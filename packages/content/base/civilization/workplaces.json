@@ -1,0 +1,20 @@
+{
+  "records": [
+    {
+      "id": "workplace.sawmill",
+      "name": "Sawmill",
+      "category": "processing",
+      "inputTags": ["log"],
+      "outputTags": ["plank"],
+      "laborSlots": 4
+    },
+    {
+      "id": "workplace.forester_lodge",
+      "name": "Forester Lodge",
+      "category": "agriculture",
+      "inputTags": ["seedling"],
+      "outputTags": ["log"],
+      "laborSlots": 3
+    }
+  ]
+}

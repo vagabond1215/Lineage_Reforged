@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EconomyRuleRecord",
+  "type": "object",
+  "required": ["id", "priceFloor", "priceCeiling", "volatility", "elasticity"],
+  "properties": {
+    "id": { "type": "string" },
+    "priceFloor": { "type": "number" },
+    "priceCeiling": { "type": "number" },
+    "volatility": { "type": "number" },
+    "elasticity": { "type": "number" }
+  }
+}

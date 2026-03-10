@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MineralRecord",
+  "type": "object",
+  "required": ["id", "slug", "name", "tier", "depositForms", "extractionTypes"],
+  "properties": {
+    "id": { "type": "string" },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "name": { "type": "string" },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "tier": { "type": "integer", "minimum": 1 },
+    "depositForms": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "extractionTypes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

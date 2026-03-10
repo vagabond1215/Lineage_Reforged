@@ -1,0 +1,8 @@
+{
+  "records": [
+    { "id": "attr.STR", "name": "Strength", "default": 10 },
+    { "id": "attr.DEX", "name": "Dexterity", "default": 10 },
+    { "id": "attr.CON", "name": "Constitution", "default": 10 },
+    { "id": "attr.INT", "name": "Intelligence", "default": 10 }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "records": [
+    {
+      "id": "fauna.bison",
+      "slug": "bison",
+      "name": "Bison",
+      "aliases": ["Buffalo"],
+      "type": "mammal",
+      "diet": "herbivore",
+      "domesticatable": true,
+      "dangerClass": "medium",
+      "habitatIds": ["habitat.coastal.tidal_flat"]
+    },
+    {
+      "id": "fauna.deer",
+      "slug": "deer",
+      "name": "Deer",
+      "aliases": [],
+      "type": "mammal",
+      "diet": "herbivore",
+      "domesticatable": true,
+      "dangerClass": "low",
+      "habitatIds": ["habitat.coastal.tidal_flat"]
+    },
+    {
+      "id": "fauna.boar",
+      "slug": "boar",
+      "name": "Boar",
+      "aliases": ["Wild Boar"],
+      "type": "mammal",
+      "diet": "omnivore",
+      "domesticatable": false,
+      "dangerClass": "medium",
+      "habitatIds": ["habitat.coastal.tidal_flat"]
+    },
+    {
+      "id": "fauna.wolf",
+      "slug": "wolf",
+      "name": "Wolf",
+      "aliases": [],
+      "type": "mammal",
+      "diet": "carnivore",
+      "domesticatable": false,
+      "dangerClass": "high",
+      "habitatIds": ["habitat.coastal.tidal_flat"]
+    }
+  ]
+}

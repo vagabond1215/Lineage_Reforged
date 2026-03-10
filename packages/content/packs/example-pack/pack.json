@@ -1,0 +1,9 @@
+{
+  "id": "example-pack",
+  "version": "0.1.0",
+  "title": "Example Content Pack",
+  "author": "project-team",
+  "dependencies": [],
+  "loadOrder": 10,
+  "enabledByDefault": false
+}

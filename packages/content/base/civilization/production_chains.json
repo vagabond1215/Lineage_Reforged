@@ -1,0 +1,10 @@
+{
+  "records": [
+    {
+      "id": "chain.lumber.basic",
+      "stages": ["extract.logging.gatherer", "workplace.sawmill"],
+      "primaryOutput": "plank",
+      "byProducts": ["sawdust"]
+    }
+  ]
+}

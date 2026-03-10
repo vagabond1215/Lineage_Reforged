@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClimateProfileRecord",
+  "type": "object",
+  "required": ["id", "name", "seasonLengths", "temperatureVariance"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "seasonLengths": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "type": "integer", "minimum": 1 }
+    },
+    "temperatureVariance": {
+      "type": "object",
+      "required": ["avg", "high", "low"],
+      "properties": {
+        "avg": { "type": "number" },
+        "high": { "type": "number" },
+        "low": { "type": "number" }
+      }
+    }
+  }
+}

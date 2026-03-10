@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HabitatRecord",
+  "type": "object",
+  "required": ["id", "slug", "name", "biomeId", "shape"],
+  "properties": {
+    "id": { "type": "string" },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "name": { "type": "string" },
+    "biomeId": { "type": "string" },
+    "shape": { "type": "string" }
+  }
+}

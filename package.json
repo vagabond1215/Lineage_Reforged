@@ -1,0 +1,13 @@
+{
+  "name": "survival-builder-rpg-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tool:content-lint": "node ./tools/content-lint/index.mjs",
+    "tool:db-build": "node ./tools/db-build/index.mjs",
+    "tool:scenario": "node ./tools/scenario-runner/index.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test"
+  }
+}

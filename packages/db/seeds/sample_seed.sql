@@ -1,0 +1,2 @@
+-- Seed file placeholder for deterministic integration fixtures.
+-- Domain-level records are authored in JSON under packages/content/base.

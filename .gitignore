@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Runtime database build artifacts
+packages/db/build/*.sqlite
+packages/db/build/build-manifest.json

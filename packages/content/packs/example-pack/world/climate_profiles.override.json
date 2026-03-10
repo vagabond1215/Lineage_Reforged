@@ -1,0 +1,19 @@
+{
+  "overrides": [
+    {
+      "target": {
+        "domain": "world",
+        "table": "climate_profiles",
+        "id": "climate.standard"
+      },
+      "strategy": "merge",
+      "patch": {
+        "temperatureVariance": {
+          "avg": 1.02,
+          "high": 1.04,
+          "low": 1.0
+        }
+      }
+    }
+  ]
+}

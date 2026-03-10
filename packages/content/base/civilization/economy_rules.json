@@ -1,0 +1,11 @@
+{
+  "records": [
+    {
+      "id": "econ.default_supply_demand",
+      "priceFloor": 0.4,
+      "priceCeiling": 2.2,
+      "volatility": 0.12,
+      "elasticity": 0.65
+    }
+  ]
+}

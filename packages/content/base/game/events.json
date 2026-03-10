@@ -1,0 +1,14 @@
+{
+  "records": [
+    {
+      "id": "event.weather.shift",
+      "domain": "world",
+      "severity": "low"
+    },
+    {
+      "id": "event.market.price.updated",
+      "domain": "civilization",
+      "severity": "low"
+    }
+  ]
+}

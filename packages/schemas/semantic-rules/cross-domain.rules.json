@@ -1,0 +1,24 @@
+{
+  "rules": [
+    {
+      "id": "rule.flora_habitat_exists",
+      "description": "Every flora habitatId must resolve to a habitat record.",
+      "severity": "error"
+    },
+    {
+      "id": "rule.fauna_habitat_exists",
+      "description": "Every fauna habitatId must resolve to a habitat record.",
+      "severity": "error"
+    },
+    {
+      "id": "rule.production_chain_stage_exists",
+      "description": "Every production chain stage must reference an extraction method or workplace.",
+      "severity": "error"
+    },
+    {
+      "id": "rule.calendar_climate_consistency",
+      "description": "Climate profiles must provide six season lengths aligned with the calendar season set.",
+      "severity": "error"
+    }
+  ]
+}

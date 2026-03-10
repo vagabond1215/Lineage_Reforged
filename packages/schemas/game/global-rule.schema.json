@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GlobalRuleRecord",
+  "type": "object",
+  "required": ["id", "value"],
+  "properties": {
+    "id": { "type": "string" },
+    "value": {}
+  }
+}

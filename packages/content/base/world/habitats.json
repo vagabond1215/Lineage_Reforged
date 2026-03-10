@@ -1,0 +1,18 @@
+{
+  "records": [
+    {
+      "id": "habitat.coastal.tidal_flat",
+      "slug": "tidal_flat",
+      "name": "Tidal Flat",
+      "biomeId": "biome.temperate.deciduous_forest",
+      "shape": "patch"
+    },
+    {
+      "id": "habitat.subterranean.crystal_cave",
+      "slug": "crystal_cave",
+      "name": "Crystal Cave",
+      "biomeId": "biome.temperate.deciduous_forest",
+      "shape": "volume"
+    }
+  ]
+}

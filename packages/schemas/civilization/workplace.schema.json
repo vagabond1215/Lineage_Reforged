@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WorkplaceRecord",
+  "type": "object",
+  "required": ["id", "name", "category", "inputTags", "outputTags", "laborSlots"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "category": { "type": "string" },
+    "inputTags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "outputTags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "laborSlots": { "type": "integer", "minimum": 1 }
+  }
+}

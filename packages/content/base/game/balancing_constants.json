@@ -1,0 +1,7 @@
+{
+  "records": [
+    { "id": "balancing.food_consumption_per_pop", "value": 1.0 },
+    { "id": "balancing.base_regrowth_rate", "value": 0.15 },
+    { "id": "balancing.default_market_drift", "value": 0.03 }
+  ]
+}

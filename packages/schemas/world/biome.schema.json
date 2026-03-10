@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BiomeRecord",
+  "type": "object",
+  "required": ["id", "slug", "name", "climateBand", "baseFertility", "hazards"],
+  "properties": {
+    "id": { "type": "string" },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "name": { "type": "string" },
+    "climateBand": { "type": "string" },
+    "baseFertility": { "type": "number" },
+    "hazards": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

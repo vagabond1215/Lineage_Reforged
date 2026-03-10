@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FloraRecord",
+  "type": "object",
+  "required": ["id", "slug", "name", "type", "lifecycle", "habitatIds", "harvest"],
+  "properties": {
+    "id": { "type": "string" },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "name": { "type": "string" },
+    "type": { "type": "string" },
+    "lifecycle": { "type": "string" },
+    "habitatIds": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "harvest": {
+      "type": "object",
+      "required": ["active", "passive", "yieldCap"],
+      "properties": {
+        "active": { "type": "boolean" },
+        "passive": { "type": "boolean" },
+        "yieldCap": { "type": "number" }
+      }
+    }
+  }
+}

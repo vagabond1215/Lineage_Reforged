@@ -1,0 +1,8 @@
+{
+  "records": [
+    { "id": "slot.weapon.main_hand", "category": "weapon", "maxItems": 1 },
+    { "id": "slot.weapon.off_hand", "category": "weapon", "maxItems": 1 },
+    { "id": "slot.armor.chest", "category": "armor", "maxItems": 1 },
+    { "id": "slot.accessory.neck", "category": "accessory", "maxItems": 1 }
+  ]
+}

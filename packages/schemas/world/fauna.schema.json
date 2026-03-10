@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FaunaRecord",
+  "type": "object",
+  "required": ["id", "slug", "name", "type", "diet", "domesticatable", "dangerClass", "habitatIds"],
+  "properties": {
+    "id": { "type": "string" },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "name": { "type": "string" },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "type": { "type": "string" },
+    "diet": { "type": "string" },
+    "domesticatable": { "type": "boolean" },
+    "dangerClass": { "type": "string" },
+    "habitatIds": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

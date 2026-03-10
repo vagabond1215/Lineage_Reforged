@@ -1,0 +1,12 @@
+{
+  "records": [
+    {
+      "id": "rule.tick_order",
+      "value": ["world", "civilization", "player", "global-events"]
+    },
+    {
+      "id": "rule.default_seed",
+      "value": 42
+    }
+  ]
+}

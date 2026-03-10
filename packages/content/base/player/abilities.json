@@ -1,0 +1,10 @@
+{
+  "records": [
+    {
+      "id": "ability.survival.forager",
+      "name": "Forager",
+      "scalingAttribute": "attr.DEX",
+      "cooldownTicks": 12
+    }
+  ]
+}

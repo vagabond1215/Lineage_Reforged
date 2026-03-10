@@ -1,0 +1,9 @@
+{
+  "records": [
+    {
+      "id": "trait.hardy",
+      "name": "Hardy",
+      "effects": ["hp_bonus", "cold_resistance"]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "id": "extract.logging.gatherer",
+      "resourceDomain": "flora",
+      "method": "gatherer",
+      "outputMultiplier": 1
+    },
+    {
+      "id": "extract.mining.basic",
+      "resourceDomain": "minerals",
+      "method": "basic_mining",
+      "outputMultiplier": 1.2
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "records": [
+    {
+      "id": "spell.nature.growth_surge",
+      "name": "Growth Surge",
+      "school": "nature",
+      "manaCost": 15,
+      "scalingAttribute": "attr.INT"
+    }
+  ]
+}

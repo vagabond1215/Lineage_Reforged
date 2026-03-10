@@ -1,0 +1,49 @@
+{
+  "records": [
+    {
+      "id": "mineral.iron_ore",
+      "slug": "iron_ore",
+      "name": "Iron Ore",
+      "aliases": [],
+      "tier": 1,
+      "depositForms": ["vein", "lode"],
+      "extractionTypes": ["manual", "infrastructure"]
+    },
+    {
+      "id": "mineral.copper_ore",
+      "slug": "copper_ore",
+      "name": "Copper Ore",
+      "aliases": [],
+      "tier": 1,
+      "depositForms": ["vein", "seam"],
+      "extractionTypes": ["manual", "infrastructure"]
+    },
+    {
+      "id": "mineral.coal",
+      "slug": "coal",
+      "name": "Coal",
+      "aliases": [],
+      "tier": 1,
+      "depositForms": ["seam", "field"],
+      "extractionTypes": ["manual", "infrastructure"]
+    },
+    {
+      "id": "mineral.quartz",
+      "slug": "quartz",
+      "name": "Quartz",
+      "aliases": ["Quartz Crystal"],
+      "tier": 1,
+      "depositForms": ["outcrop", "pocket"],
+      "extractionTypes": ["manual"]
+    },
+    {
+      "id": "mineral.salt",
+      "slug": "salt",
+      "name": "Salt",
+      "aliases": [],
+      "tier": 1,
+      "depositForms": ["field", "lode"],
+      "extractionTypes": ["manual", "infrastructure"]
+    }
+  ]
+}

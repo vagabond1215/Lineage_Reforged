@@ -1,0 +1,24 @@
+{
+  "records": [
+    {
+      "id": "climate.standard",
+      "name": "Standard",
+      "seasonLengths": [8, 9, 8, 9, 9, 8],
+      "temperatureVariance": {
+        "avg": 1,
+        "high": 1,
+        "low": 1
+      }
+    },
+    {
+      "id": "climate.drought_year",
+      "name": "Drought Year",
+      "seasonLengths": [8, 7, 8, 12, 8, 9],
+      "temperatureVariance": {
+        "avg": 1.05,
+        "high": 1.1,
+        "low": 1.03
+      }
+    }
+  ]
+}

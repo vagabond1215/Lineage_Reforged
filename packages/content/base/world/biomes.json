@@ -1,0 +1,20 @@
+{
+  "records": [
+    {
+      "id": "biome.temperate.deciduous_forest",
+      "slug": "deciduous_forest",
+      "name": "Deciduous Forest",
+      "climateBand": "temperate",
+      "baseFertility": 0.72,
+      "hazards": ["cold_snap", "blight"]
+    },
+    {
+      "id": "biome.grasslands.steppe",
+      "slug": "steppe",
+      "name": "Steppe",
+      "climateBand": "grasslands",
+      "baseFertility": 0.64,
+      "hazards": ["drought"]
+    }
+  ]
+}
