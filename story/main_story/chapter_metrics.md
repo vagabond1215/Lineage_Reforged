@@ -1,6 +1,6 @@
 ﻿# Chapter Metrics
 
-Generated: 2026-03-10 17:44
+Generated: 2026-03-10 19:06
 
 Purpose: Track chapter size so we can spot unusually short/long chapters while still allowing intentional variation.
 
@@ -18,7 +18,7 @@ Purpose: Track chapter size so we can spot unusually short/long chapters while s
 | Chapter 4 | 77 | 1282 | Lean | Within expected spread |
 | Chapter 5 | 100 | 1326 | Standard | Within expected spread |
 | Chapter 6 | 94 | 1180 | Lean | Within expected spread |
-| Chapter 7 | 136 | 1531 | Standard | Within expected spread |
+| Chapter 7 | 132 | 1534 | Standard | Within expected spread |
 
 Active chapter averages:
 - Average paragraphs: 95

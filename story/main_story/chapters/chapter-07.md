@@ -203,21 +203,13 @@ She continued in an even voice.
 
 Silence sat between them.
 
-"Terms," Sehir said.
+"Then hear it clearly," Sehir said. "An explicit slave binding carries no negotiated terms. No guaranteed limits. You will be subject to my judgment alone."
 
-"No surrender to infernal claimants. No transfer to capital custody without your direct order. Functional service under your authority."
+Serathis held his gaze. "I understand."
 
-"And restitution?"
+"There will be no argument later over what was promised."
 
-"Instruction. Intelligence on surviving infernal channels. Operational support until debt and threat reach lawful balance."
-
-Sehir measured the geometry of it.
-
-Risk contained.
-
-Future harm prevented.
-
-Equivalent burden.
+"There will be no argument," she said.
 
 He stepped forward.
 
@@ -225,7 +217,7 @@ He stepped forward.
 
 The woman knelt, spine straight.
 
-"I accept punitive slave contract under your execution and enforcement."
+"I accept explicit slave binding under your sole execution and judgment."
 
 Sehir laid his hand at her throat.
 
@@ -274,5 +266,6 @@ When Blackstone could defend itself - walls, workforce, supply, command - he wou
 Dead men are difficult to assassinate.
 
 From the shadows of a place the court believed buried, justice could move without warning.
+
 
 
