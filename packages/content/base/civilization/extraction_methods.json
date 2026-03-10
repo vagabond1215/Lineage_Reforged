@@ -1,16 +1,112 @@
-{
-  "records": [
-    {
-      "id": "extract.logging.gatherer",
-      "resourceDomain": "flora",
-      "method": "gatherer",
-      "outputMultiplier": 1
-    },
-    {
-      "id": "extract.mining.basic",
-      "resourceDomain": "minerals",
-      "method": "basic_mining",
-      "outputMultiplier": 1.2
-    }
-  ]
+﻿{
+    "records":  [
+                    {
+                        "id":  "extract.apiculture.hive_keeper",
+                        "resourceDomain":  "flora",
+                        "method":  "hive_tending",
+                        "outputMultiplier":  0.95
+                    },
+                    {
+                        "id":  "extract.clay.pit_digger",
+                        "resourceDomain":  "minerals",
+                        "method":  "clay_digging",
+                        "outputMultiplier":  1.1
+                    },
+                    {
+                        "id":  "extract.farming.mixed_plot",
+                        "resourceDomain":  "flora",
+                        "method":  "mixed_plot_harvest",
+                        "outputMultiplier":  1.1
+                    },
+                    {
+                        "id":  "extract.fishing.river_netter",
+                        "resourceDomain":  "fauna",
+                        "method":  "river_netting",
+                        "outputMultiplier":  1.1
+                    },
+                    {
+                        "id":  "extract.flax.reaper",
+                        "resourceDomain":  "flora",
+                        "method":  "field_reaping",
+                        "outputMultiplier":  1.05
+                    },
+                    {
+                        "id":  "extract.foraging.woodland",
+                        "resourceDomain":  "flora",
+                        "method":  "woodland_foraging",
+                        "outputMultiplier":  1
+                    },
+                    {
+                        "id":  "extract.grain.harvest",
+                        "resourceDomain":  "flora",
+                        "method":  "grain_harvest",
+                        "outputMultiplier":  1.2
+                    },
+                    {
+                        "id":  "extract.herbalism.forager",
+                        "resourceDomain":  "flora",
+                        "method":  "foraging",
+                        "outputMultiplier":  0.9
+                    },
+                    {
+                        "id":  "extract.hunting.trapper",
+                        "resourceDomain":  "fauna",
+                        "method":  "trapping",
+                        "outputMultiplier":  1.0
+                    },
+                    {
+                        "id":  "extract.logging.gatherer",
+                        "resourceDomain":  "flora",
+                        "method":  "gatherer",
+                        "outputMultiplier":  1.0
+                    },
+                    {
+                        "id":  "extract.mining.basic",
+                        "resourceDomain":  "minerals",
+                        "method":  "basic_mining",
+                        "outputMultiplier":  1.2
+                    },
+                    {
+                        "id":  "extract.mining.deep_shaft",
+                        "resourceDomain":  "minerals",
+                        "method":  "deep_shaft",
+                        "outputMultiplier":  1.45
+                    },
+                    {
+                        "id":  "extract.pasture.shepherd",
+                        "resourceDomain":  "fauna",
+                        "method":  "pastoral_husbandry",
+                        "outputMultiplier":  1.0
+                    },
+                    {
+                        "id":  "extract.peat.cutter",
+                        "resourceDomain":  "flora",
+                        "method":  "peat_cutting",
+                        "outputMultiplier":  1.0
+                    },
+                    {
+                        "id":  "extract.quarry.stonecut",
+                        "resourceDomain":  "minerals",
+                        "method":  "stonecutting",
+                        "outputMultiplier":  1.05
+                    },
+                    {
+                        "id":  "extract.riverbank.gatherer",
+                        "resourceDomain":  "fauna",
+                        "method":  "riverside_gathering",
+                        "outputMultiplier":  1
+                    },
+                    {
+                        "id":  "extract.salt.brine_evaporator",
+                        "resourceDomain":  "minerals",
+                        "method":  "brine_evaporation",
+                        "outputMultiplier":  1.15
+                    },
+                    {
+                        "id":  "extract.sand.dredger",
+                        "resourceDomain":  "minerals",
+                        "method":  "river_dredging",
+                        "outputMultiplier":  1.0
+                    }
+                ]
 }

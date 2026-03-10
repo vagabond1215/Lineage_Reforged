@@ -1,151 +1,155 @@
 ﻿# Chapter 4
 
-Warden Corvin closed the inspection slit with a quiet metallic click, but Sehir kept his eyes on the steel door a moment longer.
+Warden Corvin closed the inspection slit with a soft metallic click, but Sehir lingered beside the steel door for a breath longer.
 
-"Advisor," Corvin said, voice low and careful, "whatever she was before, she is dangerous now."
+"Advisor," Corvin said, his voice low and measured, "whatever she once was, she is dangerous now."
 
-Sehir finally stepped back. "Dangerous in what way?"
+Sehir glanced at him. "Dangerous how?"
 
-Corvin hesitated. "Not with a blade. With information."
+Corvin hesitated. "Not with a blade. With what she knows."
 
-The answer gave him nothing and everything at once.
+It was the kind of answer that revealed almost nothing and everything at once.
 
-As they turned to leave, a faint scrape sounded behind the door, followed by a voice so soft Sehir almost mistook it for wind moving through stone.
+They had barely turned to leave when a faint scrape came from inside the cell. Then, through the slit, the woman whispered so quietly that Sehir almost missed it.
 
-"When lightning stands behind you," the woman whispered, "do not trust the dark."
+"When lightning stands behind you, do not trust the dark."
 
 Corvin stiffened. "Move on."
 
-Sehir looked back once, but the cell was silent again.
+Sehir looked back once. The cell had already gone silent.
 
-They climbed from the lower wards into evening light. Commander Halvren was waiting in the keep corridor, arms folded behind her back, expression neutral and efficient.
+They climbed out of the lower wards into evening light. Commander Halvren stood waiting in the corridor above, hands clasped behind her back, expression calm and efficient.
 
-"Your review is complete?" she asked.
+"Is your inspection complete?" she asked.
 
-"For now," Sehir said. "We depart for Blackstone at first light."
+"For now," Sehir said. "We leave for Blackstone at first light."
 
-Halvren nodded. "Supplies are ready. The inland road has taken heavy rain this month. Slower going than usual."
+Halvren nodded once. "Supplies are ready. The inland road has taken heavy rain this month, so expect slower travel than usual."
 
-Professor Aldren offered a tired smile. "I have no objections to slower going if it means fewer cliffs."
+Professor Aldren gave her a tired smile. "If slower means fewer cliffs, you'll hear no complaint from me."
 
-Arienne laughed softly. "You and every sensible traveler in the kingdom."
+Arienne laughed softly. "From him? Never. From his knees? Constantly."
 
-The commander's gaze shifted to Sehir. "I can spare four guards for the first two days. After that they must return."
+Halvren's gaze shifted to Sehir. "I can spare four guards for the first two days. After that they must return to garrison duty."
 
-"Two is enough," Sehir said. "I won't strip your garrison."
+"Two is enough," Sehir said. "I won't thin your walls more than necessary."
 
-Halvren studied him, then gave a short nod. "Two, then."
+She studied him a moment, then inclined her head. "Two, then."
 
-That night, wind moved through the fortress towers with a low mournful hum. Sehir sat by the quarters window reviewing maps by lanternlight while Aldren slept in the nearest bed, boots still half unlaced. Across the room Arienne sharpened one of her curved blades with slow, patient strokes.
+That night, wind mourned through the fortress towers. Sehir sat by the window with a map spread across his knees while Aldren snored lightly in the near bed, still half in his boots. Across the room, Arienne drew a whetstone along one of her curved blades in slow, even strokes.
 
-"You polish steel like an artist," Sehir said without looking up.
+"You care for steel like a conservator," Sehir said without looking up.
 
-"Old academy habit," Arienne replied easily. "Tools should be cared for."
+"Old academy habit," Arienne replied. "Tools fail when people get careless."
 
-"Most academy scholars don't carry two blades."
+"Most academy scholars don't carry paired blades."
 
-"Most academy scholars don't travel monster roads."
+"Most academy scholars don't walk monster roads."
 
-The blade whispered once more against the whetstone, then she sheathed it and stood. "Try to sleep, Advisor. We start climbing at dawn."
+The blade whispered across stone one last time. She sheathed it, stood, and stretched her shoulders.
 
-He waited until her breathing settled in the dark before closing the map. Sleep came late.
+"Sleep while you can, Advisor. Dawn comes fast."
 
-At sunrise, mist rolled inland from the sea as their party passed through the eastern gate of Westfall Fortress.
+He did not sleep quickly.
 
-They carried enough provisions for ten days, including rope, lamp oil, dried rations, water skins, and Aldren's impossible weight of notebooks, instruments, and rolled survey charts. The two garrison guards took part of the load, but Sehir still ended up with the largest packs: one on his shoulders and one strapped across his chest, plus a bundled frame of tools tied high on his back.
+At sunrise, they passed through Westfall's eastern gate beneath a low bank of sea mist.
 
-Aldren stared at him as they reached the first incline. "Are you certain that is wise?"
+Their provisions were enough for ten hard days: rope, lamp oil, dried rations, survey gear, and Aldren's impossible stack of notebooks and instruments. The two guards took part of the load, but Sehir still carried the heaviest bundles: one frame on his back, one pack across his chest, and a tied roll of tools over his shoulder.
 
-"No," Sehir said. "Only efficient."
+Aldren stared at him as the road began to climb.
 
-The valley road began as hard-packed stone and quickly degraded into mud, roots, and narrow ledges carved through thick evergreen forest. Rainwater ran in silver threads down the slopes, turning every switchback into a slick hazard.
+"Are you sure that's wise?"
+
+"No," Sehir said. "Just efficient."
+
+The valley road started as packed stone, then dissolved into mud, roots, and narrow ledges carved through dark evergreen forest. Rainwater streamed down the slopes in silver threads, turning every bend into a slick hazard.
 
 By midday of the first day, Aldren was already breathing hard.
 
-Arienne slowed to match him. "Short steps," she said. "Save your lungs."
+Arienne dropped back to match his pace. "Shorter steps," she said. "Save your lungs for the climbs."
 
-"My lungs are fine," he wheezed. "My legs, however, are filing a formal complaint."
+"My lungs are fine," he wheezed. "My legs, however, have filed formal protest."
 
-Even Sehir smiled at that.
+Even Sehir laughed at that.
 
-The first attack came near dusk.
+The first attack came at dusk.
 
-They were crossing a broken section of road where a landslide had left only a narrow shelf above a steep ravine. The lead guard had just signaled a halt when two lean shapes burst from the trees, fur black with rain, eyes reflecting lantern light like wet glass.
+They were crossing a landslide break where the road narrowed to a shelf above a ravine when the lead guard hissed a warning. Two lean shapes burst from the trees, fur black with rain, eyes catching lantern light like wet glass.
 
 Cliff hounds.
 
-One launched at Aldren. Sehir moved before thought, dropping a supply frame and stepping into the animal's path. Its jaws closed on his forearm guard with a crunch that would have shattered bare bone. He twisted, drove his shoulder forward, and hurled the creature into the ravine wall.
+One lunged straight for Aldren. Sehir moved before thinking, dropping a supply frame and stepping into its path. The animal's jaws clamped down on his forearm guard with a crack that would have splintered bone. He twisted, drove through his shoulder, and hurled it against the ravine wall.
 
 The second hound never reached them.
 
-Arienne's hand flashed once. Lightning snapped through the rain with a hard blue crack, striking the beast mid-leap. It hit the ground smoking and did not rise.
+Arienne's hand flashed, and lightning snapped through the rain in a hard blue arc. The beast dropped smoking to the ground.
 
-The first hound staggered up, snarling blood and foam. Arienne was already there, blade low and tight, cutting across its throat in a single clean motion.
+The first hound staggered up, snarling blood and foam. Arienne was already on it, blade low and precise, cutting cleanly across its throat.
 
-Silence returned as quickly as violence had come.
+Silence returned all at once.
 
-Aldren stood frozen, face pale beneath his spectacles.
+Aldren stood rigid, pale behind his spectacles.
 
-"Are you injured?" Sehir asked.
+"Are you hurt?" Sehir asked.
 
-"Only spiritually," Aldren managed.
+Aldren swallowed. "Only in spirit."
 
-They made camp on higher ground that night beneath bent pines and torn cloud. The two guards kept watch in shifts while Arienne sat near the edge of the firelight, eyes on the dark tree line. Sehir noticed she never removed both hands from reach of a weapon.
+They camped on higher ground under torn cloud and wind-bent pines. The guards kept watch in rotation. Arienne sat near the edge of the firelight, eyes fixed on the tree line, never once settling far from her weapons.
 
-On the second day the guards left them at a stone marker where the fortified patrol zone ended.
+At first light on the second day, the guards left them at a boundary marker where regular patrols ended.
 
-"Three days to old watchtower ruins," one guard said. "Then another three or four to Blackstone if weather holds."
+"Three days to the old watchtower ruins," one guard said. "Then another three or four to Blackstone, if weather stays with you."
 
-Weather did not hold.
+It did not.
 
-A cold rain settled over the valley for two straight days, turning paths to rivers and forcing them to detour around fallen timber and flooded gullies. Progress dropped to a crawl. Aldren slipped twice and once had to be hauled up by rope when a muddy bank collapsed under him.
+Cold rain settled over the valley for two straight days, turning tracks to streams and forcing detours around flood-cut gullies and fallen timber. Progress slowed to a crawl. Aldren slipped twice and once had to be hauled out with rope when a muddy bank gave way beneath him.
 
-"I am beginning," he said through clenched teeth, "to suspect the academy understated fieldwork."
+"I am beginning to suspect," he muttered through clenched teeth, "that the academy greatly romanticized fieldwork."
 
 "Wildly," Sehir said.
 
-By the fifth day out from Westfall, they were behind schedule.
+By the fifth day out of Westfall, they were behind schedule.
 
-By the sixth, they were exhausted.
+By the sixth, every joint hurt.
 
-That evening, in a stand of cedar just east of the old watchtower ruins, they were attacked again.
+That evening, in a cedar stand east of the watchtower ruins, the forest erupted again.
 
-This time it was no pack.
+This time there was no pack.
 
-A single horned forest brute crashed out of brush and stone like a moving wall of muscle and matted hide, driven by hunger or rage. Its tusks were broad as short swords. Its roar shook needles from branches overhead.
+A single horned forest brute crashed through brush and stone like a moving wall of muscle and matted hide, driven by hunger or rage. Its tusks were broad as short swords. Its roar shook needles from the branches overhead.
 
-Aldren stumbled backward with a shout. Sehir dropped their cookpot bundle and stepped between the beast and the scholar, bracing on slick earth with both arms raised.
+Aldren stumbled backward with a shout. Sehir dropped the cookpot bundle and stepped between the scholar and the charge, planting both feet in the mud.
 
-The impact drove him back three full paces.
+The impact shoved him back three full paces.
 
-Arienne moved in a white-blue blur. Lightning ran down her blade and into the creature's shoulder with a burning hiss. It turned on her, bellowing, and she was suddenly gone from where it struck, rolling under its tusks and carving along its flank.
+Arienne moved like lightning given shape. A white-blue current ran down one blade as she carved into the creature's shoulder. It bellowed and turned, but she was already rolling under its tusks and opening a line across its flank.
 
-"Eyes!" she shouted.
+"The eyes!" she shouted.
 
-Sehir snatched a lantern from the ground, swung, and shattered it against the brute's face. Flame and oil burst across one eye. The creature reared blindly and Arienne drove both blades up beneath its jaw.
+Sehir snatched up a lantern, swung, and shattered it across the brute's face. Oil and flame burst over one eye. The creature reared blind and roaring, and Arienne drove both blades up beneath its jaw.
 
-The beast collapsed hard enough to shake mud from nearby roots.
+It fell hard enough to shake mud from the roots around them.
 
-Aldren sat down where he stood and did not move for several minutes.
+Aldren sat down where he stood and stayed there for several minutes, staring at nothing.
 
-No one said aloud what they were all thinking.
+No one said what they were all thinking.
 
-If this was the valley road, the mine would be worse.
+If this was the road, the mine would be worse.
 
 They reached Blackstone Camp two days later than planned.
 
-The settlement emerged from thinning trees at the eastern end of the valley like the remains of a dead machine. Collapsed worker barracks leaned into one another at broken angles. Rusted rails vanished into weed-choked earth. A weather-beaten hoist tower stood over the main shaft, one side split and sagging.
+The settlement emerged from thinning trees like the husk of a dead machine. Collapsed barracks leaned against one another at broken angles. Rusted rail lines vanished into weed-choked earth. A weather-beaten hoist tower sagged over the main shaft, split along one side.
 
 The mine entrance itself was a black wound in the mountain.
 
-Cold air flowed from it in slow breaths that smelled of wet stone, iron, and something older than either.
+Cold air breathed from it in slow pulses that smelled of wet stone, iron, and something older than both.
 
-Aldren lowered his pack and stared in reverent dread. "If the lower supports are still standing, this place could change the kingdom."
+Aldren lowered his pack and stared with reverent dread. "If the lower supports still stand, this place could change the kingdom."
 
-Arienne looked into the dark and smiled, polite and unreadable. "Then we'd better see what is still alive down there."
+Arienne looked into the dark and smiled, polite and unreadable. "Then let's find out what still lives down there."
 
-As Sehir set down the last of the supply frames, the ground under his boots gave a subtle, almost thoughtful tremor.
+As Sehir set down the last supply frame, the ground beneath his boots gave a subtle, almost thoughtful tremor.
 
-Not enough to knock a man off balance.
+Not enough to knock him off balance.
 
-Enough to make him look at the mountain and wonder if it had just answered her.
+Just enough to make him look at the mountain and wonder whether it had heard her.

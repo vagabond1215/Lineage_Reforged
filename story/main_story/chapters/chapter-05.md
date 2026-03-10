@@ -1,56 +1,56 @@
 ﻿# Chapter 5
 
-Morning in Blackstone arrived gray and windless.
+Morning at Blackstone arrived gray and windless.
 
-They established a temporary base in the least-collapsed barracks: bedrolls against the driest wall, rations stacked in sealed crates, lamp oil and rope separated from cooking fire. Aldren spread maps over a cracked table and began comparing old survey sketches against what remained of the camp.
+They set a temporary base in the least-collapsed barracks: bedrolls on the driest wall, rations sealed in crates, lamp oil kept well away from cooking flame. Aldren spread old survey maps across a cracked table and compared them to what remained of the camp.
 
-"Primary shaft here," he said, tapping a faded ink mark. "Secondary vents here and here. If we're fortunate, only the upper galleries failed in the collapse."
+"Primary shaft here," he said, tapping a faded mark. "Secondary vents here and here. If we're fortunate, only the upper galleries failed."
 
-Arienne adjusted the straps of her light armor. "And if we are not fortunate?"
+Arienne tightened the straps of her light armor. "And if we are not fortunate?"
 
-"Then we document and leave." He swallowed. "Quickly."
+Aldren swallowed. "Then we document what we can and leave quickly."
 
 They entered the mine before noon.
 
-Sehir carried coils of rope, two spare lanterns, a crowbar, and most of the field rations. Aldren carried measuring tools and chalk markers. Arienne walked point with staff in one hand and a small ball of contained lightning drifting above her palm, casting white-blue light down the tunnel.
+Sehir carried rope, spare lanterns, a crowbar, and most of the field rations. Aldren kept his measuring kit and chalk markers close to his chest. Arienne took point with her staff in one hand and a compact sphere of white-blue lightning in the other, using it as a moving lantern.
 
-The upper galleries were unstable but passable. Support beams groaned in places where rot had eaten through old timber, and fallen rock forced them to crawl through narrow cuts in the debris.
+The upper galleries were unstable but passable. Rotten support beams groaned under old weight, and fallen rock forced them through narrow crawl gaps where stone scraped both shoulders.
 
-Still, Aldren's excitement grew with every intact section.
+Aldren's anxiety gave way to fascination with each intact span.
 
-"Look at this joinery," he whispered, running fingers over an iron brace set deep into the wall. "Old imperial method. Better than modern reinforcement in half our quarries."
+"Look at this joinery," he whispered, tracing an iron brace set deep in the wall. "Old imperial work. Better than half the modern quarries still in operation."
 
-Sehir listened and watched.
+Sehir listened, but watched everything.
 
-Twice he noticed shallow grooves in the stone that looked less like pick marks and more like fingers dragged through wet clay. Once he found a patch of floor where dust had been swept into a rough spiral despite no recent wind.
+Twice he found shallow tracks in the walls that looked less like tool marks and more like fingers dragged through wet clay. Once he noticed dust arranged in a spiral on the floor where no draft should have reached.
 
-"Elemental traces," Arienne said when he pointed it out.
+"Elemental traces," Arienne said when he pointed them out.
 
-Her tone was casual.
+Her tone remained easy.
 
-Her eyes were not.
+Her eyes did not.
 
-By late afternoon they reached a wide chamber where three corridors branched toward the deeper veins.
+By late afternoon they reached a chamber where three tunnels split toward deeper veins.
 
-Aldren lit an additional lantern and crouched by a broken marker post. "East branch should lead to the rich seam and the old lift cradle," he said. "If records are accurate."
+Aldren lit another lantern and crouched beside a broken marker post. "East branch should lead to the rich seam and old lift cradle, if these records are right."
 
-Arienne gave a small nod. "Then east."
+Arienne nodded. "East, then."
 
-The first elemental struck two turns later.
+The first elemental hit two turns later.
 
-A shoulder-sized mass of stone and packed clay tore itself free from the wall with a grinding shriek and slammed into Sehir's side. He absorbed the blow and staggered, then drove it away with the crowbar like a blacksmith hammering hot iron.
+A shoulder-sized mass of stone and packed clay tore free from the wall with a grinding shriek and slammed into Sehir's side. He absorbed the impact, staggered once, then drove the creature away with the crowbar like a hammer strike.
 
-Another rose from the floor ahead, then another behind.
+Another rose from the floor ahead. Another from behind.
 
-Arienne's lightning split the tunnel in white arcs, blasting one creature into fragments. She spun through the sparks and opened another with a crossing blade cut that scattered chunks of glowing stone.
+Arienne's lightning split the tunnel in sharp white arcs, blasting one into fragments. She spun through the sparks and opened another with crossing blades that scattered hot shards across the stone.
 
-"Move!" she shouted. "They'll keep coming if we stay pinned!"
+"Move!" she shouted. "If we hold here, they'll bury us!"
 
-They forced forward in a brutal stop-and-start push, Sehir in front drawing impacts, Arienne cutting and striking from the flanks, Aldren stumbling between them with his map case clutched to his chest like a shield.
+They pushed forward in violent bursts, Sehir taking impacts at the front, Arienne carving space at the flanks, Aldren stumbling between them with his map case clutched like a shield.
 
-At the next chamber, the ground heaved.
+At the next chamber, the floor convulsed.
 
-A larger elemental emerged from beneath the center of the floor, twice Sehir's height, its body layered in jagged rock plates that shifted and locked with each movement. A core of molten orange pulsed in the cracks of its chest.
+A larger elemental rose from beneath it, twice Sehir's height, its body layered in jagged rock plates that shifted and locked as it moved. Molten orange light pulsed through the seams of its chest.
 
 Aldren froze.
 
@@ -58,53 +58,57 @@ Aldren froze.
 
 Too late.
 
-The elemental's arm came down with the speed of a falling gate.
+The elemental's arm came down with the speed of a dropped gate.
 
-Aldren had time for one sharp inhale before stone met flesh.
+Aldren had time for one sharp inhale.
 
-There was a wet, final sound. Then nothing recognizable remained but shattered gear, blood across broken rock, and a crushed bundle of cloth where a man had been standing.
+Then stone met flesh.
+
+The sound was wet and final. When the dust settled, nothing recognizable remained but shattered instruments, blood across broken rock, and a crushed knot of cloth.
 
 Sehir stopped moving.
 
-For one terrible heartbeat, the mine went silent except for dripping water and the grind of shifting stone.
+For one terrible heartbeat, the mine held its breath with him.
 
-Then lightning hit him in the back.
+Then lightning slammed into his back.
 
-It punched through his shoulders and chest in a flood of white pain, driving him to one knee. Before he could turn, a curved blade rang off his ribs, then another flashed toward his throat.
+White pain punched through his shoulders and chest and drove him to one knee. Before he could turn, a curved blade rang off his ribs and another flashed for his throat.
 
 Arienne.
 
 Her face was calm, almost regretful.
 
-"I did hope the elementals would save me the trouble," she said.
+"I hoped the elementals would spare me this part," she said.
 
-Sehir caught her wrist on the third strike and shoved her away, boots sliding through blood and gravel.
+Sehir caught her wrist on the third strike and shoved her away, boots slipping through blood and gravel.
 
-"The queen," he said, voice low and raw.
+"The queen," he said, voice hoarse.
 
-"The queen," Arienne confirmed.
+"The queen," Arienne answered.
 
-Two smaller elementals closed from the side passages. The large one advanced down the center, each step cracking stone underfoot.
+Two smaller elementals closed from the side tunnels. The giant came straight down the center, each step cracking stone.
 
-Arienne came again, lightning crawling along both blades.
+Arienne attacked again, lightning crawling along both blades.
 
-She cut high, then low, then drove a thrust toward his heart. Sehir turned with it, taking the strike across his shoulder instead of his chest. The blade bit through cloth, drew blood, and should have gone deeper.
+High cut. Low cut. Thrust to the heart.
 
-It did not.
+Sehir turned with the thrust, taking it across the shoulder instead of the chest. The blade bit cloth and flesh, and should have sunk deeper.
 
-She felt the resistance and her eyes widened.
+It didn't.
+
+Arienne felt the resistance and stared.
 
 "What are you?"
 
 "I don't know," Sehir said.
 
-That was the truth.
+It was the truth.
 
-He reached inward for power he had not truly touched in years.
+He reached inward for power he had not touched in years.
 
-It answered slowly, like embers buried beneath ash. A dull gold shimmer traced his skin for an instant, then faded as quickly as it came. He slammed his palm into the nearest elemental and a burst of force shattered its upper body into tumbling shards.
+It answered like embers under ash. A dull gold shimmer traced his skin and faded. He slammed his palm into the nearest elemental and shattered half its body into tumbling stone.
 
-The effort left his vision dim at the edges.
+The effort dimmed his vision.
 
 No focus.
 
@@ -112,79 +116,79 @@ No armor.
 
 No shield.
 
-Every breath felt expensive.
+Every breath cost.
 
-Arienne circled, reassessing. The large elemental roared and drove both stone fists down. Sehir rolled between the impacts, grabbed a fallen support pick, and rammed it into a seam of glowing rock at the creature's knee. The elemental stumbled, but did not fall.
+Arienne circled while the giant roared and drove both fists down. Sehir rolled between the impacts, seized a fallen support pick, and rammed it into a glowing seam at the creature's knee. The giant staggered, but stayed upright.
 
-Arienne flicked lightning past him into the giant's chest, not to kill it but to blind him in the flare. She was already behind him when the light cleared, one blade at his side and the other aimed under his jaw.
+Arienne fired lightning past Sehir into the giant's chest, not to kill it but to blind him with the flare. She was behind him when the afterimage cleared, one blade at his side and the other under his jaw.
 
-He twisted just enough that the first cut glanced and the second carved across his collar instead of his throat.
+He twisted just far enough. One cut glanced. The second carved his collar instead of his throat.
 
-The large elemental recovered and surged forward.
+The giant recovered and surged forward.
 
-Sehir was suddenly trapped exactly where she wanted him: assassin on one side, stone titan on the other.
+Sehir was trapped exactly where Arienne wanted him: assassin to one side, stone titan to the other.
 
-Arienne saw the opening and committed.
+She committed.
 
-Her next sequence was flawless, a trained kill pattern delivered with speed no court fencer could match. Lightning, steel, step, turn, strike.
+The next sequence was flawless - lightning, steel, step, turn, strike - faster than any court duel, cleaner than any battlefield brawl.
 
 Sehir endured it.
 
 Not untouched.
 
-Not unharmed.
+Not unhurt.
 
-But alive.
+Alive.
 
-Confusion broke her rhythm for half a second.
+Confusion broke her rhythm for half a heartbeat.
 
 That was enough.
 
-He drove his shoulder into her centerline and hurled her across the chamber. She rolled, came up on one knee, and this time she did not charge him.
+He drove his shoulder through her center and hurled her across the chamber. She rolled, came up on one knee, and for the first time did not charge.
 
-She looked at the supporting columns instead.
+Instead, she looked at the support columns.
 
-Her expression changed from frustration to calculation.
+Frustration hardened into calculation.
 
 "If I can't kill you cleanly," she said, "the mountain can."
 
-She sprinted for the eastern supports and slammed both blades into the old brace points. Lightning erupted through ancient iron struts, overloading them in a blinding web of white fire.
+She sprinted to the eastern braces and buried both blades into old iron anchors. Lightning erupted through the struts in a blinding web of white fire.
 
 The chamber screamed.
 
-Stone cracked overhead. A rain of gravel became a rain of boulders.
+Stone cracked overhead. Gravel became boulders.
 
-Sehir lunged toward her, but the large elemental crashed between them, forcing him back as the first section of ceiling collapsed.
+Sehir lunged after her, but the giant crashed between them as the first section of ceiling came down.
 
 Arienne vanished into dust and thunder.
 
-The floor split under Sehir's boots.
+The floor split beneath Sehir's boots.
 
-He fell hard, rolled, and came up beneath a slanted slab while the chamber around him failed in stages: beam, wall, ceiling, then everything.
+He fell, rolled, and came up beneath a tilted slab while the chamber failed in stages - beam, wall, ceiling, then everything.
 
-In a forgotten shrine far away, a single candle guttered nearly to nothing.
+Far away, in a forgotten shrine, a single candle guttered near extinction.
 
-The goddess of justice knelt before her own broken altar, fingers trembling against cold marble as she watched through fading divine sight.
+The goddess of justice knelt before her broken altar, fingertips trembling against cold marble as she watched through fading sight.
 
 "Not yet," she whispered. "You do not die in the dark."
 
-She reached for power that was no longer there.
+She reached for power that was gone.
 
-And then for power she could not afford to spend.
+Then for power she could not afford to spend.
 
 The last of it answered.
 
-Back in the collapsing mine, the world slowed.
+Back in the collapsing mine, time slowed.
 
-A falling boulder halted inches above Sehir's skull as if caught in unseen hands. Dust hung in the air like suspended ash. The roar of collapse became a distant pulse.
+A boulder halted inches above Sehir's skull as if caught by invisible hands. Dust hung motionless in the air. The roar of collapse became a distant pulse.
 
-Golden light rose beneath his skin in branching lines he did not recognize and yet somehow remembered. Names moved at the edge of memory. Oaths. Fire. A battlefield under a black sky. A weapon in his hands that struck like judgment itself.
+Golden light rose beneath his skin in branching lines he did not recognize and somehow remembered at once. Names flickered at the edge of thought. Oaths. Fire. A battlefield beneath a black sky. A weapon in his grip that fell like judgment.
 
 Cataclysm.
 
-The word hit him like thunder from inside his own bones.
+The word struck him from inside his bones.
 
-The light deepened. Not bright, but absolute. The shape of old armor flickered around him in fragments: shoulder, bracer, breast, gone, then back again. A shield outline formed and broke. A blade silhouette burned across his right hand before dissolving into pure force.
+The light deepened - not bright, but absolute. Fragments of old armor flickered into shape and out again: shoulder, bracer, breastplate. A shield's outline formed and dissolved. A blade silhouette burned over his right hand before turning into pure force.
 
 He stood.
 

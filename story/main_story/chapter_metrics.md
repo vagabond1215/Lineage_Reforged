@@ -1,6 +1,6 @@
 ﻿# Chapter Metrics
 
-Generated: 2026-03-09 20:35
+Generated: 2026-03-10 17:44
 
 Purpose: Track chapter size so we can spot unusually short/long chapters while still allowing intentional variation.
 
@@ -12,15 +12,17 @@ Purpose: Track chapter size so we can spot unusually short/long chapters while s
 ## Active Chapters
 | Chapter | Paragraphs | Words | Size Band | Watch |
 | --- | ---: | ---: | --- | --- |
-| Chapter 1 | 110 | 1934 | Standard | Within expected spread |
-| Chapter 2 | 73 | 1341 | Standard | Within expected spread |
-| Chapter 3 | 137 | 2596 | Extended | Long watch |
-| Chapter 4 | 75 | 1329 | Standard | Within expected spread |
-| Chapter 5 | 98 | 1456 | Standard | Within expected spread |
+| Chapter 1 | 140 | 1594 | Standard | Within expected spread |
+| Chapter 2 | 58 | 913 | Lean | Within expected spread |
+| Chapter 3 | 63 | 1089 | Lean | Within expected spread |
+| Chapter 4 | 77 | 1282 | Lean | Within expected spread |
+| Chapter 5 | 100 | 1326 | Standard | Within expected spread |
+| Chapter 6 | 94 | 1180 | Lean | Within expected spread |
+| Chapter 7 | 136 | 1531 | Standard | Within expected spread |
 
 Active chapter averages:
-- Average paragraphs: 99
-- Average words: 1731
+- Average paragraphs: 95
+- Average words: 1274
 
 ## Archived Files
 | Chapter | Status |

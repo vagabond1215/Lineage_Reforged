@@ -1,11 +1,46 @@
-{
-  "records": [
-    {
-      "id": "econ.default_supply_demand",
-      "priceFloor": 0.4,
-      "priceCeiling": 2.2,
-      "volatility": 0.12,
-      "elasticity": 0.65
-    }
-  ]
+﻿{
+    "records":  [
+                    {
+                        "id":  "econ.default_supply_demand",
+                        "priceFloor":  0.4,
+                        "priceCeiling":  2.2,
+                        "volatility":  0.12,
+                        "elasticity":  0.65
+                    },
+                    {
+                        "id":  "econ.staple_goods",
+                        "priceFloor":  0.3,
+                        "priceCeiling":  1.6,
+                        "volatility":  0.08,
+                        "elasticity":  0.82
+                    },
+                    {
+                        "id":  "econ.refined_materials",
+                        "priceFloor":  0.6,
+                        "priceCeiling":  2.8,
+                        "volatility":  0.14,
+                        "elasticity":  0.56
+                    },
+                    {
+                        "id":  "econ.crafted_equipment",
+                        "priceFloor":  0.9,
+                        "priceCeiling":  3.6,
+                        "volatility":  0.18,
+                        "elasticity":  0.44
+                    },
+                    {
+                        "id":  "econ.luxury_arcane",
+                        "priceFloor":  1.2,
+                        "priceCeiling":  5.2,
+                        "volatility":  0.23,
+                        "elasticity":  0.31
+                    },
+                    {
+                        "id":  "econ.strategic_wartime",
+                        "priceFloor":  0.8,
+                        "priceCeiling":  4.4,
+                        "volatility":  0.26,
+                        "elasticity":  0.36
+                    }
+                ]
 }

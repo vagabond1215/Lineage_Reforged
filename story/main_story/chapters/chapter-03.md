@@ -1,275 +1,127 @@
-﻿# Chapter 3
+# Chapter 3
 
-The coast began to change on the fourth day. Green hills gave way to darker stone as the shoreline rose into jagged cliffs that plunged directly into the sea. The water shifted to a pale turquoise where hidden reefs spread beneath the surface like the bones of some ancient creature. The ship slowed.
+By the fourth day, the coast had changed.
 
-A sailor climbed the rigging with a long brass spyglass, calling down careful instructions to the helmsman.
+Green hills gave way to dark, jagged cliffs, and the sea shifted to pale turquoise where reefs spread beneath the surface like submerged bone. The Silver Wake slowed as a sailor climbed the rigging with a brass spyglass and called measured corrections to the helm.
 
-“Reefs ahead! Hold the western channel!”
+"Reef line ahead. Hold western channel."
 
-Arienne stepped beside Sehir at the railing.
+Arienne stepped beside Sehir at the rail. "This is why calm seas matter here."
 
-“This is where the calm seas matter,” she said quietly.
+Below them, water boiled around sharp coral ridges and broken stone pillars hidden just beneath the surface. One bad turn would rip the hull open before anyone could shout a warning.
 
-Below them the water churned around sharp coral ridges and broken stone pillars that lurked just beneath the surface. Waves shattered against them in bursts of white foam. A careless ship would not last long here.
+The crew threaded the ship through a winding lane marked by iron posts hammered into stone generations earlier. Then the valley mouth revealed itself.
 
-The Silver Wake moved cautiously through the winding path between the reefs, guided by markers hammered into the stone by sailors long ago. Then the valley appeared.
+Mountains parted just enough for the ocean to force its way inland between towering walls of rock. At the western edge, carved into cliff and bedrock, stood Westfall Fortress.
 
-The mountains parted just enough to form a narrow opening where the ocean forced its way inland between towering cliffs. At the western mouth of the valley, carved directly into the rock itself, stood the fortress. It rose from the cliff face like a dark crown.
+It rose over the inlet like a dark crown: layered walls, hard towers, and harbor chains thick enough to halt any vessel that approached without leave.
 
-Thick stone walls followed the edge of the precipice, their towers rising above the crashing surf far below. Heavy iron chains stretched across the narrow harbor inlet, forming a barrier that could be raised or lowered to control entry.
+From the sea, it looked less like a stronghold and more like a sentence.
 
-From the sea it looked less like a fortress and more like a prison carved into the bones of the mountain. Which, Sehir knew, it effectively was.
+Storm clouds gathered above the peaks and cast most of the fortress into shadow. Aldren watched in uneasy silence before muttering, "Imposing feels too gentle a word."
 
-The kingdom’s western prison complex had been built there generations ago for a simple reason. No one escaped. The cliffs plunged hundreds of feet straight into the churning sea. The only land route followed the valley road eastward through dense forests and steep terrain that few travelers willingly crossed.
+"You're not wrong," Arienne said.
 
-Storm clouds gathered above the mountains as the ship approached, casting the fortress into deep shadow. Professor Aldren studied it with uneasy fascination.
+A horn sounded from the battlements. Moments later, the harbor chains lowered with a grinding metallic groan, and the Silver Wake glided into the protected inlet beneath the walls.
 
-“I had not realized it was quite so… imposing.”
+Soldiers were already waiting when the gangplank dropped.
 
-“That’s one way to describe it,” Arienne said softly.
+Their armor bore the royal crest, polished but practical, and their formation opened as Sehir stepped onto the pier. A tall woman in a commander's cloak came forward and bowed with crisp precision.
 
-Sehir said nothing. High along the walls, figures moved between the battlements—soldiers watching the approaching vessel. A horn sounded from one of the towers, its low echo rolling across the water. Slowly, the massive harbor chains began to lower. The Silver Wake glided toward the narrow inlet beneath the looming stone walls.
+"Advisor Sehir. Westfall welcomes you."
 
-Above them the fortress watched in silence, its dark windows staring out across the restless sea like the eyes of something ancient and patient. Beyond those walls lay the long valley road.
+Sehir returned the gesture. "Commander Halvren, I presume."
 
-And far beyond that road waited the abandoned mine where the mountains themselves would soon awaken. The harbor chains clanked heavily as the Silver Wake passed beneath them.
+"You presume correctly." A faint smile touched her mouth. "Your quarters are prepared. So are your records."
 
-From the deck, the fortress had seemed severe and unwelcoming—an immense wall of dark stone rising directly from the cliff face, its towers crowned with battlements and narrow slits for archers. Up close, the scale of it became even more impressive. Massive iron-bound gates guarded the harbor entrance where a narrow stone pier stretched into the sheltered inlet carved between the cliffs.
+Aldren blinked. "Our records?"
 
-Soldiers waited as the gangplank dropped. Their armor bore the crest of the crown, polished but practical, and their expressions were attentive without being hostile. One of them—a tall woman with a commander’s cloak—stepped forward as Sehir and the others descended.
+"The advisor's inspection authority extends to this entire complex," Halvren said, matter-of-fact. "Fortress and prison both."
 
-“Advisor Sehir,” she said with a respectful nod. “Welcome to Westfall Fortress.”
+She guided them through the inner gate, and Westfall changed completely.
 
-Sehir returned the greeting.
+The seaward walls had felt severe and unforgiving. Inside, the fortress opened into a terraced settlement built into the mountain's inland slope: workshops, kitchens, storehouses, homes, gardens, and narrow stone streets linked by steep stairways.
 
-“You have the advantage of me, commander.”
+Guards moved along patrol routes, but so did bakers, smiths, fisher crews, children, and traders managing daily stock. Lantern poles lined the paths. Flower boxes hung from windows. Someone had painted shutters in deep red and sea green despite the salt wind.
 
-“Commander Halvren,” she replied. “We received word of your inspection two days ago. Your quarters have been prepared.”
+Aldren turned slowly, astonished. "This is a town."
 
-Professor Aldren stared upward at the towering stone above them.
+"A necessary one," Halvren replied. "When storms lock the harbor, we stand on our own for weeks. We grow what we can, fish what we can, and ration what we must."
 
-“It’s… considerably larger than I imagined.”
+She glanced toward Sehir. "You'll find your requisition records accurate. You usually do."
 
-Halvren allowed herself a faint smile.
+He inclined his head. "And if they aren't, I'll tell you directly."
 
-“It usually is.”
+"I would expect nothing less."
 
-She gestured toward the great inner gate.
+Their quarters overlooked the western cliffs: modest, clean, and warmer than Aldren had expected. A writing desk sat by the window with parchment already laid out. A fireplace was stacked and ready. A bell rope hung near the door for meal service.
 
-“Come. The outer walls make a harsh first impression, but the inside is somewhat more… livable.”
+Arienne looked out across crashing water far below and said, "I've slept in worse places."
 
-The difference became apparent the moment they passed through the inner gate. The oppressive shadow of the seaward walls gave way to a surprisingly open interior built along the sloping rock of the inland side. The fortress was less a single structure and more a layered stone town built inside the protective ring of its walls.
+"Most people have," Halvren said. "We try not to advertise this one."
 
-Terraced streets climbed upward between sturdy buildings of timber and stone. Lantern posts lined the walkways, and narrow staircases connected the different levels carved into the cliffside. People moved everywhere.
+Sehir set down their packs. "Let's begin the prison inspection."
 
-Guards in half-armor passed patrol routes along the streets, but they were only part of the population. Blacksmiths hammered iron in open workshops. Tailors and leatherworkers displayed their goods along covered stalls. The smell of baking bread drifted from a large communal kitchen near the central courtyard.
+Halvren's posture shifted back to professional formality. "Warden Corvin is waiting below."
 
-Children chased one another along the steps while fishermen hauled nets toward the harbor below. Professor Aldren turned slowly, astonished.
+The prison entrance lay within the central keep.
 
-“It’s a city.”
+A broad stair descended into stone and packed earth until fortress noise faded behind them and only lantern hiss remained. At the base of the final flight, an older man with iron-gray hair waited beside a reinforced gate, key ring heavy at his belt.
 
-“A small one,” Commander Halvren agreed. “Roughly eight hundred residents when fully staffed.”
+"Advisor Sehir," he said, bowing. "Warden Corvin."
 
-She gestured toward the terraces along the inner wall.
+Sehir nodded. "Warden."
 
-“This fortress must function year-round. Storms can isolate us for weeks during winter, and sea ice sometimes blocks the harbor entirely. We stockpile food and supplies from the mainland every autumn.”
+Corvin unlocked the gate with a thick metallic click and led them inside.
 
-Sehir followed her gaze. Carved terraces lined the inland slope where the fortress met the mountain. Small fields and gardens had been carefully cultivated there despite the harsh terrain. Rows of hardy vegetables grew in neat beds while goats and chickens wandered within fenced enclosures.
+The upper wards were orderly and built for control, not spectacle: reinforced bars, narrow corridors, drainage channels, and ventilation slits cut through to the sea cliffs. Salt air moved through the passages in a cold steady draft.
 
-“Farmers maintain what crops the land allows,” Halvren continued. “Fishing crews provide most of our meat outside the winter months. The craftsmen and laborers keep the fortress operating.”
+Aldren paused by one slit, impressed. "Good airflow without creating escape routes."
 
-Arienne nodded thoughtfully.
+"Escape by window would mean a cliff drop into winter water," Corvin said. "No one survives that twice."
 
-“A self-contained community.”
+Arienne's voice was mild. "Has anyone tried once?"
 
-“Exactly.”
+Corvin gave her a dry look. "Enough that we stopped betting on attempts."
 
-They climbed several levels of stone steps as Halvren guided them through the interior. The fortress felt far more welcoming than its grim exterior suggested. Lanterns hung along covered walkways, and the buildings themselves had been constructed with surprising care—wooden balconies, painted shutters, even flower boxes along the windows.
+They descended to the common levels.
 
-Eventually they reached a quiet corridor overlooking the sea. Halvren opened a heavy oak door.
+The space opened into a large chamber where inmates were separated by conduct class under visible guard rotation. A hand-pump brought groundwater into wash basins. Work details cleaned cell blocks, hauled refuse, and maintained sanitation routes that fed compost systems for the fortress terraces above.
 
-“These will be your quarters during your stay.”
+"Efficient," Sehir said, watching a maintenance line pass with sealed waste barrels.
 
-The room beyond was modest but comfortable. A wide window faced the ocean cliffs, allowing sunlight and fresh air to fill the chamber. A sturdy stone fireplace sat opposite the door with neatly stacked firewood beside it.
+"Efficiency keeps winter from becoming famine," Corvin replied.
 
-Two beds stood along one wall while a comfortable sofa and a pair of reading chairs surrounded a low table near the hearth. A writing desk rested beneath the window, complete with ink and parchment prepared for use. Professor Aldren stepped inside and turned slowly.
+Cooperative inmates were housed apart from violent repeat offenders. Isolation blocks were deeper, quieter, and far more controlled. There, steel doors replaced bars, and movement required escort authorization.
 
-“This is far more comfortable than I expected.”
+At the end of one corridor, Corvin stopped at a heavy iron door and produced a second ring of keys.
 
-Halvren nodded.
+"Maximum security," he said. "Only cleared personnel beyond this point."
 
-“We try to make guests welcome.”
+Halvren and the others remained outside. Sehir followed Corvin into the inner hall.
 
-She pointed toward a small bell rope mounted beside the desk.
+The difference was immediate.
 
-“Meals are served in the main cafeteria twice daily. If you prefer privacy, a porter can deliver food here at a scheduled time for a small fee.”
+No open bars. No conversations. No windows. Only solid doors set into stone, each with a narrow inspection slit and a tray port. A single guard stood midway down the corridor with rigid attention.
 
-Arienne walked to the window and looked out across the ocean. Far below, waves crashed against the cliff face in bursts of white foam.
+Sehir stopped at one of the doors. "Who is housed here?"
 
-“Not a terrible view,” she said lightly.
+"People the crown cannot release," Corvin said, voice low. "And cannot publicly execute."
 
-Halvren allowed a hint of pride to show.
+Sehir leaned to the slit and looked inside.
 
-“The sea tends to improve most accommodations.”
+A woman sat against the far wall in dim lantern light. Her hair hung loose and unkempt; her clothing had long since deteriorated into stained, torn fabric. Dirt marked the floor around her, and yet her posture was not broken.
 
-Sehir set their packs down beside the desk.
+Even in that state, she held herself with the remnants of rank.
 
-“And the prison?”
+As if she had once belonged near thrones, not stone.
 
-Halvren’s expression shifted slightly—professional again.
+"Who is she?" Sehir asked.
 
-“Below ground.”
+Corvin hesitated. "Important enough that quiet confinement became the least destructive option."
 
-She moved toward the door.
+Inside the cell, the woman's eyes lifted.
 
-“If you wish, I can begin the inspection now.”
+She met Sehir's gaze through the slit with sharp, unsettling clarity.
 
-The entrance to the prison lay within the central keep. A broad stone stairwell descended deep into the bedrock beneath the fortress. The air grew cooler as they followed Commander Halvren downward, the sound of the bustling fortress slowly fading behind them with each step.
-
-At the base of the stair stood another figure waiting beside a heavy iron gate set into the stone. The man was older, his hair iron-gray and his posture rigid with long habit. A ring of thick keys hung from his belt, and the guards stationed nearby gave him the same quiet respect they had shown Halvren above.
-
-“Advisor Sehir,” Commander Halvren said, gesturing toward him, “this is Warden Corvin, who oversees the prison levels beneath the fortress.”
-
-Corvin inclined his head in a brief but respectful nod.
-
-“Welcome to the lower wards, Advisor.”
-
-Halvren folded her hands behind her back.
-
-“My responsibilities end with the fortress above. From here on, the inspection is under the warden’s authority.”
-
-Sehir returned the nod.
-
-“Then lead the way, Warden.”
-
-Corvin stepped forward, unlocking the iron gate with a heavy metallic click as it swung open into the dimly lit corridors beyond.
-
-The prison had been carved directly through stone and packed earth, forming long hallways lined with heavy iron-barred cells. The architecture was practical rather than cruel—solid stone floors, reinforced doors, and narrow ventilation shafts cut toward the surface. Every few cells, small barred windows opened to the outside cliffs.
-
-They were little more than narrow slits in the stone—far too small for a person to pass through—but they allowed fresh ocean air to circulate through the lower levels. Professor Aldren examined one curiously.
-
-“Quite effective,” he said quietly. “Ventilation without compromising security.”
-
-Halvren nodded.
-
-“Escape from here would require climbing a sheer cliff face hundreds of feet above the sea.”
-
-Arienne studied the bars of a nearby cell.
-
-“And no one has tried?”
-
-“Several,” Halvren said evenly.
-
-“And?”
-
-“They stopped trying.”
-
-The corridor continued deeper into the fortress stone. From somewhere farther below came the distant echo of waves crashing against the cliff face outside.
-
-Sehir paused for a moment, listening to the soothing repetition of waves crashing against the cliff face beyond the stone. The sound echoed faintly through the ventilation slits, steady and distant, like the slow breathing of the sea itself. When he realized the others had already continued down the corridor without him, he gave a small shake of his head and quickened his pace to follow after them.
-
-The lower prison corridors eventually widened.
-
-What had begun as narrow hallways carved through stone opened into a broad subterranean chamber illuminated by rows of lanterns fixed to iron brackets along the walls. The ceiling arched high above them where the rock had been carefully cut away, creating enough space for dozens of prisoners to gather without crowding.
-
-“This is the common yard,” Warden Corvin explained as he joined their group. The man was older than most soldiers in the fortress, his hair iron-gray and his posture rigid with long habit.
-
-Sehir observed the chamber carefully. The prison yard was surprisingly orderly. A large hand-operated water pump stood near the center of the plaza, surrounded by wooden buckets and wash basins. Several prisoners took turns working the handle, drawing up fresh groundwater that splashed into waiting tubs.
-
-“Each block is responsible for maintaining its own cells,” the warden continued. “Buckets of water are issued every morning. Filth is cleaned, bedding aired, and waste removed before inspection.”
-
-Nearby, a pair of prisoners carried sloshing buckets down a sloped corridor leading away from the chamber.
-
-“That passage leads to the sanitation vaults,” Corvin said. “Common restrooms and the septic pit.”
-
-Professor Aldren looked mildly uncomfortable.
-
-“The waste is processed and transported to the agricultural terraces above,” the warden added matter-of-factly. “Mixed with ash and compost. The farmers insist it produces excellent fertilizer.”
-
-Sehir nodded thoughtfully.
-
-“A practical use of resources.”
-
-“It keeps the terraces productive through winter,” Corvin said.
-
-Arienne leaned lightly against the stone railing overlooking the chamber below.
-
-“And the prisoners?”
-
-Corvin gestured toward the scattered figures in the yard.
-
-“We separate them by behavior and risk.”
-
-Several prisoners in simple gray tunics moved about the plaza under the watchful eyes of guards stationed along the surrounding walkway. They spoke quietly among themselves as they worked, hauling water or sweeping the stone floor.
-
-“Those men serve long sentences but have shown little violence,” the warden explained. “Low aggression. Reliable enough to handle labor assignments.”
-
-Sehir watched one man carefully scrubbing the floor near the pump.
-
-“Sanitation, maintenance, hauling waste,” Corvin continued. “Unpleasant jobs, but someone must do them.”
-
-A second section of the chamber held prisoners gathered at long tables where they ate or played quiet games with carved bone tokens.
-
-“These are cooperative inmates,” the warden said. “Nonviolent offenders or those who have demonstrated good conduct. They may mingle within their class under guard supervision.”
-
-A patrol of soldiers walked steadily along the surrounding walkway above them, eyes never leaving the prisoners below.
-
-“And the rest?” Arienne asked.
-
-Corvin pointed toward a corridor branching away from the plaza.
-
-“Isolation blocks.”
-
-They followed him down another stone passage. Here the cells were smaller and the doors thicker. Most prisoners remained behind iron bars, their movements restricted to narrow spaces barely larger than a sleeping mat.
-
-“These inmates are not permitted outside their cells except under heavy escort,” the warden said. “Violent offenders. Repeat escape attempts. Individuals who cannot be trusted among the general population.”
-
-The air here felt heavier, quieter. Lanterns burned lower along the walls, casting long shadows through the bars. Finally Corvin stopped before a heavy iron door set into the stone.
-
-“This section requires special authorization.”
-
-He produced a ring of keys and unlocked the door with a series of thick metallic clicks. Arienne and Professor Aldren remained behind as it opened.
-
-“Maximum security,” Corvin said calmly. “Only the advisor and myself beyond this point.”
-
-Sehir stepped inside. The corridor beyond was narrower and far more heavily reinforced. Thick steel doors lined both sides of the passage, each set directly into the rock itself. Unlike the other cells, these had no bars.
-
-No windows.
-
-Only a narrow slot near the center of each door where food trays could be passed through. A single guard stood at attention halfway down the hall, spear resting against the wall beside him. He saluted as the two men approached.
-
-“No disturbances, Warden.”
-
-“Good.”
-
-The silence here felt absolute. Sehir stopped beside one of the doors.
-
-“Who is held here?”
-
-“Individuals the crown cannot release,” Corvin replied carefully. “Yet cannot publicly execute.”
-
-Sehir studied the solid steel door for a moment before leaning slightly toward the inspection slit. He looked inside. The cell beyond was dimly lit by a small lantern fixed high in the corner. Its light revealed a figure sitting against the far wall.
-
-A woman.
-
-Her dark hair hung loose and tangled around her shoulders, streaked with dirt and neglect. Her clothing—once fine, perhaps—had long since been reduced to little more than torn fabric clinging to her frame. Filth marked her skin and the stone floor around her.
-
-And yet…
-
-Something about her presence felt strangely out of place. Even through the grime and disarray, there was a faint sense of refinement in the way she held herself. Her posture was not broken like the others they had seen. There was still a trace of poise.
-
-Of dignity.
-
-Of someone who had once moved among power and influence. Sehir frowned slightly.
-
-“Who is she?”
-
-Corvin’s voice lowered.
-
-“Someone important enough that killing her would cause problems.”
-
-Sehir continued watching through the narrow slit. For a moment the woman did not move. Then slowly, almost lazily, her eyes lifted. They met his through the darkness of the inspection slot. And despite the filth and the raggedness of her appearance… There was something unmistakably sharp in her gaze.
-
-Something intelligent.
-
-Something very much awake.
+Awake. Calculating. Waiting.

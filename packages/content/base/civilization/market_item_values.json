@@ -1,0 +1,1154 @@
+﻿{
+    "records":  [
+                    {
+                        "id":  "market.item.ale_cask",
+                        "itemKey":  "ale_cask",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.arrow_bundle",
+                        "itemKey":  "arrow_bundle",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.ash",
+                        "itemKey":  "ash",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.bark",
+                        "itemKey":  "bark",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.basket_frame",
+                        "itemKey":  "basket_frame",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.beeswax",
+                        "itemKey":  "beeswax",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.blood",
+                        "itemKey":  "blood",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.bolt_bundle",
+                        "itemKey":  "bolt_bundle",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.bone_raw",
+                        "itemKey":  "bone_raw",
+                        "source":  "civilization",
+                        "category":  "misc",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.bran",
+                        "itemKey":  "bran",
+                        "source":  "civilization",
+                        "category":  "misc",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.bread_loaf",
+                        "itemKey":  "bread_loaf",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.brigandine_plate",
+                        "itemKey":  "brigandine_plate",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  96,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.butchered_meat",
+                        "itemKey":  "butchered_meat",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.candle",
+                        "itemKey":  "candle",
+                        "source":  "civilization",
+                        "category":  "misc",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.cask",
+                        "itemKey":  "cask",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.ceramic_ware",
+                        "itemKey":  "ceramic_ware",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.charcoal",
+                        "itemKey":  "charcoal",
+                        "source":  "civilization",
+                        "category":  "fuel",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.clay_raw",
+                        "itemKey":  "clay_raw",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.clay_vessel",
+                        "itemKey":  "clay_vessel",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.cloth_scrap",
+                        "itemKey":  "cloth_scrap",
+                        "source":  "civilization",
+                        "category":  "misc",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.copper_ingot",
+                        "itemKey":  "copper_ingot",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.copper_ore",
+                        "itemKey":  "copper_ore",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.crawfish_raw",
+                        "itemKey":  "crawfish_raw",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.crop_bundle",
+                        "itemKey":  "crop_bundle",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.cullet",
+                        "itemKey":  "cullet",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.cured_leather",
+                        "itemKey":  "cured_leather",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.cut_stone",
+                        "itemKey":  "cut_stone",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.drippings",
+                        "itemKey":  "drippings",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.dye_residue",
+                        "itemKey":  "dye_residue",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.dyed_cloth",
+                        "itemKey":  "dyed_cloth",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_bison",
+                        "itemKey":  "fauna.bison",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_boar",
+                        "itemKey":  "fauna.boar",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  23,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_deer",
+                        "itemKey":  "fauna.deer",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_wolf",
+                        "itemKey":  "fauna.wolf",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  27,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fired_brick",
+                        "itemKey":  "fired_brick",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.firewood",
+                        "itemKey":  "firewood",
+                        "source":  "civilization",
+                        "category":  "fuel",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fish_raw",
+                        "itemKey":  "fish_raw",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flax_bundle",
+                        "itemKey":  "flax_bundle",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flax_seed",
+                        "itemKey":  "flax_seed",
+                        "source":  "civilization",
+                        "category":  "misc",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_blackberry",
+                        "itemKey":  "flora.blackberry",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_blueberry",
+                        "itemKey":  "flora.blueberry",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_flax",
+                        "itemKey":  "flora.flax",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_ironwood",
+                        "itemKey":  "flora.ironwood",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_raspberry",
+                        "itemKey":  "flora.raspberry",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flour",
+                        "itemKey":  "flour",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flower_bloom",
+                        "itemKey":  "flower_bloom",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.forge_scale",
+                        "itemKey":  "forge_scale",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fuel_bundle",
+                        "itemKey":  "fuel_bundle",
+                        "source":  "civilization",
+                        "category":  "fuel",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.game_meat_raw",
+                        "itemKey":  "game_meat_raw",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.glass_sheet",
+                        "itemKey":  "glass_sheet",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.glass_vial",
+                        "itemKey":  "glass_vial",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  15,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.grain_bundle",
+                        "itemKey":  "grain_bundle",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.gravel",
+                        "itemKey":  "gravel",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.handcart",
+                        "itemKey":  "handcart",
+                        "source":  "civilization",
+                        "category":  "trade_good",
+                        "baseValue":  56,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.hardtack",
+                        "itemKey":  "hardtack",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.healing_tonic",
+                        "itemKey":  "healing_tonic",
+                        "source":  "civilization",
+                        "category":  "alchemy",
+                        "baseValue":  58,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.herbs_raw",
+                        "itemKey":  "herbs_raw",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.hide_raw",
+                        "itemKey":  "hide_raw",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.honeycomb",
+                        "itemKey":  "honeycomb",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.iron_blade",
+                        "itemKey":  "iron_blade",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  64,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.iron_ingot",
+                        "itemKey":  "iron_ingot",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.iron_ore",
+                        "itemKey":  "iron_ore",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.kiln_shard",
+                        "itemKey":  "kiln_shard",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.kindling",
+                        "itemKey":  "kindling",
+                        "source":  "civilization",
+                        "category":  "fuel",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.lanolin",
+                        "itemKey":  "lanolin",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.linen_thread",
+                        "itemKey":  "linen_thread",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.log",
+                        "itemKey":  "log",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mail_coif",
+                        "itemKey":  "mail_coif",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  72,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.marsh_fiber",
+                        "itemKey":  "marsh_fiber",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mash_spent",
+                        "itemKey":  "mash_spent",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.medicinal_root",
+                        "itemKey":  "medicinal_root",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.metal_scrap",
+                        "itemKey":  "metal_scrap",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.milk_raw",
+                        "itemKey":  "milk_raw",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_coal",
+                        "itemKey":  "mineral.coal",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_copper_ore",
+                        "itemKey":  "mineral.copper_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_iron_ore",
+                        "itemKey":  "mineral.iron_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_quartz",
+                        "itemKey":  "mineral.quartz",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_salt",
+                        "itemKey":  "mineral.salt",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_brine",
+                        "itemKey":  "mineral_brine",
+                        "source":  "civilization",
+                        "category":  "fuel",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mushroom_cap",
+                        "itemKey":  "mushroom_cap",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.offcut_lumber",
+                        "itemKey":  "offcut_lumber",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.padded_gambeson",
+                        "itemKey":  "padded_gambeson",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  61,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.peat_block",
+                        "itemKey":  "peat_block",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.pig_iron",
+                        "itemKey":  "pig_iron",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.pitch_seal",
+                        "itemKey":  "pitch_seal",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.plank",
+                        "itemKey":  "plank",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.quicklime",
+                        "itemKey":  "quicklime",
+                        "source":  "civilization",
+                        "category":  "fuel",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.reed_mat",
+                        "itemKey":  "reed_mat",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.resin",
+                        "itemKey":  "resin",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.river_reed",
+                        "itemKey":  "river_reed",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.roof_tile",
+                        "itemKey":  "roof_tile",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.salt_crystal",
+                        "itemKey":  "salt_crystal",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.sawdust",
+                        "itemKey":  "sawdust",
+                        "source":  "civilization",
+                        "category":  "misc",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.silt",
+                        "itemKey":  "silt",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.slag",
+                        "itemKey":  "slag",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.smoked_fish",
+                        "itemKey":  "smoked_fish",
+                        "source":  "civilization",
+                        "category":  "misc",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.smoked_meat",
+                        "itemKey":  "smoked_meat",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.snail_shell",
+                        "itemKey":  "snail_shell",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.spent_reagent",
+                        "itemKey":  "spent_reagent",
+                        "source":  "civilization",
+                        "category":  "byproduct",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.stimulant_draught",
+                        "itemKey":  "stimulant_draught",
+                        "source":  "civilization",
+                        "category":  "alchemy",
+                        "baseValue":  43,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.stone_block",
+                        "itemKey":  "stone_block",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.stone_rubble",
+                        "itemKey":  "stone_rubble",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.stone_tile",
+                        "itemKey":  "stone_tile",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.straw_bundle",
+                        "itemKey":  "straw_bundle",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.tallow_scrap",
+                        "itemKey":  "tallow_scrap",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.thatch_bundle",
+                        "itemKey":  "thatch_bundle",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.timber_beam",
+                        "itemKey":  "timber_beam",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.travel_cloak",
+                        "itemKey":  "travel_cloak",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  49,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.wagon_frame",
+                        "itemKey":  "wagon_frame",
+                        "source":  "civilization",
+                        "category":  "trade_good",
+                        "baseValue":  82,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.war_spear",
+                        "itemKey":  "war_spear",
+                        "source":  "civilization",
+                        "category":  "equipment",
+                        "baseValue":  39,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.wax_seal",
+                        "itemKey":  "wax_seal",
+                        "source":  "civilization",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.wild_berry",
+                        "itemKey":  "wild_berry",
+                        "source":  "civilization",
+                        "category":  "food",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.wood_tar",
+                        "itemKey":  "wood_tar",
+                        "source":  "civilization",
+                        "category":  "fuel",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.wool_cloth",
+                        "itemKey":  "wool_cloth",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.wool_fleece",
+                        "itemKey":  "wool_fleece",
+                        "source":  "civilization",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    }
+                ]
+}

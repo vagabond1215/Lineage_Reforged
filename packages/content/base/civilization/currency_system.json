@@ -1,0 +1,34 @@
+﻿{
+    "records":  [
+                    {
+                        "id":  "currency.crown_standard",
+                        "name":  "Crown Standard",
+                        "baseUnit":  "copper_penny",
+                        "displaySymbol":  "cp",
+                        "denominations":  [
+                                              {
+                                                  "unit":  "copper_penny",
+                                                  "label":  "Copper Penny",
+                                                  "ratioToBase":  1
+                                              },
+                                              {
+                                                  "unit":  "silver_shard",
+                                                  "label":  "Silver Shard",
+                                                  "ratioToBase":  12
+                                              },
+                                              {
+                                                  "unit":  "gold_crown",
+                                                  "label":  "Gold Crown",
+                                                  "ratioToBase":  240
+                                              },
+                                              {
+                                                  "unit":  "platinum_solar",
+                                                  "label":  "Platinum Solar",
+                                                  "ratioToBase":  2400
+                                              }
+                                          ],
+                        "defaultRounding":  "nearest_copper",
+                        "valuationScale":  "All base values in economy content use copper_penny units."
+                    }
+                ]
+}

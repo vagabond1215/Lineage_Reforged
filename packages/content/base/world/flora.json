@@ -1,69 +1,89 @@
-{
-  "records": [
-    {
-      "id": "flora.blackberry",
-      "slug": "blackberry",
-      "name": "Blackberry",
-      "type": "shrub",
-      "lifecycle": "perennial",
-      "habitatIds": ["habitat.coastal.tidal_flat"],
-      "harvest": {
-        "active": true,
-        "passive": true,
-        "yieldCap": 8
-      }
-    },
-    {
-      "id": "flora.blueberry",
-      "slug": "blueberry",
-      "name": "Blueberry",
-      "type": "shrub",
-      "lifecycle": "perennial",
-      "habitatIds": ["habitat.coastal.tidal_flat"],
-      "harvest": {
-        "active": true,
-        "passive": true,
-        "yieldCap": 7
-      }
-    },
-    {
-      "id": "flora.raspberry",
-      "slug": "raspberry",
-      "name": "Raspberry",
-      "type": "shrub",
-      "lifecycle": "perennial",
-      "habitatIds": ["habitat.coastal.tidal_flat"],
-      "harvest": {
-        "active": true,
-        "passive": true,
-        "yieldCap": 7
-      }
-    },
-    {
-      "id": "flora.ironwood",
-      "slug": "ironwood",
-      "name": "Ironwood",
-      "type": "tree",
-      "lifecycle": "perennial",
-      "habitatIds": ["habitat.coastal.tidal_flat"],
-      "harvest": {
-        "active": true,
-        "passive": false,
-        "yieldCap": 20
-      }
-    },
-    {
-      "id": "flora.flax",
-      "slug": "flax",
-      "name": "Flax",
-      "type": "herb",
-      "lifecycle": "annual",
-      "habitatIds": ["habitat.coastal.tidal_flat"],
-      "harvest": {
-        "active": true,
-        "passive": false,
-        "yieldCap": 5
-      }
-    }
-  ]
+﻿{
+    "records":  [
+                    {
+                        "id":  "flora.blackberry",
+                        "slug":  "blackberry",
+                        "name":  "Blackberry",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  8
+                                    },
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.blueberry",
+                        "slug":  "blueberry",
+                        "name":  "Blueberry",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.raspberry",
+                        "slug":  "raspberry",
+                        "name":  "Raspberry",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.ironwood",
+                        "slug":  "ironwood",
+                        "name":  "Ironwood",
+                        "type":  "tree",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  20
+                                    },
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.flax",
+                        "slug":  "flax",
+                        "name":  "Flax",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    }
+                ]
 }

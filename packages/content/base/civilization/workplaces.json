@@ -1,20 +1,618 @@
-{
-  "records": [
-    {
-      "id": "workplace.sawmill",
-      "name": "Sawmill",
-      "category": "processing",
-      "inputTags": ["log"],
-      "outputTags": ["plank"],
-      "laborSlots": 4
-    },
-    {
-      "id": "workplace.forester_lodge",
-      "name": "Forester Lodge",
-      "category": "agriculture",
-      "inputTags": ["seedling"],
-      "outputTags": ["log"],
-      "laborSlots": 3
-    }
-  ]
+﻿{
+    "records":  [
+                    {
+                        "id":  "workplace.alchemists_atelier",
+                        "name":  "Alchemist\u0027s Atelier",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "herbs_raw",
+                                          "honeycomb",
+                                          "glass_vial"
+                                      ],
+                        "outputTags":  [
+                                           "healing_tonic",
+                                           "stimulant_draught",
+                                           "spent_reagent"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.apiary_yard",
+                        "name":  "Apiary Yard",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "flowering_meadow"
+                                      ],
+                        "outputTags":  [
+                                           "honeycomb",
+                                           "beeswax"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.armorers_forge",
+                        "name":  "Armorer\u0027s Forge",
+                        "category":  "manufacturing",
+                        "inputTags":  [
+                                          "iron_ingot",
+                                          "cured_leather"
+                                      ],
+                        "outputTags":  [
+                                           "mail_coif",
+                                           "brigandine_plate",
+                                           "metal_scrap"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.bakehouse",
+                        "name":  "Bakehouse",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "flour"
+                                      ],
+                        "outputTags":  [
+                                           "bread_loaf",
+                                           "hardtack"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.bloomery_forge",
+                        "name":  "Bloomery Forge",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "pig_iron",
+                                          "charcoal"
+                                      ],
+                        "outputTags":  [
+                                           "iron_ingot",
+                                           "forge_scale"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.brewery",
+                        "name":  "Brewery",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "grain_bundle",
+                                          "honeycomb"
+                                      ],
+                        "outputTags":  [
+                                           "ale_cask",
+                                           "mash_spent"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.brickworks",
+                        "name":  "Brickworks",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "clay_raw",
+                                          "peat_block"
+                                      ],
+                        "outputTags":  [
+                                           "fired_brick",
+                                           "roof_tile",
+                                           "kiln_shard"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.butchers_block",
+                        "name":  "Butcher\u0027s Block",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "game_meat_raw",
+                                          "salt_crystal"
+                                      ],
+                        "outputTags":  [
+                                           "butchered_meat",
+                                           "bone_raw",
+                                           "blood"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.cartwright_yard",
+                        "name":  "Cartwright Yard",
+                        "category":  "manufacturing",
+                        "inputTags":  [
+                                          "timber_beam",
+                                          "iron_ingot"
+                                      ],
+                        "outputTags":  [
+                                           "handcart",
+                                           "wagon_frame",
+                                           "offcut_lumber"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.chandlery",
+                        "name":  "Chandlery",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "beeswax",
+                                          "tallow_scrap"
+                                      ],
+                        "outputTags":  [
+                                           "candle",
+                                           "wax_seal"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.charcoal_kiln",
+                        "name":  "Charcoal Kiln",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "log"
+                                      ],
+                        "outputTags":  [
+                                           "charcoal",
+                                           "wood_tar",
+                                           "ash"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.clay_pit",
+                        "name":  "Clay Pit",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "clay_bank"
+                                      ],
+                        "outputTags":  [
+                                           "clay_raw",
+                                           "silt"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.common_farmstead",
+                        "name":  "Common Farmstead",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "tilled_field",
+                                          "irrigation_water"
+                                      ],
+                        "outputTags":  [
+                                           "crop_bundle",
+                                           "herbs_raw",
+                                           "flower_bloom"
+                                       ],
+                        "laborSlots":  6
+                    },
+                    {
+                        "id":  "workplace.coopers_shop",
+                        "name":  "Cooper\u0027s Shop",
+                        "category":  "manufacturing",
+                        "inputTags":  [
+                                          "plank",
+                                          "wood_tar"
+                                      ],
+                        "outputTags":  [
+                                           "cask",
+                                           "pitch_seal"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.deep_shaft_mine",
+                        "name":  "Deep Shaft Mine",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "ore_vein"
+                                      ],
+                        "outputTags":  [
+                                           "iron_ore",
+                                           "copper_ore",
+                                           "stone_rubble"
+                                       ],
+                        "laborSlots":  7
+                    },
+                    {
+                        "id":  "workplace.dye_house",
+                        "name":  "Dye House",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "linen_thread",
+                                          "herbs_raw"
+                                      ],
+                        "outputTags":  [
+                                           "dyed_cloth",
+                                           "dye_residue"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.flax_stead",
+                        "name":  "Flax Stead",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "tilled_field"
+                                      ],
+                        "outputTags":  [
+                                           "flax_bundle",
+                                           "flax_seed"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.fletchers_shop",
+                        "name":  "Fletcher\u0027s Shop",
+                        "category":  "manufacturing",
+                        "inputTags":  [
+                                          "timber_beam",
+                                          "bone_raw"
+                                      ],
+                        "outputTags":  [
+                                           "arrow_bundle",
+                                           "bolt_bundle"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.foragers_camp",
+                        "name":  "Forager\u0027s Camp",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "woodland_edge"
+                                      ],
+                        "outputTags":  [
+                                           "wild_berry",
+                                           "mushroom_cap",
+                                           "herbs_raw",
+                                           "flower_bloom",
+                                           "bark"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.forester_lodge",
+                        "name":  "Forester Lodge",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "forest_access"
+                                      ],
+                        "outputTags":  [
+                                           "log",
+                                           "resin",
+                                           "bark",
+                                           "firewood"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.fuel_yard",
+                        "name":  "Fuel Yard",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "firewood",
+                                          "peat_block",
+                                          "charcoal"
+                                      ],
+                        "outputTags":  [
+                                           "fuel_bundle",
+                                           "kindling",
+                                           "ash"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.glassworks",
+                        "name":  "Glassworks",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "river_sand",
+                                          "ash"
+                                      ],
+                        "outputTags":  [
+                                           "glass_sheet",
+                                           "glass_vial",
+                                           "cullet"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.grain_farmstead",
+                        "name":  "Grain Farmstead",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "tilled_field"
+                                      ],
+                        "outputTags":  [
+                                           "grain_bundle",
+                                           "straw_bundle"
+                                       ],
+                        "laborSlots":  6
+                    },
+                    {
+                        "id":  "workplace.herbalist_garden",
+                        "name":  "Herbalist Garden",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "wild_growth"
+                                      ],
+                        "outputTags":  [
+                                           "herbs_raw",
+                                           "medicinal_root",
+                                           "flower_bloom"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.hunters_lodge",
+                        "name":  "Hunter\u0027s Lodge",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "hunting_ground"
+                                      ],
+                        "outputTags":  [
+                                           "game_meat_raw",
+                                           "hide_raw",
+                                           "bone_raw"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.lime_kiln",
+                        "name":  "Lime Kiln",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "stone_rubble",
+                                          "peat_block"
+                                      ],
+                        "outputTags":  [
+                                           "quicklime",
+                                           "ash"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.loomhouse",
+                        "name":  "Loomhouse",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "wool_fleece",
+                                          "flax_bundle"
+                                      ],
+                        "outputTags":  [
+                                           "wool_cloth",
+                                           "linen_thread",
+                                           "lanolin"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.masons_yard",
+                        "name":  "Mason\u0027s Yard",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "stone_block"
+                                      ],
+                        "outputTags":  [
+                                           "cut_stone",
+                                           "stone_tile",
+                                           "gravel"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.millhouse",
+                        "name":  "Millhouse",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "grain_bundle"
+                                      ],
+                        "outputTags":  [
+                                           "flour",
+                                           "bran"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.peat_cutters",
+                        "name":  "Peat Cutters",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "bog_access"
+                                      ],
+                        "outputTags":  [
+                                           "peat_block",
+                                           "marsh_fiber"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.pottery_kiln",
+                        "name":  "Pottery Kiln",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "clay_raw",
+                                          "ash"
+                                      ],
+                        "outputTags":  [
+                                           "clay_vessel",
+                                           "ceramic_ware",
+                                           "kiln_shard"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.quarry_camp",
+                        "name":  "Quarry Camp",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "exposed_rock"
+                                      ],
+                        "outputTags":  [
+                                           "stone_block",
+                                           "gravel"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.reed_weaving_shed",
+                        "name":  "Reed Weaving Shed",
+                        "category":  "manufacturing",
+                        "inputTags":  [
+                                          "river_reed",
+                                          "marsh_fiber"
+                                      ],
+                        "outputTags":  [
+                                           "reed_mat",
+                                           "basket_frame",
+                                           "thatch_bundle"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.river_fishery",
+                        "name":  "River Fishery",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "river_access"
+                                      ],
+                        "outputTags":  [
+                                           "fish_raw",
+                                           "river_reed",
+                                           "crawfish_raw"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.riverbank_gatherers",
+                        "name":  "Riverbank Gatherers",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "river_shallows"
+                                      ],
+                        "outputTags":  [
+                                           "crawfish_raw",
+                                           "river_reed",
+                                           "snail_shell"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.salt_pans",
+                        "name":  "Salt Pans",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "brine_source"
+                                      ],
+                        "outputTags":  [
+                                           "salt_crystal",
+                                           "mineral_brine"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.sawmill",
+                        "name":  "Sawmill",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "log"
+                                      ],
+                        "outputTags":  [
+                                           "plank",
+                                           "timber_beam",
+                                           "sawdust"
+                                       ],
+                        "laborSlots":  5
+                    },
+                    {
+                        "id":  "workplace.sheepfold",
+                        "name":  "Sheepfold",
+                        "category":  "extraction",
+                        "inputTags":  [
+                                          "grazing_pasture"
+                                      ],
+                        "outputTags":  [
+                                           "wool_fleece",
+                                           "milk_raw"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.smelter_hall",
+                        "name":  "Smelter Hall",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "iron_ore",
+                                          "copper_ore",
+                                          "charcoal"
+                                      ],
+                        "outputTags":  [
+                                           "pig_iron",
+                                           "copper_ingot",
+                                           "slag"
+                                       ],
+                        "laborSlots":  6
+                    },
+                    {
+                        "id":  "workplace.smokehouse",
+                        "name":  "Smokehouse",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "fish_raw",
+                                          "butchered_meat",
+                                          "salt_crystal"
+                                      ],
+                        "outputTags":  [
+                                           "smoked_fish",
+                                           "smoked_meat",
+                                           "drippings"
+                                       ],
+                        "laborSlots":  3
+                    },
+                    {
+                        "id":  "workplace.tailors_hall",
+                        "name":  "Tailor\u0027s Hall",
+                        "category":  "manufacturing",
+                        "inputTags":  [
+                                          "dyed_cloth",
+                                          "cured_leather"
+                                      ],
+                        "outputTags":  [
+                                           "travel_cloak",
+                                           "padded_gambeson",
+                                           "cloth_scrap"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.tannery",
+                        "name":  "Tannery",
+                        "category":  "processing",
+                        "inputTags":  [
+                                          "hide_raw",
+                                          "salt_crystal"
+                                      ],
+                        "outputTags":  [
+                                           "cured_leather",
+                                           "tallow_scrap"
+                                       ],
+                        "laborSlots":  4
+                    },
+                    {
+                        "id":  "workplace.weaponsmith_forge",
+                        "name":  "Weaponsmith Forge",
+                        "category":  "manufacturing",
+                        "inputTags":  [
+                                          "iron_ingot",
+                                          "timber_beam"
+                                      ],
+                        "outputTags":  [
+                                           "iron_blade",
+                                           "war_spear",
+                                           "metal_scrap"
+                                       ],
+                        "laborSlots":  5
+                    }
+                ]
 }

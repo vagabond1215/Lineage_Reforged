@@ -1,14 +1,16 @@
-﻿# Story Workspace
+# Story Workspace
 
 This workspace separates draft chapters from canon reference material.
 
 ## Structure
 - main_story/chapters: Chapter files generated from the current draft (Justice.docx)
+- main_story/README.md: Chapter order, regroup notes, prose pass status, and chapter metric references
 - reference/characters: One file per character for canon consistency
 - reference/locations: One file per location/place
 - reference/divine: Divine entities and related canon
 - reference/artifacts: Important artifacts
 - reference/lore: Magic and supernatural rules
+- reference/monsters: Monster database and per-species records
 - reference/threads: Active plot threads
 - continuity: Working files for canon, timeline, and unresolved questions
 

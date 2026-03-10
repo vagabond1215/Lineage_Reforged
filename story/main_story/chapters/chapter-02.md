@@ -1,147 +1,117 @@
-﻿# Chapter 2
+# Chapter 2
 
-The harbor of the capital was never truly quiet. Even before dawn the docks stirred with motion—rigging creaked in the wind, sailors shouted across decks, and carts rattled over the cobbled quay carrying barrels of grain, salt fish, and timber bound for ports along the kingdom’s long western coast.
+Dawn had not yet broken when the capital harbor woke.
 
-Sehir stood at the edge of the harbor road watching the activity with calm interest. Travel had never particularly appealed to him. His life was one of courtrooms, council chambers, and dusty ledgers rather than ships and roadways. Yet the sea air was refreshing, sharp with salt and tar and the faint metallic scent of the tide.
+Rigging groaned in the salt wind, dockhands shouted across wet planks, and heavy wagons rattled over cobbles under loads of grain, timber, and fish bound for western ports. Sehir stood at the quay's edge and watched the machinery of departure with his usual stillness, hands folded behind his back.
 
-Behind him a small wagon rolled to a stop.
+Travel had never been his preference. Courts, records, and petitions made sense to him in ways weather and waves never had.
 
-“Advisor Sehir!”
+A wagon rolled in behind him, wheels skidding once before it stopped.
 
-The voice carried the breathless excitement of a man who had hurried far faster than his boots preferred. Sehir turned to see a short, round-shouldered man climbing awkwardly down from the wagon seat while clutching a leather case large enough to hold half a library.
+"Advisor Sehir!"
 
-“Professor Aldren, I presume.”
+He turned to see a short, round-shouldered man half climbing, half tumbling down from the driver's bench while trying to keep hold of a leather case large enough to bury a desk.
 
-The man adjusted his spectacles and gave an enthusiastic bow that nearly caused him to drop the case.
+"Professor Aldren Thalrick," Sehir said, stepping forward before the case slipped. "I assume."
 
-“Yes! Yes indeed. Aldren Thalrick, Royal Academy of Engineering and Geological Studies. An honor to travel with you, sir, an absolute honor.”
+Aldren adjusted his spectacles, then gave a hurried bow that nearly cost him his balance. "Yes, yes. Royal Academy of Engineering and Geological Studies. It's an honor, truly."
 
-Sehir stepped forward and took the heavy case before it could slip from the professor’s grip.
+Sehir took the case from him without ceremony. "Allow me."
 
-“Allow me.”
+"You don't need to-"
 
-“Oh—no, no, that isn’t necessary, I assure you—”
+"You brought half your archive."
 
-“It weighs more than you do.”
+Aldren let out a breathless laugh as Sehir set the case beside the expedition stack: rope, lamp oil, rolled tents, tools, hard rations, and enough survey gear to build a second library.
 
-The professor blinked once, then laughed nervously.
+The professor stared at the pile. "You intend to carry all of that?"
 
-“Well… yes. Quite possibly.”
+"Most of it," Sehir said. "Someone should."
 
-Sehir lifted the case as if it were no heavier than a travel pack and placed it beside the growing pile of supplies waiting near the pier.
+Aldren opened his mouth to argue, thought better of it, and pushed his spectacles up his nose again.
 
-Several bundles of rope, bedrolls, lantern oil, and preserved food already sat there neatly stacked. Professor Aldren stared.
+A thundercrack split the harbor.
 
-“You intend to carry all of this?”
+Both men looked up. The sky above them was clear.
 
-“Someone must.”
+Then a white-blue arc leapt between two masts and struck the far edge of the pier with a hard snap. Smoke curled upward. At the center of the fading sparks stood a woman smoothing pale hair behind one ear as if she had merely stepped out of an overbright doorway.
 
-The professor opened his mouth to object, reconsidered the size of the pile, and quietly adjusted his spectacles again.
+Her travel cloak hung over light field armor built for movement. A slender staff rested along her shoulder. Twin curved blades sat sheathed at her hips.
 
-“I see.”
+Aldren whispered, almost reverent, "Lady Arienne."
 
-A sudden crack of thunder split the morning air. Both men looked up. The sky above the harbor was clear. Then a streak of white-blue lightning flashed across the air between two nearby masts and struck the stone pier with a sharp snap of energy. The bolt vanished instantly, leaving only a faint curl of smoke drifting upward.
+She crossed the dock with easy confidence and a polite smile. "Professor. Advisor Sehir."
 
-Standing at the center of the fading sparks was a woman. She brushed a strand of pale hair away from her face as if stepping through lightning were the most ordinary thing in the world.
+"I apologize for the arrival," she said. "The harbor guard requested proof of identity."
 
-Her travel cloak hung loosely over light armor designed for movement rather than protection, and a slender staff rested casually against her shoulder. A pair of curved blades hung sheathed at her hips, their hilts polished to a mirror sheen. Professor Aldren nearly dropped his hat.
+Sehir arched a brow. "And lightning was your restrained option?"
 
-“Lady Arienne!”
+"It ended the discussion quickly."
 
-She smiled brightly and walked toward them with relaxed confidence.
+Aldren gave a thin, nervous chuckle. "It certainly did."
 
-“Professor. Advisor Sehir.”
+Arienne's gaze moved to the supply stack. "That is a serious load."
 
-Her voice carried the warm ease of someone accustomed to being liked.
+"Necessary load," Sehir replied.
 
-“I apologize for the theatrics,” she said pleasantly. “The harbor guards insisted I demonstrate my credentials before they allowed me through the docks.”
+"And you're carrying it?"
 
-Sehir raised an eyebrow.
+"Yes."
 
-“And lightning was the simplest solution?”
+She studied him for a beat, amused. "You're stronger than you look, Advisor."
 
-“They seemed convinced afterward.”
+"I hear that often," he said dryly. "Usually from people disappointed by my wardrobe."
 
-Aldren chuckled nervously.
-
-“Yes… well… lightning does tend to be persuasive.”
-
-Arienne’s eyes turned toward the stacked supplies.
-
-“That is quite a load.”
-
-Sehir shrugged.
-
-“Travel necessities.”
-
-“You plan to carry them yourself?”
-
-“Yes.”
-
-She studied him for a moment with quiet curiosity.
-
-“You’re stronger than you look, Advisor.”
-
-“I am frequently told I look like a librarian.”
-
-“That is exactly what I expected,” she said with a friendly grin.
-
-A bell rang from the pier as sailors began raising the gangplank of a broad merchant vessel preparing to depart.
+Her laugh came easier this time, then a bell rang from the pier as sailors raised the gangplank to a broad merchant vessel rocking on the tide.
 
 Their ship.
 
-The Silver Wake. Its hull rocked gently against the tide while crewmen secured the last crates of cargo along the deck. A grizzled dockmaster waved toward them.
+The dockmaster waved them on. "Expedition party, board now or wait for next tide!"
 
-“Expedition for the western valley! If you’re sailing, board now or wait for the next tide!”
+Aldren hurried first, clutching rolled charts to his chest. Arienne followed at a measured pace. Sehir stayed long enough to secure the final straps across his shoulder frame, then lifted the remaining bundles and stepped onto the gangplank.
 
-Aldren hurried toward the gangplank, carefully clutching a smaller satchel filled with rolled maps. Arienne followed at a relaxed pace.
+Lines were cast off, sails cracked overhead, and the harbor slowly slid behind them.
 
-Sehir lingered a moment longer, adjusting the thick straps of the supply pack across his shoulders before lifting the remaining bundles with easy strength. Then he stepped aboard.
+The capital's towers softened into morning haze. Beyond them, the coast curved west through green hills and black cliff breaks.
 
-The crew cast off the mooring lines as the morning tide began to pull outward toward the open sea. Canvas sails unfurled above them, snapping sharply as the wind caught their edges. Slowly the harbor slipped away.
+Aldren settled at the rail with open fascination. "I've only studied Blackstone in records," he admitted. "If the lower supports can be stabilized, the ore output could be extraordinary."
 
-The towers of the capital shrank behind them while the coastline curved westward into long stretches of rocky cliffs and green hills. Professor Aldren stood near the rail with open fascination.
+"If the tunnels remain stable," Arienne said lightly. "And if anything nesting there dislikes interruption."
 
-“I’ve never actually visited the western valley,” he admitted. “The records suggest the mines were incredibly productive in their early years. If the tunnels can be stabilized—”
+Aldren turned. "You expect monster activity?"
 
-“And if the elementals that once inhabited the lower caverns remain dormant,” Arienne added casually.
+"I expect old mines to attract old problems," she said.
 
-The professor blinked.
+Sehir watched the horizon while wind tugged at his hair. Behind them, law and court and palace shrank to a pale line.
 
-“Elementals?”
+Ahead waited reefs, fortress walls, and the long valley road inland.
 
-“Oh yes,” she said lightly. “Minor earth spirits attracted by excavation. Nothing particularly unusual.”
+The Silver Wake held steady for four days.
 
-Aldren looked slightly pale. Sehir leaned against the railing beside them, watching the distant horizon. The sea wind tugged gently at his dark hair while gulls wheeled overhead. Behind them, far back along the coastline, the capital faded into the morning haze.
+Once land thinned to a distant smear, ship life settled into rhythm: bell changes, sail trims, deck scrubs, meal calls. For Aldren, each hour brought a new curiosity. For Sehir, the repetition became an unfamiliar kind of quiet.
 
-Ahead lay several days of open water before the ship would reach the reefs guarding the coastal fortress. From there, the long valley road would lead them inland. To the forgotten mine.
+On the second morning, the wind died completely.
 
-High above the rolling sea, unseen by the travelers below, a faint presence stirred within the drifting clouds. A quiet spark of divine awareness followed the ship as it cut through the waves. The goddess of justice watched.
+The sea turned to glass. The ship drifted while sailors muttered about patience and favorable gusts. Sehir stood at the rail, watching silver fish flicker beneath the hull, when two dolphins surfaced and began pacing the bow in playful arcs.
 
-And waited.
+Aldren appeared at his shoulder almost at a run. "Look at them. Gods, they're magnificent."
 
-The Silver Wake rode the wind westward for four steady days. Once the capital’s harbor vanished behind the curve of the coast, the world seemed to widen into something quieter and older. The sea stretched in every direction, its surface shifting between deep sapphire and pale green as clouds drifted across the sun.
+Arienne leaned beside him, smiling as one dolphin breached again. "Maybe they're guiding us."
 
-For Professor Aldren, it was an endless source of fascination. For Sehir, it was a welcome stillness. The rhythm of the voyage settled quickly. The ship’s crew worked their ropes and sails with practiced efficiency, while the three travelers passed their time between the deck and the modest cabin set aside for them.
+"Or judging our seamanship," Sehir said.
 
-On the second morning, the sea became glass. The wind died during the night, leaving the water smooth as polished stone beneath the rising sun. The Silver Wake drifted slowly while the crew waited for the next breeze to find them. Sehir leaned against the railing, watching the water below. Movement caught his eye.
+Aldren snorted. "In that case, we should apologize."
 
-A school of silver fish darted beneath the hull like living arrows, flashing in sudden bursts of reflected sunlight. Moments later the surface broke as a pair of sleek gray dolphins emerged beside the ship, racing along the bow as if escorting the vessel. Professor Aldren hurried to the railing with boyish excitement.
+They stayed with the ship nearly an hour before vanishing into deeper blue.
 
-“Remarkable creatures,” he said, adjusting his spectacles. “Highly intelligent, you know. Sailors claim they guide ships through storms.”
+Later that day, the water darkened over a deep channel. A broad shadow rose alongside the Silver Wake, then broke the surface in a slow roll: massive back, pale spray, the clean sweep of a tail before it sank again.
 
-Arienne rested her elbows on the rail beside him, smiling as the dolphins leapt again through the calm water.
+Even the crew paused.
 
-“Or perhaps they’re simply curious.”
+"A whale," Aldren breathed.
 
-The creatures stayed with the ship for nearly an hour before vanishing into the deeper blue. Later that afternoon the sea darkened.
+Sehir nodded once.
 
-The Silver Wake passed over deeper waters where enormous shadows moved slowly beneath the surface. One rose close enough for its shape to be seen clearly—a massive creature with a broad back and a sweeping tail that stirred the water like a passing tide.
+For all the kingdom's roads, statutes, and boundaries, much of the world remained gloriously indifferent to all of it.
 
-A whale.
-
-Even the sailors paused to watch as the creature surfaced beside the ship, releasing a towering plume of mist before sinking again into the depths.
-
-“Magnificent,” Aldren whispered.
-
-Sehir simply nodded. For all the kingdom’s courts and laws, there were still parts of the world that remained entirely beyond them.
+High above the ship, hidden behind bright cloud, a faint divine awareness stirred and watched him in silence.

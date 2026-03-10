@@ -1,10 +1,396 @@
-{
-  "records": [
-    {
-      "id": "chain.lumber.basic",
-      "stages": ["extract.logging.gatherer", "workplace.sawmill"],
-      "primaryOutput": "plank",
-      "byProducts": ["sawdust"]
-    }
-  ]
+﻿{
+    "records":  [
+                    {
+                        "id":  "chain.alchemy.tonic",
+                        "stages":  [
+                                       "extract.herbalism.forager",
+                                       "extract.apiculture.hive_keeper",
+                                       "workplace.glassworks",
+                                       "workplace.alchemists_atelier"
+                                   ],
+                        "primaryOutput":  "healing_tonic",
+                        "byProducts":  [
+                                           "spent_reagent",
+                                           "stimulant_draught"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.apiary.candles",
+                        "stages":  [
+                                       "extract.apiculture.hive_keeper",
+                                       "workplace.chandlery"
+                                   ],
+                        "primaryOutput":  "candle",
+                        "byProducts":  [
+                                           "wax_seal"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.brewing.ale",
+                        "stages":  [
+                                       "extract.grain.harvest",
+                                       "extract.apiculture.hive_keeper",
+                                       "workplace.brewery",
+                                       "workplace.coopers_shop"
+                                   ],
+                        "primaryOutput":  "ale_cask",
+                        "byProducts":  [
+                                           "mash_spent",
+                                           "pitch_seal"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.ceramics.vessel",
+                        "stages":  [
+                                       "extract.clay.pit_digger",
+                                       "extract.peat.cutter",
+                                       "workplace.pottery_kiln"
+                                   ],
+                        "primaryOutput":  "clay_vessel",
+                        "byProducts":  [
+                                           "kiln_shard",
+                                           "silt"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.farming.mixed_crop",
+                        "stages":  [
+                                       "extract.farming.mixed_plot",
+                                       "workplace.common_farmstead"
+                                   ],
+                        "primaryOutput":  "crop_bundle",
+                        "byProducts":  [
+                                           "herbs_raw",
+                                           "flower_bloom"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.food.bread",
+                        "stages":  [
+                                       "extract.grain.harvest",
+                                       "workplace.millhouse",
+                                       "workplace.bakehouse"
+                                   ],
+                        "primaryOutput":  "bread_loaf",
+                        "byProducts":  [
+                                           "bran",
+                                           "hardtack"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.food.flour",
+                        "stages":  [
+                                       "extract.grain.harvest",
+                                       "workplace.millhouse"
+                                   ],
+                        "primaryOutput":  "flour",
+                        "byProducts":  [
+                                           "bran",
+                                           "straw_bundle"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.food.preserved_fish",
+                        "stages":  [
+                                       "extract.fishing.river_netter",
+                                       "extract.salt.brine_evaporator",
+                                       "workplace.smokehouse"
+                                   ],
+                        "primaryOutput":  "smoked_fish",
+                        "byProducts":  [
+                                           "drippings",
+                                           "river_reed"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.food.preserved_meat",
+                        "stages":  [
+                                       "extract.hunting.trapper",
+                                       "extract.salt.brine_evaporator",
+                                       "workplace.butchers_block",
+                                       "workplace.smokehouse"
+                                   ],
+                        "primaryOutput":  "smoked_meat",
+                        "byProducts":  [
+                                           "bone_raw",
+                                           "blood",
+                                           "drippings"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.forage.wild_harvest",
+                        "stages":  [
+                                       "extract.foraging.woodland",
+                                       "workplace.foragers_camp"
+                                   ],
+                        "primaryOutput":  "wild_berry",
+                        "byProducts":  [
+                                           "mushroom_cap",
+                                           "herbs_raw",
+                                           "flower_bloom",
+                                           "bark"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.fuel.charcoal",
+                        "stages":  [
+                                       "extract.logging.gatherer",
+                                       "workplace.charcoal_kiln"
+                                   ],
+                        "primaryOutput":  "charcoal",
+                        "byProducts":  [
+                                           "ash",
+                                           "wood_tar"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.fuel.firewood_bundle",
+                        "stages":  [
+                                       "extract.logging.gatherer",
+                                       "workplace.forester_lodge",
+                                       "workplace.fuel_yard"
+                                   ],
+                        "primaryOutput":  "fuel_bundle",
+                        "byProducts":  [
+                                           "bark",
+                                           "kindling",
+                                           "ash"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.glass.vial",
+                        "stages":  [
+                                       "extract.sand.dredger",
+                                       "extract.peat.cutter",
+                                       "workplace.glassworks"
+                                   ],
+                        "primaryOutput":  "glass_vial",
+                        "byProducts":  [
+                                           "cullet",
+                                           "glass_sheet"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.leather.cured",
+                        "stages":  [
+                                       "extract.hunting.trapper",
+                                       "workplace.tannery"
+                                   ],
+                        "primaryOutput":  "cured_leather",
+                        "byProducts":  [
+                                           "tallow_scrap",
+                                           "bone_raw"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.logistics.cart",
+                        "stages":  [
+                                       "extract.logging.gatherer",
+                                       "extract.mining.basic",
+                                       "workplace.sawmill",
+                                       "workplace.bloomery_forge",
+                                       "workplace.cartwright_yard"
+                                   ],
+                        "primaryOutput":  "handcart",
+                        "byProducts":  [
+                                           "wagon_frame",
+                                           "offcut_lumber"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.lumber.beam",
+                        "stages":  [
+                                       "extract.logging.gatherer",
+                                       "workplace.sawmill"
+                                   ],
+                        "primaryOutput":  "timber_beam",
+                        "byProducts":  [
+                                           "offcut_lumber"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.lumber.plank",
+                        "stages":  [
+                                       "extract.logging.gatherer",
+                                       "workplace.sawmill"
+                                   ],
+                        "primaryOutput":  "plank",
+                        "byProducts":  [
+                                           "sawdust",
+                                           "resin"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.masonry.cut_stone",
+                        "stages":  [
+                                       "extract.quarry.stonecut",
+                                       "workplace.masons_yard"
+                                   ],
+                        "primaryOutput":  "cut_stone",
+                        "byProducts":  [
+                                           "gravel",
+                                           "stone_tile"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.masonry.fired_brick",
+                        "stages":  [
+                                       "extract.clay.pit_digger",
+                                       "extract.peat.cutter",
+                                       "workplace.brickworks"
+                                   ],
+                        "primaryOutput":  "fired_brick",
+                        "byProducts":  [
+                                           "roof_tile",
+                                           "kiln_shard",
+                                           "silt"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.metal.copper_ingot",
+                        "stages":  [
+                                       "extract.mining.basic",
+                                       "workplace.smelter_hall"
+                                   ],
+                        "primaryOutput":  "copper_ingot",
+                        "byProducts":  [
+                                           "slag"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.metal.iron_ingot",
+                        "stages":  [
+                                       "extract.mining.deep_shaft",
+                                       "workplace.smelter_hall",
+                                       "workplace.bloomery_forge"
+                                   ],
+                        "primaryOutput":  "iron_ingot",
+                        "byProducts":  [
+                                           "slag",
+                                           "forge_scale"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.ranged.arrows",
+                        "stages":  [
+                                       "extract.logging.gatherer",
+                                       "extract.hunting.trapper",
+                                       "workplace.sawmill",
+                                       "workplace.fletchers_shop"
+                                   ],
+                        "primaryOutput":  "arrow_bundle",
+                        "byProducts":  [
+                                           "bolt_bundle",
+                                           "offcut_lumber"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.reed.thatch",
+                        "stages":  [
+                                       "extract.riverbank.gatherer",
+                                       "workplace.riverbank_gatherers",
+                                       "workplace.reed_weaving_shed"
+                                   ],
+                        "primaryOutput":  "thatch_bundle",
+                        "byProducts":  [
+                                           "reed_mat",
+                                           "basket_frame"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.riverside.crawfish",
+                        "stages":  [
+                                       "extract.riverbank.gatherer",
+                                       "workplace.riverbank_gatherers"
+                                   ],
+                        "primaryOutput":  "crawfish_raw",
+                        "byProducts":  [
+                                           "river_reed",
+                                           "snail_shell"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.tailoring.cloak",
+                        "stages":  [
+                                       "extract.flax.reaper",
+                                       "extract.hunting.trapper",
+                                       "workplace.loomhouse",
+                                       "workplace.dye_house",
+                                       "workplace.tannery",
+                                       "workplace.tailors_hall"
+                                   ],
+                        "primaryOutput":  "travel_cloak",
+                        "byProducts":  [
+                                           "padded_gambeson",
+                                           "cloth_scrap"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.textile.dyed_cloth",
+                        "stages":  [
+                                       "extract.flax.reaper",
+                                       "workplace.loomhouse",
+                                       "workplace.dye_house"
+                                   ],
+                        "primaryOutput":  "dyed_cloth",
+                        "byProducts":  [
+                                           "dye_residue"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.textile.linen",
+                        "stages":  [
+                                       "extract.flax.reaper",
+                                       "workplace.loomhouse"
+                                   ],
+                        "primaryOutput":  "linen_thread",
+                        "byProducts":  [
+                                           "flax_seed"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.textile.wool",
+                        "stages":  [
+                                       "extract.pasture.shepherd",
+                                       "workplace.loomhouse"
+                                   ],
+                        "primaryOutput":  "wool_cloth",
+                        "byProducts":  [
+                                           "lanolin"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.warfare.armor",
+                        "stages":  [
+                                       "extract.mining.deep_shaft",
+                                       "extract.hunting.trapper",
+                                       "workplace.smelter_hall",
+                                       "workplace.bloomery_forge",
+                                       "workplace.tannery",
+                                       "workplace.armorers_forge"
+                                   ],
+                        "primaryOutput":  "brigandine_plate",
+                        "byProducts":  [
+                                           "mail_coif",
+                                           "metal_scrap",
+                                           "tallow_scrap"
+                                       ]
+                    },
+                    {
+                        "id":  "chain.warfare.weapons",
+                        "stages":  [
+                                       "extract.mining.deep_shaft",
+                                       "extract.logging.gatherer",
+                                       "workplace.smelter_hall",
+                                       "workplace.bloomery_forge",
+                                       "workplace.weaponsmith_forge"
+                                   ],
+                        "primaryOutput":  "iron_blade",
+                        "byProducts":  [
+                                           "war_spear",
+                                           "metal_scrap",
+                                           "forge_scale"
+                                       ]
+                    }
+                ]
 }
