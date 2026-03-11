@@ -25,3 +25,17 @@ TypeScript-first, headless simulation scaffold for a survival/builder/RPG projec
 
 This is intentionally a foundation pass: contracts, folder boundaries, schemas, stubs, and docs.
 Gameplay systems and full simulation implementation are deferred to future iterations.
+
+## Content Browser
+
+Run the local browser app to read story files and inspect content databases/reports:
+
+- Double-click `run-content-browser.cmd`
+- or run `powershell -NoProfile -ExecutionPolicy Bypass -STA -File .\scripts\content_story_browser.ps1`
+
+The app shows three sections:
+
+- `Databases` (JSON files under `packages/content/base`)
+- `Coverage Reports` (report markdown under `docs/data-dictionary`)
+- `Story` (markdown files under `story`)
+
