@@ -726,6 +726,155 @@
                                             ],
                         "baseValue":  20,
                         "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.feldspar",
+                        "slug":  "feldspar",
+                        "name":  "Feldspar",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  1,
+                        "depositForms":  [
+                                             "outcrop",
+                                             "seam"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual",
+                                                "infrastructure"
+                                            ],
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.sandstone",
+                        "slug":  "sandstone",
+                        "name":  "Sandstone",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  1,
+                        "depositForms":  [
+                                             "field",
+                                             "lode"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual",
+                                                "infrastructure"
+                                            ],
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.magnetite",
+                        "slug":  "magnetite",
+                        "name":  "Magnetite",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  2,
+                        "depositForms":  [
+                                             "vein",
+                                             "lode"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual",
+                                                "infrastructure"
+                                            ],
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.kaolin",
+                        "slug":  "kaolin",
+                        "name":  "Kaolin",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  1,
+                        "depositForms":  [
+                                             "seam",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual",
+                                                "infrastructure"
+                                            ],
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.saltpeter",
+                        "slug":  "saltpeter",
+                        "name":  "Saltpeter",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  2,
+                        "depositForms":  [
+                                             "field",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  11,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.bitumen",
+                        "slug":  "bitumen",
+                        "name":  "Bitumen",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  2,
+                        "depositForms":  [
+                                             "seam",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual",
+                                                "infrastructure"
+                                            ],
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.dusk_opal",
+                        "slug":  "dusk_opal",
+                        "name":  "Dusk Opal",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "pocket",
+                                             "outcrop"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.aether_shale",
+                        "slug":  "aether_shale",
+                        "name":  "Aether Shale",
+                        "aliases":  [
+
+                                    ],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "lode",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  27,
+                        "currencyId":  "currency.crown_standard"
                     }
                 ]
 }

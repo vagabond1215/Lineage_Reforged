@@ -799,6 +799,176 @@
                                     },
                         "baseValue":  9,
                         "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.potato",
+                        "slug":  "potato",
+                        "name":  "Potato",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  8
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.lentil",
+                        "slug":  "lentil",
+                        "name":  "Lentil",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.hemp",
+                        "slug":  "hemp",
+                        "name":  "Hemp",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.thyme",
+                        "slug":  "thyme",
+                        "name":  "Thyme",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.rosemary",
+                        "slug":  "rosemary",
+                        "name":  "Rosemary",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.birch_sapling",
+                        "slug":  "birch_sapling",
+                        "name":  "Birch Sapling",
+                        "type":  "tree",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  10
+                                    },
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.juniper_shrub",
+                        "slug":  "juniper_shrub",
+                        "name":  "Juniper Shrub",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.dawnlily",
+                        "slug":  "dawnlily",
+                        "name":  "Dawnlily",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.voidfern",
+                        "slug":  "voidfern",
+                        "name":  "Voidfern",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.ember_moss",
+                        "slug":  "ember_moss",
+                        "name":  "Ember Moss",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard"
                     }
                 ]
 }
