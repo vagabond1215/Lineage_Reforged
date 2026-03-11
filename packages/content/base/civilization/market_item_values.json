@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "market.item.ale_cask",
@@ -1146,6 +1146,1506 @@
                         "source":  "civilization",
                         "category":  "raw_material",
                         "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_alderbark",
+                        "itemKey":  "flora.alderbark",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_river_reed",
+                        "itemKey":  "flora.river_reed",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_bog_myrtle",
+                        "itemKey":  "flora.bog_myrtle",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_marsh_mint",
+                        "itemKey":  "flora.marsh_mint",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_sunpetal",
+                        "itemKey":  "flora.sunpetal",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_wild_sage",
+                        "itemKey":  "flora.wild_sage",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_cave_moss",
+                        "itemKey":  "flora.cave_moss",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_glowcap",
+                        "itemKey":  "flora.glowcap",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_stone_truffle",
+                        "itemKey":  "flora.stone_truffle",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_crystal_lichen",
+                        "itemKey":  "flora.crystal_lichen",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_frostfern",
+                        "itemKey":  "flora.frostfern",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_bitterroot",
+                        "itemKey":  "flora.bitterroot",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_hare",
+                        "itemKey":  "fauna.hare",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_fox",
+                        "itemKey":  "fauna.fox",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_elk",
+                        "itemKey":  "fauna.elk",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  30,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_otter",
+                        "itemKey":  "fauna.otter",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  20,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_beaver",
+                        "itemKey":  "fauna.beaver",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_marsh_goat",
+                        "itemKey":  "fauna.marsh_goat",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_cave_bat",
+                        "itemKey":  "fauna.cave_bat",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_stone_mole",
+                        "itemKey":  "fauna.stone_mole",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  15,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_pale_lurker",
+                        "itemKey":  "fauna.pale_lurker",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_crystal_ram",
+                        "itemKey":  "fauna.crystal_ram",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_deep_wolf",
+                        "itemKey":  "fauna.deep_wolf",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  33,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_blind_hare",
+                        "itemKey":  "fauna.blind_hare",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  13,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_tin_ore",
+                        "itemKey":  "mineral.tin_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_lead_ore",
+                        "itemKey":  "mineral.lead_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_limestone",
+                        "itemKey":  "mineral.limestone",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_gypsum",
+                        "itemKey":  "mineral.gypsum",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_sulfur",
+                        "itemKey":  "mineral.sulfur",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_silver_ore",
+                        "itemKey":  "mineral.silver_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_gold_ore",
+                        "itemKey":  "mineral.gold_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  32,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_obsidian",
+                        "itemKey":  "mineral.obsidian",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_granite",
+                        "itemKey":  "mineral.granite",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_mithrite_ore",
+                        "itemKey":  "mineral.mithrite_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.siege_wagon",
+                        "itemKey":  "siege_wagon",
+                        "source":  "items.catalog",
+                        "category":  "vehicle",
+                        "baseValue":  220,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.sky_skiff",
+                        "itemKey":  "sky_skiff",
+                        "source":  "items.catalog",
+                        "category":  "vehicle",
+                        "baseValue":  260,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.field_cart",
+                        "itemKey":  "field_cart",
+                        "source":  "items.catalog",
+                        "category":  "vehicle",
+                        "baseValue":  90,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.river_skiff",
+                        "itemKey":  "river_skiff",
+                        "source":  "items.catalog",
+                        "category":  "vehicle",
+                        "baseValue":  120,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.utility_salve",
+                        "itemKey":  "utility_salve",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.trail_meal",
+                        "itemKey":  "trail_meal",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.vigor_tonic",
+                        "itemKey":  "vigor_tonic",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  32,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.acid_vial",
+                        "itemKey":  "acid_vial",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.poison_vial",
+                        "itemKey":  "poison_vial",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  30,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fire_flask",
+                        "itemKey":  "fire_flask",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mend_elixir",
+                        "itemKey":  "mend_elixir",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.casual_tunic",
+                        "itemKey":  "casual_tunic",
+                        "source":  "items.catalog",
+                        "category":  "clothing",
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.formal_doublet",
+                        "itemKey":  "formal_doublet",
+                        "source":  "items.catalog",
+                        "category":  "clothing",
+                        "baseValue":  48,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.survival_kit",
+                        "itemKey":  "survival_kit",
+                        "source":  "items.catalog",
+                        "category":  "tool",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.production_toolset",
+                        "itemKey":  "production_toolset",
+                        "source":  "items.catalog",
+                        "category":  "tool",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.agriculture_kit",
+                        "itemKey":  "agriculture_kit",
+                        "source":  "items.catalog",
+                        "category":  "tool",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.snare_trap",
+                        "itemKey":  "snare_trap",
+                        "source":  "items.catalog",
+                        "category":  "tool",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.casting_net",
+                        "itemKey":  "casting_net",
+                        "source":  "items.catalog",
+                        "category":  "tool",
+                        "baseValue":  16,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.cloth_jerkin",
+                        "itemKey":  "cloth_jerkin",
+                        "source":  "items.catalog",
+                        "category":  "armor",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.leather_light_armor",
+                        "itemKey":  "leather_light_armor",
+                        "source":  "items.catalog",
+                        "category":  "armor",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.plate_cuirass",
+                        "itemKey":  "plate_cuirass",
+                        "source":  "items.catalog",
+                        "category":  "armor",
+                        "baseValue":  110,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.ring_mail_hauberk",
+                        "itemKey":  "ring_mail_hauberk",
+                        "source":  "items.catalog",
+                        "category":  "armor",
+                        "baseValue":  96,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.kite_shield",
+                        "itemKey":  "kite_shield",
+                        "source":  "items.catalog",
+                        "category":  "armor",
+                        "baseValue":  58,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.short_sword",
+                        "itemKey":  "short_sword",
+                        "source":  "items.catalog",
+                        "category":  "weapon",
+                        "baseValue":  44,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.exotic_whip",
+                        "itemKey":  "exotic_whip",
+                        "source":  "items.catalog",
+                        "category":  "weapon",
+                        "baseValue":  49,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.javelin",
+                        "itemKey":  "javelin",
+                        "source":  "items.catalog",
+                        "category":  "weapon",
+                        "baseValue":  27,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.long_bow",
+                        "itemKey":  "long_bow",
+                        "source":  "items.catalog",
+                        "category":  "weapon",
+                        "baseValue":  63,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.light_crossbow",
+                        "itemKey":  "light_crossbow",
+                        "source":  "items.catalog",
+                        "category":  "weapon",
+                        "baseValue":  67,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.silver_earring",
+                        "itemKey":  "silver_earring",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.signet_ring",
+                        "itemKey":  "signet_ring",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.neck_charm",
+                        "itemKey":  "neck_charm",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.face_wrap",
+                        "itemKey":  "face_wrap",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.utility_belt",
+                        "itemKey":  "utility_belt",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  20,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.travel_pouch",
+                        "itemKey":  "travel_pouch",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_cattle",
+                        "itemKey":  "fauna.cattle",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  32,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_sheep",
+                        "itemKey":  "fauna.sheep",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  16,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_goat",
+                        "itemKey":  "fauna.goat",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_swine",
+                        "itemKey":  "fauna.swine",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_horse",
+                        "itemKey":  "fauna.horse",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  46,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_donkey",
+                        "itemKey":  "fauna.donkey",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_mule",
+                        "itemKey":  "fauna.mule",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_chicken",
+                        "itemKey":  "fauna.chicken",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_goose",
+                        "itemKey":  "fauna.goose",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_herding_hound",
+                        "itemKey":  "fauna.herding_hound",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_barn_cat",
+                        "itemKey":  "fauna.barn_cat",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_red_stag",
+                        "itemKey":  "fauna.red_stag",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_wild_turkey",
+                        "itemKey":  "fauna.wild_turkey",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_marsh_duck",
+                        "itemKey":  "fauna.marsh_duck",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_steppe_antelope",
+                        "itemKey":  "fauna.steppe_antelope",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_honey_bee",
+                        "itemKey":  "fauna.honey_bee",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_carrion_crow",
+                        "itemKey":  "fauna.carrion_crow",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_marsh_frog",
+                        "itemKey":  "fauna.marsh_frog",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_cave_cricket",
+                        "itemKey":  "fauna.cave_cricket",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_dung_beetle",
+                        "itemKey":  "fauna.dung_beetle",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_glimmer_moth",
+                        "itemKey":  "fauna.glimmer_moth",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_moon_stag",
+                        "itemKey":  "fauna.moon_stag",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  48,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_ember_boar",
+                        "itemKey":  "fauna.ember_boar",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_storm_ram",
+                        "itemKey":  "fauna.storm_ram",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  38,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_crystal_owl",
+                        "itemKey":  "fauna.crystal_owl",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_mossback_tortoise",
+                        "itemKey":  "fauna.mossback_tortoise",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  20,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_tide_lizard",
+                        "itemKey":  "fauna.tide_lizard",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fauna_shadow_hound",
+                        "itemKey":  "fauna.shadow_hound",
+                        "source":  "world.fauna",
+                        "category":  "fauna",
+                        "baseValue":  45,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_wheat",
+                        "itemKey":  "flora.wheat",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_barley",
+                        "itemKey":  "flora.barley",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_oats",
+                        "itemKey":  "flora.oats",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_rye",
+                        "itemKey":  "flora.rye",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_cabbage",
+                        "itemKey":  "flora.cabbage",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_onion",
+                        "itemKey":  "flora.onion",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_garlic",
+                        "itemKey":  "flora.garlic",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_turnip",
+                        "itemKey":  "flora.turnip",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_carrot",
+                        "itemKey":  "flora.carrot",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_beet",
+                        "itemKey":  "flora.beet",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_pea_vine",
+                        "itemKey":  "flora.pea_vine",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_bean_pod",
+                        "itemKey":  "flora.bean_pod",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_clover",
+                        "itemKey":  "flora.clover",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_ryegrass",
+                        "itemKey":  "flora.ryegrass",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_cattail",
+                        "itemKey":  "flora.cattail",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_watercress",
+                        "itemKey":  "flora.watercress",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_willow_sapling",
+                        "itemKey":  "flora.willow_sapling",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_alder_sapling",
+                        "itemKey":  "flora.alder_sapling",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_nettle",
+                        "itemKey":  "flora.nettle",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_yarrow",
+                        "itemKey":  "flora.yarrow",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_chamomile",
+                        "itemKey":  "flora.chamomile",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_morel",
+                        "itemKey":  "flora.morel",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_shelf_fungus",
+                        "itemKey":  "flora.shelf_fungus",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_cave_button",
+                        "itemKey":  "flora.cave_button",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_moonlotus",
+                        "itemKey":  "flora.moonlotus",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_emberbloom",
+                        "itemKey":  "flora.emberbloom",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  11,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_frostcap",
+                        "itemKey":  "flora.frostcap",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_glowreed",
+                        "itemKey":  "flora.glowreed",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_star_thistle",
+                        "itemKey":  "flora.star_thistle",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.flora_whisper_vine",
+                        "itemKey":  "flora.whisper_vine",
+                        "source":  "world.flora",
+                        "category":  "flora",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_clay",
+                        "itemKey":  "mineral.clay",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_river_sand",
+                        "itemKey":  "mineral.river_sand",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_slate",
+                        "itemKey":  "mineral.slate",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_marble",
+                        "itemKey":  "mineral.marble",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_chalk",
+                        "itemKey":  "mineral.chalk",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_bauxite",
+                        "itemKey":  "mineral.bauxite",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_nickel_ore",
+                        "itemKey":  "mineral.nickel_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_zinc_ore",
+                        "itemKey":  "mineral.zinc_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_cobalt_ore",
+                        "itemKey":  "mineral.cobalt_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  11,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_pyrite",
+                        "itemKey":  "mineral.pyrite",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_fluorite",
+                        "itemKey":  "mineral.fluorite",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_amethyst",
+                        "itemKey":  "mineral.amethyst",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_garnet",
+                        "itemKey":  "mineral.garnet",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  13,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_malachite",
+                        "itemKey":  "mineral.malachite",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_orichalcum_ore",
+                        "itemKey":  "mineral.orichalcum_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_aetherite_ore",
+                        "itemKey":  "mineral.aetherite_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  44,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_moon_silver_ore",
+                        "itemKey":  "mineral.moon_silver_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_sunstone",
+                        "itemKey":  "mineral.sunstone",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_stormglass",
+                        "itemKey":  "mineral.stormglass",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_void_crystal",
+                        "itemKey":  "mineral.void_crystal",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  40,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_drakeshard",
+                        "itemKey":  "mineral.drakeshard",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_star_iron",
+                        "itemKey":  "mineral.star_iron",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  38,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_deep_amber",
+                        "itemKey":  "mineral.deep_amber",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mineral_ember_quartz",
+                        "itemKey":  "mineral.ember_quartz",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  20,
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true

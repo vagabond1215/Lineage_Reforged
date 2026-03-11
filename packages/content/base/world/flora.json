@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "flora.blackberry",
@@ -83,6 +83,721 @@
                                         "yieldCap":  5
                                     },
                         "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.alderbark",
+                        "slug":  "alderbark",
+                        "name":  "Alderbark",
+                        "type":  "tree",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  15
+                                    },
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.river_reed",
+                        "slug":  "river_reed",
+                        "name":  "River Reed",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  8
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.bog_myrtle",
+                        "slug":  "bog_myrtle",
+                        "name":  "Bog Myrtle",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.marsh_mint",
+                        "slug":  "marsh_mint",
+                        "name":  "Marsh Mint",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.sunpetal",
+                        "slug":  "sunpetal",
+                        "name":  "Sunpetal",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.wild_sage",
+                        "slug":  "wild_sage",
+                        "name":  "Wild Sage",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.cave_moss",
+                        "slug":  "cave_moss",
+                        "name":  "Cave Moss",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.glowcap",
+                        "slug":  "glowcap",
+                        "name":  "Glowcap",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.stone_truffle",
+                        "slug":  "stone_truffle",
+                        "name":  "Stone Truffle",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.crystal_lichen",
+                        "slug":  "crystal_lichen",
+                        "name":  "Crystal Lichen",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.frostfern",
+                        "slug":  "frostfern",
+                        "name":  "Frostfern",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.bitterroot",
+                        "slug":  "bitterroot",
+                        "name":  "Bitterroot",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.wheat",
+                        "slug":  "wheat",
+                        "name":  "Wheat",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  9
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.barley",
+                        "slug":  "barley",
+                        "name":  "Barley",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  9
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.oats",
+                        "slug":  "oats",
+                        "name":  "Oats",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  8
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.rye",
+                        "slug":  "rye",
+                        "name":  "Rye",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  8
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.cabbage",
+                        "slug":  "cabbage",
+                        "name":  "Cabbage",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.onion",
+                        "slug":  "onion",
+                        "name":  "Onion",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.garlic",
+                        "slug":  "garlic",
+                        "name":  "Garlic",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.turnip",
+                        "slug":  "turnip",
+                        "name":  "Turnip",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.carrot",
+                        "slug":  "carrot",
+                        "name":  "Carrot",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.beet",
+                        "slug":  "beet",
+                        "name":  "Beet",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.pea_vine",
+                        "slug":  "pea_vine",
+                        "name":  "Pea Vine",
+                        "type":  "vine",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.bean_pod",
+                        "slug":  "bean_pod",
+                        "name":  "Bean Pod",
+                        "type":  "vine",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.clover",
+                        "slug":  "clover",
+                        "name":  "Clover",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.ryegrass",
+                        "slug":  "ryegrass",
+                        "name":  "Ryegrass",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.cattail",
+                        "slug":  "cattail",
+                        "name":  "Cattail",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  7
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.watercress",
+                        "slug":  "watercress",
+                        "name":  "Watercress",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  6
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.willow_sapling",
+                        "slug":  "willow_sapling",
+                        "name":  "Willow Sapling",
+                        "type":  "tree",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  11
+                                    },
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.alder_sapling",
+                        "slug":  "alder_sapling",
+                        "name":  "Alder Sapling",
+                        "type":  "tree",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  10
+                                    },
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.nettle",
+                        "slug":  "nettle",
+                        "name":  "Nettle",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.yarrow",
+                        "slug":  "yarrow",
+                        "name":  "Yarrow",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.chamomile",
+                        "slug":  "chamomile",
+                        "name":  "Chamomile",
+                        "type":  "herb",
+                        "lifecycle":  "annual",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.morel",
+                        "slug":  "morel",
+                        "name":  "Morel",
+                        "type":  "fungus",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.shelf_fungus",
+                        "slug":  "shelf_fungus",
+                        "name":  "Shelf Fungus",
+                        "type":  "fungus",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat",
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.cave_button",
+                        "slug":  "cave_button",
+                        "name":  "Cave Button",
+                        "type":  "fungus",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.moonlotus",
+                        "slug":  "moonlotus",
+                        "name":  "Moonlotus",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.emberbloom",
+                        "slug":  "emberbloom",
+                        "name":  "Emberbloom",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  11,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.frostcap",
+                        "slug":  "frostcap",
+                        "name":  "Frostcap",
+                        "type":  "fungus",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.glowreed",
+                        "slug":  "glowreed",
+                        "name":  "Glowreed",
+                        "type":  "herb",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  5
+                                    },
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.star_thistle",
+                        "slug":  "star_thistle",
+                        "name":  "Star Thistle",
+                        "type":  "shrub",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  true,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "flora.whisper_vine",
+                        "slug":  "whisper_vine",
+                        "name":  "Whisper Vine",
+                        "type":  "vine",
+                        "lifecycle":  "perennial",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "harvest":  {
+                                        "active":  true,
+                                        "passive":  false,
+                                        "yieldCap":  4
+                                    },
+                        "baseValue":  9,
                         "currencyId":  "currency.crown_standard"
                     }
                 ]

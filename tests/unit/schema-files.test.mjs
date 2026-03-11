@@ -11,7 +11,8 @@ const schemaFiles = [
   "packages/schemas/world/climate-profile.schema.json",
   "packages/schemas/civilization/workplace.schema.json",
   "packages/schemas/player/equipment.schema.json",
-  "packages/schemas/game/global-rule.schema.json"
+  "packages/schemas/game/global-rule.schema.json",
+  "packages/schemas/items/item.schema.json"
 ];
 
 for (const schemaFile of schemaFiles) {

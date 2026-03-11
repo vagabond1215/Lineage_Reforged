@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "fauna.bison",
@@ -66,6 +66,687 @@
                                            "habitat.coastal.tidal_flat"
                                        ],
                         "baseValue":  27,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.hare",
+                        "slug":  "hare",
+                        "name":  "Hare",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.fox",
+                        "slug":  "fox",
+                        "name":  "Fox",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "carnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.elk",
+                        "slug":  "elk",
+                        "name":  "Elk",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  30,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.otter",
+                        "slug":  "otter",
+                        "name":  "Otter",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "carnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  20,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.beaver",
+                        "slug":  "beaver",
+                        "name":  "Beaver",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.marsh_goat",
+                        "slug":  "marsh_goat",
+                        "name":  "Marsh Goat",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.cave_bat",
+                        "slug":  "cave_bat",
+                        "name":  "Cave Bat",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.stone_mole",
+                        "slug":  "stone_mole",
+                        "name":  "Stone Mole",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  15,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.pale_lurker",
+                        "slug":  "pale_lurker",
+                        "name":  "Pale Lurker",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "carnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "high",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.crystal_ram",
+                        "slug":  "crystal_ram",
+                        "name":  "Crystal Ram",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.deep_wolf",
+                        "slug":  "deep_wolf",
+                        "name":  "Deep Wolf",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "carnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "high",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  33,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.blind_hare",
+                        "slug":  "blind_hare",
+                        "name":  "Blind Hare",
+                        "aliases":  [
+
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  13,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.cattle",
+                        "slug":  "cattle",
+                        "name":  "Cattle",
+                        "aliases":  [
+                                        "Draft Cattle"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  32,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.sheep",
+                        "slug":  "sheep",
+                        "name":  "Sheep",
+                        "aliases":  [
+                                        "Flock Sheep"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  16,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.goat",
+                        "slug":  "goat",
+                        "name":  "Goat",
+                        "aliases":  [
+                                        "Hill Goat"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.swine",
+                        "slug":  "swine",
+                        "name":  "Swine",
+                        "aliases":  [
+                                        "Domestic Pig"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "omnivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.horse",
+                        "slug":  "horse",
+                        "name":  "Horse",
+                        "aliases":  [
+                                        "Draft Horse"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  46,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.donkey",
+                        "slug":  "donkey",
+                        "name":  "Donkey",
+                        "aliases":  [
+                                        "Pack Donkey"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.mule",
+                        "slug":  "mule",
+                        "name":  "Mule",
+                        "aliases":  [
+                                        "Pack Mule"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.chicken",
+                        "slug":  "chicken",
+                        "name":  "Chicken",
+                        "aliases":  [
+                                        "Barn Fowl"
+                                    ],
+                        "type":  "bird",
+                        "diet":  "omnivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.goose",
+                        "slug":  "goose",
+                        "name":  "Goose",
+                        "aliases":  [
+                                        "Guard Goose"
+                                    ],
+                        "type":  "bird",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.herding_hound",
+                        "slug":  "herding_hound",
+                        "name":  "Herding Hound",
+                        "aliases":  [
+                                        "Shepherd Dog"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "omnivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.barn_cat",
+                        "slug":  "barn_cat",
+                        "name":  "Barn Cat",
+                        "aliases":  [
+                                        "Mouser"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "carnivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.red_stag",
+                        "slug":  "red_stag",
+                        "name":  "Red Stag",
+                        "aliases":  [
+                                        "Hart"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.wild_turkey",
+                        "slug":  "wild_turkey",
+                        "name":  "Wild Turkey",
+                        "aliases":  [
+                                        "Forest Turkey"
+                                    ],
+                        "type":  "bird",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.marsh_duck",
+                        "slug":  "marsh_duck",
+                        "name":  "Marsh Duck",
+                        "aliases":  [
+                                        "Wild Duck"
+                                    ],
+                        "type":  "bird",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.steppe_antelope",
+                        "slug":  "steppe_antelope",
+                        "name":  "Steppe Antelope",
+                        "aliases":  [
+                                        "Prong Antelope"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.honey_bee",
+                        "slug":  "honey_bee",
+                        "name":  "Honey Bee",
+                        "aliases":  [
+                                        "Pollinator Bee"
+                                    ],
+                        "type":  "insect",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.carrion_crow",
+                        "slug":  "carrion_crow",
+                        "name":  "Carrion Crow",
+                        "aliases":  [
+                                        "Scavenger Crow"
+                                    ],
+                        "type":  "bird",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.marsh_frog",
+                        "slug":  "marsh_frog",
+                        "name":  "Marsh Frog",
+                        "aliases":  [
+                                        "Reed Frog"
+                                    ],
+                        "type":  "amphibian",
+                        "diet":  "carnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.cave_cricket",
+                        "slug":  "cave_cricket",
+                        "name":  "Cave Cricket",
+                        "aliases":  [
+                                        "Stone Cricket"
+                                    ],
+                        "type":  "insect",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.dung_beetle",
+                        "slug":  "dung_beetle",
+                        "name":  "Dung Beetle",
+                        "aliases":  [
+                                        "Soil Beetle"
+                                    ],
+                        "type":  "insect",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.glimmer_moth",
+                        "slug":  "glimmer_moth",
+                        "name":  "Glimmer Moth",
+                        "aliases":  [
+                                        "Lantern Moth"
+                                    ],
+                        "type":  "insect",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat",
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.moon_stag",
+                        "slug":  "moon_stag",
+                        "name":  "Moon Stag",
+                        "aliases":  [
+                                        "Silver Hart"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "high",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  48,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.ember_boar",
+                        "slug":  "ember_boar",
+                        "name":  "Ember Boar",
+                        "aliases":  [
+                                        "Cinder Boar"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "high",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.storm_ram",
+                        "slug":  "storm_ram",
+                        "name":  "Storm Ram",
+                        "aliases":  [
+                                        "Thunder Ram"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  38,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.crystal_owl",
+                        "slug":  "crystal_owl",
+                        "name":  "Crystal Owl",
+                        "aliases":  [
+                                        "Shard Owl"
+                                    ],
+                        "type":  "bird",
+                        "diet":  "carnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "medium",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.mossback_tortoise",
+                        "slug":  "mossback_tortoise",
+                        "name":  "Mossback Tortoise",
+                        "aliases":  [
+                                        "Bog Tortoise"
+                                    ],
+                        "type":  "reptile",
+                        "diet":  "herbivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  20,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.tide_lizard",
+                        "slug":  "tide_lizard",
+                        "name":  "Tide Lizard",
+                        "aliases":  [
+                                        "Reef Lizard"
+                                    ],
+                        "type":  "reptile",
+                        "diet":  "omnivore",
+                        "domesticatable":  false,
+                        "dangerClass":  "low",
+                        "habitatIds":  [
+                                           "habitat.coastal.tidal_flat"
+                                       ],
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "fauna.shadow_hound",
+                        "slug":  "shadow_hound",
+                        "name":  "Shadow Hound",
+                        "aliases":  [
+                                        "Dusk Hound"
+                                    ],
+                        "type":  "mammal",
+                        "diet":  "carnivore",
+                        "domesticatable":  true,
+                        "dangerClass":  "high",
+                        "habitatIds":  [
+                                           "habitat.subterranean.crystal_cave"
+                                       ],
+                        "baseValue":  45,
                         "currencyId":  "currency.crown_standard"
                     }
                 ]

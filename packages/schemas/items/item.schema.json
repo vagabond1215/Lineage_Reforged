@@ -1,0 +1,61 @@
+{
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "title":  "ItemRecord",
+    "type":  "object",
+    "additionalProperties":  false,
+    "required":  [
+                     "id",
+                     "itemKey",
+                     "name",
+                     "itemClass",
+                     "itemBranch",
+                     "itemSubBranch",
+                     "baseValue",
+                     "currencyId",
+                     "valueUnit",
+                     "marketable"
+                 ],
+    "properties":  {
+                       "id":  {
+                                  "type":  "string"
+                              },
+                       "itemKey":  {
+                                       "type":  "string",
+                                       "pattern":  "^(?!flora\\.|fauna\\.|mineral\\.)[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                   },
+                       "name":  {
+                                    "type":  "string"
+                                },
+                       "itemClass":  {
+                                         "type":  "string",
+                                         "enum":  [
+                                                      "vehicle",
+                                                      "consumable",
+                                                      "clothing",
+                                                      "tool",
+                                                      "armor",
+                                                      "weapon",
+                                                      "accessory"
+                                                  ]
+                                     },
+                       "itemBranch":  {
+                                          "type":  "string"
+                                      },
+                       "itemSubBranch":  {
+                                             "type":  "string"
+                                         },
+                       "baseValue":  {
+                                         "type":  "number",
+                                         "minimum":  0
+                                     },
+                       "currencyId":  {
+                                          "type":  "string"
+                                      },
+                       "valueUnit":  {
+                                         "type":  "string"
+                                     },
+                       "marketable":  {
+                                          "type":  "boolean"
+                                      }
+                   }
+}
