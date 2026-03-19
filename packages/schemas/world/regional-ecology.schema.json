@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "regionId",
+          "summary",
+          "primaryClimateProfileId",
+          "secondaryClimateProfileIds",
+          "mapClimateZoneIds",
+          "dominantBiomeIds",
+          "supportingBiomeIds",
+          "mapBiomeZoneIds",
+          "nativeFloraIds",
+          "nativeFaunaIds",
+          "coverageProfile",
+          "domesticStrengths",
+          "domesticGaps",
+          "likelyTradePartnerRegionIds",
+          "tradePressureNotes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^regional_ecology\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "regionId": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "primaryClimateProfileId": {
+            "type": "string",
+            "pattern": "^climate\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "secondaryClimateProfileIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^climate\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "mapClimateZoneIds": {
+            "type": "array",
+            "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^map_climate\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+              }
+            },
+          "dominantBiomeIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^biome\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "supportingBiomeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^biome\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "mapBiomeZoneIds": {
+            "type": "array",
+            "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^map_biome\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+              }
+            },
+          "nativeFloraIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^flora\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "nativeFaunaIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^fauna\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "coverageProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "stapleCrops",
+              "herdAndGame",
+              "maritimeFoods",
+              "timberAndFiber",
+              "metalsAndStone",
+              "herbsAndReagents",
+              "luxuryGoods"
+            ],
+            "properties": {
+              "stapleCrops": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "herdAndGame": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "maritimeFoods": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "timberAndFiber": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "metalsAndStone": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "herbsAndReagents": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "luxuryGoods": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              }
+            }
+          },
+          "domesticStrengths": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "domesticGaps": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "likelyTradePartnerRegionIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "tradePressureNotes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

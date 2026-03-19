@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerAbilityRecord",
+  "type": "object",
+  "required": ["id", "name", "scalingAttribute", "cooldownTicks"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "scalingAttribute": { "type": "string" },
+    "cooldownTicks": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": true
+}

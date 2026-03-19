@@ -1,0 +1,8 @@
+{
+  "records": [
+    { "id": "resource.hp", "name": "HP", "kind": "pool", "baseCurrent": 120, "baseMax": 120 },
+    { "id": "resource.mp", "name": "MP", "kind": "pool", "baseCurrent": 60, "baseMax": 60 },
+    { "id": "resource.stamina", "name": "Stamina", "kind": "pool", "baseCurrent": 100, "baseMax": 100 },
+    { "id": "resource.xp", "name": "Experience", "kind": "progression", "baseCurrent": 0, "baseMax": 100 }
+  ]
+}

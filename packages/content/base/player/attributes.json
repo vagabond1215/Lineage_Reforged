@@ -2,7 +2,12 @@
   "records": [
     { "id": "attr.STR", "name": "Strength", "default": 10 },
     { "id": "attr.DEX", "name": "Dexterity", "default": 10 },
+    { "id": "attr.AGI", "name": "Agility", "default": 10 },
     { "id": "attr.CON", "name": "Constitution", "default": 10 },
-    { "id": "attr.INT", "name": "Intelligence", "default": 10 }
+    { "id": "attr.VIT", "name": "Vitality", "default": 10 },
+    { "id": "attr.WIS", "name": "Wisdom", "default": 10 },
+    { "id": "attr.INT", "name": "Intelligence", "default": 10 },
+    { "id": "attr.SPT", "name": "Spirit", "default": 10 },
+    { "id": "attr.CHA", "name": "Charisma", "default": 10 }
   ]
 }

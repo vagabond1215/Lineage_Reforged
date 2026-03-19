@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerSpellRecord",
+  "type": "object",
+  "required": ["id", "name", "school", "manaCost", "scalingAttribute"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "school": { "type": "string" },
+    "element": { "type": "string" },
+    "manaCost": { "type": "integer", "minimum": 0 },
+    "scalingAttribute": { "type": "string" }
+  },
+  "additionalProperties": true
+}

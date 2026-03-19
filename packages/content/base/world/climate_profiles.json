@@ -1,24 +1,1102 @@
 {
-  "records": [
-    {
-      "id": "climate.standard",
-      "name": "Standard",
-      "seasonLengths": [8, 9, 8, 9, 9, 8],
-      "temperatureVariance": {
-        "avg": 1,
-        "high": 1,
-        "low": 1
-      }
-    },
-    {
-      "id": "climate.drought_year",
-      "name": "Drought Year",
-      "seasonLengths": [8, 7, 8, 12, 8, 9],
-      "temperatureVariance": {
-        "avg": 1.05,
-        "high": 1.1,
-        "low": 1.03
-      }
-    }
-  ]
+    "records":  [
+                    {
+                        "id":  "climate.mild_winter",
+                        "name":  "Mild Winter",
+                        "seasonLengths":  [
+                                              8,
+                                              7,
+                                              10,
+                                              10,
+                                              10,
+                                              7
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  0.97,
+                                                    "high":  1,
+                                                    "low":  0.85
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.standard",
+                        "name":  "Standard",
+                        "seasonLengths":  [
+                                              9,
+                                              8,
+                                              9,
+                                              9,
+                                              9,
+                                              8
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1,
+                                                    "high":  1,
+                                                    "low":  1
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.cold",
+                        "name":  "Cold",
+                        "seasonLengths":  [
+                                              10,
+                                              9,
+                                              8,
+                                              8,
+                                              8,
+                                              9
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.05,
+                                                    "high":  0.97,
+                                                    "low":  1.2
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.hot_year",
+                        "name":  "Hot Year",
+                        "seasonLengths":  [
+                                              7,
+                                              7,
+                                              8,
+                                              12,
+                                              10,
+                                              8
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.05,
+                                                    "high":  1.2,
+                                                    "low":  0.95
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.long_summer",
+                        "name":  "Long Summer",
+                        "seasonLengths":  [
+                                              8,
+                                              7,
+                                              8,
+                                              12,
+                                              9,
+                                              8
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.01,
+                                                    "high":  1.03,
+                                                    "low":  0.99
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.long_winter",
+                        "name":  "Long Winter",
+                        "seasonLengths":  [
+                                              10,
+                                              9,
+                                              8,
+                                              8,
+                                              8,
+                                              9
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.01,
+                                                    "high":  0.99,
+                                                    "low":  1.03
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.wet_year",
+                        "name":  "Wet Year",
+                        "seasonLengths":  [
+                                              9,
+                                              9,
+                                              9,
+                                              8,
+                                              9,
+                                              8
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  0.95,
+                                                    "high":  0.93,
+                                                    "low":  0.93
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.dry_year",
+                        "name":  "Dry Year",
+                        "seasonLengths":  [
+                                              8,
+                                              7,
+                                              8,
+                                              12,
+                                              8,
+                                              9
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.05,
+                                                    "high":  1.1,
+                                                    "low":  1.08
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.flood_year",
+                        "name":  "Flood Year",
+                        "seasonLengths":  [
+                                              8,
+                                              11,
+                                              11,
+                                              7,
+                                              8,
+                                              7
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  0.92,
+                                                    "high":  0.9,
+                                                    "low":  0.92
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.drought_year",
+                        "name":  "Drought Year",
+                        "seasonLengths":  [
+                                              8,
+                                              7,
+                                              7,
+                                              13,
+                                              7,
+                                              10
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.1,
+                                                    "high":  1.25,
+                                                    "low":  1.1
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.late_thaw",
+                        "name":  "Late Thaw",
+                        "seasonLengths":  [
+                                              10,
+                                              9,
+                                              7,
+                                              9,
+                                              9,
+                                              8
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.02,
+                                                    "high":  0.99,
+                                                    "low":  1.05
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.early_spring",
+                        "name":  "Early Spring",
+                        "seasonLengths":  [
+                                              8,
+                                              7,
+                                              12,
+                                              9,
+                                              9,
+                                              7
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.01,
+                                                    "high":  1.02,
+                                                    "low":  0.98
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.late_harvest",
+                        "name":  "Late Harvest",
+                        "seasonLengths":  [
+                                              8,
+                                              8,
+                                              8,
+                                              9,
+                                              10,
+                                              9
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.02,
+                                                    "high":  1.03,
+                                                    "low":  0.99
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.short_harvest",
+                        "name":  "Short Harvest",
+                        "seasonLengths":  [
+                                              8,
+                                              8,
+                                              9,
+                                              10,
+                                              7,
+                                              10
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.03,
+                                                    "high":  1.01,
+                                                    "low":  1.03
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.extended_withering",
+                        "name":  "Extended Withering",
+                        "seasonLengths":  [
+                                              8,
+                                              8,
+                                              8,
+                                              8,
+                                              9,
+                                              11
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.04,
+                                                    "high":  0.99,
+                                                    "low":  1.06
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.harsh_winter",
+                        "name":  "Harsh Winter",
+                        "seasonLengths":  [
+                                              11,
+                                              9,
+                                              7,
+                                              8,
+                                              8,
+                                              9
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.12,
+                                                    "high":  0.95,
+                                                    "low":  1.3
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.scorching_summer",
+                        "name":  "Scorching Summer",
+                        "seasonLengths":  [
+                                              7,
+                                              7,
+                                              8,
+                                              11,
+                                              8,
+                                              11
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.1,
+                                                    "high":  1.3,
+                                                    "low":  0.95
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    },
+                    {
+                        "id":  "climate.unstable_year",
+                        "name":  "Unstable Year",
+                        "seasonLengths":  [
+                                              9,
+                                              10,
+                                              7,
+                                              10,
+                                              7,
+                                              9
+                                          ],
+                        "temperatureVariance":  {
+                                                    "avg":  1.15,
+                                                    "high":  1.2,
+                                                    "low":  1.2
+                                                },
+                        "temperatureRangeTemplate":  {
+                                                         "unit":  "celsius",
+                                                         "lowLimit":  -20,
+                                                         "highLimit":  40,
+                                                         "range":  60
+                                                     },
+                        "seasonalTemperatureProfiles":  {
+                                                            "Winter":  {
+                                                                           "lowOffsetRatio":  0,
+                                                                           "highOffsetRatio":  0.3,
+                                                                           "low":  -20,
+                                                                           "high":  -2
+                                                                       },
+                                                            "Thaw":  {
+                                                                         "lowOffsetRatio":  0.1,
+                                                                         "highOffsetRatio":  0.55,
+                                                                         "low":  -14,
+                                                                         "high":  13
+                                                                     },
+                                                            "Spring":  {
+                                                                           "lowOffsetRatio":  0.25,
+                                                                           "highOffsetRatio":  0.75,
+                                                                           "low":  -5,
+                                                                           "high":  25
+                                                                       },
+                                                            "Summer":  {
+                                                                           "lowOffsetRatio":  0.55,
+                                                                           "highOffsetRatio":  1,
+                                                                           "low":  13,
+                                                                           "high":  40
+                                                                       },
+                                                            "Harvest":  {
+                                                                            "lowOffsetRatio":  0.4,
+                                                                            "highOffsetRatio":  0.85,
+                                                                            "low":  4,
+                                                                            "high":  31
+                                                                        },
+                                                            "Withering":  {
+                                                                              "lowOffsetRatio":  0.15,
+                                                                              "highOffsetRatio":  0.6,
+                                                                              "low":  -11,
+                                                                              "high":  16
+                                                                          }
+                                                        }
+                    }
+                ]
 }

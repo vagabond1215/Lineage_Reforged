@@ -1,0 +1,313 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "category",
+          "summary",
+          "governsActivities",
+          "excludedActivities",
+          "contractTypes",
+          "typicalPresenceLevels",
+          "typicalSettlementTags",
+          "membershipModel",
+          "questBoardProfile",
+          "facilityTiers"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^guild\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "mercantile",
+              "martial",
+              "gathering",
+              "crafting",
+              "logistics",
+              "civic",
+              "service"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "governsActivities": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "excludedActivities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "contractTypes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "typicalPresenceLevels": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "outpost",
+                "hall",
+                "chapterhouse",
+                "guildhouse",
+                "exchange",
+                "great_house"
+              ]
+            }
+          },
+          "typicalSettlementTags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "membershipModel": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entryMethod",
+              "entryRequirements",
+              "benefits",
+              "memberObligations"
+            ],
+            "properties": {
+              "entryMethod": {
+                "type": "string",
+                "enum": [
+                  "buy_in",
+                  "task_trial",
+                  "sponsorship",
+                  "oath",
+                  "charter"
+                ]
+              },
+              "buyInRequirement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "entryRequirements": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "benefits": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "memberObligations": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "notes": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "questBoardProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "enabled",
+              "questCategories",
+              "tracksAllResources",
+              "allowMemberSales",
+              "demandFocusTags",
+              "supplyFocusTags"
+            ],
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "questCategories": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "gathering",
+                    "hunting",
+                    "domestic_labor",
+                    "escort",
+                    "porter",
+                    "exploration",
+                    "monster_subjugation",
+                    "salvage"
+                  ]
+                }
+              },
+              "tracksAllResources": {
+                "type": "boolean"
+              },
+              "allowMemberSales": {
+                "type": "boolean"
+              },
+              "demandFocusTags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "supplyFocusTags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              }
+            }
+          },
+          "facilityTiers": {
+            "type": "array",
+            "minItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "tier",
+                "label",
+                "presenceLevel",
+                "staffCapacity",
+                "dormitoryCapacity",
+                "stableCapacity",
+                "kitchenScale",
+                "workshopScale",
+                "storehouseScale",
+                "autonomy",
+                "serviceTags"
+              ],
+              "properties": {
+                "tier": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "presenceLevel": {
+                  "type": "string",
+                  "enum": [
+                    "outpost",
+                    "hall",
+                    "chapterhouse",
+                    "guildhouse",
+                    "exchange",
+                    "great_house"
+                  ]
+                },
+                "staffCapacity": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "dormitoryCapacity": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stableCapacity": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "kitchenScale": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "galley",
+                    "house",
+                    "industrial"
+                  ]
+                },
+                "workshopScale": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "bench",
+                    "shop",
+                    "hall"
+                  ]
+                },
+                "storehouseScale": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "locker",
+                    "storeroom",
+                    "warehouse"
+                  ]
+                },
+                "autonomy": {
+                  "type": "string",
+                  "enum": [
+                    "clerical",
+                    "contract_hall",
+                    "regional_house",
+                    "autonomous_center"
+                  ]
+                },
+                "serviceTags": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

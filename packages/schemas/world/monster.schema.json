@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "monsterClass",
+          "threat",
+          "summary",
+          "habitatTags",
+          "behaviorTags",
+          "drops",
+          "loot"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^monster\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "monsterClass": {
+            "type": "string",
+            "enum": [
+              "beast",
+              "humanoid",
+              "ooze",
+              "elemental",
+              "undead",
+              "giantkin"
+            ]
+          },
+          "threat": {
+            "type": "string",
+            "enum": [
+              "low",
+              "moderate",
+              "high",
+              "severe"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "habitatTags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "behaviorTags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "drops": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "itemKey",
+                "quantityMin",
+                "quantityMax",
+                "chance"
+              ],
+              "properties": {
+                "itemKey": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "quantityMin": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "quantityMax": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "chance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            }
+          },
+          "loot": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "itemKey",
+                "chance"
+              ],
+              "properties": {
+                "itemKey": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "chance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

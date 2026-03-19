@@ -2,9 +2,19 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ClimateProfileRecord",
   "type": "object",
-  "required": ["id", "name", "seasonLengths", "temperatureVariance"],
+  "required": [
+    "id",
+    "name",
+    "seasonLengths",
+    "temperatureVariance",
+    "temperatureRangeTemplate",
+    "seasonalTemperatureProfiles"
+  ],
   "properties": {
-    "id": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^climate\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
     "name": { "type": "string" },
     "seasonLengths": {
       "type": "array",
@@ -16,10 +26,124 @@
       "type": "object",
       "required": ["avg", "high", "low"],
       "properties": {
-        "avg": { "type": "number" },
-        "high": { "type": "number" },
-        "low": { "type": "number" }
-      }
+        "avg": { "type": "number", "minimum": 0 },
+        "high": { "type": "number", "minimum": 0 },
+        "low": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "temperatureRangeTemplate": {
+      "type": "object",
+      "required": ["unit", "lowLimit", "highLimit", "range"],
+      "properties": {
+        "unit": {
+          "type": "string",
+          "enum": ["celsius", "fahrenheit", "kelvin"]
+        },
+        "lowLimit": { "type": "number" },
+        "highLimit": { "type": "number" },
+        "range": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "seasonalTemperatureProfiles": {
+      "type": "object",
+      "required": ["Winter", "Thaw", "Spring", "Summer", "Harvest", "Withering"],
+      "properties": {
+        "Winter": { "$ref": "#/$defs/winterSeasonProfile" },
+        "Thaw": { "$ref": "#/$defs/thawSeasonProfile" },
+        "Spring": { "$ref": "#/$defs/springSeasonProfile" },
+        "Summer": { "$ref": "#/$defs/summerSeasonProfile" },
+        "Harvest": { "$ref": "#/$defs/harvestSeasonProfile" },
+        "Withering": { "$ref": "#/$defs/witheringSeasonProfile" }
+      },
+      "additionalProperties": false
     }
-  }
+  },
+  "$defs": {
+    "seasonProfileBase": {
+      "type": "object",
+      "required": ["lowOffsetRatio", "highOffsetRatio", "low", "high"],
+      "properties": {
+        "lowOffsetRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "highOffsetRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "low": { "type": "number" },
+        "high": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "winterSeasonProfile": {
+      "allOf": [
+        { "$ref": "#/$defs/seasonProfileBase" },
+        {
+          "type": "object",
+          "properties": {
+            "lowOffsetRatio": { "const": 0 },
+            "highOffsetRatio": { "const": 0.3 }
+          }
+        }
+      ]
+    },
+    "thawSeasonProfile": {
+      "allOf": [
+        { "$ref": "#/$defs/seasonProfileBase" },
+        {
+          "type": "object",
+          "properties": {
+            "lowOffsetRatio": { "const": 0.1 },
+            "highOffsetRatio": { "const": 0.55 }
+          }
+        }
+      ]
+    },
+    "springSeasonProfile": {
+      "allOf": [
+        { "$ref": "#/$defs/seasonProfileBase" },
+        {
+          "type": "object",
+          "properties": {
+            "lowOffsetRatio": { "const": 0.25 },
+            "highOffsetRatio": { "const": 0.75 }
+          }
+        }
+      ]
+    },
+    "summerSeasonProfile": {
+      "allOf": [
+        { "$ref": "#/$defs/seasonProfileBase" },
+        {
+          "type": "object",
+          "properties": {
+            "lowOffsetRatio": { "const": 0.55 },
+            "highOffsetRatio": { "const": 1 }
+          }
+        }
+      ]
+    },
+    "harvestSeasonProfile": {
+      "allOf": [
+        { "$ref": "#/$defs/seasonProfileBase" },
+        {
+          "type": "object",
+          "properties": {
+            "lowOffsetRatio": { "const": 0.4 },
+            "highOffsetRatio": { "const": 0.85 }
+          }
+        }
+      ]
+    },
+    "witheringSeasonProfile": {
+      "allOf": [
+        { "$ref": "#/$defs/seasonProfileBase" },
+        {
+          "type": "object",
+          "properties": {
+            "lowOffsetRatio": { "const": 0.15 },
+            "highOffsetRatio": { "const": 0.6 }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
 }

@@ -1,19 +1,4 @@
 {
   "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-  "seasons": ["Winter", "Thaw", "Spring", "Summer", "Harvest", "Withering"],
-  "seasonByMonth": {
-    "1": "Winter",
-    "2": "Winter",
-    "3": "Thaw",
-    "4": "Spring",
-    "5": "Spring",
-    "6": "Summer",
-    "7": "Summer",
-    "8": "Harvest",
-    "9": "Harvest",
-    "10": "Withering",
-    "11": "Withering",
-    "12": "Winter",
-    "13": "Thaw"
-  }
+  "seasons": ["Winter", "Thaw", "Spring", "Summer", "Harvest", "Withering"]
 }

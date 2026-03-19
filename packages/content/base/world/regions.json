@@ -1,0 +1,631 @@
+{
+  "records": [
+    {
+      "id": "region.kaelvar",
+      "slug": "kaelvar",
+      "name": "Kaelvar",
+      "regionType": "continent",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "northwest_continent",
+      "summary": "A northwestern continent of dry interior uplands, fertile southern coasts, and island-studded northern waters.",
+      "tags": ["continent", "mediterranean", "plateau", "frontier"],
+      "populationProfile": {
+        "densityBand": "moderate",
+        "densityNotes": [
+          "Southern coasts are high-density farming and port lands.",
+          "Western plateau is low-density frontier terrain.",
+          "Northern islands are settled but sparse."
+        ],
+        "settlementPattern": "Southern kingdoms with sparse interior tribal and highland settlement.",
+        "estimatedPopulationMillions": 40
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          { "race": "humans", "percentage": 40 },
+          { "race": "dwarves", "percentage": 15 },
+          { "race": "elves", "percentage": 12 },
+          { "race": "halflings", "percentage": 8 },
+          { "race": "gnomes", "percentage": 6 },
+          { "race": "orcs", "percentage": 8 },
+          { "race": "goblins", "percentage": 7 },
+          { "race": "trolls", "percentage": 2 },
+          { "race": "merfolk", "percentage": 2 }
+        ]
+      },
+      "economicProfile": {
+        "majorExports": ["copper", "iron", "olive_oil", "wine", "wool", "salt", "ship_timber"],
+        "majorImports": ["grain", "exotic_woods", "magical_reagents", "silk"]
+      },
+      "civilizationNotes": [
+        "Humans dominate the southern peninsula.",
+        "Dwarven mountain networks anchor the western highlands.",
+        "Elves hold hidden river-valley and southern forest enclaves.",
+        "Orc tribes roam the dry interior plains."
+      ],
+      "strategicNotes": [
+        "Kaelvar's interior is a natural conflict zone between settled southern powers and mobile tribal groups."
+      ]
+    },
+    {
+      "id": "region.valtherion",
+      "slug": "valtherion",
+      "name": "Valtherion",
+      "regionType": "continent",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "northeastern_supercontinent",
+      "summary": "The largest and most fertile landmass, dominated by major rivers, forested northlands, and vast agricultural basins.",
+      "tags": ["continent", "civilization_core", "river_basin", "supercontinent"],
+      "populationProfile": {
+        "densityBand": "very_high",
+        "densityNotes": [
+          "Major river basins support dense cities and farm belts."
+        ],
+        "settlementPattern": "Dense kingdoms and imperial river corridors with limited frontier margins.",
+        "estimatedPopulationMillions": 140
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          { "race": "humans", "percentage": 52 },
+          { "race": "elves", "percentage": 14 },
+          { "race": "dwarves", "percentage": 11 },
+          { "race": "halflings", "percentage": 8 },
+          { "race": "gnomes", "percentage": 7 },
+          { "race": "orcs", "percentage": 4 },
+          { "race": "goblins", "percentage": 2 },
+          { "race": "trolls", "percentage": 1 },
+          { "race": "merfolk", "percentage": 1 }
+        ]
+      },
+      "economicProfile": {
+        "majorExports": ["grain", "horses", "steel_weapons", "magical_universities", "silk", "glass", "books"],
+        "majorImports": ["rare_ores", "spices", "exotic_animals", "timber", "pearls"]
+      },
+      "civilizationNotes": [
+        "Valtherion is the primary world civilization center.",
+        "Human kingdoms line the river basins.",
+        "Ancient elven forest realms dominate northern woodlands.",
+        "Dwarves inhabit mountain chains and canyon cities."
+      ],
+      "strategicNotes": [
+        "Valtherion's border kingdoms and chokepoints make it the political center of the map."
+      ]
+    },
+    {
+      "id": "region.serathyl",
+      "slug": "serathyl",
+      "name": "Serathyl",
+      "regionType": "continent",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "southwestern_continent",
+      "summary": "A long maritime continent of complex coasts, forested interiors, and merchant-friendly sea lanes.",
+      "tags": ["continent", "maritime", "trade_crossroads", "coastal"],
+      "populationProfile": {
+        "densityBand": "moderate",
+        "densityNotes": [
+          "Coastal belts are high-density.",
+          "Interior hills are moderate-density.",
+          "Northern mountains are low-density."
+        ],
+        "settlementPattern": "Merchant republics and port federations linked by coastal shipping and inland valleys.",
+        "estimatedPopulationMillions": 55
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          { "race": "humans", "percentage": 45 },
+          { "race": "elves", "percentage": 18 },
+          { "race": "halflings", "percentage": 10 },
+          { "race": "dwarves", "percentage": 9 },
+          { "race": "gnomes", "percentage": 7 },
+          { "race": "orcs", "percentage": 6 },
+          { "race": "goblins", "percentage": 3 },
+          { "race": "trolls", "percentage": 1 },
+          { "race": "merfolk", "percentage": 1 }
+        ]
+      },
+      "economicProfile": {
+        "majorExports": ["hardwood_lumber", "citrus_fruit", "wine", "ships", "salted_fish", "dyes"],
+        "majorImports": ["iron", "stone", "grain", "magical_artifacts"]
+      },
+      "civilizationNotes": [
+        "Serathyl is a trade-crossroads continent.",
+        "Elves dominate deep forests.",
+        "Human merchant republics line the coasts.",
+        "Halflings control many agricultural valleys."
+      ]
+    },
+    {
+      "id": "region.draemor",
+      "slug": "draemor",
+      "name": "Draemor",
+      "regionType": "continent",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "southern_central_continent",
+      "summary": "A fertile southern central continent defined by large river systems and powerful agricultural belts.",
+      "tags": ["continent", "agricultural_powerhouse", "river_basin", "breadbasket"],
+      "populationProfile": {
+        "densityBand": "high",
+        "densityNotes": [
+          "The central basin supports enormous food production."
+        ],
+        "settlementPattern": "Large agrarian kingdoms and market towns fed by dense interior farming networks.",
+        "estimatedPopulationMillions": 90
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          { "race": "humans", "percentage": 48 },
+          { "race": "halflings", "percentage": 14 },
+          { "race": "elves", "percentage": 12 },
+          { "race": "dwarves", "percentage": 10 },
+          { "race": "gnomes", "percentage": 7 },
+          { "race": "orcs", "percentage": 5 },
+          { "race": "goblins", "percentage": 2 },
+          { "race": "trolls", "percentage": 1 },
+          { "race": "merfolk", "percentage": 1 }
+        ]
+      },
+      "economicProfile": {
+        "majorExports": ["grain", "livestock", "leather", "beer", "mead", "horses"],
+        "majorImports": ["weapons", "precious_metals", "magic_goods", "silk"]
+      },
+      "civilizationNotes": [
+        "The central river basin supports enormous food production.",
+        "Halflings dominate many farming regions.",
+        "Large dwarven tunnel cities exist beneath the central hills."
+      ]
+    },
+    {
+      "id": "region.talmyra",
+      "slug": "talmyra",
+      "name": "Talmyra",
+      "regionType": "continent",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "southeast_continent",
+      "summary": "A wilder southeastern continent of tribal confederacies, volcanic strongholds, jungled interiors, and contested frontiers.",
+      "tags": ["continent", "frontier", "tribal", "jungle"],
+      "populationProfile": {
+        "densityBand": "low",
+        "densityNotes": [
+          "Northern valleys are moderate-density.",
+          "The southern peninsula is low-density.",
+          "Interior jungle and mountain zones are very low-density."
+        ],
+        "settlementPattern": "Fragmented tribal confederacies, fortified enclaves, and sparse frontier colonies.",
+        "estimatedPopulationMillions": 25
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          { "race": "orcs", "percentage": 25 },
+          { "race": "goblins", "percentage": 18 },
+          { "race": "humans", "percentage": 18 },
+          { "race": "elves", "percentage": 10 },
+          { "race": "dwarves", "percentage": 9 },
+          { "race": "trolls", "percentage": 7 },
+          { "race": "halflings", "percentage": 6 },
+          { "race": "gnomes", "percentage": 4 },
+          { "race": "merfolk", "percentage": 3 }
+        ]
+      },
+      "economicProfile": {
+        "majorExports": ["ivory", "rare_hardwood", "exotic_animals", "spices", "gold", "gems"],
+        "majorImports": ["steel_weapons", "armor", "grain", "textiles"]
+      },
+      "civilizationNotes": [
+        "Talmyra is a frontier continent.",
+        "Many tribal confederacies dominate the wilds.",
+        "Hidden elven enclaves survive in deep jungles.",
+        "Dwarven citadels stand in ancient volcanic ranges."
+      ],
+      "strategicNotes": [
+        "Talmyra's frontier wars and spice trade shape southern sea politics."
+      ]
+    },
+    {
+      "id": "region.auric_marches",
+      "slug": "auric_marches",
+      "name": "The Auric Marches",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.kaelvar",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "kaelvar_western_interior",
+      "summary": "Golden plains, dry marches, and mineral-bearing uplands across western Kaelvar.",
+      "tags": ["subregion", "plateau", "marches", "dryland"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Sparse marches, mining outposts, and fortified routes."
+      }
+    },
+    {
+      "id": "region.verdant_thalos",
+      "slug": "verdant_thalos",
+      "name": "Verdant Thalos",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.kaelvar",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "kaelvar_southern_peninsula",
+      "summary": "The lush southern peninsula of Kaelvar, rich in agriculture, ports, and managed forests.",
+      "tags": ["subregion", "peninsula", "fertile", "coastal"],
+      "populationProfile": {
+        "densityBand": "high",
+        "settlementPattern": "Dense farm belts and city-linked coasts."
+      }
+    },
+    {
+      "id": "region.shattercap_isles",
+      "slug": "shattercap_isles",
+      "name": "The Shattercap Isles",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.kaelvar",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "kaelvar_northern_coast",
+      "summary": "A broken northern island fringe that screens Kaelvar from the open northern sea.",
+      "tags": ["subregion", "islands", "coastal", "maritime"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Scattered fishing ports and lookout settlements."
+      }
+    },
+    {
+      "id": "region.crownlands",
+      "slug": "crownlands",
+      "name": "The Crownlands",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.valtherion",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "valtherion_northern_highlands",
+      "summary": "Northern forests and highlands holding the oldest noble forests and elevated frontiers of Valtherion.",
+      "tags": ["subregion", "forest", "highland", "old_realm"],
+      "populationProfile": {
+        "densityBand": "moderate",
+        "settlementPattern": "Forest realms, hill keeps, and headwater strongholds."
+      }
+    },
+    {
+      "id": "region.embersteppe",
+      "slug": "embersteppe",
+      "name": "The Embersteppe",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.valtherion",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "valtherion_central_plateau",
+      "summary": "A drier central plateau and steppe corridor between richer Valtherion basins.",
+      "tags": ["subregion", "steppe", "plateau", "frontier"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Caravan routes, ranching corridors, and contested borderlands."
+      }
+    },
+    {
+      "id": "region.sapphire_rivers",
+      "slug": "sapphire_rivers",
+      "name": "The Sapphire Rivers",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.valtherion",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "valtherion_eastern_river_basin",
+      "summary": "The eastern river basin of Valtherion, crowded with navigable waters, cities, and farmland.",
+      "tags": ["subregion", "river_basin", "urban", "fertile"],
+      "populationProfile": {
+        "densityBand": "very_high",
+        "settlementPattern": "Dense river cities, farmland, and administrative capitals."
+      }
+    },
+    {
+      "id": "region.jade_expanse",
+      "slug": "jade_expanse",
+      "name": "The Jade Expanse",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.valtherion",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "valtherion_southern_lowlands",
+      "summary": "A broad southern agricultural expanse where fertile lowlands feed the greater Valtherion system.",
+      "tags": ["subregion", "lowlands", "fertile", "agrarian"],
+      "populationProfile": {
+        "densityBand": "high",
+        "settlementPattern": "Heavy farming districts, market towns, and grain routes."
+      }
+    },
+    {
+      "id": "region.windward_spine",
+      "slug": "windward_spine",
+      "name": "The Windward Spine",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.serathyl",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "serathyl_northern_mountains",
+      "summary": "The mountain backbone of Serathyl, shaping weather, travel, and northern settlement limits.",
+      "tags": ["subregion", "mountains", "spine", "rugged"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Sparse holds, passes, and upland communities."
+      }
+    },
+    {
+      "id": "region.green_reach",
+      "slug": "green_reach",
+      "name": "The Green Reach",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.serathyl",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "serathyl_central_forests",
+      "summary": "The central forested heartland of Serathyl where timber, dyes, and elven domains overlap.",
+      "tags": ["subregion", "forest", "timber", "elven"],
+      "populationProfile": {
+        "densityBand": "moderate",
+        "settlementPattern": "Forest towns, river clearings, and protected elven domains."
+      }
+    },
+    {
+      "id": "region.sailors_verge",
+      "slug": "sailors_verge",
+      "name": "The Sailor's Verge",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.serathyl",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "serathyl_southern_coasts",
+      "summary": "An island-rich southern maritime rim of harbors, fleets, and sea-linked republics.",
+      "tags": ["subregion", "coastal", "archipelago", "merchant"],
+      "populationProfile": {
+        "densityBand": "high",
+        "settlementPattern": "Dense port belts and island shipping towns."
+      }
+    },
+    {
+      "id": "region.heart_basin",
+      "slug": "heart_basin",
+      "name": "The Heart Basin",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.draemor",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "draemor_central_basin",
+      "summary": "The core river hub and granary basin of Draemor.",
+      "tags": ["subregion", "basin", "grain", "heartland"],
+      "populationProfile": {
+        "densityBand": "high",
+        "settlementPattern": "Dense farm belts, river markets, and provisioning towns."
+      }
+    },
+    {
+      "id": "region.emerald_mantle",
+      "slug": "emerald_mantle",
+      "name": "The Emerald Mantle",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.draemor",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "draemor_surrounding_lowlands",
+      "summary": "The lowland belt surrounding Draemor's basin, rich in pasture, villages, and market roads.",
+      "tags": ["subregion", "lowlands", "pasture", "agrarian"],
+      "populationProfile": {
+        "densityBand": "moderate",
+        "settlementPattern": "Mixed farming districts and market-linked villages."
+      }
+    },
+    {
+      "id": "region.stormcap_coast",
+      "slug": "stormcap_coast",
+      "name": "The Stormcap Coast",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.draemor",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "draemor_southern_shores",
+      "summary": "The rough southern shores of Draemor where storms, fisheries, and hard ports dominate.",
+      "tags": ["subregion", "coastal", "stormbound", "rugged"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Hardy fishing ports and scattered coastal keeps."
+      }
+    },
+    {
+      "id": "region.thorn_peninsula",
+      "slug": "thorn_peninsula",
+      "name": "The Thorn Peninsula",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.talmyra",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "talmyra_southern_extension",
+      "summary": "The narrow southern extension of Talmyra, broken by peninsulas, cliffs, and exposed coasts.",
+      "tags": ["subregion", "peninsula", "rugged", "frontier"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Sparse coastal enclaves and fortified tribal settlements."
+      }
+    },
+    {
+      "id": "region.silver_valleys",
+      "slug": "silver_valleys",
+      "name": "The Silver Valleys",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.talmyra",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "talmyra_interior_valleys",
+      "summary": "The more habitable interior valleys of Talmyra where rivers allow denser settlement and contested agriculture.",
+      "tags": ["subregion", "valleys", "riverlands", "contested"],
+      "populationProfile": {
+        "densityBand": "moderate",
+        "settlementPattern": "Contested valleys, fortified trade towns, and confederate seats."
+      }
+    },
+    {
+      "id": "region.watcher_coast",
+      "slug": "watcher_coast",
+      "name": "The Watcher Coast",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.talmyra",
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "talmyra_eastern_cliffs",
+      "summary": "An eastern coast of cliffs, islands, and hard maritime approaches along Talmyra's edge.",
+      "tags": ["subregion", "cliffs", "coastal", "watchposts"],
+      "populationProfile": {
+        "densityBand": "very_low",
+        "settlementPattern": "Sparse watch-forts, coves, and isolated island communities."
+      }
+    },
+    {
+      "id": "region.myridian_chain",
+      "slug": "myridian_chain",
+      "name": "The Myridian Chain",
+      "regionType": "island_system",
+      "aliases": ["Starfall Isles", "The Broken Crown"],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "northern_archipelago",
+      "summary": "A busy archipelago between Kaelvar and Valtherion made up of pirate states, trade ports, and naval staging points.",
+      "tags": ["island_system", "trade_hub", "archipelago", "naval"],
+      "populationProfile": {
+        "densityBand": "moderate",
+        "settlementPattern": "Port towns, fortified islands, and freebooting harbor states.",
+        "estimatedPopulationMillions": 8
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          { "race": "humans", "percentage": 55 },
+          { "race": "halflings", "percentage": 12 },
+          { "race": "elves", "percentage": 10 },
+          { "race": "dwarves", "percentage": 8 },
+          { "race": "orc_goblin_mixed", "percentage": 10 },
+          { "race": "merfolk", "percentage": 5 }
+        ]
+      },
+      "economicProfile": {
+        "majorExports": ["fish", "salt", "pearls", "shipbuilding"],
+        "majorImports": ["grain", "timber", "metal_goods", "cloth"]
+      }
+    },
+    {
+      "id": "region.lantern_isles",
+      "slug": "lantern_isles",
+      "name": "The Lantern Isles",
+      "regionType": "island_system",
+      "aliases": ["The Driftkeys"],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "central_ocean_isles",
+      "summary": "Small central-ocean islands used as trade outposts, hidden anchorages, and pirate refuges.",
+      "tags": ["island_system", "central_ocean", "outposts", "piracy"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Sparse outposts, relay ports, and hidden coves.",
+        "estimatedPopulationMillions": 4
+      },
+      "demographicProfile": {
+        "notableGroups": [
+          "Trading outposts",
+          "Pirate havens",
+          "Significant merfolk presence"
+        ]
+      }
+    },
+    {
+      "id": "region.serpents_wake",
+      "slug": "serpents_wake",
+      "name": "The Serpent's Wake",
+      "regionType": "island_system",
+      "aliases": ["The Tidal Fang Isles"],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "southern_island_arc",
+      "summary": "A storm-lashed southern island arc infamous for pirate tribes, wrecking seas, and undersea kingdoms.",
+      "tags": ["island_system", "storm_sea", "piracy", "southern_arc"],
+      "populationProfile": {
+        "densityBand": "low",
+        "settlementPattern": "Dangerous anchorages, raider camps, and scattered hard ports.",
+        "estimatedPopulationMillions": 2
+      },
+      "demographicProfile": {
+        "notableGroups": [
+          "Orc and goblin pirate tribes",
+          "Merfolk kingdoms beneath the surrounding waters"
+        ]
+      }
+    },
+    {
+      "id": "region.dawnreach_isles",
+      "slug": "dawnreach_isles",
+      "name": "The Dawnreach Isles",
+      "regionType": "island_system",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "eastern_ocean_isles",
+      "summary": "Sparse eastern islands far from the main continental centers, valuable mainly as waypoints and remote outposts.",
+      "tags": ["island_system", "remote", "eastern_ocean", "waypoints"],
+      "populationProfile": {
+        "densityBand": "very_low",
+        "settlementPattern": "Remote outposts, seasonal camps, and isolated island communities.",
+        "estimatedPopulationMillions": 1
+      }
+    },
+    {
+      "id": "region.azure_vast",
+      "slug": "azure_vast",
+      "name": "The Azure Vast",
+      "regionType": "ocean",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "central_ocean",
+      "summary": "The central ocean binding the world map together through trade, piracy, and long-haul navigation.",
+      "tags": ["ocean", "central", "trade_routes"],
+      "strategicNotes": [
+        "The Azure Vast is the main connective sea between all five continents."
+      ]
+    },
+    {
+      "id": "region.gilded_sea",
+      "slug": "gilded_sea",
+      "name": "The Gilded Sea",
+      "regionType": "ocean",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "west_of_valtherion",
+      "summary": "A prosperous western sea adjacent to Valtherion and the northern island routes.",
+      "tags": ["ocean", "northern", "merchant"],
+      "strategicNotes": [
+        "This sea ties Valtherion to the Myridian routes and northwest exchanges."
+      ]
+    },
+    {
+      "id": "region.tempest_expanse",
+      "slug": "tempest_expanse",
+      "name": "The Tempest Expanse",
+      "regionType": "ocean",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "southern_ocean",
+      "summary": "The storm-heavy southern ocean where climate and distance make navigation costly and dangerous.",
+      "tags": ["ocean", "southern", "storm_sea"],
+      "strategicNotes": [
+        "The Tempest Expanse amplifies the risks around southern islands and long ocean routes."
+      ]
+    },
+    {
+      "id": "region.shattered_gulf",
+      "slug": "shattered_gulf",
+      "name": "The Shattered Gulf",
+      "regionType": "ocean",
+      "aliases": [],
+      "mapIds": ["world_map.first_world"],
+      "positionLabel": "between_serathyl_and_draemor",
+      "summary": "A broken gulf between Serathyl and Draemor filled with sea lanes, island approaches, and contested shipping.",
+      "tags": ["ocean", "gulf", "contested", "shipping"],
+      "strategicNotes": [
+        "The gulf is a natural maritime fault line between western merchants and southern grain routes."
+      ]
+    }
+  ]
+}

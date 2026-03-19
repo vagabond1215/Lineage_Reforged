@@ -1,0 +1,398 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "macroRegionId",
+          "regionId",
+          "settlementType",
+          "populationBand",
+          "populationTotal",
+          "administrativeRole",
+          "summary",
+          "siteContext",
+          "mapLocation",
+          "identityTags",
+          "purposeTags",
+          "infrastructureProfile",
+          "racialMix",
+          "domesticResourceProfile",
+          "domesticTradeFlows",
+          "guildPresence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "macroRegionId": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "regionId": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "settlementType": {
+            "type": "string",
+            "enum": [
+              "hamlet",
+              "outpost",
+              "village",
+              "market_town",
+              "town",
+              "city",
+              "fort",
+              "citadel",
+              "harbor_town",
+              "port_city",
+              "estate",
+              "monastery",
+              "ferry_post",
+              "camp",
+              "waystation"
+            ]
+          },
+          "populationBand": {
+            "type": "string",
+            "enum": [
+              "tiny",
+              "small",
+              "modest",
+              "large",
+              "major"
+            ]
+          },
+          "populationTotal": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "administrativeRole": {
+            "type": "string",
+            "enum": [
+              "none",
+              "local",
+              "subregional",
+              "regional",
+              "continental"
+            ]
+          },
+          "parentSettlementId": {
+            "type": "string",
+            "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "dependencyRole": {
+            "type": "string",
+            "enum": [
+              "satellite_hamlet",
+              "estate_supply",
+              "resource_camp",
+              "ferry_crossing",
+              "monastic_estate",
+              "watch_post",
+              "waystation",
+              "harbor_support",
+              "seasonal_station"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "siteContext": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mapLocation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mapId",
+              "pixelX",
+              "pixelY",
+              "siteClass",
+              "climateZoneId",
+              "biomeZoneId"
+            ],
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "pattern": "^world_map\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "pixelX": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pixelY": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "siteClass": {
+                "type": "string",
+                "enum": [
+                  "surface",
+                  "subterranean",
+                  "underwater"
+                ]
+              },
+              "climateZoneId": {
+                "type": "string",
+                "pattern": "^map_climate\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+              },
+              "biomeZoneId": {
+                "type": "string",
+                "pattern": "^map_biome\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "identityTags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "purposeTags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "infrastructureProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "overallLevel",
+              "roadTier",
+              "waterTier",
+              "fortificationTier",
+              "harborTier",
+              "marketTier"
+            ],
+            "properties": {
+              "overallLevel": {
+                "type": "string",
+                "enum": [
+                  "rudimentary",
+                  "frontier",
+                  "established",
+                  "developed",
+                  "civic",
+                  "grand"
+                ]
+              },
+              "roadTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "waterTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "fortificationTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "harborTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "marketTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              }
+            }
+          },
+          "racialMix": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "race",
+                "percentage"
+              ],
+              "properties": {
+                "race": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "percentage": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            }
+          },
+          "domesticResourceProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "primaryGoods",
+              "secondaryGoods",
+              "demandedGoods"
+            ],
+            "properties": {
+              "primaryGoods": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "secondaryGoods": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "demandedGoods": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              }
+            }
+          },
+          "domesticTradeFlows": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "partnerSettlementId",
+                "direction",
+                "goods",
+                "routeModes",
+                "notes"
+              ],
+              "properties": {
+                "partnerSettlementId": {
+                  "type": "string",
+                  "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "exports_to",
+                    "imports_from",
+                    "exchange_with"
+                  ]
+                },
+                "goods": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                },
+                "routeModes": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "road",
+                      "river",
+                      "coastal",
+                      "canal",
+                      "pack",
+                      "sea_lane"
+                    ]
+                  }
+                },
+                "notes": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "guildPresence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "guildType",
+                "name",
+                "presenceLevel",
+                "functions",
+                "notes"
+              ],
+              "properties": {
+                "guildType": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "presenceLevel": {
+                  "type": "string",
+                  "enum": [
+                    "outpost",
+                    "hall",
+                    "chapterhouse",
+                    "guildhouse",
+                    "exchange",
+                    "great_house"
+                  ]
+                },
+                "functions": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                },
+                "notes": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

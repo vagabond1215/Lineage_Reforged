@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "category",
+          "infrastructureType",
+          "description",
+          "serviceOutputs",
+          "constructionPolicy",
+          "progressionProfile"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^infrastructure\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "waterworks",
+              "transport",
+              "defense",
+              "civic",
+              "utility",
+              "agriculture"
+            ]
+          },
+          "infrastructureType": {
+            "type": "string",
+            "enum": [
+              "irrigation",
+              "road",
+              "wall",
+              "gate",
+              "aqueduct",
+              "bridge",
+              "canal",
+              "fortification",
+              "utility"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "serviceOutputs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "itemKey",
+                "unit",
+                "description"
+              ],
+              "properties": {
+                "itemKey": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "unit": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "constructionPolicy": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "directBuildAllowed",
+              "upgradeLaborMultiplier",
+              "deconstructionLaborShare",
+              "notes"
+            ],
+            "properties": {
+              "directBuildAllowed": {
+                "type": "boolean"
+              },
+              "upgradeLaborMultiplier": {
+                "type": "number",
+                "exclusiveMinimum": 1
+              },
+              "deconstructionLaborShare": {
+                "type": "number",
+                "minimum": 0
+              },
+              "notes": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "progressionProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "maxTier",
+              "tiers"
+            ],
+            "properties": {
+              "maxTier": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tiers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "tier",
+                    "tierLabel",
+                    "techLevel",
+                    "technologyRequirements",
+                    "laborRequirement",
+                    "materialRequirements",
+                    "accessRequirements",
+                    "serviceMetrics",
+                    "benefits"
+                  ],
+                  "properties": {
+                    "tier": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 5
+                    },
+                    "tierLabel": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "techLevel": {
+                      "type": "string",
+                      "enum": [
+                        "primitive",
+                        "basic",
+                        "improved",
+                        "advanced",
+                        "masterwork"
+                      ]
+                    },
+                    "technologyRequirements": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^(?:feature|tech)\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                      }
+                    },
+                    "laborRequirement": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "materialRequirements": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "itemKey",
+                          "quantity",
+                          "unit"
+                        ],
+                        "properties": {
+                          "itemKey": {
+                            "type": "string",
+                            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                          },
+                          "quantity": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "unit": {
+                            "type": "string",
+                            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                          }
+                        }
+                      }
+                    },
+                    "accessRequirements": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                      }
+                    },
+                    "serviceMetrics": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "label",
+                          "valueText"
+                        ],
+                        "properties": {
+                          "label": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "valueText": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    },
+                    "benefits": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "buildNotes": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

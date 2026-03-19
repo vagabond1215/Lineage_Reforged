@@ -1,0 +1,268 @@
+{
+    "records":  [
+                    {
+                        "id":  "world_map.first_world",
+                        "slug":  "first_world",
+                        "name":  "First World Map",
+                        "mapType":  "world",
+                        "sourceSummary":  "Interpreted from the supplied height and biome maps as five continents plus several island systems, with settlement logic based on rivers, fertility, forests, mountains, marginal lands, and navigable seas.",
+                        "layerSummaries":  [
+                                               "The height map suggests five major continental groups separated by ocean and island chains.",
+                                               "The biome map supports dense settlement in fertile river basins and temperate coasts, with lower density in arid, mountainous, tundra, and frontier zones.",
+                                               "River origins and mountain belts imply older civilizations at headwaters, dwarven uplands, and forest-linked elven enclaves.",
+                                               "Settlements, climate zones, biome zones, region footprints, and travel routes are now authored against the same 2048x1152 pixel grid."
+                                           ],
+                        "scaleProfile":  {
+                                             "referenceImageWidthPx":  2048,
+                                             "referenceImageHeightPx":  1152,
+                                             "kilometersPerPixel":  9.765625,
+                                             "milesPerPixel":  6.068076171875,
+                                             "mapWidthKilometers":  20000,
+                                             "mapWidthMiles":  12427.42,
+                                             "mapHeightKilometers":  11250,
+                                             "mapHeightMiles":  6990.42375,
+                                             "practicalRulerBenchmarks":  [
+                                                                              {
+                                                                                  "pixels":  10,
+                                                                                  "distanceKilometers":  100,
+                                                                                  "distanceMiles":  62.1371
+                                                                              },
+                                                                              {
+                                                                                  "pixels":  50,
+                                                                                  "distanceKilometers":  500,
+                                                                                  "distanceMiles":  310.6855
+                                                                              },
+                                                                              {
+                                                                                  "pixels":  100,
+                                                                                  "distanceKilometers":  1000,
+                                                                                  "distanceMiles":  621.371
+                                                                              }
+                                                                          ],
+                                             "distanceBenchmarks":  [
+                                                                        {
+                                                                            "id":  "full_map_width",
+                                                                            "name":  "Entire map width",
+                                                                            "distanceKilometersMin":  20000,
+                                                                            "distanceKilometersMax":  20000,
+                                                                            "distanceMilesMin":  12427.42,
+                                                                            "distanceMilesMax":  12427.42,
+                                                                            "notes":  "The supplied 2048 px map is treated as a half-world inhabited view at roughly Earth-like scale."
+                                                                        },
+                                                                        {
+                                                                            "id":  "west_to_east_continents",
+                                                                            "name":  "West continent to east continent span",
+                                                                            "distanceKilometersMin":  11000,
+                                                                            "distanceKilometersMax":  13000,
+                                                                            "distanceMilesMin":  6835.081,
+                                                                            "distanceMilesMax":  8077.823,
+                                                                            "notes":  "Cross-ocean movement between the two main northern continental groups is a major maritime undertaking."
+                                                                        },
+                                                                        {
+                                                                            "id":  "southern_continent_diameter",
+                                                                            "name":  "Large southern continent diameter",
+                                                                            "distanceKilometersMin":  4500,
+                                                                            "distanceKilometersMax":  5000,
+                                                                            "distanceMilesMin":  2796.1695,
+                                                                            "distanceMilesMax":  3106.855,
+                                                                            "notes":  "Draemor-scale southern landmasses support long internal campaigns rather than short regional crossings."
+                                                                        },
+                                                                        {
+                                                                            "id":  "eastern_continent_width",
+                                                                            "name":  "Large eastern continent width",
+                                                                            "distanceKilometersMin":  6000,
+                                                                            "distanceKilometersMax":  7000,
+                                                                            "distanceMilesMin":  3728.226,
+                                                                            "distanceMilesMax":  4349.597,
+                                                                            "notes":  "Valtherion-scale eastward breadth supports several major internal cultural and trade spheres."
+                                                                        },
+                                                                        {
+                                                                            "id":  "typical_island_chain_gap",
+                                                                            "name":  "Typical island-chain gap",
+                                                                            "distanceKilometersMin":  150,
+                                                                            "distanceKilometersMax":  400,
+                                                                            "distanceMilesMin":  93.20565,
+                                                                            "distanceMilesMax":  248.5484,
+                                                                            "notes":  "Short marine hops remain common within archipelagos even when open-ocean passages are far larger."
+                                                                        }
+                                                                    ],
+                                             "notes":  [
+                                                           "This map now uses an Earth-like half-world scale where 2048 px corresponds to roughly 20,000 km of horizontal span.",
+                                                           "Use 10 px for about 100 km, 50 px for about 500 km, and 100 px for about 1,000 km when estimating authored route lengths from the reference images.",
+                                                           "Base overland and maritime travel assumptions for the authored map are 30 km/day on foot, 60 km/day mounted, and 200 km/day for ordinary seagoing sail.",
+                                                           "Pixel coordinates on this map are now the canonical anchor for settlements, regional geometry, and authored travel routes."
+                                                       ]
+                                         },
+                        "continentRegionIds":  [
+                                                   "region.kaelvar",
+                                                   "region.valtherion",
+                                                   "region.serathyl",
+                                                   "region.draemor",
+                                                   "region.talmyra"
+                                               ],
+                        "islandSystemRegionIds":  [
+                                                      "region.myridian_chain",
+                                                      "region.lantern_isles",
+                                                      "region.serpents_wake",
+                                                      "region.dawnreach_isles"
+                                                  ],
+                        "oceanRegionIds":  [
+                                               "region.azure_vast",
+                                               "region.gilded_sea",
+                                               "region.tempest_expanse",
+                                               "region.shattered_gulf"
+                                           ],
+                        "globalAssumptions":  [
+                                                  "Fertile river basins and temperate coasts support the highest human densities.",
+                                                  "Mountain systems favor dwarven settlement.",
+                                                  "Deep forests favor elven enclaves and older forest realms.",
+                                                  "Marginal lands favor orc, goblin, and troll tribal presence.",
+                                                  "Small fertile valleys near human lands favor halflings, while mixed forest hills near trade centers favor gnomes.",
+                                                  "Coastal shelves and island seas favor merfolk, and older civilizations concentrate near major river origins."
+                                              ],
+                        "densityScale":  [
+                                             {
+                                                 "densityBand":  "very_high",
+                                                 "settlementPattern":  "Dense cities and intensive farmland."
+                                             },
+                                             {
+                                                 "densityBand":  "high",
+                                                 "settlementPattern":  "Kingdom-scale heartlands with stable farm belts and market towns."
+                                             },
+                                             {
+                                                 "densityBand":  "moderate",
+                                                 "settlementPattern":  "Frontier kingdoms and mixed settled-wild corridors."
+                                             },
+                                             {
+                                                 "densityBand":  "low",
+                                                 "settlementPattern":  "Sparse settlement, tribal ranges, and isolated forts."
+                                             },
+                                             {
+                                                 "densityBand":  "very_low",
+                                                 "settlementPattern":  "Wilderness, seasonal camps, and dangerous marginal land."
+                                             }
+                                         ],
+                        "populationEstimates":  [
+                                                    {
+                                                        "regionId":  "region.valtherion",
+                                                        "estimateMillions":  140
+                                                    },
+                                                    {
+                                                        "regionId":  "region.draemor",
+                                                        "estimateMillions":  90
+                                                    },
+                                                    {
+                                                        "regionId":  "region.serathyl",
+                                                        "estimateMillions":  55
+                                                    },
+                                                    {
+                                                        "regionId":  "region.kaelvar",
+                                                        "estimateMillions":  40
+                                                    },
+                                                    {
+                                                        "regionId":  "region.talmyra",
+                                                        "estimateMillions":  25
+                                                    },
+                                                    {
+                                                        "regionId":  "region.myridian_chain",
+                                                        "estimateMillions":  8
+                                                    },
+                                                    {
+                                                        "regionId":  "region.lantern_isles",
+                                                        "estimateMillions":  4
+                                                    },
+                                                    {
+                                                        "regionId":  "region.serpents_wake",
+                                                        "estimateMillions":  2
+                                                    },
+                                                    {
+                                                        "regionId":  "region.dawnreach_isles",
+                                                        "estimateMillions":  1
+                                                    }
+                                                ],
+                        "totalPopulationMillions":  365,
+                        "majorTradeRoutes":  [
+                                                 {
+                                                     "id":  "valtherion_draemor_grain_route",
+                                                     "name":  "Valtherion-Draemor Grain Route",
+                                                     "summary":  "The main bulk-food corridor linking Draemor\u0027s breadbasket to Valtherion\u0027s population core.",
+                                                     "regionIds":  [
+                                                                       "region.valtherion",
+                                                                       "region.draemor",
+                                                                       "region.azure_vast",
+                                                                       "region.shattered_gulf"
+                                                                   ]
+                                                 },
+                                                 {
+                                                     "id":  "serathyl_valtherion_merchant_corridor",
+                                                     "name":  "Serathyl-Valtherion Merchant Corridor",
+                                                     "summary":  "A high-value maritime route for ships, dyes, glass, books, and luxury cargo.",
+                                                     "regionIds":  [
+                                                                       "region.serathyl",
+                                                                       "region.valtherion",
+                                                                       "region.azure_vast",
+                                                                       "region.gilded_sea"
+                                                                   ]
+                                                 },
+                                                 {
+                                                     "id":  "talmyra_spice_trade",
+                                                     "name":  "Talmyra Spice Trade",
+                                                     "summary":  "A risky southern route carrying spices, rare hardwoods, ivory, and gems out of Talmyra.",
+                                                     "regionIds":  [
+                                                                       "region.talmyra",
+                                                                       "region.azure_vast",
+                                                                       "region.tempest_expanse",
+                                                                       "region.serpents_wake"
+                                                                   ]
+                                                 },
+                                                 {
+                                                     "id":  "myridian_naval_trade_hub",
+                                                     "name":  "Myridian Naval Trade Hub",
+                                                     "summary":  "A northern archipelago network that redistributes trade, naval traffic, and privateering pressure.",
+                                                     "regionIds":  [
+                                                                       "region.myridian_chain",
+                                                                       "region.kaelvar",
+                                                                       "region.valtherion",
+                                                                       "region.gilded_sea"
+                                                                   ]
+                                                 }
+                                             ],
+                        "conflictZones":  [
+                                              {
+                                                  "name":  "Kaelvar Interior",
+                                                  "summary":  "Settled southern powers compete with mobile tribal groups for routes, grazing, and minerals.",
+                                                  "regionIds":  [
+                                                                    "region.kaelvar",
+                                                                    "region.auric_marches"
+                                                                ]
+                                              },
+                                              {
+                                                  "name":  "Talmyra Frontier Wars",
+                                                  "summary":  "Confederacies, enclaves, and colonial outposts struggle over the most habitable valleys.",
+                                                  "regionIds":  [
+                                                                    "region.talmyra",
+                                                                    "region.silver_valleys",
+                                                                    "region.thorn_peninsula"
+                                                                ]
+                                              },
+                                              {
+                                                  "name":  "Valtherion Border Kingdoms",
+                                                  "summary":  "Border belts between the river core and interior frontiers are prone to raids and succession wars.",
+                                                  "regionIds":  [
+                                                                    "region.valtherion",
+                                                                    "region.embersteppe",
+                                                                    "region.crownlands"
+                                                                ]
+                                              },
+                                              {
+                                                  "name":  "Serpent\u0027s Wake Piracy Lanes",
+                                                  "summary":  "Storms, raiders, and undersea powers make the southern island arc a persistent hazard.",
+                                                  "regionIds":  [
+                                                                    "region.serpents_wake",
+                                                                    "region.tempest_expanse",
+                                                                    "region.azure_vast"
+                                                                ]
+                                              }
+                                          ]
+                    }
+                ]
+}

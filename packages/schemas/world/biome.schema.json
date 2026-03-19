@@ -10,11 +10,23 @@
       "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
     },
     "name": { "type": "string" },
-    "climateBand": { "type": "string" },
-    "baseFertility": { "type": "number" },
+    "climateBand": {
+      "type": "string",
+      "enum": ["desert", "subterranean", "temperate", "wetlands", "polar", "shrublands", "marine", "tropical", "grasslands"]
+    },
+    "baseFertility": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
     "hazards": {
       "type": "array",
-      "items": { "type": "string" }
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+      }
     }
-  }
+  },
+  "additionalProperties": false
 }

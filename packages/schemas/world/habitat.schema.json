@@ -2,15 +2,34 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "HabitatRecord",
   "type": "object",
-  "required": ["id", "slug", "name", "biomeId", "shape"],
+  "required": ["id", "slug", "name", "biomeId", "biomeIds", "shape"],
   "properties": {
-    "id": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^habitat\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
     "slug": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
     },
     "name": { "type": "string" },
-    "biomeId": { "type": "string" },
-    "shape": { "type": "string" }
-  }
+    "biomeId": {
+      "type": "string",
+      "pattern": "^biome\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "biomeIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^biome\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+      }
+    },
+    "shape": {
+      "type": "string",
+      "enum": ["patch", "linear", "point", "edge", "volume"]
+    }
+  },
+  "additionalProperties": false
 }

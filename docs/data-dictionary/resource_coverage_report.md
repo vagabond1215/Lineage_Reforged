@@ -1,20 +1,22 @@
 # Resource Coverage Report
 
-Generated: 2026-03-11 13:39
+Generated: 2026-03-14 00:00
 
 This report summarizes current content coverage for flora, fauna, and minerals, grouped by balancing-oriented categories.
 
 ## Totals
-- Flora records: 57
-- Fauna records: 54
+- Flora records: 117
+- Fauna records: 132
 - Mineral records: 47
-- Market flora entries: 57
-- Market fauna entries: 54
+- Market flora entries: 117
+- Market fauna entries: 132
 - Market mineral entries: 47
 
 ## Flora Coverage
 - Cultivated / farm plants (16): barley, bean_pod, beet, cabbage, carrot, flax, garlic, hemp, lentil, oats, onion, pea_vine, potato, rye, turnip, wheat
 - Ecology-support / wild utility plants (20): alder_sapling, birch_sapling, blackberry, blueberry, cattail, cave_button, chamomile, clover, juniper_shrub, morel, nettle, raspberry, river_reed, rosemary, ryegrass, shelf_fungus, thyme, watercress, willow_sapling, yarrow
+- Medicinal / tea / aromatic plants (15): chamomile, comfrey, feverfew, lavender, lemon_balm, lemongrass, licorice, marsh_mint, peppermint, rosemary, tea_shrub, thyme, valerian, wild_sage, yarrow
+- Colored blossom / pigment flowers (9): black_hollyhock, blue_cornflower, green_hellebore, orange_calendula, pink_peony, purple_violet, red_poppy, white_daisy, yellow_daisy
 - Fantasy variants (14): crystal_lichen, dawnlily, ember_moss, emberbloom, frostcap, frostfern, glowcap, glowreed, moonlotus, star_thistle, stone_truffle, sunpetal, voidfern, whisper_vine
 
 ## Fauna Coverage
@@ -32,3 +34,5 @@ This report summarizes current content coverage for flora, fauna, and minerals, 
 ## Notes
 - Categories are balancing-oriented groupings for design visibility; records may overlap in narrative use.
 - This report is descriptive and does not mutate source records.
+
+

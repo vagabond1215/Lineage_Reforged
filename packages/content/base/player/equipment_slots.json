@@ -1,8 +1,23 @@
 {
   "records": [
-    { "id": "slot.weapon.main_hand", "category": "weapon", "maxItems": 1 },
-    { "id": "slot.weapon.off_hand", "category": "weapon", "maxItems": 1 },
+    { "id": "slot.weapon.left", "category": "weapon", "maxItems": 1 },
+    { "id": "slot.weapon.right", "category": "weapon", "maxItems": 1 },
+
+    { "id": "slot.armor.head", "category": "armor", "maxItems": 1 },
+    { "id": "slot.armor.shoulder", "category": "armor", "maxItems": 1 },
     { "id": "slot.armor.chest", "category": "armor", "maxItems": 1 },
-    { "id": "slot.accessory.neck", "category": "accessory", "maxItems": 1 }
+    { "id": "slot.armor.arm", "category": "armor", "maxItems": 1 },
+    { "id": "slot.armor.hand", "category": "armor", "maxItems": 1 },
+    { "id": "slot.armor.waist", "category": "armor", "maxItems": 1 },
+    { "id": "slot.armor.leg", "category": "armor", "maxItems": 1 },
+    { "id": "slot.armor.foot", "category": "armor", "maxItems": 1 },
+
+    { "id": "slot.accessory.ear", "category": "accessory", "maxItems": 2 },
+    { "id": "slot.accessory.eyes", "category": "accessory", "maxItems": 1 },
+    { "id": "slot.accessory.neck", "category": "accessory", "maxItems": 1 },
+    { "id": "slot.accessory.arms", "category": "accessory", "maxItems": 2 },
+    { "id": "slot.accessory.fingers", "category": "accessory", "maxItems": 2 },
+    { "id": "slot.accessory.waist", "category": "accessory", "maxItems": 1 },
+    { "id": "slot.accessory.ankle", "category": "accessory", "maxItems": 2 }
   ]
 }

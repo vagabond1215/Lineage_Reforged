@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerTraitRecord",
+  "type": "object",
+  "required": ["id", "name", "effects"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "effects": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

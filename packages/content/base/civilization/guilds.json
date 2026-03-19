@@ -1,0 +1,2642 @@
+{
+    "records":  [
+                    {
+                        "id":  "guild.merchant_guild",
+                        "slug":  "merchant_guild",
+                        "name":  "Merchant Guild",
+                        "category":  "mercantile",
+                        "summary":  "Neutral trade houses that broker bulk exchange, credit, warehousing, and long-haul contracts out of secure market cities.",
+                        "governsActivities":  [
+                                                  "bulk_trade",
+                                                  "warehousing",
+                                                  "credit",
+                                                  "customs_broking",
+                                                  "trade_factoring"
+                                              ],
+                        "excludedActivities":  [
+                                                   "mining",
+                                                   "smelting",
+                                                   "combat_contracts"
+                                               ],
+                        "contractTypes":  [
+                                              "bulk_purchase",
+                                              "caravan_finance",
+                                              "warehouse_lease",
+                                              "chartered_shipping"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "guildhouse",
+                                                      "exchange",
+                                                      "great_house"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "trade_hub",
+                                                      "port_city",
+                                                      "regional_capital",
+                                                      "river_market"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "buy_in",
+                                                "buyInRequirement":  "A substantial buy-in in silver, plus sponsorship from two standing members or a crown-chartered factor.",
+                                                "entryRequirements":  [
+                                                                          "Demonstrate liquid capital or bonded goods sufficient for a first season of trade.",
+                                                                          "Post surety against fraud, unpaid tariffs, and broken contracts.",
+                                                                          "Swear to guild weights, measures, and neutral market arbitration."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to bonded warehouses, caravan insurance, and guarded counting rooms.",
+                                                                 "Preferential access to long-haul contracts and bulk market auctions.",
+                                                                 "Use of guild letters of credit, brokers, and dispute arbitration."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Pay annual dues and civic levies attached to guild charters.",
+                                                                          "Honor guild tariffs, declared weights, and warehouse inspections.",
+                                                                          "Contribute guards, wagons, or silver when the exchange funds critical caravans."
+                                                                      ],
+                                                "notes":  "Large exchanges effectively operate as banks, customs houses, and trade courts."
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "escort",
+                                                                          "porter",
+                                                                          "salvage"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "trade_hub",
+                                                                          "port_city",
+                                                                          "regional_capital",
+                                                                          "market_town"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "warehouse",
+                                                                          "merchant_quarter",
+                                                                          "bonded_storage",
+                                                                          "exchange"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Counting Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "none",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "notice_board",
+                                                                      "brokerage",
+                                                                      "weighing"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Trade Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  4,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "none",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "contract_broking",
+                                                                      "bonded_storage",
+                                                                      "auction_room"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Exchange House",
+                                                  "presenceLevel":  "exchange",
+                                                  "staffCapacity":  18,
+                                                  "dormitoryCapacity":  12,
+                                                  "stableCapacity":  12,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "banking",
+                                                                      "warehouse_lease",
+                                                                      "caravan_finance"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Great Exchange",
+                                                  "presenceLevel":  "great_house",
+                                                  "staffCapacity":  34,
+                                                  "dormitoryCapacity":  24,
+                                                  "stableCapacity":  20,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "banking",
+                                                                      "customs_arbitration",
+                                                                      "long_haul_factoring"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.adventurers_guild",
+                        "slug":  "adventurers_guild",
+                        "name":  "Adventurers Guild",
+                        "category":  "martial",
+                        "summary":  "Licensed contract houses for combat escorts, monster culls, ruin forays, patrol work, and other dangerous commissions unsuitable for ordinary laborers.",
+                        "governsActivities":  [
+                                                  "escort_contracts",
+                                                  "combat_contracts",
+                                                  "ruin_delving",
+                                                  "bounty_hunting",
+                                                  "hazard_clearance"
+                                              ],
+                        "excludedActivities":  [
+                                                   "standing_army_command",
+                                                   "judicial_sentencing",
+                                                   "bulk_merchant_credit"
+                                               ],
+                        "contractTypes":  [
+                                              "escort",
+                                              "bounty",
+                                              "patrol",
+                                              "monster_cull",
+                                              "ruin_recovery"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "hall",
+                                                      "chapterhouse",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "frontier_city",
+                                                      "trade_hub",
+                                                      "fortress_gate",
+                                                      "port_city"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Pass a live skills trial with weapon handling, field first aid, and formation discipline.",
+                                                                          "Complete a probation escort, patrol, or dangerous retrieval under a sworn senior member.",
+                                                                          "Accept guild arbitration for salvage shares, client disputes, and reckless conduct."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to vetted combat and escort contracts.",
+                                                                 "Use of guild notice boards, supply lockers, and casualty stipends.",
+                                                                 "Recognition papers that make travel, pay collection, and salvage claims easier."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Keep arms, armor, and camp discipline to guild standard.",
+                                                                          "Answer musters for emergency defense contracts when chartered settlements are threatened.",
+                                                                          "Submit spoil accounts and hazard reports after every sanctioned commission."
+                                                                      ],
+                                                "notes":  "Most halls sit near walls, ports, or caravan yards where danger contracts gather quickly."
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "gathering",
+                                                                          "hunting",
+                                                                          "domestic_labor",
+                                                                          "escort",
+                                                                          "porter",
+                                                                          "exploration",
+                                                                          "monster_subjugation",
+                                                                          "salvage"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "frontier_gate",
+                                                                          "fortress_gate",
+                                                                          "watch_post",
+                                                                          "trade_hub"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "quest_board",
+                                                                          "hazard_clearance",
+                                                                          "escort_contracts",
+                                                                          "salvage_registry"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Hiring Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  4,
+                                                  "dormitoryCapacity":  4,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quest_board",
+                                                                      "escort_contracts",
+                                                                      "bounty_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Contract Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  10,
+                                                  "dormitoryCapacity":  14,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "hazard_clearance",
+                                                                      "escort_contracts",
+                                                                      "company_barracks"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  20,
+                                                  "dormitoryCapacity":  32,
+                                                  "stableCapacity":  14,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "monster_culls",
+                                                                      "patrol_musters",
+                                                                      "salvage_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Grand Adventuring Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  32,
+                                                  "dormitoryCapacity":  56,
+                                                  "stableCapacity":  20,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "major_contracts",
+                                                                      "casualty_fund",
+                                                                      "armory_support"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.agricultural_guild",
+                        "slug":  "agricultural_guild",
+                        "name":  "Agricultural Guild",
+                        "category":  "gathering",
+                        "summary":  "Regional farming and orchard guild that organizes seed stock, field labor contracts, harvest levies, and bulk agricultural exchange.",
+                        "governsActivities":  [
+                                                  "field_cultivation",
+                                                  "orchard_husbandry",
+                                                  "seedkeeping",
+                                                  "grain_marketing",
+                                                  "harvest_contracts"
+                                              ],
+                        "excludedActivities":  [
+                                                   "long_haul_trade",
+                                                   "metal_smithing",
+                                                   "stone_quarrying"
+                                               ],
+                        "contractTypes":  [
+                                              "harvest_lease",
+                                              "seed_stock",
+                                              "tenant_assessment",
+                                              "bulk_grain_sale"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "agricultural_center",
+                                                      "river_market",
+                                                      "village_cluster",
+                                                      "granary_town"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Complete a supervised planting, irrigation, or harvest task to local guild standard.",
+                                                                          "Demonstrate knowledge of seed handling, storage, and crop rotation for the local climate.",
+                                                                          "Provide a seasonal reference from a landholder, reeve, or chartered guild elder."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to seed reserves, shared threshing space, and bulk grain buyers.",
+                                                                 "Priority placement for seasonal labor contracts and emergency replanting aid.",
+                                                                 "Guild-backed measures for fair rents, weighings, and cart allotments."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Maintain clean storage, honest weights, and declared harvest shares.",
+                                                                          "Contribute labor or tithed grain to communal reserves in lean years.",
+                                                                          "Follow field quarantine rules when blight, pests, or flood damage spreads."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "gathering",
+                                                                          "hunting",
+                                                                          "domestic_labor",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "agricultural_center",
+                                                                          "farm_cluster",
+                                                                          "granary_estate",
+                                                                          "estate_holding"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "seedkeeping",
+                                                                          "harvest_yard",
+                                                                          "grain_market",
+                                                                          "orchard_contracts"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "task_posting",
+                                                                      "weighing",
+                                                                      "member_sales"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Gatherers Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  4,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "labor_posting",
+                                                                      "sorting_tables",
+                                                                      "seasonal_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Chartered Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  8,
+                                                  "stableCapacity":  8,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "quality_control",
+                                                                      "reserve_stock",
+                                                                      "regional_contracts"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Produce House",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  16,
+                                                  "stableCapacity":  12,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "bulk_exchange",
+                                                                      "dispatch_office",
+                                                                      "deep_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.fishers_guild",
+                        "slug":  "fishers_guild",
+                        "name":  "Fishers Guild",
+                        "category":  "gathering",
+                        "summary":  "Catch guild for river, coastal, and lake fishers that manages rights, landing space, net rooms, and auction order.",
+                        "governsActivities":  [
+                                                  "net_fishing",
+                                                  "line_fishing",
+                                                  "shellfishing",
+                                                  "fish_auctions",
+                                                  "curing_allotments"
+                                              ],
+                        "excludedActivities":  [
+                                                   "ship_construction",
+                                                   "deep_merchant_credit",
+                                                   "military_patrol"
+                                               ],
+                        "contractTypes":  [
+                                              "fishing_rights",
+                                              "catch_delivery",
+                                              "curing_space",
+                                              "boat_share"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "harbor_town",
+                                                      "port_city",
+                                                      "river_market",
+                                                      "coastal_village"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Land, sort, and preserve a supervised catch without waste.",
+                                                                          "Demonstrate safe handling of nets, lines, shell beds, and tidal hazards.",
+                                                                          "Accept guild quotas, seasonal closures, and landing inspections."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to licensed waters, curing sheds, and catch auctions.",
+                                                                 "Shared repair yards for nets, hooks, baskets, and small boats.",
+                                                                 "Dispute mediation over grounds, moorings, and spoilage claims."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Respect closures, spawning protections, and storm recalls.",
+                                                                          "Keep guild marks on catch crates and pay landing dues.",
+                                                                          "Answer harbor musters when storms or raiders threaten the fleet."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "gathering",
+                                                                          "domestic_labor",
+                                                                          "porter",
+                                                                          "salvage"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "harbor_town",
+                                                                          "port_city",
+                                                                          "coastal_village",
+                                                                          "river_market"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "catch_auction",
+                                                                          "landing_rights",
+                                                                          "curing_space",
+                                                                          "tidal_rights"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "task_posting",
+                                                                      "weighing",
+                                                                      "member_sales"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Gatherers Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  4,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "labor_posting",
+                                                                      "sorting_tables",
+                                                                      "seasonal_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Chartered Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  8,
+                                                  "stableCapacity":  8,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "quality_control",
+                                                                      "reserve_stock",
+                                                                      "regional_contracts"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Produce House",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  16,
+                                                  "stableCapacity":  12,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "bulk_exchange",
+                                                                      "dispatch_office",
+                                                                      "deep_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.herbalists_guild",
+                        "slug":  "herbalists_guild",
+                        "name":  "Herbalists Guild",
+                        "category":  "gathering",
+                        "summary":  "A gatherers guild for medicinal herbs, teas, roots, blossoms, and other delicate botanical harvests.",
+                        "governsActivities":  [
+                                                  "herb_foraging",
+                                                  "root_harvest",
+                                                  "botanical_drying",
+                                                  "apothecary_supply",
+                                                  "tea_leaf_sorting"
+                                              ],
+                        "excludedActivities":  [
+                                                   "large_field_farming",
+                                                   "spell_inscription",
+                                                   "glassblowing"
+                                               ],
+                        "contractTypes":  [
+                                              "forage_rights",
+                                              "apothecary_supply",
+                                              "tea_bundle_delivery",
+                                              "garden_tending"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "chapterhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "forest_edge",
+                                                      "garden_town",
+                                                      "apothecary_market",
+                                                      "hill_village"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Correctly identify safe, potent, and harmful plants in a supervised field round.",
+                                                                          "Harvest and dry a mixed herbal bundle without bruising or contamination.",
+                                                                          "Show competence in recordkeeping for seasonal potency and gathering grounds."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to protected herb plots, drying lofts, and guild buyers.",
+                                                                 "Reference guides, remedy formulas, and storage standards.",
+                                                                 "Priority referrals to apothecaries, bath houses, and tea merchants."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Do not overharvest protected beds or sell misidentified remedies.",
+                                                                          "Keep accurate drying and potency records for guild inspections.",
+                                                                          "Surrender dangerous specimens for guild disposal when required."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "gathering",
+                                                                          "domestic_labor",
+                                                                          "exploration"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "forest_edge",
+                                                                          "garden_town",
+                                                                          "apothecary_market",
+                                                                          "hill_village"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "drying_loft",
+                                                                          "remedy_stock",
+                                                                          "tea_sorting",
+                                                                          "botanical_records"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "task_posting",
+                                                                      "weighing",
+                                                                      "member_sales"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Gatherers Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  4,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "labor_posting",
+                                                                      "sorting_tables",
+                                                                      "seasonal_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Chartered Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  8,
+                                                  "stableCapacity":  8,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "quality_control",
+                                                                      "reserve_stock",
+                                                                      "regional_contracts"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Produce House",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  16,
+                                                  "stableCapacity":  12,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "bulk_exchange",
+                                                                      "dispatch_office",
+                                                                      "deep_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.miners_guild",
+                        "slug":  "miners_guild",
+                        "name":  "Miners Guild",
+                        "category":  "gathering",
+                        "summary":  "Extraction guild for metal ore, coal, salt, stone, and other sub-surface or quarry resources before they pass into refining crafts.",
+                        "governsActivities":  [
+                                                  "ore_extraction",
+                                                  "coal_cutting",
+                                                  "salt_working",
+                                                  "quarry_faces",
+                                                  "shaft_safety"
+                                              ],
+                        "excludedActivities":  [
+                                                   "smelting",
+                                                   "smithing",
+                                                   "gem_cutting",
+                                                   "masonry_finish_work"
+                                               ],
+                        "contractTypes":  [
+                                              "mine_lease",
+                                              "quarry_share",
+                                              "ore_delivery",
+                                              "shaft_repair"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "chapterhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "mining_town",
+                                                      "quarry_edge",
+                                                      "mountain_pass",
+                                                      "frontier_fort"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Complete a supervised shift with correct bracing, hauling, and spoil sorting.",
+                                                                          "Show knowledge of gas signs, bad stone, flood risk, and evacuation calls.",
+                                                                          "Carry references from a shaft boss, quarry reeve, or chartered mine captain."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to guild lease claims, haul contracts, and shared safety stores.",
+                                                                 "Mediated rights over shafts, drifts, and quarry cuts.",
+                                                                 "Burial and injury stipends funded by pit dues."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Observe guild safety signals, support rules, and assay declarations.",
+                                                                          "Declare productive seams instead of concealing them from the charter.",
+                                                                          "Contribute labor for rescue, collapse clearance, and water pumping when summoned."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter",
+                                                                          "exploration"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "mining_town",
+                                                                          "quarry_edge",
+                                                                          "mountain_pass",
+                                                                          "frontier_fort"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "ore_delivery",
+                                                                          "shaft_safety",
+                                                                          "claim_registry",
+                                                                          "assay_desk"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "task_posting",
+                                                                      "weighing",
+                                                                      "member_sales"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Gatherers Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  4,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "labor_posting",
+                                                                      "sorting_tables",
+                                                                      "seasonal_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Chartered Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  8,
+                                                  "stableCapacity":  8,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "quality_control",
+                                                                      "reserve_stock",
+                                                                      "regional_contracts"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Produce House",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  16,
+                                                  "stableCapacity":  12,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "bulk_exchange",
+                                                                      "dispatch_office",
+                                                                      "deep_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.teamsters_guild",
+                        "slug":  "teamsters_guild",
+                        "name":  "Teamsters Guild",
+                        "category":  "logistics",
+                        "summary":  "Wagon and pack-haul guild that controls overland freight scheduling, convoy standards, and road-haul labor.",
+                        "governsActivities":  [
+                                                  "wagon_haulage",
+                                                  "pack_trains",
+                                                  "convoy_scheduling",
+                                                  "freight_broking",
+                                                  "roadside_yards"
+                                              ],
+                        "excludedActivities":  [
+                                                   "animal_breeding",
+                                                   "river_barge_work",
+                                                   "merchant_credit"
+                                               ],
+                        "contractTypes":  [
+                                              "freight_haul",
+                                              "convoy_guarding",
+                                              "yard_storage",
+                                              "relay_service"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "trade_hub",
+                                                      "road_junction",
+                                                      "fortress_gate",
+                                                      "market_town"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Handle a loaded wagon or pack string through a supervised road leg without loss.",
+                                                                          "Demonstrate wheel, harness, axle, and cargo lash maintenance.",
+                                                                          "Know convoy spacing, night camp order, and emergency turnaround procedure."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to freight boards, relay yards, and guild-stamped cargo contracts.",
+                                                                 "Use of guild stables, wheelwright referrals, and guarded team yards.",
+                                                                 "Priority placement on crown and guildhouse freight runs."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Keep honest load tallies and declared cargo seals.",
+                                                                          "Answer convoy calls during famine relief, siege resupply, or emergency levy.",
+                                                                          "Maintain guild road conduct and animal welfare standards."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "escort",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "trade_hub",
+                                                                          "road_junction",
+                                                                          "fortress_gate",
+                                                                          "market_town"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "freight_board",
+                                                                          "relay_service",
+                                                                          "team_yard",
+                                                                          "convoy_dispatch"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Dispatch Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  4,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "route_board",
+                                                                      "cargo_slips",
+                                                                      "animal_stalls"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Relay Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  10,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  10,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "relay_service",
+                                                                      "yard_dispatch",
+                                                                      "porter_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Freight Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  18,
+                                                  "dormitoryCapacity":  12,
+                                                  "stableCapacity":  18,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "convoy_scheduling",
+                                                                      "stable_yards",
+                                                                      "bulk_hauls"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Freight Yard",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  28,
+                                                  "dormitoryCapacity":  18,
+                                                  "stableCapacity":  28,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "caravan_command",
+                                                                      "regional_dispatch",
+                                                                      "supply_depot"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.drovers_guild",
+                        "slug":  "drovers_guild",
+                        "name":  "Drovers Guild",
+                        "category":  "logistics",
+                        "summary":  "Livestock-moving guild that manages herd routes, pasture rights, market delivery, and animal handling contracts.",
+                        "governsActivities":  [
+                                                  "herd_driving",
+                                                  "stock_yards",
+                                                  "pasture_allotment",
+                                                  "breeding_sales",
+                                                  "live_market_delivery"
+                                              ],
+                        "excludedActivities":  [
+                                                   "wagon_freight",
+                                                   "smithing",
+                                                   "slaughterhouse_management"
+                                               ],
+                        "contractTypes":  [
+                                              "herd_transfer",
+                                              "pasture_lease",
+                                              "breeding_sale",
+                                              "seasonal_drive"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "chapterhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "ranching_valley",
+                                                      "market_town",
+                                                      "pasture_hub",
+                                                      "frontier_gate"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Complete a supervised livestock drive and pen count without panic or loss.",
+                                                                          "Demonstrate disease checks, branding protocol, and feed rotation knowledge.",
+                                                                          "Provide references from a herdmaster, market reeve, or drover captain."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to marked pasture corridors, market pens, and certified breeders.",
+                                                                 "Guild mediation over brand disputes, losses, and grazing access.",
+                                                                 "Priority booking for crown remounts and large herd movements."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Respect quarantine and disease notices.",
+                                                                          "Keep accurate head counts, brands, and delivery tallies.",
+                                                                          "Provide riders or beasts when emergency food or cavalry levies are called."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "escort",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "ranching_valley",
+                                                                          "market_town",
+                                                                          "pasture_hub",
+                                                                          "frontier_gate"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "stockyard_sales",
+                                                                          "remount_transfer",
+                                                                          "seasonal_drive",
+                                                                          "pasture_registry"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Dispatch Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  4,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "route_board",
+                                                                      "cargo_slips",
+                                                                      "animal_stalls"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Relay Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  10,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  10,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "relay_service",
+                                                                      "yard_dispatch",
+                                                                      "porter_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Freight Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  18,
+                                                  "dormitoryCapacity":  12,
+                                                  "stableCapacity":  18,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "convoy_scheduling",
+                                                                      "stable_yards",
+                                                                      "bulk_hauls"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Freight Yard",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  28,
+                                                  "dormitoryCapacity":  18,
+                                                  "stableCapacity":  28,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "caravan_command",
+                                                                      "regional_dispatch",
+                                                                      "supply_depot"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.rivermen_guild",
+                        "slug":  "rivermen_guild",
+                        "name":  "Rivermen Guild",
+                        "category":  "logistics",
+                        "summary":  "River and canal transport guild for barges, ferries, tow teams, wharf order, and inland water carriage.",
+                        "governsActivities":  [
+                                                  "barge_haulage",
+                                                  "ferry_service",
+                                                  "towpath_work",
+                                                  "wharf_order",
+                                                  "canal_lockage"
+                                              ],
+                        "excludedActivities":  [
+                                                   "open_ocean_navigation",
+                                                   "wagon_freight",
+                                                   "merchant_credit"
+                                               ],
+                        "contractTypes":  [
+                                              "barge_charter",
+                                              "ferry_crossing",
+                                              "tow_service",
+                                              "wharf_handling"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "river_market",
+                                                      "ferry_crossing",
+                                                      "canal_node",
+                                                      "port_city"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Pilot or tow a supervised river craft through current, bank approach, and load transfer drills.",
+                                                                          "Demonstrate lock, mooring, and flood-stage procedure where applicable.",
+                                                                          "Accept guild authority over landing order, tow crews, and ferry pricing."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to licensed ferries, barges, towpath crews, and wharf boards.",
+                                                                 "Shared maintenance yards for poles, ropes, hull patches, and lock gear.",
+                                                                 "Priority on state grain lifts and relief convoys."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Observe flood closures, toll schedules, and lock discipline.",
+                                                                          "Keep cargo tallies, landing receipts, and ferry fare registers.",
+                                                                          "Answer for rescue, bank repair, and barge salvage in declared emergencies."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "escort",
+                                                                          "porter",
+                                                                          "salvage"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "river_market",
+                                                                          "ferry_crossing",
+                                                                          "canal_node",
+                                                                          "port_city"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "wharf_order",
+                                                                          "tow_service",
+                                                                          "lockage",
+                                                                          "barge_charter"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Dispatch Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  4,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "route_board",
+                                                                      "cargo_slips",
+                                                                      "animal_stalls"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Relay Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  10,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  10,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "relay_service",
+                                                                      "yard_dispatch",
+                                                                      "porter_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Freight Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  18,
+                                                  "dormitoryCapacity":  12,
+                                                  "stableCapacity":  18,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "convoy_scheduling",
+                                                                      "stable_yards",
+                                                                      "bulk_hauls"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Freight Yard",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  28,
+                                                  "dormitoryCapacity":  18,
+                                                  "stableCapacity":  28,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "caravan_command",
+                                                                      "regional_dispatch",
+                                                                      "supply_depot"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.shipwrights_guild",
+                        "slug":  "shipwrights_guild",
+                        "name":  "Shipwrights Guild",
+                        "category":  "crafting",
+                        "summary":  "The chartered naval and merchant-vessel craft guild for hulls, masts, rigging contracts, and dockyard standards.",
+                        "governsActivities":  [
+                                                  "hull_building",
+                                                  "mast_work",
+                                                  "rigging_contracts",
+                                                  "dockyard_carpentry",
+                                                  "drydock_repairs"
+                                              ],
+                        "excludedActivities":  [
+                                                   "timber_logging",
+                                                   "merchant_credit",
+                                                   "fishing_rights"
+                                               ],
+                        "contractTypes":  [
+                                              "new_hull",
+                                              "refit",
+                                              "mast_contract",
+                                              "drydock_booking"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "hall",
+                                                      "guildhouse",
+                                                      "great_house"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "port_city",
+                                                      "harbor_town",
+                                                      "naval_yard",
+                                                      "coastal_city"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Complete a supervised keel, spar, or hull-planking task to guild standard.",
+                                                                          "Demonstrate safe yard practice around cranes, saw pits, and pitch fires.",
+                                                                          "Present an apprenticeship mark or equivalent masterwork witness."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to drydock queues, timber allotments, and naval bids.",
+                                                                 "Shared lofting patterns, rigging tables, and yard labor boards.",
+                                                                 "Arbitration over refits, launch damage, and charter disputes."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Maintain guild dimensions, timber marks, and seaworthiness standards.",
+                                                                          "Answer harbor emergency calls for hull patching or storm recovery.",
+                                                                          "Train apprentices according to guild ratios in chartered yards."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "escort",
+                                                                          "porter",
+                                                                          "salvage"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "port_city",
+                                                                          "harbor_town",
+                                                                          "naval_yard",
+                                                                          "shipyard"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "hull_contracts",
+                                                                          "rigging_orders",
+                                                                          "dock_labor",
+                                                                          "timber_allotment"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.smiths_guild",
+                        "slug":  "smiths_guild",
+                        "name":  "Smiths Guild",
+                        "category":  "crafting",
+                        "summary":  "A broad metalcraft guild that governs smelting, refining, casting, forging, and finishing of all metals and alloys after extraction.",
+                        "governsActivities":  [
+                                                  "smelting",
+                                                  "alloying",
+                                                  "forging",
+                                                  "casting",
+                                                  "metal_finishing"
+                                              ],
+                        "excludedActivities":  [
+                                                   "ore_extraction",
+                                                   "gem_mining",
+                                                   "stone_quarrying"
+                                               ],
+                        "contractTypes":  [
+                                              "tool_order",
+                                              "arms_contract",
+                                              "foundry_batch",
+                                              "repair_work"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "mining_town",
+                                                      "trade_hub",
+                                                      "fortress_gate",
+                                                      "city_workshop"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Smelt and finish a supervised batch to declared purity and yield.",
+                                                                          "Forge, cast, or repair a standard guild test piece without hidden flaws.",
+                                                                          "Demonstrate understanding of fuel use, slag handling, and alloy proportions."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to guild assay marks, furnace standards, and master tool patterns.",
+                                                                 "Priority on military, civic, and infrastructure contracts.",
+                                                                 "Shared charcoal, flux, and emergency repair pools during shortages."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Do not misstamp alloys or dilute declared metal stock.",
+                                                                          "Maintain safe furnace practice and apprentice oversight.",
+                                                                          "Contribute labor during emergency arms, bridgework, or civic repair calls."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "forge_district",
+                                                                          "market_town",
+                                                                          "regional_capital",
+                                                                          "mining_town"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "smelting_orders",
+                                                                          "forge_marks",
+                                                                          "repair_contracts",
+                                                                          "tool_sales"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.woodwrights_guild",
+                        "slug":  "woodwrights_guild",
+                        "name":  "Woodwrights Guild",
+                        "category":  "crafting",
+                        "summary":  "A broad woodcraft guild that governs timber conversion, joinery, furniture, charcoaling, wood fuel finishing, and structural carpentry after felling.",
+                        "governsActivities":  [
+                                                  "sawmilling",
+                                                  "joinery",
+                                                  "structural_carpentry",
+                                                  "furniture_making",
+                                                  "charcoal_finishing"
+                                              ],
+                        "excludedActivities":  [
+                                                   "timber_felling",
+                                                   "river_log_driving",
+                                                   "stone_masonry"
+                                               ],
+                        "contractTypes":  [
+                                              "beam_order",
+                                              "furniture_commission",
+                                              "charcoal_batch",
+                                              "yard_joinery"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "forest_market",
+                                                      "trade_hub",
+                                                      "harbor_town",
+                                                      "city_workshop"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Dress a supervised timber batch into sound boards, beams, or fittings.",
+                                                                          "Complete a basic joinery or furniture test piece to guild tolerances.",
+                                                                          "Demonstrate safe use of saw pits, drying racks, and charcoal clamps."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to seasoned timber allotments, yard space, and guild buyers.",
+                                                                 "Use of shared patterns, work standards, and structural tables.",
+                                                                 "Priority on civic framing, shipyard joinery, and furniture contracts."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Respect timber grading, seasoning marks, and charcoal yield declarations.",
+                                                                          "Maintain yard safety and kiln discipline.",
+                                                                          "Answer major reconstruction calls after fire, flood, or siege damage."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "logging_town",
+                                                                          "market_town",
+                                                                          "river_market",
+                                                                          "shipyard"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "timber_grading",
+                                                                          "framing_contracts",
+                                                                          "wagonwork",
+                                                                          "charcoal_orders"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.masons_guild",
+                        "slug":  "masons_guild",
+                        "name":  "Masons Guild",
+                        "category":  "crafting",
+                        "summary":  "A stoneworking guild that governs cut stone, masonry, carving, road setwork, and finished structural stone after quarry extraction.",
+                        "governsActivities":  [
+                                                  "stone_cutting",
+                                                  "masonry",
+                                                  "road_setwork",
+                                                  "stone_carving",
+                                                  "vaulted_construction"
+                                              ],
+                        "excludedActivities":  [
+                                                   "quarry_extraction",
+                                                   "metal_smithing",
+                                                   "gem_cutting"
+                                               ],
+                        "contractTypes":  [
+                                              "wall_contract",
+                                              "road_work",
+                                              "bridge_stone",
+                                              "carved_commission"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "fortress_gate",
+                                                      "mountain_city",
+                                                      "civic_center",
+                                                      "quarry_town"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Dress and lay a supervised cut-stone section true to line and weight.",
+                                                                          "Demonstrate safe lifting, scaffolding, and mortar preparation.",
+                                                                          "Present an apprenticeship mark or accepted master witness for finished work."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to cut-stone orders, civic works, and master layout tables.",
+                                                                 "Shared lifting tackle, yard cranes, and mortar standards.",
+                                                                 "Arbitration over contracts involving wall failures, defects, or delayed delivery."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Observe guild tolerances for bearing walls, arches, and pavements.",
+                                                                          "Maintain scaffolds, hoists, and yard discipline.",
+                                                                          "Answer emergency repair calls after quake, flood, or siege damage."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "quarry_edge",
+                                                                          "fortress_gate",
+                                                                          "regional_capital",
+                                                                          "bridgehead"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "cut_stone_orders",
+                                                                          "lime_contracts",
+                                                                          "repair_crews",
+                                                                          "yard_storage"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.gemcutters_guild",
+                        "slug":  "gemcutters_guild",
+                        "name":  "Gemcutters Guild",
+                        "category":  "crafting",
+                        "summary":  "The finishing guild for sorting, cutting, polishing, and mounting gem stock after miners and traders bring rough stones to market.",
+                        "governsActivities":  [
+                                                  "gem_sorting",
+                                                  "gem_cutting",
+                                                  "polishing",
+                                                  "setting",
+                                                  "luxury_stone_trade"
+                                              ],
+                        "excludedActivities":  [
+                                                   "gem_mining",
+                                                   "ore_extraction",
+                                                   "glassblowing"
+                                               ],
+                        "contractTypes":  [
+                                              "cut_stone_order",
+                                              "jewel_setting",
+                                              "assay",
+                                              "luxury_sale"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "hall",
+                                                      "chapterhouse",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "luxury_market",
+                                                      "regional_capital",
+                                                      "port_city",
+                                                      "mining_town"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Grade and cut a supervised rough stone without catastrophic loss.",
+                                                                          "Demonstrate polishing, flaw reading, and honest assay practice.",
+                                                                          "Submit a finished piece or accepted master reference."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to secure cutting rooms, elite buyers, and assay seals.",
+                                                                 "Guild arbitration over flawed stones, valuation, and mounting claims.",
+                                                                 "Protection for luxury cargoes when routed through chartered exchanges."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Do not substitute stones, falsify weights, or conceal flaws.",
+                                                                          "Maintain security discipline around cutting rooms and ledgers.",
+                                                                          "Honor guild assay tables and declared valuation bands."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter",
+                                                                          "salvage"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "trade_hub",
+                                                                          "regional_capital",
+                                                                          "mining_town",
+                                                                          "artisan_district"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "assay_bench",
+                                                                          "polish_orders",
+                                                                          "secure_storage",
+                                                                          "luxury_brokerage"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.textile_guild",
+                        "slug":  "textile_guild",
+                        "name":  "Textile Guild",
+                        "category":  "crafting",
+                        "summary":  "A clothcraft guild that governs spinning, weaving, fulling, dye finishing, tailoring supply, and other finished textile trades.",
+                        "governsActivities":  [
+                                                  "spinning",
+                                                  "weaving",
+                                                  "fulling",
+                                                  "dye_finishing",
+                                                  "tailoring_supply"
+                                              ],
+                        "excludedActivities":  [
+                                                   "sheep_raising",
+                                                   "flax_farming",
+                                                   "glass_work"
+                                               ],
+                        "contractTypes":  [
+                                              "cloth_batch",
+                                              "uniform_order",
+                                              "dyed_fabric",
+                                              "loom_lease"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "market_town",
+                                                      "river_market",
+                                                      "city_workshop",
+                                                      "cloth_hall"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Produce a supervised length of cloth or finishing batch to stated quality.",
+                                                                          "Demonstrate correct handling of loom tension, spinning consistency, or fulling sequence.",
+                                                                          "Accept guild inspection for dyes, shrinkage, and fiber substitutions."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to shared looms, fulling spaces, dye vats, and cloth buyers.",
+                                                                 "Guild marks for quality, origin, and contract compliance.",
+                                                                 "Priority on uniform, sailcloth, and noble-house orders."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Do not adulterate fiber lots or misstate weave quality.",
+                                                                          "Maintain dye-house safety and clean finishing practice.",
+                                                                          "Train apprentices within guild ratios and inspection windows."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "loom_district",
+                                                                          "market_town",
+                                                                          "agricultural_center",
+                                                                          "regional_capital"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "loom_contracts",
+                                                                          "dyed_cloth_sales",
+                                                                          "quality_marks",
+                                                                          "warehouse_bales"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.glassworkers_guild",
+                        "slug":  "glassworkers_guild",
+                        "name":  "Glassworkers Guild",
+                        "category":  "crafting",
+                        "summary":  "The furnace craft guild for vessels, panes, lenses, glazing, and all finished glass goods after sand and ash are prepared.",
+                        "governsActivities":  [
+                                                  "glassblowing",
+                                                  "glazing",
+                                                  "pane_casting",
+                                                  "lens_grinding",
+                                                  "kiln_finishing"
+                                              ],
+                        "excludedActivities":  [
+                                                   "sand_quarrying",
+                                                   "pottery_firing",
+                                                   "gem_cutting"
+                                               ],
+                        "contractTypes":  [
+                                              "window_order",
+                                              "bottle_batch",
+                                              "glazing",
+                                              "lens_commission"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "hall",
+                                                      "chapterhouse",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "city_workshop",
+                                                      "scholastic_center",
+                                                      "luxury_market",
+                                                      "port_city"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Complete a supervised glass batch or vessel without devitrification or major flaws.",
+                                                                          "Demonstrate furnace discipline, annealing, and shard safety.",
+                                                                          "Show competency in color, clarity, and thickness control."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to furnace schedules, annealing space, and protected sand contracts.",
+                                                                 "Shared formulas for common vessel, pane, and laboratory work.",
+                                                                 "Priority placement on civic glazing and university commissions."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Maintain kiln safety and correct disposal of damaged batches.",
+                                                                          "Honor guild clarity grades and declared material quality.",
+                                                                          "Contribute to emergency replacement of civic glass after riots, storms, or siege."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "artisan_district",
+                                                                          "port_city",
+                                                                          "market_town",
+                                                                          "regional_capital"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "kiln_registry",
+                                                                          "furnace_batches",
+                                                                          "fragile_cargo",
+                                                                          "lens_orders"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.potters_guild",
+                        "slug":  "potters_guild",
+                        "name":  "Potters Guild",
+                        "category":  "crafting",
+                        "summary":  "A broad claycraft guild covering pottery, brick, roof tile, fired ceramic vessels, and other kiln-baked earthen goods.",
+                        "governsActivities":  [
+                                                  "pottery",
+                                                  "brickmaking",
+                                                  "tilemaking",
+                                                  "ceramic_firing",
+                                                  "kiln_goods"
+                                              ],
+                        "excludedActivities":  [
+                                                   "clay_pit_extraction",
+                                                   "glassblowing",
+                                                   "stone_masonry"
+                                               ],
+                        "contractTypes":  [
+                                              "brick_batch",
+                                              "vessel_order",
+                                              "tile_contract",
+                                              "kiln_lease"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "outpost",
+                                                      "hall",
+                                                      "guildhouse"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "clay_basin",
+                                                      "market_town",
+                                                      "city_workshop",
+                                                      "river_market"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Throw, mold, or fire a supervised batch without major warping or kiln loss.",
+                                                                          "Demonstrate clay tempering, drying, and stacking discipline.",
+                                                                          "Accept guild grading of vessels, bricks, and tile lots."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to kilns, molds, storage yards, and civic brick contracts.",
+                                                                 "Shared glaze notes, firing calendars, and clay buyers.",
+                                                                 "Guild support during kiln failures or fuel shortages."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Keep kiln logs and declared batch counts.",
+                                                                          "Maintain safe firing practice and smoke discipline near settlements.",
+                                                                          "Honor guild standards for brick size, tile pitch, and vessel integrity."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "porter"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "clay_bank",
+                                                                          "market_town",
+                                                                          "agricultural_center",
+                                                                          "river_market"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "kiln_shares",
+                                                                          "vessel_orders",
+                                                                          "brick_lots",
+                                                                          "storage_jars"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Guild Bench",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "quality_marks",
+                                                                      "task_board",
+                                                                      "sample_storage"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Craft Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "apprenticeship",
+                                                                      "commission_board",
+                                                                      "shared_kiln_or_forge"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Master Chapterhouse",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  6,
+                                                  "stableCapacity":  4,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "masterwork_review",
+                                                                      "bulk_orders",
+                                                                      "materials_registry"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Makers Hall",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  24,
+                                                  "dormitoryCapacity":  10,
+                                                  "stableCapacity":  6,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "large_contracts",
+                                                                      "guild_workshops",
+                                                                      "finished_goods_storage"
+                                                                  ]
+                                              }
+                                          ]
+                    },
+                    {
+                        "id":  "guild.scribes_guild",
+                        "slug":  "scribes_guild",
+                        "name":  "Scribes Guild",
+                        "category":  "civic",
+                        "summary":  "A records and factors guild that handles ledgers, charters, contracts, copying, and the administrative paper trail behind commerce and rule.",
+                        "governsActivities":  [
+                                                  "ledgerkeeping",
+                                                  "record_copying",
+                                                  "charter_drafting",
+                                                  "accounting",
+                                                  "archives_support"
+                                              ],
+                        "excludedActivities":  [
+                                                   "spell_inscription",
+                                                   "military_command",
+                                                   "bulk_shipping"
+                                               ],
+                        "contractTypes":  [
+                                              "ledger_service",
+                                              "charter_copy",
+                                              "tax_roll",
+                                              "archive_order"
+                                          ],
+                        "typicalPresenceLevels":  [
+                                                      "hall",
+                                                      "guildhouse",
+                                                      "great_house"
+                                                  ],
+                        "typicalSettlementTags":  [
+                                                      "regional_capital",
+                                                      "trade_hub",
+                                                      "river_market",
+                                                      "scholastic_center"
+                                                  ],
+                        "membershipModel":  {
+                                                "entryMethod":  "task_trial",
+                                                "entryRequirements":  [
+                                                                          "Produce a legible ledger or charter copy without arithmetic or transcription fault.",
+                                                                          "Demonstrate archival handling, seal protocol, and record indexing.",
+                                                                          "Swear to confidentiality, accurate tallying, and anti-fraud rules."
+                                                                      ],
+                                                "benefits":  [
+                                                                 "Access to contract tables, copying halls, and archive rooms.",
+                                                                 "Recognition seals for ledgers, tax rolls, and official copies.",
+                                                                 "Stable work from courts, guilds, ports, and merchant exchanges."
+                                                             ],
+                                                "memberObligations":  [
+                                                                          "Do not alter sealed records or conceal debts.",
+                                                                          "Maintain copying accuracy and secure storage standards.",
+                                                                          "Answer emergency musters for census, levy, or relief accounting when required."
+                                                                      ]
+                                            },
+                        "questBoardProfile":  {
+                                                  "enabled":  true,
+                                                  "questCategories":  [
+                                                                          "domestic_labor",
+                                                                          "exploration",
+                                                                          "porter",
+                                                                          "salvage"
+                                                                      ],
+                                                  "tracksAllResources":  true,
+                                                  "allowMemberSales":  true,
+                                                  "demandFocusTags":  [
+                                                                          "regional_capital",
+                                                                          "trade_hub",
+                                                                          "archive_town",
+                                                                          "university_quarter"
+                                                                      ],
+                                                  "supplyFocusTags":  [
+                                                                          "ledgerkeeping",
+                                                                          "survey_charters",
+                                                                          "copying_orders",
+                                                                          "sealed_records"
+                                                                      ]
+                                              },
+                        "facilityTiers":  [
+                                              {
+                                                  "tier":  1,
+                                                  "label":  "Record Desk",
+                                                  "presenceLevel":  "outpost",
+                                                  "staffCapacity":  3,
+                                                  "dormitoryCapacity":  0,
+                                                  "stableCapacity":  0,
+                                                  "kitchenScale":  "none",
+                                                  "workshopScale":  "bench",
+                                                  "storehouseScale":  "locker",
+                                                  "autonomy":  "clerical",
+                                                  "serviceTags":  [
+                                                                      "copying",
+                                                                      "seal_registry",
+                                                                      "notice_posting"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  2,
+                                                  "label":  "Records Hall",
+                                                  "presenceLevel":  "hall",
+                                                  "staffCapacity":  8,
+                                                  "dormitoryCapacity":  2,
+                                                  "stableCapacity":  1,
+                                                  "kitchenScale":  "galley",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "contract_hall",
+                                                  "serviceTags":  [
+                                                                      "ledgerkeeping",
+                                                                      "charters",
+                                                                      "survey_briefs"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  3,
+                                                  "label":  "Chartered Archive House",
+                                                  "presenceLevel":  "chapterhouse",
+                                                  "staffCapacity":  14,
+                                                  "dormitoryCapacity":  4,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "house",
+                                                  "workshopScale":  "shop",
+                                                  "storehouseScale":  "storeroom",
+                                                  "autonomy":  "regional_house",
+                                                  "serviceTags":  [
+                                                                      "archive_storage",
+                                                                      "copying_orders",
+                                                                      "map_dossiers"
+                                                                  ]
+                                              },
+                                              {
+                                                  "tier":  4,
+                                                  "label":  "Autonomous Archive Center",
+                                                  "presenceLevel":  "guildhouse",
+                                                  "staffCapacity":  22,
+                                                  "dormitoryCapacity":  8,
+                                                  "stableCapacity":  2,
+                                                  "kitchenScale":  "industrial",
+                                                  "workshopScale":  "hall",
+                                                  "storehouseScale":  "warehouse",
+                                                  "autonomy":  "autonomous_center",
+                                                  "serviceTags":  [
+                                                                      "state_archives",
+                                                                      "regional_records",
+                                                                      "research_support"
+                                                                  ]
+                                              }
+                                          ]
+                    }
+                ]
+}

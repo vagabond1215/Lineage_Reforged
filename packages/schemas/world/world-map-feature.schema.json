@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "mapId",
+          "summary",
+          "referenceImageWidthPx",
+          "referenceImageHeightPx",
+          "sourceLayers",
+          "regionFootprints",
+          "coastlines",
+          "riverFeatures",
+          "mountainFeatures",
+          "passFeatures",
+          "crossingFeatures",
+          "climateZones",
+          "biomeZones"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^world_map_feature\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mapId": {
+            "type": "string",
+            "pattern": "^world_map\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "referenceImageWidthPx": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "referenceImageHeightPx": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sourceLayers": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "name",
+                "layerType",
+                "summary"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "layerType": {
+                  "type": "string",
+                  "enum": [
+                    "height_map",
+                    "biome_map"
+                  ]
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "regionFootprints": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/polygonFeature"
+            }
+          },
+          "coastlines": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/lineFeature"
+            }
+          },
+          "riverFeatures": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/lineFeature"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "navigability"
+                  ],
+                  "properties": {
+                    "navigability": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "minor",
+                        "major"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "mountainFeatures": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/lineFeature"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "terrainClass"
+                  ],
+                  "properties": {
+                    "terrainClass": {
+                      "type": "string",
+                      "enum": [
+                        "upland",
+                        "range",
+                        "cliff",
+                        "volcanic"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "passFeatures": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/pointFeature"
+            }
+          },
+          "crossingFeatures": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/pointFeature"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "crossingType"
+                  ],
+                  "properties": {
+                    "crossingType": {
+                      "type": "string",
+                      "enum": [
+                        "bridge",
+                        "ferry",
+                        "ford",
+                        "strait",
+                        "lock"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "climateZones": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/polygonFeature"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "climateProfileId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^map_climate\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+                    },
+                    "climateProfileId": {
+                      "type": "string",
+                      "pattern": "^climate\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "biomeZones": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/polygonFeature"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "biomeId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^map_biome\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+                    },
+                    "biomeId": {
+                      "type": "string",
+                      "pattern": "^biome\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "baseFeature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "regionIds",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(feature|map_climate|map_biome)\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "regionIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "lineFeature": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseFeature"
+        },
+        {
+          "type": "object",
+          "required": [
+            "points"
+          ],
+          "properties": {
+            "points": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "$ref": "#/$defs/point"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "polygonFeature": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseFeature"
+        },
+        {
+          "type": "object",
+          "required": [
+            "points"
+          ],
+          "properties": {
+            "points": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "$ref": "#/$defs/point"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "pointFeature": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseFeature"
+        },
+        {
+          "type": "object",
+          "required": [
+            "point"
+          ],
+          "properties": {
+            "point": {
+              "$ref": "#/$defs/point"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

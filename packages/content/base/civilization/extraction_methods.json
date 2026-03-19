@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "extract.apiculture.hive_keeper",
@@ -49,6 +49,12 @@
                         "outputMultiplier":  0.9
                     },
                     {
+                        "id":  "extract.herbary.physicker",
+                        "resourceDomain":  "flora",
+                        "method":  "physickers_herbary",
+                        "outputMultiplier":  1
+                    },
+                    {
                         "id":  "extract.hunting.trapper",
                         "resourceDomain":  "fauna",
                         "method":  "trapping",
@@ -71,6 +77,12 @@
                         "resourceDomain":  "minerals",
                         "method":  "deep_shaft",
                         "outputMultiplier":  1.45
+                    },
+                    {
+                        "id":  "extract.orchard.grove_tender",
+                        "resourceDomain":  "flora",
+                        "method":  "orchard_harvest",
+                        "outputMultiplier":  1.1
                     },
                     {
                         "id":  "extract.pasture.shepherd",
@@ -107,6 +119,18 @@
                         "resourceDomain":  "minerals",
                         "method":  "river_dredging",
                         "outputMultiplier":  1.0
+                    },
+                    {
+                        "id":  "extract.tropical.planter",
+                        "resourceDomain":  "flora",
+                        "method":  "tropical_cultivation",
+                        "outputMultiplier":  1.08
+                    },
+                    {
+                        "id":  "extract.vineyard.trellis_tender",
+                        "resourceDomain":  "flora",
+                        "method":  "vineyard_tending",
+                        "outputMultiplier":  1.1
                     }
                 ]
 }

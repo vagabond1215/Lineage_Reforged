@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerResourceRecord",
+  "type": "object",
+  "required": ["id", "name", "kind", "baseCurrent", "baseMax"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "kind": { "type": "string" },
+    "baseCurrent": { "type": "number" },
+    "baseMax": { "type": "number" }
+  },
+  "additionalProperties": true
+}

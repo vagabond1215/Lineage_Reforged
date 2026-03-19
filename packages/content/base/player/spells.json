@@ -1,11 +1,36 @@
 {
   "records": [
     {
-      "id": "spell.nature.growth_surge",
-      "name": "Growth Surge",
-      "school": "nature",
-      "manaCost": 15,
+      "id": "spell.arcane.mana_bolt",
+      "name": "Mana Bolt",
+      "school": "arcane",
+      "element": "arcane",
+      "manaCost": 8,
       "scalingAttribute": "attr.INT"
+    },
+    {
+      "id": "spell.fire.ember_lance",
+      "name": "Ember Lance",
+      "school": "elemental",
+      "element": "fire",
+      "manaCost": 14,
+      "scalingAttribute": "attr.INT"
+    },
+    {
+      "id": "spell.storm.shock_spear",
+      "name": "Shock Spear",
+      "school": "elemental",
+      "element": "lightning",
+      "manaCost": 16,
+      "scalingAttribute": "attr.SPT"
+    },
+    {
+      "id": "spell.life.mending_light",
+      "name": "Mending Light",
+      "school": "restoration",
+      "element": "light",
+      "manaCost": 12,
+      "scalingAttribute": "attr.WIS"
     }
   ]
 }

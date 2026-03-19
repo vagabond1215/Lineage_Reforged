@@ -1,18 +1,64 @@
-# Survival-Builder-RPG Foundation
+# Cataclysm RPG Foundation
 
-TypeScript-first, headless simulation scaffold for a survival/builder/RPG project.
+TypeScript-first, headless simulation scaffold for a survival / builder / RPG project.
 
-## Layout
+## Project Layout
 
-- `apps/sim-runner`: headless CLI entrypoint for the simulation loop.
-- `packages/content`: canonical JSON content (`base`) and additive packs (`packs`).
-- `packages/schemas`: structural schemas and semantic rule declarations.
-- `packages/db`: SQL migration templates, seeds, and generated build outputs.
+- `apps/sim-runner`: CLI entrypoint for deterministic simulation ticks.
+- `packages/content`: canonical JSON content (`base`) plus additive packs (`packs`).
+- `packages/schemas`: JSON schemas and semantic rule declarations.
+- `packages/db`: SQL migration templates, seeds, and build outputs.
 - `packages/engines`: world/civilization/player/game engine stubs.
-- `packages/shared`: shared contracts, events, clock, RNG, and persistence primitives.
-- `tools`: command surfaces for content linting, DB build, and deterministic scenarios.
-- `tests`: unit, integration, and simulation test scaffolding.
-- `docs`: architecture notes, data dictionary, and simulation rules.
+- `packages/shared`: shared contracts, clock, RNG, events, and persistence primitives.
+- `tools`: content linting, DB build, and scenario tooling.
+- `tests`: unit, integration, and simulation scaffolding.
+- `docs`: architecture notes and data dictionaries.
+
+## Current Data Systems
+
+- World data: biomes, habitats, flora, fauna, calendar, climate profiles, regional ecology profiles, named regions, authored primary and dependent settlements, shared guild definitions, authored travel networks, world-map metadata, and coordinate-backed world-map feature geometry.
+- World geography model: continents, subregions, island systems, oceans, population assumptions, map scale benchmarks, pixel-coordinate settlement placement, climate/biome zone overlays, terrain features, travel baselines, trade routes, conflict zones, and named settlement networks for authored maps.
+- Climate rules: 6-season model, 13-month calendar, and 52-week seasonal length validation.
+- Player model: attributes/resources/skills/spells/abilities/traits/equipment/inventory/save metadata.
+- Economy model:
+  - workplace tier progression (`tierProfile`)
+  - workplace upgrades and tier gate requirements (`upgradesProfile`)
+  - infrastructure tier progression with technology/material/labor gates, direct higher-tier construction, and higher retrofit labor (`infrastructure`)
+  - market context and integration/combo bonuses (`marketProfile`, `integrationProfile`)
+  - workforce job curves, job tool requirements, and diminishing returns (`workforceProfile`)
+  - production chain variants (input-driven outputs via `variantConfig`)
+  - civilization tick economy ledgers aggregated across workplace, building, settlement, subregion, region, and world-map top level
+  - baseline guild-issued quest generation driven by supply/demand shortfalls, surpluses, frontier conditions, and security hazards
+
+## Workplace Progression and Upgrades
+
+Workplaces can now define:
+
+- `tierProfile`: progression track and upgrade path between facilities.
+- `upgradesProfile`: optional upgrade catalog with required dependencies and upgrade effects.
+- `tierUpgradeRequirements`: essential upgrades that gate tier advancement.
+- `workforceProfile` (required): max concurrent worker cap, tier-gated job assignments, required tools per job, missing-tool output penalties, per-worker rates, and diminishing returns.
+
+Example design intent already captured in content:
+
+- forge tooling upgrades such as bellows
+- mine/quarry logistics upgrades such as rail carts, pulleys, and hauling lanes
+- forestry lodge-and-above replanting unlock via `job.forester`
+
+## Content Browser
+
+Run the local browser app to inspect content databases and reports:
+
+- Double-click `run-content-browser.cmd`
+- or run:
+  - `powershell -NoProfile -ExecutionPolicy Bypass -STA -File .\scripts\content_story_browser.ps1`
+
+The browser shows:
+
+- `Project Docs` (README and future backlog)
+- `Databases` (JSON files under `packages/content/base`)
+- `Coverage Reports` (markdown under `docs/data-dictionary`)
+- `Story` (markdown under `story`)
 
 ## Quick Commands
 
@@ -21,21 +67,22 @@ TypeScript-first, headless simulation scaffold for a survival/builder/RPG projec
 - `npm run tool:scenario`
 - `npm test`
 
-## Current Scope
+## Scope Note
 
-This is intentionally a foundation pass: contracts, folder boundaries, schemas, stubs, and docs.
-Gameplay systems and full simulation implementation are deferred to future iterations.
+This repository is still a foundation phase. Core data models, validation, and a first-pass civilization tick for economy/quest generation are in place, while full fulfillment, stockpile movement, combat, and balancing logic continue to be implemented incrementally.
 
-## Content Browser
+## Future Content Backlog
 
-Run the local browser app to read story files and inspect content databases/reports:
+Deferred systems and intentionally held-off content live in [docs/future_content_backlog.md](/Users/vagab/OneDrive/Documents/Cataclysm%20RPG/docs/future_content_backlog.md).
 
-- Double-click `run-content-browser.cmd`
-- or run `powershell -NoProfile -ExecutionPolicy Bypass -STA -File .\scripts\content_story_browser.ps1`
+Intent:
 
-The app shows three sections:
+- preserve planned-but-delayed systems in one place
+- record prerequisites, ownership, and implementation direction for future passes
+- keep Codex runs aligned with intentionally held scope before new work starts
 
-- `Databases` (JSON files under `packages/content/base`)
-- `Coverage Reports` (report markdown under `docs/data-dictionary`)
-- `Story` (markdown files under `story`)
+This backlog is intended to be updated on each Codex run whenever:
 
+- new future work is deferred
+- a deferred item changes prerequisites or ownership
+- a deferred item is started or completed

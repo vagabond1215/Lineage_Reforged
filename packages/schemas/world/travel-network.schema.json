@@ -1,0 +1,504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "mapId",
+          "summary",
+          "modeProfiles",
+          "travelBenchmarks",
+          "terrainVarianceRules",
+          "featureVarianceRules",
+          "routeRecords",
+          "interPortShipRoutes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^travel_network\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mapId": {
+            "type": "string",
+            "pattern": "^world_map\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "modeProfiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "name",
+                "domain",
+                "baseMilesPerDay",
+                "notes"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "domain": {
+                  "type": "string",
+                  "enum": ["land", "water"]
+                },
+                "baseMilesPerDay": {
+                  "type": "number",
+                  "minimum": 0.01
+                },
+                "notes": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "travelBenchmarks": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "modeId",
+                "summary",
+                "examples"
+              ],
+              "properties": {
+                "modeId": {
+                  "type": "string",
+                  "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "examples": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "distanceKilometers",
+                      "distanceMiles",
+                      "expectedDaysMin",
+                      "expectedDaysMax"
+                    ],
+                    "properties": {
+                      "distanceKilometers": {
+                        "type": "number",
+                        "minimum": 0.01
+                      },
+                      "distanceMiles": {
+                        "type": "number",
+                        "minimum": 0.01
+                      },
+                      "expectedDaysMin": {
+                        "type": "number",
+                        "minimum": 0.01
+                      },
+                      "expectedDaysMax": {
+                        "type": "number",
+                        "minimum": 0.01
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "terrainVarianceRules": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/varianceRule"
+            }
+          },
+          "featureVarianceRules": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/varianceRule"
+            }
+          },
+          "routeRecords": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/routeRecord"
+            }
+          },
+          "interPortShipRoutes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/maritimeRouteRecord"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "modeEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modeId",
+        "speedMultiplier",
+        "variancePercent"
+      ],
+      "properties": {
+        "modeId": {
+          "type": "string",
+          "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "speedMultiplier": {
+          "type": "number",
+          "minimum": 0.01
+        },
+        "variancePercent": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "travelTimeEstimate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modeId",
+        "expectedDays",
+        "varianceDays"
+      ],
+      "properties": {
+        "modeId": {
+          "type": "string",
+          "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "expectedDays": {
+          "type": "number",
+          "minimum": 0.01
+        },
+        "varianceDays": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "pathSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fromPointIndex",
+        "toPointIndex",
+        "terrainTag",
+        "featureTags"
+      ],
+      "properties": {
+        "fromPointIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "toPointIndex": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "terrainTag": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "featureTags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "varianceRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tag",
+        "name",
+        "summary",
+        "modeEffects"
+      ],
+      "properties": {
+        "tag": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modeEffects": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/modeEffect"
+          }
+        }
+      }
+    },
+    "routeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "fromSettlementId",
+        "toSettlementId",
+        "routeClass",
+        "distanceMiles",
+        "pathPoints",
+        "pathSegments",
+        "terrainTags",
+        "featureTags",
+        "availableModeIds",
+        "travelTimeEstimates",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^route\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fromSettlementId": {
+          "type": "string",
+          "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "toSettlementId": {
+          "type": "string",
+          "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "routeClass": {
+          "type": "string",
+          "enum": [
+            "road_corridor",
+            "pack_track",
+            "river_corridor",
+            "mixed_corridor",
+            "coastal_lane"
+          ]
+        },
+        "distanceMiles": {
+          "type": "number",
+          "minimum": 1
+        },
+        "pathPoints": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/point"
+          }
+        },
+        "pathSegments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/pathSegment"
+          }
+        },
+        "terrainTags": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "featureTags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "availableModeIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "travelTimeEstimates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/travelTimeEstimate"
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "maritimeRouteRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "fromSettlementId",
+        "toSettlementId",
+        "laneClass",
+        "distanceMiles",
+        "seaRegionIds",
+        "pathPoints",
+        "pathSegments",
+        "terrainTags",
+        "featureTags",
+        "availableModeIds",
+        "travelTimeEstimates",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^lane\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fromSettlementId": {
+          "type": "string",
+          "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "toSettlementId": {
+          "type": "string",
+          "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "laneClass": {
+          "type": "string",
+          "enum": [
+            "intercoastal",
+            "open_ocean"
+          ]
+        },
+        "distanceMiles": {
+          "type": "number",
+          "minimum": 1
+        },
+        "seaRegionIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "pathPoints": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/point"
+          }
+        },
+        "pathSegments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/pathSegment"
+          }
+        },
+        "terrainTags": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "featureTags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "availableModeIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "travelTimeEstimates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/travelTimeEstimate"
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

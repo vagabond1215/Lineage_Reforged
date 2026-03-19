@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "category",
+          "summary",
+          "issuingGuildTypes",
+          "allowAdventurersFallback",
+          "generationSource",
+          "targetItemKeys",
+          "targetSettlementTags",
+          "monsterIds",
+          "minimumQuantity",
+          "minimumShortfallPerTick",
+          "minimumTradeSurplusPerTick",
+          "rewardProfile"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^quest_template\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "gathering",
+              "hunting",
+              "domestic_labor",
+              "escort",
+              "porter",
+              "exploration",
+              "monster_subjugation",
+              "salvage"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "issuingGuildTypes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "allowAdventurersFallback": {
+            "type": "boolean"
+          },
+          "generationSource": {
+            "type": "string",
+            "enum": [
+              "shortfall",
+              "surplus",
+              "security",
+              "frontier"
+            ]
+          },
+          "targetItemKeys": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "targetSettlementTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "monsterIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^monster\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "minimumQuantity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minimumShortfallPerTick": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minimumTradeSurplusPerTick": {
+            "type": "number",
+            "minimum": 0
+          },
+          "rewardProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "coinBase",
+              "reputationBase",
+              "bonusItemKeys"
+            ],
+            "properties": {
+              "coinBase": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "reputationBase": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "bonusItemKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

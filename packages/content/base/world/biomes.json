@@ -1,20 +1,433 @@
 {
-  "records": [
-    {
-      "id": "biome.temperate.deciduous_forest",
-      "slug": "deciduous_forest",
-      "name": "Deciduous Forest",
-      "climateBand": "temperate",
-      "baseFertility": 0.72,
-      "hazards": ["cold_snap", "blight"]
-    },
-    {
-      "id": "biome.grasslands.steppe",
-      "slug": "steppe",
-      "name": "Steppe",
-      "climateBand": "grasslands",
-      "baseFertility": 0.64,
-      "hazards": ["drought"]
-    }
-  ]
+    "records":  [
+                    {
+                        "id":  "biome.desert.glass_waste",
+                        "slug":  "glass_waste",
+                        "name":  "Glass Waste",
+                        "climateBand":  "desert",
+                        "baseFertility":  0.08,
+                        "hazards":  [
+                                        "sandstorm",
+                                        "heat_wave",
+                                        "glass_shards"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.desert.cold_desert",
+                        "slug":  "cold_desert",
+                        "name":  "Cold Desert",
+                        "climateBand":  "desert",
+                        "baseFertility":  0.16,
+                        "hazards":  [
+                                        "cold_snap",
+                                        "windburn",
+                                        "drought"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.desert.hot_desert",
+                        "slug":  "hot_desert",
+                        "name":  "Hot Desert",
+                        "climateBand":  "desert",
+                        "baseFertility":  0.12,
+                        "hazards":  [
+                                        "heat_wave",
+                                        "sandstorm",
+                                        "drought"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.subterranean.mushroom_forest",
+                        "slug":  "mushroom_forest",
+                        "name":  "Mushroom Forest",
+                        "climateBand":  "subterranean",
+                        "baseFertility":  0.74,
+                        "hazards":  [
+                                        "spore_bloom",
+                                        "cave_in",
+                                        "toxic_mold"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.subterranean.underdark",
+                        "slug":  "underdark",
+                        "name":  "Underdark",
+                        "climateBand":  "subterranean",
+                        "baseFertility":  0.43,
+                        "hazards":  [
+                                        "lightless_predators",
+                                        "cave_in",
+                                        "toxic_fumes"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.subterranean.crystal_garden",
+                        "slug":  "crystal_garden",
+                        "name":  "Crystal Garden",
+                        "climateBand":  "subterranean",
+                        "baseFertility":  0.58,
+                        "hazards":  [
+                                        "crystal_bloom",
+                                        "mana_surge",
+                                        "cave_in"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.temperate.temperate_rainforest",
+                        "slug":  "temperate_rainforest",
+                        "name":  "Temperate Rainforest",
+                        "climateBand":  "temperate",
+                        "baseFertility":  0.86,
+                        "hazards":  [
+                                        "overgrowth",
+                                        "fungal_blight",
+                                        "heavy_rain"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.temperate.taiga",
+                        "slug":  "taiga",
+                        "name":  "Taiga",
+                        "climateBand":  "temperate",
+                        "baseFertility":  0.52,
+                        "hazards":  [
+                                        "cold_snap",
+                                        "conifer_pollen",
+                                        "wildfire"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.temperate.coniferous_forest",
+                        "slug":  "coniferous_forest",
+                        "name":  "Coniferous Forest",
+                        "climateBand":  "temperate",
+                        "baseFertility":  0.61,
+                        "hazards":  [
+                                        "wildfire",
+                                        "blight",
+                                        "cold_snap"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.temperate.deciduous_forest",
+                        "slug":  "deciduous_forest",
+                        "name":  "Deciduous Forest",
+                        "climateBand":  "temperate",
+                        "baseFertility":  0.72,
+                        "hazards":  [
+                                        "cold_snap",
+                                        "blight"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.temperate.mixed_forest",
+                        "slug":  "mixed_forest",
+                        "name":  "Mixed Forest",
+                        "climateBand":  "temperate",
+                        "baseFertility":  0.69,
+                        "hazards":  [
+                                        "wildfire",
+                                        "blight",
+                                        "stormfall"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.wetlands.bog",
+                        "slug":  "bog",
+                        "name":  "Bog",
+                        "climateBand":  "wetlands",
+                        "baseFertility":  0.57,
+                        "hazards":  [
+                                        "acidic_peat",
+                                        "sinkhole",
+                                        "miasma"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.wetlands.marsh",
+                        "slug":  "marsh",
+                        "name":  "Marsh",
+                        "climateBand":  "wetlands",
+                        "baseFertility":  0.66,
+                        "hazards":  [
+                                        "miasma",
+                                        "flood",
+                                        "biting_insects"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.wetlands.mangrove_forest",
+                        "slug":  "mangrove_forest",
+                        "name":  "Mangrove Forest",
+                        "climateBand":  "wetlands",
+                        "baseFertility":  0.71,
+                        "hazards":  [
+                                        "brackish_flood",
+                                        "entangling_roots",
+                                        "storm_surge"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.wetlands.swamp",
+                        "slug":  "swamp",
+                        "name":  "Swamp",
+                        "climateBand":  "wetlands",
+                        "baseFertility":  0.63,
+                        "hazards":  [
+                                        "miasma",
+                                        "flood",
+                                        "predators"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.wetlands.fen",
+                        "slug":  "fen",
+                        "name":  "Fen",
+                        "climateBand":  "wetlands",
+                        "baseFertility":  0.68,
+                        "hazards":  [
+                                        "waterlogged_soil",
+                                        "miasma",
+                                        "biting_insects"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.wetlands.whisper_mire",
+                        "slug":  "whisper_mire",
+                        "name":  "Whisper Mire",
+                        "climateBand":  "wetlands",
+                        "baseFertility":  0.49,
+                        "hazards":  [
+                                        "miasma",
+                                        "illusion_fog",
+                                        "sinkhole"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.polar.tundra",
+                        "slug":  "tundra",
+                        "name":  "Tundra",
+                        "climateBand":  "polar",
+                        "baseFertility":  0.24,
+                        "hazards":  [
+                                        "cold_snap",
+                                        "permafrost_shift",
+                                        "blizzard"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.polar.polar_ice_cap",
+                        "slug":  "polar_ice_cap",
+                        "name":  "Polar Ice Cap",
+                        "climateBand":  "polar",
+                        "baseFertility":  0.05,
+                        "hazards":  [
+                                        "blizzard",
+                                        "whiteout",
+                                        "crevasse"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.polar.polar_desert",
+                        "slug":  "polar_desert",
+                        "name":  "Polar Desert",
+                        "climateBand":  "polar",
+                        "baseFertility":  0.09,
+                        "hazards":  [
+                                        "cold_snap",
+                                        "whiteout",
+                                        "drought"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.polar.alpine_tundra",
+                        "slug":  "alpine_tundra",
+                        "name":  "Alpine Tundra",
+                        "climateBand":  "polar",
+                        "baseFertility":  0.28,
+                        "hazards":  [
+                                        "avalanche",
+                                        "cold_snap",
+                                        "thin_air"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.polar.shimmering_expanse",
+                        "slug":  "shimmering_expanse",
+                        "name":  "Shimmering Expanse",
+                        "climateBand":  "polar",
+                        "baseFertility":  0.18,
+                        "hazards":  [
+                                        "whiteout",
+                                        "mirage_glare",
+                                        "cold_snap"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.shrublands.mediterranean_woodland",
+                        "slug":  "mediterranean_woodland",
+                        "name":  "Mediterranean Woodland",
+                        "climateBand":  "shrublands",
+                        "baseFertility":  0.62,
+                        "hazards":  [
+                                        "wildfire",
+                                        "drought",
+                                        "heat_wave"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.shrublands.dry_scrub",
+                        "slug":  "dry_scrub",
+                        "name":  "Dry Scrub",
+                        "climateBand":  "shrublands",
+                        "baseFertility":  0.36,
+                        "hazards":  [
+                                        "drought",
+                                        "wildfire",
+                                        "thorn_thickets"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.shrublands.chaparral",
+                        "slug":  "chaparral",
+                        "name":  "Chaparral",
+                        "climateBand":  "shrublands",
+                        "baseFertility":  0.48,
+                        "hazards":  [
+                                        "wildfire",
+                                        "drought",
+                                        "brushstorm"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.shrublands.emberwild_thicket",
+                        "slug":  "emberwild_thicket",
+                        "name":  "Emberwild Thicket",
+                        "climateBand":  "shrublands",
+                        "baseFertility":  0.41,
+                        "hazards":  [
+                                        "embershower",
+                                        "wildfire",
+                                        "thorn_thickets"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.marine.marine",
+                        "slug":  "marine",
+                        "name":  "Marine",
+                        "climateBand":  "marine",
+                        "baseFertility":  0.39,
+                        "hazards":  [
+                                        "storm_surge",
+                                        "undertow",
+                                        "salinity_shift"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.tropical.cloud_forest",
+                        "slug":  "cloud_forest",
+                        "name":  "Cloud Forest",
+                        "climateBand":  "tropical",
+                        "baseFertility":  0.82,
+                        "hazards":  [
+                                        "landslide",
+                                        "fog_chill",
+                                        "fungal_blight"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.tropical.dry_forest",
+                        "slug":  "dry_forest",
+                        "name":  "Dry Forest",
+                        "climateBand":  "tropical",
+                        "baseFertility":  0.46,
+                        "hazards":  [
+                                        "drought",
+                                        "wildfire",
+                                        "heat_wave"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.tropical.tropical_rainforest",
+                        "slug":  "tropical_rainforest",
+                        "name":  "Tropical Rainforest",
+                        "climateBand":  "tropical",
+                        "baseFertility":  0.9,
+                        "hazards":  [
+                                        "overgrowth",
+                                        "monsoon",
+                                        "disease"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.tropical.seasonal_forest",
+                        "slug":  "seasonal_forest",
+                        "name":  "Seasonal Forest",
+                        "climateBand":  "tropical",
+                        "baseFertility":  0.67,
+                        "hazards":  [
+                                        "monsoon",
+                                        "drought",
+                                        "blight"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.tropical.blooming_chasm",
+                        "slug":  "blooming_chasm",
+                        "name":  "Blooming Chasm",
+                        "climateBand":  "tropical",
+                        "baseFertility":  0.55,
+                        "hazards":  [
+                                        "toxic_pollen",
+                                        "spore_bloom",
+                                        "unstable_cliffs"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.grasslands.stormbound_prairie",
+                        "slug":  "stormbound_prairie",
+                        "name":  "Stormbound Prairie",
+                        "climateBand":  "grasslands",
+                        "baseFertility":  0.58,
+                        "hazards":  [
+                                        "lightning_storm",
+                                        "grassfire",
+                                        "hail"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.grasslands.steppe",
+                        "slug":  "steppe",
+                        "name":  "Steppe",
+                        "climateBand":  "grasslands",
+                        "baseFertility":  0.64,
+                        "hazards":  [
+                                        "drought"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.grasslands.savanna",
+                        "slug":  "savanna",
+                        "name":  "Savanna",
+                        "climateBand":  "grasslands",
+                        "baseFertility":  0.53,
+                        "hazards":  [
+                                        "drought",
+                                        "grassfire",
+                                        "heat_wave"
+                                    ]
+                    },
+                    {
+                        "id":  "biome.grasslands.alpine_meadow",
+                        "slug":  "alpine_meadow",
+                        "name":  "Alpine Meadow",
+                        "climateBand":  "grasslands",
+                        "baseFertility":  0.49,
+                        "hazards":  [
+                                        "frostbite",
+                                        "landslide",
+                                        "thin_air"
+                                    ]
+                    }
+                ]
 }

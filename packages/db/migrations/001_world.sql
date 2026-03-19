@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS world_habitats (
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
   biome_id TEXT NOT NULL,
+  biome_ids_json TEXT NOT NULL,
   shape TEXT NOT NULL
 );
 
@@ -22,7 +23,10 @@ CREATE TABLE IF NOT EXISTS world_flora (
   type TEXT NOT NULL,
   lifecycle TEXT NOT NULL,
   habitat_ids_json TEXT NOT NULL,
-  harvest_json TEXT NOT NULL
+  harvest_json TEXT NOT NULL,
+  base_value REAL NOT NULL,
+  currency_id TEXT NOT NULL,
+  template_json TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS world_fauna (
@@ -34,7 +38,10 @@ CREATE TABLE IF NOT EXISTS world_fauna (
   diet TEXT NOT NULL,
   domesticatable INTEGER NOT NULL,
   danger_class TEXT NOT NULL,
-  habitat_ids_json TEXT NOT NULL
+  size_class TEXT NOT NULL,
+  mountable INTEGER NOT NULL,
+  habitat_ids_json TEXT NOT NULL,
+  template_json TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS world_minerals (
@@ -49,7 +56,11 @@ CREATE TABLE IF NOT EXISTS world_minerals (
 
 CREATE INDEX IF NOT EXISTS idx_world_flora_type ON world_flora(type);
 CREATE INDEX IF NOT EXISTS idx_world_flora_slug ON world_flora(slug);
+CREATE INDEX IF NOT EXISTS idx_world_flora_lifecycle ON world_flora(lifecycle);
 CREATE INDEX IF NOT EXISTS idx_world_fauna_type ON world_fauna(type);
 CREATE INDEX IF NOT EXISTS idx_world_fauna_slug ON world_fauna(slug);
+CREATE INDEX IF NOT EXISTS idx_world_fauna_danger_class ON world_fauna(danger_class);
 CREATE INDEX IF NOT EXISTS idx_world_minerals_tier ON world_minerals(tier);
 CREATE INDEX IF NOT EXISTS idx_world_minerals_slug ON world_minerals(slug);
+
+

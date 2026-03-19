@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "regionType",
+          "aliases",
+          "mapIds",
+          "positionLabel",
+          "summary",
+          "tags"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "regionType": {
+            "type": "string",
+            "enum": [
+              "continent",
+              "subregion",
+              "island_system",
+              "ocean"
+            ]
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parentRegionId": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "mapIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^world_map\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "positionLabel": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "geography": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "climateSummary": {
+                "type": "string"
+              },
+              "terrainNotes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "notableFeatures": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "populationProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "densityBand": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "moderate",
+                  "low",
+                  "very_low"
+                ]
+              },
+              "densityNotes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "settlementPattern": {
+                "type": "string"
+              },
+              "estimatedPopulationMillions": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "demographicProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "raceDistribution": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "race",
+                    "percentage"
+                  ],
+                  "properties": {
+                    "race": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "percentage": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  }
+                }
+              },
+              "notableGroups": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "economicProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "majorExports": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "majorImports": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "civilizationNotes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "strategicNotes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

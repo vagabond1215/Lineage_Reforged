@@ -1,0 +1,1294 @@
+﻿{
+    "records":  [
+                    {
+                        "id":  "quest_template.foraged_supply_drive",
+                        "slug":  "foraged_supply_drive",
+                        "name":  "Foraged Supply Drive",
+                        "category":  "gathering",
+                        "summary":  "Gatherers are needed to close a local shortage in herbs, tea, fruit, or other light field goods.",
+                        "issuingGuildTypes":  [
+                                                  "herbalists_guild",
+                                                  "agricultural_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "herbs",
+                                               "fruit",
+                                               "vegetables",
+                                               "tea"
+                                           ],
+                        "targetSettlementTags":  [
+
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  2,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  12,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal",
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.hunting_for_the_pots",
+                        "slug":  "hunting_for_the_pots",
+                        "name":  "Hunting For The Pots",
+                        "category":  "hunting",
+                        "summary":  "Local kitchens and storehouses need meat, hides, or bone goods from fresh hunting runs.",
+                        "issuingGuildTypes":  [
+                                                  "adventurers_guild",
+                                                  "agricultural_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "cured_meat",
+                                               "dried_meat",
+                                               "hides",
+                                               "fur"
+                                           ],
+                        "targetSettlementTags":  [
+
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.temporary_farmhands",
+                        "slug":  "temporary_farmhands",
+                        "name":  "Temporary Farmhands",
+                        "category":  "domestic_labor",
+                        "summary":  "Seasonal labor is needed to stop field losses before they become a larger regional shortage.",
+                        "issuingGuildTypes":  [
+                                                  "agricultural_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "grain",
+                                               "vegetables",
+                                               "hay",
+                                               "horse_fodder"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "agricultural_center",
+                                                     "farm_cluster",
+                                                     "estate_holding"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  3,
+                        "minimumShortfallPerTick":  2,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  10,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.herbal_remedy_gathering",
+                        "slug":  "herbal_remedy_gathering",
+                        "name":  "Herbal Remedy Gathering",
+                        "category":  "gathering",
+                        "summary":  "Bath houses, apothecaries, and kitchens need fresh botanicals before the drying lofts run bare.",
+                        "issuingGuildTypes":  [
+                                                  "herbalists_guild",
+                                                  "scribes_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "herbs",
+                                               "tea"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "apothecary_market",
+                                                     "garden_town",
+                                                     "hill_village"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  14,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.pest_clearance",
+                        "slug":  "pest_clearance",
+                        "name":  "Pest Clearance",
+                        "category":  "domestic_labor",
+                        "summary":  "Barns, fields, and storehouses need dangerous vermin or nuisance monsters cleared before supplies spoil.",
+                        "issuingGuildTypes":  [
+                                                  "agricultural_guild",
+                                                  "herbalists_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "agricultural_center",
+                                                     "farm_cluster",
+                                                     "granary_estate"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.green_slime",
+                                           "monster.kobold_scavenger"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  20,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.field_boar_drive",
+                        "slug":  "field_boar_drive",
+                        "name":  "Field Boar Drive",
+                        "category":  "hunting",
+                        "summary":  "Crop land on the edge of settlement needs aggressive boars driven down before they ruin another planting or kill livestock.",
+                        "issuingGuildTypes":  [
+                                                  "agricultural_guild",
+                                                  "drovers_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "agricultural_center",
+                                                     "farm_cluster",
+                                                     "ranching_valley"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.dire_boar",
+                                           "monster.ember_boar"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  24,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.cargo_restacking",
+                        "slug":  "cargo_restacking",
+                        "name":  "Cargo Restacking",
+                        "category":  "domestic_labor",
+                        "summary":  "Warehouses, docks, and yards need temporary hands to move, sort, and secure incoming goods.",
+                        "issuingGuildTypes":  [
+                                                  "merchant_guild",
+                                                  "teamsters_guild",
+                                                  "shipwrights_guild",
+                                                  "rivermen_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "surplus",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "trade_hub",
+                                                     "port_city",
+                                                     "river_market"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  3,
+                        "rewardProfile":  {
+                                              "coinBase":  14,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.porter_run",
+                        "slug":  "porter_run",
+                        "name":  "Porter Run",
+                        "category":  "porter",
+                        "summary":  "Guild yards need reliable backs and pack animals to move goods through short but urgent local routes.",
+                        "issuingGuildTypes":  [
+                                                  "teamsters_guild",
+                                                  "rivermen_guild",
+                                                  "merchant_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "surplus",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "market_town",
+                                                     "trade_hub",
+                                                     "ferry_post"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  2,
+                        "rewardProfile":  {
+                                              "coinBase":  16,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.lockside_handlers",
+                        "slug":  "lockside_handlers",
+                        "name":  "Lockside Handlers",
+                        "category":  "porter",
+                        "summary":  "Canal basins and ferry landings need hands to shift cargo between wagons, wharves, and waiting barges.",
+                        "issuingGuildTypes":  [
+                                                  "rivermen_guild",
+                                                  "merchant_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "surplus",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "canal_node",
+                                                     "ferry_crossing",
+                                                     "river_market"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  2,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.caravan_escort",
+                        "slug":  "caravan_escort",
+                        "name":  "Caravan Escort",
+                        "category":  "escort",
+                        "summary":  "A caravan, barge train, or merchant convoy needs armed protection for a valuable run.",
+                        "issuingGuildTypes":  [
+                                                  "merchant_guild",
+                                                  "teamsters_guild",
+                                                  "rivermen_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "surplus",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "trade_hub",
+                                                     "road_junction",
+                                                     "port_city",
+                                                     "river_market"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  4,
+                        "rewardProfile":  {
+                                              "coinBase":  28,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal",
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.mine_shoring_detail",
+                        "slug":  "mine_shoring_detail",
+                        "name":  "Mine Shoring Detail",
+                        "category":  "domestic_labor",
+                        "summary":  "A shaft, quarry face, or tunnel line needs temporary crews before a productive seam is lost to bad supports or flooding.",
+                        "issuingGuildTypes":  [
+                                                  "miners_guild",
+                                                  "masons_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "mining_town",
+                                                     "quarry_edge",
+                                                     "mountain_pass"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  2,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.mine_beast_clearance",
+                        "slug":  "mine_beast_clearance",
+                        "name":  "Mine Beast Clearance",
+                        "category":  "monster_subjugation",
+                        "summary":  "Dangerous creatures have nested too close to shafts or quarry ledges and must be culled before production resumes.",
+                        "issuingGuildTypes":  [
+                                                  "miners_guild",
+                                                  "masons_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "mining_town",
+                                                     "quarry_edge",
+                                                     "mountain_pass"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.kobold_tunnel_sapper",
+                                           "monster.cave_spider_matron"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  30,
+                                              "reputationBase":  3,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve",
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.frontier_survey",
+                        "slug":  "frontier_survey",
+                        "name":  "Frontier Survey",
+                        "category":  "exploration",
+                        "summary":  "A guild needs new route, herb, ore, or terrain information from unsettled ground.",
+                        "issuingGuildTypes":  [
+                                                  "adventurers_guild",
+                                                  "herbalists_guild",
+                                                  "miners_guild",
+                                                  "scribes_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "frontier",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "watch_post",
+                                                     "forest_gate",
+                                                     "frontier_gate",
+                                                     "coastal_security"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  22,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "record_scroll"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.ruin_recovery_charter",
+                        "slug":  "ruin_recovery_charter",
+                        "name":  "Ruin Recovery Charter",
+                        "category":  "salvage",
+                        "summary":  "A guild wants records, salvage, or reclaimable goods recovered from unstable ruins before weather or raiders strip the site bare.",
+                        "issuingGuildTypes":  [
+                                                  "adventurers_guild",
+                                                  "scribes_guild",
+                                                  "merchant_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "frontier",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "watch_post",
+                                                     "frontier_gate",
+                                                     "fortress_gate"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  26,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "record_scroll",
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.monster_subjugation",
+                        "slug":  "monster_subjugation",
+                        "name":  "Monster Subjugation",
+                        "category":  "monster_subjugation",
+                        "summary":  "A hostile monster presence needs to be culled before travel, fields, or storehouses become unsafe.",
+                        "issuingGuildTypes":  [
+                                                  "adventurers_guild"
+                                              ],
+                        "allowAdventurersFallback":  false,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "watch_post",
+                                                     "fortress_gate",
+                                                     "coastal_security",
+                                                     "frontier_gate"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.kobold_tunnel_sapper",
+                                           "monster.bog_troll",
+                                           "monster.cave_spider_matron",
+                                           "monster.harpy_raider"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  34,
+                                              "reputationBase":  3,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve",
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.shoreline_salvage",
+                        "slug":  "shoreline_salvage",
+                        "name":  "Shoreline Salvage",
+                        "category":  "salvage",
+                        "summary":  "A hazardous stretch of coast or riverbank has recoverable cargo, wreckage, or washed-up goods worth claiming.",
+                        "issuingGuildTypes":  [
+                                                  "shipwrights_guild",
+                                                  "merchant_guild",
+                                                  "adventurers_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "harbor_town",
+                                                     "port_city",
+                                                     "coastal_security",
+                                                     "river_market"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.river_elemental",
+                                           "monster.harpy_raider"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  24,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.dock_rat_cull",
+                        "slug":  "dock_rat_cull",
+                        "name":  "Dock Rat Cull",
+                        "category":  "domestic_labor",
+                        "summary":  "Granaries, dockside lofts, and store sheds need local hazards cleared before they ruin another load of cargo.",
+                        "issuingGuildTypes":  [
+                                                  "merchant_guild",
+                                                  "fishers_guild",
+                                                  "shipwrights_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "harbor_town",
+                                                     "port_city",
+                                                     "river_market"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.green_slime",
+                                           "monster.kobold_scavenger"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  16,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.road_watch_muster",
+                        "slug":  "road_watch_muster",
+                        "name":  "Road Watch Muster",
+                        "category":  "escort",
+                        "summary":  "A road lane or ferry approach has grown dangerous enough that guild traffic needs reinforced guards for a short season.",
+                        "issuingGuildTypes":  [
+                                                  "teamsters_guild",
+                                                  "merchant_guild",
+                                                  "rivermen_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "road_junction",
+                                                     "ferry_crossing",
+                                                     "frontier_gate",
+                                                     "fortress_gate"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.kobold_scout",
+                                           "monster.harpy_raider"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  26,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal",
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.irrigation_ditch_clearing",
+                        "slug":  "irrigation_ditch_clearing",
+                        "name":  "Irrigation Ditch Clearing",
+                        "category":  "domestic_labor",
+                        "summary":  "Field channels, sluices, and embankments need hands before standing water and blocked flow ruin another planting.",
+                        "issuingGuildTypes":  [
+                                                  "agricultural_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "grain",
+                                               "vegetables",
+                                               "fruit"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "agricultural_center",
+                                                     "farm_cluster",
+                                                     "estate_holding",
+                                                     "river_market"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  2,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  12,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.granary_sanitation_detail",
+                        "slug":  "granary_sanitation_detail",
+                        "name":  "Granary Sanitation Detail",
+                        "category":  "domestic_labor",
+                        "summary":  "Storage lofts and granary cellars need cleaning and hazard removal before vermin and ooze ruin the reserve.",
+                        "issuingGuildTypes":  [
+                                                  "merchant_guild",
+                                                  "agricultural_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "granary_town",
+                                                     "market_town",
+                                                     "agricultural_center"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.granary_rat",
+                                           "monster.sewer_rat_swarm",
+                                           "monster.green_slime"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf",
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.herd_recovery_drive",
+                        "slug":  "herd_recovery_drive",
+                        "name":  "Herd Recovery Drive",
+                        "category":  "hunting",
+                        "summary":  "Drovers need help replacing lost meat, hides, and herd stock before contracts and grazing schedules collapse.",
+                        "issuingGuildTypes":  [
+                                                  "drovers_guild",
+                                                  "agricultural_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "cattle",
+                                               "horse_stock",
+                                               "hides",
+                                               "cured_meat"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "ranching_valley",
+                                                     "agricultural_center",
+                                                     "hill_village"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.river_net_repair",
+                        "slug":  "river_net_repair",
+                        "name":  "River Net Repair",
+                        "category":  "domestic_labor",
+                        "summary":  "Fish runs are backing up behind torn netting and broken poles, and the riverside yards need hands immediately.",
+                        "issuingGuildTypes":  [
+                                                  "fishers_guild",
+                                                  "rivermen_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "fish",
+                                               "salted_fish",
+                                               "netting"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "river_market",
+                                                     "harbor_town",
+                                                     "port_city"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  15,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.timber_cutting_contract",
+                        "slug":  "timber_cutting_contract",
+                        "name":  "Timber Cutting Contract",
+                        "category":  "gathering",
+                        "summary":  "Local wood yards need fast cutting and hauling before mills, kilns, and ship sheds outrun their piles.",
+                        "issuingGuildTypes":  [
+                                                  "woodwrights_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "timber",
+                                               "ship_timber",
+                                               "firewood",
+                                               "charcoal"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "forest_gate",
+                                                     "trade_hub",
+                                                     "market_town"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.charcoal_burn_shift",
+                        "slug":  "charcoal_burn_shift",
+                        "name":  "Charcoal Burn Shift",
+                        "category":  "domestic_labor",
+                        "summary":  "A run of charcoal pits and drying stacks needs extra labor before the forge quarter goes hungry for fuel.",
+                        "issuingGuildTypes":  [
+                                                  "woodwrights_guild",
+                                                  "smiths_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "charcoal",
+                                               "firewood",
+                                               "forged_tools"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "forest_gate",
+                                                     "market_town",
+                                                     "mining_town"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  16,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.ore_train_porterage",
+                        "slug":  "ore_train_porterage",
+                        "name":  "Ore Train Porterage",
+                        "category":  "porter",
+                        "summary":  "Ore yards and quarry depots need backs, sledges, and beasts to move a pressured run through steep or muddy approaches.",
+                        "issuingGuildTypes":  [
+                                                  "miners_guild",
+                                                  "teamsters_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "copper_ore",
+                                               "iron_ore",
+                                               "stone_blocks",
+                                               "worked_stone"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "mining_town",
+                                                     "quarry_edge",
+                                                     "mountain_pass"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  20,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.smithy_rush_order",
+                        "slug":  "smithy_rush_order",
+                        "name":  "Smithy Rush Order",
+                        "category":  "domestic_labor",
+                        "summary":  "Forge rows need temporary hammer hands and bellows crews to close a tools-and-arms backlog before clients walk.",
+                        "issuingGuildTypes":  [
+                                                  "smiths_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "forged_tools",
+                                               "steel_tools",
+                                               "steel_weapons"
+                                           ],
+                        "targetSettlementTags":  [
+
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  22,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.kiln_firing_watch",
+                        "slug":  "kiln_firing_watch",
+                        "name":  "Kiln Firing Watch",
+                        "category":  "domestic_labor",
+                        "summary":  "Kilns, drying sheds, and furnace teams need extra hands to keep a firing cycle from collapsing into waste.",
+                        "issuingGuildTypes":  [
+                                                  "potters_guild",
+                                                  "glassworkers_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "firewood",
+                                               "tools",
+                                               "grain"
+                                           ],
+                        "targetSettlementTags":  [
+
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  17,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.textile_finishing_shift",
+                        "slug":  "textile_finishing_shift",
+                        "name":  "Textile Finishing Shift",
+                        "category":  "domestic_labor",
+                        "summary":  "A cloth hall is short of hands for washing, fulling, trimming, and packing work before a profitable order slips.",
+                        "issuingGuildTypes":  [
+                                                  "textile_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "shortfall",
+                        "targetItemKeys":  [
+                                               "cloth",
+                                               "finished_cloth",
+                                               "winter_cloth",
+                                               "wool"
+                                           ],
+                        "targetSettlementTags":  [
+
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  2,
+                        "minimumShortfallPerTick":  1,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "bread_loaf"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.gem_lot_security",
+                        "slug":  "gem_lot_security",
+                        "name":  "Gem Lot Security",
+                        "category":  "escort",
+                        "summary":  "A high-value lot of cut stone, ore, or bullion needs armed escort through exposed roads and jealous checkpoints.",
+                        "issuingGuildTypes":  [
+                                                  "merchant_guild",
+                                                  "gemcutters_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "surplus",
+                        "targetItemKeys":  [
+                                               "gems",
+                                               "gold_ore"
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "mining_town",
+                                                     "trade_hub",
+                                                     "regional_capital"
+                                                 ],
+                        "monsterIds":  [
+
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  2,
+                        "rewardProfile":  {
+                                              "coinBase":  30,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal",
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.kobold_road_ambush",
+                        "slug":  "kobold_road_ambush",
+                        "name":  "Kobold Road Ambush",
+                        "category":  "monster_subjugation",
+                        "summary":  "A nest of road kobolds has started trapping approaches, stripping packs, and probing the local watch.",
+                        "issuingGuildTypes":  [
+                                                  "adventurers_guild"
+                                              ],
+                        "allowAdventurersFallback":  false,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "road_junction",
+                                                     "frontier_gate",
+                                                     "fortress_gate",
+                                                     "watch_post"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.kobold_raider",
+                                           "monster.kobold_trapmaster",
+                                           "monster.kobold_scout"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  28,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal",
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.lock_ooze_purge",
+                        "slug":  "lock_ooze_purge",
+                        "name":  "Lock Ooze Purge",
+                        "category":  "monster_subjugation",
+                        "summary":  "A lock, canal basin, or ferry approach has turned dangerous with ooze growth and violent water spirits.",
+                        "issuingGuildTypes":  [
+                                                  "adventurers_guild"
+                                              ],
+                        "allowAdventurersFallback":  false,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "canal_node",
+                                                     "ferry_crossing",
+                                                     "river_market"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.mire_slime",
+                                           "monster.river_elemental"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  26,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.wolfpack_cull",
+                        "slug":  "wolfpack_cull",
+                        "name":  "Wolfpack Cull",
+                        "category":  "hunting",
+                        "summary":  "A breeding pair and its pack have started taking stock, travelers, and lone shepherds from the outer lanes.",
+                        "issuingGuildTypes":  [
+                                                  "drovers_guild",
+                                                  "adventurers_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "ranching_valley",
+                                                     "hill_village",
+                                                     "frontier_gate"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.dire_wolf",
+                                           "monster.shadow_wolf"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  24,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.catacomb_sweep",
+                        "slug":  "catacomb_sweep",
+                        "name":  "Catacomb Sweep",
+                        "category":  "monster_subjugation",
+                        "summary":  "A burial complex, undercroft, or ruined vault needs a disciplined clear before records or relics can be reclaimed.",
+                        "issuingGuildTypes":  [
+                                                  "adventurers_guild",
+                                                  "scribes_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "frontier_gate",
+                                                     "regional_capital",
+                                                     "fortress_gate"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.grave_ghoul",
+                                           "monster.barrow_wight",
+                                           "monster.grave_skeleton"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  32,
+                                              "reputationBase":  3,
+                                              "bonusItemKeys":  [
+                                                                    "record_scroll",
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.quarry_scorpion_hunt",
+                        "slug":  "quarry_scorpion_hunt",
+                        "name":  "Quarry Scorpion Hunt",
+                        "category":  "hunting",
+                        "summary":  "Venomous burrowers have infested spoil heaps and quarry faces, making ordinary stone crews unwilling to work.",
+                        "issuingGuildTypes":  [
+                                                  "miners_guild",
+                                                  "masons_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "quarry_edge",
+                                                     "mountain_pass",
+                                                     "mining_town"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.dune_scorpion",
+                                           "monster.cave_centipede"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  22,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.cellar_ooze_clearance",
+                        "slug":  "cellar_ooze_clearance",
+                        "name":  "Cellar Ooze Clearance",
+                        "category":  "domestic_labor",
+                        "summary":  "Cool cellars and drainage runs have turned slick with ooze growth, and stores must be cleared before another spoilage wave hits.",
+                        "issuingGuildTypes":  [
+                                                  "merchant_guild",
+                                                  "adventurers_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "market_town",
+                                                     "trade_hub",
+                                                     "regional_capital"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.green_slime",
+                                           "monster.mire_slime",
+                                           "monster.frost_slime"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  18,
+                                              "reputationBase":  1,
+                                              "bonusItemKeys":  [
+                                                                    "utility_salve"
+                                                                ]
+                                          }
+                    },
+                    {
+                        "id":  "quest_template.frontier_wreck_recovery",
+                        "slug":  "frontier_wreck_recovery",
+                        "name":  "Frontier Wreck Recovery",
+                        "category":  "salvage",
+                        "summary":  "Scattered freight, smashed tackle, and recoverable manifests lie on a dangerous route that needs armed salvage crews.",
+                        "issuingGuildTypes":  [
+                                                  "merchant_guild",
+                                                  "adventurers_guild",
+                                                  "shipwrights_guild"
+                                              ],
+                        "allowAdventurersFallback":  true,
+                        "generationSource":  "security",
+                        "targetItemKeys":  [
+
+                                           ],
+                        "targetSettlementTags":  [
+                                                     "coastal_security",
+                                                     "frontier_gate",
+                                                     "harbor_town",
+                                                     "port_city"
+                                                 ],
+                        "monsterIds":  [
+                                           "monster.harpy_raider",
+                                           "monster.kobold_raider"
+                                       ],
+                        "minimumQuantity":  1,
+                        "minimumShortfallPerTick":  0,
+                        "minimumTradeSurplusPerTick":  0,
+                        "rewardProfile":  {
+                                              "coinBase":  27,
+                                              "reputationBase":  2,
+                                              "bonusItemKeys":  [
+                                                                    "record_scroll",
+                                                                    "trail_meal"
+                                                                ]
+                                          }
+                    }
+                ]
+}

@@ -1,0 +1,46 @@
+{
+  "records": [
+    {
+      "id": "skill.innate.dodge",
+      "name": "Dodge",
+      "kind": "innate",
+      "defaultRank": 1,
+      "governingAttributes": ["attr.AGI", "attr.DEX"]
+    },
+    {
+      "id": "skill.innate.block",
+      "name": "Block",
+      "kind": "innate",
+      "defaultRank": 1,
+      "governingAttributes": ["attr.STR", "attr.CON"]
+    },
+    {
+      "id": "skill.innate.parry",
+      "name": "Parry",
+      "kind": "innate",
+      "defaultRank": 1,
+      "governingAttributes": ["attr.DEX", "attr.AGI"]
+    },
+    {
+      "id": "skill.innate.climb",
+      "name": "Climb",
+      "kind": "innate",
+      "defaultRank": 1,
+      "governingAttributes": ["attr.STR", "attr.VIT"]
+    },
+    {
+      "id": "skill.innate.jump",
+      "name": "Jump",
+      "kind": "innate",
+      "defaultRank": 1,
+      "governingAttributes": ["attr.AGI", "attr.VIT"]
+    },
+    {
+      "id": "skill.innate.throw",
+      "name": "Throw",
+      "kind": "innate",
+      "defaultRank": 1,
+      "governingAttributes": ["attr.STR", "attr.DEX"]
+    }
+  ]
+}

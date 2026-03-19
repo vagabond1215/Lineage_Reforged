@@ -4,6 +4,11 @@
       "id": "trait.hardy",
       "name": "Hardy",
       "effects": ["hp_bonus", "cold_resistance"]
+    },
+    {
+      "id": "trait.focused_mind",
+      "name": "Focused Mind",
+      "effects": ["mana_regen_bonus", "concentration_bonus"]
     }
   ]
 }

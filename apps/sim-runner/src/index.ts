@@ -30,6 +30,17 @@ function createDbHandles(): DomainDbHandles {
 export function runSingleTick(): void {
   const clock = createInitialClock();
   const db = createDbHandles();
+  const seededSettlements = [
+    "settlement.aurelis",
+    "settlement.vinecross",
+    "settlement.stonevein",
+    "settlement.silvergrove",
+    "settlement.verdeward",
+    "settlement.passglass_hold",
+    "settlement.riverthrone",
+    "settlement.sunspire_reach",
+    "settlement.starfall_port"
+  ];
 
   const context: GameTickContext = {
     clock,
@@ -58,8 +69,17 @@ export function runSingleTick(): void {
       incomingEvents: [],
       economyProfileId: "baseline",
       state: {
-        settlements: ["settlement-001"],
-        markets: ["market-001"]
+        settlements: seededSettlements,
+        markets: seededSettlements.map((settlementId) => settlementId.replace("settlement.", "market.")),
+        economy: {
+          nodes: [],
+          lastSnapshots: [],
+          lastLevelTotals: []
+        },
+        quests: {
+          activeOffers: [],
+          lastGeneratedTick: 0
+        }
       }
     },
     playerContext: {
@@ -71,12 +91,102 @@ export function runSingleTick(): void {
       state: {
         playerId: "player-001",
         regionId: "region-001",
-        stats: {
+        coreData: {
+          playerName: "Sehir",
+          lineageId: "lineage.human",
+          classId: null,
+          jobId: "job.royal_advisor"
+        },
+        attributes: {
           STR: 10,
           DEX: 10,
-          CON: 10
+          AGI: 10,
+          CON: 10,
+          VIT: 10,
+          WIS: 10,
+          INT: 10,
+          SPT: 10,
+          CHA: 10
         },
-        flags: []
+        resources: {
+          hp: { current: 120, max: 120 },
+          mp: { current: 60, max: 60 },
+          stamina: { current: 100, max: 100 },
+          xp: { current: 0, total: 0, toNextLevel: 100 }
+        },
+        progression: {
+          level: 1,
+          unspentAttributePoints: 0,
+          unspentSkillPoints: 0
+        },
+        skills: [
+          { id: "skill.innate.dodge", rank: 1, source: "innate" },
+          { id: "skill.innate.block", rank: 1, source: "innate" },
+          { id: "skill.innate.parry", rank: 1, source: "innate" },
+          { id: "skill.innate.climb", rank: 1, source: "innate" },
+          { id: "skill.innate.jump", rank: 1, source: "innate" },
+          { id: "skill.innate.throw", rank: 1, source: "innate" }
+        ],
+        spells: [
+          {
+            id: "spell.arcane.mana_bolt",
+            school: "arcane",
+            element: "arcane",
+            rank: 1,
+            source: "learned"
+          }
+        ],
+        abilities: [
+          {
+            id: "ability.combat.shield_bash",
+            category: "weapon",
+            rank: 1,
+            source: "learned"
+          }
+        ],
+        traits: [
+          { id: "trait.hardy", source: "innate" }
+        ],
+        equipment: {
+          "slot.weapon.left": null,
+          "slot.weapon.right": null,
+          "slot.armor.head": null,
+          "slot.armor.shoulder": null,
+          "slot.armor.chest": null,
+          "slot.armor.arm": null,
+          "slot.armor.hand": null,
+          "slot.armor.waist": null,
+          "slot.armor.leg": null,
+          "slot.armor.foot": null,
+          "slot.accessory.ear": null,
+          "slot.accessory.eyes": null,
+          "slot.accessory.neck": null,
+          "slot.accessory.arms": null,
+          "slot.accessory.fingers": null,
+          "slot.accessory.waist": null,
+          "slot.accessory.ankle": null
+        },
+        inventory: {
+          bags: [
+            {
+              id: "bag.starter",
+              label: "Starter Satchel",
+              slotCapacity: 16,
+              stacks: []
+            }
+          ],
+          overflow: []
+        },
+        activeEffects: [],
+        discoveredRegions: ["region-001"],
+        activeQuestIds: [],
+        completedQuestIds: [],
+        flags: [],
+        saveMeta: {
+          totalPlayTicks: 0,
+          lastRestAtTick: 0,
+          lastSavedAtTick: 0
+        }
       }
     }
   };

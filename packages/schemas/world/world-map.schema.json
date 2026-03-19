@@ -1,0 +1,337 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "mapType",
+          "sourceSummary",
+          "scaleProfile",
+          "continentRegionIds",
+          "islandSystemRegionIds",
+          "oceanRegionIds",
+          "globalAssumptions",
+          "densityScale",
+          "populationEstimates",
+          "majorTradeRoutes",
+          "conflictZones"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^world_map\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mapType": {
+            "type": "string",
+            "enum": [
+              "world"
+            ]
+          },
+          "sourceSummary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "layerSummaries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scaleProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "referenceImageWidthPx",
+              "referenceImageHeightPx",
+              "kilometersPerPixel",
+              "milesPerPixel",
+              "mapWidthKilometers",
+              "mapWidthMiles",
+              "mapHeightKilometers",
+              "mapHeightMiles",
+              "practicalRulerBenchmarks",
+              "distanceBenchmarks",
+              "notes"
+            ],
+            "properties": {
+              "referenceImageWidthPx": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "referenceImageHeightPx": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kilometersPerPixel": {
+                "type": "number",
+                "minimum": 0.01
+              },
+              "milesPerPixel": {
+                "type": "number",
+                "minimum": 0.01
+              },
+              "mapWidthKilometers": {
+                "type": "number",
+                "minimum": 1
+              },
+              "mapWidthMiles": {
+                "type": "number",
+                "minimum": 1
+              },
+              "mapHeightKilometers": {
+                "type": "number",
+                "minimum": 1
+              },
+              "mapHeightMiles": {
+                "type": "number",
+                "minimum": 1
+              },
+              "practicalRulerBenchmarks": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "pixels",
+                    "distanceKilometers",
+                    "distanceMiles"
+                  ],
+                  "properties": {
+                    "pixels": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "distanceKilometers": {
+                      "type": "number",
+                      "minimum": 0.01
+                    },
+                    "distanceMiles": {
+                      "type": "number",
+                      "minimum": 0.01
+                    }
+                  }
+                }
+              },
+              "distanceBenchmarks": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "name",
+                    "distanceKilometersMin",
+                    "distanceKilometersMax",
+                    "distanceMilesMin",
+                    "distanceMilesMax",
+                    "notes"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "distanceKilometersMin": {
+                      "type": "number",
+                      "minimum": 0.01
+                    },
+                    "distanceKilometersMax": {
+                      "type": "number",
+                      "minimum": 0.01
+                    },
+                    "distanceMilesMin": {
+                      "type": "number",
+                      "minimum": 0.01
+                    },
+                    "distanceMilesMax": {
+                      "type": "number",
+                      "minimum": 0.01
+                    },
+                    "notes": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              },
+              "notes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "continentRegionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "islandSystemRegionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "oceanRegionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "globalAssumptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "densityScale": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "densityBand",
+                "settlementPattern"
+              ],
+              "properties": {
+                "densityBand": {
+                  "type": "string",
+                  "enum": [
+                    "very_high",
+                    "high",
+                    "moderate",
+                    "low",
+                    "very_low"
+                  ]
+                },
+                "settlementPattern": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "populationEstimates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "regionId",
+                "estimateMillions"
+              ],
+              "properties": {
+                "regionId": {
+                  "type": "string",
+                  "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "estimateMillions": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "totalPopulationMillions": {
+            "type": "number",
+            "minimum": 0
+          },
+          "majorTradeRoutes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "name",
+                "summary",
+                "regionIds"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "regionIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                }
+              }
+            }
+          },
+          "conflictZones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "summary",
+                "regionIds"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "regionIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

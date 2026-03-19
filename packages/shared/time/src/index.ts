@@ -14,6 +14,7 @@ const DEFAULT_CONFIG: ClockConfig = {
   monthsPerYear: 13
 };
 
+// Temporary runtime source of month->season mapping until profile-driven season progression is implemented.
 const SEASON_BY_MONTH: Record<number, SeasonName> = {
   1: "Winter",
   2: "Winter",

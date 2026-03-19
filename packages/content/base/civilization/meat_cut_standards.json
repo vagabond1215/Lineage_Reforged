@@ -1,0 +1,1988 @@
+{
+    "records":  [
+                    {
+                        "id":  "meat.standard.deer",
+                        "speciesKey":  "deer",
+                        "category":  "game",
+                        "sourceItemKey":  "deer_meat",
+                        "usableMeatPerCarcass":  44,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  2
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  8,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.boar",
+                        "speciesKey":  "boar",
+                        "category":  "game",
+                        "sourceItemKey":  "boar_meat",
+                        "usableMeatPerCarcass":  48,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  2
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  5
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  9,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  2.2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.hare",
+                        "speciesKey":  "hare",
+                        "category":  "game",
+                        "sourceItemKey":  "hare_meat",
+                        "usableMeatPerCarcass":  14,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  3,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.8,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.wild_turkey",
+                        "speciesKey":  "wild_turkey",
+                        "category":  "game",
+                        "sourceItemKey":  "wild_turkey_meat",
+                        "usableMeatPerCarcass":  16,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.5,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.7,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.elk",
+                        "speciesKey":  "elk",
+                        "category":  "game",
+                        "sourceItemKey":  "elk_meat",
+                        "usableMeatPerCarcass":  76,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  3
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  3
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  4
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  13,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  3.1,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.moose",
+                        "speciesKey":  "moose",
+                        "category":  "game",
+                        "sourceItemKey":  "moose_meat",
+                        "usableMeatPerCarcass":  88,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  3
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  3
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  7
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  7
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  7
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  4
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  15,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  3.6,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.bear",
+                        "speciesKey":  "bear",
+                        "category":  "game",
+                        "sourceItemKey":  "bear_meat",
+                        "usableMeatPerCarcass":  64,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  5
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  5
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  5
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  3
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  11,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  2.9,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.wolf",
+                        "speciesKey":  "wolf",
+                        "category":  "game",
+                        "sourceItemKey":  "wolf_meat",
+                        "usableMeatPerCarcass":  24,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  5,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  1.3,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.cattle",
+                        "speciesKey":  "cattle",
+                        "category":  "livestock",
+                        "sourceItemKey":  "cattle_meat",
+                        "usableMeatPerCarcass":  112,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  4
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  4
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  2
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  8
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  8
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  8
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  6
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  20,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  4.2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.swine",
+                        "speciesKey":  "swine",
+                        "category":  "livestock",
+                        "sourceItemKey":  "swine_meat",
+                        "usableMeatPerCarcass":  72,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  3
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  3
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  4
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  14,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  3.4,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.sheep",
+                        "speciesKey":  "sheep",
+                        "category":  "livestock",
+                        "sourceItemKey":  "sheep_meat",
+                        "usableMeatPerCarcass":  40,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  2
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  8,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  1.9,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.goat",
+                        "speciesKey":  "goat",
+                        "category":  "livestock",
+                        "sourceItemKey":  "goat_meat",
+                        "usableMeatPerCarcass":  34,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  2
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  7,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  1.5,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.chicken",
+                        "speciesKey":  "chicken",
+                        "category":  "livestock",
+                        "sourceItemKey":  "chicken_meat",
+                        "usableMeatPerCarcass":  10,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.5,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.domestic_duck",
+                        "speciesKey":  "domestic_duck",
+                        "category":  "livestock",
+                        "sourceItemKey":  "domestic_duck_meat",
+                        "usableMeatPerCarcass":  12,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.1,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.6,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.goose",
+                        "speciesKey":  "goose",
+                        "category":  "livestock",
+                        "sourceItemKey":  "goose_meat",
+                        "usableMeatPerCarcass":  14,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.4,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.7,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.trout",
+                        "speciesKey":  "trout",
+                        "category":  "seafood",
+                        "sourceItemKey":  "trout_meat",
+                        "usableMeatPerCarcass":  9,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.6,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.4,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.perch",
+                        "speciesKey":  "perch",
+                        "category":  "seafood",
+                        "sourceItemKey":  "perch_meat",
+                        "usableMeatPerCarcass":  8,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.4,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.4,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.catfish",
+                        "speciesKey":  "catfish",
+                        "category":  "seafood",
+                        "sourceItemKey":  "catfish_meat",
+                        "usableMeatPerCarcass":  12,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.5,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.salmon",
+                        "speciesKey":  "salmon",
+                        "category":  "seafood",
+                        "sourceItemKey":  "salmon_meat",
+                        "usableMeatPerCarcass":  15,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.8,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.6,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.cod",
+                        "speciesKey":  "cod",
+                        "category":  "seafood",
+                        "sourceItemKey":  "cod_meat",
+                        "usableMeatPerCarcass":  13,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.3,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.5,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.crawfish",
+                        "speciesKey":  "crawfish",
+                        "category":  "seafood",
+                        "sourceItemKey":  "crawfish_raw",
+                        "usableMeatPerCarcass":  6,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.3,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.oyster",
+                        "speciesKey":  "oyster",
+                        "category":  "seafood",
+                        "sourceItemKey":  "oyster_meat",
+                        "usableMeatPerCarcass":  5,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.0,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  false
+                    },
+                    {
+                        "id":  "meat.standard.mussel",
+                        "speciesKey":  "mussel",
+                        "category":  "seafood",
+                        "sourceItemKey":  "mussel_meat",
+                        "usableMeatPerCarcass":  5,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.0,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  false
+                    },
+                    {
+                        "id":  "meat.standard.clam",
+                        "speciesKey":  "clam",
+                        "category":  "seafood",
+                        "sourceItemKey":  "clam_meat",
+                        "usableMeatPerCarcass":  5,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.0,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  false
+                    },
+                    {
+                        "id":  "meat.standard.crab",
+                        "speciesKey":  "crab",
+                        "category":  "seafood",
+                        "sourceItemKey":  "crab_meat",
+                        "usableMeatPerCarcass":  7,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.3,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.3,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.rabbit",
+                        "speciesKey":  "rabbit",
+                        "category":  "game",
+                        "sourceItemKey":  "rabbit_meat",
+                        "usableMeatPerCarcass":  12,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.6,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.mallard",
+                        "speciesKey":  "mallard",
+                        "category":  "game",
+                        "sourceItemKey":  "mallard_meat",
+                        "usableMeatPerCarcass":  12,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.0,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.7,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.ring_necked_pheasant",
+                        "speciesKey":  "ring_necked_pheasant",
+                        "category":  "game",
+                        "sourceItemKey":  "ring_necked_pheasant_meat",
+                        "usableMeatPerCarcass":  14,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.8,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.northern_bobwhite",
+                        "speciesKey":  "northern_bobwhite",
+                        "category":  "game",
+                        "sourceItemKey":  "northern_bobwhite_meat",
+                        "usableMeatPerCarcass":  8,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.4,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.rock_pigeon",
+                        "speciesKey":  "rock_pigeon",
+                        "category":  "game",
+                        "sourceItemKey":  "rock_pigeon_meat",
+                        "usableMeatPerCarcass":  6,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.0,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.3,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.bullfrog",
+                        "speciesKey":  "bullfrog",
+                        "category":  "game",
+                        "sourceItemKey":  "bullfrog_meat",
+                        "usableMeatPerCarcass":  5,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  0.8,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  false
+                    },
+                    {
+                        "id":  "meat.standard.american_alligator",
+                        "speciesKey":  "american_alligator",
+                        "category":  "game",
+                        "sourceItemKey":  "american_alligator_meat",
+                        "usableMeatPerCarcass":  68,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  2
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  5
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  3
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  8,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  3.0,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.white_shrimp",
+                        "speciesKey":  "white_shrimp",
+                        "category":  "seafood",
+                        "sourceItemKey":  "white_shrimp_raw",
+                        "usableMeatPerCarcass":  6,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.1,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.3,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.black_sea_bass",
+                        "speciesKey":  "black_sea_bass",
+                        "category":  "seafood",
+                        "sourceItemKey":  "black_sea_bass_meat",
+                        "usableMeatPerCarcass":  11,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.0,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.5,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.stormshoal_herring",
+                        "speciesKey":  "stormshoal_herring",
+                        "category":  "seafood",
+                        "sourceItemKey":  "stormshoal_herring_meat",
+                        "usableMeatPerCarcass":  7,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.3,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.bluefin_tuna",
+                        "speciesKey":  "bluefin_tuna",
+                        "category":  "seafood",
+                        "sourceItemKey":  "bluefin_tuna_meat",
+                        "usableMeatPerCarcass":  36,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  2
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  6
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  5
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  5.6,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  1.2,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.moonflat_halibut",
+                        "speciesKey":  "moonflat_halibut",
+                        "category":  "seafood",
+                        "sourceItemKey":  "moonflat_halibut_meat",
+                        "usableMeatPerCarcass":  24,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  2
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  4
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  3
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  4.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.9,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.octopus",
+                        "speciesKey":  "octopus",
+                        "category":  "seafood",
+                        "sourceItemKey":  "octopus_meat",
+                        "usableMeatPerCarcass":  9,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.4,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.4,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  false
+                    },
+                    {
+                        "id":  "meat.standard.squid",
+                        "speciesKey":  "squid",
+                        "category":  "seafood",
+                        "sourceItemKey":  "squid_meat",
+                        "usableMeatPerCarcass":  8,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.3,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  false
+                    },
+                    {
+                        "id":  "meat.standard.raccoon",
+                        "speciesKey":  "raccoon",
+                        "category":  "game",
+                        "sourceItemKey":  "raccoon_meat",
+                        "usableMeatPerCarcass":  20,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  4.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  1.1,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.squirrel",
+                        "speciesKey":  "squirrel",
+                        "category":  "game",
+                        "sourceItemKey":  "squirrel_meat",
+                        "usableMeatPerCarcass":  8,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.4,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.4,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.heron",
+                        "speciesKey":  "heron",
+                        "category":  "game",
+                        "sourceItemKey":  "heron_meat",
+                        "usableMeatPerCarcass":  14,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.8,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.gull",
+                        "speciesKey":  "gull",
+                        "category":  "game",
+                        "sourceItemKey":  "gull_meat",
+                        "usableMeatPerCarcass":  10,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "breast_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  1
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.8,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  0.5,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.seal",
+                        "speciesKey":  "seal",
+                        "category":  "game",
+                        "sourceItemKey":  "seal_meat",
+                        "usableMeatPerCarcass":  36,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "hindquarter_bulk",
+                                             "portionCount":  1
+                                         },
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  1
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "haunch_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  6.5,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "blood",
+                                               "quantity":  1.7,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.eel",
+                        "speciesKey":  "eel",
+                        "category":  "seafood",
+                        "sourceItemKey":  "eel_meat",
+                        "usableMeatPerCarcass":  11,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  1.8,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.5,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.pike",
+                        "speciesKey":  "pike",
+                        "category":  "seafood",
+                        "sourceItemKey":  "pike_meat",
+                        "usableMeatPerCarcass":  14,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  2
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  2
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  2.4,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.6,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    },
+                    {
+                        "id":  "meat.standard.sturgeon",
+                        "speciesKey":  "sturgeon",
+                        "category":  "seafood",
+                        "sourceItemKey":  "sturgeon_meat",
+                        "usableMeatPerCarcass":  22,
+                        "yieldUnit":  "cut",
+                        "bulkCuts":  [
+                                         {
+                                             "itemKey":  "forequarter_bulk",
+                                             "portionCount":  1
+                                         },
+                                         {
+                                             "itemKey":  "whole_side_bulk",
+                                             "portionCount":  1
+                                         }
+                                     ],
+                        "retailCuts":  [
+                                           {
+                                               "itemKey":  "flank_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "rib_cut",
+                                               "portionCount":  3
+                                           },
+                                           {
+                                               "itemKey":  "shank_cut",
+                                               "portionCount":  1
+                                           }
+                                       ],
+                        "byproducts":  [
+                                           {
+                                               "itemKey":  "bone_raw",
+                                               "quantity":  4.2,
+                                               "unit":  "cut"
+                                           },
+                                           {
+                                               "itemKey":  "drippings",
+                                               "quantity":  0.9,
+                                               "unit":  "item"
+                                           }
+                                       ],
+                        "sausageEligible":  true
+                    }
+                ],
+    "sausageUnitStandard":  {
+                                "baseUnitItemKey":  "sausage_link",
+                                "packaging":  [
+                                                  {
+                                                      "itemKey":  "sausage_coil",
+                                                      "links":  12
+                                                  },
+                                                  {
+                                                      "itemKey":  "sausage_bundle",
+                                                      "links":  48
+                                                  }
+                                              ]
+                            }
+}

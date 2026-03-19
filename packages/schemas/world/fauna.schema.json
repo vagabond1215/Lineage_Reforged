@@ -1,27 +1,723 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "FaunaRecord",
-  "type": "object",
-  "required": ["id", "slug", "name", "type", "diet", "domesticatable", "dangerClass", "habitatIds"],
-  "properties": {
-    "id": { "type": "string" },
-    "slug": {
-      "type": "string",
-      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-    },
-    "name": { "type": "string" },
-    "aliases": {
-      "type": "array",
-      "items": { "type": "string" },
-      "default": []
-    },
-    "type": { "type": "string" },
-    "diet": { "type": "string" },
-    "domesticatable": { "type": "boolean" },
-    "dangerClass": { "type": "string" },
-    "habitatIds": {
-      "type": "array",
-      "items": { "type": "string" }
-    }
-  }
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "title":  "FaunaRecord",
+    "type":  "object",
+    "required":  [
+                     "id",
+                     "slug",
+                     "name",
+                     "aliases",
+                     "type",
+                     "diet",
+                     "domesticatable",
+                     "dangerClass",
+                     "habitatIds",
+                     "baseValue",
+                     "currencyId",
+                     "template"
+                 ],
+    "properties":  {
+                       "id":  {
+                                  "type":  "string"
+                              },
+                       "slug":  {
+                                    "type":  "string",
+                                    "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                },
+                       "name":  {
+                                    "type":  "string"
+                                },
+                       "aliases":  {
+                                       "type":  "array",
+                                       "items":  {
+                                                     "type":  "string"
+                                                 }
+                                   },
+                       "type":  {
+                                    "type":  "string",
+                                    "enum":  [
+                                                 "mammal",
+                                                 "reptile",
+                                                 "avian",
+                                                 "fish",
+                                                 "amphibian",
+                                                 "arthropod",
+                                                 "mollusk"
+                                             ]
+                                },
+                       "diet":  {
+                                    "type":  "string",
+                                    "enum":  [
+                                                 "herbivore",
+                                                 "omnivore",
+                                                 "carnivore"
+                                             ]
+                                },
+                       "domesticatable":  {
+                                              "type":  "boolean"
+                                          },
+                       "dangerClass":  {
+                                           "type":  "string",
+                                           "enum":  [
+                                                        "none",
+                                                        "low",
+                                                        "medium",
+                                                        "high"
+                                                    ]
+                                       },
+                       "habitatIds":  {
+                                          "type":  "array",
+                                          "items":  {
+                                                        "type":  "string"
+                                                    },
+                                          "minItems":  1
+                                      },
+                       "baseValue":  {
+                                         "type":  "number",
+                                         "minimum":  0
+                                     },
+                       "currencyId":  {
+                                          "type":  "string"
+                                      },
+                       "template":  {
+                                        "type":  "object",
+                                        "required":  [
+                                                         "identity",
+                                                         "domestication",
+                                                         "infrastructureModifiers",
+                                                         "reproduction",
+                                                         "ecology",
+                                                         "lifecycle",
+                                                         "output",
+                                                         "activity",
+                                                         "foodChain"
+                                                     ],
+                                        "properties":  {
+                                                           "identity":  {
+                                                                            "type":  "object",
+                                                                            "required":  [
+                                                                                             "type",
+                                                                                             "name",
+                                                                                             "dietType",
+                                                                                             "behavior",
+                                                                                             "dangerClass",
+                                                                                             "sizeClass",
+                                                                                             "domesticatable",
+                                                                                             "mountable"
+                                                                                         ],
+                                                                            "properties":  {
+                                                                                               "type":  {
+                                                                                                            "type":  "string",
+                                                                                                            "enum":  [
+                                                                                                                         "mammal",
+                                                                                                                         "reptile",
+                                                                                                                         "avian",
+                                                                                                                         "fish",
+                                                                                                                         "amphibian",
+                                                                                                                         "arthropod",
+                                                                                                                         "mollusk"
+                                                                                                                     ]
+                                                                                                        },
+                                                                                               "name":  {
+                                                                                                            "type":  "string"
+                                                                                                        },
+                                                                                               "dietType":  {
+                                                                                                                "type":  "string",
+                                                                                                                "enum":  [
+                                                                                                                             "herbivore",
+                                                                                                                             "omnivore",
+                                                                                                                             "carnivore"
+                                                                                                                         ]
+                                                                                                            },
+                                                                                               "behavior":  {
+                                                                                                                "type":  "array",
+                                                                                                                "items":  {
+                                                                                                                              "type":  "string",
+                                                                                                                              "enum":  [
+                                                                                                                                           "aggressive",
+                                                                                                                                           "docile",
+                                                                                                                                           "territorial",
+                                                                                                                                           "passive"
+                                                                                                                                       ]
+                                                                                                                          },
+                                                                                                                "minItems":  1,
+                                                                                                                "uniqueItems":  true
+                                                                                                            },
+                                                                                               "dangerClass":  {
+                                                                                                                   "type":  "string",
+                                                                                                                   "enum":  [
+                                                                                                                                "none",
+                                                                                                                                "low",
+                                                                                                                                "medium",
+                                                                                                                                "high"
+                                                                                                                            ]
+                                                                                                               },
+                                                                                               "sizeClass":  {
+                                                                                                                 "type":  "string",
+                                                                                                                 "enum":  [
+                                                                                                                              "small",
+                                                                                                                              "medium",
+                                                                                                                              "large",
+                                                                                                                              "colossal"
+                                                                                                                          ]
+                                                                                                             },
+                                                                                               "domesticatable":  {
+                                                                                                                      "type":  "boolean"
+                                                                                                                  },
+                                                                                               "mountable":  {
+                                                                                                                 "type":  "boolean"
+                                                                                                             }
+                                                                                           },
+                                                                            "additionalProperties":  false
+                                                                        },
+                                                           "domestication":  {
+                                                                                 "type":  "object",
+                                                                                 "required":  [
+                                                                                                  "infrastructure",
+                                                                                                  "yieldBonus",
+                                                                                                  "population"
+                                                                                              ],
+                                                                                 "properties":  {
+                                                                                                    "infrastructure":  {
+                                                                                                                           "type":  "object",
+                                                                                                                           "required":  [
+                                                                                                                                            "enabled",
+                                                                                                                                            "infrastructureSize"
+                                                                                                                                        ],
+                                                                                                                           "properties":  {
+                                                                                                                                              "enabled":  {
+                                                                                                                                                              "type":  "boolean"
+                                                                                                                                                          },
+                                                                                                                                              "infrastructureSize":  {
+                                                                                                                                                                         "type":  "integer",
+                                                                                                                                                                         "minimum":  0
+                                                                                                                                                                     }
+                                                                                                                                          },
+                                                                                                                           "additionalProperties":  false
+                                                                                                                       },
+                                                                                                    "yieldBonus":  {
+                                                                                                                       "type":  "object",
+                                                                                                                       "required":  [
+                                                                                                                                        "temperatureControlBonus",
+                                                                                                                                        "feedEfficiencyBonus"
+                                                                                                                                    ],
+                                                                                                                       "properties":  {
+                                                                                                                                          "temperatureControlBonus":  {
+                                                                                                                                                                          "type":  "number"
+                                                                                                                                                                      },
+                                                                                                                                          "feedEfficiencyBonus":  {
+                                                                                                                                                                      "type":  "number"
+                                                                                                                                                                  }
+                                                                                                                                      },
+                                                                                                                       "additionalProperties":  false
+                                                                                                                   },
+                                                                                                    "population":  {
+                                                                                                                       "type":  "object",
+                                                                                                                       "required":  [
+                                                                                                                                        "populationCap",
+                                                                                                                                        "populationRatio",
+                                                                                                                                        "stableSeasonSlaughterRateAtCap",
+                                                                                                                                        "passiveOutputYieldBonus"
+                                                                                                                                    ],
+                                                                                                                       "properties":  {
+                                                                                                                                          "populationCap":  {
+                                                                                                                                                                "type":  "integer",
+                                                                                                                                                                "minimum":  0
+                                                                                                                                                            },
+                                                                                                                                          "populationRatio":  {
+                                                                                                                                                                  "type":  "number",
+                                                                                                                                                                  "minimum":  0
+                                                                                                                                                              },
+                                                                                                                                          "stableSeasonSlaughterRateAtCap":  {
+                                                                                                                                                                                 "type":  "number",
+                                                                                                                                                                                 "minimum":  0
+                                                                                                                                                                             },
+                                                                                                                                          "passiveOutputYieldBonus":  {
+                                                                                                                                                                          "type":  "number",
+                                                                                                                                                                          "minimum":  0
+                                                                                                                                                                      }
+                                                                                                                                      },
+                                                                                                                       "additionalProperties":  false
+                                                                                                                   }
+                                                                                                },
+                                                                                 "additionalProperties":  false
+                                                                             },
+                                                           "infrastructureModifiers":  {
+                                                                                           "type":  "object",
+                                                                                           "required":  [
+                                                                                                            "hydrationBonus",
+                                                                                                            "climateProtectionBonus",
+                                                                                                            "feedDiversity",
+                                                                                                            "nutritionBonus",
+                                                                                                            "juvenileSurvivalRateBonus",
+                                                                                                            "fertilityModifier"
+                                                                                                        ],
+                                                                                           "properties":  {
+                                                                                                              "hydrationBonus":  {
+                                                                                                                                     "type":  "number"
+                                                                                                                                 },
+                                                                                                              "climateProtectionBonus":  {
+                                                                                                                                             "type":  "number"
+                                                                                                                                         },
+                                                                                                              "feedDiversity":  {
+                                                                                                                                    "type":  "number"
+                                                                                                                                },
+                                                                                                              "nutritionBonus":  {
+                                                                                                                                     "type":  "number"
+                                                                                                                                 },
+                                                                                                              "juvenileSurvivalRateBonus":  {
+                                                                                                                                                "type":  "number"
+                                                                                                                                            },
+                                                                                                              "fertilityModifier":  {
+                                                                                                                                        "type":  "number"
+                                                                                                                                    }
+                                                                                                          },
+                                                                                           "additionalProperties":  false
+                                                                                       },
+                                                           "reproduction":  {
+                                                                                "type":  "object",
+                                                                                "required":  [
+                                                                                                 "annualReproductionRatio",
+                                                                                                 "reproductionType",
+                                                                                                 "breedingSeasons",
+                                                                                                 "gestationIncubationTimeDays",
+                                                                                                 "fertileAgeDays",
+                                                                                                 "offspringPerBreedingCycle",
+                                                                                                 "offspringSurvivalRate",
+                                                                                                 "effectiveRecruitmentRate"
+                                                                                             ],
+                                                                                "properties":  {
+                                                                                                   "annualReproductionRatio":  {
+                                                                                                                                   "type":  "number",
+                                                                                                                                   "minimum":  0
+                                                                                                                               },
+                                                                                                   "reproductionType":  {
+                                                                                                                            "type":  "string",
+                                                                                                                            "enum":  [
+                                                                                                                                         "oviparous",
+                                                                                                                                         "viviparous",
+                                                                                                                                         "asexual"
+                                                                                                                                     ]
+                                                                                                                        },
+                                                                                                   "breedingSeasons":  {
+                                                                                                                           "type":  "array",
+                                                                                                                           "items":  {
+                                                                                                                                         "type":  "string"
+                                                                                                                                     },
+                                                                                                                           "minItems":  1
+                                                                                                                       },
+                                                                                                   "gestationIncubationTimeDays":  {
+                                                                                                                                       "type":  "integer",
+                                                                                                                                       "minimum":  0
+                                                                                                                                   },
+                                                                                                   "fertileAgeDays":  {
+                                                                                                                          "type":  "integer",
+                                                                                                                          "minimum":  0
+                                                                                                                      },
+                                                                                                   "offspringPerBreedingCycle":  {
+                                                                                                                                     "type":  "integer",
+                                                                                                                                     "minimum":  0
+                                                                                                                                 },
+                                                                                                   "offspringSurvivalRate":  {
+                                                                                                                                 "type":  "number",
+                                                                                                                                 "minimum":  0
+                                                                                                                             },
+                                                                                                   "effectiveRecruitmentRate":  {
+                                                                                                                                    "type":  "number",
+                                                                                                                                    "minimum":  0
+                                                                                                                                }
+                                                                                               },
+                                                                                "additionalProperties":  false
+                                                                            },
+                                                           "ecology":  {
+                                                                           "type":  "object",
+                                                                           "required":  [
+                                                                                            "biomes",
+                                                                                            "territory"
+                                                                                        ],
+                                                                           "properties":  {
+                                                                                              "biomes":  {
+                                                                                                             "type":  "array",
+                                                                                                             "items":  {
+                                                                                                                           "type":  "object",
+                                                                                                                           "required":  [
+                                                                                                                                            "habitatId",
+                                                                                                                                            "preference",
+                                                                                                                                            "prevalence",
+                                                                                                                                            "terrainPreference"
+                                                                                                                                        ],
+                                                                                                                           "properties":  {
+                                                                                                                                              "habitatId":  {
+                                                                                                                                                                "type":  "string"
+                                                                                                                                                            },
+                                                                                                                                              "preference":  {
+                                                                                                                                                                 "type":  "string",
+                                                                                                                                                                 "enum":  [
+                                                                                                                                                                              "primary",
+                                                                                                                                                                              "secondary",
+                                                                                                                                                                              "fallback"
+                                                                                                                                                                          ]
+                                                                                                                                                             },
+                                                                                                                                              "prevalence":  {
+                                                                                                                                                                 "type":  "number",
+                                                                                                                                                                 "minimum":  0
+                                                                                                                                                             },
+                                                                                                                                              "terrainPreference":  {
+                                                                                                                                                                        "type":  "string"
+                                                                                                                                                                    }
+                                                                                                                                          },
+                                                                                                                           "additionalProperties":  false
+                                                                                                                       },
+                                                                                                             "minItems":  1
+                                                                                                         },
+                                                                                              "territory":  {
+                                                                                                                "type":  "object",
+                                                                                                                "required":  [
+                                                                                                                                 "movement",
+                                                                                                                                 "climateRange",
+                                                                                                                                 "size",
+                                                                                                                                 "waterDependency",
+                                                                                                                                 "depthRequirement",
+                                                                                                                                 "hydrationNeed"
+                                                                                                                             ],
+                                                                                                                "properties":  {
+                                                                                                                                   "movement":  {
+                                                                                                                                                    "type":  "string",
+                                                                                                                                                    "enum":  [
+                                                                                                                                                                 "sedentary",
+                                                                                                                                                                 "migration",
+                                                                                                                                                                 "nomadic"
+                                                                                                                                                             ]
+                                                                                                                                                },
+                                                                                                                                   "climateRange":  {
+                                                                                                                                                        "type":  "string"
+                                                                                                                                                    },
+                                                                                                                                   "size":  {
+                                                                                                                                                "type":  "string",
+                                                                                                                                                "enum":  [
+                                                                                                                                                             "small",
+                                                                                                                                                             "medium",
+                                                                                                                                                             "large",
+                                                                                                                                                             "colossal"
+                                                                                                                                                         ]
+                                                                                                                                            },
+                                                                                                                                   "waterDependency":  {
+                                                                                                                                                           "type":  "boolean"
+                                                                                                                                                       },
+                                                                                                                                   "depthRequirement":  {
+                                                                                                                                                            "type":  "string"
+                                                                                                                                                        },
+                                                                                                                                   "hydrationNeed":  {
+                                                                                                                                                         "type":  "string",
+                                                                                                                                                         "enum":  [
+                                                                                                                                                                      "low",
+                                                                                                                                                                      "medium",
+                                                                                                                                                                      "high"
+                                                                                                                                                                  ]
+                                                                                                                                                     }
+                                                                                                                               },
+                                                                                                                "additionalProperties":  false
+                                                                                                            }
+                                                                                          },
+                                                                           "additionalProperties":  false
+                                                                       },
+                                                           "lifecycle":  {
+                                                                             "type":  "object",
+                                                                             "required":  [
+                                                                                              "type",
+                                                                                              "applicableStages"
+                                                                                          ],
+                                                                             "properties":  {
+                                                                                                "type":  {
+                                                                                                             "type":  "string"
+                                                                                                         },
+                                                                                                "applicableStages":  {
+                                                                                                                         "type":  "array",
+                                                                                                                         "items":  {
+                                                                                                                                       "type":  "string"
+                                                                                                                                   },
+                                                                                                                         "minItems":  1
+                                                                                                                     }
+                                                                                            },
+                                                                             "additionalProperties":  false
+                                                                         },
+                                                           "output":  {
+                                                                          "type":  "object",
+                                                                          "required":  [
+                                                                                           "passiveOutput",
+                                                                                           "slaughterOutput"
+                                                                                       ],
+                                                                          "properties":  {
+                                                                                             "passiveOutput":  {
+                                                                                                                   "type":  "object",
+                                                                                                                   "required":  [
+                                                                                                                                    "producerSex",
+                                                                                                                                    "producerWindow"
+                                                                                                                                ],
+                                                                                                                   "properties":  {
+                                                                                                                                      "producerSex":  {
+                                                                                                                                                          "type":  "string",
+                                                                                                                                                          "enum":  [
+                                                                                                                                                                       "female",
+                                                                                                                                                                       "male",
+                                                                                                                                                                       "any"
+                                                                                                                                                                   ]
+                                                                                                                                                      },
+                                                                                                                                      "producerWindow":  {
+                                                                                                                                                             "type":  "string",
+                                                                                                                                                             "enum":  [
+                                                                                                                                                                          "daily",
+                                                                                                                                                                          "seasonal",
+                                                                                                                                                                          "weekly"
+                                                                                                                                                                      ]
+                                                                                                                                                         },
+                                                                                                                                      "products":  {
+                                                                                                                                                       "type":  "object",
+                                                                                                                                                       "properties":  {
+                                                                                                                                                                          "items":  {
+                                                                                                                                                                                        "type":  "array",
+                                                                                                                                                                                        "items":  {
+                                                                                                                                                                                                      "type":  "string",
+                                                                                                                                                                                                      "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                  },
+                                                                                                                                                                                        "minItems":  1
+                                                                                                                                                                                    },
+                                                                                                                                                                          "materials":  {
+                                                                                                                                                                                            "type":  "array",
+                                                                                                                                                                                            "items":  {
+                                                                                                                                                                                                          "type":  "string",
+                                                                                                                                                                                                          "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                      },
+                                                                                                                                                                                            "minItems":  1
+                                                                                                                                                                                        },
+                                                                                                                                                                          "ingredients":  {
+                                                                                                                                                                                              "type":  "array",
+                                                                                                                                                                                              "items":  {
+                                                                                                                                                                                                            "type":  "string",
+                                                                                                                                                                                                            "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                        },
+                                                                                                                                                                                              "minItems":  1
+                                                                                                                                                                                          },
+                                                                                                                                                                          "byproducts":  {
+                                                                                                                                                                                             "type":  "array",
+                                                                                                                                                                                             "items":  {
+                                                                                                                                                                                                           "type":  "string",
+                                                                                                                                                                                                           "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                       },
+                                                                                                                                                                                             "minItems":  1
+                                                                                                                                                                                         }
+                                                                                                                                                                      },
+                                                                                                                                                       "additionalProperties":  false,
+                                                                                                                                                       "anyOf":  [
+                                                                                                                                                                     {
+                                                                                                                                                                         "required":  [
+                                                                                                                                                                                          "items"
+                                                                                                                                                                                      ]
+                                                                                                                                                                     },
+                                                                                                                                                                     {
+                                                                                                                                                                         "required":  [
+                                                                                                                                                                                          "materials"
+                                                                                                                                                                                      ]
+                                                                                                                                                                     },
+                                                                                                                                                                     {
+                                                                                                                                                                         "required":  [
+                                                                                                                                                                                          "ingredients"
+                                                                                                                                                                                      ]
+                                                                                                                                                                     },
+                                                                                                                                                                     {
+                                                                                                                                                                         "required":  [
+                                                                                                                                                                                          "byproducts"
+                                                                                                                                                                                      ]
+                                                                                                                                                                     }
+                                                                                                                                                                 ]
+                                                                                                                                                   }
+                                                                                                                                  },
+                                                                                                                   "additionalProperties":  false
+                                                                                                               },
+                                                                                             "slaughterOutput":  {
+                                                                                                                     "type":  "object",
+                                                                                                                     "required":  [
+                                                                                                                                      "primeAgeDays",
+                                                                                                                                      "cullAgeDays"
+                                                                                                                                  ],
+                                                                                                                     "properties":  {
+                                                                                                                                        "primeAgeDays":  {
+                                                                                                                                                             "type":  "integer",
+                                                                                                                                                             "minimum":  0
+                                                                                                                                                         },
+                                                                                                                                        "cullAgeDays":  {
+                                                                                                                                                            "type":  "integer",
+                                                                                                                                                            "minimum":  0
+                                                                                                                                                        },
+                                                                                                                                        "products":  {
+                                                                                                                                                         "type":  "object",
+                                                                                                                                                         "properties":  {
+                                                                                                                                                                            "items":  {
+                                                                                                                                                                                          "type":  "array",
+                                                                                                                                                                                          "items":  {
+                                                                                                                                                                                                        "type":  "string",
+                                                                                                                                                                                                        "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                    },
+                                                                                                                                                                                          "minItems":  1
+                                                                                                                                                                                      },
+                                                                                                                                                                            "materials":  {
+                                                                                                                                                                                              "type":  "array",
+                                                                                                                                                                                              "items":  {
+                                                                                                                                                                                                            "type":  "string",
+                                                                                                                                                                                                            "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                        },
+                                                                                                                                                                                              "minItems":  1
+                                                                                                                                                                                          },
+                                                                                                                                                                            "ingredients":  {
+                                                                                                                                                                                                "type":  "array",
+                                                                                                                                                                                                "items":  {
+                                                                                                                                                                                                              "type":  "string",
+                                                                                                                                                                                                              "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                          },
+                                                                                                                                                                                                "minItems":  1
+                                                                                                                                                                                            },
+                                                                                                                                                                            "byproducts":  {
+                                                                                                                                                                                               "type":  "array",
+                                                                                                                                                                                               "items":  {
+                                                                                                                                                                                                             "type":  "string",
+                                                                                                                                                                                                             "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                         },
+                                                                                                                                                                                               "minItems":  1
+                                                                                                                                                                                           }
+                                                                                                                                                                        },
+                                                                                                                                                         "additionalProperties":  false,
+                                                                                                                                                         "anyOf":  [
+                                                                                                                                                                       {
+                                                                                                                                                                           "required":  [
+                                                                                                                                                                                            "items"
+                                                                                                                                                                                        ]
+                                                                                                                                                                       },
+                                                                                                                                                                       {
+                                                                                                                                                                           "required":  [
+                                                                                                                                                                                            "materials"
+                                                                                                                                                                                        ]
+                                                                                                                                                                       },
+                                                                                                                                                                       {
+                                                                                                                                                                           "required":  [
+                                                                                                                                                                                            "ingredients"
+                                                                                                                                                                                        ]
+                                                                                                                                                                       },
+                                                                                                                                                                       {
+                                                                                                                                                                           "required":  [
+                                                                                                                                                                                            "byproducts"
+                                                                                                                                                                                        ]
+                                                                                                                                                                       }
+                                                                                                                                                                   ]
+                                                                                                                                                     }
+                                                                                                                                    },
+                                                                                                                     "additionalProperties":  false
+                                                                                                                 }
+                                                                                         },
+                                                                          "additionalProperties":  false
+                                                                      },
+                                                           "activity":  {
+                                                                            "type":  "object",
+                                                                            "required":  [
+                                                                                             "hibernationPeriod",
+                                                                                             "activeTime"
+                                                                                         ],
+                                                                            "properties":  {
+                                                                                               "hibernationPeriod":  {
+                                                                                                                         "type":  "string"
+                                                                                                                     },
+                                                                                               "activeTime":  {
+                                                                                                                  "type":  "string",
+                                                                                                                  "enum":  [
+                                                                                                                               "diurnal",
+                                                                                                                               "nocturnal",
+                                                                                                                               "crepuscular"
+                                                                                                                           ]
+                                                                                                              }
+                                                                                           },
+                                                                            "additionalProperties":  false
+                                                                        },
+                                                           "foodChain":  {
+                                                                             "type":  "object",
+                                                                             "required":  [
+                                                                                              "foodBehaviors",
+                                                                                              "foodTargets"
+                                                                                          ],
+                                                                             "properties":  {
+                                                                                                "foodBehaviors":  {
+                                                                                                                      "type":  "object",
+                                                                                                                      "required":  [
+                                                                                                                                       "prey",
+                                                                                                                                       "scavenger",
+                                                                                                                                       "predator",
+                                                                                                                                       "apex"
+                                                                                                                                   ],
+                                                                                                                      "properties":  {
+                                                                                                                                         "prey":  {
+                                                                                                                                                      "type":  "boolean"
+                                                                                                                                                  },
+                                                                                                                                         "scavenger":  {
+                                                                                                                                                           "type":  "boolean"
+                                                                                                                                                       },
+                                                                                                                                         "predator":  {
+                                                                                                                                                          "type":  "boolean"
+                                                                                                                                                      },
+                                                                                                                                         "apex":  {
+                                                                                                                                                      "type":  "boolean"
+                                                                                                                                                  }
+                                                                                                                                     },
+                                                                                                                      "additionalProperties":  false
+                                                                                                                  },
+                                                                                                "foodTargets":  {
+                                                                                                                    "type":  "object",
+                                                                                                                    "required":  [
+                                                                                                                                     "faunaTypes",
+                                                                                                                                     "floraTypes",
+                                                                                                                                     "specificTargets"
+                                                                                                                                 ],
+                                                                                                                    "properties":  {
+                                                                                                                                       "faunaTypes":  {
+                                                                                                                                                          "type":  "array",
+                                                                                                                                                          "items":  {
+                                                                                                                                                                        "type":  "string"
+                                                                                                                                                                    }
+                                                                                                                                                      },
+                                                                                                                                       "floraTypes":  {
+                                                                                                                                                          "type":  "array",
+                                                                                                                                                          "items":  {
+                                                                                                                                                                        "type":  "string"
+                                                                                                                                                                    }
+                                                                                                                                                      },
+                                                                                                                                       "specificTargets":  {
+                                                                                                                                                               "type":  "object",
+                                                                                                                                                               "required":  [
+                                                                                                                                                                                "fauna",
+                                                                                                                                                                                "flora"
+                                                                                                                                                                            ],
+                                                                                                                                                               "properties":  {
+                                                                                                                                                                                  "fauna":  {
+                                                                                                                                                                                                "type":  "array",
+                                                                                                                                                                                                "items":  {
+                                                                                                                                                                                                              "type":  "string"
+                                                                                                                                                                                                          }
+                                                                                                                                                                                            },
+                                                                                                                                                                                  "flora":  {
+                                                                                                                                                                                                "type":  "array",
+                                                                                                                                                                                                "items":  {
+                                                                                                                                                                                                              "type":  "string"
+                                                                                                                                                                                                          }
+                                                                                                                                                                                            }
+                                                                                                                                                                              },
+                                                                                                                                                               "additionalProperties":  false
+                                                                                                                                                           }
+                                                                                                                                   },
+                                                                                                                    "additionalProperties":  false
+                                                                                                                }
+                                                                                            },
+                                                                             "additionalProperties":  false
+                                                                         }
+                                                       },
+                                        "additionalProperties":  false
+                                    }
+                   },
+    "additionalProperties":  false
 }

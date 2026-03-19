@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+﻿import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 const ROOT = process.cwd();
@@ -6,6 +6,152 @@ const SLUG_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const ITEM_KEY_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const RESOURCE_ITEM_PREFIX_PATTERN = /^(flora|fauna|mineral)\./;
 const GEO_QUALIFIER_PATTERN = /\b(american|european|asian|african|oregon|texas|california|alaskan)\b/i;
+
+const FLORA_TYPES = new Set(["tree", "shrub", "herb", "grass", "fungi"]);
+const FLORA_LIFECYCLES = new Set(["annual", "biennial", "perennial"]);
+const FLORA_NEEDS = new Set(["low", "medium", "high"]);
+const FLORA_REGROWTH_PERIODS = new Set(["none", "growth_season", "annual"]);
+const FLORA_STAGES = new Set(["germination", "vegetative", "flowering", "fruiting", "dormancy"]);
+const HABITAT_SHAPES = new Set(["patch", "linear", "point", "edge", "volume"]);
+
+const FAUNA_TYPES = new Set(["mammal", "reptile", "avian", "fish", "amphibian", "arthropod", "mollusk"]);
+const FAUNA_DIETS = new Set(["herbivore", "omnivore", "carnivore"]);
+const FAUNA_DANGER_CLASSES = new Set(["none", "low", "medium", "high"]);
+const FAUNA_SIZE_CLASSES = new Set(["small", "medium", "large", "colossal"]);
+const FAUNA_BEHAVIORS = new Set(["aggressive", "docile", "territorial", "passive"]);
+const FAUNA_MOVEMENTS = new Set(["sedentary", "migration", "nomadic"]);
+const FAUNA_HYDRATION_NEEDS = new Set(["low", "medium", "high"]);
+const FAUNA_ACTIVE_TIMES = new Set(["diurnal", "nocturnal", "crepuscular"]);
+const FAUNA_REPRODUCTION_TYPES = new Set(["oviparous", "viviparous", "asexual"]);
+const FAUNA_PRODUCER_SEX = new Set(["female", "male", "any"]);
+const FAUNA_PRODUCER_WINDOWS = new Set(["daily", "seasonal", "weekly"]);
+
+const CLIMATE_SEASONS = ["Winter", "Thaw", "Spring", "Summer", "Harvest", "Withering"];
+const CLIMATE_UNITS = new Set(["celsius", "fahrenheit", "kelvin"]);
+const CLIMATE_SEASON_RATIOS = {
+  Winter: { low: 0, high: 0.3 },
+  Thaw: { low: 0.1, high: 0.55 },
+  Spring: { low: 0.25, high: 0.75 },
+  Summer: { low: 0.55, high: 1 },
+  Harvest: { low: 0.4, high: 0.85 },
+  Withering: { low: 0.15, high: 0.6 }
+};
+const CLIMATE_EPSILON = 0.000001;
+const CLIMATE_WEEKS_PER_YEAR = 52;
+const CALENDAR_MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+const FAUNA_PRODUCT_GROUPS = ["items", "materials", "ingredients", "byproducts"];
+const GENERIC_PROPAGULE_KEYS = new Set(["seed", "seeds", "seed_mix", "bulb", "bulbs", "start", "starts", "propagule", "propagules"]);
+const WORKPLACE_CATEGORIES = new Set(["extraction", "processing", "manufacturing", "distribution"]);
+const WORKPLACE_TECH_LEVELS = new Set(["primitive", "basic", "improved", "advanced", "masterwork"]);
+const WORKPLACE_OWNERSHIP_MODELS = new Set(["subsistence", "independent", "guild", "estate", "civic"]);
+const WORKPLACE_WEALTH_BANDS = new Set(["low_income", "mid_income", "high_income"]);
+const WORKPLACE_FACILITY_FORMS = new Set(["camp", "hut", "cabin", "lodge", "hall", "guildhouse", "workshop", "estate", "compound", "outpost"]);
+const WORKPLACE_INTEGRATION_ROLES = new Set([
+  "gathering",
+  "primary_processing",
+  "secondary_processing",
+  "aging",
+  "distillation",
+  "bottling",
+  "distribution",
+  "integrated"
+]);
+const WORKPLACE_TRACK_ID_PATTERN = /^track\.[a-z0-9]+(?:_[a-z0-9]+)*$/;
+const WORKPLACE_COMBO_ID_PATTERN = /^combo\.[a-z0-9]+(?:[._][a-z0-9]+)*$/;
+const WORKPLACE_BUSINESS_SCALES = new Set(["micro", "small", "medium", "large", "estate"]);
+const WORKPLACE_CONSUMER_SCOPES = new Set(["self_use", "local", "district", "regional", "export"]);
+const WORKPLACE_SUPPLY_ACCESS = new Set(["scarce", "constrained", "balanced", "surplus"]);
+const WORKPLACE_RISK_TOLERANCE = new Set(["safe", "frontier", "dangerous"]);
+const CHAIN_FACILITY_MODES = new Set(["compact", "tiered", "segmented", "integrated"]);
+const WORKPLACE_JOB_ID_PATTERN = /^job\.[a-z0-9]+(?:_[a-z0-9]+)*$/;
+const WORKPLACE_WORKFORCE_ROLES = new Set(["primary", "support", "specialist", "management"]);
+const WORKPLACE_TOOL_TAG_PATTERN = /^tool\.[a-z0-9]+(?:_[a-z0-9]+)*$/;
+const WORKPLACE_MISSING_TOOL_PENALTY_MODES = new Set(["reduced_output", "no_output"]);
+const WORKPLACE_IO_CONSUMPTION_TYPES = new Set(["consumed", "access"]);
+const WORKPLACE_IO_PRODUCTION_TYPES = new Set(["primary", "byproduct"]);
+const WORKPLACE_IRRIGATION_SOURCE_TYPES = new Set(["well", "ditch", "wood_lined_channel", "stone_culvert", "aqueduct"]);
+const WORKPLACE_IRRIGATION_RENEWABILITY = new Set(["effectively_unbounded", "recharging", "bounded"]);
+const WORKPLACE_IRRIGATION_DELIVERY_LATENCY = new Set(["high", "moderate", "low", "minimal"]);
+const WORKPLACE_IRRIGATION_MAINTENANCE = new Set(["seasonal", "annual", "minimal"]);
+const WORKPLACE_IRRIGATION_EROSION = new Set(["high", "low", "none"]);
+const WORKPLACE_IRRIGATION_CROSS_INFRA = new Set(["none", "wood_and_stone", "full"]);
+const WORKPLACE_IRRIGATION_PREFERRED_SOURCES = new Set(["major_river", "large_lake", "spring", "deep_aquifer"]);
+const WORKPLACE_PLOT_TYPES = new Set(["garden", "farmland", "raised_bed", "orchard", "terraced_farm", "terraced_orchard", "greenhouse"]);
+const WORKPLACE_PLOT_SPECIALTY_UPGRADES = new Set(["terracing", "greenhouse", "raised_beds", "built_in_irrigation"]);
+const WORKPLACE_PLOT_TERRAINS = new Set(["flat", "rolling", "hillside", "mountain", "wetland"]);
+const WORKPLACE_UPGRADE_ID_PATTERN = /^upgrade\.[a-z0-9]+(?:_[a-z0-9]+)*$/;
+const WORKPLACE_UPGRADE_CATEGORIES = new Set([
+  "tooling",
+  "infrastructure",
+  "logistics",
+  "safety",
+  "storage",
+  "quality",
+  "operations",
+  "comfort"
+]);
+const WORKPLACE_PROGRESS_POWER_MODES = new Set(["manual", "animal", "water", "wind", "steam", "hybrid"]);
+const INFRASTRUCTURE_CATEGORIES = new Set(["waterworks", "transport", "defense", "civic", "utility", "agriculture"]);
+const INFRASTRUCTURE_TYPES = new Set(["irrigation", "road", "wall", "gate", "aqueduct", "bridge", "canal", "fortification", "utility"]);
+const MEAT_CUT_SPECIES_CATEGORIES = new Set(["game", "livestock", "seafood"]);
+const WORLD_REGION_TYPES = new Set(["continent", "subregion", "island_system", "ocean"]);
+const WORLD_POPULATION_DENSITY_BANDS = new Set(["very_high", "high", "moderate", "low", "very_low"]);
+const WORLD_MAP_TYPES = new Set(["world"]);
+const REGIONAL_ECOLOGY_COVERAGE_BANDS = new Set(["surplus", "strong", "moderate", "limited", "scarce", "none"]);
+const TRAVEL_MODE_DOMAINS = new Set(["land", "water"]);
+const TRAVEL_ROUTE_CLASSES = new Set(["road_corridor", "pack_track", "river_corridor", "mixed_corridor", "coastal_lane"]);
+const TRAVEL_LANE_CLASSES = new Set(["intercoastal", "open_ocean"]);
+const GUILD_CATEGORIES = new Set(["mercantile", "martial", "gathering", "crafting", "logistics", "civic", "service"]);
+const GUILD_ENTRY_METHODS = new Set(["buy_in", "task_trial", "sponsorship", "oath", "charter"]);
+const QUEST_TEMPLATE_CATEGORIES = new Set([
+  "gathering",
+  "hunting",
+  "domestic_labor",
+  "escort",
+  "porter",
+  "exploration",
+  "monster_subjugation",
+  "salvage"
+]);
+const QUEST_TEMPLATE_SOURCES = new Set(["shortfall", "surplus", "security", "frontier"]);
+const MONSTER_CLASSES = new Set(["beast", "humanoid", "ooze", "elemental", "undead", "giantkin"]);
+const MONSTER_THREATS = new Set(["low", "moderate", "high", "severe"]);
+const SETTLEMENT_TYPES = new Set([
+  "hamlet",
+  "outpost",
+  "village",
+  "market_town",
+  "town",
+  "city",
+  "fort",
+  "citadel",
+  "harbor_town",
+  "port_city",
+  "estate",
+  "monastery",
+  "ferry_post",
+  "camp",
+  "waystation"
+]);
+const SETTLEMENT_POPULATION_BANDS = new Set(["tiny", "small", "modest", "large", "major"]);
+const SETTLEMENT_ADMIN_ROLES = new Set(["none", "local", "subregional", "regional", "continental"]);
+const SETTLEMENT_INFRA_LEVELS = new Set(["rudimentary", "frontier", "established", "developed", "civic", "grand"]);
+const SETTLEMENT_TRADE_DIRECTIONS = new Set(["exports_to", "imports_from", "exchange_with"]);
+const SETTLEMENT_ROUTE_MODES = new Set(["road", "river", "coastal", "canal", "pack", "sea_lane"]);
+const SETTLEMENT_GUILD_PRESENCE_LEVELS = new Set(["outpost", "hall", "chapterhouse", "guildhouse", "exchange", "great_house"]);
+const SETTLEMENT_DEPENDENCY_ROLES = new Set([
+  "satellite_hamlet",
+  "estate_supply",
+  "resource_camp",
+  "ferry_crossing",
+  "monastic_estate",
+  "watch_post",
+  "waystation",
+  "harbor_support",
+  "seasonal_station"
+]);
+const DEPENDENT_SETTLEMENT_TYPES = new Set(["hamlet", "estate", "monastery", "ferry_post", "camp", "waystation"]);
+
 
 const checks = [
   {
@@ -18,19 +164,22 @@ const checks = [
     file: "packages/content/base/world/habitats.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
-    forbidGeoQualifierInName: true
+    forbidGeoQualifierInName: true,
+    validateHabitatBiomes: true
   },
   {
     file: "packages/content/base/world/flora.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
-    forbidGeoQualifierInName: true
+    forbidGeoQualifierInName: true,
+    validateFloraTemplate: true
   },
   {
     file: "packages/content/base/world/fauna.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
-    forbidGeoQualifierInName: true
+    forbidGeoQualifierInName: true,
+    validateFaunaTemplate: true
   },
   {
     file: "packages/content/base/world/minerals.json",
@@ -49,7 +198,50 @@ const checks = [
     file: "packages/content/base/civilization/workplaces.json",
     requiredTopLevel: ["records"],
     requireSlug: false,
-    forbidGeoQualifierInName: false
+    forbidGeoQualifierInName: false,
+    validateWorkplaces: true
+  },
+  {
+    file: "packages/content/base/civilization/infrastructure.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateInfrastructure: true
+  },
+  {
+    file: "packages/content/base/civilization/production_chains.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateProductionChains: true
+  },
+  {
+    file: "packages/content/base/civilization/meat_cut_standards.json",
+    requiredTopLevel: ["records", "sausageUnitStandard"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateMeatCutStandards: true
+  },
+  {
+    file: "packages/content/base/civilization/guilds.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateGuilds: true
+  },
+  {
+    file: "packages/content/base/civilization/quest_templates.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateQuestTemplates: true
+  },
+  {
+    file: "packages/content/base/world/monsters.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateMonsters: true
   },
   {
     file: "packages/content/base/player/equipment_slots.json",
@@ -58,12 +250,3583 @@ const checks = [
     forbidGeoQualifierInName: false
   },
   {
+    file: "packages/content/base/world/calendar.json",
+    requiredTopLevel: ["months", "seasons"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateCalendar: true
+  },
+  {
     file: "packages/content/base/world/climate_profiles.json",
     requiredTopLevel: ["records"],
     requireSlug: false,
-    forbidGeoQualifierInName: false
+    forbidGeoQualifierInName: false,
+    validateClimateProfiles: true
+  },
+  {
+    file: "packages/content/base/world/regions.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateWorldRegions: true
+  },
+  {
+    file: "packages/content/base/world/regional_ecology_profiles.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateRegionalEcologyProfiles: true
+  },
+  {
+    file: "packages/content/base/world/settlements.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateSettlements: true
+  },
+  {
+    file: "packages/content/base/world/travel_networks.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateTravelNetworks: true
+  },
+  {
+    file: "packages/content/base/world/world_map_features.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateWorldMapFeatures: true
+  },
+  {
+    file: "packages/content/base/world/world_maps.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateWorldMaps: true
   }
 ];
+
+function isObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function ensureSetMembership(relativePath, recordId, field, value, allowed) {
+  if (!allowed.has(value)) {
+    throw new Error(`${relativePath} has invalid ${field} '${String(value)}' on record ${recordId}`);
+  }
+}
+
+function ensureStringArray(relativePath, recordId, field, value, minLength = 0) {
+  if (!Array.isArray(value)) {
+    throw new Error(`${relativePath} has non-array ${field} on record ${recordId}`);
+  }
+
+  if (value.length < minLength) {
+    throw new Error(`${relativePath} has too few values in ${field} on record ${recordId}`);
+  }
+
+  for (const entry of value) {
+    if (typeof entry !== "string") {
+      throw new Error(`${relativePath} has non-string value in ${field} on record ${recordId}`);
+    }
+  }
+}
+
+function ensureNumber(relativePath, recordId, field, value, min = 0) {
+  if (typeof value !== "number" || Number.isNaN(value) || value < min) {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+}
+
+function ensureFiniteNumber(relativePath, recordId, field, value) {
+  if (typeof value !== "number" || Number.isNaN(value) || !Number.isFinite(value)) {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+}
+
+function ensureApproxEqual(relativePath, recordId, field, actual, expected, epsilon = CLIMATE_EPSILON) {
+  ensureFiniteNumber(relativePath, recordId, field, actual);
+  ensureFiniteNumber(relativePath, recordId, field, expected);
+
+  if (Math.abs(actual - expected) > epsilon) {
+    throw new Error(
+      `${relativePath} has invalid ${field} on record ${recordId}; expected ${expected}, received ${actual}`
+    );
+  }
+}
+
+function ensureInteger(relativePath, recordId, field, value, min = 0) {
+  if (!Number.isInteger(value) || value < min) {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+}
+
+function ensureString(relativePath, recordId, field, value) {
+  if (typeof value !== "string" || value.trim().length === 0) {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+}
+
+function ensureBoolean(relativePath, recordId, field, value) {
+  if (typeof value !== "boolean") {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+}
+
+async function validateHabitatBiomes(relativePath, records) {
+  const rawBiomes = await readFile(path.join(ROOT, "packages/content/base/world/biomes.json"), "utf8");
+  const parsedBiomes = JSON.parse(rawBiomes);
+
+  if (!Array.isArray(parsedBiomes.records)) {
+    throw new Error(`${relativePath} could not validate habitats because biomes records is not an array`);
+  }
+
+  const validBiomeIds = new Set();
+  for (const biome of parsedBiomes.records) {
+    if (typeof biome.id === "string") {
+      validBiomeIds.add(biome.id);
+    }
+  }
+
+  const seenHabitatIds = new Set();
+  const seenHabitatSlugs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    ensureString(relativePath, recordId, "slug", record.slug);
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "biomeId", record.biomeId);
+
+    if (seenHabitatIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate habitat id ${record.id}`);
+    }
+    seenHabitatIds.add(record.id);
+
+    if (seenHabitatSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate habitat slug ${record.slug}`);
+    }
+    seenHabitatSlugs.add(record.slug);
+
+    ensureStringArray(relativePath, recordId, "biomeIds", record.biomeIds, 1);
+
+    if (new Set(record.biomeIds).size !== record.biomeIds.length) {
+      throw new Error(`${relativePath} has duplicate biomeIds values on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "shape", record.shape, HABITAT_SHAPES);
+
+    if (!record.biomeIds.includes(record.biomeId)) {
+      throw new Error(`${relativePath} has biomeId not included in biomeIds on record ${recordId}`);
+    }
+
+    for (const biomeId of record.biomeIds) {
+      if (!validBiomeIds.has(biomeId)) {
+        throw new Error(`${relativePath} references unknown biomeId '${biomeId}' on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateFloraOutputBlock(relativePath, recordId, fieldName, block) {
+  if (!isObject(block) || !isObject(block.rawOutput) || !isObject(block.rawOutput.processing) || !isObject(block.rawOutput.processing.byProducts)) {
+    throw new Error(`${relativePath} has incomplete ${fieldName} on record ${recordId}`);
+  }
+
+  ensureString(relativePath, recordId, `${fieldName}.trigger`, block.trigger);
+  ensureStringArray(relativePath, recordId, `${fieldName}.rawOutput.materials`, block.rawOutput.materials, 1);
+  ensureStringArray(relativePath, recordId, `${fieldName}.rawOutput.ingredients`, block.rawOutput.ingredients, 1);
+  ensureStringArray(relativePath, recordId, `${fieldName}.rawOutput.processing.byProducts.materials`, block.rawOutput.processing.byProducts.materials, 1);
+  ensureStringArray(relativePath, recordId, `${fieldName}.rawOutput.processing.byProducts.ingredients`, block.rawOutput.processing.byProducts.ingredients, 1);
+}
+
+function validateFloraTemplate(relativePath, records) {
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureSetMembership(relativePath, recordId, "type", record.type, FLORA_TYPES);
+    ensureSetMembership(relativePath, recordId, "lifecycle", record.lifecycle, FLORA_LIFECYCLES);
+    ensureStringArray(relativePath, recordId, "habitatIds", record.habitatIds, 1);
+
+    if (!isObject(record.harvest)) {
+      throw new Error(`${relativePath} is missing harvest object on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "harvest.active", record.harvest.active);
+    ensureBoolean(relativePath, recordId, "harvest.passive", record.harvest.passive);
+    ensureNumber(relativePath, recordId, "harvest.yieldCap", record.harvest.yieldCap, 0);
+    ensureNumber(relativePath, recordId, "baseValue", record.baseValue, 0);
+    ensureString(relativePath, recordId, "currencyId", record.currencyId);
+
+    if (!isObject(record.template)) {
+      throw new Error(`${relativePath} is missing template object on record ${recordId}`);
+    }
+
+    const { identity, harvest, lifecycle, agronomy, domestication, ecology } = record.template;
+
+    if (!isObject(identity)) {
+      throw new Error(`${relativePath} is missing template.identity on record ${recordId}`);
+    }
+
+    if (identity.name !== record.name) {
+      throw new Error(`${relativePath} has mismatched identity.name on record ${recordId}`);
+    }
+
+    if (identity.type !== record.type) {
+      throw new Error(`${relativePath} has mismatched identity.type on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "template.identity.type", identity.type, FLORA_TYPES);
+
+    if (!isObject(harvest) || !isObject(harvest.partHarvestAvailability) || !isObject(harvest.partPassiveHarvestRules) || !isObject(harvest.partActiveHarvestRules)) {
+      throw new Error(`${relativePath} has incomplete template.harvest block on record ${recordId}`);
+    }
+
+    ensureStringArray(relativePath, recordId, "template.harvest.harvestableParts", harvest.harvestableParts, 1);
+    ensureBoolean(relativePath, recordId, "template.harvest.partHarvestAvailability.active", harvest.partHarvestAvailability.active);
+    ensureBoolean(relativePath, recordId, "template.harvest.partHarvestAvailability.passive", harvest.partHarvestAvailability.passive);
+
+    if (harvest.partHarvestAvailability.active !== record.harvest.active) {
+      throw new Error(`${relativePath} has mismatched harvest.active and template.harvest.partHarvestAvailability.active on record ${recordId}`);
+    }
+
+    if (harvest.partHarvestAvailability.passive !== record.harvest.passive) {
+      throw new Error(`${relativePath} has mismatched harvest.passive and template.harvest.partHarvestAvailability.passive on record ${recordId}`);
+    }
+
+    if (!Array.isArray(harvest.partHarvestAvailability.partsByStages) || harvest.partHarvestAvailability.partsByStages.length === 0) {
+      throw new Error(`${relativePath} has invalid template.harvest.partHarvestAvailability.partsByStages on record ${recordId}`);
+    }
+
+    for (const stageParts of harvest.partHarvestAvailability.partsByStages) {
+      if (!isObject(stageParts)) {
+        throw new Error(`${relativePath} has invalid partsByStages entry on record ${recordId}`);
+      }
+
+      ensureSetMembership(relativePath, recordId, "template.harvest.partHarvestAvailability.partsByStages.stage", stageParts.stage, FLORA_STAGES);
+      ensureStringArray(relativePath, recordId, "template.harvest.partHarvestAvailability.partsByStages.parts", stageParts.parts, 1);
+    }
+
+    ensureInteger(relativePath, recordId, "template.harvest.partPassiveHarvestRules.passiveYieldStartAgeDays", harvest.partPassiveHarvestRules.passiveYieldStartAgeDays, 0);
+    ensureInteger(relativePath, recordId, "template.harvest.partPassiveHarvestRules.yieldCapAnnual", harvest.partPassiveHarvestRules.yieldCapAnnual, 0);
+
+    if (!isObject(harvest.partPassiveHarvestRules.regrowthBehavior)) {
+      throw new Error(`${relativePath} has missing template.harvest.partPassiveHarvestRules.regrowthBehavior on record ${recordId}`);
+    }
+
+    ensureInteger(
+      relativePath,
+      recordId,
+      "template.harvest.partPassiveHarvestRules.regrowthBehavior.unitsPerGrowthSeasonWhenMature",
+      harvest.partPassiveHarvestRules.regrowthBehavior.unitsPerGrowthSeasonWhenMature,
+      0
+    );
+
+    const activeRules = harvest.partActiveHarvestRules;
+
+    if (!isObject(activeRules.primeYieldAges) || !isObject(activeRules.regrowthBehavior) || !isObject(activeRules.activeHarvestImpact)) {
+      throw new Error(`${relativePath} has incomplete template.harvest.partActiveHarvestRules block on record ${recordId}`);
+    }
+
+    ensureInteger(relativePath, recordId, "template.harvest.partActiveHarvestRules.primeYieldAges.startAgeDays", activeRules.primeYieldAges.startAgeDays, 0);
+    ensureInteger(relativePath, recordId, "template.harvest.partActiveHarvestRules.primeYieldAges.peakAgeDays", activeRules.primeYieldAges.peakAgeDays, 0);
+    ensureInteger(relativePath, recordId, "template.harvest.partActiveHarvestRules.primeYieldAges.endAgeDays", activeRules.primeYieldAges.endAgeDays, 0);
+
+    ensureNumber(relativePath, recordId, "template.harvest.partActiveHarvestRules.regrowthBehavior.growthCyclesPerSeason", activeRules.regrowthBehavior.growthCyclesPerSeason, 0);
+    ensureNumber(relativePath, recordId, "template.harvest.partActiveHarvestRules.regrowthBehavior.unitGrowthSpeed", activeRules.regrowthBehavior.unitGrowthSpeed, 0);
+    ensureInteger(relativePath, recordId, "template.harvest.partActiveHarvestRules.regrowthBehavior.matureAgeDays", activeRules.regrowthBehavior.matureAgeDays, 0);
+
+    if (!isObject(activeRules.activeHarvestImpact.destructiveHarvestFlag)) {
+      throw new Error(`${relativePath} has missing template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag on record ${recordId}`);
+    }
+
+    ensureInteger(
+      relativePath,
+      recordId,
+      "template.harvest.partActiveHarvestRules.activeHarvestImpact.harvestableStructuralUnits",
+      activeRules.activeHarvestImpact.harvestableStructuralUnits,
+      0
+    );
+
+    const destructiveFlag = activeRules.activeHarvestImpact.destructiveHarvestFlag;
+
+    ensureNumber(relativePath, recordId, "template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag.passiveYieldEffectPerHarvest", destructiveFlag.passiveYieldEffectPerHarvest, 0);
+    ensureNumber(
+      relativePath,
+      recordId,
+      "template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag.allPartGrowthSpeedReductionPerHarvest",
+      destructiveFlag.allPartGrowthSpeedReductionPerHarvest,
+      0
+    );
+    ensureInteger(
+      relativePath,
+      recordId,
+      "template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag.maximumDestructiveHarvestsToStagnation",
+      destructiveFlag.maximumDestructiveHarvestsToStagnation,
+      0
+    );
+    ensureInteger(
+      relativePath,
+      recordId,
+      "template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag.maximumDestructiveHarvestsToDeath",
+      destructiveFlag.maximumDestructiveHarvestsToDeath,
+      0
+    );
+    ensureBoolean(relativePath, recordId, "template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag.canRegrow", destructiveFlag.canRegrow);
+    ensureInteger(
+      relativePath,
+      recordId,
+      "template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag.timeToRegrowDays",
+      destructiveFlag.timeToRegrowDays,
+      0
+    );
+    ensureSetMembership(
+      relativePath,
+      recordId,
+      "template.harvest.partActiveHarvestRules.activeHarvestImpact.destructiveHarvestFlag.regrowthPeriod",
+      destructiveFlag.regrowthPeriod,
+      FLORA_REGROWTH_PERIODS
+    );
+
+    ensureNumber(relativePath, recordId, "template.harvest.partActiveHarvestRules.unharvestedConversion", activeRules.unharvestedConversion, 0);
+
+    ensureStringArray(relativePath, recordId, "template.harvest.tools", harvest.tools, 1);
+    ensureStringArray(relativePath, recordId, "template.harvest.triggers", harvest.triggers, 1);
+
+    validateFloraOutputBlock(relativePath, recordId, "template.harvest.activeHarvest", harvest.activeHarvest);
+    validateFloraOutputBlock(relativePath, recordId, "template.harvest.passiveHarvest", harvest.passiveHarvest);
+
+    if (!isObject(lifecycle) || !isObject(lifecycle.stages)) {
+      throw new Error(`${relativePath} has incomplete template.lifecycle block on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "template.lifecycle.type", lifecycle.type, FLORA_LIFECYCLES);
+    if (lifecycle.type !== record.lifecycle) {
+      throw new Error(`${relativePath} has mismatched lifecycle.type on record ${recordId}`);
+    }
+
+    ensureStringArray(relativePath, recordId, "template.lifecycle.applicableStages", lifecycle.applicableStages, 1);
+    for (const stage of lifecycle.applicableStages) {
+      ensureSetMembership(relativePath, recordId, "template.lifecycle.applicableStages", stage, FLORA_STAGES);
+    }
+
+    for (const stageName of FLORA_STAGES) {
+      const stageData = lifecycle.stages[stageName];
+      if (!isObject(stageData) || !isObject(stageData.duration)) {
+        throw new Error(`${relativePath} has invalid lifecycle stage '${stageName}' on record ${recordId}`);
+      }
+
+      ensureNumber(relativePath, recordId, `template.lifecycle.stages.${stageName}.mortalityThreshold`, stageData.mortalityThreshold, 0);
+      ensureStringArray(relativePath, recordId, `template.lifecycle.stages.${stageName}.transitionTriggers`, stageData.transitionTriggers, 1);
+      ensureInteger(relativePath, recordId, `template.lifecycle.stages.${stageName}.duration.baseDurationDays`, stageData.duration.baseDurationDays, 0);
+      ensureNumber(
+        relativePath,
+        recordId,
+        `template.lifecycle.stages.${stageName}.duration.environmentalVariability`,
+        stageData.duration.environmentalVariability,
+        0
+      );
+    }
+
+    if (!isObject(agronomy) || !isObject(agronomy.rotationBenefit)) {
+      throw new Error(`${relativePath} has incomplete template.agronomy block on record ${recordId}`);
+    }
+
+    ensureStringArray(relativePath, recordId, "template.agronomy.plantingWindow", agronomy.plantingWindow, 1);
+    ensureStringArray(relativePath, recordId, "template.agronomy.companionCrops", agronomy.companionCrops, 1);
+    ensureStringArray(relativePath, recordId, "template.agronomy.antagonisticCrops", agronomy.antagonisticCrops, 1);
+    ensureStringArray(relativePath, recordId, "template.agronomy.harvestWindow", agronomy.harvestWindow, 1);
+    ensureStringArray(relativePath, recordId, "template.agronomy.shedSeasons", agronomy.shedSeasons, 0);
+    ensureStringArray(relativePath, recordId, "template.agronomy.growthSeasons", agronomy.growthSeasons, 1);
+
+    ensureNumber(relativePath, recordId, "template.agronomy.rotationBenefit.soilQuality", agronomy.rotationBenefit.soilQuality, 0);
+    ensureNumber(relativePath, recordId, "template.agronomy.rotationBenefit.fertilizationEffect", agronomy.rotationBenefit.fertilizationEffect, 0);
+    ensureNumber(relativePath, recordId, "template.agronomy.rotationBenefit.survivability", agronomy.rotationBenefit.survivability, 0);
+    ensureNumber(relativePath, recordId, "template.agronomy.rotationBenefit.pestInteraction", agronomy.rotationBenefit.pestInteraction, 0);
+
+    if (!isObject(domestication) || !isObject(domestication.difficulty) || !isObject(domestication.mediation) || !isObject(domestication.infrastructure)) {
+      throw new Error(`${relativePath} has incomplete template.domestication block on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "template.domestication.cultivable", domestication.cultivable);
+
+    if (domestication.domesticVariant !== null && typeof domestication.domesticVariant !== "string") {
+      throw new Error(`${relativePath} has invalid template.domestication.domesticVariant on record ${recordId}`);
+    }
+
+    ensureNumber(relativePath, recordId, "template.domestication.domesticationYieldModifier", domestication.domesticationYieldModifier, 0);
+    ensureStringArray(relativePath, recordId, "template.domestication.tools", domestication.tools, 1);
+
+    ensureNumber(relativePath, recordId, "template.domestication.difficulty.invasivity", domestication.difficulty.invasivity, 0);
+    ensureStringArray(relativePath, recordId, "template.domestication.difficulty.fragilityFactors", domestication.difficulty.fragilityFactors, 1);
+    ensureNumber(relativePath, recordId, "template.domestication.difficulty.soilDegradation", domestication.difficulty.soilDegradation, 0);
+    ensureNumber(relativePath, recordId, "template.domestication.difficulty.survivability", domestication.difficulty.survivability, 0);
+    ensureNumber(relativePath, recordId, "template.domestication.difficulty.landArea", domestication.difficulty.landArea, 0);
+
+    if (!isObject(domestication.mediation.protection) || !isObject(domestication.mediation.pollination) || !isObject(domestication.mediation.upkeep)) {
+      throw new Error(`${relativePath} has incomplete template.domestication.mediation block on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "template.domestication.mediation.protection.fences", domestication.mediation.protection.fences);
+    ensureBoolean(relativePath, recordId, "template.domestication.mediation.protection.netting", domestication.mediation.protection.netting);
+    ensureBoolean(relativePath, recordId, "template.domestication.mediation.pollination.fertilization", domestication.mediation.pollination.fertilization);
+    ensureBoolean(relativePath, recordId, "template.domestication.mediation.upkeep.weedControl", domestication.mediation.upkeep.weedControl);
+    ensureBoolean(relativePath, recordId, "template.domestication.mediation.upkeep.fungusControl", domestication.mediation.upkeep.fungusControl);
+
+    ensureBoolean(relativePath, recordId, "template.domestication.infrastructure.irrigation", domestication.infrastructure.irrigation);
+    ensureBoolean(relativePath, recordId, "template.domestication.infrastructure.greenhouse", domestication.infrastructure.greenhouse);
+    ensureBoolean(relativePath, recordId, "template.domestication.infrastructure.mulch", domestication.infrastructure.mulch);
+    ensureBoolean(relativePath, recordId, "template.domestication.infrastructure.trellising", domestication.infrastructure.trellising);
+    ensureBoolean(relativePath, recordId, "template.domestication.infrastructure.raisedBeds", domestication.infrastructure.raisedBeds);
+
+    if (!isObject(ecology)) {
+      throw new Error(`${relativePath} is missing template.ecology on record ${recordId}`);
+    }
+
+    ensureString(relativePath, recordId, "template.ecology.climateRange", ecology.climateRange);
+    ensureSetMembership(relativePath, recordId, "template.ecology.waterNeed", ecology.waterNeed, FLORA_NEEDS);
+    ensureSetMembership(relativePath, recordId, "template.ecology.lightNeed", ecology.lightNeed, FLORA_NEEDS);
+    ensureStringArray(relativePath, recordId, "template.ecology.soilType", ecology.soilType, 1);
+
+    if (!Array.isArray(ecology.biomes) || ecology.biomes.length === 0) {
+      throw new Error(`${relativePath} has invalid template.ecology.biomes on record ${recordId}`);
+    }
+
+    for (const biome of ecology.biomes) {
+      if (!isObject(biome)) {
+        throw new Error(`${relativePath} has invalid template.ecology.biome entry on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, "template.ecology.biomes.habitatId", biome.habitatId);
+      if (!record.habitatIds.includes(biome.habitatId)) {
+        throw new Error(`${relativePath} has ecology biome habitatId not present in habitatIds on record ${recordId}`);
+      }
+
+      ensureNumber(relativePath, recordId, "template.ecology.biomes.prevalence", biome.prevalence, 0);
+    }
+  }
+}
+
+function ensureItemKeyArray(relativePath, recordId, field, value) {
+  ensureStringArray(relativePath, recordId, field, value, 1);
+
+  const seen = new Set();
+  for (const key of value) {
+    if (!ITEM_KEY_PATTERN.test(key)) {
+      throw new Error(`${relativePath} has invalid ${field} key '${key}' on record ${recordId}`);
+    }
+
+    if (RESOURCE_ITEM_PREFIX_PATTERN.test(key)) {
+      throw new Error(`${relativePath} has prefixed ${field} key '${key}' on record ${recordId}`);
+    }
+
+    if (GENERIC_PROPAGULE_KEYS.has(key)) {
+      throw new Error(`${relativePath} has generic propagule key '${key}' in ${field} on record ${recordId}`);
+    }
+
+    if (seen.has(key)) {
+      throw new Error(`${relativePath} has duplicate ${field} key '${key}' on record ${recordId}`);
+    }
+
+    seen.add(key);
+  }
+}
+
+function validateFaunaProductsBlock(relativePath, recordId, fieldName, products) {
+  if (!isObject(products)) {
+    throw new Error(`${relativePath} has invalid ${fieldName} on record ${recordId}`);
+  }
+
+  const keys = Object.keys(products);
+  for (const key of keys) {
+    if (!FAUNA_PRODUCT_GROUPS.includes(key)) {
+      throw new Error(`${relativePath} has unsupported ${fieldName} group '${key}' on record ${recordId}`);
+    }
+  }
+
+  if (keys.length === 0) {
+    throw new Error(`${relativePath} has empty ${fieldName} on record ${recordId}`);
+  }
+
+  for (const group of keys) {
+    ensureItemKeyArray(relativePath, recordId, `${fieldName}.${group}`, products[group]);
+  }
+}
+
+function validateFaunaTemplate(relativePath, records) {
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureSetMembership(relativePath, recordId, "type", record.type, FAUNA_TYPES);
+    ensureSetMembership(relativePath, recordId, "diet", record.diet, FAUNA_DIETS);
+    ensureSetMembership(relativePath, recordId, "dangerClass", record.dangerClass, FAUNA_DANGER_CLASSES);
+    ensureBoolean(relativePath, recordId, "domesticatable", record.domesticatable);
+    ensureStringArray(relativePath, recordId, "habitatIds", record.habitatIds, 1);
+
+    if (!isObject(record.template)) {
+      throw new Error(`${relativePath} is missing template object on record ${recordId}`);
+    }
+
+    const { identity, domestication, infrastructureModifiers, reproduction, ecology, lifecycle, output, activity, foodChain } =
+      record.template;
+
+    if (!isObject(identity)) {
+      throw new Error(`${relativePath} is missing template.identity on record ${recordId}`);
+    }
+
+    if (identity.type !== record.type) {
+      throw new Error(`${relativePath} has mismatched identity.type on record ${recordId}`);
+    }
+
+    if (identity.name !== record.name) {
+      throw new Error(`${relativePath} has mismatched identity.name on record ${recordId}`);
+    }
+
+    if (identity.dietType !== record.diet) {
+      throw new Error(`${relativePath} has mismatched identity.dietType on record ${recordId}`);
+    }
+
+    if (identity.dangerClass !== record.dangerClass) {
+      throw new Error(`${relativePath} has mismatched identity.dangerClass on record ${recordId}`);
+    }
+
+    if (identity.domesticatable !== record.domesticatable) {
+      throw new Error(`${relativePath} has mismatched identity.domesticatable on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "template.identity.type", identity.type, FAUNA_TYPES);
+    ensureSetMembership(relativePath, recordId, "template.identity.dietType", identity.dietType, FAUNA_DIETS);
+    ensureSetMembership(relativePath, recordId, "template.identity.dangerClass", identity.dangerClass, FAUNA_DANGER_CLASSES);
+    ensureSetMembership(relativePath, recordId, "template.identity.sizeClass", identity.sizeClass, FAUNA_SIZE_CLASSES);
+    ensureBoolean(relativePath, recordId, "template.identity.mountable", identity.mountable);
+
+    ensureStringArray(relativePath, recordId, "template.identity.behavior", identity.behavior, 1);
+    for (const behavior of identity.behavior) {
+      ensureSetMembership(relativePath, recordId, "template.identity.behavior", behavior, FAUNA_BEHAVIORS);
+    }
+
+    if (!isObject(domestication) || !isObject(domestication.infrastructure) || !isObject(domestication.yieldBonus) || !isObject(domestication.population)) {
+      throw new Error(`${relativePath} has incomplete template.domestication block on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "template.domestication.infrastructure.enabled", domestication.infrastructure.enabled);
+    ensureNumber(relativePath, recordId, "template.domestication.infrastructure.infrastructureSize", domestication.infrastructure.infrastructureSize, 0);
+
+    ensureNumber(relativePath, recordId, "template.domestication.yieldBonus.temperatureControlBonus", domestication.yieldBonus.temperatureControlBonus, 0);
+    ensureNumber(relativePath, recordId, "template.domestication.yieldBonus.feedEfficiencyBonus", domestication.yieldBonus.feedEfficiencyBonus, 0);
+
+    ensureNumber(relativePath, recordId, "template.domestication.population.populationCap", domestication.population.populationCap, 0);
+    ensureNumber(relativePath, recordId, "template.domestication.population.populationRatio", domestication.population.populationRatio, 0);
+    ensureNumber(
+      relativePath,
+      recordId,
+      "template.domestication.population.stableSeasonSlaughterRateAtCap",
+      domestication.population.stableSeasonSlaughterRateAtCap,
+      0
+    );
+    ensureNumber(relativePath, recordId, "template.domestication.population.passiveOutputYieldBonus", domestication.population.passiveOutputYieldBonus, 0);
+
+    if (!isObject(infrastructureModifiers)) {
+      throw new Error(`${relativePath} is missing template.infrastructureModifiers on record ${recordId}`);
+    }
+
+    for (const key of [
+      "hydrationBonus",
+      "climateProtectionBonus",
+      "feedDiversity",
+      "nutritionBonus",
+      "juvenileSurvivalRateBonus",
+      "fertilityModifier"
+    ]) {
+      ensureNumber(relativePath, recordId, `template.infrastructureModifiers.${key}`, infrastructureModifiers[key], 0);
+    }
+
+    if (!isObject(reproduction)) {
+      throw new Error(`${relativePath} is missing template.reproduction on record ${recordId}`);
+    }
+
+    ensureNumber(relativePath, recordId, "template.reproduction.annualReproductionRatio", reproduction.annualReproductionRatio, 0);
+    ensureSetMembership(relativePath, recordId, "template.reproduction.reproductionType", reproduction.reproductionType, FAUNA_REPRODUCTION_TYPES);
+    ensureStringArray(relativePath, recordId, "template.reproduction.breedingSeasons", reproduction.breedingSeasons, 1);
+    ensureNumber(relativePath, recordId, "template.reproduction.gestationIncubationTimeDays", reproduction.gestationIncubationTimeDays, 0);
+    ensureNumber(relativePath, recordId, "template.reproduction.fertileAgeDays", reproduction.fertileAgeDays, 0);
+    ensureNumber(relativePath, recordId, "template.reproduction.offspringPerBreedingCycle", reproduction.offspringPerBreedingCycle, 0);
+    ensureNumber(relativePath, recordId, "template.reproduction.offspringSurvivalRate", reproduction.offspringSurvivalRate, 0);
+    ensureNumber(relativePath, recordId, "template.reproduction.effectiveRecruitmentRate", reproduction.effectiveRecruitmentRate, 0);
+
+    if (!isObject(ecology) || !Array.isArray(ecology.biomes) || !isObject(ecology.territory)) {
+      throw new Error(`${relativePath} has incomplete template.ecology block on record ${recordId}`);
+    }
+
+    if (ecology.biomes.length === 0) {
+      throw new Error(`${relativePath} has empty template.ecology.biomes on record ${recordId}`);
+    }
+
+    for (const biome of ecology.biomes) {
+      if (!isObject(biome)) {
+        throw new Error(`${relativePath} has invalid biome object on record ${recordId}`);
+      }
+
+      if (typeof biome.habitatId !== "string" || !record.habitatIds.includes(biome.habitatId)) {
+        throw new Error(`${relativePath} has biome habitatId not present in habitatIds on record ${recordId}`);
+      }
+
+      if (typeof biome.preference !== "string") {
+        throw new Error(`${relativePath} has invalid biome preference on record ${recordId}`);
+      }
+
+      ensureNumber(relativePath, recordId, "template.ecology.biomes.prevalence", biome.prevalence, 0);
+
+      if (typeof biome.terrainPreference !== "string") {
+        throw new Error(`${relativePath} has invalid biome terrainPreference on record ${recordId}`);
+      }
+    }
+
+    ensureSetMembership(relativePath, recordId, "template.ecology.territory.movement", ecology.territory.movement, FAUNA_MOVEMENTS);
+    ensureSetMembership(relativePath, recordId, "template.ecology.territory.size", ecology.territory.size, FAUNA_SIZE_CLASSES);
+    ensureBoolean(relativePath, recordId, "template.ecology.territory.waterDependency", ecology.territory.waterDependency);
+    ensureSetMembership(relativePath, recordId, "template.ecology.territory.hydrationNeed", ecology.territory.hydrationNeed, FAUNA_HYDRATION_NEEDS);
+
+    if (ecology.territory.size !== identity.sizeClass) {
+      throw new Error(`${relativePath} has mismatched territory.size and identity.sizeClass on record ${recordId}`);
+    }
+
+    if (!isObject(lifecycle)) {
+      throw new Error(`${relativePath} is missing template.lifecycle on record ${recordId}`);
+    }
+
+    if (typeof lifecycle.type !== "string" || lifecycle.type.trim().length === 0) {
+      throw new Error(`${relativePath} has invalid template.lifecycle.type on record ${recordId}`);
+    }
+
+    ensureStringArray(relativePath, recordId, "template.lifecycle.applicableStages", lifecycle.applicableStages, 1);
+
+    if (!isObject(output) || !isObject(output.passiveOutput) || !isObject(output.slaughterOutput)) {
+      throw new Error(`${relativePath} has incomplete template.output block on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "template.output.passiveOutput.producerSex", output.passiveOutput.producerSex, FAUNA_PRODUCER_SEX);
+    ensureSetMembership(relativePath, recordId, "template.output.passiveOutput.producerWindow", output.passiveOutput.producerWindow, FAUNA_PRODUCER_WINDOWS);
+
+    if ("products" in output.passiveOutput) {
+      validateFaunaProductsBlock(relativePath, recordId, "template.output.passiveOutput.products", output.passiveOutput.products);
+    }
+
+    ensureNumber(relativePath, recordId, "template.output.slaughterOutput.primeAgeDays", output.slaughterOutput.primeAgeDays, 0);
+    ensureNumber(relativePath, recordId, "template.output.slaughterOutput.cullAgeDays", output.slaughterOutput.cullAgeDays, 0);
+
+    if ("products" in output.slaughterOutput) {
+      validateFaunaProductsBlock(relativePath, recordId, "template.output.slaughterOutput.products", output.slaughterOutput.products);
+    }
+
+    if (!isObject(activity)) {
+      throw new Error(`${relativePath} is missing template.activity on record ${recordId}`);
+    }
+
+    if (typeof activity.hibernationPeriod !== "string") {
+      throw new Error(`${relativePath} has invalid template.activity.hibernationPeriod on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "template.activity.activeTime", activity.activeTime, FAUNA_ACTIVE_TIMES);
+
+    if (!isObject(foodChain) || !isObject(foodChain.foodBehaviors) || !isObject(foodChain.foodTargets) || !isObject(foodChain.foodTargets.specificTargets)) {
+      throw new Error(`${relativePath} has incomplete template.foodChain block on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "template.foodChain.foodBehaviors.prey", foodChain.foodBehaviors.prey);
+    ensureBoolean(relativePath, recordId, "template.foodChain.foodBehaviors.scavenger", foodChain.foodBehaviors.scavenger);
+    ensureBoolean(relativePath, recordId, "template.foodChain.foodBehaviors.predator", foodChain.foodBehaviors.predator);
+    ensureBoolean(relativePath, recordId, "template.foodChain.foodBehaviors.apex", foodChain.foodBehaviors.apex);
+
+    ensureStringArray(relativePath, recordId, "template.foodChain.foodTargets.faunaTypes", foodChain.foodTargets.faunaTypes, 0);
+    ensureStringArray(relativePath, recordId, "template.foodChain.foodTargets.floraTypes", foodChain.foodTargets.floraTypes, 0);
+    ensureStringArray(relativePath, recordId, "template.foodChain.foodTargets.specificTargets.fauna", foodChain.foodTargets.specificTargets.fauna, 0);
+    ensureStringArray(relativePath, recordId, "template.foodChain.foodTargets.specificTargets.flora", foodChain.foodTargets.specificTargets.flora, 0);
+  }
+}
+
+function validateCalendarDefinition(relativePath, parsed) {
+  const calendarKeys = Object.keys(parsed);
+  const allowedCalendarKeys = new Set(["months", "seasons"]);
+  const unknownCalendarKeys = calendarKeys.filter((key) => !allowedCalendarKeys.has(key));
+  if (unknownCalendarKeys.length > 0) {
+    throw new Error(`${relativePath} has unsupported keys: ${unknownCalendarKeys.join(",")}`);
+  }
+
+  if (!Array.isArray(parsed.months)) {
+    throw new Error(`${relativePath} has non-array months`);
+  }
+
+  if (parsed.months.length !== CALENDAR_MONTHS.length) {
+    throw new Error(`${relativePath} has invalid months length; expected ${CALENDAR_MONTHS.length}, received ${parsed.months.length}`);
+  }
+
+  const monthSet = new Set();
+  for (const month of parsed.months) {
+    if (!Number.isInteger(month)) {
+      throw new Error(`${relativePath} has non-integer month value '${String(month)}'`);
+    }
+
+    monthSet.add(month);
+  }
+
+  if (monthSet.size !== parsed.months.length) {
+    throw new Error(`${relativePath} has duplicate month values`);
+  }
+
+  const sortedMonths = [...monthSet].sort((a, b) => a - b);
+  for (const [index, expectedMonth] of CALENDAR_MONTHS.entries()) {
+    if (sortedMonths[index] !== expectedMonth) {
+      throw new Error(`${relativePath} has invalid months set; expected ${CALENDAR_MONTHS.join(",")}`);
+    }
+  }
+
+  if (!Array.isArray(parsed.seasons)) {
+    throw new Error(`${relativePath} has non-array seasons`);
+  }
+
+  if (parsed.seasons.length !== CLIMATE_SEASONS.length) {
+    throw new Error(`${relativePath} has invalid seasons length; expected ${CLIMATE_SEASONS.length}, received ${parsed.seasons.length}`);
+  }
+
+  if (new Set(parsed.seasons).size !== parsed.seasons.length) {
+    throw new Error(`${relativePath} has duplicate seasons`);
+  }
+
+  for (const [index, expectedSeason] of CLIMATE_SEASONS.entries()) {
+    if (parsed.seasons[index] !== expectedSeason) {
+      throw new Error(
+        `${relativePath} has invalid seasons order/content; expected ${CLIMATE_SEASONS.join(",")}, received ${parsed.seasons.join(",")}`
+      );
+    }
+  }
+}
+function validateClimateProfiles(relativePath, records) {
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    ensureString(relativePath, recordId, "name", record.name);
+
+    if (!Array.isArray(record.seasonLengths) || record.seasonLengths.length !== CLIMATE_SEASONS.length) {
+      throw new Error(`${relativePath} has invalid seasonLengths on record ${recordId}`);
+    }
+
+    for (const [index, seasonLength] of record.seasonLengths.entries()) {
+      ensureInteger(relativePath, recordId, `seasonLengths[${index}]`, seasonLength, 1);
+    }
+
+    const seasonLengthTotalWeeks = record.seasonLengths.reduce((sum, weeks) => sum + weeks, 0);
+    if (seasonLengthTotalWeeks !== CLIMATE_WEEKS_PER_YEAR) {
+      throw new Error(
+        `${relativePath} has invalid seasonLengths total on record ${recordId}; expected ${CLIMATE_WEEKS_PER_YEAR}, received ${seasonLengthTotalWeeks}`
+      );
+    }
+
+    if (!isObject(record.temperatureVariance)) {
+      throw new Error(`${relativePath} is missing temperatureVariance on record ${recordId}`);
+    }
+
+    ensureNumber(relativePath, recordId, "temperatureVariance.avg", record.temperatureVariance.avg, 0);
+    ensureNumber(relativePath, recordId, "temperatureVariance.high", record.temperatureVariance.high, 0);
+    ensureNumber(relativePath, recordId, "temperatureVariance.low", record.temperatureVariance.low, 0);
+
+    if (!isObject(record.temperatureRangeTemplate)) {
+      throw new Error(`${relativePath} is missing temperatureRangeTemplate on record ${recordId}`);
+    }
+
+    const template = record.temperatureRangeTemplate;
+
+    ensureSetMembership(relativePath, recordId, "temperatureRangeTemplate.unit", template.unit, CLIMATE_UNITS);
+    ensureFiniteNumber(relativePath, recordId, "temperatureRangeTemplate.lowLimit", template.lowLimit);
+    ensureFiniteNumber(relativePath, recordId, "temperatureRangeTemplate.highLimit", template.highLimit);
+    ensureFiniteNumber(relativePath, recordId, "temperatureRangeTemplate.range", template.range);
+
+    const computedRange = template.highLimit - template.lowLimit;
+
+    if (computedRange <= 0) {
+      throw new Error(`${relativePath} has non-positive temperature range on record ${recordId}`);
+    }
+
+    ensureApproxEqual(relativePath, recordId, "temperatureRangeTemplate.range", template.range, computedRange);
+
+    if (!isObject(record.seasonalTemperatureProfiles)) {
+      throw new Error(`${relativePath} is missing seasonalTemperatureProfiles on record ${recordId}`);
+    }
+
+    const seasonKeys = Object.keys(record.seasonalTemperatureProfiles);
+    if (seasonKeys.length !== CLIMATE_SEASONS.length || seasonKeys.some((season) => !CLIMATE_SEASONS.includes(season))) {
+      throw new Error(`${relativePath} has invalid seasonalTemperatureProfiles seasons on record ${recordId}`);
+    }
+
+    for (const season of CLIMATE_SEASONS) {
+      const seasonProfile = record.seasonalTemperatureProfiles[season];
+      const expectedRatios = CLIMATE_SEASON_RATIOS[season];
+
+      if (!isObject(seasonProfile)) {
+        throw new Error(`${relativePath} is missing seasonal profile '${season}' on record ${recordId}`);
+      }
+
+      ensureFiniteNumber(relativePath, recordId, `seasonalTemperatureProfiles.${season}.lowOffsetRatio`, seasonProfile.lowOffsetRatio);
+      ensureFiniteNumber(relativePath, recordId, `seasonalTemperatureProfiles.${season}.highOffsetRatio`, seasonProfile.highOffsetRatio);
+      ensureFiniteNumber(relativePath, recordId, `seasonalTemperatureProfiles.${season}.low`, seasonProfile.low);
+      ensureFiniteNumber(relativePath, recordId, `seasonalTemperatureProfiles.${season}.high`, seasonProfile.high);
+
+      ensureApproxEqual(
+        relativePath,
+        recordId,
+        `seasonalTemperatureProfiles.${season}.lowOffsetRatio`,
+        seasonProfile.lowOffsetRatio,
+        expectedRatios.low
+      );
+      ensureApproxEqual(
+        relativePath,
+        recordId,
+        `seasonalTemperatureProfiles.${season}.highOffsetRatio`,
+        seasonProfile.highOffsetRatio,
+        expectedRatios.high
+      );
+
+      const expectedLow = template.lowLimit + (template.range * expectedRatios.low);
+      const expectedHigh = template.lowLimit + (template.range * expectedRatios.high);
+
+      ensureApproxEqual(relativePath, recordId, `seasonalTemperatureProfiles.${season}.low`, seasonProfile.low, expectedLow);
+      ensureApproxEqual(relativePath, recordId, `seasonalTemperatureProfiles.${season}.high`, seasonProfile.high, expectedHigh);
+
+      if (seasonProfile.low > seasonProfile.high) {
+        throw new Error(`${relativePath} has low greater than high in season '${season}' on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateWorkplaces(relativePath, records) {
+  const workplaceIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "category", record.category);
+    ensureStringArray(relativePath, recordId, "inputTags", record.inputTags, 1);
+    ensureStringArray(relativePath, recordId, "outputTags", record.outputTags, 1);
+    ensureInteger(relativePath, recordId, "laborSlots", record.laborSlots, 1);
+    ensureSetMembership(relativePath, recordId, "category", record.category, WORKPLACE_CATEGORIES);
+
+    if (new Set(record.inputTags).size !== record.inputTags.length) {
+      throw new Error(`${relativePath} has duplicate inputTags values on record ${recordId}`);
+    }
+
+    if (new Set(record.outputTags).size !== record.outputTags.length) {
+      throw new Error(`${relativePath} has duplicate outputTags values on record ${recordId}`);
+    }
+
+    for (const inputTag of record.inputTags) {
+      if (!ITEM_KEY_PATTERN.test(inputTag)) {
+        throw new Error(`${relativePath} has invalid inputTags value '${inputTag}' on record ${recordId}`);
+      }
+    }
+
+    for (const outputTag of record.outputTags) {
+      if (!ITEM_KEY_PATTERN.test(outputTag)) {
+        throw new Error(`${relativePath} has invalid outputTags value '${outputTag}' on record ${recordId}`);
+      }
+    }
+
+    if (workplaceIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate workplace id ${record.id}`);
+    }
+    workplaceIds.add(record.id);
+  }
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    if (!("ioProfile" in record) || !isObject(record.ioProfile)) {
+      throw new Error(`${relativePath} has invalid or missing ioProfile on record ${recordId}`);
+    }
+
+    const ioProfile = record.ioProfile;
+    ensureNumber(relativePath, recordId, "ioProfile.workCycleHours", ioProfile.workCycleHours, 1);
+    if (ioProfile.workCycleHours > 24) {
+      throw new Error(`${relativePath} has ioProfile.workCycleHours above 24 on record ${recordId}`);
+    }
+
+    if (!Array.isArray(ioProfile.inputs) || ioProfile.inputs.length === 0) {
+      throw new Error(`${relativePath} has empty ioProfile.inputs on record ${recordId}`);
+    }
+
+    if (!Array.isArray(ioProfile.outputs) || ioProfile.outputs.length === 0) {
+      throw new Error(`${relativePath} has empty ioProfile.outputs on record ${recordId}`);
+    }
+
+    const seenInputItemKeys = new Set();
+    const seenOutputItemKeys = new Set();
+    let ioPrimaryOutputs = 0;
+
+    for (const [index, input] of ioProfile.inputs.entries()) {
+      const inputField = `ioProfile.inputs[${index}]`;
+
+      if (!isObject(input)) {
+        throw new Error(`${relativePath} has invalid ${inputField} on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, `${inputField}.itemKey`, input.itemKey);
+      if (!ITEM_KEY_PATTERN.test(input.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${inputField}.itemKey '${input.itemKey}' on record ${recordId}`);
+      }
+
+      if (seenInputItemKeys.has(input.itemKey)) {
+        throw new Error(`${relativePath} has duplicate ${inputField}.itemKey '${input.itemKey}' on record ${recordId}`);
+      }
+      seenInputItemKeys.add(input.itemKey);
+
+      ensureNumber(relativePath, recordId, `${inputField}.quantityPerCycle`, input.quantityPerCycle, 0.0001);
+      ensureString(relativePath, recordId, `${inputField}.unit`, input.unit);
+      if (!SLUG_PATTERN.test(input.unit)) {
+        throw new Error(`${relativePath} has invalid ${inputField}.unit '${input.unit}' on record ${recordId}`);
+      }
+
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        `${inputField}.consumptionType`,
+        input.consumptionType,
+        WORKPLACE_IO_CONSUMPTION_TYPES
+      );
+    }
+
+    for (const [index, output] of ioProfile.outputs.entries()) {
+      const outputField = `ioProfile.outputs[${index}]`;
+
+      if (!isObject(output)) {
+        throw new Error(`${relativePath} has invalid ${outputField} on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, `${outputField}.itemKey`, output.itemKey);
+      if (!ITEM_KEY_PATTERN.test(output.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${outputField}.itemKey '${output.itemKey}' on record ${recordId}`);
+      }
+
+      if (seenOutputItemKeys.has(output.itemKey)) {
+        throw new Error(`${relativePath} has duplicate ${outputField}.itemKey '${output.itemKey}' on record ${recordId}`);
+      }
+      seenOutputItemKeys.add(output.itemKey);
+
+      ensureNumber(relativePath, recordId, `${outputField}.quantityPerCycle`, output.quantityPerCycle, 0.0001);
+      ensureString(relativePath, recordId, `${outputField}.unit`, output.unit);
+      if (!SLUG_PATTERN.test(output.unit)) {
+        throw new Error(`${relativePath} has invalid ${outputField}.unit '${output.unit}' on record ${recordId}`);
+      }
+
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        `${outputField}.productionType`,
+        output.productionType,
+        WORKPLACE_IO_PRODUCTION_TYPES
+      );
+
+      if (output.productionType === "primary") {
+        ioPrimaryOutputs += 1;
+      }
+    }
+
+    if (ioPrimaryOutputs < 1) {
+      throw new Error(`${relativePath} ioProfile.outputs must include at least one primary output on record ${recordId}`);
+    }
+
+    if (seenInputItemKeys.size !== record.inputTags.length) {
+      throw new Error(`${relativePath} ioProfile.inputs count does not match inputTags on record ${recordId}`);
+    }
+
+    if (seenOutputItemKeys.size !== record.outputTags.length) {
+      throw new Error(`${relativePath} ioProfile.outputs count does not match outputTags on record ${recordId}`);
+    }
+
+    for (const inputTag of record.inputTags) {
+      if (!seenInputItemKeys.has(inputTag)) {
+        throw new Error(`${relativePath} inputTags item '${inputTag}' missing from ioProfile.inputs on record ${recordId}`);
+      }
+    }
+
+    for (const outputTag of record.outputTags) {
+      if (!seenOutputItemKeys.has(outputTag)) {
+        throw new Error(`${relativePath} outputTags item '${outputTag}' missing from ioProfile.outputs on record ${recordId}`);
+      }
+    }
+
+    for (const inputItemKey of seenInputItemKeys) {
+      if (!record.inputTags.includes(inputItemKey)) {
+        throw new Error(`${relativePath} ioProfile.inputs item '${inputItemKey}' missing from inputTags on record ${recordId}`);
+      }
+    }
+
+    for (const outputItemKey of seenOutputItemKeys) {
+      if (!record.outputTags.includes(outputItemKey)) {
+        throw new Error(`${relativePath} ioProfile.outputs item '${outputItemKey}' missing from outputTags on record ${recordId}`);
+      }
+    }
+
+    // irrigated_plot uses access-style flag semantics rather than transported volume.
+    if (record.inputTags.includes("irrigated_plot")) {
+      const irrigatedInput = ioProfile.inputs.find((input) => input.itemKey === "irrigated_plot");
+      if (!irrigatedInput) {
+        throw new Error(`${relativePath} has inputTags irrigated_plot without ioProfile.inputs entry on record ${recordId}`);
+      }
+      if (irrigatedInput.consumptionType !== "access") {
+        throw new Error(`${relativePath} irrigated_plot input must use consumptionType access on record ${recordId}`);
+      }
+      if (irrigatedInput.unit !== "flag") {
+        throw new Error(`${relativePath} irrigated_plot input must use unit flag on record ${recordId}`);
+      }
+    }
+
+    for (const input of ioProfile.inputs) {
+      if (input.itemKey === "irrigation_water") {
+        throw new Error(`${relativePath} irrigation_water transport input is deprecated; use irrigated_plot access flag on record ${recordId}`);
+      }
+    }
+
+    for (const output of ioProfile.outputs) {
+      if (output.itemKey === "irrigation_water") {
+        throw new Error(`${relativePath} irrigation_water transport output is deprecated; use irrigated_plot flag output on record ${recordId}`);
+      }
+
+      if (output.itemKey === "irrigated_plot") {
+        throw new Error(
+          `${relativePath} workplace output irrigated_plot is deprecated; irrigation capability must come from infrastructure.json on record ${recordId}`
+        );
+      }
+    }
+
+    if ("irrigationProfile" in record) {
+      throw new Error(`${relativePath} irrigationProfile is deprecated on workplace record ${recordId}; move irrigation data to infrastructure.json`);
+    }
+
+    if (isObject(record.tierProfile) && record.tierProfile.trackId === "track.irrigation") {
+      throw new Error(`${relativePath} track.irrigation is no longer a workplace track; move record ${recordId} to infrastructure.json`);
+    }
+
+    if ("plotProfile" in record) {
+      if (!isObject(record.plotProfile)) {
+        throw new Error(`${relativePath} has invalid plotProfile on record ${recordId}`);
+      }
+
+      const plot = record.plotProfile;
+      ensureInteger(relativePath, recordId, "plotProfile.plotCapacity", plot.plotCapacity, 1);
+      ensureNumber(relativePath, recordId, "plotProfile.usableAreaPerPlot", plot.usableAreaPerPlot, 0.0001);
+      ensureBoolean(relativePath, recordId, "plotProfile.proportionalAreaScaling", plot.proportionalAreaScaling);
+
+      ensureStringArray(relativePath, recordId, "plotProfile.allowedPlotTypes", plot.allowedPlotTypes, 1);
+      if (new Set(plot.allowedPlotTypes).size !== plot.allowedPlotTypes.length) {
+        throw new Error(`${relativePath} has duplicate plotProfile.allowedPlotTypes values on record ${recordId}`);
+      }
+      for (const plotType of plot.allowedPlotTypes) {
+        ensureSetMembership(relativePath, recordId, "plotProfile.allowedPlotTypes", plotType, WORKPLACE_PLOT_TYPES);
+      }
+
+      if (!isObject(plot.irrigationPolicy)) {
+        throw new Error(`${relativePath} has invalid plotProfile.irrigationPolicy on record ${recordId}`);
+      }
+      ensureInteger(relativePath, recordId, "plotProfile.irrigationPolicy.minimumIrrigationTier", plot.irrigationPolicy.minimumIrrigationTier, 0);
+      if (plot.irrigationPolicy.minimumIrrigationTier > 5) {
+        throw new Error(`${relativePath} has plotProfile.irrigationPolicy.minimumIrrigationTier above 5 on record ${recordId}`);
+      }
+      ensureNumber(relativePath, recordId, "plotProfile.irrigationPolicy.bonusPerTierAboveMinimum", plot.irrigationPolicy.bonusPerTierAboveMinimum, 0);
+      ensureNumber(relativePath, recordId, "plotProfile.irrigationPolicy.maxTierBonus", plot.irrigationPolicy.maxTierBonus, 0);
+      if (plot.irrigationPolicy.bonusPerTierAboveMinimum > plot.irrigationPolicy.maxTierBonus) {
+        throw new Error(`${relativePath} has plotProfile.irrigationPolicy.bonusPerTierAboveMinimum above maxTierBonus on record ${recordId}`);
+      }
+
+      ensureStringArray(relativePath, recordId, "plotProfile.specialtyUpgrades", plot.specialtyUpgrades, 0);
+      if (new Set(plot.specialtyUpgrades).size !== plot.specialtyUpgrades.length) {
+        throw new Error(`${relativePath} has duplicate plotProfile.specialtyUpgrades values on record ${recordId}`);
+      }
+      for (const upgrade of plot.specialtyUpgrades) {
+        ensureSetMembership(relativePath, recordId, "plotProfile.specialtyUpgrades", upgrade, WORKPLACE_PLOT_SPECIALTY_UPGRADES);
+      }
+
+      ensureStringArray(relativePath, recordId, "plotProfile.terrainCompatibility", plot.terrainCompatibility, 1);
+      if (new Set(plot.terrainCompatibility).size !== plot.terrainCompatibility.length) {
+        throw new Error(`${relativePath} has duplicate plotProfile.terrainCompatibility values on record ${recordId}`);
+      }
+      for (const terrain of plot.terrainCompatibility) {
+        ensureSetMembership(relativePath, recordId, "plotProfile.terrainCompatibility", terrain, WORKPLACE_PLOT_TERRAINS);
+      }
+    }
+
+    // agriculture tier plot semantics
+    if (isObject(record.tierProfile) && record.tierProfile.trackId === "track.agriculture") {
+      if (!isObject(record.plotProfile)) {
+        throw new Error(`${relativePath} agriculture track record requires plotProfile on record ${recordId}`);
+      }
+
+      const plotTypes = new Set(record.plotProfile.allowedPlotTypes);
+      const tier = record.tierProfile.tier;
+
+      if (tier === 1) {
+        if (plotTypes.size !== 1 || !plotTypes.has("garden")) {
+          throw new Error(`${relativePath} agriculture tier 1 must support only garden plots on record ${recordId}`);
+        }
+      }
+
+      if (tier === 2) {
+        for (const plotType of plotTypes) {
+          if (plotType !== "farmland" && plotType !== "orchard") {
+            throw new Error(`${relativePath} agriculture tier 2 may only use farmland or orchard plots on record ${recordId}`);
+          }
+        }
+        if (!plotTypes.has("farmland")) {
+          throw new Error(`${relativePath} agriculture tier 2 must include farmland plot mode on record ${recordId}`);
+        }
+      }
+
+      if (tier >= 3) {
+        const requiredHighTierPlotTypes = ["farmland", "raised_bed", "orchard", "terraced_farm", "terraced_orchard", "greenhouse"];
+        for (const plotType of requiredHighTierPlotTypes) {
+          if (!plotTypes.has(plotType)) {
+            throw new Error(`${relativePath} agriculture tier ${tier} must include plot mode '${plotType}' on record ${recordId}`);
+          }
+        }
+      }
+
+      const minimumByTier = new Map([
+        [1, 0],
+        [2, 1],
+        [3, 2],
+        [4, 3],
+        [5, 4]
+      ]);
+      const minimumRequiredIrrigation = minimumByTier.get(tier) ?? 0;
+      if (record.plotProfile.irrigationPolicy.minimumIrrigationTier < minimumRequiredIrrigation) {
+        throw new Error(
+          `${relativePath} agriculture tier ${tier} requires minimumIrrigationTier >= ${minimumRequiredIrrigation} on record ${recordId}`
+        );
+      }
+
+      if (tier >= 2 && !record.inputTags.includes("irrigated_plot")) {
+        throw new Error(`${relativePath} agriculture tier ${tier} must include irrigated_plot input tag on record ${recordId}`);
+      }
+    }
+
+    if ("tierProfile" in record) {
+      if (!isObject(record.tierProfile)) {
+        throw new Error(`${relativePath} has invalid tierProfile on record ${recordId}`);
+      }
+
+      const tier = record.tierProfile;
+      ensureString(relativePath, recordId, "tierProfile.trackId", tier.trackId);
+      if (!WORKPLACE_TRACK_ID_PATTERN.test(tier.trackId)) {
+        throw new Error(`${relativePath} has invalid tierProfile.trackId '${tier.trackId}' on record ${recordId}`);
+      }
+
+      ensureInteger(relativePath, recordId, "tierProfile.tier", tier.tier, 1);
+      if (tier.tier > 5) {
+        throw new Error(`${relativePath} has tierProfile.tier above 5 on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, "tierProfile.tierLabel", tier.tierLabel);
+      ensureSetMembership(relativePath, recordId, "tierProfile.facilityForm", tier.facilityForm, WORKPLACE_FACILITY_FORMS);
+      ensureSetMembership(relativePath, recordId, "tierProfile.techLevel", tier.techLevel, WORKPLACE_TECH_LEVELS);
+      ensureSetMembership(relativePath, recordId, "tierProfile.ownershipModel", tier.ownershipModel, WORKPLACE_OWNERSHIP_MODELS);
+      ensureSetMembership(relativePath, recordId, "tierProfile.wealthBand", tier.wealthBand, WORKPLACE_WEALTH_BANDS);
+
+      if (tier.upgradesFrom !== null && typeof tier.upgradesFrom !== "string") {
+        throw new Error(`${relativePath} has invalid tierProfile.upgradesFrom on record ${recordId}`);
+      }
+
+      ensureStringArray(relativePath, recordId, "tierProfile.upgradesTo", tier.upgradesTo, 0);
+      ensureBoolean(relativePath, recordId, "tierProfile.splitFacility", tier.splitFacility);
+      ensureStringArray(relativePath, recordId, "tierProfile.regionalSuitability", tier.regionalSuitability, 0);
+
+      if (tier.upgradesFrom === record.id) {
+        throw new Error(`${relativePath} has self-referencing tierProfile.upgradesFrom on record ${recordId}`);
+      }
+
+      for (const upgradeTarget of tier.upgradesTo) {
+        if (upgradeTarget === record.id) {
+          throw new Error(`${relativePath} has self-referencing tierProfile.upgradesTo on record ${recordId}`);
+        }
+      }
+    }
+
+    if ("efficiencyProfile" in record) {
+      if (!isObject(record.efficiencyProfile)) {
+        throw new Error(`${relativePath} has invalid efficiencyProfile on record ${recordId}`);
+      }
+
+      const efficiency = record.efficiencyProfile;
+      ensureNumber(relativePath, recordId, "efficiencyProfile.throughputMultiplier", efficiency.throughputMultiplier, 0.01);
+      ensureNumber(relativePath, recordId, "efficiencyProfile.laborEfficiency", efficiency.laborEfficiency, 0.01);
+      ensureNumber(relativePath, recordId, "efficiencyProfile.wasteMultiplier", efficiency.wasteMultiplier, 0.01);
+      ensureNumber(relativePath, recordId, "efficiencyProfile.comfortScore", efficiency.comfortScore, 0);
+
+      if (efficiency.comfortScore > 1) {
+        throw new Error(`${relativePath} has efficiencyProfile.comfortScore above 1 on record ${recordId}`);
+      }
+    }
+
+    if ("marketProfile" in record) {
+      if (!isObject(record.marketProfile)) {
+        throw new Error(`${relativePath} has invalid marketProfile on record ${recordId}`);
+      }
+
+      const market = record.marketProfile;
+      ensureSetMembership(relativePath, recordId, "marketProfile.businessScale", market.businessScale, WORKPLACE_BUSINESS_SCALES);
+      ensureSetMembership(relativePath, recordId, "marketProfile.consumerScope", market.consumerScope, WORKPLACE_CONSUMER_SCOPES);
+      ensureSetMembership(relativePath, recordId, "marketProfile.supplyAccess", market.supplyAccess, WORKPLACE_SUPPLY_ACCESS);
+      ensureSetMembership(relativePath, recordId, "marketProfile.riskTolerance", market.riskTolerance, WORKPLACE_RISK_TOLERANCE);
+      ensureStringArray(relativePath, recordId, "marketProfile.districtTags", market.districtTags, 1);
+
+      if (isObject(record.tierProfile)) {
+        const overlap = market.districtTags.some((tag) => record.tierProfile.regionalSuitability.includes(tag));
+        if (!overlap) {
+          throw new Error(
+            `${relativePath} has marketProfile.districtTags with no overlap with tierProfile.regionalSuitability on record ${recordId}`
+          );
+        }
+      }
+    }
+
+    if ("progressionProfile" in record) {
+      if (!isObject(record.progressionProfile)) {
+        throw new Error(`${relativePath} has invalid progressionProfile on record ${recordId}`);
+      }
+
+      const progression = record.progressionProfile;
+      ensureInteger(relativePath, recordId, "progressionProfile.maxTier", progression.maxTier, 1);
+      if (progression.maxTier > 5) {
+        throw new Error(`${relativePath} has progressionProfile.maxTier above 5 on record ${recordId}`);
+      }
+
+      if (!Array.isArray(progression.tiers) || progression.tiers.length === 0) {
+        throw new Error(`${relativePath} has empty progressionProfile.tiers on record ${recordId}`);
+      }
+
+      if (progression.tiers.length !== progression.maxTier) {
+        throw new Error(`${relativePath} progressionProfile.tiers length must equal maxTier on record ${recordId}`);
+      }
+
+      const seenProgressTiers = new Set();
+      for (const [index, tierDef] of progression.tiers.entries()) {
+        const tierField = `progressionProfile.tiers[${index}]`;
+        if (!isObject(tierDef)) {
+          throw new Error(`${relativePath} has invalid ${tierField} on record ${recordId}`);
+        }
+
+        ensureInteger(relativePath, recordId, `${tierField}.tier`, tierDef.tier, 1);
+        if (tierDef.tier > 5) {
+          throw new Error(`${relativePath} has ${tierField}.tier above 5 on record ${recordId}`);
+        }
+
+        if (seenProgressTiers.has(tierDef.tier)) {
+          throw new Error(`${relativePath} has duplicate ${tierField}.tier ${tierDef.tier} on record ${recordId}`);
+        }
+        seenProgressTiers.add(tierDef.tier);
+
+        ensureString(relativePath, recordId, `${tierField}.tierLabel`, tierDef.tierLabel);
+        ensureNumber(relativePath, recordId, `${tierField}.throughputMultiplier`, tierDef.throughputMultiplier, 0.01);
+        ensureInteger(relativePath, recordId, `${tierField}.variantSlots`, tierDef.variantSlots, 1);
+        ensureNumber(relativePath, recordId, `${tierField}.switchLaborCost`, tierDef.switchLaborCost, 0);
+
+        ensureSetMembership(
+          relativePath,
+          recordId,
+          `${tierField}.powerMode`,
+          tierDef.powerMode,
+          WORKPLACE_PROGRESS_POWER_MODES
+        );
+
+        if ("facilityForm" in tierDef) {
+          ensureSetMembership(relativePath, recordId, `${tierField}.facilityForm`, tierDef.facilityForm, WORKPLACE_FACILITY_FORMS);
+        }
+
+        if ("ownershipModel" in tierDef) {
+          ensureSetMembership(
+            relativePath,
+            recordId,
+            `${tierField}.ownershipModel`,
+            tierDef.ownershipModel,
+            WORKPLACE_OWNERSHIP_MODELS
+          );
+        }
+
+        if ("techLevel" in tierDef) {
+          ensureSetMembership(relativePath, recordId, `${tierField}.techLevel`, tierDef.techLevel, WORKPLACE_TECH_LEVELS);
+        }
+
+        if ("wealthBand" in tierDef) {
+          ensureSetMembership(relativePath, recordId, `${tierField}.wealthBand`, tierDef.wealthBand, WORKPLACE_WEALTH_BANDS);
+        }
+
+        if ("laborSlots" in tierDef) {
+          ensureInteger(relativePath, recordId, `${tierField}.laborSlots`, tierDef.laborSlots, 1);
+          if (tierDef.laborSlots > record.laborSlots) {
+            throw new Error(`${relativePath} has ${tierField}.laborSlots above record laborSlots on record ${recordId}`);
+          }
+        }
+
+        if ("maxConcurrentWorkers" in tierDef) {
+          ensureInteger(relativePath, recordId, `${tierField}.maxConcurrentWorkers`, tierDef.maxConcurrentWorkers, 1);
+          if (
+            isObject(record.workforceProfile) &&
+            tierDef.maxConcurrentWorkers > record.workforceProfile.maxConcurrentWorkers
+          ) {
+            throw new Error(
+              `${relativePath} has ${tierField}.maxConcurrentWorkers above workforceProfile.maxConcurrentWorkers on record ${recordId}`
+            );
+          }
+        }
+
+        if ("upgradeSlots" in tierDef) {
+          ensureInteger(relativePath, recordId, `${tierField}.upgradeSlots`, tierDef.upgradeSlots, 0);
+        }
+
+        if ("requiredUpgradeIds" in tierDef) {
+          ensureStringArray(relativePath, recordId, `${tierField}.requiredUpgradeIds`, tierDef.requiredUpgradeIds, 0);
+          const tierRequiredUpgradeIds = new Set();
+          for (const requiredUpgradeId of tierDef.requiredUpgradeIds) {
+            if (!WORKPLACE_UPGRADE_ID_PATTERN.test(requiredUpgradeId)) {
+              throw new Error(
+                `${relativePath} has invalid ${tierField}.requiredUpgradeIds value '${requiredUpgradeId}' on record ${recordId}`
+              );
+            }
+
+            if (tierRequiredUpgradeIds.has(requiredUpgradeId)) {
+              throw new Error(
+                `${relativePath} has duplicate ${tierField}.requiredUpgradeIds value '${requiredUpgradeId}' on record ${recordId}`
+              );
+            }
+            tierRequiredUpgradeIds.add(requiredUpgradeId);
+          }
+
+          if (tierDef.tier === 1 && tierRequiredUpgradeIds.size > 0) {
+            throw new Error(`${relativePath} has tier 1 ${tierField}.requiredUpgradeIds on record ${recordId}`);
+          }
+        }
+
+        if ("advancementNotes" in tierDef && typeof tierDef.advancementNotes !== "string") {
+          throw new Error(`${relativePath} has invalid ${tierField}.advancementNotes on record ${recordId}`);
+        }
+
+        ensureStringArray(relativePath, recordId, `${tierField}.variantUnlocks`, tierDef.variantUnlocks, 0);
+        for (const variantUnlock of tierDef.variantUnlocks) {
+          if (!SLUG_PATTERN.test(variantUnlock)) {
+            throw new Error(`${relativePath} has invalid ${tierField}.variantUnlocks value '${variantUnlock}' on record ${recordId}`);
+          }
+        }
+
+        if ("jobUnlocks" in tierDef) {
+          ensureStringArray(relativePath, recordId, `${tierField}.jobUnlocks`, tierDef.jobUnlocks, 0);
+          const tierJobUnlocks = new Set();
+          for (const jobUnlock of tierDef.jobUnlocks) {
+            if (!WORKPLACE_JOB_ID_PATTERN.test(jobUnlock)) {
+              throw new Error(`${relativePath} has invalid ${tierField}.jobUnlocks value '${jobUnlock}' on record ${recordId}`);
+            }
+
+            if (tierJobUnlocks.has(jobUnlock)) {
+              throw new Error(`${relativePath} has duplicate ${tierField}.jobUnlocks value '${jobUnlock}' on record ${recordId}`);
+            }
+            tierJobUnlocks.add(jobUnlock);
+          }
+        }
+
+        if ("outputUnlocks" in tierDef) {
+          ensureStringArray(relativePath, recordId, `${tierField}.outputUnlocks`, tierDef.outputUnlocks, 0);
+          const tierOutputUnlocks = new Set();
+          for (const outputUnlock of tierDef.outputUnlocks) {
+            if (!ITEM_KEY_PATTERN.test(outputUnlock)) {
+              throw new Error(
+                `${relativePath} has invalid ${tierField}.outputUnlocks value '${outputUnlock}' on record ${recordId}`
+              );
+            }
+
+            if (!record.outputTags.includes(outputUnlock)) {
+              throw new Error(
+                `${relativePath} has ${tierField}.outputUnlocks value '${outputUnlock}' not present in outputTags on record ${recordId}`
+              );
+            }
+
+            if (tierOutputUnlocks.has(outputUnlock)) {
+              throw new Error(
+                `${relativePath} has duplicate ${tierField}.outputUnlocks value '${outputUnlock}' on record ${recordId}`
+              );
+            }
+            tierOutputUnlocks.add(outputUnlock);
+          }
+        }
+
+        if ("districtTags" in tierDef) {
+          ensureStringArray(relativePath, recordId, `${tierField}.districtTags`, tierDef.districtTags, 0);
+        }
+
+        if (!Array.isArray(tierDef.inputLaborWeights) || tierDef.inputLaborWeights.length === 0) {
+          throw new Error(`${relativePath} has empty ${tierField}.inputLaborWeights on record ${recordId}`);
+        }
+
+        const seenLaborWeightItemKeys = new Set();
+        for (const [weightIndex, laborWeight] of tierDef.inputLaborWeights.entries()) {
+          const weightField = `${tierField}.inputLaborWeights[${weightIndex}]`;
+          if (!isObject(laborWeight)) {
+            throw new Error(`${relativePath} has invalid ${weightField} on record ${recordId}`);
+          }
+
+          ensureString(relativePath, recordId, `${weightField}.itemKey`, laborWeight.itemKey);
+          if (!ITEM_KEY_PATTERN.test(laborWeight.itemKey)) {
+            throw new Error(`${relativePath} has invalid ${weightField}.itemKey '${laborWeight.itemKey}' on record ${recordId}`);
+          }
+
+          if (!record.inputTags.includes(laborWeight.itemKey)) {
+            throw new Error(`${relativePath} has ${weightField}.itemKey '${laborWeight.itemKey}' not present in inputTags on record ${recordId}`);
+          }
+
+          if (seenLaborWeightItemKeys.has(laborWeight.itemKey)) {
+            throw new Error(`${relativePath} has duplicate ${weightField}.itemKey '${laborWeight.itemKey}' on record ${recordId}`);
+          }
+          seenLaborWeightItemKeys.add(laborWeight.itemKey);
+
+          ensureNumber(relativePath, recordId, `${weightField}.laborWeight`, laborWeight.laborWeight, 0.01);
+        }
+      }
+
+      for (let expectedTier = 1; expectedTier <= progression.maxTier; expectedTier += 1) {
+        if (!seenProgressTiers.has(expectedTier)) {
+          throw new Error(`${relativePath} progressionProfile tiers must be contiguous from 1 on record ${recordId}`);
+        }
+      }
+    }
+    if ("upgradesProfile" in record) {
+      if (!isObject(record.upgradesProfile)) {
+        throw new Error(`${relativePath} has invalid upgradesProfile on record ${recordId}`);
+      }
+
+      const upgrades = record.upgradesProfile;
+      ensureInteger(relativePath, recordId, "upgradesProfile.upgradeSlots", upgrades.upgradeSlots, 0);
+
+      if (!Array.isArray(upgrades.availableUpgrades) || upgrades.availableUpgrades.length === 0) {
+        throw new Error(`${relativePath} has empty upgradesProfile.availableUpgrades on record ${recordId}`);
+      }
+
+      if (!Array.isArray(upgrades.tierUpgradeRequirements)) {
+        throw new Error(`${relativePath} has non-array upgradesProfile.tierUpgradeRequirements on record ${recordId}`);
+      }
+
+      const upgradeIds = new Set();
+      const essentialUpgradeIds = new Set();
+
+      for (const [index, upgrade] of upgrades.availableUpgrades.entries()) {
+        const upgradeField = `upgradesProfile.availableUpgrades[${index}]`;
+
+        if (!isObject(upgrade)) {
+          throw new Error(`${relativePath} has invalid ${upgradeField} on record ${recordId}`);
+        }
+
+        ensureString(relativePath, recordId, `${upgradeField}.id`, upgrade.id);
+        if (!WORKPLACE_UPGRADE_ID_PATTERN.test(upgrade.id)) {
+          throw new Error(`${relativePath} has invalid ${upgradeField}.id '${upgrade.id}' on record ${recordId}`);
+        }
+
+        if (upgradeIds.has(upgrade.id)) {
+          throw new Error(`${relativePath} has duplicate ${upgradeField}.id '${upgrade.id}' on record ${recordId}`);
+        }
+        upgradeIds.add(upgrade.id);
+
+        ensureString(relativePath, recordId, `${upgradeField}.name`, upgrade.name);
+        ensureString(relativePath, recordId, `${upgradeField}.description`, upgrade.description);
+        ensureSetMembership(relativePath, recordId, `${upgradeField}.category`, upgrade.category, WORKPLACE_UPGRADE_CATEGORIES);
+
+        ensureStringArray(relativePath, recordId, `${upgradeField}.requiredUpgradeIds`, upgrade.requiredUpgradeIds, 0);
+        ensureBoolean(relativePath, recordId, `${upgradeField}.essentialForTierUpgrade`, upgrade.essentialForTierUpgrade);
+
+        if (upgrade.essentialForTierUpgrade) {
+          essentialUpgradeIds.add(upgrade.id);
+        }
+
+        if (!isObject(upgrade.effects)) {
+          throw new Error(`${relativePath} has invalid ${upgradeField}.effects on record ${recordId}`);
+        }
+
+        ensureNumber(relativePath, recordId, `${upgradeField}.effects.throughputMultiplier`, upgrade.effects.throughputMultiplier, 0.01);
+        ensureNumber(relativePath, recordId, `${upgradeField}.effects.laborEfficiency`, upgrade.effects.laborEfficiency, 0.01);
+        ensureNumber(relativePath, recordId, `${upgradeField}.effects.wasteMultiplier`, upgrade.effects.wasteMultiplier, 0.01);
+        ensureNumber(relativePath, recordId, `${upgradeField}.effects.qualityMultiplier`, upgrade.effects.qualityMultiplier, 0.01);
+
+        if ("variantSlotDelta" in upgrade.effects) {
+          ensureInteger(relativePath, recordId, `${upgradeField}.effects.variantSlotDelta`, upgrade.effects.variantSlotDelta, 0);
+        }
+
+        if ("switchLaborCostMultiplier" in upgrade.effects) {
+          ensureNumber(
+            relativePath,
+            recordId,
+            `${upgradeField}.effects.switchLaborCostMultiplier`,
+            upgrade.effects.switchLaborCostMultiplier,
+            0.01
+          );
+        }
+
+        if ("variantUnlocks" in upgrade.effects) {
+          ensureStringArray(relativePath, recordId, `${upgradeField}.effects.variantUnlocks`, upgrade.effects.variantUnlocks, 0);
+          for (const variantUnlock of upgrade.effects.variantUnlocks) {
+            if (!SLUG_PATTERN.test(variantUnlock)) {
+              throw new Error(
+                `${relativePath} has invalid ${upgradeField}.effects.variantUnlocks value '${variantUnlock}' on record ${recordId}`
+              );
+            }
+          }
+        }
+      }
+
+      for (const [index, upgrade] of upgrades.availableUpgrades.entries()) {
+        const upgradeField = `upgradesProfile.availableUpgrades[${index}]`;
+
+        for (const requiredId of upgrade.requiredUpgradeIds) {
+          if (!upgradeIds.has(requiredId)) {
+            throw new Error(`${relativePath} has unknown ${upgradeField}.requiredUpgradeIds '${requiredId}' on record ${recordId}`);
+          }
+
+          if (requiredId === upgrade.id) {
+            throw new Error(`${relativePath} has self-referencing ${upgradeField}.requiredUpgradeIds on record ${recordId}`);
+          }
+        }
+      }
+
+      const tierUpgradeTargets = new Set();
+      for (const [index, requirement] of upgrades.tierUpgradeRequirements.entries()) {
+        const requirementField = `upgradesProfile.tierUpgradeRequirements[${index}]`;
+
+        if (!isObject(requirement)) {
+          throw new Error(`${relativePath} has invalid ${requirementField} on record ${recordId}`);
+        }
+
+        ensureString(relativePath, recordId, `${requirementField}.targetWorkplaceId`, requirement.targetWorkplaceId);
+        ensureStringArray(relativePath, recordId, `${requirementField}.requiredUpgradeIds`, requirement.requiredUpgradeIds, 1);
+
+        if (tierUpgradeTargets.has(requirement.targetWorkplaceId)) {
+          throw new Error(`${relativePath} has duplicate ${requirementField}.targetWorkplaceId '${requirement.targetWorkplaceId}' on record ${recordId}`);
+        }
+        tierUpgradeTargets.add(requirement.targetWorkplaceId);
+
+        for (const requiredId of requirement.requiredUpgradeIds) {
+          if (!upgradeIds.has(requiredId)) {
+            throw new Error(`${relativePath} has unknown ${requirementField}.requiredUpgradeIds '${requiredId}' on record ${recordId}`);
+          }
+
+          if (!essentialUpgradeIds.has(requiredId)) {
+            throw new Error(`${relativePath} ${requirementField}.requiredUpgradeIds '${requiredId}' must be marked essentialForTierUpgrade on record ${recordId}`);
+          }
+        }
+
+        if ("notes" in requirement && typeof requirement.notes !== "string") {
+          throw new Error(`${relativePath} has invalid ${requirementField}.notes on record ${recordId}`);
+        }
+      }
+
+      if (isObject(record.tierProfile) && Array.isArray(record.tierProfile.upgradesTo)) {
+        const tierTargets = record.tierProfile.upgradesTo;
+
+        if (tierTargets.length > 0) {
+          for (const tierTarget of tierTargets) {
+            if (!tierUpgradeTargets.has(tierTarget)) {
+              throw new Error(
+                `${relativePath} is missing upgradesProfile.tierUpgradeRequirements target '${tierTarget}' on record ${recordId}`
+              );
+            }
+          }
+
+          for (const target of tierUpgradeTargets) {
+            if (!tierTargets.includes(target)) {
+              throw new Error(
+                `${relativePath} has upgradesProfile.tierUpgradeRequirements target '${target}' not present in tierProfile.upgradesTo on record ${recordId}`
+              );
+            }
+          }
+        } else if (tierUpgradeTargets.size > 0) {
+          throw new Error(`${relativePath} has tierUpgradeRequirements on non-upgrading record ${recordId}`);
+        }
+      } else if (tierUpgradeTargets.size > 0) {
+        throw new Error(`${relativePath} has tierUpgradeRequirements without tierProfile on record ${recordId}`);
+      }
+
+      if (isObject(record.progressionProfile)) {
+        for (const [index, tierDef] of record.progressionProfile.tiers.entries()) {
+          const tierField = `progressionProfile.tiers[${index}]`;
+
+          if ("upgradeSlots" in tierDef && tierDef.upgradeSlots > upgrades.upgradeSlots) {
+            throw new Error(`${relativePath} has ${tierField}.upgradeSlots above upgradesProfile.upgradeSlots on record ${recordId}`);
+          }
+
+          if ("requiredUpgradeIds" in tierDef) {
+            for (const requiredId of tierDef.requiredUpgradeIds) {
+              if (!upgradeIds.has(requiredId)) {
+                throw new Error(`${relativePath} has unknown ${tierField}.requiredUpgradeIds '${requiredId}' on record ${recordId}`);
+              }
+
+              if (!essentialUpgradeIds.has(requiredId)) {
+                throw new Error(
+                  `${relativePath} ${tierField}.requiredUpgradeIds '${requiredId}' must be marked essentialForTierUpgrade on record ${recordId}`
+                );
+              }
+            }
+          }
+        }
+      }
+    } else if (isObject(record.progressionProfile)) {
+      for (const [index, tierDef] of record.progressionProfile.tiers.entries()) {
+        const tierField = `progressionProfile.tiers[${index}]`;
+        if ("upgradeSlots" in tierDef) {
+          throw new Error(`${relativePath} has ${tierField}.upgradeSlots without upgradesProfile on record ${recordId}`);
+        }
+        if ("requiredUpgradeIds" in tierDef && tierDef.requiredUpgradeIds.length > 0) {
+          throw new Error(`${relativePath} has ${tierField}.requiredUpgradeIds without upgradesProfile on record ${recordId}`);
+        }
+      }
+    }
+
+    if (!("workforceProfile" in record) || !isObject(record.workforceProfile)) {
+      throw new Error(`${relativePath} has invalid or missing workforceProfile on record ${recordId}`);
+    }
+
+    const workforce = record.workforceProfile;
+    ensureInteger(relativePath, recordId, "workforceProfile.maxConcurrentWorkers", workforce.maxConcurrentWorkers, 1);
+
+    if (!Array.isArray(workforce.jobs) || workforce.jobs.length === 0) {
+      throw new Error(`${relativePath} has empty workforceProfile.jobs on record ${recordId}`);
+    }
+
+    const seenJobIds = new Set();
+    let primaryJobCount = 0;
+    let minimumWorkersFloor = 0;
+    const workplaceTier = isObject(record.tierProfile) ? record.tierProfile.tier : null;
+    const hasProgressionProfile = isObject(record.progressionProfile);
+
+    for (const [index, job] of workforce.jobs.entries()) {
+      const jobField = `workforceProfile.jobs[${index}]`;
+
+      if (!isObject(job)) {
+        throw new Error(`${relativePath} has invalid ${jobField} on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, `${jobField}.jobId`, job.jobId);
+      if (!WORKPLACE_JOB_ID_PATTERN.test(job.jobId)) {
+        throw new Error(`${relativePath} has invalid ${jobField}.jobId '${job.jobId}' on record ${recordId}`);
+      }
+
+      if (seenJobIds.has(job.jobId)) {
+        throw new Error(`${relativePath} has duplicate ${jobField}.jobId '${job.jobId}' on record ${recordId}`);
+      }
+      seenJobIds.add(job.jobId);
+
+      ensureSetMembership(relativePath, recordId, `${jobField}.role`, job.role, WORKPLACE_WORKFORCE_ROLES);
+      if (job.role === "primary") {
+        primaryJobCount += 1;
+      }
+
+      ensureInteger(relativePath, recordId, `${jobField}.requiredTier`, job.requiredTier, 1);
+      if (job.requiredTier > 5) {
+        throw new Error(`${relativePath} has ${jobField}.requiredTier above 5 on record ${recordId}`);
+      }
+
+      if (Number.isInteger(workplaceTier) && job.requiredTier > workplaceTier) {
+        throw new Error(`${relativePath} has ${jobField}.requiredTier above workplace tier on record ${recordId}`);
+      }
+
+      ensureInteger(relativePath, recordId, `${jobField}.minWorkers`, job.minWorkers, 0);
+      ensureInteger(relativePath, recordId, `${jobField}.recommendedWorkers`, job.recommendedWorkers, 1);
+      ensureInteger(relativePath, recordId, `${jobField}.diminishingStartsAt`, job.diminishingStartsAt, 1);
+      ensureInteger(relativePath, recordId, `${jobField}.maxWorkers`, job.maxWorkers, 1);
+
+      if (job.maxWorkers > workforce.maxConcurrentWorkers) {
+        throw new Error(`${relativePath} has ${jobField}.maxWorkers above workforceProfile.maxConcurrentWorkers on record ${recordId}`);
+      }
+
+      minimumWorkersFloor += job.minWorkers;
+
+      if (job.minWorkers > job.recommendedWorkers) {
+        throw new Error(`${relativePath} has ${jobField}.minWorkers above recommendedWorkers on record ${recordId}`);
+      }
+
+      if (job.recommendedWorkers > job.diminishingStartsAt) {
+        throw new Error(`${relativePath} has ${jobField}.recommendedWorkers above diminishingStartsAt on record ${recordId}`);
+      }
+
+      if (job.diminishingStartsAt > job.maxWorkers) {
+        throw new Error(`${relativePath} has ${jobField}.diminishingStartsAt above maxWorkers on record ${recordId}`);
+      }
+
+      ensureNumber(relativePath, recordId, `${jobField}.baseOutputPerWorker`, job.baseOutputPerWorker, 0);
+      ensureNumber(relativePath, recordId, `${jobField}.diminishingFactor`, job.diminishingFactor, 0.01);
+      if (job.diminishingFactor > 1) {
+        throw new Error(`${relativePath} has ${jobField}.diminishingFactor above 1 on record ${recordId}`);
+      }
+
+      ensureStringArray(relativePath, recordId, `${jobField}.unlocks`, job.unlocks, 0);
+      if (!isObject(job.toolRequirements)) {
+        throw new Error(`${relativePath} has invalid ${jobField}.toolRequirements on record ${recordId}`);
+      }
+
+      ensureInteger(relativePath, recordId, `${jobField}.toolRequirements.minimumToolTier`, job.toolRequirements.minimumToolTier, 1);
+      if (job.toolRequirements.minimumToolTier > 5) {
+        throw new Error(`${relativePath} has ${jobField}.toolRequirements.minimumToolTier above 5 on record ${recordId}`);
+      }
+
+      ensureStringArray(relativePath, recordId, `${jobField}.toolRequirements.requiredToolTags`, job.toolRequirements.requiredToolTags, 1);
+      for (const toolTag of job.toolRequirements.requiredToolTags) {
+        if (!WORKPLACE_TOOL_TAG_PATTERN.test(toolTag)) {
+          throw new Error(`${relativePath} has invalid ${jobField}.toolRequirements.requiredToolTags value '${toolTag}' on record ${recordId}`);
+        }
+      }
+
+      if (!isObject(job.toolRequirements.missingToolPenalty)) {
+        throw new Error(`${relativePath} has invalid ${jobField}.toolRequirements.missingToolPenalty on record ${recordId}`);
+      }
+
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        `${jobField}.toolRequirements.missingToolPenalty.mode`,
+        job.toolRequirements.missingToolPenalty.mode,
+        WORKPLACE_MISSING_TOOL_PENALTY_MODES
+      );
+      ensureNumber(
+        relativePath,
+        recordId,
+        `${jobField}.toolRequirements.missingToolPenalty.outputMultiplier`,
+        job.toolRequirements.missingToolPenalty.outputMultiplier,
+        0
+      );
+
+      if (job.toolRequirements.missingToolPenalty.outputMultiplier > 1) {
+        throw new Error(`${relativePath} has ${jobField}.toolRequirements.missingToolPenalty.outputMultiplier above 1 on record ${recordId}`);
+      }
+
+      if (
+        job.toolRequirements.missingToolPenalty.mode === "no_output" &&
+        job.toolRequirements.missingToolPenalty.outputMultiplier !== 0
+      ) {
+        throw new Error(`${relativePath} has ${jobField}.toolRequirements.missingToolPenalty mode no_output with non-zero multiplier on record ${recordId}`);
+      }
+
+      if (
+        job.toolRequirements.missingToolPenalty.mode === "reduced_output" &&
+        (job.toolRequirements.missingToolPenalty.outputMultiplier <= 0 ||
+          job.toolRequirements.missingToolPenalty.outputMultiplier >= 1)
+      ) {
+        throw new Error(`${relativePath} has ${jobField}.toolRequirements.missingToolPenalty reduced_output multiplier outside (0,1) on record ${recordId}`);
+      }
+
+      if ("replanting" in job) {
+        if (!isObject(job.replanting)) {
+          throw new Error(`${relativePath} has invalid ${jobField}.replanting on record ${recordId}`);
+        }
+
+        ensureBoolean(relativePath, recordId, `${jobField}.replanting.enabled`, job.replanting.enabled);
+        ensureNumber(relativePath, recordId, `${jobField}.replanting.outputGainPerWorker`, job.replanting.outputGainPerWorker, 0);
+        ensureNumber(relativePath, recordId, `${jobField}.replanting.maxOutputGain`, job.replanting.maxOutputGain, 0);
+        ensureNumber(
+          relativePath,
+          recordId,
+          `${jobField}.replanting.effectiveRadiusReductionPerWorker`,
+          job.replanting.effectiveRadiusReductionPerWorker,
+          0
+        );
+        ensureNumber(relativePath, recordId, `${jobField}.replanting.maxRadiusReduction`, job.replanting.maxRadiusReduction, 0);
+
+        if (job.replanting.outputGainPerWorker > job.replanting.maxOutputGain) {
+          throw new Error(`${relativePath} has ${jobField}.replanting.outputGainPerWorker above maxOutputGain on record ${recordId}`);
+        }
+
+        if (job.replanting.effectiveRadiusReductionPerWorker > job.replanting.maxRadiusReduction) {
+          throw new Error(
+            `${relativePath} has ${jobField}.replanting.effectiveRadiusReductionPerWorker above maxRadiusReduction on record ${recordId}`
+          );
+        }
+
+        if (job.replanting.enabled && !job.unlocks.includes("feature.replanting")) {
+          throw new Error(`${relativePath} has enabled replanting without feature.replanting unlock on record ${recordId}`);
+        }
+      }
+    }
+
+    if (!hasProgressionProfile && primaryJobCount !== 1) {
+      throw new Error(`${relativePath} must define exactly one primary workforce job on record ${recordId}`);
+    }
+
+    if (hasProgressionProfile && primaryJobCount < 1) {
+      throw new Error(`${relativePath} must define at least one primary workforce job on record ${recordId}`);
+    }
+
+    if (minimumWorkersFloor > workforce.maxConcurrentWorkers) {
+      throw new Error(`${relativePath} has workforce min worker floor above maxConcurrentWorkers on record ${recordId}`);
+    }
+
+    if (hasProgressionProfile) {
+      for (const [index, tierDef] of record.progressionProfile.tiers.entries()) {
+        const tierField = `progressionProfile.tiers[${index}]`;
+        if ("jobUnlocks" in tierDef) {
+          for (const jobUnlock of tierDef.jobUnlocks) {
+            if (!seenJobIds.has(jobUnlock)) {
+              throw new Error(`${relativePath} has ${tierField}.jobUnlocks '${jobUnlock}' not present in workforceProfile.jobs on record ${recordId}`);
+            }
+          }
+        }
+      }
+    }
+
+    if (isObject(record.tierProfile) && record.tierProfile.trackId === "track.forestry" && record.tierProfile.tier >= 4) {
+      const foresterJob = record.workforceProfile.jobs.find((job) => isObject(job) && job.jobId === "job.forester");
+      if (!foresterJob) {
+        throw new Error(`${relativePath} is missing job.forester on forestry lodge-or-higher record ${recordId}`);
+      }
+
+      if (!Array.isArray(foresterJob.unlocks) || !foresterJob.unlocks.includes("feature.replanting")) {
+        throw new Error(`${relativePath} job.forester must unlock feature.replanting on record ${recordId}`);
+      }
+
+      if (!isObject(foresterJob.replanting) || foresterJob.replanting.enabled !== true) {
+        throw new Error(`${relativePath} job.forester must enable replanting on record ${recordId}`);
+      }
+    }
+    if ("integrationProfile" in record) {
+      if (!isObject(record.integrationProfile)) {
+        throw new Error(`${relativePath} has invalid integrationProfile on record ${recordId}`);
+      }
+
+      const integration = record.integrationProfile;
+      ensureSetMembership(relativePath, recordId, "integrationProfile.role", integration.role, WORKPLACE_INTEGRATION_ROLES);
+      ensureStringArray(relativePath, recordId, "integrationProfile.comboGroupIds", integration.comboGroupIds, 0);
+
+      for (const comboGroupId of integration.comboGroupIds) {
+        if (!WORKPLACE_COMBO_ID_PATTERN.test(comboGroupId)) {
+          throw new Error(`${relativePath} has invalid integrationProfile.comboGroupIds value '${comboGroupId}' on record ${recordId}`);
+        }
+      }
+
+      if (!Array.isArray(integration.comboBonuses)) {
+        throw new Error(`${relativePath} has non-array integrationProfile.comboBonuses on record ${recordId}`);
+      }
+
+      for (const [index, bonus] of integration.comboBonuses.entries()) {
+        const bonusField = `integrationProfile.comboBonuses[${index}]`;
+
+        if (!isObject(bonus)) {
+          throw new Error(`${relativePath} has invalid ${bonusField} on record ${recordId}`);
+        }
+
+        ensureStringArray(relativePath, recordId, `${bonusField}.withWorkplaceIds`, bonus.withWorkplaceIds, 1);
+        ensureNumber(relativePath, recordId, `${bonusField}.throughputMultiplier`, bonus.throughputMultiplier, 0.01);
+        ensureNumber(relativePath, recordId, `${bonusField}.laborEfficiency`, bonus.laborEfficiency, 0.01);
+        ensureNumber(relativePath, recordId, `${bonusField}.wasteMultiplier`, bonus.wasteMultiplier, 0.01);
+        ensureNumber(relativePath, recordId, `${bonusField}.logisticsCostMultiplier`, bonus.logisticsCostMultiplier, 0.01);
+      }
+    }
+  }
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    if (isObject(record.tierProfile)) {
+      const tier = record.tierProfile;
+
+      if (Array.isArray(tier.upgradesTo) && tier.upgradesTo.length > 0 && !("upgradesProfile" in record)) {
+        throw new Error(`${relativePath} requires upgradesProfile on upgrading workplace record ${recordId}`);
+      }
+
+      if (typeof tier.upgradesFrom === "string" && !workplaceIds.has(tier.upgradesFrom)) {
+        throw new Error(`${relativePath} has unknown tierProfile.upgradesFrom '${tier.upgradesFrom}' on record ${recordId}`);
+      }
+
+      for (const upgradeTarget of tier.upgradesTo) {
+        if (!workplaceIds.has(upgradeTarget)) {
+          throw new Error(`${relativePath} has unknown tierProfile.upgradesTo '${upgradeTarget}' on record ${recordId}`);
+        }
+      }
+    }
+
+    if (isObject(record.integrationProfile)) {
+      for (const [index, bonus] of record.integrationProfile.comboBonuses.entries()) {
+        for (const withWorkplaceId of bonus.withWorkplaceIds) {
+          if (!workplaceIds.has(withWorkplaceId)) {
+            throw new Error(
+              `${relativePath} has unknown integrationProfile.comboBonuses[${index}].withWorkplaceIds '${withWorkplaceId}' on record ${recordId}`
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+function isPixelPoint(value) {
+  return isObject(value) && Number.isInteger(value.x) && Number.isInteger(value.y) && value.x >= 0 && value.y >= 0;
+}
+
+function pointInPolygon(point, polygonPoints) {
+  let inside = false;
+  for (let i = 0, j = polygonPoints.length - 1; i < polygonPoints.length; j = i++) {
+    const xi = polygonPoints[i].x;
+    const yi = polygonPoints[i].y;
+    const xj = polygonPoints[j].x;
+    const yj = polygonPoints[j].y;
+    const intersects =
+      yi > point.y !== yj > point.y &&
+      point.x < ((xj - xi) * (point.y - yi)) / ((yj - yi) || Number.EPSILON) + xi;
+    if (intersects) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+function polylineLengthPixels(points) {
+  let total = 0;
+  for (let index = 1; index < points.length; index += 1) {
+    const dx = points[index].x - points[index - 1].x;
+    const dy = points[index].y - points[index - 1].y;
+    total += Math.hypot(dx, dy);
+  }
+  return total;
+}
+
+function validateInfrastructure(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^infrastructure\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid infrastructure id '${record.id}' on record ${recordId}`);
+    }
+
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate infrastructure id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "category", record.category, INFRASTRUCTURE_CATEGORIES);
+    ensureSetMembership(relativePath, recordId, "infrastructureType", record.infrastructureType, INFRASTRUCTURE_TYPES);
+    ensureString(relativePath, recordId, "description", record.description);
+
+    if (!Array.isArray(record.serviceOutputs) || record.serviceOutputs.length === 0) {
+      throw new Error(`${relativePath} has invalid serviceOutputs on record ${recordId}`);
+    }
+
+    for (const [index, output] of record.serviceOutputs.entries()) {
+      const field = `serviceOutputs[${index}]`;
+      if (!isObject(output)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, `${field}.itemKey`, output.itemKey);
+      if (!ITEM_KEY_PATTERN.test(output.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${field}.itemKey '${output.itemKey}' on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, `${field}.unit`, output.unit);
+      if (!SLUG_PATTERN.test(output.unit)) {
+        throw new Error(`${relativePath} has invalid ${field}.unit '${output.unit}' on record ${recordId}`);
+      }
+
+      ensureString(relativePath, recordId, `${field}.description`, output.description);
+    }
+
+    if (!isObject(record.constructionPolicy)) {
+      throw new Error(`${relativePath} has invalid constructionPolicy on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "constructionPolicy.directBuildAllowed", record.constructionPolicy.directBuildAllowed);
+    ensureNumber(relativePath, recordId, "constructionPolicy.upgradeLaborMultiplier", record.constructionPolicy.upgradeLaborMultiplier, 1);
+    if (record.constructionPolicy.upgradeLaborMultiplier <= 1) {
+      throw new Error(`${relativePath} constructionPolicy.upgradeLaborMultiplier must be greater than 1 on record ${recordId}`);
+    }
+    ensureNumber(relativePath, recordId, "constructionPolicy.deconstructionLaborShare", record.constructionPolicy.deconstructionLaborShare, 0);
+    ensureString(relativePath, recordId, "constructionPolicy.notes", record.constructionPolicy.notes);
+
+    if (!isObject(record.progressionProfile)) {
+      throw new Error(`${relativePath} has invalid progressionProfile on record ${recordId}`);
+    }
+
+    const progression = record.progressionProfile;
+    ensureInteger(relativePath, recordId, "progressionProfile.maxTier", progression.maxTier, 1);
+    if (progression.maxTier > 5) {
+      throw new Error(`${relativePath} has progressionProfile.maxTier above 5 on record ${recordId}`);
+    }
+    if (progression.maxTier > 1 && !record.constructionPolicy.directBuildAllowed) {
+      throw new Error(`${relativePath} tiered infrastructure must allow direct build at higher tiers on record ${recordId}`);
+    }
+
+    if (!Array.isArray(progression.tiers) || progression.tiers.length !== progression.maxTier) {
+      throw new Error(`${relativePath} progressionProfile.tiers length must equal maxTier on record ${recordId}`);
+    }
+
+    const seenTiers = new Set();
+    for (const [index, tierDef] of progression.tiers.entries()) {
+      const tierField = `progressionProfile.tiers[${index}]`;
+      if (!isObject(tierDef)) {
+        throw new Error(`${relativePath} has invalid ${tierField} on record ${recordId}`);
+      }
+
+      ensureInteger(relativePath, recordId, `${tierField}.tier`, tierDef.tier, 1);
+      if (tierDef.tier > 5) {
+        throw new Error(`${relativePath} has ${tierField}.tier above 5 on record ${recordId}`);
+      }
+      if (seenTiers.has(tierDef.tier)) {
+        throw new Error(`${relativePath} has duplicate ${tierField}.tier ${tierDef.tier} on record ${recordId}`);
+      }
+      seenTiers.add(tierDef.tier);
+
+      ensureString(relativePath, recordId, `${tierField}.tierLabel`, tierDef.tierLabel);
+      ensureSetMembership(relativePath, recordId, `${tierField}.techLevel`, tierDef.techLevel, WORKPLACE_TECH_LEVELS);
+      ensureStringArray(relativePath, recordId, `${tierField}.technologyRequirements`, tierDef.technologyRequirements, 1);
+      for (const tech of tierDef.technologyRequirements) {
+        if (!/^(?:feature|tech)\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(tech)) {
+          throw new Error(`${relativePath} has invalid ${tierField}.technologyRequirements value '${tech}' on record ${recordId}`);
+        }
+      }
+
+      ensureNumber(relativePath, recordId, `${tierField}.laborRequirement`, tierDef.laborRequirement, 0.0001);
+      ensureStringArray(relativePath, recordId, `${tierField}.accessRequirements`, tierDef.accessRequirements, 1);
+      for (const access of tierDef.accessRequirements) {
+        if (!ITEM_KEY_PATTERN.test(access)) {
+          throw new Error(`${relativePath} has invalid ${tierField}.accessRequirements value '${access}' on record ${recordId}`);
+        }
+      }
+
+      if (!Array.isArray(tierDef.materialRequirements) || tierDef.materialRequirements.length === 0) {
+        throw new Error(`${relativePath} has invalid ${tierField}.materialRequirements on record ${recordId}`);
+      }
+
+      for (const [materialIndex, material] of tierDef.materialRequirements.entries()) {
+        const materialField = `${tierField}.materialRequirements[${materialIndex}]`;
+        if (!isObject(material)) {
+          throw new Error(`${relativePath} has invalid ${materialField} on record ${recordId}`);
+        }
+
+        ensureString(relativePath, recordId, `${materialField}.itemKey`, material.itemKey);
+        if (!ITEM_KEY_PATTERN.test(material.itemKey)) {
+          throw new Error(`${relativePath} has invalid ${materialField}.itemKey '${material.itemKey}' on record ${recordId}`);
+        }
+        ensureNumber(relativePath, recordId, `${materialField}.quantity`, material.quantity, 0.0001);
+        ensureString(relativePath, recordId, `${materialField}.unit`, material.unit);
+        if (!SLUG_PATTERN.test(material.unit)) {
+          throw new Error(`${relativePath} has invalid ${materialField}.unit '${material.unit}' on record ${recordId}`);
+        }
+      }
+
+      if (!Array.isArray(tierDef.serviceMetrics) || tierDef.serviceMetrics.length === 0) {
+        throw new Error(`${relativePath} has invalid ${tierField}.serviceMetrics on record ${recordId}`);
+      }
+
+      for (const [metricIndex, metric] of tierDef.serviceMetrics.entries()) {
+        const metricField = `${tierField}.serviceMetrics[${metricIndex}]`;
+        if (!isObject(metric)) {
+          throw new Error(`${relativePath} has invalid ${metricField} on record ${recordId}`);
+        }
+
+        ensureString(relativePath, recordId, `${metricField}.label`, metric.label);
+        ensureString(relativePath, recordId, `${metricField}.valueText`, metric.valueText);
+      }
+
+      ensureStringArray(relativePath, recordId, `${tierField}.benefits`, tierDef.benefits, 1);
+      if ("buildNotes" in tierDef) {
+        ensureString(relativePath, recordId, `${tierField}.buildNotes`, tierDef.buildNotes);
+      }
+    }
+
+    for (let tier = 1; tier <= progression.maxTier; tier += 1) {
+      if (!seenTiers.has(tier)) {
+        throw new Error(`${relativePath} is missing infrastructure progression tier ${tier} on record ${recordId}`);
+      }
+    }
+
+    if (record.infrastructureType === "irrigation") {
+      const irrigatedOutputs = record.serviceOutputs.filter((output) => output.itemKey === "irrigated_plot" && output.unit === "flag");
+      if (irrigatedOutputs.length !== 1) {
+        throw new Error(`${relativePath} irrigation infrastructure must define exactly one irrigated_plot flag output on record ${recordId}`);
+      }
+
+      const allowedSources = new Set();
+      for (const tierDef of progression.tiers) {
+        for (const metric of tierDef.serviceMetrics) {
+          if (metric.label === "Water source") {
+            allowedSources.add(metric.valueText);
+          }
+        }
+      }
+
+      const sourceMap = new Map([
+        ["well", "well"],
+        ["ditch", "ditch"],
+        ["wood-lined channel", "wood_lined_channel"],
+        ["stone culvert", "stone_culvert"],
+        ["aqueduct", "aqueduct"]
+      ]);
+
+      for (const source of allowedSources) {
+        const normalized = sourceMap.get(source);
+        if (!normalized || !WORKPLACE_IRRIGATION_SOURCE_TYPES.has(normalized)) {
+          throw new Error(`${relativePath} irrigation infrastructure has unsupported water source metric '${source}' on record ${recordId}`);
+        }
+      }
+    }
+  }
+}
+
+async function validateProductionChains(relativePath, records) {
+  const extractionPath = path.join(ROOT, "packages/content/base/civilization/extraction_methods.json");
+  const workplacePath = path.join(ROOT, "packages/content/base/civilization/workplaces.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const extractionParsed = JSON.parse(await readFile(extractionPath, "utf8"));
+  const workplaceParsed = JSON.parse(await readFile(workplacePath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (!Array.isArray(extractionParsed.records) || !Array.isArray(workplaceParsed.records) || !Array.isArray(marketParsed.records)) {
+    throw new Error(`${relativePath} could not validate production chains due to missing dependency records`);
+  }
+
+  const extractionIds = new Set();
+  const workplaceIds = new Set();
+  const marketKeys = new Set();
+
+  for (const record of extractionParsed.records) {
+    if (typeof record.id === "string") {
+      extractionIds.add(record.id);
+    }
+  }
+
+  for (const record of workplaceParsed.records) {
+    if (typeof record.id === "string") {
+      workplaceIds.add(record.id);
+    }
+  }
+
+  for (const record of marketParsed.records) {
+    if (typeof record.itemKey === "string") {
+      marketKeys.add(record.itemKey);
+    }
+  }
+
+  function validateChainItemKey(recordId, fieldName, itemKey, requireMarketKey = true) {
+    if (!ITEM_KEY_PATTERN.test(itemKey)) {
+      throw new Error(`${relativePath} has invalid ${fieldName} key '${itemKey}' on record ${recordId}`);
+    }
+
+    if (RESOURCE_ITEM_PREFIX_PATTERN.test(itemKey)) {
+      throw new Error(`${relativePath} ${fieldName} key ${itemKey} must not use resource prefixes on record ${recordId}`);
+    }
+
+    if (requireMarketKey && !marketKeys.has(itemKey)) {
+      throw new Error(`${relativePath} ${fieldName} key '${itemKey}' missing in market item values on record ${recordId}`);
+    }
+  }
+
+  const seenIds = new Set();
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate chain id ${record.id}`);
+    }
+    seenIds.add(record.id);
+
+    ensureStringArray(relativePath, recordId, "stages", record.stages, 1);
+    ensureString(relativePath, recordId, "primaryOutput", record.primaryOutput);
+    ensureStringArray(relativePath, recordId, "byProducts", record.byProducts, 0);
+
+    let hasWorkplaceStage = false;
+    for (const stage of record.stages) {
+      if (stage.startsWith("extract.")) {
+        if (!extractionIds.has(stage)) {
+          throw new Error(`${relativePath} has unknown extraction stage '${stage}' on record ${recordId}`);
+        }
+      } else if (stage.startsWith("workplace.")) {
+        hasWorkplaceStage = true;
+        if (!workplaceIds.has(stage)) {
+          throw new Error(`${relativePath} has unknown workplace stage '${stage}' on record ${recordId}`);
+        }
+      } else {
+        throw new Error(`${relativePath} has invalid stage prefix '${stage}' on record ${recordId}`);
+      }
+    }
+
+    if (!hasWorkplaceStage) {
+      throw new Error(`${relativePath} chain ${recordId} must include at least one workplace stage`);
+    }
+
+    for (const outputKey of [record.primaryOutput, ...record.byProducts]) {
+      validateChainItemKey(recordId, "output", outputKey);
+    }
+
+    if ("facilityStrategy" in record) {
+      if (!isObject(record.facilityStrategy)) {
+        throw new Error(`${relativePath} has invalid facilityStrategy on record ${recordId}`);
+      }
+
+      const strategy = record.facilityStrategy;
+      ensureSetMembership(relativePath, recordId, "facilityStrategy.mode", strategy.mode, CHAIN_FACILITY_MODES);
+
+      if (!Array.isArray(strategy.tierRange) || strategy.tierRange.length !== 2) {
+        throw new Error(`${relativePath} has invalid facilityStrategy.tierRange on record ${recordId}`);
+      }
+
+      ensureInteger(relativePath, recordId, "facilityStrategy.tierRange[0]", strategy.tierRange[0], 1);
+      ensureInteger(relativePath, recordId, "facilityStrategy.tierRange[1]", strategy.tierRange[1], 1);
+
+      if (strategy.tierRange[0] > strategy.tierRange[1]) {
+        throw new Error(`${relativePath} has descending facilityStrategy.tierRange on record ${recordId}`);
+      }
+
+      if (strategy.tierRange[1] > 5) {
+        throw new Error(`${relativePath} has facilityStrategy.tierRange above 5 on record ${recordId}`);
+      }
+
+      ensureStringArray(relativePath, recordId, "facilityStrategy.ownershipModels", strategy.ownershipModels, 1);
+      for (const ownershipModel of strategy.ownershipModels) {
+        ensureSetMembership(relativePath, recordId, "facilityStrategy.ownershipModels", ownershipModel, WORKPLACE_OWNERSHIP_MODELS);
+      }
+
+      ensureString(relativePath, recordId, "facilityStrategy.comboGroupId", strategy.comboGroupId);
+      if (!WORKPLACE_COMBO_ID_PATTERN.test(strategy.comboGroupId)) {
+        throw new Error(`${relativePath} has invalid facilityStrategy.comboGroupId '${strategy.comboGroupId}' on record ${recordId}`);
+      }
+
+      if ("marketContext" in strategy) {
+        if (!isObject(strategy.marketContext)) {
+          throw new Error(`${relativePath} has invalid facilityStrategy.marketContext on record ${recordId}`);
+        }
+
+        ensureSetMembership(
+          relativePath,
+          recordId,
+          "facilityStrategy.marketContext.consumerScope",
+          strategy.marketContext.consumerScope,
+          WORKPLACE_CONSUMER_SCOPES
+        );
+        ensureSetMembership(
+          relativePath,
+          recordId,
+          "facilityStrategy.marketContext.supplyAccess",
+          strategy.marketContext.supplyAccess,
+          WORKPLACE_SUPPLY_ACCESS
+        );
+        ensureSetMembership(
+          relativePath,
+          recordId,
+          "facilityStrategy.marketContext.riskTolerance",
+          strategy.marketContext.riskTolerance,
+          WORKPLACE_RISK_TOLERANCE
+        );
+        ensureStringArray(relativePath, recordId, "facilityStrategy.marketContext.districtTags", strategy.marketContext.districtTags, 1);
+      }
+    }
+
+    if ("variantConfig" in record) {
+      if (!isObject(record.variantConfig)) {
+        throw new Error(`${relativePath} has invalid variantConfig on record ${recordId}`);
+      }
+
+      const variantConfig = record.variantConfig;
+      ensureString(relativePath, recordId, "variantConfig.variantFlag", variantConfig.variantFlag);
+      ensureString(relativePath, recordId, "variantConfig.defaultVariant", variantConfig.defaultVariant);
+
+      if (!SLUG_PATTERN.test(variantConfig.variantFlag)) {
+        throw new Error(`${relativePath} has invalid variantConfig.variantFlag '${variantConfig.variantFlag}' on record ${recordId}`);
+      }
+
+      if (!SLUG_PATTERN.test(variantConfig.defaultVariant)) {
+        throw new Error(
+          `${relativePath} has invalid variantConfig.defaultVariant '${variantConfig.defaultVariant}' on record ${recordId}`
+        );
+      }
+
+      if (!Array.isArray(variantConfig.variants) || variantConfig.variants.length === 0) {
+        throw new Error(`${relativePath} has empty variantConfig.variants on record ${recordId}`);
+      }
+
+      const seenVariantIds = new Set();
+      const seenVariantOutputs = new Set();
+      let defaultVariantResolved = false;
+
+      for (const [index, variant] of variantConfig.variants.entries()) {
+        const variantField = `variantConfig.variants[${index}]`;
+
+        if (!isObject(variant)) {
+          throw new Error(`${relativePath} has invalid ${variantField} on record ${recordId}`);
+        }
+
+        ensureString(relativePath, recordId, `${variantField}.id`, variant.id);
+        if (!SLUG_PATTERN.test(variant.id)) {
+          throw new Error(`${relativePath} has invalid ${variantField}.id '${variant.id}' on record ${recordId}`);
+        }
+
+        if (seenVariantIds.has(variant.id)) {
+          throw new Error(`${relativePath} has duplicate ${variantField}.id '${variant.id}' on record ${recordId}`);
+        }
+        seenVariantIds.add(variant.id);
+
+        if (variant.id === variantConfig.defaultVariant) {
+          defaultVariantResolved = true;
+        }
+
+        ensureStringArray(relativePath, recordId, `${variantField}.inputItemKeys`, variant.inputItemKeys, 1);
+        for (const inputItemKey of variant.inputItemKeys) {
+          validateChainItemKey(recordId, `${variantField}.inputItem`, inputItemKey, true);
+        }
+
+        ensureString(relativePath, recordId, `${variantField}.primaryOutput`, variant.primaryOutput);
+        ensureStringArray(relativePath, recordId, `${variantField}.byProducts`, variant.byProducts, 0);
+
+        validateChainItemKey(recordId, `${variantField}.primaryOutput`, variant.primaryOutput);
+        if (seenVariantOutputs.has(variant.primaryOutput)) {
+          throw new Error(
+            `${relativePath} has duplicate ${variantField}.primaryOutput '${variant.primaryOutput}' on record ${recordId}`
+          );
+        }
+        seenVariantOutputs.add(variant.primaryOutput);
+
+        for (const byProductKey of variant.byProducts) {
+          validateChainItemKey(recordId, `${variantField}.byProducts`, byProductKey);
+        }
+        if ("laborWeight" in variant) {
+          ensureNumber(relativePath, recordId, `${variantField}.laborWeight`, variant.laborWeight, 0.01);
+        }
+
+      }
+      if (!defaultVariantResolved) {
+        throw new Error(
+          `${relativePath} has variantConfig.defaultVariant '${variantConfig.defaultVariant}' missing in variants on record ${recordId}`
+        );
+      }
+    }
+  }
+}
+
+function validateWorldRegions(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid region id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate region id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "regionType", record.regionType, WORLD_REGION_TYPES);
+    ensureStringArray(relativePath, recordId, "aliases", record.aliases, 0);
+    ensureStringArray(relativePath, recordId, "mapIds", record.mapIds, 1);
+    ensureString(relativePath, recordId, "positionLabel", record.positionLabel);
+    if (!SLUG_PATTERN.test(record.positionLabel)) {
+      throw new Error(`${relativePath} has invalid positionLabel '${record.positionLabel}' on record ${recordId}`);
+    }
+
+    for (const mapId of record.mapIds) {
+      if (!/^world_map\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(mapId)) {
+        throw new Error(`${relativePath} has invalid mapIds value '${mapId}' on record ${recordId}`);
+      }
+    }
+
+    if ("parentRegionId" in record) {
+      ensureString(relativePath, recordId, "parentRegionId", record.parentRegionId);
+      if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.parentRegionId)) {
+        throw new Error(`${relativePath} has invalid parentRegionId '${record.parentRegionId}' on record ${recordId}`);
+      }
+    }
+
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureStringArray(relativePath, recordId, "tags", record.tags, 1);
+    for (const tag of record.tags) {
+      if (!SLUG_PATTERN.test(tag)) {
+        throw new Error(`${relativePath} has invalid tag '${tag}' on record ${recordId}`);
+      }
+    }
+
+    if ("geography" in record) {
+      if (!isObject(record.geography)) {
+        throw new Error(`${relativePath} has invalid geography on record ${recordId}`);
+      }
+      if ("climateSummary" in record.geography) {
+        ensureString(relativePath, recordId, "geography.climateSummary", record.geography.climateSummary);
+      }
+      if ("terrainNotes" in record.geography) {
+        ensureStringArray(relativePath, recordId, "geography.terrainNotes", record.geography.terrainNotes, 1);
+      }
+      if ("notableFeatures" in record.geography) {
+        ensureStringArray(relativePath, recordId, "geography.notableFeatures", record.geography.notableFeatures, 1);
+      }
+    }
+
+    if ("populationProfile" in record) {
+      if (!isObject(record.populationProfile)) {
+        throw new Error(`${relativePath} has invalid populationProfile on record ${recordId}`);
+      }
+      const population = record.populationProfile;
+      if ("densityBand" in population) {
+        ensureSetMembership(relativePath, recordId, "populationProfile.densityBand", population.densityBand, WORLD_POPULATION_DENSITY_BANDS);
+      }
+      if ("densityNotes" in population) {
+        ensureStringArray(relativePath, recordId, "populationProfile.densityNotes", population.densityNotes, 1);
+      }
+      if ("settlementPattern" in population) {
+        ensureString(relativePath, recordId, "populationProfile.settlementPattern", population.settlementPattern);
+      }
+      if ("estimatedPopulationMillions" in population) {
+        ensureNumber(relativePath, recordId, "populationProfile.estimatedPopulationMillions", population.estimatedPopulationMillions, 0);
+      }
+    }
+
+    if ("demographicProfile" in record) {
+      if (!isObject(record.demographicProfile)) {
+        throw new Error(`${relativePath} has invalid demographicProfile on record ${recordId}`);
+      }
+      const demographics = record.demographicProfile;
+      if ("raceDistribution" in demographics) {
+        if (!Array.isArray(demographics.raceDistribution) || demographics.raceDistribution.length === 0) {
+          throw new Error(`${relativePath} has invalid demographicProfile.raceDistribution on record ${recordId}`);
+        }
+
+        let total = 0;
+        for (const [index, entry] of demographics.raceDistribution.entries()) {
+          const field = `demographicProfile.raceDistribution[${index}]`;
+          if (!isObject(entry)) {
+            throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+          }
+          ensureString(relativePath, recordId, `${field}.race`, entry.race);
+          ensureNumber(relativePath, recordId, `${field}.percentage`, entry.percentage, 0);
+          if (entry.percentage > 100) {
+            throw new Error(`${relativePath} has ${field}.percentage above 100 on record ${recordId}`);
+          }
+          total += entry.percentage;
+        }
+
+        if (Math.abs(total - 100) > 0.5) {
+          throw new Error(`${relativePath} demographicProfile.raceDistribution must total 100 (+/-0.5) on record ${recordId}`);
+        }
+      }
+      if ("notableGroups" in demographics) {
+        ensureStringArray(relativePath, recordId, "demographicProfile.notableGroups", demographics.notableGroups, 1);
+      }
+    }
+
+    if ("economicProfile" in record) {
+      if (!isObject(record.economicProfile)) {
+        throw new Error(`${relativePath} has invalid economicProfile on record ${recordId}`);
+      }
+      if ("majorExports" in record.economicProfile) {
+        ensureStringArray(relativePath, recordId, "economicProfile.majorExports", record.economicProfile.majorExports, 1);
+      }
+      if ("majorImports" in record.economicProfile) {
+        ensureStringArray(relativePath, recordId, "economicProfile.majorImports", record.economicProfile.majorImports, 1);
+      }
+    }
+
+    if ("civilizationNotes" in record) {
+      ensureStringArray(relativePath, recordId, "civilizationNotes", record.civilizationNotes, 1);
+    }
+    if ("strategicNotes" in record) {
+      ensureStringArray(relativePath, recordId, "strategicNotes", record.strategicNotes, 1);
+    }
+  }
+}
+
+function validateWorldMaps(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^world_map\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid world map id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate world map id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "mapType", record.mapType, WORLD_MAP_TYPES);
+    ensureString(relativePath, recordId, "sourceSummary", record.sourceSummary);
+    if (!isObject(record.scaleProfile)) {
+      throw new Error(`${relativePath} has invalid scaleProfile on record ${recordId}`);
+    }
+    ensureNumber(relativePath, recordId, "scaleProfile.referenceImageWidthPx", record.scaleProfile.referenceImageWidthPx, 1);
+    ensureNumber(relativePath, recordId, "scaleProfile.referenceImageHeightPx", record.scaleProfile.referenceImageHeightPx, 1);
+    ensureNumber(relativePath, recordId, "scaleProfile.kilometersPerPixel", record.scaleProfile.kilometersPerPixel, 0.01);
+    ensureNumber(relativePath, recordId, "scaleProfile.milesPerPixel", record.scaleProfile.milesPerPixel, 0.01);
+    ensureNumber(relativePath, recordId, "scaleProfile.mapWidthKilometers", record.scaleProfile.mapWidthKilometers, 1);
+    ensureNumber(relativePath, recordId, "scaleProfile.mapWidthMiles", record.scaleProfile.mapWidthMiles, 1);
+    ensureNumber(relativePath, recordId, "scaleProfile.mapHeightKilometers", record.scaleProfile.mapHeightKilometers, 1);
+    ensureNumber(relativePath, recordId, "scaleProfile.mapHeightMiles", record.scaleProfile.mapHeightMiles, 1);
+    if (!Array.isArray(record.scaleProfile.practicalRulerBenchmarks) || record.scaleProfile.practicalRulerBenchmarks.length === 0) {
+      throw new Error(`${relativePath} has invalid scaleProfile.practicalRulerBenchmarks on record ${recordId}`);
+    }
+    for (const [index, benchmark] of record.scaleProfile.practicalRulerBenchmarks.entries()) {
+      const field = `scaleProfile.practicalRulerBenchmarks[${index}]`;
+      if (!isObject(benchmark)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureNumber(relativePath, recordId, `${field}.pixels`, benchmark.pixels, 1);
+      ensureNumber(relativePath, recordId, `${field}.distanceKilometers`, benchmark.distanceKilometers, 0.01);
+      ensureNumber(relativePath, recordId, `${field}.distanceMiles`, benchmark.distanceMiles, 0.01);
+    }
+    if (!Array.isArray(record.scaleProfile.distanceBenchmarks) || record.scaleProfile.distanceBenchmarks.length === 0) {
+      throw new Error(`${relativePath} has invalid scaleProfile.distanceBenchmarks on record ${recordId}`);
+    }
+    const seenDistanceBenchmarkIds = new Set();
+    for (const [index, benchmark] of record.scaleProfile.distanceBenchmarks.entries()) {
+      const field = `scaleProfile.distanceBenchmarks[${index}]`;
+      if (!isObject(benchmark)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, benchmark.id);
+      if (!SLUG_PATTERN.test(benchmark.id)) {
+        throw new Error(`${relativePath} has invalid ${field}.id '${benchmark.id}' on record ${recordId}`);
+      }
+      if (seenDistanceBenchmarkIds.has(benchmark.id)) {
+        throw new Error(`${relativePath} has duplicate ${field}.id '${benchmark.id}' on record ${recordId}`);
+      }
+      seenDistanceBenchmarkIds.add(benchmark.id);
+      ensureString(relativePath, recordId, `${field}.name`, benchmark.name);
+      ensureNumber(relativePath, recordId, `${field}.distanceKilometersMin`, benchmark.distanceKilometersMin, 0.01);
+      ensureNumber(relativePath, recordId, `${field}.distanceKilometersMax`, benchmark.distanceKilometersMax, benchmark.distanceKilometersMin);
+      ensureNumber(relativePath, recordId, `${field}.distanceMilesMin`, benchmark.distanceMilesMin, 0.01);
+      ensureNumber(relativePath, recordId, `${field}.distanceMilesMax`, benchmark.distanceMilesMax, benchmark.distanceMilesMin);
+      ensureString(relativePath, recordId, `${field}.notes`, benchmark.notes);
+    }
+    ensureStringArray(relativePath, recordId, "scaleProfile.notes", record.scaleProfile.notes, 1);
+
+    const expectedMapWidthKilometers = record.scaleProfile.referenceImageWidthPx * record.scaleProfile.kilometersPerPixel;
+    const expectedMapHeightKilometers = record.scaleProfile.referenceImageHeightPx * record.scaleProfile.kilometersPerPixel;
+    const expectedMapWidth = record.scaleProfile.referenceImageWidthPx * record.scaleProfile.milesPerPixel;
+    const expectedMapHeight = record.scaleProfile.referenceImageHeightPx * record.scaleProfile.milesPerPixel;
+    if (Math.abs(expectedMapWidthKilometers - record.scaleProfile.mapWidthKilometers) > 1) {
+      throw new Error(`${relativePath} scaleProfile.mapWidthKilometers does not match image width * kilometersPerPixel on record ${recordId}`);
+    }
+    if (Math.abs(expectedMapHeightKilometers - record.scaleProfile.mapHeightKilometers) > 1) {
+      throw new Error(`${relativePath} scaleProfile.mapHeightKilometers does not match image height * kilometersPerPixel on record ${recordId}`);
+    }
+    if (Math.abs(expectedMapWidth - record.scaleProfile.mapWidthMiles) > 1) {
+      throw new Error(`${relativePath} scaleProfile.mapWidthMiles does not match image width * milesPerPixel on record ${recordId}`);
+    }
+    if (Math.abs(expectedMapHeight - record.scaleProfile.mapHeightMiles) > 1) {
+      throw new Error(`${relativePath} scaleProfile.mapHeightMiles does not match image height * milesPerPixel on record ${recordId}`);
+    }
+    const expectedMilesPerPixel = record.scaleProfile.kilometersPerPixel * 0.621371;
+    if (Math.abs(expectedMilesPerPixel - record.scaleProfile.milesPerPixel) > 0.01) {
+      throw new Error(`${relativePath} scaleProfile.milesPerPixel must match kilometersPerPixel conversion on record ${recordId}`);
+    }
+    for (const benchmark of record.scaleProfile.practicalRulerBenchmarks) {
+      const expectedDistanceMiles = benchmark.distanceKilometers * 0.621371;
+      if (Math.abs(expectedDistanceMiles - benchmark.distanceMiles) > 1) {
+        throw new Error(`${relativePath} scaleProfile.practicalRulerBenchmarks distanceMiles must match distanceKilometers conversion on record ${recordId}`);
+      }
+    }
+    for (const benchmark of record.scaleProfile.distanceBenchmarks) {
+      const expectedMinMiles = benchmark.distanceKilometersMin * 0.621371;
+      const expectedMaxMiles = benchmark.distanceKilometersMax * 0.621371;
+      if (Math.abs(expectedMinMiles - benchmark.distanceMilesMin) > 1) {
+        throw new Error(`${relativePath} scaleProfile.distanceBenchmarks distanceMilesMin must match distanceKilometersMin conversion on record ${recordId}`);
+      }
+      if (Math.abs(expectedMaxMiles - benchmark.distanceMilesMax) > 1) {
+        throw new Error(`${relativePath} scaleProfile.distanceBenchmarks distanceMilesMax must match distanceKilometersMax conversion on record ${recordId}`);
+      }
+      if (benchmark.distanceKilometersMax < benchmark.distanceKilometersMin) {
+        throw new Error(`${relativePath} scaleProfile.distanceBenchmarks has distanceKilometersMax below distanceKilometersMin on record ${recordId}`);
+      }
+      if (benchmark.distanceMilesMax < benchmark.distanceMilesMin) {
+        throw new Error(`${relativePath} scaleProfile.distanceBenchmarks has distanceMilesMax below distanceMilesMin on record ${recordId}`);
+      }
+    }
+
+    if ("layerSummaries" in record) {
+      ensureStringArray(relativePath, recordId, "layerSummaries", record.layerSummaries, 1);
+    }
+
+    ensureStringArray(relativePath, recordId, "continentRegionIds", record.continentRegionIds, 1);
+    ensureStringArray(relativePath, recordId, "islandSystemRegionIds", record.islandSystemRegionIds, 1);
+    ensureStringArray(relativePath, recordId, "oceanRegionIds", record.oceanRegionIds, 1);
+    ensureStringArray(relativePath, recordId, "globalAssumptions", record.globalAssumptions, 1);
+
+    if (!Array.isArray(record.densityScale) || record.densityScale.length === 0) {
+      throw new Error(`${relativePath} has invalid densityScale on record ${recordId}`);
+    }
+
+    const seenDensityBands = new Set();
+    for (const [index, entry] of record.densityScale.entries()) {
+      const field = `densityScale[${index}]`;
+      if (!isObject(entry)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, `${field}.densityBand`, entry.densityBand, WORLD_POPULATION_DENSITY_BANDS);
+      ensureString(relativePath, recordId, `${field}.settlementPattern`, entry.settlementPattern);
+      if (seenDensityBands.has(entry.densityBand)) {
+        throw new Error(`${relativePath} has duplicate ${field}.densityBand '${entry.densityBand}' on record ${recordId}`);
+      }
+      seenDensityBands.add(entry.densityBand);
+    }
+
+    if (!Array.isArray(record.populationEstimates) || record.populationEstimates.length === 0) {
+      throw new Error(`${relativePath} has invalid populationEstimates on record ${recordId}`);
+    }
+
+    const seenPopulationIds = new Set();
+    for (const [index, estimate] of record.populationEstimates.entries()) {
+      const field = `populationEstimates[${index}]`;
+      if (!isObject(estimate)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.regionId`, estimate.regionId);
+      if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(estimate.regionId)) {
+        throw new Error(`${relativePath} has invalid ${field}.regionId '${estimate.regionId}' on record ${recordId}`);
+      }
+      ensureNumber(relativePath, recordId, `${field}.estimateMillions`, estimate.estimateMillions, 0);
+      if (seenPopulationIds.has(estimate.regionId)) {
+        throw new Error(`${relativePath} has duplicate ${field}.regionId '${estimate.regionId}' on record ${recordId}`);
+      }
+      seenPopulationIds.add(estimate.regionId);
+    }
+
+    if ("totalPopulationMillions" in record) {
+      ensureNumber(relativePath, recordId, "totalPopulationMillions", record.totalPopulationMillions, 0);
+    }
+
+    if (!Array.isArray(record.majorTradeRoutes) || record.majorTradeRoutes.length === 0) {
+      throw new Error(`${relativePath} has invalid majorTradeRoutes on record ${recordId}`);
+    }
+    for (const [index, route] of record.majorTradeRoutes.entries()) {
+      const field = `majorTradeRoutes[${index}]`;
+      if (!isObject(route)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, route.id);
+      ensureString(relativePath, recordId, `${field}.name`, route.name);
+      ensureString(relativePath, recordId, `${field}.summary`, route.summary);
+      ensureStringArray(relativePath, recordId, `${field}.regionIds`, route.regionIds, 1);
+    }
+
+    if (!Array.isArray(record.conflictZones) || record.conflictZones.length === 0) {
+      throw new Error(`${relativePath} has invalid conflictZones on record ${recordId}`);
+    }
+    for (const [index, zone] of record.conflictZones.entries()) {
+      const field = `conflictZones[${index}]`;
+      if (!isObject(zone)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.name`, zone.name);
+      ensureString(relativePath, recordId, `${field}.summary`, zone.summary);
+      ensureStringArray(relativePath, recordId, `${field}.regionIds`, zone.regionIds, 1);
+    }
+  }
+}
+
+function validateRegionalEcologyProfiles(relativePath, records) {
+  const seenIds = new Set();
+  const seenRegionIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^regional_ecology\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid regional ecology id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate regional ecology id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "regionId", record.regionId);
+    if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.regionId)) {
+      throw new Error(`${relativePath} has invalid regionId '${record.regionId}' on record ${recordId}`);
+    }
+    if (seenRegionIds.has(record.regionId)) {
+      throw new Error(`${relativePath} has duplicate regionId '${record.regionId}' on record ${recordId}`);
+    }
+    seenRegionIds.add(record.regionId);
+
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureString(relativePath, recordId, "primaryClimateProfileId", record.primaryClimateProfileId);
+    if (!/^climate\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.primaryClimateProfileId)) {
+      throw new Error(`${relativePath} has invalid primaryClimateProfileId '${record.primaryClimateProfileId}' on record ${recordId}`);
+    }
+
+    ensureStringArray(relativePath, recordId, "secondaryClimateProfileIds", record.secondaryClimateProfileIds, 0);
+    for (const climateId of record.secondaryClimateProfileIds) {
+      if (!/^climate\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(climateId)) {
+        throw new Error(`${relativePath} has invalid secondaryClimateProfileIds value '${climateId}' on record ${recordId}`);
+      }
+    }
+    ensureStringArray(relativePath, recordId, "mapClimateZoneIds", record.mapClimateZoneIds, 1);
+    for (const zoneId of record.mapClimateZoneIds) {
+      if (!/^map_climate\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(zoneId)) {
+        throw new Error(`${relativePath} has invalid mapClimateZoneIds value '${zoneId}' on record ${recordId}`);
+      }
+    }
+
+    ensureStringArray(relativePath, recordId, "dominantBiomeIds", record.dominantBiomeIds, 1);
+    ensureStringArray(relativePath, recordId, "supportingBiomeIds", record.supportingBiomeIds, 0);
+    for (const biomeId of [...record.dominantBiomeIds, ...record.supportingBiomeIds]) {
+      if (!/^biome\.[a-z0-9]+(?:_[a-z0-9]+)*\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(biomeId)) {
+        throw new Error(`${relativePath} has invalid biome id '${biomeId}' on record ${recordId}`);
+      }
+    }
+    ensureStringArray(relativePath, recordId, "mapBiomeZoneIds", record.mapBiomeZoneIds, 1);
+    for (const zoneId of record.mapBiomeZoneIds) {
+      if (!/^map_biome\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(zoneId)) {
+        throw new Error(`${relativePath} has invalid mapBiomeZoneIds value '${zoneId}' on record ${recordId}`);
+      }
+    }
+
+    ensureStringArray(relativePath, recordId, "nativeFloraIds", record.nativeFloraIds, 1);
+    ensureStringArray(relativePath, recordId, "nativeFaunaIds", record.nativeFaunaIds, 1);
+    for (const floraId of record.nativeFloraIds) {
+      if (!/^flora\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(floraId)) {
+        throw new Error(`${relativePath} has invalid flora id '${floraId}' on record ${recordId}`);
+      }
+    }
+    for (const faunaId of record.nativeFaunaIds) {
+      if (!/^fauna\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(faunaId)) {
+        throw new Error(`${relativePath} has invalid fauna id '${faunaId}' on record ${recordId}`);
+      }
+    }
+
+    if (!isObject(record.coverageProfile)) {
+      throw new Error(`${relativePath} has invalid coverageProfile on record ${recordId}`);
+    }
+    for (const field of ["stapleCrops", "herdAndGame", "maritimeFoods", "timberAndFiber", "metalsAndStone", "herbsAndReagents", "luxuryGoods"]) {
+      ensureSetMembership(relativePath, recordId, `coverageProfile.${field}`, record.coverageProfile[field], REGIONAL_ECOLOGY_COVERAGE_BANDS);
+    }
+
+    ensureStringArray(relativePath, recordId, "domesticStrengths", record.domesticStrengths, 1);
+    ensureStringArray(relativePath, recordId, "domesticGaps", record.domesticGaps, 1);
+    ensureStringArray(relativePath, recordId, "likelyTradePartnerRegionIds", record.likelyTradePartnerRegionIds, 1);
+    ensureStringArray(relativePath, recordId, "tradePressureNotes", record.tradePressureNotes, 1);
+
+    for (const partnerRegionId of record.likelyTradePartnerRegionIds) {
+      if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(partnerRegionId)) {
+        throw new Error(`${relativePath} has invalid likelyTradePartnerRegionIds value '${partnerRegionId}' on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateGuilds(relativePath, records) {
+  const seenIds = new Set();
+  const seenSlugs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^guild\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid guild id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate guild id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "slug", record.slug);
+    if (!SLUG_PATTERN.test(record.slug)) {
+      throw new Error(`${relativePath} has invalid guild slug '${record.slug}' on record ${recordId}`);
+    }
+    if (seenSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate guild slug '${record.slug}'`);
+    }
+    seenSlugs.add(record.slug);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "category", record.category, GUILD_CATEGORIES);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureStringArray(relativePath, recordId, "governsActivities", record.governsActivities, 1);
+    ensureStringArray(relativePath, recordId, "excludedActivities", record.excludedActivities, 0);
+    ensureStringArray(relativePath, recordId, "contractTypes", record.contractTypes, 1);
+    ensureStringArray(relativePath, recordId, "typicalPresenceLevels", record.typicalPresenceLevels, 1);
+    ensureStringArray(relativePath, recordId, "typicalSettlementTags", record.typicalSettlementTags, 1);
+
+    for (const field of ["governsActivities", "excludedActivities", "contractTypes", "typicalSettlementTags"]) {
+      for (const value of record[field]) {
+        if (!SLUG_PATTERN.test(value)) {
+          throw new Error(`${relativePath} has invalid ${field} value '${value}' on record ${recordId}`);
+        }
+      }
+    }
+    for (const presenceLevel of record.typicalPresenceLevels) {
+      ensureSetMembership(relativePath, recordId, "typicalPresenceLevels", presenceLevel, SETTLEMENT_GUILD_PRESENCE_LEVELS);
+    }
+
+    if (!isObject(record.membershipModel)) {
+      throw new Error(`${relativePath} has invalid membershipModel on record ${recordId}`);
+    }
+    ensureSetMembership(
+      relativePath,
+      recordId,
+      "membershipModel.entryMethod",
+      record.membershipModel.entryMethod,
+      GUILD_ENTRY_METHODS
+    );
+    if (record.membershipModel.entryMethod === "buy_in") {
+      ensureString(relativePath, recordId, "membershipModel.buyInRequirement", record.membershipModel.buyInRequirement);
+    }
+    ensureStringArray(relativePath, recordId, "membershipModel.entryRequirements", record.membershipModel.entryRequirements, 1);
+    ensureStringArray(relativePath, recordId, "membershipModel.benefits", record.membershipModel.benefits, 1);
+    ensureStringArray(relativePath, recordId, "membershipModel.memberObligations", record.membershipModel.memberObligations, 1);
+    if (record.membershipModel.notes !== undefined) {
+      ensureString(relativePath, recordId, "membershipModel.notes", record.membershipModel.notes);
+    }
+  }
+}
+
+function validateQuestTemplates(relativePath, records) {
+  const seenIds = new Set();
+  const seenSlugs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^quest_template\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid quest template id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate quest template id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "slug", record.slug);
+    if (!SLUG_PATTERN.test(record.slug)) {
+      throw new Error(`${relativePath} has invalid quest template slug '${record.slug}' on record ${recordId}`);
+    }
+    if (seenSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate quest template slug '${record.slug}'`);
+    }
+    seenSlugs.add(record.slug);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "category", record.category, QUEST_TEMPLATE_CATEGORIES);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureStringArray(relativePath, recordId, "issuingGuildTypes", record.issuingGuildTypes, 1);
+    ensureBoolean(relativePath, recordId, "allowAdventurersFallback", record.allowAdventurersFallback);
+    ensureSetMembership(relativePath, recordId, "generationSource", record.generationSource, QUEST_TEMPLATE_SOURCES);
+    ensureStringArray(relativePath, recordId, "targetItemKeys", record.targetItemKeys, 0);
+    ensureStringArray(relativePath, recordId, "targetSettlementTags", record.targetSettlementTags, 0);
+    ensureStringArray(relativePath, recordId, "monsterIds", record.monsterIds, 0);
+    ensureInteger(relativePath, recordId, "minimumQuantity", record.minimumQuantity, 1);
+    ensureNumber(relativePath, recordId, "minimumShortfallPerTick", record.minimumShortfallPerTick, 0);
+    ensureNumber(relativePath, recordId, "minimumTradeSurplusPerTick", record.minimumTradeSurplusPerTick, 0);
+
+    for (const guildType of record.issuingGuildTypes) {
+      if (!SLUG_PATTERN.test(guildType)) {
+        throw new Error(`${relativePath} has invalid issuingGuildTypes value '${guildType}' on record ${recordId}`);
+      }
+    }
+    for (const itemKey of record.targetItemKeys) {
+      if (!ITEM_KEY_PATTERN.test(itemKey)) {
+        throw new Error(`${relativePath} has invalid targetItemKeys value '${itemKey}' on record ${recordId}`);
+      }
+    }
+    for (const settlementTag of record.targetSettlementTags) {
+      if (!SLUG_PATTERN.test(settlementTag)) {
+        throw new Error(`${relativePath} has invalid targetSettlementTags value '${settlementTag}' on record ${recordId}`);
+      }
+    }
+    for (const monsterId of record.monsterIds) {
+      if (!/^monster\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(monsterId)) {
+        throw new Error(`${relativePath} has invalid monsterIds value '${monsterId}' on record ${recordId}`);
+      }
+    }
+
+    if (!isObject(record.rewardProfile)) {
+      throw new Error(`${relativePath} has invalid rewardProfile on record ${recordId}`);
+    }
+    ensureInteger(relativePath, recordId, "rewardProfile.coinBase", record.rewardProfile.coinBase, 0);
+    ensureInteger(relativePath, recordId, "rewardProfile.reputationBase", record.rewardProfile.reputationBase, 0);
+    ensureStringArray(relativePath, recordId, "rewardProfile.bonusItemKeys", record.rewardProfile.bonusItemKeys, 0);
+    for (const itemKey of record.rewardProfile.bonusItemKeys) {
+      if (!ITEM_KEY_PATTERN.test(itemKey)) {
+        throw new Error(`${relativePath} has invalid rewardProfile.bonusItemKeys value '${itemKey}' on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateMonsters(relativePath, records) {
+  const seenIds = new Set();
+  const seenSlugs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^monster\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid monster id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate monster id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "slug", record.slug);
+    if (!SLUG_PATTERN.test(record.slug)) {
+      throw new Error(`${relativePath} has invalid monster slug '${record.slug}' on record ${recordId}`);
+    }
+    if (seenSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate monster slug '${record.slug}'`);
+    }
+    seenSlugs.add(record.slug);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "monsterClass", record.monsterClass, MONSTER_CLASSES);
+    ensureSetMembership(relativePath, recordId, "threat", record.threat, MONSTER_THREATS);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureStringArray(relativePath, recordId, "habitatTags", record.habitatTags, 1);
+    ensureStringArray(relativePath, recordId, "behaviorTags", record.behaviorTags, 1);
+
+    for (const field of ["habitatTags", "behaviorTags"]) {
+      for (const value of record[field]) {
+        if (!SLUG_PATTERN.test(value)) {
+          throw new Error(`${relativePath} has invalid ${field} value '${value}' on record ${recordId}`);
+        }
+      }
+    }
+
+    if (!Array.isArray(record.drops) || record.drops.length === 0) {
+      throw new Error(`${relativePath} has invalid drops on record ${recordId}`);
+    }
+    for (const [index, drop] of record.drops.entries()) {
+      const field = `drops[${index}]`;
+      if (!isObject(drop)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.itemKey`, drop.itemKey);
+      if (!ITEM_KEY_PATTERN.test(drop.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${field}.itemKey '${drop.itemKey}' on record ${recordId}`);
+      }
+      ensureInteger(relativePath, recordId, `${field}.quantityMin`, drop.quantityMin, 1);
+      ensureInteger(relativePath, recordId, `${field}.quantityMax`, drop.quantityMax, 1);
+      if (drop.quantityMax < drop.quantityMin) {
+        throw new Error(`${relativePath} has ${field}.quantityMax below quantityMin on record ${recordId}`);
+      }
+      ensureNumber(relativePath, recordId, `${field}.chance`, drop.chance, 0);
+      if (drop.chance > 1) {
+        throw new Error(`${relativePath} has ${field}.chance above 1 on record ${recordId}`);
+      }
+    }
+
+    if (!Array.isArray(record.loot)) {
+      throw new Error(`${relativePath} has invalid loot on record ${recordId}`);
+    }
+    for (const [index, loot] of record.loot.entries()) {
+      const field = `loot[${index}]`;
+      if (!isObject(loot)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.itemKey`, loot.itemKey);
+      if (!ITEM_KEY_PATTERN.test(loot.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${field}.itemKey '${loot.itemKey}' on record ${recordId}`);
+      }
+      ensureNumber(relativePath, recordId, `${field}.chance`, loot.chance, 0);
+      if (loot.chance > 1) {
+        throw new Error(`${relativePath} has ${field}.chance above 1 on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateSettlements(relativePath, records) {
+  const seenIds = new Set();
+  const populationBandRanges = {
+    tiny: { min: 1, max: 500 },
+    small: { min: 501, max: 2500 },
+    modest: { min: 2501, max: 12000 },
+    large: { min: 12001, max: 60000 },
+    major: { min: 60001, max: Number.POSITIVE_INFINITY }
+  };
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^settlement\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid settlement id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate settlement id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "macroRegionId", record.macroRegionId);
+    ensureString(relativePath, recordId, "regionId", record.regionId);
+    if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.macroRegionId)) {
+      throw new Error(`${relativePath} has invalid macroRegionId '${record.macroRegionId}' on record ${recordId}`);
+    }
+    if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.regionId)) {
+      throw new Error(`${relativePath} has invalid regionId '${record.regionId}' on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "settlementType", record.settlementType, SETTLEMENT_TYPES);
+    ensureSetMembership(relativePath, recordId, "populationBand", record.populationBand, SETTLEMENT_POPULATION_BANDS);
+
+    if (!Number.isInteger(record.populationTotal) || record.populationTotal < 1) {
+      throw new Error(`${relativePath} has invalid populationTotal on record ${recordId}`);
+    }
+    const bandRange = populationBandRanges[record.populationBand];
+    if (record.populationTotal < bandRange.min || record.populationTotal > bandRange.max) {
+      throw new Error(
+        `${relativePath} populationTotal ${record.populationTotal} is outside ${record.populationBand} band range on record ${recordId}`
+      );
+    }
+
+    ensureSetMembership(relativePath, recordId, "administrativeRole", record.administrativeRole, SETTLEMENT_ADMIN_ROLES);
+    if (record.parentSettlementId !== undefined) {
+      ensureString(relativePath, recordId, "parentSettlementId", record.parentSettlementId);
+      if (!/^settlement\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.parentSettlementId)) {
+        throw new Error(`${relativePath} has invalid parentSettlementId '${record.parentSettlementId}' on record ${recordId}`);
+      }
+    }
+    if (record.dependencyRole !== undefined) {
+      ensureSetMembership(relativePath, recordId, "dependencyRole", record.dependencyRole, SETTLEMENT_DEPENDENCY_ROLES);
+    }
+    if ((record.parentSettlementId === undefined) !== (record.dependencyRole === undefined)) {
+      throw new Error(`${relativePath} parentSettlementId and dependencyRole must be provided together on record ${recordId}`);
+    }
+    if (DEPENDENT_SETTLEMENT_TYPES.has(record.settlementType) && record.parentSettlementId === undefined) {
+      throw new Error(`${relativePath} dependent settlement type '${record.settlementType}' requires parentSettlementId on record ${recordId}`);
+    }
+
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureString(relativePath, recordId, "siteContext", record.siteContext);
+    if (!isObject(record.mapLocation)) {
+      throw new Error(`${relativePath} has invalid mapLocation on record ${recordId}`);
+    }
+    ensureString(relativePath, recordId, "mapLocation.mapId", record.mapLocation.mapId);
+    if (!/^world_map\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.mapLocation.mapId)) {
+      throw new Error(`${relativePath} has invalid mapLocation.mapId '${record.mapLocation.mapId}' on record ${recordId}`);
+    }
+    if (!Number.isInteger(record.mapLocation.pixelX) || record.mapLocation.pixelX < 0) {
+      throw new Error(`${relativePath} has invalid mapLocation.pixelX on record ${recordId}`);
+    }
+    if (!Number.isInteger(record.mapLocation.pixelY) || record.mapLocation.pixelY < 0) {
+      throw new Error(`${relativePath} has invalid mapLocation.pixelY on record ${recordId}`);
+    }
+    ensureSetMembership(relativePath, recordId, "mapLocation.siteClass", record.mapLocation.siteClass, new Set(["surface", "subterranean", "underwater"]));
+    ensureString(relativePath, recordId, "mapLocation.climateZoneId", record.mapLocation.climateZoneId);
+    if (!/^map_climate\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.mapLocation.climateZoneId)) {
+      throw new Error(`${relativePath} has invalid mapLocation.climateZoneId '${record.mapLocation.climateZoneId}' on record ${recordId}`);
+    }
+    ensureString(relativePath, recordId, "mapLocation.biomeZoneId", record.mapLocation.biomeZoneId);
+    if (!/^map_biome\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.mapLocation.biomeZoneId)) {
+      throw new Error(`${relativePath} has invalid mapLocation.biomeZoneId '${record.mapLocation.biomeZoneId}' on record ${recordId}`);
+    }
+    ensureStringArray(relativePath, recordId, "identityTags", record.identityTags, 1);
+    ensureStringArray(relativePath, recordId, "purposeTags", record.purposeTags, 1);
+
+    for (const tag of [...record.identityTags, ...record.purposeTags]) {
+      if (!SLUG_PATTERN.test(tag)) {
+        throw new Error(`${relativePath} has invalid tag '${tag}' on record ${recordId}`);
+      }
+    }
+
+    if (!isObject(record.infrastructureProfile)) {
+      throw new Error(`${relativePath} has invalid infrastructureProfile on record ${recordId}`);
+    }
+    ensureSetMembership(
+      relativePath,
+      recordId,
+      "infrastructureProfile.overallLevel",
+      record.infrastructureProfile.overallLevel,
+      SETTLEMENT_INFRA_LEVELS
+    );
+    for (const field of ["roadTier", "waterTier", "fortificationTier", "harborTier", "marketTier"]) {
+      const value = record.infrastructureProfile[field];
+      if (!Number.isInteger(value) || value < 0 || value > 5) {
+        throw new Error(`${relativePath} has invalid infrastructureProfile.${field} on record ${recordId}`);
+      }
+    }
+
+    if (!Array.isArray(record.racialMix) || record.racialMix.length === 0) {
+      throw new Error(`${relativePath} has invalid racialMix on record ${recordId}`);
+    }
+    let raceTotal = 0;
+    let humanPercentage = 0;
+    for (const [index, entry] of record.racialMix.entries()) {
+      const field = `racialMix[${index}]`;
+      if (!isObject(entry)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.race`, entry.race);
+      ensureNumber(relativePath, recordId, `${field}.percentage`, entry.percentage, 0);
+      if (entry.percentage > 100) {
+        throw new Error(`${relativePath} has ${field}.percentage above 100 on record ${recordId}`);
+      }
+      raceTotal += entry.percentage;
+      if (entry.race === "humans") {
+        humanPercentage += entry.percentage;
+      }
+    }
+    if (Math.abs(raceTotal - 100) > 0.5) {
+      throw new Error(`${relativePath} racialMix must total 100 (+/-0.5) on record ${recordId}`);
+    }
+
+    if (!isObject(record.domesticResourceProfile)) {
+      throw new Error(`${relativePath} has invalid domesticResourceProfile on record ${recordId}`);
+    }
+    ensureStringArray(relativePath, recordId, "domesticResourceProfile.primaryGoods", record.domesticResourceProfile.primaryGoods, 1);
+    ensureStringArray(relativePath, recordId, "domesticResourceProfile.secondaryGoods", record.domesticResourceProfile.secondaryGoods, 0);
+    ensureStringArray(relativePath, recordId, "domesticResourceProfile.demandedGoods", record.domesticResourceProfile.demandedGoods, 1);
+    for (const field of ["primaryGoods", "secondaryGoods", "demandedGoods"]) {
+      for (const item of record.domesticResourceProfile[field]) {
+        if (!ITEM_KEY_PATTERN.test(item)) {
+          throw new Error(`${relativePath} has invalid domesticResourceProfile.${field} item '${item}' on record ${recordId}`);
+        }
+      }
+    }
+
+    if (!Array.isArray(record.domesticTradeFlows)) {
+      throw new Error(`${relativePath} has invalid domesticTradeFlows on record ${recordId}`);
+    }
+    for (const [index, flow] of record.domesticTradeFlows.entries()) {
+      const field = `domesticTradeFlows[${index}]`;
+      if (!isObject(flow)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.partnerSettlementId`, flow.partnerSettlementId);
+      if (!/^settlement\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(flow.partnerSettlementId)) {
+        throw new Error(`${relativePath} has invalid ${field}.partnerSettlementId '${flow.partnerSettlementId}' on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, `${field}.direction`, flow.direction, SETTLEMENT_TRADE_DIRECTIONS);
+      ensureStringArray(relativePath, recordId, `${field}.goods`, flow.goods, 1);
+      for (const item of flow.goods) {
+        if (!ITEM_KEY_PATTERN.test(item)) {
+          throw new Error(`${relativePath} has invalid ${field}.goods item '${item}' on record ${recordId}`);
+        }
+      }
+      ensureStringArray(relativePath, recordId, `${field}.routeModes`, flow.routeModes, 1);
+      for (const routeMode of flow.routeModes) {
+        ensureSetMembership(relativePath, recordId, `${field}.routeModes`, routeMode, SETTLEMENT_ROUTE_MODES);
+      }
+      ensureString(relativePath, recordId, `${field}.notes`, flow.notes);
+    }
+
+    if (!Array.isArray(record.guildPresence)) {
+      throw new Error(`${relativePath} has invalid guildPresence on record ${recordId}`);
+    }
+    if (humanPercentage <= 0 && record.guildPresence.length > 0) {
+      throw new Error(`${relativePath} guildPresence requires a human population on record ${recordId}`);
+    }
+    for (const [index, guild] of record.guildPresence.entries()) {
+      const field = `guildPresence[${index}]`;
+      if (!isObject(guild)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.guildType`, guild.guildType);
+      if (!SLUG_PATTERN.test(guild.guildType)) {
+        throw new Error(`${relativePath} has invalid ${field}.guildType '${guild.guildType}' on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.name`, guild.name);
+      ensureSetMembership(relativePath, recordId, `${field}.presenceLevel`, guild.presenceLevel, SETTLEMENT_GUILD_PRESENCE_LEVELS);
+      ensureStringArray(relativePath, recordId, `${field}.functions`, guild.functions, 1);
+      for (const func of guild.functions) {
+        if (!SLUG_PATTERN.test(func)) {
+          throw new Error(`${relativePath} has invalid ${field}.functions item '${func}' on record ${recordId}`);
+        }
+      }
+      ensureString(relativePath, recordId, `${field}.notes`, guild.notes);
+    }
+  }
+}
+
+function validateTravelNetworks(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^travel_network\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid travel network id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate travel network id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "mapId", record.mapId);
+    if (!/^world_map\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.mapId)) {
+      throw new Error(`${relativePath} has invalid mapId '${record.mapId}' on record ${recordId}`);
+    }
+    ensureString(relativePath, recordId, "summary", record.summary);
+
+    if (!Array.isArray(record.modeProfiles) || record.modeProfiles.length === 0) {
+      throw new Error(`${relativePath} has invalid modeProfiles on record ${recordId}`);
+    }
+    const modeIds = new Set();
+    for (const [index, mode] of record.modeProfiles.entries()) {
+      const field = `modeProfiles[${index}]`;
+      if (!isObject(mode)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, mode.id);
+      if (!/^travel_mode\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(mode.id)) {
+        throw new Error(`${relativePath} has invalid ${field}.id '${mode.id}' on record ${recordId}`);
+      }
+      if (modeIds.has(mode.id)) {
+        throw new Error(`${relativePath} has duplicate ${field}.id '${mode.id}' on record ${recordId}`);
+      }
+      modeIds.add(mode.id);
+      ensureString(relativePath, recordId, `${field}.name`, mode.name);
+      ensureSetMembership(relativePath, recordId, `${field}.domain`, mode.domain, TRAVEL_MODE_DOMAINS);
+      ensureNumber(relativePath, recordId, `${field}.baseMilesPerDay`, mode.baseMilesPerDay, 0.01);
+      ensureString(relativePath, recordId, `${field}.notes`, mode.notes);
+    }
+
+    if (!Array.isArray(record.travelBenchmarks) || record.travelBenchmarks.length === 0) {
+      throw new Error(`${relativePath} has invalid travelBenchmarks on record ${recordId}`);
+    }
+    const seenBenchmarkModes = new Set();
+    for (const [index, benchmark] of record.travelBenchmarks.entries()) {
+      const field = `travelBenchmarks[${index}]`;
+      if (!isObject(benchmark)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.modeId`, benchmark.modeId);
+      if (!modeIds.has(benchmark.modeId)) {
+        throw new Error(`${relativePath} references unknown ${field}.modeId '${benchmark.modeId}' on record ${recordId}`);
+      }
+      if (seenBenchmarkModes.has(benchmark.modeId)) {
+        throw new Error(`${relativePath} has duplicate ${field}.modeId '${benchmark.modeId}' on record ${recordId}`);
+      }
+      seenBenchmarkModes.add(benchmark.modeId);
+      ensureString(relativePath, recordId, `${field}.summary`, benchmark.summary);
+      if (!Array.isArray(benchmark.examples) || benchmark.examples.length === 0) {
+        throw new Error(`${relativePath} has invalid ${field}.examples on record ${recordId}`);
+      }
+      for (const [exampleIndex, example] of benchmark.examples.entries()) {
+        const exampleField = `${field}.examples[${exampleIndex}]`;
+        if (!isObject(example)) {
+          throw new Error(`${relativePath} has invalid ${exampleField} on record ${recordId}`);
+        }
+        ensureNumber(relativePath, recordId, `${exampleField}.distanceKilometers`, example.distanceKilometers, 0.01);
+        ensureNumber(relativePath, recordId, `${exampleField}.distanceMiles`, example.distanceMiles, 0.01);
+        ensureNumber(relativePath, recordId, `${exampleField}.expectedDaysMin`, example.expectedDaysMin, 0.01);
+        ensureNumber(relativePath, recordId, `${exampleField}.expectedDaysMax`, example.expectedDaysMax, example.expectedDaysMin);
+        const expectedDistanceMiles = example.distanceKilometers * 0.621371;
+        if (Math.abs(expectedDistanceMiles - example.distanceMiles) > 1) {
+          throw new Error(`${relativePath} ${exampleField}.distanceMiles must match distanceKilometers conversion on record ${recordId}`);
+        }
+        if (example.expectedDaysMax < example.expectedDaysMin) {
+          throw new Error(`${relativePath} ${exampleField}.expectedDaysMax must be >= expectedDaysMin on record ${recordId}`);
+        }
+      }
+    }
+
+    const validateVarianceRules = (rules, fieldPrefix) => {
+      if (!Array.isArray(rules) || rules.length === 0) {
+        throw new Error(`${relativePath} has invalid ${fieldPrefix} on record ${recordId}`);
+      }
+      const seenTags = new Set();
+      for (const [index, rule] of rules.entries()) {
+        const field = `${fieldPrefix}[${index}]`;
+        if (!isObject(rule)) {
+          throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+        }
+        ensureString(relativePath, recordId, `${field}.tag`, rule.tag);
+        if (!SLUG_PATTERN.test(rule.tag)) {
+          throw new Error(`${relativePath} has invalid ${field}.tag '${rule.tag}' on record ${recordId}`);
+        }
+        if (seenTags.has(rule.tag)) {
+          throw new Error(`${relativePath} has duplicate ${field}.tag '${rule.tag}' on record ${recordId}`);
+        }
+        seenTags.add(rule.tag);
+        ensureString(relativePath, recordId, `${field}.name`, rule.name);
+        ensureString(relativePath, recordId, `${field}.summary`, rule.summary);
+        if (!Array.isArray(rule.modeEffects) || rule.modeEffects.length === 0) {
+          throw new Error(`${relativePath} has invalid ${field}.modeEffects on record ${recordId}`);
+        }
+        const seenEffectModes = new Set();
+        for (const [effectIndex, effect] of rule.modeEffects.entries()) {
+          const effectField = `${field}.modeEffects[${effectIndex}]`;
+          if (!isObject(effect)) {
+            throw new Error(`${relativePath} has invalid ${effectField} on record ${recordId}`);
+          }
+          ensureString(relativePath, recordId, `${effectField}.modeId`, effect.modeId);
+          if (!modeIds.has(effect.modeId)) {
+            throw new Error(`${relativePath} references unknown ${effectField}.modeId '${effect.modeId}' on record ${recordId}`);
+          }
+          if (seenEffectModes.has(effect.modeId)) {
+            throw new Error(`${relativePath} has duplicate ${effectField}.modeId '${effect.modeId}' on record ${recordId}`);
+          }
+          seenEffectModes.add(effect.modeId);
+          ensureNumber(relativePath, recordId, `${effectField}.speedMultiplier`, effect.speedMultiplier, 0.01);
+          ensureNumber(relativePath, recordId, `${effectField}.variancePercent`, effect.variancePercent, 0);
+        }
+      }
+    };
+
+    validateVarianceRules(record.terrainVarianceRules, "terrainVarianceRules");
+    validateVarianceRules(record.featureVarianceRules, "featureVarianceRules");
+
+    const validateTimeArray = (timeEstimates, availableModeIds, fieldPrefix) => {
+      if (!Array.isArray(timeEstimates) || timeEstimates.length === 0) {
+        throw new Error(`${relativePath} has invalid ${fieldPrefix}.travelTimeEstimates on record ${recordId}`);
+      }
+      const seenModeIds = new Set();
+      for (const [index, estimate] of timeEstimates.entries()) {
+        const timeField = `${fieldPrefix}.travelTimeEstimates[${index}]`;
+        if (!isObject(estimate)) {
+          throw new Error(`${relativePath} has invalid ${timeField} on record ${recordId}`);
+        }
+        ensureString(relativePath, recordId, `${timeField}.modeId`, estimate.modeId);
+        if (!modeIds.has(estimate.modeId)) {
+          throw new Error(`${relativePath} references unknown ${timeField}.modeId '${estimate.modeId}' on record ${recordId}`);
+        }
+        if (!availableModeIds.includes(estimate.modeId)) {
+          throw new Error(`${relativePath} ${timeField}.modeId '${estimate.modeId}' must appear in availableModeIds on record ${recordId}`);
+        }
+        if (seenModeIds.has(estimate.modeId)) {
+          throw new Error(`${relativePath} has duplicate ${timeField}.modeId '${estimate.modeId}' on record ${recordId}`);
+        }
+        seenModeIds.add(estimate.modeId);
+        ensureNumber(relativePath, recordId, `${timeField}.expectedDays`, estimate.expectedDays, 0.01);
+        ensureNumber(relativePath, recordId, `${timeField}.varianceDays`, estimate.varianceDays, 0);
+      }
+    };
+
+    if (!Array.isArray(record.routeRecords) || record.routeRecords.length === 0) {
+      throw new Error(`${relativePath} has invalid routeRecords on record ${recordId}`);
+    }
+    const seenRouteIds = new Set();
+    const validatePathGeometry = (points, segments, fieldPrefix) => {
+      if (!Array.isArray(points) || points.length < 2) {
+        throw new Error(`${relativePath} has invalid ${fieldPrefix}.pathPoints on record ${recordId}`);
+      }
+      for (const [pointIndex, point] of points.entries()) {
+        const pointField = `${fieldPrefix}.pathPoints[${pointIndex}]`;
+        if (!isPixelPoint(point)) {
+          throw new Error(`${relativePath} has invalid ${pointField} on record ${recordId}`);
+        }
+      }
+      if (!Array.isArray(segments) || segments.length === 0) {
+        throw new Error(`${relativePath} has invalid ${fieldPrefix}.pathSegments on record ${recordId}`);
+      }
+      for (const [segmentIndex, segment] of segments.entries()) {
+        const segmentField = `${fieldPrefix}.pathSegments[${segmentIndex}]`;
+        if (!isObject(segment)) {
+          throw new Error(`${relativePath} has invalid ${segmentField} on record ${recordId}`);
+        }
+        ensureNumber(relativePath, recordId, `${segmentField}.fromPointIndex`, segment.fromPointIndex, 0);
+        ensureNumber(relativePath, recordId, `${segmentField}.toPointIndex`, segment.toPointIndex, 1);
+        if (!Number.isInteger(segment.fromPointIndex) || !Number.isInteger(segment.toPointIndex)) {
+          throw new Error(`${relativePath} ${segmentField} indexes must be integers on record ${recordId}`);
+        }
+        if (segment.fromPointIndex < 0 || segment.toPointIndex >= points.length || segment.toPointIndex <= segment.fromPointIndex) {
+          throw new Error(`${relativePath} has out-of-range ${segmentField} indexes on record ${recordId}`);
+        }
+        ensureString(relativePath, recordId, `${segmentField}.terrainTag`, segment.terrainTag);
+        if (!SLUG_PATTERN.test(segment.terrainTag)) {
+          throw new Error(`${relativePath} has invalid ${segmentField}.terrainTag '${segment.terrainTag}' on record ${recordId}`);
+        }
+        ensureStringArray(relativePath, recordId, `${segmentField}.featureTags`, segment.featureTags, 0);
+        for (const featureTag of segment.featureTags) {
+          if (!SLUG_PATTERN.test(featureTag)) {
+            throw new Error(`${relativePath} has invalid ${segmentField}.featureTags value '${featureTag}' on record ${recordId}`);
+          }
+        }
+      }
+    };
+    for (const [index, route] of record.routeRecords.entries()) {
+      const field = `routeRecords[${index}]`;
+      if (!isObject(route)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, route.id);
+      if (!/^route\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(route.id)) {
+        throw new Error(`${relativePath} has invalid ${field}.id '${route.id}' on record ${recordId}`);
+      }
+      if (seenRouteIds.has(route.id)) {
+        throw new Error(`${relativePath} has duplicate ${field}.id '${route.id}' on record ${recordId}`);
+      }
+      seenRouteIds.add(route.id);
+      ensureString(relativePath, recordId, `${field}.name`, route.name);
+      ensureString(relativePath, recordId, `${field}.fromSettlementId`, route.fromSettlementId);
+      ensureString(relativePath, recordId, `${field}.toSettlementId`, route.toSettlementId);
+      ensureSetMembership(relativePath, recordId, `${field}.routeClass`, route.routeClass, TRAVEL_ROUTE_CLASSES);
+      ensureNumber(relativePath, recordId, `${field}.distanceMiles`, route.distanceMiles, 1);
+      validatePathGeometry(route.pathPoints, route.pathSegments, field);
+      ensureStringArray(relativePath, recordId, `${field}.terrainTags`, route.terrainTags, 1);
+      ensureStringArray(relativePath, recordId, `${field}.featureTags`, route.featureTags, 0);
+      ensureStringArray(relativePath, recordId, `${field}.availableModeIds`, route.availableModeIds, 1);
+      for (const modeId of route.availableModeIds) {
+        if (!modeIds.has(modeId)) {
+          throw new Error(`${relativePath} references unknown ${field}.availableModeIds value '${modeId}' on record ${recordId}`);
+        }
+      }
+      validateTimeArray(route.travelTimeEstimates, route.availableModeIds, field);
+      ensureString(relativePath, recordId, `${field}.notes`, route.notes);
+      if (route.fromSettlementId === route.toSettlementId) {
+        throw new Error(`${relativePath} route ${route.id} must not connect a settlement to itself on record ${recordId}`);
+      }
+    }
+
+    if (!Array.isArray(record.interPortShipRoutes) || record.interPortShipRoutes.length === 0) {
+      throw new Error(`${relativePath} has invalid interPortShipRoutes on record ${recordId}`);
+    }
+    const seenLaneIds = new Set();
+    for (const [index, lane] of record.interPortShipRoutes.entries()) {
+      const field = `interPortShipRoutes[${index}]`;
+      if (!isObject(lane)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, lane.id);
+      if (!/^lane\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(lane.id)) {
+        throw new Error(`${relativePath} has invalid ${field}.id '${lane.id}' on record ${recordId}`);
+      }
+      if (seenLaneIds.has(lane.id)) {
+        throw new Error(`${relativePath} has duplicate ${field}.id '${lane.id}' on record ${recordId}`);
+      }
+      seenLaneIds.add(lane.id);
+      ensureString(relativePath, recordId, `${field}.name`, lane.name);
+      ensureString(relativePath, recordId, `${field}.fromSettlementId`, lane.fromSettlementId);
+      ensureString(relativePath, recordId, `${field}.toSettlementId`, lane.toSettlementId);
+      ensureSetMembership(relativePath, recordId, `${field}.laneClass`, lane.laneClass, TRAVEL_LANE_CLASSES);
+      ensureNumber(relativePath, recordId, `${field}.distanceMiles`, lane.distanceMiles, 1);
+      ensureStringArray(relativePath, recordId, `${field}.seaRegionIds`, lane.seaRegionIds, 1);
+      validatePathGeometry(lane.pathPoints, lane.pathSegments, field);
+      ensureStringArray(relativePath, recordId, `${field}.terrainTags`, lane.terrainTags, 1);
+      ensureStringArray(relativePath, recordId, `${field}.featureTags`, lane.featureTags, 0);
+      ensureStringArray(relativePath, recordId, `${field}.availableModeIds`, lane.availableModeIds, 1);
+      for (const modeId of lane.availableModeIds) {
+        if (!modeIds.has(modeId)) {
+          throw new Error(`${relativePath} references unknown ${field}.availableModeIds value '${modeId}' on record ${recordId}`);
+        }
+      }
+      validateTimeArray(lane.travelTimeEstimates, lane.availableModeIds, field);
+      ensureString(relativePath, recordId, `${field}.notes`, lane.notes);
+      if (lane.fromSettlementId === lane.toSettlementId) {
+        throw new Error(`${relativePath} maritime lane ${lane.id} must not connect a settlement to itself on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateWorldMapFeatures(relativePath, records) {
+  const seenIds = new Set();
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^world_map_feature\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid world map feature id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate world map feature id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "mapId", record.mapId);
+    if (!/^world_map\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.mapId)) {
+      throw new Error(`${relativePath} has invalid mapId '${record.mapId}' on record ${recordId}`);
+    }
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureNumber(relativePath, recordId, "referenceImageWidthPx", record.referenceImageWidthPx, 1);
+    ensureNumber(relativePath, recordId, "referenceImageHeightPx", record.referenceImageHeightPx, 1);
+
+    const validateFeaturePoints = (feature, field, minPoints) => {
+      if (!Array.isArray(feature.points) || feature.points.length < minPoints) {
+        throw new Error(`${relativePath} has invalid ${field}.points on record ${recordId}`);
+      }
+      for (const [pointIndex, point] of feature.points.entries()) {
+        if (!isPixelPoint(point)) {
+          throw new Error(`${relativePath} has invalid ${field}.points[${pointIndex}] on record ${recordId}`);
+        }
+      }
+    };
+
+    const validateLineSet = (entries, field, minPoints = 2) => {
+      if (!Array.isArray(entries) || entries.length === 0) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      const seenFeatureIds = new Set();
+      for (const [index, feature] of entries.entries()) {
+        const featureField = `${field}[${index}]`;
+        if (!isObject(feature)) {
+          throw new Error(`${relativePath} has invalid ${featureField} on record ${recordId}`);
+        }
+        ensureString(relativePath, recordId, `${featureField}.id`, feature.id);
+        if (seenFeatureIds.has(feature.id)) {
+          throw new Error(`${relativePath} has duplicate ${featureField}.id '${feature.id}' on record ${recordId}`);
+        }
+        seenFeatureIds.add(feature.id);
+        ensureString(relativePath, recordId, `${featureField}.name`, feature.name);
+        ensureStringArray(relativePath, recordId, `${featureField}.regionIds`, feature.regionIds, 1);
+        ensureString(relativePath, recordId, `${featureField}.notes`, feature.notes);
+        validateFeaturePoints(feature, featureField, minPoints);
+      }
+    };
+
+    if (!Array.isArray(record.sourceLayers) || record.sourceLayers.length < 1) {
+      throw new Error(`${relativePath} has invalid sourceLayers on record ${recordId}`);
+    }
+    validateLineSet(record.regionFootprints, "regionFootprints", 3);
+    validateLineSet(record.coastlines, "coastlines", 2);
+    validateLineSet(record.riverFeatures, "riverFeatures", 2);
+    validateLineSet(record.mountainFeatures, "mountainFeatures", 2);
+    validateLineSet(record.climateZones, "climateZones", 3);
+    validateLineSet(record.biomeZones, "biomeZones", 3);
+
+    if (!Array.isArray(record.passFeatures) || record.passFeatures.length === 0) {
+      throw new Error(`${relativePath} has invalid passFeatures on record ${recordId}`);
+    }
+    for (const [index, feature] of record.passFeatures.entries()) {
+      const field = `passFeatures[${index}]`;
+      if (!isObject(feature)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, feature.id);
+      ensureString(relativePath, recordId, `${field}.name`, feature.name);
+      ensureStringArray(relativePath, recordId, `${field}.regionIds`, feature.regionIds, 1);
+      ensureString(relativePath, recordId, `${field}.notes`, feature.notes);
+      if (!isPixelPoint(feature.point)) {
+        throw new Error(`${relativePath} has invalid ${field}.point on record ${recordId}`);
+      }
+    }
+
+    if (!Array.isArray(record.crossingFeatures) || record.crossingFeatures.length === 0) {
+      throw new Error(`${relativePath} has invalid crossingFeatures on record ${recordId}`);
+    }
+    for (const [index, feature] of record.crossingFeatures.entries()) {
+      const field = `crossingFeatures[${index}]`;
+      if (!isObject(feature)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, feature.id);
+      ensureString(relativePath, recordId, `${field}.name`, feature.name);
+      ensureStringArray(relativePath, recordId, `${field}.regionIds`, feature.regionIds, 1);
+      ensureString(relativePath, recordId, `${field}.notes`, feature.notes);
+      if (!isPixelPoint(feature.point)) {
+        throw new Error(`${relativePath} has invalid ${field}.point on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, `${field}.crossingType`, feature.crossingType, new Set(["bridge", "ferry", "ford", "strait", "lock"]));
+    }
+  }
+}
 
 function validateRecords(relativePath, parsed, check) {
   if (!Array.isArray(parsed.records)) {
@@ -90,8 +3853,53 @@ function validateRecords(relativePath, parsed, check) {
     }
   }
 
+  if (check.validateWorkplaces) {
+    validateWorkplaces(relativePath, parsed.records);
+  }
+  if (check.validateInfrastructure) {
+    validateInfrastructure(relativePath, parsed.records);
+  }
   if (check.validateItemCatalog) {
     validateItemCatalog(relativePath, parsed.records);
+  }
+
+  if (check.validateFloraTemplate) {
+    validateFloraTemplate(relativePath, parsed.records);
+  }
+
+  if (check.validateFaunaTemplate) {
+    validateFaunaTemplate(relativePath, parsed.records);
+  }
+
+  if (check.validateClimateProfiles) {
+    validateClimateProfiles(relativePath, parsed.records);
+  }
+  if (check.validateWorldRegions) {
+    validateWorldRegions(relativePath, parsed.records);
+  }
+  if (check.validateWorldMaps) {
+    validateWorldMaps(relativePath, parsed.records);
+  }
+  if (check.validateRegionalEcologyProfiles) {
+    validateRegionalEcologyProfiles(relativePath, parsed.records);
+  }
+  if (check.validateGuilds) {
+    validateGuilds(relativePath, parsed.records);
+  }
+  if (check.validateQuestTemplates) {
+    validateQuestTemplates(relativePath, parsed.records);
+  }
+  if (check.validateMonsters) {
+    validateMonsters(relativePath, parsed.records);
+  }
+  if (check.validateSettlements) {
+    validateSettlements(relativePath, parsed.records);
+  }
+  if (check.validateTravelNetworks) {
+    validateTravelNetworks(relativePath, parsed.records);
+  }
+  if (check.validateWorldMapFeatures) {
+    validateWorldMapFeatures(relativePath, parsed.records);
   }
 }
 
@@ -138,6 +3946,129 @@ function validateItemCatalog(relativePath, records) {
   }
 }
 
+
+function validateMeatCutStandards(relativePath, parsed) {
+  if (!Array.isArray(parsed.records)) {
+    throw new Error(`${relativePath} has non-array records`);
+  }
+
+  if (!isObject(parsed.sausageUnitStandard)) {
+    throw new Error(`${relativePath} has invalid sausageUnitStandard`);
+  }
+
+  const sausageStandard = parsed.sausageUnitStandard;
+  ensureString(relativePath, "<sausage>", "sausageUnitStandard.baseUnitItemKey", sausageStandard.baseUnitItemKey);
+  if (!ITEM_KEY_PATTERN.test(sausageStandard.baseUnitItemKey)) {
+    throw new Error(`${relativePath} has invalid sausageUnitStandard.baseUnitItemKey '${sausageStandard.baseUnitItemKey}'`);
+  }
+
+  if (!Array.isArray(sausageStandard.packaging) || sausageStandard.packaging.length < 2) {
+    throw new Error(`${relativePath} has invalid sausageUnitStandard.packaging`);
+  }
+
+  for (const [index, pack] of sausageStandard.packaging.entries()) {
+    const packField = `sausageUnitStandard.packaging[${index}]`;
+    if (!isObject(pack)) {
+      throw new Error(`${relativePath} has invalid ${packField}`);
+    }
+
+    ensureString(relativePath, "<sausage>", `${packField}.itemKey`, pack.itemKey);
+    if (!ITEM_KEY_PATTERN.test(pack.itemKey)) {
+      throw new Error(`${relativePath} has invalid ${packField}.itemKey '${pack.itemKey}'`);
+    }
+
+    ensureInteger(relativePath, "<sausage>", `${packField}.links`, pack.links, 1);
+  }
+
+  const seenIds = new Set();
+  const seenSpecies = new Set();
+  for (const record of parsed.records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "speciesKey", record.speciesKey);
+    if (!SLUG_PATTERN.test(record.speciesKey)) {
+      throw new Error(`${relativePath} has invalid speciesKey '${record.speciesKey}' on record ${recordId}`);
+    }
+
+    if (seenSpecies.has(record.speciesKey)) {
+      throw new Error(`${relativePath} has duplicate speciesKey '${record.speciesKey}' on record ${recordId}`);
+    }
+    seenSpecies.add(record.speciesKey);
+
+    ensureSetMembership(relativePath, recordId, "category", record.category, MEAT_CUT_SPECIES_CATEGORIES);
+    ensureString(relativePath, recordId, "sourceItemKey", record.sourceItemKey);
+    if (!ITEM_KEY_PATTERN.test(record.sourceItemKey)) {
+      throw new Error(`${relativePath} has invalid sourceItemKey '${record.sourceItemKey}' on record ${recordId}`);
+    }
+
+    ensureNumber(relativePath, recordId, "usableMeatPerCarcass", record.usableMeatPerCarcass, 0.0001);
+    ensureString(relativePath, recordId, "yieldUnit", record.yieldUnit);
+    if (!SLUG_PATTERN.test(record.yieldUnit)) {
+      throw new Error(`${relativePath} has invalid yieldUnit '${record.yieldUnit}' on record ${recordId}`);
+    }
+
+    if (!Array.isArray(record.bulkCuts) || record.bulkCuts.length === 0) {
+      throw new Error(`${relativePath} has empty bulkCuts on record ${recordId}`);
+    }
+
+    if (!Array.isArray(record.retailCuts) || record.retailCuts.length === 0) {
+      throw new Error(`${relativePath} has empty retailCuts on record ${recordId}`);
+    }
+
+    if (!Array.isArray(record.byproducts) || record.byproducts.length === 0) {
+      throw new Error(`${relativePath} has empty byproducts on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "sausageEligible", record.sausageEligible);
+
+    for (const [index, cut] of record.bulkCuts.entries()) {
+      const cutField = `bulkCuts[${index}]`;
+      if (!isObject(cut)) {
+        throw new Error(`${relativePath} has invalid ${cutField} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${cutField}.itemKey`, cut.itemKey);
+      if (!ITEM_KEY_PATTERN.test(cut.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${cutField}.itemKey '${cut.itemKey}' on record ${recordId}`);
+      }
+      ensureInteger(relativePath, recordId, `${cutField}.portionCount`, cut.portionCount, 1);
+    }
+
+    for (const [index, cut] of record.retailCuts.entries()) {
+      const cutField = `retailCuts[${index}]`;
+      if (!isObject(cut)) {
+        throw new Error(`${relativePath} has invalid ${cutField} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${cutField}.itemKey`, cut.itemKey);
+      if (!ITEM_KEY_PATTERN.test(cut.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${cutField}.itemKey '${cut.itemKey}' on record ${recordId}`);
+      }
+      ensureInteger(relativePath, recordId, `${cutField}.portionCount`, cut.portionCount, 1);
+    }
+
+    for (const [index, byproduct] of record.byproducts.entries()) {
+      const byproductField = `byproducts[${index}]`;
+      if (!isObject(byproduct)) {
+        throw new Error(`${relativePath} has invalid ${byproductField} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${byproductField}.itemKey`, byproduct.itemKey);
+      if (!ITEM_KEY_PATTERN.test(byproduct.itemKey)) {
+        throw new Error(`${relativePath} has invalid ${byproductField}.itemKey '${byproduct.itemKey}' on record ${recordId}`);
+      }
+      ensureNumber(relativePath, recordId, `${byproductField}.quantity`, byproduct.quantity, 0.0001);
+      ensureString(relativePath, recordId, `${byproductField}.unit`, byproduct.unit);
+      if (!SLUG_PATTERN.test(byproduct.unit)) {
+        throw new Error(`${relativePath} has invalid ${byproductField}.unit '${byproduct.unit}' on record ${recordId}`);
+      }
+    }
+  }
+}
+
 async function validateFile(check) {
   const fullPath = path.join(ROOT, check.file);
   const raw = await readFile(fullPath, "utf8");
@@ -149,14 +4080,975 @@ async function validateFile(check) {
     }
   }
 
+  if (check.validateCalendar) {
+    validateCalendarDefinition(check.file, parsed);
+    return true;
+  }
+
   validateRecords(check.file, parsed, check);
+
+  if (check.validateHabitatBiomes) {
+    await validateHabitatBiomes(check.file, parsed.records);
+  }
+
+  if (check.validateProductionChains) {
+    await validateProductionChains(check.file, parsed.records);
+  }
+
+  if (check.validateMeatCutStandards) {
+    validateMeatCutStandards(check.file, parsed);
+  }
+
   return true;
+}
+
+async function validateFaunaProductsAgainstMarketKeys() {
+  const faunaPath = path.join(ROOT, "packages/content/base/world/fauna.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const faunaParsed = JSON.parse(await readFile(faunaPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (!Array.isArray(faunaParsed.records) || !Array.isArray(marketParsed.records)) {
+    throw new Error("content cross-check failed: fauna or market records is not an array");
+  }
+
+  const marketKeys = new Set();
+  for (const record of marketParsed.records) {
+    if (typeof record.itemKey === "string") {
+      marketKeys.add(record.itemKey);
+    }
+  }
+
+  for (const fauna of faunaParsed.records) {
+    const recordId = typeof fauna.id === "string" ? fauna.id : "<unknown>";
+    const output = fauna?.template?.output;
+    if (!isObject(output)) {
+      continue;
+    }
+
+    for (const fieldName of ["passiveOutput", "slaughterOutput"]) {
+      const section = output[fieldName];
+      if (!isObject(section) || !isObject(section.products)) {
+        continue;
+      }
+
+      for (const group of Object.keys(section.products)) {
+        const values = section.products[group];
+        if (!Array.isArray(values)) {
+          continue;
+        }
+
+        for (const key of values) {
+          if (!marketKeys.has(key)) {
+            throw new Error(
+              `packages/content/base/world/fauna.json has unknown economy itemKey '${key}' in template.output.${fieldName}.products.${group} on record ${recordId}`
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+
+async function validateMeatCutStandardsAgainstMarketKeys() {
+  const meatPath = path.join(ROOT, "packages/content/base/civilization/meat_cut_standards.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const meatParsed = JSON.parse(await readFile(meatPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (!Array.isArray(meatParsed.records) || !isObject(meatParsed.sausageUnitStandard) || !Array.isArray(marketParsed.records)) {
+    throw new Error("content cross-check failed: meat standards or market records are invalid");
+  }
+
+  const marketKeys = new Set();
+  for (const record of marketParsed.records) {
+    if (typeof record.itemKey === "string") {
+      marketKeys.add(record.itemKey);
+    }
+  }
+
+  const ensureMarketKey = (field, key) => {
+    if (!marketKeys.has(key)) {
+      throw new Error(`packages/content/base/civilization/meat_cut_standards.json ${field} key '${key}' missing in market item values`);
+    }
+  };
+
+  for (const record of meatParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureMarketKey(`sourceItemKey (${recordId})`, record.sourceItemKey);
+
+    for (const cut of record.bulkCuts ?? []) {
+      ensureMarketKey(`bulkCuts (${recordId})`, cut.itemKey);
+    }
+
+    for (const cut of record.retailCuts ?? []) {
+      ensureMarketKey(`retailCuts (${recordId})`, cut.itemKey);
+    }
+
+    for (const byproduct of record.byproducts ?? []) {
+      ensureMarketKey(`byproducts (${recordId})`, byproduct.itemKey);
+    }
+
+    if (!Array.isArray(record.bulkCuts) || record.bulkCuts.length === 0) {
+      throw new Error(`packages/content/base/civilization/meat_cut_standards.json record ${recordId} must include at least one bulk cut`);
+    }
+
+    if (!Array.isArray(record.retailCuts) || record.retailCuts.length === 0) {
+      throw new Error(`packages/content/base/civilization/meat_cut_standards.json record ${recordId} must include at least one retail cut`);
+    }
+  }
+
+  const sausage = meatParsed.sausageUnitStandard;
+  ensureMarketKey("sausageUnitStandard.baseUnitItemKey", sausage.baseUnitItemKey);
+
+  const packagingMap = new Map();
+  for (const pack of sausage.packaging ?? []) {
+    packagingMap.set(pack.itemKey, pack.links);
+    ensureMarketKey("sausageUnitStandard.packaging", pack.itemKey);
+  }
+
+  if (sausage.baseUnitItemKey !== "sausage_link") {
+    throw new Error("packages/content/base/civilization/meat_cut_standards.json sausage base unit must be sausage_link");
+  }
+
+  if (packagingMap.get("sausage_coil") !== 12 || packagingMap.get("sausage_bundle") !== 48) {
+    throw new Error("packages/content/base/civilization/meat_cut_standards.json sausage conversion must be 1:12:48 for link/coil/bundle");
+  }
+}
+
+async function validateInfrastructureAgainstWorkplaces() {
+  const infrastructurePath = path.join(ROOT, "packages/content/base/civilization/infrastructure.json");
+  const workplacePath = path.join(ROOT, "packages/content/base/civilization/workplaces.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const infrastructureParsed = JSON.parse(await readFile(infrastructurePath, "utf8"));
+  const workplaceParsed = JSON.parse(await readFile(workplacePath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (!Array.isArray(infrastructureParsed.records) || !Array.isArray(workplaceParsed.records) || !Array.isArray(marketParsed.records)) {
+    throw new Error("content cross-check failed: infrastructure, workplaces, or market records are invalid");
+  }
+
+  const marketKeys = new Set();
+  for (const record of marketParsed.records) {
+    if (typeof record.itemKey === "string") {
+      marketKeys.add(record.itemKey);
+    }
+  }
+
+  let irrigationMaxTier = 0;
+  let irrigationRecordCount = 0;
+
+  for (const record of infrastructureParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+
+    for (const tierDef of record.progressionProfile?.tiers ?? []) {
+      for (const material of tierDef.materialRequirements ?? []) {
+        if (!marketKeys.has(material.itemKey)) {
+          throw new Error(
+            `packages/content/base/civilization/infrastructure.json materialRequirements key '${material.itemKey}' missing in market item values on record ${recordId}`
+          );
+        }
+      }
+    }
+
+    if (record.infrastructureType === "irrigation") {
+      irrigationRecordCount += 1;
+      irrigationMaxTier = Math.max(irrigationMaxTier, record.progressionProfile?.maxTier ?? 0);
+      const hasIrrigatedPlotFlag = (record.serviceOutputs ?? []).some((output) => output.itemKey === "irrigated_plot" && output.unit === "flag");
+      if (!hasIrrigatedPlotFlag) {
+        throw new Error(`packages/content/base/civilization/infrastructure.json irrigation record ${recordId} must expose irrigated_plot as a flag output`);
+      }
+    }
+  }
+
+  if (irrigationRecordCount < 1) {
+    throw new Error("packages/content/base/civilization/infrastructure.json must include at least one irrigation infrastructure record");
+  }
+
+  for (const workplace of workplaceParsed.records) {
+    const recordId = workplace.id ?? "<unknown>";
+
+    if ("irrigationProfile" in workplace) {
+      throw new Error(`packages/content/base/civilization/workplaces.json irrigationProfile remains on workplace record ${recordId}`);
+    }
+
+    if (workplace?.tierProfile?.trackId === "track.irrigation") {
+      throw new Error(`packages/content/base/civilization/workplaces.json track.irrigation remains on workplace record ${recordId}`);
+    }
+
+    for (const output of workplace?.ioProfile?.outputs ?? []) {
+      if (output.itemKey === "irrigated_plot") {
+        throw new Error(`packages/content/base/civilization/workplaces.json irrigated_plot output remains on workplace record ${recordId}`);
+      }
+    }
+
+    if (workplace?.plotProfile?.irrigationPolicy) {
+      const minimumTier = workplace.plotProfile.irrigationPolicy.minimumIrrigationTier ?? 0;
+      if (minimumTier > irrigationMaxTier) {
+        throw new Error(
+          `packages/content/base/civilization/workplaces.json plotProfile.irrigationPolicy.minimumIrrigationTier ${minimumTier} exceeds available irrigation infrastructure max tier ${irrigationMaxTier} on record ${recordId}`
+        );
+      }
+    }
+  }
+}
+
+async function validateWorldMapsAgainstRegions() {
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
+
+  const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
+  const worldMapParsed = JSON.parse(await readFile(worldMapPath, "utf8"));
+
+  if (!Array.isArray(regionParsed.records) || !Array.isArray(worldMapParsed.records)) {
+    throw new Error("content cross-check failed: region or world map records are invalid");
+  }
+
+  const regionsById = new Map();
+  for (const record of regionParsed.records) {
+    if (typeof record.id === "string") {
+      regionsById.set(record.id, record);
+    }
+  }
+
+  const worldMapsById = new Map();
+  for (const record of worldMapParsed.records) {
+    if (typeof record.id === "string") {
+      worldMapsById.set(record.id, record);
+    }
+  }
+
+  for (const region of regionParsed.records) {
+    const recordId = region.id ?? "<unknown>";
+
+    for (const mapId of region.mapIds ?? []) {
+      if (!worldMapsById.has(mapId)) {
+        throw new Error(`packages/content/base/world/regions.json mapIds value '${mapId}' missing in world_maps.json on record ${recordId}`);
+      }
+    }
+
+    if (region.regionType === "subregion") {
+      if (typeof region.parentRegionId !== "string") {
+        throw new Error(`packages/content/base/world/regions.json subregion record ${recordId} must define parentRegionId`);
+      }
+      const parent = regionsById.get(region.parentRegionId);
+      if (!parent) {
+        throw new Error(`packages/content/base/world/regions.json parentRegionId '${region.parentRegionId}' missing on record ${recordId}`);
+      }
+      if (parent.regionType !== "continent") {
+        throw new Error(`packages/content/base/world/regions.json subregion parent '${region.parentRegionId}' must be a continent on record ${recordId}`);
+      }
+    }
+    else if ("parentRegionId" in region) {
+      throw new Error(`packages/content/base/world/regions.json only subregion records may define parentRegionId on record ${recordId}`);
+    }
+  }
+
+  for (const record of worldMapParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+
+    const validateTypedRegion = (regionId, expectedType, field) => {
+      const region = regionsById.get(regionId);
+      if (!region) {
+        throw new Error(`packages/content/base/world/world_maps.json ${field} regionId '${regionId}' missing on record ${recordId}`);
+      }
+      if (region.regionType !== expectedType) {
+        throw new Error(`packages/content/base/world/world_maps.json ${field} regionId '${regionId}' must be a ${expectedType} on record ${recordId}`);
+      }
+    };
+
+    for (const regionId of record.continentRegionIds ?? []) {
+      validateTypedRegion(regionId, "continent", "continentRegionIds");
+    }
+    for (const regionId of record.islandSystemRegionIds ?? []) {
+      validateTypedRegion(regionId, "island_system", "islandSystemRegionIds");
+    }
+    for (const regionId of record.oceanRegionIds ?? []) {
+      validateTypedRegion(regionId, "ocean", "oceanRegionIds");
+    }
+
+    let populationTotal = 0;
+    for (const estimate of record.populationEstimates ?? []) {
+      if (!regionsById.has(estimate.regionId)) {
+        throw new Error(`packages/content/base/world/world_maps.json populationEstimates regionId '${estimate.regionId}' missing on record ${recordId}`);
+      }
+      populationTotal += estimate.estimateMillions;
+    }
+    if (typeof record.totalPopulationMillions === "number" && Math.abs(populationTotal - record.totalPopulationMillions) > 0.5) {
+      throw new Error(`packages/content/base/world/world_maps.json totalPopulationMillions does not match summed populationEstimates on record ${recordId}`);
+    }
+
+    for (const route of record.majorTradeRoutes ?? []) {
+      for (const regionId of route.regionIds ?? []) {
+        if (!regionsById.has(regionId)) {
+          throw new Error(`packages/content/base/world/world_maps.json majorTradeRoutes regionId '${regionId}' missing on record ${recordId}`);
+        }
+      }
+    }
+
+    for (const zone of record.conflictZones ?? []) {
+      for (const regionId of zone.regionIds ?? []) {
+        if (!regionsById.has(regionId)) {
+          throw new Error(`packages/content/base/world/world_maps.json conflictZones regionId '${regionId}' missing on record ${recordId}`);
+        }
+      }
+    }
+  }
+}
+
+async function validateWorldMapFeaturesAgainstWorldData() {
+  const featurePath = path.join(ROOT, "packages/content/base/world/world_map_features.json");
+  const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const climatePath = path.join(ROOT, "packages/content/base/world/climate_profiles.json");
+  const biomePath = path.join(ROOT, "packages/content/base/world/biomes.json");
+
+  const featureParsed = JSON.parse(await readFile(featurePath, "utf8"));
+  const worldMapParsed = JSON.parse(await readFile(worldMapPath, "utf8"));
+  const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
+  const climateParsed = JSON.parse(await readFile(climatePath, "utf8"));
+  const biomeParsed = JSON.parse(await readFile(biomePath, "utf8"));
+
+  if (
+    !Array.isArray(featureParsed.records) ||
+    !Array.isArray(worldMapParsed.records) ||
+    !Array.isArray(regionParsed.records) ||
+    !Array.isArray(climateParsed.records) ||
+    !Array.isArray(biomeParsed.records)
+  ) {
+    throw new Error("content cross-check failed: world map feature dependencies are invalid");
+  }
+
+  const worldMapsById = new Map(worldMapParsed.records.map((record) => [record.id, record]));
+  const regionsById = new Map(regionParsed.records.map((record) => [record.id, record]));
+  const climateIds = new Set(climateParsed.records.map((record) => record.id));
+  const biomeIds = new Set(biomeParsed.records.map((record) => record.id));
+
+  for (const record of featureParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    const worldMap = worldMapsById.get(record.mapId);
+    if (!worldMap) {
+      throw new Error(`packages/content/base/world/world_map_features.json mapId '${record.mapId}' missing on record ${recordId}`);
+    }
+    if (
+      record.referenceImageWidthPx !== worldMap.scaleProfile?.referenceImageWidthPx ||
+      record.referenceImageHeightPx !== worldMap.scaleProfile?.referenceImageHeightPx
+    ) {
+      throw new Error(`packages/content/base/world/world_map_features.json image dimensions must match world_maps.json on record ${recordId}`);
+    }
+
+    const validateFeature = (feature, field) => {
+      for (const regionId of feature.regionIds ?? []) {
+        if (!regionsById.has(regionId)) {
+          throw new Error(`packages/content/base/world/world_map_features.json ${field} regionId '${regionId}' missing on record ${recordId}`);
+        }
+      }
+      if ("points" in feature) {
+        for (const point of feature.points ?? []) {
+          if (point.x > record.referenceImageWidthPx || point.y > record.referenceImageHeightPx) {
+            throw new Error(`packages/content/base/world/world_map_features.json ${field} point lies outside image bounds on record ${recordId}`);
+          }
+        }
+      }
+      if ("point" in feature) {
+        if (feature.point.x > record.referenceImageWidthPx || feature.point.y > record.referenceImageHeightPx) {
+          throw new Error(`packages/content/base/world/world_map_features.json ${field} point lies outside image bounds on record ${recordId}`);
+        }
+      }
+    };
+
+    const climateZoneIds = new Set();
+    for (const [index, zone] of (record.climateZones ?? []).entries()) {
+      validateFeature(zone, `climateZones[${index}]`);
+      if (!climateIds.has(zone.climateProfileId)) {
+        throw new Error(`packages/content/base/world/world_map_features.json climateProfileId '${zone.climateProfileId}' missing on record ${recordId}`);
+      }
+      if (climateZoneIds.has(zone.id)) {
+        throw new Error(`packages/content/base/world/world_map_features.json duplicate climate zone id '${zone.id}' on record ${recordId}`);
+      }
+      climateZoneIds.add(zone.id);
+    }
+
+    const biomeZoneIds = new Set();
+    for (const [index, zone] of (record.biomeZones ?? []).entries()) {
+      validateFeature(zone, `biomeZones[${index}]`);
+      if (!biomeIds.has(zone.biomeId)) {
+        throw new Error(`packages/content/base/world/world_map_features.json biomeId '${zone.biomeId}' missing on record ${recordId}`);
+      }
+      if (biomeZoneIds.has(zone.id)) {
+        throw new Error(`packages/content/base/world/world_map_features.json duplicate biome zone id '${zone.id}' on record ${recordId}`);
+      }
+      biomeZoneIds.add(zone.id);
+    }
+
+    for (const [fieldName, features] of Object.entries({
+      regionFootprints: record.regionFootprints ?? [],
+      coastlines: record.coastlines ?? [],
+      riverFeatures: record.riverFeatures ?? [],
+      mountainFeatures: record.mountainFeatures ?? [],
+      passFeatures: record.passFeatures ?? [],
+      crossingFeatures: record.crossingFeatures ?? []
+    })) {
+      for (const [index, feature] of features.entries()) {
+        validateFeature(feature, `${fieldName}[${index}]`);
+      }
+    }
+  }
+}
+
+async function validateRegionalEcologyAgainstWorldData() {
+  const ecologyPath = path.join(ROOT, "packages/content/base/world/regional_ecology_profiles.json");
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const climatePath = path.join(ROOT, "packages/content/base/world/climate_profiles.json");
+  const biomePath = path.join(ROOT, "packages/content/base/world/biomes.json");
+  const floraPath = path.join(ROOT, "packages/content/base/world/flora.json");
+  const faunaPath = path.join(ROOT, "packages/content/base/world/fauna.json");
+  const featurePath = path.join(ROOT, "packages/content/base/world/world_map_features.json");
+
+  const ecologyParsed = JSON.parse(await readFile(ecologyPath, "utf8"));
+  const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
+  const climateParsed = JSON.parse(await readFile(climatePath, "utf8"));
+  const biomeParsed = JSON.parse(await readFile(biomePath, "utf8"));
+  const floraParsed = JSON.parse(await readFile(floraPath, "utf8"));
+  const faunaParsed = JSON.parse(await readFile(faunaPath, "utf8"));
+  const featureParsed = JSON.parse(await readFile(featurePath, "utf8"));
+
+  if (
+    !Array.isArray(ecologyParsed.records) ||
+    !Array.isArray(regionParsed.records) ||
+    !Array.isArray(climateParsed.records) ||
+    !Array.isArray(biomeParsed.records) ||
+    !Array.isArray(floraParsed.records) ||
+    !Array.isArray(faunaParsed.records) ||
+    !Array.isArray(featureParsed.records)
+  ) {
+    throw new Error("content cross-check failed: regional ecology dependencies are invalid");
+  }
+
+  const regionsById = new Map();
+  for (const record of regionParsed.records) {
+    if (typeof record.id === "string") {
+      regionsById.set(record.id, record);
+    }
+  }
+
+  const climateIds = new Set();
+  for (const record of climateParsed.records) {
+    if (typeof record.id === "string") {
+      climateIds.add(record.id);
+    }
+  }
+
+  const biomeIds = new Set();
+  for (const record of biomeParsed.records) {
+    if (typeof record.id === "string") {
+      biomeIds.add(record.id);
+    }
+  }
+
+  const floraIds = new Set();
+  for (const record of floraParsed.records) {
+    if (typeof record.id === "string") {
+      floraIds.add(record.id);
+    }
+  }
+
+  const faunaIds = new Set();
+  for (const record of faunaParsed.records) {
+    if (typeof record.id === "string") {
+      faunaIds.add(record.id);
+    }
+  }
+
+  const climateZonesById = new Map();
+  const biomeZonesById = new Map();
+  for (const featureRecord of featureParsed.records) {
+    for (const zone of featureRecord.climateZones ?? []) {
+      if (typeof zone.id === "string") {
+        climateZonesById.set(zone.id, zone);
+      }
+    }
+    for (const zone of featureRecord.biomeZones ?? []) {
+      if (typeof zone.id === "string") {
+        biomeZonesById.set(zone.id, zone);
+      }
+    }
+  }
+
+  for (const record of ecologyParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    const region = regionsById.get(record.regionId);
+    if (!region) {
+      throw new Error(`packages/content/base/world/regional_ecology_profiles.json regionId '${record.regionId}' missing on record ${recordId}`);
+    }
+    if (!["continent", "island_system"].includes(region.regionType)) {
+      throw new Error(`packages/content/base/world/regional_ecology_profiles.json regionId '${record.regionId}' must target a continent or island_system on record ${recordId}`);
+    }
+
+    if (!climateIds.has(record.primaryClimateProfileId)) {
+      throw new Error(`packages/content/base/world/regional_ecology_profiles.json primaryClimateProfileId '${record.primaryClimateProfileId}' missing on record ${recordId}`);
+    }
+    for (const climateId of record.secondaryClimateProfileIds ?? []) {
+      if (!climateIds.has(climateId)) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json secondaryClimateProfileId '${climateId}' missing on record ${recordId}`);
+      }
+    }
+    for (const zoneId of record.mapClimateZoneIds ?? []) {
+      const zone = climateZonesById.get(zoneId);
+      if (!zone) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json mapClimateZoneId '${zoneId}' missing on record ${recordId}`);
+      }
+      if (!(zone.regionIds ?? []).includes(record.regionId)) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json mapClimateZoneId '${zoneId}' must include regionId '${record.regionId}' on record ${recordId}`);
+      }
+    }
+
+    for (const biomeId of [...(record.dominantBiomeIds ?? []), ...(record.supportingBiomeIds ?? [])]) {
+      if (!biomeIds.has(biomeId)) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json biome id '${biomeId}' missing on record ${recordId}`);
+      }
+    }
+    for (const zoneId of record.mapBiomeZoneIds ?? []) {
+      const zone = biomeZonesById.get(zoneId);
+      if (!zone) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json mapBiomeZoneId '${zoneId}' missing on record ${recordId}`);
+      }
+      if (!(zone.regionIds ?? []).includes(record.regionId)) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json mapBiomeZoneId '${zoneId}' must include regionId '${record.regionId}' on record ${recordId}`);
+      }
+    }
+    for (const floraId of record.nativeFloraIds ?? []) {
+      if (!floraIds.has(floraId)) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json flora id '${floraId}' missing on record ${recordId}`);
+      }
+    }
+    for (const faunaId of record.nativeFaunaIds ?? []) {
+      if (!faunaIds.has(faunaId)) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json fauna id '${faunaId}' missing on record ${recordId}`);
+      }
+    }
+
+    for (const partnerRegionId of record.likelyTradePartnerRegionIds ?? []) {
+      const partnerRegion = regionsById.get(partnerRegionId);
+      if (!partnerRegion) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json likelyTradePartnerRegionId '${partnerRegionId}' missing on record ${recordId}`);
+      }
+      if (!["continent", "island_system"].includes(partnerRegion.regionType)) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json likelyTradePartnerRegionId '${partnerRegionId}' must target a continent or island_system on record ${recordId}`);
+      }
+      if (partnerRegionId === record.regionId) {
+        throw new Error(`packages/content/base/world/regional_ecology_profiles.json record ${recordId} must not list itself as a trade partner`);
+      }
+    }
+  }
+}
+
+async function validateSettlementsAgainstRegions() {
+  const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const guildPath = path.join(ROOT, "packages/content/base/civilization/guilds.json");
+  const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
+  const featurePath = path.join(ROOT, "packages/content/base/world/world_map_features.json");
+
+  const settlementParsed = JSON.parse(await readFile(settlementPath, "utf8"));
+  const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
+  const guildParsed = JSON.parse(await readFile(guildPath, "utf8"));
+  const worldMapParsed = JSON.parse(await readFile(worldMapPath, "utf8"));
+  const featureParsed = JSON.parse(await readFile(featurePath, "utf8"));
+
+  if (
+    !Array.isArray(settlementParsed.records) ||
+    !Array.isArray(regionParsed.records) ||
+    !Array.isArray(guildParsed.records) ||
+    !Array.isArray(worldMapParsed.records) ||
+    !Array.isArray(featureParsed.records)
+  ) {
+    throw new Error("content cross-check failed: settlement, region, guild, or map feature records are invalid");
+  }
+
+  const regionsById = new Map();
+  for (const record of regionParsed.records) {
+    if (typeof record.id === "string") {
+      regionsById.set(record.id, record);
+    }
+  }
+
+  const settlementsById = new Map();
+  for (const record of settlementParsed.records) {
+    if (typeof record.id === "string") {
+      settlementsById.set(record.id, record);
+    }
+  }
+
+  const guildsBySlug = new Map();
+  for (const record of guildParsed.records) {
+    if (typeof record.slug === "string") {
+      guildsBySlug.set(record.slug, record);
+    }
+  }
+
+  const worldMapsById = new Map();
+  for (const record of worldMapParsed.records) {
+    if (typeof record.id === "string") {
+      worldMapsById.set(record.id, record);
+    }
+  }
+
+  const featureRecordsByMapId = new Map();
+  for (const record of featureParsed.records) {
+    if (typeof record.mapId === "string") {
+      featureRecordsByMapId.set(record.mapId, record);
+    }
+  }
+
+  for (const record of settlementParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    const macroRegion = regionsById.get(record.macroRegionId);
+    const localRegion = regionsById.get(record.regionId);
+
+    if (!macroRegion) {
+      throw new Error(`packages/content/base/world/settlements.json macroRegionId '${record.macroRegionId}' missing on record ${recordId}`);
+    }
+    if (!["continent", "island_system"].includes(macroRegion.regionType)) {
+      throw new Error(`packages/content/base/world/settlements.json macroRegionId '${record.macroRegionId}' must target a continent or island_system on record ${recordId}`);
+    }
+    if (!localRegion) {
+      throw new Error(`packages/content/base/world/settlements.json regionId '${record.regionId}' missing on record ${recordId}`);
+    }
+
+    const regionBelongsToMacro =
+      localRegion.id === macroRegion.id ||
+      (localRegion.regionType === "subregion" && localRegion.parentRegionId === macroRegion.id);
+    if (!regionBelongsToMacro) {
+      throw new Error(`packages/content/base/world/settlements.json regionId '${record.regionId}' does not belong to macroRegionId '${record.macroRegionId}' on record ${recordId}`);
+    }
+
+    if (record.parentSettlementId) {
+      const parent = settlementsById.get(record.parentSettlementId);
+      if (!parent) {
+        throw new Error(`packages/content/base/world/settlements.json parentSettlementId '${record.parentSettlementId}' missing on record ${recordId}`);
+      }
+      if (parent.id === record.id) {
+        throw new Error(`packages/content/base/world/settlements.json record ${recordId} must not depend on itself`);
+      }
+      if (parent.parentSettlementId) {
+        throw new Error(`packages/content/base/world/settlements.json parentSettlementId '${record.parentSettlementId}' must target a primary settlement on record ${recordId}`);
+      }
+      if (parent.regionId !== record.regionId || parent.macroRegionId !== record.macroRegionId) {
+        throw new Error(`packages/content/base/world/settlements.json parentSettlementId '${record.parentSettlementId}' must share region and macro region on record ${recordId}`);
+      }
+      if ((parent.populationTotal ?? 0) <= (record.populationTotal ?? 0)) {
+        throw new Error(`packages/content/base/world/settlements.json parentSettlementId '${record.parentSettlementId}' must be larger than dependent settlement on record ${recordId}`);
+      }
+    }
+
+    for (const guild of record.guildPresence ?? []) {
+      if (!guildsBySlug.has(guild.guildType)) {
+        throw new Error(`packages/content/base/world/settlements.json guildPresence guildType '${guild.guildType}' missing guild definition on record ${recordId}`);
+      }
+    }
+
+    for (const flow of record.domesticTradeFlows ?? []) {
+      const partner = settlementsById.get(flow.partnerSettlementId);
+      if (!partner) {
+        throw new Error(`packages/content/base/world/settlements.json domesticTradeFlows partnerSettlementId '${flow.partnerSettlementId}' missing on record ${recordId}`);
+      }
+      if (partner.id === record.id) {
+        throw new Error(`packages/content/base/world/settlements.json record ${recordId} must not trade with itself`);
+      }
+      if (partner.macroRegionId !== record.macroRegionId) {
+        throw new Error(
+          `packages/content/base/world/settlements.json domesticTradeFlows partnerSettlementId '${flow.partnerSettlementId}' must share macroRegionId '${record.macroRegionId}' on record ${recordId}`
+        );
+      }
+    }
+
+    const worldMap = worldMapsById.get(record.mapLocation?.mapId);
+    const featureRecord = featureRecordsByMapId.get(record.mapLocation?.mapId);
+    if (!worldMap || !featureRecord) {
+      throw new Error(`packages/content/base/world/settlements.json mapLocation.mapId '${record.mapLocation?.mapId}' missing world map or feature record on record ${recordId}`);
+    }
+    if (
+      record.mapLocation.pixelX > worldMap.scaleProfile.referenceImageWidthPx ||
+      record.mapLocation.pixelY > worldMap.scaleProfile.referenceImageHeightPx
+    ) {
+      throw new Error(`packages/content/base/world/settlements.json mapLocation lies outside world map bounds on record ${recordId}`);
+    }
+
+    const regionFootprints = (featureRecord.regionFootprints ?? []).filter((feature) => (feature.regionIds ?? []).includes(record.regionId));
+    if (regionFootprints.length === 0) {
+      throw new Error(`packages/content/base/world/settlements.json regionId '${record.regionId}' has no region footprint on record ${recordId}`);
+    }
+    const mapPoint = { x: record.mapLocation.pixelX, y: record.mapLocation.pixelY };
+    if (!regionFootprints.some((feature) => pointInPolygon(mapPoint, feature.points))) {
+      throw new Error(`packages/content/base/world/settlements.json mapLocation does not fall inside region footprint '${record.regionId}' on record ${recordId}`);
+    }
+
+    const climateZone = (featureRecord.climateZones ?? []).find((zone) => zone.id === record.mapLocation.climateZoneId);
+    if (!climateZone) {
+      throw new Error(`packages/content/base/world/settlements.json climateZoneId '${record.mapLocation.climateZoneId}' missing on record ${recordId}`);
+    }
+    if (!pointInPolygon(mapPoint, climateZone.points)) {
+      throw new Error(`packages/content/base/world/settlements.json mapLocation must fall inside climateZoneId '${record.mapLocation.climateZoneId}' on record ${recordId}`);
+    }
+
+    const biomeZone = (featureRecord.biomeZones ?? []).find((zone) => zone.id === record.mapLocation.biomeZoneId);
+    if (!biomeZone) {
+      throw new Error(`packages/content/base/world/settlements.json biomeZoneId '${record.mapLocation.biomeZoneId}' missing on record ${recordId}`);
+    }
+    if (!pointInPolygon(mapPoint, biomeZone.points)) {
+      throw new Error(`packages/content/base/world/settlements.json mapLocation must fall inside biomeZoneId '${record.mapLocation.biomeZoneId}' on record ${recordId}`);
+    }
+  }
+}
+
+async function validateQuestTemplatesAgainstWorldData() {
+  const templatePath = path.join(ROOT, "packages/content/base/civilization/quest_templates.json");
+  const guildPath = path.join(ROOT, "packages/content/base/civilization/guilds.json");
+  const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const templateParsed = JSON.parse(await readFile(templatePath, "utf8"));
+  const guildParsed = JSON.parse(await readFile(guildPath, "utf8"));
+  const monsterParsed = JSON.parse(await readFile(monsterPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (
+    !Array.isArray(templateParsed.records) ||
+    !Array.isArray(guildParsed.records) ||
+    !Array.isArray(monsterParsed.records) ||
+    !Array.isArray(marketParsed.records)
+  ) {
+    throw new Error("content cross-check failed: quest template dependencies are invalid");
+  }
+
+  const guildSlugs = new Set(guildParsed.records.map((record) => record.slug).filter((value) => typeof value === "string"));
+  const monsterIds = new Set(monsterParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const marketKeys = new Set(marketParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+
+  for (const record of templateParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    for (const guildType of record.issuingGuildTypes ?? []) {
+      if (!guildSlugs.has(guildType)) {
+        throw new Error(`packages/content/base/civilization/quest_templates.json issuingGuildTypes '${guildType}' missing guild definition on record ${recordId}`);
+      }
+    }
+    for (const monsterId of record.monsterIds ?? []) {
+      if (!monsterIds.has(monsterId)) {
+        throw new Error(`packages/content/base/civilization/quest_templates.json monsterIds '${monsterId}' missing monster definition on record ${recordId}`);
+      }
+    }
+    for (const itemKey of [...(record.targetItemKeys ?? []), ...(record.rewardProfile?.bonusItemKeys ?? [])]) {
+      if (!marketKeys.has(itemKey)) {
+        throw new Error(`packages/content/base/civilization/quest_templates.json itemKey '${itemKey}' missing market item value on record ${recordId}`);
+      }
+    }
+  }
+}
+
+async function validateMonstersAgainstMarketValues() {
+  const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const monsterParsed = JSON.parse(await readFile(monsterPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (!Array.isArray(monsterParsed.records) || !Array.isArray(marketParsed.records)) {
+    throw new Error("content cross-check failed: monster or market records are invalid");
+  }
+
+  const marketKeys = new Set(marketParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+
+  for (const record of monsterParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    for (const drop of record.drops ?? []) {
+      if (!marketKeys.has(drop.itemKey)) {
+        throw new Error(`packages/content/base/world/monsters.json drop itemKey '${drop.itemKey}' missing market item value on record ${recordId}`);
+      }
+    }
+    for (const loot of record.loot ?? []) {
+      if (!marketKeys.has(loot.itemKey)) {
+        throw new Error(`packages/content/base/world/monsters.json loot itemKey '${loot.itemKey}' missing market item value on record ${recordId}`);
+      }
+    }
+  }
+}
+
+async function validateTravelNetworksAgainstWorldData() {
+  const travelPath = path.join(ROOT, "packages/content/base/world/travel_networks.json");
+  const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
+  const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const featurePath = path.join(ROOT, "packages/content/base/world/world_map_features.json");
+
+  const travelParsed = JSON.parse(await readFile(travelPath, "utf8"));
+  const worldMapParsed = JSON.parse(await readFile(worldMapPath, "utf8"));
+  const settlementParsed = JSON.parse(await readFile(settlementPath, "utf8"));
+  const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
+  const featureParsed = JSON.parse(await readFile(featurePath, "utf8"));
+
+  if (
+    !Array.isArray(travelParsed.records) ||
+    !Array.isArray(worldMapParsed.records) ||
+    !Array.isArray(settlementParsed.records) ||
+    !Array.isArray(regionParsed.records) ||
+    !Array.isArray(featureParsed.records)
+  ) {
+    throw new Error("content cross-check failed: travel network dependencies are invalid");
+  }
+
+  const worldMapsById = new Map();
+  for (const record of worldMapParsed.records) {
+    if (typeof record.id === "string") {
+      worldMapsById.set(record.id, record);
+    }
+  }
+
+  const settlementsById = new Map();
+  for (const record of settlementParsed.records) {
+    if (typeof record.id === "string") {
+      settlementsById.set(record.id, record);
+    }
+  }
+
+  const regionsById = new Map();
+  for (const record of regionParsed.records) {
+    if (typeof record.id === "string") {
+      regionsById.set(record.id, record);
+    }
+  }
+
+  const featureRecordsByMapId = new Map();
+  for (const record of featureParsed.records) {
+    if (typeof record.mapId === "string") {
+      featureRecordsByMapId.set(record.mapId, record);
+    }
+  }
+
+  for (const record of travelParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    const worldMap = worldMapsById.get(record.mapId);
+    const featureRecord = featureRecordsByMapId.get(record.mapId);
+    if (!worldMap) {
+      throw new Error(`packages/content/base/world/travel_networks.json mapId '${record.mapId}' missing on record ${recordId}`);
+    }
+    if (!featureRecord) {
+      throw new Error(`packages/content/base/world/travel_networks.json mapId '${record.mapId}' missing world_map_features entry on record ${recordId}`);
+    }
+
+    const terrainRuleTags = new Set((record.terrainVarianceRules ?? []).map((entry) => entry.tag).filter((value) => typeof value === "string"));
+    const featureRuleTags = new Set((record.featureVarianceRules ?? []).map((entry) => entry.tag).filter((value) => typeof value === "string"));
+    const milesPerPixel = worldMap.scaleProfile?.milesPerPixel ?? 0;
+    const validatePath = (pathPoints, distanceMiles, fieldPrefix, fromSettlement, toSettlement) => {
+      if (!Array.isArray(pathPoints) || pathPoints.length < 2) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.pathPoints missing on record ${recordId}`);
+      }
+      const firstPoint = pathPoints[0];
+      const lastPoint = pathPoints[pathPoints.length - 1];
+      if (firstPoint.x !== fromSettlement.mapLocation?.pixelX || firstPoint.y !== fromSettlement.mapLocation?.pixelY) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.pathPoints[0] must match fromSettlementId coordinates on record ${recordId}`);
+      }
+      if (lastPoint.x !== toSettlement.mapLocation?.pixelX || lastPoint.y !== toSettlement.mapLocation?.pixelY) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.pathPoints[last] must match toSettlementId coordinates on record ${recordId}`);
+      }
+      const derivedMiles = polylineLengthPixels(pathPoints) * milesPerPixel;
+      if (Math.abs(derivedMiles - distanceMiles) > 10) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.distanceMiles must match path geometry on record ${recordId}`);
+      }
+    };
+
+    for (const route of record.routeRecords ?? []) {
+      const fromSettlement = settlementsById.get(route.fromSettlementId);
+      const toSettlement = settlementsById.get(route.toSettlementId);
+      if (!fromSettlement) {
+        throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} missing fromSettlementId '${route.fromSettlementId}' on record ${recordId}`);
+      }
+      if (!toSettlement) {
+        throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} missing toSettlementId '${route.toSettlementId}' on record ${recordId}`);
+      }
+      validatePath(route.pathPoints, route.distanceMiles, `route ${route.id}`, fromSettlement, toSettlement);
+      for (const tag of route.terrainTags ?? []) {
+        if (!terrainRuleTags.has(tag)) {
+          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} terrainTag '${tag}' missing terrain variance rule on record ${recordId}`);
+        }
+      }
+      for (const tag of route.featureTags ?? []) {
+        if (!featureRuleTags.has(tag)) {
+          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} featureTag '${tag}' missing feature variance rule on record ${recordId}`);
+        }
+      }
+      for (const segment of route.pathSegments ?? []) {
+        if (!terrainRuleTags.has(segment.terrainTag)) {
+          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} pathSegments terrainTag '${segment.terrainTag}' missing terrain variance rule on record ${recordId}`);
+        }
+        for (const featureTag of segment.featureTags ?? []) {
+          if (!featureRuleTags.has(featureTag)) {
+            throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} pathSegments featureTag '${featureTag}' missing feature variance rule on record ${recordId}`);
+          }
+        }
+      }
+    }
+
+    for (const lane of record.interPortShipRoutes ?? []) {
+      const fromSettlement = settlementsById.get(lane.fromSettlementId);
+      const toSettlement = settlementsById.get(lane.toSettlementId);
+      if (!fromSettlement) {
+        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} missing fromSettlementId '${lane.fromSettlementId}' on record ${recordId}`);
+      }
+      if (!toSettlement) {
+        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} missing toSettlementId '${lane.toSettlementId}' on record ${recordId}`);
+      }
+      if ((fromSettlement.infrastructureProfile?.harborTier ?? 0) < 1) {
+        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} fromSettlementId '${lane.fromSettlementId}' must have harbor infrastructure on record ${recordId}`);
+      }
+      if ((toSettlement.infrastructureProfile?.harborTier ?? 0) < 1) {
+        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} toSettlementId '${lane.toSettlementId}' must have harbor infrastructure on record ${recordId}`);
+      }
+      validatePath(lane.pathPoints, lane.distanceMiles, `lane ${lane.id}`, fromSettlement, toSettlement);
+
+      for (const regionId of lane.seaRegionIds ?? []) {
+        const region = regionsById.get(regionId);
+        if (!region) {
+          throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} seaRegionId '${regionId}' missing on record ${recordId}`);
+        }
+        if (region.regionType !== "ocean") {
+          throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} seaRegionId '${regionId}' must target an ocean on record ${recordId}`);
+        }
+      }
+      for (const tag of lane.terrainTags ?? []) {
+        if (!terrainRuleTags.has(tag)) {
+          throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} terrainTag '${tag}' missing terrain variance rule on record ${recordId}`);
+        }
+      }
+      for (const tag of lane.featureTags ?? []) {
+        if (!featureRuleTags.has(tag)) {
+          throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} featureTag '${tag}' missing feature variance rule on record ${recordId}`);
+        }
+      }
+    }
+  }
 }
 
 async function main() {
   for (const check of checks) {
     await validateFile(check);
   }
+
+  await validateFaunaProductsAgainstMarketKeys();
+  await validateMeatCutStandardsAgainstMarketKeys();
+  await validateInfrastructureAgainstWorkplaces();
+  await validateWorldMapsAgainstRegions();
+  await validateWorldMapFeaturesAgainstWorldData();
+  await validateRegionalEcologyAgainstWorldData();
+  await validateSettlementsAgainstRegions();
+  await validateQuestTemplatesAgainstWorldData();
+  await validateMonstersAgainstMarketValues();
+  await validateTravelNetworksAgainstWorldData();
 
   console.log(`content-lint: ok (${checks.length} files checked)`);
 }
@@ -165,3 +5057,19 @@ main().catch((error) => {
   console.error("content-lint: failed", error.message);
   process.exitCode = 1;
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

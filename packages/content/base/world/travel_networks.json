@@ -1,0 +1,1916 @@
+{
+    "records":  [
+                    {
+                        "id":  "travel_network.first_world",
+                        "slug":  "first_world",
+                        "name":  "First World Travel Network",
+                        "mapId":  "world_map.first_world",
+                        "summary":  "Baseline overland and maritime travel assumptions for the authored first world, now resolved through pixel-based route geometry on the shared world map grid.",
+                        "modeProfiles":  [
+                                             {
+                                                 "id":  "travel_mode.foot",
+                                                 "name":  "On Foot",
+                                                 "domain":  "land",
+                                                 "baseMilesPerDay":  18.64113,
+                                                 "notes":  "Represents ordinary laden travel on maintained routes at about 30 km per day before terrain and feature modifiers."
+                                             },
+                                             {
+                                                 "id":  "travel_mode.mounted",
+                                                 "name":  "Mounted",
+                                                 "domain":  "land",
+                                                 "baseMilesPerDay":  37.28226,
+                                                 "notes":  "Represents relay riding, mounted messengers, and light pack riders averaging about 60 km per day before modifiers."
+                                             },
+                                             {
+                                                 "id":  "travel_mode.wagon",
+                                                 "name":  "Wagon",
+                                                 "domain":  "land",
+                                                 "baseMilesPerDay":  24.85484,
+                                                 "notes":  "Represents animal-drawn land vehicles and freight wagons averaging about 40 km per day on workable roads."
+                                             },
+                                             {
+                                                 "id":  "travel_mode.river_barge",
+                                                 "name":  "River Barge",
+                                                 "domain":  "water",
+                                                 "baseMilesPerDay":  74.56452,
+                                                 "notes":  "Represents barges, tow craft, and canal freight moving about 120 km per day on navigable inland water."
+                                             },
+                                             {
+                                                 "id":  "travel_mode.coastal_ship",
+                                                 "name":  "Coastal Ship",
+                                                 "domain":  "water",
+                                                 "baseMilesPerDay":  124.2742,
+                                                 "notes":  "Represents ordinary coastal sail making about 200 km per day in fair conditions while hugging known shores and island chains."
+                                             },
+                                             {
+                                                 "id":  "travel_mode.bluewater_ship",
+                                                 "name":  "Bluewater Ship",
+                                                 "domain":  "water",
+                                                 "baseMilesPerDay":  124.2742,
+                                                 "notes":  "Represents long-range sea sail with the same fair-weather pace as coastal shipping but greater endurance across exposed open-water lanes."
+                                             }
+                                         ],
+                        "travelBenchmarks":  [
+                                                 {
+                                                     "modeId":  "travel_mode.foot",
+                                                     "summary":  "Reference marching pace for ordinary overland travel at about 30 km per day.",
+                                                     "examples":  [
+                                                                      {
+                                                                          "distanceKilometers":  100,
+                                                                          "distanceMiles":  62.1371,
+                                                                          "expectedDaysMin":  3,
+                                                                          "expectedDaysMax":  3
+                                                                      },
+                                                                      {
+                                                                          "distanceKilometers":  500,
+                                                                          "distanceMiles":  310.6855,
+                                                                          "expectedDaysMin":  14,
+                                                                          "expectedDaysMax":  21
+                                                                      },
+                                                                      {
+                                                                          "distanceKilometers":  1000,
+                                                                          "distanceMiles":  621.371,
+                                                                          "expectedDaysMin":  30,
+                                                                          "expectedDaysMax":  30
+                                                                      },
+                                                                      {
+                                                                          "distanceKilometers":  5000,
+                                                                          "distanceMiles":  3106.855,
+                                                                          "expectedDaysMin":  150,
+                                                                          "expectedDaysMax":  180
+                                                                      }
+                                                                  ]
+                                                 },
+                                                 {
+                                                     "modeId":  "travel_mode.mounted",
+                                                     "summary":  "Reference mounted pace for horse relays, couriers, and light rider caravans at about 60 km per day.",
+                                                     "examples":  [
+                                                                      {
+                                                                          "distanceKilometers":  500,
+                                                                          "distanceMiles":  310.6855,
+                                                                          "expectedDaysMin":  8,
+                                                                          "expectedDaysMax":  10
+                                                                      },
+                                                                      {
+                                                                          "distanceKilometers":  1000,
+                                                                          "distanceMiles":  621.371,
+                                                                          "expectedDaysMin":  21,
+                                                                          "expectedDaysMax":  21
+                                                                      }
+                                                                  ]
+                                                 },
+                                                 {
+                                                     "modeId":  "travel_mode.coastal_ship",
+                                                     "summary":  "Reference sailing pace for ordinary medieval-scale shipping at about 200 km per day.",
+                                                     "examples":  [
+                                                                      {
+                                                                          "distanceKilometers":  1000,
+                                                                          "distanceMiles":  621.371,
+                                                                          "expectedDaysMin":  5,
+                                                                          "expectedDaysMax":  5
+                                                                      },
+                                                                      {
+                                                                          "distanceKilometers":  5000,
+                                                                          "distanceMiles":  3106.855,
+                                                                          "expectedDaysMin":  30,
+                                                                          "expectedDaysMax":  30
+                                                                      }
+                                                                  ]
+                                                 }
+                                             ],
+                        "terrainVarianceRules":  [
+                                                     {
+                                                         "tag":  "open_plains",
+                                                         "name":  "Open Plains",
+                                                         "summary":  "Long sightlines and gentle grades favor riders, wagons, and marching columns.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  1.05,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  1.15,
+                                                                                 "variancePercent":  12
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  1.1,
+                                                                                 "variancePercent":  10
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "temperate_farmland",
+                                                         "name":  "Temperate Farmland",
+                                                         "summary":  "Cultivated lowlands support the most consistent overland travel in settled regions.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  1,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  1.05,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  1.05,
+                                                                                 "variancePercent":  8
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "deep_forest",
+                                                         "name":  "Deep Forest",
+                                                         "summary":  "Dense cover, roots, and wet ground punish anything wider than a trail column.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.8,
+                                                                                 "variancePercent":  18
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.65,
+                                                                                 "variancePercent":  22
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.45,
+                                                                                 "variancePercent":  30
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "marshland",
+                                                         "name":  "Marshland",
+                                                         "summary":  "Sodden ground, channels, and insects make marsh crossings slow and unreliable.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.55,
+                                                                                 "variancePercent":  25
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.4,
+                                                                                 "variancePercent":  30
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.25,
+                                                                                 "variancePercent":  35
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "speedMultiplier":  0.9,
+                                                                                 "variancePercent":  12
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "upland_hills",
+                                                         "name":  "Upland Hills",
+                                                         "summary":  "Broken grades and stream cuts slow freight and mounted movement more than marching infantry.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.8,
+                                                                                 "variancePercent":  15
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.72,
+                                                                                 "variancePercent":  18
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.6,
+                                                                                 "variancePercent":  20
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "mountain_pass",
+                                                         "name":  "Mountain Pass",
+                                                         "summary":  "Switchbacks, thin ledges, and snow risks turn mountain transit into a controlled bottleneck.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.6,
+                                                                                 "variancePercent":  20
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.48,
+                                                                                 "variancePercent":  24
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.28,
+                                                                                 "variancePercent":  35
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "desert_plateau",
+                                                         "name":  "Desert Plateau",
+                                                         "summary":  "Heat, water discipline, and sparse shade reduce sustained pace even on otherwise open ground.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.75,
+                                                                                 "variancePercent":  20
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.82,
+                                                                                 "variancePercent":  18
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.55,
+                                                                                 "variancePercent":  25
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "navigable_river",
+                                                         "name":  "Navigable River",
+                                                         "summary":  "Reliable current and draft depth make rivers the fastest bulk-movement corridors inland.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.95,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.9,
+                                                                                 "variancePercent":  12
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.8,
+                                                                                 "variancePercent":  12
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "speedMultiplier":  1,
+                                                                                 "variancePercent":  10
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "open_sea",
+                                                         "name":  "Open Sea",
+                                                         "summary":  "Fair-weather sea travel holds to baseline sailing pace but remains weather-sensitive.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "speedMultiplier":  1,
+                                                                                 "variancePercent":  12
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.bluewater_ship",
+                                                                                 "speedMultiplier":  1,
+                                                                                 "variancePercent":  18
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "storm_belt",
+                                                         "name":  "Storm Belt",
+                                                         "summary":  "Persistent squalls and swells impose severe time uncertainty on exposed sea lanes.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "speedMultiplier":  0.72,
+                                                                                 "variancePercent":  28
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.bluewater_ship",
+                                                                                 "speedMultiplier":  0.8,
+                                                                                 "variancePercent":  25
+                                                                             }
+                                                                         ]
+                                                     }
+                                                 ],
+                        "featureVarianceRules":  [
+                                                     {
+                                                         "tag":  "paved_road",
+                                                         "name":  "Paved Road",
+                                                         "summary":  "Engineered roads reduce attrition and improve reliable travel speed for all land traffic.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  1.1,
+                                                                                 "variancePercent":  8
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  1.15,
+                                                                                 "variancePercent":  8
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  1.2,
+                                                                                 "variancePercent":  8
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "river_crossing",
+                                                         "name":  "River Crossing",
+                                                         "summary":  "Unbridged crossings delay caravans and introduce waiting time for ferries or fords.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.95,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.85,
+                                                                                 "variancePercent":  15
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.7,
+                                                                                 "variancePercent":  20
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "bridge_or_ferry",
+                                                         "name":  "Bridge or Ferry Control Point",
+                                                         "summary":  "Bridgeheads and managed ferry slips reduce crossing chaos but still impose toll and queue friction.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  1,
+                                                                                 "variancePercent":  8
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  1,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.95,
+                                                                                 "variancePercent":  12
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "speedMultiplier":  0.98,
+                                                                                 "variancePercent":  6
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "mountain_switchbacks",
+                                                         "name":  "Mountain Switchbacks",
+                                                         "summary":  "Cut roads and cliff turns preserve access but slow any heavy overland movement.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.82,
+                                                                                 "variancePercent":  14
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.68,
+                                                                                 "variancePercent":  20
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.45,
+                                                                                 "variancePercent":  25
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "canal_lock",
+                                                         "name":  "Canal Lock",
+                                                         "summary":  "Locks improve navigability across elevation changes but add handling delays at each chamber.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  1,
+                                                                                 "variancePercent":  8
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.98,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.96,
+                                                                                 "variancePercent":  8
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "speedMultiplier":  0.88,
+                                                                                 "variancePercent":  10
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "drydock_refit",
+                                                         "name":  "Drydock Refit",
+                                                         "summary":  "Large ports can service hulls and crews quickly, but major refits still insert planned delay.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "speedMultiplier":  0.9,
+                                                                                 "variancePercent":  8
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "speedMultiplier":  0.92,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.bluewater_ship",
+                                                                                 "speedMultiplier":  0.9,
+                                                                                 "variancePercent":  12
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "favorable_current",
+                                                         "name":  "Favorable Current",
+                                                         "summary":  "Current and seasonal winds shorten trips on aligned river and coastal segments.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "speedMultiplier":  1.15,
+                                                                                 "variancePercent":  8
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "speedMultiplier":  1.05,
+                                                                                 "variancePercent":  10
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.bluewater_ship",
+                                                                                 "speedMultiplier":  1.08,
+                                                                                 "variancePercent":  12
+                                                                             }
+                                                                         ]
+                                                     },
+                                                     {
+                                                         "tag":  "bad_weather",
+                                                         "name":  "Bad Weather",
+                                                         "summary":  "Mud, storms, and visibility loss broaden travel uncertainty across all route types.",
+                                                         "modeEffects":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "speedMultiplier":  0.9,
+                                                                                 "variancePercent":  15
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "speedMultiplier":  0.85,
+                                                                                 "variancePercent":  18
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "speedMultiplier":  0.78,
+                                                                                 "variancePercent":  20
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "speedMultiplier":  0.85,
+                                                                                 "variancePercent":  16
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "speedMultiplier":  0.8,
+                                                                                 "variancePercent":  25
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.bluewater_ship",
+                                                                                 "speedMultiplier":  0.83,
+                                                                                 "variancePercent":  28
+                                                                             }
+                                                                         ]
+                                                     }
+                                                 ],
+                        "routeRecords":  [
+                                             {
+                                                 "id":  "route.aurelis_vinecross",
+                                                 "name":  "Aurelis-Vinecross Road",
+                                                 "fromSettlementId":  "settlement.aurelis",
+                                                 "toSettlementId":  "settlement.vinecross",
+                                                 "routeClass":  "road_corridor",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.foot",
+                                                                          "travel_mode.mounted",
+                                                                          "travel_mode.wagon"
+                                                                      ],
+                                                 "notes":  "A heavily worked farm-road and cask route linking the southern capital to its inland viticulture market.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  300,
+                                                                        "y":  395
+                                                                    },
+                                                                    {
+                                                                        "x":  308,
+                                                                        "y":  380
+                                                                    },
+                                                                    {
+                                                                        "x":  315,
+                                                                        "y":  348
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  1,
+                                                                          "terrainTag":  "temperate_farmland",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  1,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "temperate_farmland",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "temperate_farmland"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "paved_road"
+                                                                 ],
+                                                 "distanceMiles":  301.93,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "expectedDays":  14.7,
+                                                                                 "varianceDays":  2.7
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "expectedDays":  6.7,
+                                                                                 "varianceDays":  1.2
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "expectedDays":  9.6,
+                                                                                 "varianceDays":  1.5
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.aurelis_stonevein",
+                                                 "name":  "Aurelis-Stonevein Crown Track",
+                                                 "fromSettlementId":  "settlement.aurelis",
+                                                 "toSettlementId":  "settlement.stonevein",
+                                                 "routeClass":  "mixed_corridor",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.foot",
+                                                                          "travel_mode.mounted",
+                                                                          "travel_mode.wagon"
+                                                                      ],
+                                                 "notes":  "Ore caravans and crown wagons use this route to connect Kaelvar\u0027s southern court with the dwarf-held upland mines.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  300,
+                                                                        "y":  395
+                                                                    },
+                                                                    {
+                                                                        "x":  305,
+                                                                        "y":  360
+                                                                    },
+                                                                    {
+                                                                        "x":  280,
+                                                                        "y":  325
+                                                                    },
+                                                                    {
+                                                                        "x":  235,
+                                                                        "y":  295
+                                                                    },
+                                                                    {
+                                                                        "x":  210,
+                                                                        "y":  255
+                                                                    },
+                                                                    {
+                                                                        "x":  195,
+                                                                        "y":  225
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "temperate_farmland",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  2,
+                                                                          "toPointIndex":  3,
+                                                                          "terrainTag":  "upland_hills",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  3,
+                                                                          "toPointIndex":  5,
+                                                                          "terrainTag":  "mountain_pass",
+                                                                          "featureTags":  [
+                                                                                              "mountain_switchbacks"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "temperate_farmland",
+                                                                     "upland_hills",
+                                                                     "mountain_pass"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "paved_road",
+                                                                     "mountain_switchbacks"
+                                                                 ],
+                                                 "distanceMiles":  1293.48,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "expectedDays":  96.6,
+                                                                                 "varianceDays":  26.9
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "expectedDays":  61.4,
+                                                                                 "varianceDays":  22.4
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "expectedDays":  189.9,
+                                                                                 "varianceDays":  101.4
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.brineharbor_aurelis",
+                                                 "name":  "Brineharbor-Aurelis Coastal Run",
+                                                 "fromSettlementId":  "settlement.brineharbor",
+                                                 "toSettlementId":  "settlement.aurelis",
+                                                 "routeClass":  "coastal_lane",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.coastal_ship"
+                                                                      ],
+                                                 "notes":  "Salt fish, pearls, and northern cargoes move south along the safer Kaelvar littoral instead of crossing the open ocean.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  360,
+                                                                        "y":  180
+                                                                    },
+                                                                    {
+                                                                        "x":  342,
+                                                                        "y":  240
+                                                                    },
+                                                                    {
+                                                                        "x":  322,
+                                                                        "y":  315
+                                                                    },
+                                                                    {
+                                                                        "x":  305,
+                                                                        "y":  365
+                                                                    },
+                                                                    {
+                                                                        "x":  300,
+                                                                        "y":  395
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "open_sea",
+                                                                          "featureTags":  [
+                                                                                              "favorable_current"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  2,
+                                                                          "toPointIndex":  4,
+                                                                          "terrainTag":  "open_sea",
+                                                                          "featureTags":  [
+                                                                                              "bad_weather"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "open_sea"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "favorable_current",
+                                                                     "bad_weather"
+                                                                 ],
+                                                 "distanceMiles":  1356.14,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "expectedDays":  11.6,
+                                                                                 "varianceDays":  3.3
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.highcrown_blueflow",
+                                                 "name":  "Highcrown-Blueflow River Corridor",
+                                                 "fromSettlementId":  "settlement.highcrown",
+                                                 "toSettlementId":  "settlement.blueflow",
+                                                 "routeClass":  "river_corridor",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.foot",
+                                                                          "travel_mode.mounted",
+                                                                          "travel_mode.wagon",
+                                                                          "travel_mode.river_barge"
+                                                                      ],
+                                                 "notes":  "This is one of Valtherion\u0027s core administrative corridors, with the river doing most of the heavy freight work.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  1560,
+                                                                        "y":  255
+                                                                    },
+                                                                    {
+                                                                        "x":  1545,
+                                                                        "y":  315
+                                                                    },
+                                                                    {
+                                                                        "x":  1490,
+                                                                        "y":  360
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  1,
+                                                                          "terrainTag":  "navigable_river",
+                                                                          "featureTags":  [
+                                                                                              "bridge_or_ferry"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  1,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "navigable_river",
+                                                                          "featureTags":  [
+                                                                                              "favorable_current"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "navigable_river"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "bridge_or_ferry",
+                                                                     "favorable_current"
+                                                                 ],
+                                                 "distanceMiles":  806.51,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "expectedDays":  45.5,
+                                                                                 "varianceDays":  6.2
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "expectedDays":  24,
+                                                                                 "varianceDays":  4
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "expectedDays":  41.6,
+                                                                                 "varianceDays":  7.4
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "expectedDays":  10.2,
+                                                                                 "varianceDays":  1.7
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.riverthrone_granary_crown",
+                                                 "name":  "Riverthrone-Granary Crown Grainwater",
+                                                 "fromSettlementId":  "settlement.riverthrone",
+                                                 "toSettlementId":  "settlement.granary_crown",
+                                                 "routeClass":  "river_corridor",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.foot",
+                                                                          "travel_mode.mounted",
+                                                                          "travel_mode.wagon",
+                                                                          "travel_mode.river_barge"
+                                                                      ],
+                                                 "notes":  "Draemor\u0027s grain core relies on both lock-managed river movement and dense road traffic into the capital basin.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  950,
+                                                                        "y":  825
+                                                                    },
+                                                                    {
+                                                                        "x":  935,
+                                                                        "y":  805
+                                                                    },
+                                                                    {
+                                                                        "x":  915,
+                                                                        "y":  780
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "navigable_river",
+                                                                          "featureTags":  [
+                                                                                              "favorable_current"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "navigable_river"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "favorable_current"
+                                                                 ],
+                                                 "distanceMiles":  345.98,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "expectedDays":  19.5,
+                                                                                 "varianceDays":  2
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "expectedDays":  10.3,
+                                                                                 "varianceDays":  1.2
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "expectedDays":  17.4,
+                                                                                 "varianceDays":  2.1
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.river_barge",
+                                                                                 "expectedDays":  4,
+                                                                                 "varianceDays":  0.7
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.seabanner_tidecrown",
+                                                 "name":  "Seabanner-Tidecrown Coastway",
+                                                 "fromSettlementId":  "settlement.seabanner",
+                                                 "toSettlementId":  "settlement.tidecrown",
+                                                 "routeClass":  "coastal_lane",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.coastal_ship"
+                                                                      ],
+                                                 "notes":  "Short-haul shipping keeps Serathyl\u0027s main naval harbor fed with timber, fish, and citrus from nearby coast towns.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  345,
+                                                                        "y":  825
+                                                                    },
+                                                                    {
+                                                                        "x":  320,
+                                                                        "y":  842
+                                                                    },
+                                                                    {
+                                                                        "x":  280,
+                                                                        "y":  860
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "open_sea",
+                                                                          "featureTags":  [
+                                                                                              "favorable_current"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "open_sea"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "favorable_current"
+                                                                 ],
+                                                 "distanceMiles":  449.62,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "expectedDays":  3.4,
+                                                                                 "varianceDays":  0.8
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.sunspire_reach_silvermere",
+                                                 "name":  "Sunspire Reach-Silvermere Valley Road",
+                                                 "fromSettlementId":  "settlement.sunspire_reach",
+                                                 "toSettlementId":  "settlement.silvermere",
+                                                 "routeClass":  "road_corridor",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.foot",
+                                                                          "travel_mode.mounted",
+                                                                          "travel_mode.wagon"
+                                                                      ],
+                                                 "notes":  "The main civilized road through Talmyra\u0027s northern valleys, carrying food, guards, and frontier administrators.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  1295,
+                                                                        "y":  820
+                                                                    },
+                                                                    {
+                                                                        "x":  1270,
+                                                                        "y":  845
+                                                                    },
+                                                                    {
+                                                                        "x":  1235,
+                                                                        "y":  875
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  1,
+                                                                          "terrainTag":  "open_plains",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  1,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "temperate_farmland",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "open_plains",
+                                                                     "temperate_farmland"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "paved_road"
+                                                                 ],
+                                                 "distanceMiles":  494.26,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "expectedDays":  23.6,
+                                                                                 "varianceDays":  4.2
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "expectedDays":  10.6,
+                                                                                 "varianceDays":  2
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "expectedDays":  15.5,
+                                                                                 "varianceDays":  2.6
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.spicehook_watchers_gate",
+                                                 "name":  "Spicehook-Watcher\u0027s Gate Frontier Road",
+                                                 "fromSettlementId":  "settlement.spicehook",
+                                                 "toSettlementId":  "settlement.watchers_gate",
+                                                 "routeClass":  "mixed_corridor",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.foot",
+                                                                          "travel_mode.mounted",
+                                                                          "travel_mode.wagon"
+                                                                      ],
+                                                 "notes":  "Convoys moving between Talmyra\u0027s spice coast and its eastern cliff fortresses accept high delay variance due to weather and ground.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  1290,
+                                                                        "y":  965
+                                                                    },
+                                                                    {
+                                                                        "x":  1360,
+                                                                        "y":  935
+                                                                    },
+                                                                    {
+                                                                        "x":  1425,
+                                                                        "y":  1010
+                                                                    },
+                                                                    {
+                                                                        "x":  1465,
+                                                                        "y":  900
+                                                                    },
+                                                                    {
+                                                                        "x":  1500,
+                                                                        "y":  820
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  1,
+                                                                          "terrainTag":  "deep_forest",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  1,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "marshland",
+                                                                          "featureTags":  [
+                                                                                              "bridge_or_ferry"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  2,
+                                                                          "toPointIndex":  4,
+                                                                          "terrainTag":  "upland_hills",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "deep_forest",
+                                                                     "marshland",
+                                                                     "upland_hills"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "paved_road",
+                                                                     "bridge_or_ferry"
+                                                                 ],
+                                                 "distanceMiles":  2304.49,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "expectedDays":  162.5,
+                                                                                 "varianceDays":  44.1
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "expectedDays":  97.1,
+                                                                                 "varianceDays":  31.6
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "expectedDays":  205.8,
+                                                                                 "varianceDays":  80.4
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.starfall_port_harbormast_quay",
+                                                 "name":  "Starfall Port-Harbormast Quay Island Run",
+                                                 "fromSettlementId":  "settlement.starfall_port",
+                                                 "toSettlementId":  "settlement.harbormast_quay",
+                                                 "routeClass":  "coastal_lane",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.coastal_ship"
+                                                                      ],
+                                                 "notes":  "A high-frequency convoy leg inside the Myridian Chain, used by bonded warehouses and naval patrols.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  825,
+                                                                        "y":  245
+                                                                    },
+                                                                    {
+                                                                        "x":  860,
+                                                                        "y":  255
+                                                                    },
+                                                                    {
+                                                                        "x":  905,
+                                                                        "y":  270
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "open_sea",
+                                                                          "featureTags":  [
+                                                                                              "favorable_current"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "open_sea"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "favorable_current"
+                                                                 ],
+                                                 "distanceMiles":  508.72,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "expectedDays":  3.9,
+                                                                                 "varianceDays":  0.9
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.breaksail_riverthrone",
+                                                 "name":  "Breaksail-Riverthrone Gulf Road",
+                                                 "fromSettlementId":  "settlement.breaksail",
+                                                 "toSettlementId":  "settlement.riverthrone",
+                                                 "routeClass":  "mixed_corridor",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.foot",
+                                                                          "travel_mode.mounted",
+                                                                          "travel_mode.wagon"
+                                                                      ],
+                                                 "notes":  "The main overland backup route between Draemor\u0027s capital basin and its southern sea outlet.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  860,
+                                                                        "y":  1015
+                                                                    },
+                                                                    {
+                                                                        "x":  900,
+                                                                        "y":  965
+                                                                    },
+                                                                    {
+                                                                        "x":  930,
+                                                                        "y":  910
+                                                                    },
+                                                                    {
+                                                                        "x":  950,
+                                                                        "y":  825
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  1,
+                                                                          "terrainTag":  "upland_hills",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  1,
+                                                                          "toPointIndex":  3,
+                                                                          "terrainTag":  "temperate_farmland",
+                                                                          "featureTags":  [
+                                                                                              "paved_road"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "upland_hills",
+                                                                     "temperate_farmland"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "paved_road"
+                                                                 ],
+                                                 "distanceMiles":  1298.58,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.foot",
+                                                                                 "expectedDays":  68.1,
+                                                                                 "varianceDays":  13.4
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.mounted",
+                                                                                 "expectedDays":  32.8,
+                                                                                 "varianceDays":  6.9
+                                                                             },
+                                                                             {
+                                                                                 "modeId":  "travel_mode.wagon",
+                                                                                 "expectedDays":  50.8,
+                                                                                 "varianceDays":  10.7
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.redcliff_quay_brineharbor",
+                                                 "name":  "Redcliff Quay-Brineharbor Coast Roadstead",
+                                                 "fromSettlementId":  "settlement.redcliff_quay",
+                                                 "toSettlementId":  "settlement.brineharbor",
+                                                 "routeClass":  "coastal_lane",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.coastal_ship"
+                                                                      ],
+                                                 "notes":  "This north-south Kaelvar lane links the royal coast to the salt and fish harbors of the Shattercap Isles.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  255,
+                                                                        "y":  430
+                                                                    },
+                                                                    {
+                                                                        "x":  290,
+                                                                        "y":  355
+                                                                    },
+                                                                    {
+                                                                        "x":  330,
+                                                                        "y":  270
+                                                                    },
+                                                                    {
+                                                                        "x":  360,
+                                                                        "y":  180
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "open_sea",
+                                                                          "featureTags":  [
+                                                                                              "favorable_current"
+                                                                                          ]
+                                                                      },
+                                                                      {
+                                                                          "fromPointIndex":  2,
+                                                                          "toPointIndex":  3,
+                                                                          "terrainTag":  "open_sea",
+                                                                          "featureTags":  [
+                                                                                              "bad_weather"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "open_sea"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "favorable_current",
+                                                                     "bad_weather"
+                                                                 ],
+                                                 "distanceMiles":  1647.93,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "expectedDays":  14,
+                                                                                 "varianceDays":  4
+                                                                             }
+                                                                         ]
+                                             },
+                                             {
+                                                 "id":  "route.lantern_key_driftglass_outpost",
+                                                 "name":  "Lantern Key-Driftglass Outpost Patrol Run",
+                                                 "fromSettlementId":  "settlement.lantern_key",
+                                                 "toSettlementId":  "settlement.driftglass_outpost",
+                                                 "routeClass":  "coastal_lane",
+                                                 "availableModeIds":  [
+                                                                          "travel_mode.coastal_ship"
+                                                                      ],
+                                                 "notes":  "Short-haul cutters from Lantern Key resupply the outer watch post whenever weather allows.",
+                                                 "pathPoints":  [
+                                                                    {
+                                                                        "x":  915,
+                                                                        "y":  610
+                                                                    },
+                                                                    {
+                                                                        "x":  965,
+                                                                        "y":  555
+                                                                    },
+                                                                    {
+                                                                        "x":  1010,
+                                                                        "y":  505
+                                                                    }
+                                                                ],
+                                                 "pathSegments":  [
+                                                                      {
+                                                                          "fromPointIndex":  0,
+                                                                          "toPointIndex":  2,
+                                                                          "terrainTag":  "open_sea",
+                                                                          "featureTags":  [
+                                                                                              "bad_weather"
+                                                                                          ]
+                                                                      }
+                                                                  ],
+                                                 "terrainTags":  [
+                                                                     "open_sea"
+                                                                 ],
+                                                 "featureTags":  [
+                                                                     "bad_weather"
+                                                                 ],
+                                                 "distanceMiles":  859.23,
+                                                 "travelTimeEstimates":  [
+                                                                             {
+                                                                                 "modeId":  "travel_mode.coastal_ship",
+                                                                                 "expectedDays":  8.6,
+                                                                                 "varianceDays":  3.2
+                                                                             }
+                                                                         ]
+                                             }
+                                         ],
+                        "interPortShipRoutes":  [
+                                                    {
+                                                        "id":  "lane.brineharbor_starfall_port",
+                                                        "name":  "Brineharbor-Starfall Northern Lane",
+                                                        "fromSettlementId":  "settlement.brineharbor",
+                                                        "toSettlementId":  "settlement.starfall_port",
+                                                        "laneClass":  "intercoastal",
+                                                        "seaRegionIds":  [
+                                                                             "region.gilded_sea"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.coastal_ship"
+                                                                             ],
+                                                        "notes":  "A northern island-hopping lane linking Kaelvar\u0027s outer harbors to the Myridian naval hub.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  360,
+                                                                               "y":  180
+                                                                           },
+                                                                           {
+                                                                               "x":  520,
+                                                                               "y":  170
+                                                                           },
+                                                                           {
+                                                                               "x":  670,
+                                                                               "y":  195
+                                                                           },
+                                                                           {
+                                                                               "x":  825,
+                                                                               "y":  245
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  2,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  2,
+                                                                                 "toPointIndex":  3,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "open_sea"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "favorable_current",
+                                                                            "bad_weather"
+                                                                        ],
+                                                        "distanceMiles":  2883.83,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.coastal_ship",
+                                                                                        "expectedDays":  24.5,
+                                                                                        "varianceDays":  6.9
+                                                                                    }
+                                                                                ]
+                                                    },
+                                                    {
+                                                        "id":  "lane.starfall_port_blueflow",
+                                                        "name":  "Starfall-Blueflow Merchant Lane",
+                                                        "fromSettlementId":  "settlement.starfall_port",
+                                                        "toSettlementId":  "settlement.blueflow",
+                                                        "laneClass":  "intercoastal",
+                                                        "seaRegionIds":  [
+                                                                             "region.gilded_sea"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.coastal_ship"
+                                                                             ],
+                                                        "notes":  "The main northern merchant corridor from the Myridian hub to Valtherion\u0027s eastern river ports.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  825,
+                                                                               "y":  245
+                                                                           },
+                                                                           {
+                                                                               "x":  1020,
+                                                                               "y":  220
+                                                                           },
+                                                                           {
+                                                                               "x":  1210,
+                                                                               "y":  240
+                                                                           },
+                                                                           {
+                                                                               "x":  1385,
+                                                                               "y":  300
+                                                                           },
+                                                                           {
+                                                                               "x":  1490,
+                                                                               "y":  360
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  2,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  2,
+                                                                                 "toPointIndex":  4,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "open_sea"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "favorable_current",
+                                                                            "bad_weather"
+                                                                        ],
+                                                        "distanceMiles":  4208.69,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.coastal_ship",
+                                                                                        "expectedDays":  36.7,
+                                                                                        "varianceDays":  10.9
+                                                                                    }
+                                                                                ]
+                                                    },
+                                                    {
+                                                        "id":  "lane.aurelis_seabanner",
+                                                        "name":  "Aurelis-Seabanner Gulf Lane",
+                                                        "fromSettlementId":  "settlement.aurelis",
+                                                        "toSettlementId":  "settlement.seabanner",
+                                                        "laneClass":  "intercoastal",
+                                                        "seaRegionIds":  [
+                                                                             "region.shattered_gulf"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.coastal_ship"
+                                                                             ],
+                                                        "notes":  "A sheltered but still weather-sensitive gulf lane between Kaelvar\u0027s southern capital and Serathyl\u0027s merchant coast.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  300,
+                                                                               "y":  395
+                                                                           },
+                                                                           {
+                                                                               "x":  325,
+                                                                               "y":  520
+                                                                           },
+                                                                           {
+                                                                               "x":  340,
+                                                                               "y":  690
+                                                                           },
+                                                                           {
+                                                                               "x":  345,
+                                                                               "y":  825
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  2,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  2,
+                                                                                 "toPointIndex":  3,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "open_sea"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "favorable_current",
+                                                                            "bad_weather"
+                                                                        ],
+                                                        "distanceMiles":  2628.86,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.coastal_ship",
+                                                                                        "expectedDays":  22.1,
+                                                                                        "varianceDays":  6.1
+                                                                                    }
+                                                                                ]
+                                                    },
+                                                    {
+                                                        "id":  "lane.seabanner_breaksail",
+                                                        "name":  "Seabanner-Breaksail Inner Sea Lane",
+                                                        "fromSettlementId":  "settlement.seabanner",
+                                                        "toSettlementId":  "settlement.breaksail",
+                                                        "laneClass":  "intercoastal",
+                                                        "seaRegionIds":  [
+                                                                             "region.shattered_gulf"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.coastal_ship"
+                                                                             ],
+                                                        "notes":  "A dense regional sea lane for grain, timber, fish, and finished goods between Serathyl and Draemor.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  345,
+                                                                               "y":  825
+                                                                           },
+                                                                           {
+                                                                               "x":  500,
+                                                                               "y":  865
+                                                                           },
+                                                                           {
+                                                                               "x":  670,
+                                                                               "y":  915
+                                                                           },
+                                                                           {
+                                                                               "x":  860,
+                                                                               "y":  1015
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  2,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  2,
+                                                                                 "toPointIndex":  3,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "open_sea"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "favorable_current",
+                                                                            "bad_weather"
+                                                                        ],
+                                                        "distanceMiles":  3349.5,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.coastal_ship",
+                                                                                        "expectedDays":  28.8,
+                                                                                        "varianceDays":  8.3
+                                                                                    }
+                                                                                ]
+                                                    },
+                                                    {
+                                                        "id":  "lane.breaksail_lantern_key",
+                                                        "name":  "Breaksail-Lantern Central Crossing",
+                                                        "fromSettlementId":  "settlement.breaksail",
+                                                        "toSettlementId":  "settlement.lantern_key",
+                                                        "laneClass":  "open_ocean",
+                                                        "seaRegionIds":  [
+                                                                             "region.azure_vast"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.coastal_ship",
+                                                                                 "travel_mode.bluewater_ship"
+                                                                             ],
+                                                        "notes":  "A central-ocean crossing that links Draemor\u0027s southern ports to the Lantern Isles trading cluster.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  860,
+                                                                               "y":  1015
+                                                                           },
+                                                                           {
+                                                                               "x":  870,
+                                                                               "y":  880
+                                                                           },
+                                                                           {
+                                                                               "x":  885,
+                                                                               "y":  760
+                                                                           },
+                                                                           {
+                                                                               "x":  900,
+                                                                               "y":  680
+                                                                           },
+                                                                           {
+                                                                               "x":  915,
+                                                                               "y":  610
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  2,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  2,
+                                                                                 "toPointIndex":  4,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "open_sea"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "bad_weather",
+                                                                            "favorable_current"
+                                                                        ],
+                                                        "distanceMiles":  2483.58,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.coastal_ship",
+                                                                                        "expectedDays":  22.8,
+                                                                                        "varianceDays":  7.4
+                                                                                    },
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.bluewater_ship",
+                                                                                        "expectedDays":  22,
+                                                                                        "varianceDays":  9
+                                                                                    }
+                                                                                ]
+                                                    },
+                                                    {
+                                                        "id":  "lane.lantern_key_stormfang_haven",
+                                                        "name":  "Lantern-Stormfang Southern Reach",
+                                                        "fromSettlementId":  "settlement.lantern_key",
+                                                        "toSettlementId":  "settlement.stormfang_haven",
+                                                        "laneClass":  "open_ocean",
+                                                        "seaRegionIds":  [
+                                                                             "region.azure_vast",
+                                                                             "region.tempest_expanse"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.bluewater_ship"
+                                                                             ],
+                                                        "notes":  "A long bluewater approach that runs into the rough southern seas near the Serpent\u0027s Wake.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  915,
+                                                                               "y":  610
+                                                                           },
+                                                                           {
+                                                                               "x":  1030,
+                                                                               "y":  690
+                                                                           },
+                                                                           {
+                                                                               "x":  1150,
+                                                                               "y":  775
+                                                                           },
+                                                                           {
+                                                                               "x":  1240,
+                                                                               "y":  855
+                                                                           },
+                                                                           {
+                                                                               "x":  1325,
+                                                                               "y":  905
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  2,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  2,
+                                                                                 "toPointIndex":  4,
+                                                                                 "terrainTag":  "storm_belt",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "open_sea",
+                                                                            "storm_belt"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "favorable_current",
+                                                                            "bad_weather"
+                                                                        ],
+                                                        "distanceMiles":  3071.51,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.bluewater_ship",
+                                                                                        "expectedDays":  29.1,
+                                                                                        "varianceDays":  12.4
+                                                                                    }
+                                                                                ]
+                                                    },
+                                                    {
+                                                        "id":  "lane.breaksail_saltfang_anchorage",
+                                                        "name":  "Breaksail-Saltfang Southern Trade Lane",
+                                                        "fromSettlementId":  "settlement.breaksail",
+                                                        "toSettlementId":  "settlement.saltfang_anchorage",
+                                                        "laneClass":  "open_ocean",
+                                                        "seaRegionIds":  [
+                                                                             "region.tempest_expanse"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.coastal_ship",
+                                                                                 "travel_mode.bluewater_ship"
+                                                                             ],
+                                                        "notes":  "The main southern lane for moving grain northbound and spices or hardwoods westbound between Draemor and Talmyra.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  860,
+                                                                               "y":  1015
+                                                                           },
+                                                                           {
+                                                                               "x":  1010,
+                                                                               "y":  1000
+                                                                           },
+                                                                           {
+                                                                               "x":  1175,
+                                                                               "y":  1015
+                                                                           },
+                                                                           {
+                                                                               "x":  1360,
+                                                                               "y":  1015
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  1,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  1,
+                                                                                 "toPointIndex":  3,
+                                                                                 "terrainTag":  "storm_belt",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "open_sea",
+                                                                            "storm_belt"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "favorable_current",
+                                                                            "bad_weather"
+                                                                        ],
+                                                        "distanceMiles":  3042.71,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.coastal_ship",
+                                                                                        "expectedDays":  36.7,
+                                                                                        "varianceDays":  17.3
+                                                                                    },
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.bluewater_ship",
+                                                                                        "expectedDays":  32.6,
+                                                                                        "varianceDays":  15.7
+                                                                                    }
+                                                                                ]
+                                                    },
+                                                    {
+                                                        "id":  "lane.stormfang_haven_aurora_anchorage",
+                                                        "name":  "Stormfang-Aurora Far East Lane",
+                                                        "fromSettlementId":  "settlement.stormfang_haven",
+                                                        "toSettlementId":  "settlement.aurora_anchorage",
+                                                        "laneClass":  "open_ocean",
+                                                        "seaRegionIds":  [
+                                                                             "region.tempest_expanse",
+                                                                             "region.azure_vast"
+                                                                         ],
+                                                        "availableModeIds":  [
+                                                                                 "travel_mode.bluewater_ship"
+                                                                             ],
+                                                        "notes":  "A hard bluewater lane linking the storm arc to the polar whaling and pearl approaches of Dawnreach.",
+                                                        "pathPoints":  [
+                                                                           {
+                                                                               "x":  1325,
+                                                                               "y":  905
+                                                                           },
+                                                                           {
+                                                                               "x":  1495,
+                                                                               "y":  935
+                                                                           },
+                                                                           {
+                                                                               "x":  1640,
+                                                                               "y":  955
+                                                                           },
+                                                                           {
+                                                                               "x":  1765,
+                                                                               "y":  945
+                                                                           },
+                                                                           {
+                                                                               "x":  1855,
+                                                                               "y":  930
+                                                                           }
+                                                                       ],
+                                                        "pathSegments":  [
+                                                                             {
+                                                                                 "fromPointIndex":  0,
+                                                                                 "toPointIndex":  2,
+                                                                                 "terrainTag":  "storm_belt",
+                                                                                 "featureTags":  [
+                                                                                                     "bad_weather"
+                                                                                                 ]
+                                                                             },
+                                                                             {
+                                                                                 "fromPointIndex":  2,
+                                                                                 "toPointIndex":  4,
+                                                                                 "terrainTag":  "open_sea",
+                                                                                 "featureTags":  [
+                                                                                                     "favorable_current"
+                                                                                                 ]
+                                                                             }
+                                                                         ],
+                                                        "terrainTags":  [
+                                                                            "storm_belt",
+                                                                            "open_sea"
+                                                                        ],
+                                                        "featureTags":  [
+                                                                            "bad_weather",
+                                                                            "favorable_current"
+                                                                        ],
+                                                        "distanceMiles":  3250.31,
+                                                        "travelTimeEstimates":  [
+                                                                                    {
+                                                                                        "modeId":  "travel_mode.bluewater_ship",
+                                                                                        "expectedDays":  33.3,
+                                                                                        "varianceDays":  15.4
+                                                                                    }
+                                                                                ]
+                                                    }
+                                                ]
+                    }
+                ]
+}

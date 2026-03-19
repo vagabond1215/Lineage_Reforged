@@ -1,9 +1,27 @@
 {
   "records": [
     {
-      "id": "ability.survival.forager",
-      "name": "Forager",
+      "id": "ability.combat.shield_bash",
+      "name": "Shield Bash",
+      "scalingAttribute": "attr.STR",
+      "cooldownTicks": 8
+    },
+    {
+      "id": "ability.rogue.sneak_attack",
+      "name": "Sneak Attack",
       "scalingAttribute": "attr.DEX",
+      "cooldownTicks": 10
+    },
+    {
+      "id": "ability.mobility.combat_roll",
+      "name": "Combat Roll",
+      "scalingAttribute": "attr.AGI",
+      "cooldownTicks": 6
+    },
+    {
+      "id": "ability.survival.field_dress",
+      "name": "Field Dress",
+      "scalingAttribute": "attr.WIS",
       "cooldownTicks": 12
     }
   ]

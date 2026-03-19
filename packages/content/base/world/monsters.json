@@ -1,0 +1,1170 @@
+﻿{
+    "records":  [
+                    {
+                        "id":  "monster.kobold_scavenger",
+                        "slug":  "kobold_scavenger",
+                        "name":  "Kobold Scavenger",
+                        "monsterClass":  "humanoid",
+                        "threat":  "low",
+                        "summary":  "A small tunnel-dwelling raider that survives by stripping refuse heaps, isolated carts, and unsecured sheds.",
+                        "habitatTags":  [
+                                            "mine_tunnel",
+                                            "quarry_edge",
+                                            "ruins",
+                                            "roadside_ditch"
+                                        ],
+                        "behaviorTags":  [
+                                             "pack_hunter",
+                                             "opportunistic",
+                                             "cowardly",
+                                             "thieving"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "kobold_scrap",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "kobold_bauble",
+                                         "chance":  0.35
+                                     },
+                                     {
+                                         "itemKey":  "charcoal",
+                                         "chance":  0.25
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.kobold_tunnel_sapper",
+                        "slug":  "kobold_tunnel_sapper",
+                        "name":  "Kobold Tunnel Sapper",
+                        "monsterClass":  "humanoid",
+                        "threat":  "moderate",
+                        "summary":  "A dangerous kobold miner bred to undermine supports, burn braces, and turn cramped tunnels into kill zones.",
+                        "habitatTags":  [
+                                            "mine_tunnel",
+                                            "quarry_edge",
+                                            "collapsed_passage",
+                                            "mountain_pass"
+                                        ],
+                        "behaviorTags":  [
+                                             "pack_hunter",
+                                             "ambusher",
+                                             "saboteur",
+                                             "burrower"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "kobold_scrap",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "kobold_bauble",
+                                         "chance":  0.5
+                                     },
+                                     {
+                                         "itemKey":  "charcoal",
+                                         "chance":  0.45
+                                     },
+                                     {
+                                         "itemKey":  "copper_ore",
+                                         "chance":  0.2
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.kobold_scout",
+                        "slug":  "kobold_scout",
+                        "name":  "Kobold Scout",
+                        "monsterClass":  "humanoid",
+                        "threat":  "low",
+                        "summary":  "A fast-moving road lurker that marks convoys, ferries, and isolated camps for larger raids.",
+                        "habitatTags":  [
+                                            "roadside_ditch",
+                                            "forest_edge",
+                                            "frontier_track",
+                                            "ferry_crossing"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "scout",
+                                             "cowardly",
+                                             "thieving"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "kobold_scrap",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "kobold_bauble",
+                                         "chance":  0.3
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.green_slime",
+                        "slug":  "green_slime",
+                        "name":  "Green Slime",
+                        "monsterClass":  "ooze",
+                        "threat":  "low",
+                        "summary":  "A corrosive ooze that creeps into root cellars, drains, and storehouses to dissolve anything soft enough to digest.",
+                        "habitatTags":  [
+                                            "cellar",
+                                            "granary",
+                                            "ditch",
+                                            "sewer_edge"
+                                        ],
+                        "behaviorTags":  [
+                                             "amorphous",
+                                             "corrosive",
+                                             "slow",
+                                             "mindless"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "slime_jelly",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  1.0
+                                      },
+                                      {
+                                          "itemKey":  "acid_gland",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.45
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.cave_slime",
+                        "slug":  "cave_slime",
+                        "name":  "Cave Slime",
+                        "monsterClass":  "ooze",
+                        "threat":  "moderate",
+                        "summary":  "A heavier subterranean slime that pools in damp tunnels and stone basins before surging over prey.",
+                        "habitatTags":  [
+                                            "mine_tunnel",
+                                            "cave_floor",
+                                            "underground_stream",
+                                            "ruins"
+                                        ],
+                        "behaviorTags":  [
+                                             "amorphous",
+                                             "corrosive",
+                                             "ambusher",
+                                             "mindless"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "slime_jelly",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  1.0
+                                      },
+                                      {
+                                          "itemKey":  "acid_gland",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.55
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.ember_slime",
+                        "slug":  "ember_slime",
+                        "name":  "Ember Slime",
+                        "monsterClass":  "ooze",
+                        "threat":  "moderate",
+                        "summary":  "A heat-swollen slime found near kilns, cinders, and old lava vents where it feeds on ash and grease.",
+                        "habitatTags":  [
+                                            "ash_field",
+                                            "burned_wood",
+                                            "kiln_yard",
+                                            "volcanic_rim"
+                                        ],
+                        "behaviorTags":  [
+                                             "amorphous",
+                                             "heat_touched",
+                                             "corrosive",
+                                             "mindless"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "slime_jelly",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  1.0
+                                      },
+                                      {
+                                          "itemKey":  "ember_core",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.35
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.dire_boar",
+                        "slug":  "dire_boar",
+                        "name":  "Dire Boar",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "An oversized feral boar that wrecks fences, uproots fields, and kills anything that corners it.",
+                        "habitatTags":  [
+                                            "forest_edge",
+                                            "farm_border",
+                                            "reed_marsh",
+                                            "oak_scrub"
+                                        ],
+                        "behaviorTags":  [
+                                             "territorial",
+                                             "aggressive",
+                                             "charger",
+                                             "omnivore"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "boar_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.95
+                                      },
+                                      {
+                                          "itemKey":  "boar_hide",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "boar_tusk",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.85
+                                      },
+                                      {
+                                          "itemKey":  "boar_bone",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.8
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.ember_boar",
+                        "slug":  "ember_boar",
+                        "name":  "Ember Boar",
+                        "monsterClass":  "beast",
+                        "threat":  "high",
+                        "summary":  "A fire-scarred boar from volcanic scrub and burned forests whose tusks throw sparks when it charges.",
+                        "habitatTags":  [
+                                            "burned_wood",
+                                            "ash_field",
+                                            "volcanic_rim",
+                                            "charred_hills"
+                                        ],
+                        "behaviorTags":  [
+                                             "territorial",
+                                             "aggressive",
+                                             "charger",
+                                             "heat_touched"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "ember_boar_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.95
+                                      },
+                                      {
+                                          "itemKey":  "ember_boar_hide",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.85
+                                      },
+                                      {
+                                          "itemKey":  "ember_boar_tusk",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "ember_boar_bone",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.8
+                                      },
+                                      {
+                                          "itemKey":  "ember_core",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.2
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.bog_troll",
+                        "slug":  "bog_troll",
+                        "name":  "Bog Troll",
+                        "monsterClass":  "giantkin",
+                        "threat":  "high",
+                        "summary":  "A swamp giant that lairs in reed bogs and ford crossings, preying on carts, ferrymen, and unwary patrols.",
+                        "habitatTags":  [
+                                            "bog",
+                                            "reed_marsh",
+                                            "river_ford",
+                                            "foggy_wetland"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "regenerative",
+                                             "territorial",
+                                             "carnivore"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "troll_hide",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.85
+                                      },
+                                      {
+                                          "itemKey":  "troll_tooth",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  0.8
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "ancient_coin_cache",
+                                         "chance":  0.25
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.cave_spider_matron",
+                        "slug":  "cave_spider_matron",
+                        "name":  "Cave Spider Matron",
+                        "monsterClass":  "beast",
+                        "threat":  "high",
+                        "summary":  "The brood mother of deep cave webs, large enough to seal shaft mouths and drag miners out of line.",
+                        "habitatTags":  [
+                                            "mine_tunnel",
+                                            "cave_floor",
+                                            "collapsed_passage",
+                                            "ruins"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "web_builder",
+                                             "pack_brood",
+                                             "venomous"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "cave_silk",
+                                          "quantityMin":  2,
+                                          "quantityMax":  5,
+                                          "chance":  0.95
+                                      },
+                                      {
+                                          "itemKey":  "venom_sac",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.8
+                                      },
+                                      {
+                                          "itemKey":  "chitin_plate",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  0.75
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.harpy_raider",
+                        "slug":  "harpy_raider",
+                        "name":  "Harpy Raider",
+                        "monsterClass":  "humanoid",
+                        "threat":  "moderate",
+                        "summary":  "A cliff-nesting aerial raider that snatches cargo, lone travelers, and weak deckhands from exposed routes.",
+                        "habitatTags":  [
+                                            "sea_cliff",
+                                            "wind_spire",
+                                            "broken_coast",
+                                            "high_pass"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "aerial",
+                                             "pack_hunter",
+                                             "thieving"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "harpy_feather",
+                                          "quantityMin":  2,
+                                          "quantityMax":  5,
+                                          "chance":  0.95
+                                      },
+                                      {
+                                          "itemKey":  "talon_bundle",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.75
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "ancient_coin_cache",
+                                         "chance":  0.2
+                                     },
+                                     {
+                                         "itemKey":  "kobold_bauble",
+                                         "chance":  0.15
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.river_elemental",
+                        "slug":  "river_elemental",
+                        "name":  "River Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A violent water spirit that forms where currents, floods, or drowned works leave enough force to wake a will in the river.",
+                        "habitatTags":  [
+                                            "river_ford",
+                                            "waterfall_base",
+                                            "canal_lock",
+                                            "whirlpool"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "territorial",
+                                             "amorphous",
+                                             "sudden_surge"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "river_core",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.9
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.ember_elemental",
+                        "slug":  "ember_elemental",
+                        "name":  "Ember Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A furnace-born spirit that coalesces around great fires, kilns, and battlefield ash.",
+                        "habitatTags":  [
+                                            "kiln_yard",
+                                            "ash_field",
+                                            "volcanic_rim",
+                                            "burned_wood"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "aggressive",
+                                             "heat_touched",
+                                             "sudden_surge"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "ember_core",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.9
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.stone_elemental",
+                        "slug":  "stone_elemental",
+                        "name":  "Stone Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A grinding mass of awakened stone that rises from quarry scars, broken fortifications, and old mountain wounds.",
+                        "habitatTags":  [
+                                            "quarry_edge",
+                                            "mountain_pass",
+                                            "ruins",
+                                            "stonefield"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "territorial",
+                                             "slow",
+                                             "crusher"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "stone_core",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.9
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.storm_elemental",
+                        "slug":  "storm_elemental",
+                        "name":  "Storm Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "severe",
+                        "summary":  "A sky-wrath spirit bound to thunderheads, broken masts, and cliff lines where wind never settles.",
+                        "habitatTags":  [
+                                            "sea_cliff",
+                                            "storm_peak",
+                                            "open_water",
+                                            "tempest_pass"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "aerial",
+                                             "aggressive",
+                                             "sudden_surge"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "storm_core",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.85
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.grave_skeleton",
+                        "slug":  "grave_skeleton",
+                        "name":  "Grave Skeleton",
+                        "monsterClass":  "undead",
+                        "threat":  "low",
+                        "summary":  "A rattling lesser undead that rises from neglected cairns, battle pits, and broken catacombs.",
+                        "habitatTags":  [
+                                            "graveyard",
+                                            "battlefield",
+                                            "catacomb",
+                                            "ruins"
+                                        ],
+                        "behaviorTags":  [
+                                             "undead",
+                                             "mindless",
+                                             "pack_hunter",
+                                             "persistent"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "grave_dust",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "ancient_coin_cache",
+                                         "chance":  0.25
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.barrow_wight",
+                        "slug":  "barrow_wight",
+                        "name":  "Barrow Wight",
+                        "monsterClass":  "undead",
+                        "threat":  "high",
+                        "summary":  "An ancient burial guardian that still clings to grave wealth, old arms, and cursed tomb paths.",
+                        "habitatTags":  [
+                                            "barrow",
+                                            "catacomb",
+                                            "ruins",
+                                            "stonefield"
+                                        ],
+                        "behaviorTags":  [
+                                             "undead",
+                                             "territorial",
+                                             "cunning",
+                                             "persistent"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "grave_dust",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.9
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "ancient_coin_cache",
+                                         "chance":  0.6
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.kobold_raider",
+                        "slug":  "kobold_raider",
+                        "name":  "Kobold Raider",
+                        "monsterClass":  "humanoid",
+                        "threat":  "moderate",
+                        "summary":  "A lean, torch-bitten kobold that favors wagon flanks, isolated waystations, and panicked strikes on exposed caravans.",
+                        "habitatTags":  [
+                                            "roadside_ditch",
+                                            "frontier_track",
+                                            "ferry_crossing",
+                                            "ruins"
+                                        ],
+                        "behaviorTags":  [
+                                             "pack_hunter",
+                                             "ambusher",
+                                             "thieving",
+                                             "saboteur"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "kobold_scrap",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "kobold_bauble",
+                                         "chance":  0.4
+                                     },
+                                     {
+                                         "itemKey":  "charcoal",
+                                         "chance":  0.3
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.kobold_trapmaster",
+                        "slug":  "kobold_trapmaster",
+                        "name":  "Kobold Trapmaster",
+                        "monsterClass":  "humanoid",
+                        "threat":  "moderate",
+                        "summary":  "A vicious kobold skirmisher who seeds lanes and culverts with hooked lines, pits, and poison spikes before a raid.",
+                        "habitatTags":  [
+                                            "frontier_track",
+                                            "roadside_ditch",
+                                            "mine_tunnel",
+                                            "ferry_crossing"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "saboteur",
+                                             "cunning",
+                                             "pack_hunter"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "kobold_scrap",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      },
+                                      {
+                                          "itemKey":  "venom_sac",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.35
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "kobold_bauble",
+                                         "chance":  0.5
+                                     },
+                                     {
+                                         "itemKey":  "copper_ore",
+                                         "chance":  0.15
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.granary_rat",
+                        "slug":  "granary_rat",
+                        "name":  "Granary Rat",
+                        "monsterClass":  "beast",
+                        "threat":  "low",
+                        "summary":  "A bloated grain-fed rat that multiplies fast in lofts, bins, and cellars and can strip a store faster than a hungry village.",
+                        "habitatTags":  [
+                                            "granary",
+                                            "cellar",
+                                            "store_shed",
+                                            "ditch"
+                                        ],
+                        "behaviorTags":  [
+                                             "pack_hunter",
+                                             "scavenger",
+                                             "gnawer",
+                                             "infestation"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "rat_meat",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "rat_tail",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "grain",
+                                         "chance":  0.35
+                                     },
+                                     {
+                                         "itemKey":  "bread_loaf",
+                                         "chance":  0.15
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.sewer_rat_swarm",
+                        "slug":  "sewer_rat_swarm",
+                        "name":  "Sewer Rat Swarm",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "A coordinated knot of drain and midden rats that can roll through dock lofts and culverts in a single filthy tide.",
+                        "habitatTags":  [
+                                            "sewer_edge",
+                                            "ditch",
+                                            "cellar",
+                                            "granary"
+                                        ],
+                        "behaviorTags":  [
+                                             "pack_hunter",
+                                             "infestation",
+                                             "scavenger",
+                                             "sudden_surge"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "rat_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "rat_tail",
+                                          "quantityMin":  2,
+                                          "quantityMax":  5,
+                                          "chance":  1.0
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "grain",
+                                         "chance":  0.45
+                                     },
+                                     {
+                                         "itemKey":  "bread_loaf",
+                                         "chance":  0.25
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.giant_tick_broodmother",
+                        "slug":  "giant_tick_broodmother",
+                        "name":  "Giant Tick Broodmother",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "A swollen tick matriarch that nests in damp straw and rotten timber, spawning blood-mad broods into stables and lofts.",
+                        "habitatTags":  [
+                                            "barn_loft",
+                                            "store_shed",
+                                            "reed_marsh",
+                                            "ditch"
+                                        ],
+                        "behaviorTags":  [
+                                             "parasite",
+                                             "ambusher",
+                                             "brood_nest",
+                                             "blood_feeder"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "tick_meat",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.75
+                                      },
+                                      {
+                                          "itemKey":  "tick_chitin",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.cave_centipede",
+                        "slug":  "cave_centipede",
+                        "name":  "Cave Centipede",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "A handspan-thick centipede that thrives in rubble seams, quarry cuts, and old tunnel drains where boots seldom land cleanly.",
+                        "habitatTags":  [
+                                            "mine_tunnel",
+                                            "quarry_edge",
+                                            "collapsed_passage",
+                                            "cave_floor"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "venomous",
+                                             "burrower",
+                                             "predator"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "centipede_meat",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.8
+                                      },
+                                      {
+                                          "itemKey":  "centipede_venom",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.85
+                                      },
+                                      {
+                                          "itemKey":  "centipede_chitin",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.dune_scorpion",
+                        "slug":  "dune_scorpion",
+                        "name":  "Dune Scorpion",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "A broad-clawed scorpion of ash slopes and broken spoil, notorious for hiding under tools, sledges, and sun-warmed stone.",
+                        "habitatTags":  [
+                                            "ash_field",
+                                            "stonefield",
+                                            "quarry_edge",
+                                            "charred_hills"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "venomous",
+                                             "burrower",
+                                             "territorial"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "scorpion_meat",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.7
+                                      },
+                                      {
+                                          "itemKey":  "scorpion_venom",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.85
+                                      },
+                                      {
+                                          "itemKey":  "scorpion_chitin",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.mire_slime",
+                        "slug":  "mire_slime",
+                        "name":  "Mire Slime",
+                        "monsterClass":  "ooze",
+                        "threat":  "moderate",
+                        "summary":  "A swamp-fed ooze that clings to culverts, reeds, and lock walls before sloughing forward in choking sheets.",
+                        "habitatTags":  [
+                                            "bog",
+                                            "reed_marsh",
+                                            "canal_lock",
+                                            "ditch"
+                                        ],
+                        "behaviorTags":  [
+                                             "amorphous",
+                                             "corrosive",
+                                             "ambusher",
+                                             "mindless"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "slime_jelly",
+                                          "quantityMin":  2,
+                                          "quantityMax":  3,
+                                          "chance":  1.0
+                                      },
+                                      {
+                                          "itemKey":  "acid_gland",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.55
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.frost_slime",
+                        "slug":  "frost_slime",
+                        "name":  "Frost Slime",
+                        "monsterClass":  "ooze",
+                        "threat":  "moderate",
+                        "summary":  "A pale cellar ooze that blooms in cold cisterns and winter stores, leaving brittle frost and spoiled stock behind it.",
+                        "habitatTags":  [
+                                            "cellar",
+                                            "ice_cave",
+                                            "storm_peak",
+                                            "store_shed"
+                                        ],
+                        "behaviorTags":  [
+                                             "amorphous",
+                                             "cold_touched",
+                                             "ambusher",
+                                             "mindless"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "slime_jelly",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  1.0
+                                      },
+                                      {
+                                          "itemKey":  "frost_gland",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.4
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.dire_wolf",
+                        "slug":  "dire_wolf",
+                        "name":  "Dire Wolf",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "A massive wolf that hunts in disciplined packs and learns the routine of shepherds, drovers, and sentry lines.",
+                        "habitatTags":  [
+                                            "forest_edge",
+                                            "high_pass",
+                                            "frontier_track",
+                                            "hill_scrub"
+                                        ],
+                        "behaviorTags":  [
+                                             "pack_hunter",
+                                             "predator",
+                                             "cunning",
+                                             "territorial"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "wolf_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "wolf_fur",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "wolf_bone",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.85
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.shadow_wolf",
+                        "slug":  "shadow_wolf",
+                        "name":  "Shadow Wolf",
+                        "monsterClass":  "beast",
+                        "threat":  "high",
+                        "summary":  "A deep-coated night hunter of ravines and black pines that stalks by silence until the lane has already been cut off.",
+                        "habitatTags":  [
+                                            "high_pass",
+                                            "deep_forest",
+                                            "storm_peak",
+                                            "ruins"
+                                        ],
+                        "behaviorTags":  [
+                                             "pack_hunter",
+                                             "predator",
+                                             "ambusher",
+                                             "night_stalker"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "deep_wolf_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "deep_wolf_fur",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.95
+                                      },
+                                      {
+                                          "itemKey":  "deep_wolf_bone",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.8
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    },
+                    {
+                        "id":  "monster.grave_ghoul",
+                        "slug":  "grave_ghoul",
+                        "name":  "Grave Ghoul",
+                        "monsterClass":  "undead",
+                        "threat":  "moderate",
+                        "summary":  "A carrion-hungry corpse eater that stalks crypt mouths, ruined fields, and plague pits in search of the living.",
+                        "habitatTags":  [
+                                            "graveyard",
+                                            "catacomb",
+                                            "battlefield",
+                                            "ruins"
+                                        ],
+                        "behaviorTags":  [
+                                             "undead",
+                                             "cunning",
+                                             "pack_hunter",
+                                             "persistent"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "grave_dust",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  0.95
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "ancient_coin_cache",
+                                         "chance":  0.3
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.mud_elemental",
+                        "slug":  "mud_elemental",
+                        "name":  "Mud Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A sucking earth-water spirit born from drowned ditches, canal breaches, and churned banks that refuse to settle.",
+                        "habitatTags":  [
+                                            "river_ford",
+                                            "bog",
+                                            "canal_lock",
+                                            "ditch"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "territorial",
+                                             "amorphous",
+                                             "sudden_surge"
+                                         ],
+                        "drops":  [
+                                      {
+                                          "itemKey":  "mud_core",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.9
+                                      }
+                                  ],
+                        "loot":  [
+
+                                 ]
+                    }
+                ]
+}

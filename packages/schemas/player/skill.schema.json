@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerSkillRecord",
+  "type": "object",
+  "required": ["id", "name", "kind", "defaultRank", "governingAttributes"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "kind": { "type": "string" },
+    "defaultRank": { "type": "integer", "minimum": 0 },
+    "governingAttributes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": true
+}

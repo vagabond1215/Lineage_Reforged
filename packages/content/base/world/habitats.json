@@ -1,18 +1,1092 @@
 {
-  "records": [
-    {
-      "id": "habitat.coastal.tidal_flat",
-      "slug": "tidal_flat",
-      "name": "Tidal Flat",
-      "biomeId": "biome.temperate.deciduous_forest",
-      "shape": "patch"
-    },
-    {
-      "id": "habitat.subterranean.crystal_cave",
-      "slug": "crystal_cave",
-      "name": "Crystal Cave",
-      "biomeId": "biome.temperate.deciduous_forest",
-      "shape": "volume"
-    }
-  ]
+    "records":  [
+                    {
+                        "id":  "habitat.marine.coral_reef_fringe",
+                        "slug":  "coral_reef_fringe",
+                        "name":  "Coral Reef (Fringe)",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.marine.marine",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.coral_reef_barrier",
+                        "slug":  "coral_reef_barrier",
+                        "name":  "Coral Reef (Barrier)",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.marine.marine",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.coral_reef_atoll",
+                        "slug":  "coral_reef_atoll",
+                        "name":  "Coral Reef (Atoll)",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.marine.marine",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.kelp_forest_coastal",
+                        "slug":  "kelp_forest_coastal",
+                        "name":  "Kelp Forest (Coastal)",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.marine.marine",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.kelp_forest_drift",
+                        "slug":  "kelp_forest_drift",
+                        "name":  "Kelp Forest (Drift)",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.marine.marine",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.seagrass_meadow",
+                        "slug":  "seagrass_meadow",
+                        "name":  "Seagrass Meadow",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.marine.marine",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.current_front",
+                        "slug":  "current_front",
+                        "name":  "Current Front",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.marine.marine",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.shelf_break",
+                        "slug":  "shelf_break",
+                        "name":  "Shelf Break",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.marine.marine"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.hydrothermal_vent",
+                        "slug":  "hydrothermal_vent",
+                        "name":  "Hydrothermal Vent",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.marine.marine"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.cold_seep_methane",
+                        "slug":  "cold_seep_methane",
+                        "name":  "Cold Seep (Methane)",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.marine.marine"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.marine.cold_seep_brine",
+                        "slug":  "cold_seep_brine",
+                        "name":  "Cold Seep (Brine)",
+                        "biomeId":  "biome.marine.marine",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.marine.marine"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.shoreline",
+                        "slug":  "shoreline",
+                        "name":  "Shoreline",
+                        "biomeId":  "biome.wetlands.mangrove_forest",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.wetlands.mangrove_forest",
+                                         "biome.shrublands.mediterranean_woodland",
+                                         "biome.tropical.tropical_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.sea_cliff",
+                        "slug":  "sea_cliff",
+                        "name":  "Sea Cliff",
+                        "biomeId":  "biome.shrublands.mediterranean_woodland",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.shrublands.mediterranean_woodland",
+                                         "biome.polar.alpine_tundra",
+                                         "biome.temperate.mixed_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.dune_ridge",
+                        "slug":  "dune_ridge",
+                        "name":  "Dune Ridge",
+                        "biomeId":  "biome.shrublands.dry_scrub",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.shrublands.dry_scrub",
+                                         "biome.desert.hot_desert",
+                                         "biome.grasslands.steppe"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.beach",
+                        "slug":  "beach",
+                        "name":  "Beach",
+                        "biomeId":  "biome.wetlands.mangrove_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.mangrove_forest",
+                                         "biome.tropical.tropical_rainforest",
+                                         "biome.shrublands.mediterranean_woodland"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.tidal_flat",
+                        "slug":  "tidal_flat",
+                        "name":  "Tidal Flat",
+                        "biomeId":  "biome.wetlands.mangrove_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.mangrove_forest",
+                                         "biome.wetlands.marsh",
+                                         "biome.wetlands.fen"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.estuary",
+                        "slug":  "estuary",
+                        "name":  "Estuary",
+                        "biomeId":  "biome.wetlands.mangrove_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.mangrove_forest",
+                                         "biome.wetlands.marsh",
+                                         "biome.wetlands.swamp"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.tide_pools",
+                        "slug":  "tide_pools",
+                        "name":  "Tide Pools",
+                        "biomeId":  "biome.wetlands.mangrove_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.mangrove_forest",
+                                         "biome.marine.marine",
+                                         "biome.shrublands.mediterranean_woodland"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.coastal.blowhole",
+                        "slug":  "blowhole",
+                        "name":  "Blowhole",
+                        "biomeId":  "biome.wetlands.mangrove_forest",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.wetlands.mangrove_forest",
+                                         "biome.marine.marine"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.seep_cold_spring",
+                        "slug":  "seep_cold_spring",
+                        "name":  "Seep (Cold Spring)",
+                        "biomeId":  "biome.grasslands.alpine_meadow",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.grasslands.alpine_meadow",
+                                         "biome.temperate.taiga",
+                                         "biome.polar.tundra"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.seep_hot_spring",
+                        "slug":  "seep_hot_spring",
+                        "name":  "Seep (Hot Spring)",
+                        "biomeId":  "biome.tropical.cloud_forest",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.tropical.cloud_forest",
+                                         "biome.desert.glass_waste",
+                                         "biome.subterranean.crystal_garden"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.rapids",
+                        "slug":  "rapids",
+                        "name":  "Rapids",
+                        "biomeId":  "biome.temperate.mixed_forest",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.temperate.mixed_forest",
+                                         "biome.temperate.coniferous_forest",
+                                         "biome.temperate.taiga"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.braided_channel",
+                        "slug":  "braided_channel",
+                        "name":  "Braided Channel",
+                        "biomeId":  "biome.temperate.mixed_forest",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.temperate.mixed_forest",
+                                         "biome.grasslands.stormbound_prairie"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.river",
+                        "slug":  "river",
+                        "name":  "River",
+                        "biomeId":  "biome.temperate.mixed_forest",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.temperate.mixed_forest",
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.temperate.taiga",
+                                         "biome.tropical.seasonal_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.stream",
+                        "slug":  "stream",
+                        "name":  "Stream",
+                        "biomeId":  "biome.temperate.deciduous_forest",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.temperate.coniferous_forest",
+                                         "biome.tropical.cloud_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.seasonal_creek",
+                        "slug":  "seasonal_creek",
+                        "name":  "Seasonal Creek",
+                        "biomeId":  "biome.grasslands.steppe",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.grasslands.steppe",
+                                         "biome.grasslands.savanna",
+                                         "biome.tropical.dry_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.oxbow_lake",
+                        "slug":  "oxbow_lake",
+                        "name":  "Oxbow Lake",
+                        "biomeId":  "biome.temperate.deciduous_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.wetlands.swamp",
+                                         "biome.tropical.tropical_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.lake",
+                        "slug":  "lake",
+                        "name":  "Lake",
+                        "biomeId":  "biome.temperate.deciduous_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.temperate.taiga",
+                                         "biome.polar.alpine_tundra"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.pond",
+                        "slug":  "pond",
+                        "name":  "Pond",
+                        "biomeId":  "biome.temperate.deciduous_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.shrublands.chaparral"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.marsh_pool",
+                        "slug":  "marsh_pool",
+                        "name":  "Marsh Pool",
+                        "biomeId":  "biome.wetlands.marsh",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.marsh",
+                                         "biome.wetlands.swamp",
+                                         "biome.wetlands.fen"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.riverbank",
+                        "slug":  "riverbank",
+                        "name":  "Riverbank",
+                        "biomeId":  "biome.grasslands.steppe",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.grasslands.steppe",
+                                         "biome.grasslands.savanna",
+                                         "biome.temperate.deciduous_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.hydrology.floodplain_terrace",
+                        "slug":  "floodplain_terrace",
+                        "name":  "Floodplain Terrace",
+                        "biomeId":  "biome.grasslands.stormbound_prairie",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.grasslands.stormbound_prairie",
+                                         "biome.grasslands.savanna",
+                                         "biome.tropical.seasonal_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.vegetation.flower_meadow",
+                        "slug":  "flower_meadow",
+                        "name":  "Flower Meadow",
+                        "biomeId":  "biome.grasslands.alpine_meadow",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.grasslands.alpine_meadow",
+                                         "biome.grasslands.steppe",
+                                         "biome.grasslands.savanna"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.vegetation.brush_patch",
+                        "slug":  "brush_patch",
+                        "name":  "Brush Patch",
+                        "biomeId":  "biome.shrublands.chaparral",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.shrublands.chaparral",
+                                         "biome.shrublands.dry_scrub"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.vegetation.thicket",
+                        "slug":  "thicket",
+                        "name":  "Thicket",
+                        "biomeId":  "biome.shrublands.emberwild_thicket",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.shrublands.emberwild_thicket",
+                                         "biome.tropical.tropical_rainforest",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.vegetation.clearing",
+                        "slug":  "clearing",
+                        "name":  "Clearing",
+                        "biomeId":  "biome.temperate.mixed_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.temperate.mixed_forest",
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.temperate.taiga"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.vegetation.forest_edge",
+                        "slug":  "forest_edge",
+                        "name":  "Forest Edge",
+                        "biomeId":  "biome.temperate.deciduous_forest",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.temperate.coniferous_forest",
+                                         "biome.tropical.tropical_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.vegetation.ancient_tree",
+                        "slug":  "ancient_tree",
+                        "name":  "Ancient Tree",
+                        "biomeId":  "biome.temperate.temperate_rainforest",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.temperate.temperate_rainforest",
+                                         "biome.tropical.tropical_rainforest",
+                                         "biome.tropical.cloud_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.vegetation.fallen_log",
+                        "slug":  "fallen_log",
+                        "name":  "Fallen Log",
+                        "biomeId":  "biome.temperate.deciduous_forest",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.temperate.mixed_forest",
+                                         "biome.subterranean.mushroom_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.disturbance.dust_bowl",
+                        "slug":  "dust_bowl",
+                        "name":  "Dust Bowl",
+                        "biomeId":  "biome.desert.hot_desert",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.desert.hot_desert",
+                                         "biome.desert.cold_desert",
+                                         "biome.grasslands.steppe"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.disturbance.flood_debris_field",
+                        "slug":  "flood_debris_field",
+                        "name":  "Flood Debris Field",
+                        "biomeId":  "biome.wetlands.swamp",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.swamp",
+                                         "biome.wetlands.marsh",
+                                         "biome.wetlands.fen"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.disturbance.burn_scar",
+                        "slug":  "burn_scar",
+                        "name":  "Burn Scar",
+                        "biomeId":  "biome.shrublands.chaparral",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.shrublands.chaparral",
+                                         "biome.temperate.coniferous_forest",
+                                         "biome.tropical.dry_forest",
+                                         "biome.grasslands.stormbound_prairie"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.disturbance.windthrow",
+                        "slug":  "windthrow",
+                        "name":  "Windthrow",
+                        "biomeId":  "biome.temperate.coniferous_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.temperate.coniferous_forest",
+                                         "biome.temperate.mixed_forest",
+                                         "biome.temperate.temperate_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.disturbance.landslide",
+                        "slug":  "landslide",
+                        "name":  "Landslide",
+                        "biomeId":  "biome.polar.alpine_tundra",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.polar.alpine_tundra",
+                                         "biome.tropical.cloud_forest",
+                                         "biome.grasslands.alpine_meadow"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.disturbance.blight_patch",
+                        "slug":  "blight_patch",
+                        "name":  "Blight Patch",
+                        "biomeId":  "biome.wetlands.whisper_mire",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.whisper_mire",
+                                         "biome.wetlands.bog",
+                                         "biome.wetlands.swamp",
+                                         "biome.temperate.temperate_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.fungal_grotto",
+                        "slug":  "fungal_grotto",
+                        "name":  "Fungal Grotto",
+                        "biomeId":  "biome.subterranean.mushroom_forest",
+                        "shape":  "volume",
+                        "biomeIds":  [
+                                         "biome.subterranean.mushroom_forest",
+                                         "biome.subterranean.underdark"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.lava_tube",
+                        "slug":  "lava_tube",
+                        "name":  "Lava Tube",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "volume",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.crystal_garden"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.cave_dry",
+                        "slug":  "cave_dry",
+                        "name":  "Cave (Dry)",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "volume",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.mushroom_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.cave_flooded",
+                        "slug":  "cave_flooded",
+                        "name":  "Cave (Flooded)",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "volume",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.crystal_garden"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.cave_ice",
+                        "slug":  "cave_ice",
+                        "name":  "Cave (Ice)",
+                        "biomeId":  "biome.subterranean.crystal_garden",
+                        "shape":  "volume",
+                        "biomeIds":  [
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.polar.polar_ice_cap",
+                                         "biome.subterranean.underdark"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.cavern",
+                        "slug":  "cavern",
+                        "name":  "Cavern",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "volume",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.mushroom_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.crystal_cave",
+                        "slug":  "crystal_cave",
+                        "name":  "Crystal Cave",
+                        "biomeId":  "biome.subterranean.crystal_garden",
+                        "shape":  "volume",
+                        "biomeIds":  [
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.subterranean.underdark"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.chasm",
+                        "slug":  "chasm",
+                        "name":  "Chasm",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.tropical.blooming_chasm"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.tunnel_network",
+                        "slug":  "tunnel_network",
+                        "name":  "Tunnel Network",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.mushroom_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.subterranean_river",
+                        "slug":  "subterranean_river",
+                        "name":  "Subterranean River",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.crystal_garden"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.underground_lake_potable",
+                        "slug":  "underground_lake_potable",
+                        "name":  "Underground Lake (Potable)",
+                        "biomeId":  "biome.subterranean.crystal_garden",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.subterranean.mushroom_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.underground_lake_mineral",
+                        "slug":  "underground_lake_mineral",
+                        "name":  "Underground Lake (Mineral)",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.crystal_garden"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.stalagmite_field",
+                        "slug":  "stalagmite_field",
+                        "name":  "Stalagmite Field",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.subterranean.crystal_garden"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.gas_vent",
+                        "slug":  "gas_vent",
+                        "name":  "Gas Vent",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.desert.glass_waste"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.subterranean.underground_spring",
+                        "slug":  "underground_spring",
+                        "name":  "Underground Spring",
+                        "biomeId":  "biome.subterranean.crystal_garden",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.subterranean.mushroom_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.escarpment",
+                        "slug":  "escarpment",
+                        "name":  "Escarpment",
+                        "biomeId":  "biome.polar.alpine_tundra",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.polar.alpine_tundra",
+                                         "biome.shrublands.dry_scrub",
+                                         "biome.grasslands.steppe"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.cliff",
+                        "slug":  "cliff",
+                        "name":  "Cliff",
+                        "biomeId":  "biome.polar.alpine_tundra",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.polar.alpine_tundra",
+                                         "biome.temperate.mixed_forest",
+                                         "biome.shrublands.mediterranean_woodland"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.mountain_pass",
+                        "slug":  "mountain_pass",
+                        "name":  "Mountain Pass",
+                        "biomeId":  "biome.grasslands.alpine_meadow",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.grasslands.alpine_meadow",
+                                         "biome.polar.alpine_tundra",
+                                         "biome.temperate.taiga"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.scree_run",
+                        "slug":  "scree_run",
+                        "name":  "Scree Run",
+                        "biomeId":  "biome.polar.alpine_tundra",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.polar.alpine_tundra",
+                                         "biome.grasslands.alpine_meadow",
+                                         "biome.temperate.taiga"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.dry_wash",
+                        "slug":  "dry_wash",
+                        "name":  "Dry Wash",
+                        "biomeId":  "biome.desert.cold_desert",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.desert.cold_desert",
+                                         "biome.desert.hot_desert",
+                                         "biome.grasslands.steppe"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.ravine",
+                        "slug":  "ravine",
+                        "name":  "Ravine",
+                        "biomeId":  "biome.polar.alpine_tundra",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.polar.alpine_tundra",
+                                         "biome.temperate.mixed_forest",
+                                         "biome.tropical.cloud_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.canyon",
+                        "slug":  "canyon",
+                        "name":  "Canyon",
+                        "biomeId":  "biome.polar.alpine_tundra",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.polar.alpine_tundra",
+                                         "biome.desert.hot_desert",
+                                         "biome.desert.cold_desert"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.ridge_line",
+                        "slug":  "ridge_line",
+                        "name":  "Ridge Line",
+                        "biomeId":  "biome.polar.alpine_tundra",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.polar.alpine_tundra",
+                                         "biome.temperate.taiga",
+                                         "biome.grasslands.steppe"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.basin",
+                        "slug":  "basin",
+                        "name":  "Basin",
+                        "biomeId":  "biome.desert.cold_desert",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.desert.cold_desert",
+                                         "biome.desert.hot_desert",
+                                         "biome.grasslands.steppe"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.sinkhole",
+                        "slug":  "sinkhole",
+                        "name":  "Sinkhole",
+                        "biomeId":  "biome.shrublands.dry_scrub",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.shrublands.dry_scrub",
+                                         "biome.wetlands.bog",
+                                         "biome.wetlands.whisper_mire"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.talus_field",
+                        "slug":  "talus_field",
+                        "name":  "Talus Field",
+                        "biomeId":  "biome.grasslands.alpine_meadow",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.grasslands.alpine_meadow",
+                                         "biome.polar.alpine_tundra",
+                                         "biome.temperate.taiga"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.mudflat",
+                        "slug":  "mudflat",
+                        "name":  "Mudflat",
+                        "biomeId":  "biome.wetlands.fen",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.fen",
+                                         "biome.wetlands.marsh",
+                                         "biome.wetlands.swamp",
+                                         "biome.wetlands.mangrove_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.salt_pan",
+                        "slug":  "salt_pan",
+                        "name":  "Salt Pan",
+                        "biomeId":  "biome.desert.hot_desert",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.desert.hot_desert",
+                                         "biome.desert.cold_desert",
+                                         "biome.desert.glass_waste"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.geothermal_field",
+                        "slug":  "geothermal_field",
+                        "name":  "Geothermal Field",
+                        "biomeId":  "biome.desert.glass_waste",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.desert.glass_waste",
+                                         "biome.desert.hot_desert",
+                                         "biome.tropical.blooming_chasm"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.geomorphology.rock_spire",
+                        "slug":  "rock_spire",
+                        "name":  "Rock Spire",
+                        "biomeId":  "biome.desert.glass_waste",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.desert.glass_waste",
+                                         "biome.desert.cold_desert",
+                                         "biome.polar.alpine_tundra"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.planar_rift_stable",
+                        "slug":  "planar_rift_stable",
+                        "name":  "Planar Rift (Stable)",
+                        "biomeId":  "biome.polar.shimmering_expanse",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.polar.shimmering_expanse",
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.temperate.temperate_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.planar_rift_unstable",
+                        "slug":  "planar_rift_unstable",
+                        "name":  "Planar Rift (Unstable)",
+                        "biomeId":  "biome.tropical.blooming_chasm",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.tropical.blooming_chasm",
+                                         "biome.subterranean.underdark",
+                                         "biome.desert.glass_waste"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.ley_node_convergence",
+                        "slug":  "ley_node_convergence",
+                        "name":  "Ley Node (Convergence)",
+                        "biomeId":  "biome.temperate.mixed_forest",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.temperate.mixed_forest",
+                                         "biome.temperate.temperate_rainforest",
+                                         "biome.tropical.cloud_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.ley_node_intersection",
+                        "slug":  "ley_node_intersection",
+                        "name":  "Ley Node (Intersection)",
+                        "biomeId":  "biome.subterranean.crystal_garden",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.temperate.mixed_forest",
+                                         "biome.polar.shimmering_expanse"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.portal_scar",
+                        "slug":  "portal_scar",
+                        "name":  "Portal Scar",
+                        "biomeId":  "biome.subterranean.underdark",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.subterranean.underdark",
+                                         "biome.tropical.blooming_chasm",
+                                         "biome.desert.glass_waste"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.cursed_idol_site",
+                        "slug":  "cursed_idol_site",
+                        "name":  "Cursed Idol Site",
+                        "biomeId":  "biome.tropical.blooming_chasm",
+                        "shape":  "point",
+                        "biomeIds":  [
+                                         "biome.tropical.blooming_chasm",
+                                         "biome.wetlands.whisper_mire",
+                                         "biome.tropical.tropical_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.leyline",
+                        "slug":  "leyline",
+                        "name":  "Leyline",
+                        "biomeId":  "biome.polar.shimmering_expanse",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.polar.shimmering_expanse",
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.temperate.mixed_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.cliffside_ore_forest",
+                        "slug":  "cliffside_ore_forest",
+                        "name":  "Cliffside Ore Forest",
+                        "biomeId":  "biome.temperate.coniferous_forest",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.temperate.coniferous_forest",
+                                         "biome.temperate.mixed_forest",
+                                         "biome.polar.alpine_tundra"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.aether_fissure",
+                        "slug":  "aether_fissure",
+                        "name":  "Aether Fissure",
+                        "biomeId":  "biome.tropical.blooming_chasm",
+                        "shape":  "linear",
+                        "biomeIds":  [
+                                         "biome.tropical.blooming_chasm",
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.desert.glass_waste"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.genie_oasis",
+                        "slug":  "genie_oasis",
+                        "name":  "Genie Oasis",
+                        "biomeId":  "biome.desert.hot_desert",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.desert.hot_desert",
+                                         "biome.desert.glass_waste",
+                                         "biome.desert.cold_desert"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.corrupted_grounds",
+                        "slug":  "corrupted_grounds",
+                        "name":  "Corrupted Grounds",
+                        "biomeId":  "biome.wetlands.whisper_mire",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.wetlands.whisper_mire",
+                                         "biome.wetlands.bog",
+                                         "biome.tropical.blooming_chasm"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.chaos_garden",
+                        "slug":  "chaos_garden",
+                        "name":  "Chaos Garden",
+                        "biomeId":  "biome.tropical.blooming_chasm",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.tropical.blooming_chasm",
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.temperate.temperate_rainforest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.poison_forest",
+                        "slug":  "poison_forest",
+                        "name":  "Poison Forest",
+                        "biomeId":  "biome.tropical.tropical_rainforest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.tropical.tropical_rainforest",
+                                         "biome.wetlands.swamp",
+                                         "biome.tropical.cloud_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.sanctuary_holy",
+                        "slug":  "sanctuary_holy",
+                        "name":  "Sanctuary (Holy)",
+                        "biomeId":  "biome.temperate.temperate_rainforest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.temperate.temperate_rainforest",
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.tropical.cloud_forest"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.sanctuary_neutral",
+                        "slug":  "sanctuary_neutral",
+                        "name":  "Sanctuary (Neutral)",
+                        "biomeId":  "biome.temperate.deciduous_forest",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.temperate.deciduous_forest",
+                                         "biome.temperate.mixed_forest",
+                                         "biome.grasslands.alpine_meadow"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.temporal_stillzone",
+                        "slug":  "temporal_stillzone",
+                        "name":  "Temporal Stillzone",
+                        "biomeId":  "biome.polar.shimmering_expanse",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.polar.shimmering_expanse",
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.polar.polar_ice_cap"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.elemental_zone",
+                        "slug":  "elemental_zone",
+                        "name":  "Elemental Zone",
+                        "biomeId":  "biome.subterranean.crystal_garden",
+                        "shape":  "patch",
+                        "biomeIds":  [
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.tropical.blooming_chasm",
+                                         "biome.polar.shimmering_expanse"
+                                     ]
+                    },
+                    {
+                        "id":  "habitat.supernatural.prismatic_curtain",
+                        "slug":  "prismatic_curtain",
+                        "name":  "Prismatic Curtain",
+                        "biomeId":  "biome.polar.shimmering_expanse",
+                        "shape":  "edge",
+                        "biomeIds":  [
+                                         "biome.polar.shimmering_expanse",
+                                         "biome.subterranean.crystal_garden",
+                                         "biome.tropical.blooming_chasm"
+                                     ]
+                    }
+                ]
 }
