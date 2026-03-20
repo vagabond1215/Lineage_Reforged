@@ -30,7 +30,9 @@ $script:workplaceChainIndex = @{}
 $script:regionRecords = @()
 $script:guildRecords = @()
 $script:worldMapRecords = @()
+$script:worldMapFeatureRecords = @()
 $script:settlementRecords = @()
+$script:travelNetworkRecords = @()
 $script:isRenderingNavigation = $false
 $script:lastNavClientWidth = 0
 
@@ -559,8 +561,14 @@ function Build-DatasetNode {
         elseif ($datasetKey -eq "world_maps") {
             $script:worldMapRecords = $records
         }
+        elseif ($datasetKey -eq "world_map_features") {
+            $script:worldMapFeatureRecords = $records
+        }
         elseif ($datasetKey -eq "settlements") {
             $script:settlementRecords = $records
+        }
+        elseif ($datasetKey -eq "travel_networks") {
+            $script:travelNetworkRecords = $records
         }
 
         foreach ($childNode in @(Group-RecordNodes -Records $records -DatasetKey $datasetKey -SourcePath $FilePath -RecordDetailKind (Get-RecordDetailKind -DatasetKey $datasetKey))) {
@@ -2346,6 +2354,752 @@ function Get-FileDetailText {
     }
 }
 
+function Get-WorldMapRecordById {
+    param([string]$MapId)
+
+    foreach ($record in @($script:worldMapRecords)) {
+        if ((Get-ObjectProperty -Object $record -Name 'id' -Default '') -eq $MapId) {
+            return $record
+        }
+    }
+
+    return $null
+}
+
+function Get-WorldMapFeatureRecordByMapId {
+    param([string]$MapId)
+
+    foreach ($record in @($script:worldMapFeatureRecords)) {
+        if ((Get-ObjectProperty -Object $record -Name 'mapId' -Default '') -eq $MapId) {
+            return $record
+        }
+    }
+
+    return $null
+}
+
+function Get-TravelNetworkRecordByMapId {
+    param([string]$MapId)
+
+    foreach ($record in @($script:travelNetworkRecords)) {
+        if ((Get-ObjectProperty -Object $record -Name 'mapId' -Default '') -eq $MapId) {
+            return $record
+        }
+    }
+
+    return $null
+}
+
+function Get-RegionRecordById {
+    param([string]$RegionId)
+
+    foreach ($record in @($script:regionRecords)) {
+        if ((Get-ObjectProperty -Object $record -Name 'id' -Default '') -eq $RegionId) {
+            return $record
+        }
+    }
+
+    return $null
+}
+
+function Get-SettlementRecordById {
+    param([string]$SettlementId)
+
+    foreach ($record in @($script:settlementRecords)) {
+        if ((Get-ObjectProperty -Object $record -Name 'id' -Default '') -eq $SettlementId) {
+            return $record
+        }
+    }
+
+    return $null
+}
+
+function Get-ChildRegionIds {
+    param([string]$ParentRegionId)
+
+    return @(
+        $script:regionRecords |
+            Where-Object { (Get-ObjectProperty -Object $_ -Name 'parentRegionId' -Default '') -eq $ParentRegionId } |
+            ForEach-Object { [string](Get-ObjectProperty -Object $_ -Name 'id' -Default '') }
+    )
+}
+
+function Get-RegionHighlightIds {
+    param([string]$RegionId)
+
+    $ids = @()
+    if (-not [string]::IsNullOrWhiteSpace($RegionId)) {
+        $ids += $RegionId
+    }
+
+    foreach ($childId in @(Get-ChildRegionIds -ParentRegionId $RegionId)) {
+        if (-not [string]::IsNullOrWhiteSpace($childId)) {
+            $ids += $childId
+        }
+    }
+
+    return @($ids | Select-Object -Unique)
+}
+
+function Get-MapIdFromZoneId {
+    param([string]$ZoneId)
+
+    if ([string]::IsNullOrWhiteSpace($ZoneId)) {
+        return ''
+    }
+
+    if ($ZoneId -match '^map_(?:climate|biome)\.([^.]+)\.') {
+        return ('world_map.{0}' -f $Matches[1])
+    }
+
+    return ''
+}
+
+function Get-MapViewportInfo {
+    param(
+        [Parameter(Mandatory = $true)][System.Drawing.Size]$CanvasSize,
+        [Parameter(Mandatory = $true)][double]$MapWidthPx,
+        [Parameter(Mandatory = $true)][double]$MapHeightPx
+    )
+
+    $padding = 12.0
+    $availableWidth = [Math]::Max(1.0, $CanvasSize.Width - ($padding * 2.0))
+    $availableHeight = [Math]::Max(1.0, $CanvasSize.Height - ($padding * 2.0))
+    $scale = [Math]::Min(($availableWidth / $MapWidthPx), ($availableHeight / $MapHeightPx))
+
+    if ($scale -le 0.0) {
+        return $null
+    }
+
+    $drawWidth = $MapWidthPx * $scale
+    $drawHeight = $MapHeightPx * $scale
+    $left = ($CanvasSize.Width - $drawWidth) / 2.0
+    $top = ($CanvasSize.Height - $drawHeight) / 2.0
+
+    return @{
+        Scale = $scale
+        Left = $left
+        Top = $top
+        Width = $drawWidth
+        Height = $drawHeight
+        Rect = (New-Object System.Drawing.RectangleF -ArgumentList ([single]$left), ([single]$top), ([single]$drawWidth), ([single]$drawHeight))
+    }
+}
+
+function Convert-MapPointToCanvas {
+    param(
+        $Point,
+        [hashtable]$Viewport
+    )
+
+    if ($null -eq $Point -or $null -eq $Viewport) {
+        return $null
+    }
+
+    return (New-Object System.Drawing.PointF -ArgumentList `
+            ([single]($Viewport.Left + ([double](Get-ObjectProperty -Object $Point -Name 'x' -Default 0) * $Viewport.Scale))), `
+            ([single]($Viewport.Top + ([double](Get-ObjectProperty -Object $Point -Name 'y' -Default 0) * $Viewport.Scale))))
+}
+
+function Convert-MapPointsToCanvas {
+    param(
+        [object[]]$Points,
+        [hashtable]$Viewport
+    )
+
+    $result = New-Object 'System.Collections.Generic.List[System.Drawing.PointF]'
+    foreach ($point in @($Points)) {
+        $canvasPoint = Convert-MapPointToCanvas -Point $point -Viewport $Viewport
+        if ($null -ne $canvasPoint) {
+            [void]$result.Add($canvasPoint)
+        }
+    }
+
+    return $result.ToArray()
+}
+
+function Get-PointsCentroid {
+    param([object[]]$Points)
+
+    $pointsArray = @($Points)
+    if ($pointsArray.Count -eq 0) {
+        return $null
+    }
+
+    $sumX = 0.0
+    $sumY = 0.0
+    foreach ($point in $pointsArray) {
+        $sumX += [double](Get-ObjectProperty -Object $point -Name 'x' -Default 0)
+        $sumY += [double](Get-ObjectProperty -Object $point -Name 'y' -Default 0)
+    }
+
+    return @{
+        x = ($sumX / $pointsArray.Count)
+        y = ($sumY / $pointsArray.Count)
+    }
+}
+
+function Get-RegionMapLabelPoint {
+    param(
+        [string]$RegionId,
+        $FeatureRecord
+    )
+
+    if ([string]::IsNullOrWhiteSpace($RegionId) -or $null -eq $FeatureRecord) {
+        return $null
+    }
+
+    $allPoints = @()
+
+    foreach ($footprint in @((Get-ObjectProperty -Object $FeatureRecord -Name 'regionFootprints' -Default @()))) {
+        $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
+        if ($regionIds -contains $RegionId) {
+            $allPoints += @((Get-ObjectProperty -Object $footprint -Name 'points' -Default @()))
+        }
+    }
+
+    if ($allPoints.Count -eq 0) {
+        foreach ($childId in @(Get-ChildRegionIds -ParentRegionId $RegionId)) {
+            foreach ($footprint in @((Get-ObjectProperty -Object $FeatureRecord -Name 'regionFootprints' -Default @()))) {
+                $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
+                if ($regionIds -contains $childId) {
+                    $allPoints += @((Get-ObjectProperty -Object $footprint -Name 'points' -Default @()))
+                }
+            }
+        }
+    }
+
+    return (Get-PointsCentroid -Points $allPoints)
+}
+
+function Get-BiomeDisplayColor {
+    param([string]$BiomeId)
+
+    switch -Regex ($BiomeId) {
+        'underdark' { return [System.Drawing.Color]::FromArgb(255, 88, 80, 104) }
+        'marine' { return [System.Drawing.Color]::FromArgb(255, 94, 166, 214) }
+        'tundra' { return [System.Drawing.Color]::FromArgb(255, 193, 213, 188) }
+        'mangrove' { return [System.Drawing.Color]::FromArgb(255, 77, 143, 94) }
+        'rainforest' { return [System.Drawing.Color]::FromArgb(255, 52, 136, 83) }
+        'seasonal_forest' { return [System.Drawing.Color]::FromArgb(255, 83, 164, 84) }
+        'dry_forest' { return [System.Drawing.Color]::FromArgb(255, 127, 155, 81) }
+        'taiga' { return [System.Drawing.Color]::FromArgb(255, 74, 131, 92) }
+        'conifer' { return [System.Drawing.Color]::FromArgb(255, 78, 144, 89) }
+        'mixed_forest' { return [System.Drawing.Color]::FromArgb(255, 99, 169, 92) }
+        'deciduous_forest' { return [System.Drawing.Color]::FromArgb(255, 127, 188, 92) }
+        'mediterranean_woodland' { return [System.Drawing.Color]::FromArgb(255, 157, 185, 86) }
+        'chaparral' { return [System.Drawing.Color]::FromArgb(255, 201, 192, 98) }
+        'dry_scrub' { return [System.Drawing.Color]::FromArgb(255, 219, 202, 120) }
+        'stormbound_prairie' { return [System.Drawing.Color]::FromArgb(255, 171, 203, 108) }
+        'alpine_meadow' { return [System.Drawing.Color]::FromArgb(255, 142, 191, 124) }
+        'steppe' { return [System.Drawing.Color]::FromArgb(255, 224, 208, 121) }
+        default { return [System.Drawing.Color]::FromArgb(255, 157, 177, 125) }
+    }
+}
+
+function Get-RegionElevationColor {
+    param($RegionRecord)
+
+    $tags = @((Get-ObjectProperty -Object $RegionRecord -Name 'tags' -Default @())) | ForEach-Object { [string]$_ }
+
+    if ($tags -contains 'highland' -or $tags -contains 'plateau' -or $tags -contains 'marches' -or $tags -contains 'old_realm') {
+        return [System.Drawing.Color]::FromArgb(210, 224, 163, 118)
+    }
+    if ($tags -contains 'mountain' -or $tags -contains 'cliffs') {
+        return [System.Drawing.Color]::FromArgb(215, 210, 142, 104)
+    }
+    if ($tags -contains 'lowlands' -or $tags -contains 'fertile' -or $tags -contains 'breadbasket' -or $tags -contains 'river_basin') {
+        return [System.Drawing.Color]::FromArgb(205, 234, 199, 154)
+    }
+    if ($tags -contains 'coastal' -or $tags -contains 'islands' -or $tags -contains 'maritime') {
+        return [System.Drawing.Color]::FromArgb(205, 242, 219, 178)
+    }
+    if ($tags -contains 'forest' -or $tags -contains 'jungle') {
+        return [System.Drawing.Color]::FromArgb(205, 217, 180, 126)
+    }
+
+    return [System.Drawing.Color]::FromArgb(205, 232, 193, 148)
+}
+
+function Get-SettlementMarkerRadius {
+    param($SettlementRecord)
+
+    switch ((Get-ObjectProperty -Object $SettlementRecord -Name 'populationBand' -Default '')) {
+        'major' { return 5.5 }
+        'large' { return 4.8 }
+        'modest' { return 4.0 }
+        'small' { return 3.3 }
+        'tiny' { return 2.8 }
+        default { return 3.4 }
+    }
+}
+
+function Get-SettlementMarkerColor {
+    param($SettlementRecord)
+
+    $mapLocation = Get-ObjectProperty -Object $SettlementRecord -Name 'mapLocation' -Default $null
+    $siteClass = Get-ObjectProperty -Object $mapLocation -Name 'siteClass' -Default 'surface'
+
+    switch ($siteClass) {
+        'subterranean' { return [System.Drawing.Color]::FromArgb(255, 98, 89, 125) }
+        'underwater' { return [System.Drawing.Color]::FromArgb(255, 62, 158, 201) }
+        default { return [System.Drawing.Color]::FromArgb(255, 143, 63, 44) }
+    }
+}
+
+function Draw-MapLabel {
+    param(
+        [System.Drawing.Graphics]$Graphics,
+        [string]$Text,
+        [System.Drawing.Font]$Font,
+        [System.Drawing.Color]$ForeColor,
+        [System.Drawing.Color]$BackColor,
+        [System.Drawing.PointF]$Point,
+        [ValidateSet('Center', 'Left')][string]$Alignment = 'Center'
+    )
+
+    if ($null -eq $Graphics -or [string]::IsNullOrWhiteSpace($Text) -or $null -eq $Point) {
+        return
+    }
+
+    $size = $Graphics.MeasureString($Text, $Font)
+    $x = $Point.X
+    if ($Alignment -eq 'Center') {
+        $x -= ($size.Width / 2.0)
+    }
+
+    $y = $Point.Y - ($size.Height / 2.0)
+    $rect = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x - 3.0)), ([single]($y - 1.0)), ([single]($size.Width + 6.0)), ([single]($size.Height + 2.0))
+    $backBrush = New-Object System.Drawing.SolidBrush($BackColor)
+    $textBrush = New-Object System.Drawing.SolidBrush($ForeColor)
+
+    try {
+        $Graphics.FillRectangle($backBrush, $rect)
+        $Graphics.DrawString($Text, $Font, $textBrush, ([single]$x), ([single]$y))
+    }
+    finally {
+        $backBrush.Dispose()
+        $textBrush.Dispose()
+    }
+}
+
+function Get-MapContextForNode {
+    param($Node)
+
+    $context = @{
+        IsVisible = $false
+        MapId = ''
+        HighlightSettlementIds = @()
+        HighlightRegionIds = @()
+        HighlightClimateZoneIds = @()
+        HighlightBiomeZoneIds = @()
+    }
+
+    if ($null -eq $Node) {
+        return $context
+    }
+
+    $record = $Node.Record
+
+    switch ($Node.DetailKind) {
+        'world_map' {
+            $context.MapId = [string](Get-ObjectProperty -Object $record -Name 'id' -Default '')
+            $context.IsVisible = -not [string]::IsNullOrWhiteSpace($context.MapId)
+        }
+        'world_map_feature' {
+            $context.MapId = [string](Get-ObjectProperty -Object $record -Name 'mapId' -Default '')
+            $context.IsVisible = -not [string]::IsNullOrWhiteSpace($context.MapId)
+        }
+        'world_region' {
+            $mapIds = @((Get-ObjectProperty -Object $record -Name 'mapIds' -Default @()))
+            if ($mapIds.Count -gt 0) {
+                $context.MapId = [string]$mapIds[0]
+            }
+            $context.HighlightRegionIds = @(Get-RegionHighlightIds -RegionId (Get-ObjectProperty -Object $record -Name 'id' -Default ''))
+            $context.IsVisible = -not [string]::IsNullOrWhiteSpace($context.MapId)
+        }
+        'regional_ecology' {
+            $mapId = ''
+            $climateZoneIds = @((Get-ObjectProperty -Object $record -Name 'mapClimateZoneIds' -Default @()))
+            $biomeZoneIds = @((Get-ObjectProperty -Object $record -Name 'mapBiomeZoneIds' -Default @()))
+
+            if ($climateZoneIds.Count -gt 0) {
+                $mapId = Get-MapIdFromZoneId -ZoneId ([string]$climateZoneIds[0])
+            }
+            elseif ($biomeZoneIds.Count -gt 0) {
+                $mapId = Get-MapIdFromZoneId -ZoneId ([string]$biomeZoneIds[0])
+            }
+            else {
+                $regionRecord = Get-RegionRecordById -RegionId (Get-ObjectProperty -Object $record -Name 'regionId' -Default '')
+                if ($null -ne $regionRecord) {
+                    $mapIds = @((Get-ObjectProperty -Object $regionRecord -Name 'mapIds' -Default @()))
+                    if ($mapIds.Count -gt 0) {
+                        $mapId = [string]$mapIds[0]
+                    }
+                }
+            }
+
+            $context.MapId = $mapId
+            $context.HighlightRegionIds = @(Get-RegionHighlightIds -RegionId (Get-ObjectProperty -Object $record -Name 'regionId' -Default ''))
+            $context.HighlightClimateZoneIds = @($climateZoneIds)
+            $context.HighlightBiomeZoneIds = @($biomeZoneIds)
+            $context.IsVisible = -not [string]::IsNullOrWhiteSpace($context.MapId)
+        }
+        'settlement' {
+            $mapLocation = Get-ObjectProperty -Object $record -Name 'mapLocation' -Default $null
+            $context.MapId = [string](Get-ObjectProperty -Object $mapLocation -Name 'mapId' -Default '')
+            $context.HighlightSettlementIds = @([string](Get-ObjectProperty -Object $record -Name 'id' -Default ''))
+            $context.HighlightRegionIds = @(Get-RegionHighlightIds -RegionId (Get-ObjectProperty -Object $record -Name 'regionId' -Default ''))
+            $context.HighlightClimateZoneIds = @([string](Get-ObjectProperty -Object $mapLocation -Name 'climateZoneId' -Default ''))
+            $context.HighlightBiomeZoneIds = @([string](Get-ObjectProperty -Object $mapLocation -Name 'biomeZoneId' -Default ''))
+            $context.IsVisible = -not [string]::IsNullOrWhiteSpace($context.MapId)
+        }
+        'travel_network' {
+            $context.MapId = [string](Get-ObjectProperty -Object $record -Name 'mapId' -Default '')
+            $context.IsVisible = -not [string]::IsNullOrWhiteSpace($context.MapId)
+        }
+    }
+
+    return $context
+}
+
+function Draw-WorldMapSurface {
+    param(
+        [System.Drawing.Graphics]$Graphics,
+        [System.Drawing.Size]$CanvasSize,
+        $Node,
+        [string]$LayerMode,
+        [bool]$ShowSettlements,
+        [bool]$ShowSettlementNames,
+        [bool]$ShowMajorLabels,
+        [bool]$ShowRegionLabels,
+        [bool]$ShowRoutes
+    )
+
+    $context = Get-MapContextForNode -Node $Node
+    if (-not $context.IsVisible) {
+        return $false
+    }
+
+    $worldMapRecord = Get-WorldMapRecordById -MapId $context.MapId
+    $featureRecord = Get-WorldMapFeatureRecordByMapId -MapId $context.MapId
+    if ($null -eq $worldMapRecord -or $null -eq $featureRecord) {
+        return $false
+    }
+
+    $mapWidthPx = [double](Get-ObjectProperty -Object $featureRecord -Name 'referenceImageWidthPx' -Default 2048)
+    $mapHeightPx = [double](Get-ObjectProperty -Object $featureRecord -Name 'referenceImageHeightPx' -Default 1152)
+    $viewport = Get-MapViewportInfo -CanvasSize $CanvasSize -MapWidthPx $mapWidthPx -MapHeightPx $mapHeightPx
+    if ($null -eq $viewport) {
+        return $false
+    }
+
+    $travelNetworkRecord = Get-TravelNetworkRecordByMapId -MapId $context.MapId
+
+    $Graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
+    $Graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+    $Graphics.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::ClearTypeGridFit
+    $Graphics.Clear([System.Drawing.Color]::FromArgb(240, 235, 223))
+
+    $oceanBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(67, 122, 223))
+    $landBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(250, 241, 223))
+    $coastPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(51, 64, 71), 1.5)
+    $riverPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(118, 204, 228), 1.8)
+    $mountainPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(176, 118, 83), 4.4)
+    $mountainInnerPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(224, 173, 121), 1.6)
+    $routePen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(162, 117, 58), 1.7)
+    $seaLanePen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(255, 244, 242, 228), 1.6)
+    $highlightPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(236, 190, 88), 2.4)
+    $zonePen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(220, 58, 120, 190), 2.0)
+    $biomeHighlightPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(220, 74, 153, 80), 2.0)
+    $majorFont = New-Object System.Drawing.Font("Segoe UI Semibold", 13)
+    $minorFont = New-Object System.Drawing.Font("Segoe UI Semibold", 9.5)
+    $settlementFont = New-Object System.Drawing.Font("Segoe UI", 8.25)
+    $pointBackBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(255, 245, 240, 230))
+
+    $routePen.LineJoin = [System.Drawing.Drawing2D.LineJoin]::Round
+    $seaLanePen.LineJoin = [System.Drawing.Drawing2D.LineJoin]::Round
+    $seaLanePen.DashStyle = [System.Drawing.Drawing2D.DashStyle]::Dash
+    $highlightPen.LineJoin = [System.Drawing.Drawing2D.LineJoin]::Round
+    $zonePen.DashStyle = [System.Drawing.Drawing2D.DashStyle]::Dash
+    $biomeHighlightPen.DashStyle = [System.Drawing.Drawing2D.DashStyle]::Dash
+
+    try {
+        $Graphics.FillRectangle($oceanBrush, $viewport.Rect)
+        $Graphics.SetClip($viewport.Rect)
+
+        foreach ($coastline in @((Get-ObjectProperty -Object $featureRecord -Name 'coastlines' -Default @()))) {
+            $coastPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $coastline -Name 'points' -Default @()) -Viewport $viewport
+            if ($coastPoints.Length -ge 3) {
+                $Graphics.FillPolygon($landBrush, $coastPoints)
+            }
+        }
+
+        if ($LayerMode -eq 'Elevation') {
+            foreach ($footprint in @((Get-ObjectProperty -Object $featureRecord -Name 'regionFootprints' -Default @()))) {
+                $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
+                $regionRecord = $null
+                foreach ($regionId in $regionIds) {
+                    $regionRecord = Get-RegionRecordById -RegionId ([string]$regionId)
+                    if ($null -ne $regionRecord) {
+                        break
+                    }
+                }
+
+                $fillBrush = New-Object System.Drawing.SolidBrush((Get-RegionElevationColor -RegionRecord $regionRecord))
+                try {
+                    $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $footprint -Name 'points' -Default @()) -Viewport $viewport
+                    if ($polygonPoints.Length -ge 3) {
+                        $Graphics.FillPolygon($fillBrush, $polygonPoints)
+                    }
+                }
+                finally {
+                    $fillBrush.Dispose()
+                }
+            }
+        }
+        else {
+            foreach ($zone in @((Get-ObjectProperty -Object $featureRecord -Name 'biomeZones' -Default @()))) {
+                $biomeBrush = New-Object System.Drawing.SolidBrush((Get-BiomeDisplayColor -BiomeId (Get-ObjectProperty -Object $zone -Name 'biomeId' -Default '')))
+                try {
+                    $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $zone -Name 'points' -Default @()) -Viewport $viewport
+                    if ($polygonPoints.Length -ge 3) {
+                        $Graphics.FillPolygon($biomeBrush, $polygonPoints)
+                    }
+                }
+                finally {
+                    $biomeBrush.Dispose()
+                }
+            }
+        }
+
+        foreach ($coastline in @((Get-ObjectProperty -Object $featureRecord -Name 'coastlines' -Default @()))) {
+            $coastPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $coastline -Name 'points' -Default @()) -Viewport $viewport
+            if ($coastPoints.Length -ge 3) {
+                $Graphics.DrawPolygon($coastPen, $coastPoints)
+            }
+        }
+
+        foreach ($mountain in @((Get-ObjectProperty -Object $featureRecord -Name 'mountainFeatures' -Default @()))) {
+            $pathPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $mountain -Name 'points' -Default @()) -Viewport $viewport
+            if ($pathPoints.Length -ge 2) {
+                $Graphics.DrawLines($mountainPen, $pathPoints)
+                $Graphics.DrawLines($mountainInnerPen, $pathPoints)
+            }
+        }
+
+        foreach ($river in @((Get-ObjectProperty -Object $featureRecord -Name 'riverFeatures' -Default @()))) {
+            $pathPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $river -Name 'points' -Default @()) -Viewport $viewport
+            if ($pathPoints.Length -ge 2) {
+                $Graphics.DrawLines($riverPen, $pathPoints)
+            }
+        }
+
+        if ($ShowRoutes -and $null -ne $travelNetworkRecord) {
+            foreach ($route in @((Get-ObjectProperty -Object $travelNetworkRecord -Name 'routeRecords' -Default @()))) {
+                $routePoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $route -Name 'pathPoints' -Default @()) -Viewport $viewport
+                if ($routePoints.Length -ge 2) {
+                    $pen = $routePen
+                    $fromSettlementId = [string](Get-ObjectProperty -Object $route -Name 'fromSettlementId' -Default '')
+                    $toSettlementId = [string](Get-ObjectProperty -Object $route -Name 'toSettlementId' -Default '')
+                    if (($context.HighlightSettlementIds -contains $fromSettlementId) -or ($context.HighlightSettlementIds -contains $toSettlementId)) {
+                        $pen = $highlightPen
+                    }
+                    $Graphics.DrawLines($pen, $routePoints)
+                }
+            }
+
+            foreach ($lane in @((Get-ObjectProperty -Object $travelNetworkRecord -Name 'interPortShipRoutes' -Default @()))) {
+                $lanePoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $lane -Name 'pathPoints' -Default @()) -Viewport $viewport
+                if ($lanePoints.Length -ge 2) {
+                    $Graphics.DrawLines($seaLanePen, $lanePoints)
+                }
+            }
+        }
+
+        foreach ($zone in @((Get-ObjectProperty -Object $featureRecord -Name 'climateZones' -Default @()))) {
+            $zoneId = [string](Get-ObjectProperty -Object $zone -Name 'id' -Default '')
+            if ($context.HighlightClimateZoneIds -contains $zoneId) {
+                $zonePoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $zone -Name 'points' -Default @()) -Viewport $viewport
+                if ($zonePoints.Length -ge 3) {
+                    $Graphics.DrawPolygon($zonePen, $zonePoints)
+                }
+            }
+        }
+
+        foreach ($zone in @((Get-ObjectProperty -Object $featureRecord -Name 'biomeZones' -Default @()))) {
+            $zoneId = [string](Get-ObjectProperty -Object $zone -Name 'id' -Default '')
+            if ($context.HighlightBiomeZoneIds -contains $zoneId) {
+                $zonePoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $zone -Name 'points' -Default @()) -Viewport $viewport
+                if ($zonePoints.Length -ge 3) {
+                    $Graphics.DrawPolygon($biomeHighlightPen, $zonePoints)
+                }
+            }
+        }
+
+        foreach ($footprint in @((Get-ObjectProperty -Object $featureRecord -Name 'regionFootprints' -Default @()))) {
+            $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
+            if (@($regionIds | Where-Object { $context.HighlightRegionIds -contains [string]$_ }).Count -gt 0) {
+                $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $footprint -Name 'points' -Default @()) -Viewport $viewport
+                if ($polygonPoints.Length -ge 3) {
+                    $Graphics.DrawPolygon($highlightPen, $polygonPoints)
+                }
+            }
+        }
+
+        foreach ($pass in @((Get-ObjectProperty -Object $featureRecord -Name 'passFeatures' -Default @()))) {
+            $canvasPoint = Convert-MapPointToCanvas -Point (Get-ObjectProperty -Object $pass -Name 'point' -Default $null) -Viewport $viewport
+            if ($null -ne $canvasPoint) {
+                $Graphics.FillEllipse($pointBackBrush, ($canvasPoint.X - 2.1), ($canvasPoint.Y - 2.1), 4.2, 4.2)
+            }
+        }
+
+        foreach ($crossing in @((Get-ObjectProperty -Object $featureRecord -Name 'crossingFeatures' -Default @()))) {
+            $canvasPoint = Convert-MapPointToCanvas -Point (Get-ObjectProperty -Object $crossing -Name 'point' -Default $null) -Viewport $viewport
+            if ($null -ne $canvasPoint) {
+                $Graphics.FillRectangle($pointBackBrush, ($canvasPoint.X - 2.0), ($canvasPoint.Y - 2.0), 4.0, 4.0)
+            }
+        }
+
+        if ($ShowSettlements) {
+            foreach ($settlement in @($script:settlementRecords | Sort-Object @{ Expression = { Get-ObjectProperty -Object $_ -Name 'populationTotal' -Default 0 }; Descending = $false })) {
+                $mapLocation = Get-ObjectProperty -Object $settlement -Name 'mapLocation' -Default $null
+                if ((Get-ObjectProperty -Object $mapLocation -Name 'mapId' -Default '') -ne $context.MapId) {
+                    continue
+                }
+
+                $mapPoint = @{
+                    x = Get-ObjectProperty -Object $mapLocation -Name 'pixelX' -Default 0
+                    y = Get-ObjectProperty -Object $mapLocation -Name 'pixelY' -Default 0
+                }
+
+                $canvasPoint = Convert-MapPointToCanvas -Point $mapPoint -Viewport $viewport
+                if ($null -eq $canvasPoint) {
+                    continue
+                }
+
+                $radius = [single](Get-SettlementMarkerRadius -SettlementRecord $settlement)
+                $markerColor = Get-SettlementMarkerColor -SettlementRecord $settlement
+                $markerBrush = New-Object System.Drawing.SolidBrush($markerColor)
+                $markerPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(255, 248, 244, 234), 1.0)
+
+                try {
+                    $Graphics.FillEllipse($markerBrush, ($canvasPoint.X - $radius), ($canvasPoint.Y - $radius), ($radius * 2.0), ($radius * 2.0))
+                    $Graphics.DrawEllipse($markerPen, ($canvasPoint.X - $radius), ($canvasPoint.Y - $radius), ($radius * 2.0), ($radius * 2.0))
+
+                    if ($context.HighlightSettlementIds -contains [string](Get-ObjectProperty -Object $settlement -Name 'id' -Default '')) {
+                        $Graphics.DrawEllipse($highlightPen, ($canvasPoint.X - ($radius + 2.0)), ($canvasPoint.Y - ($radius + 2.0)), (($radius + 2.0) * 2.0), (($radius + 2.0) * 2.0))
+                    }
+                }
+                finally {
+                    $markerBrush.Dispose()
+                    $markerPen.Dispose()
+                }
+
+                if ($ShowSettlementNames) {
+                    Draw-MapLabel -Graphics $Graphics `
+                        -Text (Get-ObjectProperty -Object $settlement -Name 'name' -Default '') `
+                        -Font $settlementFont `
+                        -ForeColor ([System.Drawing.Color]::FromArgb(41, 36, 30)) `
+                        -BackColor ([System.Drawing.Color]::FromArgb(180, 248, 244, 236)) `
+                        -Point (New-Object System.Drawing.PointF -ArgumentList ([single]($canvasPoint.X + $radius + 3.0)), ([single]($canvasPoint.Y - 8.0))) `
+                        -Alignment Left
+                }
+            }
+        }
+
+        $Graphics.ResetClip()
+
+        if ($ShowMajorLabels) {
+            $majorRegionIds = @((Get-ObjectProperty -Object $worldMapRecord -Name 'continentRegionIds' -Default @()))
+            $majorRegionIds += @((Get-ObjectProperty -Object $worldMapRecord -Name 'islandSystemRegionIds' -Default @()))
+
+            foreach ($regionId in @($majorRegionIds | Select-Object -Unique)) {
+                $anchor = Get-RegionMapLabelPoint -RegionId ([string]$regionId) -FeatureRecord $featureRecord
+                if ($null -eq $anchor) {
+                    continue
+                }
+
+                $canvasPoint = Convert-MapPointToCanvas -Point $anchor -Viewport $viewport
+                Draw-MapLabel -Graphics $Graphics `
+                    -Text (Resolve-RegionLabel -RegionId ([string]$regionId)) `
+                    -Font $majorFont `
+                    -ForeColor ([System.Drawing.Color]::FromArgb(37, 33, 28)) `
+                    -BackColor ([System.Drawing.Color]::FromArgb(170, 248, 243, 232)) `
+                    -Point $canvasPoint `
+                    -Alignment Center
+            }
+        }
+
+        if ($ShowRegionLabels) {
+            foreach ($footprint in @((Get-ObjectProperty -Object $featureRecord -Name 'regionFootprints' -Default @()))) {
+                $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
+                if ($regionIds.Count -eq 0) {
+                    continue
+                }
+
+                $regionId = [string]$regionIds[0]
+                $regionRecord = Get-RegionRecordById -RegionId $regionId
+                if ($null -eq $regionRecord) {
+                    continue
+                }
+
+                if ((Get-ObjectProperty -Object $regionRecord -Name 'regionType' -Default '') -ne 'subregion') {
+                    continue
+                }
+
+                $anchor = Get-PointsCentroid -Points (Get-ObjectProperty -Object $footprint -Name 'points' -Default @())
+                if ($null -eq $anchor) {
+                    continue
+                }
+
+                $canvasPoint = Convert-MapPointToCanvas -Point $anchor -Viewport $viewport
+                $backColor = if ($context.HighlightRegionIds -contains $regionId) {
+                    [System.Drawing.Color]::FromArgb(185, 247, 223, 167)
+                }
+                else {
+                    [System.Drawing.Color]::FromArgb(150, 248, 244, 236)
+                }
+
+                Draw-MapLabel -Graphics $Graphics `
+                    -Text (Get-ObjectProperty -Object $regionRecord -Name 'name' -Default $regionId) `
+                    -Font $minorFont `
+                    -ForeColor ([System.Drawing.Color]::FromArgb(46, 40, 33)) `
+                    -BackColor $backColor `
+                    -Point $canvasPoint `
+                    -Alignment Center
+            }
+        }
+
+        $borderPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(132, 116, 86), 1.0)
+        try {
+            $Graphics.DrawRectangle($borderPen, $viewport.Rect.X, $viewport.Rect.Y, $viewport.Rect.Width, $viewport.Rect.Height)
+        }
+        finally {
+            $borderPen.Dispose()
+        }
+
+        return $true
+    }
+    finally {
+        $oceanBrush.Dispose()
+        $landBrush.Dispose()
+        $coastPen.Dispose()
+        $riverPen.Dispose()
+        $mountainPen.Dispose()
+        $mountainInnerPen.Dispose()
+        $routePen.Dispose()
+        $seaLanePen.Dispose()
+        $highlightPen.Dispose()
+        $zonePen.Dispose()
+        $biomeHighlightPen.Dispose()
+        $majorFont.Dispose()
+        $minorFont.Dispose()
+        $settlementFont.Dispose()
+        $pointBackBrush.Dispose()
+    }
+}
+
 function Get-BreadcrumbText {
     $titles = @()
 
@@ -2583,9 +3337,10 @@ $mainPanel.Padding = New-Object System.Windows.Forms.Padding(18, 18, 18, 18)
 $detailLayout = New-Object System.Windows.Forms.TableLayoutPanel
 $detailLayout.Dock = "Fill"
 $detailLayout.ColumnCount = 1
-$detailLayout.RowCount = 4
+$detailLayout.RowCount = 5
 [void]$detailLayout.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
 [void]$detailLayout.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+[void]$detailLayout.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Absolute, 0)))
 [void]$detailLayout.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 100)))
 [void]$detailLayout.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
 
@@ -2642,6 +3397,104 @@ $openButton.Font = New-Object System.Drawing.Font("Segoe UI Semibold", 10)
 [void]$toolbar.Controls.Add($refreshButton)
 [void]$toolbar.Controls.Add($openButton)
 
+$mapControlsSpacer = New-Object System.Windows.Forms.Label
+$mapControlsSpacer.AutoSize = $true
+$mapControlsSpacer.Width = 12
+$mapControlsSpacer.Margin = New-Object System.Windows.Forms.Padding(12, 8, 0, 0)
+$mapControlsSpacer.Text = " "
+
+$mapLayerLabel = New-Object System.Windows.Forms.Label
+$mapLayerLabel.AutoSize = $true
+$mapLayerLabel.Margin = New-Object System.Windows.Forms.Padding(8, 10, 2, 0)
+$mapLayerLabel.ForeColor = [System.Drawing.Color]::FromArgb(66, 57, 41)
+$mapLayerLabel.Font = New-Object System.Drawing.Font("Segoe UI Semibold", 9.5)
+$mapLayerLabel.Text = "Map:"
+$mapLayerLabel.Enabled = $false
+
+$mapLayerComboBox = New-Object System.Windows.Forms.ComboBox
+$mapLayerComboBox.DropDownStyle = "DropDownList"
+$mapLayerComboBox.Width = 112
+$mapLayerComboBox.Margin = New-Object System.Windows.Forms.Padding(2, 6, 8, 0)
+[void]$mapLayerComboBox.Items.Add("Biome")
+[void]$mapLayerComboBox.Items.Add("Elevation")
+$mapLayerComboBox.SelectedIndex = 0
+$mapLayerComboBox.Enabled = $false
+
+$showSettlementsCheckBox = New-Object System.Windows.Forms.CheckBox
+$showSettlementsCheckBox.AutoSize = $true
+$showSettlementsCheckBox.Margin = New-Object System.Windows.Forms.Padding(4, 10, 0, 0)
+$showSettlementsCheckBox.ForeColor = [System.Drawing.Color]::FromArgb(66, 57, 41)
+$showSettlementsCheckBox.Font = New-Object System.Drawing.Font("Segoe UI", 9.25)
+$showSettlementsCheckBox.Text = "Settlements"
+$showSettlementsCheckBox.Checked = $true
+$showSettlementsCheckBox.Enabled = $false
+
+$showSettlementNamesCheckBox = New-Object System.Windows.Forms.CheckBox
+$showSettlementNamesCheckBox.AutoSize = $true
+$showSettlementNamesCheckBox.Margin = New-Object System.Windows.Forms.Padding(4, 10, 0, 0)
+$showSettlementNamesCheckBox.ForeColor = [System.Drawing.Color]::FromArgb(66, 57, 41)
+$showSettlementNamesCheckBox.Font = New-Object System.Drawing.Font("Segoe UI", 9.25)
+$showSettlementNamesCheckBox.Text = "Names"
+$showSettlementNamesCheckBox.Checked = $true
+$showSettlementNamesCheckBox.Enabled = $false
+
+$showContinentsCheckBox = New-Object System.Windows.Forms.CheckBox
+$showContinentsCheckBox.AutoSize = $true
+$showContinentsCheckBox.Margin = New-Object System.Windows.Forms.Padding(4, 10, 0, 0)
+$showContinentsCheckBox.ForeColor = [System.Drawing.Color]::FromArgb(66, 57, 41)
+$showContinentsCheckBox.Font = New-Object System.Drawing.Font("Segoe UI", 9.25)
+$showContinentsCheckBox.Text = "Continents"
+$showContinentsCheckBox.Checked = $true
+$showContinentsCheckBox.Enabled = $false
+
+$showRegionsCheckBox = New-Object System.Windows.Forms.CheckBox
+$showRegionsCheckBox.AutoSize = $true
+$showRegionsCheckBox.Margin = New-Object System.Windows.Forms.Padding(4, 10, 0, 0)
+$showRegionsCheckBox.ForeColor = [System.Drawing.Color]::FromArgb(66, 57, 41)
+$showRegionsCheckBox.Font = New-Object System.Drawing.Font("Segoe UI", 9.25)
+$showRegionsCheckBox.Text = "Regions"
+$showRegionsCheckBox.Checked = $true
+$showRegionsCheckBox.Enabled = $false
+
+$showRoutesCheckBox = New-Object System.Windows.Forms.CheckBox
+$showRoutesCheckBox.AutoSize = $true
+$showRoutesCheckBox.Margin = New-Object System.Windows.Forms.Padding(4, 10, 0, 0)
+$showRoutesCheckBox.ForeColor = [System.Drawing.Color]::FromArgb(66, 57, 41)
+$showRoutesCheckBox.Font = New-Object System.Drawing.Font("Segoe UI", 9.25)
+$showRoutesCheckBox.Text = "Routes"
+$showRoutesCheckBox.Checked = $false
+$showRoutesCheckBox.Enabled = $false
+
+[void]$toolbar.Controls.Add($mapControlsSpacer)
+[void]$toolbar.Controls.Add($mapLayerLabel)
+[void]$toolbar.Controls.Add($mapLayerComboBox)
+[void]$toolbar.Controls.Add($showSettlementsCheckBox)
+[void]$toolbar.Controls.Add($showSettlementNamesCheckBox)
+[void]$toolbar.Controls.Add($showContinentsCheckBox)
+[void]$toolbar.Controls.Add($showRegionsCheckBox)
+[void]$toolbar.Controls.Add($showRoutesCheckBox)
+
+$mapHostPanel = New-Object System.Windows.Forms.Panel
+$mapHostPanel.Dock = "Fill"
+$mapHostPanel.Padding = New-Object System.Windows.Forms.Padding(0, 0, 0, 10)
+$mapHostPanel.Margin = New-Object System.Windows.Forms.Padding(0, 0, 0, 8)
+$mapHostPanel.BackColor = [System.Drawing.Color]::FromArgb(245, 240, 229)
+$mapHostPanel.Visible = $false
+
+$mapFramePanel = New-Object System.Windows.Forms.Panel
+$mapFramePanel.Dock = "Fill"
+$mapFramePanel.Padding = New-Object System.Windows.Forms.Padding(8)
+$mapFramePanel.BackColor = [System.Drawing.Color]::FromArgb(235, 229, 216)
+$mapFramePanel.BorderStyle = "FixedSingle"
+
+$mapPictureBox = New-Object System.Windows.Forms.PictureBox
+$mapPictureBox.Dock = "Fill"
+$mapPictureBox.BackColor = [System.Drawing.Color]::FromArgb(239, 233, 220)
+$mapPictureBox.SizeMode = "Normal"
+
+[void]$mapFramePanel.Controls.Add($mapPictureBox)
+[void]$mapHostPanel.Controls.Add($mapFramePanel)
+
 $detailBox = New-Object System.Windows.Forms.RichTextBox
 $detailBox.Dock = "Fill"
 $detailBox.ReadOnly = $true
@@ -2662,8 +3515,9 @@ $statusLabel.Text = "Ready."
 
 [void]$detailLayout.Controls.Add($detailHeaderPanel, 0, 0)
 [void]$detailLayout.Controls.Add($toolbar, 0, 1)
-[void]$detailLayout.Controls.Add($detailBox, 0, 2)
-[void]$detailLayout.Controls.Add($statusLabel, 0, 3)
+[void]$detailLayout.Controls.Add($mapHostPanel, 0, 2)
+[void]$detailLayout.Controls.Add($detailBox, 0, 3)
+[void]$detailLayout.Controls.Add($statusLabel, 0, 4)
 
 [void]$mainPanel.Controls.Add($detailLayout)
 [void]$form.Controls.Add($mainPanel)
@@ -2710,6 +3564,87 @@ function Update-OpenButtonState {
     }
 }
 
+function Set-MapControlsEnabled {
+    param([bool]$Enabled)
+
+    $mapLayerLabel.Enabled = $Enabled
+    $mapLayerComboBox.Enabled = $Enabled
+    $showSettlementsCheckBox.Enabled = $Enabled
+    $showSettlementNamesCheckBox.Enabled = $Enabled
+    $showContinentsCheckBox.Enabled = $Enabled
+    $showRegionsCheckBox.Enabled = $Enabled
+    $showRoutesCheckBox.Enabled = $Enabled
+}
+
+function Clear-MapDisplay {
+    $mapHostPanel.Visible = $false
+    $detailLayout.RowStyles[2].Height = 0
+    Set-MapControlsEnabled -Enabled $false
+
+    if ($null -ne $mapPictureBox.Image) {
+        $previousImage = $mapPictureBox.Image
+        $mapPictureBox.Image = $null
+        $previousImage.Dispose()
+    }
+}
+
+function Update-MapDisplay {
+    param($Node)
+
+    $context = Get-MapContextForNode -Node $Node
+    if (-not $context.IsVisible) {
+        Clear-MapDisplay
+        return
+    }
+
+    $clientSize = $mapPictureBox.ClientSize
+    if ($clientSize.Width -lt 64 -or $clientSize.Height -lt 64) {
+        return
+    }
+
+    Set-MapControlsEnabled -Enabled $true
+    $mapHostPanel.Visible = $true
+    $detailLayout.RowStyles[2].Height = 420
+
+    $bitmap = New-Object System.Drawing.Bitmap($clientSize.Width, $clientSize.Height)
+    $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+
+    try {
+        $drawn = Draw-WorldMapSurface `
+            -Graphics $graphics `
+            -CanvasSize $clientSize `
+            -Node $Node `
+            -LayerMode ([string]$mapLayerComboBox.SelectedItem) `
+            -ShowSettlements ([bool]$showSettlementsCheckBox.Checked) `
+            -ShowSettlementNames ([bool]$showSettlementNamesCheckBox.Checked) `
+            -ShowMajorLabels ([bool]$showContinentsCheckBox.Checked) `
+            -ShowRegionLabels ([bool]$showRegionsCheckBox.Checked) `
+            -ShowRoutes ([bool]$showRoutesCheckBox.Checked)
+
+        if (-not $drawn) {
+            $graphics.Clear([System.Drawing.Color]::FromArgb(239, 233, 220))
+            $fallbackBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(82, 74, 62))
+            $fallbackFont = New-Object System.Drawing.Font("Segoe UI", 11)
+            try {
+                $graphics.DrawString("No map geometry is available for this record.", $fallbackFont, $fallbackBrush, 18, 18)
+            }
+            finally {
+                $fallbackBrush.Dispose()
+                $fallbackFont.Dispose()
+            }
+        }
+    }
+    finally {
+        $graphics.Dispose()
+    }
+
+    $previousImage = $mapPictureBox.Image
+    $mapPictureBox.Image = $bitmap
+    if ($null -ne $previousImage) {
+        $previousImage.Dispose()
+    }
+}
+
 function Render-Detail {
     param($Node)
 
@@ -2727,6 +3662,7 @@ function Render-Detail {
     $statusLabel.Text = $view.Status
 
     Update-OpenButtonState
+    Update-MapDisplay -Node $Node
 }
 
 function Render-Navigation {
@@ -2953,6 +3889,48 @@ $openButton.add_Click({
                 [System.Windows.Forms.MessageBoxButtons]::OK,
                 [System.Windows.Forms.MessageBoxIcon]::Error
             )
+        }
+    })
+
+$mapLayerComboBox.add_SelectedIndexChanged({
+        if ($null -ne $script:currentDetailNode) {
+            Update-MapDisplay -Node $script:currentDetailNode
+        }
+    })
+
+$showSettlementsCheckBox.add_CheckedChanged({
+        if ($null -ne $script:currentDetailNode) {
+            Update-MapDisplay -Node $script:currentDetailNode
+        }
+    })
+
+$showSettlementNamesCheckBox.add_CheckedChanged({
+        if ($null -ne $script:currentDetailNode) {
+            Update-MapDisplay -Node $script:currentDetailNode
+        }
+    })
+
+$showContinentsCheckBox.add_CheckedChanged({
+        if ($null -ne $script:currentDetailNode) {
+            Update-MapDisplay -Node $script:currentDetailNode
+        }
+    })
+
+$showRegionsCheckBox.add_CheckedChanged({
+        if ($null -ne $script:currentDetailNode) {
+            Update-MapDisplay -Node $script:currentDetailNode
+        }
+    })
+
+$showRoutesCheckBox.add_CheckedChanged({
+        if ($null -ne $script:currentDetailNode) {
+            Update-MapDisplay -Node $script:currentDetailNode
+        }
+    })
+
+$mapPictureBox.add_SizeChanged({
+        if ($null -ne $script:currentDetailNode -and $mapHostPanel.Visible) {
+            Update-MapDisplay -Node $script:currentDetailNode
         }
     })
 

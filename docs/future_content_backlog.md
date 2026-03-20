@@ -42,9 +42,10 @@ This file tracks content and systems that are intentionally deferred.
 - Intended implementation:
   - the first authored world geography pass now lives in `packages/content/base/world/regions.json` and `packages/content/base/world/world_maps.json`
   - coordinate-backed feature geometry now lives in `packages/content/base/world/world_map_features.json`, including region footprints, climate zones, biome zones, rivers, mountain belts, passes, and crossings
+  - the content browser now renders biome/elevation map views from that geometry and can overlay continent names, region names, settlements, and route lines against the authored pixel grid
   - add map item families now that region data can anchor them
   - keep future map generation tied to real region records rather than placeholder generic maps
-  - add stored raster assets and boundary geometry when cartography content needs visual/physical map ownership instead of metadata only
+  - add stored raster assets and optional image-backed browser loading later if cartography content needs visual/physical map ownership instead of rendered geometry only
 
 ### Regional Economies
 

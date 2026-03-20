@@ -18,6 +18,7 @@ TypeScript-first, headless simulation scaffold for a survival / builder / RPG pr
 
 - World data: biomes, habitats, flora, fauna, calendar, climate profiles, regional ecology profiles, named regions, authored primary and dependent settlements, shared guild definitions, authored travel networks, world-map metadata, and coordinate-backed world-map feature geometry.
 - World geography model: continents, subregions, island systems, oceans, population assumptions, map scale benchmarks, pixel-coordinate settlement placement, climate/biome zone overlays, terrain features, travel baselines, trade routes, conflict zones, and named settlement networks for authored maps.
+- Browser map viewer: the content browser can now render biome and elevation map layers from authored world-map geometry, with overlay labels for continents and regions plus settlement dots/names tied to the shared pixel grid.
 - Climate rules: 6-season model, 13-month calendar, and 52-week seasonal length validation.
 - Player model: attributes/resources/skills/spells/abilities/traits/equipment/inventory/save metadata.
 - Economy model:
@@ -59,6 +60,7 @@ The browser shows:
 - `Databases` (JSON files under `packages/content/base`)
 - `Coverage Reports` (markdown under `docs/data-dictionary`)
 - `Story` (markdown under `story`)
+- rendered world-map views for map-backed records, with switchable biome/elevation layers and settlement/region overlays
 
 ## Quick Commands
 
