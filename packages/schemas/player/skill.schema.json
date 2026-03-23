@@ -2,17 +2,40 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerSkillRecord",
   "type": "object",
-  "required": ["id", "name", "kind", "defaultRank", "governingAttributes"],
+  "required": [
+    "id",
+    "name",
+    "kind",
+    "family",
+    "defaultRank",
+    "defaultCap",
+    "governingAttributes",
+    "progressionModelId",
+    "description"
+  ],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
     "kind": { "type": "string" },
+    "family": { "type": "string" },
     "defaultRank": { "type": "integer", "minimum": 0 },
+    "defaultCap": { "type": "integer", "minimum": 1 },
     "governingAttributes": {
       "type": "array",
       "items": { "type": "string" },
       "minItems": 1
-    }
+    },
+    "progressionModelId": { "type": "string" },
+    "description": { "type": "string" },
+    "gainSources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "placeholderSourceId": { "type": "string" }
   },
   "additionalProperties": true
 }

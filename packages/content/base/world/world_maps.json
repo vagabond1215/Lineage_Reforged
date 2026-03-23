@@ -1,4 +1,4 @@
-{
+﻿{
     "records":  [
                     {
                         "id":  "world_map.first_world",
@@ -262,7 +262,17 @@
                                                                     "region.azure_vast"
                                                                 ]
                                               }
-                                          ]
+                                          ],
+                        "layerAssetPaths":  {
+                                                "biome":  "packages/content/base/world/map_assets/First World Biome.png",
+                                                "elevation":  "packages/content/base/world/map_assets/First World Elevation.png"
+                                            },
+                        "assetReferenceRectPx":  {
+                                                       "x":  60,
+                                                       "y":  60,
+                                                       "width":  3976,
+                                                       "height":  2235
+                                            }
                     }
                 ]
 }

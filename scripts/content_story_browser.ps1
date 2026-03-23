@@ -33,6 +33,7 @@ $script:worldMapRecords = @()
 $script:worldMapFeatureRecords = @()
 $script:settlementRecords = @()
 $script:travelNetworkRecords = @()
+$script:mapImageCache = @{}
 $script:isRenderingNavigation = $false
 $script:lastNavClientWidth = 0
 
@@ -615,7 +616,14 @@ function Build-JsonFolderNode {
     }
 
     foreach ($file in (Get-ChildItem -LiteralPath $FolderPath -File -Filter "*.json" | Sort-Object Name)) {
-        [void](Add-ChildNode -Parent $node -Child (Build-DatasetNode -FilePath $file.FullName))
+        $datasetNode = Build-DatasetNode -FilePath $file.FullName
+        $datasetKey = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
+
+        if ($datasetKey -eq "world_map_features") {
+            continue
+        }
+
+        [void](Add-ChildNode -Parent $node -Child $datasetNode)
     }
 
     if ($node.Children.Count -eq 0) {
@@ -2572,6 +2580,75 @@ function Get-RegionMapLabelPoint {
     return (Get-PointsCentroid -Points $allPoints)
 }
 
+function Get-WorldMapLayerAssetPath {
+    param(
+        $WorldMapRecord,
+        [string]$LayerMode
+    )
+
+    $layerAssetPaths = Get-ObjectProperty -Object $WorldMapRecord -Name 'layerAssetPaths' -Default $null
+    if ($null -eq $layerAssetPaths) {
+        return ''
+    }
+
+    $assetKey = if ($LayerMode -eq 'Elevation') { 'elevation' } else { 'biome' }
+    $configuredPath = [string](Get-ObjectProperty -Object $layerAssetPaths -Name $assetKey -Default '')
+    if ([string]::IsNullOrWhiteSpace($configuredPath)) {
+        return ''
+    }
+
+    if ([System.IO.Path]::IsPathRooted($configuredPath)) {
+        return $configuredPath
+    }
+
+    return (Join-Path $workspaceRoot $configuredPath)
+}
+
+function Get-CachedMapImage {
+    param([string]$ImagePath)
+
+    if ([string]::IsNullOrWhiteSpace($ImagePath) -or -not (Test-Path -LiteralPath $ImagePath)) {
+        return $null
+    }
+
+    if ($script:mapImageCache.ContainsKey($ImagePath)) {
+        return $script:mapImageCache[$ImagePath]
+    }
+
+    $fileBytes = [System.IO.File]::ReadAllBytes($ImagePath)
+    $stream = New-Object System.IO.MemoryStream(,$fileBytes)
+    try {
+        $loadedImage = [System.Drawing.Image]::FromStream($stream)
+        $cachedImage = New-Object System.Drawing.Bitmap($loadedImage)
+        $loadedImage.Dispose()
+        $script:mapImageCache[$ImagePath] = $cachedImage
+        return $cachedImage
+    }
+    finally {
+        $stream.Dispose()
+    }
+}
+
+function Get-WorldMapAssetSourceRect {
+    param($WorldMapRecord)
+
+    $rectRecord = Get-ObjectProperty -Object $WorldMapRecord -Name 'assetReferenceRectPx' -Default $null
+    if ($null -eq $rectRecord) {
+        return $null
+    }
+
+    $x = [int](Get-ObjectProperty -Object $rectRecord -Name 'x' -Default 0)
+    $y = [int](Get-ObjectProperty -Object $rectRecord -Name 'y' -Default 0)
+    $width = [int](Get-ObjectProperty -Object $rectRecord -Name 'width' -Default 0)
+    $height = [int](Get-ObjectProperty -Object $rectRecord -Name 'height' -Default 0)
+
+    if ($width -le 0 -or $height -le 0) {
+        return $null
+    }
+
+    return (New-Object System.Drawing.Rectangle -ArgumentList $x, $y, $width, $height)
+}
+
 function Get-BiomeDisplayColor {
     param([string]$BiomeId)
 
@@ -2676,6 +2753,7 @@ function Draw-MapLabel {
     try {
         $Graphics.FillRectangle($backBrush, $rect)
         $Graphics.DrawString($Text, $Font, $textBrush, ([single]$x), ([single]$y))
+        return $rect
     }
     finally {
         $backBrush.Dispose()
@@ -2795,6 +2873,10 @@ function Draw-WorldMapSurface {
     }
 
     $travelNetworkRecord = Get-TravelNetworkRecordByMapId -MapId $context.MapId
+    $layerImagePath = Get-WorldMapLayerAssetPath -WorldMapRecord $worldMapRecord -LayerMode $LayerMode
+    $layerImage = Get-CachedMapImage -ImagePath $layerImagePath
+    $layerSourceRect = Get-WorldMapAssetSourceRect -WorldMapRecord $worldMapRecord
+    $useRasterLayer = ($null -ne $layerImage)
 
     $Graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
     $Graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
@@ -2809,6 +2891,7 @@ function Draw-WorldMapSurface {
     $mountainInnerPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(224, 173, 121), 1.6)
     $routePen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(162, 117, 58), 1.7)
     $seaLanePen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(255, 244, 242, 228), 1.6)
+    $regionOutlinePen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(178, 56, 73, 83), 1.3)
     $highlightPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(236, 190, 88), 2.4)
     $zonePen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(220, 58, 120, 190), 2.0)
     $biomeHighlightPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(220, 74, 153, 80), 2.0)
@@ -2823,75 +2906,86 @@ function Draw-WorldMapSurface {
     $highlightPen.LineJoin = [System.Drawing.Drawing2D.LineJoin]::Round
     $zonePen.DashStyle = [System.Drawing.Drawing2D.DashStyle]::Dash
     $biomeHighlightPen.DashStyle = [System.Drawing.Drawing2D.DashStyle]::Dash
+    $regionOutlinePen.LineJoin = [System.Drawing.Drawing2D.LineJoin]::Round
 
     try {
         $Graphics.FillRectangle($oceanBrush, $viewport.Rect)
         $Graphics.SetClip($viewport.Rect)
 
-        foreach ($coastline in @((Get-ObjectProperty -Object $featureRecord -Name 'coastlines' -Default @()))) {
-            $coastPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $coastline -Name 'points' -Default @()) -Viewport $viewport
-            if ($coastPoints.Length -ge 3) {
-                $Graphics.FillPolygon($landBrush, $coastPoints)
+        if ($useRasterLayer) {
+            if ($null -ne $layerSourceRect) {
+                $Graphics.DrawImage($layerImage, $viewport.Rect, $layerSourceRect, [System.Drawing.GraphicsUnit]::Pixel)
             }
-        }
-
-        if ($LayerMode -eq 'Elevation') {
-            foreach ($footprint in @((Get-ObjectProperty -Object $featureRecord -Name 'regionFootprints' -Default @()))) {
-                $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
-                $regionRecord = $null
-                foreach ($regionId in $regionIds) {
-                    $regionRecord = Get-RegionRecordById -RegionId ([string]$regionId)
-                    if ($null -ne $regionRecord) {
-                        break
-                    }
-                }
-
-                $fillBrush = New-Object System.Drawing.SolidBrush((Get-RegionElevationColor -RegionRecord $regionRecord))
-                try {
-                    $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $footprint -Name 'points' -Default @()) -Viewport $viewport
-                    if ($polygonPoints.Length -ge 3) {
-                        $Graphics.FillPolygon($fillBrush, $polygonPoints)
-                    }
-                }
-                finally {
-                    $fillBrush.Dispose()
-                }
+            else {
+                $Graphics.DrawImage($layerImage, $viewport.Rect)
             }
         }
         else {
-            foreach ($zone in @((Get-ObjectProperty -Object $featureRecord -Name 'biomeZones' -Default @()))) {
-                $biomeBrush = New-Object System.Drawing.SolidBrush((Get-BiomeDisplayColor -BiomeId (Get-ObjectProperty -Object $zone -Name 'biomeId' -Default '')))
-                try {
-                    $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $zone -Name 'points' -Default @()) -Viewport $viewport
-                    if ($polygonPoints.Length -ge 3) {
-                        $Graphics.FillPolygon($biomeBrush, $polygonPoints)
+            foreach ($coastline in @((Get-ObjectProperty -Object $featureRecord -Name 'coastlines' -Default @()))) {
+                $coastPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $coastline -Name 'points' -Default @()) -Viewport $viewport
+                if ($coastPoints.Length -ge 3) {
+                    $Graphics.FillPolygon($landBrush, $coastPoints)
+                }
+            }
+
+            if ($LayerMode -eq 'Elevation') {
+                foreach ($footprint in @((Get-ObjectProperty -Object $featureRecord -Name 'regionFootprints' -Default @()))) {
+                    $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
+                    $regionRecord = $null
+                    foreach ($regionId in $regionIds) {
+                        $regionRecord = Get-RegionRecordById -RegionId ([string]$regionId)
+                        if ($null -ne $regionRecord) {
+                            break
+                        }
+                    }
+
+                    $fillBrush = New-Object System.Drawing.SolidBrush((Get-RegionElevationColor -RegionRecord $regionRecord))
+                    try {
+                        $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $footprint -Name 'points' -Default @()) -Viewport $viewport
+                        if ($polygonPoints.Length -ge 3) {
+                            $Graphics.FillPolygon($fillBrush, $polygonPoints)
+                        }
+                    }
+                    finally {
+                        $fillBrush.Dispose()
                     }
                 }
-                finally {
-                    $biomeBrush.Dispose()
+            }
+            else {
+                foreach ($zone in @((Get-ObjectProperty -Object $featureRecord -Name 'biomeZones' -Default @()))) {
+                    $biomeBrush = New-Object System.Drawing.SolidBrush((Get-BiomeDisplayColor -BiomeId (Get-ObjectProperty -Object $zone -Name 'biomeId' -Default '')))
+                    try {
+                        $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $zone -Name 'points' -Default @()) -Viewport $viewport
+                        if ($polygonPoints.Length -ge 3) {
+                            $Graphics.FillPolygon($biomeBrush, $polygonPoints)
+                        }
+                    }
+                    finally {
+                        $biomeBrush.Dispose()
+                    }
                 }
             }
-        }
 
-        foreach ($coastline in @((Get-ObjectProperty -Object $featureRecord -Name 'coastlines' -Default @()))) {
-            $coastPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $coastline -Name 'points' -Default @()) -Viewport $viewport
-            if ($coastPoints.Length -ge 3) {
-                $Graphics.DrawPolygon($coastPen, $coastPoints)
+            foreach ($coastline in @((Get-ObjectProperty -Object $featureRecord -Name 'coastlines' -Default @()))) {
+                $coastPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $coastline -Name 'points' -Default @()) -Viewport $viewport
+                if ($coastPoints.Length -ge 3) {
+                    $Graphics.DrawPolygon($coastPen, $coastPoints)
+                }
             }
-        }
 
-        foreach ($mountain in @((Get-ObjectProperty -Object $featureRecord -Name 'mountainFeatures' -Default @()))) {
-            $pathPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $mountain -Name 'points' -Default @()) -Viewport $viewport
-            if ($pathPoints.Length -ge 2) {
-                $Graphics.DrawLines($mountainPen, $pathPoints)
-                $Graphics.DrawLines($mountainInnerPen, $pathPoints)
+            foreach ($mountain in @((Get-ObjectProperty -Object $featureRecord -Name 'mountainFeatures' -Default @()))) {
+                $pathPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $mountain -Name 'points' -Default @()) -Viewport $viewport
+                if ($pathPoints.Length -ge 2) {
+                    $Graphics.DrawLines($mountainPen, $pathPoints)
+                    $Graphics.DrawLines($mountainInnerPen, $pathPoints)
+                }
             }
-        }
 
-        foreach ($river in @((Get-ObjectProperty -Object $featureRecord -Name 'riverFeatures' -Default @()))) {
-            $pathPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $river -Name 'points' -Default @()) -Viewport $viewport
-            if ($pathPoints.Length -ge 2) {
-                $Graphics.DrawLines($riverPen, $pathPoints)
+            foreach ($river in @((Get-ObjectProperty -Object $featureRecord -Name 'riverFeatures' -Default @()))) {
+                $pathPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $river -Name 'points' -Default @()) -Viewport $viewport
+                if ($pathPoints.Length -ge 2) {
+                    $Graphics.DrawLines($riverPen, $pathPoints)
+                }
             }
         }
 
@@ -2913,6 +3007,15 @@ function Draw-WorldMapSurface {
                 $lanePoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $lane -Name 'pathPoints' -Default @()) -Viewport $viewport
                 if ($lanePoints.Length -ge 2) {
                     $Graphics.DrawLines($seaLanePen, $lanePoints)
+                }
+            }
+        }
+
+        if ($ShowRegionLabels) {
+            foreach ($footprint in @((Get-ObjectProperty -Object $featureRecord -Name 'regionFootprints' -Default @()))) {
+                $polygonPoints = Convert-MapPointsToCanvas -Points (Get-ObjectProperty -Object $footprint -Name 'points' -Default @()) -Viewport $viewport
+                if ($polygonPoints.Length -ge 3) {
+                    $Graphics.DrawPolygon($regionOutlinePen, $polygonPoints)
                 }
             }
         }
@@ -3010,6 +3113,7 @@ function Draw-WorldMapSurface {
 
         $Graphics.ResetClip()
 
+        $majorLabelAnchors = @()
         if ($ShowMajorLabels) {
             $majorRegionIds = @((Get-ObjectProperty -Object $worldMapRecord -Name 'continentRegionIds' -Default @()))
             $majorRegionIds += @((Get-ObjectProperty -Object $worldMapRecord -Name 'islandSystemRegionIds' -Default @()))
@@ -3028,32 +3132,55 @@ function Draw-WorldMapSurface {
                     -BackColor ([System.Drawing.Color]::FromArgb(170, 248, 243, 232)) `
                     -Point $canvasPoint `
                     -Alignment Center
+                $majorLabelAnchors += $canvasPoint
             }
         }
 
         if ($ShowRegionLabels) {
+            $regionLabelAnchors = @()
+            $subregionIds = New-Object 'System.Collections.Generic.List[string]'
             foreach ($footprint in @((Get-ObjectProperty -Object $featureRecord -Name 'regionFootprints' -Default @()))) {
-                $regionIds = @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))
-                if ($regionIds.Count -eq 0) {
+                foreach ($regionId in @((Get-ObjectProperty -Object $footprint -Name 'regionIds' -Default @()))) {
+                    $regionRecord = Get-RegionRecordById -RegionId ([string]$regionId)
+                    if ($null -eq $regionRecord) {
+                        continue
+                    }
+
+                    if ((Get-ObjectProperty -Object $regionRecord -Name 'regionType' -Default '') -eq 'subregion' -and -not $subregionIds.Contains([string]$regionId)) {
+                        $subregionIds.Add([string]$regionId)
+                    }
+                }
+            }
+
+            foreach ($regionId in @($subregionIds)) {
+                if ([string]::IsNullOrWhiteSpace($regionId)) {
                     continue
                 }
 
-                $regionId = [string]$regionIds[0]
                 $regionRecord = Get-RegionRecordById -RegionId $regionId
                 if ($null -eq $regionRecord) {
                     continue
                 }
 
-                if ((Get-ObjectProperty -Object $regionRecord -Name 'regionType' -Default '') -ne 'subregion') {
-                    continue
-                }
-
-                $anchor = Get-PointsCentroid -Points (Get-ObjectProperty -Object $footprint -Name 'points' -Default @())
+                $anchor = Get-RegionMapLabelPoint -RegionId $regionId -FeatureRecord $featureRecord
                 if ($null -eq $anchor) {
                     continue
                 }
 
                 $canvasPoint = Convert-MapPointToCanvas -Point $anchor -Viewport $viewport
+                $shouldSkipLabel = $false
+                foreach ($existingPoint in @($majorLabelAnchors + $regionLabelAnchors)) {
+                    $deltaX = [double]($canvasPoint.X - $existingPoint.X)
+                    $deltaY = [double]($canvasPoint.Y - $existingPoint.Y)
+                    if ((($deltaX * $deltaX) + ($deltaY * $deltaY)) -lt 4900.0) {
+                        $shouldSkipLabel = $true
+                        break
+                    }
+                }
+                if ($shouldSkipLabel) {
+                    continue
+                }
+
                 $backColor = if ($context.HighlightRegionIds -contains $regionId) {
                     [System.Drawing.Color]::FromArgb(185, 247, 223, 167)
                 }
@@ -3068,6 +3195,7 @@ function Draw-WorldMapSurface {
                     -BackColor $backColor `
                     -Point $canvasPoint `
                     -Alignment Center
+                $regionLabelAnchors += $canvasPoint
             }
         }
 
@@ -3090,6 +3218,7 @@ function Draw-WorldMapSurface {
         $mountainInnerPen.Dispose()
         $routePen.Dispose()
         $seaLanePen.Dispose()
+        $regionOutlinePen.Dispose()
         $highlightPen.Dispose()
         $zonePen.Dispose()
         $biomeHighlightPen.Dispose()

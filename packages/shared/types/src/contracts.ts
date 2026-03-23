@@ -177,6 +177,15 @@ export interface CivilizationState {
 }
 
 export type PlayerAttributeKey = "STR" | "DEX" | "AGI" | "CON" | "VIT" | "WIS" | "INT" | "SPT" | "CHA";
+export type PlayerSexId = "male" | "female" | "neutral";
+
+export interface PlayerResourceGrowthVector {
+  hp: number;
+  mp: number;
+  stamina: number;
+}
+
+export type PlayerAttributeAdjustments = Partial<Record<PlayerAttributeKey, number>>;
 
 export interface PlayerAttributes {
   STR: number;
@@ -208,8 +217,90 @@ export interface PlayerResources {
   xp: ExperiencePool;
 }
 
+export type PlayerResourceKey = "hp" | "mp" | "stamina";
+
+export type PlayerPartialResourceVector = Partial<Record<PlayerResourceKey, number>>;
+
+export type PlayerResourceModifierSourceType =
+  | "origin"
+  | "class"
+  | "equipment"
+  | "buff"
+  | "debuff"
+  | "food"
+  | "aura"
+  | "trait"
+  | "spell"
+  | "environment"
+  | "system";
+
+export interface PlayerResourceModifierState {
+  id: string;
+  label: string;
+  sourceType: PlayerResourceModifierSourceType;
+  sourceId: string | null;
+  maxFlat: PlayerPartialResourceVector;
+  maxPercent: PlayerPartialResourceVector;
+  tickDeltaFlat: PlayerPartialResourceVector;
+  expiresAtTick?: number | null;
+  notes: string[];
+}
+
+export type PlayerResourceChangeKind =
+  | "natural_regen"
+  | "assisted_regen"
+  | "degeneration"
+  | "damage"
+  | "heal"
+  | "potion"
+  | "spell_cost"
+  | "food"
+  | "aura"
+  | "scripted";
+
+export interface PlayerResourceChangeRequestState {
+  id: string;
+  label: string;
+  resource: PlayerResourceKey;
+  amount: number;
+  kind: PlayerResourceChangeKind;
+  sourceType: PlayerResourceModifierSourceType;
+  sourceId: string | null;
+}
+
+export interface PlayerResourceChangeRecordState extends PlayerResourceChangeRequestState {
+  appliedTick: number;
+  before: number;
+  after: number;
+}
+
+export interface PlayerResourceTickEntryState {
+  max: number;
+  before: number;
+  after: number;
+  naturalRegen: number;
+  assistedRegen: number;
+  degeneration: number;
+  directChange: number;
+  clampAdjustment: number;
+}
+
+export interface PlayerResourceTickBreakdownState {
+  appliedTick: number;
+  activeModifierIds: string[];
+  resources: Record<PlayerResourceKey, PlayerResourceTickEntryState>;
+}
+
+export interface PlayerResourceRuntimeState {
+  modifiers: PlayerResourceModifierState[];
+  pendingChanges: PlayerResourceChangeRequestState[];
+  lastBreakdown: PlayerResourceTickBreakdownState | null;
+  history: PlayerResourceChangeRecordState[];
+}
+
 export interface PlayerProgression {
   level: number;
+  classLevel: number;
   unspentAttributePoints: number;
   unspentSkillPoints: number;
 }
@@ -272,6 +363,7 @@ export interface EquippedItemRef {
   itemKey: string;
   quantity: number;
   durability?: number;
+  resourceModifiers?: PlayerResourceModifierState[];
 }
 
 export type EquipmentState = Record<EquipmentSlotId, EquippedItemRef | null>;
@@ -297,6 +389,7 @@ export interface PlayerInventoryState {
 export interface PlayerCoreData {
   playerName: string;
   lineageId: string;
+  sexId: PlayerSexId;
   classId: string | null;
   jobId: string | null;
 }
@@ -307,12 +400,213 @@ export interface PlayerSaveMetadata {
   lastSavedAtTick: number;
 }
 
+export interface PlayerLocationState {
+  settlementId: string | null;
+  siteLabel: string | null;
+  worldMapId: string | null;
+  knownSettlementIds: string[];
+}
+
+export interface PlayerCurrencyState {
+  gold: number;
+  silver: number;
+  copper: number;
+}
+
+export interface PlayerReputationState {
+  id: string;
+  label: string;
+  standingLabel: string;
+  score: number;
+  effects: string[];
+}
+
+export interface PlayerTitleState {
+  id: string;
+  label: string;
+  source: string;
+  equipped: boolean;
+  effects: string[];
+}
+
+export type PlayerDiscoveryCategory =
+  | "flora"
+  | "fauna"
+  | "minerals"
+  | "items"
+  | "recipes"
+  | "factions"
+  | "notes";
+
+export interface PlayerDiscoveryChronicleEntryState {
+  id: string;
+  codexEntryId: string;
+  category: PlayerDiscoveryCategory;
+  title: string;
+  discoveredAtTick: number;
+  discoveredAtLabel: string;
+  regionLabel: string;
+  sourceType: string;
+  sourceId: string | null;
+  notes: string[];
+}
+
+export interface PlayerDiscoveryChronicleState {
+  entries: PlayerDiscoveryChronicleEntryState[];
+  lastUpdatedTick: number | null;
+}
+
+export interface PlayerOriginProfileState {
+  lineageId: string;
+  lineageLabel: string;
+  classId: string | null;
+  classLabel: string | null;
+  sexId: PlayerSexId;
+  attributeAdjustments: PlayerAttributeAdjustments;
+  resourceBaseAdjustments: PlayerResourceGrowthVector;
+  lineageResourceGrowthPerLevel: PlayerResourceGrowthVector;
+  classResourceGrowthPerClassLevel: PlayerResourceGrowthVector;
+  resolvedResourceMaxima: PlayerResourceGrowthVector;
+  notes: string[];
+}
+
+export type UiTone = "accent" | "success" | "warning" | "neutral" | "danger";
+
+export interface NotificationState {
+  id: string;
+  title: string;
+  detail: string;
+  timeLabel: string;
+  tone: UiTone;
+}
+
+export type WorldLocationType = "settlement" | "ruin" | "harbor" | "fort";
+
+export interface KnownLocationState {
+  id: string;
+  name: string;
+  regionLabel: string;
+  type: WorldLocationType;
+  x: number;
+  y: number;
+  note: string;
+  known: boolean;
+}
+
+export interface PanelRecordDetailEntry {
+  label: string;
+  value: string;
+}
+
+export interface PanelRecordState {
+  id: string;
+  sectionId: string;
+  title: string;
+  subtitle?: string;
+  meta?: string;
+  status?: string;
+  summary: string;
+  tags: string[];
+  detailEntries: PanelRecordDetailEntry[];
+}
+
+export interface CodexEntryState {
+  id: string;
+  category: string;
+  title: string;
+  subtitle?: string;
+  status?: string;
+  summary: string;
+  tags: string[];
+  habitat: string;
+  uses: string;
+  valueDescription: string;
+  regionTags: string[];
+  locked?: boolean;
+}
+
+export type QuestJournalCategory = "active" | "contracts" | "completed" | "failed";
+
+export interface QuestJournalEntryState {
+  id: string;
+  category: QuestJournalCategory;
+  title: string;
+  regionLabel: string;
+  rewardLabel: string;
+  summary: string;
+  statusLabel?: string;
+  tracked?: boolean;
+  objectives: string[];
+  rewards: string[];
+  relatedLocations: string[];
+  tags: string[];
+}
+
+export type ChronicleCategory =
+  | "combat"
+  | "trade"
+  | "social"
+  | "travel"
+  | "crafting"
+  | "discovery"
+  | "reputation";
+
+export interface ChronicleEventState {
+  id: string;
+  category: ChronicleCategory;
+  title: string;
+  timeLabel: string;
+  summary: string;
+  statusLabel?: string;
+  entities: string[];
+  results: string[];
+  statChanges: string[];
+  tags: string[];
+}
+
+export interface OperationState {
+  id: string;
+  title: string;
+  stage: string;
+  progress: number;
+  etaLabel: string;
+  owner: string;
+  output: string;
+  priority: "Low" | "Normal" | "High";
+}
+
+export interface CurrentActivityState {
+  id: string;
+  label: string;
+  category: string;
+  detail?: string;
+}
+
+export interface SessionState {
+  activeEvents: string[];
+  flags: string[];
+  triggers: string[];
+  completedEvents: string[];
+  trackedQuestId: string | null;
+  currentActivity: CurrentActivityState | null;
+  pinnedRecordIds: string[];
+  notifications: NotificationState[];
+  knownLocations: KnownLocationState[];
+  worldRecords: PanelRecordState[];
+  activityRecords: PanelRecordState[];
+  operations: OperationState[];
+  codexEntries: CodexEntryState[];
+  questJournal: QuestJournalEntryState[];
+  chronicle: ChronicleEventState[];
+}
+
 export interface PlayerState {
   playerId: string;
   regionId: string;
   coreData: PlayerCoreData;
   attributes: PlayerAttributes;
   resources: PlayerResources;
+  resourceRuntime: PlayerResourceRuntimeState;
   progression: PlayerProgression;
   skills: PlayerSkillState[];
   spells: PlayerSpellState[];
@@ -321,6 +615,12 @@ export interface PlayerState {
   equipment: EquipmentState;
   inventory: PlayerInventoryState;
   activeEffects: string[];
+  location: PlayerLocationState;
+  currency: PlayerCurrencyState;
+  originProfile: PlayerOriginProfileState;
+  reputation: PlayerReputationState[];
+  titles: PlayerTitleState[];
+  discoveryChronicle: PlayerDiscoveryChronicleState;
   discoveredRegions: string[];
   activeQuestIds: string[];
   completedQuestIds: string[];
@@ -369,11 +669,17 @@ export interface PlayerDelta {
     | "inventory"
     | "progression"
     | "resources"
+    | "origin"
+    | "location"
+    | "currency"
     | "equipment"
     | "skills"
     | "abilities"
     | "spells"
-    | "traits";
+    | "traits"
+    | "discovery"
+    | "reputation"
+    | "titles";
   playerId: string;
   payload: Record<string, unknown>;
 }
@@ -416,13 +722,9 @@ export interface OverrideRule {
 export interface SaveSnapshot {
   snapshotVersion: string;
   capturedAtTick: number;
+  clock: SimulationClock;
   playerState: PlayerState;
   worldState: WorldState;
   civilizationState: CivilizationState;
-  sessionState: {
-    activeEvents: string[];
-    flags: string[];
-    triggers: string[];
-    completedEvents: string[];
-  };
+  sessionState: SessionState;
 }

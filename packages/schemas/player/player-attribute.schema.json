@@ -2,10 +2,45 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerAttributeRecord",
   "type": "object",
-  "required": ["id", "name", "default"],
+  "required": ["id", "name", "shortCode", "category", "default", "description"],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
-    "default": { "type": "number" }
-  }
+    "shortCode": { "type": "string", "minLength": 2, "maxLength": 5 },
+    "category": { "type": "string" },
+    "default": { "type": "number" },
+    "description": { "type": "string" },
+    "derivedStats": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skillAffinities": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "resourceInfluence": {
+      "type": "object",
+      "properties": {
+        "hp": { "$ref": "#/$defs/resourceVector" },
+        "mp": { "$ref": "#/$defs/resourceVector" },
+        "stamina": { "$ref": "#/$defs/resourceVector" }
+      },
+      "additionalProperties": false
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "resourceVector": {
+      "type": "object",
+      "properties": {
+        "maxPerPoint": { "type": "number" },
+        "regenPerPoint": { "type": "number" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
 }

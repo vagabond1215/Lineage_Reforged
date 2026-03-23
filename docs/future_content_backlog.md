@@ -17,7 +17,7 @@ This file tracks content and systems that are intentionally deferred.
 #### Magical books and tomes
 
 - Status: deferred
-- Prerequisite: establish the spell database and spell metadata first
+- Prerequisite: establish the canonical spell database and spell metadata first; the current starter FFXI-style placeholder catalog is not yet enough to author stable tome items
 - Intended owner: `enchanters`, with follow-on support from `scriptorium` and `bookbindery` content
 - Intended implementation:
   - define spell-bearing book item families after spells have stable tiers, schools, and storage rules
@@ -26,7 +26,7 @@ This file tracks content and systems that are intentionally deferred.
 #### Magical scrolls
 
 - Status: deferred
-- Prerequisite: establish the spell database and spell metadata first
+- Prerequisite: establish the canonical spell database and spell metadata first; the current starter FFXI-style placeholder catalog is not yet enough to author stable scroll items
 - Intended owner: `enchanters`, with scroll substrate support from `scriptorium`
 - Intended implementation:
   - define spell scroll payloads after spell data can describe charges, decay, and inscription limits
@@ -37,15 +37,17 @@ This file tracks content and systems that are intentionally deferred.
 #### Region-based maps
 
 - Status: partially deferred
-- Prerequisite: region metadata and authored boundary/polygon data now exist; remaining prerequisites are cartography item families, stored map-art assets in the repo, and physical map-item ownership rules
+- Prerequisite: region metadata, polygon boundaries, and source raster base layers now exist; remaining prerequisites are cartography item families and physical map-item ownership rules
 - Intended owner: future cartography/mapmaking content
 - Intended implementation:
   - the first authored world geography pass now lives in `packages/content/base/world/regions.json` and `packages/content/base/world/world_maps.json`
+  - `world_maps.json` now carries source-raster asset paths plus an authored source-rect so the browser can align overlays to the canonical map coordinate grid even when the source art includes framing or margins
   - coordinate-backed feature geometry now lives in `packages/content/base/world/world_map_features.json`, including region footprints, climate zones, biome zones, rivers, mountain belts, passes, and crossings
-  - the content browser now renders biome/elevation map views from that geometry and can overlay continent names, region names, settlements, and route lines against the authored pixel grid
+  - `scripts/regenerate_world_map_features.ps1` now regenerates source-aligned coastlines plus region/biome polygon families from the source biome raster so future map-boundary corrections do not require hand-editing every polygon
+  - source full-size raster base layers now live under `packages/content/base/world/map_assets/`, and the content browser now uses those layers while overlaying region polygons, continent names, region names, settlements, and route lines against the authored pixel grid
   - add map item families now that region data can anchor them
   - keep future map generation tied to real region records rather than placeholder generic maps
-  - add stored raster assets and optional image-backed browser loading later if cartography content needs visual/physical map ownership instead of rendered geometry only
+  - keep the browser centered on `world_maps` as the player-facing map surface while lower-level geometry data remains an internal support layer for rendering and route validation
 
 ### Regional Economies
 
@@ -64,18 +66,20 @@ This file tracks content and systems that are intentionally deferred.
 #### Settlement consumption, growth, and routing
 
 - Status: partially deferred
-- Prerequisite: authored settlement data now exists; remaining prerequisites are runtime population-consumption rules, route throughput, migration/urban growth logic, and region-aware infrastructure service effects
+- Prerequisite: authored settlement data now exists; remaining prerequisites are runtime population-consumption rules, route throughput, migration/urban growth logic, automated terrain-aware pathfinding, and region-aware infrastructure service effects
 - Intended owner: region data, economy simulation, settlement simulation, and infrastructure routing systems
 - Intended implementation:
   - authored settlement records now live in `packages/content/base/world/settlements.json`
   - authored map scale benchmarks and route metadata now live in `packages/content/base/world/world_maps.json` and `packages/content/base/world/travel_networks.json`
   - settlement records now carry pixel-coordinate map locations with climate and biome zone bindings on the shared 2048x1152 map grid
   - world-map features now define coastlines, rivers, mountains, passes, crossings, and region footprints for the authored map
+  - browser-facing raster map layers now exist, and authored route data is now constrained so land corridors cannot use sea terrain without crossing/pass mechanisms and sea lanes must terminate at coastal harbor settlements
   - the settlement layer now includes both primary centers and a first dependent-settlement layer of estates, hamlets, monasteries, ferry posts, camps, and similar support sites
   - settlement records now include authored guild-building presence for major human trade, craft, logistics, and adventuring nodes
   - use those records as the canonical layer for domestic production, regional trade links, infrastructure level, and population-center identity
   - add runtime settlement demand, storage pressure, migration, and urban growth instead of leaving settlement sizes as static authored values
   - convert authored route geometry and travel timings into simulated throughput across roads, rivers, coasts, and canals once transport systems consume route data directly
+  - if route authoring needs to become more automatic later, add path generation against the shared pixel terrain model instead of continuing to hand-author every corridor
 
 #### Guild institutions and contract systems
 
@@ -186,3 +190,85 @@ This file tracks content and systems that are intentionally deferred.
   - tie future maps, flora distribution, and fauna distribution more tightly to region-specific identities
   - expand deferred regional realism passes using the authored region records now in place
   - add finer subregion-level ecology overlays and runtime weighting after the major trade regions are stable
+
+### Player Systems
+
+#### Discovery chronicle, inventory metadata, and origin growth ownership
+
+- Status: partially deferred
+- Prerequisite: player snapshot fields and starter authored origin profiles now exist; remaining prerequisites are canonical item metadata, runtime discovery emitters, and a canonical content/database owner for expanded lineage and class growth records
+- Intended owner: `packages/shared`, player-engine/runtime systems, future player/content databases, and UI/session adapters
+- Intended implementation:
+  - player state now carries `originProfile`, `discoveryChronicle`, `inventory`, `equipment`, and `currency` so the character UI can render a discovery log, carried items, equipped gear, wallet balances, and lineage/class growth effects
+  - starter lineage and class growth rules now live in `packages/shared/types/src/player-origins.ts` for human, elf, dwarf, halfling, gnome, orc, goblin, troll, merfolk, and the current starter class set
+  - move lineage/class growth definitions into the canonical content/database layer once the playable race and class roster is broad enough that authored profile coverage should not live inside shared TypeScript helpers
+  - add a canonical mapping between authored world race ids and player lineage ids so settlement/region demographics, character creation, and origin growth resolve through the same taxonomy
+  - add a raw-vs-derived attribute split so sex variance, lineage adjustments, equipment bonuses, effects, and temporary modifiers can be audited separately from final displayed attribute totals
+  - add canonical item stat/value/weight metadata refs so inventory and equipment rows can project real authored data instead of humanized item keys and stack ids alone
+  - add runtime discovery emitters, dedupe rules, and codex sync ownership so flora/fauna/mineral/item/note discoveries are written by live simulation systems instead of demo snapshot payloads
+
+#### FFXI-style placeholder progression catalogs and canonical replacement
+
+- Status: partially deferred
+- Prerequisite: starter authored progression catalogs now exist; remaining prerequisites are a canonical class/job taxonomy, fuller BG-Wiki placeholder ingestion, player-content validation/seed tooling, and runtime consumers for unlocks and gain rules
+- Intended owner: player content databases, combat systems, spell systems, craft systems, and later progression tooling
+- Intended implementation:
+  - player attributes, skills, abilities, spells, and traits now live as richer authored progression catalogs with SQLite storage support instead of minimal placeholder rows
+  - the current pass intentionally uses FFXI-style taxonomy and representative records from BG-Wiki as a temporary stand-in while the game-native class, skill, and spell roster is still fluid
+  - the current spell catalog now guarantees at least five authored spells for each supported element and each current black/white magic discipline, so downstream systems can assume basic elemental and subtype diversity
+  - remaining work is to ingest broader placeholder coverage beyond that minimum-diversity floor, especially the full black-magic and white-magic line coverage referenced in the authored spell catalog metadata
+  - map any placeholder job or role assumptions onto the canonical player class/job taxonomy before runtime unlock logic depends on these records
+  - add content-lint or seed-pipeline validation for the richer player catalogs so progression models, unlock rules, and effect payloads are checked the same way broader world content is checked
+  - replace the temporary FFXI-inspired records with organic game-native abilities, traits, spells, and skill families once the downstream combat, crafting, and progression systems stabilize
+
+#### Real-time HP/MP/Stamina effect catalogs and event integration
+
+- Status: partially deferred
+- Prerequisite: the runtime calculator now exists; remaining prerequisites are canonical spell/food/equipment effect payloads, combat/runtime systems that emit resource changes, and authored rest/consumption/aura rules
+- Intended owner: player-engine runtime, combat systems, spell/item content, and UI/session adapters
+- Intended implementation:
+  - player resource runtime now supports active modifiers, pending one-shot changes, per-tick breakdowns, and recent history so HP/MP/Stamina can be recalculated each tick instead of treated as static numbers
+  - the player engine now resolves origin maxima, equipment bonuses, ongoing buff/debuff/food/aura effects, natural regeneration, assisted regeneration, degeneration, and direct change requests through one calculator path
+  - remaining work is to replace fixture-authored modifier payloads with canonical equipment, spell, potion, food, rest, and aura effect data from the content/database layer
+  - wire combat damage, healing, spellcasting costs, potion use, food consumption, environmental drains, and rest actions to emit `player.resource.change` and modifier-application events instead of hand-seeding pending changes in test/demo state
+  - extend the UI beyond the current character-overview summary so the player can inspect the full resource history and source-by-source breakdown in dedicated views
+
+### Frontend UI
+
+#### Live RPG UI data bindings and persistence
+
+- Status: partially deferred
+- Prerequisite: shared player/session snapshot fields and a browser-safe UI projection layer now exist; remaining prerequisite is runtime generation of those session records from actual simulation systems
+- Intended owner: `apps/rpg-ui`, `packages/shared`, and engine/session runtime layers
+- Intended implementation:
+  - the React/Tailwind shell now reads from a save/session snapshot bridge instead of the earlier freeform mock-data module
+  - shared contracts now carry location, currency, reputation, titles, tracked activity, notifications, codex records, quest journal records, chronicle records, operations, origin profiles, inventory/equipment, and the player discovery chronicle in a session-facing shape the UI can project directly
+  - `packages/engines/game-engine/src/save-snapshot.ts` now provides a runtime-side snapshot helper, and `apps/rpg-ui/src/runtime/uiViewModel.ts` projects that snapshot shape into panel data
+  - the detail column now also exposes per-section standard field audits and missing-reference callouts so each submenu window documents what data it expects to receive
+  - the character tab now surfaces origin growth, wallet/inventory state, equipped gear refs, and discovery-chronicle records from the snapshot bridge instead of treating those windows as placeholders
+  - remaining work is to have the simulation produce `worldRecords`, `activityRecords`, `questJournal`, `chronicle`, `codexEntries`, and notification/operation feeds dynamically instead of relying on demo session payloads
+  - pinned items are still persisted locally in the UI app; move that ownership into the player/session layer once save/update semantics are finalized
+
+#### RPG UI section field coverage and missing references
+
+- Status: partially deferred
+- Prerequisite: section-level UI audit scaffolding now exists; remaining prerequisites are canonical content ids plus live runtime adapters that can populate those refs
+- Intended owner: `apps/rpg-ui` with follow-on work in `packages/shared`, engine/session adapters, and authored content layers
+- Intended implementation:
+  - the UI menus now surface per-section descriptions and record counts, and each submenu detail window now lists its standard fields, current data source refs, and missing or empty references
+  - remaining character refs include raw base-attribute provenance, derived combat/encumbrance formulas, authored equipment stat payloads, canonical item metadata refs for inventory rows, canonical spell/food/potion/aura modifier payloads, trait modifier tables, faction threshold tables, title equip/unlock ownership rules, runtime ownership for discovery-chronicle writes, and full combat/resource event emitters
+  - remaining world refs include authored `world_maps` / `world_map_features` ids, player visibility state, region ecology/hazard bindings, settlement stockpile and service refs, route geometry/throughput refs, and live market price/stock feeds
+  - remaining activity refs include employer/workplace ids, business revenue-expense ledgers, upgrade catalogs, recipe/station refs, cargo and shipment ids, contract lifecycle refs, service payroll/readiness refs, vessel/crew refs, and operation dependency / input-output refs
+  - remaining codex refs include canonical content ids for flora/fauna/minerals/items/recipes/factions, habitat weighting, extraction/drop links, item stat and recipe refs, faction presence thresholds, and note-source linkage
+  - remaining quest refs include issuer / giver ids, acceptance-expiry lifecycle refs, objective-state refs, reward ledger links, follow-on or failure consequence refs, and canonical tracked-objective ownership
+  - remaining chronicle refs include source event ids, replay/sort indices, encounter / transaction / dialogue / route / recipe / codex / reputation linkbacks, and stable references to the systems that emitted each event
+
+#### World-panel map rendering against authored geography data
+
+- Status: deferred
+- Prerequisite: the UI now accepts snapshot-fed known locations and world records; remaining prerequisite is exposing authored `world_maps`, `world_map_features`, route geometry, and visibility state through that snapshot layer
+- Intended owner: `apps/rpg-ui` world panel plus future map/presentation adapters
+- Intended implementation:
+  - the world tab now consumes snapshot-fed known locations and world records for side lists/details, but the map surface remains a placeholder renderer
+  - replace the placeholder with rendered authored geography layers tied to the canonical map coordinate system and live player-known-location visibility
+  - layer route risk, settlement supply-demand overlays, and region tooltips onto the same map surface after the adapter contract is stable

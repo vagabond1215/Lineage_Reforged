@@ -2855,6 +2855,31 @@ function validateWorldMaps(relativePath, records) {
     if ("layerSummaries" in record) {
       ensureStringArray(relativePath, recordId, "layerSummaries", record.layerSummaries, 1);
     }
+    if ("layerAssetPaths" in record) {
+      if (!isObject(record.layerAssetPaths)) {
+        throw new Error(`${relativePath} has invalid layerAssetPaths on record ${recordId}`);
+      }
+      if ("biome" in record.layerAssetPaths) {
+        ensureString(relativePath, recordId, "layerAssetPaths.biome", record.layerAssetPaths.biome);
+      }
+      if ("elevation" in record.layerAssetPaths) {
+        ensureString(relativePath, recordId, "layerAssetPaths.elevation", record.layerAssetPaths.elevation);
+      }
+    }
+    if ("assetReferenceRectPx" in record) {
+      if (!isObject(record.assetReferenceRectPx)) {
+        throw new Error(`${relativePath} has invalid assetReferenceRectPx on record ${recordId}`);
+      }
+      ensureNumber(relativePath, recordId, "assetReferenceRectPx.x", record.assetReferenceRectPx.x, 0);
+      ensureNumber(relativePath, recordId, "assetReferenceRectPx.y", record.assetReferenceRectPx.y, 0);
+      ensureNumber(relativePath, recordId, "assetReferenceRectPx.width", record.assetReferenceRectPx.width, 1);
+      ensureNumber(relativePath, recordId, "assetReferenceRectPx.height", record.assetReferenceRectPx.height, 1);
+      const sourceAspectRatio = record.assetReferenceRectPx.width / record.assetReferenceRectPx.height;
+      const referenceAspectRatio = record.scaleProfile.referenceImageWidthPx / record.scaleProfile.referenceImageHeightPx;
+      if (Math.abs(sourceAspectRatio - referenceAspectRatio) > 0.02) {
+        throw new Error(`${relativePath} assetReferenceRectPx aspect ratio must closely match the reference image aspect ratio on record ${recordId}`);
+      }
+    }
 
     ensureStringArray(relativePath, recordId, "continentRegionIds", record.continentRegionIds, 1);
     ensureStringArray(relativePath, recordId, "islandSystemRegionIds", record.islandSystemRegionIds, 1);
@@ -4372,6 +4397,22 @@ async function validateWorldMapsAgainstRegions() {
       validateTypedRegion(regionId, "ocean", "oceanRegionIds");
     }
 
+    if (record.layerAssetPaths && typeof record.layerAssetPaths === "object") {
+      for (const [layerName, assetPath] of Object.entries(record.layerAssetPaths)) {
+        if (typeof assetPath !== "string" || assetPath.trim().length === 0) {
+          continue;
+        }
+
+        const resolvedAssetPath = path.isAbsolute(assetPath) ? assetPath : path.join(ROOT, assetPath);
+        try {
+          await readFile(resolvedAssetPath);
+        }
+        catch {
+          throw new Error(`packages/content/base/world/world_maps.json layerAssetPaths.${layerName} '${assetPath}' is missing on record ${recordId}`);
+        }
+      }
+    }
+
     let populationTotal = 0;
     for (const estimate of record.populationEstimates ?? []) {
       if (!regionsById.has(estimate.regionId)) {
@@ -4944,6 +4985,29 @@ async function validateTravelNetworksAgainstWorldData() {
     const terrainRuleTags = new Set((record.terrainVarianceRules ?? []).map((entry) => entry.tag).filter((value) => typeof value === "string"));
     const featureRuleTags = new Set((record.featureVarianceRules ?? []).map((entry) => entry.tag).filter((value) => typeof value === "string"));
     const milesPerPixel = worldMap.scaleProfile?.milesPerPixel ?? 0;
+    const coastalIdentityPattern = /\b(coastal|port|harbor|quay|anchorage|haven|estuary)\b/i;
+    const riverCrossingFeatureTags = new Set(["bridge_or_ferry", "river_crossing", "bridge_crossing", "ferry_crossing", "ford_crossing", "lock_crossing"]);
+    const mountainTraversalFeatureTags = new Set(["mountain_switchbacks", "tunnel", "pass_tunnel"]);
+    const getCombinedTerrainTags = (pathRecord) => [
+      ...(Array.isArray(pathRecord?.terrainTags) ? pathRecord.terrainTags : []),
+      ...((pathRecord?.pathSegments ?? []).map((segment) => segment?.terrainTag).filter((value) => typeof value === "string"))
+    ];
+    const getCombinedFeatureTags = (pathRecord) => new Set([
+      ...(Array.isArray(pathRecord?.featureTags) ? pathRecord.featureTags : []),
+      ...((pathRecord?.pathSegments ?? []).flatMap((segment) => Array.isArray(segment?.featureTags) ? segment.featureTags : []))
+    ].filter((value) => typeof value === "string"));
+    const isCoastalSettlement = (settlement) => {
+      if (!settlement || (settlement.infrastructureProfile?.harborTier ?? 0) < 1) {
+        return false;
+      }
+
+      const siteClass = settlement.mapLocation?.siteClass ?? "surface";
+      if (siteClass === "subterranean" || siteClass === "underwater") {
+        return false;
+      }
+
+      return (settlement.identityTags ?? []).some((tag) => typeof tag === "string" && coastalIdentityPattern.test(tag));
+    };
     const validatePath = (pathPoints, distanceMiles, fieldPrefix, fromSettlement, toSettlement) => {
       if (!Array.isArray(pathPoints) || pathPoints.length < 2) {
         throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.pathPoints missing on record ${recordId}`);
@@ -4972,6 +5036,36 @@ async function validateTravelNetworksAgainstWorldData() {
         throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} missing toSettlementId '${route.toSettlementId}' on record ${recordId}`);
       }
       validatePath(route.pathPoints, route.distanceMiles, `route ${route.id}`, fromSettlement, toSettlement);
+      const combinedTerrainTags = getCombinedTerrainTags(route);
+      const combinedFeatureTags = getCombinedFeatureTags(route);
+
+      if (route.routeClass === "coastal_lane") {
+        if (!isCoastalSettlement(fromSettlement)) {
+          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} fromSettlementId '${route.fromSettlementId}' must be a coastal harbor settlement on record ${recordId}`);
+        }
+        if (!isCoastalSettlement(toSettlement)) {
+          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} toSettlementId '${route.toSettlementId}' must be a coastal harbor settlement on record ${recordId}`);
+        }
+      }
+
+      if (route.routeClass === "road_corridor" || route.routeClass === "mixed_corridor") {
+        if (combinedTerrainTags.includes("open_sea") || combinedTerrainTags.includes("storm_belt")) {
+          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} cannot place a land route across sea terrain on record ${recordId}`);
+        }
+        if (combinedTerrainTags.includes("navigable_river")) {
+          const hasRiverCrossing = [...riverCrossingFeatureTags].some((tag) => combinedFeatureTags.has(tag));
+          if (!hasRiverCrossing) {
+            throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} crosses navigable_river terrain without a bridge, ferry, or crossing feature on record ${recordId}`);
+          }
+        }
+        if (combinedTerrainTags.includes("mountain_pass")) {
+          const hasMountainTraversal = [...mountainTraversalFeatureTags].some((tag) => combinedFeatureTags.has(tag));
+          if (!hasMountainTraversal) {
+            throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} crosses mountain_pass terrain without a pass, switchback, or tunnel feature on record ${recordId}`);
+          }
+        }
+      }
+
       for (const tag of route.terrainTags ?? []) {
         if (!terrainRuleTags.has(tag)) {
           throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} terrainTag '${tag}' missing terrain variance rule on record ${recordId}`);
@@ -5003,11 +5097,11 @@ async function validateTravelNetworksAgainstWorldData() {
       if (!toSettlement) {
         throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} missing toSettlementId '${lane.toSettlementId}' on record ${recordId}`);
       }
-      if ((fromSettlement.infrastructureProfile?.harborTier ?? 0) < 1) {
-        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} fromSettlementId '${lane.fromSettlementId}' must have harbor infrastructure on record ${recordId}`);
+      if (!isCoastalSettlement(fromSettlement)) {
+        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} fromSettlementId '${lane.fromSettlementId}' must be a coastal harbor settlement on record ${recordId}`);
       }
-      if ((toSettlement.infrastructureProfile?.harborTier ?? 0) < 1) {
-        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} toSettlementId '${lane.toSettlementId}' must have harbor infrastructure on record ${recordId}`);
+      if (!isCoastalSettlement(toSettlement)) {
+        throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} toSettlementId '${lane.toSettlementId}' must be a coastal harbor settlement on record ${recordId}`);
       }
       validatePath(lane.pathPoints, lane.distanceMiles, `lane ${lane.id}`, fromSettlement, toSettlement);
 

@@ -56,6 +56,48 @@
               "type": "string"
             }
           },
+          "layerAssetPaths": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "biome": {
+                "type": "string",
+                "minLength": 1
+              },
+              "elevation": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "assetReferenceRectPx": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "properties": {
+              "x": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
           "scaleProfile": {
             "type": "object",
             "additionalProperties": false,

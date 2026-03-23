@@ -2,6 +2,7 @@ import { tickCivilization } from "../../civilization-engine/src/index.js";
 import { tickPlayer } from "../../player-engine/src/index.js";
 import { tickWorld } from "../../world-engine/src/index.js";
 import type { GameDelta, GameTickContext, TickResult } from "../../../shared/types/src/index.js";
+export { createEmptySessionState, createSaveSnapshotFromGameContext } from "./save-snapshot.js";
 
 export function runGameTick(context: GameTickContext): TickResult<GameDelta> {
   const worldResult = tickWorld(context.worldContext);

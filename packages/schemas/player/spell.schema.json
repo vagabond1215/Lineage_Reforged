@@ -2,14 +2,38 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerSpellRecord",
   "type": "object",
-  "required": ["id", "name", "school", "manaCost", "scalingAttribute"],
+  "required": [
+    "id",
+    "name",
+    "school",
+    "discipline",
+    "manaCost",
+    "scalingAttribute",
+    "governingSkillId",
+    "progressionModelId",
+    "description"
+  ],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
     "school": { "type": "string" },
+    "discipline": { "type": "string" },
     "element": { "type": "string" },
     "manaCost": { "type": "integer", "minimum": 0 },
-    "scalingAttribute": { "type": "string" }
+    "scalingAttribute": { "type": "string" },
+    "governingSkillId": { "type": "string" },
+    "progressionModelId": { "type": "string" },
+    "tier": { "type": "integer", "minimum": 1 },
+    "powerRating": { "type": "number", "minimum": 0 },
+    "effectComplexity": { "type": "number", "minimum": 0 },
+    "requiredLevel": { "type": "integer", "minimum": 0 },
+    "description": { "type": "string" },
+    "effectTags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "targetProfile": { "type": "string" },
+    "placeholderSourceId": { "type": "string" }
   },
   "additionalProperties": true
 }

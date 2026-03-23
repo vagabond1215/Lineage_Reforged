@@ -1,28 +1,327 @@
 {
+  "sourceReferences": [
+    {
+      "id": "bgwiki_job_ability",
+      "label": "BG-Wiki Job Ability",
+      "url": "https://www.bg-wiki.com/ffxi/Category:Job_Ability"
+    },
+    {
+      "id": "bgwiki_weapon_skills",
+      "label": "BG-Wiki Weapon Skills",
+      "url": "https://www.bg-wiki.com/ffxi/Category:Weapon_Skills"
+    }
+  ],
+  "resourceModels": [
+    {
+      "id": "ability_cost.tactical_cooldown",
+      "name": "Tactical Cooldown",
+      "description": "Ability relies on timing and readiness more than stamina expenditure.",
+      "staminaCostRange": { "min": 0, "max": 12 },
+      "cooldownRangeTicks": { "min": 8, "max": 180 }
+    },
+    {
+      "id": "ability_cost.stamina_burst",
+      "name": "Stamina Burst",
+      "description": "Ability is an active exertion with meaningful stamina drain and a short-to-medium recast.",
+      "staminaCostRange": { "min": 8, "max": 28 },
+      "cooldownRangeTicks": { "min": 6, "max": 75 }
+    },
+    {
+      "id": "ability_cost.weapon_skill",
+      "name": "Weapon Skill",
+      "description": "Ability is gated by weapon proficiency and converts stamina into weapon-specific burst output.",
+      "staminaCostRange": { "min": 14, "max": 36 },
+      "cooldownRangeTicks": { "min": 10, "max": 45 }
+    }
+  ],
   "records": [
     {
-      "id": "ability.combat.shield_bash",
-      "name": "Shield Bash",
+      "id": "ability.martial.provoke",
+      "name": "Provoke",
+      "abilityType": "job_ability",
+      "family": "tactical_control",
+      "resourceModelId": "ability_cost.tactical_cooldown",
+      "scalingAttribute": "attr.CHA",
+      "cooldownTicks": 20,
+      "staminaCost": 4,
+      "description": "Forces hostile attention toward the user and briefly stabilizes front-line control.",
+      "unlockRules": [{ "type": "role_tag", "id": "role.tank", "level": 1 }],
+      "effectProfile": [{ "kind": "threat", "basePower": 18, "scalesWith": "attr.CHA" }],
+      "tags": ["ffxi", "control", "threat"],
+      "placeholderSourceId": "bgwiki_job_ability"
+    },
+    {
+      "id": "ability.martial.berserk",
+      "name": "Berserk",
+      "abilityType": "job_ability",
+      "family": "offensive_stance",
+      "resourceModelId": "ability_cost.tactical_cooldown",
       "scalingAttribute": "attr.STR",
-      "cooldownTicks": 8
+      "cooldownTicks": 60,
+      "staminaCost": 8,
+      "description": "Trades defense for increased physical offense for a short combat window.",
+      "unlockRules": [{ "type": "role_tag", "id": "role.vanguard", "level": 8 }],
+      "effectProfile": [
+        { "kind": "buff", "stat": "attack_power", "mode": "percent", "value": 0.18 },
+        { "kind": "debuff", "stat": "defense", "mode": "percent", "value": -0.1 }
+      ],
+      "tags": ["ffxi", "stance", "offense"],
+      "placeholderSourceId": "bgwiki_job_ability"
     },
     {
-      "id": "ability.rogue.sneak_attack",
+      "id": "ability.martial.defender",
+      "name": "Defender",
+      "abilityType": "job_ability",
+      "family": "defensive_stance",
+      "resourceModelId": "ability_cost.tactical_cooldown",
+      "scalingAttribute": "attr.CON",
+      "cooldownTicks": 60,
+      "staminaCost": 6,
+      "description": "Trades attack for stronger mitigation and guard stability.",
+      "unlockRules": [{ "type": "role_tag", "id": "role.tank", "level": 8 }],
+      "effectProfile": [
+        { "kind": "buff", "stat": "defense", "mode": "percent", "value": 0.18 },
+        { "kind": "debuff", "stat": "attack_power", "mode": "percent", "value": -0.1 }
+      ],
+      "tags": ["ffxi", "stance", "defense"],
+      "placeholderSourceId": "bgwiki_job_ability"
+    },
+    {
+      "id": "ability.martial.shield_bash",
+      "name": "Shield Bash",
+      "abilityType": "job_ability",
+      "family": "control_strike",
+      "resourceModelId": "ability_cost.stamina_burst",
+      "scalingAttribute": "attr.STR",
+      "scalingSkillId": "skill.defense.shield",
+      "requiredWeaponSkillId": "skill.defense.shield",
+      "requiredSkillRank": 20,
+      "cooldownTicks": 14,
+      "staminaCost": 16,
+      "description": "A close-range shield strike that can interrupt or briefly stun the target.",
+      "unlockRules": [{ "type": "equipment_category", "id": "shield", "level": 1 }],
+      "effectProfile": [
+        { "kind": "damage", "basePower": 14, "scalesWith": "attr.STR" },
+        { "kind": "status", "statusId": "stun", "chance": 0.35, "durationTicks": 4 }
+      ],
+      "tags": ["ffxi", "control", "shield"],
+      "placeholderSourceId": "bgwiki_job_ability"
+    },
+    {
+      "id": "ability.skirmisher.sneak_attack",
       "name": "Sneak Attack",
+      "abilityType": "job_ability",
+      "family": "burst_setup",
+      "resourceModelId": "ability_cost.tactical_cooldown",
       "scalingAttribute": "attr.DEX",
-      "cooldownTicks": 10
+      "cooldownTicks": 28,
+      "staminaCost": 10,
+      "description": "Empowers the next qualifying strike from a positional advantage.",
+      "unlockRules": [{ "type": "role_tag", "id": "role.skirmisher", "level": 10 }],
+      "effectProfile": [{ "kind": "next_hit_bonus", "basePower": 20, "scalesWith": "attr.DEX" }],
+      "tags": ["ffxi", "burst", "precision"],
+      "placeholderSourceId": "bgwiki_job_ability"
     },
     {
-      "id": "ability.mobility.combat_roll",
-      "name": "Combat Roll",
+      "id": "ability.skirmisher.flee",
+      "name": "Flee",
+      "abilityType": "job_ability",
+      "family": "mobility",
+      "resourceModelId": "ability_cost.tactical_cooldown",
       "scalingAttribute": "attr.AGI",
-      "cooldownTicks": 6
+      "cooldownTicks": 90,
+      "staminaCost": 0,
+      "description": "Temporarily spikes movement speed and disengagement capability.",
+      "unlockRules": [{ "type": "role_tag", "id": "role.skirmisher", "level": 5 }],
+      "effectProfile": [{ "kind": "buff", "stat": "move_speed", "mode": "percent", "value": 0.35 }],
+      "tags": ["ffxi", "mobility"],
+      "placeholderSourceId": "bgwiki_job_ability"
     },
     {
-      "id": "ability.survival.field_dress",
-      "name": "Field Dress",
-      "scalingAttribute": "attr.WIS",
-      "cooldownTicks": 12
+      "id": "ability.monk.chakra",
+      "name": "Chakra",
+      "abilityType": "job_ability",
+      "family": "self_recovery",
+      "resourceModelId": "ability_cost.tactical_cooldown",
+      "scalingAttribute": "attr.VIT",
+      "cooldownTicks": 72,
+      "staminaCost": 6,
+      "description": "Centers the user and converts discipline into a modest self-heal and cleanse.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.hand_to_hand", "rank": 40 }],
+      "effectProfile": [
+        { "kind": "heal", "basePower": 22, "scalesWith": "attr.VIT" },
+        { "kind": "cleanse", "target": "self", "limit": 1 }
+      ],
+      "tags": ["ffxi", "recovery"],
+      "placeholderSourceId": "bgwiki_job_ability"
+    },
+    {
+      "id": "ability.ranger.barrage",
+      "name": "Barrage",
+      "abilityType": "job_ability",
+      "family": "ranged_burst",
+      "resourceModelId": "ability_cost.stamina_burst",
+      "scalingAttribute": "attr.DEX",
+      "scalingSkillId": "skill.weapon.archery",
+      "requiredWeaponSkillId": "skill.weapon.archery",
+      "requiredSkillRank": 35,
+      "cooldownTicks": 24,
+      "staminaCost": 18,
+      "description": "Releases a controlled rapid volley with improved burst potential.",
+      "unlockRules": [{ "type": "role_tag", "id": "role.ranged", "level": 15 }],
+      "effectProfile": [{ "kind": "multi_hit", "basePower": 3, "scalesWith": "skill.weapon.archery" }],
+      "tags": ["ffxi", "ranged", "burst"],
+      "placeholderSourceId": "bgwiki_job_ability"
+    },
+    {
+      "id": "ability.samurai.meditate",
+      "name": "Meditate",
+      "abilityType": "job_ability",
+      "family": "resource_conversion",
+      "resourceModelId": "ability_cost.tactical_cooldown",
+      "scalingAttribute": "attr.SPT",
+      "cooldownTicks": 55,
+      "staminaCost": 0,
+      "description": "Focuses breathing and stance to restore combat momentum and stabilize stamina recovery.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.great_katana", "rank": 30 }],
+      "effectProfile": [
+        { "kind": "resource_restore", "resourceId": "stamina", "basePower": 18, "scalesWith": "attr.SPT" },
+        { "kind": "buff", "stat": "stamina_regen", "mode": "flat", "value": 0.12 }
+      ],
+      "tags": ["ffxi", "resource"],
+      "placeholderSourceId": "bgwiki_job_ability"
+    },
+    {
+      "id": "ability.dragoon.jump",
+      "name": "Jump",
+      "abilityType": "job_ability",
+      "family": "mobility_strike",
+      "resourceModelId": "ability_cost.stamina_burst",
+      "scalingAttribute": "attr.AGI",
+      "scalingSkillId": "skill.weapon.polearm",
+      "requiredWeaponSkillId": "skill.weapon.polearm",
+      "requiredSkillRank": 25,
+      "cooldownTicks": 12,
+      "staminaCost": 16,
+      "description": "Leaps into range with an evasive strike that repositions the user.",
+      "unlockRules": [{ "type": "role_tag", "id": "role.mobile_melee", "level": 10 }],
+      "effectProfile": [
+        { "kind": "damage", "basePower": 16, "scalesWith": "skill.weapon.polearm" },
+        { "kind": "movement", "pattern": "engage_or_disengage", "distance": 1 }
+      ],
+      "tags": ["ffxi", "mobility", "polearm"],
+      "placeholderSourceId": "bgwiki_job_ability"
+    },
+    {
+      "id": "ability.weapon.fast_blade",
+      "name": "Fast Blade",
+      "abilityType": "weapon_skill",
+      "family": "sword_weapon_skill",
+      "resourceModelId": "ability_cost.weapon_skill",
+      "scalingAttribute": "attr.DEX",
+      "scalingSkillId": "skill.weapon.sword",
+      "requiredWeaponSkillId": "skill.weapon.sword",
+      "requiredSkillRank": 25,
+      "cooldownTicks": 14,
+      "staminaCost": 18,
+      "description": "Quick sword finisher that converts weapon mastery into a reliable burst strike.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.sword", "rank": 25 }],
+      "effectProfile": [{ "kind": "damage", "basePower": 20, "scalesWith": "skill.weapon.sword" }],
+      "tags": ["ffxi", "weapon_skill", "sword"],
+      "placeholderSourceId": "bgwiki_weapon_skills"
+    },
+    {
+      "id": "ability.weapon.burning_blade",
+      "name": "Burning Blade",
+      "abilityType": "weapon_skill",
+      "family": "sword_weapon_skill",
+      "resourceModelId": "ability_cost.weapon_skill",
+      "scalingAttribute": "attr.INT",
+      "scalingSkillId": "skill.weapon.sword",
+      "requiredWeaponSkillId": "skill.weapon.sword",
+      "requiredSkillRank": 40,
+      "cooldownTicks": 18,
+      "staminaCost": 20,
+      "description": "Imbues a sword finisher with fire-aspected burst damage.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.sword", "rank": 40 }],
+      "effectProfile": [
+        { "kind": "damage", "basePower": 18, "scalesWith": "skill.weapon.sword" },
+        { "kind": "elemental_bonus", "element": "fire", "basePower": 8 }
+      ],
+      "tags": ["ffxi", "weapon_skill", "sword", "fire"],
+      "placeholderSourceId": "bgwiki_weapon_skills"
+    },
+    {
+      "id": "ability.weapon.combo",
+      "name": "Combo",
+      "abilityType": "weapon_skill",
+      "family": "hand_to_hand_weapon_skill",
+      "resourceModelId": "ability_cost.weapon_skill",
+      "scalingAttribute": "attr.STR",
+      "scalingSkillId": "skill.weapon.hand_to_hand",
+      "requiredWeaponSkillId": "skill.weapon.hand_to_hand",
+      "requiredSkillRank": 20,
+      "cooldownTicks": 12,
+      "staminaCost": 18,
+      "description": "Converts hand-to-hand tempo into a concentrated multi-hit finisher.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.hand_to_hand", "rank": 20 }],
+      "effectProfile": [{ "kind": "multi_hit", "basePower": 2, "scalesWith": "skill.weapon.hand_to_hand" }],
+      "tags": ["ffxi", "weapon_skill", "hand_to_hand"],
+      "placeholderSourceId": "bgwiki_weapon_skills"
+    },
+    {
+      "id": "ability.weapon.raging_axe",
+      "name": "Raging Axe",
+      "abilityType": "weapon_skill",
+      "family": "axe_weapon_skill",
+      "resourceModelId": "ability_cost.weapon_skill",
+      "scalingAttribute": "attr.STR",
+      "scalingSkillId": "skill.weapon.axe",
+      "requiredWeaponSkillId": "skill.weapon.axe",
+      "requiredSkillRank": 25,
+      "cooldownTicks": 16,
+      "staminaCost": 22,
+      "description": "Heavy one-handed axe finisher with strong front-loaded physical damage.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.axe", "rank": 25 }],
+      "effectProfile": [{ "kind": "damage", "basePower": 22, "scalesWith": "skill.weapon.axe" }],
+      "tags": ["ffxi", "weapon_skill", "axe"],
+      "placeholderSourceId": "bgwiki_weapon_skills"
+    },
+    {
+      "id": "ability.weapon.sidewinder",
+      "name": "Sidewinder",
+      "abilityType": "weapon_skill",
+      "family": "archery_weapon_skill",
+      "resourceModelId": "ability_cost.weapon_skill",
+      "scalingAttribute": "attr.DEX",
+      "scalingSkillId": "skill.weapon.archery",
+      "requiredWeaponSkillId": "skill.weapon.archery",
+      "requiredSkillRank": 75,
+      "cooldownTicks": 24,
+      "staminaCost": 30,
+      "description": "High-commitment ranged finisher with exceptional burst but heavier execution cost.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.archery", "rank": 75 }],
+      "effectProfile": [{ "kind": "damage", "basePower": 34, "scalesWith": "skill.weapon.archery" }],
+      "tags": ["ffxi", "weapon_skill", "archery", "burst"],
+      "placeholderSourceId": "bgwiki_weapon_skills"
+    },
+    {
+      "id": "ability.weapon.tachi_enpi",
+      "name": "Tachi: Enpi",
+      "abilityType": "weapon_skill",
+      "family": "great_katana_weapon_skill",
+      "resourceModelId": "ability_cost.weapon_skill",
+      "scalingAttribute": "attr.AGI",
+      "scalingSkillId": "skill.weapon.great_katana",
+      "requiredWeaponSkillId": "skill.weapon.great_katana",
+      "requiredSkillRank": 30,
+      "cooldownTicks": 16,
+      "staminaCost": 22,
+      "description": "A measured great-katana finisher that rewards timing and disciplined burst windows.",
+      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.great_katana", "rank": 30 }],
+      "effectProfile": [{ "kind": "damage", "basePower": 24, "scalesWith": "skill.weapon.great_katana" }],
+      "tags": ["ffxi", "weapon_skill", "great_katana"],
+      "placeholderSourceId": "bgwiki_weapon_skills"
     }
   ]
 }

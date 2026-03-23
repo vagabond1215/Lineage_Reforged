@@ -1,4 +1,4 @@
-{
+﻿{
     "records":  [
                     {
                         "id":  "settlement.aurelis",
@@ -1875,12 +1875,14 @@
                         "populationBand":  "major",
                         "populationTotal":  128000,
                         "administrativeRole":  "regional",
-                        "summary":  "The most literate river city in Valtherion, renowned for barges, glassworks, and civic scriptoria.",
-                        "siteContext":  "Blueflow occupies an island-dotted reach of the Sapphire Rivers where wide quays and canal basins make water transport cheap and constant.",
+                        "summary":  "A major estuary port and scholarly river city where the Sapphire Rivers open toward the eastern sea through quays, archives, and canal basins.",
+                        "siteContext":  "Blueflow occupies the broad estuary mouth of the Sapphire Rivers, where tidal quays, canal basins, and island districts let sea captains and river barges exchange cargo year-round.",
                         "identityTags":  [
+                                             "estuary_port_city",
                                              "riverside_city",
                                              "scholarly_city",
-                                             "barge_hub"
+                                             "barge_hub",
+                                             "coastal_exchange"
                                          ],
                         "purposeTags":  [
                                             "bookmaking",
@@ -1892,7 +1894,7 @@
                                                       "roadTier":  4,
                                                       "waterTier":  4,
                                                       "fortificationTier":  2,
-                                                      "harborTier":  1,
+                                                      "harborTier":  2,
                                                       "marketTier":  5
                                                   },
                         "racialMix":  [
@@ -9304,6 +9306,7 @@
                         "siteContext":  "Driftglass sits on a low coral rise with a tiny cove, kiln pits, and improvised watch platforms.",
                         "identityTags":  [
                                              "reef_outpost",
+                                             "coastal_outpost",
                                              "lookout_post",
                                              "shell_burner"
                                          ],

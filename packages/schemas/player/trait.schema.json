@@ -2,13 +2,51 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerTraitRecord",
   "type": "object",
-  "required": ["id", "name", "effects"],
+  "required": ["id", "name", "family", "sourceType", "tier", "description", "stackingRule", "effects"],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
+    "family": { "type": "string" },
+    "sourceType": { "type": "string" },
+    "tier": { "type": "integer", "minimum": 1 },
+    "description": { "type": "string" },
+    "stackingRule": { "type": "string" },
+    "unlockRules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/unlockRule" }
+    },
     "effects": {
       "type": "array",
+      "items": { "$ref": "#/$defs/effectRule" },
+      "minItems": 1
+    },
+    "tags": {
+      "type": "array",
       "items": { "type": "string" }
+    },
+    "placeholderSourceId": { "type": "string" }
+  },
+  "$defs": {
+    "unlockRule": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "id": { "type": "string" },
+        "level": { "type": "integer" }
+      },
+      "required": ["type", "id"],
+      "additionalProperties": true
+    },
+    "effectRule": {
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string" },
+        "stat": { "type": "string" },
+        "mode": { "type": "string" },
+        "value": { "type": "number" }
+      },
+      "required": ["kind", "stat", "mode", "value"],
+      "additionalProperties": true
     }
   },
   "additionalProperties": true

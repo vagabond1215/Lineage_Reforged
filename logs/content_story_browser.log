@@ -322,3 +322,58 @@
 [2026-03-16 22:45:56.725][INFO] Returned to menu: World
 [2026-03-16 22:45:58.740][INFO] Content browser closed. DialogResult=Cancel
 [2026-03-19 20:18:53.678][INFO] Content browser starting. Workspace=C:\Users\vagab\OneDrive\Documents\Cataclysm RPG
+[2026-03-19 20:19:00.600][INFO] Content browser initialized successfully.
+[2026-03-19 20:19:05.047][INFO] Entered menu: Project Docs
+[2026-03-19 20:19:07.145][INFO] Returned to menu: Home
+[2026-03-19 20:19:09.451][INFO] Entered menu: Game
+[2026-03-19 20:19:11.257][INFO] Returned to menu: Home
+[2026-03-19 20:19:13.645][INFO] Entered menu: World
+[2026-03-19 20:19:16.969][INFO] Entered menu: World Maps
+[2026-03-19 20:19:20.839][INFO] Viewed detail: First World Map
+[2026-03-19 20:20:18.265][INFO] Browser data refreshed.
+[2026-03-19 20:20:20.332][INFO] Entered menu: World
+[2026-03-19 20:20:21.207][INFO] Entered menu: Regional Ecology Profiles
+[2026-03-19 20:20:22.334][INFO] Returned to menu: World
+[2026-03-19 20:20:24.931][INFO] Entered menu: World Map Features
+[2026-03-19 20:20:29.647][INFO] Returned to menu: World
+[2026-03-19 20:20:31.000][INFO] Entered menu: World Maps
+[2026-03-19 20:20:35.003][INFO] Viewed detail: First World Map
+[2026-03-19 20:24:29.199][INFO] Content browser closed. DialogResult=Cancel
+[2026-03-19 21:02:25.696][INFO] Content browser starting. Workspace=C:\Users\vagab\OneDrive\Documents\Cataclysm RPG
+[2026-03-19 21:02:32.032][INFO] Content browser initialized successfully.
+[2026-03-19 21:02:50.103][INFO] Entered menu: World
+[2026-03-19 21:02:51.439][INFO] Entered menu: World Maps
+[2026-03-19 21:02:54.936][INFO] Viewed detail: First World Map
+[2026-03-19 21:02:58.728][INFO] Returned to menu: World
+[2026-03-19 21:03:01.720][INFO] Entered menu: World Map Features
+[2026-03-19 21:03:04.369][INFO] Viewed detail: First World Feature Geometry
+[2026-03-19 21:03:11.332][INFO] Returned to menu: World
+[2026-03-19 21:03:17.205][INFO] Content browser closed. DialogResult=Cancel
+[2026-03-19 21:07:27.894][INFO] Content browser starting. Workspace=C:\Users\vagab\OneDrive\Documents\Cataclysm RPG
+[2026-03-19 21:07:34.024][INFO] Content browser initialized successfully.
+[2026-03-19 21:07:37.893][INFO] Entered menu: World
+[2026-03-19 21:07:39.344][INFO] Entered menu: World Maps
+[2026-03-19 21:07:42.446][INFO] Viewed detail: First World Map
+[2026-03-19 21:07:53.763][INFO] Returned to menu: World
+[2026-03-19 21:07:55.728][INFO] Entered menu: World Map Features
+[2026-03-19 21:07:58.408][INFO] Viewed detail: First World Feature Geometry
+[2026-03-19 21:08:01.122][INFO] Returned to menu: World
+[2026-03-19 21:15:59.556][INFO] Content browser closed. DialogResult=Cancel
+[2026-03-19 21:16:15.916][INFO] Content browser starting. Workspace=C:\Users\vagab\OneDrive\Documents\Cataclysm RPG
+[2026-03-19 21:16:22.020][INFO] Content browser initialized successfully.
+[2026-03-19 21:16:24.709][INFO] Entered menu: World
+[2026-03-19 21:16:27.450][INFO] Entered menu: Travel Networks
+[2026-03-19 21:16:30.778][INFO] Viewed detail: First World Travel Network
+[2026-03-19 21:16:33.595][INFO] Returned to menu: World
+[2026-03-19 21:16:34.668][INFO] Returned to menu: Home
+[2026-03-19 21:16:36.193][INFO] Entered menu: World
+[2026-03-19 21:16:37.458][INFO] Entered menu: World Maps
+[2026-03-19 21:16:39.679][INFO] Viewed detail: First World Map
+[2026-03-19 21:17:41.240][INFO] Opened source path externally: C:\Users\vagab\OneDrive\Documents\Cataclysm RPG\packages\content\base\world\world_maps.json
+[2026-03-19 21:17:42.317][INFO] Content browser closed. DialogResult=Cancel
+[2026-03-19 21:57:35.078][INFO] Content browser starting. Workspace=C:\Users\vagab\OneDrive\Documents\Cataclysm RPG
+[2026-03-19 21:57:41.412][INFO] Content browser initialized successfully.
+[2026-03-19 21:57:43.419][INFO] Entered menu: World
+[2026-03-19 21:57:45.265][INFO] Entered menu: World Maps
+[2026-03-19 21:58:06.422][INFO] Viewed detail: First World Map
+[2026-03-19 21:59:18.416][INFO] Content browser closed. DialogResult=Cancel

@@ -2,12 +2,77 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerAbilityRecord",
   "type": "object",
-  "required": ["id", "name", "scalingAttribute", "cooldownTicks"],
+  "required": [
+    "id",
+    "name",
+    "abilityType",
+    "family",
+    "resourceModelId",
+    "scalingAttribute",
+    "cooldownTicks",
+    "staminaCost",
+    "description"
+  ],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
+    "abilityType": { "type": "string" },
+    "family": { "type": "string" },
+    "resourceModelId": { "type": "string" },
     "scalingAttribute": { "type": "string" },
-    "cooldownTicks": { "type": "integer", "minimum": 0 }
+    "scalingSkillId": { "type": "string" },
+    "requiredWeaponSkillId": { "type": "string" },
+    "requiredSkillRank": { "type": "integer", "minimum": 0 },
+    "cooldownTicks": { "type": "integer", "minimum": 0 },
+    "staminaCost": { "type": "integer", "minimum": 0 },
+    "description": { "type": "string" },
+    "unlockRules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/unlockRule" }
+    },
+    "effectProfile": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/effectRule" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "placeholderSourceId": { "type": "string" }
+  },
+  "$defs": {
+    "unlockRule": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "id": { "type": "string" },
+        "level": { "type": "integer" },
+        "rank": { "type": "integer" }
+      },
+      "required": ["type", "id"],
+      "additionalProperties": true
+    },
+    "effectRule": {
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string" },
+        "stat": { "type": "string" },
+        "mode": { "type": "string" },
+        "value": { "type": "number" },
+        "basePower": { "type": "number" },
+        "scalesWith": { "type": "string" },
+        "statusId": { "type": "string" },
+        "chance": { "type": "number" },
+        "durationTicks": { "type": "integer" },
+        "target": { "type": "string" },
+        "pattern": { "type": "string" },
+        "distance": { "type": "integer" },
+        "resourceId": { "type": "string" },
+        "element": { "type": "string" }
+      },
+      "required": ["kind"],
+      "additionalProperties": true
+    }
   },
   "additionalProperties": true
 }
