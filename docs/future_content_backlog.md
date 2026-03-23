@@ -233,6 +233,45 @@ This file tracks content and systems that are intentionally deferred.
   - wire combat damage, healing, spellcasting costs, potion use, food consumption, environmental drains, and rest actions to emit `player.resource.change` and modifier-application events instead of hand-seeding pending changes in test/demo state
   - extend the UI beyond the current character-overview summary so the player can inspect the full resource history and source-by-source breakdown in dedicated views
 
+### Quest Systems
+
+#### Branching quest execution runtime and issuer registry ownership
+
+- Status: partially deferred
+- Prerequisite: authored `quest_definitions` and reusable `quest_archetypes` now exist; remaining prerequisites are canonical NPC/business/government entity registries, quest-branch execution runtime, party deployment ownership, and consequence writers for world/player/session state
+- Intended owner: quest systems, civilization/runtime engines, faction and civic content, player deployment systems, and UI/session adapters
+- Intended implementation:
+  - `packages/content/base/civilization/quest_definitions.json` now stores authored quest givers, requirements, schedules, rank/risk, logistics, rewards, and branching action trees with stat/skill/ability/spell/tool/RNG checks
+  - `packages/content/base/civilization/quest_archetypes.json` now stores reusable branching quest families for gathering/extraction, escort, extermination, porter, blacksmithing, masterwork smithing, menial labor, and maritime salvage
+  - the starter authored set now covers government, business, guild, and individual quest-giver types, including a more operation-style scenario inspired by multi-role organized-crime structures
+  - remaining work is to resolve giver ids against canonical NPC/business/government registries instead of leaving some non-guild ids provisional
+  - add a runtime branch executor that can evaluate action-tree checks, apply branch effects, consume items, assign injuries/time loss, and emit chronicle/quest-journal updates
+  - add party deployment semantics so extra or missing personnel can positively or negatively affect quest branches the way the authored data now describes
+  - connect authored quest outcomes to downstream world changes, faction standings, unlock flags, and follow-on quest chains instead of leaving branch effects as descriptive strings only
+
+#### Quest archetype instantiation, canonical refs, and loop execution
+
+- Status: partially deferred
+- Prerequisite: reusable quest archetypes now exist; remaining prerequisites are canonical skill/equipment/tag registries plus runtime support for repeated branch loops and material accounting
+- Intended owner: quest systems, player progression content, item/equipment content, and runtime execution layers
+- Intended implementation:
+  - let future generated quest offers and specific `quest_definitions` reference an archetype id instead of duplicating full branch trees whenever the quest follows a standard family
+  - add canonical skill/content support for the fields currently proxied through broad attributes or adjacent skills inside archetypes, especially perception, foraging, mining or extraction, hauling, labor endurance, routecraft, and fine-grained craft-stage specializations
+  - normalize freeform `class_tag.*` and `gear.*` references used by the archetypes so they resolve against canonical class/job and equipment-tag registries rather than remaining string-only hints
+  - add loop-aware runtime execution for repeated work stages such as fold-stack-weld passes, bulk labor cycles, repeated harvest pulls, and multi-room extermination sweeps so branch outcomes can accumulate instead of resolving as isolated text
+  - add explicit material-loss, downgraded-yield, casualty, and partial-completion accounting so catastrophic craft failures, cargo damage, late deliveries, and reduced-lot gathering results can modify real inventories and ledgers
+
+#### Universal quest-role adapter matrix and non-combat check families
+
+- Status: deferred
+- Prerequisite: the architecture pass for the modular quest-template system now exists; remaining prerequisites are canonical class or job tags, lineage tags, faith-role tags, merchant-role tags, and authored non-combat skill families
+- Intended owner: quest systems, player progression content, religion and faction content, and economy systems
+- Intended implementation:
+  - formalize reusable quest-stage modifiers for class or job, lineage, combat role, crafter profession, merchant role, and religious office instead of leaving those relationships as freeform text notes
+  - add canonical non-combat check families needed by the modular quest-template design, especially perception, foraging, mining or extraction, hauling, bargaining, appraisal, persuasion, deception, etiquette, doctrine, ritual purity, investigation, and routecraft
+  - expand authored quest archetypes beyond the current combat, labor, and craft-heavy set into diplomacy, temple service, intrigue, merchant-house operations, and other social or faith-driven quest families using those canonical check families
+  - resolve quest-state tracks such as suspicion, sanctity, profit margin, morale, and alert into runtime-owned systems so hybrid quests can carry meaningful consequences across stage boundaries
+
 ### Frontend UI
 
 #### Live RPG UI data bindings and persistence

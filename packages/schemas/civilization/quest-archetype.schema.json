@@ -1,0 +1,406 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "sourceReferences": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceReference" }
+    },
+    "rankScale": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/scaleEntry" }
+    },
+    "riskScale": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/scaleEntry" }
+    },
+    "questTypes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/noteEntry" }
+    },
+    "checkKinds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/noteEntry" }
+    },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/questArchetype" }
+    }
+  },
+  "$defs": {
+    "sourceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "url"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "url": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "scaleEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "difficultyBand": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "noteEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "notes"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "questArchetype": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "questType",
+        "summary",
+        "typicalGiverTypes",
+        "commonGuildTypes",
+        "encounterMonsterIds",
+        "baselineRequirements",
+        "classification",
+        "deployment",
+        "logistics",
+        "outcomeMetrics",
+        "failureStates",
+        "rewardDrivers",
+        "scalingAxes",
+        "actionTree"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^quest_archetype\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "questType": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "typicalGiverTypes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "commonGuildTypes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" }
+        },
+        "encounterMonsterIds": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^monster\\.[a-z0-9]+(?:_[a-z0-9]+)*$" }
+        },
+        "baselineRequirements": { "$ref": "#/$defs/baselineRequirements" },
+        "classification": { "$ref": "#/$defs/classification" },
+        "deployment": { "$ref": "#/$defs/deployment" },
+        "logistics": { "$ref": "#/$defs/logistics" },
+        "outcomeMetrics": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/namedMetric" }
+        },
+        "failureStates": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/namedFailure" }
+        },
+        "rewardDrivers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "scalingAxes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "actionTree": { "$ref": "#/$defs/actionTree" }
+      }
+    },
+    "baselineRequirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "levelMin",
+        "classTagsAny",
+        "requiredSkills",
+        "requiredAbilities",
+        "requiredSpells",
+        "requiredTraits",
+        "requiredItems",
+        "notes"
+      ],
+      "properties": {
+        "levelMin": { "type": "integer", "minimum": 1 },
+        "classTagsAny": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "requiredSkills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/thresholdRef" }
+        },
+        "requiredAbilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/idThresholdRef" }
+        },
+        "requiredSpells": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/idThresholdRef" }
+        },
+        "requiredTraits": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/idThresholdRef" }
+        },
+        "requiredItems": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "thresholdRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "minRank"],
+      "properties": {
+        "id": { "type": "string" },
+        "minRank": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "idThresholdRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "minValue"],
+      "properties": {
+        "id": { "type": "string" },
+        "minValue": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recommendedRankRange", "baselineRisk", "timeSensitivity", "usualFailureProfile"],
+      "properties": {
+        "recommendedRankRange": { "$ref": "#/$defs/rankRange" },
+        "baselineRisk": { "type": "string" },
+        "timeSensitivity": { "type": "string" },
+        "usualFailureProfile": { "type": "string" }
+      }
+    },
+    "rankRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minRank", "maxRank"],
+      "properties": {
+        "minRank": { "type": "string" },
+        "maxRank": { "type": "string" }
+      }
+    },
+    "deployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minPartySize", "recommendedPartySize", "maxPartySize", "soloAllowed", "roleSlots", "partySizeRules"],
+      "properties": {
+        "minPartySize": { "type": "integer", "minimum": 1 },
+        "recommendedPartySize": { "type": "integer", "minimum": 1 },
+        "maxPartySize": { "type": "integer", "minimum": 1 },
+        "soloAllowed": { "type": "boolean" },
+        "roleSlots": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/roleSlot" }
+        },
+        "partySizeRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/partySizeRule" }
+        }
+      }
+    },
+    "roleSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slotId", "label", "minPeople", "maxPeople", "preferredChecks", "notes"],
+      "properties": {
+        "slotId": { "type": "string" },
+        "label": { "type": "string" },
+        "minPeople": { "type": "integer", "minimum": 0 },
+        "maxPeople": { "type": "integer", "minimum": 0 },
+        "preferredChecks": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "partySizeRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition", "effect"],
+      "properties": {
+        "condition": { "type": "string" },
+        "effect": { "type": "string" }
+      }
+    },
+    "logistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requiredTools", "recommendedTools", "requiredEquipmentTags", "recommendedSpells", "consumedItems"],
+      "properties": {
+        "requiredTools": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "recommendedTools": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "requiredEquipmentTags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "recommendedSpells": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "consumedItems": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "namedMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "namedFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "description", "severity"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "severity": { "type": "string" }
+      }
+    },
+    "actionTree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entryNodeId", "completionNodeIds", "nodes"],
+      "properties": {
+        "entryNodeId": { "type": "string" },
+        "completionNodeIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "nodes": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/actionNode" }
+        }
+      }
+    },
+    "actionNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "phase", "summary", "estimatedHours", "assignedRoles", "participantRange", "checks", "branches"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "phase": { "type": "string" },
+        "summary": { "type": "string" },
+        "estimatedHours": { "type": "number", "minimum": 0 },
+        "assignedRoles": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "participantRange": { "$ref": "#/$defs/participantRange" },
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/actionCheck" }
+        },
+        "branches": { "$ref": "#/$defs/branchSet" }
+      }
+    },
+    "participantRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "actionCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetId", "minValue", "weight", "optional", "notes"],
+      "properties": {
+        "kind": { "type": "string" },
+        "targetId": { "type": "string" },
+        "minValue": { "type": "number" },
+        "weight": { "type": "number" },
+        "optional": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "branchSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "criticalSuccess": { "$ref": "#/$defs/branchOutcome" },
+        "success": { "$ref": "#/$defs/branchOutcome" },
+        "partial": { "$ref": "#/$defs/branchOutcome" },
+        "failure": { "$ref": "#/$defs/branchOutcome" },
+        "criticalFailure": { "$ref": "#/$defs/branchOutcome" }
+      }
+    },
+    "branchOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nextNodeId", "questState", "summary", "effects"],
+      "properties": {
+        "nextNodeId": {
+          "type": ["string", "null"]
+        },
+        "questState": { "type": "string" },
+        "summary": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

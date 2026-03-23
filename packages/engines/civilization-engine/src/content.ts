@@ -125,6 +125,57 @@ export interface QuestTemplateRecord {
   };
 }
 
+export interface QuestDefinitionRecord {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  summary: string;
+  giver: {
+    type: string;
+    entityId: string;
+    displayName: string;
+    contactName: string;
+    settlementId: string;
+  };
+  requirements: Record<string, unknown>;
+  scheduling: Record<string, unknown>;
+  classification: Record<string, unknown>;
+  deployment: Record<string, unknown>;
+  logistics: Record<string, unknown>;
+  rewards: Record<string, unknown>;
+  miscNotes: string[];
+  actionTree: {
+    entryNodeId: string;
+    completionNodeIds: string[];
+    nodes: Array<Record<string, unknown>>;
+  };
+}
+
+export interface QuestArchetypeRecord {
+  id: string;
+  slug: string;
+  name: string;
+  questType: string;
+  summary: string;
+  typicalGiverTypes: string[];
+  commonGuildTypes: string[];
+  encounterMonsterIds: string[];
+  baselineRequirements: Record<string, unknown>;
+  classification: Record<string, unknown>;
+  deployment: Record<string, unknown>;
+  logistics: Record<string, unknown>;
+  outcomeMetrics: Array<Record<string, unknown>>;
+  failureStates: Array<Record<string, unknown>>;
+  rewardDrivers: string[];
+  scalingAxes: string[];
+  actionTree: {
+    entryNodeId: string;
+    completionNodeIds: string[];
+    nodes: Array<Record<string, unknown>>;
+  };
+}
+
 export interface MonsterContentRecord {
   id: string;
   slug: string;
@@ -212,6 +263,20 @@ export function loadSettlementContent(): SettlementContentRecord[] {
 
 export function loadQuestTemplates(): QuestTemplateRecord[] {
   const parsed = loadJsonFile<{ records: QuestTemplateRecord[] }>("../../../content/base/civilization/quest_templates.json");
+  return parsed.records;
+}
+
+export function loadQuestDefinitions(): QuestDefinitionRecord[] {
+  const parsed = loadJsonFile<{ records: QuestDefinitionRecord[] }>(
+    "../../../content/base/civilization/quest_definitions.json"
+  );
+  return parsed.records;
+}
+
+export function loadQuestArchetypes(): QuestArchetypeRecord[] {
+  const parsed = loadJsonFile<{ records: QuestArchetypeRecord[] }>(
+    "../../../content/base/civilization/quest_archetypes.json"
+  );
   return parsed.records;
 }
 

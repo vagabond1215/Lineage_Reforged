@@ -30,6 +30,10 @@ TypeScript-first, headless simulation scaffold for a survival / builder / RPG pr
   - production chain variants (input-driven outputs via `variantConfig`)
   - civilization tick economy ledgers aggregated across workplace, building, settlement, subregion, region, and world-map top level
   - baseline guild-issued quest generation driven by supply/demand shortfalls, surpluses, frontier conditions, and security hazards
+- Quest data:
+  - lightweight settlement/guild-driven `quest_templates` for procedural offer generation
+  - reusable `quest_archetypes` for standard branching gathering, escort, extermination, porter, crafting, labor, salvage, and masterwork quest structures
+  - authored `quest_definitions` with giver metadata, eligibility requirements, scheduling, rank/risk, deployment roles, and branching action trees
 
 ## Workplace Progression and Upgrades
 

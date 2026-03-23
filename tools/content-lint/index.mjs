@@ -237,6 +237,18 @@ const checks = [
     validateQuestTemplates: true
   },
   {
+    file: "packages/content/base/civilization/quest_archetypes.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/civilization/quest_definitions.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
     file: "packages/content/base/world/monsters.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
@@ -4892,6 +4904,183 @@ async function validateQuestTemplatesAgainstWorldData() {
   }
 }
 
+async function validateQuestArchetypesAgainstWorldData() {
+  const archetypePath = path.join(ROOT, "packages/content/base/civilization/quest_archetypes.json");
+  const guildPath = path.join(ROOT, "packages/content/base/civilization/guilds.json");
+  const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
+  const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
+  const abilityPath = path.join(ROOT, "packages/content/base/player/abilities.json");
+  const spellPath = path.join(ROOT, "packages/content/base/player/spells.json");
+  const traitPath = path.join(ROOT, "packages/content/base/player/traits.json");
+
+  const archetypeParsed = JSON.parse(await readFile(archetypePath, "utf8"));
+  const guildParsed = JSON.parse(await readFile(guildPath, "utf8"));
+  const monsterParsed = JSON.parse(await readFile(monsterPath, "utf8"));
+  const itemParsed = JSON.parse(await readFile(itemPath, "utf8"));
+  const attributeParsed = JSON.parse(await readFile(attributePath, "utf8"));
+  const skillParsed = JSON.parse(await readFile(skillPath, "utf8"));
+  const abilityParsed = JSON.parse(await readFile(abilityPath, "utf8"));
+  const spellParsed = JSON.parse(await readFile(spellPath, "utf8"));
+  const traitParsed = JSON.parse(await readFile(traitPath, "utf8"));
+
+  if (
+    !Array.isArray(archetypeParsed.records) ||
+    !Array.isArray(guildParsed.records) ||
+    !Array.isArray(monsterParsed.records) ||
+    !Array.isArray(itemParsed.records) ||
+    !Array.isArray(attributeParsed.records) ||
+    !Array.isArray(skillParsed.records) ||
+    !Array.isArray(abilityParsed.records) ||
+    !Array.isArray(spellParsed.records) ||
+    !Array.isArray(traitParsed.records)
+  ) {
+    throw new Error("content cross-check failed: quest archetype dependencies are invalid");
+  }
+
+  const archetypeFile = "packages/content/base/civilization/quest_archetypes.json";
+  const questTypeIds = new Set((archetypeParsed.questTypes ?? []).map((entry) => entry.id).filter((value) => typeof value === "string"));
+  const guildSlugs = new Set(guildParsed.records.map((record) => record.slug).filter((value) => typeof value === "string"));
+  const monsterIds = new Set(monsterParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const itemKeys = new Set(itemParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+  const attributeIds = new Set(attributeParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const skillIds = new Set(skillParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const abilityIds = new Set(abilityParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const spellIds = new Set(spellParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const traitIds = new Set(traitParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+
+  const validateCheckTarget = (kind, targetId, recordId, nodeId) => {
+    if (typeof targetId !== "string" || targetId.length === 0) {
+      return;
+    }
+
+    if (kind === "attribute" && !attributeIds.has(targetId)) {
+      throw new Error(`${archetypeFile} actionTree check targetId '${targetId}' missing attribute definition on record ${recordId}, node ${nodeId}`);
+    }
+    if (kind === "skill" && !skillIds.has(targetId)) {
+      throw new Error(`${archetypeFile} actionTree check targetId '${targetId}' missing skill definition on record ${recordId}, node ${nodeId}`);
+    }
+    if (kind === "ability" && !abilityIds.has(targetId)) {
+      throw new Error(`${archetypeFile} actionTree check targetId '${targetId}' missing ability definition on record ${recordId}, node ${nodeId}`);
+    }
+    if (kind === "spell" && !spellIds.has(targetId)) {
+      throw new Error(`${archetypeFile} actionTree check targetId '${targetId}' missing spell definition on record ${recordId}, node ${nodeId}`);
+    }
+    if ((kind === "tool" || kind === "item") && !itemKeys.has(targetId)) {
+      throw new Error(`${archetypeFile} actionTree check targetId '${targetId}' missing item definition on record ${recordId}, node ${nodeId}`);
+    }
+  };
+
+  for (const record of archetypeParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+
+    if (questTypeIds.size > 0 && !questTypeIds.has(record.questType)) {
+      throw new Error(`${archetypeFile} questType '${record.questType}' missing top-level questTypes entry on record ${recordId}`);
+    }
+
+    for (const guildType of record.commonGuildTypes ?? []) {
+      if (!guildSlugs.has(guildType)) {
+        throw new Error(`${archetypeFile} commonGuildTypes '${guildType}' missing guild definition on record ${recordId}`);
+      }
+    }
+
+    for (const monsterId of record.encounterMonsterIds ?? []) {
+      if (!monsterIds.has(monsterId)) {
+        throw new Error(`${archetypeFile} encounterMonsterIds '${monsterId}' missing monster definition on record ${recordId}`);
+      }
+    }
+
+    for (const requirement of record.baselineRequirements?.requiredSkills ?? []) {
+      if (!skillIds.has(requirement.id)) {
+        throw new Error(`${archetypeFile} requiredSkills id '${requirement.id}' missing skill definition on record ${recordId}`);
+      }
+    }
+    for (const requirement of record.baselineRequirements?.requiredAbilities ?? []) {
+      if (!abilityIds.has(requirement.id)) {
+        throw new Error(`${archetypeFile} requiredAbilities id '${requirement.id}' missing ability definition on record ${recordId}`);
+      }
+    }
+    for (const requirement of record.baselineRequirements?.requiredSpells ?? []) {
+      if (!spellIds.has(requirement.id)) {
+        throw new Error(`${archetypeFile} requiredSpells id '${requirement.id}' missing spell definition on record ${recordId}`);
+      }
+    }
+    for (const requirement of record.baselineRequirements?.requiredTraits ?? []) {
+      if (!traitIds.has(requirement.id)) {
+        throw new Error(`${archetypeFile} requiredTraits id '${requirement.id}' missing trait definition on record ${recordId}`);
+      }
+    }
+    for (const itemKey of [
+      ...(record.baselineRequirements?.requiredItems ?? []),
+      ...(record.logistics?.requiredTools ?? []),
+      ...(record.logistics?.recommendedTools ?? []),
+      ...(record.logistics?.consumedItems ?? [])
+    ]) {
+      if (!itemKeys.has(itemKey)) {
+        throw new Error(`${archetypeFile} item reference '${itemKey}' missing item definition on record ${recordId}`);
+      }
+    }
+    for (const spellId of record.logistics?.recommendedSpells ?? []) {
+      if (!spellIds.has(spellId)) {
+        throw new Error(`${archetypeFile} recommendedSpells id '${spellId}' missing spell definition on record ${recordId}`);
+      }
+    }
+
+    const nodeIds = new Set((record.actionTree?.nodes ?? []).map((node) => node.id).filter((value) => typeof value === "string"));
+    const roleSlotIds = new Set((record.deployment?.roleSlots ?? []).map((slot) => slot.slotId).filter((value) => typeof value === "string"));
+
+    if (record.actionTree?.entryNodeId && !nodeIds.has(record.actionTree.entryNodeId)) {
+      throw new Error(`${archetypeFile} entryNodeId '${record.actionTree.entryNodeId}' missing action node on record ${recordId}`);
+    }
+    for (const nodeId of record.actionTree?.completionNodeIds ?? []) {
+      if (!nodeIds.has(nodeId)) {
+        throw new Error(`${archetypeFile} completionNodeId '${nodeId}' missing action node on record ${recordId}`);
+      }
+    }
+
+    for (const slot of record.deployment?.roleSlots ?? []) {
+      for (const ref of slot.preferredChecks ?? []) {
+        if (typeof ref !== "string") {
+          continue;
+        }
+        if (ref.startsWith("attr.") && !attributeIds.has(ref)) {
+          throw new Error(`${archetypeFile} preferredChecks '${ref}' missing attribute definition on record ${recordId}`);
+        }
+        if (ref.startsWith("skill.") && !skillIds.has(ref)) {
+          throw new Error(`${archetypeFile} preferredChecks '${ref}' missing skill definition on record ${recordId}`);
+        }
+        if (ref.startsWith("ability.") && !abilityIds.has(ref)) {
+          throw new Error(`${archetypeFile} preferredChecks '${ref}' missing ability definition on record ${recordId}`);
+        }
+        if (ref.startsWith("spell.") && !spellIds.has(ref)) {
+          throw new Error(`${archetypeFile} preferredChecks '${ref}' missing spell definition on record ${recordId}`);
+        }
+        if (!ref.includes(".") && !itemKeys.has(ref)) {
+          throw new Error(`${archetypeFile} preferredChecks '${ref}' missing item definition on record ${recordId}`);
+        }
+      }
+    }
+
+    for (const node of record.actionTree?.nodes ?? []) {
+      const nodeId = node.id ?? "<unknown>";
+      for (const assignedRole of node.assignedRoles ?? []) {
+        if (!roleSlotIds.has(assignedRole)) {
+          throw new Error(`${archetypeFile} assignedRoles '${assignedRole}' missing deployment roleSlot on record ${recordId}, node ${nodeId}`);
+        }
+      }
+      for (const check of node.checks ?? []) {
+        validateCheckTarget(check.kind, check.targetId, recordId, nodeId);
+      }
+      for (const branch of Object.values(node.branches ?? {})) {
+        if (branch?.nextNodeId && !nodeIds.has(branch.nextNodeId)) {
+          throw new Error(`${archetypeFile} branch nextNodeId '${branch.nextNodeId}' missing action node on record ${recordId}, node ${nodeId}`);
+        }
+      }
+    }
+  }
+}
+
 async function validateMonstersAgainstMarketValues() {
   const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
   const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
@@ -5141,6 +5330,7 @@ async function main() {
   await validateRegionalEcologyAgainstWorldData();
   await validateSettlementsAgainstRegions();
   await validateQuestTemplatesAgainstWorldData();
+  await validateQuestArchetypesAgainstWorldData();
   await validateMonstersAgainstMarketValues();
   await validateTravelNetworksAgainstWorldData();
 

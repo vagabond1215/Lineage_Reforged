@@ -1,0 +1,943 @@
+{
+  "sourceReferences": [
+    {
+      "id": "torn_oc2",
+      "label": "Torn Organized Crime 2.0",
+      "url": "https://wiki.torn.com/wiki/Organized_Crime_2.0",
+      "notes": "Used as structural inspiration for planning/execution phases, role slots, tools, materials, member counts, and branching outcomes."
+    }
+  ],
+  "rankScale": [
+    { "id": "rank.f", "label": "F", "difficultyBand": "introductory", "notes": "Low-stakes local work or apprentice contracts." },
+    { "id": "rank.d", "label": "D", "difficultyBand": "basic", "notes": "Routine field work with manageable danger." },
+    { "id": "rank.c", "label": "C", "difficultyBand": "seasoned", "notes": "Requires trained members, decent kit, and real risk management." },
+    { "id": "rank.b", "label": "B", "difficultyBand": "advanced", "notes": "Serious contracts with meaningful failure costs and branch complexity." },
+    { "id": "rank.a", "label": "A", "difficultyBand": "elite", "notes": "High danger or political sensitivity with specialized role expectations." },
+    { "id": "rank.s", "label": "S", "difficultyBand": "legendary", "notes": "Exceptional operations intended for later high-end authored content." }
+  ],
+  "riskScale": [
+    { "id": "risk.low", "label": "Low", "notes": "Minor injury, schedule slip, or local reputation loss is the main failure cost." },
+    { "id": "risk.moderate", "label": "Moderate", "notes": "Combat, legal trouble, or meaningful financial loss is plausible." },
+    { "id": "risk.high", "label": "High", "notes": "Major injury, mission collapse, or faction blowback is expected on failure." },
+    { "id": "risk.severe", "label": "Severe", "notes": "Permanent losses, deaths, or serious political fallout are credible outcomes." }
+  ],
+  "checkKinds": [
+    { "id": "attribute", "notes": "Flat stat gate or weighted stat contribution." },
+    { "id": "skill", "notes": "Rank-based check against an authored player skill." },
+    { "id": "ability", "notes": "Presence of a learned active ability unlocks a bonus path or mitigation." },
+    { "id": "spell", "notes": "Presence of a spell grants a bonus branch, safety net, or alternate route." },
+    { "id": "tool", "notes": "Special tool or kit requirement that may or may not be consumed." },
+    { "id": "item", "notes": "Consumable, reagent, or cargo item requirement." },
+    { "id": "equipment_tag", "notes": "Equipment class or slot tag needed for the route." },
+    { "id": "party_size", "notes": "Crew size can help or hurt depending on noise, load, or formation pressure." },
+    { "id": "rng", "notes": "Uncontrolled environment or luck factor." }
+  ],
+  "records": [
+    {
+      "id": "quest_definition.brineharbor_reef_soundings",
+      "slug": "brineharbor_reef_soundings",
+      "name": "Reef Soundings Charter",
+      "category": "survey",
+      "summary": "Brineharbor's harbor office needs a fresh sounding route through a reef shelf that shifted after the last storm surge.",
+      "giver": {
+        "type": "government",
+        "entityId": "office.harbor_master.brineharbor",
+        "displayName": "Brineharbor Harbor Office",
+        "contactName": "Harbormaster Sel Varn",
+        "settlementId": "settlement.brineharbor"
+      },
+      "requirements": {
+        "levelMin": 6,
+        "classTagsAny": ["class_tag.scout", "class_tag.mariner", "class_tag.support_mage"],
+        "requiredSkills": [
+          { "id": "skill.innate.sailing", "minRank": 12 },
+          { "id": "skill.innate.swim", "minRank": 8 }
+        ],
+        "requiredAbilities": [],
+        "requiredSpells": [],
+        "requiredTraits": [],
+        "requiredItems": [],
+        "reputationRequirements": [
+          { "id": "rep.harbor_authority.brineharbor", "minScore": 5 }
+        ],
+        "notes": [
+          "Aquaveil, Blink, or strong wind/water resistance reduce weather losses.",
+          "At least one deployed character should be able to swim in armor or operate a skiff."
+        ]
+      },
+      "scheduling": {
+        "expectedDurationHours": 18,
+        "dueWithinHours": 48,
+        "planningWindowHours": 4,
+        "repeatable": true,
+        "timeSensitivity": "tide_locked"
+      },
+      "classification": {
+        "rank": "rank.d",
+        "expectedRisk": "risk.moderate",
+        "legalExposure": "none",
+        "combatIntensity": "light",
+        "failureProfile": "Skiff damage, lost charts, and temporary harbor penalties are more likely than total party loss."
+      },
+      "deployment": {
+        "minPartySize": 1,
+        "recommendedPartySize": 2,
+        "maxPartySize": 4,
+        "soloAllowed": true,
+        "roleSlots": [
+          {
+            "slotId": "navigator",
+            "label": "Navigator",
+            "minPeople": 1,
+            "maxPeople": 1,
+            "preferredChecks": ["skill.innate.sailing", "attr.WIS"],
+            "notes": "Handles charts, tide tables, and route calls."
+          },
+          {
+            "slotId": "sounding_hand",
+            "label": "Sounding Hand",
+            "minPeople": 0,
+            "maxPeople": 2,
+            "preferredChecks": ["attr.DEX", "skill.innate.swim"],
+            "notes": "Drops lines, checks reef markers, and recovers if the skiff grounds."
+          }
+        ],
+        "partySizeRules": [
+          {
+            "condition": "ifBelowRecommended",
+            "effect": "Fewer hands increase the time spent on recovery branches and reduce the margin for weather errors."
+          },
+          {
+            "condition": "ifAboveRecommended",
+            "effect": "Extra crew helps only if the launch stays quiet; too many people raise grounding and noise risk in the shallows."
+          }
+        ]
+      },
+      "logistics": {
+        "requiredTools": ["tool.depth_line", "tool.tide_chart_case"],
+        "recommendedTools": ["tool.signal_lantern", "tool.spare_oars"],
+        "requiredEquipmentTags": ["gear.seafaring"],
+        "recommendedSpells": ["spell.white.enhancing.aquaveil", "spell.white.enhancing.blink"],
+        "consumedItems": ["trail_meal", "utility_salve"]
+      },
+      "rewards": {
+        "coinBase": 26,
+        "coinBonusOnPerfect": 12,
+        "reputationBase": 2,
+        "itemRewards": ["trail_meal", "utility_salve"],
+        "unlocks": ["map_note.brineharbor_reef_lane"]
+      },
+      "miscNotes": [
+        "Storm RNG matters more on spring and harvest tides.",
+        "A critical success can permanently reduce later coastal travel risk on this lane."
+      ],
+      "actionTree": {
+        "entryNodeId": "plot_tide_window",
+        "completionNodeIds": ["file_soundings"],
+        "nodes": [
+          {
+            "id": "plot_tide_window",
+            "label": "Plot the tide window",
+            "phase": "planning",
+            "summary": "Choose the launch time and path through the shifting reef shelf.",
+            "estimatedHours": 4,
+            "assignedRoles": ["navigator"],
+            "participantRange": { "min": 1, "max": 2 },
+            "checks": [
+              { "kind": "skill", "targetId": "skill.innate.sailing", "minValue": 12, "weight": 0.45, "optional": false, "notes": "Primary seamanship check." },
+              { "kind": "attribute", "targetId": "attr.WIS", "minValue": 11, "weight": 0.25, "optional": false, "notes": "Reading tide charts correctly." },
+              { "kind": "spell", "targetId": "spell.white.enhancing.aquaveil", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Improves weather tolerance." },
+              { "kind": "rng", "targetId": "weather_window", "minValue": 40, "weight": 0.2, "optional": false, "notes": "Spring winds can still spoil the best plan." }
+            ],
+            "branches": {
+              "criticalSuccess": { "nextNodeId": "sound_the_channel", "questState": "advance", "summary": "You catch the cleanest tide and trim hours off the run.", "effects": ["duration:-3h", "reward:+perfect_bonus"] },
+              "success": { "nextNodeId": "sound_the_channel", "questState": "advance", "summary": "The crew launches on a workable route window.", "effects": ["route:stable"] },
+              "failure": { "nextNodeId": "recover_after_grounding", "questState": "advance", "summary": "A bad route guess runs the skiff shallow before the real work begins.", "effects": ["durability:-minor", "risk:+1"] },
+              "criticalFailure": { "nextNodeId": null, "questState": "fail", "summary": "The launch window collapses into breakers and the office recalls the charter.", "effects": ["reputation:-1", "coin:-25%"] }
+            }
+          },
+          {
+            "id": "sound_the_channel",
+            "label": "Sound the channel",
+            "phase": "execution",
+            "summary": "Work the lines and marker buoys while the reef remains half-exposed.",
+            "estimatedHours": 8,
+            "assignedRoles": ["navigator", "sounding_hand"],
+            "participantRange": { "min": 1, "max": 4 },
+            "checks": [
+              { "kind": "skill", "targetId": "skill.innate.swim", "minValue": 8, "weight": 0.25, "optional": false, "notes": "Recovery if someone goes overboard." },
+              { "kind": "attribute", "targetId": "attr.DEX", "minValue": 10, "weight": 0.2, "optional": false, "notes": "Precise marker drops and line work." },
+              { "kind": "party_size", "targetId": "recommended_crew", "minValue": 2, "weight": 0.15, "optional": false, "notes": "Too few hands slows the sounding pattern." },
+              { "kind": "rng", "targetId": "reef_surge", "minValue": 45, "weight": 0.15, "optional": false, "notes": "Unexpected surge between reef teeth." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "file_soundings", "questState": "advance", "summary": "You finish the chart and clear the shoal before the next swell cycle.", "effects": ["map_quality:good"] },
+              "partial": { "nextNodeId": "file_soundings", "questState": "advance", "summary": "You recover usable charts, but one section remains rough.", "effects": ["reward:-10%", "map_quality:rough"] },
+              "failure": { "nextNodeId": "recover_after_grounding", "questState": "advance", "summary": "A grounding forces the crew into a desperate recovery loop.", "effects": ["durability:-moderate", "hp:-minor"] }
+            }
+          },
+          {
+            "id": "recover_after_grounding",
+            "label": "Recover after grounding",
+            "phase": "execution",
+            "summary": "Free the skiff, salvage the lines, and decide whether to continue or limp home.",
+            "estimatedHours": 6,
+            "assignedRoles": ["sounding_hand"],
+            "participantRange": { "min": 1, "max": 3 },
+            "checks": [
+              { "kind": "attribute", "targetId": "attr.STR", "minValue": 11, "weight": 0.3, "optional": false, "notes": "Getting the hull off the reef." },
+              { "kind": "item", "targetId": "utility_salve", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Treating cuts and coral scrapes keeps the crew working." },
+              { "kind": "spell", "targetId": "spell.white.enhancing.blink", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Reduces further injury while working in the surf." },
+              { "kind": "rng", "targetId": "second_surge", "minValue": 35, "weight": 0.2, "optional": false, "notes": "The sea may hit the hull again before it comes free." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "file_soundings", "questState": "advance", "summary": "The crew salvages enough work to complete the charter at reduced pay.", "effects": ["reward:-15%", "time:+4h"] },
+              "failure": { "nextNodeId": null, "questState": "fail", "summary": "The reef wins; the crew abandons the launch and the office voids the job.", "effects": ["reputation:-1", "coin:-50%"] }
+            }
+          },
+          {
+            "id": "file_soundings",
+            "label": "File the soundings",
+            "phase": "resolution",
+            "summary": "Return the finished route notes to the harbor office and collect payment.",
+            "estimatedHours": 1,
+            "assignedRoles": ["navigator"],
+            "participantRange": { "min": 1, "max": 2 },
+            "checks": [
+              { "kind": "attribute", "targetId": "attr.CHA", "minValue": 9, "weight": 0.15, "optional": true, "notes": "Good reporting may convert a rough chart into partial harbor reputation." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": null, "questState": "complete", "summary": "The harbor office accepts the chart and logs the lane.", "effects": ["quest:complete"] }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "quest_definition.coppergate_ore_train_relief",
+      "slug": "coppergate_ore_train_relief",
+      "name": "Ore Train Relief Run",
+      "category": "escort",
+      "summary": "Ironwheel Haulage needs a reinforced crew to move a delayed ore convoy through a switchback corridor before the smelter shift goes cold.",
+      "giver": {
+        "type": "business",
+        "entityId": "business.ironwheel_haulage_coppergate",
+        "displayName": "Ironwheel Haulage Company",
+        "contactName": "Foreman Mira Kell",
+        "settlementId": "settlement.coppergate"
+      },
+      "requirements": {
+        "levelMin": 10,
+        "classTagsAny": ["class_tag.vanguard", "class_tag.wagoner", "class_tag.support_mage"],
+        "requiredSkills": [
+          { "id": "skill.craft.smithing", "minRank": 10 },
+          { "id": "skill.weapon.polearm", "minRank": 12 }
+        ],
+        "requiredAbilities": [],
+        "requiredSpells": [],
+        "requiredTraits": [],
+        "requiredItems": ["production_toolset"],
+        "reputationRequirements": [],
+        "notes": [
+          "Defender, Provoke, Protect, and Stoneskin are all strong mitigators on the ambush branch.",
+          "More bodies help with load and axle recovery, but increase the convoy profile on the ridgeline."
+        ]
+      },
+      "scheduling": {
+        "expectedDurationHours": 26,
+        "dueWithinHours": 36,
+        "planningWindowHours": 3,
+        "repeatable": true,
+        "timeSensitivity": "industrial_shift"
+      },
+      "classification": {
+        "rank": "rank.c",
+        "expectedRisk": "risk.high",
+        "legalExposure": "none",
+        "combatIntensity": "moderate",
+        "failureProfile": "Broken cargo, team losses, and reduced business trust if the ore misses the furnace window."
+      },
+      "deployment": {
+        "minPartySize": 2,
+        "recommendedPartySize": 3,
+        "maxPartySize": 5,
+        "soloAllowed": false,
+        "roleSlots": [
+          {
+            "slotId": "wagon_master",
+            "label": "Wagon Master",
+            "minPeople": 1,
+            "maxPeople": 1,
+            "preferredChecks": ["attr.WIS", "attr.CHA"],
+            "notes": "Calls route pace, spacing, and load order."
+          },
+          {
+            "slotId": "guard_line",
+            "label": "Guard Line",
+            "minPeople": 1,
+            "maxPeople": 3,
+            "preferredChecks": ["skill.weapon.polearm", "ability.martial.provoke", "ability.martial.defender"],
+            "notes": "Screens the convoy and reacts to road pressure."
+          },
+          {
+            "slotId": "fixer",
+            "label": "Field Fixer",
+            "minPeople": 0,
+            "maxPeople": 1,
+            "preferredChecks": ["skill.craft.smithing", "spell.white.enhancing.stoneskin"],
+            "notes": "Handles axle, harness, and brake failures."
+          }
+        ],
+        "partySizeRules": [
+          {
+            "condition": "ifBelowRecommended",
+            "effect": "Understaffed crews struggle to hold the line during the ambush and axle-repair branches."
+          },
+          {
+            "condition": "ifAboveRecommended",
+            "effect": "Large crews move the cargo safely but increase detection and food consumption on long climbs."
+          }
+        ]
+      },
+      "logistics": {
+        "requiredTools": ["tool.brake_wrench", "tool.axle_pin_kit"],
+        "recommendedTools": ["tool.pack_hoist", "tool.spare_harness"],
+        "requiredEquipmentTags": ["gear.road_ready"],
+        "recommendedSpells": ["spell.white.enhancing.protect_ii", "spell.white.enhancing.stoneskin"],
+        "consumedItems": ["trail_meal", "vigor_tonic", "production_toolset"]
+      },
+      "rewards": {
+        "coinBase": 42,
+        "coinBonusOnPerfect": 18,
+        "reputationBase": 3,
+        "itemRewards": ["trail_meal", "vigor_tonic"],
+        "unlocks": ["contract.ironwheel_priority_runs"]
+      },
+      "miscNotes": [
+        "This quest treats more people as mostly good in the repair branch and only mildly bad in the concealment branch.",
+        "Failure leaves a visible ledger flag on Coppergate industrial employers."
+      ],
+      "actionTree": {
+        "entryNodeId": "stack_the_wagons",
+        "completionNodeIds": ["deliver_manifest"],
+        "nodes": [
+          {
+            "id": "stack_the_wagons",
+            "label": "Stack the wagons",
+            "phase": "planning",
+            "summary": "Decide what rides high, what rides protected, and how the escort rotates around the convoy.",
+            "estimatedHours": 3,
+            "assignedRoles": ["wagon_master", "fixer"],
+            "participantRange": { "min": 2, "max": 4 },
+            "checks": [
+              { "kind": "attribute", "targetId": "attr.WIS", "minValue": 11, "weight": 0.3, "optional": false, "notes": "Good load balance prevents axle strain." },
+              { "kind": "skill", "targetId": "skill.craft.smithing", "minValue": 10, "weight": 0.25, "optional": true, "notes": "A fixer can brace the weak axle before departure." },
+              { "kind": "party_size", "targetId": "minimum_crew", "minValue": 3, "weight": 0.2, "optional": false, "notes": "More hands help secure and lash the load." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "hold_the_switchback", "questState": "advance", "summary": "The convoy rolls out balanced and ready.", "effects": ["cargo_stability:+1"] },
+              "failure": { "nextNodeId": "repair_the_axle", "questState": "advance", "summary": "A wheel starts to drift before the convoy clears the first ridge.", "effects": ["time:+3h", "risk:+1"] }
+            }
+          },
+          {
+            "id": "hold_the_switchback",
+            "label": "Hold the switchback",
+            "phase": "execution",
+            "summary": "Bandits and falling rock force the escort to protect the lead wagons through a narrow climb.",
+            "estimatedHours": 8,
+            "assignedRoles": ["guard_line", "wagon_master"],
+            "participantRange": { "min": 2, "max": 5 },
+            "checks": [
+              { "kind": "skill", "targetId": "skill.weapon.polearm", "minValue": 12, "weight": 0.25, "optional": false, "notes": "Reach weapons control the road edge." },
+              { "kind": "ability", "targetId": "ability.martial.provoke", "minValue": 1, "weight": 0.15, "optional": true, "notes": "Draws raiders away from the wagons." },
+              { "kind": "spell", "targetId": "spell.white.enhancing.protect_ii", "minValue": 1, "weight": 0.15, "optional": true, "notes": "Reduces attrition on the climb." },
+              { "kind": "rng", "targetId": "ridge_rockfall", "minValue": 45, "weight": 0.15, "optional": false, "notes": "Loose stone can still wreck formation." }
+            ],
+            "branches": {
+              "criticalSuccess": { "nextNodeId": "deliver_manifest", "questState": "advance", "summary": "The escort breaks the ambush cleanly and reaches the furnace road early.", "effects": ["reward:+perfect_bonus", "reputation:+1"] },
+              "success": { "nextNodeId": "deliver_manifest", "questState": "advance", "summary": "The convoy takes hits but remains intact.", "effects": ["cargo_loss:none"] },
+              "failure": { "nextNodeId": "repair_the_axle", "questState": "advance", "summary": "The line holds, but a wagon axle snaps under pressure.", "effects": ["cargo_loss:minor", "hp:-minor"] }
+            }
+          },
+          {
+            "id": "repair_the_axle",
+            "label": "Repair the axle under pressure",
+            "phase": "execution",
+            "summary": "Fix the damaged wagon before the convoy loses its smelter slot.",
+            "estimatedHours": 6,
+            "assignedRoles": ["fixer", "guard_line"],
+            "participantRange": { "min": 2, "max": 4 },
+            "checks": [
+              { "kind": "skill", "targetId": "skill.craft.smithing", "minValue": 12, "weight": 0.35, "optional": false, "notes": "Primary field repair check." },
+              { "kind": "item", "targetId": "production_toolset", "minValue": 1, "weight": 0.15, "optional": false, "notes": "The repair is much harder without tools." },
+              { "kind": "spell", "targetId": "spell.white.enhancing.stoneskin", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Keeps the fixer working under stray shots and debris." },
+              { "kind": "party_size", "targetId": "repair_hands", "minValue": 3, "weight": 0.15, "optional": true, "notes": "Extra hands are genuinely helpful here." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "deliver_manifest", "questState": "advance", "summary": "The convoy limps through but keeps the contract alive.", "effects": ["reward:-10%"] },
+              "failure": { "nextNodeId": null, "questState": "fail", "summary": "The ore misses the furnace window and the contract collapses into losses.", "effects": ["reputation:-1", "coin:-40%"] }
+            }
+          },
+          {
+            "id": "deliver_manifest",
+            "label": "Deliver the manifest",
+            "phase": "resolution",
+            "summary": "Turn over the ore tally and sign off the delivery with Ironwheel's clerk.",
+            "estimatedHours": 1,
+            "assignedRoles": ["wagon_master"],
+            "participantRange": { "min": 1, "max": 2 },
+            "checks": [
+              { "kind": "attribute", "targetId": "attr.CHA", "minValue": 10, "weight": 0.1, "optional": true, "notes": "Good reporting softens minor losses." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": null, "questState": "complete", "summary": "Ironwheel logs the run and pays the crew.", "effects": ["quest:complete"] }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "quest_definition.highcrown_catacomb_quietus",
+      "slug": "highcrown_catacomb_quietus",
+      "name": "Catacomb Quietus",
+      "category": "monster_subjugation",
+      "summary": "The Highcrown Adventurers Guild needs a disciplined party to clear a sealed catacomb passage so scribes can recover burial records and relic inventories.",
+      "giver": {
+        "type": "guild",
+        "entityId": "adventurers_guild",
+        "displayName": "Highcrown Adventurers Guild",
+        "contactName": "Archivist-Provost Lysa Mar",
+        "settlementId": "settlement.highcrown"
+      },
+      "requirements": {
+        "levelMin": 14,
+        "classTagsAny": ["class_tag.vanguard", "class_tag.healer", "class_tag.offensive_caster"],
+        "requiredSkills": [
+          { "id": "skill.weapon.club", "minRank": 12 },
+          { "id": "skill.magic.divine_magic", "minRank": 12 },
+          { "id": "skill.magic.healing_magic", "minRank": 10 }
+        ],
+        "requiredAbilities": [],
+        "requiredSpells": [],
+        "requiredTraits": [],
+        "requiredItems": ["utility_salve"],
+        "reputationRequirements": [
+          { "id": "rep.adventurers_guild.highcrown", "minScore": 8 }
+        ],
+        "notes": [
+          "Light-aligned spells, clubs, and shields are especially valuable against the undead branch outcomes.",
+          "More people help hold the ossuary choke, but too many bodies complicate narrow-hall positioning."
+        ]
+      },
+      "scheduling": {
+        "expectedDurationHours": 20,
+        "dueWithinHours": 72,
+        "planningWindowHours": 5,
+        "repeatable": false,
+        "timeSensitivity": "before_scribe_auction"
+      },
+      "classification": {
+        "rank": "rank.c",
+        "expectedRisk": "risk.high",
+        "legalExposure": "sanctioned",
+        "combatIntensity": "heavy",
+        "failureProfile": "Undead escalation, injuries, and loss of relic access for the sponsoring scriptorium."
+      },
+      "deployment": {
+        "minPartySize": 2,
+        "recommendedPartySize": 3,
+        "maxPartySize": 4,
+        "soloAllowed": false,
+        "roleSlots": [
+          {
+            "slotId": "ward_keeper",
+            "label": "Ward Keeper",
+            "minPeople": 1,
+            "maxPeople": 1,
+            "preferredChecks": ["skill.magic.divine_magic", "spell.white.divine.flash"],
+            "notes": "Handles seals, light pressure, and aggro control."
+          },
+          {
+            "slotId": "line_holder",
+            "label": "Line Holder",
+            "minPeople": 1,
+            "maxPeople": 2,
+            "preferredChecks": ["skill.weapon.club", "skill.defense.shield", "ability.martial.shield_bash"],
+            "notes": "Pins the ossuary chokepoints and protects the ward keeper."
+          },
+          {
+            "slotId": "restorer",
+            "label": "Restorer",
+            "minPeople": 0,
+            "maxPeople": 1,
+            "preferredChecks": ["skill.magic.healing_magic", "spell.white.healing.cure_iii"],
+            "notes": "Cleanses rot, patch-heals, and stabilizes after a branch failure."
+          }
+        ],
+        "partySizeRules": [
+          {
+            "condition": "ifBelowRecommended",
+            "effect": "Understaffed parties face harsher attrition and weaker relic recovery."
+          },
+          {
+            "condition": "ifAboveRecommended",
+            "effect": "Large parties raise torch smoke and formation friction in the narrow halls."
+          }
+        ]
+      },
+      "logistics": {
+        "requiredTools": ["tool.sanctified_chalk", "tool.bone_hook"],
+        "recommendedTools": ["tool.grave_lantern"],
+        "requiredEquipmentTags": ["gear.catacomb_ready"],
+        "recommendedSpells": ["spell.white.divine.flash", "spell.white.healing.cure_iii", "spell.white.enhancing.protect_ii"],
+        "consumedItems": ["utility_salve", "trail_meal", "mend_elixir"]
+      },
+      "rewards": {
+        "coinBase": 54,
+        "coinBonusOnPerfect": 24,
+        "reputationBase": 4,
+        "itemRewards": ["record_scroll", "mend_elixir"],
+        "unlocks": ["archive.highcrown_catacomb_records"]
+      },
+      "miscNotes": [
+        "This quest has one of the sharper success-to-failure combat pivots in the current starter quest set.",
+        "A critical success prevents future random undead flare-ups in the same passage."
+      ],
+      "actionTree": {
+        "entryNodeId": "seal_the_entry",
+        "completionNodeIds": ["return_the_relic_logs"],
+        "nodes": [
+          {
+            "id": "seal_the_entry",
+            "label": "Seal the entry",
+            "phase": "planning",
+            "summary": "Reinforce the outer seal before the party breaks into the burial hall.",
+            "estimatedHours": 4,
+            "assignedRoles": ["ward_keeper", "line_holder"],
+            "participantRange": { "min": 2, "max": 3 },
+            "checks": [
+              { "kind": "skill", "targetId": "skill.magic.divine_magic", "minValue": 12, "weight": 0.35, "optional": false, "notes": "Primary warding check." },
+              { "kind": "tool", "targetId": "tool.sanctified_chalk", "minValue": 1, "weight": 0.15, "optional": false, "notes": "Needed to trace the seal correctly." },
+              { "kind": "spell", "targetId": "spell.white.divine.flash", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Light pressure steadies the ward." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "break_the_wight_line", "questState": "advance", "summary": "The seal holds behind you and limits the undead surge.", "effects": ["encounter_pressure:-1"] },
+              "failure": { "nextNodeId": "break_the_wight_line", "questState": "advance", "summary": "The seal is sloppy and the dead stir more violently than expected.", "effects": ["encounter_pressure:+1", "risk:+1"] }
+            }
+          },
+          {
+            "id": "break_the_wight_line",
+            "label": "Break the wight line",
+            "phase": "execution",
+            "summary": "Fight through the first rank of grave dead before they overwhelm the ward keeper.",
+            "estimatedHours": 7,
+            "assignedRoles": ["line_holder", "ward_keeper", "restorer"],
+            "participantRange": { "min": 2, "max": 4 },
+            "checks": [
+              { "kind": "skill", "targetId": "skill.weapon.club", "minValue": 12, "weight": 0.2, "optional": false, "notes": "Reliable blunt damage against skeletal defenders." },
+              { "kind": "ability", "targetId": "ability.martial.shield_bash", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Interrupts the wight's lead howl." },
+              { "kind": "spell", "targetId": "spell.white.healing.cure_iii", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Prevents attrition from tipping the branch." },
+              { "kind": "party_size", "targetId": "hold_line_size", "minValue": 3, "weight": 0.15, "optional": true, "notes": "A third body makes the chokepoint much safer." }
+            ],
+            "branches": {
+              "criticalSuccess": { "nextNodeId": "secure_the_ledger_niche", "questState": "advance", "summary": "The party breaks the line fast enough to preserve the relic alcove.", "effects": ["reward:+perfect_bonus", "relic_damage:none"] },
+              "success": { "nextNodeId": "secure_the_ledger_niche", "questState": "advance", "summary": "The dead are pushed back and the chamber opens.", "effects": ["hp:-minor"] },
+              "failure": { "nextNodeId": "secure_the_ledger_niche", "questState": "advance", "summary": "You win the line slowly and the relic niche takes splash damage.", "effects": ["reward:-15%", "hp:-moderate"] }
+            }
+          },
+          {
+            "id": "secure_the_ledger_niche",
+            "label": "Secure the ledger niche",
+            "phase": "execution",
+            "summary": "Recover the burial ledgers and keep the last chamber from collapsing under corpse weight and panic.",
+            "estimatedHours": 5,
+            "assignedRoles": ["ward_keeper", "restorer"],
+            "participantRange": { "min": 1, "max": 3 },
+            "checks": [
+              { "kind": "attribute", "targetId": "attr.WIS", "minValue": 12, "weight": 0.2, "optional": false, "notes": "Avoid damaging the records while the room shifts." },
+              { "kind": "item", "targetId": "mend_elixir", "minValue": 1, "weight": 0.05, "optional": true, "notes": "Helps anyone injured in the prior branch keep working." },
+              { "kind": "rng", "targetId": "crypt_collapse", "minValue": 45, "weight": 0.15, "optional": false, "notes": "Old stone can still slip." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "return_the_relic_logs", "questState": "advance", "summary": "The ledgers come out intact and the seal can be restored.", "effects": ["records:intact"] },
+              "failure": { "nextNodeId": "return_the_relic_logs", "questState": "advance", "summary": "Some ledgers are recovered, but part of the alcove is lost.", "effects": ["reward:-10%", "records:partial"] }
+            }
+          },
+          {
+            "id": "return_the_relic_logs",
+            "label": "Return the relic logs",
+            "phase": "resolution",
+            "summary": "Turn the recovered records over to the guild archivist and close the contract.",
+            "estimatedHours": 1,
+            "assignedRoles": ["ward_keeper"],
+            "participantRange": { "min": 1, "max": 2 },
+            "checks": [],
+            "branches": {
+              "success": { "nextNodeId": null, "questState": "complete", "summary": "The guild accepts the records and clears payment.", "effects": ["quest:complete"] }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "quest_definition.aurelis_counterfeit_ring",
+      "slug": "aurelis_counterfeit_ring",
+      "name": "Counterfeit Ring Sting",
+      "category": "investigation",
+      "summary": "Aurelis civic watch and the merchant guild want a discreet crew to expose a counterfeit scrip ring before festival trade opens.",
+      "giver": {
+        "type": "government",
+        "entityId": "office.civic_watch.aurelis",
+        "displayName": "Aurelis Civic Watch",
+        "contactName": "Inspector Halwen Crest",
+        "settlementId": "settlement.aurelis"
+      },
+      "requirements": {
+        "levelMin": 12,
+        "classTagsAny": ["class_tag.scout", "class_tag.social", "class_tag.support_mage"],
+        "requiredSkills": [
+          { "id": "skill.magic.enfeebling_magic", "minRank": 10 },
+          { "id": "skill.craft.goldsmithing", "minRank": 8 }
+        ],
+        "requiredAbilities": [],
+        "requiredSpells": [],
+        "requiredTraits": [],
+        "requiredItems": [],
+        "reputationRequirements": [
+          { "id": "rep.civic_watch.aurelis", "minScore": 4 }
+        ],
+        "notes": [
+          "Too many people are bad in the surveillance phase.",
+          "Paralyze, Sleep, Blink, and Fast Cast style casters create safer arrest branches."
+        ]
+      },
+      "scheduling": {
+        "expectedDurationHours": 16,
+        "dueWithinHours": 30,
+        "planningWindowHours": 2,
+        "repeatable": false,
+        "timeSensitivity": "festival_market"
+      },
+      "classification": {
+        "rank": "rank.c",
+        "expectedRisk": "risk.moderate",
+        "legalExposure": "sanctioned_if_clean",
+        "combatIntensity": "light",
+        "failureProfile": "Spooked suspects disappear, counterfeit stock is moved, and the watch loses leverage."
+      },
+      "deployment": {
+        "minPartySize": 1,
+        "recommendedPartySize": 2,
+        "maxPartySize": 3,
+        "soloAllowed": true,
+        "roleSlots": [
+          {
+            "slotId": "watcher",
+            "label": "Watcher",
+            "minPeople": 1,
+            "maxPeople": 1,
+            "preferredChecks": ["attr.WIS", "skill.defense.evasion"],
+            "notes": "Handles surveillance and route memory."
+          },
+          {
+            "slotId": "face",
+            "label": "Face",
+            "minPeople": 0,
+            "maxPeople": 1,
+            "preferredChecks": ["attr.CHA", "skill.craft.goldsmithing"],
+            "notes": "Confirms the fake work and keeps the cover story together."
+          },
+          {
+            "slotId": "soft_arrester",
+            "label": "Soft Arrester",
+            "minPeople": 0,
+            "maxPeople": 1,
+            "preferredChecks": ["skill.magic.enfeebling_magic", "spell.black.enfeebling.sleep"],
+            "notes": "Handles low-noise takedowns if the suspects bolt."
+          }
+        ],
+        "partySizeRules": [
+          {
+            "condition": "ifAboveRecommended",
+            "effect": "Extra people are actively bad during surveillance and increase the chance of burning the sting."
+          }
+        ]
+      },
+      "logistics": {
+        "requiredTools": ["tool.false_bottom_purse", "tool.wax_impression_kit"],
+        "recommendedTools": ["tool.market_cloak"],
+        "requiredEquipmentTags": ["gear.city_subtle"],
+        "recommendedSpells": ["spell.black.enfeebling.sleep", "spell.white.enhancing.blink", "spell.white.enfeebling.paralyze"],
+        "consumedItems": ["trail_meal", "utility_salve"]
+      },
+      "rewards": {
+        "coinBase": 38,
+        "coinBonusOnPerfect": 16,
+        "reputationBase": 3,
+        "itemRewards": ["utility_salve"],
+        "unlocks": ["casefile.aurelis_counterfeit_network"]
+      },
+      "miscNotes": [
+        "This is the cleanest example in the starter database of extra people being bad.",
+        "Goldsmithing does not replace social checks but confirms the evidence branch."
+      ],
+      "actionTree": {
+        "entryNodeId": "watch_the_exchange",
+        "completionNodeIds": ["submit_the_plates"],
+        "nodes": [
+          {
+            "id": "watch_the_exchange",
+            "label": "Watch the exchange",
+            "phase": "planning",
+            "summary": "Shadow the suspect runners without spooking them before the handoff.",
+            "estimatedHours": 5,
+            "assignedRoles": ["watcher", "face"],
+            "participantRange": { "min": 1, "max": 2 },
+            "checks": [
+              { "kind": "attribute", "targetId": "attr.WIS", "minValue": 12, "weight": 0.3, "optional": false, "notes": "Tracking routes and body language." },
+              { "kind": "party_size", "targetId": "quiet_tail_size", "minValue": 2, "weight": -0.15, "optional": false, "notes": "Too many bodies ruin the tail." },
+              { "kind": "spell", "targetId": "spell.white.enhancing.blink", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Helps a watcher slip cover when noticed." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "test_the_coin", "questState": "advance", "summary": "The suspects walk you straight to the dye cellar.", "effects": ["intel:+1"] },
+              "failure": { "nextNodeId": "rush_the_cellar", "questState": "advance", "summary": "The tail turns hot and the crew must improvise before the evidence moves.", "effects": ["risk:+1", "reward:-10%"] }
+            }
+          },
+          {
+            "id": "test_the_coin",
+            "label": "Test the coin and plates",
+            "phase": "execution",
+            "summary": "Confirm the counterfeit work before the arrest call is made.",
+            "estimatedHours": 3,
+            "assignedRoles": ["face"],
+            "participantRange": { "min": 1, "max": 2 },
+            "checks": [
+              { "kind": "skill", "targetId": "skill.craft.goldsmithing", "minValue": 8, "weight": 0.35, "optional": false, "notes": "Spotting soft strike marks and bad edge weight." },
+              { "kind": "attribute", "targetId": "attr.CHA", "minValue": 11, "weight": 0.2, "optional": false, "notes": "Maintaining the buyer cover story." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "rush_the_cellar", "questState": "advance", "summary": "The crew confirms the plates and catches the ring red-handed.", "effects": ["evidence:+1"] },
+              "failure": { "nextNodeId": "rush_the_cellar", "questState": "advance", "summary": "The fake is obvious, but the buyer mask starts to crack.", "effects": ["alarm:+1"] }
+            }
+          },
+          {
+            "id": "rush_the_cellar",
+            "label": "Rush the dye cellar",
+            "phase": "execution",
+            "summary": "Seize the plates and pin the ringleader before the cellar is torched or stripped.",
+            "estimatedHours": 4,
+            "assignedRoles": ["soft_arrester", "watcher"],
+            "participantRange": { "min": 1, "max": 3 },
+            "checks": [
+              { "kind": "spell", "targetId": "spell.black.enfeebling.sleep", "minValue": 1, "weight": 0.15, "optional": true, "notes": "Quietly drops a runner." },
+              { "kind": "spell", "targetId": "spell.white.enfeebling.paralyze", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Pins suspects long enough for shackles." },
+              { "kind": "rng", "targetId": "hidden_exit", "minValue": 45, "weight": 0.15, "optional": false, "notes": "The ringleader may have a preplanned escape." }
+            ],
+            "branches": {
+              "criticalSuccess": { "nextNodeId": "submit_the_plates", "questState": "advance", "summary": "The ring is taken cleanly with ledgers, plates, and witnesses intact.", "effects": ["reward:+perfect_bonus", "reputation:+1"] },
+              "success": { "nextNodeId": "submit_the_plates", "questState": "advance", "summary": "The plates are seized, though one runner slips the net.", "effects": ["case:weakened"] },
+              "failure": { "nextNodeId": "submit_the_plates", "questState": "advance", "summary": "The raid scatters the ring and forces a partial case filing.", "effects": ["reward:-20%", "case:partial"] }
+            }
+          },
+          {
+            "id": "submit_the_plates",
+            "label": "Submit the plates",
+            "phase": "resolution",
+            "summary": "Return the seized plates and witness notes to the civic watch.",
+            "estimatedHours": 1,
+            "assignedRoles": ["face"],
+            "participantRange": { "min": 1, "max": 2 },
+            "checks": [],
+            "branches": {
+              "success": { "nextNodeId": null, "questState": "complete", "summary": "The watch closes the sting and pays out the warrant purse.", "effects": ["quest:complete"] }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "quest_definition.gullsreach_smokehouse_extortion",
+      "slug": "gullsreach_smokehouse_extortion",
+      "name": "Smokehouse Extortion Turnover",
+      "category": "operation",
+      "summary": "A dockside broker wants a compact crew to flip an extortion bookkeeper, seize the tally chest, and exit before the harbor bruisers regroup.",
+      "giver": {
+        "type": "individual",
+        "entityId": "npc.corin_ash",
+        "displayName": "Corin Ash",
+        "contactName": "Corin Ash",
+        "settlementId": "settlement.gullsreach"
+      },
+      "requirements": {
+        "levelMin": 16,
+        "classTagsAny": ["class_tag.scout", "class_tag.skirmisher", "class_tag.support_mage"],
+        "requiredSkills": [
+          { "id": "skill.weapon.dagger", "minRank": 12 },
+          { "id": "skill.magic.enfeebling_magic", "minRank": 10 }
+        ],
+        "requiredAbilities": [],
+        "requiredSpells": [],
+        "requiredTraits": [],
+        "requiredItems": ["poison_vial", "utility_salve"],
+        "reputationRequirements": [],
+        "notes": [
+          "This quest is explicitly structured like a small organized operation: planning slots, role discipline, materials, and failure branches compound fast.",
+          "Too few people weakens leverage in the extraction phase; too many people increase noise in the setup phase."
+        ]
+      },
+      "scheduling": {
+        "expectedDurationHours": 12,
+        "dueWithinHours": 18,
+        "planningWindowHours": 2,
+        "repeatable": false,
+        "timeSensitivity": "same_night"
+      },
+      "classification": {
+        "rank": "rank.b",
+        "expectedRisk": "risk.high",
+        "legalExposure": "criminal",
+        "combatIntensity": "moderate",
+        "failureProfile": "Arrest, faction retaliation, or losing the tally chest to a harbor gang counterpush."
+      },
+      "deployment": {
+        "minPartySize": 2,
+        "recommendedPartySize": 3,
+        "maxPartySize": 4,
+        "soloAllowed": false,
+        "roleSlots": [
+          {
+            "slotId": "inside_face",
+            "label": "Inside Face",
+            "minPeople": 1,
+            "maxPeople": 1,
+            "preferredChecks": ["attr.CHA", "spell.black.enfeebling.sleep"],
+            "notes": "Gets close to the bookkeeper and keeps the setup calm."
+          },
+          {
+            "slotId": "lookout",
+            "label": "Lookout",
+            "minPeople": 1,
+            "maxPeople": 1,
+            "preferredChecks": ["skill.defense.evasion", "attr.WIS"],
+            "notes": "Tracks harbor patrols and warns the crew if the lane turns hot."
+          },
+          {
+            "slotId": "muscle",
+            "label": "Muscle",
+            "minPeople": 0,
+            "maxPeople": 2,
+            "preferredChecks": ["skill.weapon.dagger", "ability.skirmisher.sneak_attack", "ability.martial.provoke"],
+            "notes": "Turns intimidation into a clean extraction if things go loud."
+          }
+        ],
+        "partySizeRules": [
+          {
+            "condition": "ifBelowRecommended",
+            "effect": "Too few bodies make the extraction phase dangerous if the bookkeeper resists."
+          },
+          {
+            "condition": "ifAboveRecommended",
+            "effect": "Every extra person increases noise, suspicion, and the chance of a patrol branch."
+          }
+        ]
+      },
+      "logistics": {
+        "requiredTools": ["tool.dockside_signal_whistle", "tool.false_manifest_satchel"],
+        "recommendedTools": ["tool.bolt_cutters", "tool.shore_skiff"],
+        "requiredEquipmentTags": ["gear.concealable"],
+        "recommendedSpells": ["spell.black.enfeebling.sleep", "spell.white.enhancing.blink", "spell.white.enfeebling.paralyze"],
+        "consumedItems": ["poison_vial", "trail_meal", "utility_salve"]
+      },
+      "rewards": {
+        "coinBase": 64,
+        "coinBonusOnPerfect": 28,
+        "reputationBase": 2,
+        "itemRewards": ["poison_vial", "trail_meal"],
+        "unlocks": ["underworld.gullsreach_blackbook_contact"]
+      },
+      "miscNotes": [
+        "This is the most Torn-inspired starter quest in the repository so far.",
+        "Role discipline matters more than raw level if the crew wants the clean payout branch."
+      ],
+      "actionTree": {
+        "entryNodeId": "brief_the_crew",
+        "completionNodeIds": ["wash_the_tally_chest"],
+        "nodes": [
+          {
+            "id": "brief_the_crew",
+            "label": "Brief the crew",
+            "phase": "planning",
+            "summary": "Assign the inside face, the lookout, and the fallback muscle before the tavern crowd thickens.",
+            "estimatedHours": 2,
+            "assignedRoles": ["inside_face", "lookout", "muscle"],
+            "participantRange": { "min": 2, "max": 4 },
+            "checks": [
+              { "kind": "party_size", "targetId": "clean_crew_size", "minValue": 3, "weight": 0.2, "optional": false, "notes": "Three is ideal; four starts to get noisy." },
+              { "kind": "attribute", "targetId": "attr.CHA", "minValue": 11, "weight": 0.2, "optional": false, "notes": "The face needs a convincing pitch." },
+              { "kind": "rng", "targetId": "harbor_patrol_rotation", "minValue": 40, "weight": 0.15, "optional": false, "notes": "Bad timing can make the whole setup uglier." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "stage_the_blackout", "questState": "advance", "summary": "The crew gets its timing and roles straight before moving.", "effects": ["setup:clean"] },
+              "failure": { "nextNodeId": "stage_the_blackout", "questState": "advance", "summary": "The crew goes in shaky, with a higher chance of a noisy extraction.", "effects": ["alarm:+1"] }
+            }
+          },
+          {
+            "id": "stage_the_blackout",
+            "label": "Stage the blackout",
+            "phase": "planning",
+            "summary": "Kill the right lamps, cut the alley sightline, and keep the smokehouse boys from seeing the crew form up.",
+            "estimatedHours": 2,
+            "assignedRoles": ["lookout", "inside_face"],
+            "participantRange": { "min": 2, "max": 3 },
+            "checks": [
+              { "kind": "spell", "targetId": "spell.white.enhancing.blink", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Lets the face move between light pools cleanly." },
+              { "kind": "item", "targetId": "poison_vial", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Can quietly drop the watchdog if needed." },
+              { "kind": "party_size", "targetId": "stealth_threshold", "minValue": 3, "weight": -0.15, "optional": false, "notes": "More people are bad during setup." }
+            ],
+            "branches": {
+              "criticalSuccess": { "nextNodeId": "turn_the_bookkeeper", "questState": "advance", "summary": "The crew owns the dark and gets the first move for free.", "effects": ["alarm:-1", "reward:+perfect_bonus"] },
+              "success": { "nextNodeId": "turn_the_bookkeeper", "questState": "advance", "summary": "The lane goes dim enough for the approach.", "effects": ["setup:quiet"] },
+              "failure": { "nextNodeId": "turn_the_bookkeeper", "questState": "advance", "summary": "A lamp crashes and the block starts to wake up.", "effects": ["alarm:+1", "risk:+1"] }
+            }
+          },
+          {
+            "id": "turn_the_bookkeeper",
+            "label": "Turn the bookkeeper",
+            "phase": "execution",
+            "summary": "Convince, threaten, or disable the tally keeper before he burns the names or whistles for help.",
+            "estimatedHours": 3,
+            "assignedRoles": ["inside_face", "muscle"],
+            "participantRange": { "min": 2, "max": 4 },
+            "checks": [
+              { "kind": "attribute", "targetId": "attr.CHA", "minValue": 12, "weight": 0.25, "optional": false, "notes": "Primary pressure check if the face is doing it clean." },
+              { "kind": "ability", "targetId": "ability.skirmisher.sneak_attack", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Lets the crew threaten violence without a full brawl." },
+              { "kind": "spell", "targetId": "spell.black.enfeebling.sleep", "minValue": 1, "weight": 0.1, "optional": true, "notes": "Can quietly end the argument if things turn." },
+              { "kind": "party_size", "targetId": "extraction_hands", "minValue": 3, "weight": 0.1, "optional": true, "notes": "Here extra people are actually good." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": "wash_the_tally_chest", "questState": "advance", "summary": "The bookkeeper folds and the tally chest changes hands.", "effects": ["loot:intact"] },
+              "failure": { "nextNodeId": "wash_the_tally_chest", "questState": "advance", "summary": "The chest is seized, but the smokehouse calls bruisers to the lane.", "effects": ["hp:-moderate", "alarm:+2", "reward:-15%"] },
+              "criticalFailure": { "nextNodeId": null, "questState": "fail", "summary": "The bookkeeper bolts and the harbor gang reaches the alley before the crew can reset.", "effects": ["reputation:-1", "coin:-50%"] }
+            }
+          },
+          {
+            "id": "wash_the_tally_chest",
+            "label": "Wash the tally chest",
+            "phase": "resolution",
+            "summary": "Move the stolen tallies through a clean handoff before dawn and take the final purse.",
+            "estimatedHours": 2,
+            "assignedRoles": ["lookout", "inside_face"],
+            "participantRange": { "min": 1, "max": 3 },
+            "checks": [
+              { "kind": "rng", "targetId": "late_patrol", "minValue": 40, "weight": 0.1, "optional": false, "notes": "A late patrol can still complicate the payout." }
+            ],
+            "branches": {
+              "success": { "nextNodeId": null, "questState": "complete", "summary": "The chest is washed, the broker pays, and the lane goes quiet again.", "effects": ["quest:complete"] },
+              "failure": { "nextNodeId": null, "questState": "complete", "summary": "The payoff lands, but a patrol skim cuts into the final take.", "effects": ["reward:-10%", "quest:complete"] }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
