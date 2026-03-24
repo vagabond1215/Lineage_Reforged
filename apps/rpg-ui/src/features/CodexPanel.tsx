@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { uiViewModel } from '../runtime/uiViewModel';
+import { useUiViewModel } from '../runtime/UiViewModelContext';
 import { matchesQuery } from '../utils';
 import { PanelLayout } from '../components/layout/PanelLayout';
 import { Card } from '../components/ui/Card';
@@ -16,7 +16,7 @@ type CodexPanelProps = {
 };
 
 export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: CodexPanelProps) {
-  const codexData = uiViewModel.codex;
+  const codexData = useUiViewModel().codex;
   const [activeSection, setActiveSection] = useState('flora');
   const [localSearch, setLocalSearch] = useState('');
   const [regionFilter, setRegionFilter] = useState('All Regions');

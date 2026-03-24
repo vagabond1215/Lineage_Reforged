@@ -20,7 +20,6 @@ import type {
   SidebarItem,
   SummaryMetric
 } from '../types.js';
-import { demoSnapshot } from './demoSnapshot.js';
 
 type WindowDetail = {
   title: string;
@@ -78,7 +77,7 @@ type ChronicleViewModel = {
   windowDetails: Record<string, WindowDetail>;
 };
 
-type UiViewModel = {
+export type UiViewModel = {
   navItems: NavItem[];
   notifications: {
     id: string;
@@ -1529,7 +1528,7 @@ function buildChronicleWindowDetails(snapshot: SaveSnapshot): Record<string, Win
   };
 }
 
-function buildUiViewModel(snapshot: SaveSnapshot): UiViewModel {
+export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
   const trackedQuest =
     snapshot.sessionState.questJournal.find((entry) => entry.id === snapshot.sessionState.trackedQuestId) ??
     snapshot.sessionState.questJournal.find((entry) => entry.tracked);
@@ -1539,6 +1538,9 @@ function buildUiViewModel(snapshot: SaveSnapshot): UiViewModel {
   const inventoryCapacity = getInventoryCapacity(snapshot.playerState.inventory);
   const occupiedEquipmentSlots = getOccupiedEquipmentSlots(snapshot);
   const discoverySummary = summarizeDiscoveryCategories(snapshot.playerState.discoveryChronicle.entries);
+  const backgroundLabel = snapshot.playerState.coreData.jobId
+    ? humanizeId(snapshot.playerState.coreData.jobId)
+    : null;
   const worldLists = worldSections.reduce<Record<string, ListItem[]>>((groups, section) => {
     if (section.id === 'world-map') {
       groups[section.id] = snapshot.sessionState.knownLocations.map((location) => ({
@@ -1762,6 +1764,7 @@ function buildUiViewModel(snapshot: SaveSnapshot): UiViewModel {
             title: 'Origin Profile',
             entries: [
               { label: 'Origin', value: formatOriginLabel(snapshot.playerState.originProfile) },
+              ...(backgroundLabel ? [{ label: 'Background', value: backgroundLabel }] : []),
               {
                 label: 'Attribute Variance',
                 value: summarizeAttributeAdjustments(snapshot.playerState.originProfile.attributeAdjustments)
@@ -1913,5 +1916,3 @@ function buildUiViewModel(snapshot: SaveSnapshot): UiViewModel {
     }
   };
 }
-
-export const uiViewModel = buildUiViewModel(demoSnapshot);

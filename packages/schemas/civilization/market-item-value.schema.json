@@ -1,0 +1,56 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "MarketItemValues",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "records"
+    ],
+    "properties": {
+        "records": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                    "id",
+                    "itemKey",
+                    "source",
+                    "category",
+                    "baseValue",
+                    "currencyId",
+                    "valueUnit",
+                    "marketable"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "itemKey": {
+                        "type": "string",
+                        "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "baseValue": {
+                        "type": "number",
+                        "minimum": 0
+                    },
+                    "currencyId": {
+                        "type": "string"
+                    },
+                    "valueUnit": {
+                        "type": "string"
+                    },
+                    "marketable": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}

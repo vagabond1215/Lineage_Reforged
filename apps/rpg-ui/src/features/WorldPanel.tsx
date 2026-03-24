@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { uiViewModel } from '../runtime/uiViewModel';
+import { useUiViewModel } from '../runtime/UiViewModelContext';
 import { matchesQuery } from '../utils';
 import { Icon } from '../components/icons';
 import { PanelLayout } from '../components/layout/PanelLayout';
@@ -7,6 +7,15 @@ import { Card } from '../components/ui/Card';
 import { PanelDetailStack } from '../components/ui/PanelDetailStack';
 import { SelectionList } from '../components/ui/SelectionList';
 import { SidebarMenu } from '../components/ui/SidebarMenu';
+import { useGameSession } from '../runtime/GameSessionContext';
+import { GameActionButton } from '../game-shell/components/GameActionButton';
+import { PanelNotice } from '../game-shell/components/PanelNotice';
+import {
+  getCurrentLocationLabel,
+  getKnownLocationId,
+  travelToKnownLocation
+} from '../game-shell/gameplayLoop';
+import type { GameShellNotice } from '../game-shell/state';
 
 type WorldPanelProps = {
   accent: string;
@@ -16,7 +25,8 @@ type WorldPanelProps = {
 };
 
 export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: WorldPanelProps) {
-  const worldData = uiViewModel.world;
+  const worldData = useUiViewModel().world;
+  const { snapshot, updateSnapshot } = useGameSession();
   const [activeSection, setActiveSection] = useState('world-map');
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({
     'world-map': worldData.lists['world-map']?.[0]?.id ?? '',
@@ -27,6 +37,7 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
     'local-market': worldData.lists['local-market']?.[0]?.id ?? ''
   });
   const [zoom, setZoom] = useState(1);
+  const [panelNotice, setPanelNotice] = useState<GameShellNotice | null>(null);
 
   const listItems = worldData.lists[activeSection] ?? [];
   const filteredItems = listItems.filter((item) =>
@@ -34,6 +45,11 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
   );
   const selectedItem =
     filteredItems.find((item) => item.id === selectedIds[activeSection]) ?? filteredItems[0];
+  const selectedWorldLocation =
+    worldData.locations.find((location) => location.id === selectedIds['world-map']) ??
+    worldData.locations[0];
+  const currentLocationId = getKnownLocationId(snapshot);
+  const currentLocationLabel = getCurrentLocationLabel(snapshot);
   const windowDetail = worldData.windowDetails[activeSection];
   const primaryDetail = selectedItem
     ? {
@@ -128,6 +144,44 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                   {detail}
                 </div>
               ))}
+            </div>
+          </Card>
+          {panelNotice && <PanelNotice notice={panelNotice} />}
+          <Card title="Travel Actions" accent={accent}>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="space-y-2 text-sm text-slate-300">
+                <div>
+                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Current Location</span>
+                  <div className="mt-1 text-base text-slate-50">{currentLocationLabel}</div>
+                </div>
+                <div>
+                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Selected Destination</span>
+                  <div className="mt-1 text-base text-slate-50">{selectedWorldLocation?.name ?? 'No location selected'}</div>
+                </div>
+                <div className="text-slate-400">
+                  {selectedWorldLocation?.note ?? 'Choose a known location on the map to begin travel.'}
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <GameActionButton
+                  label="Travel To Location"
+                  tone="accent"
+                  disabled={
+                    !selectedWorldLocation ||
+                    !selectedWorldLocation.known ||
+                    selectedWorldLocation.id === currentLocationId
+                  }
+                  onClick={() => {
+                    if (!selectedWorldLocation) {
+                      return;
+                    }
+
+                    const result = travelToKnownLocation(snapshot, selectedWorldLocation.id);
+                    updateSnapshot(result.snapshot);
+                    setPanelNotice(result.notice);
+                  }}
+                />
+              </div>
             </div>
           </Card>
           <SelectionList

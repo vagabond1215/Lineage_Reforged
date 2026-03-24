@@ -2663,6 +2663,778 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true
+                    },
+                    {
+                        "id":  "item.bark",
+                        "itemKey":  "bark",
+                        "name":  "Bark",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "bark",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "ingredient",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "bark",
+                                     "botanical",
+                                     "tannin"
+                                 ],
+                        "processingGroups":  [
+                                                 "bark.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.bark"
+                                      ]
+                    },
+                    {
+                        "id":  "item.wood",
+                        "itemKey":  "wood",
+                        "name":  "Wood",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "lumber",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good",
+                                      "fuel"
+                                  ],
+                        "tags":  [
+                                     "wood",
+                                     "lumber",
+                                     "botanical"
+                                 ],
+                        "processingGroups":  [
+                                                 "wood.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.wood"
+                                      ]
+                    },
+                    {
+                        "id":  "item.sap",
+                        "itemKey":  "sap",
+                        "name":  "Sap",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "sap",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "sap",
+                                     "botanical",
+                                     "liquid"
+                                 ],
+                        "processingGroups":  [
+                                                 "sap.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "ingredient.sap"
+                                      ]
+                    },
+                    {
+                        "id":  "item.resin",
+                        "itemKey":  "resin",
+                        "name":  "Resin",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "resin",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "resin",
+                                     "botanical",
+                                     "aromatic"
+                                 ],
+                        "processingGroups":  [
+                                                 "resin.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "ingredient.resin"
+                                      ]
+                    },
+                    {
+                        "id":  "item.herb_bundle",
+                        "itemKey":  "herb_bundle",
+                        "name":  "Herb Bundle",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "herb",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "herb",
+                                     "botanical",
+                                     "fresh",
+                                     "perishable"
+                                 ],
+                        "processingGroups":  [
+                                                 "herb.medicinal"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "ingredient.herb_bundle"
+                                      ]
+                    },
+                    {
+                        "id":  "item.dried_herb_bundle",
+                        "itemKey":  "dried_herb_bundle",
+                        "name":  "Dried Herb Bundle",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "herb",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "herb",
+                                     "botanical",
+                                     "dried"
+                                 ],
+                        "processingGroups":  [
+                                                 "herb.dried"
+                                             ],
+                        "stage":  "processed"
+                    },
+                    {
+                        "id":  "item.compost",
+                        "itemKey":  "compost",
+                        "name":  "Compost",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "soil",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "soil",
+                                     "fertilizer",
+                                     "organic"
+                                 ],
+                        "processingGroups":  [
+                                                 "soil.amendment"
+                                             ],
+                        "stage":  "processed",
+                        "aliasKeys":  [
+                                          "material.compost"
+                                      ]
+                    },
+                    {
+                        "id":  "item.hide_raw",
+                        "itemKey":  "hide_raw",
+                        "name":  "Raw Hide",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "animal",
+                        "itemSubBranch":  "hide",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "hide",
+                                     "animal_product",
+                                     "tannable"
+                                 ],
+                        "processingGroups":  [
+                                                 "hide.raw"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.hides",
+                        "itemKey":  "hides",
+                        "name":  "Hides",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "animal",
+                        "itemSubBranch":  "hide",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "hide",
+                                     "animal_product",
+                                     "aggregate"
+                                 ],
+                        "processingGroups":  [
+                                                 "hide.raw"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.cured_leather",
+                        "itemKey":  "cured_leather",
+                        "name":  "Cured Leather",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "processed",
+                        "itemSubBranch":  "leather",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "leather",
+                                     "processed",
+                                     "tannery_output"
+                                 ],
+                        "processingGroups":  [
+                                                 "leather.cured"
+                                             ],
+                        "stage":  "processed"
+                    },
+                    {
+                        "id":  "item.sheep_milk",
+                        "itemKey":  "sheep_milk",
+                        "name":  "Sheep Milk",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "animal",
+                        "itemSubBranch":  "dairy",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "consumable",
+                                      "ingredient",
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "dairy",
+                                     "liquid",
+                                     "animal_product",
+                                     "perishable"
+                                 ],
+                        "processingGroups":  [
+                                                 "dairy.raw"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.wild_turkey_egg",
+                        "itemKey":  "wild_turkey_egg",
+                        "name":  "Wild Turkey Egg",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "animal",
+                        "itemSubBranch":  "egg",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "consumable",
+                                      "ingredient",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "egg",
+                                     "animal_product",
+                                     "perishable"
+                                 ],
+                        "processingGroups":  [
+                                                 "egg.raw"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.wild_turkey_feather",
+                        "itemKey":  "wild_turkey_feather",
+                        "name":  "Wild Turkey Feather",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "animal",
+                        "itemSubBranch":  "feather",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "feather",
+                                     "animal_product",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "feather.raw"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.blood",
+                        "itemKey":  "blood",
+                        "name":  "Blood",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "animal",
+                        "itemSubBranch":  "blood",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "blood",
+                                     "animal_product",
+                                     "liquid"
+                                 ],
+                        "processingGroups":  [
+                                                 "blood.raw"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.bone_raw",
+                        "itemKey":  "bone_raw",
+                        "name":  "Raw Bone",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "animal",
+                        "itemSubBranch":  "bone",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "bone",
+                                     "animal_product",
+                                     "rigid"
+                                 ],
+                        "processingGroups":  [
+                                                 "bone.raw"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.gold_ore",
+                        "itemKey":  "gold_ore",
+                        "name":  "Gold Ore",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "ore",
+                        "baseValue":  30,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "metal",
+                                     "ore",
+                                     "precious"
+                                 ],
+                        "processingGroups":  [
+                                                 "ore.metal",
+                                                 "ore.precious"
+                                             ],
+                        "stage":  "raw"
+                    },
+                    {
+                        "id":  "item.copper_ingot",
+                        "itemKey":  "copper_ingot",
+                        "name":  "Copper Ingot",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "metal",
+                        "itemSubBranch":  "ingot",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "metal",
+                                     "ingot",
+                                     "refined"
+                                 ],
+                        "processingGroups":  [
+                                                 "ingot.common",
+                                                 "ingot.copper"
+                                             ],
+                        "stage":  "refined"
+                    },
+                    {
+                        "id":  "item.iron_ingot",
+                        "itemKey":  "iron_ingot",
+                        "name":  "Iron Ingot",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "metal",
+                        "itemSubBranch":  "ingot",
+                        "baseValue":  22,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "metal",
+                                     "ingot",
+                                     "refined"
+                                 ],
+                        "processingGroups":  [
+                                                 "ingot.common",
+                                                 "ingot.iron"
+                                             ],
+                        "stage":  "refined"
+                    },
+                    {
+                        "id":  "item.fungal_cap",
+                        "itemKey":  "fungal_cap",
+                        "name":  "Fungal Cap",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "fungal",
+                        "itemSubBranch":  "cap",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "fungus",
+                                     "cap",
+                                     "foraged"
+                                 ],
+                        "processingGroups":  [
+                                                 "fungi.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "ingredient.fungal_cap"
+                                      ]
+                    },
+                    {
+                        "id":  "item.fungal_extract",
+                        "itemKey":  "fungal_extract",
+                        "name":  "Fungal Extract",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "fungal",
+                        "itemSubBranch":  "extract",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "fungus",
+                                     "extract",
+                                     "processed"
+                                 ],
+                        "processingGroups":  [
+                                                 "fungi.extract"
+                                             ],
+                        "stage":  "processed",
+                        "aliasKeys":  [
+                                          "ingredient.fungal_extract"
+                                      ]
+                    },
+                    {
+                        "id":  "item.pollen",
+                        "itemKey":  "pollen",
+                        "name":  "Pollen",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "pollen",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "pollen",
+                                     "floral",
+                                     "powder"
+                                 ],
+                        "processingGroups":  [
+                                                 "pollen.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "ingredient.pollen"
+                                      ]
+                    },
+                    {
+                        "id":  "item.chaff",
+                        "itemKey":  "chaff",
+                        "name":  "Chaff",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "chaff",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good",
+                                      "fuel"
+                                  ],
+                        "tags":  [
+                                     "fiber",
+                                     "plant_waste",
+                                     "dry"
+                                 ],
+                        "processingGroups":  [
+                                                 "plant_waste.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.chaff"
+                                      ]
+                    },
+                    {
+                        "id":  "item.fiber",
+                        "itemKey":  "fiber",
+                        "name":  "Fiber",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "fiber",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "fiber",
+                                     "botanical",
+                                     "textile"
+                                 ],
+                        "processingGroups":  [
+                                                 "fiber.raw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.fiber"
+                                      ]
+                    },
+                    {
+                        "id":  "item.mulch",
+                        "itemKey":  "mulch",
+                        "name":  "Mulch",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "mulch",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "soil",
+                                     "botanical",
+                                     "groundcover"
+                                 ],
+                        "processingGroups":  [
+                                                 "soil.mulch"
+                                             ],
+                        "stage":  "processed",
+                        "aliasKeys":  [
+                                          "material.mulch"
+                                      ]
+                    },
+                    {
+                        "id":  "item.mycelium",
+                        "itemKey":  "mycelium",
+                        "name":  "Mycelium",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "fungal",
+                        "itemSubBranch":  "mycelium",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "fungus",
+                                     "mycelium",
+                                     "living"
+                                 ],
+                        "processingGroups":  [
+                                                 "fungi.mycelium"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.mycelium"
+                                      ]
+                    },
+                    {
+                        "id":  "item.spore_dust",
+                        "itemKey":  "spore_dust",
+                        "name":  "Spore Dust",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "fungal",
+                        "itemSubBranch":  "spore",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "ingredient",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "fungus",
+                                     "spore",
+                                     "powder"
+                                 ],
+                        "processingGroups":  [
+                                                 "fungi.spore"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.spore_dust"
+                                      ]
+                    },
+                    {
+                        "id":  "item.straw",
+                        "itemKey":  "straw",
+                        "name":  "Straw",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "straw",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good",
+                                      "fuel"
+                                  ],
+                        "tags":  [
+                                     "straw",
+                                     "botanical",
+                                     "dry"
+                                 ],
+                        "processingGroups":  [
+                                                 "fiber.straw"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.straw"
+                                      ]
+                    },
+                    {
+                        "id":  "item.twig_bundle",
+                        "itemKey":  "twig_bundle",
+                        "name":  "Twig Bundle",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "botanical",
+                        "itemSubBranch":  "twig",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good",
+                                      "fuel"
+                                  ],
+                        "tags":  [
+                                     "twig",
+                                     "wood",
+                                     "botanical"
+                                 ],
+                        "processingGroups":  [
+                                                 "wood.twig"
+                                             ],
+                        "stage":  "raw",
+                        "aliasKeys":  [
+                                          "material.twig_bundle"
+                                      ]
                     }
                 ]
 }

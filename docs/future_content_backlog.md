@@ -157,6 +157,23 @@ This file tracks content and systems that are intentionally deferred.
   - continue replacing aggregate botanicals inside specific processing recipes and workplaces once named herb and flower inputs exist
   - remove the aggregate harvest buckets only after broad extraction outputs can be split into stable specific species yields
 
+### Item and Economy Data
+
+#### Canonical commodity identity rollout beyond the first pass
+
+- Status: partially deferred
+- Prerequisite: the first canonical commodity item cohort, alias-backed flora compatibility, and market overlay schema now exist; remaining prerequisites are broader item catalog coverage, recipe/workplace consumers that can target processing groups, and deliberate provenance rules for aggregate goods
+- Intended owner: `packages/content/base/items`, `packages/content/base/civilization`, extraction/workplace content, and future inventory/codex consumers
+- Intended implementation:
+  - `packages/content/base/items/items.json` now owns the first canonical multi-role commodity records for core raw and processed goods such as wood, bark, sap, resin, herb bundles, compost, hides, leather, dairy, eggs, feathers, blood, bone, ore, and ingots
+  - `packages/content/base/civilization/market_item_values.json` now has a dedicated schema and remains the valuation overlay keyed to canonical `itemKey`
+  - flora output aliases such as `material.wood`, `ingredient.sap`, `ingredient.herb_bundle`, and `material.compost` now resolve through canonical item alias keys instead of acting as pseudo-identities
+  - remaining work is to migrate more of the market catalog into canonical item records instead of leaving many tradable goods defined only in the market layer
+  - remaining work is to convert more flora, fauna, and mineral outputs from compatibility aliases and source-prefixed tokens to canonical unprefixed `itemKey`s once downstream consumers are ready
+  - remaining work is to replace generic aggregate items such as `hides` with deliberate provenance-aware item families where species distinctions materially matter
+  - remaining work is to let recipes, workplaces, crafting, and codex systems consume `roles`, `tags`, and `processingGroups` directly instead of treating those fields as catalog metadata only
+  - remaining work is to add canonical consumable and spoilage profile ownership before `consumableProfileId` and `spoilageProfileId` become populated broadly
+
 ### Runtime Enforcement
 
 #### Workplace progression simulation rules
@@ -221,6 +238,20 @@ This file tracks content and systems that are intentionally deferred.
   - add content-lint or seed-pipeline validation for the richer player catalogs so progression models, unlock rules, and effect payloads are checked the same way broader world content is checked
   - replace the temporary FFXI-inspired records with organic game-native abilities, traits, spells, and skill families once the downstream combat, crafting, and progression systems stabilize
 
+#### Canonical skill, job, workplace, and employment architecture refactor
+
+- Status: deferred
+- Prerequisite: replace the current FFXI-style placeholder skill taxonomy, freeform workplace job ids, and quest-only party/deployment assumptions with canonical cross-system registries plus runtime consumers
+- Intended owner: player progression content, civilization/workplace content, quest systems, simulation runtime, and UI/session adapters
+- Intended implementation:
+  - replace the current `packages/content/base/player/skills.json` taxonomy with a game-native permanent skill model organized around combat, magic, crafting, gathering, trade, survival, social, and utility families instead of the current FFXI-derived weapon/magic/craft split
+  - introduce a canonical `jobs.json` so professions become explicit temporary employment roles with required skills, preferred skills, workplace eligibility, progression tiers, and compensation expectations instead of remaining embedded string ids inside workplace staffing curves and player state
+  - refactor `packages/content/base/civilization/workplaces.json` so workplaces own capacity, role slots, productivity rules, and multi-role burden semantics while jobs own role identity and worker-fit logic
+  - generalize the current quest action/deployment concepts into a reusable context-aware action system that can power travel, gathering, trade, hiring, labor, party assignments, and building interactions outside quest trees
+  - add canonical NPC/employment/hiring/negotiation data ownership so candidate discovery, wage negotiation, compensation preferences, and worker loyalty are not inferred from ad hoc settlement tags or quest givers
+  - split the current flat player reputation model into local fame, regional fame, faction reputation, party reputation, and business reputation, with explicit ownership for gain/loss rules and UI projection
+  - align shared snapshot contracts, simulation runtime state, and the React UI so jobs, employees, parties, workplaces, actions, and reputations resolve through the same typed registries instead of duplicating string-only references across content and session state
+
 #### Real-time HP/MP/Stamina effect catalogs and event integration
 
 - Status: partially deferred
@@ -280,13 +311,24 @@ This file tracks content and systems that are intentionally deferred.
 - Prerequisite: shared player/session snapshot fields and a browser-safe UI projection layer now exist; remaining prerequisite is runtime generation of those session records from actual simulation systems
 - Intended owner: `apps/rpg-ui`, `packages/shared`, and engine/session runtime layers
 - Intended implementation:
-  - the React/Tailwind shell now reads from a save/session snapshot bridge instead of the earlier freeform mock-data module
+  - player-facing root launchers now exist as `Play Cataclysm.cmd`, `Open Content Browser.cmd`, and `Launch Game + Browser.cmd` so the current UI/browser stack can be entered from the project root without terminal knowledge
+  - the React/Tailwind shell now reads from a save/session snapshot bridge instead of the earlier freeform mock-data module, and the in-game shell now owns a typed game-session provider that separates raw active snapshots, derived UI view models, and local navigation state while leaving `demoSnapshot` as development-only seed data
   - shared contracts now carry location, currency, reputation, titles, tracked activity, notifications, codex records, quest journal records, chronicle records, operations, origin profiles, inventory/equipment, and the player discovery chronicle in a session-facing shape the UI can project directly
   - `packages/engines/game-engine/src/save-snapshot.ts` now provides a runtime-side snapshot helper, and `apps/rpg-ui/src/runtime/uiViewModel.ts` projects that snapshot shape into panel data
+  - `apps/rpg-ui` now has a typed top-level flow with `MAIN_MENU`, `CHARACTER_CREATION`, `LOAD_GAME`, and `IN_GAME` states so the existing shell can be entered from a real front-end game loop instead of rendering immediately on boot
+  - the UI now maintains three browser-local manual save slots plus a dedicated quick-save slot backed by `localStorage`, with serialized shared `SaveSnapshot` payloads, stored save metadata, explicit save/load/overwrite/delete/reset-all controls, and corrupt-slot isolation in the front-end shell
+  - the UI character creator now runs as a deterministic multi-step flow for name, sex, lineage, class, background, and starting settlement, with a live summary panel and a snapshot factory kept separate from the screen component
+  - the world, activity, and quest tabs now expose a first playable snapshot-backed loop for accepting a contract, traveling between authored locations, advancing contract work shifts, resting, turning contracts in, and applying rewards to currency, XP, skills, reputation, codex entries, chronicle events, notifications, and operations
   - the detail column now also exposes per-section standard field audits and missing-reference callouts so each submenu window documents what data it expects to receive
   - the character tab now surfaces origin growth, wallet/inventory state, equipped gear refs, and discovery-chronicle records from the snapshot bridge instead of treating those windows as placeholders
+  - the character tab now also supports session-backed equip/unequip, inventory filtering and sorting, favorite-item and tracked-skill quick actions, record pinning, and item inspection against the active snapshot instead of acting as a read-only concept panel
+  - pinned items now persist through the saved `sessionState.pinnedRecordIds` snapshot payload, but the current write path is still a UI-local adapter rather than engine-owned save/update orchestration
   - remaining work is to have the simulation produce `worldRecords`, `activityRecords`, `questJournal`, `chronicle`, `codexEntries`, and notification/operation feeds dynamically instead of relying on demo session payloads
-  - pinned items are still persisted locally in the UI app; move that ownership into the player/session layer once save/update semantics are finalized
+  - remaining work is to replace the current UI-authored travel, shift-advance, rest, quest-turn-in, and reward application resolver with engine-owned command handling plus authoritative tick/event output from `packages/engines` or `apps/sim-runner`
+  - remaining work is to replace session-flag-driven objective progress, cargo markers, and codex unlock triggers with canonical quest/runtime state owned by the engine layer instead of the front-end command helper
+  - remaining work is to replace the current UI-side equip-slot heuristics, session-flag item metadata stashing, and disabled consumable action hook with canonical item definitions plus engine-owned equip/use semantics
+  - remaining work is to replace the UI-authored character creation templates for backgrounds, settlement starts, and starter loadouts with canonical content/database ownership once the player-content layer stabilizes
+  - remaining work is to replace the UI-authored new-game snapshot builder and browser-local slot manager with engine-owned character creation, canonical save-slot metadata, and session persistence once runtime save semantics are finalized
 
 #### RPG UI section field coverage and missing references
 
@@ -295,7 +337,7 @@ This file tracks content and systems that are intentionally deferred.
 - Intended owner: `apps/rpg-ui` with follow-on work in `packages/shared`, engine/session adapters, and authored content layers
 - Intended implementation:
   - the UI menus now surface per-section descriptions and record counts, and each submenu detail window now lists its standard fields, current data source refs, and missing or empty references
-  - remaining character refs include raw base-attribute provenance, derived combat/encumbrance formulas, authored equipment stat payloads, canonical item metadata refs for inventory rows, canonical spell/food/potion/aura modifier payloads, trait modifier tables, faction threshold tables, title equip/unlock ownership rules, runtime ownership for discovery-chronicle writes, and full combat/resource event emitters
+  - remaining character refs include raw base-attribute provenance, derived combat/encumbrance formulas, authored equipment stat payloads, canonical item metadata refs for inventory rows, canonical spell/food/potion/aura modifier payloads, trait modifier tables, faction threshold tables, title equip/unlock ownership rules, runtime ownership for discovery-chronicle writes, consumable-use execution ownership, and full combat/resource event emitters
   - remaining world refs include authored `world_maps` / `world_map_features` ids, player visibility state, region ecology/hazard bindings, settlement stockpile and service refs, route geometry/throughput refs, and live market price/stock feeds
   - remaining activity refs include employer/workplace ids, business revenue-expense ledgers, upgrade catalogs, recipe/station refs, cargo and shipment ids, contract lifecycle refs, service payroll/readiness refs, vessel/crew refs, and operation dependency / input-output refs
   - remaining codex refs include canonical content ids for flora/fauna/minerals/items/recipes/factions, habitat weighting, extraction/drop links, item stat and recipe refs, faction presence thresholds, and note-source linkage
@@ -311,3 +353,13 @@ This file tracks content and systems that are intentionally deferred.
   - the world tab now consumes snapshot-fed known locations and world records for side lists/details, but the map surface remains a placeholder renderer
   - replace the placeholder with rendered authored geography layers tied to the canonical map coordinate system and live player-known-location visibility
   - layer route risk, settlement supply-demand overlays, and region tooltips onto the same map surface after the adapter contract is stable
+
+#### Desktop packaging and embedded launch flow
+
+- Status: deferred
+- Prerequisite: root-level player/browser launchers now exist; remaining prerequisites are a stable production build pipeline for `apps/rpg-ui`, packaged asset bundling for the content browser, and a clear ownership decision for running or embedding the simulation/runtime host in desktop builds
+- Intended owner: desktop packaging, `apps/rpg-ui`, and future app-host/runtime integration layers
+- Intended implementation:
+  - keep `Play Cataclysm.cmd`, `Open Content Browser.cmd`, and `Launch Game + Browser.cmd` as the current non-technical root entrypoints while the project remains browser-hosted in development
+  - package the player UI into a desktop shell once the save flow, launcher behavior, and runtime bridge are stable enough that browser-specific boot assumptions can be removed
+  - decide whether the content browser ships as a separate desktop utility, a secondary window inside the same host, or a development-only companion tool before installer/update work begins

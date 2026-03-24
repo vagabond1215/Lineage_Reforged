@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { uiViewModel } from '../runtime/uiViewModel';
+import { useUiViewModel } from '../runtime/UiViewModelContext';
 import { matchesQuery } from '../utils';
 import { PanelLayout } from '../components/layout/PanelLayout';
 import { Card } from '../components/ui/Card';
@@ -20,7 +20,7 @@ export function ChroniclePanel({
   pinnedIds,
   onTogglePin
 }: ChroniclePanelProps) {
-  const chronicleData = uiViewModel.chronicle;
+  const chronicleData = useUiViewModel().chronicle;
   const [activeSection, setActiveSection] = useState('all');
   const [selectedId, setSelectedId] = useState(chronicleData.entries[0]?.id ?? '');
   const latestEntry = chronicleData.entries[0];

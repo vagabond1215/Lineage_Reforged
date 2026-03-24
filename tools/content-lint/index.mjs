@@ -5,6 +5,8 @@ const ROOT = process.cwd();
 const SLUG_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const ITEM_KEY_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const RESOURCE_ITEM_PREFIX_PATTERN = /^(flora|fauna|mineral)\./;
+const ITEM_PROCESSING_GROUP_PATTERN = /^[a-z0-9]+(?:[._][a-z0-9]+)*$/;
+const LEGACY_ROLE_OUTPUT_PATTERN = /^(ingredient|material)\.([a-z0-9]+(?:_[a-z0-9]+)*)$/;
 const GEO_QUALIFIER_PATTERN = /\b(american|european|asian|african|oregon|texas|california|alaskan)\b/i;
 
 const FLORA_TYPES = new Set(["tree", "shrub", "herb", "grass", "fungi"]);
@@ -151,6 +153,8 @@ const SETTLEMENT_DEPENDENCY_ROLES = new Set([
   "seasonal_station"
 ]);
 const DEPENDENT_SETTLEMENT_TYPES = new Set(["hamlet", "estate", "monastery", "ferry_post", "camp", "waystation"]);
+const ITEM_ROLE_VALUES = new Set(["consumable", "ingredient", "material", "reagent", "trade_good", "fuel"]);
+const ITEM_STAGE_VALUES = new Set(["raw", "refined", "processed", "finished"]);
 
 
 const checks = [
@@ -193,6 +197,13 @@ const checks = [
     requireSlug: false,
     forbidGeoQualifierInName: false,
     validateItemCatalog: true
+  },
+  {
+    file: "packages/content/base/civilization/market_item_values.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateMarketItemValues: true
   },
   {
     file: "packages/content/base/civilization/workplaces.json",
@@ -384,6 +395,60 @@ function ensureBoolean(relativePath, recordId, field, value) {
   if (typeof value !== "boolean") {
     throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
   }
+}
+
+function ensureUniqueSlugStrings(relativePath, recordId, field, value, { allowDotted = false } = {}) {
+  ensureStringArray(relativePath, recordId, field, value, 1);
+
+  const seen = new Set();
+  for (const entry of value) {
+    const isValidSlug = allowDotted ? ITEM_PROCESSING_GROUP_PATTERN.test(entry) : SLUG_PATTERN.test(entry);
+    if (!isValidSlug) {
+      throw new Error(`${relativePath} has invalid ${field} value '${entry}' on record ${recordId}`);
+    }
+
+    if (seen.has(entry)) {
+      throw new Error(`${relativePath} has duplicate ${field} value '${entry}' on record ${recordId}`);
+    }
+    seen.add(entry);
+  }
+}
+
+function ensureUniqueAliasStrings(relativePath, recordId, field, value) {
+  ensureStringArray(relativePath, recordId, field, value, 1);
+
+  const seen = new Set();
+  for (const entry of value) {
+    if (typeof entry !== "string" || entry.trim().length === 0) {
+      throw new Error(`${relativePath} has invalid ${field} value on record ${recordId}`);
+    }
+
+    if (seen.has(entry)) {
+      throw new Error(`${relativePath} has duplicate ${field} value '${entry}' on record ${recordId}`);
+    }
+    seen.add(entry);
+  }
+}
+
+function isValidMarketItemKey(itemKey) {
+  return ITEM_KEY_PATTERN.test(itemKey) || RESOURCE_ITEM_PREFIX_PATTERN.test(itemKey);
+}
+
+function buildItemAliasMap(relativePath, records) {
+  const aliasToCanonical = new Map();
+
+  for (const record of records) {
+    for (const aliasKey of record.aliasKeys ?? []) {
+      if (aliasToCanonical.has(aliasKey)) {
+        throw new Error(
+          `${relativePath} has duplicate aliasKey '${aliasKey}' on records ${aliasToCanonical.get(aliasKey)} and ${record.id ?? "<unknown>"}`
+        );
+      }
+      aliasToCanonical.set(aliasKey, record.itemKey);
+    }
+  }
+
+  return aliasToCanonical;
 }
 
 async function validateHabitatBiomes(relativePath, records) {
@@ -3899,6 +3964,9 @@ function validateRecords(relativePath, parsed, check) {
   if (check.validateItemCatalog) {
     validateItemCatalog(relativePath, parsed.records);
   }
+  if (check.validateMarketItemValues) {
+    validateMarketItemValues(relativePath, parsed.records);
+  }
 
   if (check.validateFloraTemplate) {
     validateFloraTemplate(relativePath, parsed.records);
@@ -3943,6 +4011,7 @@ function validateRecords(relativePath, parsed, check) {
 function validateItemCatalog(relativePath, records) {
   const seenIds = new Set();
   const seenKeys = new Set();
+  const seenAliasKeys = new Map();
 
   for (const record of records) {
     if (typeof record.id !== "string" || record.id.trim().length === 0) {
@@ -3980,6 +4049,100 @@ function validateItemCatalog(relativePath, records) {
     if (typeof record.marketable !== "boolean") {
       throw new Error(`${relativePath} has invalid marketable flag on record ${record.id}`);
     }
+
+    if (record.roles !== undefined) {
+      ensureUniqueSlugStrings(relativePath, record.id, "roles", record.roles);
+      for (const role of record.roles) {
+        ensureSetMembership(relativePath, record.id, "roles", role, ITEM_ROLE_VALUES);
+      }
+    }
+
+    if (record.tags !== undefined) {
+      ensureUniqueSlugStrings(relativePath, record.id, "tags", record.tags);
+    }
+
+    if (record.processingGroups !== undefined) {
+      ensureUniqueSlugStrings(relativePath, record.id, "processingGroups", record.processingGroups, { allowDotted: true });
+    }
+
+    if (record.stage !== undefined) {
+      ensureSetMembership(relativePath, record.id, "stage", record.stage, ITEM_STAGE_VALUES);
+    }
+
+    if (record.aliasKeys !== undefined) {
+      ensureUniqueAliasStrings(relativePath, record.id, "aliasKeys", record.aliasKeys);
+      for (const aliasKey of record.aliasKeys) {
+        if (aliasKey === record.itemKey) {
+          throw new Error(`${relativePath} aliasKey '${aliasKey}' must not repeat itemKey on record ${record.id}`);
+        }
+        if (seenAliasKeys.has(aliasKey)) {
+          throw new Error(`${relativePath} has duplicate aliasKey '${aliasKey}' on records ${seenAliasKeys.get(aliasKey)} and ${record.id}`);
+        }
+        seenAliasKeys.set(aliasKey, record.id);
+      }
+    }
+
+    if (record.consumableProfileId !== undefined) {
+      ensureString(relativePath, record.id, "consumableProfileId", record.consumableProfileId);
+      if (!Array.isArray(record.roles) || !record.roles.includes("consumable")) {
+        throw new Error(`${relativePath} consumableProfileId requires consumable role on record ${record.id}`);
+      }
+    }
+
+    if (record.spoilageProfileId !== undefined) {
+      ensureString(relativePath, record.id, "spoilageProfileId", record.spoilageProfileId);
+      if (!Array.isArray(record.roles) || (!record.roles.includes("consumable") && !record.roles.includes("ingredient"))) {
+        throw new Error(`${relativePath} spoilageProfileId requires consumable or ingredient role on record ${record.id}`);
+      }
+    }
+
+    if (record.itemClass === "commodity") {
+      if (!Array.isArray(record.roles) || record.roles.length === 0) {
+        throw new Error(`${relativePath} commodity item ${record.id} must define at least one role`);
+      }
+      if (!Array.isArray(record.tags) || record.tags.length === 0) {
+        throw new Error(`${relativePath} commodity item ${record.id} must define at least one tag`);
+      }
+      if (!Array.isArray(record.processingGroups) || record.processingGroups.length === 0) {
+        throw new Error(`${relativePath} commodity item ${record.id} must define at least one processing group`);
+      }
+      if (typeof record.stage !== "string" || record.stage.trim().length === 0) {
+        throw new Error(`${relativePath} commodity item ${record.id} must define stage`);
+      }
+    }
+  }
+}
+
+function validateMarketItemValues(relativePath, records) {
+  const seenIds = new Set();
+  const seenKeys = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate market id ${record.id}`);
+    }
+    seenIds.add(record.id);
+
+    if (typeof record.itemKey !== "string" || !isValidMarketItemKey(record.itemKey)) {
+      throw new Error(`${relativePath} has invalid itemKey on record ${recordId}`);
+    }
+    if (seenKeys.has(record.itemKey)) {
+      throw new Error(`${relativePath} has duplicate market itemKey ${record.itemKey}`);
+    }
+    seenKeys.add(record.itemKey);
+
+    for (const key of ["source", "category", "currencyId", "valueUnit"]) {
+      ensureString(relativePath, recordId, key, record[key]);
+    }
+
+    if (typeof record.baseValue !== "number" || Number.isNaN(record.baseValue) || record.baseValue < 0) {
+      throw new Error(`${relativePath} has invalid baseValue on record ${recordId}`);
+    }
+
+    ensureBoolean(relativePath, recordId, "marketable", record.marketable);
   }
 }
 
@@ -4254,6 +4417,112 @@ async function validateMeatCutStandardsAgainstMarketKeys() {
 
   if (packagingMap.get("sausage_coil") !== 12 || packagingMap.get("sausage_bundle") !== 48) {
     throw new Error("packages/content/base/civilization/meat_cut_standards.json sausage conversion must be 1:12:48 for link/coil/bundle");
+  }
+}
+
+async function validateFloraOutputsAgainstItemIdentitySpace() {
+  const floraPath = path.join(ROOT, "packages/content/base/world/flora.json");
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const floraParsed = JSON.parse(await readFile(floraPath, "utf8"));
+  const itemParsed = JSON.parse(await readFile(itemPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (!Array.isArray(floraParsed.records) || !Array.isArray(itemParsed.records) || !Array.isArray(marketParsed.records)) {
+    throw new Error("content cross-check failed: flora, items, or market records are invalid");
+  }
+
+  const itemKeys = new Set(itemParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+  const aliasToCanonical = buildItemAliasMap("packages/content/base/items/items.json", itemParsed.records);
+  const marketKeys = new Set(marketParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+
+  const ensureResolvableOutputKey = (recordId, fieldPath, key) => {
+    if (marketKeys.has(key)) {
+      return;
+    }
+
+    if (itemKeys.has(key)) {
+      if (!marketKeys.has(key)) {
+        throw new Error(`packages/content/base/world/flora.json ${fieldPath} key '${key}' exists in items but is missing in market item values on record ${recordId}`);
+      }
+      return;
+    }
+
+    const canonicalKey = aliasToCanonical.get(key);
+    if (canonicalKey) {
+      if (!marketKeys.has(canonicalKey)) {
+        throw new Error(
+          `packages/content/base/world/flora.json ${fieldPath} key '${key}' resolves to '${canonicalKey}' but that canonical itemKey is missing in market item values on record ${recordId}`
+        );
+      }
+      return;
+    }
+
+    const legacyRoleMatch = key.match(LEGACY_ROLE_OUTPUT_PATTERN);
+    if (legacyRoleMatch) {
+      const normalizedKey = legacyRoleMatch[2];
+      if (marketKeys.has(normalizedKey)) {
+        return;
+      }
+      if (itemKeys.has(normalizedKey) && marketKeys.has(normalizedKey)) {
+        return;
+      }
+    }
+
+    throw new Error(`packages/content/base/world/flora.json has unresolved ${fieldPath} key '${key}' on record ${recordId}`);
+  };
+
+  for (const flora of floraParsed.records) {
+    const recordId = flora.id ?? "<unknown>";
+    for (const [fieldPath, block] of [
+      ["template.harvest.activeHarvest", flora?.template?.harvest?.activeHarvest],
+      ["template.harvest.passiveHarvest", flora?.template?.harvest?.passiveHarvest]
+    ]) {
+      if (!isObject(block) || !isObject(block.rawOutput) || !isObject(block.rawOutput.processing) || !isObject(block.rawOutput.processing.byProducts)) {
+        continue;
+      }
+
+      for (const [groupPath, values] of [
+        [`${fieldPath}.rawOutput.materials`, block.rawOutput.materials ?? []],
+        [`${fieldPath}.rawOutput.ingredients`, block.rawOutput.ingredients ?? []],
+        [`${fieldPath}.rawOutput.processing.byProducts.materials`, block.rawOutput.processing.byProducts.materials ?? []],
+        [`${fieldPath}.rawOutput.processing.byProducts.ingredients`, block.rawOutput.processing.byProducts.ingredients ?? []]
+      ]) {
+        for (const key of values) {
+          ensureResolvableOutputKey(recordId, groupPath, key);
+        }
+      }
+    }
+  }
+}
+
+async function validateCanonicalCommodityItemsAgainstMarketKeys() {
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const itemParsed = JSON.parse(await readFile(itemPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+
+  if (!Array.isArray(itemParsed.records) || !Array.isArray(marketParsed.records)) {
+    throw new Error("content cross-check failed: item or market records are invalid");
+  }
+
+  const aliasToCanonical = buildItemAliasMap("packages/content/base/items/items.json", itemParsed.records);
+  const marketKeys = new Set(marketParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+
+  for (const aliasKey of aliasToCanonical.keys()) {
+    if (marketKeys.has(aliasKey)) {
+      throw new Error(`packages/content/base/items/items.json aliasKey '${aliasKey}' conflicts with an existing market itemKey`);
+    }
+  }
+
+  for (const record of itemParsed.records) {
+    if (record.itemClass === "commodity" && record.marketable && !marketKeys.has(record.itemKey)) {
+      throw new Error(
+        `packages/content/base/items/items.json commodity itemKey '${record.itemKey}' is marked marketable but missing in market item values`
+      );
+    }
   }
 }
 
@@ -5322,7 +5591,9 @@ async function main() {
     await validateFile(check);
   }
 
+  await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
+  await validateCanonicalCommodityItemsAgainstMarketKeys();
   await validateMeatCutStandardsAgainstMarketKeys();
   await validateInfrastructureAgainstWorkplaces();
   await validateWorldMapsAgainstRegions();

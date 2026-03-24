@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { uiViewModel } from '../runtime/uiViewModel';
+import { useUiViewModel } from '../runtime/UiViewModelContext';
 import { matchesQuery } from '../utils';
 import { PanelLayout } from '../components/layout/PanelLayout';
 import { Card } from '../components/ui/Card';
@@ -7,6 +7,16 @@ import { PanelDetailStack } from '../components/ui/PanelDetailStack';
 import { OperationsQueue } from '../components/ui/OperationsQueue';
 import { SelectionList } from '../components/ui/SelectionList';
 import { SidebarMenu } from '../components/ui/SidebarMenu';
+import { useGameSession } from '../runtime/GameSessionContext';
+import { GameActionButton } from '../game-shell/components/GameActionButton';
+import { PanelNotice } from '../game-shell/components/PanelNotice';
+import {
+  advanceCurrentActivity,
+  getCurrentLocationLabel,
+  restAtCurrentSettlement,
+  setCurrentActivityFromRecord
+} from '../game-shell/gameplayLoop';
+import type { GameShellNotice } from '../game-shell/state';
 
 type ActivityPanelProps = {
   accent: string;
@@ -21,7 +31,8 @@ export function ActivityPanel({
   pinnedIds,
   onTogglePin
 }: ActivityPanelProps) {
-  const activityData = uiViewModel.activity;
+  const activityData = useUiViewModel().activity;
+  const { snapshot, updateSnapshot } = useGameSession();
   const [activeSection, setActiveSection] = useState('employment');
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({
     employment: activityData.lists.employment?.[0]?.id ?? '',
@@ -33,6 +44,7 @@ export function ActivityPanel({
     naval: activityData.lists.naval?.[0]?.id ?? '',
     operations: activityData.lists.operations?.[0]?.id ?? ''
   });
+  const [panelNotice, setPanelNotice] = useState<GameShellNotice | null>(null);
 
   const listItems = activityData.lists[activeSection] ?? [];
   const filteredItems = listItems.filter((item) =>
@@ -40,6 +52,7 @@ export function ActivityPanel({
   );
   const selectedItem =
     filteredItems.find((item) => item.id === selectedIds[activeSection]) ?? filteredItems[0];
+  const currentLocationLabel = getCurrentLocationLabel(snapshot);
   const windowDetail = activityData.windowDetails[activeSection];
   const primaryDetail = selectedItem
     ? {
@@ -73,6 +86,59 @@ export function ActivityPanel({
                   <div className="mt-2 text-sm text-slate-400">{metric.detail}</div>
                 </div>
               ))}
+            </div>
+          </Card>
+          {panelNotice && <PanelNotice notice={panelNotice} />}
+          <Card title="Active Shift Controls" accent={accent}>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="space-y-2 text-sm text-slate-300">
+                <div>
+                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Current Activity</span>
+                  <div className="mt-1 text-base text-slate-50">
+                    {snapshot.sessionState.currentActivity?.label ?? 'No active process'}
+                  </div>
+                </div>
+                <div>
+                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Current Location</span>
+                  <div className="mt-1 text-base text-slate-50">{currentLocationLabel}</div>
+                </div>
+                <div className="text-slate-400">
+                  {selectedItem?.detailSummary ?? 'Select a job, contract, or operation to set focus before advancing time.'}
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <GameActionButton
+                  label="Set Current Activity"
+                  onClick={() => {
+                    if (!selectedItem) {
+                      return;
+                    }
+
+                    const result = setCurrentActivityFromRecord(snapshot, selectedItem.id);
+                    updateSnapshot(result.snapshot);
+                    setPanelNotice(result.notice);
+                  }}
+                  disabled={!selectedItem}
+                />
+                <GameActionButton
+                  label="Advance Shift"
+                  tone="accent"
+                  onClick={() => {
+                    const result = advanceCurrentActivity(snapshot);
+                    updateSnapshot(result.snapshot);
+                    setPanelNotice(result.notice);
+                  }}
+                />
+                <GameActionButton
+                  label="Rest"
+                  tone="warning"
+                  onClick={() => {
+                    const result = restAtCurrentSettlement(snapshot);
+                    updateSnapshot(result.snapshot);
+                    setPanelNotice(result.notice);
+                  }}
+                />
+              </div>
             </div>
           </Card>
           <SelectionList

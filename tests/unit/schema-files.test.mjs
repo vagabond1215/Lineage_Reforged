@@ -18,6 +18,7 @@ const schemaFiles = [
   "packages/schemas/world/world-map-feature.schema.json",
   "packages/schemas/civilization/workplace.schema.json",
   "packages/schemas/civilization/infrastructure.schema.json",
+  "packages/schemas/civilization/market-item-value.schema.json",
   "packages/schemas/civilization/guild.schema.json",
   "packages/schemas/civilization/quest-archetype.schema.json",
   "packages/schemas/civilization/quest-definition.schema.json",

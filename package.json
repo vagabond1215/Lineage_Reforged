@@ -8,6 +8,7 @@
     "tool:db-build": "node ./tools/db-build/index.mjs",
     "tool:scenario": "node ./tools/scenario-runner/index.mjs",
     "ui:dev": "npm --prefix ./apps/rpg-ui run dev",
+    "ui:dev:host": "npm --prefix ./apps/rpg-ui run dev -- --host 127.0.0.1 --port 5173",
     "ui:build": "npm --prefix ./apps/rpg-ui run build",
     "ui:preview": "npm --prefix ./apps/rpg-ui run preview",
     "typecheck": "tsc --noEmit -p tsconfig.json",

@@ -54,9 +54,20 @@ Example design intent already captured in content:
 
 Run the local browser app to inspect content databases and reports:
 
+- Double-click `Open Content Browser.cmd`
 - Double-click `run-content-browser.cmd`
 - or run:
   - `powershell -NoProfile -ExecutionPolicy Bypass -STA -File .\scripts\content_story_browser.ps1`
+
+## Player Launchers
+
+Use the root launchers for the current playable UI flow:
+
+- Double-click `Play Cataclysm.cmd` to start the RPG UI from the project root and open it in the browser
+- Double-click `Launch Game + Browser.cmd` to open the player UI and the content browser together
+- Double-click `Open Content Browser.cmd` to open the world/content browser directly
+
+Launcher logs are written under `logs/`.
 
 The browser shows:
 

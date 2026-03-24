@@ -34,7 +34,8 @@ This project is best served by a hybrid ownership model:
 
 - species-level output logic (for example dairy, eggs, wool, hides, slaughter yields) should live in fauna records
 - plant-level harvest and regrowth logic should live in flora records
-- processed goods, intermediates, and byproducts should be referenced as economy item keys and valued in market item values
+- canonical object identity should live in `packages/content/base/items/items.json`, including multi-role commodities that can act as materials, ingredients, reagents, consumables, or trade goods
+- processed goods, intermediates, and byproducts should be referenced as canonical item keys and valued in `market_item_values.json`
 - avoid separate micro-databases per byproduct family; use one canonical economy item-key space
 
 ## Propagules

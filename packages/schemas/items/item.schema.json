@@ -31,6 +31,7 @@
                                          "enum":  [
                                                       "vehicle",
                                                       "consumable",
+                                                      "commodity",
                                                       "clothing",
                                                       "tool",
                                                       "armor",
@@ -56,6 +57,60 @@
                                      },
                        "marketable":  {
                                           "type":  "boolean"
+                                      },
+                       "roles":  {
+                                     "type":  "array",
+                                     "items":  {
+                                                   "type":  "string",
+                                                   "enum":  [
+                                                                "consumable",
+                                                                "ingredient",
+                                                                "material",
+                                                                "reagent",
+                                                                "trade_good",
+                                                                "fuel"
+                                                            ]
+                                               },
+                                     "uniqueItems":  true
+                                 },
+                       "tags":  {
+                                    "type":  "array",
+                                    "items":  {
+                                                  "type":  "string",
+                                                  "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                              },
+                                    "uniqueItems":  true
+                                },
+                       "processingGroups":  {
+                                               "type":  "array",
+                                               "items":  {
+                                                             "type":  "string",
+                                                             "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                                                         },
+                                               "uniqueItems":  true
+                                           },
+                       "stage":  {
+                                     "type":  "string",
+                                     "enum":  [
+                                                  "raw",
+                                                  "refined",
+                                                  "processed",
+                                                  "finished"
+                                              ]
+                                 },
+                       "aliasKeys":  {
+                                         "type":  "array",
+                                         "items":  {
+                                                       "type":  "string",
+                                                       "minLength":  1
+                                                   },
+                                         "uniqueItems":  true
+                                     },
+                       "consumableProfileId":  {
+                                                   "type":  "string"
+                                               },
+                       "spoilageProfileId":  {
+                                                "type":  "string"
                                       }
                    }
 }

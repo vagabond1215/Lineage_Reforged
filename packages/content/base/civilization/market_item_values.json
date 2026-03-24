@@ -14699,6 +14699,146 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.wood",
+                        "itemKey":  "wood",
+                        "source":  "economy.generic",
+                        "category":  "raw_material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.sap",
+                        "itemKey":  "sap",
+                        "source":  "economy.generic",
+                        "category":  "ingredient",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.herb_bundle",
+                        "itemKey":  "herb_bundle",
+                        "source":  "economy.generic",
+                        "category":  "ingredient",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.compost",
+                        "itemKey":  "compost",
+                        "source":  "economy.generic",
+                        "category":  "material",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fungal_cap",
+                        "itemKey":  "fungal_cap",
+                        "source":  "economy.generic",
+                        "category":  "ingredient",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fungal_extract",
+                        "itemKey":  "fungal_extract",
+                        "source":  "economy.generic",
+                        "category":  "ingredient",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.pollen",
+                        "itemKey":  "pollen",
+                        "source":  "economy.generic",
+                        "category":  "ingredient",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.chaff",
+                        "itemKey":  "chaff",
+                        "source":  "economy.generic",
+                        "category":  "raw_material",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.fiber",
+                        "itemKey":  "fiber",
+                        "source":  "economy.generic",
+                        "category":  "material",
+                        "baseValue":  4,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mulch",
+                        "itemKey":  "mulch",
+                        "source":  "economy.generic",
+                        "category":  "material",
+                        "baseValue":  1,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.mycelium",
+                        "itemKey":  "mycelium",
+                        "source":  "economy.generic",
+                        "category":  "ingredient",
+                        "baseValue":  3,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.spore_dust",
+                        "itemKey":  "spore_dust",
+                        "source":  "economy.generic",
+                        "category":  "ingredient",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.straw",
+                        "itemKey":  "straw",
+                        "source":  "economy.generic",
+                        "category":  "raw_material",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
+                    },
+                    {
+                        "id":  "market.item.twig_bundle",
+                        "itemKey":  "twig_bundle",
+                        "source":  "economy.generic",
+                        "category":  "raw_material",
+                        "baseValue":  2,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true
                     }
                 ]
 }
