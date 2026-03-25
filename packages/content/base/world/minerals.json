@@ -1,8 +1,9 @@
-{
+﻿{
     "records":  [
                     {
                         "id":  "mineral.iron_ore",
                         "slug":  "iron_ore",
+                        "itemKey":  "iron_ore",
                         "name":  "Iron Ore",
                         "aliases":  [
 
@@ -22,6 +23,7 @@
                     {
                         "id":  "mineral.copper_ore",
                         "slug":  "copper_ore",
+                        "itemKey":  "copper_ore",
                         "name":  "Copper Ore",
                         "aliases":  [
 
@@ -41,6 +43,7 @@
                     {
                         "id":  "mineral.coal",
                         "slug":  "coal",
+                        "itemKey":  "coal",
                         "name":  "Coal",
                         "aliases":  [
 
@@ -60,6 +63,7 @@
                     {
                         "id":  "mineral.quartz",
                         "slug":  "quartz",
+                        "itemKey":  "quartz",
                         "name":  "Quartz",
                         "aliases":  [
                                         "Quartz Crystal"
@@ -78,6 +82,7 @@
                     {
                         "id":  "mineral.salt",
                         "slug":  "salt",
+                        "itemKey":  "salt",
                         "name":  "Salt",
                         "aliases":  [
 
@@ -97,6 +102,7 @@
                     {
                         "id":  "mineral.tin_ore",
                         "slug":  "tin_ore",
+                        "itemKey":  "tin_ore",
                         "name":  "Tin Ore",
                         "aliases":  [
 
@@ -116,6 +122,7 @@
                     {
                         "id":  "mineral.lead_ore",
                         "slug":  "lead_ore",
+                        "itemKey":  "lead_ore",
                         "name":  "Lead Ore",
                         "aliases":  [
 
@@ -135,6 +142,7 @@
                     {
                         "id":  "mineral.limestone",
                         "slug":  "limestone",
+                        "itemKey":  "limestone",
                         "name":  "Limestone",
                         "aliases":  [
 
@@ -154,6 +162,7 @@
                     {
                         "id":  "mineral.gypsum",
                         "slug":  "gypsum",
+                        "itemKey":  "gypsum",
                         "name":  "Gypsum",
                         "aliases":  [
 
@@ -173,6 +182,7 @@
                     {
                         "id":  "mineral.sulfur",
                         "slug":  "sulfur",
+                        "itemKey":  "sulfur",
                         "name":  "Sulfur",
                         "aliases":  [
                                         "Brimstone"
@@ -191,6 +201,7 @@
                     {
                         "id":  "mineral.silver_ore",
                         "slug":  "silver_ore",
+                        "itemKey":  "silver_ore",
                         "name":  "Silver Ore",
                         "aliases":  [
 
@@ -210,6 +221,7 @@
                     {
                         "id":  "mineral.gold_ore",
                         "slug":  "gold_ore",
+                        "itemKey":  "gold_ore",
                         "name":  "Gold Ore",
                         "aliases":  [
 
@@ -229,6 +241,7 @@
                     {
                         "id":  "mineral.obsidian",
                         "slug":  "obsidian",
+                        "itemKey":  "obsidian",
                         "name":  "Obsidian",
                         "aliases":  [
 
@@ -247,6 +260,7 @@
                     {
                         "id":  "mineral.granite",
                         "slug":  "granite",
+                        "itemKey":  "granite",
                         "name":  "Granite",
                         "aliases":  [
 
@@ -266,6 +280,7 @@
                     {
                         "id":  "mineral.mithrite_ore",
                         "slug":  "mithrite_ore",
+                        "itemKey":  "mithrite_ore",
                         "name":  "Mithrite Ore",
                         "aliases":  [
                                         "Starmetal Ore"
@@ -285,6 +300,7 @@
                     {
                         "id":  "mineral.clay",
                         "slug":  "clay",
+                        "itemKey":  "clay",
                         "name":  "Clay",
                         "aliases":  [
 
@@ -304,6 +320,7 @@
                     {
                         "id":  "mineral.river_sand",
                         "slug":  "river_sand",
+                        "itemKey":  "river_sand",
                         "name":  "River Sand",
                         "aliases":  [
                                         "Fine Sand"
@@ -323,6 +340,7 @@
                     {
                         "id":  "mineral.slate",
                         "slug":  "slate",
+                        "itemKey":  "slate",
                         "name":  "Slate",
                         "aliases":  [
 
@@ -342,6 +360,7 @@
                     {
                         "id":  "mineral.marble",
                         "slug":  "marble",
+                        "itemKey":  "marble",
                         "name":  "Marble",
                         "aliases":  [
 
@@ -361,6 +380,7 @@
                     {
                         "id":  "mineral.chalk",
                         "slug":  "chalk",
+                        "itemKey":  "chalk",
                         "name":  "Chalk",
                         "aliases":  [
 
@@ -380,6 +400,7 @@
                     {
                         "id":  "mineral.bauxite",
                         "slug":  "bauxite",
+                        "itemKey":  "bauxite",
                         "name":  "Bauxite",
                         "aliases":  [
 
@@ -399,6 +420,7 @@
                     {
                         "id":  "mineral.nickel_ore",
                         "slug":  "nickel_ore",
+                        "itemKey":  "nickel_ore",
                         "name":  "Nickel Ore",
                         "aliases":  [
 
@@ -418,6 +440,7 @@
                     {
                         "id":  "mineral.zinc_ore",
                         "slug":  "zinc_ore",
+                        "itemKey":  "zinc_ore",
                         "name":  "Zinc Ore",
                         "aliases":  [
 
@@ -437,6 +460,7 @@
                     {
                         "id":  "mineral.cobalt_ore",
                         "slug":  "cobalt_ore",
+                        "itemKey":  "cobalt_ore",
                         "name":  "Cobalt Ore",
                         "aliases":  [
 
@@ -456,6 +480,7 @@
                     {
                         "id":  "mineral.pyrite",
                         "slug":  "pyrite",
+                        "itemKey":  "pyrite",
                         "name":  "Pyrite",
                         "aliases":  [
                                         "Fool Gold"
@@ -475,6 +500,7 @@
                     {
                         "id":  "mineral.fluorite",
                         "slug":  "fluorite",
+                        "itemKey":  "fluorite",
                         "name":  "Fluorite",
                         "aliases":  [
 
@@ -493,6 +519,7 @@
                     {
                         "id":  "mineral.amethyst",
                         "slug":  "amethyst",
+                        "itemKey":  "amethyst",
                         "name":  "Amethyst",
                         "aliases":  [
 
@@ -511,6 +538,7 @@
                     {
                         "id":  "mineral.garnet",
                         "slug":  "garnet",
+                        "itemKey":  "garnet",
                         "name":  "Garnet",
                         "aliases":  [
 
@@ -529,6 +557,7 @@
                     {
                         "id":  "mineral.malachite",
                         "slug":  "malachite",
+                        "itemKey":  "malachite",
                         "name":  "Malachite",
                         "aliases":  [
 
@@ -547,6 +576,7 @@
                     {
                         "id":  "mineral.orichalcum_ore",
                         "slug":  "orichalcum_ore",
+                        "itemKey":  "orichalcum_ore",
                         "name":  "Orichalcum Ore",
                         "aliases":  [
 
@@ -566,6 +596,7 @@
                     {
                         "id":  "mineral.aetherite_ore",
                         "slug":  "aetherite_ore",
+                        "itemKey":  "aetherite_ore",
                         "name":  "Aetherite Ore",
                         "aliases":  [
                                         "Sky Ore"
@@ -584,6 +615,7 @@
                     {
                         "id":  "mineral.moon_silver_ore",
                         "slug":  "moon_silver_ore",
+                        "itemKey":  "moon_silver_ore",
                         "name":  "Moon Silver Ore",
                         "aliases":  [
 
@@ -603,6 +635,7 @@
                     {
                         "id":  "mineral.sunstone",
                         "slug":  "sunstone",
+                        "itemKey":  "sunstone",
                         "name":  "Sunstone",
                         "aliases":  [
 
@@ -621,6 +654,7 @@
                     {
                         "id":  "mineral.stormglass",
                         "slug":  "stormglass",
+                        "itemKey":  "stormglass",
                         "name":  "Stormglass",
                         "aliases":  [
                                         "Tempest Glass"
@@ -639,6 +673,7 @@
                     {
                         "id":  "mineral.void_crystal",
                         "slug":  "void_crystal",
+                        "itemKey":  "void_crystal",
                         "name":  "Void Crystal",
                         "aliases":  [
                                         "Night Crystal"
@@ -657,6 +692,7 @@
                     {
                         "id":  "mineral.drakeshard",
                         "slug":  "drakeshard",
+                        "itemKey":  "drakeshard",
                         "name":  "Drakeshard",
                         "aliases":  [
                                         "Dragon Shard"
@@ -675,6 +711,7 @@
                     {
                         "id":  "mineral.star_iron",
                         "slug":  "star_iron",
+                        "itemKey":  "star_iron",
                         "name":  "Star Iron",
                         "aliases":  [
                                         "Sky Iron"
@@ -694,6 +731,7 @@
                     {
                         "id":  "mineral.deep_amber",
                         "slug":  "deep_amber",
+                        "itemKey":  "deep_amber",
                         "name":  "Deep Amber",
                         "aliases":  [
 
@@ -712,6 +750,7 @@
                     {
                         "id":  "mineral.ember_quartz",
                         "slug":  "ember_quartz",
+                        "itemKey":  "ember_quartz",
                         "name":  "Ember Quartz",
                         "aliases":  [
                                         "Fire Quartz"
@@ -730,6 +769,7 @@
                     {
                         "id":  "mineral.feldspar",
                         "slug":  "feldspar",
+                        "itemKey":  "feldspar",
                         "name":  "Feldspar",
                         "aliases":  [
 
@@ -749,6 +789,7 @@
                     {
                         "id":  "mineral.sandstone",
                         "slug":  "sandstone",
+                        "itemKey":  "sandstone",
                         "name":  "Sandstone",
                         "aliases":  [
 
@@ -768,6 +809,7 @@
                     {
                         "id":  "mineral.magnetite",
                         "slug":  "magnetite",
+                        "itemKey":  "magnetite",
                         "name":  "Magnetite",
                         "aliases":  [
 
@@ -787,6 +829,7 @@
                     {
                         "id":  "mineral.kaolin",
                         "slug":  "kaolin",
+                        "itemKey":  "kaolin",
                         "name":  "Kaolin",
                         "aliases":  [
 
@@ -806,6 +849,7 @@
                     {
                         "id":  "mineral.saltpeter",
                         "slug":  "saltpeter",
+                        "itemKey":  "saltpeter",
                         "name":  "Saltpeter",
                         "aliases":  [
 
@@ -824,6 +868,7 @@
                     {
                         "id":  "mineral.bitumen",
                         "slug":  "bitumen",
+                        "itemKey":  "bitumen",
                         "name":  "Bitumen",
                         "aliases":  [
 
@@ -843,6 +888,7 @@
                     {
                         "id":  "mineral.dusk_opal",
                         "slug":  "dusk_opal",
+                        "itemKey":  "dusk_opal",
                         "name":  "Dusk Opal",
                         "aliases":  [
 
@@ -861,6 +907,7 @@
                     {
                         "id":  "mineral.aether_shale",
                         "slug":  "aether_shale",
+                        "itemKey":  "aether_shale",
                         "name":  "Aether Shale",
                         "aliases":  [
 

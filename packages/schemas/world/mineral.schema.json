@@ -2,10 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MineralRecord",
   "type": "object",
-  "required": ["id", "slug", "name", "tier", "depositForms", "extractionTypes"],
+  "required": ["id", "slug", "itemKey", "name", "tier", "depositForms", "extractionTypes"],
   "properties": {
     "id": { "type": "string" },
     "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "itemKey": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
     },

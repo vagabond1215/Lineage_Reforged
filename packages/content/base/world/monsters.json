@@ -22,19 +22,29 @@
                         "drops":  [
                                       {
                                           "itemKey":  "kobold_scrap",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "kobold_bauble",
-                                         "chance":  0.35
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "charcoal",
-                                         "chance":  0.25
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -60,23 +70,35 @@
                         "drops":  [
                                       {
                                           "itemKey":  "kobold_scrap",
-                                          "quantityMin":  1,
-                                          "quantityMax":  3,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "kobold_bauble",
-                                         "chance":  0.5
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "charcoal",
-                                         "chance":  0.45
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "copper_ore",
-                                         "chance":  0.2
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -102,15 +124,23 @@
                         "drops":  [
                                       {
                                           "itemKey":  "kobold_scrap",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "kobold_bauble",
-                                         "chance":  0.3
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -136,15 +166,27 @@
                         "drops":  [
                                       {
                                           "itemKey":  "slime_jelly",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  1.0
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "acid_gland",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.45
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -173,15 +215,27 @@
                         "drops":  [
                                       {
                                           "itemKey":  "slime_jelly",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  1.0
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "acid_gland",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.55
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -210,15 +264,27 @@
                         "drops":  [
                                       {
                                           "itemKey":  "slime_jelly",
-                                          "quantityMin":  1,
-                                          "quantityMax":  3,
-                                          "chance":  1.0
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "ember_core",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.35
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -247,27 +313,51 @@
                         "drops":  [
                                       {
                                           "itemKey":  "boar_meat",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "boar_hide",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "boar_tusk",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.85
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "boar_bone",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.8
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -296,33 +386,63 @@
                         "drops":  [
                                       {
                                           "itemKey":  "ember_boar_meat",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "ember_boar_hide",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.85
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "ember_boar_tusk",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "ember_boar_bone",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.8
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "ember_core",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.2
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -351,21 +471,35 @@
                         "drops":  [
                                       {
                                           "itemKey":  "troll_hide",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.85
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "troll_tooth",
-                                          "quantityMin":  1,
-                                          "quantityMax":  3,
-                                          "chance":  0.8
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "ancient_coin_cache",
-                                         "chance":  0.25
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -391,21 +525,39 @@
                         "drops":  [
                                       {
                                           "itemKey":  "cave_silk",
-                                          "quantityMin":  2,
-                                          "quantityMax":  5,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "venom_sac",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.8
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "chitin_plate",
-                                          "quantityMin":  1,
-                                          "quantityMax":  3,
-                                          "chance":  0.75
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -434,25 +586,41 @@
                         "drops":  [
                                       {
                                           "itemKey":  "harpy_feather",
-                                          "quantityMin":  2,
-                                          "quantityMax":  5,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "talon_bundle",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.75
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "ancient_coin_cache",
-                                         "chance":  0.2
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "kobold_bauble",
-                                         "chance":  0.15
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -478,9 +646,15 @@
                         "drops":  [
                                       {
                                           "itemKey":  "river_core",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -509,9 +683,15 @@
                         "drops":  [
                                       {
                                           "itemKey":  "ember_core",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -540,9 +720,15 @@
                         "drops":  [
                                       {
                                           "itemKey":  "stone_core",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -571,9 +757,15 @@
                         "drops":  [
                                       {
                                           "itemKey":  "storm_core",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.85
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -602,15 +794,23 @@
                         "drops":  [
                                       {
                                           "itemKey":  "grave_dust",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "ancient_coin_cache",
-                                         "chance":  0.25
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -636,15 +836,23 @@
                         "drops":  [
                                       {
                                           "itemKey":  "grave_dust",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "ancient_coin_cache",
-                                         "chance":  0.6
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -670,19 +878,29 @@
                         "drops":  [
                                       {
                                           "itemKey":  "kobold_scrap",
-                                          "quantityMin":  1,
-                                          "quantityMax":  3,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "kobold_bauble",
-                                         "chance":  0.4
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "charcoal",
-                                         "chance":  0.3
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -708,25 +926,41 @@
                         "drops":  [
                                       {
                                           "itemKey":  "kobold_scrap",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "venom_sac",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.35
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "kobold_bauble",
-                                         "chance":  0.5
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "copper_ore",
-                                         "chance":  0.15
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -752,25 +986,41 @@
                         "drops":  [
                                       {
                                           "itemKey":  "rat_meat",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "rat_tail",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "grain",
-                                         "chance":  0.35
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "bread_loaf",
-                                         "chance":  0.15
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -796,25 +1046,41 @@
                         "drops":  [
                                       {
                                           "itemKey":  "rat_meat",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "rat_tail",
-                                          "quantityMin":  2,
-                                          "quantityMax":  5,
-                                          "chance":  1.0
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "grain",
-                                         "chance":  0.45
+                                         "chance":  {
+
+                                                    }
                                      },
                                      {
                                          "itemKey":  "bread_loaf",
-                                         "chance":  0.25
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -840,15 +1106,27 @@
                         "drops":  [
                                       {
                                           "itemKey":  "tick_meat",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.75
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "tick_chitin",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -877,21 +1155,39 @@
                         "drops":  [
                                       {
                                           "itemKey":  "centipede_meat",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.8
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "centipede_venom",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.85
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "centipede_chitin",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -920,21 +1216,39 @@
                         "drops":  [
                                       {
                                           "itemKey":  "scorpion_meat",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.7
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "scorpion_venom",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.85
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "scorpion_chitin",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -963,15 +1277,27 @@
                         "drops":  [
                                       {
                                           "itemKey":  "slime_jelly",
-                                          "quantityMin":  2,
-                                          "quantityMax":  3,
-                                          "chance":  1.0
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "acid_gland",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.55
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -1000,15 +1326,27 @@
                         "drops":  [
                                       {
                                           "itemKey":  "slime_jelly",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  1.0
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "frost_gland",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.4
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -1037,21 +1375,39 @@
                         "drops":  [
                                       {
                                           "itemKey":  "wolf_meat",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "wolf_fur",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "wolf_bone",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.85
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -1080,21 +1436,39 @@
                         "drops":  [
                                       {
                                           "itemKey":  "deep_wolf_meat",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "deep_wolf_fur",
-                                          "quantityMin":  1,
-                                          "quantityMax":  2,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       },
                                       {
                                           "itemKey":  "deep_wolf_bone",
-                                          "quantityMin":  2,
-                                          "quantityMax":  4,
-                                          "chance":  0.8
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
@@ -1123,15 +1497,23 @@
                         "drops":  [
                                       {
                                           "itemKey":  "grave_dust",
-                                          "quantityMin":  1,
-                                          "quantityMax":  3,
-                                          "chance":  0.95
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [
                                      {
                                          "itemKey":  "ancient_coin_cache",
-                                         "chance":  0.3
+                                         "chance":  {
+
+                                                    }
                                      }
                                  ]
                     },
@@ -1157,9 +1539,15 @@
                         "drops":  [
                                       {
                                           "itemKey":  "mud_core",
-                                          "quantityMin":  1,
-                                          "quantityMax":  1,
-                                          "chance":  0.9
+                                          "quantityMin":  {
+
+                                                          },
+                                          "quantityMax":  {
+
+                                                          },
+                                          "chance":  {
+
+                                                     }
                                       }
                                   ],
                         "loot":  [

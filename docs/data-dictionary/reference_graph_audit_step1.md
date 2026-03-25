@@ -1,0 +1,1610 @@
+﻿# Reference Graph Audit Step 1
+
+Generated: 2026-03-24T21:56:23.2659943-04:00
+
+## 1. TOTAL REFERENCE COUNTS
+- Total references scanned: 5731
+- world: 1450 refs, 652 unique
+- workplace: 1531 refs, 466 unique
+- chain: 1266 refs, 390 unique
+- market: 1484 refs, 1484 unique
+- Unique refs by classification: CANONICAL ITEM=531; DUPLICATE / COLLISION=199; MALFORMED REFERENCE=8; MISUSED ABSTRACTION=15; REQUIRED CANONICAL ITEM (MISSING)=949
+
+## 2. CANONICAL ITEMS (VALID)
+- acid_vial | occurrences=1 | domains=market | sources=market
+- adze | occurrences=1 | domains=market | sources=market
+- aether_glider | occurrences=1 | domains=market | sources=market
+- agriculture_kit | occurrences=1 | domains=market | sources=market
+- ale_cask | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- alembic | occurrences=1 | domains=market | sources=market
+- american_alligator_butchered_meat | occurrences=16 | domains=chains, market, workplaces | sources=chain, market, workplace
+- american_alligator_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- antidote_phial | occurrences=1 | domains=market | sources=market
+- anvil | occurrences=1 | domains=market | sources=market
+- apple_wine_cask | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- arming_sword | occurrences=1 | domains=market | sources=market
+- armored_chariot | occurrences=1 | domains=market | sources=market
+- arrow_bundle | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- ash | occurrences=20 | domains=chains, market, workplaces | sources=chain, market, workplace
+- awl | occurrences=1 | domains=market | sources=market
+- axe | occurrences=1 | domains=market | sources=market
+- bagasse | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- balanced_javelin | occurrences=1 | domains=market | sources=market
+- bark | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- barley_flour | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- basket | occurrences=1 | domains=market | sources=market
+- basket_frame | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- battle_axe | occurrences=1 | domains=market | sources=market
+- battle_staff | occurrences=1 | domains=market | sources=market
+- bear_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bear_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bedroll_kit | occurrences=1 | domains=market | sources=market
+- beeswax | occurrences=5 | domains=market, workplaces | sources=market, workplace
+- berry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bitter_tincture | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- black_pigment | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- black_sea_bass_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- black_tea | occurrences=19 | domains=chains, market, workplaces | sources=chain, market, workplace
+- black_tea_leaf | occurrences=16 | domains=chains, market, workplaces | sources=chain, market, workplace
+- blackberry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- blacksmith_hammer | occurrences=1 | domains=market | sources=market
+- blank_book | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- blank_scroll | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- blood | occurrences=71 | domains=chains, market, workplaces | sources=chain, market, workplace
+- blow_gun | occurrences=1 | domains=market | sources=market
+- blue_pigment | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- blue_writing_ink | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- blueberry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bluefin_tuna_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- boar_butchered_meat | occurrences=15 | domains=chains, market, workplaces | sources=chain, market, workplace
+- boar_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- boiling_kettle | occurrences=1 | domains=market | sources=market
+- bolt_bundle | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bone_raw | occurrences=20 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bottle_funnel | occurrences=1 | domains=market | sources=market
+- bran | occurrences=11 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bread_loaf | occurrences=15 | domains=chains, market, monsters, workplaces | sources=chain, market, workplace, world
+- bread_peel | occurrences=1 | domains=market | sources=market
+- breast_cut | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- brewing_kettle | occurrences=1 | domains=market | sources=market
+- brick_mold | occurrences=1 | domains=market | sources=market
+- brigandine_plate | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bucket | occurrences=1 | domains=market | sources=market
+- buckler_shield | occurrences=1 | domains=market | sources=market
+- bullfrog_butchered_meat | occurrences=12 | domains=chains, market, workplaces | sources=chain, market, workplace
+- bullfrog_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- butcher_knife | occurrences=1 | domains=market | sources=market
+- butchered_meat | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cacao_husk | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- caltrops | occurrences=1 | domains=market | sources=market
+- candied_peel | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- candle | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- candle_mold | occurrences=1 | domains=market | sources=market
+- cane_sugar | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cask | occurrences=4 | domains=market, workplaces | sources=market, workplace
+- casting_net | occurrences=1 | domains=market | sources=market
+- casual_boots | occurrences=1 | domains=market | sources=market
+- casual_cloak | occurrences=1 | domains=market | sources=market
+- casual_trousers | occurrences=1 | domains=market | sources=market
+- casual_tunic | occurrences=1 | domains=market | sources=market
+- catfish_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cattle | occurrences=1 | domains=market | sources=market
+- cellar_rack | occurrences=1 | domains=market | sources=market
+- ceramic_ware | occurrences=3 | domains=market, workplaces | sources=market, workplace
+- chaff | occurrences=1 | domains=market | sources=market
+- chain_flail | occurrences=1 | domains=market | sources=market
+- chain_whip | occurrences=1 | domains=market | sources=market
+- chakram | occurrences=1 | domains=market | sources=market
+- charcoal | occurrences=15 | domains=chains, market, monsters, workplaces | sources=chain, market, workplace, world
+- cherry_wine_cask | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- chisel | occurrences=1 | domains=market | sources=market
+- cider_cask | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- citrus_marmalade_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- clam_smoked_shellfish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- clay_raw | occurrences=7 | domains=market, workplaces | sources=market, workplace
+- clay_vessel | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cloth | occurrences=1 | domains=market | sources=market
+- cloth_heavy_armor | occurrences=1 | domains=market | sources=market
+- cloth_jerkin | occurrences=1 | domains=market | sources=market
+- cloth_medium_armor | occurrences=1 | domains=market | sources=market
+- cloth_scrap | occurrences=9 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cocoa_butter | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cocoa_mass | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cod_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- coffee_grounds | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- coffee_husk | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- coin_belt | occurrences=1 | domains=market | sources=market
+- compass | occurrences=1 | domains=market | sources=market
+- composite_bow | occurrences=1 | domains=market | sources=market
+- compost | occurrences=1 | domains=market | sources=market
+- cooper_adze | occurrences=1 | domains=market | sources=market
+- copper_ingot | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- copper_ore | occurrences=7 | domains=market, monsters, workplaces | sources=market, workplace, world
+- corn_flour | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- crab_smoked_shellfish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cranberry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- crane_hook | occurrences=1 | domains=market | sources=market
+- crawfish_raw | occurrences=16 | domains=chains, fauna, market, workplaces | sources=chain, market, workplace, world
+- crawfish_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- crook | occurrences=1 | domains=market | sources=market
+- crop_bundle | occurrences=3 | domains=chains, market, workplaces | sources=chain, market, workplace
+- crucible_tongs | occurrences=1 | domains=market | sources=market
+- crusty_sausage_roll | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cullet | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cured_leather | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- cured_meat | occurrences=1 | domains=market | sources=market
+- curing_rack | occurrences=1 | domains=market | sources=market
+- cut_stone | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- deer_butchered_meat | occurrences=15 | domains=chains, market, workplaces | sources=chain, market, workplace
+- deer_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- dirk_dagger | occurrences=1 | domains=market | sources=market
+- dried_herb_bundle | occurrences=9 | domains=chains, market, workplaces | sources=chain, market, workplace
+- dried_meat | occurrences=1 | domains=market | sources=market
+- dried_meat_pack | occurrences=1 | domains=market | sources=market
+- drippings | occurrences=71 | domains=chains, market, workplaces | sources=chain, market, workplace
+- dusk_blowgun | occurrences=1 | domains=market | sources=market
+- dye_residue | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- dye_stirrer | occurrences=1 | domains=market | sources=market
+- dyed_cloth | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- eel_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- elderberry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- elk_butchered_meat | occurrences=16 | domains=chains, market, workplaces | sources=chain, market, workplace
+- elk_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- ember_greataxe | occurrences=1 | domains=market | sources=market
+- executioner_greatsword | occurrences=1 | domains=market | sources=market
+- exotic_whip | occurrences=1 | domains=market | sources=market
+- explosive_charge | occurrences=1 | domains=market | sources=market
+- face_wrap | occurrences=1 | domains=market | sources=market
+- fiber | occurrences=1 | domains=market | sources=market
+- field_bandage | occurrences=1 | domains=market | sources=market
+- field_cart | occurrences=1 | domains=market | sources=market
+- fillet_knife | occurrences=1 | domains=market | sources=market
+- fine_paper | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- finished_cloth | occurrences=1 | domains=market | sources=market
+- fire_flask | occurrences=1 | domains=market | sources=market
+- fire_striker | occurrences=1 | domains=market | sources=market
+- fired_brick | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- firewood | occurrences=8 | domains=market, workplaces | sources=market, workplace
+- fish | occurrences=1 | domains=market | sources=market
+- fish_pie | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- fish_raw | occurrences=6 | domains=market, workplaces | sources=market, workplace
+- fishing_gear | occurrences=1 | domains=market | sources=market
+- flank_cut | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- flash_powder | occurrences=1 | domains=market | sources=market
+- flax_bundle | occurrences=7 | domains=market, workplaces | sources=market, workplace
+- fletching_knife | occurrences=1 | domains=market | sources=market
+- flour | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- flower_bloom | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- focus_draught | occurrences=1 | domains=market | sources=market
+- foraging_knife | occurrences=1 | domains=market | sources=market
+- forequarter_bulk | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- forge_scale | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- forged_tools | occurrences=1 | domains=market | sources=market
+- formal_cloak | occurrences=1 | domains=market | sources=market
+- formal_doublet | occurrences=1 | domains=market | sources=market
+- formal_shoes | occurrences=1 | domains=market | sources=market
+- formal_trousers | occurrences=1 | domains=market | sources=market
+- frost_flask | occurrences=1 | domains=market | sources=market
+- fruit | occurrences=1 | domains=market | sources=market
+- fruit_must | occurrences=22 | domains=chains, market, workplaces | sources=chain, market, workplace
+- fruit_pomace | occurrences=17 | domains=chains, market, workplaces | sources=chain, market, workplace
+- fruit_syrup | occurrences=12 | domains=chains, market, workplaces | sources=chain, market, workplace
+- fuel_bundle | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- fungal_cap | occurrences=1 | domains=market | sources=market
+- fungal_extract | occurrences=1 | domains=market | sources=market
+- fur | occurrences=1 | domains=market | sources=market
+- furnace_poker | occurrences=1 | domains=market | sources=market
+- game_meat_raw | occurrences=4 | domains=market, workplaces | sources=market, workplace
+- game_stew | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- gate_hook | occurrences=1 | domains=market | sources=market
+- gems | occurrences=1 | domains=market | sources=market
+- glass_sheet | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- glass_vial | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- glassblowing_pipe | occurrences=1 | domains=market | sources=market
+- gold_ore | occurrences=1 | domains=market | sources=market
+- gooseberry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- grafting_knife | occurrences=1 | domains=market | sources=market
+- grain | occurrences=3 | domains=market, monsters | sources=market, world
+- grain_bundle | occurrences=6 | domains=market, workplaces | sources=market, workplace
+- grape_pomace | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- grape_wine_cask | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- grapnel_line | occurrences=1 | domains=market | sources=market
+- gravel | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- greatsword | occurrences=1 | domains=market | sources=market
+- green_pigment | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- green_tea | occurrences=15 | domains=chains, market, workplaces | sources=chain, market, workplace
+- green_tea_leaf | occurrences=17 | domains=chains, market, workplaces | sources=chain, market, workplace
+- green_writing_ink | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- grinding_stone | occurrences=1 | domains=market | sources=market
+- gull_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- gull_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hammer | occurrences=1 | domains=market | sources=market
+- hand_axe | occurrences=1 | domains=market | sources=market
+- handcart | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hardtack | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hardwood_plank | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hardwood_timber_beam | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hare_butchered_meat | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hare_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- haunch_cut | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hay | occurrences=1 | domains=market | sources=market
+- healing_tonic | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- heavy_crossbow | occurrences=1 | domains=market | sources=market
+- herb_bundle | occurrences=1 | domains=market | sources=market
+- herb_knife | occurrences=1 | domains=market | sources=market
+- herb_pouch | occurrences=1 | domains=market | sources=market
+- herbal_bath | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- herbal_tea | occurrences=17 | domains=chains, market, workplaces | sources=chain, market, workplace
+- herbal_tea_blend | occurrences=16 | domains=chains, market, workplaces | sources=chain, market, workplace
+- herbs | occurrences=1 | domains=market | sources=market
+- herbs_raw | occurrences=9 | domains=chains, market, workplaces | sources=chain, market, workplace
+- heron_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- heron_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hide_raw | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hides | occurrences=1 | domains=market | sources=market
+- hindquarter_bulk | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hive_tool | occurrences=1 | domains=market | sources=market
+- hoe | occurrences=1 | domains=market | sources=market
+- honeycomb | occurrences=43 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hook | occurrences=1 | domains=market | sources=market
+- hoop_anvil | occurrences=1 | domains=market | sources=market
+- horse_fodder | occurrences=1 | domains=market | sources=market
+- horse_stock | occurrences=1 | domains=market | sources=market
+- household_remedy_kit | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- hunting_net | occurrences=1 | domains=market | sources=market
+- hunting_weapons | occurrences=1 | domains=market | sources=market
+- inn_hearty_meal | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- inn_sausage_board | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- iron_blade | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- iron_ingot | occurrences=12 | domains=chains, market, workplaces | sources=chain, market, workplace
+- iron_ore | occurrences=5 | domains=market, workplaces | sources=market, workplace
+- iron_ring | occurrences=1 | domains=market | sources=market
+- javelin | occurrences=1 | domains=market | sources=market
+- kiln_paddle | occurrences=1 | domains=market | sources=market
+- kiln_shard | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- kindling | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- kitchen_pan_sear | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- kite_shield | occurrences=1 | domains=market | sources=market
+- lamp | occurrences=1 | domains=market | sources=market
+- lanolin | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- leather_greaves | occurrences=1 | domains=market | sources=market
+- leather_heavy_armor | occurrences=1 | domains=market | sources=market
+- leather_light_armor | occurrences=1 | domains=market | sources=market
+- leather_medium_armor | occurrences=1 | domains=market | sources=market
+- ledger | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- licorice_root_tea | occurrences=15 | domains=chains, market, workplaces | sources=chain, market, workplace
+- light_crossbow | occurrences=1 | domains=market | sources=market
+- linen_thread | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- log | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- long_bow | occurrences=1 | domains=market | sources=market
+- mail_coif | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- mallard_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- mallard_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- malting_rake | occurrences=1 | domains=market | sources=market
+- marsh_fiber | occurrences=7 | domains=market, workplaces | sources=market, workplace
+- mash_spent | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- mason_chisel | occurrences=1 | domains=market | sources=market
+- mason_hammer | occurrences=1 | domains=market | sources=market
+- maul | occurrences=1 | domains=market | sources=market
+- measuring_rod | occurrences=1 | domains=market | sources=market
+- meat_trimmings | occurrences=17 | domains=chains, market, workplaces | sources=chain, market, workplace
+- medicinal_root | occurrences=3 | domains=market, workplaces | sources=market, workplace
+- mend_elixir | occurrences=1 | domains=market | sources=market
+- metal_scrap | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- milk_raw | occurrences=3 | domains=market, workplaces | sources=market, workplace
+- mill_rake | occurrences=1 | domains=market | sources=market
+- mineral_brine | occurrences=3 | domains=market, workplaces | sources=market, workplace
+- mint_tea | occurrences=17 | domains=chains, market, workplaces | sources=chain, market, workplace
+- mixing_spoon | occurrences=1 | domains=market | sources=market
+- molasses | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- moonflat_halibut_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- moose_butchered_meat | occurrences=16 | domains=chains, market, workplaces | sources=chain, market, workplace
+- moose_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- mortar_pestle | occurrences=1 | domains=market | sources=market
+- mulch | occurrences=1 | domains=market | sources=market
+- mushroom_cap | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- mussel_smoked_shellfish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- mycelium | occurrences=1 | domains=market | sources=market
+- neck_charm | occurrences=1 | domains=market | sources=market
+- net_needle | occurrences=1 | domains=market | sources=market
+- netting | occurrences=1 | domains=market | sources=market
+- northern_bobwhite_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- northern_bobwhite_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- oat_flour | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- octopus_smoked_shellfish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- offcut_lumber | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- oil_flask | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- oven_peel | occurrences=1 | domains=market | sources=market
+- oyster_smoked_shellfish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- pack_harness | occurrences=1 | domains=market | sources=market
+- pack_wagon | occurrences=1 | domains=market | sources=market
+- padded_gambeson | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- paper_sheet | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- parchment_sheet | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- patrol_skiff | occurrences=1 | domains=market | sources=market
+- pear_wine_cask | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- pearl_earring | occurrences=1 | domains=market | sources=market
+- peat_block | occurrences=11 | domains=market, workplaces | sources=market, workplace
+- peat_spade | occurrences=1 | domains=market | sources=market
+- perch_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- pickaxe | occurrences=1 | domains=market | sources=market
+- pig_iron | occurrences=5 | domains=market, workplaces | sources=market, workplace
+- pigment_paste | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- pike_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- pitch_ladle | occurrences=1 | domains=market | sources=market
+- pitch_seal | occurrences=18 | domains=chains, market, workplaces | sources=chain, market, workplace
+- plank | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- plate_cuirass | occurrences=1 | domains=market | sources=market
+- plate_greaves | occurrences=1 | domains=market | sources=market
+- plate_helm | occurrences=1 | domains=market | sources=market
+- plum_wine_cask | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- plumb_line | occurrences=1 | domains=market | sources=market
+- poison_vial | occurrences=1 | domains=market | sources=market
+- pollen | occurrences=1 | domains=market | sources=market
+- pottery_wheel | occurrences=1 | domains=market | sources=market
+- preserving_kettle | occurrences=1 | domains=market | sources=market
+- press_screw_key | occurrences=1 | domains=market | sources=market
+- production_toolset | occurrences=1 | domains=market | sources=market
+- pruning_knife | occurrences=1 | domains=market | sources=market
+- pruning_saw | occurrences=1 | domains=market | sources=market
+- pruning_shears | occurrences=1 | domains=market | sources=market
+- public_bath | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- purple_pigment | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- purple_writing_ink | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- quarry_hammer | occurrences=1 | domains=market | sources=market
+- quarterstaff | occurrences=1 | domains=market | sources=market
+- quicklime | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- quill_bundle | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- rabbit_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- rabbit_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- raccoon_butchered_meat | occurrences=15 | domains=chains, market, workplaces | sources=chain, market, workplace
+- raccoon_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- rake | occurrences=1 | domains=market | sources=market
+- raspberry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- ration_bundle | occurrences=1 | domains=market | sources=market
+- record_book | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- record_scroll | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- red_pigment | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- red_writing_ink | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- reed_mat | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- reference_book | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- rendering_pot | occurrences=1 | domains=market | sources=market
+- repair_hammer | occurrences=1 | domains=market | sources=market
+- resin | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- restorative_poultice | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- retting_rake | occurrences=1 | domains=market | sources=market
+- rib_cut | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- rice_flour | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- ring_mail_hauberk | occurrences=1 | domains=market | sources=market
+- ring_necked_pheasant_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- ring_necked_pheasant_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- ritual_necklace | occurrences=1 | domains=market | sources=market
+- river_barge | occurrences=1 | domains=market | sources=market
+- river_reed | occurrences=30 | domains=chains, market, workplaces | sources=chain, market, workplace
+- river_skiff | occurrences=1 | domains=market | sources=market
+- roasting_drums | occurrences=1 | domains=market | sources=market
+- rock_pigeon_butchered_meat | occurrences=12 | domains=chains, market, workplaces | sources=chain, market, workplace
+- rock_pigeon_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- roof_tile | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- rope_hook_kit | occurrences=1 | domains=market | sources=market
+- route_charts | occurrences=1 | domains=market | sources=market
+- rye_flour | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- salmon_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- salt_crystal | occurrences=18 | domains=chains, market, workplaces | sources=chain, market, workplace
+- salted_fish | occurrences=1 | domains=market | sources=market
+- sap | occurrences=1 | domains=market | sources=market
+- sausage_bundle | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- sausage_coil | occurrences=16 | domains=chains, market, workplaces | sources=chain, market, workplace
+- sausage_link | occurrences=18 | domains=chains, market, workplaces | sources=chain, market, workplace
+- sausage_roll | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- savory_meat_pie | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- saw | occurrences=1 | domains=market | sources=market
+- sawdust | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- scale_mail_armor | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- scale_vest | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- scraper | occurrences=1 | domains=market | sources=market
+- scythe | occurrences=1 | domains=market | sources=market
+- seafood_stew | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- seal_butchered_meat | occurrences=15 | domains=chains, market, workplaces | sources=chain, market, workplace
+- seal_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- seed_satchel | occurrences=1 | domains=market | sources=market
+- shank_cut | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- shears | occurrences=1 | domains=market | sources=market
+- sheep_milk | occurrences=2 | domains=fauna, market | sources=market, world
+- ship_timber | occurrences=1 | domains=market | sources=market
+- shock_vial | occurrences=1 | domains=market | sources=market
+- short_bow | occurrences=1 | domains=market | sources=market
+- short_sword | occurrences=1 | domains=market | sources=market
+- shovel | occurrences=1 | domains=market | sources=market
+- shuttle | occurrences=1 | domains=market | sources=market
+- sickle | occurrences=1 | domains=market | sources=market
+- siege_wagon | occurrences=1 | domains=market | sources=market
+- signet_ring | occurrences=1 | domains=market | sources=market
+- silt | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- silver_earring | occurrences=1 | domains=market | sources=market
+- skillet_sausage | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- skimmer_ladle | occurrences=1 | domains=market | sources=market
+- skinning_knife | occurrences=1 | domains=market | sources=market
+- sky_skiff | occurrences=1 | domains=market | sources=market
+- slag | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- sled_harness | occurrences=1 | domains=market | sources=market
+- sledge_hammer | occurrences=1 | domains=market | sources=market
+- sling | occurrences=1 | domains=market | sources=market
+- smoke_bomb | occurrences=1 | domains=market | sources=market
+- smoked_fish | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- smoked_meat | occurrences=9 | domains=chains, market, workplaces | sources=chain, market, workplace
+- smoked_sausage_link | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- smoker | occurrences=1 | domains=market | sources=market
+- smoking_rack | occurrences=1 | domains=market | sources=market
+- snail_shell | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- snare_trap | occurrences=1 | domains=market | sources=market
+- softwood_plank | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- softwood_timber_beam | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- spade | occurrences=1 | domains=market | sources=market
+- spent_reagent | occurrences=18 | domains=chains, market, workplaces | sources=chain, market, workplace
+- spindle | occurrences=1 | domains=market | sources=market
+- spore_dust | occurrences=1 | domains=market | sources=market
+- squid_smoked_shellfish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- squirrel_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- squirrel_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- stamina_draught | occurrences=1 | domains=market | sources=market
+- steel_fan | occurrences=1 | domains=market | sources=market
+- steel_tools | occurrences=1 | domains=market | sources=market
+- steel_weapons | occurrences=1 | domains=market | sources=market
+- stiletto_dagger | occurrences=1 | domains=market | sources=market
+- stimulant_draught | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- stone_block | occurrences=5 | domains=market, workplaces | sources=market, workplace
+- stone_blocks | occurrences=1 | domains=market | sources=market
+- stone_rubble | occurrences=5 | domains=market, workplaces | sources=market, workplace
+- stone_tile | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- stormshoal_herring_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- straw | occurrences=1 | domains=market | sources=market
+- straw_bundle | occurrences=9 | domains=chains, market, workplaces | sources=chain, market, workplace
+- strawberry_preserve_jar | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- sturgeon_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- surgical_needle | occurrences=1 | domains=market | sources=market
+- survey_staff | occurrences=1 | domains=market | sources=market
+- surveyor_kit | occurrences=1 | domains=market | sources=market
+- survival_kit | occurrences=1 | domains=market | sources=market
+- sweet_roll | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tailor_needle | occurrences=1 | domains=market | sources=market
+- tallow_scrap | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tanning_scraper | occurrences=1 | domains=market | sources=market
+- tavern_family_roast | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tavern_fish_plate | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tavern_roast_platter | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tavern_sausage_board | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tea | occurrences=1 | domains=market | sources=market
+- tea_ceremony | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tea_service | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- testing_thief | occurrences=1 | domains=market | sources=market
+- thatch_bundle | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- thresher_flail | occurrences=1 | domains=market | sources=market
+- throwing_axe | occurrences=1 | domains=market | sources=market
+- throwing_dart | occurrences=1 | domains=market | sources=market
+- throwing_knife | occurrences=1 | domains=market | sources=market
+- throwing_star | occurrences=1 | domains=market | sources=market
+- timber | occurrences=1 | domains=market | sources=market
+- timber_beam | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- tools | occurrences=1 | domains=market | sources=market
+- tower_shield | occurrences=1 | domains=market | sources=market
+- tracking_lens | occurrences=1 | domains=market | sources=market
+- trail_meal | occurrences=1 | domains=market | sources=market
+- trap_set | occurrences=1 | domains=market | sources=market
+- travel_cloak | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- travel_pouch | occurrences=1 | domains=market | sources=market
+- traveler_ration | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- traveler_remedy_kit | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- trout_smoked_fish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- twig_bundle | occurrences=1 | domains=market | sources=market
+- utility_belt | occurrences=1 | domains=market | sources=market
+- utility_salve | occurrences=1 | domains=market | sources=market
+- valve_key | occurrences=1 | domains=market | sources=market
+- vegetables | occurrences=1 | domains=market | sources=market
+- veil_mask | occurrences=1 | domains=market | sources=market
+- vigor_tonic | occurrences=3 | domains=market, workplaces | sources=market, workplace
+- wagon_frame | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- war_fan | occurrences=1 | domains=market | sources=market
+- war_hammer | occurrences=1 | domains=market | sources=market
+- war_mace | occurrences=1 | domains=market | sources=market
+- war_sling | occurrences=1 | domains=market | sources=market
+- war_spear | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wax_seal | occurrences=22 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wax_stamp | occurrences=1 | domains=market | sources=market
+- weaving_shuttle | occurrences=1 | domains=market | sources=market
+- wedge_set | occurrences=1 | domains=market | sources=market
+- well_winch | occurrences=1 | domains=market | sources=market
+- wheat_flour | occurrences=9 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wheel_jig | occurrences=1 | domains=market | sources=market
+- white_shrimp_smoked_shellfish | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- whole_side_bulk | occurrences=7 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wick_knife | occurrences=1 | domains=market | sources=market
+- wild_turkey_butchered_meat | occurrences=10 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wild_turkey_egg | occurrences=2 | domains=fauna, market | sources=market, world
+- wild_turkey_feather | occurrences=9 | domains=chains, fauna, market, workplaces | sources=chain, market, workplace, world
+- wild_turkey_smoked_meat | occurrences=5 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wind_glider | occurrences=1 | domains=market | sources=market
+- wine_cask | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- winnowing_set | occurrences=1 | domains=market | sources=market
+- winter_cloth | occurrences=1 | domains=market | sources=market
+- wolf_butchered_meat | occurrences=13 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wolf_smoked_meat | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wood | occurrences=1 | domains=market | sources=market
+- wood_plane | occurrences=1 | domains=market | sources=market
+- wood_tar | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wool | occurrences=1 | domains=market | sources=market
+- wool_cloth | occurrences=4 | domains=chains, market, workplaces | sources=chain, market, workplace
+- wool_fleece | occurrences=5 | domains=market, workplaces | sources=market, workplace
+- worked_stone | occurrences=1 | domains=market | sources=market
+- wrench | occurrences=1 | domains=market | sources=market
+- wrist_bracer | occurrences=1 | domains=market | sources=market
+- writing_ink | occurrences=8 | domains=chains, market, workplaces | sources=chain, market, workplace
+- yellow_pigment | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- yellow_writing_ink | occurrences=6 | domains=chains, market, workplaces | sources=chain, market, workplace
+- yoke | occurrences=1 | domains=market | sources=market
+
+## 3. MISSING CANONICAL ITEMS
+### flora
+- None
+
+### fauna
+- carrion_crow_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- cave_swallow_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- chicken_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- crystal_owl_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- domestic_duck_feather | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- ember_hawk_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- goose_feather | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- gull_feather | domainFrequency=2 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- heron_feather | domainFrequency=2 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- ice_penguin_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- marsh_duck_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ostrich_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- owl_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- pelican_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- peregrine_falcon_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- raven_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- roc_feather | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- abalone_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- abalone_shell | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- american_alligator_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- american_alligator_hide | domainFrequency=1 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- ashfox_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ashfox_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ashfox_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- axolotl_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- axolotl_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- badger_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- badger_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- badger_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bald_eagle_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bald_eagle_feather | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- barn_cat_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- barn_cat_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- barn_cat_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bear_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- bear_claw | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- bear_hide | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- bear_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- beaver_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- beaver_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- beaver_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bison_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bison_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bison_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bison_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bison_milk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- black_sea_bass_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- black_sea_bass_scale | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- blind_hare_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- blind_hare_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- blind_hare_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_meat | domainFrequency=1 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_oil | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- boar_bone | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- boar_hide | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- boar_meat | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- boar_tusk | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- bog_toad_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bog_toad_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bog_toad_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bog_toad_skin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- box_turtle_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- box_turtle_shell | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- bullfrog_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- bullfrog_skin | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- carrion_crow_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- carrion_crow_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- carrion_crow_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- catfish_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- catfish_meat | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- catfish_roe | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- catfish_skin | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- cattle_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cattle_hide | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- cattle_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cattle_meat | domainFrequency=1 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- cattle_milk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_bat_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_bat_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_bat_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_cricket_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_cricket_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_serpent_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_serpent_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_serpent_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_serpent_scale | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_swallow_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_swallow_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cave_swallow_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- centipede_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- centipede_venom | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- chicken_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- chicken_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- chicken_meat | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- chipmunk_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- chipmunk_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- clam_meat | domainFrequency=1 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- clam_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- cliff_viper_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cliff_viper_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cliff_viper_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cliff_viper_scale | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- cod_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- cod_liver | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- cod_meat | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- coyote_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- coyote_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crab_meat | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- crab_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- crawfish_shell | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- crystal_owl_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crystal_owl_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crystal_owl_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crystal_ram_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crystal_ram_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crystal_ram_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crystal_ram_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crystal_ram_wool | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- deep_wolf_bone | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- deep_wolf_fur | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- deep_wolf_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- deer_antler | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- deer_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- deer_hide | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- deer_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- dolphin_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- dolphin_oil | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- domestic_duck_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- domestic_duck_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- domestic_duck_meat | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- donkey_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- donkey_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- donkey_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- downy_woodpecker_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- downy_woodpecker_feather | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- dung_beetle_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- dung_beetle_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- eel_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- eel_meat | domainFrequency=1 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- eel_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- eel_skin | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- elk_antler | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- elk_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- elk_hide | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- elk_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- ember_boar_bone | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_boar_hide | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_boar_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_boar_tusk | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_hawk_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ember_hawk_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ember_hawk_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- fox_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- fox_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- fox_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- garter_snake_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- garter_snake_scale | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glass_salamander_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glass_salamander_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glass_salamander_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glass_salamander_skin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glimmer_moth_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glimmer_moth_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glowmire_caecilian_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- glowmire_caecilian_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- goat_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- goat_hide | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- goat_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- goat_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- goat_milk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- goose_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- goose_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- goose_meat | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- great_whale_baleen | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- great_whale_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- great_whale_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- great_whale_oil | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- gull_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- gull_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- gull_meat | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- hare_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- hare_fur | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- hare_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- herding_hound_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- herding_hound_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- herding_hound_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- heron_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- heron_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- heron_meat | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- honey_bee_beeswax | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- honey_bee_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- honey_bee_honeycomb | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- honey_bee_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- horse_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- horse_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- horse_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ice_penguin_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- lynx_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- lynx_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- lynx_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mallard_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- mallard_feather | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- marsh_duck_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_duck_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_duck_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_frog_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_frog_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_frog_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_frog_skin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_goat_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_goat_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_goat_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_goat_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_goat_milk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_turtle_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_turtle_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_turtle_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- marsh_turtle_scale | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- moon_stag_antler | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- moon_stag_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- moon_stag_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- moon_stag_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_skin | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- moose_antler | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- moose_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- moose_hide | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- moose_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- mossback_tortoise_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mossback_tortoise_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mossback_tortoise_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mossback_tortoise_scale | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mountain_lion_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mountain_lion_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mule_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mule_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mule_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- muskrat_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- muskrat_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mussel_meat | domainFrequency=1 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- mussel_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- northern_bobwhite_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- northern_bobwhite_feather | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- opossum_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- opossum_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ostrich_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- otter_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- otter_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- otter_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- owl_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- owl_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- owl_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ox_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ox_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ox_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ox_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ox_milk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- oyster_meat | domainFrequency=1 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- oyster_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- pale_lurker_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- pale_lurker_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- pale_lurker_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- pelican_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- perch_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- perch_meat | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- perch_roe | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- perch_scale | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- peregrine_falcon_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- pike_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- pike_meat | domainFrequency=1 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- pike_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- pike_scale | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- porcupine_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- porcupine_quill | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- rabbit_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- rabbit_fur | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- raccoon_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- raccoon_fur | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- ram_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ram_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ram_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ram_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ram_wool | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- raven_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- raven_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- raven_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- red_stag_antler | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- red_stag_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- red_stag_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- red_stag_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- reef_lobster_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- reef_lobster_shell | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- ring_necked_pheasant_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- ring_necked_pheasant_feather | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- river_newt_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_newt_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_newt_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_newt_skin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_skink_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_skink_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_skink_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_skink_scale | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_snail_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_snail_shell | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- roc_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- rock_pigeon_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- rock_pigeon_feather | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- salmon_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- salmon_meat | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- salmon_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- salmon_scale | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- scallop_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- scallop_shell | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- scorpion_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- scorpion_venom | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- seal_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- seal_hide | domainFrequency=1 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- seal_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- shadow_hound_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- shadow_hound_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- shadow_hound_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- sheep_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- sheep_hide | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- sheep_meat | domainFrequency=1 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- sheep_wool | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- silk_spider_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- silk_spider_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- silk_spider_silk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- skunk_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- skunk_scent_gland | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- squirrel_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- squirrel_fur | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- steppe_antelope_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- steppe_antelope_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- steppe_antelope_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- steppe_antelope_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- stone_mole_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- stone_mole_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- stone_mole_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- storm_ram_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- storm_ram_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- storm_ram_horn | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- storm_ram_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- storm_ram_wool | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_scale | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- sturgeon_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- sturgeon_meat | domainFrequency=1 | totalFrequency=14 | note=referenced in market layer but missing from items.json
+- sturgeon_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- sturgeon_scute | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- swine_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- swine_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- swine_meat | domainFrequency=1 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- swine_tusk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tide_lizard_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tide_lizard_egg | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tide_lizard_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tide_lizard_scale | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tiger_salamander_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tiger_salamander_skin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tree_frog_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tree_frog_skin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- trout_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- trout_meat | domainFrequency=1 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- trout_roe | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- trout_scale | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- walrus_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- walrus_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- walrus_tusk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- wild_turkey_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- wild_turkey_meat | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_bone | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_fur | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_meat | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- wolverine_bone | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- wolverine_fur | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- wolverine_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+
+### minerals
+- mineral.aether_shale | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.aetherite_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.amethyst | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.bauxite | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.bitumen | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.chalk | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.clay | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.coal | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.cobalt_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.deep_amber | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.drakeshard | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.dusk_opal | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.ember_quartz | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.feldspar | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.fluorite | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.garnet | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.granite | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.gypsum | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.kaolin | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.lead_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.limestone | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.magnetite | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.malachite | domainFrequency=1 | totalFrequency=4 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.marble | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.mithrite_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.moon_silver_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.nickel_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.obsidian | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.orichalcum_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.pyrite | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.quartz | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.salt | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.saltpeter | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.sandstone | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.silver_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.slate | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.star_iron | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.stormglass | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.sulfur | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.sunstone | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.tin_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.void_crystal | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+- mineral.zinc_ore | domainFrequency=1 | totalFrequency=2 | note=prefixed source/role identity should resolve to canonical item key
+
+### monsters
+- kobold_bauble | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- ancient_coin_cache | domainFrequency=5 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- kobold_scrap | domainFrequency=5 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- slime_jelly | domainFrequency=5 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- acid_gland | domainFrequency=3 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- ember_core | domainFrequency=3 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- grave_dust | domainFrequency=3 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- rat_meat | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- rat_tail | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- venom_sac | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- boar_bone | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- boar_hide | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- boar_meat | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- boar_tusk | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- cave_silk | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- centipede_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- centipede_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- centipede_venom | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- chitin_plate | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- deep_wolf_bone | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- deep_wolf_fur | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- deep_wolf_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_boar_bone | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_boar_hide | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_boar_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- ember_boar_tusk | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- frost_gland | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- harpy_feather | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- mud_core | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- river_core | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- scorpion_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- scorpion_meat | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- scorpion_venom | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- stone_core | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- storm_core | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- talon_bundle | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tick_chitin | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- tick_meat | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- troll_hide | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- troll_tooth | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- wolf_bone | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_fur | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_meat | domainFrequency=1 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+
+### workplaces
+- licorice_root | domainFrequency=14 | totalFrequency=19 | note=referenced in market layer but missing from items.json
+- mint_leaf | domainFrequency=14 | totalFrequency=19 | note=referenced in market layer but missing from items.json
+- lemon_balm_leaf | domainFrequency=8 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- lemongrass_blade | domainFrequency=8 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- wild_sage_leaf | domainFrequency=8 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- black_hollyhock_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- blue_cornflower_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- chamomile_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- green_hellebore_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- lavender_bloom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- orange_calendula_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- purple_violet_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- red_poppy_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- yellow_daisy_blossom | domainFrequency=6 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- black_sea_bass_meat | domainFrequency=5 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- blueberry_berry | domainFrequency=5 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_meat | domainFrequency=5 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- catfish_meat | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- clam_meat | domainFrequency=5 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- cod_meat | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- crab_meat | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- cranberry_berry | domainFrequency=5 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- eel_meat | domainFrequency=5 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- eel_skin | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- elderberry_berry | domainFrequency=5 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_meat | domainFrequency=5 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_skin | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- mussel_meat | domainFrequency=5 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- octopus_meat | domainFrequency=5 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- oyster_meat | domainFrequency=5 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- perch_meat | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- pike_meat | domainFrequency=5 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- salmon_meat | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- seal_hide | domainFrequency=5 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- squid_meat | domainFrequency=5 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_meat | domainFrequency=5 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- sturgeon_meat | domainFrequency=5 | totalFrequency=14 | note=referenced in market layer but missing from items.json
+- trout_meat | domainFrequency=5 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- white_shrimp_raw | domainFrequency=5 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- american_alligator_hide | domainFrequency=4 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- comfrey_root | domainFrequency=4 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- pink_peony_blossom | domainFrequency=4 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- tea_leaf | domainFrequency=4 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- valerian_root | domainFrequency=4 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- white_daisy_blossom | domainFrequency=4 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- bear_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- bear_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- black_sea_bass_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- blackberry_berry | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_oil | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- boar_meat | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- clam_shell | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- cod_liver | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- crab_shell | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- deer_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- deer_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- elk_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- elk_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- gooseberry_berry | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- gull_feather | domainFrequency=3 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- gull_meat | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- hare_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- heron_feather | domainFrequency=3 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- heron_meat | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- moose_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- moose_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- mussel_shell | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- octopus_ink | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- oyster_shell | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- pike_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- raccoon_fur | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- raccoon_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- raspberry_berry | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- salmon_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- seal_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- squid_ink | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- squirrel_fur | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- squirrel_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- strawberry_berry | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- sturgeon_scute | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- trout_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- white_shrimp_shell | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- wild_turkey_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_meat | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- aloe_gel | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- american_alligator_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- apple_fruit | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- bullfrog_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- cacao_pod | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- carpenter_ant_chitin | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- cattle_hide | domainFrequency=2 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- cattle_meat | domainFrequency=2 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- chicken_meat | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- coffee_cherry | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- crawfish_shell | domainFrequency=2 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- domestic_duck_feather | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- domestic_duck_meat | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- echinacea_bloom | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- flax_seed | domainFrequency=2 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- flora.lavender | domainFrequency=2 | totalFrequency=3 | note=source-record identity is being used where an item identity is required
+- flora.marigold | domainFrequency=2 | totalFrequency=3 | note=source-record identity is being used where an item identity is required
+- flora.rosemary | domainFrequency=2 | totalFrequency=3 | note=source-record identity is being used where an item identity is required
+- flora.sunpetal | domainFrequency=2 | totalFrequency=3 | note=source-record identity is being used where an item identity is required
+- ginger_root | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- goat_hide | domainFrequency=2 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- goat_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- goose_feather | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- goose_meat | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- hibiscus_blossom | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- lemon_fruit | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- mallard_feather | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- mallard_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- mineral.malachite | domainFrequency=2 | totalFrequency=4 | note=prefixed source/role identity should resolve to canonical item key
+- monarch_butterfly_chitin | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- northern_bobwhite_feather | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- northern_bobwhite_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- orange_fruit | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- pear_fruit | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- plum_fruit | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- rabbit_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- ring_necked_pheasant_feather | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- ring_necked_pheasant_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- river_sand | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- rock_pigeon_feather | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- rock_pigeon_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- rose_petal | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- sheep_hide | domainFrequency=2 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- sheep_meat | domainFrequency=2 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- sugarcane_stalk | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- swine_meat | domainFrequency=2 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- turmeric_root | domainFrequency=2 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- bear_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- bear_claw | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- black_sea_bass_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_bone | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- boar_bone | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- boar_hide | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- catfish_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- catfish_skin | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- cherry_fruit | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- cod_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- deer_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- eel_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- eel_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- elk_antler | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- elk_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- grape_cluster | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- gull_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- hare_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- hare_fur | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- heron_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- moose_antler | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- moose_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- perch_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- perch_scale | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- pike_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- pike_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- raccoon_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- salmon_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- salmon_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- seal_bone | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- squirrel_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- sturgeon_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- sturgeon_roe | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- trout_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- wild_turkey_bone | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- wolf_bone | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_fur | domainFrequency=1 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+
+### chains
+- cattle_meat | domainFrequency=8 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- sturgeon_meat | domainFrequency=7 | totalFrequency=14 | note=referenced in market layer but missing from items.json
+- swine_meat | domainFrequency=7 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- black_sea_bass_meat | domainFrequency=6 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_meat | domainFrequency=6 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- eel_meat | domainFrequency=6 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_meat | domainFrequency=6 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- octopus_meat | domainFrequency=6 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- pike_meat | domainFrequency=6 | totalFrequency=13 | note=referenced in market layer but missing from items.json
+- squid_meat | domainFrequency=6 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_meat | domainFrequency=6 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- white_shrimp_raw | domainFrequency=6 | totalFrequency=12 | note=referenced in market layer but missing from items.json
+- american_alligator_hide | domainFrequency=5 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- sheep_meat | domainFrequency=5 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- blackberry_berry | domainFrequency=4 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- licorice_root | domainFrequency=4 | totalFrequency=19 | note=referenced in market layer but missing from items.json
+- mint_leaf | domainFrequency=4 | totalFrequency=19 | note=referenced in market layer but missing from items.json
+- seal_hide | domainFrequency=4 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- american_alligator_bone | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- apple_fruit | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- bear_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- bear_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- black_sea_bass_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- blueberry_berry | domainFrequency=3 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- boar_bone | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- boar_hide | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- bullfrog_bone | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- bullfrog_skin | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- catfish_meat | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- cherry_fruit | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- cod_meat | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- crab_meat | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- deer_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- deer_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- eel_skin | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- elk_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- elk_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- goat_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- grape_cluster | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- gull_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- gull_feather | domainFrequency=3 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- gull_meat | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- hare_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- hare_fur | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- heron_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- heron_feather | domainFrequency=3 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- heron_meat | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- mallard_bone | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- mallard_feather | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_skin | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- moose_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- moose_hide | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- northern_bobwhite_bone | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- northern_bobwhite_feather | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- pear_fruit | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- perch_meat | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- pike_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- plum_fruit | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- rabbit_bone | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- rabbit_fur | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- raccoon_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- raccoon_fur | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- raccoon_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- raspberry_berry | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- ring_necked_pheasant_bone | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- ring_necked_pheasant_feather | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- rock_pigeon_bone | domainFrequency=3 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- rock_pigeon_feather | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- salmon_meat | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- salmon_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- squirrel_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- squirrel_fur | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- squirrel_meat | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- sturgeon_scute | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- trout_meat | domainFrequency=3 | totalFrequency=10 | note=referenced in market layer but missing from items.json
+- trout_scale | domainFrequency=3 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- wild_turkey_bone | domainFrequency=3 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- wolf_bone | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_fur | domainFrequency=3 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- american_alligator_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- bear_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- boar_meat | domainFrequency=2 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- bullfrog_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- chicken_meat | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- clam_meat | domainFrequency=2 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- cranberry_berry | domainFrequency=2 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- deer_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- domestic_duck_meat | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- elderberry_berry | domainFrequency=2 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- elk_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- goose_meat | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- gooseberry_berry | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- hare_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- mallard_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- moose_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- mussel_meat | domainFrequency=2 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- northern_bobwhite_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- oyster_meat | domainFrequency=2 | totalFrequency=9 | note=referenced in market layer but missing from items.json
+- rabbit_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- ring_necked_pheasant_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- rock_pigeon_meat | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- seal_bone | domainFrequency=2 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- seal_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- strawberry_berry | domainFrequency=2 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- tea_leaf | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wild_sage_leaf | domainFrequency=2 | totalFrequency=11 | note=referenced in market layer but missing from items.json
+- wild_turkey_meat | domainFrequency=2 | totalFrequency=7 | note=referenced in market layer but missing from items.json
+- wolf_meat | domainFrequency=2 | totalFrequency=8 | note=referenced in market layer but missing from items.json
+- barley_seed | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- black_sea_bass_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_bone | domainFrequency=1 | totalFrequency=3 | note=referenced in market layer but missing from items.json
+- bluefin_tuna_oil | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- catfish_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- catfish_skin | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- clam_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- cod_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- cod_liver | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- corn_seed | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- crab_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- eel_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- flax_seed | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- moonflat_halibut_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- mussel_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- oats_seed | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- octopus_ink | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- oyster_shell | domainFrequency=1 | totalFrequency=6 | note=referenced in market layer but missing from items.json
+- perch_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- perch_scale | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- pike_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- rice_seed | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- rye_seed | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- salmon_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- squid_ink | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+- stormshoal_herring_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- sturgeon_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- trout_bone | domainFrequency=1 | totalFrequency=4 | note=referenced in market layer but missing from items.json
+- wheat_seed | domainFrequency=1 | totalFrequency=2 | note=referenced in market layer but missing from items.json
+- white_shrimp_shell | domainFrequency=1 | totalFrequency=5 | note=referenced in market layer but missing from items.json
+
+## 4. ABSTRACTIONS (VALID)
+- None currently appear in valid audited reference positions.
+- Candidate abstraction registry values extracted from current bad refs: bog_access, brine_source, clay_bank, exposed_rock, flowering_meadow, forest_access, grazing_pasture, hunting_ground, irrigated_plot, ore_vein, river_access, river_shallows, tilled_field, wild_growth, woodland_edge
+
+## 5. MISUSED ABSTRACTIONS
+- bog_access | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- brine_source | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- clay_bank | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- exposed_rock | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- flowering_meadow | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- forest_access | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- grazing_pasture | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- hunting_ground | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- irrigated_plot | occurrences=1 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- ore_vein | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- river_access | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- river_shallows | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- tilled_field | occurrences=3 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- wild_growth | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+- woodland_edge | occurrences=2 | domains=workplaces | note=non-inventory site/access concept currently used in item-bearing field
+
+## 6. MALFORMED REFERENCES
+- blackberry_berry mushroom_cap herbs_raw bark flower_bloom blueberry_berry raspberry_berry strawberry_berry cranberry_berry elderberry_berry gooseberry_berry | occurrences=1 | examples=workplace.gatherers_hut @ ioProfile.outputs[0].itemKey
+  - tokenBreakdown: blackberry_berry [REQUIRED CANONICAL ITEM (MISSING)], mushroom_cap [CANONICAL ITEM], herbs_raw [CANONICAL ITEM], bark [CANONICAL ITEM], flower_bloom [CANONICAL ITEM], blueberry_berry [REQUIRED CANONICAL ITEM (MISSING)], raspberry_berry [REQUIRED CANONICAL ITEM (MISSING)], strawberry_berry [REQUIRED CANONICAL ITEM (MISSING)], cranberry_berry [REQUIRED CANONICAL ITEM (MISSING)], elderberry_berry [REQUIRED CANONICAL ITEM (MISSING)], gooseberry_berry [REQUIRED CANONICAL ITEM (MISSING)]
+- crop_bundle herbs_raw flower_bloom grain_bundle straw_bundle apple_fruit pear_fruit plum_fruit | occurrences=1 | examples=workplace.garden_plots @ ioProfile.outputs[0].itemKey
+  - tokenBreakdown: crop_bundle [CANONICAL ITEM], herbs_raw [CANONICAL ITEM], flower_bloom [CANONICAL ITEM], grain_bundle [CANONICAL ITEM], straw_bundle [CANONICAL ITEM], apple_fruit [REQUIRED CANONICAL ITEM (MISSING)], pear_fruit [REQUIRED CANONICAL ITEM (MISSING)], plum_fruit [REQUIRED CANONICAL ITEM (MISSING)]
+- fish_raw crawfish_raw river_reed trout_meat trout_scale trout_bone perch_meat perch_scale perch_bone catfish_meat catfish_skin catfish_bone salmon_meat salmon_scale salmon_bone salmon_roe cod_meat cod_bone cod_liver oyster_meat oyster_shell mussel_meat mussel_shell clam_meat clam_shell crab_meat crab_shell eel_meat eel_skin eel_bone eel_roe pike_meat pike_scale pike_bone pike_roe sturgeon_meat sturgeon_scute sturgeon_bone sturgeon_roe snail_shell white_shrimp_raw white_shrimp_shell black_sea_bass_meat black_sea_bass_bone black_sea_bass_scale stormshoal_herring_meat stormshoal_herring_bone stormshoal_herring_scale bluefin_tuna_meat bluefin_tuna_bone bluefin_tuna_oil moonflat_halibut_meat moonflat_halibut_bone moonflat_halibut_skin octopus_meat octopus_ink squid_meat squid_ink | occurrences=1 | examples=workplace.anglers_camp @ ioProfile.outputs[0].itemKey
+  - tokenBreakdown: fish_raw [CANONICAL ITEM], crawfish_raw [CANONICAL ITEM], river_reed [CANONICAL ITEM], trout_meat [REQUIRED CANONICAL ITEM (MISSING)], trout_scale [REQUIRED CANONICAL ITEM (MISSING)], trout_bone [REQUIRED CANONICAL ITEM (MISSING)], perch_meat [REQUIRED CANONICAL ITEM (MISSING)], perch_scale [REQUIRED CANONICAL ITEM (MISSING)], perch_bone [REQUIRED CANONICAL ITEM (MISSING)], catfish_meat [REQUIRED CANONICAL ITEM (MISSING)], catfish_skin [REQUIRED CANONICAL ITEM (MISSING)], catfish_bone [REQUIRED CANONICAL ITEM (MISSING)], salmon_meat [REQUIRED CANONICAL ITEM (MISSING)], salmon_scale [REQUIRED CANONICAL ITEM (MISSING)], salmon_bone [REQUIRED CANONICAL ITEM (MISSING)], salmon_roe [REQUIRED CANONICAL ITEM (MISSING)], cod_meat [REQUIRED CANONICAL ITEM (MISSING)], cod_bone [REQUIRED CANONICAL ITEM (MISSING)], cod_liver [REQUIRED CANONICAL ITEM (MISSING)], oyster_meat [REQUIRED CANONICAL ITEM (MISSING)], oyster_shell [REQUIRED CANONICAL ITEM (MISSING)], mussel_meat [REQUIRED CANONICAL ITEM (MISSING)], mussel_shell [REQUIRED CANONICAL ITEM (MISSING)], clam_meat [REQUIRED CANONICAL ITEM (MISSING)], clam_shell [REQUIRED CANONICAL ITEM (MISSING)], crab_meat [REQUIRED CANONICAL ITEM (MISSING)], crab_shell [REQUIRED CANONICAL ITEM (MISSING)], eel_meat [REQUIRED CANONICAL ITEM (MISSING)], eel_skin [REQUIRED CANONICAL ITEM (MISSING)], eel_bone [REQUIRED CANONICAL ITEM (MISSING)], eel_roe [REQUIRED CANONICAL ITEM (MISSING)], pike_meat [REQUIRED CANONICAL ITEM (MISSING)], pike_scale [REQUIRED CANONICAL ITEM (MISSING)], pike_bone [REQUIRED CANONICAL ITEM (MISSING)], pike_roe [REQUIRED CANONICAL ITEM (MISSING)], sturgeon_meat [REQUIRED CANONICAL ITEM (MISSING)], sturgeon_scute [REQUIRED CANONICAL ITEM (MISSING)], sturgeon_bone [REQUIRED CANONICAL ITEM (MISSING)], sturgeon_roe [REQUIRED CANONICAL ITEM (MISSING)], snail_shell [CANONICAL ITEM], white_shrimp_raw [REQUIRED CANONICAL ITEM (MISSING)], white_shrimp_shell [REQUIRED CANONICAL ITEM (MISSING)], black_sea_bass_meat [REQUIRED CANONICAL ITEM (MISSING)], black_sea_bass_bone [REQUIRED CANONICAL ITEM (MISSING)], black_sea_bass_scale [REQUIRED CANONICAL ITEM (MISSING)], stormshoal_herring_meat [REQUIRED CANONICAL ITEM (MISSING)], stormshoal_herring_bone [REQUIRED CANONICAL ITEM (MISSING)], stormshoal_herring_scale [REQUIRED CANONICAL ITEM (MISSING)], bluefin_tuna_meat [REQUIRED CANONICAL ITEM (MISSING)], bluefin_tuna_bone [REQUIRED CANONICAL ITEM (MISSING)], bluefin_tuna_oil [REQUIRED CANONICAL ITEM (MISSING)], moonflat_halibut_meat [REQUIRED CANONICAL ITEM (MISSING)], moonflat_halibut_bone [REQUIRED CANONICAL ITEM (MISSING)], moonflat_halibut_skin [REQUIRED CANONICAL ITEM (MISSING)], octopus_meat [REQUIRED CANONICAL ITEM (MISSING)], octopus_ink [REQUIRED CANONICAL ITEM (MISSING)], squid_meat [REQUIRED CANONICAL ITEM (MISSING)], squid_ink [REQUIRED CANONICAL ITEM (MISSING)]
+- fruit_must grape_pomace fruit_pomace wine_cask grape_wine_cask apple_wine_cask pear_wine_cask cherry_wine_cask plum_wine_cask cider_cask | occurrences=1 | examples=workplace.vintners_press @ ioProfile.outputs[0].itemKey
+  - tokenBreakdown: fruit_must [CANONICAL ITEM], grape_pomace [CANONICAL ITEM], fruit_pomace [CANONICAL ITEM], wine_cask [CANONICAL ITEM], grape_wine_cask [CANONICAL ITEM], apple_wine_cask [CANONICAL ITEM], pear_wine_cask [CANONICAL ITEM], cherry_wine_cask [CANONICAL ITEM], plum_wine_cask [CANONICAL ITEM], cider_cask [CANONICAL ITEM]
+- game_meat_raw hide_raw bone_raw deer_meat boar_meat hare_meat wild_turkey_meat deer_hide boar_hide hare_fur wild_turkey_feather deer_bone boar_bone hare_bone wild_turkey_bone elk_meat moose_meat bear_meat wolf_meat elk_hide moose_hide bear_hide wolf_fur elk_bone moose_bone bear_bone wolf_bone elk_antler moose_antler bear_claw raccoon_meat raccoon_fur raccoon_bone squirrel_meat squirrel_fur squirrel_bone heron_meat heron_feather heron_bone gull_meat gull_feather gull_bone seal_meat seal_hide seal_bone | occurrences=1 | examples=workplace.hunters_camp @ ioProfile.outputs[0].itemKey
+  - tokenBreakdown: game_meat_raw [CANONICAL ITEM], hide_raw [CANONICAL ITEM], bone_raw [CANONICAL ITEM], deer_meat [REQUIRED CANONICAL ITEM (MISSING)], boar_meat [REQUIRED CANONICAL ITEM (MISSING)], hare_meat [REQUIRED CANONICAL ITEM (MISSING)], wild_turkey_meat [REQUIRED CANONICAL ITEM (MISSING)], deer_hide [REQUIRED CANONICAL ITEM (MISSING)], boar_hide [REQUIRED CANONICAL ITEM (MISSING)], hare_fur [REQUIRED CANONICAL ITEM (MISSING)], wild_turkey_feather [CANONICAL ITEM], deer_bone [REQUIRED CANONICAL ITEM (MISSING)], boar_bone [REQUIRED CANONICAL ITEM (MISSING)], hare_bone [REQUIRED CANONICAL ITEM (MISSING)], wild_turkey_bone [REQUIRED CANONICAL ITEM (MISSING)], elk_meat [REQUIRED CANONICAL ITEM (MISSING)], moose_meat [REQUIRED CANONICAL ITEM (MISSING)], bear_meat [REQUIRED CANONICAL ITEM (MISSING)], wolf_meat [REQUIRED CANONICAL ITEM (MISSING)], elk_hide [REQUIRED CANONICAL ITEM (MISSING)], moose_hide [REQUIRED CANONICAL ITEM (MISSING)], bear_hide [REQUIRED CANONICAL ITEM (MISSING)], wolf_fur [REQUIRED CANONICAL ITEM (MISSING)], elk_bone [REQUIRED CANONICAL ITEM (MISSING)], moose_bone [REQUIRED CANONICAL ITEM (MISSING)], bear_bone [REQUIRED CANONICAL ITEM (MISSING)], wolf_bone [REQUIRED CANONICAL ITEM (MISSING)], elk_antler [REQUIRED CANONICAL ITEM (MISSING)], moose_antler [REQUIRED CANONICAL ITEM (MISSING)], bear_claw [REQUIRED CANONICAL ITEM (MISSING)], raccoon_meat [REQUIRED CANONICAL ITEM (MISSING)], raccoon_fur [REQUIRED CANONICAL ITEM (MISSING)], raccoon_bone [REQUIRED CANONICAL ITEM (MISSING)], squirrel_meat [REQUIRED CANONICAL ITEM (MISSING)], squirrel_fur [REQUIRED CANONICAL ITEM (MISSING)], squirrel_bone [REQUIRED CANONICAL ITEM (MISSING)], heron_meat [REQUIRED CANONICAL ITEM (MISSING)], heron_feather [REQUIRED CANONICAL ITEM (MISSING)], heron_bone [REQUIRED CANONICAL ITEM (MISSING)], gull_meat [REQUIRED CANONICAL ITEM (MISSING)], gull_feather [REQUIRED CANONICAL ITEM (MISSING)], gull_bone [REQUIRED CANONICAL ITEM (MISSING)], seal_meat [REQUIRED CANONICAL ITEM (MISSING)], seal_hide [REQUIRED CANONICAL ITEM (MISSING)], seal_bone [REQUIRED CANONICAL ITEM (MISSING)]
+- grape_cluster apple_fruit pear_fruit cherry_fruit plum_fruit fruit_must cask honeycomb wine_cask grape_wine_cask apple_wine_cask pear_wine_cask cherry_wine_cask plum_wine_cask cider_cask pitch_seal | occurrences=1 | examples=workplace.vintners_press @ ioProfile.inputs[0].itemKey
+  - tokenBreakdown: grape_cluster [REQUIRED CANONICAL ITEM (MISSING)], apple_fruit [REQUIRED CANONICAL ITEM (MISSING)], pear_fruit [REQUIRED CANONICAL ITEM (MISSING)], cherry_fruit [REQUIRED CANONICAL ITEM (MISSING)], plum_fruit [REQUIRED CANONICAL ITEM (MISSING)], fruit_must [CANONICAL ITEM], cask [CANONICAL ITEM], honeycomb [CANONICAL ITEM], wine_cask [CANONICAL ITEM], grape_wine_cask [CANONICAL ITEM], apple_wine_cask [CANONICAL ITEM], pear_wine_cask [CANONICAL ITEM], cherry_wine_cask [CANONICAL ITEM], plum_wine_cask [CANONICAL ITEM], cider_cask [CANONICAL ITEM], pitch_seal [CANONICAL ITEM]
+- log firewood bark resin | occurrences=1 | examples=workplace.woodcutters_camp @ ioProfile.outputs[0].itemKey
+  - tokenBreakdown: log [CANONICAL ITEM], firewood [CANONICAL ITEM], bark [CANONICAL ITEM], resin [CANONICAL ITEM]
+- tilled_field irrigated_plot | occurrences=1 | examples=workplace.garden_plots @ ioProfile.inputs[0].itemKey
+  - tokenBreakdown: tilled_field [MISUSED ABSTRACTION], irrigated_plot [MISUSED ABSTRACTION]
+
+## 7. DUPLICATES / COLLISIONS
+- ingredient.alder_sapling_shoot -> alder_sapling_shoot | occurrences=30 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.alderbark_shoot -> alderbark_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.aloe_gel -> aloe_gel | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.aloe_start -> aloe_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.apple_fruit -> apple_fruit | occurrences=18 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.apple_tree_shoot -> apple_tree_shoot | occurrences=18 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.banana_fruit -> banana_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.banana_plant_start -> banana_plant_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.barley_seed -> barley_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.basil_seed -> basil_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.bean_pod_seed -> bean_pod_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.beet_seed -> beet_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.birch_sapling_shoot -> birch_sapling_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.bitterroot_seed -> bitterroot_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.black_hollyhock_blossom -> black_hollyhock_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.black_hollyhock_seed -> black_hollyhock_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.blackberry_berry -> blackberry_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.blackberry_cutting -> blackberry_cutting | occurrences=14 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.blue_cornflower_blossom -> blue_cornflower_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.blue_cornflower_seed -> blue_cornflower_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.blueberry_berry -> blueberry_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.blueberry_cutting -> blueberry_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.bog_myrtle_berry -> bog_myrtle_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.bog_myrtle_cutting -> bog_myrtle_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cabbage_seed -> cabbage_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cacao_pod -> cacao_pod | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cacao_tree_shoot -> cacao_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.carrot_seed -> carrot_seed | occurrences=6 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cattail_seed -> cattail_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cave_button_spore -> cave_button_spore | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cave_moss_seed -> cave_moss_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.chamomile_blossom -> chamomile_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.chamomile_seed -> chamomile_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cherry_fruit -> cherry_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cherry_tree_shoot -> cherry_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.clover_seed -> clover_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.coconut_nut -> coconut_nut | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.coconut_palm_shoot -> coconut_palm_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.coffee_cherry -> coffee_cherry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.coffee_shrub_cutting -> coffee_shrub_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.comfrey_leaf -> comfrey_leaf | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.comfrey_root -> comfrey_root | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.comfrey_seed -> comfrey_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.corn_seed -> corn_seed | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cranberry_berry -> cranberry_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.cranberry_cutting -> cranberry_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.crystal_lichen_seed -> crystal_lichen_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.dawnlily_bulb -> dawnlily_bulb | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.echinacea_bloom -> echinacea_bloom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.echinacea_seed -> echinacea_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.elderberry_berry -> elderberry_berry | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.elderberry_cutting -> elderberry_cutting | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.ember_moss_seed -> ember_moss_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.emberbloom_berry -> emberbloom_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.emberbloom_cutting -> emberbloom_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.feverfew_blossom -> feverfew_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.feverfew_seed -> feverfew_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.flax_seed -> flax_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.frostcap_spore -> frostcap_spore | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.frostfern_berry -> frostfern_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.frostfern_cutting -> frostfern_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.fungal_cap -> fungal_cap | occurrences=8 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.garlic_bulb -> garlic_bulb | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.ginger_root -> ginger_root | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.ginger_start -> ginger_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.glowcap_seed -> glowcap_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.glowreed_seed -> glowreed_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.gooseberry_berry -> gooseberry_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.gooseberry_cutting -> gooseberry_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.grain -> grain | occurrences=22 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.grape_cluster -> grape_cluster | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.grape_vine_cutting -> grape_vine_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.grapefruit_fruit -> grapefruit_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.grapefruit_tree_shoot -> grapefruit_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.green_hellebore_blossom -> green_hellebore_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.green_hellebore_seed -> green_hellebore_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.hazelnut_bush_cutting -> hazelnut_bush_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.hazelnut_nut -> hazelnut_nut | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.hemp_seed -> hemp_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.herb_bundle -> herb_bundle | occurrences=126 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.hibiscus_blossom -> hibiscus_blossom | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.hibiscus_cutting -> hibiscus_cutting | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.hops_cone -> hops_cone | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.hops_start -> hops_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.ironwood_shoot -> ironwood_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.juniper_berry -> juniper_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.juniper_shrub_cutting -> juniper_shrub_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.kale_seed -> kale_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lavender_bloom -> lavender_bloom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lavender_seed -> lavender_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lemon_balm_leaf -> lemon_balm_leaf | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lemon_balm_seed -> lemon_balm_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lemon_fruit -> lemon_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lemon_tree_shoot -> lemon_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lemongrass_blade -> lemongrass_blade | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lemongrass_seed -> lemongrass_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lentil_seed -> lentil_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lettuce_seed -> lettuce_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.licorice_root -> licorice_root | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.licorice_seed -> licorice_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lime_fruit -> lime_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.lime_tree_shoot -> lime_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.mandarin_fruit -> mandarin_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.mandarin_tree_shoot -> mandarin_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.mango_fruit -> mango_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.mango_tree_shoot -> mango_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.marigold_seed -> marigold_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.marsh_mint_seed -> marsh_mint_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.mint_leaf -> mint_leaf | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.moonlotus_bulb -> moonlotus_bulb | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.morel_spore -> morel_spore | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.nettle_seed -> nettle_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.oats_seed -> oats_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.onion_bulb -> onion_bulb | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.orange_calendula_blossom -> orange_calendula_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.orange_calendula_seed -> orange_calendula_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.orange_fruit -> orange_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.orange_tree_shoot -> orange_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.papaya_fruit -> papaya_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.papaya_tree_shoot -> papaya_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pea_vine_seed -> pea_vine_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pear_fruit -> pear_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pear_tree_shoot -> pear_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.peppermint_seed -> peppermint_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pineapple_fruit -> pineapple_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pineapple_start -> pineapple_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pink_peony_blossom -> pink_peony_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pink_peony_seed -> pink_peony_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.plum_fruit -> plum_fruit | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.plum_tree_shoot -> plum_tree_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.potato_start -> potato_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.pumpkin_seed -> pumpkin_seed | occurrences=6 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.purple_violet_blossom -> purple_violet_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.purple_violet_seed -> purple_violet_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.raspberry_berry -> raspberry_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.raspberry_cutting -> raspberry_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.red_poppy_blossom -> red_poppy_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.red_poppy_seed -> red_poppy_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.rice_seed -> rice_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.river_reed_seed -> river_reed_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.rose_cutting -> rose_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.rose_petal -> rose_petal | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.rosemary_berry -> rosemary_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.rosemary_cutting -> rosemary_cutting | occurrences=6 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.rye_seed -> rye_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.ryegrass_seed -> ryegrass_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.sap -> sap | occurrences=38 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.shelf_fungus_spore -> shelf_fungus_spore | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.spinach_seed -> spinach_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.star_thistle_berry -> star_thistle_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.star_thistle_cutting -> star_thistle_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.stone_truffle_seed -> stone_truffle_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.strawberry_berry -> strawberry_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.strawberry_seed -> strawberry_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.sugarcane_cutting -> sugarcane_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.sugarcane_stalk -> sugarcane_stalk | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.sunflower_seed -> sunflower_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.sunpetal_seed -> sunpetal_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.tea_leaf -> tea_leaf | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.tea_shrub_cutting -> tea_shrub_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.thyme_seed -> thyme_seed | occurrences=10 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.tomato_seed -> tomato_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.turmeric_root -> turmeric_root | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.turmeric_start -> turmeric_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.turnip_seed -> turnip_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.valerian_root -> valerian_root | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.valerian_seed -> valerian_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.vanilla_orchid_start -> vanilla_orchid_start | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.vanilla_pod -> vanilla_pod | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.voidfern_berry -> voidfern_berry | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.voidfern_cutting -> voidfern_cutting | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.walnut_nut -> walnut_nut | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.walnut_tree_shoot -> walnut_tree_shoot | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.watercress_seed -> watercress_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.wheat_seed -> wheat_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.whisper_vine_seed -> whisper_vine_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.white_daisy_blossom -> white_daisy_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.white_daisy_seed -> white_daisy_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.wild_sage_leaf -> wild_sage_leaf | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.wild_sage_seed -> wild_sage_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.willow_sapling_shoot -> willow_sapling_shoot | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.yarrow_seed -> yarrow_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.yellow_daisy_blossom -> yellow_daisy_blossom | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- ingredient.yellow_daisy_seed -> yellow_daisy_seed | occurrences=2 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.bark -> bark | occurrences=19 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.chaff -> chaff | occurrences=11 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.compost -> compost | occurrences=63 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.fiber -> fiber | occurrences=74 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.mulch -> mulch | occurrences=20 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.mycelium -> mycelium | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.sawdust -> sawdust | occurrences=19 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.spore_dust -> spore_dust | occurrences=4 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.straw -> straw | occurrences=11 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.twig_bundle -> twig_bundle | occurrences=20 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- material.wood -> wood | occurrences=19 | domains=flora | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- mineral.copper_ore -> copper_ore | occurrences=2 | domains=market, minerals | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- mineral.gold_ore -> gold_ore | occurrences=2 | domains=market, minerals | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- mineral.iron_ore -> iron_ore | occurrences=2 | domains=market, minerals | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- mineral.river_sand -> river_sand | occurrences=2 | domains=market, minerals | note=prefixed pseudo-identity overlaps an unprefixed item concept
+- raw_hide_family | members=hide_raw, hides | note=generic raw hide terminology overlaps and should be normalized to one generic aggregate or split by provenance
+- cloth_stage_family | members=cloth, finished_cloth | note=generic cloth and finished cloth overlap semantically without a clear process-stage boundary
+- wool_family | members=wool, wool_fleece | note=washed/processed wool versus raw fleece is not clearly distinguished in the current graph
+
+## 8. HIGH-RISK DOMAINS
+- World outputs: flora non-canonical unique=195, fauna=377, minerals=47, monsters=43
+- Top problem records:
+  - workplace | workplace.butchers_block | problemRefOccurrences=92
+  - workplace | workplace.alchemists_atelier | problemRefOccurrences=66
+  - chain | chain.food.preserved_meat | problemRefOccurrences=59
+  - workplace | workplace.anglers_camp | problemRefOccurrences=57
+  - chain | chain.hunting.game_supply.camp | problemRefOccurrences=56
+  - chain | chain.food.preserved_fish | problemRefOccurrences=50
+  - workplace | workplace.hunters_camp | problemRefOccurrences=44
+  - chain | chain.hunting.game_supply.guild | problemRefOccurrences=44
+  - workplace | workplace.herbalist_garden | problemRefOccurrences=40
+  - chain | chain.food.butchery_retail_cuts | problemRefOccurrences=38
+  - workplace | workplace.smokehouse | problemRefOccurrences=38
+  - workplace | workplace.physickers_conservatory | problemRefOccurrences=26
+  - workplace | workplace.armorers_forge | problemRefOccurrences=20
+  - chain | chain.warfare.scale_armor | problemRefOccurrences=20
+  - chain | chain.food.butchery_bulk_cuts | problemRefOccurrences=19
+  - chain | chain.food.sausage_links | problemRefOccurrences=19
+  - chain | chain.food.kitchen_hearty_stews | problemRefOccurrences=19
+  - workplace | workplace.preservers_hearth | problemRefOccurrences=18
+  - workplace | workplace.tailors_hall | problemRefOccurrences=16
+  - world | flora.mango_tree | problemRefOccurrences=15
+
+## 9. SUMMARY OF BLOCKERS
+- World-source identities remain split from the canonical item graph, especially flora, fauna, minerals, and monster drops.
+- Workplace IO still contains malformed whitespace-bundled references and single-token site abstractions in item-bearing fields.
+- Production chains and workplaces still depend heavily on missing world-source items, so reference closure cannot be enforced yet.
+- Duplicate/collision identities remain in role-prefixed and source-prefixed forms alongside unprefixed item concepts.
+
+## 10. READINESS STATUS
+- WORLD OUTPUT CANONICALIZATION: FAIL
+- WORKPLACE IO NORMALIZATION: FAIL
+- REFERENCE GRAPH INTEGRITY: FAIL
+

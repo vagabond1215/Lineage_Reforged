@@ -1,0 +1,766 @@
+# Step 2 Canonicalization Report
+
+## 1. CANONICAL ITEM CREATION
+
+### flora-derived (184)
+- alder_sapling_shoot | Alder Sapling Shoot | world.flora
+- alderbark_shoot | Alderbark Shoot | world.flora
+- aloe_gel | Aloe Gel | world.flora
+- aloe_start | Aloe Start | world.flora
+- apple_fruit | Apple Fruit | world.flora
+- apple_tree_shoot | Apple Tree Shoot | world.flora
+- banana_fruit | Banana Fruit | world.flora
+- banana_plant_start | Banana Plant Start | world.flora
+- barley_seed | Barley Seed | world.flora
+- basil_seed | Basil Seed | world.flora
+- bean_pod_seed | Bean Pod Seed | world.flora
+- beet_seed | Beet Seed | world.flora
+- birch_sapling_shoot | Birch Sapling Shoot | world.flora
+- bitterroot_seed | Bitterroot Seed | world.flora
+- black_hollyhock_blossom | Black Hollyhock Blossom | world.flora
+- black_hollyhock_seed | Black Hollyhock Seed | world.flora
+- blackberry_berry | Blackberry Berry | world.flora
+- blackberry_cutting | Blackberry Cutting | world.flora
+- blue_cornflower_blossom | Blue Cornflower Blossom | world.flora
+- blue_cornflower_seed | Blue Cornflower Seed | world.flora
+- blueberry_berry | Blueberry Berry | world.flora
+- blueberry_cutting | Blueberry Cutting | world.flora
+- bog_myrtle_berry | Bog Myrtle Berry | world.flora
+- bog_myrtle_cutting | Bog Myrtle Cutting | world.flora
+- cabbage_seed | Cabbage Seed | world.flora
+- cacao_pod | Cacao Pod | world.flora
+- cacao_tree_shoot | Cacao Tree Shoot | world.flora
+- carrot_seed | Carrot Seed | world.flora
+- cattail_seed | Cattail Seed | world.flora
+- cave_button_spore | Cave Button Spore | world.flora
+- cave_moss_seed | Cave Moss Seed | world.flora
+- chamomile_blossom | Chamomile Blossom | world.flora
+- chamomile_seed | Chamomile Seed | world.flora
+- cherry_fruit | Cherry Fruit | world.flora
+- cherry_tree_shoot | Cherry Tree Shoot | world.flora
+- clover_seed | Clover Seed | world.flora
+- coconut_nut | Coconut Nut | world.flora
+- coconut_palm_shoot | Coconut Palm Shoot | world.flora
+- coffee_cherry | Coffee Cherry | world.flora
+- coffee_shrub_cutting | Coffee Shrub Cutting | world.flora
+- comfrey_leaf | Comfrey Leaf | world.flora
+- comfrey_root | Comfrey Root | world.flora
+- comfrey_seed | Comfrey Seed | world.flora
+- corn_seed | Corn Seed | world.flora
+- cranberry_berry | Cranberry Berry | world.flora
+- cranberry_cutting | Cranberry Cutting | world.flora
+- crystal_lichen_seed | Crystal Lichen Seed | world.flora
+- dawnlily_bulb | Dawnlily Bulb | world.flora
+- echinacea_bloom | Echinacea Bloom | world.flora
+- echinacea_seed | Echinacea Seed | world.flora
+- elderberry_berry | Elderberry Berry | world.flora
+- elderberry_cutting | Elderberry Cutting | world.flora
+- ember_moss_seed | Ember Moss Seed | world.flora
+- emberbloom_berry | Emberbloom Berry | world.flora
+- emberbloom_cutting | Emberbloom Cutting | world.flora
+- feverfew_blossom | Feverfew Blossom | world.flora
+- feverfew_seed | Feverfew Seed | world.flora
+- flax_seed | Flax Seed | world.flora
+- flora.lavender | Flora.Lavender | world.flora
+- flora.marigold | Flora.Marigold | world.flora
+- flora.rosemary | Flora.Rosemary | world.flora
+- flora.sunpetal | Flora.Sunpetal | world.flora
+- frostcap_spore | Frostcap Spore | world.flora
+- frostfern_berry | Frostfern Berry | world.flora
+- frostfern_cutting | Frostfern Cutting | world.flora
+- garlic_bulb | Garlic Bulb | world.flora
+- ginger_root | Ginger Root | world.flora
+- ginger_start | Ginger Start | world.flora
+- glowcap_seed | Glowcap Seed | world.flora
+- glowreed_seed | Glowreed Seed | world.flora
+- gooseberry_berry | Gooseberry Berry | world.flora
+- gooseberry_cutting | Gooseberry Cutting | world.flora
+- grape_cluster | Grape Cluster | world.flora
+- grape_vine_cutting | Grape Vine Cutting | world.flora
+- grapefruit_fruit | Grapefruit Fruit | world.flora
+- grapefruit_tree_shoot | Grapefruit Tree Shoot | world.flora
+- green_hellebore_blossom | Green Hellebore Blossom | world.flora
+- green_hellebore_seed | Green Hellebore Seed | world.flora
+- hazelnut_bush_cutting | Hazelnut Bush Cutting | world.flora
+- hazelnut_nut | Hazelnut Nut | world.flora
+- hemp_seed | Hemp Seed | world.flora
+- hibiscus_blossom | Hibiscus Blossom | world.flora
+- hibiscus_cutting | Hibiscus Cutting | world.flora
+- hops_cone | Hops Cone | world.flora
+- hops_start | Hops Start | world.flora
+- ironwood_shoot | Ironwood Shoot | world.flora
+- juniper_berry | Juniper Berry | world.flora
+- juniper_shrub_cutting | Juniper Shrub Cutting | world.flora
+- kale_seed | Kale Seed | world.flora
+- lavender_bloom | Lavender Bloom | world.flora
+- lavender_seed | Lavender Seed | world.flora
+- lemon_balm_leaf | Lemon Balm Leaf | world.flora
+- lemon_balm_seed | Lemon Balm Seed | world.flora
+- lemon_fruit | Lemon Fruit | world.flora
+- lemon_tree_shoot | Lemon Tree Shoot | world.flora
+- lemongrass_blade | Lemongrass Blade | world.flora
+- lemongrass_seed | Lemongrass Seed | world.flora
+- lentil_seed | Lentil Seed | world.flora
+- lettuce_seed | Lettuce Seed | world.flora
+- licorice_root | Licorice Root | world.flora
+- licorice_seed | Licorice Seed | world.flora
+- lime_fruit | Lime Fruit | world.flora
+- lime_tree_shoot | Lime Tree Shoot | world.flora
+- mandarin_fruit | Mandarin Fruit | world.flora
+- mandarin_tree_shoot | Mandarin Tree Shoot | world.flora
+- mango_fruit | Mango Fruit | world.flora
+- mango_tree_shoot | Mango Tree Shoot | world.flora
+- marigold_seed | Marigold Seed | world.flora
+- marsh_mint_seed | Marsh Mint Seed | world.flora
+- mint_leaf | Mint Leaf | world.flora
+- moonlotus_bulb | Moonlotus Bulb | world.flora
+- morel_spore | Morel Spore | world.flora
+- nettle_seed | Nettle Seed | world.flora
+- oats_seed | Oats Seed | world.flora
+- onion_bulb | Onion Bulb | world.flora
+- orange_calendula_blossom | Orange Calendula Blossom | world.flora
+- orange_calendula_seed | Orange Calendula Seed | world.flora
+- orange_fruit | Orange Fruit | world.flora
+- orange_tree_shoot | Orange Tree Shoot | world.flora
+- papaya_fruit | Papaya Fruit | world.flora
+- papaya_tree_shoot | Papaya Tree Shoot | world.flora
+- pea_vine_seed | Pea Vine Seed | world.flora
+- pear_fruit | Pear Fruit | world.flora
+- pear_tree_shoot | Pear Tree Shoot | world.flora
+- peppermint_seed | Peppermint Seed | world.flora
+- pineapple_fruit | Pineapple Fruit | world.flora
+- pineapple_start | Pineapple Start | world.flora
+- pink_peony_blossom | Pink Peony Blossom | world.flora
+- pink_peony_seed | Pink Peony Seed | world.flora
+- plum_fruit | Plum Fruit | world.flora
+- plum_tree_shoot | Plum Tree Shoot | world.flora
+- potato_start | Potato Start | world.flora
+- pumpkin_seed | Pumpkin Seed | world.flora
+- purple_violet_blossom | Purple Violet Blossom | world.flora
+- purple_violet_seed | Purple Violet Seed | world.flora
+- raspberry_berry | Raspberry Berry | world.flora
+- raspberry_cutting | Raspberry Cutting | world.flora
+- red_poppy_blossom | Red Poppy Blossom | world.flora
+- red_poppy_seed | Red Poppy Seed | world.flora
+- rice_seed | Rice Seed | world.flora
+- river_reed_seed | River Reed Seed | world.flora
+- rose_cutting | Rose Cutting | world.flora
+- rose_petal | Rose Petal | world.flora
+- rosemary_berry | Rosemary Berry | world.flora
+- rosemary_cutting | Rosemary Cutting | world.flora
+- rye_seed | Rye Seed | world.flora
+- ryegrass_seed | Ryegrass Seed | world.flora
+- shelf_fungus_spore | Shelf Fungus Spore | world.flora
+- spinach_seed | Spinach Seed | world.flora
+- star_thistle_berry | Star Thistle Berry | world.flora
+- star_thistle_cutting | Star Thistle Cutting | world.flora
+- stone_truffle_seed | Stone Truffle Seed | world.flora
+- strawberry_berry | Strawberry Berry | world.flora
+- strawberry_seed | Strawberry Seed | world.flora
+- sugarcane_cutting | Sugarcane Cutting | world.flora
+- sugarcane_stalk | Sugarcane Stalk | world.flora
+- sunflower_seed | Sunflower Seed | world.flora
+- sunpetal_seed | Sunpetal Seed | world.flora
+- tea_leaf | Tea Leaf | world.flora
+- tea_shrub_cutting | Tea Shrub Cutting | world.flora
+- thyme_seed | Thyme Seed | world.flora
+- tomato_seed | Tomato Seed | world.flora
+- turmeric_root | Turmeric Root | world.flora
+- turmeric_start | Turmeric Start | world.flora
+- turnip_seed | Turnip Seed | world.flora
+- valerian_root | Valerian Root | world.flora
+- valerian_seed | Valerian Seed | world.flora
+- vanilla_orchid_start | Vanilla Orchid Start | world.flora
+- vanilla_pod | Vanilla Pod | world.flora
+- voidfern_berry | Voidfern Berry | world.flora
+- voidfern_cutting | Voidfern Cutting | world.flora
+- walnut_nut | Walnut Nut | world.flora
+- walnut_tree_shoot | Walnut Tree Shoot | world.flora
+- watercress_seed | Watercress Seed | world.flora
+- wheat_seed | Wheat Seed | world.flora
+- whisper_vine_seed | Whisper Vine Seed | world.flora
+- white_daisy_blossom | White Daisy Blossom | world.flora
+- white_daisy_seed | White Daisy Seed | world.flora
+- wild_sage_leaf | Wild Sage Leaf | world.flora
+- wild_sage_seed | Wild Sage Seed | world.flora
+- willow_sapling_shoot | Willow Sapling Shoot | world.flora
+- yarrow_seed | Yarrow Seed | world.flora
+- yellow_daisy_blossom | Yellow Daisy Blossom | world.flora
+- yellow_daisy_seed | Yellow Daisy Seed | world.flora
+
+### fauna-derived (455)
+- abalone_meat | Abalone Meat | world.fauna
+- abalone_shell | Abalone Shell | world.fauna
+- american_alligator_bone | American Alligator Bone | world.fauna
+- american_alligator_egg | American Alligator Egg | world.fauna
+- american_alligator_hide | American Alligator Hide | world.fauna
+- american_alligator_meat | American Alligator Meat | world.fauna
+- ashfox_bone | Ashfox Bone | world.fauna
+- ashfox_fur | Ashfox Fur | world.fauna
+- ashfox_meat | Ashfox Meat | world.fauna
+- axolotl_bone | Axolotl Bone | world.fauna
+- axolotl_egg | Axolotl Egg | world.fauna
+- axolotl_hide | Axolotl Hide | world.fauna
+- axolotl_meat | Axolotl Meat | world.fauna
+- badger_bone | Badger Bone | world.fauna
+- badger_fur | Badger Fur | world.fauna
+- badger_meat | Badger Meat | world.fauna
+- bald_eagle_bone | Bald Eagle Bone | world.fauna
+- bald_eagle_egg | Bald Eagle Egg | world.fauna
+- bald_eagle_feather | Bald Eagle Feather | world.fauna
+- bald_eagle_meat | Bald Eagle Meat | world.fauna
+- barn_cat_bone | Barn Cat Bone | world.fauna
+- barn_cat_fur | Barn Cat Fur | world.fauna
+- barn_cat_meat | Barn Cat Meat | world.fauna
+- bear_bone | Bear Bone | world.fauna
+- bear_claw | Bear Claw | world.fauna
+- bear_hide | Bear Hide | world.fauna
+- bear_meat | Bear Meat | world.fauna
+- beaver_bone | Beaver Bone | world.fauna
+- beaver_fur | Beaver Fur | world.fauna
+- beaver_meat | Beaver Meat | world.fauna
+- bison_bone | Bison Bone | world.fauna
+- bison_hide | Bison Hide | world.fauna
+- bison_horn | Bison Horn | world.fauna
+- bison_meat | Bison Meat | world.fauna
+- bison_milk | Bison Milk | world.fauna
+- black_sea_bass_bone | Black Sea Bass Bone | world.fauna
+- black_sea_bass_meat | Black Sea Bass Meat | world.fauna
+- black_sea_bass_roe | Black Sea Bass Roe | world.fauna
+- black_sea_bass_scale | Black Sea Bass Scale | world.fauna
+- blind_hare_bone | Blind Hare Bone | world.fauna
+- blind_hare_fur | Blind Hare Fur | world.fauna
+- blind_hare_meat | Blind Hare Meat | world.fauna
+- bluefin_tuna_bone | Bluefin Tuna Bone | world.fauna
+- bluefin_tuna_meat | Bluefin Tuna Meat | world.fauna
+- bluefin_tuna_oil | Bluefin Tuna Oil | world.fauna
+- bluefin_tuna_roe | Bluefin Tuna Roe | world.fauna
+- boar_bone | Boar Bone | world.fauna
+- boar_hide | Boar Hide | world.fauna
+- boar_meat | Boar Meat | world.fauna
+- boar_tusk | Boar Tusk | world.fauna
+- bog_toad_bone | Bog Toad Bone | world.fauna
+- bog_toad_egg | Bog Toad Egg | world.fauna
+- bog_toad_meat | Bog Toad Meat | world.fauna
+- bog_toad_skin | Bog Toad Skin | world.fauna
+- box_turtle_bone | Box Turtle Bone | world.fauna
+- box_turtle_egg | Box Turtle Egg | world.fauna
+- box_turtle_meat | Box Turtle Meat | world.fauna
+- box_turtle_shell | Box Turtle Shell | world.fauna
+- bullfrog_bone | Bullfrog Bone | world.fauna
+- bullfrog_egg | Bullfrog Egg | world.fauna
+- bullfrog_meat | Bullfrog Meat | world.fauna
+- bullfrog_skin | Bullfrog Skin | world.fauna
+- carpenter_ant_chitin | Carpenter Ant Chitin | world.fauna
+- carpenter_ant_meat | Carpenter Ant Meat | world.fauna
+- carrion_crow_bone | Carrion Crow Bone | world.fauna
+- carrion_crow_egg | Carrion Crow Egg | world.fauna
+- carrion_crow_feather | Carrion Crow Feather | world.fauna
+- carrion_crow_meat | Carrion Crow Meat | world.fauna
+- catfish_bone | Catfish Bone | world.fauna
+- catfish_meat | Catfish Meat | world.fauna
+- catfish_roe | Catfish Roe | world.fauna
+- catfish_skin | Catfish Skin | world.fauna
+- cattle_bone | Cattle Bone | world.fauna
+- cattle_hide | Cattle Hide | world.fauna
+- cattle_horn | Cattle Horn | world.fauna
+- cattle_meat | Cattle Meat | world.fauna
+- cattle_milk | Cattle Milk | world.fauna
+- cave_bat_bone | Cave Bat Bone | world.fauna
+- cave_bat_fur | Cave Bat Fur | world.fauna
+- cave_bat_meat | Cave Bat Meat | world.fauna
+- cave_cricket_chitin | Cave Cricket Chitin | world.fauna
+- cave_cricket_meat | Cave Cricket Meat | world.fauna
+- cave_serpent_bone | Cave Serpent Bone | world.fauna
+- cave_serpent_egg | Cave Serpent Egg | world.fauna
+- cave_serpent_meat | Cave Serpent Meat | world.fauna
+- cave_serpent_scale | Cave Serpent Scale | world.fauna
+- cave_swallow_bone | Cave Swallow Bone | world.fauna
+- cave_swallow_egg | Cave Swallow Egg | world.fauna
+- cave_swallow_feather | Cave Swallow Feather | world.fauna
+- cave_swallow_meat | Cave Swallow Meat | world.fauna
+- centipede_chitin | Centipede Chitin | world.fauna
+- centipede_meat | Centipede Meat | world.fauna
+- centipede_venom | Centipede Venom | world.fauna
+- chicken_bone | Chicken Bone | world.fauna
+- chicken_egg | Chicken Egg | world.fauna
+- chicken_feather | Chicken Feather | world.fauna
+- chicken_meat | Chicken Meat | world.fauna
+- chipmunk_bone | Chipmunk Bone | world.fauna
+- chipmunk_fur | Chipmunk Fur | world.fauna
+- chipmunk_meat | Chipmunk Meat | world.fauna
+- clam_meat | Clam Meat | world.fauna
+- clam_shell | Clam Shell | world.fauna
+- cliff_viper_bone | Cliff Viper Bone | world.fauna
+- cliff_viper_egg | Cliff Viper Egg | world.fauna
+- cliff_viper_meat | Cliff Viper Meat | world.fauna
+- cliff_viper_scale | Cliff Viper Scale | world.fauna
+- cod_bone | Cod Bone | world.fauna
+- cod_liver | Cod Liver | world.fauna
+- cod_meat | Cod Meat | world.fauna
+- coyote_bone | Coyote Bone | world.fauna
+- coyote_fur | Coyote Fur | world.fauna
+- coyote_meat | Coyote Meat | world.fauna
+- crab_meat | Crab Meat | world.fauna
+- crab_shell | Crab Shell | world.fauna
+- crawfish_shell | Crawfish Shell | world.fauna
+- crystal_owl_bone | Crystal Owl Bone | world.fauna
+- crystal_owl_egg | Crystal Owl Egg | world.fauna
+- crystal_owl_feather | Crystal Owl Feather | world.fauna
+- crystal_owl_meat | Crystal Owl Meat | world.fauna
+- crystal_ram_bone | Crystal Ram Bone | world.fauna
+- crystal_ram_hide | Crystal Ram Hide | world.fauna
+- crystal_ram_horn | Crystal Ram Horn | world.fauna
+- crystal_ram_meat | Crystal Ram Meat | world.fauna
+- crystal_ram_wool | Crystal Ram Wool | world.fauna
+- deep_wolf_bone | Deep Wolf Bone | world.fauna
+- deep_wolf_fur | Deep Wolf Fur | world.fauna
+- deep_wolf_meat | Deep Wolf Meat | world.fauna
+- deer_antler | Deer Antler | world.fauna
+- deer_bone | Deer Bone | world.fauna
+- deer_hide | Deer Hide | world.fauna
+- deer_meat | Deer Meat | world.fauna
+- dolphin_bone | Dolphin Bone | world.fauna
+- dolphin_meat | Dolphin Meat | world.fauna
+- dolphin_oil | Dolphin Oil | world.fauna
+- domestic_duck_bone | Domestic Duck Bone | world.fauna
+- domestic_duck_egg | Domestic Duck Egg | world.fauna
+- domestic_duck_feather | Domestic Duck Feather | world.fauna
+- domestic_duck_meat | Domestic Duck Meat | world.fauna
+- donkey_bone | Donkey Bone | world.fauna
+- donkey_hide | Donkey Hide | world.fauna
+- donkey_meat | Donkey Meat | world.fauna
+- downy_woodpecker_bone | Downy Woodpecker Bone | world.fauna
+- downy_woodpecker_egg | Downy Woodpecker Egg | world.fauna
+- downy_woodpecker_feather | Downy Woodpecker Feather | world.fauna
+- downy_woodpecker_meat | Downy Woodpecker Meat | world.fauna
+- dung_beetle_chitin | Dung Beetle Chitin | world.fauna
+- dung_beetle_meat | Dung Beetle Meat | world.fauna
+- eel_bone | Eel Bone | world.fauna
+- eel_meat | Eel Meat | world.fauna
+- eel_roe | Eel Roe | world.fauna
+- eel_skin | Eel Skin | world.fauna
+- elk_antler | Elk Antler | world.fauna
+- elk_bone | Elk Bone | world.fauna
+- elk_hide | Elk Hide | world.fauna
+- elk_meat | Elk Meat | world.fauna
+- ember_boar_bone | Ember Boar Bone | world.fauna
+- ember_boar_hide | Ember Boar Hide | world.fauna
+- ember_boar_meat | Ember Boar Meat | world.fauna
+- ember_boar_tusk | Ember Boar Tusk | world.fauna
+- ember_hawk_bone | Ember Hawk Bone | world.fauna
+- ember_hawk_egg | Ember Hawk Egg | world.fauna
+- ember_hawk_feather | Ember Hawk Feather | world.fauna
+- ember_hawk_meat | Ember Hawk Meat | world.fauna
+- field_cricket_chitin | Field Cricket Chitin | world.fauna
+- field_cricket_meat | Field Cricket Meat | world.fauna
+- firefly_chitin | Firefly Chitin | world.fauna
+- firefly_lantern_gland | Firefly Lantern Gland | world.fauna
+- fox_bone | Fox Bone | world.fauna
+- fox_fur | Fox Fur | world.fauna
+- fox_meat | Fox Meat | world.fauna
+- garter_snake_bone | Garter Snake Bone | world.fauna
+- garter_snake_egg | Garter Snake Egg | world.fauna
+- garter_snake_meat | Garter Snake Meat | world.fauna
+- garter_snake_scale | Garter Snake Scale | world.fauna
+- glass_salamander_bone | Glass Salamander Bone | world.fauna
+- glass_salamander_egg | Glass Salamander Egg | world.fauna
+- glass_salamander_meat | Glass Salamander Meat | world.fauna
+- glass_salamander_skin | Glass Salamander Skin | world.fauna
+- glimmer_moth_chitin | Glimmer Moth Chitin | world.fauna
+- glimmer_moth_meat | Glimmer Moth Meat | world.fauna
+- glowmire_caecilian_bone | Glowmire Caecilian Bone | world.fauna
+- glowmire_caecilian_egg | Glowmire Caecilian Egg | world.fauna
+- glowmire_caecilian_hide | Glowmire Caecilian Hide | world.fauna
+- glowmire_caecilian_meat | Glowmire Caecilian Meat | world.fauna
+- goat_bone | Goat Bone | world.fauna
+- goat_hide | Goat Hide | world.fauna
+- goat_horn | Goat Horn | world.fauna
+- goat_meat | Goat Meat | world.fauna
+- goat_milk | Goat Milk | world.fauna
+- goose_bone | Goose Bone | world.fauna
+- goose_egg | Goose Egg | world.fauna
+- goose_feather | Goose Feather | world.fauna
+- goose_meat | Goose Meat | world.fauna
+- great_whale_baleen | Great Whale Baleen | world.fauna
+- great_whale_bone | Great Whale Bone | world.fauna
+- great_whale_meat | Great Whale Meat | world.fauna
+- great_whale_oil | Great Whale Oil | world.fauna
+- gull_bone | Gull Bone | world.fauna
+- gull_egg | Gull Egg | world.fauna
+- gull_feather | Gull Feather | world.fauna
+- gull_meat | Gull Meat | world.fauna
+- hare_bone | Hare Bone | world.fauna
+- hare_fur | Hare Fur | world.fauna
+- hare_meat | Hare Meat | world.fauna
+- herding_hound_bone | Herding Hound Bone | world.fauna
+- herding_hound_fur | Herding Hound Fur | world.fauna
+- herding_hound_meat | Herding Hound Meat | world.fauna
+- heron_bone | Heron Bone | world.fauna
+- heron_egg | Heron Egg | world.fauna
+- heron_feather | Heron Feather | world.fauna
+- heron_meat | Heron Meat | world.fauna
+- honey_bee_beeswax | Honey Bee Beeswax | world.fauna
+- honey_bee_chitin | Honey Bee Chitin | world.fauna
+- honey_bee_honeycomb | Honey Bee Honeycomb | world.fauna
+- honey_bee_meat | Honey Bee Meat | world.fauna
+- horse_bone | Horse Bone | world.fauna
+- horse_hide | Horse Hide | world.fauna
+- horse_meat | Horse Meat | world.fauna
+- ice_penguin_bone | Ice Penguin Bone | world.fauna
+- ice_penguin_egg | Ice Penguin Egg | world.fauna
+- ice_penguin_feather | Ice Penguin Feather | world.fauna
+- ice_penguin_meat | Ice Penguin Meat | world.fauna
+- lynx_bone | Lynx Bone | world.fauna
+- lynx_fur | Lynx Fur | world.fauna
+- lynx_meat | Lynx Meat | world.fauna
+- mallard_bone | Mallard Bone | world.fauna
+- mallard_egg | Mallard Egg | world.fauna
+- mallard_feather | Mallard Feather | world.fauna
+- mallard_meat | Mallard Meat | world.fauna
+- marsh_duck_bone | Marsh Duck Bone | world.fauna
+- marsh_duck_egg | Marsh Duck Egg | world.fauna
+- marsh_duck_feather | Marsh Duck Feather | world.fauna
+- marsh_duck_meat | Marsh Duck Meat | world.fauna
+- marsh_frog_bone | Marsh Frog Bone | world.fauna
+- marsh_frog_egg | Marsh Frog Egg | world.fauna
+- marsh_frog_meat | Marsh Frog Meat | world.fauna
+- marsh_frog_skin | Marsh Frog Skin | world.fauna
+- marsh_goat_bone | Marsh Goat Bone | world.fauna
+- marsh_goat_hide | Marsh Goat Hide | world.fauna
+- marsh_goat_horn | Marsh Goat Horn | world.fauna
+- marsh_goat_meat | Marsh Goat Meat | world.fauna
+- marsh_goat_milk | Marsh Goat Milk | world.fauna
+- marsh_turtle_bone | Marsh Turtle Bone | world.fauna
+- marsh_turtle_egg | Marsh Turtle Egg | world.fauna
+- marsh_turtle_meat | Marsh Turtle Meat | world.fauna
+- marsh_turtle_scale | Marsh Turtle Scale | world.fauna
+- monarch_butterfly_chitin | Monarch Butterfly Chitin | world.fauna
+- monarch_butterfly_meat | Monarch Butterfly Meat | world.fauna
+- moon_stag_antler | Moon Stag Antler | world.fauna
+- moon_stag_bone | Moon Stag Bone | world.fauna
+- moon_stag_hide | Moon Stag Hide | world.fauna
+- moon_stag_meat | Moon Stag Meat | world.fauna
+- moonflat_halibut_bone | Moonflat Halibut Bone | world.fauna
+- moonflat_halibut_meat | Moonflat Halibut Meat | world.fauna
+- moonflat_halibut_roe | Moonflat Halibut Roe | world.fauna
+- moonflat_halibut_skin | Moonflat Halibut Skin | world.fauna
+- moose_antler | Moose Antler | world.fauna
+- moose_bone | Moose Bone | world.fauna
+- moose_hide | Moose Hide | world.fauna
+- moose_meat | Moose Meat | world.fauna
+- mossback_tortoise_bone | Mossback Tortoise Bone | world.fauna
+- mossback_tortoise_egg | Mossback Tortoise Egg | world.fauna
+- mossback_tortoise_meat | Mossback Tortoise Meat | world.fauna
+- mossback_tortoise_scale | Mossback Tortoise Scale | world.fauna
+- mountain_lion_bone | Mountain Lion Bone | world.fauna
+- mountain_lion_fur | Mountain Lion Fur | world.fauna
+- mountain_lion_meat | Mountain Lion Meat | world.fauna
+- mule_bone | Mule Bone | world.fauna
+- mule_hide | Mule Hide | world.fauna
+- mule_meat | Mule Meat | world.fauna
+- muskrat_bone | Muskrat Bone | world.fauna
+- muskrat_fur | Muskrat Fur | world.fauna
+- muskrat_meat | Muskrat Meat | world.fauna
+- mussel_meat | Mussel Meat | world.fauna
+- mussel_shell | Mussel Shell | world.fauna
+- northern_bobwhite_bone | Northern Bobwhite Bone | world.fauna
+- northern_bobwhite_egg | Northern Bobwhite Egg | world.fauna
+- northern_bobwhite_feather | Northern Bobwhite Feather | world.fauna
+- northern_bobwhite_meat | Northern Bobwhite Meat | world.fauna
+- octopus_ink | Octopus Ink | world.fauna
+- octopus_meat | Octopus Meat | world.fauna
+- opossum_bone | Opossum Bone | world.fauna
+- opossum_fur | Opossum Fur | world.fauna
+- opossum_meat | Opossum Meat | world.fauna
+- ostrich_bone | Ostrich Bone | world.fauna
+- ostrich_egg | Ostrich Egg | world.fauna
+- ostrich_feather | Ostrich Feather | world.fauna
+- ostrich_meat | Ostrich Meat | world.fauna
+- otter_bone | Otter Bone | world.fauna
+- otter_fur | Otter Fur | world.fauna
+- otter_meat | Otter Meat | world.fauna
+- owl_bone | Owl Bone | world.fauna
+- owl_egg | Owl Egg | world.fauna
+- owl_feather | Owl Feather | world.fauna
+- owl_meat | Owl Meat | world.fauna
+- ox_bone | Ox Bone | world.fauna
+- ox_hide | Ox Hide | world.fauna
+- ox_horn | Ox Horn | world.fauna
+- ox_meat | Ox Meat | world.fauna
+- ox_milk | Ox Milk | world.fauna
+- oyster_meat | Oyster Meat | world.fauna
+- oyster_shell | Oyster Shell | world.fauna
+- pale_lurker_bone | Pale Lurker Bone | world.fauna
+- pale_lurker_fur | Pale Lurker Fur | world.fauna
+- pale_lurker_meat | Pale Lurker Meat | world.fauna
+- pelican_bone | Pelican Bone | world.fauna
+- pelican_egg | Pelican Egg | world.fauna
+- pelican_feather | Pelican Feather | world.fauna
+- pelican_meat | Pelican Meat | world.fauna
+- perch_bone | Perch Bone | world.fauna
+- perch_meat | Perch Meat | world.fauna
+- perch_roe | Perch Roe | world.fauna
+- perch_scale | Perch Scale | world.fauna
+- peregrine_falcon_bone | Peregrine Falcon Bone | world.fauna
+- peregrine_falcon_egg | Peregrine Falcon Egg | world.fauna
+- peregrine_falcon_feather | Peregrine Falcon Feather | world.fauna
+- peregrine_falcon_meat | Peregrine Falcon Meat | world.fauna
+- pike_bone | Pike Bone | world.fauna
+- pike_meat | Pike Meat | world.fauna
+- pike_roe | Pike Roe | world.fauna
+- pike_scale | Pike Scale | world.fauna
+- pill_bug_chitin | Pill Bug Chitin | world.fauna
+- pill_bug_meat | Pill Bug Meat | world.fauna
+- porcupine_bone | Porcupine Bone | world.fauna
+- porcupine_meat | Porcupine Meat | world.fauna
+- porcupine_quill | Porcupine Quill | world.fauna
+- rabbit_bone | Rabbit Bone | world.fauna
+- rabbit_fur | Rabbit Fur | world.fauna
+- rabbit_meat | Rabbit Meat | world.fauna
+- raccoon_bone | Raccoon Bone | world.fauna
+- raccoon_fur | Raccoon Fur | world.fauna
+- raccoon_meat | Raccoon Meat | world.fauna
+- ram_bone | Ram Bone | world.fauna
+- ram_hide | Ram Hide | world.fauna
+- ram_horn | Ram Horn | world.fauna
+- ram_meat | Ram Meat | world.fauna
+- ram_wool | Ram Wool | world.fauna
+- raven_bone | Raven Bone | world.fauna
+- raven_egg | Raven Egg | world.fauna
+- raven_feather | Raven Feather | world.fauna
+- raven_meat | Raven Meat | world.fauna
+- red_stag_antler | Red Stag Antler | world.fauna
+- red_stag_bone | Red Stag Bone | world.fauna
+- red_stag_hide | Red Stag Hide | world.fauna
+- red_stag_meat | Red Stag Meat | world.fauna
+- reef_lobster_meat | Reef Lobster Meat | world.fauna
+- reef_lobster_shell | Reef Lobster Shell | world.fauna
+- ring_necked_pheasant_bone | Ring Necked Pheasant Bone | world.fauna
+- ring_necked_pheasant_egg | Ring Necked Pheasant Egg | world.fauna
+- ring_necked_pheasant_feather | Ring Necked Pheasant Feather | world.fauna
+- ring_necked_pheasant_meat | Ring Necked Pheasant Meat | world.fauna
+- river_newt_bone | River Newt Bone | world.fauna
+- river_newt_egg | River Newt Egg | world.fauna
+- river_newt_meat | River Newt Meat | world.fauna
+- river_newt_skin | River Newt Skin | world.fauna
+- river_skink_bone | River Skink Bone | world.fauna
+- river_skink_egg | River Skink Egg | world.fauna
+- river_skink_meat | River Skink Meat | world.fauna
+- river_skink_scale | River Skink Scale | world.fauna
+- river_snail_meat | River Snail Meat | world.fauna
+- river_snail_shell | River Snail Shell | world.fauna
+- roc_bone | Roc Bone | world.fauna
+- roc_egg | Roc Egg | world.fauna
+- roc_feather | Roc Feather | world.fauna
+- roc_meat | Roc Meat | world.fauna
+- rock_pigeon_bone | Rock Pigeon Bone | world.fauna
+- rock_pigeon_egg | Rock Pigeon Egg | world.fauna
+- rock_pigeon_feather | Rock Pigeon Feather | world.fauna
+- rock_pigeon_meat | Rock Pigeon Meat | world.fauna
+- salmon_bone | Salmon Bone | world.fauna
+- salmon_meat | Salmon Meat | world.fauna
+- salmon_roe | Salmon Roe | world.fauna
+- salmon_scale | Salmon Scale | world.fauna
+- scallop_meat | Scallop Meat | world.fauna
+- scallop_shell | Scallop Shell | world.fauna
+- scorpion_chitin | Scorpion Chitin | world.fauna
+- scorpion_meat | Scorpion Meat | world.fauna
+- scorpion_venom | Scorpion Venom | world.fauna
+- seal_bone | Seal Bone | world.fauna
+- seal_hide | Seal Hide | world.fauna
+- seal_meat | Seal Meat | world.fauna
+- shadow_hound_bone | Shadow Hound Bone | world.fauna
+- shadow_hound_fur | Shadow Hound Fur | world.fauna
+- shadow_hound_meat | Shadow Hound Meat | world.fauna
+- sheep_bone | Sheep Bone | world.fauna
+- sheep_hide | Sheep Hide | world.fauna
+- sheep_meat | Sheep Meat | world.fauna
+- sheep_wool | Sheep Wool | world.fauna
+- silk_spider_chitin | Silk Spider Chitin | world.fauna
+- silk_spider_meat | Silk Spider Meat | world.fauna
+- silk_spider_silk | Silk Spider Silk | world.fauna
+- skunk_fur | Skunk Fur | world.fauna
+- skunk_meat | Skunk Meat | world.fauna
+- skunk_scent_gland | Skunk Scent Gland | world.fauna
+- squid_ink | Squid Ink | world.fauna
+- squid_meat | Squid Meat | world.fauna
+- squirrel_bone | Squirrel Bone | world.fauna
+- squirrel_fur | Squirrel Fur | world.fauna
+- squirrel_meat | Squirrel Meat | world.fauna
+- steppe_antelope_bone | Steppe Antelope Bone | world.fauna
+- steppe_antelope_hide | Steppe Antelope Hide | world.fauna
+- steppe_antelope_horn | Steppe Antelope Horn | world.fauna
+- steppe_antelope_meat | Steppe Antelope Meat | world.fauna
+- stone_mole_bone | Stone Mole Bone | world.fauna
+- stone_mole_fur | Stone Mole Fur | world.fauna
+- stone_mole_meat | Stone Mole Meat | world.fauna
+- storm_ram_bone | Storm Ram Bone | world.fauna
+- storm_ram_hide | Storm Ram Hide | world.fauna
+- storm_ram_horn | Storm Ram Horn | world.fauna
+- storm_ram_meat | Storm Ram Meat | world.fauna
+- storm_ram_wool | Storm Ram Wool | world.fauna
+- stormshoal_herring_bone | Stormshoal Herring Bone | world.fauna
+- stormshoal_herring_meat | Stormshoal Herring Meat | world.fauna
+- stormshoal_herring_roe | Stormshoal Herring Roe | world.fauna
+- stormshoal_herring_scale | Stormshoal Herring Scale | world.fauna
+- sturgeon_bone | Sturgeon Bone | world.fauna
+- sturgeon_meat | Sturgeon Meat | world.fauna
+- sturgeon_roe | Sturgeon Roe | world.fauna
+- sturgeon_scute | Sturgeon Scute | world.fauna
+- swine_bone | Swine Bone | world.fauna
+- swine_hide | Swine Hide | world.fauna
+- swine_meat | Swine Meat | world.fauna
+- swine_tusk | Swine Tusk | world.fauna
+- tick_chitin | Tick Chitin | world.fauna
+- tick_meat | Tick Meat | world.fauna
+- tide_lizard_bone | Tide Lizard Bone | world.fauna
+- tide_lizard_egg | Tide Lizard Egg | world.fauna
+- tide_lizard_meat | Tide Lizard Meat | world.fauna
+- tide_lizard_scale | Tide Lizard Scale | world.fauna
+- tiger_salamander_bone | Tiger Salamander Bone | world.fauna
+- tiger_salamander_egg | Tiger Salamander Egg | world.fauna
+- tiger_salamander_meat | Tiger Salamander Meat | world.fauna
+- tiger_salamander_skin | Tiger Salamander Skin | world.fauna
+- tree_frog_bone | Tree Frog Bone | world.fauna
+- tree_frog_egg | Tree Frog Egg | world.fauna
+- tree_frog_meat | Tree Frog Meat | world.fauna
+- tree_frog_skin | Tree Frog Skin | world.fauna
+- trout_bone | Trout Bone | world.fauna
+- trout_meat | Trout Meat | world.fauna
+- trout_roe | Trout Roe | world.fauna
+- trout_scale | Trout Scale | world.fauna
+- walrus_bone | Walrus Bone | world.fauna
+- walrus_hide | Walrus Hide | world.fauna
+- walrus_meat | Walrus Meat | world.fauna
+- walrus_tusk | Walrus Tusk | world.fauna
+- white_shrimp_raw | White Shrimp Raw | world.fauna
+- white_shrimp_shell | White Shrimp Shell | world.fauna
+- wild_turkey_bone | Wild Turkey Bone | world.fauna
+- wild_turkey_meat | Wild Turkey Meat | world.fauna
+- wolf_bone | Wolf Bone | world.fauna
+- wolf_fur | Wolf Fur | world.fauna
+- wolf_meat | Wolf Meat | world.fauna
+- wolverine_bone | Wolverine Bone | world.fauna
+- wolverine_fur | Wolverine Fur | world.fauna
+- wolverine_meat | Wolverine Meat | world.fauna
+
+### mineral-derived (44)
+- aether_shale | Aether Shale | world.minerals
+- aetherite_ore | Aetherite Ore | world.minerals
+- amethyst | Amethyst | world.minerals
+- bauxite | Bauxite | world.minerals
+- bitumen | Bitumen | world.minerals
+- chalk | Chalk | world.minerals
+- clay | Clay | world.minerals
+- coal | Coal | world.minerals
+- cobalt_ore | Cobalt Ore | world.minerals
+- deep_amber | Deep Amber | world.minerals
+- drakeshard | Drakeshard | world.minerals
+- dusk_opal | Dusk Opal | world.minerals
+- ember_quartz | Ember Quartz | world.minerals
+- feldspar | Feldspar | world.minerals
+- fluorite | Fluorite | world.minerals
+- garnet | Garnet | world.minerals
+- granite | Granite | world.minerals
+- gypsum | Gypsum | world.minerals
+- kaolin | Kaolin | world.minerals
+- lead_ore | Lead Ore | world.minerals
+- limestone | Limestone | world.minerals
+- magnetite | Magnetite | world.minerals
+- malachite | Malachite | world.minerals
+- marble | Marble | world.minerals
+- mithrite_ore | Mithrite Ore | world.minerals
+- moon_silver_ore | Moon Silver Ore | world.minerals
+- nickel_ore | Nickel Ore | world.minerals
+- obsidian | Obsidian | world.minerals
+- orichalcum_ore | Orichalcum Ore | world.minerals
+- pyrite | Pyrite | world.minerals
+- quartz | Quartz | world.minerals
+- river_sand | River Sand | world.minerals
+- salt | Salt | world.minerals
+- saltpeter | Saltpeter | world.minerals
+- sandstone | Sandstone | world.minerals
+- silver_ore | Silver Ore | world.minerals
+- slate | Slate | world.minerals
+- star_iron | Star Iron | world.minerals
+- stormglass | Stormglass | world.minerals
+- sulfur | Sulfur | world.minerals
+- sunstone | Sunstone | world.minerals
+- tin_ore | Tin Ore | world.minerals
+- void_crystal | Void Crystal | world.minerals
+- zinc_ore | Zinc Ore | world.minerals
+
+### monster-derived (21)
+- acid_gland | Acid Gland | world.monster
+- ancient_coin_cache | Ancient Coin Cache | world.monster
+- cave_silk | Cave Silk | world.monster
+- chitin_plate | Chitin Plate | world.monster
+- ember_core | Ember Core | world.monster
+- frost_gland | Frost Gland | world.monster
+- grave_dust | Grave Dust | world.monster
+- harpy_feather | Harpy Feather | world.monster
+- kobold_bauble | Kobold Bauble | world.monster
+- kobold_scrap | Kobold Scrap | world.monster
+- mud_core | Mud Core | world.monster
+- rat_meat | Rat Meat | world.monster
+- rat_tail | Rat Tail | world.monster
+- river_core | River Core | world.monster
+- slime_jelly | Slime Jelly | world.monster
+- stone_core | Stone Core | world.monster
+- storm_core | Storm Core | world.monster
+- talon_bundle | Talon Bundle | world.monster
+- troll_hide | Troll Hide | world.monster
+- troll_tooth | Troll Tooth | world.monster
+- venom_sac | Venom Sac | world.monster
+
+### workplace/chain-derived (0)
+
+## 2. PREFIX REMOVAL MAPPING
+
+## 3. COLLISION RESOLUTION
+- hides, hide_raw -> hide_raw
+- finished_cloth, cloth -> cloth
+- wool, wool_fleece -> wool_fleece
+- mineral.copper_ore, copper_ore -> copper_ore
+- mineral.gold_ore, gold_ore -> gold_ore
+- mineral.iron_ore, iron_ore -> iron_ore
+- mineral.river_sand, river_sand -> river_sand
+
+## 4. ABSTRACTION EXTRACTION
+- bog_access
+- brine_source
+- clay_bank
+- exposed_rock
+- flowering_meadow
+- forest_access
+- grazing_pasture
+- hunting_ground
+- irrigated_plot
+- ore_vein
+- river_access
+- river_shallows
+- tilled_field
+- wild_growth
+- woodland_edge
+- Removed from canonical item, market, world-output, and chain identity usage; workplace access-field separation remains Step 3 work.
+
+## 5. WORLD OUTPUT NORMALIZATION
+- Flora outputs now use canonical item keys only.
+- Fauna outputs now use canonical item keys only.
+- Mineral records now expose canonical itemKey fields and market rows point to canonical item keys only.
+- Monster drops and loot now use canonical item keys only.
+- No ingredient.*, material.*, or mineral.* item identities remain in world outputs, market rows, items, workplaces, or chains.
+
+## 6. POST-NORMALIZATION STATE
+- total canonical items: 1232
+- remaining missing items: 0
+- remaining collisions: 0
+- abstraction count: 15
+
+## 7. READINESS STATUS
+
+- WORLD OUTPUT CANONICALIZATION: PASS
+- IDENTITY COLLISION RESOLUTION: PASS
+- ABSTRACTION SEPARATION: FAIL
+- READY FOR STEP 3 (IO NORMALIZATION): PASS

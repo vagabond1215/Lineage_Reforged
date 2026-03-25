@@ -208,12 +208,18 @@
                   "properties": {
                     "materials": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                      },
                       "minItems": 1
                     },
                     "ingredients": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                      },
                       "minItems": 1
                     },
                     "processing": {
@@ -226,12 +232,18 @@
                           "properties": {
                             "materials": {
                               "type": "array",
-                              "items": { "type": "string" },
+                              "items": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                              },
                               "minItems": 1
                             },
                             "ingredients": {
                               "type": "array",
-                              "items": { "type": "string" },
+                              "items": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                              },
                               "minItems": 1
                             }
                           },
@@ -257,12 +269,18 @@
                   "properties": {
                     "materials": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                      },
                       "minItems": 1
                     },
                     "ingredients": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                      },
                       "minItems": 1
                     },
                     "processing": {
@@ -275,12 +293,18 @@
                           "properties": {
                             "materials": {
                               "type": "array",
-                              "items": { "type": "string" },
+                              "items": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                              },
                               "minItems": 1
                             },
                             "ingredients": {
                               "type": "array",
-                              "items": { "type": "string" },
+                              "items": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                              },
                               "minItems": 1
                             }
                           },
