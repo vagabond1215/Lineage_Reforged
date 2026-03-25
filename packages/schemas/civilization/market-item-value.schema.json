@@ -20,7 +20,8 @@
                     "baseValue",
                     "currencyId",
                     "valueUnit",
-                    "marketable"
+                    "marketable",
+                    "pricingProfile"
                 ],
                 "properties": {
                     "id": {
@@ -48,6 +49,61 @@
                     },
                     "marketable": {
                         "type": "boolean"
+                    },
+                    "pricingProfile": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                            "pricingMode",
+                            "materialCostSource",
+                            "laborCostSource",
+                            "processingCostSource",
+                            "difficultySource",
+                            "demandBand"
+                        ],
+                        "properties": {
+                            "pricingMode": {
+                                "type": "string",
+                                "enum": [
+                                    "derived_snapshot"
+                                ]
+                            },
+                            "materialCostSource": {
+                                "type": "string",
+                                "enum": [
+                                    "source_effort",
+                                    "input_rollup"
+                                ]
+                            },
+                            "laborCostSource": {
+                                "type": "string",
+                                "enum": [
+                                    "recipe_skill_time"
+                                ]
+                            },
+                            "processingCostSource": {
+                                "type": "string",
+                                "enum": [
+                                    "fuel_and_tool_wear"
+                                ]
+                            },
+                            "difficultySource": {
+                                "type": "string",
+                                "enum": [
+                                    "material_and_precision"
+                                ]
+                            },
+                            "demandBand": {
+                                "type": "string",
+                                "enum": [
+                                    "subsistence",
+                                    "common",
+                                    "utility",
+                                    "specialty",
+                                    "luxury"
+                                ]
+                            }
+                        }
                     }
                 }
             }

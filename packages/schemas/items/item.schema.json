@@ -13,7 +13,8 @@
                      "baseValue",
                      "currencyId",
                      "valueUnit",
-                     "marketable"
+                     "marketable",
+                     "valueProfile"
                  ],
     "properties":  {
                        "id":  {
@@ -21,7 +22,7 @@
                               },
                        "itemKey":  {
                                        "type":  "string",
-                                       "pattern":  "^(?!flora\\.|fauna\\.|mineral\\.)[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                       "pattern":  "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
                                    },
                        "name":  {
                                     "type":  "string"
@@ -58,6 +59,124 @@
                        "marketable":  {
                                           "type":  "boolean"
                                       },
+                       "valueProfile":  {
+                                            "type":  "object",
+                                            "additionalProperties":  false,
+                                            "required":  [
+                                                             "valueMode",
+                                                             "materialCostModel",
+                                                             "laborIntensity",
+                                                             "processingIntensity",
+                                                             "difficultyTier",
+                                                             "demandBand"
+                                                         ],
+                                            "properties":  {
+                                                               "valueMode":  {
+                                                                                 "type":  "string",
+                                                                                 "enum":  [
+                                                                                              "source_derived",
+                                                                                              "recipe_derived"
+                                                                                          ]
+                                                                             },
+                                                               "materialCostModel":  {
+                                                                                         "type":  "string",
+                                                                                         "enum":  [
+                                                                                                      "source_effort",
+                                                                                                      "input_rollup"
+                                                                                                  ]
+                                                                                     },
+                                                               "laborIntensity":  {
+                                                                                       "type":  "string",
+                                                                                       "enum":  [
+                                                                                                    "light",
+                                                                                                    "moderate",
+                                                                                                    "heavy"
+                                                                                                ]
+                                                                                   },
+                                                               "processingIntensity":  {
+                                                                                            "type":  "string",
+                                                                                            "enum":  [
+                                                                                                         "minimal",
+                                                                                                         "standard",
+                                                                                                         "fuel_heavy",
+                                                                                                         "precision"
+                                                                                                     ]
+                                                                                        },
+                                                               "difficultyTier":  {
+                                                                                      "type":  "string",
+                                                                                      "enum":  [
+                                                                                                   "easy",
+                                                                                                   "moderate",
+                                                                                                   "hard",
+                                                                                                   "expert"
+                                                                                               ]
+                                                                                  },
+                                                               "demandBand":  {
+                                                                                  "type":  "string",
+                                                                                  "enum":  [
+                                                                                               "subsistence",
+                                                                                               "common",
+                                                                                               "utility",
+                                                                                               "specialty",
+                                                                                               "luxury"
+                                                                                           ]
+                                                                              }
+                                                           }
+                                        },
+                       "materialDifficultyProfile":  {
+                                                        "type":  "object",
+                                                        "additionalProperties":  false,
+                                                        "required":  [
+                                                                         "family",
+                                                                         "workability",
+                                                                         "hardness",
+                                                                         "refinementDifficulty",
+                                                                         "processingCostImpact"
+                                                                     ],
+                                                        "properties":  {
+                                                                           "family":  {
+                                                                                          "type":  "string",
+                                                                                          "enum":  [
+                                                                                                       "wood",
+                                                                                                       "metal",
+                                                                                                       "textile",
+                                                                                                       "leather"
+                                                                                                   ]
+                                                                                      },
+                                                                           "workability":  {
+                                                                                               "type":  "string",
+                                                                                               "enum":  [
+                                                                                                            "easy",
+                                                                                                            "moderate",
+                                                                                                            "hard"
+                                                                                                        ]
+                                                                                           },
+                                                                           "hardness":  {
+                                                                                            "type":  "string",
+                                                                                            "enum":  [
+                                                                                                         "soft",
+                                                                                                         "medium",
+                                                                                                         "hard"
+                                                                                                     ]
+                                                                                        },
+                                                                           "refinementDifficulty":  {
+                                                                                                        "type":  "string",
+                                                                                                        "enum":  [
+                                                                                                                     "low",
+                                                                                                                     "moderate",
+                                                                                                                     "high"
+                                                                                                                 ]
+                                                                                                    },
+                                                                           "processingCostImpact":  {
+                                                                                                       "type":  "string",
+                                                                                                       "enum":  [
+                                                                                                                    "light",
+                                                                                                                    "moderate",
+                                                                                                                    "heavy"
+                                                                                                                ]
+                                                                                                   }
+                                                                       }
+                                                    },
                        "roles":  {
                                      "type":  "array",
                                      "items":  {
@@ -111,6 +230,6 @@
                                                },
                        "spoilageProfileId":  {
                                                 "type":  "string"
-                                      }
+                                            }
                    }
 }

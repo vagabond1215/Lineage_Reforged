@@ -289,7 +289,8 @@ const sampleSnapshot = {
     economy: {
       nodes: [],
       lastSnapshots: [],
-      lastLevelTotals: []
+      lastLevelTotals: [],
+      marketStates: []
     },
     quests: {
       activeOffers: [],

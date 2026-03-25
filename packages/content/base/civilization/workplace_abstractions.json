@@ -1,0 +1,124 @@
+{
+  "records": [
+    {
+      "id": "abstraction.bog_access",
+      "abstractionKey": "bog_access",
+      "name": "Bog Access",
+      "category": "terrain_access",
+      "description": "Access to peat-cutting bog ground used by extraction workplaces.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    },
+    {
+      "id": "abstraction.brine_source",
+      "abstractionKey": "brine_source",
+      "name": "Brine Source",
+      "category": "resource_source",
+      "description": "A saline water source suitable for salt extraction and evaporation works.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    },
+    {
+      "id": "abstraction.clay_bank",
+      "abstractionKey": "clay_bank",
+      "name": "Clay Bank",
+      "category": "resource_source",
+      "description": "A clay-bearing deposit that supports extraction and digging operations.",
+      "usageContexts": ["workplace_io"]
+    },
+    {
+      "id": "abstraction.exposed_rock",
+      "abstractionKey": "exposed_rock",
+      "name": "Exposed Rock",
+      "category": "resource_source",
+      "description": "A quarry face or exposed rock shelf suitable for stone extraction.",
+      "usageContexts": ["workplace_io"]
+    },
+    {
+      "id": "abstraction.flowering_meadow",
+      "abstractionKey": "flowering_meadow",
+      "name": "Flowering Meadow",
+      "category": "wildland",
+      "description": "Pollinator-rich meadowland that supports apiary operations.",
+      "usageContexts": ["workplace_io"]
+    },
+    {
+      "id": "abstraction.forest_access",
+      "abstractionKey": "forest_access",
+      "name": "Forest Access",
+      "category": "terrain_access",
+      "description": "Timber access to managed woodland or nearby forest stands.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    },
+    {
+      "id": "abstraction.grazing_pasture",
+      "abstractionKey": "grazing_pasture",
+      "name": "Grazing Pasture",
+      "category": "agricultural_site",
+      "description": "Managed grazing land that sustains herd and flock workplaces.",
+      "usageContexts": ["workplace_io"]
+    },
+    {
+      "id": "abstraction.hunting_ground",
+      "abstractionKey": "hunting_ground",
+      "name": "Hunting Ground",
+      "category": "wildland",
+      "description": "A hunting range or game-rich territory used by hunting camps.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    },
+    {
+      "id": "abstraction.irrigated_plot",
+      "abstractionKey": "irrigated_plot",
+      "name": "Irrigated Plot",
+      "category": "agricultural_site",
+      "description": "An irrigated cultivation plot provided by infrastructure rather than transported stock.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    },
+    {
+      "id": "abstraction.ore_vein",
+      "abstractionKey": "ore_vein",
+      "name": "Ore Vein",
+      "category": "resource_source",
+      "description": "A mineable ore-bearing seam required by deep extraction workplaces.",
+      "usageContexts": ["workplace_io"]
+    },
+    {
+      "id": "abstraction.river_access",
+      "abstractionKey": "river_access",
+      "name": "River Access",
+      "category": "terrain_access",
+      "description": "Direct access to fishable river water and adjoining banks.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    },
+    {
+      "id": "abstraction.river_shallows",
+      "abstractionKey": "river_shallows",
+      "name": "River Shallows",
+      "category": "terrain_access",
+      "description": "Shallow river margins suitable for reed, shell, and crawfish gathering.",
+      "usageContexts": ["workplace_io"]
+    },
+    {
+      "id": "abstraction.tilled_field",
+      "abstractionKey": "tilled_field",
+      "name": "Tilled Field",
+      "category": "agricultural_site",
+      "description": "Prepared arable ground that supports crop and garden production.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    },
+    {
+      "id": "abstraction.wild_growth",
+      "abstractionKey": "wild_growth",
+      "name": "Wild Growth",
+      "category": "wildland",
+      "description": "Untended growth suitable for herb and botanical gathering.",
+      "usageContexts": ["workplace_io"]
+    },
+    {
+      "id": "abstraction.woodland_edge",
+      "abstractionKey": "woodland_edge",
+      "name": "Woodland Edge",
+      "category": "wildland",
+      "description": "Forage-rich woodland margins suitable for mixed gathering operations.",
+      "usageContexts": ["workplace_io", "workplace_progression"]
+    }
+  ]
+}

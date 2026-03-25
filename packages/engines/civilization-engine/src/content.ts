@@ -59,7 +59,10 @@ export interface SettlementContentRecord {
   name: string;
   macroRegionId: string;
   regionId: string;
+  localityBandId: string;
   settlementType: string;
+  siteClass: "surface" | "subterranean" | "underwater";
+  terrainContext: string;
   populationBand: string;
   populationTotal: number;
   administrativeRole: string;
@@ -69,6 +72,36 @@ export interface SettlementContentRecord {
   dependencyRole?: string;
   identityTags: string[];
   purposeTags: string[];
+  economicModel: {
+    dominantRole: string;
+    secondaryRoles: string[];
+    localSupplyStrengths: string[];
+    demandPressures: string[];
+    specializationWeight: number;
+  };
+  survivalModel: {
+    habitationScore: number;
+    foodSecurity: number;
+    waterSecurity: number;
+    climateBurden: number;
+    hazardPressure: number;
+    infrastructureDifficulty: number;
+  };
+  tradeDependencyProfile: {
+    importBias: number;
+    exportBias: number;
+    dependencyBand: "low" | "moderate" | "high";
+    stapleImports: string[];
+    exportFocus: string[];
+    routeAccess: {
+      road: number;
+      river: number;
+      coastal: number;
+      caravan: number;
+      pass: number;
+      seaLane: number;
+    };
+  };
   infrastructureProfile: {
     overallLevel: string;
     roadTier: number;
@@ -90,6 +123,14 @@ export interface SettlementContentRecord {
     notes: string;
   }>;
   guildPresence: GuildPresenceRecord[];
+  visualMapRef?: {
+    mapId: string;
+    pixelX: number;
+    pixelY: number;
+    climateZoneId: string;
+    biomeZoneId: string;
+    notes?: string;
+  };
 }
 
 export interface WorldMapContentRecord {
@@ -204,13 +245,56 @@ export interface RegionContentRecord {
   regionType: "continent" | "subregion" | "island_system" | "ocean";
   parentRegionId?: string;
   tags: string[];
+  environmentProfile?: {
+    dominantBiomeMix: string[];
+    elevationProfile: string;
+    climateTendencies: string;
+    freshwaterAvailability: string;
+    climateSeverity: string;
+    agriculturalPotential: string;
+    extractivePotential: string;
+    hazardLevel: string;
+  };
+  simulationProfile?: {
+    habitationScore: number;
+    foodProductionCapacity: number;
+    waterAvailability: number;
+    climateBurden: number;
+    hazardPressure: number;
+    infrastructureDifficulty: number;
+    populationCapacity: number;
+    densityBand: "very_high" | "high" | "moderate" | "low" | "very_low";
+  };
   populationProfile?: {
     densityBand?: "very_high" | "high" | "moderate" | "low" | "very_low";
+    settlementPattern?: string;
     estimatedPopulationMillions?: number;
+    populationCapacityMillions?: number;
+    urbanPopulationPercent?: number;
+    ruralPopulationPercent?: number;
   };
   economicProfile?: {
     majorExports?: string[];
     majorImports?: string[];
+    supplyStrengths?: string[];
+    demandPressures?: string[];
+    importBias?: number;
+    exportBias?: number;
+    resourceDiversityBand?: "very_high" | "high" | "moderate" | "low" | "very_low";
+  };
+  settlementDistributionModel?: {
+    targetCounts: {
+      city: number;
+      town: number;
+      village: number;
+      outpost: number;
+      strategic_site: number;
+    };
+    generationRules: {
+      asymmetryMode: string;
+      survivabilityDriver: string;
+      settlementPattern: string;
+    };
   };
 }
 
@@ -228,6 +312,240 @@ export interface RegionalEcologyProfileRecord {
     herbsAndReagents: string;
     luxuryGoods: string;
   };
+  simulationProfile: {
+    habitationScore: number;
+    foodProductionCapacity: number;
+    waterAvailability: number;
+    climateBurden: number;
+    hazardPressure: number;
+    infrastructureDifficulty: number;
+    populationCapacity: number;
+    densityBand: "very_high" | "high" | "moderate" | "low" | "very_low";
+  };
+  resourceDiversityBand: "very_high" | "high" | "moderate" | "low" | "very_low";
+  supplyStrengths: string[];
+  demandPressures: string[];
+  importBias: number;
+  exportBias: number;
+}
+
+export interface RegionLocalityContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  macroRegionId: string;
+  regionId: string;
+  localityType: string;
+  summary: string;
+  habitationScoreModifier: number;
+  resourceCatchment: {
+    arableLand: string;
+    pasture: string;
+    timber: string;
+    fishery: string;
+    stone: string;
+    ore: string;
+    salt: string;
+    herbs: string;
+    specialty: string;
+  };
+  settlementSuitability: {
+    settlementWeight: number;
+    maxPopulationBand: string;
+    strategicSiteWeight: number;
+    favoredSettlementTypes: string[];
+  };
+  routeAccessModifier: {
+    road: number;
+    river: number;
+    coastal: number;
+    caravan: number;
+    pass: number;
+    seaLane: number;
+  };
+  dominantIndustries: string[];
+  supportedSiteClasses: Array<"surface" | "subterranean" | "underwater">;
+}
+
+export interface ItemValueProfileRecord {
+  valueMode: "source_derived" | "recipe_derived";
+  materialCostModel: "source_effort" | "input_rollup";
+  laborIntensity: "light" | "moderate" | "heavy";
+  processingIntensity: "minimal" | "standard" | "fuel_heavy" | "precision";
+  difficultyTier: "easy" | "moderate" | "hard" | "expert";
+  demandBand: "subsistence" | "common" | "utility" | "specialty" | "luxury";
+}
+
+export interface MaterialDifficultyProfileRecord {
+  family: "wood" | "metal" | "textile" | "leather";
+  workability: "easy" | "moderate" | "hard";
+  hardness: "soft" | "medium" | "hard";
+  refinementDifficulty: "low" | "moderate" | "high";
+  processingCostImpact: "light" | "moderate" | "heavy";
+}
+
+export interface ItemContentRecord {
+  id: string;
+  itemKey: string;
+  name: string;
+  itemClass: string;
+  itemBranch?: string;
+  itemSubBranch?: string;
+  baseValue: number;
+  currencyId: string;
+  valueUnit: string;
+  marketable: boolean;
+  roles?: string[];
+  tags?: string[];
+  processingGroups?: string[];
+  stage?: string;
+  valueProfile: ItemValueProfileRecord;
+  materialDifficultyProfile?: MaterialDifficultyProfileRecord;
+}
+
+export interface MarketPricingProfileRecord {
+  pricingMode: "derived_snapshot";
+  materialCostSource: "source_effort" | "input_rollup";
+  laborCostSource: "recipe_skill_time";
+  processingCostSource: "fuel_and_tool_wear";
+  difficultySource: "material_and_precision";
+  demandBand: "subsistence" | "common" | "utility" | "specialty" | "luxury";
+}
+
+export interface MarketItemValueRecord {
+  id: string;
+  itemKey: string;
+  source: string;
+  category: string;
+  baseValue: number;
+  currencyId: string;
+  valueUnit: string;
+  marketable: boolean;
+  pricingProfile: MarketPricingProfileRecord;
+}
+
+export interface WorkplaceToolPenaltyRecord {
+  mode: "no_output" | "reduced_output";
+  outputMultiplier?: Record<string, number>;
+}
+
+export interface WorkplaceJobToolRequirementRecord {
+  minimumToolTier?: Record<string, number>;
+  requiredToolTags: string[];
+  missingToolPenalty: WorkplaceToolPenaltyRecord;
+}
+
+export interface WorkplaceJobRecord {
+  jobId: string;
+  role: string;
+  toolRequirements?: WorkplaceJobToolRequirementRecord;
+}
+
+export interface WorkplaceIoItemRecord {
+  itemKey: string;
+  quantityPerCycle?: Record<string, number>;
+  unit: string;
+  consumptionType: string;
+}
+
+export interface WorkplaceYieldGroupOutputRecord {
+  itemKey: string;
+  weight?: number;
+  quantityPerCycle?: Record<string, number>;
+  unit?: string;
+}
+
+export interface WorkplaceYieldGroupRecord {
+  groupId: string;
+  selectionMode: string;
+  drawsPerCycle?: Record<string, number>;
+  outputs: WorkplaceYieldGroupOutputRecord[];
+}
+
+export interface WorkplaceContentRecord {
+  id: string;
+  name: string;
+  category: string;
+  inputTags?: string[];
+  outputTags?: string[];
+  workforceProfile?: {
+    jobs?: WorkplaceJobRecord[];
+  };
+  ioProfile?: {
+    workCycleHours?: Record<string, number>;
+    inputs?: WorkplaceIoItemRecord[];
+    outputs?: WorkplaceIoItemRecord[];
+    yieldGroups?: WorkplaceYieldGroupRecord[];
+  };
+}
+
+export interface RecipeSkillCheckRecord {
+  skillId: string;
+  minimumRank: number;
+  efficiencyRank: number;
+  qualityRank: number;
+  lowSkillOutcome: "higher_labor_and_waste";
+}
+
+export interface RecipeProcessingStepRecord {
+  id: string;
+  stageRef: string;
+  operation: string;
+  inputs: string[];
+  outputs: string[];
+  laborIntensity: "light" | "moderate" | "heavy";
+  processingIntensity: "minimal" | "standard" | "fuel_heavy" | "precision";
+  difficultyTier: "easy" | "moderate" | "hard" | "expert";
+  materialDifficultyMode: "input_weighted";
+  usesVariantInputs?: boolean;
+  usesVariantPrimaryOutput?: boolean;
+  usesVariantByProducts?: boolean;
+  skillCheck?: RecipeSkillCheckRecord;
+}
+
+export interface RecipeValuePropagationRecord {
+  materialCostMode: "input_sum";
+  laborCostMode: "skill_time_weighted";
+  processingCostMode: "fuel_tool_wear";
+  difficultyMode: "step_material_weighted";
+  demandBand: "subsistence" | "common" | "utility" | "specialty" | "luxury";
+  carriesForward: boolean;
+}
+
+export interface ProductionChainVariantRecord {
+  id: string;
+  inputItemKeys?: string[];
+  primaryOutput?: string;
+  byProducts?: string[];
+}
+
+export interface ProductionChainRecord {
+  id: string;
+  stages: string[];
+  primaryOutput: string;
+  byProducts?: string[];
+  variantConfig?: {
+    defaultVariant?: string;
+    variants: ProductionChainVariantRecord[];
+  };
+  recipeProfile: {
+    recipeClass: string;
+    primarySkillId: string;
+    externalInputs: string[];
+    intermediateItems: string[];
+    processingSteps: RecipeProcessingStepRecord[];
+    valuePropagation: RecipeValuePropagationRecord;
+  };
+}
+
+export interface SkillContentRecord {
+  id: string;
+  name: string;
+  kind: string;
+  family: string;
+  defaultRank: number;
+  defaultCap: number;
+  progressionModelId: string;
 }
 
 export const DEFAULT_ADVENTURERS_PRESENCE: GuildPresenceRecord = {
@@ -297,8 +615,40 @@ export function loadRegionalEcologyProfiles(): RegionalEcologyProfileRecord[] {
   return parsed.records;
 }
 
+export function loadRegionLocalityContent(): RegionLocalityContentRecord[] {
+  const parsed = loadJsonFile<{ records: RegionLocalityContentRecord[] }>(
+    "../../../content/base/world/region_localities.json"
+  );
+  return parsed.records;
+}
+
 export function loadWorldMapContent(): WorldMapContentRecord[] {
   const parsed = loadJsonFile<{ records: WorldMapContentRecord[] }>("../../../content/base/world/world_maps.json");
+  return parsed.records;
+}
+
+export function loadItemContent(): ItemContentRecord[] {
+  const parsed = loadJsonFile<{ records: ItemContentRecord[] }>("../../../content/base/items/items.json");
+  return parsed.records;
+}
+
+export function loadMarketItemValues(): MarketItemValueRecord[] {
+  const parsed = loadJsonFile<{ records: MarketItemValueRecord[] }>("../../../content/base/civilization/market_item_values.json");
+  return parsed.records;
+}
+
+export function loadProductionChainContent(): ProductionChainRecord[] {
+  const parsed = loadJsonFile<{ records: ProductionChainRecord[] }>("../../../content/base/civilization/production_chains.json");
+  return parsed.records;
+}
+
+export function loadWorkplaceContent(): WorkplaceContentRecord[] {
+  const parsed = loadJsonFile<{ records: WorkplaceContentRecord[] }>("../../../content/base/civilization/workplaces.json");
+  return parsed.records;
+}
+
+export function loadSkillContent(): SkillContentRecord[] {
+  const parsed = loadJsonFile<{ records: SkillContentRecord[] }>("../../../content/base/player/skills.json");
   return parsed.records;
 }
 

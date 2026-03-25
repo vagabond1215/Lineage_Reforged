@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "macroRegionId",
+          "regionId",
+          "localityType",
+          "summary",
+          "habitationScoreModifier",
+          "resourceCatchment",
+          "settlementSuitability",
+          "routeAccessModifier",
+          "dominantIndustries",
+          "supportedSiteClasses"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^region_locality\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "macroRegionId": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "regionId": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "localityType": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "habitationScoreModifier": {
+            "type": "integer",
+            "minimum": -100,
+            "maximum": 100
+          },
+          "resourceCatchment": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "arableLand",
+              "pasture",
+              "timber",
+              "fishery",
+              "stone",
+              "ore",
+              "salt",
+              "herbs",
+              "specialty"
+            ],
+            "properties": {
+              "arableLand": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "pasture": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "timber": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "fishery": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "stone": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "ore": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "salt": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "herbs": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              },
+              "specialty": {
+                "type": "string",
+                "enum": ["surplus", "strong", "moderate", "limited", "scarce", "none"]
+              }
+            }
+          },
+          "settlementSuitability": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settlementWeight",
+              "maxPopulationBand",
+              "strategicSiteWeight",
+              "favoredSettlementTypes"
+            ],
+            "properties": {
+              "settlementWeight": {
+                "type": "number",
+                "minimum": 0
+              },
+              "maxPopulationBand": {
+                "type": "string",
+                "enum": [
+                  "tiny",
+                  "small",
+                  "modest",
+                  "large",
+                  "major"
+                ]
+              },
+              "strategicSiteWeight": {
+                "type": "number",
+                "minimum": 0
+              },
+              "favoredSettlementTypes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "hamlet",
+                    "outpost",
+                    "village",
+                    "market_town",
+                    "town",
+                    "city",
+                    "fort",
+                    "citadel",
+                    "harbor_town",
+                    "port_city",
+                    "estate",
+                    "monastery",
+                    "ferry_post",
+                    "camp",
+                    "waystation"
+                  ]
+                }
+              }
+            }
+          },
+          "routeAccessModifier": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "road",
+              "river",
+              "coastal",
+              "caravan",
+              "pass",
+              "seaLane"
+            ],
+            "properties": {
+              "road": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "river": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "coastal": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "caravan": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "pass": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "seaLane": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 2
+              }
+            }
+          },
+          "dominantIndustries": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "supportedSiteClasses": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "surface",
+                "subterranean",
+                "underwater"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

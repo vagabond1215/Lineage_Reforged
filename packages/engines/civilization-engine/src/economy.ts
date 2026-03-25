@@ -11,16 +11,16 @@ import type {
 import {
   loadGuildContent,
   loadRegionContent,
+  loadRegionLocalityContent,
   loadRegionalEcologyProfiles,
   loadSettlementContent,
-  loadWorldMapContent,
   resolveEffectiveGuildPresence,
   type GuildContentRecord,
   type GuildPresenceRecord,
   type RegionContentRecord,
+  type RegionLocalityContentRecord,
   type RegionalEcologyProfileRecord,
-  type SettlementContentRecord,
-  type WorldMapContentRecord
+  type SettlementContentRecord
 } from "./content.js";
 import { resolveCoverageDimension, resolveResourceFamilies } from "./resource-taxonomy.js";
 
@@ -34,6 +34,15 @@ const ECOLOGY_BAND_FACTORS: Record<string, number> = {
   moderate: 1,
   strong: 1.2,
   surplus: 1.45
+};
+
+const LOCALITY_CATCHMENT_FACTORS: Record<string, number> = {
+  none: 0.52,
+  scarce: 0.72,
+  limited: 0.86,
+  moderate: 1,
+  strong: 1.14,
+  surplus: 1.28
 };
 
 const INFRASTRUCTURE_FACTORS: Record<string, number> = {
@@ -206,12 +215,6 @@ function toFriendlyLabel(value: string): string {
     .join(" ");
 }
 
-function findOwningWorldMap(maps: WorldMapContentRecord[], regionId: string): WorldMapContentRecord | undefined {
-  return maps.find(
-    (record) => record.continentRegionIds.includes(regionId) || record.islandSystemRegionIds.includes(regionId) || record.oceanRegionIds.includes(regionId)
-  );
-}
-
 function getPopulationFactor(settlement: SettlementContentRecord): number {
   return Math.max(0.35, settlement.populationTotal / 6000);
 }
@@ -234,6 +237,91 @@ function getCoverageFactor(ecologyProfile: RegionalEcologyProfileRecord | undefi
 
   const coverageDimension = resolveCoverageDimension(itemKey);
   return ECOLOGY_BAND_FACTORS[ecologyProfile.coverageProfile[coverageDimension]] ?? 1;
+}
+
+function getCatchmentCoverageFactor(locality: RegionLocalityContentRecord | undefined, itemKey: string): number {
+  if (!locality) {
+    return 1;
+  }
+
+  const families = new Set(resolveResourceFamilies(itemKey));
+  const catchment = locality.resourceCatchment;
+  let band = "moderate";
+
+  if (families.has("grain") || families.has("vegetables") || families.has("fruit")) {
+    band = catchment.arableLand;
+  } else if (
+    families.has("livestock") ||
+    itemKey.includes("wool") ||
+    itemKey.includes("hide") ||
+    itemKey.includes("leather") ||
+    itemKey.includes("horse") ||
+    itemKey.includes("cattle") ||
+    itemKey.includes("goat")
+  ) {
+    band = catchment.pasture;
+  } else if (families.has("wood")) {
+    band = catchment.timber;
+  } else if (families.has("fish") || families.has("maritime_goods")) {
+    band = catchment.fishery;
+  } else if (families.has("minerals")) {
+    if (itemKey.includes("salt")) {
+      band = catchment.salt;
+    } else if (itemKey.includes("stone") || itemKey.includes("clay")) {
+      band = catchment.stone;
+    } else {
+      band = catchment.ore;
+    }
+  } else if (families.has("herbs") || families.has("tea")) {
+    band = catchment.herbs;
+  } else if (families.has("luxury_goods")) {
+    band = catchment.specialty;
+  }
+
+  return LOCALITY_CATCHMENT_FACTORS[band] ?? 1;
+}
+
+function getTradeAccessFactor(settlement: SettlementContentRecord, locality: RegionLocalityContentRecord | undefined): number {
+  const routeAccess = settlement.tradeDependencyProfile?.routeAccess ?? locality?.routeAccessModifier;
+  if (!routeAccess) {
+    return 1;
+  }
+
+  const average =
+    (routeAccess.road + routeAccess.river + routeAccess.coastal + routeAccess.caravan + routeAccess.pass + routeAccess.seaLane) / 6;
+  return roundNumber(Math.max(0.85, Math.min(1.18, 0.9 + average * 0.12)));
+}
+
+function getSurvivalProductionFactor(settlement: SettlementContentRecord): number {
+  const profile = settlement.survivalModel;
+  const modifier =
+    0.82 +
+    profile.habitationScore / 280 +
+    profile.foodSecurity / 520 +
+    profile.waterSecurity / 520 -
+    profile.climateBurden / 900 -
+    profile.hazardPressure / 850 -
+    profile.infrastructureDifficulty / 1100;
+
+  return roundNumber(Math.max(0.76, Math.min(1.2, modifier)));
+}
+
+function getSettlementEconomicSupplyFactor(settlement: SettlementContentRecord, itemKey: string): number {
+  if (settlement.economicModel.localSupplyStrengths.includes(itemKey)) {
+    return Math.max(1.05, settlement.economicModel.specializationWeight ?? 1);
+  }
+  if (settlement.domesticResourceProfile.secondaryGoods.includes(itemKey)) {
+    return 1;
+  }
+  return 0.88;
+}
+
+function getRegionPopulationMillions(region: RegionContentRecord): number {
+  return (
+    region.populationProfile?.populationCapacityMillions ??
+    region.populationProfile?.estimatedPopulationMillions ??
+    ((region.simulationProfile?.populationCapacity ?? 0) / 1000000)
+  );
 }
 
 function getSeasonalProductionFactor(itemKey: string, clock: SimulationClock): number {
@@ -337,6 +425,7 @@ function getProductionSupportDemands(itemKey: string): Array<{ itemKey: string; 
 
 function buildWorkplaceNode(
   settlement: SettlementContentRecord,
+  locality: RegionLocalityContentRecord | undefined,
   ecologyProfile: RegionalEcologyProfileRecord | undefined,
   itemKey: string,
   role: "primary" | "secondary",
@@ -344,8 +433,19 @@ function buildWorkplaceNode(
 ): EconomyNodeState {
   const balanceMap = new Map<string, MutableBalance>();
   const baseWeight = role === "primary" ? 1.45 : 0.92;
+  const specializationFactor = getSettlementEconomicSupplyFactor(settlement, itemKey);
+  const tradeAccessFactor = getTradeAccessFactor(settlement, locality);
+  const survivalFactor = getSurvivalProductionFactor(settlement);
   const supplyRate =
-    getPopulationFactor(settlement) * getInfrastructureFactor(settlement) * getCoverageFactor(ecologyProfile, itemKey) * getSeasonalProductionFactor(itemKey, clock) * baseWeight;
+    getPopulationFactor(settlement) *
+    getInfrastructureFactor(settlement) *
+    getCoverageFactor(ecologyProfile, itemKey) *
+    getCatchmentCoverageFactor(locality, itemKey) *
+    getSeasonalProductionFactor(itemKey, clock) *
+    specializationFactor *
+    tradeAccessFactor *
+    survivalFactor *
+    baseWeight;
 
   addFlow(balanceMap, itemKey, supplyRate, 0);
   for (const support of getProductionSupportDemands(itemKey)) {
@@ -366,7 +466,7 @@ function buildWorkplaceNode(
     directFlows,
     sourceRecordType: "workplace",
     sourceRecordId: settlement.id,
-    tradeCapacityPerTick: roundNumber(supplyRate * 0.55 + settlement.infrastructureProfile.marketTier * 0.35),
+    tradeCapacityPerTick: roundNumber(supplyRate * 0.55 * tradeAccessFactor + settlement.infrastructureProfile.marketTier * 0.35),
     reserveRatio: role === "primary" ? 0.22 : 0.18
   };
 }
@@ -375,22 +475,30 @@ function addDemand(balanceMap: Map<string, MutableBalance>, itemKey: string, bas
   addFlow(balanceMap, itemKey, 0, baseRate * getSeasonalDemandFactor(itemKey, clock));
 }
 
-function buildSettlementNode(settlement: SettlementContentRecord, parentNodeId: string, clock: SimulationClock): EconomyNodeState {
+function buildSettlementNode(
+  settlement: SettlementContentRecord,
+  locality: RegionLocalityContentRecord | undefined,
+  parentNodeId: string,
+  clock: SimulationClock
+): EconomyNodeState {
   const balanceMap = new Map<string, MutableBalance>();
   const populationFactor = getPopulationFactor(settlement);
   const infra = settlement.infrastructureProfile;
   const guildCount = resolveEffectiveGuildPresence(settlement.guildPresence ?? []).length;
+  const demandBias = 1 + settlement.tradeDependencyProfile.importBias * 0.22;
+  const tradeAccessFactor = getTradeAccessFactor(settlement, locality);
+  const survivalRelief = Math.max(0.8, Math.min(1.15, 1 + (settlement.survivalModel.foodSecurity - 50) / 500 + (settlement.survivalModel.waterSecurity - 50) / 600));
 
-  addDemand(balanceMap, "grain", populationFactor * 0.95, clock);
-  addDemand(balanceMap, "vegetables", populationFactor * 0.55, clock);
+  addDemand(balanceMap, "grain", populationFactor * 0.95 * demandBias, clock);
+  addDemand(balanceMap, "vegetables", populationFactor * 0.55 * demandBias, clock);
   addDemand(balanceMap, settlement.identityTags.some((tag) => tag.includes("coastal") || tag.includes("port")) ? "fish" : "cured_meat", populationFactor * 0.22, clock);
-  addDemand(balanceMap, "firewood", populationFactor * 0.35, clock);
+  addDemand(balanceMap, "firewood", populationFactor * (0.22 + settlement.survivalModel.climateBurden / 220), clock);
   addDemand(balanceMap, "tools", populationFactor * 0.11, clock);
-  addDemand(balanceMap, "cloth", populationFactor * 0.08, clock);
+  addDemand(balanceMap, "cloth", populationFactor * (0.06 + settlement.tradeDependencyProfile.importBias * 0.05), clock);
   addDemand(balanceMap, "herbs", populationFactor * 0.04, clock);
   addDemand(balanceMap, "tea", populationFactor * (infra.marketTier >= 2 ? 0.035 : 0.015), clock);
 
-  if (infra.roadTier >= 2 || settlement.purposeTags.includes("regional_trade")) {
+  if (infra.roadTier >= 2 || settlement.purposeTags.includes("regional_trade") || settlement.tradeDependencyProfile.routeAccess.caravan >= 0.9) {
     addDemand(balanceMap, "horse_fodder", populationFactor * 0.08, clock);
     addDemand(balanceMap, "pack_support", populationFactor * 0.06, clock);
   }
@@ -419,8 +527,8 @@ function buildSettlementNode(settlement: SettlementContentRecord, parentNodeId: 
     addFlow(balanceMap, "ship_supplies", populationFactor * 0.03, 0);
   }
 
-  for (const demandedGood of settlement.domesticResourceProfile.demandedGoods) {
-    addDemand(balanceMap, demandedGood, populationFactor * 0.24, clock);
+  for (const demandedGood of settlement.economicModel.demandPressures) {
+    addDemand(balanceMap, demandedGood, populationFactor * (0.16 + settlement.tradeDependencyProfile.importBias * 0.16), clock);
   }
 
   const directFlows = toFlowArray(balanceMap);
@@ -437,23 +545,26 @@ function buildSettlementNode(settlement: SettlementContentRecord, parentNodeId: 
     sourceRecordType: "settlement",
     sourceRecordId: settlement.id,
     tradeCapacityPerTick: roundNumber(
-      populationFactor * (infra.marketTier * 1.2 + infra.roadTier * 0.9 + infra.waterTier * 0.6 + infra.harborTier * 1.1) + totalSupply * 0.15
+      populationFactor * (infra.marketTier * 1.2 + infra.roadTier * 0.9 + infra.waterTier * 0.6 + infra.harborTier * 1.1) * tradeAccessFactor * survivalRelief +
+        totalSupply * 0.15 +
+        settlement.tradeDependencyProfile.exportBias * 1.4
     ),
     reserveRatio: 0.12
   };
 }
 
-function buildContinentNode(worldMap: WorldMapContentRecord, activeRegionCount: number): EconomyNodeState {
+function buildContinentNode(region: RegionContentRecord, activeRegionCount: number): EconomyNodeState {
+  const populationMillions = getRegionPopulationMillions(region);
   return {
-    id: createNodeId("continent", worldMap.slug),
+    id: createNodeId("continent", region.id),
     level: "continent",
-    displayName: `${worldMap.name} Ledger`,
+    displayName: `${region.name} Ledger`,
     parentNodeId: null,
-    tags: ["continent", worldMap.mapType, "world_map"],
+    tags: ["continent", region.regionType, ...region.tags],
     directFlows: [],
-    sourceRecordType: "simulation",
-    sourceRecordId: worldMap.id,
-    tradeCapacityPerTick: roundNumber(Math.max(12, (worldMap.totalPopulationMillions ?? 0) * 0.35 + activeRegionCount * 8)),
+    sourceRecordType: "region",
+    sourceRecordId: region.id,
+    tradeCapacityPerTick: roundNumber(Math.max(12, populationMillions * 0.35 + activeRegionCount * 6)),
     reserveRatio: 0.03
   };
 }
@@ -532,31 +643,29 @@ function buildGuildNode(
   };
 }
 
-function buildRegionNode(
-  level: "subregion" | "region" | "continent",
-  region: RegionContentRecord,
-  parentNodeId: string | null,
-  settlementCount: number
-): EconomyNodeState {
+function buildRegionNode(level: "subregion" | "region", region: RegionContentRecord, parentNodeId: string | null, settlementCount: number): EconomyNodeState {
   const balanceMap = new Map<string, MutableBalance>();
-  const estimatedPopulation = region.populationProfile?.estimatedPopulationMillions ?? 0;
+  const estimatedPopulation = getRegionPopulationMillions(region);
   const densityFactor =
-    region.populationProfile?.densityBand === "very_high"
+    region.simulationProfile?.densityBand === "very_high" || region.populationProfile?.densityBand === "very_high"
       ? 1.4
-      : region.populationProfile?.densityBand === "high"
+      : region.simulationProfile?.densityBand === "high" || region.populationProfile?.densityBand === "high"
         ? 1.2
-        : region.populationProfile?.densityBand === "low"
+        : region.simulationProfile?.densityBand === "low" || region.populationProfile?.densityBand === "low"
           ? 0.8
-          : region.populationProfile?.densityBand === "very_low"
+          : region.simulationProfile?.densityBand === "very_low" || region.populationProfile?.densityBand === "very_low"
             ? 0.6
             : 1;
 
-  for (const itemKey of region.economicProfile?.majorExports ?? []) {
-    addFlow(balanceMap, itemKey, estimatedPopulation * densityFactor * 0.12, 0);
+  const exportBias = region.economicProfile?.exportBias ?? 0.5;
+  const importBias = region.economicProfile?.importBias ?? 0.5;
+
+  for (const itemKey of region.economicProfile?.supplyStrengths ?? region.economicProfile?.majorExports ?? []) {
+    addFlow(balanceMap, itemKey, estimatedPopulation * densityFactor * (0.08 + exportBias * 0.08), 0);
   }
 
-  for (const itemKey of region.economicProfile?.majorImports ?? []) {
-    addFlow(balanceMap, itemKey, 0, estimatedPopulation * densityFactor * 0.09);
+  for (const itemKey of region.economicProfile?.demandPressures ?? region.economicProfile?.majorImports ?? []) {
+    addFlow(balanceMap, itemKey, 0, estimatedPopulation * densityFactor * (0.06 + importBias * 0.07));
   }
 
   const directFlows = toFlowArray(balanceMap);
@@ -570,8 +679,8 @@ function buildRegionNode(
     directFlows,
     sourceRecordType: "region",
     sourceRecordId: region.id,
-    tradeCapacityPerTick: roundNumber(Math.max(directFlows.reduce((sum, flow) => sum + flow.supplyPerTick, 0) * 0.4, settlementCount * (level === "continent" ? 6 : 2.5))),
-    reserveRatio: level === "continent" ? 0.04 : 0.06
+    tradeCapacityPerTick: roundNumber(Math.max(directFlows.reduce((sum, flow) => sum + flow.supplyPerTick, 0) * 0.4, settlementCount * 2.5)),
+    reserveRatio: 0.06
   };
 }
 
@@ -580,12 +689,13 @@ export function buildEconomyStateFromContent(settlementIds: string[], clock: Sim
   const settlements = loadSettlementContent();
   const guilds = loadGuildContent();
   const regions = loadRegionContent();
+  const localities = loadRegionLocalityContent();
   const ecologyProfiles = loadRegionalEcologyProfiles();
-  const worldMaps = loadWorldMapContent();
 
   const settlementById = new Map(settlements.map((record) => [record.id, record]));
   const guildBySlug = new Map(guilds.map((record) => [record.slug, record]));
   const regionById = new Map(regions.map((record) => [record.id, record]));
+  const localityById = new Map(localities.map((record) => [record.id, record]));
   const ecologyByRegionId = new Map(ecologyProfiles.map((record) => [record.regionId, record]));
 
   const activeSettlements = settlementIds
@@ -601,27 +711,14 @@ export function buildEconomyStateFromContent(settlementIds: string[], clock: Sim
   const nodes: EconomyNodeState[] = [];
   const macroRegionIds = new Set(activeSettlements.map((settlement) => settlement.macroRegionId));
   const subregionIds = new Set(activeSettlements.filter((settlement) => settlement.regionId !== settlement.macroRegionId).map((settlement) => settlement.regionId));
-  const activeWorldMaps = worldMaps.filter((record) =>
-    [...macroRegionIds].some((regionId) => record.continentRegionIds.includes(regionId) || record.islandSystemRegionIds.includes(regionId))
-  );
-
-  for (const worldMap of activeWorldMaps.sort((left, right) => left.id.localeCompare(right.id))) {
-    const activeRegionCount = [...macroRegionIds].filter(
-      (regionId) => worldMap.continentRegionIds.includes(regionId) || worldMap.islandSystemRegionIds.includes(regionId)
-    ).length;
-    nodes.push(buildContinentNode(worldMap, activeRegionCount));
-  }
 
   for (const macroRegionId of [...macroRegionIds].sort()) {
     const region = regionById.get(macroRegionId);
     if (region) {
-      const settlementCount = activeSettlements.filter((settlement) => settlement.macroRegionId === macroRegionId).length;
-      const parentMap = findOwningWorldMap(activeWorldMaps, macroRegionId);
-      const parentNodeId = parentMap ? createNodeId("continent", parentMap.slug) : null;
-      if (!parentMap) {
-        warnings.push(`Economy bootstrap could not resolve world map parent for macro region ${macroRegionId}.`);
-      }
-      nodes.push(buildRegionNode("region", region, parentNodeId, settlementCount));
+      const activeRegionCount = activeSettlements.filter((settlement) => settlement.macroRegionId === macroRegionId).length;
+      nodes.push(buildContinentNode(region, activeRegionCount));
+    } else {
+      warnings.push(`Economy bootstrap could not resolve macro region ${macroRegionId}.`);
     }
   }
 
@@ -629,24 +726,28 @@ export function buildEconomyStateFromContent(settlementIds: string[], clock: Sim
     const region = regionById.get(subregionId);
     if (region) {
       const settlementCount = activeSettlements.filter((settlement) => settlement.regionId === subregionId).length;
-      nodes.push(buildRegionNode("subregion", region, createNodeId("region", region.parentRegionId ?? subregionId), settlementCount));
+      nodes.push(buildRegionNode("region", region, createNodeId("continent", region.parentRegionId ?? subregionId), settlementCount));
     }
   }
 
   for (const settlement of activeSettlements) {
-    const ecologyProfile = ecologyByRegionId.get(settlement.macroRegionId);
+    const ecologyProfile = ecologyByRegionId.get(settlement.regionId) ?? ecologyByRegionId.get(settlement.macroRegionId);
+    const locality = localityById.get(settlement.localityBandId);
+    if (!locality) {
+      warnings.push(`Economy bootstrap could not resolve locality ${settlement.localityBandId} for settlement ${settlement.id}.`);
+    }
     for (const primaryGood of settlement.domesticResourceProfile.primaryGoods) {
-      nodes.push(buildWorkplaceNode(settlement, ecologyProfile, primaryGood, "primary", clock));
+      nodes.push(buildWorkplaceNode(settlement, locality, ecologyProfile, primaryGood, "primary", clock));
     }
     for (const secondaryGood of settlement.domesticResourceProfile.secondaryGoods) {
-      nodes.push(buildWorkplaceNode(settlement, ecologyProfile, secondaryGood, "secondary", clock));
+      nodes.push(buildWorkplaceNode(settlement, locality, ecologyProfile, secondaryGood, "secondary", clock));
     }
     for (const guildPresence of resolveEffectiveGuildPresence(settlement.guildPresence ?? [])) {
       nodes.push(buildGuildNode(settlement, guildPresence, guildBySlug.get(guildPresence.guildType), clock));
     }
     const settlementParentNodeId =
-      settlement.regionId !== settlement.macroRegionId ? createNodeId("subregion", settlement.regionId) : createNodeId("region", settlement.macroRegionId);
-    nodes.push(buildSettlementNode(settlement, settlementParentNodeId, clock));
+      settlement.regionId !== settlement.macroRegionId ? createNodeId("region", settlement.regionId) : createNodeId("continent", settlement.macroRegionId);
+    nodes.push(buildSettlementNode(settlement, locality, settlementParentNodeId, clock));
   }
 
   return {
@@ -654,6 +755,7 @@ export function buildEconomyStateFromContent(settlementIds: string[], clock: Sim
       nodes,
       lastSnapshots: [],
       lastLevelTotals: [],
+      marketStates: [],
       lastComputedTick: clock.tick
     },
     warnings

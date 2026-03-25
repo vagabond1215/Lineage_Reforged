@@ -1,0 +1,2195 @@
+﻿{
+    "records":  [
+                    {
+                        "id":  "region_locality.verdant_thalos_coastal_bays",
+                        "slug":  "verdant_thalos_coastal_bays",
+                        "name":  "Verdant Coastal Bays",
+                        "macroRegionId":  "region.kaelvar",
+                        "regionId":  "region.verdant_thalos",
+                        "localityType":  "coastal_bay",
+                        "summary":  "Sheltered southern bays where ports, vineyards, and naval yards cluster.",
+                        "habitationScoreModifier":  8,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "moderate",
+                                                  "pasture":  "limited",
+                                                  "timber":  "moderate",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.35,
+                                                      "maxPopulationBand":  "major",
+                                                      "strategicSiteWeight":  1.4,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "harbor_town",
+                                                                                     "port_city",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.2,
+                                                    "river":  0.4,
+                                                    "coastal":  1.4,
+                                                    "caravan":  0.9,
+                                                    "pass":  0.4,
+                                                    "seaLane":  1.3
+                                                },
+                        "dominantIndustries":  [
+                                                   "maritime_trade",
+                                                   "shipbuilding",
+                                                   "viticulture"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.verdant_thalos_inland_estates",
+                        "slug":  "verdant_thalos_inland_estates",
+                        "name":  "Verdant Inland Estates",
+                        "macroRegionId":  "region.kaelvar",
+                        "regionId":  "region.verdant_thalos",
+                        "localityType":  "estate_farmbelt",
+                        "summary":  "Terraced vineyard, orchard, grain, and dairy interior feeding the coastal cities.",
+                        "habitationScoreModifier":  7,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "strong",
+                                                  "pasture":  "strong",
+                                                  "timber":  "limited",
+                                                  "fishery":  "limited",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.15,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.35,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "market_town",
+                                                                                     "town",
+                                                                                     "village",
+                                                                                     "estate"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.15,
+                                                    "river":  0.2,
+                                                    "coastal":  0.2,
+                                                    "caravan":  1,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0.1
+                                                },
+                        "dominantIndustries":  [
+                                                   "viticulture",
+                                                   "olive_pressing",
+                                                   "grain_farming",
+                                                   "dairy"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.auric_marches_ore_ridges",
+                        "slug":  "auric_marches_ore_ridges",
+                        "name":  "Ore Ridge Uplands",
+                        "macroRegionId":  "region.kaelvar",
+                        "regionId":  "region.auric_marches",
+                        "localityType":  "ore_ridge",
+                        "summary":  "Mineral-bearing uplands where mines and smelters justify permanent towns despite harsh water limits.",
+                        "habitationScoreModifier":  -4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "scarce",
+                                                  "pasture":  "limited",
+                                                  "timber":  "scarce",
+                                                  "fishery":  "none",
+                                                  "stone":  "moderate",
+                                                  "ore":  "strong",
+                                                  "salt":  "limited",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.9,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.1,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "town",
+                                                                                     "camp"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.8,
+                                                    "river":  0,
+                                                    "coastal":  0,
+                                                    "caravan":  1,
+                                                    "pass":  0.4,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "mining",
+                                                   "smelting",
+                                                   "ore_trade"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface",
+                                                     "subterranean"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.auric_marches_caravan_marches",
+                        "slug":  "auric_marches_caravan_marches",
+                        "name":  "Caravan Marches",
+                        "macroRegionId":  "region.kaelvar",
+                        "regionId":  "region.auric_marches",
+                        "localityType":  "upland_march",
+                        "summary":  "Dry caravan lanes held by forts, wells, and customs posts.",
+                        "habitationScoreModifier":  -6,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "scarce",
+                                                  "pasture":  "limited",
+                                                  "timber":  "scarce",
+                                                  "fishery":  "none",
+                                                  "stone":  "limited",
+                                                  "ore":  "limited",
+                                                  "salt":  "scarce",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.75,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  0.95,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "town",
+                                                                                     "fort",
+                                                                                     "outpost",
+                                                                                     "waystation"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0,
+                                                    "coastal":  0,
+                                                    "caravan":  1.25,
+                                                    "pass":  0.3,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "caravan_trade",
+                                                   "route_control",
+                                                   "pack_haulage"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.shattercap_deep_harbors",
+                        "slug":  "shattercap_deep_harbors",
+                        "name":  "Shattercap Deep Harbors",
+                        "macroRegionId":  "region.kaelvar",
+                        "regionId":  "region.shattercap_isles",
+                        "localityType":  "deep_harbor",
+                        "summary":  "Reliable island anchorages that support the main population and fish trade.",
+                        "habitationScoreModifier":  2,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "limited",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "strong",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.05,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  1.25,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "town",
+                                                                                     "city"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.85,
+                                                    "river":  0,
+                                                    "coastal":  1.35,
+                                                    "caravan":  0.6,
+                                                    "pass":  0.4,
+                                                    "seaLane":  1.3
+                                                },
+                        "dominantIndustries":  [
+                                                   "fishing",
+                                                   "salt_harvest",
+                                                   "coastal_trade"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.shattercap_beacon_cliffs",
+                        "slug":  "shattercap_beacon_cliffs",
+                        "name":  "Shattercap Beacon Cliffs",
+                        "macroRegionId":  "region.kaelvar",
+                        "regionId":  "region.shattercap_isles",
+                        "localityType":  "beacon_cliffs",
+                        "summary":  "Cold island cliffs where keeps, beacons, and watch posts dominate over ordinary settlement.",
+                        "habitationScoreModifier":  -6,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "scarce",
+                                                  "fishery":  "limited",
+                                                  "stone":  "strong",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.55,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.75,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "fort",
+                                                                                     "outpost"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.65,
+                                                    "river":  0,
+                                                    "coastal":  1,
+                                                    "caravan":  0.5,
+                                                    "pass":  0.4,
+                                                    "seaLane":  1
+                                                },
+                        "dominantIndustries":  [
+                                                   "sea_watch",
+                                                   "signal_watch",
+                                                   "piracy_deterrence"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.crownlands_forest_vales",
+                        "slug":  "crownlands_forest_vales",
+                        "name":  "Crownlands Forest Vales",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.crownlands",
+                        "localityType":  "forest_vale",
+                        "summary":  "Protected forest vales that can support cities, scholarship, and craft.",
+                        "habitationScoreModifier":  4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "moderate",
+                                                  "pasture":  "limited",
+                                                  "timber":  "strong",
+                                                  "fishery":  "none",
+                                                  "stone":  "limited",
+                                                  "ore":  "moderate",
+                                                  "salt":  "none",
+                                                  "herbs":  "strong",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.05,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.25,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0.4,
+                                                    "coastal":  0,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "forest_stewardship",
+                                                   "herbalism",
+                                                   "fine_craft"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.crownlands_headwater_passes",
+                        "slug":  "crownlands_headwater_passes",
+                        "name":  "Crownlands Headwater Passes",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.crownlands",
+                        "localityType":  "headwater_pass",
+                        "summary":  "Cold headwaters and border bastions controlling upland routes.",
+                        "habitationScoreModifier":  -6,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "scarce",
+                                                  "timber":  "moderate",
+                                                  "fishery":  "limited",
+                                                  "stone":  "moderate",
+                                                  "ore":  "limited",
+                                                  "salt":  "none",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.55,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.75,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "fort",
+                                                                                     "outpost"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.75,
+                                                    "river":  0.4,
+                                                    "coastal":  0,
+                                                    "caravan":  0.7,
+                                                    "pass":  1.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "border_security",
+                                                   "pass_control",
+                                                   "watershed_guard"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.embersteppe_herd_plains",
+                        "slug":  "embersteppe_herd_plains",
+                        "name":  "Embersteppe Herd Plains",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.embersteppe",
+                        "localityType":  "steppe_plain",
+                        "summary":  "Open pasture country favoring herd towns, remount yards, and hide trade.",
+                        "habitationScoreModifier":  0,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "surplus",
+                                                  "timber":  "scarce",
+                                                  "fishery":  "none",
+                                                  "stone":  "none",
+                                                  "ore":  "scarce",
+                                                  "salt":  "none",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.95,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.15,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "market_town",
+                                                                                     "town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.9,
+                                                    "river":  0,
+                                                    "coastal":  0,
+                                                    "caravan":  1.15,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "horse_breeding",
+                                                   "leatherworking",
+                                                   "stock_raising"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.embersteppe_stepwell_corridors",
+                        "slug":  "embersteppe_stepwell_corridors",
+                        "name":  "Embersteppe Stepwell Corridors",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.embersteppe",
+                        "localityType":  "water_redoubt",
+                        "summary":  "Fortified wells and rare river crossings that make otherwise harsh routes viable.",
+                        "habitationScoreModifier":  -7,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "minimal",
+                                                  "pasture":  "limited",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "none"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.55,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.75,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "fort",
+                                                                                     "outpost",
+                                                                                     "ferry_post"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.8,
+                                                    "river":  0.5,
+                                                    "coastal":  0,
+                                                    "caravan":  1.2,
+                                                    "pass":  0.3,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "water_security",
+                                                   "route_control",
+                                                   "escort_staging"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.sapphire_rivers_royal_floodplain",
+                        "slug":  "sapphire_rivers_royal_floodplain",
+                        "name":  "Royal Floodplain",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.sapphire_rivers",
+                        "localityType":  "river_plain",
+                        "summary":  "The most fertile floodplain in the world, supporting capitals and dense barge traffic.",
+                        "habitationScoreModifier":  8,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "surplus",
+                                                  "pasture":  "strong",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.4,
+                                                      "maxPopulationBand":  "major",
+                                                      "strategicSiteWeight":  1.4,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "town",
+                                                                                     "market_town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.15,
+                                                    "river":  1.35,
+                                                    "coastal":  0.1,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "administration",
+                                                   "grain_trade",
+                                                   "river_logistics"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.sapphire_rivers_bridge_corridors",
+                        "slug":  "sapphire_rivers_bridge_corridors",
+                        "name":  "Bridge Corridors",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.sapphire_rivers",
+                        "localityType":  "bridge_corridor",
+                        "summary":  "Bridged market belts where tax collection and route control matter.",
+                        "habitationScoreModifier":  4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "strong",
+                                                  "pasture":  "moderate",
+                                                  "timber":  "limited",
+                                                  "fishery":  "moderate",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.05,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.25,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "town",
+                                                                                     "market_town",
+                                                                                     "fort"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.25,
+                                                    "river":  1,
+                                                    "coastal":  0,
+                                                    "caravan":  0.9,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "route_control",
+                                                   "papermaking",
+                                                   "river_trade"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.jade_expanse_granary_core",
+                        "slug":  "jade_expanse_granary_core",
+                        "name":  "Granary Core",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.jade_expanse",
+                        "localityType":  "granary_plain",
+                        "summary":  "The core grain plain and storage districts of the open heartland.",
+                        "habitationScoreModifier":  7,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "surplus",
+                                                  "pasture":  "strong",
+                                                  "timber":  "none",
+                                                  "fishery":  "none",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.3,
+                                                      "maxPopulationBand":  "major",
+                                                      "strategicSiteWeight":  1.4,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "town",
+                                                                                     "market_town",
+                                                                                     "estate"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.15,
+                                                    "river":  0.2,
+                                                    "coastal":  0,
+                                                    "caravan":  1,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "grain_storage",
+                                                   "brewing",
+                                                   "agricultural_trade"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.jade_expanse_orchard_steppe",
+                        "slug":  "jade_expanse_orchard_steppe",
+                        "name":  "Orchard Steppe",
+                        "macroRegionId":  "region.valtherion",
+                        "regionId":  "region.jade_expanse",
+                        "localityType":  "orchard_belt",
+                        "summary":  "Horse-breeding and orchard belts around market towns and villages.",
+                        "habitationScoreModifier":  4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "strong",
+                                                  "pasture":  "strong",
+                                                  "timber":  "none",
+                                                  "fishery":  "none",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.2,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "market_town",
+                                                                                     "town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0.1,
+                                                    "coastal":  0,
+                                                    "caravan":  1.05,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "horse_breeding",
+                                                   "orcharding",
+                                                   "cider_making"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.windward_spine_mountain_holds",
+                        "slug":  "windward_spine_mountain_holds",
+                        "name":  "Mountain Holds",
+                        "macroRegionId":  "region.serathyl",
+                        "regionId":  "region.windward_spine",
+                        "localityType":  "mountain_hold",
+                        "summary":  "Permanent mountain holds sustained by mining, smelting, and pass taxation.",
+                        "habitationScoreModifier":  -2,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "scarce",
+                                                  "timber":  "limited",
+                                                  "fishery":  "none",
+                                                  "stone":  "strong",
+                                                  "ore":  "strong",
+                                                  "salt":  "none",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.85,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.05,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "fort",
+                                                                                     "citadel"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.7,
+                                                    "river":  0,
+                                                    "coastal":  0,
+                                                    "caravan":  0.6,
+                                                    "pass":  1.3,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "stonework",
+                                                   "smelting",
+                                                   "pass_control"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface",
+                                                     "subterranean"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.windward_spine_alpine_passes",
+                        "slug":  "windward_spine_alpine_passes",
+                        "name":  "Alpine Passes",
+                        "macroRegionId":  "region.serathyl",
+                        "regionId":  "region.windward_spine",
+                        "localityType":  "alpine_pass",
+                        "summary":  "Harsh pass belts supporting forts and customs but little ordinary farming.",
+                        "habitationScoreModifier":  -10,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "none",
+                                                  "stone":  "moderate",
+                                                  "ore":  "limited",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "none"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.45,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.65,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "fort",
+                                                                                     "outpost"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.5,
+                                                    "river":  0,
+                                                    "coastal":  0,
+                                                    "caravan":  0.7,
+                                                    "pass":  1.4,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "pass_security",
+                                                   "customs_control",
+                                                   "quarry_support"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.green_reach_heartwood",
+                        "slug":  "green_reach_heartwood",
+                        "name":  "Green Reach Heartwood",
+                        "macroRegionId":  "region.serathyl",
+                        "regionId":  "region.green_reach",
+                        "localityType":  "managed_forest",
+                        "summary":  "Protected heartwood forests with craft and stewardship centers.",
+                        "habitationScoreModifier":  1,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "limited",
+                                                  "timber":  "surplus",
+                                                  "fishery":  "none",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "strong",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.95,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.15,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.8,
+                                                    "river":  0.4,
+                                                    "coastal":  0,
+                                                    "caravan":  0.6,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "forest_stewardship",
+                                                   "herbalism",
+                                                   "fine_craft"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.green_reach_timber_edges",
+                        "slug":  "green_reach_timber_edges",
+                        "name":  "Green Reach Timber Edges",
+                        "macroRegionId":  "region.serathyl",
+                        "regionId":  "region.green_reach",
+                        "localityType":  "forest_edge",
+                        "summary":  "River-edge timber towns where floating logs and trade boats converge.",
+                        "habitationScoreModifier":  0,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "limited",
+                                                  "timber":  "strong",
+                                                  "fishery":  "moderate",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.9,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.1,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "town",
+                                                                                     "market_town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.95,
+                                                    "river":  0.8,
+                                                    "coastal":  0,
+                                                    "caravan":  0.7,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "timber_trade",
+                                                   "river_trade",
+                                                   "dye_processing"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.sailors_verge_grand_harbors",
+                        "slug":  "sailors_verge_grand_harbors",
+                        "name":  "Grand Harbors",
+                        "macroRegionId":  "region.serathyl",
+                        "regionId":  "region.sailors_verge",
+                        "localityType":  "grand_harbor",
+                        "summary":  "Major estuary harbors with deep trade, finance, and naval logistics.",
+                        "habitationScoreModifier":  6,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "moderate",
+                                                  "pasture":  "limited",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.3,
+                                                      "maxPopulationBand":  "major",
+                                                      "strategicSiteWeight":  1.4,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "port_city",
+                                                                                     "city",
+                                                                                     "harbor_town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.15,
+                                                    "river":  0.2,
+                                                    "coastal":  1.4,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.2,
+                                                    "seaLane":  1.35
+                                                },
+                        "dominantIndustries":  [
+                                                   "maritime_trade",
+                                                   "naval_logistics",
+                                                   "ship_finance"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.sailors_verge_citrus_trade_belt",
+                        "slug":  "sailors_verge_citrus_trade_belt",
+                        "name":  "Citrus Trade Belt",
+                        "macroRegionId":  "region.serathyl",
+                        "regionId":  "region.sailors_verge",
+                        "localityType":  "estuary_garden",
+                        "summary":  "Fertile estuaries and rope towns mixing citrus gardens, fishing, and maritime support.",
+                        "habitationScoreModifier":  4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "strong",
+                                                  "pasture":  "moderate",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.2,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "town",
+                                                                                     "estate"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0.4,
+                                                    "coastal":  1.1,
+                                                    "caravan":  0.7,
+                                                    "pass":  0.1,
+                                                    "seaLane":  1
+                                                },
+                        "dominantIndustries":  [
+                                                   "fishing",
+                                                   "citrus_trade",
+                                                   "ship_support",
+                                                   "rope_making"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.heart_basin_river_capitals",
+                        "slug":  "heart_basin_river_capitals",
+                        "name":  "River Capital Belt",
+                        "macroRegionId":  "region.draemor",
+                        "regionId":  "region.heart_basin",
+                        "localityType":  "river_capital_belt",
+                        "summary":  "The main capital and river service belt of the southern breadbasket.",
+                        "habitationScoreModifier":  8,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "surplus",
+                                                  "pasture":  "strong",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.35,
+                                                      "maxPopulationBand":  "major",
+                                                      "strategicSiteWeight":  1.4,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.15,
+                                                    "river":  1.25,
+                                                    "coastal":  0,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "administration",
+                                                   "grain_trade",
+                                                   "river_logistics"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.heart_basin_market_mills",
+                        "slug":  "heart_basin_market_mills",
+                        "name":  "Market Mills",
+                        "macroRegionId":  "region.draemor",
+                        "regionId":  "region.heart_basin",
+                        "localityType":  "mill_market",
+                        "summary":  "Large milling, baking, and crossing towns on stable waterways.",
+                        "habitationScoreModifier":  6,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "strong",
+                                                  "pasture":  "moderate",
+                                                  "timber":  "none",
+                                                  "fishery":  "moderate",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.1,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.3,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "market_town",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1.05,
+                                                    "river":  1,
+                                                    "coastal":  0,
+                                                    "caravan":  0.9,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "milling",
+                                                   "baking",
+                                                   "river_transport"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.emerald_mantle_pasture_uplands",
+                        "slug":  "emerald_mantle_pasture_uplands",
+                        "name":  "Pasture Uplands",
+                        "macroRegionId":  "region.draemor",
+                        "regionId":  "region.emerald_mantle",
+                        "localityType":  "pasture_upland",
+                        "summary":  "Forest-edge uplands suited to herds, remounts, and leatherwork.",
+                        "habitationScoreModifier":  3,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "moderate",
+                                                  "pasture":  "surplus",
+                                                  "timber":  "limited",
+                                                  "fishery":  "none",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.95,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.15,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "town",
+                                                                                     "market_town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0.2,
+                                                    "coastal":  0,
+                                                    "caravan":  0.9,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "animal_husbandry",
+                                                   "horse_breeding",
+                                                   "leatherworking"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.emerald_mantle_orchard_meadows",
+                        "slug":  "emerald_mantle_orchard_meadows",
+                        "name":  "Orchard Meadows",
+                        "macroRegionId":  "region.draemor",
+                        "regionId":  "region.emerald_mantle",
+                        "localityType":  "orchard_meadow",
+                        "summary":  "Meadows, orchards, and marsh-edge villages supporting mixed inland settlement.",
+                        "habitationScoreModifier":  3,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "strong",
+                                                  "pasture":  "moderate",
+                                                  "timber":  "limited",
+                                                  "fishery":  "limited",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.8,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  1,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "market_town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.9,
+                                                    "river":  0.3,
+                                                    "coastal":  0,
+                                                    "caravan":  0.7,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "orcharding",
+                                                   "hay_trade",
+                                                   "pond_farming"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.stormcap_coast_storm_harbors",
+                        "slug":  "stormcap_coast_storm_harbors",
+                        "name":  "Storm Harbors",
+                        "macroRegionId":  "region.draemor",
+                        "regionId":  "region.stormcap_coast",
+                        "localityType":  "storm_harbor",
+                        "summary":  "Weather-hardened anchorages and salt harbors along the dangerous coast.",
+                        "habitationScoreModifier":  2,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "limited",
+                                                  "timber":  "scarce",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "strong",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.2,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "town",
+                                                                                     "port_city"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.95,
+                                                    "river":  0,
+                                                    "coastal":  1.35,
+                                                    "caravan":  0.7,
+                                                    "pass":  0.2,
+                                                    "seaLane":  1.1
+                                                },
+                        "dominantIndustries":  [
+                                                   "salt_harvest",
+                                                   "fishing",
+                                                   "coastal_resupply"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.stormcap_coast_watch_citadels",
+                        "slug":  "stormcap_coast_watch_citadels",
+                        "name":  "Watch Citadels",
+                        "macroRegionId":  "region.draemor",
+                        "regionId":  "region.stormcap_coast",
+                        "localityType":  "watch_citadel",
+                        "summary":  "Defended coastal heights commanding beacons and anti-piracy patrols.",
+                        "habitationScoreModifier":  -4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "strong",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.5,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.7,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "citadel",
+                                                                                     "fort"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.6,
+                                                    "river":  0,
+                                                    "coastal":  1,
+                                                    "caravan":  0.5,
+                                                    "pass":  0.2,
+                                                    "seaLane":  1
+                                                },
+                        "dominantIndustries":  [
+                                                   "coastal_defense",
+                                                   "signal_watch",
+                                                   "traveler_relief"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.silver_valleys_sunspire_vales",
+                        "slug":  "silver_valleys_sunspire_vales",
+                        "name":  "Sunspire Vales",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.silver_valleys",
+                        "localityType":  "river_vale",
+                        "summary":  "Best valley floor for administration, trade, and defended agriculture.",
+                        "habitationScoreModifier":  3,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "strong",
+                                                  "pasture":  "moderate",
+                                                  "timber":  "limited",
+                                                  "fishery":  "moderate",
+                                                  "stone":  "limited",
+                                                  "ore":  "moderate",
+                                                  "salt":  "none",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1,
+                                                      "maxPopulationBand":  "major",
+                                                      "strategicSiteWeight":  1.2,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0.7,
+                                                    "coastal":  0,
+                                                    "caravan":  0.9,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "administration",
+                                                   "frontier_trade",
+                                                   "defense"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.silver_valleys_ford_corridors",
+                        "slug":  "silver_valleys_ford_corridors",
+                        "name":  "Ford Corridors",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.silver_valleys",
+                        "localityType":  "ford_corridor",
+                        "summary":  "Trade and hide towns concentrated at controllable valley crossings.",
+                        "habitationScoreModifier":  -1,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "moderate",
+                                                  "pasture":  "strong",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.8,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "town",
+                                                                                     "market_town",
+                                                                                     "fort"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0.6,
+                                                    "coastal":  0,
+                                                    "caravan":  1.1,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "crossing_control",
+                                                   "caravan_support",
+                                                   "hide_trade"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.silver_valleys_warrens_below",
+                        "slug":  "silver_valleys_warrens_below",
+                        "name":  "Warrens Below",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.silver_valleys",
+                        "localityType":  "underhold",
+                        "summary":  "Subterranean strongholds exploiting hidden smelting, fungus, and raiding routes.",
+                        "habitationScoreModifier":  -8,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "scarce",
+                                                  "timber":  "none",
+                                                  "fishery":  "none",
+                                                  "stone":  "strong",
+                                                  "ore":  "strong",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.6,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  0.8,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "citadel",
+                                                                                     "city"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.4,
+                                                    "river":  0,
+                                                    "coastal":  0,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.6,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "fungus_cultivation",
+                                                   "hidden_smelting",
+                                                   "raiding"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "subterranean"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.thorn_peninsula_spice_markets",
+                        "slug":  "thorn_peninsula_spice_markets",
+                        "name":  "Spice Markets",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.thorn_peninsula",
+                        "localityType":  "spice_market",
+                        "summary":  "Dry-heat spice markets and warehouses concentrated near workable ports.",
+                        "habitationScoreModifier":  0,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "moderate",
+                                                  "pasture":  "limited",
+                                                  "timber":  "limited",
+                                                  "fishery":  "moderate",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "strong",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.95,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  1.15,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "market_town",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.95,
+                                                    "river":  0,
+                                                    "coastal":  0.8,
+                                                    "caravan":  0.9,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0.8
+                                                },
+                        "dominantIndustries":  [
+                                                   "spice_trade",
+                                                   "warehousing",
+                                                   "tea_growing"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.thorn_peninsula_salt_anchorage",
+                        "slug":  "thorn_peninsula_salt_anchorage",
+                        "name":  "Salt Anchorage Coast",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.thorn_peninsula",
+                        "localityType":  "salt_anchorage",
+                        "summary":  "Salt harbors and patrol anchorages that control the peninsula’s coastwise trade.",
+                        "habitationScoreModifier":  -1,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "scarce",
+                                                  "pasture":  "limited",
+                                                  "timber":  "scarce",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "surplus",
+                                                  "herbs":  "none",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.9,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  1.1,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.85,
+                                                    "river":  0,
+                                                    "coastal":  1.25,
+                                                    "caravan":  0.9,
+                                                    "pass":  0.2,
+                                                    "seaLane":  1.1
+                                                },
+                        "dominantIndustries":  [
+                                                   "coastal_trade",
+                                                   "salt_trade",
+                                                   "naval_patrol"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.thorn_peninsula_watch_forts",
+                        "slug":  "thorn_peninsula_watch_forts",
+                        "name":  "Thorn Forts",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.thorn_peninsula",
+                        "localityType":  "frontier_fort",
+                        "summary":  "Fortified route controls in harsher interior hills.",
+                        "habitationScoreModifier":  -8,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "scarce",
+                                                  "timber":  "none",
+                                                  "fishery":  "none",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "none"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.45,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.65,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "fort",
+                                                                                     "outpost"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.6,
+                                                    "river":  0,
+                                                    "coastal":  0,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.7,
+                                                    "seaLane":  0
+                                                },
+                        "dominantIndustries":  [
+                                                   "route_control",
+                                                   "frontier_response",
+                                                   "peninsula_security"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.watcher_coast_gate_citadels",
+                        "slug":  "watcher_coast_gate_citadels",
+                        "name":  "Gate Citadels",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.watcher_coast",
+                        "localityType":  "gate_citadel",
+                        "summary":  "Defensive chokeholds on the hazardous coast and inland approaches.",
+                        "habitationScoreModifier":  -9,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "strong",
+                                                  "ore":  "moderate",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.5,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.7,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "citadel",
+                                                                                     "fort"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.7,
+                                                    "river":  0,
+                                                    "coastal":  0.7,
+                                                    "caravan":  0.7,
+                                                    "pass":  0.9,
+                                                    "seaLane":  0.3
+                                                },
+                        "dominantIndustries":  [
+                                                   "defense",
+                                                   "route_control",
+                                                   "tax_collection"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.watcher_coast_obsidian_steps",
+                        "slug":  "watcher_coast_obsidian_steps",
+                        "name":  "Obsidian Steps",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.watcher_coast",
+                        "localityType":  "obsidian_steps",
+                        "summary":  "Stone and obsidian working towns on difficult cliff approaches.",
+                        "habitationScoreModifier":  -4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "scarce",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "surplus",
+                                                  "ore":  "moderate",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.7,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  0.9,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "town",
+                                                                                     "camp"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.65,
+                                                    "river":  0,
+                                                    "coastal":  0.4,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.3,
+                                                    "seaLane":  0.2
+                                                },
+                        "dominantIndustries":  [
+                                                   "quarrying",
+                                                   "obsidian_cutting",
+                                                   "metal_supply"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.watcher_coast_mistfen_edges",
+                        "slug":  "watcher_coast_mistfen_edges",
+                        "name":  "Mistfen Edges",
+                        "macroRegionId":  "region.talmyra",
+                        "regionId":  "region.watcher_coast",
+                        "localityType":  "mistfen_harbor",
+                        "summary":  "Marsh-edged harbor pockets supporting fishing and supply transfer.",
+                        "habitationScoreModifier":  -5,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "scarce",
+                                                  "pasture":  "scarce",
+                                                  "timber":  "none",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.65,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  0.85,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.6,
+                                                    "river":  0.2,
+                                                    "coastal":  1,
+                                                    "caravan":  0.6,
+                                                    "pass":  0.2,
+                                                    "seaLane":  0.9
+                                                },
+                        "dominantIndustries":  [
+                                                   "coastal_trade",
+                                                   "fishing",
+                                                   "marsh_supply"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.myridian_ports",
+                        "slug":  "myridian_ports",
+                        "name":  "Starfall Ports",
+                        "macroRegionId":  "region.myridian_chain",
+                        "regionId":  "region.myridian_chain",
+                        "localityType":  "archipelago_port",
+                        "summary":  "Primary archipelago harbors handling customs, shipbuilding, and interregional trade.",
+                        "habitationScoreModifier":  4,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "limited",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  1.15,
+                                                      "maxPopulationBand":  "large",
+                                                      "strategicSiteWeight":  1.35,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "port_city",
+                                                                                     "harbor_town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  1,
+                                                    "river":  0,
+                                                    "coastal":  1.4,
+                                                    "caravan":  0.7,
+                                                    "pass":  0.2,
+                                                    "seaLane":  1.4
+                                                },
+                        "dominantIndustries":  [
+                                                   "interregional_trade",
+                                                   "shipbuilding",
+                                                   "customs"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.myridian_pearl_shoals",
+                        "slug":  "myridian_pearl_shoals",
+                        "name":  "Pearl Shoals",
+                        "macroRegionId":  "region.myridian_chain",
+                        "regionId":  "region.myridian_chain",
+                        "localityType":  "pearl_shoals",
+                        "summary":  "Pearling and curing harbors on the island shelves.",
+                        "habitationScoreModifier":  1,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "limited",
+                                                  "timber":  "none",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.85,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  1.05,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "village"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.75,
+                                                    "river":  0,
+                                                    "coastal":  1.1,
+                                                    "caravan":  0.4,
+                                                    "pass":  0.1,
+                                                    "seaLane":  1.15
+                                                },
+                        "dominantIndustries":  [
+                                                   "pearling",
+                                                   "fishing",
+                                                   "salt_curing"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.myridian_beacon_bastions",
+                        "slug":  "myridian_beacon_bastions",
+                        "name":  "Beacon Bastions",
+                        "macroRegionId":  "region.myridian_chain",
+                        "regionId":  "region.myridian_chain",
+                        "localityType":  "beacon_bastion",
+                        "summary":  "Fortified beacons on exposed edges of the chain.",
+                        "habitationScoreModifier":  -5,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "strong",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.45,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.65,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "fort",
+                                                                                     "outpost"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.55,
+                                                    "river":  0,
+                                                    "coastal":  0.9,
+                                                    "caravan":  0.4,
+                                                    "pass":  0.3,
+                                                    "seaLane":  0.9
+                                                },
+                        "dominantIndustries":  [
+                                                   "beacon_signaling",
+                                                   "coastal_defense",
+                                                   "market_transfer"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.lantern_harbors",
+                        "slug":  "lantern_harbors",
+                        "name":  "Lantern Harbors",
+                        "macroRegionId":  "region.lantern_isles",
+                        "regionId":  "region.lantern_isles",
+                        "localityType":  "reef_harbor",
+                        "summary":  "Sheltered harbors that broker island trade and light manufacture.",
+                        "habitationScoreModifier":  2,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "limited",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "limited",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.95,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  1.15,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.85,
+                                                    "river":  0,
+                                                    "coastal":  1.3,
+                                                    "caravan":  0.6,
+                                                    "pass":  0.1,
+                                                    "seaLane":  1.25
+                                                },
+                        "dominantIndustries":  [
+                                                   "brokerage",
+                                                   "resupply",
+                                                   "light_manufacture"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.lantern_reef_depths",
+                        "slug":  "lantern_reef_depths",
+                        "name":  "Lantern Reef Depths",
+                        "macroRegionId":  "region.lantern_isles",
+                        "regionId":  "region.lantern_isles",
+                        "localityType":  "reef_depths",
+                        "summary":  "Protected reef and undersea pockets supporting pearl and sea-craft communities.",
+                        "habitationScoreModifier":  -2,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "limited",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.75,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  0.95,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "harbor_town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.2,
+                                                    "river":  0,
+                                                    "coastal":  1.1,
+                                                    "caravan":  0.2,
+                                                    "pass":  0,
+                                                    "seaLane":  1.1
+                                                },
+                        "dominantIndustries":  [
+                                                   "pearling",
+                                                   "reef_craft",
+                                                   "sea_trade"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "underwater"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.lantern_shrine_gardens",
+                        "slug":  "lantern_shrine_gardens",
+                        "name":  "Shrine Gardens",
+                        "macroRegionId":  "region.lantern_isles",
+                        "regionId":  "region.lantern_isles",
+                        "localityType":  "shrine_garden",
+                        "summary":  "Small religious estates with herbs, records, and traveler relief.",
+                        "habitationScoreModifier":  0,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "limited",
+                                                  "pasture":  "limited",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "strong",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.45,
+                                                      "maxPopulationBand":  "small",
+                                                      "strategicSiteWeight":  0.65,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "monastery",
+                                                                                     "estate"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.5,
+                                                    "river":  0,
+                                                    "coastal":  0.4,
+                                                    "caravan":  0.3,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0.2
+                                                },
+                        "dominantIndustries":  [
+                                                   "record_copying",
+                                                   "herb_cultivation",
+                                                   "traveler_relief"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.serpents_storm_havens",
+                        "slug":  "serpents_storm_havens",
+                        "name":  "Storm Havens",
+                        "macroRegionId":  "region.serpents_wake",
+                        "regionId":  "region.serpents_wake",
+                        "localityType":  "storm_haven",
+                        "summary":  "The only larger safe anchors in the wake, built on salvage and convoy service.",
+                        "habitationScoreModifier":  -2,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "scarce",
+                                                  "pasture":  "limited",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "strong",
+                                                  "herbs":  "moderate",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.85,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  1.05,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.65,
+                                                    "river":  0,
+                                                    "coastal":  1.2,
+                                                    "caravan":  0.8,
+                                                    "pass":  0.1,
+                                                    "seaLane":  1.25
+                                                },
+                        "dominantIndustries":  [
+                                                   "salvage_trade",
+                                                   "shellfish_harvest",
+                                                   "passage_services"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.serpents_reef_anchorages",
+                        "slug":  "serpents_reef_anchorages",
+                        "name":  "Reef Anchorages",
+                        "macroRegionId":  "region.serpents_wake",
+                        "regionId":  "region.serpents_wake",
+                        "localityType":  "reef_anchorage",
+                        "summary":  "Tiny anchorages surviving through smuggling, raids, and salvage.",
+                        "habitationScoreModifier":  -8,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "scarce",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "moderate",
+                                                  "herbs":  "none",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.4,
+                                                      "maxPopulationBand":  "tiny",
+                                                      "strategicSiteWeight":  0.6,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "outpost",
+                                                                                     "harbor_town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.35,
+                                                    "river":  0,
+                                                    "coastal":  1,
+                                                    "caravan":  0.7,
+                                                    "pass":  0,
+                                                    "seaLane":  1.05
+                                                },
+                        "dominantIndustries":  [
+                                                   "smuggling",
+                                                   "storm_salvage",
+                                                   "raiding"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.serpents_watch_musters",
+                        "slug":  "serpents_watch_musters",
+                        "name":  "Watch Musters",
+                        "macroRegionId":  "region.serpents_wake",
+                        "regionId":  "region.serpents_wake",
+                        "localityType":  "watch_waystation",
+                        "summary":  "Mustering and signal sites at the edge of viable permanent settlement.",
+                        "habitationScoreModifier":  -11,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "limited",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.3,
+                                                      "maxPopulationBand":  "tiny",
+                                                      "strategicSiteWeight":  0.5,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "waystation",
+                                                                                     "outpost"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.4,
+                                                    "river":  0,
+                                                    "coastal":  0.7,
+                                                    "caravan":  0.7,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0.7
+                                                },
+                        "dominantIndustries":  [
+                                                   "signal_duty",
+                                                   "coastal_security",
+                                                   "escort_mustering"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.dawnreach_aurora_harbors",
+                        "slug":  "dawnreach_aurora_harbors",
+                        "name":  "Aurora Harbors",
+                        "macroRegionId":  "region.dawnreach_isles",
+                        "regionId":  "region.dawnreach_isles",
+                        "localityType":  "cold_harbor",
+                        "summary":  "Cold-water harbors supporting whaling, fishery, and eastward relay trade.",
+                        "habitationScoreModifier":  -2,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "scarce",
+                                                  "pasture":  "limited",
+                                                  "timber":  "limited",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "scarce",
+                                                  "specialty":  "moderate"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.7,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  0.9,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "harbor_town",
+                                                                                     "town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.6,
+                                                    "river":  0,
+                                                    "coastal":  1.1,
+                                                    "caravan":  0.6,
+                                                    "pass":  0.1,
+                                                    "seaLane":  1
+                                                },
+                        "dominantIndustries":  [
+                                                   "whaling",
+                                                   "cold_fishery",
+                                                   "resupply"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.dawnreach_nacre_depths",
+                        "slug":  "dawnreach_nacre_depths",
+                        "name":  "Nacre Depths",
+                        "macroRegionId":  "region.dawnreach_isles",
+                        "regionId":  "region.dawnreach_isles",
+                        "localityType":  "nacre_depths",
+                        "summary":  "A rare underwater pocket for pearling and cold sea-craft.",
+                        "habitationScoreModifier":  -6,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "strong"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.55,
+                                                      "maxPopulationBand":  "modest",
+                                                      "strategicSiteWeight":  0.75,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "city",
+                                                                                     "harbor_town"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.1,
+                                                    "river":  0,
+                                                    "coastal":  0.9,
+                                                    "caravan":  0.2,
+                                                    "pass":  0,
+                                                    "seaLane":  0.9
+                                                },
+                        "dominantIndustries":  [
+                                                   "pearling",
+                                                   "cold_water_trade",
+                                                   "sea_craft"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "underwater"
+                                                 ]
+                    },
+                    {
+                        "id":  "region_locality.dawnreach_whalebone_watches",
+                        "slug":  "dawnreach_whalebone_watches",
+                        "name":  "Whalebone Watches",
+                        "macroRegionId":  "region.dawnreach_isles",
+                        "regionId":  "region.dawnreach_isles",
+                        "localityType":  "whalebone_watch",
+                        "summary":  "Tiny lookout and whale-processing stations on exposed coasts.",
+                        "habitationScoreModifier":  -10,
+                        "resourceCatchment":  {
+                                                  "arableLand":  "none",
+                                                  "pasture":  "none",
+                                                  "timber":  "none",
+                                                  "fishery":  "strong",
+                                                  "stone":  "none",
+                                                  "ore":  "none",
+                                                  "salt":  "none",
+                                                  "herbs":  "none",
+                                                  "specialty":  "limited"
+                                              },
+                        "settlementSuitability":  {
+                                                      "settlementWeight":  0.3,
+                                                      "maxPopulationBand":  "tiny",
+                                                      "strategicSiteWeight":  0.5,
+                                                      "favoredSettlementTypes":  [
+                                                                                     "outpost",
+                                                                                     "camp"
+                                                                                 ]
+                                                  },
+                        "routeAccessModifier":  {
+                                                    "road":  0.25,
+                                                    "river":  0,
+                                                    "coastal":  0.6,
+                                                    "caravan":  0.4,
+                                                    "pass":  0.1,
+                                                    "seaLane":  0.6
+                                                },
+                        "dominantIndustries":  [
+                                                   "whaling",
+                                                   "lookout_service",
+                                                   "marine_harvest"
+                                               ],
+                        "supportedSiteClasses":  [
+                                                     "surface"
+                                                 ]
+                    }
+                ]
+}

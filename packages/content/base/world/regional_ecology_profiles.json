@@ -1,4 +1,4 @@
-{
+﻿{
     "records":  [
                     {
                         "id":  "regional_ecology.kaelvar",
@@ -53,11 +53,10 @@
                         "domesticStrengths":  [
                                                   "Wine grapes and orchard-edge agriculture",
                                                   "Wool, goats, and horse stock",
-                                                  "Copper, iron, and salt districts",
-                                                  "Coastal fish and ship timber access"
+                                                  "Copper, iron, and salt districts"
                                               ],
                         "domesticGaps":  [
-                                             "Bulk grain is less reliable than in basin-heavy continents",
+                                             "Bulk grain is less reliable than basin continents",
                                              "Silk and tropical luxuries are weak",
                                              "Rare magical reagents and exotic hardwoods are limited"
                                          ],
@@ -67,20 +66,35 @@
                                                             "region.talmyra"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Kaelvar naturally exports metals, wool, and wine while leaning on Draemor for dependable grain.",
-                                                   "Serathyl and Talmyra are the cleanest suppliers for warmer-climate luxuries and exotic plant goods."
+                                                   "Kaelvar exports metals, wool, and wine while leaning outward for reliable grain and warmer luxuries."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.kaelvar_plateau",
-                                                  "map_climate.first_world.kaelvar_south",
-                                                  "map_climate.first_world.shattercap_marine"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.auric_marches_steppe",
-                                                "map_biome.first_world.auric_marches_underdark",
-                                                "map_biome.first_world.verdant_thalos_woodland",
-                                                "map_biome.first_world.shattercap_isles_conifer"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  68,
+                                                  "foodProductionCapacity":  64,
+                                                  "waterAvailability":  58,
+                                                  "climateBurden":  42,
+                                                  "hazardPressure":  38,
+                                                  "infrastructureDifficulty":  46,
+                                                  "populationCapacity":  40000000,
+                                                  "densityBand":  "moderate"
+                                              },
+                        "resourceDiversityBand":  "high",
+                        "supplyStrengths":  [
+                                                "wine",
+                                                "olive_oil",
+                                                "wool",
+                                                "copper",
+                                                "iron",
+                                                "salt"
+                                            ],
+                        "demandPressures":  [
+                                                "grain",
+                                                "silk",
+                                                "exotic_woods",
+                                                "magical_reagents"
+                                            ],
+                        "importBias":  0.58,
+                        "exportBias":  0.62
                     },
                     {
                         "id":  "regional_ecology.valtherion",
@@ -137,13 +151,12 @@
                         "domesticStrengths":  [
                                                   "Massive grain output and river-fed orchards",
                                                   "Horse, cattle, and sheep husbandry",
-                                                  "Flax fiber and timber support for industry",
-                                                  "Strong upland access to metals and stone"
+                                                  "Flax fiber and timber support for industry"
                                               ],
                         "domesticGaps":  [
                                              "Spices and tropical plant luxuries are weak",
                                              "Rare hardwoods and exotic fauna are not native strengths",
-                                             "Pearls and warm-sea luxury fisheries remain import-biased"
+                                             "Warm-sea luxury fisheries remain import-biased"
                                          ],
                         "likelyTradePartnerRegionIds":  [
                                                             "region.talmyra",
@@ -151,21 +164,34 @@
                                                             "region.myridian_chain"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Valtherion can feed itself and others, but its scale creates permanent demand for luxuries, spices, and prestige imports.",
-                                                   "Talmyra and Serathyl fill the strongest climate-driven gaps, while Myridian helps with pearls and sea luxuries."
+                                                   "Valtherion can feed itself and others, but its scale creates permanent demand for luxuries and prestige imports."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.valtherion_north",
-                                                  "map_climate.first_world.valtherion_interior",
-                                                  "map_climate.first_world.valtherion_rivers",
-                                                  "map_climate.first_world.valtherion_south"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.crownlands_taiga",
-                                                "map_biome.first_world.embersteppe_steppe",
-                                                "map_biome.first_world.sapphire_rivers_mixed",
-                                                "map_biome.first_world.jade_expanse_prairie"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  86,
+                                                  "foodProductionCapacity":  88,
+                                                  "waterAvailability":  84,
+                                                  "climateBurden":  28,
+                                                  "hazardPressure":  26,
+                                                  "infrastructureDifficulty":  30,
+                                                  "populationCapacity":  140000000,
+                                                  "densityBand":  "very_high"
+                                              },
+                        "resourceDiversityBand":  "very_high",
+                        "supplyStrengths":  [
+                                                "grain",
+                                                "horses",
+                                                "flax",
+                                                "river_trade",
+                                                "steel_tools"
+                                            ],
+                        "demandPressures":  [
+                                                "spices",
+                                                "rare_ores",
+                                                "pearls",
+                                                "prestige_goods"
+                                            ],
+                        "importBias":  0.42,
+                        "exportBias":  0.74
                     },
                     {
                         "id":  "regional_ecology.serathyl",
@@ -218,14 +244,13 @@
                                                 "luxuryGoods":  "strong"
                                             },
                         "domesticStrengths":  [
-                                                  "Hardwood, ship timber, and shipbuilding materials",
-                                                  "Citrus, vineyard, and dye-plant output",
-                                                  "Coastal fisheries and preserved seafood",
-                                                  "Useful medicinal and aromatic herbs"
+                                                  "Hardwood and ship timber output",
+                                                  "Citrus, vineyard, and dye-plant crops",
+                                                  "Coastal fisheries and preserved seafood"
                                               ],
                         "domesticGaps":  [
-                                             "Bulk grain depth is weaker than the river-basin continents",
-                                             "Iron and construction stone are limited compared with northern interiors",
+                                             "Bulk grain depth is weaker than the basin continents",
+                                             "Iron and stone are limited",
                                              "Large cavalry herds are not a standout domestic strength"
                                          ],
                         "likelyTradePartnerRegionIds":  [
@@ -234,20 +259,33 @@
                                                             "region.kaelvar"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Serathyl naturally trades crafted maritime goods and luxury crops for grain, metal, and stone.",
-                                                   "Valtherion and Draemor cover the largest staple deficits, while Kaelvar can help on metals and wool."
+                                                   "Serathyl trades maritime craft goods and luxury crops for grain, metal, and stone."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.serathyl_spine",
-                                                  "map_climate.first_world.serathyl_forest",
-                                                  "map_climate.first_world.serathyl_coast"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.windward_spine_alpine",
-                                                "map_biome.first_world.windward_spine_holdfast",
-                                                "map_biome.first_world.green_reach_rainforest",
-                                                "map_biome.first_world.sailors_verge_chaparral"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  72,
+                                                  "foodProductionCapacity":  63,
+                                                  "waterAvailability":  78,
+                                                  "climateBurden":  36,
+                                                  "hazardPressure":  44,
+                                                  "infrastructureDifficulty":  48,
+                                                  "populationCapacity":  55000000,
+                                                  "densityBand":  "moderate"
+                                              },
+                        "resourceDiversityBand":  "high",
+                        "supplyStrengths":  [
+                                                "hardwood_lumber",
+                                                "citrus",
+                                                "ships",
+                                                "dyes",
+                                                "fish"
+                                            ],
+                        "demandPressures":  [
+                                                "grain",
+                                                "iron",
+                                                "construction_stone"
+                                            ],
+                        "importBias":  0.57,
+                        "exportBias":  0.67
                     },
                     {
                         "id":  "regional_ecology.draemor",
@@ -258,22 +296,21 @@
                         "primaryClimateProfileId":  "climate.wet_year",
                         "secondaryClimateProfileIds":  [
                                                            "climate.standard",
-                                                           "climate.early_spring"
+                                                           "climate.long_summer"
                                                        ],
                         "dominantBiomeIds":  [
                                                  "biome.grasslands.stormbound_prairie",
                                                  "biome.temperate.deciduous_forest",
                                                  "biome.temperate.mixed_forest",
-                                                 "biome.wetlands.marsh"
+                                                 "biome.wetlands.floodplain_marsh"
                                              ],
                         "supportingBiomeIds":  [
-                                                   "biome.wetlands.fen",
-                                                   "biome.marine.marine"
+                                                   "biome.marine.marine",
+                                                   "biome.shrublands.chaparral"
                                                ],
                         "nativeFloraIds":  [
                                                "flora.wheat",
                                                "flora.barley",
-                                               "flora.rice",
                                                "flora.flax",
                                                "flora.apple_tree",
                                                "flora.pear_tree",
@@ -282,53 +319,60 @@
                                            ],
                         "nativeFaunaIds":  [
                                                "fauna.cattle",
-                                               "fauna.sheep",
                                                "fauna.horse",
+                                               "fauna.sheep",
                                                "fauna.goat",
                                                "fauna.deer",
-                                               "fauna.rabbit",
-                                               "fauna.pike",
                                                "fauna.trout",
-                                               "fauna.crawfish"
+                                               "fauna.catfish"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "surplus",
                                                 "herdAndGame":  "strong",
                                                 "maritimeFoods":  "moderate",
                                                 "timberAndFiber":  "strong",
-                                                "metalsAndStone":  "limited",
+                                                "metalsAndStone":  "moderate",
                                                 "herbsAndReagents":  "moderate",
                                                 "luxuryGoods":  "limited"
                                             },
                         "domesticStrengths":  [
-                                                  "Reliable grain surpluses and fodder crops",
-                                                  "Large livestock base and horse-breeding capacity",
-                                                  "Leather, wool, and common fibers",
-                                                  "Wetland-adjacent fisheries and freshwater harvests"
+                                                  "Massive grain and beer output",
+                                                  "Cattle, horse, and hide production",
+                                                  "Vegetable belts and market orchards"
                                               ],
-                        "domesticGaps":  [
-                                             "Precious metals and high-value mineral wealth are weaker than in mountain-heavy regions",
-                                             "Spices, silk, and tropical fruits require import",
-                                             "Rare magical and prestige goods are not a native ecological strength"
-                                         ],
+                        "domesticGaps":  "Needs more metal ore, hardwood, and prestige goods than it produces locally",
                         "likelyTradePartnerRegionIds":  [
-                                                            "region.valtherion",
-                                                            "region.talmyra",
-                                                            "region.serathyl"
+                                                            "region.kaelvar",
+                                                            "region.serathyl",
+                                                            "region.talmyra"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Draemor naturally trades food, livestock, and leather outward while importing prestige, metal, and tropical goods.",
-                                                   "Talmyra and Serathyl solve most climate-luxury gaps, while Valtherion fills industrial and scholarly demand."
+                                                   "Draemor is a southern breadbasket whose deficits are mostly higher-tier goods, not staples."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.draemor_basin",
-                                                  "map_climate.first_world.draemor_coast"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.heart_basin_prairie",
-                                                "map_biome.first_world.emerald_mantle_deciduous",
-                                                "map_biome.first_world.stormcap_coast_chaparral"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  89,
+                                                  "foodProductionCapacity":  92,
+                                                  "waterAvailability":  88,
+                                                  "climateBurden":  24,
+                                                  "hazardPressure":  28,
+                                                  "infrastructureDifficulty":  32,
+                                                  "populationCapacity":  90000000,
+                                                  "densityBand":  "high"
+                                              },
+                        "resourceDiversityBand":  "high",
+                        "supplyStrengths":  [
+                                                "grain",
+                                                "beer",
+                                                "cattle",
+                                                "vegetables"
+                                            ],
+                        "demandPressures":  [
+                                                "metal_ore",
+                                                "hardwood",
+                                                "prestige_goods"
+                                            ],
+                        "importBias":  0.38,
+                        "exportBias":  0.72
                     },
                     {
                         "id":  "regional_ecology.talmyra",
@@ -336,84 +380,88 @@
                         "name":  "Talmyra Ecology Profile",
                         "regionId":  "region.talmyra",
                         "summary":  "Talmyra\u0027s tropical forests, mangroves, and savannas favor sugar, aromatics, tropical fruit, and rare animal goods, but not stable cold-weather staple depth.",
-                        "primaryClimateProfileId":  "climate.hot_year",
+                        "primaryClimateProfileId":  "climate.long_summer",
                         "secondaryClimateProfileIds":  [
-                                                           "climate.long_summer",
-                                                           "climate.wet_year"
+                                                           "climate.wet_year",
+                                                           "climate.dry_year"
                                                        ],
                         "dominantBiomeIds":  [
+                                                 "biome.temperate.seasonal_forest",
+                                                 "biome.grasslands.savanna",
                                                  "biome.tropical.tropical_rainforest",
-                                                 "biome.tropical.seasonal_forest",
-                                                 "biome.tropical.cloud_forest",
-                                                 "biome.grasslands.savanna"
+                                                 "biome.grasslands.alpine_meadow"
                                              ],
                         "supportingBiomeIds":  [
-                                                   "biome.wetlands.mangrove_forest",
-                                                   "biome.marine.marine"
+                                                   "biome.marine.marine",
+                                                   "biome.shrublands.dry_scrub"
                                                ],
                         "nativeFloraIds":  [
-                                               "flora.rice",
-                                               "flora.sugarcane",
-                                               "flora.cacao_tree",
-                                               "flora.coffee_shrub",
-                                               "flora.mango_tree",
-                                               "flora.papaya_tree",
-                                               "flora.pineapple",
-                                               "flora.lemongrass",
-                                               "flora.tea_shrub"
+                                               "flora.cinnamon_tree",
+                                               "flora.orange_tree",
+                                               "flora.lemon_tree",
+                                               "flora.cassava",
+                                               "flora.tea_shrub",
+                                               "flora.mahogany_tree"
                                            ],
                         "nativeFaunaIds":  [
-                                               "fauna.boar",
                                                "fauna.goat",
-                                               "fauna.ostrich",
-                                               "fauna.pelican",
-                                               "fauna.crab",
-                                               "fauna.clam",
-                                               "fauna.bluefin_tuna",
-                                               "fauna.dolphin",
-                                               "fauna.roc"
+                                               "fauna.boar",
+                                               "fauna.deer",
+                                               "fauna.parrotfish",
+                                               "fauna.oyster",
+                                               "fauna.crab"
                                            ],
                         "coverageProfile":  {
-                                                "stapleCrops":  "moderate",
+                                                "stapleCrops":  "limited",
                                                 "herdAndGame":  "moderate",
-                                                "maritimeFoods":  "strong",
+                                                "maritimeFoods":  "moderate",
                                                 "timberAndFiber":  "moderate",
-                                                "metalsAndStone":  "moderate",
+                                                "metalsAndStone":  "strong",
                                                 "herbsAndReagents":  "strong",
-                                                "luxuryGoods":  "surplus"
+                                                "luxuryGoods":  "strong"
                                             },
                         "domesticStrengths":  [
-                                                  "Sugar, cacao, coffee, tea, and tropical fruit",
-                                                  "Aromatic herbs and spice-adjacent plant goods",
-                                                  "Rare hardwood belts and exotic beasts",
-                                                  "Warm-sea fish and shellfish"
+                                                  "Spices, rare hardwoods, and tropical fruit",
+                                                  "Gold, gems, and resinous woods",
+                                                  "Strong frontier extraction value"
                                               ],
                         "domesticGaps":  [
-                                             "Cool-weather grain systems are less stable than in basin continents",
-                                             "Wool, linen breadth, and heavy draft stock are weaker",
-                                             "Finished steel and dense industrial tool metal remain import-biased"
+                                             "Bulk grain is weak",
+                                             "Steel and finished cloth remain import-heavy"
                                          ],
                         "likelyTradePartnerRegionIds":  [
-                                                            "region.draemor",
                                                             "region.valtherion",
-                                                            "region.serathyl"
+                                                            "region.serathyl",
+                                                            "region.lantern_isles"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Talmyra drives luxury trade through climate exclusives while importing staple security and finished arms.",
-                                                   "Draemor and Valtherion are the strongest staple partners, while Serathyl complements maritime and craft exchange."
+                                                   "Talmyra survives through valleys, coasts, and high-value exports rather than broad agrarian self-sufficiency."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.talmyra_valleys",
-                                                  "map_climate.first_world.talmyra_thorn",
-                                                  "map_climate.first_world.talmyra_watcher"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.silver_valleys_seasonal_forest",
-                                                "map_biome.first_world.silver_valleys_warrens",
-                                                "map_biome.first_world.thorn_peninsula_dry_forest",
-                                                "map_biome.first_world.watcher_coast_mangrove",
-                                                "map_biome.first_world.watcher_coast_cliffs"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  57,
+                                                  "foodProductionCapacity":  54,
+                                                  "waterAvailability":  72,
+                                                  "climateBurden":  52,
+                                                  "hazardPressure":  58,
+                                                  "infrastructureDifficulty":  60,
+                                                  "populationCapacity":  25000000,
+                                                  "densityBand":  "low"
+                                              },
+                        "resourceDiversityBand":  "very_high",
+                        "supplyStrengths":  [
+                                                "spices",
+                                                "rare_hardwood",
+                                                "resin",
+                                                "precious_metals",
+                                                "tropical_fruit"
+                                            ],
+                        "demandPressures":  [
+                                                "grain",
+                                                "steel",
+                                                "cloth"
+                                            ],
+                        "importBias":  0.68,
+                        "exportBias":  0.63
                     },
                     {
                         "id":  "regional_ecology.myridian_chain",
@@ -422,68 +470,70 @@
                         "regionId":  "region.myridian_chain",
                         "summary":  "The Myridian Chain is rich in marine food and naval access but poor in land area for stable grain, herds, and inland craft materials.",
                         "primaryClimateProfileId":  "climate.mild_winter",
-                        "secondaryClimateProfileIds":  [
-                                                           "climate.wet_year",
-                                                           "climate.standard"
-                                                       ],
+                        "secondaryClimateProfileIds":  "climate.wet_year",
                         "dominantBiomeIds":  [
-                                                 "biome.marine.marine",
-                                                 "biome.temperate.mixed_forest"
+                                                 "biome.temperate.mixed_forest",
+                                                 "biome.temperate.temperate_rainforest",
+                                                 "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  [
-                                                   "biome.temperate.temperate_rainforest",
-                                                   "biome.temperate.deciduous_forest"
-                                               ],
+                        "supportingBiomeIds":  "biome.shrublands.chaparral",
                         "nativeFloraIds":  [
+                                               "flora.coconut_palm",
+                                               "flora.orange_tree",
                                                "flora.flax",
-                                               "flora.apple_tree",
-                                               "flora.grape_vine",
-                                               "flora.willow_sapling"
+                                               "flora.reed"
                                            ],
                         "nativeFaunaIds":  [
                                                "fauna.cod",
-                                               "fauna.stormshoal_herring",
                                                "fauna.oyster",
-                                               "fauna.mussel",
-                                               "fauna.clam",
-                                               "fauna.crab",
-                                               "fauna.seal",
-                                               "fauna.walrus"
+                                               "fauna.crab"
                                            ],
                         "coverageProfile":  {
-                                                "stapleCrops":  "scarce",
-                                                "herdAndGame":  "scarce",
-                                                "maritimeFoods":  "surplus",
-                                                "timberAndFiber":  "limited",
-                                                "metalsAndStone":  "scarce",
-                                                "herbsAndReagents":  "limited",
+                                                "stapleCrops":  "limited",
+                                                "herdAndGame":  "limited",
+                                                "maritimeFoods":  "strong",
+                                                "timberAndFiber":  "moderate",
+                                                "metalsAndStone":  "limited",
+                                                "herbsAndReagents":  "moderate",
                                                 "luxuryGoods":  "moderate"
                                             },
                         "domesticStrengths":  [
-                                                  "Fish, shellfish, and preserved sea foods",
-                                                  "Pearl and marine-luxury access",
-                                                  "Naval staging and ship-servicing geography"
+                                                  "Pearls, fisheries, and maritime repair services",
+                                                  "Reliable relay harbors"
                                               ],
-                        "domesticGaps":  [
-                                             "Reliable grain, livestock, and draft animals are weak",
-                                             "Heavy timber and metal goods require import",
-                                             "Cloth and most inland craft materials are constrained"
-                                         ],
+                        "domesticGaps":  "Grain, metal, and heavy timber are import-biased",
                         "likelyTradePartnerRegionIds":  [
-                                                            "region.kaelvar",
                                                             "region.valtherion",
-                                                            "region.draemor"
+                                                            "region.serathyl",
+                                                            "region.lantern_isles"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Myridian must trade sea wealth for staple food, cloth, and metalwork.",
-                                                   "Its location lets it arbitrage between Kaelvar, Valtherion, and southern grain routes."
+                                                   "The chain thrives as a relay and specialty maritime economy."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.myridian_chain"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.myridian_chain_chaparral"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  62,
+                                                  "foodProductionCapacity":  48,
+                                                  "waterAvailability":  60,
+                                                  "climateBurden":  44,
+                                                  "hazardPressure":  42,
+                                                  "infrastructureDifficulty":  50,
+                                                  "populationCapacity":  8000000,
+                                                  "densityBand":  "moderate"
+                                              },
+                        "resourceDiversityBand":  "moderate",
+                        "supplyStrengths":  [
+                                                "maritime_services",
+                                                "fish",
+                                                "pearls",
+                                                "ship_repair"
+                                            ],
+                        "demandPressures":  [
+                                                "grain",
+                                                "metal",
+                                                "bulk_timber"
+                                            ],
+                        "importBias":  0.62,
+                        "exportBias":  0.66
                     },
                     {
                         "id":  "regional_ecology.lantern_isles",
@@ -492,68 +542,68 @@
                         "regionId":  "region.lantern_isles",
                         "summary":  "The Lantern Isles support small warm-island harvests and strong sea access, but remain too fragmented for deep domestic self-sufficiency.",
                         "primaryClimateProfileId":  "climate.long_summer",
-                        "secondaryClimateProfileIds":  [
-                                                           "climate.standard",
-                                                           "climate.wet_year"
-                                                       ],
+                        "secondaryClimateProfileIds":  "climate.wet_year",
                         "dominantBiomeIds":  [
-                                                 "biome.marine.marine",
-                                                 "biome.tropical.seasonal_forest"
+                                                 "biome.shrublands.chaparral",
+                                                 "biome.wetlands.mangrove",
+                                                 "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  [
-                                                   "biome.shrublands.chaparral",
-                                                   "biome.wetlands.mangrove_forest"
-                                               ],
+                        "supportingBiomeIds":  "biome.temperate.seasonal_forest",
                         "nativeFloraIds":  [
-                                               "flora.tea_shrub",
-                                               "flora.lemongrass",
-                                               "flora.sugarcane",
                                                "flora.orange_tree",
-                                               "flora.lemon_tree"
+                                               "flora.lemon_tree",
+                                               "flora.cinnamon_tree",
+                                               "flora.reed"
                                            ],
                         "nativeFaunaIds":  [
-                                               "fauna.bluefin_tuna",
-                                               "fauna.crab",
-                                               "fauna.clam",
+                                               "fauna.cod",
                                                "fauna.oyster",
-                                               "fauna.pelican",
-                                               "fauna.dolphin"
+                                               "fauna.crab",
+                                               "fauna.goat"
                                            ],
                         "coverageProfile":  {
-                                                "stapleCrops":  "scarce",
-                                                "herdAndGame":  "none",
+                                                "stapleCrops":  "limited",
+                                                "herdAndGame":  "limited",
                                                 "maritimeFoods":  "strong",
-                                                "timberAndFiber":  "limited",
-                                                "metalsAndStone":  "scarce",
+                                                "timberAndFiber":  "moderate",
+                                                "metalsAndStone":  "limited",
                                                 "herbsAndReagents":  "moderate",
-                                                "luxuryGoods":  "moderate"
+                                                "luxuryGoods":  "strong"
                                             },
-                        "domesticStrengths":  [
-                                                  "Shellfish and pelagic fish",
-                                                  "Small warm-island tea, citrus, and aromatic harvests",
-                                                  "Relay-port and resupply geography"
-                                              ],
-                        "domesticGaps":  [
-                                             "Grain, livestock, cloth, and metal goods are chronically weak",
-                                             "Large construction timber is limited",
-                                             "Population support depends on imported staples"
-                                         ],
+                        "domesticStrengths":  "Fish, citrus, spice gardens, and tropical wood lots",
+                        "domesticGaps":  "Grain and iron remain structural imports",
                         "likelyTradePartnerRegionIds":  [
-                                                            "region.serathyl",
                                                             "region.talmyra",
-                                                            "region.valtherion"
+                                                            "region.myridian_chain",
+                                                            "region.draemor"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Lantern Isles survive by converting maritime position into trade leverage rather than by broad domestic output.",
-                                                   "Serathyl and Talmyra are the most natural warm-sea partners, while Valtherion supplies heavy staples and goods."
+                                                   "Lantern settlement depends on harbors and reef logistics more than inland acreage."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.lantern_isles"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.lantern_isles_chaparral",
-                                                "map_biome.first_world.lantern_isles_deepwater"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  56,
+                                                  "foodProductionCapacity":  46,
+                                                  "waterAvailability":  55,
+                                                  "climateBurden":  50,
+                                                  "hazardPressure":  48,
+                                                  "infrastructureDifficulty":  58,
+                                                  "populationCapacity":  4000000,
+                                                  "densityBand":  "low"
+                                              },
+                        "resourceDiversityBand":  "moderate",
+                        "supplyStrengths":  [
+                                                "fish",
+                                                "citrus",
+                                                "spices",
+                                                "tropical_woods"
+                                            ],
+                        "demandPressures":  [
+                                                "grain",
+                                                "iron",
+                                                "draft_animals"
+                                            ],
+                        "importBias":  0.65,
+                        "exportBias":  0.61
                     },
                     {
                         "id":  "regional_ecology.serpents_wake",
@@ -561,71 +611,71 @@
                         "name":  "Serpent\u0027s Wake Ecology Profile",
                         "regionId":  "region.serpents_wake",
                         "summary":  "The Serpent\u0027s Wake is storm-rich and sea-rich but politically unstable, making marine foods and select tropical crops available without broad domestic reliability.",
-                        "primaryClimateProfileId":  "climate.unstable_year",
+                        "primaryClimateProfileId":  "climate.wet_year",
                         "secondaryClimateProfileIds":  [
-                                                           "climate.hot_year",
-                                                           "climate.wet_year"
+                                                           "climate.long_summer",
+                                                           "climate.dry_year"
                                                        ],
                         "dominantBiomeIds":  [
-                                                 "biome.marine.marine",
-                                                 "biome.wetlands.mangrove_forest",
-                                                 "biome.tropical.dry_forest"
+                                                 "biome.wetlands.mangrove",
+                                                 "biome.grasslands.savanna",
+                                                 "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  [
-                                                   "biome.tropical.seasonal_forest",
-                                                   "biome.grasslands.savanna"
-                                               ],
+                        "supportingBiomeIds":  "biome.shrublands.dry_scrub",
                         "nativeFloraIds":  [
-                                               "flora.sugarcane",
-                                               "flora.cacao_tree",
-                                               "flora.coffee_shrub",
-                                               "flora.lemongrass",
-                                               "flora.mango_tree",
-                                               "flora.pineapple"
+                                               "flora.reed",
+                                               "flora.mangrove_tree",
+                                               "flora.indigo_plant"
                                            ],
                         "nativeFaunaIds":  [
-                                               "fauna.bluefin_tuna",
                                                "fauna.crab",
-                                               "fauna.clam",
                                                "fauna.oyster",
-                                               "fauna.pelican",
-                                               "fauna.dolphin",
-                                               "fauna.great_whale"
+                                               "fauna.cod",
+                                               "fauna.goat"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "scarce",
-                                                "herdAndGame":  "none",
+                                                "herdAndGame":  "limited",
                                                 "maritimeFoods":  "strong",
                                                 "timberAndFiber":  "limited",
-                                                "metalsAndStone":  "scarce",
+                                                "metalsAndStone":  "limited",
                                                 "herbsAndReagents":  "moderate",
-                                                "luxuryGoods":  "strong"
+                                                "luxuryGoods":  "moderate"
                                             },
-                        "domesticStrengths":  [
-                                                  "Warm-sea fish, shellfish, and storm-cast marine goods",
-                                                  "Sugar and tropical crop pockets on larger islands",
-                                                  "Whale products and pirate-raided redistribution"
-                                              ],
-                        "domesticGaps":  [
-                                             "Stable grain supply is weak",
-                                             "Herd animals, cloth, and finished metal are poor domestic categories",
-                                             "Political instability reduces dependable internal coverage even where raw ecology helps"
-                                         ],
+                        "domesticStrengths":  "Salt fish, mangrove timber, dyestuffs, and passage services",
+                        "domesticGaps":  "Grain, iron, and cloth are persistent imports",
                         "likelyTradePartnerRegionIds":  [
                                                             "region.talmyra",
-                                                            "region.draemor",
-                                                            "region.serathyl"
+                                                            "region.lantern_isles",
+                                                            "region.draemor"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Serpent\u0027s Wake ecology alone cannot support strong self-sufficiency, so it leans on trade, raiding, and external provisioning.",
-                                                   "Talmyra shares the closest climate fit, while Draemor and Serathyl stabilize staples and tools."
+                                                   "Serpent\u0027s Wake remains viable through convoy support, salvage, and hard coastal adaptation."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.serpents_wake"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.serpents_wake_mangrove"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  43,
+                                                  "foodProductionCapacity":  36,
+                                                  "waterAvailability":  58,
+                                                  "climateBurden":  62,
+                                                  "hazardPressure":  68,
+                                                  "infrastructureDifficulty":  70,
+                                                  "populationCapacity":  2000000,
+                                                  "densityBand":  "low"
+                                              },
+                        "resourceDiversityBand":  "moderate",
+                        "supplyStrengths":  [
+                                                "salt_fish",
+                                                "mangrove_timber",
+                                                "dyestuffs",
+                                                "passage_services"
+                                            ],
+                        "demandPressures":  [
+                                                "grain",
+                                                "iron",
+                                                "cloth"
+                                            ],
+                        "importBias":  0.8,
+                        "exportBias":  0.57
                     },
                     {
                         "id":  "regional_ecology.dawnreach_isles",
@@ -634,70 +684,68 @@
                         "regionId":  "region.dawnreach_isles",
                         "summary":  "The Dawnreach Isles favor cold-water fisheries, whale routes, and hardy island harvests, but remain poor in staple agriculture and broad domestic materials.",
                         "primaryClimateProfileId":  "climate.cold",
-                        "secondaryClimateProfileIds":  [
-                                                           "climate.long_winter",
-                                                           "climate.standard"
-                                                       ],
+                        "secondaryClimateProfileIds":  "climate.mild_winter",
                         "dominantBiomeIds":  [
-                                                 "biome.marine.marine",
                                                  "biome.temperate.taiga",
-                                                 "biome.temperate.coniferous_forest"
+                                                 "biome.temperate.conifer_forest",
+                                                 "biome.tundra.tundra",
+                                                 "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  [
-                                                   "biome.grasslands.alpine_meadow",
-                                                   "biome.polar.tundra"
-                                               ],
+                        "supportingBiomeIds":  "biome.grasslands.alpine_meadow",
                         "nativeFloraIds":  [
-                                               "flora.barley",
-                                               "flora.flax",
-                                               "flora.willow_sapling",
-                                               "flora.peppermint",
-                                               "flora.licorice"
+                                               "flora.pine_tree",
+                                               "flora.spruce_tree",
+                                               "flora.birch_tree",
+                                               "flora.reed"
                                            ],
                         "nativeFaunaIds":  [
-                                               "fauna.seal",
-                                               "fauna.walrus",
-                                               "fauna.great_whale",
-                                               "fauna.ice_penguin",
                                                "fauna.cod",
-                                               "fauna.stormshoal_herring",
-                                               "fauna.moonflat_halibut"
+                                               "fauna.seal",
+                                               "fauna.rabbit"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "scarce",
-                                                "herdAndGame":  "none",
-                                                "maritimeFoods":  "surplus",
-                                                "timberAndFiber":  "limited",
+                                                "herdAndGame":  "limited",
+                                                "maritimeFoods":  "strong",
+                                                "timberAndFiber":  "moderate",
                                                 "metalsAndStone":  "limited",
-                                                "herbsAndReagents":  "scarce",
+                                                "herbsAndReagents":  "limited",
                                                 "luxuryGoods":  "moderate"
                                             },
-                        "domesticStrengths":  [
-                                                  "Cold-water fish, whale routes, and marine oils",
-                                                  "Ivory-like marine materials and preserved seafood",
-                                                  "Remote watch-post and wayfinding value"
-                                              ],
-                        "domesticGaps":  [
-                                             "Staple grain and fruit agriculture are weak",
-                                             "Textiles, herd stock, and warm-climate goods require import",
-                                             "Herbs and alchemical plant diversity are narrow"
-                                         ],
+                        "domesticStrengths":  "Cold fisheries, furs, conifer timber, and resin",
+                        "domesticGaps":  "Grain, textiles, and forged metal remain import-heavy",
                         "likelyTradePartnerRegionIds":  [
                                                             "region.valtherion",
                                                             "region.myridian_chain",
-                                                            "region.kaelvar"
+                                                            "region.serathyl"
                                                         ],
                         "tradePressureNotes":  [
-                                                   "Dawnreach must exchange marine wealth for almost every land-based staple category.",
-                                                   "Valtherion is the strongest general supplier, while Myridian and Kaelvar bridge naval and northern-sea exchange."
+                                                   "Dawnreach survives through cold-water specialization, not inland carrying capacity."
                                                ],
-                        "mapClimateZoneIds":  [
-                                                  "map_climate.first_world.dawnreach_isles"
-                                              ],
-                        "mapBiomeZoneIds":  [
-                                                "map_biome.first_world.dawnreach_tundra",
-                                                "map_biome.first_world.dawnreach_deepwater"
-                                            ]
+                        "simulationProfile":  {
+                                                  "habitationScore":  34,
+                                                  "foodProductionCapacity":  28,
+                                                  "waterAvailability":  46,
+                                                  "climateBurden":  74,
+                                                  "hazardPressure":  56,
+                                                  "infrastructureDifficulty":  72,
+                                                  "populationCapacity":  1000000,
+                                                  "densityBand":  "very_low"
+                                              },
+                        "resourceDiversityBand":  "moderate",
+                        "supplyStrengths":  [
+                                                "cold_fish",
+                                                "furs",
+                                                "conifer_timber",
+                                                "resin"
+                                            ],
+                        "demandPressures":  [
+                                                "grain",
+                                                "textiles",
+                                                "forged_metal"
+                                            ],
+                        "importBias":  0.82,
+                        "exportBias":  0.54
                     }
                 ]
 }

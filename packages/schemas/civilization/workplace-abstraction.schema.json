@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WorkplaceAbstractionRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "abstractionKey", "name", "category", "description", "usageContexts"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^abstraction\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "abstractionKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["terrain_access", "resource_source", "agricultural_site", "wildland"]
+    },
+    "description": {
+      "type": "string"
+    },
+    "usageContexts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["workplace_io", "workplace_progression"]
+      }
+    }
+  }
+}

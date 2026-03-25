@@ -161,7 +161,8 @@ export function runSingleTick(): void {
         economy: {
           nodes: [],
           lastSnapshots: [],
-          lastLevelTotals: []
+          lastLevelTotals: [],
+          marketStates: []
         },
         quests: {
           activeOffers: [],

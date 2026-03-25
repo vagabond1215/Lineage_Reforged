@@ -98,6 +98,147 @@
               }
             }
           },
+          "environmentProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "dominantBiomeMix",
+              "elevationProfile",
+              "climateTendencies",
+              "freshwaterAvailability",
+              "climateSeverity",
+              "agriculturalPotential",
+              "extractivePotential",
+              "hazardLevel"
+            ],
+            "properties": {
+              "dominantBiomeMix": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "elevationProfile": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "climateTendencies": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "freshwaterAvailability": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "moderate",
+                  "low",
+                  "very_low"
+                ]
+              },
+              "climateSeverity": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "moderate",
+                  "low",
+                  "very_low"
+                ]
+              },
+              "agriculturalPotential": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "moderate",
+                  "low",
+                  "very_low"
+                ]
+              },
+              "extractivePotential": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "moderate",
+                  "low",
+                  "very_low"
+                ]
+              },
+              "hazardLevel": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              }
+            }
+          },
+          "simulationProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "habitationScore",
+              "foodProductionCapacity",
+              "waterAvailability",
+              "climateBurden",
+              "hazardPressure",
+              "infrastructureDifficulty",
+              "populationCapacity",
+              "densityBand"
+            ],
+            "properties": {
+              "habitationScore": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "foodProductionCapacity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "waterAvailability": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "climateBurden": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "hazardPressure": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "infrastructureDifficulty": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "populationCapacity": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "densityBand": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "moderate",
+                  "low",
+                  "very_low"
+                ]
+              }
+            }
+          },
           "populationProfile": {
             "type": "object",
             "additionalProperties": false,
@@ -124,6 +265,20 @@
               "estimatedPopulationMillions": {
                 "type": "number",
                 "minimum": 0
+              },
+              "populationCapacityMillions": {
+                "type": "number",
+                "minimum": 0
+              },
+              "urbanPopulationPercent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "ruralPopulationPercent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
               }
             }
           },
@@ -175,6 +330,104 @@
                 "type": "array",
                 "items": {
                   "type": "string"
+                }
+              },
+              "supplyStrengths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "demandPressures": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "importBias": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "exportBias": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "resourceDiversityBand": {
+                "type": "string",
+                "enum": [
+                  "very_high",
+                  "high",
+                  "moderate",
+                  "low",
+                  "very_low"
+                ]
+              }
+            }
+          },
+          "settlementDistributionModel": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "targetCounts",
+              "generationRules"
+            ],
+            "properties": {
+              "targetCounts": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "city",
+                  "town",
+                  "village",
+                  "outpost",
+                  "strategic_site"
+                ],
+                "properties": {
+                  "city": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "town": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "village": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "outpost": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "strategic_site": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              },
+              "generationRules": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "asymmetryMode",
+                  "survivabilityDriver",
+                  "settlementPattern"
+                ],
+                "properties": {
+                  "asymmetryMode": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  },
+                  "survivabilityDriver": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  },
+                  "settlementPattern": {
+                    "type": "string",
+                    "minLength": 1
+                  }
                 }
               }
             }

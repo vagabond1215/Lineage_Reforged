@@ -6,6 +6,19 @@ import type {
 import { createEvent, EVENT_TYPES } from "../../../shared/events/src/index.js";
 import { aggregateEconomyHierarchy, buildEconomyStateFromContent, summarizeEconomyLevels } from "./economy.js";
 import { generateQuestOffers } from "./quest-generation.js";
+import {
+  buildSettlementMarketStates,
+  resolveCraftAtSettlement,
+  resolveItemValueAtSettlement,
+  resolveLocalMarketPrice
+} from "./runtime-economy.js";
+
+export {
+  buildSettlementMarketStates,
+  resolveCraftAtSettlement,
+  resolveItemValueAtSettlement,
+  resolveLocalMarketPrice
+} from "./runtime-economy.js";
 
 export function tickCivilization(context: CivilizationTickContext): TickResult<CivilizationDelta> {
   const { economy: rebuiltEconomy, warnings: bootstrapWarnings } = buildEconomyStateFromContent(context.state.settlements, context.clock);
@@ -14,6 +27,11 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
 
   const { snapshots, warnings: economyWarnings } = aggregateEconomyHierarchy(context.state.economy);
   const levelTotals = summarizeEconomyLevels(snapshots);
+  const marketStates = buildSettlementMarketStates({
+    settlementIds: context.state.settlements,
+    snapshots,
+    clock: context.clock
+  });
   const { nextState: nextQuestState, warnings: questWarnings } = generateQuestOffers(
     context.state.settlements,
     snapshots,
@@ -23,6 +41,7 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
 
   context.state.economy.lastSnapshots = snapshots;
   context.state.economy.lastLevelTotals = levelTotals;
+  context.state.economy.marketStates = marketStates;
   context.state.quests = nextQuestState;
 
   const settlementSnapshots = snapshots.filter((snapshot) => snapshot.level === "settlement");
@@ -57,6 +76,7 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
       economyProfileId: context.economyProfileId,
       tick: context.clock.tick,
       snapshotCount: snapshots.length,
+      marketStateCount: marketStates.length,
       levelCounts: levelTotals.reduce<Record<string, number>>((counts, summary) => {
         counts[summary.level] = summary.nodeCount;
         return counts;
@@ -71,6 +91,16 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
       totalTradeSurplusPerTick: Number(snapshots.reduce((sum, snapshot) => sum + snapshot.totalTradeSurplusPerTick, 0).toFixed(4)),
       topShortfalls,
       topTradeSurpluses
+    }
+  };
+
+  const marketDelta: CivilizationDelta = {
+    kind: "market",
+    payload: {
+      tick: context.clock.tick,
+      marketStateCount: marketStates.length,
+      pricedItemCount: marketStates.reduce((sum, state) => sum + state.priceView.length, 0),
+      settlementIds: marketStates.map((state) => state.settlementId)
     }
   };
 
@@ -90,12 +120,16 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
   return {
     domain: "civilization",
     appliedTick: context.clock.tick,
-    deltas: [economyDelta, questDelta],
+    deltas: [economyDelta, marketDelta, questDelta],
     emittedEvents: [
       createEvent(EVENT_TYPES.ECONOMY_LEDGER_UPDATED, "civilization", context.clock.tick, {
         snapshotCount: snapshots.length,
         totalShortfallPerTick: economyDelta.payload.totalShortfallPerTick,
         totalTradeSurplusPerTick: economyDelta.payload.totalTradeSurplusPerTick
+      }),
+      createEvent(EVENT_TYPES.MARKET_PRICE_UPDATED, "civilization", context.clock.tick, {
+        marketStateCount: marketStates.length,
+        pricedItemCount: marketDelta.payload.pricedItemCount
       }),
       createEvent(EVENT_TYPES.QUEST_BOARD_REFRESHED, "civilization", context.clock.tick, {
         activeOfferCount: nextQuestState.activeOffers.length

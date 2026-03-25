@@ -17,15 +17,20 @@
           "name",
           "macroRegionId",
           "regionId",
+          "localityBandId",
           "settlementType",
+          "siteClass",
+          "terrainContext",
           "populationBand",
           "populationTotal",
           "administrativeRole",
           "summary",
           "siteContext",
-          "mapLocation",
           "identityTags",
           "purposeTags",
+          "economicModel",
+          "survivalModel",
+          "tradeDependencyProfile",
           "infrastructureProfile",
           "racialMix",
           "domesticResourceProfile",
@@ -53,6 +58,10 @@
             "type": "string",
             "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
           },
+          "localityBandId": {
+            "type": "string",
+            "pattern": "^region_locality\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
           "settlementType": {
             "type": "string",
             "enum": [
@@ -72,6 +81,18 @@
               "camp",
               "waystation"
             ]
+          },
+          "siteClass": {
+            "type": "string",
+            "enum": [
+              "surface",
+              "subterranean",
+              "underwater"
+            ]
+          },
+          "terrainContext": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
           },
           "populationBand": {
             "type": "string",
@@ -123,51 +144,6 @@
             "type": "string",
             "minLength": 1
           },
-          "mapLocation": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "mapId",
-              "pixelX",
-              "pixelY",
-              "siteClass",
-              "climateZoneId",
-              "biomeZoneId"
-            ],
-            "properties": {
-              "mapId": {
-                "type": "string",
-                "pattern": "^world_map\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
-              },
-              "pixelX": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "pixelY": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "siteClass": {
-                "type": "string",
-                "enum": [
-                  "surface",
-                  "subterranean",
-                  "underwater"
-                ]
-              },
-              "climateZoneId": {
-                "type": "string",
-                "pattern": "^map_climate\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
-              },
-              "biomeZoneId": {
-                "type": "string",
-                "pattern": "^map_biome\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
-              },
-              "notes": {
-                "type": "string"
-              }
-            }
-          },
           "identityTags": {
             "type": "array",
             "minItems": 1,
@@ -182,6 +158,184 @@
             "items": {
               "type": "string",
               "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "economicModel": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "dominantRole",
+              "secondaryRoles",
+              "localSupplyStrengths",
+              "demandPressures",
+              "specializationWeight"
+            ],
+            "properties": {
+              "dominantRole": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "secondaryRoles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "localSupplyStrengths": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
+                }
+              },
+              "demandPressures": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
+                }
+              },
+              "specializationWeight": {
+                "type": "number",
+                "minimum": 0.1
+              }
+            }
+          },
+          "survivalModel": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "habitationScore",
+              "foodSecurity",
+              "waterSecurity",
+              "climateBurden",
+              "hazardPressure",
+              "infrastructureDifficulty"
+            ],
+            "properties": {
+              "habitationScore": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "foodSecurity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "waterSecurity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "climateBurden": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "hazardPressure": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "infrastructureDifficulty": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              }
+            }
+          },
+          "tradeDependencyProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "importBias",
+              "exportBias",
+              "dependencyBand",
+              "stapleImports",
+              "exportFocus",
+              "routeAccess"
+            ],
+            "properties": {
+              "importBias": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "exportBias": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "dependencyBand": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "moderate",
+                  "high"
+                ]
+              },
+              "stapleImports": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
+                }
+              },
+              "exportFocus": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
+                }
+              },
+              "routeAccess": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "road",
+                  "river",
+                  "coastal",
+                  "caravan",
+                  "pass",
+                  "seaLane"
+                ],
+                "properties": {
+                  "road": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "river": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "coastal": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "caravan": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "pass": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "seaLane": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2
+                  }
+                }
+              }
             }
           },
           "infrastructureProfile": {
@@ -268,23 +422,25 @@
             "properties": {
               "primaryGoods": {
                 "type": "array",
+                "minItems": 1,
                 "items": {
                   "type": "string",
-                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
                 }
               },
               "secondaryGoods": {
                 "type": "array",
                 "items": {
                   "type": "string",
-                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
                 }
               },
               "demandedGoods": {
                 "type": "array",
+                "minItems": 1,
                 "items": {
                   "type": "string",
-                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
                 }
               }
             }
@@ -319,7 +475,7 @@
                   "minItems": 1,
                   "items": {
                     "type": "string",
-                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
                   }
                 },
                 "routeModes": {
@@ -378,7 +534,6 @@
                 },
                 "functions": {
                   "type": "array",
-                  "minItems": 1,
                   "items": {
                     "type": "string",
                     "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
@@ -388,6 +543,42 @@
                   "type": "string",
                   "minLength": 1
                 }
+              }
+            }
+          },
+          "visualMapRef": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mapId",
+              "pixelX",
+              "pixelY",
+              "climateZoneId",
+              "biomeZoneId"
+            ],
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "pattern": "^world_map\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "pixelX": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pixelY": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "climateZoneId": {
+                "type": "string",
+                "pattern": "^map_climate\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+              },
+              "biomeZoneId": {
+                "type": "string",
+                "pattern": "^map_biome\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+              },
+              "notes": {
+                "type": "string"
               }
             }
           }

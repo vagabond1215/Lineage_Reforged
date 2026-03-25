@@ -47,7 +47,7 @@ This file tracks content and systems that are intentionally deferred.
   - source full-size raster base layers now live under `packages/content/base/world/map_assets/`, and the content browser now uses those layers while overlaying region polygons, continent names, region names, settlements, and route lines against the authored pixel grid
   - add map item families now that region data can anchor them
   - keep future map generation tied to real region records rather than placeholder generic maps
-  - keep the browser centered on `world_maps` as the player-facing map surface while lower-level geometry data remains an internal support layer for rendering and route validation
+  - keep the browser centered on `world_maps` as the player-facing map surface while lower-level geometry data remains an internal support layer for rendering and optional debug overlays
 
 ### Regional Economies
 
@@ -57,8 +57,8 @@ This file tracks content and systems that are intentionally deferred.
 - Prerequisite: hierarchy ledgers now exist; remaining prerequisites are trade-lane throughput resolution, storage fulfillment, settlement stockpiles, and kingdom definitions
 - Intended owner: economy simulation, market systems, and region data
 - Intended implementation:
-  - first-pass macro-region ecology and a manual domestic production / trade-gap report now exist for the authored world map
-  - the civilization tick now builds per-tick supply/demand ledgers and shortfall/surplus summaries across `workplace`, `building`, `settlement`, `subregion`, `region`, and top-level world-map ledger nodes
+  - first-pass macro-region ecology, region survivability, locality catchment, and import/export baselines now exist for the authored world
+  - the civilization tick now builds per-tick supply/demand ledgers and shortfall/surplus summaries across `workplace`, `building`, `settlement`, `region`, and top-level continent ledger nodes
   - guild halls now contribute building-level supply/demand pressure and can issue quests from those ledgers, including synthesized adventurers-guild fallback presence when a settlement has other guild business but no explicit adventurers hall
   - remaining work is to resolve actual fulfillment across travel lanes, move goods between stockpiles, and layer kingdom-level aggregation once kingdoms exist
   - tie shortages, surpluses, and trade specialization to local ecology, infrastructure, workplace density, and route throughput instead of treating ledgers as descriptive totals only
@@ -66,20 +66,54 @@ This file tracks content and systems that are intentionally deferred.
 #### Settlement consumption, growth, and routing
 
 - Status: partially deferred
-- Prerequisite: authored settlement data now exists; remaining prerequisites are runtime population-consumption rules, route throughput, migration/urban growth logic, automated terrain-aware pathfinding, and region-aware infrastructure service effects
+- Prerequisite: authored region-first settlement and locality data now exists; remaining prerequisites are runtime population-consumption rules, route throughput, migration/urban growth logic, corridor-aware routing, and region-aware infrastructure service effects
 - Intended owner: region data, economy simulation, settlement simulation, and infrastructure routing systems
 - Intended implementation:
   - authored settlement records now live in `packages/content/base/world/settlements.json`
-  - authored map scale benchmarks and route metadata now live in `packages/content/base/world/world_maps.json` and `packages/content/base/world/travel_networks.json`
-  - settlement records now carry pixel-coordinate map locations with climate and biome zone bindings on the shared 2048x1152 map grid
-  - world-map features now define coastlines, rivers, mountains, passes, crossings, and region footprints for the authored map
-  - browser-facing raster map layers now exist, and authored route data is now constrained so land corridors cannot use sea terrain without crossing/pass mechanisms and sea lanes must terminate at coastal harbor settlements
+  - authored locality-band records now live in `packages/content/base/world/region_localities.json`
+  - settlement records now derive simulation truth from `macroRegionId`, `regionId`, `localityBandId`, `siteClass`, `terrainContext`, survivability, and trade dependency rather than `mapLocation`
+  - authored map scale benchmarks and route metadata still live in `packages/content/base/world/world_maps.json` and `packages/content/base/world/travel_networks.json`, but they are no longer settlement-placement truth
+  - browser-facing raster map layers and feature overlays remain useful for display/debug/reference ownership
   - the settlement layer now includes both primary centers and a first dependent-settlement layer of estates, hamlets, monasteries, ferry posts, camps, and similar support sites
   - settlement records now include authored guild-building presence for major human trade, craft, logistics, and adventuring nodes
-  - use those records as the canonical layer for domestic production, regional trade links, infrastructure level, and population-center identity
+  - use those records plus region/locality data as the canonical layer for domestic production, regional trade links, infrastructure level, and population-center identity
   - add runtime settlement demand, storage pressure, migration, and urban growth instead of leaving settlement sizes as static authored values
-  - convert authored route geometry and travel timings into simulated throughput across roads, rivers, coasts, and canals once transport systems consume route data directly
-  - if route authoring needs to become more automatic later, add path generation against the shared pixel terrain model instead of continuing to hand-author every corridor
+
+#### Region-first settlement truth and map demotion
+
+- Status: partially deferred
+- Prerequisite: the region-first location refactor is now in place across `regions.json`, `regional_ecology_profiles.json`, `region_localities.json`, `settlements.json`, schemas, linting, and economy loaders; remaining prerequisites are corridor-first route records and route/trade runtime consumers
+- Intended owner: world region content, settlement schemas, travel data, content lint, and civilization runtime loaders
+- Intended implementation:
+  - `packages/content/base/world/regions.json` and `packages/content/base/world/regional_ecology_profiles.json` now own survivability, density, catchment, and supply/demand baseline fields used by runtime systems
+  - `packages/content/base/world/region_localities.json` now formalizes the `macro region -> region -> locality band -> settlement/site` hierarchy and locality-band terrain-pocket logic
+  - `packages/content/base/world/settlements.json` now uses region/locality identity, `siteClass`, `terrainContext`, `economicModel`, `survivalModel`, and `tradeDependencyProfile` as settlement simulation truth, with old map coordinates retained only under optional `visualMapRef`
+  - `tools/content-lint/index.mjs` and `packages/schemas/world/settlement.schema.json` now validate region-first settlement truth and no longer require pixel-coordinate placement or biome/climate polygon membership
+  - biome and elevation influence are now expressed through region and locality simulation fields rather than brittle raster-coordinate truth
+  - `packages/content/base/world/world_maps.json`, `packages/content/base/world/world_map_features.json`, and the related browser/scripts pipeline are now optional visual/debug/reference ownership instead of settlement-truth ownership
+  - remaining work is to refactor `packages/content/base/world/travel_networks.json` further toward corridor-first route records so trade/path systems no longer lean on optional endpoint geometry
+  - remaining work is to let future import/export baselines, settlement dependency, caravan routing, and trade simulation consume the region-first settlement model end to end
+
+### Crafting And Item Expansion
+
+#### Prestige material outputs after the base Phase 2 material families are exercised
+
+- Status: deferred
+- Prerequisite: the new `steel`, `bronze`, `brass`, precious-metal, fantasy-ingot, cloth-grade, leather-grade, and specialty-lumber families now exist; remaining prerequisite is proving their value through live recipe use, market demand, and first-layer manufactured outputs before adding prestige breadth
+- Intended owner: `packages/content/base/items`, `packages/content/base/civilization/workplaces.json`, and `packages/content/base/civilization/production_chains.json`
+- Intended implementation:
+  - keep the current pass focused on first-layer base apparel, armor, weapons, tools, containers, and household goods that already sit on the validated support graph
+  - defer prestige-metal weapons, ceremonial armor, elite furnishings, luxury garments, and decorative household lines until the new base material families are exercised by enough real recipes to justify further splits
+  - use future expansion to add material-specific visible outputs only where the material difference affects durability, weight, value, or regional trade identity instead of adding cosmetic variants
+
+#### Magical books, magical scrolls, and enchanter-authored arcane documents remain blocked on the spell database
+
+- Status: deferred
+- Prerequisite: establish the canonical spell database and spell metadata first; the new mundane paper, binding, ink, and book production support is intentionally not a license to add magical documents early
+- Intended owner: `enchanters`, with downstream support from `scriptorium`, `bookbindery`, and future spell content
+- Intended implementation:
+  - keep mundane books, blank ledgers, scroll stock, and stationery as the current ownership layer until spell payloads exist
+  - add magical books / tomes, magical scrolls, and enchanter-authored arcane documents only after spell schools, charges, attunement, and inscription rules are authored canonically
 
 #### Guild institutions and contract systems
 
@@ -169,7 +203,8 @@ This file tracks content and systems that are intentionally deferred.
   - `packages/content/base/civilization/market_item_values.json` now has a dedicated schema and remains the valuation overlay keyed to canonical `itemKey`
   - the Step 2 canonicalization pass now removes `ingredient.*`, `material.*`, and `mineral.*` pseudo-identities from live item usage, promotes the remaining world-source outputs into canonical item records, and normalizes flora/fauna/mineral/monster outputs plus market rows onto one unprefixed item graph
   - remaining work is to migrate more of the market catalog into canonical item records instead of leaving many tradable goods defined only in the market layer
-  - remaining work is to separate non-inventory access concepts such as `forest_access`, `ore_vein`, and `grazing_pasture` out of workplace item-bearing fields through an explicit abstraction registry during the Step 3 IO normalization pass
+  - the Step 3 workplace IO normalization pass now separates non-inventory access concepts such as `forest_access`, `ore_vein`, and `grazing_pasture` into `packages/content/base/civilization/workplace_abstractions.json`, with workplaces consuming them through `siteTags`, `ioProfile.siteRequirements`, and `progressionProfile.tiers[].siteLaborWeights` instead of `itemKey`
+  - extraction-heavy workplace yield pools now use explicit `ioProfile.yieldGroups` instead of flattened access-driven output lists, while manufacturing workplaces remain strict item-only IO
   - remaining work is to replace generic aggregate items such as `hide_raw` with deliberate provenance-aware item families where species distinctions materially matter
   - remaining work is to let recipes, workplaces, crafting, and codex systems consume `roles`, `tags`, and `processingGroups` directly instead of treating those fields as catalog metadata only
   - remaining work is to add canonical consumable and spoilage profile ownership before `consumableProfileId` and `spoilageProfileId` become populated broadly
@@ -177,20 +212,39 @@ This file tracks content and systems that are intentionally deferred.
 #### Crafting dependency closure and intermediate material completion
 
 - Status: partially deferred
-- Prerequisite: canonical commodity identity rollout must expand beyond the current starter cohort so workplace IO, production chains, flora/fauna outputs, and market overlays can all resolve against the same item graph
+- Prerequisite: canonical commodity identity rollout, workplace IO normalization, the first component-layer pass, and the Step 5 support-craft closure pass now exist; remaining prerequisites are dependency-closure validation and any provenance-aware splits that materially affect downstream recipes
 - Intended owner: `packages/content/base/items`, `packages/content/base/civilization`, world extraction content, schema/lint tooling, and future crafting/runtime consumers
 - Intended implementation:
   - Tier 1 canonicalization now promotes the missing `civilization` and `economy.generic` market rows into `packages/content/base/items/items.json`, covering the current economy-owned processed goods, intermediates, byproducts, food products, stationery goods, ammunition bundles, and trade aggregates without waiting on world-source normalization
   - `tools/content-lint/index.mjs` now enforces that Tier 1 economy-owned refs from `market_item_values`, `production_chains`, and `workplaces` must exist in the canonical item registry rather than remaining market-only strings
   - the Step 2 graph pass now closes the main identity gap by canonicalizing all remaining `world.flora`, `world.fauna`, `world.minerals`, and `world.monster` outputs onto canonical item keys and removing the remaining item and market identity collisions
-  - the next blocker is Step 3 workplace IO normalization: split malformed whitespace-bundled IO rows into structural grouped outputs or single canonical refs, and move site-access concepts into an explicit abstraction registry instead of tolerating them in `itemKey` fields
-  - add the missing intermediate material layers needed for textiles, leather, lumber, metallurgy, paper, glass, ceramics, preservation, alchemy, ammunition, fittings, and other existing production families so chains do not jump directly from raw extraction to finished goods
-  - complete the missing component/support-part layer inside the current workplace roster first, especially shafts, staves, handles, fasteners, fittings, cords, straps, panels, wick stock, adhesives, and related assembly materials that existing chain outputs already depend on
-  - complete the smallest supporting-craft output set needed for closure inside existing workplaces before adding new facilities, especially cordage, joinery stock, small metal fittings, ranged assembly parts, oil/fat rendering outputs, leather finishing parts, and binding materials
+  - the Step 3 workplace IO normalization pass is now complete: workplaces no longer store site/access abstractions in item-bearing fields, access inputs are separated into `siteRequirements`, and extraction yield pools are represented structurally instead of as flattened item-only output lists
+  - malformed whitespace-delimited workplace IO rows were already cleared before the current pass; the remaining Step 3 cleanup was structural normalization of access-bearing extraction records and progression labor weights
+  - the Step 4 component-layer pass is now complete inside the current workplace roster: sawmill, loomhouse, tannery, chandlery, coopers, fletchers, armorers, cartwrights, weaponsmiths, bookbindery, and the alchemist atelier now produce or consume the first assembly-critical parts such as shafts, staves, handles, poles, wheel parts, rods, wire, rings, rivets, nails, buckles, hinges, ferrules, blade blanks, yarn, cord, binding strips, leather parts, wick, glue, resin pitch, and adhesive
+  - the current component pass intentionally reuses existing `timber_beam` and `linen_thread` ownership instead of adding duplicate generic `wood_beam` or `thread` identities
+  - the Step 5 support-craft closure pass is now complete inside the existing workplace roster: chandlery now consumes rendered tallow and wick, tannery now emits rendered tallow alongside leather parts and glue, fletching now depends on explicit heads plus quill/binding inputs, cartwrights and bookbinders now consume cord, and weaponsmiths now emit ammunition heads while consuming leather strap for hafted assembly
+  - the current support-craft pass intentionally deepens the existing roster instead of adding new workplaces or broad new visible-output families
   - ensure every crafted output has upstream canonical inputs, every upstream input has a logical source path, and every byproduct is either canonicalized or intentionally abstracted
   - remaining work is to replace broad aggregate goods with deliberate provenance-aware families where the distinction materially affects crafting, cooking, or trade behavior
-  - add new supporting workplaces or infrastructure families only after the current roster cannot complete the normalized graph with disciplined component outputs and support-part chains
+  - add new supporting workplaces or infrastructure families only after dependency-closure validation shows the current roster still cannot complete the normalized graph with disciplined component outputs and support-part chains
   - tighten validation so workplace inputs/outputs, production-chain primary outputs/byproducts/variant inputs, and market overlays are checked for canonical item backing and intentional abstraction instead of market-only existence
+
+#### Derived recipe valuation and runtime cost resolution
+
+- Status: partially deferred
+- Prerequisite: recipe standardization, component/support-part closure, and the new item/market valuation metadata now exist; remaining prerequisites are stockpile fulfillment, broader trade routing, and UI/session consumers that can use the new runtime outputs directly
+- Intended owner: `packages/content/base/items`, `packages/content/base/civilization/production_chains.json`, `packages/content/base/civilization/market_item_values.json`, runtime crafting systems, and economy simulation
+- Intended implementation:
+  - `packages/content/base/items/items.json` now carries `valueProfile` on every item plus `materialDifficultyProfile` on authored material families so value and processing are no longer modeled as flat category assumptions
+  - `packages/content/base/civilization/market_item_values.json` now carries `pricingProfile` on every market row so the market layer can consume derived value inputs without hard-coding final price logic yet
+  - `packages/content/base/civilization/production_chains.json` now carries `recipeProfile` with explicit processing steps, chain value-propagation rules, and step-level skill thresholds so food and non-food crafting share one authored recipe surface
+  - the first deterministic runtime pass now lives in `packages/engines/civilization-engine/src/runtime-economy.ts`, where settlement markets derive local buy/sell prices, craft resolution derives time/cost/waste from recipe metadata, and value now carries forward through chain stages instead of resetting at each output
+  - `packages/shared/types/src/contracts.ts` now exposes explainable settlement market state, pressure contributions, craft-resolution breakdowns, and item value-resolution outputs so runtime and UI layers can consume one typed surface
+  - `packages/engines/civilization-engine/src/index.ts` now builds per-settlement market states each tick and emits market updates from the same deterministic runtime layer instead of leaving pricing as static descriptive content
+  - remaining work is to replace the remaining authored `baseValue` fields as active runtime anchors once stockpile fulfillment, throughput, and settlement trade movement can price goods from live inventory rather than fallback source anchors
+  - remaining work is to project the new runtime market/craft explanations into UI/session records and player-facing trade screens instead of leaving them inside engine state only
+  - remaining work is to connect runtime craft resolution to actual workplace throughput, worker assignments, inventory consumption, and future quality outcomes instead of using it only for deterministic estimates and price derivation
+  - avoid adding broader price simulation, auction dynamics, speculative trading, or random failure before stockpile fulfillment and direct runtime consumers exist for the current deterministic model
 
 ### Runtime Enforcement
 

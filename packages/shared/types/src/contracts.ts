@@ -122,10 +122,134 @@ export interface EconomyLevelTotals {
   totalTradeSurplusPerTick: number;
 }
 
+export interface EconomyPressureContribution {
+  source: string;
+  factor: number;
+  impact: number;
+  note: string;
+}
+
+export interface SettlementMarketItemPressureState {
+  itemKey: string;
+  stockLevel: number;
+  reservePerTick: number;
+  tradeSurplusPerTick: number;
+  unmetDemandPerTick: number;
+  netPerTick: number;
+  supplyPressure: number;
+  demandPressure: number;
+}
+
+export interface SettlementMarketLaborPressureState {
+  skillId: string;
+  availability: number;
+  pressure: number;
+  supportingSupplyPerTick: number;
+  shortfallPerTick: number;
+}
+
+export interface SettlementMarketPriceState {
+  itemKey: string;
+  baseProductionCost: number;
+  effectiveProductionCost: number;
+  estimatedMarketValue: number;
+  localBuyPrice: number;
+  localSellPrice: number;
+  spread: number;
+  pressureSources: EconomyPressureContribution[];
+}
+
+export interface SettlementMarketState {
+  settlementId: string;
+  tick: number;
+  productionCapacityModifier: number;
+  stock: SettlementMarketItemPressureState[];
+  laborPressure: SettlementMarketLaborPressureState[];
+  priceView: SettlementMarketPriceState[];
+}
+
+export interface CraftResolutionInputState {
+  itemKey: string;
+  quantity: number;
+  unitCost: number;
+  totalCost: number;
+}
+
+export interface CraftResolutionOutputState {
+  itemKey: string;
+  quantity: number;
+  role: "primary" | "byproduct" | "waste";
+  unitValueBasis: number;
+  totalValueBasis: number;
+}
+
+export interface CraftResolutionStepState {
+  stepId: string;
+  stageRef: string;
+  operation: string;
+  skillId: string;
+  skillRank: number;
+  minimumRank: number | null;
+  effectiveRequiredRank: number;
+  inputItems: string[];
+  outputItems: string[];
+  materialCost: number;
+  laborCost: number;
+  processingCost: number;
+  wasteCost: number;
+  processingTimeHours: number;
+  materialDifficultyFactor: number;
+  skillTimeFactor: number;
+  laborRate: number;
+  notes: string[];
+}
+
+export interface CraftResolutionExplanationState {
+  selectedVariantId: string | null;
+  valuePropagation: {
+    materialCostMode: string;
+    laborCostMode: string;
+    processingCostMode: string;
+    difficultyMode: string;
+    demandBand: string;
+    carriesForward: boolean;
+  };
+  stepBreakdown: CraftResolutionStepState[];
+  notes: string[];
+}
+
+export interface CraftResolutionState {
+  chainId: string;
+  settlementId: string | null;
+  primarySkillId: string;
+  targetOutputItemKey: string;
+  outputQuantity: number;
+  processingTimeHours: number;
+  laborCost: number;
+  materialCost: number;
+  processingCost: number;
+  wasteCost: number;
+  totalCost: number;
+  inputConsumption: CraftResolutionInputState[];
+  outputs: CraftResolutionOutputState[];
+  explanation: CraftResolutionExplanationState;
+}
+
+export interface ItemValueResolutionState {
+  itemKey: string;
+  baseProductionCost: number;
+  effectiveProductionCost: number;
+  estimatedMarketValue: number;
+  profitMarginEstimate: number;
+  resolutionPath: string[];
+  explanation: EconomyPressureContribution[];
+}
+
 export interface CivilizationEconomyState {
   nodes: EconomyNodeState[];
   lastSnapshots: EconomyLedgerSnapshot[];
   lastLevelTotals: EconomyLevelTotals[];
+  marketStates: SettlementMarketState[];
   lastComputedTick?: number;
 }
 

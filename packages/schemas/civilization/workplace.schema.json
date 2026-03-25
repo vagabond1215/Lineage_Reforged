@@ -32,13 +32,21 @@
                        "inputTags":  {
                                          "type":  "array",
                                          "items":  {
-                                                       "type":  "string"
+                                                       "type":  "string",
+                                                       "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
                                                    }
                                      },
+                       "siteTags":  {
+                                        "type":  "array",
+                                        "items":  {
+                                                      "type":  "string"
+                                                  }
+                                    },
                        "outputTags":  {
                                           "type":  "array",
                                           "items":  {
-                                                        "type":  "string"
+                                                        "type":  "string",
+                                                        "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
                                                     }
                                       },
                        "laborSlots":  {
@@ -611,7 +619,7 @@
                                                                                },
                                                             "inputs":  {
                                                                            "type":  "array",
-                                                                           "minItems":  1,
+                                                                           "minItems":  0,
                                                                            "items":  {
                                                                                          "type":  "object",
                                                                                          "additionalProperties":  false,
@@ -624,7 +632,7 @@
                                                                                          "properties":  {
                                                                                                             "itemKey":  {
                                                                                                                             "type":  "string",
-                                                                                                                            "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                            "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
                                                                                                                         },
                                                                                                             "quantityPerCycle":  {
                                                                                                                                      "type":  "number",
@@ -637,16 +645,42 @@
                                                                                                             "consumptionType":  {
                                                                                                                                     "type":  "string",
                                                                                                                                     "enum":  [
-                                                                                                                                                 "consumed",
-                                                                                                                                                 "access"
+                                                                                                                                                 "consumed"
                                                                                                                                              ]
                                                                                                                                 }
                                                                                                         }
                                                                                      }
                                                                        },
+                                                            "siteRequirements":  {
+                                                                                     "type":  "array",
+                                                                                     "minItems":  0,
+                                                                                     "items":  {
+                                                                                                   "type":  "object",
+                                                                                                   "additionalProperties":  false,
+                                                                                                   "required":  [
+                                                                                                                    "abstractionKey",
+                                                                                                                    "quantityPerCycle",
+                                                                                                                    "unit"
+                                                                                                                ],
+                                                                                                   "properties":  {
+                                                                                                                      "abstractionKey":  {
+                                                                                                                                             "type":  "string",
+                                                                                                                                             "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                         },
+                                                                                                                      "quantityPerCycle":  {
+                                                                                                                                               "type":  "number",
+                                                                                                                                               "minimum":  0.0001
+                                                                                                                                           },
+                                                                                                                      "unit":  {
+                                                                                                                                   "type":  "string",
+                                                                                                                                   "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                               }
+                                                                                                                  }
+                                                                                               }
+                                                                                 },
                                                             "outputs":  {
                                                                             "type":  "array",
-                                                                            "minItems":  1,
+                                                                            "minItems":  0,
                                                                             "items":  {
                                                                                           "type":  "object",
                                                                                           "additionalProperties":  false,
@@ -657,10 +691,10 @@
                                                                                                            "productionType"
                                                                                                        ],
                                                                                           "properties":  {
-                                                                                                             "itemKey":  {
-                                                                                                                             "type":  "string",
-                                                                                                                             "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                         },
+                                                                                                            "itemKey":  {
+                                                                                                                            "type":  "string",
+                                                                                                                            "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                                                                                                                        },
                                                                                                              "quantityPerCycle":  {
                                                                                                                                       "type":  "number",
                                                                                                                                       "minimum":  0.0001
@@ -678,6 +712,75 @@
                                                                                                                                 }
                                                                                                          }
                                                                                       }
+                                                                        },
+                                                            "yieldGroups":  {
+                                                                                "type":  "array",
+                                                                                "minItems":  0,
+                                                                                "items":  {
+                                                                                              "type":  "object",
+                                                                                              "additionalProperties":  false,
+                                                                                              "required":  [
+                                                                                                               "groupId",
+                                                                                                               "selectionMode",
+                                                                                                               "outputs"
+                                                                                                           ],
+                                                                                              "properties":  {
+                                                                                                                 "groupId":  {
+                                                                                                                                 "type":  "string",
+                                                                                                                                 "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                             },
+                                                                                                                 "selectionMode":  {
+                                                                                                                                      "type":  "string",
+                                                                                                                                      "enum":  [
+                                                                                                                                                   "weighted_pool",
+                                                                                                                                                   "deterministic_bundle"
+                                                                                                                                               ]
+                                                                                                                                  },
+                                                                                                                 "drawsPerCycle":  {
+                                                                                                                                       "type":  "integer",
+                                                                                                                                       "minimum":  1
+                                                                                                                                   },
+                                                                                                                 "outputs":  {
+                                                                                                                                 "type":  "array",
+                                                                                                                                 "minItems":  1,
+                                                                                                                                 "items":  {
+                                                                                                                                               "type":  "object",
+                                                                                                                                               "additionalProperties":  false,
+                                                                                                                                               "required":  [
+                                                                                                                                                                "itemKey",
+                                                                                                                                                                "quantityPerCycle",
+                                                                                                                                                                "unit",
+                                                                                                                                                                "productionType"
+                                                                                                                                                            ],
+                                                                                                                                               "properties":  {
+                                                                                                                                                                  "itemKey":  {
+                                                                                                                                                                                  "type":  "string",
+                                                                                                                                                                                  "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                                                                                                                                                                              },
+                                                                                                                                                                  "quantityPerCycle":  {
+                                                                                                                                                                                           "type":  "number",
+                                                                                                                                                                                           "minimum":  0.0001
+                                                                                                                                                                                       },
+                                                                                                                                                                  "unit":  {
+                                                                                                                                                                               "type":  "string",
+                                                                                                                                                                               "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                           },
+                                                                                                                                                                  "productionType":  {
+                                                                                                                                                                                         "type":  "string",
+                                                                                                                                                                                         "enum":  [
+                                                                                                                                                                                                      "primary",
+                                                                                                                                                                                                      "byproduct"
+                                                                                                                                                                                                  ]
+                                                                                                                                                                                     },
+                                                                                                                                                                  "weight":  {
+                                                                                                                                                                                 "type":  "number",
+                                                                                                                                                                                 "minimum":  0.0001
+                                                                                                                                                                             }
+                                                                                                                                                              }
+                                                                                                                                           }
+                                                                                                                             }
+                                                                                                             }
+                                                                                          }
                                                                         }
                                                         }
                                      },
@@ -832,7 +935,7 @@
                                                                                                                                        },
                                                                                                                     "inputLaborWeights":  {
                                                                                                                                               "type":  "array",
-                                                                                                                                              "minItems":  1,
+                                                                                                                                              "minItems":  0,
                                                                                                                                               "items":  {
                                                                                                                                                             "type":  "object",
                                                                                                                                                             "additionalProperties":  false,
@@ -841,17 +944,39 @@
                                                                                                                                                                              "laborWeight"
                                                                                                                                                                          ],
                                                                                                                                                             "properties":  {
-                                                                                                                                                                               "itemKey":  {
-                                                                                                                                                                                               "type":  "string",
-                                                                                                                                                                                               "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                                                           },
-                                                                                                                                                                               "laborWeight":  {
+                                                                                                                                                                              "itemKey":  {
+                                                                                                                                                                                              "type":  "string",
+                                                                                                                                                                                               "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                                                                                                                                                                                          },
+                                                                                                                                                                           "laborWeight":  {
                                                                                                                                                                                                    "type":  "number",
                                                                                                                                                                                                    "minimum":  0.01
                                                                                                                                                                                                }
                                                                                                                                                                            }
                                                                                                                                                         }
                                                                                                                                           },
+                                                                                                                    "siteLaborWeights":  {
+                                                                                                                                             "type":  "array",
+                                                                                                                                             "minItems":  0,
+                                                                                                                                             "items":  {
+                                                                                                                                                           "type":  "object",
+                                                                                                                                                           "additionalProperties":  false,
+                                                                                                                                                           "required":  [
+                                                                                                                                                                            "abstractionKey",
+                                                                                                                                                                            "laborWeight"
+                                                                                                                                                                        ],
+                                                                                                                                                           "properties":  {
+                                                                                                                                                                              "abstractionKey":  {
+                                                                                                                                                                                                     "type":  "string",
+                                                                                                                                                                                                     "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                                                                                                                                                                                                 },
+                                                                                                                                                                              "laborWeight":  {
+                                                                                                                                                                                                  "type":  "number",
+                                                                                                                                                                                                  "minimum":  0.01
+                                                                                                                                                                                              }
+                                                                                                                                                                          }
+                                                                                                                                                       }
+                                                                                                                                         },
                                                                                                                     "powerMode":  {
                                                                                                                                       "type":  "string",
                                                                                                                                       "enum":  [

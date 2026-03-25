@@ -377,6 +377,7 @@ export const demoSnapshot: SaveSnapshot = {
       nodes: [],
       lastSnapshots: [],
       lastLevelTotals: [],
+      marketStates: [],
       lastComputedTick: 1438
     },
     quests: {
