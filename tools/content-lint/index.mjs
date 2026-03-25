@@ -155,6 +155,7 @@ const SETTLEMENT_DEPENDENCY_ROLES = new Set([
 const DEPENDENT_SETTLEMENT_TYPES = new Set(["hamlet", "estate", "monastery", "ferry_post", "camp", "waystation"]);
 const ITEM_ROLE_VALUES = new Set(["consumable", "ingredient", "material", "reagent", "trade_good", "fuel"]);
 const ITEM_STAGE_VALUES = new Set(["raw", "refined", "processed", "finished"]);
+const CANONICAL_ITEM_MARKET_SOURCES = new Set(["items.catalog", "civilization", "economy.generic"]);
 
 
 const checks = [
@@ -449,6 +450,10 @@ function buildItemAliasMap(relativePath, records) {
   }
 
   return aliasToCanonical;
+}
+
+function marketSourceRequiresCanonicalItem(source) {
+  return CANONICAL_ITEM_MARKET_SOURCES.has(source);
 }
 
 async function validateHabitatBiomes(relativePath, records) {
@@ -4526,6 +4531,99 @@ async function validateCanonicalCommodityItemsAgainstMarketKeys() {
   }
 }
 
+async function validateTierOneCanonicalItemCoverage() {
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+  const workplacePath = path.join(ROOT, "packages/content/base/civilization/workplaces.json");
+  const chainPath = path.join(ROOT, "packages/content/base/civilization/production_chains.json");
+
+  const itemParsed = JSON.parse(await readFile(itemPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+  const workplaceParsed = JSON.parse(await readFile(workplacePath, "utf8"));
+  const chainParsed = JSON.parse(await readFile(chainPath, "utf8"));
+
+  if (
+    !Array.isArray(itemParsed.records) ||
+    !Array.isArray(marketParsed.records) ||
+    !Array.isArray(workplaceParsed.records) ||
+    !Array.isArray(chainParsed.records)
+  ) {
+    throw new Error("content cross-check failed: item, market, workplace, or production chain records are invalid");
+  }
+
+  const itemKeys = new Set(itemParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+  const marketSourceByKey = new Map();
+  for (const record of marketParsed.records) {
+    if (typeof record.itemKey === "string" && typeof record.source === "string") {
+      marketSourceByKey.set(record.itemKey, record.source);
+    }
+  }
+
+  const ensureCanonicalItemWhenRequired = (relativePath, recordId, fieldName, itemKey) => {
+    const source = marketSourceByKey.get(itemKey);
+    if (!marketSourceRequiresCanonicalItem(source)) {
+      return;
+    }
+
+    if (!itemKeys.has(itemKey)) {
+      throw new Error(`${relativePath} ${fieldName} key '${itemKey}' is source='${source}' and must exist in packages/content/base/items/items.json on record ${recordId}`);
+    }
+  };
+
+  for (const record of marketParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    if (marketSourceRequiresCanonicalItem(record.source) && !itemKeys.has(record.itemKey)) {
+      throw new Error(
+        `packages/content/base/civilization/market_item_values.json itemKey '${record.itemKey}' with source '${record.source}' is missing in packages/content/base/items/items.json on record ${recordId}`
+      );
+    }
+  }
+
+  for (const record of chainParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureCanonicalItemWhenRequired("packages/content/base/civilization/production_chains.json", recordId, "primaryOutput", record.primaryOutput);
+    for (const itemKey of record.byProducts ?? []) {
+      ensureCanonicalItemWhenRequired("packages/content/base/civilization/production_chains.json", recordId, "byProducts", itemKey);
+    }
+
+    for (const variant of record?.variantConfig?.variants ?? []) {
+      const variantId = variant.id ?? "<unknown>";
+      ensureCanonicalItemWhenRequired(
+        "packages/content/base/civilization/production_chains.json",
+        `${recordId}:${variantId}`,
+        "variant.primaryOutput",
+        variant.primaryOutput
+      );
+      for (const itemKey of variant.byProducts ?? []) {
+        ensureCanonicalItemWhenRequired(
+          "packages/content/base/civilization/production_chains.json",
+          `${recordId}:${variantId}`,
+          "variant.byProducts",
+          itemKey
+        );
+      }
+      for (const itemKey of variant.inputItemKeys ?? []) {
+        ensureCanonicalItemWhenRequired(
+          "packages/content/base/civilization/production_chains.json",
+          `${recordId}:${variantId}`,
+          "variant.inputItemKeys",
+          itemKey
+        );
+      }
+    }
+  }
+
+  for (const record of workplaceParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    for (const input of record?.ioProfile?.inputs ?? []) {
+      ensureCanonicalItemWhenRequired("packages/content/base/civilization/workplaces.json", recordId, "ioProfile.inputs", input.itemKey);
+    }
+    for (const output of record?.ioProfile?.outputs ?? []) {
+      ensureCanonicalItemWhenRequired("packages/content/base/civilization/workplaces.json", recordId, "ioProfile.outputs", output.itemKey);
+    }
+  }
+}
+
 async function validateInfrastructureAgainstWorkplaces() {
   const infrastructurePath = path.join(ROOT, "packages/content/base/civilization/infrastructure.json");
   const workplacePath = path.join(ROOT, "packages/content/base/civilization/workplaces.json");
@@ -5594,6 +5692,7 @@ async function main() {
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();
+  await validateTierOneCanonicalItemCoverage();
   await validateMeatCutStandardsAgainstMarketKeys();
   await validateInfrastructureAgainstWorkplaces();
   await validateWorldMapsAgainstRegions();

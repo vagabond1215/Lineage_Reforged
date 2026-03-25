@@ -174,6 +174,22 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to let recipes, workplaces, crafting, and codex systems consume `roles`, `tags`, and `processingGroups` directly instead of treating those fields as catalog metadata only
   - remaining work is to add canonical consumable and spoilage profile ownership before `consumableProfileId` and `spoilageProfileId` become populated broadly
 
+#### Crafting dependency closure and intermediate material completion
+
+- Status: partially deferred
+- Prerequisite: canonical commodity identity rollout must expand beyond the current starter cohort so workplace IO, production chains, flora/fauna outputs, and market overlays can all resolve against the same item graph
+- Intended owner: `packages/content/base/items`, `packages/content/base/civilization`, world extraction content, schema/lint tooling, and future crafting/runtime consumers
+- Intended implementation:
+  - Tier 1 canonicalization now promotes the missing `civilization` and `economy.generic` market rows into `packages/content/base/items/items.json`, covering the current economy-owned processed goods, intermediates, byproducts, food products, stationery goods, ammunition bundles, and trade aggregates without waiting on world-source normalization
+  - `tools/content-lint/index.mjs` now enforces that Tier 1 economy-owned refs from `market_item_values`, `production_chains`, and `workplaces` must exist in the canonical item registry rather than remaining market-only strings
+  - close the current identity gap where most `market_item_values`, `production_chains`, and `workplaces` references still point at non-canonical item keys even though the intended ownership model now places object identity in `packages/content/base/items/items.json`
+  - add the missing intermediate material layers needed for textiles, leather, lumber, metallurgy, paper, glass, ceramics, preservation, alchemy, ammunition, fittings, and other existing production families so chains do not jump directly from raw extraction to finished goods
+  - ensure every crafted output has upstream canonical inputs, every upstream input has a logical source path, and every byproduct is either canonicalized or intentionally abstracted
+  - remaining work is to canonicalize the raw source outputs still owned only by `world.flora`, `world.fauna`, and `world.minerals`, including species-specific meats, hides, bones, scales, fruits, seeds, fibers, and ore families that currently remain market-backed but not item-backed
+  - remaining work is to replace broad aggregate goods with deliberate provenance-aware families where the distinction materially affects crafting, cooking, or trade behavior
+  - add the missing supporting workplace and infrastructure families only where existing production domains cannot be completed cleanly with the current extraction/processing/manufacturing roster
+  - tighten validation so workplace inputs/outputs, production-chain primary outputs/byproducts/variant inputs, and market overlays are checked for canonical item backing and intentional abstraction instead of market-only existence
+
 ### Runtime Enforcement
 
 #### Workplace progression simulation rules
