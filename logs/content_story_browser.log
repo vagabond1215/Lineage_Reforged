@@ -377,3 +377,15 @@
 [2026-03-19 21:57:45.265][INFO] Entered menu: World Maps
 [2026-03-19 21:58:06.422][INFO] Viewed detail: First World Map
 [2026-03-19 21:59:18.416][INFO] Content browser closed. DialogResult=Cancel
+[2026-03-25 17:39:59.492][INFO] Content browser starting. Workspace=C:\Users\vagab\OneDrive\Documents\Cataclysm RPG
+[2026-03-25 17:40:07.669][INFO] Content browser initialized successfully.
+[2026-03-25 17:40:12.534][INFO] Entered menu: Game
+[2026-03-25 17:40:13.768][INFO] Entered menu: Balancing Constants
+[2026-03-25 17:40:15.676][INFO] Viewed detail: Base Regrowth Rate
+[2026-03-25 17:40:21.144][INFO] Returned to menu: Game
+[2026-03-25 17:40:22.108][INFO] Returned to menu: Home
+[2026-03-25 17:40:24.451][INFO] Entered menu: Civilization
+[2026-03-25 17:40:25.562][INFO] Returned to menu: Home
+[2026-03-25 17:40:26.340][INFO] Entered menu: Project Docs
+[2026-03-25 17:40:27.697][INFO] Returned to menu: Home
+[2026-03-25 17:40:29.458][INFO] Content browser closed. DialogResult=Cancel
