@@ -12,14 +12,20 @@ import {
 import {
   backgroundOptions,
   classOptions,
-  lineageOptions,
-  settlementOptions
+  lineageOptions
 } from '../starterTemplates.js';
 import {
   buildCharacterCreationPreview,
   type CharacterCreationPreview
 } from '../newGameSnapshot.js';
 import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
+import {
+  getPreferredWorldSettlementOption,
+  getWorldContinentOptions,
+  getWorldRegionOptions,
+  getWorldSettlementOptions,
+  resolveWorldSelection
+} from '../worldSelectionCatalog.js';
 import { ScreenFrame } from './ScreenFrame.js';
 
 type CharacterCreationScreenProps = {
@@ -113,6 +119,48 @@ export function CharacterCreationScreen({
   const [showValidation, setShowValidation] = useState(false);
   const manualSlots = slots.filter((slot) => slot.kind === 'manual');
   const preview: CharacterCreationPreview = buildCharacterCreationPreview(form);
+  const continentOptions = getWorldContinentOptions().map((option) => ({
+    id: option.id,
+    label: option.label,
+    description: `${option.survivabilityLabel} survivability | ${option.description}`,
+    notes: [
+      option.climate,
+      option.dominantResources.join(', '),
+      option.tradeCharacteristics.join(', ')
+    ].filter((value) => value.length > 0)
+  }));
+  const regionOptions = getWorldRegionOptions(form.continentId).map((option) => ({
+    id: option.id,
+    label: option.label,
+    description: `${option.terrainAndBiome} | ${option.description}`,
+    notes: [
+      option.populationDensity,
+      option.resourceAvailability.join(', '),
+      option.economicProfile.join(', ')
+    ].filter((value) => value.length > 0)
+  }));
+  const settlementOptions = getWorldSettlementOptions({
+    continentId: form.continentId,
+    regionId: form.regionId,
+    classId: form.classId,
+    backgroundId: form.backgroundId
+  }).map((option) => ({
+    id: option.id,
+    label: option.label,
+    description: `${option.settlementType} | Pop ${option.populationSize} | ${option.description}`,
+    notes: [
+      `${option.tradeRole} | ${option.developmentLevel}`,
+      option.dominantIndustries.join(', '),
+      option.access.accessStatus === 'allowed' ? option.access.lodgingType : option.access.notes[0] ?? 'Restricted'
+    ]
+  }));
+  const selectedWorld = resolveWorldSelection({
+    continentId: form.continentId,
+    regionId: form.regionId,
+    settlementId: form.startingSettlementId,
+    classId: form.classId,
+    backgroundId: form.backgroundId
+  });
   const currentStep =
     CHARACTER_CREATION_STEPS.find((step) => step.id === currentStepId) ??
     CHARACTER_CREATION_STEPS[0]!;
@@ -128,6 +176,101 @@ export function CharacterCreationScreen({
   const updateForm = (nextForm: Partial<CharacterCreationFormState>) => {
     setShowValidation(false);
     onChange(nextForm);
+  };
+
+  const updateContinent = (continentId: string) => {
+    const nextRegion = getWorldRegionOptions(continentId)[0];
+    const nextSettlement = nextRegion
+      ? getPreferredWorldSettlementOption({
+          continentId,
+          regionId: nextRegion.id,
+          classId: form.classId,
+          backgroundId: form.backgroundId
+        })
+      : null;
+
+    updateForm({
+      continentId,
+      regionId: nextRegion?.id ?? '',
+      startingSettlementId: nextSettlement?.id ?? ''
+    });
+  };
+
+  const updateRegion = (regionId: string) => {
+    const nextSettlement = getPreferredWorldSettlementOption({
+      continentId: form.continentId,
+      regionId,
+      classId: form.classId,
+      backgroundId: form.backgroundId
+    });
+
+    updateForm({
+      regionId,
+      startingSettlementId: nextSettlement?.id ?? ''
+    });
+  };
+
+  const reconcileStartSelection = (nextClassId: string, nextBackgroundId: string) => {
+    const currentSelection = resolveWorldSelection({
+      continentId: form.continentId,
+      regionId: form.regionId,
+      settlementId: form.startingSettlementId,
+      classId: nextClassId,
+      backgroundId: nextBackgroundId
+    });
+
+    if (currentSelection?.settlement.access.accessStatus === 'allowed') {
+      return {
+        continentId: form.continentId,
+        regionId: form.regionId,
+        startingSettlementId: form.startingSettlementId
+      };
+    }
+
+    const currentRegionSettlement = getPreferredWorldSettlementOption({
+      continentId: form.continentId,
+      regionId: form.regionId,
+      classId: nextClassId,
+      backgroundId: nextBackgroundId
+    });
+
+    if (currentRegionSettlement) {
+      return {
+        continentId: form.continentId,
+        regionId: form.regionId,
+        startingSettlementId: currentRegionSettlement.id
+      };
+    }
+
+    const fallbackRegion = getWorldRegionOptions(form.continentId)[0];
+    const fallbackSettlement = fallbackRegion
+      ? getPreferredWorldSettlementOption({
+          continentId: form.continentId,
+          regionId: fallbackRegion.id,
+          classId: nextClassId,
+          backgroundId: nextBackgroundId
+        })
+      : null;
+
+    return {
+      continentId: form.continentId,
+      regionId: fallbackRegion?.id ?? form.regionId,
+      startingSettlementId: fallbackSettlement?.id ?? ''
+    };
+  };
+
+  const updateClass = (classId: string) => {
+    updateForm({
+      classId,
+      ...reconcileStartSelection(classId, form.backgroundId)
+    });
+  };
+
+  const updateBackground = (backgroundId: string) => {
+    updateForm({
+      backgroundId,
+      ...reconcileStartSelection(form.classId, backgroundId)
+    });
   };
 
   const handleContinue = () => {
@@ -211,7 +354,7 @@ export function CharacterCreationScreen({
         {renderOptionGrid(
           classOptions,
           form.classId,
-          (classId) => updateForm({ classId }),
+          (classId) => updateClass(classId),
           'border-orange-300/25 bg-orange-200/10 text-orange-50'
         )}
       </Card>
@@ -222,19 +365,62 @@ export function CharacterCreationScreen({
         {renderOptionGrid(
           backgroundOptions,
           form.backgroundId,
-          (backgroundId) => updateForm({ backgroundId }),
+          (backgroundId) => updateBackground(backgroundId),
           'border-[color:var(--color-codex)]/35 bg-[color:var(--color-codex)]/10 text-slate-100'
         )}
       </Card>
     );
-  } else if (currentStepId === 'homeland') {
+  } else if (currentStepId === 'continent') {
     stepContent = (
-      <Card title="Starting Ground" accent="var(--color-world)">
+      <Card title="Continent" accent="var(--color-world)">
+        {renderOptionGrid(
+          continentOptions,
+          form.continentId,
+          (continentId) => updateContinent(continentId),
+          'border-emerald-300/25 bg-emerald-200/10 text-emerald-50'
+        )}
+        {showValidation && currentStepValidation.errors.continentId && (
+          <div className="mt-3 text-sm text-rose-300">{currentStepValidation.errors.continentId}</div>
+        )}
+      </Card>
+    );
+  } else if (currentStepId === 'region') {
+    stepContent = (
+      <Card title="Region" accent="var(--color-world)">
+        {renderOptionGrid(
+          regionOptions,
+          form.regionId,
+          (regionId) => updateRegion(regionId),
+          'border-emerald-300/25 bg-emerald-200/10 text-emerald-50'
+        )}
+        {showValidation && currentStepValidation.errors.regionId && (
+          <div className="mt-3 text-sm text-rose-300">{currentStepValidation.errors.regionId}</div>
+        )}
+      </Card>
+    );
+  } else if (currentStepId === 'settlement') {
+    stepContent = (
+      <Card title="Settlement" accent="var(--color-world)">
         {renderOptionGrid(
           settlementOptions,
           form.startingSettlementId,
           (startingSettlementId) => updateForm({ startingSettlementId }),
           'border-emerald-300/25 bg-emerald-200/10 text-emerald-50'
+        )}
+        {selectedWorld && (
+          <div className="mt-4 rounded-[20px] border border-white/10 bg-black/10 p-4 text-sm leading-6 text-slate-300">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Start Access</div>
+            <div className="mt-2 text-slate-100">
+              {selectedWorld.settlement.access.accessStatus === 'allowed' ? 'Allowed' : 'Restricted'}
+            </div>
+            <div className="mt-2">{selectedWorld.settlement.access.notes[0] ?? 'Standard rented arrival.'}</div>
+            <div className="mt-2 text-xs uppercase tracking-[0.16em] text-slate-500">
+              Authority: {selectedWorld.settlement.landAuthorityType.replace(/_/g, ' ')}
+            </div>
+          </div>
+        )}
+        {showValidation && currentStepValidation.errors.startingSettlementId && (
+          <div className="mt-3 text-sm text-rose-300">{currentStepValidation.errors.startingSettlementId}</div>
         )}
       </Card>
     );
@@ -247,7 +433,8 @@ export function CharacterCreationScreen({
               <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Chosen Origin</div>
               <div className="mt-2 text-xl text-slate-50">{preview.chosenOrigin}</div>
               <div className="mt-2 text-sm leading-6 text-slate-300">
-                {preview.backgroundLabel} starting from {preview.startingSettlement} in the {preview.startingRegion}.
+                {preview.backgroundLabel} starting from {preview.startingSettlement} in the {preview.startingRegion} of{' '}
+                {preview.startingContinent}.
               </div>
             </div>
             <div className="rounded-[22px] border border-white/10 bg-black/10 p-4">
@@ -320,7 +507,7 @@ export function CharacterCreationScreen({
       mainContent={
         <div className="space-y-4">
           <Card title="Creation Steps" accent="var(--color-character)">
-            <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-6">
+            <div className="grid gap-3 md:grid-cols-4 xl:grid-cols-8">
               {CHARACTER_CREATION_STEPS.map((step, index) => {
                 const isActive = step.id === currentStepId;
                 const isCompleted = index < currentStepIndex;
@@ -398,9 +585,22 @@ export function CharacterCreationScreen({
                 <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Chosen Origin</div>
                 <div className="mt-2 text-base text-slate-50">{preview.chosenOrigin}</div>
                 <div className="mt-2 text-sm leading-6 text-slate-300">
-                  {preview.startingSettlement} | {preview.startingRegion}
+                  {preview.startingSettlement} | {preview.startingRegion} | {preview.startingContinent}
                 </div>
               </div>
+
+              {selectedWorld && (
+                <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
+                  <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Starting Access</div>
+                  <div className="mt-2 text-base text-slate-50">
+                    {selectedWorld.settlement.access.accessStatus === 'allowed' ? 'Authorized Start' : 'Restricted Start'}
+                  </div>
+                  <div className="mt-2 text-sm leading-6 text-slate-300">
+                    {selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')} |{' '}
+                    {selectedWorld.settlement.access.lodgingType.replace(/_/g, ' ')}
+                  </div>
+                </div>
+              )}
 
               <div className="grid gap-3 sm:grid-cols-3">
                 {renderMetric('HP', preview.resourceMaxima.hp.toString())}

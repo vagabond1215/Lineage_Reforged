@@ -1,0 +1,200 @@
+{
+  "records": [
+    {
+      "id": "religion.elemental_pantheon",
+      "slug": "elemental_pantheon",
+      "name": "Elemental Pantheon",
+      "summary": "A balanced elemental religion built around paired opposition, cyclical dominance, and geography-shaped worship.",
+      "deities": [
+        {
+          "id": "deity.light_lady",
+          "name": "Lady of Light",
+          "presentationGender": "female",
+          "element": "light",
+          "domains": ["guidance", "healing", "judgment"],
+          "opposedDeityId": "deity.dark_lord"
+        },
+        {
+          "id": "deity.water_lady",
+          "name": "Lady of Water",
+          "presentationGender": "female",
+          "element": "water",
+          "domains": ["tides", "mercy", "fertility"],
+          "opposedDeityId": "deity.fire_lord"
+        },
+        {
+          "id": "deity.wind_lady",
+          "name": "Lady of Wind",
+          "presentationGender": "female",
+          "element": "wind",
+          "domains": ["travel", "messages", "change"],
+          "opposedDeityId": "deity.stone_lord"
+        },
+        {
+          "id": "deity.ice_lady",
+          "name": "Lady of Ice",
+          "presentationGender": "female",
+          "element": "ice",
+          "domains": ["memory", "discipline", "winter"],
+          "opposedDeityId": "deity.fire_lord"
+        },
+        {
+          "id": "deity.dark_lord",
+          "name": "Lord of Darkness",
+          "presentationGender": "male",
+          "element": "darkness",
+          "domains": ["night", "secrets", "thresholds"],
+          "opposedDeityId": "deity.light_lady"
+        },
+        {
+          "id": "deity.fire_lord",
+          "name": "Lord of Fire",
+          "presentationGender": "male",
+          "element": "fire",
+          "domains": ["forging", "war", "will"],
+          "opposedDeityId": "deity.water_lady"
+        },
+        {
+          "id": "deity.stone_lord",
+          "name": "Lord of Stone",
+          "presentationGender": "male",
+          "element": "stone",
+          "domains": ["endurance", "craft", "foundations"],
+          "opposedDeityId": "deity.wind_lady"
+        },
+        {
+          "id": "deity.thunder_lord",
+          "name": "Lord of Thunder",
+          "presentationGender": "male",
+          "element": "thunder",
+          "domains": ["storms", "oaths", "shock"],
+          "opposedDeityId": "deity.water_lady"
+        }
+      ],
+      "dualities": [
+        {
+          "leftDeityId": "deity.light_lady",
+          "rightDeityId": "deity.dark_lord",
+          "relationship": "opposed"
+        }
+      ],
+      "dominanceCycle": [
+        {
+          "winnerDeityId": "deity.fire_lord",
+          "loserDeityId": "deity.ice_lady",
+          "relationship": "dominant"
+        },
+        {
+          "winnerDeityId": "deity.ice_lady",
+          "loserDeityId": "deity.wind_lady",
+          "relationship": "dominant"
+        },
+        {
+          "winnerDeityId": "deity.wind_lady",
+          "loserDeityId": "deity.stone_lord",
+          "relationship": "dominant"
+        },
+        {
+          "winnerDeityId": "deity.stone_lord",
+          "loserDeityId": "deity.thunder_lord",
+          "relationship": "dominant"
+        },
+        {
+          "winnerDeityId": "deity.thunder_lord",
+          "loserDeityId": "deity.water_lady",
+          "relationship": "dominant"
+        },
+        {
+          "winnerDeityId": "deity.water_lady",
+          "loserDeityId": "deity.fire_lord",
+          "relationship": "dominant"
+        }
+      ],
+      "organizations": [
+        {
+          "id": "religious_order.luminous_tide",
+          "name": "Order of the Luminous Tide",
+          "category": "elemental_order",
+          "favoredDeityIds": ["deity.light_lady", "deity.water_lady"],
+          "typicalTerrainTags": ["coastal", "river", "estuary", "harbor"],
+          "summary": "Harbor priests, ferryside healers, and lighthouse keepers devoted to light and water."
+        },
+        {
+          "id": "religious_order.gale_veil",
+          "name": "Order of the Gale Veil",
+          "category": "elemental_order",
+          "favoredDeityIds": ["deity.wind_lady", "deity.ice_lady"],
+          "typicalTerrainTags": ["alpine", "pass", "tundra", "highland"],
+          "summary": "Mountain ascetics and sky-watchers who govern shrines in passes, cliffs, and winter roads."
+        },
+        {
+          "id": "religious_order.forge_sanctum",
+          "name": "Forge Sanctum",
+          "category": "elemental_order",
+          "favoredDeityIds": ["deity.fire_lord", "deity.stone_lord"],
+          "typicalTerrainTags": ["ore_ridge", "quarry", "city", "craft"],
+          "summary": "Temple-smith orders that blend civic ritual with foundry, masonry, and oath-forging traditions."
+        },
+        {
+          "id": "religious_order.storm_bound",
+          "name": "Stormbound Covenant",
+          "category": "elemental_order",
+          "favoredDeityIds": ["deity.thunder_lord", "deity.dark_lord"],
+          "typicalTerrainTags": ["frontier", "storm_coast", "watch", "border"],
+          "summary": "Oath-keepers and wardens who tend storm shrines, execution grounds, and frontier watches."
+        },
+        {
+          "id": "religious_order.prismatic_enclave",
+          "name": "Prismatic Enclave",
+          "category": "prismatic_enclave",
+          "favoredDeityIds": [
+            "deity.light_lady",
+            "deity.water_lady",
+            "deity.wind_lady",
+            "deity.ice_lady",
+            "deity.dark_lord",
+            "deity.fire_lord",
+            "deity.stone_lord",
+            "deity.thunder_lord"
+          ],
+          "typicalTerrainTags": ["regional_capital", "trade_hub", "port_city", "great_temple"],
+          "summary": "A syncretic high order that arbitrates between elemental cults and oversees convergence rituals."
+        },
+        {
+          "id": "religious_order.the_unbound",
+          "name": "The Unbound",
+          "category": "unbound",
+          "favoredDeityIds": ["deity.dark_lord", "deity.fire_lord", "deity.thunder_lord"],
+          "typicalTerrainTags": ["frontier", "ruin", "storm", "badlands", "volcanic"],
+          "summary": "A loose network of ecstatic hedge mystics and taboo keepers who gather where formal authority thins."
+        }
+      ],
+      "structureTypes": [
+        {
+          "id": "religious_site.shrine",
+          "label": "Shrine",
+          "minimumPopulationBand": "tiny",
+          "magicSupport": "none"
+        },
+        {
+          "id": "religious_site.temple",
+          "label": "Temple",
+          "minimumPopulationBand": "small",
+          "magicSupport": "limited"
+        },
+        {
+          "id": "religious_site.great_temple",
+          "label": "Great Temple",
+          "minimumPopulationBand": "large",
+          "magicSupport": "high"
+        },
+        {
+          "id": "religious_site.convergence_site",
+          "label": "Convergence Site",
+          "minimumPopulationBand": "modest",
+          "magicSupport": "moderate"
+        }
+      ]
+    }
+  ]
+}

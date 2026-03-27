@@ -109,6 +109,14 @@ const TRAVEL_ROUTE_CLASSES = new Set(["road_corridor", "pack_track", "river_corr
 const TRAVEL_LANE_CLASSES = new Set(["intercoastal", "open_ocean"]);
 const GUILD_CATEGORIES = new Set(["mercantile", "martial", "gathering", "crafting", "logistics", "civic", "service"]);
 const GUILD_ENTRY_METHODS = new Set(["buy_in", "task_trial", "sponsorship", "oath", "charter"]);
+const RELIGION_GENDERS = new Set(["female", "male"]);
+const RELIGION_ELEMENTS = new Set(["light", "water", "wind", "ice", "darkness", "fire", "stone", "thunder"]);
+const RELIGION_RELATIONSHIPS = new Set(["opposed", "dominant"]);
+const RELIGION_ORGANIZATION_CATEGORIES = new Set(["elemental_order", "prismatic_enclave", "unbound"]);
+const RELIGION_MAGIC_SUPPORT_LEVELS = new Set(["none", "limited", "moderate", "high"]);
+const MAGIC_SERVICE_CATEGORIES = new Set(["adventurer_magic", "utility_enchantment", "ritual_religious"]);
+const MAGIC_SERVICE_SCALE_BANDS = new Set(["small", "moderate", "large"]);
+const CRYSTAL_TIERS = new Set(["shard", "crystal", "cluster"]);
 const QUEST_TEMPLATE_CATEGORIES = new Set([
   "gathering",
   "hunting",
@@ -395,6 +403,27 @@ const checks = [
     requireSlug: true,
     forbidGeoQualifierInName: false,
     validateRegionalEcologyProfiles: true
+  },
+  {
+    file: "packages/content/base/world/religions.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateReligions: true
+  },
+  {
+    file: "packages/content/base/world/magic_infrastructure.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateMagicInfrastructureCatalog: true
+  },
+  {
+    file: "packages/content/base/world/crystal_catalog.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateCrystalCatalog: true
   },
   {
     file: "packages/content/base/world/settlements.json",
@@ -3842,6 +3871,276 @@ function validateGuilds(relativePath, records) {
   }
 }
 
+function validateReligions(relativePath, records) {
+  const seenIds = new Set();
+  const seenSlugs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^religion\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid religion id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate religion id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "slug", record.slug);
+    if (!SLUG_PATTERN.test(record.slug)) {
+      throw new Error(`${relativePath} has invalid religion slug '${record.slug}' on record ${recordId}`);
+    }
+    if (seenSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate religion slug '${record.slug}'`);
+    }
+    seenSlugs.add(record.slug);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    if (!Array.isArray(record.deities) || record.deities.length === 0) {
+      throw new Error(`${relativePath} has invalid deities on record ${recordId}`);
+    }
+    if (!Array.isArray(record.dualities)) {
+      throw new Error(`${relativePath} has invalid dualities on record ${recordId}`);
+    }
+    if (!Array.isArray(record.dominanceCycle)) {
+      throw new Error(`${relativePath} has invalid dominanceCycle on record ${recordId}`);
+    }
+    if (!Array.isArray(record.organizations) || record.organizations.length === 0) {
+      throw new Error(`${relativePath} has invalid organizations on record ${recordId}`);
+    }
+    if (!Array.isArray(record.structureTypes) || record.structureTypes.length === 0) {
+      throw new Error(`${relativePath} has invalid structureTypes on record ${recordId}`);
+    }
+
+    const deityIds = new Set();
+    for (const [index, deity] of record.deities.entries()) {
+      const field = `deities[${index}]`;
+      if (!isObject(deity)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, deity.id);
+      if (!/^deity\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(deity.id)) {
+        throw new Error(`${relativePath} has invalid ${field}.id '${deity.id}' on record ${recordId}`);
+      }
+      if (deityIds.has(deity.id)) {
+        throw new Error(`${relativePath} has duplicate deity id '${deity.id}' on record ${recordId}`);
+      }
+      deityIds.add(deity.id);
+      ensureString(relativePath, recordId, `${field}.name`, deity.name);
+      ensureSetMembership(relativePath, recordId, `${field}.presentationGender`, deity.presentationGender, RELIGION_GENDERS);
+      ensureSetMembership(relativePath, recordId, `${field}.element`, deity.element, RELIGION_ELEMENTS);
+      ensureStringArray(relativePath, recordId, `${field}.domains`, deity.domains, 1);
+      if (deity.opposedDeityId !== undefined) {
+        ensureString(relativePath, recordId, `${field}.opposedDeityId`, deity.opposedDeityId);
+      }
+    }
+
+    for (const [index, duality] of record.dualities.entries()) {
+      const field = `dualities[${index}]`;
+      if (!isObject(duality)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.leftDeityId`, duality.leftDeityId);
+      ensureString(relativePath, recordId, `${field}.rightDeityId`, duality.rightDeityId);
+      if (!deityIds.has(duality.leftDeityId) || !deityIds.has(duality.rightDeityId)) {
+        throw new Error(`${relativePath} has unknown deity reference in ${field} on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, `${field}.relationship`, duality.relationship, RELIGION_RELATIONSHIPS);
+      if (duality.relationship !== "opposed") {
+        throw new Error(`${relativePath} has invalid duality relationship '${duality.relationship}' on record ${recordId}`);
+      }
+    }
+
+    for (const [index, pairing] of record.dominanceCycle.entries()) {
+      const field = `dominanceCycle[${index}]`;
+      if (!isObject(pairing)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.winnerDeityId`, pairing.winnerDeityId);
+      ensureString(relativePath, recordId, `${field}.loserDeityId`, pairing.loserDeityId);
+      if (!deityIds.has(pairing.winnerDeityId) || !deityIds.has(pairing.loserDeityId)) {
+        throw new Error(`${relativePath} has unknown deity reference in ${field} on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, `${field}.relationship`, pairing.relationship, RELIGION_RELATIONSHIPS);
+      if (pairing.relationship !== "dominant") {
+        throw new Error(`${relativePath} has invalid dominance relationship '${pairing.relationship}' on record ${recordId}`);
+      }
+    }
+
+    const organizationIds = new Set();
+    for (const [index, organization] of record.organizations.entries()) {
+      const field = `organizations[${index}]`;
+      if (!isObject(organization)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, organization.id);
+      if (!/^religious_order\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(organization.id)) {
+        throw new Error(`${relativePath} has invalid ${field}.id '${organization.id}' on record ${recordId}`);
+      }
+      if (organizationIds.has(organization.id)) {
+        throw new Error(`${relativePath} has duplicate organization id '${organization.id}' on record ${recordId}`);
+      }
+      organizationIds.add(organization.id);
+      ensureString(relativePath, recordId, `${field}.name`, organization.name);
+      ensureSetMembership(relativePath, recordId, `${field}.category`, organization.category, RELIGION_ORGANIZATION_CATEGORIES);
+      ensureStringArray(relativePath, recordId, `${field}.favoredDeityIds`, organization.favoredDeityIds, 1);
+      ensureStringArray(relativePath, recordId, `${field}.typicalTerrainTags`, organization.typicalTerrainTags, 1);
+      ensureString(relativePath, recordId, `${field}.summary`, organization.summary);
+      for (const deityId of organization.favoredDeityIds) {
+        if (!deityIds.has(deityId)) {
+          throw new Error(`${relativePath} has unknown favoredDeityId '${deityId}' in ${field} on record ${recordId}`);
+        }
+      }
+    }
+
+    const structureTypeIds = new Set();
+    for (const [index, structureType] of record.structureTypes.entries()) {
+      const field = `structureTypes[${index}]`;
+      if (!isObject(structureType)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.id`, structureType.id);
+      if (!/^religious_site\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(structureType.id)) {
+        throw new Error(`${relativePath} has invalid ${field}.id '${structureType.id}' on record ${recordId}`);
+      }
+      if (structureTypeIds.has(structureType.id)) {
+        throw new Error(`${relativePath} has duplicate structureType id '${structureType.id}' on record ${recordId}`);
+      }
+      structureTypeIds.add(structureType.id);
+      ensureString(relativePath, recordId, `${field}.label`, structureType.label);
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        `${field}.minimumPopulationBand`,
+        structureType.minimumPopulationBand,
+        SETTLEMENT_POPULATION_BANDS
+      );
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        `${field}.magicSupport`,
+        structureType.magicSupport,
+        RELIGION_MAGIC_SUPPORT_LEVELS
+      );
+    }
+  }
+}
+
+function validateMagicInfrastructureCatalog(relativePath, records) {
+  const seenIds = new Set();
+  const seenSlugs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^magic_service\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid magic service id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate magic service id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "slug", record.slug);
+    if (!SLUG_PATTERN.test(record.slug)) {
+      throw new Error(`${relativePath} has invalid magic service slug '${record.slug}' on record ${recordId}`);
+    }
+    if (seenSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate magic service slug '${record.slug}'`);
+    }
+    seenSlugs.add(record.slug);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureSetMembership(relativePath, recordId, "category", record.category, MAGIC_SERVICE_CATEGORIES);
+
+    if (!isObject(record.requiredInfrastructure)) {
+      throw new Error(`${relativePath} has invalid requiredInfrastructure on record ${recordId}`);
+    }
+    for (const field of ["roadTier", "waterTier", "harborTier", "marketTier", "fortificationTier"]) {
+      ensureInteger(relativePath, recordId, `requiredInfrastructure.${field}`, record.requiredInfrastructure[field], 0);
+      if (record.requiredInfrastructure[field] > 5) {
+        throw new Error(`${relativePath} has out-of-range requiredInfrastructure.${field} on record ${recordId}`);
+      }
+    }
+
+    ensureStringArray(relativePath, recordId, "requiredGuildTypes", record.requiredGuildTypes, 0);
+    ensureStringArray(relativePath, recordId, "requiredReligionOrganizationIds", record.requiredReligionOrganizationIds, 0);
+    ensureStringArray(relativePath, recordId, "supportedUseCases", record.supportedUseCases, 1);
+    ensureStringArray(relativePath, recordId, "prohibitedBypassTags", record.prohibitedBypassTags, 1);
+    ensureStringArray(relativePath, recordId, "preferredCrystalTiers", record.preferredCrystalTiers, 1);
+    ensureStringArray(relativePath, recordId, "allowedElements", record.allowedElements, 1);
+    ensureSetMembership(relativePath, recordId, "serviceScaleBand", record.serviceScaleBand, MAGIC_SERVICE_SCALE_BANDS);
+
+    for (const guildType of record.requiredGuildTypes) {
+      if (!SLUG_PATTERN.test(guildType)) {
+        throw new Error(`${relativePath} has invalid requiredGuildTypes value '${guildType}' on record ${recordId}`);
+      }
+    }
+    for (const organizationId of record.requiredReligionOrganizationIds) {
+      if (!/^religious_order\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(organizationId)) {
+        throw new Error(`${relativePath} has invalid requiredReligionOrganizationIds value '${organizationId}' on record ${recordId}`);
+      }
+    }
+    for (const tier of record.preferredCrystalTiers) {
+      ensureSetMembership(relativePath, recordId, "preferredCrystalTiers", tier, CRYSTAL_TIERS);
+    }
+    for (const element of record.allowedElements) {
+      ensureSetMembership(relativePath, recordId, "allowedElements", element, new Set(["neutral", ...RELIGION_ELEMENTS]));
+    }
+  }
+}
+
+function validateCrystalCatalog(relativePath, records) {
+  const seenIds = new Set();
+  const seenSlugs = new Set();
+  const seenElementTierPairs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^crystal\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid crystal id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate crystal id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "slug", record.slug);
+    if (!SLUG_PATTERN.test(record.slug)) {
+      throw new Error(`${relativePath} has invalid crystal slug '${record.slug}' on record ${recordId}`);
+    }
+    if (seenSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate crystal slug '${record.slug}'`);
+    }
+    seenSlugs.add(record.slug);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "tier", record.tier, CRYSTAL_TIERS);
+    ensureSetMembership(relativePath, recordId, "element", record.element, new Set(["neutral", ...RELIGION_ELEMENTS]));
+    ensureInteger(relativePath, recordId, "capacity", record.capacity, 1);
+    ensureFiniteNumber(relativePath, recordId, "efficiency", record.efficiency);
+    ensureFiniteNumber(relativePath, recordId, "stability", record.stability);
+    ensureBoolean(relativePath, recordId, "reusable", record.reusable);
+    ensureString(relativePath, recordId, "rechargeMethod", record.rechargeMethod);
+    ensureNumber(relativePath, recordId, "mismatchPenalty", record.mismatchPenalty, 0);
+    if (record.mismatchPenalty > 1) {
+      throw new Error(`${relativePath} has mismatchPenalty above 1 on record ${recordId}`);
+    }
+
+    const pairKey = `${record.element}:${record.tier}`;
+    if (seenElementTierPairs.has(pairKey)) {
+      throw new Error(`${relativePath} has duplicate crystal element/tier pair '${pairKey}' on record ${recordId}`);
+    }
+    seenElementTierPairs.add(pairKey);
+  }
+}
+
 function validateQuestTemplates(relativePath, records) {
   const seenIds = new Set();
   const seenSlugs = new Set();
@@ -4894,6 +5193,15 @@ function validateRecords(relativePath, parsed, check) {
   }
   if (check.validateRegionalEcologyProfiles) {
     validateRegionalEcologyProfiles(relativePath, parsed.records);
+  }
+  if (check.validateReligions) {
+    validateReligions(relativePath, parsed.records);
+  }
+  if (check.validateMagicInfrastructureCatalog) {
+    validateMagicInfrastructureCatalog(relativePath, parsed.records);
+  }
+  if (check.validateCrystalCatalog) {
+    validateCrystalCatalog(relativePath, parsed.records);
   }
   if (check.validateGuilds) {
     validateGuilds(relativePath, parsed.records);
@@ -6239,6 +6547,69 @@ async function validateRegionalEcologyAgainstWorldData() {
   }
 }
 
+async function validateInstitutionalMagicAgainstWorldData() {
+  const guildPath = path.join(ROOT, "packages/content/base/civilization/guilds.json");
+  const religionPath = path.join(ROOT, "packages/content/base/world/religions.json");
+  const magicPath = path.join(ROOT, "packages/content/base/world/magic_infrastructure.json");
+  const crystalPath = path.join(ROOT, "packages/content/base/world/crystal_catalog.json");
+
+  const guildParsed = JSON.parse(await readFile(guildPath, "utf8"));
+  const religionParsed = JSON.parse(await readFile(religionPath, "utf8"));
+  const magicParsed = JSON.parse(await readFile(magicPath, "utf8"));
+  const crystalParsed = JSON.parse(await readFile(crystalPath, "utf8"));
+
+  if (
+    !Array.isArray(guildParsed.records) ||
+    !Array.isArray(religionParsed.records) ||
+    !Array.isArray(magicParsed.records) ||
+    !Array.isArray(crystalParsed.records)
+  ) {
+    throw new Error("content cross-check failed: institutional magic dependencies are invalid");
+  }
+
+  const guildSlugs = new Set(guildParsed.records.map((record) => record.slug).filter((value) => typeof value === "string"));
+  const religionOrganizationIds = new Set(
+    religionParsed.records
+      .flatMap((record) => record.organizations ?? [])
+      .map((organization) => organization.id)
+      .filter((value) => typeof value === "string")
+  );
+  const crystalPairs = new Set(
+    crystalParsed.records
+      .map((record) => (typeof record.element === "string" && typeof record.tier === "string" ? `${record.element}:${record.tier}` : null))
+      .filter((value) => value !== null)
+  );
+
+  for (const requiredPair of ["neutral:shard", "neutral:crystal", "neutral:cluster"]) {
+    if (!crystalPairs.has(requiredPair)) {
+      throw new Error(`packages/content/base/world/crystal_catalog.json missing required neutral crystal pair '${requiredPair}'`);
+    }
+  }
+
+  for (const record of magicParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+
+    for (const guildType of record.requiredGuildTypes ?? []) {
+      if (!guildSlugs.has(guildType)) {
+        throw new Error(`packages/content/base/world/magic_infrastructure.json requiredGuildType '${guildType}' missing guild definition on record ${recordId}`);
+      }
+    }
+
+    for (const organizationId of record.requiredReligionOrganizationIds ?? []) {
+      if (!religionOrganizationIds.has(organizationId)) {
+        throw new Error(`packages/content/base/world/magic_infrastructure.json requiredReligionOrganizationId '${organizationId}' missing religion definition on record ${recordId}`);
+      }
+    }
+
+    const hasCrystalSupport = (record.allowedElements ?? []).some((element) =>
+      (record.preferredCrystalTiers ?? []).some((tier) => crystalPairs.has(`${element}:${tier}`))
+    );
+    if (!hasCrystalSupport) {
+      throw new Error(`packages/content/base/world/magic_infrastructure.json record ${recordId} has no compatible crystal definitions`);
+    }
+  }
+}
+
 async function validateRegionLocalitiesAgainstWorldData() {
   const localityPath = path.join(ROOT, "packages/content/base/world/region_localities.json");
   const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
@@ -6927,6 +7298,7 @@ async function main() {
   await validateWorldMapsAgainstRegions();
   await validateWorldMapFeaturesAgainstWorldData();
   await validateRegionalEcologyAgainstWorldData();
+  await validateInstitutionalMagicAgainstWorldData();
   await validateRegionLocalitiesAgainstWorldData();
   await validateSettlementsAgainstRegions();
   await validateQuestTemplatesAgainstWorldData();

@@ -45,6 +45,11 @@ export {
 } from "./settlement-simulation.js";
 
 export {
+  buildSettlementInstitutionProfiles,
+  resolveSettlementInstitutionProfile
+} from "./institutions-runtime.js";
+
+export {
   evaluateAutonomousTradeOpportunities,
   runAutonomousTradeDispatch
 } from "./trade-runtime.js";

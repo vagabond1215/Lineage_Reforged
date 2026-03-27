@@ -19,13 +19,14 @@ import {
 import type { CharacterCreationFormState } from './characterCreationForm.js';
 import {
   getStarterBackgroundTemplate,
-  getStarterClassTemplate,
-  getStarterSettlementTemplate
+  getStarterClassTemplate
 } from './starterTemplates.js';
+import { resolveWorldSelection } from './worldSelectionCatalog.js';
 import { demoSnapshot } from '../runtime/demoSnapshot.js';
 
 type DerivedCharacterCreationState = {
   backgroundLabel: string;
+  startingContinentLabel: string;
   startingSettlementLabel: string;
   startingRegionLabel: string;
   chosenOriginLabel: string;
@@ -51,6 +52,7 @@ export type CharacterCreationPreview = {
   characterName: string;
   chosenOrigin: string;
   backgroundLabel: string;
+  startingContinent: string;
   startingSettlement: string;
   startingRegion: string;
   attributes: PlayerAttributes;
@@ -237,69 +239,129 @@ function buildStarterInventory(
 }
 
 function buildStarterSessionState(
-  baseSnapshot: SaveSnapshot,
   playerName: string,
-  form: CharacterCreationFormState
+  form: CharacterCreationFormState,
+  selectedWorld: NonNullable<ReturnType<typeof resolveWorldSelection>>
 ): SaveSnapshot['sessionState'] {
   const backgroundTemplate = getStarterBackgroundTemplate(form.backgroundId);
-  const settlementTemplate = getStarterSettlementTemplate(form.startingSettlementId);
-
-  const questJournal = baseSnapshot.sessionState.questJournal.filter((entry) =>
-    settlementTemplate.questJournalIds.includes(entry.id)
-  );
-  const chronicleEntries = baseSnapshot.sessionState.chronicle.filter((entry) =>
-    settlementTemplate.chronicleIds.includes(entry.id)
-  );
+  const settlementRecord = selectedWorld.settlementRecord;
+  const locationType =
+    settlementRecord.settlementType === 'fort' || settlementRecord.settlementType === 'citadel'
+      ? 'fort'
+      : settlementRecord.settlementType === 'harbor_town' || settlementRecord.settlementType === 'port_city'
+        ? 'harbor'
+        : 'settlement';
+  const knownLocations = [
+    {
+      id: settlementRecord.id,
+      name: settlementRecord.name,
+      regionLabel: selectedWorld.region.label,
+      type: locationType,
+      x: settlementRecord.visualMapRef?.pixelX ?? 0,
+      y: settlementRecord.visualMapRef?.pixelY ?? 0,
+      note: settlementRecord.summary,
+      known: true
+    }
+  ];
+  const worldRecords = [
+    {
+      id: selectedWorld.continent.id,
+      sectionId: 'world.continent',
+      title: selectedWorld.continent.label,
+      summary: selectedWorld.continent.description,
+      tags: selectedWorld.continent.biomeMix,
+      detailEntries: [
+        { label: 'Climate', value: selectedWorld.continent.climate },
+        { label: 'Survivability', value: selectedWorld.continent.survivabilityLabel }
+      ]
+    },
+    {
+      id: selectedWorld.region.id,
+      sectionId: 'world.region',
+      title: selectedWorld.region.label,
+      subtitle: selectedWorld.continent.label,
+      summary: selectedWorld.region.description,
+      tags: selectedWorld.region.resourceAvailability,
+      detailEntries: [
+        { label: 'Terrain', value: selectedWorld.region.terrainAndBiome },
+        { label: 'Density', value: selectedWorld.region.populationDensity }
+      ]
+    },
+    {
+      id: selectedWorld.settlement.id,
+      sectionId: 'world.settlement',
+      title: selectedWorld.settlement.label,
+      subtitle: selectedWorld.region.label,
+      summary: selectedWorld.settlement.description,
+      tags: selectedWorld.settlement.dominantIndustries,
+      detailEntries: [
+        { label: 'Population', value: selectedWorld.settlement.populationSize },
+        { label: 'Trade Role', value: selectedWorld.settlement.tradeRole },
+        { label: 'Authority', value: selectedWorld.settlement.landAuthorityType.replace(/_/g, ' ') }
+      ]
+    }
+  ];
+  const activityRecords = [
+    {
+      id: `activity.start.${settlementRecord.id}`,
+      sectionId: 'activity.start',
+      title: `Arrival at ${settlementRecord.name}`,
+      summary: selectedWorld.settlement.access.notes[0] ?? settlementRecord.summary,
+      tags: selectedWorld.settlement.dominantIndustries,
+      detailEntries: [
+        { label: 'Spawn Mode', value: selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ') },
+        { label: 'Lodging', value: selectedWorld.settlement.access.lodgingType.replace(/_/g, ' ') }
+      ]
+    }
+  ];
 
   return {
     activeEvents: ['event.campaign.started'],
     flags: [
       'campaign.new_game',
       `character.background.${backgroundTemplate.id}`,
-      `character.start.${settlementTemplate.id}`
+      `character.start.${settlementRecord.id}`,
+      `character.continent.${selectedWorld.continent.id}`,
+      `character.region.${selectedWorld.region.id}`
     ],
     triggers: [],
     completedEvents: [],
     trackedQuestId: null,
-    currentActivity: settlementTemplate.currentActivity,
+    currentActivity: {
+      id: `activity.arrival.${settlementRecord.id}`,
+      label: `Arriving in ${settlementRecord.name}`,
+      category: 'Arrival',
+      detail: `${selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')} into ${settlementRecord.name}.`
+    },
     pinnedRecordIds: [],
     notifications: [
       {
         id: 'note.new_game',
-        title: `${settlementTemplate.label} arrival`,
-        detail: `${playerName} begins as a ${backgroundTemplate.label} at ${settlementTemplate.label}.`,
+        title: `${settlementRecord.name} arrival`,
+        detail: `${playerName} begins as a ${backgroundTemplate.label} at ${settlementRecord.name}.`,
         timeLabel: 'Just now',
         tone: 'accent'
       }
     ],
-    knownLocations: baseSnapshot.sessionState.knownLocations.filter((location) =>
-      settlementTemplate.knownLocationIds.includes(location.id)
-    ),
-    worldRecords: baseSnapshot.sessionState.worldRecords.filter((record) =>
-      settlementTemplate.worldRecordIds.includes(record.id)
-    ),
-    activityRecords: baseSnapshot.sessionState.activityRecords.filter((record) =>
-      settlementTemplate.activityRecordIds.includes(record.id)
-    ),
+    knownLocations,
+    worldRecords,
+    activityRecords,
     operations: [],
-    codexEntries: baseSnapshot.sessionState.codexEntries.filter((entry) =>
-      settlementTemplate.codexEntryIds.includes(entry.id)
-    ),
-    questJournal,
+    codexEntries: [],
+    questJournal: [],
     chronicle: [
       {
         id: 'chronicle.campaign_started',
         category: 'social',
         title: `${playerName} began as a ${backgroundTemplate.label}`,
         timeLabel: 'Just now',
-        summary: `${playerName} opens the campaign from ${settlementTemplate.label} in the ${settlementTemplate.regionLabel}.`,
+        summary: `${playerName} opens the campaign from ${settlementRecord.name} in the ${selectedWorld.region.label}.`,
         statusLabel: 'Campaign started',
-        entities: [playerName, settlementTemplate.label, backgroundTemplate.label],
-        results: ['Starter state generated', 'Local leads prepared'],
+        entities: [playerName, settlementRecord.name, backgroundTemplate.label],
+        results: ['Starter state generated', selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')],
         statChanges: ['Save slot created', `Origin set to ${backgroundTemplate.label}`],
-        tags: [settlementTemplate.regionLabel, 'New Game']
-      },
-      ...chronicleEntries
+        tags: [selectedWorld.region.label, selectedWorld.continent.label, 'New Game']
+      }
     ]
   };
 }
@@ -310,7 +372,26 @@ function deriveCharacterCreationState(
   const baseSnapshot = cloneSnapshot(demoSnapshot);
   const classTemplate = getStarterClassTemplate(form.classId);
   const backgroundTemplate = getStarterBackgroundTemplate(form.backgroundId);
-  const settlementTemplate = getStarterSettlementTemplate(form.startingSettlementId);
+  const selectedWorld = resolveWorldSelection({
+    continentId: form.continentId,
+    regionId: form.regionId,
+    settlementId: form.startingSettlementId,
+    classId: form.classId,
+    backgroundId: form.backgroundId
+  });
+
+  if (!selectedWorld) {
+    throw new Error('Cannot create a new game without a valid world selection.');
+  }
+
+  if (selectedWorld.settlement.access.accessStatus !== 'allowed') {
+    throw new Error(selectedWorld.settlement.access.notes[0] ?? 'Selected settlement start is restricted.');
+  }
+
+  const settlementTraitIds = [
+    `trait.${selectedWorld.settlementRecord.terrainContext}`,
+    `trait.${selectedWorld.settlement.tradeRole.toLowerCase()}_start`
+  ];
   const progression = {
     level: 1,
     classLevel: 1,
@@ -341,7 +422,7 @@ function deriveCharacterCreationState(
     form.lineageId,
     form.classId,
     backgroundTemplate.traitIds,
-    settlementTemplate.traitIds
+    settlementTraitIds
   );
   const currency = mergeCurrency(classTemplate.currency, backgroundTemplate.currencyBonus);
   const resourceRuntime = createEmptyPlayerResourceRuntimeState();
@@ -376,7 +457,7 @@ function deriveCharacterCreationState(
     [],
     baseSnapshot.clock.tick
   );
-  const sessionState = buildStarterSessionState(baseSnapshot, playerName, form);
+  const sessionState = buildStarterSessionState(playerName, form, selectedWorld);
   const activeQuestIds = sessionState.questJournal
     .filter((entry) => entry.category === 'active' || entry.category === 'contracts')
     .map((entry) => entry.id);
@@ -388,7 +469,7 @@ function deriveCharacterCreationState(
     playerState: {
       ...baseSnapshot.playerState,
       playerId,
-      regionId: settlementTemplate.regionId,
+      regionId: selectedWorld.region.id,
       coreData: {
         playerName,
         lineageId: form.lineageId,
@@ -408,10 +489,10 @@ function deriveCharacterCreationState(
       inventory,
       activeEffects: [],
       location: {
-        settlementId: settlementTemplate.settlementId,
-        siteLabel: settlementTemplate.siteLabel,
-        worldMapId: settlementTemplate.worldMapId,
-        knownSettlementIds: settlementTemplate.knownSettlementIds
+        settlementId: selectedWorld.settlement.id,
+        siteLabel: selectedWorld.settlement.label,
+        worldMapId: selectedWorld.settlementRecord.visualMapRef?.mapId ?? null,
+        knownSettlementIds: [selectedWorld.settlement.id]
       },
       currency,
       originProfile,
@@ -421,13 +502,15 @@ function deriveCharacterCreationState(
         entries: [],
         lastUpdatedTick: null
       },
-      discoveredRegions: [settlementTemplate.regionId],
+      discoveredRegions: [selectedWorld.region.id],
       activeQuestIds,
       completedQuestIds,
       flags: [
         'player.new_game',
         `player.background.${backgroundTemplate.id}`,
-        `player.start.${settlementTemplate.id}`
+        `player.start.${selectedWorld.settlement.id}`,
+        `player.start_authority.${selectedWorld.settlement.landAuthorityType}`,
+        `player.start_mode.${selectedWorld.settlement.access.spawnMode}`
       ],
       saveMeta: {
         totalPlayTicks: 0,
@@ -438,7 +521,7 @@ function deriveCharacterCreationState(
     worldState: {
       ...baseSnapshot.worldState,
       activeRegions: Array.from(
-        new Set([settlementTemplate.regionId, ...baseSnapshot.worldState.activeRegions])
+        new Set([selectedWorld.region.id, ...baseSnapshot.worldState.activeRegions])
       )
     },
     sessionState
@@ -446,9 +529,10 @@ function deriveCharacterCreationState(
 
   return {
     backgroundLabel: backgroundTemplate.label,
-    startingSettlementLabel: settlementTemplate.label,
-    startingRegionLabel: settlementTemplate.regionLabel,
-    chosenOriginLabel: `${backgroundTemplate.label} of ${settlementTemplate.label}`,
+    startingContinentLabel: selectedWorld.continent.label,
+    startingSettlementLabel: selectedWorld.settlement.label,
+    startingRegionLabel: selectedWorld.region.label,
+    chosenOriginLabel: `${backgroundTemplate.label} of ${selectedWorld.settlement.label}`,
     attributes,
     resources: {
       hp: resourceResolution.resources.hp.max,
@@ -468,7 +552,8 @@ function deriveCharacterCreationState(
     starterNotes: [
       ...originProfile.notes.slice(0, 2),
       backgroundTemplate.description,
-      settlementTemplate.description
+      selectedWorld.settlement.description,
+      selectedWorld.settlement.access.notes[0] ?? ''
     ],
     snapshot
   };
@@ -477,27 +562,80 @@ function deriveCharacterCreationState(
 export function buildCharacterCreationPreview(
   form: CharacterCreationFormState
 ): CharacterCreationPreview {
-  const derived = deriveCharacterCreationState(form);
+  try {
+    const derived = deriveCharacterCreationState(form);
 
-  return {
-    characterName: form.playerName.trim() || 'Unnamed Adventurer',
-    chosenOrigin: derived.chosenOriginLabel,
-    backgroundLabel: derived.backgroundLabel,
-    startingSettlement: derived.startingSettlementLabel,
-    startingRegion: derived.startingRegionLabel,
-    attributes: derived.attributes,
-    resourceMaxima: {
-      hp: derived.resources.hp,
-      mp: derived.resources.mp,
-      stamina: derived.resources.stamina
-    },
-    starterSkills: derived.starterSkillLabels,
-    starterTraits: derived.starterTraitLabels,
-    starterGear: derived.gearLabels,
-    starterPack: derived.starterPackLabels,
-    walletLabel: formatWallet(derived.currency),
-    starterNotes: derived.starterNotes
-  };
+    return {
+      characterName: form.playerName.trim() || 'Unnamed Adventurer',
+      chosenOrigin: derived.chosenOriginLabel,
+      backgroundLabel: derived.backgroundLabel,
+      startingContinent: derived.startingContinentLabel,
+      startingSettlement: derived.startingSettlementLabel,
+      startingRegion: derived.startingRegionLabel,
+      attributes: derived.attributes,
+      resourceMaxima: {
+        hp: derived.resources.hp,
+        mp: derived.resources.mp,
+        stamina: derived.resources.stamina
+      },
+      starterSkills: derived.starterSkillLabels,
+      starterTraits: derived.starterTraitLabels,
+      starterGear: derived.gearLabels,
+      starterPack: derived.starterPackLabels,
+      walletLabel: formatWallet(derived.currency),
+      starterNotes: derived.starterNotes.filter((note) => note.trim().length > 0)
+    };
+  } catch (error) {
+    const classTemplate = getStarterClassTemplate(form.classId);
+    const backgroundTemplate = getStarterBackgroundTemplate(form.backgroundId);
+    const selectedWorld = resolveWorldSelection({
+      continentId: form.continentId,
+      regionId: form.regionId,
+      settlementId: form.startingSettlementId,
+      classId: form.classId,
+      backgroundId: form.backgroundId
+    });
+    const originProfile = resolvePlayerOriginProfile(
+      {
+        lineageId: form.lineageId,
+        classId: form.classId,
+        sexId: form.sexId
+      },
+      {
+        level: 1,
+        classLevel: 1,
+        unspentAttributePoints: 0,
+        unspentSkillPoints: 0
+      }
+    );
+    const attributes = applyAttributeAdjustments(
+      applyAttributeAdjustments(classTemplate.baseAttributes, originProfile.attributeAdjustments),
+      backgroundTemplate.attributeAdjustments
+    );
+    const currency = mergeCurrency(classTemplate.currency, backgroundTemplate.currencyBonus);
+    const inventory = buildStarterInventory(form.classId, form.backgroundId);
+
+    return {
+      characterName: form.playerName.trim() || 'Unnamed Adventurer',
+      chosenOrigin: `${backgroundTemplate.label} of ${selectedWorld?.settlement.label ?? 'Unknown Start'}`,
+      backgroundLabel: backgroundTemplate.label,
+      startingContinent: selectedWorld?.continent.label ?? 'Unknown Continent',
+      startingSettlement: selectedWorld?.settlement.label ?? 'Unknown Settlement',
+      startingRegion: selectedWorld?.region.label ?? 'Unknown Region',
+      attributes,
+      resourceMaxima: originProfile.resolvedResourceMaxima,
+      starterSkills: classTemplate.skills.map((skill) => `${humanizeId(skill.id)} ${skill.rank}`),
+      starterTraits: backgroundTemplate.traitIds.map((traitId) => humanizeId(traitId)),
+      starterGear: Object.values(buildStarterEquipment(form.classId)).flatMap((item) => (item ? [humanizeId(item.itemKey)] : [])),
+      starterPack: (inventory.bags[0]?.stacks ?? []).map((item) => `${humanizeId(item.itemKey)} x${item.quantity}`),
+      walletLabel: formatWallet(currency),
+      starterNotes: [
+        backgroundTemplate.description,
+        selectedWorld?.settlement.access.notes[0] ?? 'Select a legal start to finalize the campaign.',
+        error instanceof Error ? error.message : 'Preview fallback active.'
+      ]
+    };
+  }
 }
 
 export function createNewGameSnapshot(

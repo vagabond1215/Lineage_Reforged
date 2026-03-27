@@ -139,16 +139,30 @@ This file tracks content and systems that are intentionally deferred.
 #### Guild institutions and contract systems
 
 - Status: partially deferred
-- Prerequisite: authored guild definitions, settlement guild presence, and baseline quest generation now exist; remaining prerequisites are runtime contract acceptance/completion, warehousing, banking, apprenticeship, and market-service consumers
-- Intended owner: economy simulation, civic institutions, settlement services, and market systems
+- Prerequisite: authored guild definitions, settlement guild presence, ownership derivation, religion catalogs, bounded magic service catalogs, crystal catalogs, and baseline quest generation now exist; remaining prerequisites are runtime contract acceptance/completion, warehousing, banking, apprenticeship, tax/rent collection, and market-service consumers
+- Intended owner: economy simulation, civic institutions, settlement services, property systems, and market systems
 - Intended implementation:
   - shared guild definitions now live in `packages/content/base/civilization/guilds.json`
   - settlement records now include `guildPresence` to describe merchant, adventurer, agricultural, mining, shipwright, teamster, scribal, and similar human guild buildings
+  - settlement ownership, district restrictions, property valuation, religion, bounded magic-service availability, crystal reserves, and legal start-access derivation now live in `packages/shared/types/src/settlement-institutions.ts`, with engine-facing resolution in `packages/engines/civilization-engine/src/institutions-runtime.ts`
+  - elemental religion, bounded magic-service, and crystal catalogs now live in `packages/content/base/world/religions.json`, `packages/content/base/world/magic_infrastructure.json`, and `packages/content/base/world/crystal_catalog.json`
   - merchant buy-in rules, task-trial entry models, and broad trade ownership splits are now authored as data definitions rather than implied only by settlement notes
   - the civilization tick now generates baseline guild-issued quest offers from settlement and guild-building ledgers, with adventurers-guild fallback behavior enforced in runtime
   - add runtime behavior for accepting, completing, expiring, and paying out guild-backed contracts instead of leaving quest offers as generated notices only
-  - add bonded storage, credit, apprenticeship progression, and guild-backed service demand when runtime consumers exist
+  - add bonded storage, credit, apprenticeship progression, rent/tax collection, title transfer, and guild-backed service demand when runtime consumers exist
   - let future civic and faction systems react to guild density, specializations, and regional concentration
+
+#### Ownership, religion, and bounded magic institutions beyond the foundation pass
+
+- Status: partially deferred
+- Prerequisite: settlement ownership/property derivation, district restrictions, elemental religion catalogs, bounded magic-service catalogs, crystal catalogs, and class/background-aware start-access rules now exist; remaining prerequisites are canonical NPC/household/company registries, spell database ownership, crystal-charge runtime consumers, and legal/financial lifecycle systems
+- Intended owner: settlement institutions, player-start systems, religion content, magic systems, and economy simulation
+- Intended implementation:
+  - keep the current pass focused on deterministic derivation of land authority, district permissions, plot/building ownership, property valuation, repair scaling, guild presence, religion sites, bounded magic availability, crystal reserves, and legal start-access
+  - add real owner registries for individuals, households, companies, temples, nobles, and civic offices before ownership becomes a live transaction system instead of a derived legal layer
+  - add rent, tax delinquency progression, foreclosure, condemnation, disputes, charters, and title transfer only after those owner registries and civic ledgers exist
+  - keep magic infrastructure bounded to support, ritual, and licensed utility roles until the spell database exists and runtime charge consumption can be enforced on real spell services
+  - keep magical books, magical scrolls, and other spell-bearing documents blocked behind the spell database even though religion/magic/crystal infrastructure foundations now exist
 
 ### Monsters and Encounters
 
@@ -431,7 +445,8 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to replace the current UI-authored travel, shift-advance, rest, quest-turn-in, and reward application resolver with engine-owned command handling plus authoritative tick/event output from `packages/engines` or `apps/sim-runner`
   - remaining work is to replace session-flag-driven objective progress, cargo markers, and codex unlock triggers with canonical quest/runtime state owned by the engine layer instead of the front-end command helper
   - remaining work is to replace the current UI-side equip-slot heuristics, session-flag item metadata stashing, and disabled consumable action hook with canonical item definitions plus engine-owned equip/use semantics
-  - remaining work is to replace the UI-authored character creation templates for backgrounds, settlement starts, and starter loadouts with canonical content/database ownership once the player-content layer stabilizes
+  - the character creator now resolves continent, region, and settlement selection from canonical world data instead of the earlier UI-authored settlement-template catalog
+  - remaining work is to replace the UI-authored character creation templates for backgrounds and starter loadouts with canonical content/database ownership once the player-content layer stabilizes
   - remaining work is to replace the UI-authored new-game snapshot builder and browser-local slot manager with engine-owned character creation, canonical save-slot metadata, and session persistence once runtime save semantics are finalized
 
 #### RPG UI section field coverage and missing references

@@ -3,16 +3,23 @@ import type { ManualSaveSlotId } from './state.js';
 import {
   STARTER_BACKGROUND_TEMPLATES,
   STARTER_CLASS_TEMPLATES,
-  STARTER_SETTLEMENT_TEMPLATES,
   isKnownLineageId
 } from './starterTemplates.js';
+import {
+  getDefaultWorldSelection,
+  getWorldContinentOptions,
+  getWorldRegionOptions,
+  resolveWorldSelection
+} from './worldSelectionCatalog.js';
 
 export type CharacterCreationStepId =
   | 'identity'
   | 'lineage'
   | 'class'
   | 'background'
-  | 'homeland'
+  | 'continent'
+  | 'region'
+  | 'settlement'
   | 'review';
 
 export type CharacterCreationField =
@@ -21,6 +28,8 @@ export type CharacterCreationField =
   | 'lineageId'
   | 'classId'
   | 'backgroundId'
+  | 'continentId'
+  | 'regionId'
   | 'startingSettlementId'
   | 'saveSlotId';
 
@@ -30,6 +39,8 @@ export interface CharacterCreationFormState {
   lineageId: string;
   classId: string;
   backgroundId: string;
+  continentId: string;
+  regionId: string;
   startingSettlementId: string;
   saveSlotId: ManualSaveSlotId;
 }
@@ -72,16 +83,38 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
     fields: ['backgroundId']
   },
   {
-    id: 'homeland',
-    label: 'Starting Ground',
-    description: 'Choose the first settlement or district where the campaign opens.',
+    id: 'continent',
+    label: 'Continent',
+    description: 'Choose the starting landmass and its broad climate, resource, and trade character.',
+    fields: ['continentId']
+  },
+  {
+    id: 'region',
+    label: 'Region',
+    description: 'Choose the regional terrain pocket, economy, and survivability band inside that continent.',
+    fields: ['regionId']
+  },
+  {
+    id: 'settlement',
+    label: 'Settlement',
+    description: 'Choose the exact settlement where the campaign opens and validate whether you can legally start there.',
     fields: ['startingSettlementId']
   },
   {
     id: 'review',
     label: 'Finalize',
     description: 'Review the generated starter state, choose a save slot, and begin the campaign.',
-    fields: ['saveSlotId', 'playerName', 'sexId', 'lineageId', 'classId', 'backgroundId', 'startingSettlementId']
+    fields: [
+      'saveSlotId',
+      'playerName',
+      'sexId',
+      'lineageId',
+      'classId',
+      'backgroundId',
+      'continentId',
+      'regionId',
+      'startingSettlementId'
+    ]
   }
 ];
 
@@ -90,14 +123,22 @@ const CHARACTER_CREATION_STEP_SEQUENCE = CHARACTER_CREATION_STEPS.map((step) => 
 export function createDefaultCharacterCreationFormState(
   saveSlotId: ManualSaveSlotId
 ): CharacterCreationFormState {
+  const classId = 'class.explorer';
+  const backgroundId =
+    STARTER_BACKGROUND_TEMPLATES['background.harbor_runner']?.id ??
+    Object.keys(STARTER_BACKGROUND_TEMPLATES)[0] ??
+    'background.harbor_runner';
+  const worldSelection = getDefaultWorldSelection(classId, backgroundId);
+
   return {
     playerName: '',
     sexId: 'neutral',
     lineageId: 'lineage.human',
-    classId: 'class.explorer',
-    backgroundId: Object.keys(STARTER_BACKGROUND_TEMPLATES)[0] ?? 'background.harbor_runner',
-    startingSettlementId:
-      Object.keys(STARTER_SETTLEMENT_TEMPLATES)[0] ?? 'start.saltmere_harbor',
+    classId,
+    backgroundId,
+    continentId: worldSelection.continentId,
+    regionId: worldSelection.regionId,
+    startingSettlementId: worldSelection.settlementId,
     saveSlotId
   };
 }
@@ -155,8 +196,26 @@ export function validateCharacterCreationForm(
     errors.backgroundId = 'Choose a valid background.';
   }
 
-  if (!(form.startingSettlementId in STARTER_SETTLEMENT_TEMPLATES)) {
+  if (!getWorldContinentOptions().some((continent) => continent.id === form.continentId)) {
+    errors.continentId = 'Choose a valid continent.';
+  }
+
+  if (!getWorldRegionOptions(form.continentId).some((region) => region.id === form.regionId)) {
+    errors.regionId = 'Choose a valid region for the selected continent.';
+  }
+
+  const resolvedSelection = resolveWorldSelection({
+    continentId: form.continentId,
+    regionId: form.regionId,
+    settlementId: form.startingSettlementId,
+    classId: form.classId,
+    backgroundId: form.backgroundId
+  });
+
+  if (!resolvedSelection) {
     errors.startingSettlementId = 'Choose a valid starting settlement.';
+  } else if (resolvedSelection.settlement.access.accessStatus !== 'allowed') {
+    errors.startingSettlementId = resolvedSelection.settlement.access.notes[0] ?? 'This start is restricted.';
   }
 
   if (!form.saveSlotId) {

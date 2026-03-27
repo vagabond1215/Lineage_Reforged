@@ -814,6 +814,81 @@ export interface SkillContentRecord {
   progressionModelId: string;
 }
 
+export interface ReligionContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  summary: string;
+  deities: Array<{
+    id: string;
+    name: string;
+    presentationGender: "female" | "male";
+    element: "light" | "water" | "wind" | "ice" | "darkness" | "fire" | "stone" | "thunder";
+    domains: string[];
+    opposedDeityId?: string;
+  }>;
+  dualities: Array<{
+    leftDeityId: string;
+    rightDeityId: string;
+    relationship: "opposed";
+  }>;
+  dominanceCycle: Array<{
+    winnerDeityId: string;
+    loserDeityId: string;
+    relationship: "dominant";
+  }>;
+  organizations: Array<{
+    id: string;
+    name: string;
+    category: "elemental_order" | "prismatic_enclave" | "unbound";
+    favoredDeityIds: string[];
+    typicalTerrainTags: string[];
+    summary: string;
+  }>;
+  structureTypes: Array<{
+    id: string;
+    label: string;
+    minimumPopulationBand: "tiny" | "small" | "modest" | "large" | "major";
+    magicSupport: "none" | "limited" | "moderate" | "high";
+  }>;
+}
+
+export interface MagicInfrastructureContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  category: "adventurer_magic" | "utility_enchantment" | "ritual_religious";
+  summary: string;
+  requiredInfrastructure: {
+    roadTier: number;
+    waterTier: number;
+    harborTier: number;
+    marketTier: number;
+    fortificationTier: number;
+  };
+  requiredGuildTypes: string[];
+  requiredReligionOrganizationIds: string[];
+  supportedUseCases: string[];
+  prohibitedBypassTags: string[];
+  preferredCrystalTiers: Array<"shard" | "crystal" | "cluster">;
+  allowedElements: Array<"neutral" | "light" | "water" | "wind" | "ice" | "darkness" | "fire" | "stone" | "thunder">;
+  serviceScaleBand: "small" | "moderate" | "large";
+}
+
+export interface CrystalCatalogContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  tier: "shard" | "crystal" | "cluster";
+  element: "neutral" | "light" | "water" | "wind" | "ice" | "darkness" | "fire" | "stone" | "thunder";
+  capacity: number;
+  efficiency: number;
+  stability: number;
+  reusable: boolean;
+  rechargeMethod: string;
+  mismatchPenalty: number;
+}
+
 export const DEFAULT_ADVENTURERS_PRESENCE: GuildPresenceRecord = {
   guildType: "adventurers_guild",
   name: "Adventurers Guild Desk",
@@ -973,6 +1048,25 @@ export function loadWorkplaceContent(): WorkplaceContentRecord[] {
 
 export function loadSkillContent(): SkillContentRecord[] {
   const parsed = loadJsonFile<{ records: SkillContentRecord[] }>("../../../content/base/player/skills.json");
+  return parsed.records;
+}
+
+export function loadReligionContent(): ReligionContentRecord[] {
+  const parsed = loadJsonFile<{ records: ReligionContentRecord[] }>("../../../content/base/world/religions.json");
+  return parsed.records;
+}
+
+export function loadMagicInfrastructureContent(): MagicInfrastructureContentRecord[] {
+  const parsed = loadJsonFile<{ records: MagicInfrastructureContentRecord[] }>(
+    "../../../content/base/world/magic_infrastructure.json"
+  );
+  return parsed.records;
+}
+
+export function loadCrystalCatalogContent(): CrystalCatalogContentRecord[] {
+  const parsed = loadJsonFile<{ records: CrystalCatalogContentRecord[] }>(
+    "../../../content/base/world/crystal_catalog.json"
+  );
   return parsed.records;
 }
 

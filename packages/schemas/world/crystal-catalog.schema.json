@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "tier",
+          "element",
+          "capacity",
+          "efficiency",
+          "stability",
+          "reusable",
+          "rechargeMethod",
+          "mismatchPenalty"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^crystal\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tier": {
+            "type": "string",
+            "enum": ["shard", "crystal", "cluster"]
+          },
+          "element": {
+            "type": "string",
+            "enum": ["neutral", "light", "water", "wind", "ice", "darkness", "fire", "stone", "thunder"]
+          },
+          "capacity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "efficiency": {
+            "type": "number",
+            "minimum": 0.1
+          },
+          "stability": {
+            "type": "number",
+            "minimum": 0.1
+          },
+          "reusable": {
+            "type": "boolean"
+          },
+          "rechargeMethod": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "mismatchPenalty": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    }
+  }
+}

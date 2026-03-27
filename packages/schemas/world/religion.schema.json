@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "summary",
+          "deities",
+          "dualities",
+          "dominanceCycle",
+          "organizations",
+          "structureTypes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^religion\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "deities": {
+            "type": "array",
+            "minItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "name", "presentationGender", "element", "domains"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "presentationGender": {
+                  "type": "string",
+                  "enum": ["female", "male"]
+                },
+                "element": {
+                  "type": "string",
+                  "enum": ["light", "water", "wind", "ice", "darkness", "fire", "stone", "thunder"]
+                },
+                "domains": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                },
+                "opposedDeityId": {
+                  "type": "string",
+                  "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              }
+            }
+          },
+          "dualities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["leftDeityId", "rightDeityId", "relationship"],
+              "properties": {
+                "leftDeityId": {
+                  "type": "string",
+                  "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "rightDeityId": {
+                  "type": "string",
+                  "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "relationship": {
+                  "type": "string",
+                  "enum": ["opposed"]
+                }
+              }
+            }
+          },
+          "dominanceCycle": {
+            "type": "array",
+            "minItems": 6,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["winnerDeityId", "loserDeityId", "relationship"],
+              "properties": {
+                "winnerDeityId": {
+                  "type": "string",
+                  "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "loserDeityId": {
+                  "type": "string",
+                  "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "relationship": {
+                  "type": "string",
+                  "enum": ["dominant"]
+                }
+              }
+            }
+          },
+          "organizations": {
+            "type": "array",
+            "minItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "name",
+                "category",
+                "favoredDeityIds",
+                "typicalTerrainTags",
+                "summary"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^religious_order\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "category": {
+                  "type": "string",
+                  "enum": ["elemental_order", "prismatic_enclave", "unbound"]
+                },
+                "favoredDeityIds": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                },
+                "typicalTerrainTags": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "structureTypes": {
+            "type": "array",
+            "minItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "label", "minimumPopulationBand", "magicSupport"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^religious_site\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minimumPopulationBand": {
+                  "type": "string",
+                  "enum": ["tiny", "small", "modest", "large", "major"]
+                },
+                "magicSupport": {
+                  "type": "string",
+                  "enum": ["none", "limited", "moderate", "high"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
