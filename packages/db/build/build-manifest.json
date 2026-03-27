@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-03-12T22:27:33.128Z",
+  "outputs": [
+    "world.sqlite",
+    "civilization.sqlite",
+    "player.sqlite",
+    "sim_view.sqlite"
+  ],
+  "migrations": [
+    "001_world.sql",
+    "002_civilization.sql",
+    "003_player.sql",
+    "004_sim_view.sql"
+  ],
+  "note": "Placeholder build artifacts. Wire actual JSON->SQLite compiler in next iteration."
+}
