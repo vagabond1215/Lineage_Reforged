@@ -32946,6 +32946,2358 @@
                                                           "refinementDifficulty":  "moderate",
                                                           "processingCostImpact":  "moderate"
                                                       }
+                    },
+                    {
+                        "id":  "item.diamond",
+                        "itemKey":  "diamond",
+                        "name":  "Diamond",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "expert",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.emerald",
+                        "itemKey":  "emerald",
+                        "name":  "Emerald",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.ruby",
+                        "itemKey":  "ruby",
+                        "name":  "Ruby",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  30,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.sapphire",
+                        "itemKey":  "sapphire",
+                        "name":  "Sapphire",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.topaz",
+                        "itemKey":  "topaz",
+                        "name":  "Topaz",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  19,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.onyx",
+                        "itemKey":  "onyx",
+                        "name":  "Onyx",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.opal",
+                        "itemKey":  "opal",
+                        "name":  "Opal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.moonstone",
+                        "itemKey":  "moonstone",
+                        "name":  "Moonstone",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  25,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.adamantite_ore",
+                        "itemKey":  "adamantite_ore",
+                        "name":  "Adamantite Ore",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "mineral",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "expert",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.adamantite_ingot",
+                        "itemKey":  "adamantite_ingot",
+                        "name":  "Adamantite Ingot",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "metal",
+                        "itemSubBranch":  "ingot",
+                        "baseValue":  88,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "metal",
+                                     "ingot",
+                                     "refined",
+                                     "adamantite",
+                                     "relic",
+                                     "durable"
+                                 ],
+                        "processingGroups":  [
+                                                 "ingot.fantasy",
+                                                 "ingot.adamantite"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "fuel_heavy",
+                                             "difficultyTier":  "expert",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "hard",
+                                                          "hardness":  "hard",
+                                                          "refinementDifficulty":  "high",
+                                                          "processingCostImpact":  "heavy"
+                                                      }
+                    },
+                    {
+                        "id":  "item.cut_diamond",
+                        "itemKey":  "cut_diamond",
+                        "name":  "Cut Diamond",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  58,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "light",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_emerald",
+                        "itemKey":  "cut_emerald",
+                        "name":  "Cut Emerald",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "wind",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_ruby",
+                        "itemKey":  "cut_ruby",
+                        "name":  "Cut Ruby",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  48,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "fire",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_sapphire",
+                        "itemKey":  "cut_sapphire",
+                        "name":  "Cut Sapphire",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  46,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "water",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_topaz",
+                        "itemKey":  "cut_topaz",
+                        "name":  "Cut Topaz",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  31,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "thunder",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_garnet",
+                        "itemKey":  "cut_garnet",
+                        "name":  "Cut Garnet",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "fire",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_onyx",
+                        "itemKey":  "cut_onyx",
+                        "name":  "Cut Onyx",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  29,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "darkness",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_opal",
+                        "itemKey":  "cut_opal",
+                        "name":  "Cut Opal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  38,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "water",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_amethyst",
+                        "itemKey":  "cut_amethyst",
+                        "name":  "Cut Amethyst",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "thunder",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_quartz",
+                        "itemKey":  "cut_quartz",
+                        "name":  "Cut Quartz",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "earth",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_moonstone",
+                        "itemKey":  "cut_moonstone",
+                        "name":  "Cut Moonstone",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  40,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "ice",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.cut_sunstone",
+                        "itemKey":  "cut_sunstone",
+                        "name":  "Cut Sunstone",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "mineral",
+                        "itemSubBranch":  "cut_gem",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "gemstone",
+                                     "cut",
+                                     "light",
+                                     "lapidary",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "gem.cut"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.jewelry_setting",
+                        "itemKey":  "jewelry_setting",
+                        "name":  "Jewelry Setting",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "setting",
+                        "baseValue":  16,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "setting",
+                                     "precision",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.fine_chain_link",
+                        "itemKey":  "fine_chain_link",
+                        "name":  "Fine Chain Link",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "link",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "link",
+                                     "precision",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.fine_chain",
+                        "itemKey":  "fine_chain",
+                        "name":  "Fine Chain",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "chain",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "chain",
+                                     "precision",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.earring_hook",
+                        "itemKey":  "earring_hook",
+                        "name":  "Earring Hook",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "hook",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "hook",
+                                     "precision",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "easy",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.bracelet_link",
+                        "itemKey":  "bracelet_link",
+                        "name":  "Bracelet Link",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "link",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "link",
+                                     "bracelet",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.silver_band",
+                        "itemKey":  "silver_band",
+                        "name":  "Silver Band",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "band",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "band",
+                                     "silver",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "easy",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.gold_band",
+                        "itemKey":  "gold_band",
+                        "name":  "Gold Band",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "band",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "band",
+                                     "gold",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "easy",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.mithrite_band",
+                        "itemKey":  "mithrite_band",
+                        "name":  "Mithrite Band",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "band",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "band",
+                                     "mithrite",
+                                     "arcane",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "high",
+                                                          "processingCostImpact":  "heavy"
+                                                      }
+                    },
+                    {
+                        "id":  "item.orichalcum_band",
+                        "itemKey":  "orichalcum_band",
+                        "name":  "Orichalcum Band",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "band",
+                        "baseValue":  50,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "band",
+                                     "orichalcum",
+                                     "arcane",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "hard",
+                                                          "hardness":  "hard",
+                                                          "refinementDifficulty":  "high",
+                                                          "processingCostImpact":  "heavy"
+                                                      }
+                    },
+                    {
+                        "id":  "item.adamantite_band",
+                        "itemKey":  "adamantite_band",
+                        "name":  "Adamantite Band",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "accessory_component",
+                        "itemSubBranch":  "band",
+                        "baseValue":  56,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "band",
+                                     "adamantite",
+                                     "relic",
+                                     "crafting"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.component"
+                                             ],
+                        "stage":  "processed",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "hard",
+                                                          "hardness":  "hard",
+                                                          "refinementDifficulty":  "high",
+                                                          "processingCostImpact":  "heavy"
+                                                      }
+                    },
+                    {
+                        "id":  "item.gemmed_ring",
+                        "itemKey":  "gemmed_ring",
+                        "name":  "Gemmed Ring",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "ring",
+                        "itemSubBranch":  "adornment",
+                        "baseValue":  54,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "ring",
+                                     "gemmed",
+                                     "focus_ready"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.finished"
+                                             ],
+                        "stage":  "finished",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.gemmed_necklace",
+                        "itemKey":  "gemmed_necklace",
+                        "name":  "Gemmed Necklace",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "necklace",
+                        "itemSubBranch":  "adornment",
+                        "baseValue":  72,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "necklace",
+                                     "gemmed",
+                                     "focus_ready"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.finished"
+                                             ],
+                        "stage":  "finished",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.gemmed_bracelet",
+                        "itemKey":  "gemmed_bracelet",
+                        "name":  "Gemmed Bracelet",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "bracelet",
+                        "itemSubBranch":  "adornment",
+                        "baseValue":  60,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "bracelet",
+                                     "gemmed",
+                                     "focus_ready"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.finished"
+                                             ],
+                        "stage":  "finished",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.gemmed_earrings",
+                        "itemKey":  "gemmed_earrings",
+                        "name":  "Gemmed Earrings",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "earring",
+                        "itemSubBranch":  "adornment",
+                        "baseValue":  58,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "earring",
+                                     "gemmed",
+                                     "focus_ready"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.finished"
+                                             ],
+                        "stage":  "finished",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "moderate",
+                                                          "processingCostImpact":  "moderate"
+                                                      }
+                    },
+                    {
+                        "id":  "item.mithrite_focus_ring",
+                        "itemKey":  "mithrite_focus_ring",
+                        "name":  "Mithrite Focus Ring",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "ring",
+                        "itemSubBranch":  "focus",
+                        "baseValue":  84,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "ring",
+                                     "mithrite",
+                                     "focus",
+                                     "arcane"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.finished"
+                                             ],
+                        "stage":  "finished",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "moderate",
+                                                          "hardness":  "medium",
+                                                          "refinementDifficulty":  "high",
+                                                          "processingCostImpact":  "heavy"
+                                                      }
+                    },
+                    {
+                        "id":  "item.orichalcum_relic_chain",
+                        "itemKey":  "orichalcum_relic_chain",
+                        "name":  "Orichalcum Relic Chain",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "necklace",
+                        "itemSubBranch":  "relic",
+                        "baseValue":  116,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "chain",
+                                     "orichalcum",
+                                     "relic",
+                                     "arcane"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.finished"
+                                             ],
+                        "stage":  "finished",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "hard",
+                                                          "hardness":  "hard",
+                                                          "refinementDifficulty":  "high",
+                                                          "processingCostImpact":  "heavy"
+                                                      }
+                    },
+                    {
+                        "id":  "item.adamantite_ward_bracelet",
+                        "itemKey":  "adamantite_ward_bracelet",
+                        "name":  "Adamantite Ward Bracelet",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "bracelet",
+                        "itemSubBranch":  "ward",
+                        "baseValue":  124,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "jewelry",
+                                     "bracelet",
+                                     "adamantite",
+                                     "ward",
+                                     "arcane"
+                                 ],
+                        "processingGroups":  [
+                                                 "jewelry.finished"
+                                             ],
+                        "stage":  "finished",
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         },
+                        "materialDifficultyProfile":  {
+                                                          "family":  "metal",
+                                                          "workability":  "hard",
+                                                          "hardness":  "hard",
+                                                          "refinementDifficulty":  "high",
+                                                          "processingCostImpact":  "heavy"
+                                                      }
+                    },
+                    {
+                        "id":  "item.elemental_shard",
+                        "itemKey":  "elemental_shard",
+                        "name":  "Unattuned Vessel Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "attunable"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.elemental_crystal",
+                        "itemKey":  "elemental_crystal",
+                        "name":  "Unattuned Vessel Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "attunable"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.elemental_cluster",
+                        "itemKey":  "elemental_cluster",
+                        "name":  "Unattuned Vessel Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  86,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "attunable"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.light_shard",
+                        "itemKey":  "light_shard",
+                        "name":  "Light Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "light",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.light"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.light_crystal",
+                        "itemKey":  "light_crystal",
+                        "name":  "Light Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "light",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.light"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.light_cluster",
+                        "itemKey":  "light_cluster",
+                        "name":  "Light Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "light",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.light"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.water_shard",
+                        "itemKey":  "water_shard",
+                        "name":  "Water Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "water",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.water"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.water_crystal",
+                        "itemKey":  "water_crystal",
+                        "name":  "Water Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "water",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.water"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.water_cluster",
+                        "itemKey":  "water_cluster",
+                        "name":  "Water Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "water",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.water"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.wind_shard",
+                        "itemKey":  "wind_shard",
+                        "name":  "Wind Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "wind",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.wind"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.wind_crystal",
+                        "itemKey":  "wind_crystal",
+                        "name":  "Wind Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "wind",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.wind"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.wind_cluster",
+                        "itemKey":  "wind_cluster",
+                        "name":  "Wind Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "wind",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.wind"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.ice_shard",
+                        "itemKey":  "ice_shard",
+                        "name":  "Ice Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "ice",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.ice"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.ice_crystal",
+                        "itemKey":  "ice_crystal",
+                        "name":  "Ice Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "ice",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.ice"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.ice_cluster",
+                        "itemKey":  "ice_cluster",
+                        "name":  "Ice Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "ice",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.ice"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.darkness_shard",
+                        "itemKey":  "darkness_shard",
+                        "name":  "Darkness Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "darkness",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.darkness"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.darkness_crystal",
+                        "itemKey":  "darkness_crystal",
+                        "name":  "Darkness Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "darkness",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.darkness"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.darkness_cluster",
+                        "itemKey":  "darkness_cluster",
+                        "name":  "Darkness Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "darkness",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.darkness"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.fire_shard",
+                        "itemKey":  "fire_shard",
+                        "name":  "Fire Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "fire",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.fire"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.fire_crystal",
+                        "itemKey":  "fire_crystal",
+                        "name":  "Fire Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "fire",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.fire"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.fire_cluster",
+                        "itemKey":  "fire_cluster",
+                        "name":  "Fire Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "fire",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.fire"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.stone_shard",
+                        "itemKey":  "stone_shard",
+                        "name":  "Stone Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "earth",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.earth"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.stone_crystal",
+                        "itemKey":  "stone_crystal",
+                        "name":  "Stone Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "earth",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.earth"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.stone_cluster",
+                        "itemKey":  "stone_cluster",
+                        "name":  "Stone Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "earth",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.earth"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.thunder_shard",
+                        "itemKey":  "thunder_shard",
+                        "name":  "Thunder Shard",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "shard",
+                                     "thunder",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.thunder"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "specialty"
+                                         }
+                    },
+                    {
+                        "id":  "item.thunder_crystal",
+                        "itemKey":  "thunder_crystal",
+                        "name":  "Thunder Crystal",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "crystal",
+                                     "thunder",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.thunder"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
+                    },
+                    {
+                        "id":  "item.thunder_cluster",
+                        "itemKey":  "thunder_cluster",
+                        "name":  "Thunder Cluster",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "arcane",
+                        "itemSubBranch":  "vessel",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "roles":  [
+                                      "material",
+                                      "reagent",
+                                      "trade_good"
+                                  ],
+                        "tags":  [
+                                     "arcane",
+                                     "vessel",
+                                     "cluster",
+                                     "thunder",
+                                     "attuned"
+                                 ],
+                        "processingGroups":  [
+                                                 "arcane.vessel",
+                                                 "arcane.thunder"
+                                             ],
+                        "stage":  "refined",
+                        "valueProfile":  {
+                                             "valueMode":  "source_derived",
+                                             "materialCostModel":  "source_effort",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "minimal",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "luxury"
+                                         }
                     }
                 ]
 }

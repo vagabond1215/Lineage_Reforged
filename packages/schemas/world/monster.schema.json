@@ -130,6 +130,77 @@
                 }
               }
             }
+          },
+          "baseFaunaId": {
+            "type": "string",
+            "pattern": "^fauna\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "baseMonsterId": {
+            "type": "string",
+            "pattern": "^monster\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "variantType": {
+            "type": "string",
+            "enum": [
+              "species_only",
+              "biological",
+              "evolved",
+              "elemental",
+              "material",
+              "cursed",
+              "transformed",
+              "supernatural"
+            ]
+          },
+          "attunementLevel": {
+            "type": "string",
+            "enum": ["unattuned", "low", "moderate", "high"]
+          },
+          "elements": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["neutral", "fire", "water", "earth", "stone", "wind", "thunder", "ice", "light", "darkness"]
+            },
+            "uniqueItems": true
+          },
+          "originProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["appearanceRate", "terrainSources", "entryVectors", "secureSettlementRule"],
+            "properties": {
+              "appearanceRate": {
+                "type": "string",
+                "enum": ["common", "uncommon", "rare", "lair_only"]
+              },
+              "terrainSources": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "entryVectors": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "secureSettlementRule": {
+                "type": "string",
+                "enum": [
+                  "blocked_without_open_path",
+                  "requires_subsurface_access",
+                  "requires_open_water_access",
+                  "can_bypass_if_airspace_unsecured",
+                  "requires_affinity_breach",
+                  "summoned_only"
+                ]
+              }
+            }
           }
         }
       }

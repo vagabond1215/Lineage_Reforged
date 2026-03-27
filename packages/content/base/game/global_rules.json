@@ -7,6 +7,198 @@
     {
       "id": "rule.default_seed",
       "value": 42
+    },
+    {
+      "id": "rule.elemental_combat_framework",
+      "value": {
+        "canonicalCombatElements": ["fire", "water", "earth", "wind", "thunder", "ice", "light", "darkness"],
+        "legacyAffinityAliases": {
+          "stone": "earth",
+          "dark": "darkness"
+        },
+        "resolutionOrder": [
+          "base_damage",
+          "elemental_bonus_damage",
+          "elemental_affinity_modifier",
+          "saturation_response",
+          "status_eligibility",
+          "status_potency_duration",
+          "resistance_and_mitigation"
+        ],
+        "elementalStatusProfiles": [
+          {
+            "element": "fire",
+            "primaryStatuses": ["burn", "ignite"],
+            "secondaryEffects": ["damage_over_time", "temporary_attack_penalty", "flammable_spread"]
+          },
+          {
+            "element": "water",
+            "primaryStatuses": ["soaked", "drench"],
+            "secondaryEffects": ["burn_suppression", "thunder_conductivity", "fire_dampening"]
+          },
+          {
+            "element": "earth",
+            "primaryStatuses": ["stagger", "sunder"],
+            "secondaryEffects": ["armor_strain", "posture_pressure", "structure_damage"]
+          },
+          {
+            "element": "wind",
+            "primaryStatuses": ["destabilize", "displace"],
+            "secondaryEffects": ["accuracy_disruption", "mobility_pressure", "spread_support"]
+          },
+          {
+            "element": "thunder",
+            "primaryStatuses": ["daze", "stun"],
+            "secondaryEffects": ["interrupt", "conductive_arc", "chain_pressure"]
+          },
+          {
+            "element": "ice",
+            "primaryStatuses": ["chill", "freeze_buildup"],
+            "secondaryEffects": ["slow", "brittle", "movement_reduction"]
+          },
+          {
+            "element": "light",
+            "primaryStatuses": ["blind", "purge"],
+            "secondaryEffects": ["anti_undead", "anti_corruption", "ward_break"]
+          },
+          {
+            "element": "darkness",
+            "primaryStatuses": ["weaken", "fear"],
+            "secondaryEffects": ["healing_suppression", "obscuration", "morale_pressure"]
+          }
+        ],
+        "opposedElementRules": [
+          { "attacker": "fire", "defender": "ice", "damageMultiplier": 1.25, "statusMultiplier": 1.35 },
+          { "attacker": "ice", "defender": "fire", "damageMultiplier": 1.2, "statusMultiplier": 1.2 },
+          { "attacker": "water", "defender": "fire", "damageMultiplier": 1.2, "statusMultiplier": 1.25 },
+          { "attacker": "wind", "defender": "earth", "damageMultiplier": 1.15, "statusMultiplier": 1.2 },
+          { "attacker": "earth", "defender": "thunder", "damageMultiplier": 1.15, "statusMultiplier": 1.15 },
+          { "attacker": "thunder", "defender": "water", "damageMultiplier": 1.25, "statusMultiplier": 1.3 },
+          { "attacker": "light", "defender": "darkness", "damageMultiplier": 1.25, "statusMultiplier": 1.25 },
+          { "attacker": "darkness", "defender": "light", "damageMultiplier": 1.25, "statusMultiplier": 1.25 }
+        ],
+        "sameElementResponses": [
+          { "element": "fire", "highAffinityResponse": "resist_null_or_heal", "suppressedStatuses": ["burn", "ignite"] },
+          { "element": "water", "highAffinityResponse": "resist_or_absorb", "suppressedStatuses": ["soaked"] },
+          { "element": "earth", "highAffinityResponse": "resist_or_anchor", "suppressedStatuses": ["stagger"] },
+          { "element": "wind", "highAffinityResponse": "resist_or_shear_aside", "suppressedStatuses": ["destabilize"] },
+          { "element": "thunder", "highAffinityResponse": "resist_or_ground", "suppressedStatuses": ["stun"] },
+          { "element": "ice", "highAffinityResponse": "resist_or_temper", "suppressedStatuses": ["freeze_buildup"] },
+          { "element": "light", "highAffinityResponse": "resist_or_refract", "suppressedStatuses": ["blind"] },
+          { "element": "darkness", "highAffinityResponse": "resist_or_shroud", "suppressedStatuses": ["fear"] }
+        ],
+        "mitigationGuidance": {
+          "constitutionReduces": ["status_application", "damage_over_time", "status_duration"],
+          "vitalityReduces": ["burst_status_potency", "burn_spread", "freeze_lock", "stun_window"]
+        }
+      }
+    },
+    {
+      "id": "rule.enchanter_profession",
+      "value": {
+        "professionId": "profession.enchanter",
+        "summary": "Affinity-bound artisans who attune vessels, bind stable elemental effects into equipment, and tune arcane accessories for specific roles.",
+        "coreRoles": [
+          { "id": "vessel_attuner", "focus": "convert unattuned vessels into fixed affinities without destabilizing the lattice" },
+          { "id": "focus_setter", "focus": "seat gemstones and conductive metals into foci, rings, necklaces, bracelets, and relic chains" },
+          { "id": "ward_binder", "focus": "lock temporary wards, barriers, and licensed civic enchantments into bounded use cases" },
+          { "id": "weapon_imprinter", "focus": "apply elemental edges and on-hit status riders to weapons without overwhelming their base handling" }
+        ],
+        "affinityDistribution": {
+          "common": { "affinities": 1, "shareOfPractitioners": 0.72 },
+          "uncommon": { "affinities": 2, "shareOfPractitioners": 0.21 },
+          "rare": { "affinities": 3, "shareOfPractitioners": 0.06 },
+          "exceptional": { "affinities": 4, "shareOfPractitioners": 0.01 }
+        },
+        "opposedAffinityHandling": {
+          "allowed": true,
+          "efficiencyPenalty": 0.18,
+          "instabilityPenalty": 0.22,
+          "notes": "Opposed affinities can coexist, but they require extra suppression work and should never be treated as free dual-specialization."
+        },
+        "permanentEnchanting": {
+          "consumesBoundVessel": true,
+          "returnsReusableCrystal": false,
+          "salvageState": "inert_dust_or_spent_shards"
+        },
+        "temporaryUseCases": ["channeling_focus", "ritual_array", "licensed_infrastructure", "ward_refresh"],
+        "permanentUseCases": ["weapon_binding", "armor_warding", "relic_focus", "anchored_barrier"]
+      }
+    },
+    {
+      "id": "rule.magical_material_affinity",
+      "value": {
+        "metalProfiles": [
+          { "material": "iron", "conductivity": "none", "retention": "low" },
+          { "material": "steel", "conductivity": "low", "retention": "low" },
+          { "material": "copper", "conductivity": "slight", "retention": "low" },
+          { "material": "high_steel", "conductivity": "slight", "retention": "slight" },
+          { "material": "silver", "conductivity": "moderate", "retention": "moderate" },
+          { "material": "gold", "conductivity": "moderate", "retention": "moderate" },
+          { "material": "platinum", "conductivity": "high", "retention": "high" },
+          { "material": "mithrite", "displayAlias": "mithril", "conductivity": "high", "retention": "high" },
+          { "material": "orichalcum", "conductivity": "high", "retention": "very_high" },
+          { "material": "adamantite", "displayAlias": "adamantium", "conductivity": "moderate", "retention": "very_high" }
+        ],
+        "gemstoneBias": {
+          "light": ["diamond", "sunstone", "moonstone"],
+          "fire": ["ruby", "sunstone", "garnet"],
+          "water": ["sapphire", "opal", "emerald"],
+          "earth": ["topaz", "onyx", "quartz"],
+          "wind": ["emerald", "opal", "amethyst"],
+          "thunder": ["topaz", "amethyst", "diamond"],
+          "ice": ["diamond", "moonstone", "sapphire"],
+          "darkness": ["onyx", "opal", "garnet"]
+        }
+      }
+    },
+    {
+      "id": "rule.arcane_crafting_processes",
+      "value": {
+        "lapidaryFlow": [
+          "sort_rough_gemstones_by_flaw_and_affinity",
+          "cut_and_face_for_stability",
+          "polish_for_conductive_contact",
+          "reserve_best_cuts_for_foci_relics_and_vessel_housings"
+        ],
+        "jewelryAssemblyFlow": [
+          "draw_or_cast_band_or_chain",
+          "shape_setting_and_mount",
+          "seat_cut_gemstone",
+          "bind_closure_or_links",
+          "finish_for_balance_and_contact"
+        ],
+        "enchantmentFlow": [
+          "prepare_item_surface_and_conductive_points",
+          "attune_or_select_matching_vessel",
+          "stabilize_opposing_or_secondary_affinities",
+          "bind_elemental_effect_and_status_rider",
+          "fracture_or_consume_permanent_use_vessel",
+          "inspect_residual_heat_frost_shock_shadow_or_ward_leakage"
+        ],
+        "qualityDrivers": [
+          "vessel_tier",
+          "item_quality",
+          "material_conductivity",
+          "material_retention",
+          "gemstone_bias",
+          "crafting_precision"
+        ]
+      }
+    },
+    {
+      "id": "rule.monster_origin_constraints",
+      "value": {
+        "appearanceRateBands": ["common", "uncommon", "rare", "lair_only"],
+        "entryVectors": ["surface", "burrow", "tunnel", "ruin", "sewer", "waterway", "coast", "air", "summoned"],
+        "secureSettlementRule": "Monsters should not appear inside secure cities unless they have an active open path, an internal infestation source, sanctioned magical breach, or a movement mode that bypasses walls and gates.",
+        "terrainGuidance": [
+          { "originType": "burrowers", "preferredVectors": ["burrow", "tunnel", "collapsed_cellar", "mine"], "settlementRestriction": "requires_subsurface_access" },
+          { "originType": "aquatic", "preferredVectors": ["waterway", "coast", "floodgate", "canal"], "settlementRestriction": "requires_open_water_access" },
+          { "originType": "fliers", "preferredVectors": ["air", "cliff", "tower", "coast"], "settlementRestriction": "can_bypass_walls_if_airspace_unsecured" },
+          { "originType": "elementals", "preferredVectors": ["rift", "vein", "stormfront", "ritual_site"], "settlementRestriction": "requires_affinity_source_or_breach" }
+        ]
+      }
     }
   ]
 }

@@ -27917,6 +27917,1194 @@
                                                "difficultySource":  "material_and_precision",
                                                "demandBand":  "common"
                                            }
+                    },
+                    {
+                        "id":  "market.item.diamond",
+                        "itemKey":  "diamond",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.emerald",
+                        "itemKey":  "emerald",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.ruby",
+                        "itemKey":  "ruby",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  30,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.sapphire",
+                        "itemKey":  "sapphire",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.topaz",
+                        "itemKey":  "topaz",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  19,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.onyx",
+                        "itemKey":  "onyx",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.opal",
+                        "itemKey":  "opal",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.moonstone",
+                        "itemKey":  "moonstone",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  25,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.adamantite_ore",
+                        "itemKey":  "adamantite_ore",
+                        "source":  "world.minerals",
+                        "category":  "mineral",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.adamantite_ingot",
+                        "itemKey":  "adamantite_ingot",
+                        "source":  "civilization",
+                        "category":  "material",
+                        "baseValue":  88,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_diamond",
+                        "itemKey":  "cut_diamond",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  58,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_emerald",
+                        "itemKey":  "cut_emerald",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_ruby",
+                        "itemKey":  "cut_ruby",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  48,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_sapphire",
+                        "itemKey":  "cut_sapphire",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  46,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_topaz",
+                        "itemKey":  "cut_topaz",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  31,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_garnet",
+                        "itemKey":  "cut_garnet",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_onyx",
+                        "itemKey":  "cut_onyx",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  29,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_opal",
+                        "itemKey":  "cut_opal",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  38,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_amethyst",
+                        "itemKey":  "cut_amethyst",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_quartz",
+                        "itemKey":  "cut_quartz",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_moonstone",
+                        "itemKey":  "cut_moonstone",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  40,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.cut_sunstone",
+                        "itemKey":  "cut_sunstone",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.jewelry_setting",
+                        "itemKey":  "jewelry_setting",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  16,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.fine_chain_link",
+                        "itemKey":  "fine_chain_link",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  6,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.fine_chain",
+                        "itemKey":  "fine_chain",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.earring_hook",
+                        "itemKey":  "earring_hook",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  5,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.bracelet_link",
+                        "itemKey":  "bracelet_link",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.silver_band",
+                        "itemKey":  "silver_band",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.gold_band",
+                        "itemKey":  "gold_band",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.mithrite_band",
+                        "itemKey":  "mithrite_band",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.orichalcum_band",
+                        "itemKey":  "orichalcum_band",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  50,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.adamantite_band",
+                        "itemKey":  "adamantite_band",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  56,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.gemmed_ring",
+                        "itemKey":  "gemmed_ring",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  54,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.gemmed_necklace",
+                        "itemKey":  "gemmed_necklace",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  72,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.gemmed_bracelet",
+                        "itemKey":  "gemmed_bracelet",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  60,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.gemmed_earrings",
+                        "itemKey":  "gemmed_earrings",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  58,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.mithrite_focus_ring",
+                        "itemKey":  "mithrite_focus_ring",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  84,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.orichalcum_relic_chain",
+                        "itemKey":  "orichalcum_relic_chain",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  116,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.adamantite_ward_bracelet",
+                        "itemKey":  "adamantite_ward_bracelet",
+                        "source":  "items.catalog",
+                        "category":  "accessory",
+                        "baseValue":  124,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.elemental_shard",
+                        "itemKey":  "elemental_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.elemental_crystal",
+                        "itemKey":  "elemental_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  42,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.elemental_cluster",
+                        "itemKey":  "elemental_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  86,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.light_shard",
+                        "itemKey":  "light_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.light_crystal",
+                        "itemKey":  "light_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.light_cluster",
+                        "itemKey":  "light_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.water_shard",
+                        "itemKey":  "water_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.water_crystal",
+                        "itemKey":  "water_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.water_cluster",
+                        "itemKey":  "water_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.wind_shard",
+                        "itemKey":  "wind_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.wind_crystal",
+                        "itemKey":  "wind_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.wind_cluster",
+                        "itemKey":  "wind_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.ice_shard",
+                        "itemKey":  "ice_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.ice_crystal",
+                        "itemKey":  "ice_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.ice_cluster",
+                        "itemKey":  "ice_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.darkness_shard",
+                        "itemKey":  "darkness_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.darkness_crystal",
+                        "itemKey":  "darkness_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.darkness_cluster",
+                        "itemKey":  "darkness_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.fire_shard",
+                        "itemKey":  "fire_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.fire_crystal",
+                        "itemKey":  "fire_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.fire_cluster",
+                        "itemKey":  "fire_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.stone_shard",
+                        "itemKey":  "stone_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.stone_crystal",
+                        "itemKey":  "stone_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.stone_cluster",
+                        "itemKey":  "stone_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.thunder_shard",
+                        "itemKey":  "thunder_shard",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "specialty"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.thunder_crystal",
+                        "itemKey":  "thunder_crystal",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.thunder_cluster",
+                        "itemKey":  "thunder_cluster",
+                        "source":  "world.crystal_catalog",
+                        "category":  "crystal",
+                        "baseValue":  104,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "source_effort",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "luxury"
+                                           }
                     }
                 ]
 }

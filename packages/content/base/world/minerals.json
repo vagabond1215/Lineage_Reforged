@@ -919,8 +919,164 @@
                                          ],
                         "extractionTypes":  [
                                                 "manual"
-                                            ],
+                        ],
                         "baseValue":  27,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.diamond",
+                        "slug":  "diamond",
+                        "itemKey":  "diamond",
+                        "name":  "Diamond",
+                        "aliases":  [],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "pocket",
+                                             "outcrop"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  36,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.emerald",
+                        "slug":  "emerald",
+                        "itemKey":  "emerald",
+                        "name":  "Emerald",
+                        "aliases":  [],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "vein",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  26,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.ruby",
+                        "slug":  "ruby",
+                        "itemKey":  "ruby",
+                        "name":  "Ruby",
+                        "aliases":  [],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "vein",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  30,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.sapphire",
+                        "slug":  "sapphire",
+                        "itemKey":  "sapphire",
+                        "name":  "Sapphire",
+                        "aliases":  [],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "vein",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.topaz",
+                        "slug":  "topaz",
+                        "itemKey":  "topaz",
+                        "name":  "Topaz",
+                        "aliases":  [],
+                        "tier":  2,
+                        "depositForms":  [
+                                             "outcrop",
+                                             "pocket"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  19,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.onyx",
+                        "slug":  "onyx",
+                        "itemKey":  "onyx",
+                        "name":  "Onyx",
+                        "aliases":  [],
+                        "tier":  2,
+                        "depositForms":  [
+                                             "seam",
+                                             "outcrop"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.opal",
+                        "slug":  "opal",
+                        "itemKey":  "opal",
+                        "name":  "Opal",
+                        "aliases":  [],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "pocket",
+                                             "outcrop"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.moonstone",
+                        "slug":  "moonstone",
+                        "itemKey":  "moonstone",
+                        "name":  "Moonstone",
+                        "aliases":  [],
+                        "tier":  3,
+                        "depositForms":  [
+                                             "pocket",
+                                             "outcrop"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual"
+                                            ],
+                        "baseValue":  25,
+                        "currencyId":  "currency.crown_standard"
+                    },
+                    {
+                        "id":  "mineral.adamantite_ore",
+                        "slug":  "adamantite_ore",
+                        "itemKey":  "adamantite_ore",
+                        "name":  "Adamantite Ore",
+                        "aliases":  [
+                                        "Adamantium Ore"
+                                    ],
+                        "tier":  4,
+                        "depositForms":  [
+                                             "vein",
+                                             "lode"
+                                         ],
+                        "extractionTypes":  [
+                                                "manual",
+                                                "infrastructure"
+                                            ],
+                        "baseValue":  52,
                         "currencyId":  "currency.crown_standard"
                     }
                 ]

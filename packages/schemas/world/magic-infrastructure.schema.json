@@ -101,7 +101,7 @@
             "minItems": 1,
             "items": {
               "type": "string",
-              "enum": ["neutral", "light", "water", "wind", "ice", "darkness", "fire", "stone", "thunder"]
+              "enum": ["neutral", "light", "water", "wind", "ice", "darkness", "fire", "stone", "earth", "thunder"]
             }
           },
           "serviceScaleBand": {

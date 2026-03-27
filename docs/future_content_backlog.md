@@ -136,6 +136,17 @@ This file tracks content and systems that are intentionally deferred.
   - keep mundane books, blank ledgers, scroll stock, and stationery as the current ownership layer until spell payloads exist
   - add magical books / tomes, magical scrolls, and enchanter-authored arcane documents only after spell schools, charges, attunement, and inscription rules are authored canonically
 
+#### Enchanter workplace wiring and lapidary production chains after runtime craft consumers exist
+
+- Status: deferred
+- Prerequisite: the elemental combat rules, vessel lifecycle rules, crystal item economy, gemstone expansion, magical-metal affinities, and starter enchanter-facing accessory outputs now exist; remaining prerequisites are stable workplace or recipe runtime consumers plus a decision on how lapidary and enchantment stations should be represented alongside the current placeholder-heavy workplace catalog
+- Intended owner: `packages/content/base/civilization/workplaces.json`, `packages/content/base/civilization/production_chains.json`, future crafting runtime consumers, and enchanter content
+- Intended implementation:
+  - the current pass adds the material, vessel, and item-economy foundations for enchanter and jewelry work without forcing large speculative workplace records into the current unfinished production runtime
+  - add dedicated lapidary, jewelry, and enchanter workplaces once real craft execution can consume station distinctions, quality drivers, and vessel consumption rules
+  - wire cut-gem processing, component fabrication, affinity attunement, and permanent-bind recipes into production chains after that station/runtime decision is stable
+  - keep permanent enchanting explicitly vessel-consuming when those chains are added so the later implementation does not accidentally reintroduce infinite crystal loops
+
 #### Guild institutions and contract systems
 
 - Status: partially deferred
@@ -172,9 +183,20 @@ This file tracks content and systems that are intentionally deferred.
 - Prerequisite: baseline monster catalog and quest-facing drops now exist; remaining prerequisites are encounter tables, lair ownership, habitat weighting, and combat/runtime consumers
 - Intended owner: world simulation, encounter generation, quest systems, and regional ecology
 - Intended implementation:
-  - `packages/content/base/world/monsters.json` now includes a broader starter set of kobolds, slimes, wolves, vermin, scorpions, centipedes, elementals, and undead with saleable drops/loot
+  - `packages/content/base/world/monsters.json` now includes a broader starter set of kobolds, slimes, wolves, vermin, scorpions, centipedes, elementals, undead, and newer affinity-aware fauna-linked monsters with saleable drops and vessel outputs
+  - monster records now also carry first-pass origin metadata for appearance rate, terrain sources, entry vectors, and secure-settlement restrictions so later spawn systems do not treat cities and wilderness as equivalent
   - use that catalog later for real spawn tables, hazard pressure around settlements, lair placement, and route danger instead of relying only on authored quest references
   - connect monster drops to broader crafting, alchemy, and economy consumers once those downstream systems are formalized
+
+#### Full fauna-monster codex merge and lineage backfill
+
+- Status: deferred
+- Prerequisite: monster lineage metadata now exists on the new affinity-aware additions, but the broader fauna and monster catalogs still need a full backfill plus a codex presentation layer that can consume those links
+- Intended owner: `packages/content/base/world/fauna.json`, `packages/content/base/world/monsters.json`, codex data consumers, and future UI or browser presentation layers
+- Intended implementation:
+  - keep the current pass focused on adding the merged-fauna design direction, new monster lineage fields, and realistic progression examples instead of rewriting every existing fauna and monster record at once
+  - backfill `baseFaunaId`, variant typing, attunement metadata, and related codex links across the rest of the monster catalog in a dedicated normalization pass
+  - add merged fauna-page presentation later so species, fantasy fauna branches, and hostile escalations read as one biological line rather than disconnected record lists
 
 #### Tertiary sites below the authored dependent layer
 

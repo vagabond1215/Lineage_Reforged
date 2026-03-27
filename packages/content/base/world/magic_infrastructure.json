@@ -1,104 +1,214 @@
 {
-  "records": [
-    {
-      "id": "magic_service.adventurer_magic",
-      "slug": "adventurer_magic",
-      "name": "Adventurer Magic",
-      "category": "adventurer_magic",
-      "summary": "Portable combat and expedition casting supported by guild halls, watch posts, and licensed field practitioners.",
-      "requiredInfrastructure": {
-        "roadTier": 0,
-        "waterTier": 0,
-        "harborTier": 0,
-        "marketTier": 1,
-        "fortificationTier": 0
-      },
-      "requiredGuildTypes": ["adventurers_guild"],
-      "requiredReligionOrganizationIds": [],
-      "supportedUseCases": [
-        "field_healing",
-        "combat_magic",
-        "hazard_clearance",
-        "scouting_wards"
-      ],
-      "prohibitedBypassTags": [
-        "bulk_industry",
-        "mass_transport",
-        "free_fuel",
-        "free_food"
-      ],
-      "preferredCrystalTiers": ["shard", "crystal"],
-      "allowedElements": ["neutral", "fire", "water", "wind", "ice", "light", "darkness", "stone", "thunder"],
-      "serviceScaleBand": "small"
-    },
-    {
-      "id": "magic_service.utility_enchantment",
-      "slug": "utility_enchantment",
-      "name": "Utility Enchantment",
-      "category": "utility_enchantment",
-      "summary": "Limited civic and workshop magic used for lights, seals, preservation, navigation aids, and other bounded services.",
-      "requiredInfrastructure": {
-        "roadTier": 1,
-        "waterTier": 0,
-        "harborTier": 0,
-        "marketTier": 2,
-        "fortificationTier": 0
-      },
-      "requiredGuildTypes": ["merchant_guild", "smiths_guild", "scribes_guild"],
-      "requiredReligionOrganizationIds": ["religious_order.prismatic_enclave"],
-      "supportedUseCases": [
-        "warded_storage",
-        "civic_lighting",
-        "navigation_marks",
-        "small_scale_preservation"
-      ],
-      "prohibitedBypassTags": [
-        "free_metals",
-        "free_labor",
-        "free_transport",
-        "unbounded_repair"
-      ],
-      "preferredCrystalTiers": ["crystal", "cluster"],
-      "allowedElements": ["neutral", "light", "water", "wind", "stone", "fire"],
-      "serviceScaleBand": "moderate"
-    },
-    {
-      "id": "magic_service.ritual_religious",
-      "slug": "ritual_religious",
-      "name": "Ritual And Religious Magic",
-      "category": "ritual_religious",
-      "summary": "Temple-bound rites, public blessings, oath wards, funerary rites, and convergence work kept inside religious institutions.",
-      "requiredInfrastructure": {
-        "roadTier": 0,
-        "waterTier": 0,
-        "harborTier": 0,
-        "marketTier": 0,
-        "fortificationTier": 0
-      },
-      "requiredGuildTypes": [],
-      "requiredReligionOrganizationIds": [
-        "religious_order.luminous_tide",
-        "religious_order.gale_veil",
-        "religious_order.forge_sanctum",
-        "religious_order.storm_bound",
-        "religious_order.prismatic_enclave",
-        "religious_order.the_unbound"
-      ],
-      "supportedUseCases": [
-        "blessings",
-        "funerary_rites",
-        "oath_binding",
-        "seasonal_rituals"
-      ],
-      "prohibitedBypassTags": [
-        "mass_healing_industry",
-        "free_housing",
-        "free_trade",
-        "limitless_battery"
-      ],
-      "preferredCrystalTiers": ["shard", "crystal", "cluster"],
-      "allowedElements": ["neutral", "light", "water", "wind", "ice", "darkness", "fire", "stone", "thunder"],
-      "serviceScaleBand": "large"
-    }
-  ]
+    "records":  [
+                    {
+                        "id":  "magic_service.adventurer_magic",
+                        "slug":  "adventurer_magic",
+                        "name":  "Adventurer Magic",
+                        "category":  "adventurer_magic",
+                        "summary":  "Portable combat and expedition casting supported by guild halls, watch posts, and licensed field practitioners.",
+                        "requiredInfrastructure":  {
+                                                       "roadTier":  0,
+                                                       "waterTier":  0,
+                                                       "harborTier":  0,
+                                                       "marketTier":  1,
+                                                       "fortificationTier":  0
+                                                   },
+                        "requiredGuildTypes":  [
+                                                   "adventurers_guild"
+                                               ],
+                        "requiredReligionOrganizationIds":  [
+
+                                                            ],
+                        "supportedUseCases":  [
+                                                  "field_healing",
+                                                  "combat_magic",
+                                                  "hazard_clearance",
+                                                  "scouting_wards"
+                                              ],
+                        "prohibitedBypassTags":  [
+                                                     "bulk_industry",
+                                                     "mass_transport",
+                                                     "free_fuel",
+                                                     "free_food"
+                                                 ],
+                        "preferredCrystalTiers":  [
+                                                      "shard",
+                                                      "crystal"
+                                                  ],
+                        "allowedElements":  [
+                                                "neutral",
+                                                "fire",
+                                                "water",
+                                                "wind",
+                                                "ice",
+                                                "light",
+                                                "darkness",
+                                                "stone",
+                                                "thunder",
+                                                "earth"
+                                            ],
+                        "serviceScaleBand":  "small"
+                    },
+                    {
+                        "id":  "magic_service.utility_enchantment",
+                        "slug":  "utility_enchantment",
+                        "name":  "Utility Enchantment",
+                        "category":  "utility_enchantment",
+                        "summary":  "Limited civic and workshop magic used for lights, seals, preservation, navigation aids, and other bounded services.",
+                        "requiredInfrastructure":  {
+                                                       "roadTier":  1,
+                                                       "waterTier":  0,
+                                                       "harborTier":  0,
+                                                       "marketTier":  2,
+                                                       "fortificationTier":  0
+                                                   },
+                        "requiredGuildTypes":  [
+                                                   "merchant_guild",
+                                                   "smiths_guild",
+                                                   "scribes_guild",
+                                                   "gemcutters_guild"
+                                               ],
+                        "requiredReligionOrganizationIds":  [
+                                                                "religious_order.prismatic_enclave"
+                                                            ],
+                        "supportedUseCases":  [
+                                                  "warded_storage",
+                                                  "civic_lighting",
+                                                  "navigation_marks",
+                                                  "small_scale_preservation",
+                                                  "focus_setting",
+                                                  "accessory_tuning",
+                                                  "weapon_binding"
+                                              ],
+                        "prohibitedBypassTags":  [
+                                                     "free_metals",
+                                                     "free_labor",
+                                                     "free_transport",
+                                                     "unbounded_repair",
+                                                     "infinite_vessel_loop"
+                                                 ],
+                        "preferredCrystalTiers":  [
+                                                      "crystal",
+                                                      "cluster"
+                                                  ],
+                        "allowedElements":  [
+                                                "neutral",
+                                                "light",
+                                                "water",
+                                                "wind",
+                                                "stone",
+                                                "fire",
+                                                "earth"
+                                            ],
+                        "serviceScaleBand":  "moderate"
+                    },
+                    {
+                        "id":  "magic_service.ritual_religious",
+                        "slug":  "ritual_religious",
+                        "name":  "Ritual And Religious Magic",
+                        "category":  "ritual_religious",
+                        "summary":  "Temple-bound rites, public blessings, oath wards, funerary rites, and convergence work kept inside religious institutions.",
+                        "requiredInfrastructure":  {
+                                                       "roadTier":  0,
+                                                       "waterTier":  0,
+                                                       "harborTier":  0,
+                                                       "marketTier":  0,
+                                                       "fortificationTier":  0
+                                                   },
+                        "requiredGuildTypes":  [
+
+                                               ],
+                        "requiredReligionOrganizationIds":  [
+                                                                "religious_order.luminous_tide",
+                                                                "religious_order.gale_veil",
+                                                                "religious_order.forge_sanctum",
+                                                                "religious_order.storm_bound",
+                                                                "religious_order.prismatic_enclave",
+                                                                "religious_order.the_unbound"
+                                                            ],
+                        "supportedUseCases":  [
+                                                  "blessings",
+                                                  "funerary_rites",
+                                                  "oath_binding",
+                                                  "seasonal_rituals"
+                                              ],
+                        "prohibitedBypassTags":  [
+                                                     "mass_healing_industry",
+                                                     "free_housing",
+                                                     "free_trade",
+                                                     "limitless_battery"
+                                                 ],
+                        "preferredCrystalTiers":  [
+                                                      "shard",
+                                                      "crystal",
+                                                      "cluster"
+                                                  ],
+                        "allowedElements":  [
+                                                "neutral",
+                                                "light",
+                                                "water",
+                                                "wind",
+                                                "ice",
+                                                "darkness",
+                                                "fire",
+                                                "stone",
+                                                "thunder",
+                                                "earth"
+                                            ],
+                        "serviceScaleBand":  "large"
+                    },
+                    {
+                        "id":  "magic_service.affinity_binding",
+                        "slug":  "affinity_binding",
+                        "name":  "Affinity Binding",
+                        "category":  "utility_enchantment",
+                        "summary":  "Licensed enchanter work that tunes vessels, binds elemental effects into weapons and accessories, and stabilizes bounded relic craftsmanship.",
+                        "requiredInfrastructure":  {
+                                                       "roadTier":  1,
+                                                       "waterTier":  0,
+                                                       "harborTier":  0,
+                                                       "marketTier":  2,
+                                                       "fortificationTier":  0
+                                                   },
+                        "requiredGuildTypes":  [
+                                                   "smiths_guild",
+                                                   "gemcutters_guild",
+                                                   "scribes_guild"
+                                               ],
+                        "requiredReligionOrganizationIds":  [
+                                                                "religious_order.prismatic_enclave",
+                                                                "religious_order.forge_sanctum"
+                                                            ],
+                        "supportedUseCases":  [
+                                                  "vessel_attunement",
+                                                  "focus_setting",
+                                                  "weapon_binding",
+                                                  "accessory_tuning"
+                                              ],
+                        "prohibitedBypassTags":  [
+                                                     "free_metals",
+                                                     "free_labor",
+                                                     "infinite_vessel_loop",
+                                                     "unbounded_repair"
+                                                 ],
+                        "preferredCrystalTiers":  [
+                                                      "shard",
+                                                      "crystal",
+                                                      "cluster"
+                                                  ],
+                        "allowedElements":  [
+                                                "neutral",
+                                                "light",
+                                                "water",
+                                                "wind",
+                                                "ice",
+                                                "darkness",
+                                                "fire",
+                                                "stone",
+                                                "earth",
+                                                "thunder"
+                                            ],
+                        "serviceScaleBand":  "moderate"
+                    }
+                ]
 }

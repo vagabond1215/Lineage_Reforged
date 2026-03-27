@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "monster.kobold_scavenger",
@@ -1552,6 +1552,931 @@
                                   ],
                         "loot":  [
 
+                                 ]
+                    },
+                    {
+                        "id":  "monster.fire_elemental",
+                        "slug":  "fire_elemental",
+                        "name":  "Fire Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A furnace-bright elemental that erupts from forge ruins, cinder pits, and volcanic vents when heat saturation becomes self-sustaining.",
+                        "habitatTags":  [
+                                            "volcanic_rim",
+                                            "ash_field",
+                                            "kiln_yard",
+                                            "forge_ruin"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "territorial",
+                                             "heat_touched",
+                                             "sudden_surge"
+                                         ],
+                        "baseMonsterId":  "monster.ember_elemental",
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "fire"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "volcanic_vent",
+                                                                     "forge_ruin",
+                                                                     "cinder_field"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "rift",
+                                                                   "surface"
+                                                               ],
+                                              "secureSettlementRule":  "requires_affinity_breach"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "fire_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "fire_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "ember_core",
+                                         "chance":  0.2
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.water_elemental",
+                        "slug":  "water_elemental",
+                        "name":  "Water Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A heavy-bodied current spirit that forms where river pressure, floodwater, and drowned channels hold too much magic to stay still.",
+                        "habitatTags":  [
+                                            "river_ford",
+                                            "estuary",
+                                            "canal_lock",
+                                            "underground_stream"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "territorial",
+                                             "surging",
+                                             "amorphous"
+                                         ],
+                        "baseMonsterId":  "monster.river_elemental",
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "water"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "flood_channel",
+                                                                     "spring_basin",
+                                                                     "estuary"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "waterway",
+                                                                   "coast"
+                                                               ],
+                                              "secureSettlementRule":  "requires_open_water_access"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "water_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "water_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "river_core",
+                                         "chance":  0.2
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.earth_elemental",
+                        "slug":  "earth_elemental",
+                        "name":  "Earth Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A pressure-packed earth spirit that rises from faulted stone, quarry scars, and collapsed tunnels when the bedrock is overcharged.",
+                        "habitatTags":  [
+                                            "cave_floor",
+                                            "quarry_edge",
+                                            "collapsed_passage",
+                                            "stonefield"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "territorial",
+                                             "burrower",
+                                             "unyielding"
+                                         ],
+                        "baseMonsterId":  "monster.stone_elemental",
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "earth"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "fault_line",
+                                                                     "quarry_scar",
+                                                                     "collapsed_tunnel"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "burrow",
+                                                                   "surface",
+                                                                   "tunnel"
+                                                               ],
+                                              "secureSettlementRule":  "requires_subsurface_access"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "stone_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "stone_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "stone_core",
+                                         "chance":  0.2
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.wind_elemental",
+                        "slug":  "wind_elemental",
+                        "name":  "Wind Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A slicing air spirit that forms in high passes and cliff gaps where pressure, speed, and open sky concentrate into a hostile will.",
+                        "habitatTags":  [
+                                            "high_pass",
+                                            "storm_peak",
+                                            "cliff_edge",
+                                            "open_plain"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "swift",
+                                             "displacing",
+                                             "territorial"
+                                         ],
+                        "baseMonsterId":  "monster.storm_elemental",
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "wind"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "cliff_gap",
+                                                                     "stormfront",
+                                                                     "mountain_pass"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "air",
+                                                                   "surface"
+                                                               ],
+                                              "secureSettlementRule":  "can_bypass_if_airspace_unsecured"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "wind_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "wind_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "cut_quartz",
+                                         "chance":  0.12
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.thunder_elemental",
+                        "slug":  "thunder_elemental",
+                        "name":  "Thunder Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "severe",
+                        "summary":  "A violent storm-heart elemental that condenses out of repeated lightning strikes, tower storms, and oath-marked battlements.",
+                        "habitatTags":  [
+                                            "storm_peak",
+                                            "ruined_tower",
+                                            "charred_hills",
+                                            "high_pass"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "volatile",
+                                             "storm_bound",
+                                             "sudden_surge"
+                                         ],
+                        "baseMonsterId":  "monster.storm_elemental",
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "thunder"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "stormfront",
+                                                                     "lightning_spire",
+                                                                     "oath_battlement"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "air",
+                                                                   "rift"
+                                                               ],
+                                              "secureSettlementRule":  "requires_affinity_breach"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "thunder_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "thunder_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.28
+                                      },
+                                      {
+                                          "itemKey":  "thunder_cluster",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.08
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "storm_core",
+                                         "chance":  0.22
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.ice_elemental",
+                        "slug":  "ice_elemental",
+                        "name":  "Ice Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A hard-edged cold spirit that coalesces in buried ice, glacier cracks, and storm-chilled caverns where stillness turns hostile.",
+                        "habitatTags":  [
+                                            "ice_cave",
+                                            "storm_peak",
+                                            "glacier_crevasse",
+                                            "winter_barrow"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "cold_touched",
+                                             "unyielding",
+                                             "territorial"
+                                         ],
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "ice"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "glacier_vein",
+                                                                     "ice_cave",
+                                                                     "winter_storm"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "surface",
+                                                                   "rift"
+                                                               ],
+                                              "secureSettlementRule":  "requires_affinity_breach"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "ice_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "ice_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "frost_gland",
+                                         "chance":  0.24
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.light_elemental",
+                        "slug":  "light_elemental",
+                        "name":  "Light Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A radiant elemental drawn to sanctums, sunstruck ruins, and exposed convergence stones where illumination becomes willful.",
+                        "habitatTags":  [
+                                            "sun_ruin",
+                                            "sanctum",
+                                            "lighthouse",
+                                            "high_temple"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "radiant",
+                                             "watchful",
+                                             "territorial"
+                                         ],
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "light"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "sanctified_focus",
+                                                                     "sunstone_vein",
+                                                                     "convergence_site"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "rift",
+                                                                   "surface"
+                                                               ],
+                                              "secureSettlementRule":  "requires_affinity_breach"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "light_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "light_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "sunstone",
+                                         "chance":  0.24
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.darkness_elemental",
+                        "slug":  "darkness_elemental",
+                        "name":  "Darkness Elemental",
+                        "monsterClass":  "elemental",
+                        "threat":  "high",
+                        "summary":  "A void-heavy elemental that gathers in shadow wells, ruined thresholds, and catacombs where fear and secrecy accumulate.",
+                        "habitatTags":  [
+                                            "catacomb",
+                                            "ruins",
+                                            "shadow_grove",
+                                            "deep_forest"
+                                        ],
+                        "behaviorTags":  [
+                                             "elemental",
+                                             "obscuring",
+                                             "cunning",
+                                             "territorial"
+                                         ],
+                        "variantType":  "supernatural",
+                        "attunementLevel":  "high",
+                        "elements":  [
+                                         "darkness"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "shadow_well",
+                                                                     "ruined_threshold",
+                                                                     "grave_barrow"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "rift",
+                                                                   "ruin",
+                                                                   "surface"
+                                                               ],
+                                              "secureSettlementRule":  "requires_affinity_breach"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "darkness_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.9
+                                      },
+                                      {
+                                          "itemKey":  "darkness_crystal",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "dusk_opal",
+                                         "chance":  0.24
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.storm_ram",
+                        "slug":  "storm_ram",
+                        "name":  "Storm Ram",
+                        "monsterClass":  "beast",
+                        "threat":  "high",
+                        "summary":  "A thunder-touched ram that descends from ridge storms, hammering gates and shield lines with electrified charges.",
+                        "habitatTags":  [
+                                            "storm_peak",
+                                            "high_pass",
+                                            "charred_hills",
+                                            "open_plain"
+                                        ],
+                        "behaviorTags":  [
+                                             "charger",
+                                             "territorial",
+                                             "thunder_touched",
+                                             "herd_guard"
+                                         ],
+                        "baseFaunaId":  "fauna.storm_ram",
+                        "variantType":  "elemental",
+                        "attunementLevel":  "moderate",
+                        "elements":  [
+                                         "thunder",
+                                         "wind"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "uncommon",
+                                              "terrainSources":  [
+                                                                     "stormfront",
+                                                                     "ridge_herd",
+                                                                     "highland_scree"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "surface"
+                                                               ],
+                                              "secureSettlementRule":  "blocked_without_open_path"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "storm_ram_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.86
+                                      },
+                                      {
+                                          "itemKey":  "storm_ram_hide",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.72
+                                      },
+                                      {
+                                          "itemKey":  "storm_ram_horn",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.64
+                                      },
+                                      {
+                                          "itemKey":  "storm_ram_bone",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  0.78
+                                      },
+                                      {
+                                          "itemKey":  "thunder_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.34
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "sunstone",
+                                         "chance":  0.1
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.stone_mole_burrower",
+                        "slug":  "stone_mole_burrower",
+                        "name":  "Stone Mole Burrower",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "A bedrock-fed mole that tunnels through quarry walls and cellar floors when earth affinity hardens its claws into chisels.",
+                        "habitatTags":  [
+                                            "quarry_edge",
+                                            "cave_floor",
+                                            "collapsed_passage",
+                                            "cellar"
+                                        ],
+                        "behaviorTags":  [
+                                             "burrower",
+                                             "territorial",
+                                             "earth_touched",
+                                             "ambusher"
+                                         ],
+                        "baseFaunaId":  "fauna.stone_mole",
+                        "variantType":  "material",
+                        "attunementLevel":  "low",
+                        "elements":  [
+                                         "earth"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "uncommon",
+                                              "terrainSources":  [
+                                                                     "quarry_scar",
+                                                                     "cellar_wall",
+                                                                     "mine_spoil"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "burrow",
+                                                                   "tunnel"
+                                                               ],
+                                              "secureSettlementRule":  "requires_subsurface_access"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "stone_mole_meat",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.82
+                                      },
+                                      {
+                                          "itemKey":  "stone_mole_fur",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.58
+                                      },
+                                      {
+                                          "itemKey":  "stone_mole_bone",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.7
+                                      },
+                                      {
+                                          "itemKey":  "stone_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.28
+                                      }
+                                  ],
+                        "loot":  [
+                    
+                                 ]
+                    },
+                    {
+                        "id":  "monster.bog_toad_croaker",
+                        "slug":  "bog_toad_croaker",
+                        "name":  "Bog Toad Croaker",
+                        "monsterClass":  "beast",
+                        "threat":  "moderate",
+                        "summary":  "A swamp-bloated toad whose waterlogged croak carries a dull earthen pressure that can stagger prey in the reeds.",
+                        "habitatTags":  [
+                                            "bog",
+                                            "reed_marsh",
+                                            "ditch",
+                                            "river_ford"
+                                        ],
+                        "behaviorTags":  [
+                                             "ambusher",
+                                             "water_touched",
+                                             "territorial",
+                                             "toxin_breath"
+                                         ],
+                        "baseFaunaId":  "fauna.bog_toad",
+                        "variantType":  "elemental",
+                        "attunementLevel":  "low",
+                        "elements":  [
+                                         "water",
+                                         "earth"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "common",
+                                              "terrainSources":  [
+                                                                     "reed_bed",
+                                                                     "flood_ditch",
+                                                                     "bog_pool"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "surface",
+                                                                   "waterway"
+                                                               ],
+                                              "secureSettlementRule":  "requires_open_water_access"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "bog_toad_meat",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.84
+                                      },
+                                      {
+                                          "itemKey":  "bog_toad_skin",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.68
+                                      },
+                                      {
+                                          "itemKey":  "bog_toad_bone",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.64
+                                      },
+                                      {
+                                          "itemKey":  "water_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.22
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "quartz",
+                                         "chance":  0.08
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.ember_hawk",
+                        "slug":  "ember_hawk",
+                        "name":  "Ember Hawk",
+                        "monsterClass":  "beast",
+                        "threat":  "high",
+                        "summary":  "A fire-lined raptor that rides thermals over burns and forge towns, diving in bursts of cinder and cutting heat.",
+                        "habitatTags":  [
+                                            "burned_wood",
+                                            "volcanic_rim",
+                                            "charred_hills",
+                                            "cliff_edge"
+                                        ],
+                        "behaviorTags":  [
+                                             "aerial_hunter",
+                                             "fire_touched",
+                                             "swift",
+                                             "territorial"
+                                         ],
+                        "baseFaunaId":  "fauna.ember_hawk",
+                        "variantType":  "elemental",
+                        "attunementLevel":  "moderate",
+                        "elements":  [
+                                         "fire",
+                                         "wind"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "uncommon",
+                                              "terrainSources":  [
+                                                                     "burn_scar",
+                                                                     "thermal_cliff",
+                                                                     "cinder_roost"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "air"
+                                                               ],
+                                              "secureSettlementRule":  "can_bypass_if_airspace_unsecured"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "ember_hawk_meat",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.8
+                                      },
+                                      {
+                                          "itemKey":  "ember_hawk_feather",
+                                          "quantityMin":  2,
+                                          "quantityMax":  5,
+                                          "chance":  0.86
+                                      },
+                                      {
+                                          "itemKey":  "ember_hawk_bone",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.66
+                                      },
+                                      {
+                                          "itemKey":  "fire_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.3
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "ember_quartz",
+                                         "chance":  0.16
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.crystal_ram",
+                        "slug":  "crystal_ram",
+                        "name":  "Crystal Ram",
+                        "monsterClass":  "beast",
+                        "threat":  "high",
+                        "summary":  "A crystal-backed ram whose horns and wool hold neutral charge, making it a prized but dangerous source of unattuned vessels.",
+                        "habitatTags":  [
+                                            "crystal_cave",
+                                            "high_pass",
+                                            "stonefield",
+                                            "mountain_meadow"
+                                        ],
+                        "behaviorTags":  [
+                                             "charger",
+                                             "territorial",
+                                             "crystal_bodied",
+                                             "herd_guard"
+                                         ],
+                        "baseFaunaId":  "fauna.crystal_ram",
+                        "variantType":  "material",
+                        "attunementLevel":  "moderate",
+                        "elements":  [
+                                         "neutral",
+                                         "earth"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "uncommon",
+                                              "terrainSources":  [
+                                                                     "crystal_vein",
+                                                                     "highland_graze",
+                                                                     "cave_mouth"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "surface",
+                                                                   "tunnel"
+                                                               ],
+                                              "secureSettlementRule":  "blocked_without_open_path"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "crystal_ram_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.84
+                                      },
+                                      {
+                                          "itemKey":  "crystal_ram_hide",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.72
+                                      },
+                                      {
+                                          "itemKey":  "crystal_ram_horn",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.66
+                                      },
+                                      {
+                                          "itemKey":  "crystal_ram_wool",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.74
+                                      },
+                                      {
+                                          "itemKey":  "crystal_ram_bone",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.74
+                                      },
+                                      {
+                                          "itemKey":  "elemental_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.38
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "quartz",
+                                         "chance":  0.12
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "monster.moon_stag",
+                        "slug":  "moon_stag",
+                        "name":  "Moon Stag",
+                        "monsterClass":  "beast",
+                        "threat":  "high",
+                        "summary":  "A pale antlered stag whose light affinity sharpens night vision, ward-breaking charges, and moonlit territorial aggression.",
+                        "habitatTags":  [
+                                            "deep_forest",
+                                            "moonlit_glade",
+                                            "high_pass",
+                                            "ruins"
+                                        ],
+                        "behaviorTags":  [
+                                             "territorial",
+                                             "light_touched",
+                                             "charger",
+                                             "watchful"
+                                         ],
+                        "baseFaunaId":  "fauna.moon_stag",
+                        "variantType":  "elemental",
+                        "attunementLevel":  "moderate",
+                        "elements":  [
+                                         "light"
+                                     ],
+                        "originProfile":  {
+                                              "appearanceRate":  "rare",
+                                              "terrainSources":  [
+                                                                     "moonlit_glade",
+                                                                     "ruined_shrine",
+                                                                     "highland_wood"
+                                                                 ],
+                                              "entryVectors":  [
+                                                                   "surface"
+                                                               ],
+                                              "secureSettlementRule":  "blocked_without_open_path"
+                                          },
+                        "drops":  [
+                                      {
+                                          "itemKey":  "moon_stag_meat",
+                                          "quantityMin":  2,
+                                          "quantityMax":  4,
+                                          "chance":  0.82
+                                      },
+                                      {
+                                          "itemKey":  "moon_stag_hide",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.7
+                                      },
+                                      {
+                                          "itemKey":  "moon_stag_antler",
+                                          "quantityMin":  1,
+                                          "quantityMax":  2,
+                                          "chance":  0.68
+                                      },
+                                      {
+                                          "itemKey":  "moon_stag_bone",
+                                          "quantityMin":  1,
+                                          "quantityMax":  3,
+                                          "chance":  0.76
+                                      },
+                                      {
+                                          "itemKey":  "light_shard",
+                                          "quantityMin":  1,
+                                          "quantityMax":  1,
+                                          "chance":  0.34
+                                      }
+                                  ],
+                        "loot":  [
+                                     {
+                                         "itemKey":  "moonstone",
+                                         "chance":  0.16
+                                     }
                                  ]
                     }
                 ]

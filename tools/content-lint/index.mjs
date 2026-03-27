@@ -110,13 +110,14 @@ const TRAVEL_LANE_CLASSES = new Set(["intercoastal", "open_ocean"]);
 const GUILD_CATEGORIES = new Set(["mercantile", "martial", "gathering", "crafting", "logistics", "civic", "service"]);
 const GUILD_ENTRY_METHODS = new Set(["buy_in", "task_trial", "sponsorship", "oath", "charter"]);
 const RELIGION_GENDERS = new Set(["female", "male"]);
-const RELIGION_ELEMENTS = new Set(["light", "water", "wind", "ice", "darkness", "fire", "stone", "thunder"]);
+const RELIGION_ELEMENTS = new Set(["light", "water", "wind", "ice", "darkness", "fire", "stone", "earth", "thunder"]);
 const RELIGION_RELATIONSHIPS = new Set(["opposed", "dominant"]);
 const RELIGION_ORGANIZATION_CATEGORIES = new Set(["elemental_order", "prismatic_enclave", "unbound"]);
 const RELIGION_MAGIC_SUPPORT_LEVELS = new Set(["none", "limited", "moderate", "high"]);
 const MAGIC_SERVICE_CATEGORIES = new Set(["adventurer_magic", "utility_enchantment", "ritual_religious"]);
 const MAGIC_SERVICE_SCALE_BANDS = new Set(["small", "moderate", "large"]);
 const CRYSTAL_TIERS = new Set(["shard", "crystal", "cluster"]);
+const CRYSTAL_ATTUNEMENT_MODES = new Set(["fixed", "attunable"]);
 const QUEST_TEMPLATE_CATEGORIES = new Set([
   "gathering",
   "hunting",
@@ -130,6 +131,26 @@ const QUEST_TEMPLATE_CATEGORIES = new Set([
 const QUEST_TEMPLATE_SOURCES = new Set(["shortfall", "surplus", "security", "frontier"]);
 const MONSTER_CLASSES = new Set(["beast", "humanoid", "ooze", "elemental", "undead", "giantkin"]);
 const MONSTER_THREATS = new Set(["low", "moderate", "high", "severe"]);
+const MONSTER_VARIANT_TYPES = new Set([
+  "species_only",
+  "biological",
+  "evolved",
+  "elemental",
+  "material",
+  "cursed",
+  "transformed",
+  "supernatural"
+]);
+const MONSTER_ATTUNEMENT_LEVELS = new Set(["unattuned", "low", "moderate", "high"]);
+const MONSTER_APPEARANCE_RATES = new Set(["common", "uncommon", "rare", "lair_only"]);
+const MONSTER_SECURE_SETTLEMENT_RULES = new Set([
+  "blocked_without_open_path",
+  "requires_subsurface_access",
+  "requires_open_water_access",
+  "can_bypass_if_airspace_unsecured",
+  "requires_affinity_breach",
+  "summoned_only"
+]);
 const SETTLEMENT_TYPES = new Set([
   "hamlet",
   "outpost",
@@ -4123,14 +4144,22 @@ function validateCrystalCatalog(relativePath, records) {
     ensureString(relativePath, recordId, "name", record.name);
     ensureSetMembership(relativePath, recordId, "tier", record.tier, CRYSTAL_TIERS);
     ensureSetMembership(relativePath, recordId, "element", record.element, new Set(["neutral", ...RELIGION_ELEMENTS]));
+    ensureSetMembership(relativePath, recordId, "affinityKey", record.affinityKey, new Set(["neutral", ...RELIGION_ELEMENTS]));
     ensureInteger(relativePath, recordId, "capacity", record.capacity, 1);
     ensureFiniteNumber(relativePath, recordId, "efficiency", record.efficiency);
     ensureFiniteNumber(relativePath, recordId, "stability", record.stability);
+    ensureSetMembership(relativePath, recordId, "attunementMode", record.attunementMode, CRYSTAL_ATTUNEMENT_MODES);
     ensureBoolean(relativePath, recordId, "reusable", record.reusable);
+    ensureBoolean(relativePath, recordId, "consumedOnPermanentEnchant", record.consumedOnPermanentEnchant);
+    ensureStringArray(relativePath, recordId, "supportedUseCases", record.supportedUseCases, 1);
     ensureString(relativePath, recordId, "rechargeMethod", record.rechargeMethod);
     ensureNumber(relativePath, recordId, "mismatchPenalty", record.mismatchPenalty, 0);
     if (record.mismatchPenalty > 1) {
       throw new Error(`${relativePath} has mismatchPenalty above 1 on record ${recordId}`);
+    }
+
+    if (record.affinityKey === "stone") {
+      throw new Error(`${relativePath} must normalize affinityKey 'stone' to 'earth' on record ${recordId}`);
     }
 
     const pairKey = `${record.element}:${record.tier}`;
@@ -4292,6 +4321,79 @@ function validateMonsters(relativePath, records) {
       ensureNumber(relativePath, recordId, `${field}.chance`, loot.chance, 0);
       if (loot.chance > 1) {
         throw new Error(`${relativePath} has ${field}.chance above 1 on record ${recordId}`);
+      }
+    }
+
+    if ("baseFaunaId" in record) {
+      ensureString(relativePath, recordId, "baseFaunaId", record.baseFaunaId);
+      if (!/^fauna\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.baseFaunaId)) {
+        throw new Error(`${relativePath} has invalid baseFaunaId '${record.baseFaunaId}' on record ${recordId}`);
+      }
+    }
+
+    if ("baseMonsterId" in record) {
+      ensureString(relativePath, recordId, "baseMonsterId", record.baseMonsterId);
+      if (!/^monster\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.baseMonsterId)) {
+        throw new Error(`${relativePath} has invalid baseMonsterId '${record.baseMonsterId}' on record ${recordId}`);
+      }
+      if (record.baseMonsterId === record.id) {
+        throw new Error(`${relativePath} has self-referencing baseMonsterId on record ${recordId}`);
+      }
+    }
+
+    if ("variantType" in record) {
+      ensureSetMembership(relativePath, recordId, "variantType", record.variantType, MONSTER_VARIANT_TYPES);
+    }
+
+    if ("attunementLevel" in record) {
+      ensureSetMembership(relativePath, recordId, "attunementLevel", record.attunementLevel, MONSTER_ATTUNEMENT_LEVELS);
+    }
+
+    if ("elements" in record) {
+      ensureStringArray(relativePath, recordId, "elements", record.elements, 1);
+      const seenElements = new Set();
+      for (const element of record.elements) {
+        ensureSetMembership(relativePath, recordId, "elements", element, new Set(["neutral", ...RELIGION_ELEMENTS]));
+        if (seenElements.has(element)) {
+          throw new Error(`${relativePath} has duplicate elements value '${element}' on record ${recordId}`);
+        }
+        seenElements.add(element);
+      }
+    }
+
+    if ("originProfile" in record) {
+      if (!isObject(record.originProfile)) {
+        throw new Error(`${relativePath} has invalid originProfile on record ${recordId}`);
+      }
+
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        "originProfile.appearanceRate",
+        record.originProfile.appearanceRate,
+        MONSTER_APPEARANCE_RATES
+      );
+      ensureStringArray(relativePath, recordId, "originProfile.terrainSources", record.originProfile.terrainSources, 1);
+      ensureStringArray(relativePath, recordId, "originProfile.entryVectors", record.originProfile.entryVectors, 1);
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        "originProfile.secureSettlementRule",
+        record.originProfile.secureSettlementRule,
+        MONSTER_SECURE_SETTLEMENT_RULES
+      );
+
+      for (const field of ["terrainSources", "entryVectors"]) {
+        const seenValues = new Set();
+        for (const value of record.originProfile[field]) {
+          if (!SLUG_PATTERN.test(value)) {
+            throw new Error(`${relativePath} has invalid originProfile.${field} value '${value}' on record ${recordId}`);
+          }
+          if (seenValues.has(value)) {
+            throw new Error(`${relativePath} has duplicate originProfile.${field} value '${value}' on record ${recordId}`);
+          }
+          seenValues.add(value);
+        }
       }
     }
   }
