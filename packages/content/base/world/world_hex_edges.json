@@ -1,0 +1,1121 @@
+{
+    "records":  [
+                    {
+                        "id":  "world_hex_edge.verdant_thalos_coastal_bays__verdant_thalos_inland_estates",
+                        "fromHexId":  "world_hex.verdant_thalos_coastal_bays",
+                        "toHexId":  "world_hex.verdant_thalos_inland_estates",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Verdant Inland Estates",
+                        "directionTo":  "toward Verdant Coastal Bays",
+                        "corridorName":  "Verdant Coastal Bays - Verdant Inland Estates local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.auric_marches_ore_ridges__auric_marches_caravan_marches",
+                        "fromHexId":  "world_hex.auric_marches_ore_ridges",
+                        "toHexId":  "world_hex.auric_marches_caravan_marches",
+                        "edgeType":  "pass",
+                        "hexSpan":  5,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.3,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Caravan Marches",
+                        "directionTo":  "toward Ore Ridge Uplands",
+                        "corridorName":  "Ore Ridge Uplands - Caravan Marches local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.shattercap_deep_harbors__shattercap_beacon_cliffs",
+                        "fromHexId":  "world_hex.shattercap_deep_harbors",
+                        "toHexId":  "world_hex.shattercap_beacon_cliffs",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Shattercap Beacon Cliffs",
+                        "directionTo":  "toward Shattercap Deep Harbors",
+                        "corridorName":  "Shattercap Deep Harbors - Shattercap Beacon Cliffs local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.crownlands_forest_vales__crownlands_headwater_passes",
+                        "fromHexId":  "world_hex.crownlands_forest_vales",
+                        "toHexId":  "world_hex.crownlands_headwater_passes",
+                        "edgeType":  "river",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.river_craft"
+                                               ],
+                        "directionFrom":  "toward Crownlands Headwater Passes",
+                        "directionTo":  "toward Crownlands Forest Vales",
+                        "corridorName":  "Crownlands Forest Vales - Crownlands Headwater Passes local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.embersteppe_herd_plains__embersteppe_stepwell_corridors",
+                        "fromHexId":  "world_hex.embersteppe_herd_plains",
+                        "toHexId":  "world_hex.embersteppe_stepwell_corridors",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Embersteppe Stepwell Corridors",
+                        "directionTo":  "toward Embersteppe Herd Plains",
+                        "corridorName":  "Embersteppe Herd Plains - Embersteppe Stepwell Corridors local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.sapphire_rivers_royal_floodplain__sapphire_rivers_bridge_corridors",
+                        "fromHexId":  "world_hex.sapphire_rivers_royal_floodplain",
+                        "toHexId":  "world_hex.sapphire_rivers_bridge_corridors",
+                        "edgeType":  "river",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.river_craft"
+                                               ],
+                        "directionFrom":  "toward Bridge Corridors",
+                        "directionTo":  "toward Royal Floodplain",
+                        "corridorName":  "Royal Floodplain - Bridge Corridors local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.jade_expanse_granary_core__jade_expanse_orchard_steppe",
+                        "fromHexId":  "world_hex.jade_expanse_granary_core",
+                        "toHexId":  "world_hex.jade_expanse_orchard_steppe",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Orchard Steppe",
+                        "directionTo":  "toward Granary Core",
+                        "corridorName":  "Granary Core - Orchard Steppe local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.windward_spine_mountain_holds__windward_spine_alpine_passes",
+                        "fromHexId":  "world_hex.windward_spine_mountain_holds",
+                        "toHexId":  "world_hex.windward_spine_alpine_passes",
+                        "edgeType":  "pass",
+                        "hexSpan":  5,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.3,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Alpine Passes",
+                        "directionTo":  "toward Mountain Holds",
+                        "corridorName":  "Mountain Holds - Alpine Passes local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.green_reach_heartwood__green_reach_timber_edges",
+                        "fromHexId":  "world_hex.green_reach_heartwood",
+                        "toHexId":  "world_hex.green_reach_timber_edges",
+                        "edgeType":  "trail",
+                        "hexSpan":  4,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.15,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Green Reach Timber Edges",
+                        "directionTo":  "toward Green Reach Heartwood",
+                        "corridorName":  "Green Reach Heartwood - Green Reach Timber Edges local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.sailors_verge_grand_harbors__sailors_verge_citrus_trade_belt",
+                        "fromHexId":  "world_hex.sailors_verge_grand_harbors",
+                        "toHexId":  "world_hex.sailors_verge_citrus_trade_belt",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Citrus Trade Belt",
+                        "directionTo":  "toward Grand Harbors",
+                        "corridorName":  "Grand Harbors - Citrus Trade Belt local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.heart_basin_river_capitals__heart_basin_market_mills",
+                        "fromHexId":  "world_hex.heart_basin_river_capitals",
+                        "toHexId":  "world_hex.heart_basin_market_mills",
+                        "edgeType":  "river",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.river_craft"
+                                               ],
+                        "directionFrom":  "toward Market Mills",
+                        "directionTo":  "toward River Capital Belt",
+                        "corridorName":  "River Capital Belt - Market Mills local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.emerald_mantle_pasture_uplands__emerald_mantle_orchard_meadows",
+                        "fromHexId":  "world_hex.emerald_mantle_pasture_uplands",
+                        "toHexId":  "world_hex.emerald_mantle_orchard_meadows",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Orchard Meadows",
+                        "directionTo":  "toward Pasture Uplands",
+                        "corridorName":  "Pasture Uplands - Orchard Meadows local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.stormcap_coast_storm_harbors__stormcap_coast_watch_citadels",
+                        "fromHexId":  "world_hex.stormcap_coast_storm_harbors",
+                        "toHexId":  "world_hex.stormcap_coast_watch_citadels",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Watch Citadels",
+                        "directionTo":  "toward Storm Harbors",
+                        "corridorName":  "Storm Harbors - Watch Citadels local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.silver_valleys_sunspire_vales__silver_valleys_ford_corridors",
+                        "fromHexId":  "world_hex.silver_valleys_sunspire_vales",
+                        "toHexId":  "world_hex.silver_valleys_ford_corridors",
+                        "edgeType":  "river",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.river_craft"
+                                               ],
+                        "directionFrom":  "toward Ford Corridors",
+                        "directionTo":  "toward Sunspire Vales",
+                        "corridorName":  "Sunspire Vales - Ford Corridors local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.silver_valleys_sunspire_vales__silver_valleys_warrens_below",
+                        "fromHexId":  "world_hex.silver_valleys_sunspire_vales",
+                        "toHexId":  "world_hex.silver_valleys_warrens_below",
+                        "edgeType":  "river",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.river_craft"
+                                               ],
+                        "directionFrom":  "toward Warrens Below",
+                        "directionTo":  "toward Sunspire Vales",
+                        "corridorName":  "Sunspire Vales - Warrens Below local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.silver_valleys_ford_corridors__silver_valleys_warrens_below",
+                        "fromHexId":  "world_hex.silver_valleys_ford_corridors",
+                        "toHexId":  "world_hex.silver_valleys_warrens_below",
+                        "edgeType":  "river",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.river_craft"
+                                               ],
+                        "directionFrom":  "toward Warrens Below",
+                        "directionTo":  "toward Ford Corridors",
+                        "corridorName":  "Ford Corridors - Warrens Below local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.thorn_peninsula_spice_markets__thorn_peninsula_salt_anchorage",
+                        "fromHexId":  "world_hex.thorn_peninsula_spice_markets",
+                        "toHexId":  "world_hex.thorn_peninsula_salt_anchorage",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Salt Anchorage Coast",
+                        "directionTo":  "toward Spice Markets",
+                        "corridorName":  "Spice Markets - Salt Anchorage Coast local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.thorn_peninsula_spice_markets__thorn_peninsula_watch_forts",
+                        "fromHexId":  "world_hex.thorn_peninsula_spice_markets",
+                        "toHexId":  "world_hex.thorn_peninsula_watch_forts",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Thorn Forts",
+                        "directionTo":  "toward Spice Markets",
+                        "corridorName":  "Spice Markets - Thorn Forts local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.thorn_peninsula_salt_anchorage__thorn_peninsula_watch_forts",
+                        "fromHexId":  "world_hex.thorn_peninsula_salt_anchorage",
+                        "toHexId":  "world_hex.thorn_peninsula_watch_forts",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Thorn Forts",
+                        "directionTo":  "toward Salt Anchorage Coast",
+                        "corridorName":  "Salt Anchorage Coast - Thorn Forts local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.watcher_coast_gate_citadels__watcher_coast_obsidian_steps",
+                        "fromHexId":  "world_hex.watcher_coast_gate_citadels",
+                        "toHexId":  "world_hex.watcher_coast_obsidian_steps",
+                        "edgeType":  "pass",
+                        "hexSpan":  5,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.3,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Obsidian Steps",
+                        "directionTo":  "toward Gate Citadels",
+                        "corridorName":  "Gate Citadels - Obsidian Steps local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.watcher_coast_gate_citadels__watcher_coast_mistfen_edges",
+                        "fromHexId":  "world_hex.watcher_coast_gate_citadels",
+                        "toHexId":  "world_hex.watcher_coast_mistfen_edges",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Mistfen Edges",
+                        "directionTo":  "toward Gate Citadels",
+                        "corridorName":  "Gate Citadels - Mistfen Edges local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.watcher_coast_obsidian_steps__watcher_coast_mistfen_edges",
+                        "fromHexId":  "world_hex.watcher_coast_obsidian_steps",
+                        "toHexId":  "world_hex.watcher_coast_mistfen_edges",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Mistfen Edges",
+                        "directionTo":  "toward Obsidian Steps",
+                        "corridorName":  "Obsidian Steps - Mistfen Edges local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.myridian_ports__myridian_pearl_shoals",
+                        "fromHexId":  "world_hex.myridian_ports",
+                        "toHexId":  "world_hex.myridian_pearl_shoals",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Pearl Shoals",
+                        "directionTo":  "toward Starfall Ports",
+                        "corridorName":  "Starfall Ports - Pearl Shoals local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.myridian_ports__myridian_beacon_bastions",
+                        "fromHexId":  "world_hex.myridian_ports",
+                        "toHexId":  "world_hex.myridian_beacon_bastions",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Beacon Bastions",
+                        "directionTo":  "toward Starfall Ports",
+                        "corridorName":  "Starfall Ports - Beacon Bastions local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.myridian_pearl_shoals__myridian_beacon_bastions",
+                        "fromHexId":  "world_hex.myridian_pearl_shoals",
+                        "toHexId":  "world_hex.myridian_beacon_bastions",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Beacon Bastions",
+                        "directionTo":  "toward Pearl Shoals",
+                        "corridorName":  "Pearl Shoals - Beacon Bastions local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.lantern_harbors__lantern_reef_depths",
+                        "fromHexId":  "world_hex.lantern_harbors",
+                        "toHexId":  "world_hex.lantern_reef_depths",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Lantern Reef Depths",
+                        "directionTo":  "toward Lantern Harbors",
+                        "corridorName":  "Lantern Harbors - Lantern Reef Depths local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.lantern_harbors__lantern_shrine_gardens",
+                        "fromHexId":  "world_hex.lantern_harbors",
+                        "toHexId":  "world_hex.lantern_shrine_gardens",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Shrine Gardens",
+                        "directionTo":  "toward Lantern Harbors",
+                        "corridorName":  "Lantern Harbors - Shrine Gardens local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.lantern_reef_depths__lantern_shrine_gardens",
+                        "fromHexId":  "world_hex.lantern_reef_depths",
+                        "toHexId":  "world_hex.lantern_shrine_gardens",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Shrine Gardens",
+                        "directionTo":  "toward Lantern Reef Depths",
+                        "corridorName":  "Lantern Reef Depths - Shrine Gardens local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.serpents_storm_havens__serpents_reef_anchorages",
+                        "fromHexId":  "world_hex.serpents_storm_havens",
+                        "toHexId":  "world_hex.serpents_reef_anchorages",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Reef Anchorages",
+                        "directionTo":  "toward Storm Havens",
+                        "corridorName":  "Storm Havens - Reef Anchorages local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.serpents_storm_havens__serpents_watch_musters",
+                        "fromHexId":  "world_hex.serpents_storm_havens",
+                        "toHexId":  "world_hex.serpents_watch_musters",
+                        "edgeType":  "road",
+                        "hexSpan":  3,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Watch Musters",
+                        "directionTo":  "toward Storm Havens",
+                        "corridorName":  "Storm Havens - Watch Musters local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.serpents_reef_anchorages__serpents_watch_musters",
+                        "fromHexId":  "world_hex.serpents_reef_anchorages",
+                        "toHexId":  "world_hex.serpents_watch_musters",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Watch Musters",
+                        "directionTo":  "toward Reef Anchorages",
+                        "corridorName":  "Reef Anchorages - Watch Musters local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.dawnreach_aurora_harbors__dawnreach_nacre_depths",
+                        "fromHexId":  "world_hex.dawnreach_aurora_harbors",
+                        "toHexId":  "world_hex.dawnreach_nacre_depths",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Nacre Depths",
+                        "directionTo":  "toward Aurora Harbors",
+                        "corridorName":  "Aurora Harbors - Nacre Depths local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.dawnreach_aurora_harbors__dawnreach_whalebone_watches",
+                        "fromHexId":  "world_hex.dawnreach_aurora_harbors",
+                        "toHexId":  "world_hex.dawnreach_whalebone_watches",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Whalebone Watches",
+                        "directionTo":  "toward Aurora Harbors",
+                        "corridorName":  "Aurora Harbors - Whalebone Watches local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.dawnreach_nacre_depths__dawnreach_whalebone_watches",
+                        "fromHexId":  "world_hex.dawnreach_nacre_depths",
+                        "toHexId":  "world_hex.dawnreach_whalebone_watches",
+                        "edgeType":  "ferry",
+                        "hexSpan":  2,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.2,
+                        "barrierTags":  [
+
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.pack_animal",
+                                                   "travel_mode.wagon"
+                                               ],
+                        "directionFrom":  "toward Whalebone Watches",
+                        "directionTo":  "toward Nacre Depths",
+                        "corridorName":  "Nacre Depths - Whalebone Watches local corridor"
+                    },
+                    {
+                        "id":  "world_hex_edge.aurelis_vinecross",
+                        "fromHexId":  "world_hex.verdant_thalos_coastal_bays",
+                        "toHexId":  "world_hex.verdant_thalos_inland_estates",
+                        "edgeType":  "road",
+                        "hexSpan":  20,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1,
+                        "barrierTags": [],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Vinecross",
+                        "directionTo":  "toward Aurelis",
+                        "corridorName":  "Aurelis-Vinecross Road",
+                        "terrainTags":  [
+                                            "temperate_farmland"
+                                        ],
+                        "featureTags":  [
+                                            "paved_road"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.aurelis_stonevein",
+                        "fromHexId":  "world_hex.verdant_thalos_coastal_bays",
+                        "toHexId":  "world_hex.auric_marches_ore_ridges",
+                        "edgeType":  "trail",
+                        "hexSpan":  86,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1.23,
+                        "barrierTags":  [
+                                            "cliff",
+                                            "switchbacks"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Stonevein",
+                        "directionTo":  "toward Aurelis",
+                        "corridorName":  "Aurelis-Stonevein Crown Track",
+                        "terrainTags":  [
+                                            "temperate_farmland",
+                                            "upland_hills",
+                                            "mountain_pass"
+                                        ],
+                        "featureTags":  [
+                                            "paved_road",
+                                            "mountain_switchbacks"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.brineharbor_aurelis",
+                        "fromHexId":  "world_hex.shattercap_deep_harbors",
+                        "toHexId":  "world_hex.verdant_thalos_coastal_bays",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  90,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Aurelis",
+                        "directionTo":  "toward Brineharbor",
+                        "corridorName":  "Brineharbor-Aurelis Coastal Run",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.spicehook_watchers_gate",
+                        "fromHexId":  "world_hex.thorn_peninsula_spice_markets",
+                        "toHexId":  "world_hex.watcher_coast_gate_citadels",
+                        "edgeType":  "trail",
+                        "hexSpan":  154,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1.15,
+                        "barrierTags":  [
+                                            "ferry_required"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Watcher\u0027s Gate",
+                        "directionTo":  "toward Spicehook",
+                        "corridorName":  "Spicehook-Watcher\u0027s Gate Frontier Road",
+                        "terrainTags":  [
+                                            "deep_forest",
+                                            "marshland",
+                                            "upland_hills"
+                                        ],
+                        "featureTags":  [
+                                            "paved_road",
+                                            "bridge_or_ferry"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.breaksail_riverthrone",
+                        "fromHexId":  "world_hex.stormcap_coast_storm_harbors",
+                        "toHexId":  "world_hex.heart_basin_river_capitals",
+                        "edgeType":  "trail",
+                        "hexSpan":  87,
+                        "routeQuality":  "high",
+                        "crossingDifficulty":  1.15,
+                        "barrierTags": [],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.foot",
+                                                   "travel_mode.horseback",
+                                                   "travel_mode.wagon",
+                                                   "travel_mode.pack_animal"
+                                               ],
+                        "directionFrom":  "toward Riverthrone",
+                        "directionTo":  "toward Breaksail",
+                        "corridorName":  "Breaksail-Riverthrone Gulf Road",
+                        "terrainTags":  [
+                                            "upland_hills",
+                                            "temperate_farmland"
+                                        ],
+                        "featureTags":  [
+                                            "paved_road"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.redcliff_quay_brineharbor",
+                        "fromHexId":  "world_hex.verdant_thalos_coastal_bays",
+                        "toHexId":  "world_hex.shattercap_deep_harbors",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  110,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Brineharbor",
+                        "directionTo":  "toward Redcliff Quay",
+                        "corridorName":  "Redcliff Quay-Brineharbor Coast Roadstead",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.lantern_key_driftglass_outpost",
+                        "fromHexId":  "world_hex.lantern_harbors",
+                        "toHexId":  "world_hex.lantern_shrine_gardens",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  57,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Driftglass Outpost",
+                        "directionTo":  "toward Lantern Key",
+                        "corridorName":  "Lantern Key-Driftglass Outpost Patrol Run",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.brineharbor_starfall_port",
+                        "fromHexId":  "world_hex.shattercap_deep_harbors",
+                        "toHexId":  "world_hex.myridian_ports",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  192,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Starfall Port",
+                        "directionTo":  "toward Brineharbor",
+                        "corridorName":  "Brineharbor-Starfall Northern Lane",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.starfall_port_blueflow",
+                        "fromHexId":  "world_hex.myridian_ports",
+                        "toHexId":  "world_hex.sapphire_rivers_royal_floodplain",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  281,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Blueflow",
+                        "directionTo":  "toward Starfall Port",
+                        "corridorName":  "Starfall-Blueflow Merchant Lane",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.aurelis_seabanner",
+                        "fromHexId":  "world_hex.verdant_thalos_coastal_bays",
+                        "toHexId":  "world_hex.sailors_verge_grand_harbors",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  175,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Seabanner",
+                        "directionTo":  "toward Aurelis",
+                        "corridorName":  "Aurelis-Seabanner Gulf Lane",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.seabanner_breaksail",
+                        "fromHexId":  "world_hex.sailors_verge_grand_harbors",
+                        "toHexId":  "world_hex.stormcap_coast_storm_harbors",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  223,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Breaksail",
+                        "directionTo":  "toward Seabanner",
+                        "corridorName":  "Seabanner-Breaksail Inner Sea Lane",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.breaksail_lantern_key",
+                        "fromHexId":  "world_hex.stormcap_coast_storm_harbors",
+                        "toHexId":  "world_hex.lantern_harbors",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  166,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Lantern Key",
+                        "directionTo":  "toward Breaksail",
+                        "corridorName":  "Breaksail-Lantern Central Crossing",
+                        "terrainTags":  [
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "bad_weather",
+                                            "favorable_current"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.lantern_key_stormfang_haven",
+                        "fromHexId":  "world_hex.lantern_harbors",
+                        "toHexId":  "world_hex.serpents_storm_havens",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  205,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Stormfang Haven",
+                        "directionTo":  "toward Lantern Key",
+                        "corridorName":  "Lantern-Stormfang Southern Reach",
+                        "terrainTags":  [
+                                            "open_sea",
+                                            "storm_belt"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.breaksail_saltfang_anchorage",
+                        "fromHexId":  "world_hex.stormcap_coast_storm_harbors",
+                        "toHexId":  "world_hex.thorn_peninsula_salt_anchorage",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  203,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Saltfang Anchorage",
+                        "directionTo":  "toward Breaksail",
+                        "corridorName":  "Breaksail-Saltfang Southern Trade Lane",
+                        "terrainTags":  [
+                                            "open_sea",
+                                            "storm_belt"
+                                        ],
+                        "featureTags":  [
+                                            "favorable_current",
+                                            "bad_weather"
+                                        ]
+                    },
+                    {
+                        "id":  "world_hex_edge.stormfang_haven_aurora_anchorage",
+                        "fromHexId":  "world_hex.serpents_storm_havens",
+                        "toHexId":  "world_hex.dawnreach_aurora_harbors",
+                        "edgeType":  "sea_lane",
+                        "hexSpan":  217,
+                        "routeQuality":  "medium",
+                        "crossingDifficulty":  1.28,
+                        "barrierTags":  [
+                                            "water_only",
+                                            "open_sea"
+                                        ],
+                        "allowedTravelModes":  [
+                                                   "travel_mode.sea_vessel"
+                                               ],
+                        "directionFrom":  "toward Aurora Anchorage",
+                        "directionTo":  "toward Stormfang Haven",
+                        "corridorName":  "Stormfang-Aurora Far East Lane",
+                        "terrainTags":  [
+                                            "storm_belt",
+                                            "open_sea"
+                                        ],
+                        "featureTags":  [
+                                            "bad_weather",
+                                            "favorable_current"
+                                        ]
+                    }
+                ]
+}
+

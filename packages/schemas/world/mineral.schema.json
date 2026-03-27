@@ -27,6 +27,36 @@
     "extractionTypes": {
       "type": "array",
       "items": { "type": "string" }
+    },
+    "ecologyProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "compatibleBiomeIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "compatibleClimateBands": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "compatibleElevationBands": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "compatibleLocalityTags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "freshwaterAffinity": {
+          "type": "string",
+          "enum": ["none", "stream", "river", "coast", "marsh", "any"]
+        },
+        "rarityTendency": {
+          "type": "string",
+          "enum": ["abundant", "common", "uncommon", "rare"]
+        }
+      }
     }
   }
 }

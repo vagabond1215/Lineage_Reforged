@@ -380,6 +380,14 @@ export const demoSnapshot: SaveSnapshot = {
       marketStates: [],
       lastComputedTick: 1438
     },
+    transport: {
+      caravans: [],
+      stockAdjustments: [],
+      nextCaravanOrdinal: 1,
+      assetReservations: [],
+      lastEvaluatedOpportunities: [],
+      lastProcessedTick: 1438
+    },
     quests: {
       activeOffers: [],
       lastGeneratedTick: 1438

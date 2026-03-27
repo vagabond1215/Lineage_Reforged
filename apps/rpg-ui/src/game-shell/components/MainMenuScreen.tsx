@@ -6,13 +6,11 @@ import { ScreenFrame } from './ScreenFrame.js';
 type MainMenuScreenProps = {
   slots: SaveSlotSummary[];
   notice: GameShellNotice | null;
-  isResetConfirmationOpen: boolean;
   onDismissNotice: () => void;
+  onContinue: () => void;
   onNewGame: () => void;
   onLoadGame: () => void;
-  onOpenResetConfirmation: () => void;
-  onCloseResetConfirmation: () => void;
-  onConfirmReset: () => void;
+  onOpenSettings: () => void;
   onExit: () => void;
 };
 
@@ -22,13 +20,11 @@ const actionButtonClass =
 export function MainMenuScreen({
   slots,
   notice,
-  isResetConfirmationOpen,
   onDismissNotice,
+  onContinue,
   onNewGame,
   onLoadGame,
-  onOpenResetConfirmation,
-  onCloseResetConfirmation,
-  onConfirmReset,
+  onOpenSettings,
   onExit
 }: MainMenuScreenProps) {
   const manualSlots = slots.filter((slot) => slot.kind === 'manual');
@@ -43,7 +39,7 @@ export function MainMenuScreen({
       <ScreenFrame
         eyebrow="Main Menu"
         title="Cataclysm RPG"
-        description="Choose whether to begin a fresh campaign, load one of the browser-local save records, clear all local save data, or attempt a browser-safe exit. Manual slots and the dedicated quick-save slot all share the same snapshot model."
+        description="Continue the newest campaign, begin a fresh one, load a specific browser-local save, open launcher settings, or exit. Manual slots and the dedicated quick-save slot all share the same real snapshot model."
         accent="var(--color-character)"
         notice={notice}
         onDismissNotice={onDismissNotice}
@@ -51,6 +47,23 @@ export function MainMenuScreen({
           <div className="space-y-4">
             <Card title="Campaign Gate" accent="var(--color-character)">
               <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={onContinue}
+                  disabled={!latestSave}
+                  className={`${actionButtonClass} border-emerald-300/25 bg-emerald-200/10 text-emerald-50 hover:bg-emerald-200/14 disabled:cursor-not-allowed disabled:opacity-45`}
+                >
+                  <span>
+                    <span className="block text-lg font-semibold">Continue</span>
+                    <span className="mt-1 block text-sm text-emerald-100/80">
+                      {latestSave
+                        ? `Load the most recent campaign: ${latestSave.playerName}.`
+                        : 'Disabled until a real save exists in this browser.'}
+                    </span>
+                  </span>
+                  <Icon name="chevron" className="h-5 w-5" />
+                </button>
+
                 <button
                   type="button"
                   onClick={onNewGame}
@@ -81,13 +94,13 @@ export function MainMenuScreen({
 
                 <button
                   type="button"
-                  onClick={onOpenResetConfirmation}
-                  className={`${actionButtonClass} border-rose-300/20 bg-rose-200/10 text-rose-50 hover:bg-rose-200/14`}
+                  onClick={onOpenSettings}
+                  className={`${actionButtonClass} border-indigo-300/20 bg-indigo-200/10 text-indigo-50 hover:bg-indigo-200/14`}
                 >
                   <span>
-                    <span className="block text-lg font-semibold">Reset Save Data</span>
-                    <span className="mt-1 block text-sm text-rose-100/80">
-                      Clear all local save slots after an explicit confirmation step.
+                    <span className="block text-lg font-semibold">Settings</span>
+                    <span className="mt-1 block text-sm text-indigo-100/80">
+                      Open launcher settings, save storage details, and reset controls.
                     </span>
                   </span>
                   <Icon name="chevron" className="h-5 w-5" />
@@ -210,35 +223,6 @@ export function MainMenuScreen({
           </Card>
         }
       />
-
-      {isResetConfirmationOpen && (
-        <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm">
-          <Card title="Reset All Local Save Data" accent="var(--color-chronicle)" className="w-full max-w-xl">
-            <div className="space-y-4">
-              <p className="text-sm leading-7 text-slate-300">
-                This will permanently clear all three manual save slots and the dedicated quick-save slot for the
-                current browser profile. The action cannot be undone.
-              </p>
-              <div className="flex flex-wrap justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={onCloseResetConfirmation}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={onConfirmReset}
-                  className="rounded-full border border-rose-300/25 bg-rose-200/10 px-4 py-2 text-sm text-rose-50 transition hover:bg-rose-200/15"
-                >
-                  Clear Saves
-                </button>
-              </div>
-            </div>
-          </Card>
-        </div>
-      )}
     </>
   );
 }

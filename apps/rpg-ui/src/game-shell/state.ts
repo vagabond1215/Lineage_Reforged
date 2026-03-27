@@ -2,7 +2,7 @@ import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.j
 import type { TagTone } from '../types.js';
 import type { CharacterCreationFormState } from './characterCreationForm.js';
 
-export type AppScreen = 'MAIN_MENU' | 'CHARACTER_CREATION' | 'LOAD_GAME' | 'IN_GAME';
+export type AppScreen = 'MAIN_MENU' | 'CHARACTER_CREATION' | 'LOAD_GAME' | 'SETTINGS' | 'IN_GAME';
 export type ManualSaveSlotId = 'slot-1' | 'slot-2' | 'slot-3';
 export type QuickSaveSlotId = 'quick-save';
 export type SaveSlotId = ManualSaveSlotId | QuickSaveSlotId;
@@ -58,7 +58,6 @@ type GameShellBaseState = {
 
 export type MainMenuState = GameShellBaseState & {
   screen: 'MAIN_MENU';
-  isResetConfirmationOpen: boolean;
 };
 
 export type CharacterCreationState = GameShellBaseState & {
@@ -72,6 +71,10 @@ export type LoadGameState = GameShellBaseState & {
   selectedSlotId: SaveSlotId | null;
 };
 
+export type SettingsState = GameShellBaseState & {
+  screen: 'SETTINGS';
+};
+
 export type InGameState = GameShellBaseState & {
   screen: 'IN_GAME';
   activeSlotId: SaveSlotId;
@@ -83,6 +86,7 @@ export type GameShellState =
   | MainMenuState
   | CharacterCreationState
   | LoadGameState
+  | SettingsState
   | InGameState;
 
 export type GameShellAction =
@@ -90,10 +94,6 @@ export type GameShellAction =
       type: 'SHOW_MAIN_MENU';
       slots: SaveSlotSummary[];
       notice: GameShellNotice | null;
-    }
-  | {
-      type: 'SET_RESET_CONFIRMATION';
-      open: boolean;
     }
   | {
       type: 'OPEN_CHARACTER_CREATION';
@@ -113,6 +113,11 @@ export type GameShellAction =
       type: 'OPEN_LOAD_GAME';
       slots: SaveSlotSummary[];
       selectedSlotId: SaveSlotId | null;
+      notice: GameShellNotice | null;
+    }
+  | {
+      type: 'OPEN_SETTINGS';
+      slots: SaveSlotSummary[];
       notice: GameShellNotice | null;
     }
   | {
@@ -230,8 +235,7 @@ export function createInitialGameShellState(
   return {
     screen: 'MAIN_MENU',
     slots,
-    notice,
-    isResetConfirmationOpen: false
+    notice
   };
 }
 
@@ -244,17 +248,7 @@ export function gameShellReducer(
       return {
         screen: 'MAIN_MENU',
         slots: action.slots,
-        notice: action.notice,
-        isResetConfirmationOpen: false
-      };
-    case 'SET_RESET_CONFIRMATION':
-      if (state.screen !== 'MAIN_MENU') {
-        return state;
-      }
-
-      return {
-        ...state,
-        isResetConfirmationOpen: action.open
+        notice: action.notice
       };
     case 'OPEN_CHARACTER_CREATION':
       return {
@@ -292,6 +286,12 @@ export function gameShellReducer(
         slots: action.slots,
         notice: action.notice,
         selectedSlotId: action.selectedSlotId
+      };
+    case 'OPEN_SETTINGS':
+      return {
+        screen: 'SETTINGS',
+        slots: action.slots,
+        notice: action.notice
       };
     case 'SELECT_LOAD_SLOT':
       if (state.screen !== 'LOAD_GAME') {

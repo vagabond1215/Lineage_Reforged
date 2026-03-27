@@ -7,6 +7,7 @@ import {
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen';
 import { MainMenuScreen } from './game-shell/components/MainMenuScreen';
+import { SettingsScreen } from './game-shell/components/SettingsScreen';
 import { createNewGameSnapshot } from './game-shell/newGameSnapshot';
 import {
   buildSaveMetadata,
@@ -113,6 +114,61 @@ export default function App() {
       selectedSlotId: getPreferredLoadSlotId(next.slots),
       notice: next.notice
     });
+  };
+
+  const openSettings = () => {
+    const next = listSlotsWithFallback('read');
+    dispatch({
+      type: 'OPEN_SETTINGS',
+      slots: next.slots,
+      notice: next.notice
+    });
+  };
+
+  const continueLatestGame = () => {
+    const next = listSlotsWithFallback('read');
+    const slotId = getPreferredLoadSlotId(next.slots);
+
+    if (!slotId) {
+      dispatch({
+        type: 'SHOW_MAIN_MENU',
+        slots: next.slots,
+        notice: next.notice ?? {
+          tone: 'warning',
+          title: 'No Save To Continue',
+          detail: 'Continue stays disabled until a real save exists in one of the local slots.'
+        }
+      });
+      return;
+    }
+
+    try {
+      const snapshot = loadSave(slotId);
+
+      if (!snapshot) {
+        dispatch({
+          type: 'SHOW_MAIN_MENU',
+          slots: next.slots,
+          notice: next.notice ?? {
+            tone: 'warning',
+            title: 'Latest Save Unavailable',
+            detail: 'The most recent save could not be loaded. Use Load Game to inspect the available slots.'
+          }
+        });
+        return;
+      }
+
+      enterGame(slotId, snapshot, {
+        tone: 'accent',
+        title: 'Continuing Campaign',
+        detail: `Continuing ${snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
+      });
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('continue the most recent game', error)
+      });
+    }
   };
 
   const attemptCreateGame = (forceOverwrite: boolean) => {
@@ -377,13 +433,11 @@ export default function App() {
       <MainMenuScreen
         slots={state.slots}
         notice={state.notice}
-        isResetConfirmationOpen={state.isResetConfirmationOpen}
         onDismissNotice={dismissNotice}
+        onContinue={continueLatestGame}
         onNewGame={openCharacterCreation}
         onLoadGame={openLoadGame}
-        onOpenResetConfirmation={() => dispatch({ type: 'SET_RESET_CONFIRMATION', open: true })}
-        onCloseResetConfirmation={() => dispatch({ type: 'SET_RESET_CONFIRMATION', open: false })}
-        onConfirmReset={handleResetSaves}
+        onOpenSettings={openSettings}
         onExit={handleExit}
       />
     );
@@ -417,6 +471,18 @@ export default function App() {
         onSelectSlot={(slotId) => dispatch({ type: 'SELECT_LOAD_SLOT', slotId })}
         onLoadSelected={loadSelectedGame}
         onDeleteSlot={handleDeleteSave}
+      />
+    );
+  }
+
+  if (state.screen === 'SETTINGS') {
+    return (
+      <SettingsScreen
+        slots={state.slots}
+        notice={state.notice}
+        onDismissNotice={dismissNotice}
+        onBack={() => showMainMenu()}
+        onResetSaves={handleResetSaves}
       />
     );
   }

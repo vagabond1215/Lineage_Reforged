@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "category",
+          "summary",
+          "hostedWorkplaceIds",
+          "serviceFunctions",
+          "triggerBusinessTypes",
+          "compatibleSettlementTypes",
+          "requiredInfrastructure",
+          "placeability"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^building\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "agrarian",
+              "extractive",
+              "industrial",
+              "trade",
+              "storage",
+              "civic",
+              "military",
+              "maritime",
+              "hospitality",
+              "service"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hostedWorkplaceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^workplace\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "serviceFunctions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "triggerBusinessTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "compatibleSettlementTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "hamlet",
+                "outpost",
+                "village",
+                "market_town",
+                "town",
+                "city",
+                "fort",
+                "citadel",
+                "harbor_town",
+                "port_city",
+                "estate",
+                "monastery",
+                "ferry_post",
+                "camp",
+                "waystation"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "requiredInfrastructure": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "roadTier",
+              "waterTier",
+              "harborTier",
+              "marketTier",
+              "fortificationTier"
+            ],
+            "properties": {
+              "roadTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "waterTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "harborTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "marketTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "fortificationTier": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              }
+            }
+          },
+          "placeability": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "supportedSiteClasses",
+              "allowedTerrainContexts",
+              "requiresWaterAccess",
+              "requiresCoastalAccess",
+              "requiresRiverAccess",
+              "requiredRouteModes"
+            ],
+            "properties": {
+              "supportedSiteClasses": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "surface",
+                    "subterranean",
+                    "underwater"
+                  ]
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "allowedTerrainContexts": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "uniqueItems": true
+              },
+              "requiresWaterAccess": {
+                "type": "boolean"
+              },
+              "requiresCoastalAccess": {
+                "type": "boolean"
+              },
+              "requiresRiverAccess": {
+                "type": "boolean"
+              },
+              "requiredRouteModes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "road",
+                    "river",
+                    "coastal",
+                    "canal",
+                    "pack",
+                    "sea_lane"
+                  ]
+                },
+                "uniqueItems": true
+              }
+            }
+          },
+          "storageProfiles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storageType",
+                "capacityUnits",
+                "goodsFocus"
+              ],
+              "properties": {
+                "storageType": {
+                  "type": "string",
+                  "enum": [
+                    "granary",
+                    "cellar",
+                    "warehouse",
+                    "vault"
+                  ]
+                },
+                "capacityUnits": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "goodsFocus": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

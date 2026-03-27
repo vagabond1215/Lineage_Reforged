@@ -3035,6 +3035,7 @@
                                       ],
                         "outputTags":  [
                                            "mail_coif",
+                                           "plate_helm",
                                            "brigandine_plate",
                                            "metal_scrap",
                                            "scale_vest",
@@ -8193,6 +8194,14 @@
                         "outputTags":  [
                                            "handcart",
                                            "wagon_frame",
+                                           "pack_wagon",
+                                           "wagon_wheel",
+                                           "wagon_fittings",
+                                           "pack_frame",
+                                           "yoke",
+                                           "plow",
+                                           "bucket",
+                                           "cellar_rack",
                                            "offcut_lumber",
                                            "crate",
                                            "wooden_stool"
@@ -8506,6 +8515,7 @@
                         "outputTags":  [
                                            "candle",
                                            "wax_seal",
+                                           "soap",
                                            "lamp",
                                            "lantern"
                                        ],
@@ -13061,6 +13071,8 @@
                         "outputTags":  [
                                            "glass_sheet",
                                            "glass_vial",
+                                           "glass_bottle",
+                                           "glass_jar",
                                            "cullet"
                                        ],
                         "laborSlots":  {
@@ -16455,6 +16467,7 @@
                                            "cord",
                                            "binding_strip",
                                            "wick",
+                                           "rope",
                                            "coarse_cloth",
                                            "fine_cloth"
                                        ],
@@ -19239,11 +19252,12 @@
                                           "clay_raw",
                                           "ash"
                                       ],
-                        "outputTags":  [
-                                           "clay_vessel",
-                                           "ceramic_ware",
-                                           "kiln_shard"
-                                       ],
+            "outputTags":  [
+                               "clay_vessel",
+                               "jar",
+                               "ceramic_ware",
+                               "kiln_shard"
+                           ],
                         "laborSlots":  {
 
                                        },
@@ -20181,6 +20195,7 @@
                                       ],
                         "outputTags":  [
                                            "reed_mat",
+                                           "basket",
                                            "basket_frame",
                                            "thatch_bundle"
                                        ],
@@ -24417,15 +24432,25 @@
                                       ],
                         "outputTags":  [
                                            "travel_cloak",
-                                           "padded_gambeson",
-                                           "cloth_scrap",
-                                           "quill_bundle",
-                                           "travel_hood",
-                                           "work_gloves",
-                                           "utility_belt",
-                                           "casual_tunic",
-                                           "casual_boots",
-                                           "cloth_jerkin"
+                                           "casual_cloak",
+                                            "padded_gambeson",
+                                            "cloth_scrap",
+                                            "quill_bundle",
+                                            "travel_hood",
+                                            "work_gloves",
+                                            "utility_belt",
+                                            "casual_tunic",
+                                            "casual_boots",
+                                           "cloth_jerkin",
+                                           "backpack",
+                                           "apron",
+                                           "work_hat",
+                                           "blanket",
+                                           "sack",
+                                           "pack_harness",
+                                           "sled_harness",
+                                           "reins",
+                                           "saddle"
                                        ],
                         "laborSlots":  {
 
@@ -27675,6 +27700,13 @@
                                            "battle_axe",
                                            "hammer",
                                            "pickaxe",
+                                           "hoe",
+                                           "sickle",
+                                           "scythe",
+                                           "rake",
+                                           "shovel",
+                                           "pitchfork",
+                                           "thresher_flail",
                                            "butcher_knife",
                                            "fillet_knife",
                                            "skinning_knife",

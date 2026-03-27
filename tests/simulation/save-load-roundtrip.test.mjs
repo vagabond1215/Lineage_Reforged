@@ -292,6 +292,14 @@ const sampleSnapshot = {
       lastLevelTotals: [],
       marketStates: []
     },
+    transport: {
+      caravans: [],
+      stockAdjustments: [],
+      nextCaravanOrdinal: 1,
+      assetReservations: [],
+      lastEvaluatedOpportunities: [],
+      lastProcessedTick: 24
+    },
     quests: {
       activeOffers: [],
       lastGeneratedTick: 24

@@ -27595,6 +27595,312 @@
                                            }
                     },
                     {
+                        "id":  "market.item.plow",
+                        "itemKey":  "plow",
+                        "source":  "items.catalog",
+                        "category":  "tool",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.pitchfork",
+                        "itemKey":  "pitchfork",
+                        "source":  "items.catalog",
+                        "category":  "tool",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.reins",
+                        "itemKey":  "reins",
+                        "source":  "items.catalog",
+                        "category":  "equipment",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.saddle",
+                        "itemKey":  "saddle",
+                        "source":  "items.catalog",
+                        "category":  "equipment",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.pack_frame",
+                        "itemKey":  "pack_frame",
+                        "source":  "items.catalog",
+                        "category":  "equipment",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.wagon_wheel",
+                        "itemKey":  "wagon_wheel",
+                        "source":  "items.catalog",
+                        "category":  "equipment",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.wagon_fittings",
+                        "itemKey":  "wagon_fittings",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.sack",
+                        "itemKey":  "sack",
+                        "source":  "items.catalog",
+                        "category":  "trade_good",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.jar",
+                        "itemKey":  "jar",
+                        "source":  "items.catalog",
+                        "category":  "trade_good",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.glass_bottle",
+                        "itemKey":  "glass_bottle",
+                        "source":  "items.catalog",
+                        "category":  "trade_good",
+                        "baseValue":  16,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.glass_jar",
+                        "itemKey":  "glass_jar",
+                        "source":  "items.catalog",
+                        "category":  "trade_good",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.backpack",
+                        "itemKey":  "backpack",
+                        "source":  "items.catalog",
+                        "category":  "equipment",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.apron",
+                        "itemKey":  "apron",
+                        "source":  "items.catalog",
+                        "category":  "clothing",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.work_hat",
+                        "itemKey":  "work_hat",
+                        "source":  "items.catalog",
+                        "category":  "clothing",
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.soap",
+                        "itemKey":  "soap",
+                        "source":  "items.catalog",
+                        "category":  "consumable",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.blanket",
+                        "itemKey":  "blanket",
+                        "source":  "items.catalog",
+                        "category":  "clothing",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "common"
+                                           }
+                    },
+                    {
+                        "id":  "market.item.rope",
+                        "itemKey":  "rope",
+                        "source":  "items.catalog",
+                        "category":  "material",
+                        "baseValue":  20,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "pricingProfile":  {
+                                               "pricingMode":  "derived_snapshot",
+                                               "materialCostSource":  "input_rollup",
+                                               "laborCostSource":  "recipe_skill_time",
+                                               "processingCostSource":  "fuel_and_tool_wear",
+                                               "difficultySource":  "material_and_precision",
+                                               "demandBand":  "utility"
+                                           }
+                    },
+                    {
                         "id":  "market.item.zinc_ore",
                         "itemKey":  "zinc_ore",
                         "source":  "world.minerals",

@@ -99,6 +99,9 @@ const INFRASTRUCTURE_TYPES = new Set(["irrigation", "road", "wall", "gate", "aqu
 const MEAT_CUT_SPECIES_CATEGORIES = new Set(["game", "livestock", "seafood"]);
 const WORLD_REGION_TYPES = new Set(["continent", "subregion", "island_system", "ocean"]);
 const WORLD_POPULATION_DENSITY_BANDS = new Set(["very_high", "high", "moderate", "low", "very_low"]);
+const WORLD_HEX_FRESHWATER_TYPES = new Set(["none", "stream", "river", "coast", "marsh"]);
+const WORLD_HEX_EDGE_TYPES = new Set(["road", "trail", "river", "pass", "ferry", "sea_lane", "none"]);
+const WORLD_ROUTE_QUALITIES = new Set(["low", "medium", "high"]);
 const WORLD_MAP_TYPES = new Set(["world"]);
 const REGIONAL_ECOLOGY_COVERAGE_BANDS = new Set(["surplus", "strong", "moderate", "limited", "scarce", "none"]);
 const TRAVEL_MODE_DOMAINS = new Set(["land", "water"]);
@@ -144,6 +147,8 @@ const SETTLEMENT_ROUTE_MODES = new Set(["road", "river", "coastal", "canal", "pa
 const SETTLEMENT_GUILD_PRESENCE_LEVELS = new Set(["outpost", "hall", "chapterhouse", "guildhouse", "exchange", "great_house"]);
 const SETTLEMENT_SITE_CLASSES = new Set(["surface", "subterranean", "underwater"]);
 const SETTLEMENT_DEPENDENCY_BANDS = new Set(["low", "moderate", "high"]);
+const BUILDING_CATEGORIES = new Set(["agrarian", "extractive", "industrial", "trade", "storage", "civic", "military", "maritime", "hospitality", "service"]);
+const BUILDING_STORAGE_TYPES = new Set(["granary", "cellar", "warehouse", "vault"]);
 const SETTLEMENT_DEPENDENCY_ROLES = new Set([
   "satellite_hamlet",
   "estate_supply",
@@ -290,6 +295,13 @@ const checks = [
     validateWorkplaceAbstractions: true
   },
   {
+    file: "packages/content/base/civilization/buildings.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateBuildings: true
+  },
+  {
     file: "packages/content/base/civilization/infrastructure.json",
     requiredTopLevel: ["records"],
     requireSlug: false,
@@ -390,6 +402,27 @@ const checks = [
     requireSlug: true,
     forbidGeoQualifierInName: false,
     validateSettlements: true
+  },
+  {
+    file: "packages/content/base/world/world_hexes.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateWorldHexes: true
+  },
+  {
+    file: "packages/content/base/world/world_hex_edges.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateWorldHexEdges: true
+  },
+  {
+    file: "packages/content/base/world/transport_profiles.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false,
+    validateTransportProfiles: true
   },
   {
     file: "packages/content/base/world/travel_networks.json",
@@ -1303,6 +1336,86 @@ function validateWorkplaceAbstractions(relativePath, records) {
     ensureSetMembership(relativePath, recordId, "category", record.category, abstractionCategories);
     for (const usageContext of record.usageContexts) {
       ensureSetMembership(relativePath, recordId, "usageContexts", usageContext, usageContexts);
+    }
+  }
+}
+
+function validateBuildings(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+
+    if (typeof record.id !== "string" || !/^building\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid building id on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate building id ${record.id}`);
+    }
+    seenIds.add(record.id);
+
+    if (typeof record.name !== "string" || record.name.trim().length === 0) {
+      throw new Error(`${relativePath} record ${recordId} must define a non-empty name`);
+    }
+    if (typeof record.summary !== "string" || record.summary.trim().length === 0) {
+      throw new Error(`${relativePath} record ${recordId} must define a non-empty summary`);
+    }
+
+    ensureSetMembership(relativePath, recordId, "category", record.category, BUILDING_CATEGORIES);
+
+    for (const field of ["hostedWorkplaceIds", "serviceFunctions", "triggerBusinessTypes", "compatibleSettlementTypes"]) {
+      if (!Array.isArray(record[field])) {
+        throw new Error(`${relativePath} record ${recordId} must define array field ${field}`);
+      }
+    }
+
+    if (record.hostedWorkplaceIds.length === 0 && record.serviceFunctions.length === 0) {
+      throw new Error(`${relativePath} record ${recordId} must host workplaces or expose serviceFunctions`);
+    }
+
+    for (const settlementType of record.compatibleSettlementTypes) {
+      ensureSetMembership(relativePath, recordId, "compatibleSettlementTypes", settlementType, SETTLEMENT_TYPES);
+    }
+
+    if (!isObject(record.requiredInfrastructure)) {
+      throw new Error(`${relativePath} record ${recordId} must define requiredInfrastructure`);
+    }
+    for (const tierField of ["roadTier", "waterTier", "harborTier", "marketTier", "fortificationTier"]) {
+      const value = record.requiredInfrastructure[tierField];
+      if (!Number.isInteger(value) || value < 0 || value > 5) {
+        throw new Error(`${relativePath} record ${recordId} has invalid requiredInfrastructure.${tierField}`);
+      }
+    }
+
+    if (!isObject(record.placeability)) {
+      throw new Error(`${relativePath} record ${recordId} must define placeability`);
+    }
+    if (!Array.isArray(record.placeability.supportedSiteClasses) || record.placeability.supportedSiteClasses.length === 0) {
+      throw new Error(`${relativePath} record ${recordId} must define supportedSiteClasses`);
+    }
+    for (const siteClass of record.placeability.supportedSiteClasses) {
+      ensureSetMembership(relativePath, recordId, "placeability.supportedSiteClasses", siteClass, SETTLEMENT_SITE_CLASSES);
+    }
+    if (!Array.isArray(record.placeability.requiredRouteModes)) {
+      throw new Error(`${relativePath} record ${recordId} must define placeability.requiredRouteModes`);
+    }
+    for (const routeMode of record.placeability.requiredRouteModes) {
+      ensureSetMembership(relativePath, recordId, "placeability.requiredRouteModes", routeMode, SETTLEMENT_ROUTE_MODES);
+    }
+    for (const flagField of ["requiresWaterAccess", "requiresCoastalAccess", "requiresRiverAccess"]) {
+      if (typeof record.placeability[flagField] !== "boolean") {
+        throw new Error(`${relativePath} record ${recordId} has invalid placeability.${flagField}`);
+      }
+    }
+
+    for (const profile of record.storageProfiles ?? []) {
+      ensureSetMembership(relativePath, recordId, "storageProfiles.storageType", profile.storageType, BUILDING_STORAGE_TYPES);
+      if (typeof profile.capacityUnits !== "number" || Number.isNaN(profile.capacityUnits) || profile.capacityUnits <= 0) {
+        throw new Error(`${relativePath} record ${recordId} has invalid storageProfiles.capacityUnits`);
+      }
+      if (!Array.isArray(profile.goodsFocus) || profile.goodsFocus.length === 0) {
+        throw new Error(`${relativePath} record ${recordId} storageProfiles.goodsFocus must be a non-empty array`);
+      }
     }
   }
 }
@@ -3911,6 +4024,7 @@ function validateSettlements(relativePath, records) {
     ensureString(relativePath, recordId, "macroRegionId", record.macroRegionId);
     ensureString(relativePath, recordId, "regionId", record.regionId);
     ensureString(relativePath, recordId, "localityBandId", record.localityBandId);
+    ensureString(relativePath, recordId, "hexAnchorId", record.hexAnchorId);
     if (!/^region\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.macroRegionId)) {
       throw new Error(`${relativePath} has invalid macroRegionId '${record.macroRegionId}' on record ${recordId}`);
     }
@@ -3919,6 +4033,9 @@ function validateSettlements(relativePath, records) {
     }
     if (!/^region_locality\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.localityBandId)) {
       throw new Error(`${relativePath} has invalid localityBandId '${record.localityBandId}' on record ${recordId}`);
+    }
+    if (!/^world_hex\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.hexAnchorId)) {
+      throw new Error(`${relativePath} has invalid hexAnchorId '${record.hexAnchorId}' on record ${recordId}`);
     }
 
     ensureSetMembership(relativePath, recordId, "settlementType", record.settlementType, SETTLEMENT_TYPES);
@@ -4145,6 +4262,183 @@ function validateSettlements(relativePath, records) {
       }
       ensureString(relativePath, recordId, "visualMapRef.climateZoneId", record.visualMapRef.climateZoneId);
       ensureString(relativePath, recordId, "visualMapRef.biomeZoneId", record.visualMapRef.biomeZoneId);
+    }
+  }
+}
+
+function validateWorldHexes(relativePath, records) {
+  const seenIds = new Set();
+  const seenSlugs = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^world_hex\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid world hex id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate world hex id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "slug", record.slug);
+    if (!SLUG_PATTERN.test(record.slug)) {
+      throw new Error(`${relativePath} has invalid slug '${record.slug}' on record ${recordId}`);
+    }
+    if (seenSlugs.has(record.slug)) {
+      throw new Error(`${relativePath} has duplicate slug '${record.slug}' on record ${recordId}`);
+    }
+    seenSlugs.add(record.slug);
+
+    ensureString(relativePath, recordId, "regionId", record.regionId);
+    ensureString(relativePath, recordId, "localityBandId", record.localityBandId);
+    ensureString(relativePath, recordId, "biomeFamily", record.biomeFamily);
+    ensureString(relativePath, recordId, "elevationBand", record.elevationBand);
+    ensureString(relativePath, recordId, "terrainType", record.terrainType);
+    ensureSetMembership(relativePath, recordId, "freshwaterType", record.freshwaterType, WORLD_HEX_FRESHWATER_TYPES);
+    ensureInteger(relativePath, recordId, "habitabilityScore", record.habitabilityScore, 0);
+    if (record.habitabilityScore > 100) {
+      throw new Error(`${relativePath} has habitabilityScore above 100 on record ${recordId}`);
+    }
+    if (!isObject(record.frictionByMode)) {
+      throw new Error(`${relativePath} has invalid frictionByMode on record ${recordId}`);
+    }
+    for (const field of ["foot", "horseback", "pack_animal", "wagon", "river_craft", "sea_vessel"]) {
+      ensureNumber(relativePath, recordId, `frictionByMode.${field}`, record.frictionByMode[field], 0.1);
+    }
+    ensureStringArray(relativePath, recordId, "barrierTags", record.barrierTags, 0);
+    ensureStringArray(relativePath, recordId, "hazardTags", record.hazardTags, 0);
+    ensureStringArray(relativePath, recordId, "resourceAffinityTags", record.resourceAffinityTags, 0);
+    ensureStringArray(relativePath, recordId, "anchoredSettlementIds", record.anchoredSettlementIds, 0);
+  }
+}
+
+function validateWorldHexEdges(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^world_hex_edge\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid world hex edge id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate world hex edge id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "fromHexId", record.fromHexId);
+    ensureString(relativePath, recordId, "toHexId", record.toHexId);
+    if (record.fromHexId === record.toHexId) {
+      throw new Error(`${relativePath} edge '${record.id}' must not point to the same hex`);
+    }
+    ensureSetMembership(relativePath, recordId, "edgeType", record.edgeType, WORLD_HEX_EDGE_TYPES);
+    ensureInteger(relativePath, recordId, "hexSpan", record.hexSpan, 1);
+    ensureSetMembership(relativePath, recordId, "routeQuality", record.routeQuality, WORLD_ROUTE_QUALITIES);
+    ensureNumber(relativePath, recordId, "crossingDifficulty", record.crossingDifficulty, 0.1);
+    ensureStringArray(relativePath, recordId, "barrierTags", record.barrierTags, 0);
+    ensureStringArray(relativePath, recordId, "allowedTravelModes", record.allowedTravelModes, 1);
+    ensureString(relativePath, recordId, "directionFrom", record.directionFrom);
+    ensureString(relativePath, recordId, "directionTo", record.directionTo);
+    ensureString(relativePath, recordId, "corridorName", record.corridorName);
+    if (record.terrainTags !== undefined) {
+      ensureStringArray(relativePath, recordId, "terrainTags", record.terrainTags, 1);
+    }
+    if (record.featureTags !== undefined) {
+      ensureStringArray(relativePath, recordId, "featureTags", record.featureTags, 0);
+    }
+  }
+}
+
+function validateTransportProfiles(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    if (seenIds.has(recordId)) {
+      throw new Error(`${relativePath} has duplicate record id ${recordId}`);
+    }
+    seenIds.add(recordId);
+
+    const harnessIds = new Set((record.harnessProfiles ?? []).map((entry) => entry.id));
+    const animalIds = new Set((record.animalProfiles ?? []).map((entry) => entry.id));
+
+    for (const harness of record.harnessProfiles ?? []) {
+      ensureString(relativePath, recordId, `harnessProfiles.${harness.id}.name`, harness.name);
+      ensureNumber(relativePath, recordId, `harnessProfiles.${harness.id}.efficiencyModifier`, harness.efficiencyModifier, 0.01);
+      for (const animalId of harness.compatibleAnimalIds ?? []) {
+        if (!animalIds.has(animalId)) {
+          throw new Error(`${relativePath} harness '${harness.id}' references missing compatibleAnimalId '${animalId}' on record ${recordId}`);
+        }
+      }
+    }
+
+    for (const animal of record.animalProfiles ?? []) {
+      ensureNumber(relativePath, recordId, `animalProfiles.${animal.id}.pullStrength`, animal.pullStrength, 0.01);
+      ensureNumber(relativePath, recordId, `animalProfiles.${animal.id}.packCapacityUnits`, animal.packCapacityUnits, 0.01);
+      ensureNumber(relativePath, recordId, `animalProfiles.${animal.id}.speedModifier`, animal.speedModifier, 0.01);
+      ensureNumber(relativePath, recordId, `animalProfiles.${animal.id}.enduranceHours`, animal.enduranceHours, 0.01);
+      ensureNumber(relativePath, recordId, `animalProfiles.${animal.id}.inclineHandling`, animal.inclineHandling, 0.01);
+      ensureNumber(relativePath, recordId, `animalProfiles.${animal.id}.sprintFactor`, animal.sprintFactor, 0.01);
+      ensureNumber(relativePath, recordId, `animalProfiles.${animal.id}.diminishingExponent`, animal.diminishingExponent, 0.01);
+      for (const harnessId of animal.compatibleHarnessIds ?? []) {
+        if (!harnessIds.has(harnessId)) {
+          throw new Error(`${relativePath} animal '${animal.id}' references missing compatibleHarnessId '${harnessId}' on record ${recordId}`);
+        }
+      }
+    }
+
+    for (const vehicle of record.vehicleProfiles ?? []) {
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.cargoCapacityUnits`, vehicle.cargoCapacityUnits, 0.01);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.baseWeightUnits`, vehicle.baseWeightUnits, 0.01);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.crewRequired`, vehicle.crewRequired, 1);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.baseEnduranceHours`, vehicle.baseEnduranceHours, 0.01);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.restDaysPerFatigueCycle`, vehicle.restDaysPerFatigueCycle, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.speedModifier`, vehicle.speedModifier, 0.01);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.maxAnimals`, vehicle.maxAnimals, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.optimalAnimals`, vehicle.optimalAnimals, 0);
+      ensureSetMembership(relativePath, recordId, `vehicleProfiles.${vehicle.id}.propulsionType`, vehicle.propulsionType, [
+        "human",
+        "draft_animals",
+        "pack_train",
+        "crew"
+      ]);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumRoadTier`, vehicle.minimumRoadTier, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumWaterTier`, vehicle.minimumWaterTier, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumHarborTier`, vehicle.minimumHarborTier, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumMarketTier`, vehicle.minimumMarketTier, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumFillRatio`, vehicle.minimumFillRatio, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.loadingDays`, vehicle.loadingDays, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.unloadingDays`, vehicle.unloadingDays, 0);
+      ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.routeScaleCost`, vehicle.routeScaleCost, 0.1);
+      if (vehicle.optimalAnimals > vehicle.maxAnimals) {
+        throw new Error(`${relativePath} vehicle '${vehicle.id}' has optimalAnimals above maxAnimals on record ${recordId}`);
+      }
+      if (vehicle.transportType === "ship") {
+        if (vehicle.requiredHarnessId !== null) {
+          throw new Error(`${relativePath} ship vehicle '${vehicle.id}' cannot require a harness on record ${recordId}`);
+        }
+        if (vehicle.maxAnimals !== 0) {
+          throw new Error(`${relativePath} ship vehicle '${vehicle.id}' cannot support draft animals on record ${recordId}`);
+        }
+        if (vehicle.propulsionType !== "crew") {
+          throw new Error(`${relativePath} ship vehicle '${vehicle.id}' must use crew propulsion on record ${recordId}`);
+        }
+      }
+      if (vehicle.transportType === "vehicle" && vehicle.propulsionType === "crew") {
+        throw new Error(`${relativePath} land vehicle '${vehicle.id}' cannot use crew propulsion on record ${recordId}`);
+      }
+      if (vehicle.propulsionType === "human") {
+        if (vehicle.requiredHarnessId !== null || vehicle.maxAnimals !== 0 || vehicle.optimalAnimals !== 0) {
+          throw new Error(`${relativePath} human-powered vehicle '${vehicle.id}' cannot require harnessed animals on record ${recordId}`);
+        }
+      }
+      if ((vehicle.propulsionType === "draft_animals" || vehicle.propulsionType === "pack_train") && vehicle.requiredHarnessId === null) {
+        throw new Error(`${relativePath} animal-powered vehicle '${vehicle.id}' must declare a requiredHarnessId on record ${recordId}`);
+      }
+      if (vehicle.requiredHarnessId !== null && !harnessIds.has(vehicle.requiredHarnessId)) {
+        throw new Error(`${relativePath} vehicle '${vehicle.id}' references missing requiredHarnessId '${vehicle.requiredHarnessId}' on record ${recordId}`);
+      }
     }
   }
 }
@@ -4565,6 +4859,9 @@ function validateRecords(relativePath, parsed, check) {
   if (check.validateWorkplaceAbstractions) {
     validateWorkplaceAbstractions(relativePath, parsed.records);
   }
+  if (check.validateBuildings) {
+    validateBuildings(relativePath, parsed.records);
+  }
   if (check.validateInfrastructure) {
     validateInfrastructure(relativePath, parsed.records);
   }
@@ -4609,6 +4906,15 @@ function validateRecords(relativePath, parsed, check) {
   }
   if (check.validateSettlements) {
     validateSettlements(relativePath, parsed.records);
+  }
+  if (check.validateWorldHexes) {
+    validateWorldHexes(relativePath, parsed.records);
+  }
+  if (check.validateWorldHexEdges) {
+    validateWorldHexEdges(relativePath, parsed.records);
+  }
+  if (check.validateTransportProfiles) {
+    validateTransportProfiles(relativePath, parsed.records);
   }
   if (check.validateTravelNetworks) {
     validateTravelNetworks(relativePath, parsed.records);
@@ -5562,6 +5868,47 @@ async function validateInfrastructureAgainstWorkplaces() {
   }
 }
 
+async function validateBuildingsAgainstWorkplaces() {
+  const buildingPath = path.join(ROOT, "packages/content/base/civilization/buildings.json");
+  const workplacePath = path.join(ROOT, "packages/content/base/civilization/workplaces.json");
+
+  const buildingParsed = JSON.parse(await readFile(buildingPath, "utf8"));
+  const workplaceParsed = JSON.parse(await readFile(workplacePath, "utf8"));
+
+  if (!Array.isArray(buildingParsed.records) || !Array.isArray(workplaceParsed.records)) {
+    throw new Error("content cross-check failed: buildings or workplaces are invalid");
+  }
+
+  const workplaceIds = new Set();
+  for (const workplace of workplaceParsed.records) {
+    if (typeof workplace.id === "string") {
+      workplaceIds.add(workplace.id);
+    }
+  }
+
+  const hostedWorkplaceIds = new Set();
+  for (const building of buildingParsed.records) {
+    const recordId = building.id ?? "<unknown>";
+
+    for (const workplaceId of building.hostedWorkplaceIds ?? []) {
+      if (!workplaceIds.has(workplaceId)) {
+        throw new Error(`packages/content/base/civilization/buildings.json hostedWorkplaceIds '${workplaceId}' missing workplace definition on record ${recordId}`);
+      }
+      hostedWorkplaceIds.add(workplaceId);
+    }
+
+    if ((building.hostedWorkplaceIds?.length ?? 0) === 0 && (building.serviceFunctions?.length ?? 0) === 0) {
+      throw new Error(`packages/content/base/civilization/buildings.json record ${recordId} must host workplaces or expose service functions`);
+    }
+  }
+
+  for (const workplace of workplaceParsed.records) {
+    if (!hostedWorkplaceIds.has(workplace.id)) {
+      throw new Error(`packages/content/base/civilization/workplaces.json record ${workplace.id} has no compatible building coverage`);
+    }
+  }
+}
+
 async function validateWorldMapsAgainstRegions() {
   const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
   const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
@@ -5937,20 +6284,23 @@ async function validateSettlementsAgainstRegions() {
   const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
   const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
   const localityPath = path.join(ROOT, "packages/content/base/world/region_localities.json");
+  const hexPath = path.join(ROOT, "packages/content/base/world/world_hexes.json");
   const guildPath = path.join(ROOT, "packages/content/base/civilization/guilds.json");
 
   const settlementParsed = JSON.parse(await readFile(settlementPath, "utf8"));
   const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
   const localityParsed = JSON.parse(await readFile(localityPath, "utf8"));
+  const hexParsed = JSON.parse(await readFile(hexPath, "utf8"));
   const guildParsed = JSON.parse(await readFile(guildPath, "utf8"));
 
   if (
     !Array.isArray(settlementParsed.records) ||
     !Array.isArray(regionParsed.records) ||
     !Array.isArray(localityParsed.records) ||
+    !Array.isArray(hexParsed.records) ||
     !Array.isArray(guildParsed.records)
   ) {
-    throw new Error("content cross-check failed: settlement, region, locality, or guild records are invalid");
+    throw new Error("content cross-check failed: settlement, region, locality, hex, or guild records are invalid");
   }
 
   const regionsById = new Map();
@@ -5974,6 +6324,13 @@ async function validateSettlementsAgainstRegions() {
     }
   }
 
+  const hexesById = new Map();
+  for (const record of hexParsed.records) {
+    if (typeof record.id === "string") {
+      hexesById.set(record.id, record);
+    }
+  }
+
   const guildsBySlug = new Map();
   for (const record of guildParsed.records) {
     if (typeof record.slug === "string") {
@@ -5986,6 +6343,7 @@ async function validateSettlementsAgainstRegions() {
     const macroRegion = regionsById.get(record.macroRegionId);
     const localRegion = regionsById.get(record.regionId);
     const locality = localitiesById.get(record.localityBandId);
+    const hex = hexesById.get(record.hexAnchorId);
 
     if (!macroRegion) {
       throw new Error(`packages/content/base/world/settlements.json macroRegionId '${record.macroRegionId}' missing on record ${recordId}`);
@@ -5998,6 +6356,9 @@ async function validateSettlementsAgainstRegions() {
     }
     if (!locality) {
       throw new Error(`packages/content/base/world/settlements.json localityBandId '${record.localityBandId}' missing on record ${recordId}`);
+    }
+    if (!hex) {
+      throw new Error(`packages/content/base/world/settlements.json hexAnchorId '${record.hexAnchorId}' missing on record ${recordId}`);
     }
 
     const regionBelongsToMacro =
@@ -6014,6 +6375,12 @@ async function validateSettlementsAgainstRegions() {
     }
     if (record.terrainContext !== locality.localityType) {
       throw new Error(`packages/content/base/world/settlements.json terrainContext '${record.terrainContext}' must match localityBandId '${record.localityBandId}' type '${locality.localityType}' on record ${recordId}`);
+    }
+    if (hex.regionId !== record.regionId || hex.localityBandId !== record.localityBandId) {
+      throw new Error(`packages/content/base/world/settlements.json hexAnchorId '${record.hexAnchorId}' must share region and locality on record ${recordId}`);
+    }
+    if (!(hex.anchoredSettlementIds ?? []).includes(record.id)) {
+      throw new Error(`packages/content/base/world/world_hexes.json hex '${record.hexAnchorId}' must list settlement '${record.id}' in anchoredSettlementIds`);
     }
 
     if (record.parentSettlementId) {
@@ -6311,18 +6678,21 @@ async function validateTravelNetworksAgainstWorldData() {
   const travelPath = path.join(ROOT, "packages/content/base/world/travel_networks.json");
   const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
   const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
-  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const hexPath = path.join(ROOT, "packages/content/base/world/world_hexes.json");
+  const edgePath = path.join(ROOT, "packages/content/base/world/world_hex_edges.json");
 
   const travelParsed = JSON.parse(await readFile(travelPath, "utf8"));
   const worldMapParsed = JSON.parse(await readFile(worldMapPath, "utf8"));
   const settlementParsed = JSON.parse(await readFile(settlementPath, "utf8"));
-  const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
+  const hexParsed = JSON.parse(await readFile(hexPath, "utf8"));
+  const edgeParsed = JSON.parse(await readFile(edgePath, "utf8"));
 
   if (
     !Array.isArray(travelParsed.records) ||
     !Array.isArray(worldMapParsed.records) ||
     !Array.isArray(settlementParsed.records) ||
-    !Array.isArray(regionParsed.records)
+    !Array.isArray(hexParsed.records) ||
+    !Array.isArray(edgeParsed.records)
   ) {
     throw new Error("content cross-check failed: travel network dependencies are invalid");
   }
@@ -6341,10 +6711,17 @@ async function validateTravelNetworksAgainstWorldData() {
     }
   }
 
-  const regionsById = new Map();
-  for (const record of regionParsed.records) {
+  const hexesById = new Map();
+  for (const record of hexParsed.records) {
     if (typeof record.id === "string") {
-      regionsById.set(record.id, record);
+      hexesById.set(record.id, record);
+    }
+  }
+
+  const edgesById = new Map();
+  for (const record of edgeParsed.records) {
+    if (typeof record.id === "string") {
+      edgesById.set(record.id, record);
     }
   }
 
@@ -6354,19 +6731,8 @@ async function validateTravelNetworksAgainstWorldData() {
       throw new Error(`packages/content/base/world/travel_networks.json mapId '${record.mapId}' missing on record ${recordId}`);
     }
 
-    const terrainRuleTags = new Set((record.terrainVarianceRules ?? []).map((entry) => entry.tag).filter((value) => typeof value === "string"));
-    const featureRuleTags = new Set((record.featureVarianceRules ?? []).map((entry) => entry.tag).filter((value) => typeof value === "string"));
+    const modeIds = new Set((record.modeProfiles ?? []).map((entry) => entry.id).filter((value) => typeof value === "string"));
     const coastalIdentityPattern = /\b(coastal|port|harbor|quay|anchorage|haven|estuary)\b/i;
-    const riverCrossingFeatureTags = new Set(["bridge_or_ferry", "river_crossing", "bridge_crossing", "ferry_crossing", "ford_crossing", "lock_crossing"]);
-    const mountainTraversalFeatureTags = new Set(["mountain_switchbacks", "tunnel", "pass_tunnel"]);
-    const getCombinedTerrainTags = (pathRecord) => [
-      ...(Array.isArray(pathRecord?.terrainTags) ? pathRecord.terrainTags : []),
-      ...((pathRecord?.pathSegments ?? []).map((segment) => segment?.terrainTag).filter((value) => typeof value === "string"))
-    ];
-    const getCombinedFeatureTags = (pathRecord) => new Set([
-      ...(Array.isArray(pathRecord?.featureTags) ? pathRecord.featureTags : []),
-      ...((pathRecord?.pathSegments ?? []).flatMap((segment) => Array.isArray(segment?.featureTags) ? segment.featureTags : []))
-    ].filter((value) => typeof value === "string"));
     const isCoastalSettlement = (settlement) => {
       if (!settlement || (settlement.infrastructureProfile?.harborTier ?? 0) < 1) {
         return false;
@@ -6385,15 +6751,77 @@ async function validateTravelNetworksAgainstWorldData() {
         (routeAccess.seaLane ?? 0) >= 0.7
       );
     };
-    const validatePath = (pathPoints, distanceMiles, fieldPrefix, fromSettlement, toSettlement) => {
-      if (pathPoints === undefined) {
-        return;
-      }
-      if (!Array.isArray(pathPoints) || pathPoints.length < 2) {
-        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.pathPoints missing on record ${recordId}`);
-      }
-      if (distanceMiles < 1) {
+
+    const validateRouteRefs = (pathRecord, fieldPrefix) => {
+      if (pathRecord.distanceMiles < 1) {
         throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.distanceMiles must be positive on record ${recordId}`);
+      }
+
+      const fromSettlement = settlementsById.get(pathRecord.fromSettlementId);
+      const toSettlement = settlementsById.get(pathRecord.toSettlementId);
+      if (!fromSettlement) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} missing fromSettlementId '${pathRecord.fromSettlementId}' on record ${recordId}`);
+      }
+      if (!toSettlement) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} missing toSettlementId '${pathRecord.toSettlementId}' on record ${recordId}`);
+      }
+
+      for (const modeId of pathRecord.availableModeIds ?? []) {
+        if (!modeIds.has(modeId)) {
+          throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.availableModeIds '${modeId}' missing in modeProfiles on record ${recordId}`);
+        }
+      }
+      for (const estimate of pathRecord.travelTimeEstimates ?? []) {
+        if (!modeIds.has(estimate.modeId)) {
+          throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix}.travelTimeEstimates mode '${estimate.modeId}' missing in modeProfiles on record ${recordId}`);
+        }
+      }
+
+      const orderedHexIds = Array.isArray(pathRecord.orderedHexIds) ? pathRecord.orderedHexIds : [];
+      const edgeIds = Array.isArray(pathRecord.edgeIds) ? pathRecord.edgeIds : [];
+      if (orderedHexIds.length === 0 && edgeIds.length === 0) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} must provide orderedHexIds or edgeIds on record ${recordId}`);
+      }
+
+      for (const hexId of orderedHexIds) {
+        if (!hexesById.has(hexId)) {
+          throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} orderedHexId '${hexId}' missing on record ${recordId}`);
+        }
+      }
+      for (const edgeId of edgeIds) {
+        if (!edgesById.has(edgeId)) {
+          throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} edgeId '${edgeId}' missing on record ${recordId}`);
+        }
+      }
+
+      if (orderedHexIds.length === 1 && pathRecord.intraHexDistanceKm !== undefined) {
+        if (fromSettlement.hexAnchorId !== orderedHexIds[0] || toSettlement.hexAnchorId !== orderedHexIds[0]) {
+          throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} intraHexDistanceKm must remain within the endpoint hex anchor on record ${recordId}`);
+        }
+      } else if (orderedHexIds.length > 0) {
+        if (orderedHexIds[0] !== fromSettlement.hexAnchorId) {
+          throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} first orderedHexId must match fromSettlementId hexAnchorId on record ${recordId}`);
+        }
+        if (orderedHexIds[orderedHexIds.length - 1] !== toSettlement.hexAnchorId) {
+          throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} last orderedHexId must match toSettlementId hexAnchorId on record ${recordId}`);
+        }
+      }
+
+      if (edgeIds.length > 0 && orderedHexIds.length >= 2 && edgeIds.length !== orderedHexIds.length - 1) {
+        throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} edgeIds count must match orderedHexIds transitions on record ${recordId}`);
+      }
+      if (edgeIds.length > 0 && orderedHexIds.length >= 2) {
+        for (let index = 0; index < edgeIds.length; index += 1) {
+          const edge = edgesById.get(edgeIds[index]);
+          const fromHexId = orderedHexIds[index];
+          const toHexId = orderedHexIds[index + 1];
+          const connects =
+            (edge.fromHexId === fromHexId && edge.toHexId === toHexId) ||
+            (edge.fromHexId === toHexId && edge.toHexId === fromHexId);
+          if (!connects) {
+            throw new Error(`packages/content/base/world/travel_networks.json ${fieldPrefix} edgeId '${edge.id}' must connect orderedHexIds '${fromHexId}' and '${toHexId}' on record ${recordId}`);
+          }
+        }
       }
     };
 
@@ -6406,9 +6834,7 @@ async function validateTravelNetworksAgainstWorldData() {
       if (!toSettlement) {
         throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} missing toSettlementId '${route.toSettlementId}' on record ${recordId}`);
       }
-      validatePath(route.pathPoints, route.distanceMiles, `route ${route.id}`, fromSettlement, toSettlement);
-      const combinedTerrainTags = getCombinedTerrainTags(route);
-      const combinedFeatureTags = getCombinedFeatureTags(route);
+      validateRouteRefs(route, `route ${route.id}`);
 
       if (route.routeClass === "coastal_lane") {
         if (!isCoastalSettlement(fromSettlement)) {
@@ -6416,45 +6842,6 @@ async function validateTravelNetworksAgainstWorldData() {
         }
         if (!isCoastalSettlement(toSettlement)) {
           throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} toSettlementId '${route.toSettlementId}' must be a coastal harbor settlement on record ${recordId}`);
-        }
-      }
-
-      if (route.routeClass === "road_corridor" || route.routeClass === "mixed_corridor") {
-        if (combinedTerrainTags.includes("open_sea") || combinedTerrainTags.includes("storm_belt")) {
-          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} cannot place a land route across sea terrain on record ${recordId}`);
-        }
-        if (combinedTerrainTags.includes("navigable_river")) {
-          const hasRiverCrossing = [...riverCrossingFeatureTags].some((tag) => combinedFeatureTags.has(tag));
-          if (!hasRiverCrossing) {
-            throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} crosses navigable_river terrain without a bridge, ferry, or crossing feature on record ${recordId}`);
-          }
-        }
-        if (combinedTerrainTags.includes("mountain_pass")) {
-          const hasMountainTraversal = [...mountainTraversalFeatureTags].some((tag) => combinedFeatureTags.has(tag));
-          if (!hasMountainTraversal) {
-            throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} crosses mountain_pass terrain without a pass, switchback, or tunnel feature on record ${recordId}`);
-          }
-        }
-      }
-
-      for (const tag of route.terrainTags ?? []) {
-        if (!terrainRuleTags.has(tag)) {
-          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} terrainTag '${tag}' missing terrain variance rule on record ${recordId}`);
-        }
-      }
-      for (const tag of route.featureTags ?? []) {
-        if (!featureRuleTags.has(tag)) {
-          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} featureTag '${tag}' missing feature variance rule on record ${recordId}`);
-        }
-      }
-      for (const segment of route.pathSegments ?? []) {
-        if (!terrainRuleTags.has(segment.terrainTag)) {
-          throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} pathSegments terrainTag '${segment.terrainTag}' missing terrain variance rule on record ${recordId}`);
-        }
-        for (const featureTag of segment.featureTags ?? []) {
-          if (!featureRuleTags.has(featureTag)) {
-            throw new Error(`packages/content/base/world/travel_networks.json route ${route.id} pathSegments featureTag '${featureTag}' missing feature variance rule on record ${recordId}`);
-          }
         }
       }
     }
@@ -6474,26 +6861,51 @@ async function validateTravelNetworksAgainstWorldData() {
       if (!isCoastalSettlement(toSettlement)) {
         throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} toSettlementId '${lane.toSettlementId}' must be a coastal harbor settlement on record ${recordId}`);
       }
-      validatePath(lane.pathPoints, lane.distanceMiles, `lane ${lane.id}`, fromSettlement, toSettlement);
+      validateRouteRefs(lane, `lane ${lane.id}`);
 
       for (const regionId of lane.seaRegionIds ?? []) {
-        const region = regionsById.get(regionId);
-        if (!region) {
+        const regionExists = worldMapParsed.records.some((worldMap) => (worldMap.oceanRegionIds ?? []).includes(regionId));
+        if (!regionExists) {
           throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} seaRegionId '${regionId}' missing on record ${recordId}`);
         }
-        if (region.regionType !== "ocean") {
-          throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} seaRegionId '${regionId}' must target an ocean on record ${recordId}`);
-        }
       }
-      for (const tag of lane.terrainTags ?? []) {
-        if (!terrainRuleTags.has(tag)) {
-          throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} terrainTag '${tag}' missing terrain variance rule on record ${recordId}`);
-        }
+    }
+  }
+}
+
+async function validateTransportProfilesAgainstWorldData() {
+  const transportPath = path.join(ROOT, "packages/content/base/world/transport_profiles.json");
+  const travelPath = path.join(ROOT, "packages/content/base/world/travel_networks.json");
+
+  const transportParsed = JSON.parse(await readFile(transportPath, "utf8"));
+  const travelParsed = JSON.parse(await readFile(travelPath, "utf8"));
+
+  if (!Array.isArray(transportParsed.records) || !Array.isArray(travelParsed.records)) {
+    throw new Error("content cross-check failed: transport profile dependencies are invalid");
+  }
+
+  const travelModeIds = new Set(
+    travelParsed.records
+      .flatMap((record) => record.modeProfiles ?? [])
+      .map((entry) => entry.id)
+      .filter((value) => typeof value === "string")
+  );
+
+  for (const record of transportParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+    const vehicleIds = new Set((record.vehicleProfiles ?? []).map((entry) => entry.id));
+    for (const vehicle of record.vehicleProfiles ?? []) {
+      if (!travelModeIds.has(vehicle.routeModeId)) {
+        throw new Error(`packages/content/base/world/transport_profiles.json vehicle '${vehicle.id}' references missing routeModeId '${vehicle.routeModeId}' on record ${recordId}`);
       }
-      for (const tag of lane.featureTags ?? []) {
-        if (!featureRuleTags.has(tag)) {
-          throw new Error(`packages/content/base/world/travel_networks.json lane ${lane.id} featureTag '${tag}' missing feature variance rule on record ${recordId}`);
-        }
+      if (vehicle.transportType === "vehicle" && !["travel_mode.wagon", "travel_mode.pack_animal"].includes(vehicle.routeModeId)) {
+        throw new Error(`packages/content/base/world/transport_profiles.json land vehicle '${vehicle.id}' must use wagon or pack-animal travel modes on record ${recordId}`);
+      }
+      if (vehicle.transportType === "ship" && !["travel_mode.river_craft", "travel_mode.sea_vessel"].includes(vehicle.routeModeId)) {
+        throw new Error(`packages/content/base/world/transport_profiles.json ship '${vehicle.id}' must use water travel modes on record ${recordId}`);
+      }
+      if (vehicleIds.has(vehicle.requiredHarnessId) && vehicle.requiredHarnessId !== null) {
+        throw new Error(`packages/content/base/world/transport_profiles.json vehicle '${vehicle.id}' requiredHarnessId cannot point at a vehicle id on record ${recordId}`);
       }
     }
   }
@@ -6511,6 +6923,7 @@ async function main() {
   await validateWorkplaceAbstractionSeparation();
   await validateMeatCutStandardsAgainstMarketKeys();
   await validateInfrastructureAgainstWorkplaces();
+  await validateBuildingsAgainstWorkplaces();
   await validateWorldMapsAgainstRegions();
   await validateWorldMapFeaturesAgainstWorldData();
   await validateRegionalEcologyAgainstWorldData();
@@ -6520,6 +6933,7 @@ async function main() {
   await validateQuestArchetypesAgainstWorldData();
   await validateMonstersAgainstMarketValues();
   await validateTravelNetworksAgainstWorldData();
+  await validateTransportProfilesAgainstWorldData();
 
   console.log(`content-lint: ok (${checks.length} files checked)`);
 }

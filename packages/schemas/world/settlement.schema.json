@@ -18,6 +18,7 @@
           "macroRegionId",
           "regionId",
           "localityBandId",
+          "hexAnchorId",
           "settlementType",
           "siteClass",
           "terrainContext",
@@ -61,6 +62,10 @@
           "localityBandId": {
             "type": "string",
             "pattern": "^region_locality\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "hexAnchorId": {
+            "type": "string",
+            "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
           },
           "settlementType": {
             "type": "string",

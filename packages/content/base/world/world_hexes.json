@@ -1,0 +1,1921 @@
+{
+    "records":  [
+                    {
+                        "id":  "world_hex.verdant_thalos_coastal_bays",
+                        "slug":  "verdant_thalos_coastal_bays",
+                        "regionId":  "region.verdant_thalos",
+                        "localityBandId":  "region_locality.verdant_thalos_coastal_bays",
+                        "biomeFamily":  "mediterranean_woodland",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "coastal_bay",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  92,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "weather_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "timber",
+                                                     "firewood",
+                                                     "resin",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "maritime_trade",
+                                                     "shipbuilding",
+                                                     "viticulture"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.aurelis",
+                                                      "settlement.redcliff_quay"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.verdant_thalos_inland_estates",
+                        "slug":  "verdant_thalos_inland_estates",
+                        "regionId":  "region.verdant_thalos",
+                        "localityBandId":  "region_locality.verdant_thalos_inland_estates",
+                        "biomeFamily":  "mediterranean_woodland",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "estate_farmbelt",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  91,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "viticulture",
+                                                     "olive_pressing",
+                                                     "grain_farming",
+                                                     "dairy"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.vinecross",
+                                                      "settlement.oliveford",
+                                                      "settlement.sunmeadow",
+                                                      "settlement.caskbank_estate"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.auric_marches_ore_ridges",
+                        "slug":  "auric_marches_ore_ridges",
+                        "regionId":  "region.auric_marches",
+                        "localityBandId":  "region_locality.auric_marches_ore_ridges",
+                        "biomeFamily":  "dry_scrub",
+                        "elevationBand":  "highland",
+                        "terrainType":  "ore_ridge",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  48,
+                        "frictionByMode":  {
+                                               "foot":  1.2,
+                                               "horseback":  1.45,
+                                               "pack_animal":  1.3,
+                                               "wagon":  2,
+                                               "river_craft":  4,
+                                               "sea_vessel":  4
+                                           },
+                        "barrierTags":  [
+                                            "cliff",
+                                            "pass_country"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "rockfall"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "ore",
+                                                     "coal",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "mining",
+                                                     "smelting",
+                                                     "ore_trade"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.stonevein",
+                                                      "settlement.coppergate",
+                                                      "settlement.quarrymule_camp"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.auric_marches_caravan_marches",
+                        "slug":  "auric_marches_caravan_marches",
+                        "regionId":  "region.auric_marches",
+                        "localityBandId":  "region_locality.auric_marches_caravan_marches",
+                        "biomeFamily":  "dry_scrub",
+                        "elevationBand":  "upland",
+                        "terrainType":  "upland_march",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  46,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "caravan_trade",
+                                                     "route_control",
+                                                     "pack_haulage"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.sunscar_watch"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.shattercap_deep_harbors",
+                        "slug":  "shattercap_deep_harbors",
+                        "regionId":  "region.shattercap_isles",
+                        "localityBandId":  "region_locality.shattercap_deep_harbors",
+                        "biomeFamily":  "conifer_islands",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "deep_harbor",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  63,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "fishing",
+                                                     "salt_harvest",
+                                                     "coastal_trade"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.brineharbor",
+                                                      "settlement.gullsreach",
+                                                      "settlement.kelpnet_hamlet"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.shattercap_beacon_cliffs",
+                        "slug":  "shattercap_beacon_cliffs",
+                        "regionId":  "region.shattercap_isles",
+                        "localityBandId":  "region_locality.shattercap_beacon_cliffs",
+                        "biomeFamily":  "conifer_islands",
+                        "elevationBand":  "highland",
+                        "terrainType":  "beacon_cliffs",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  55,
+                        "frictionByMode":  {
+                                               "foot":  1.2,
+                                               "horseback":  1.45,
+                                               "pack_animal":  1.3,
+                                               "wagon":  2,
+                                               "river_craft":  4,
+                                               "sea_vessel":  4
+                                           },
+                        "barrierTags":  [
+                                            "cliff",
+                                            "pass_country"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "rockfall"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "sea_watch",
+                                                     "signal_watch",
+                                                     "piracy_deterrence"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.northhook_keep"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.crownlands_forest_vales",
+                        "slug":  "crownlands_forest_vales",
+                        "regionId":  "region.crownlands",
+                        "localityBandId":  "region_locality.crownlands_forest_vales",
+                        "biomeFamily":  "taiga",
+                        "elevationBand":  "upland",
+                        "terrainType":  "forest_vale",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  72,
+                        "frictionByMode":  {
+                                               "foot":  1.1,
+                                               "horseback":  1.2,
+                                               "pack_animal":  1.1,
+                                               "wagon":  1.45,
+                                               "river_craft":  3,
+                                               "sea_vessel":  3
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "timber",
+                                                     "firewood",
+                                                     "resin",
+                                                     "ore",
+                                                     "coal",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "forest_stewardship",
+                                                     "herbalism",
+                                                     "fine_craft"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.silvergrove",
+                                                      "settlement.whitebark_gate",
+                                                      "settlement.moonwell_grove"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.crownlands_headwater_passes",
+                        "slug":  "crownlands_headwater_passes",
+                        "regionId":  "region.crownlands",
+                        "localityBandId":  "region_locality.crownlands_headwater_passes",
+                        "biomeFamily":  "taiga",
+                        "elevationBand":  "highland",
+                        "terrainType":  "headwater_pass",
+                        "freshwaterType":  "river",
+                        "habitabilityScore":  62,
+                        "frictionByMode":  {
+                                               "foot":  1.2,
+                                               "horseback":  1.45,
+                                               "pack_animal":  1.3,
+                                               "wagon":  2,
+                                               "river_craft":  4,
+                                               "sea_vessel":  4
+                                           },
+                        "barrierTags":  [
+                                            "cliff",
+                                            "pass_country"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "rockfall"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "timber",
+                                                     "firewood",
+                                                     "resin",
+                                                     "stone",
+                                                     "clay",
+                                                     "border_security",
+                                                     "pass_control",
+                                                     "watershed_guard"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.headwater_bastion"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.embersteppe_herd_plains",
+                        "slug":  "embersteppe_herd_plains",
+                        "regionId":  "region.embersteppe",
+                        "localityBandId":  "region_locality.embersteppe_herd_plains",
+                        "biomeFamily":  "dry_steppe",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "steppe_plain",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  64,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "horse_breeding",
+                                                     "leatherworking",
+                                                     "stock_raising"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.ashsaddle",
+                                                      "settlement.coalspur"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.embersteppe_stepwell_corridors",
+                        "slug":  "embersteppe_stepwell_corridors",
+                        "regionId":  "region.embersteppe",
+                        "localityBandId":  "region_locality.embersteppe_stepwell_corridors",
+                        "biomeFamily":  "dry_steppe",
+                        "elevationBand":  "upland",
+                        "terrainType":  "water_redoubt",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  57,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "water_security",
+                                                     "route_control",
+                                                     "escort_staging"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.stepwell_redoubt",
+                                                      "settlement.redreed_ford"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.sapphire_rivers_royal_floodplain",
+                        "slug":  "sapphire_rivers_royal_floodplain",
+                        "regionId":  "region.sapphire_rivers",
+                        "localityBandId":  "region_locality.sapphire_rivers_royal_floodplain",
+                        "biomeFamily":  "alluvial_mixed_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "river_plain",
+                        "freshwaterType":  "river",
+                        "habitabilityScore":  95,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+                                            "river_crossing"
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "administration",
+                                                     "grain_trade",
+                                                     "river_logistics"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.highcrown",
+                                                      "settlement.blueflow",
+                                                      "settlement.ledgerford"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.sapphire_rivers_bridge_corridors",
+                        "slug":  "sapphire_rivers_bridge_corridors",
+                        "regionId":  "region.sapphire_rivers",
+                        "localityBandId":  "region_locality.sapphire_rivers_bridge_corridors",
+                        "biomeFamily":  "alluvial_mixed_forest",
+                        "elevationBand":  "upland",
+                        "terrainType":  "bridge_corridor",
+                        "freshwaterType":  "river",
+                        "habitabilityScore":  95,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+                                            "river_crossing"
+                                        ],
+                        "hazardTags":  [
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "route_control",
+                                                     "papermaking",
+                                                     "river_trade"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.kingsbridge",
+                                                      "settlement.bridgewatch_ferry"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.jade_expanse_granary_core",
+                        "slug":  "jade_expanse_granary_core",
+                        "regionId":  "region.jade_expanse",
+                        "localityBandId":  "region_locality.jade_expanse_granary_core",
+                        "biomeFamily":  "prairie",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "granary_plain",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  95,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "grain_storage",
+                                                     "brewing",
+                                                     "agricultural_trade"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.harvestrest",
+                                                      "settlement.golden_barrow"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.jade_expanse_orchard_steppe",
+                        "slug":  "jade_expanse_orchard_steppe",
+                        "regionId":  "region.jade_expanse",
+                        "localityBandId":  "region_locality.jade_expanse_orchard_steppe",
+                        "biomeFamily":  "prairie",
+                        "elevationBand":  "upland",
+                        "terrainType":  "orchard_belt",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  92,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "horse_breeding",
+                                                     "orcharding",
+                                                     "cider_making"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.greenharrow",
+                                                      "settlement.orchardhome",
+                                                      "settlement.barleyhearth_estate"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.windward_spine_mountain_holds",
+                        "slug":  "windward_spine_mountain_holds",
+                        "regionId":  "region.windward_spine",
+                        "localityBandId":  "region_locality.windward_spine_mountain_holds",
+                        "biomeFamily":  "alpine",
+                        "elevationBand":  "highland",
+                        "terrainType":  "mountain_hold",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  44,
+                        "frictionByMode":  {
+                                               "foot":  1.2,
+                                               "horseback":  1.45,
+                                               "pack_animal":  1.3,
+                                               "wagon":  2,
+                                               "river_craft":  4,
+                                               "sea_vessel":  4
+                                           },
+                        "barrierTags":  [
+                                            "cliff",
+                                            "pass_country"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "rockfall"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "ore",
+                                                     "coal",
+                                                     "stonework",
+                                                     "smelting",
+                                                     "pass_control"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.passglass_hold",
+                                                      "settlement.slatewake",
+                                                      "settlement.deepecho_camp"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.windward_spine_alpine_passes",
+                        "slug":  "windward_spine_alpine_passes",
+                        "regionId":  "region.windward_spine",
+                        "localityBandId":  "region_locality.windward_spine_alpine_passes",
+                        "biomeFamily":  "alpine",
+                        "elevationBand":  "highland",
+                        "terrainType":  "alpine_pass",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  36,
+                        "frictionByMode":  {
+                                               "foot":  1.2,
+                                               "horseback":  1.45,
+                                               "pack_animal":  1.3,
+                                               "wagon":  2,
+                                               "river_craft":  4,
+                                               "sea_vessel":  4
+                                           },
+                        "barrierTags":  [
+                                            "cliff",
+                                            "pass_country"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "rockfall"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "pass_security",
+                                                     "customs_control",
+                                                     "quarry_support"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.northpass_redoubt"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.green_reach_heartwood",
+                        "slug":  "green_reach_heartwood",
+                        "regionId":  "region.green_reach",
+                        "localityBandId":  "region_locality.green_reach_heartwood",
+                        "biomeFamily":  "rainforest",
+                        "elevationBand":  "upland",
+                        "terrainType":  "managed_forest",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  71,
+                        "frictionByMode":  {
+                                               "foot":  1.1,
+                                               "horseback":  1.2,
+                                               "pack_animal":  1.1,
+                                               "wagon":  1.45,
+                                               "river_craft":  3,
+                                               "sea_vessel":  3
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "forest_stewardship",
+                                                     "herbalism",
+                                                     "fine_craft"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.verdeward",
+                                                      "settlement.dyehollow"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.green_reach_timber_edges",
+                        "slug":  "green_reach_timber_edges",
+                        "regionId":  "region.green_reach",
+                        "localityBandId":  "region_locality.green_reach_timber_edges",
+                        "biomeFamily":  "rainforest",
+                        "elevationBand":  "upland",
+                        "terrainType":  "forest_edge",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  70,
+                        "frictionByMode":  {
+                                               "foot":  1.1,
+                                               "horseback":  1.2,
+                                               "pack_animal":  1.1,
+                                               "wagon":  1.45,
+                                               "river_craft":  3,
+                                               "sea_vessel":  3
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "timber",
+                                                     "firewood",
+                                                     "resin",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "timber_trade",
+                                                     "river_trade",
+                                                     "dye_processing"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.timbercross",
+                                                      "settlement.barkmill_hamlet"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.sailors_verge_grand_harbors",
+                        "slug":  "sailors_verge_grand_harbors",
+                        "regionId":  "region.sailors_verge",
+                        "localityBandId":  "region_locality.sailors_verge_grand_harbors",
+                        "biomeFamily":  "chaparral_coast",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "grand_harbor",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  85,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "maritime_trade",
+                                                     "naval_logistics",
+                                                     "ship_finance"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.seabanner",
+                                                      "settlement.tidecrown"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.sailors_verge_citrus_trade_belt",
+                        "slug":  "sailors_verge_citrus_trade_belt",
+                        "regionId":  "region.sailors_verge",
+                        "localityBandId":  "region_locality.sailors_verge_citrus_trade_belt",
+                        "biomeFamily":  "chaparral_coast",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "estuary_garden",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  83,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "fishing",
+                                                     "citrus_trade",
+                                                     "ship_support",
+                                                     "rope_making"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.islemarket",
+                                                      "settlement.mastfield",
+                                                      "settlement.dockreed_estate"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.heart_basin_river_capitals",
+                        "slug":  "heart_basin_river_capitals",
+                        "regionId":  "region.heart_basin",
+                        "localityBandId":  "region_locality.heart_basin_river_capitals",
+                        "biomeFamily":  "prairie",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "river_capital_belt",
+                        "freshwaterType":  "river",
+                        "habitabilityScore":  95,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+                                            "river_crossing"
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "administration",
+                                                     "grain_trade",
+                                                     "river_logistics"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.riverthrone",
+                                                      "settlement.granary_crown"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.heart_basin_market_mills",
+                        "slug":  "heart_basin_market_mills",
+                        "regionId":  "region.heart_basin",
+                        "localityBandId":  "region_locality.heart_basin_market_mills",
+                        "biomeFamily":  "prairie",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "mill_market",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  95,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "milling",
+                                                     "baking",
+                                                     "river_transport"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.millrun",
+                                                      "settlement.basinford",
+                                                      "settlement.southlock_ferry"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.emerald_mantle_pasture_uplands",
+                        "slug":  "emerald_mantle_pasture_uplands",
+                        "regionId":  "region.emerald_mantle",
+                        "localityBandId":  "region_locality.emerald_mantle_pasture_uplands",
+                        "biomeFamily":  "deciduous_forest",
+                        "elevationBand":  "upland",
+                        "terrainType":  "pasture_upland",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  81,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "animal_husbandry",
+                                                     "horse_breeding",
+                                                     "leatherworking"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.pasturemeet",
+                                                      "settlement.haywarden_estate"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.emerald_mantle_orchard_meadows",
+                        "slug":  "emerald_mantle_orchard_meadows",
+                        "regionId":  "region.emerald_mantle",
+                        "localityBandId":  "region_locality.emerald_mantle_orchard_meadows",
+                        "biomeFamily":  "deciduous_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "orchard_meadow",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  81,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "orcharding",
+                                                     "hay_trade",
+                                                     "pond_farming"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.longmeadow",
+                                                      "settlement.applemarsh"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.stormcap_coast_storm_harbors",
+                        "slug":  "stormcap_coast_storm_harbors",
+                        "regionId":  "region.stormcap_coast",
+                        "localityBandId":  "region_locality.stormcap_coast_storm_harbors",
+                        "biomeFamily":  "storm_coast",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "storm_harbor",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  76,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "salt_harvest",
+                                                     "fishing",
+                                                     "coastal_resupply"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.breaksail",
+                                                      "settlement.southlight"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.stormcap_coast_watch_citadels",
+                        "slug":  "stormcap_coast_watch_citadels",
+                        "regionId":  "region.stormcap_coast",
+                        "localityBandId":  "region_locality.stormcap_coast_watch_citadels",
+                        "biomeFamily":  "storm_coast",
+                        "elevationBand":  "upland",
+                        "terrainType":  "watch_citadel",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  70,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "coastal_defense",
+                                                     "signal_watch",
+                                                     "traveler_relief"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.stormwatch_citadel",
+                                                      "settlement.cliffsalt_priory"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.silver_valleys_sunspire_vales",
+                        "slug":  "silver_valleys_sunspire_vales",
+                        "regionId":  "region.silver_valleys",
+                        "localityBandId":  "region_locality.silver_valleys_sunspire_vales",
+                        "biomeFamily":  "seasonal_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "river_vale",
+                        "freshwaterType":  "river",
+                        "habitabilityScore":  68,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+                                            "river_crossing"
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "ore",
+                                                     "coal",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "administration",
+                                                     "frontier_trade",
+                                                     "defense"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.sunspire_reach",
+                                                      "settlement.silvermere"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.silver_valleys_ford_corridors",
+                        "slug":  "silver_valleys_ford_corridors",
+                        "regionId":  "region.silver_valleys",
+                        "localityBandId":  "region_locality.silver_valleys_ford_corridors",
+                        "biomeFamily":  "seasonal_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "ford_corridor",
+                        "freshwaterType":  "river",
+                        "habitabilityScore":  64,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+                                            "river_crossing"
+                                        ],
+                        "hazardTags":  [
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "livestock",
+                                                     "wool",
+                                                     "hides",
+                                                     "crossing_control",
+                                                     "caravan_support",
+                                                     "hide_trade"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.confederate_ford",
+                                                      "settlement.sunpasture_estate"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.silver_valleys_warrens_below",
+                        "slug":  "silver_valleys_warrens_below",
+                        "regionId":  "region.silver_valleys",
+                        "localityBandId":  "region_locality.silver_valleys_warrens_below",
+                        "biomeFamily":  "seasonal_forest",
+                        "elevationBand":  "subterranean",
+                        "terrainType":  "underhold",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  57,
+                        "frictionByMode":  {
+                                               "foot":  1.4,
+                                               "horseback":  3,
+                                               "pack_animal":  2,
+                                               "wagon":  4,
+                                               "river_craft":  5,
+                                               "sea_vessel":  5
+                                           },
+                        "barrierTags":  [
+                                            "subterranean_access"
+                                        ],
+                        "hazardTags":  [
+
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "ore",
+                                                     "coal",
+                                                     "fungus_cultivation",
+                                                     "hidden_smelting",
+                                                     "raiding"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.redroot_warrens"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.thorn_peninsula_spice_markets",
+                        "slug":  "thorn_peninsula_spice_markets",
+                        "regionId":  "region.thorn_peninsula",
+                        "localityBandId":  "region_locality.thorn_peninsula_spice_markets",
+                        "biomeFamily":  "dry_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "spice_market",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  54,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "grain",
+                                                     "fruit",
+                                                     "vegetables",
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "spice_trade",
+                                                     "warehousing",
+                                                     "tea_growing"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.spicehook",
+                                                      "settlement.pepperfield_estate"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.thorn_peninsula_salt_anchorage",
+                        "slug":  "thorn_peninsula_salt_anchorage",
+                        "regionId":  "region.thorn_peninsula",
+                        "localityBandId":  "region_locality.thorn_peninsula_salt_anchorage",
+                        "biomeFamily":  "dry_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "salt_anchorage",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  53,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "coastal_trade",
+                                                     "salt_trade",
+                                                     "naval_patrol"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.saltfang_anchorage"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.thorn_peninsula_watch_forts",
+                        "slug":  "thorn_peninsula_watch_forts",
+                        "regionId":  "region.thorn_peninsula",
+                        "localityBandId":  "region_locality.thorn_peninsula_watch_forts",
+                        "biomeFamily":  "dry_forest",
+                        "elevationBand":  "upland",
+                        "terrainType":  "frontier_fort",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  46,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "route_control",
+                                                     "frontier_response",
+                                                     "peninsula_security"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.thornwatch"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.watcher_coast_gate_citadels",
+                        "slug":  "watcher_coast_gate_citadels",
+                        "regionId":  "region.watcher_coast",
+                        "localityBandId":  "region_locality.watcher_coast_gate_citadels",
+                        "biomeFamily":  "cliff_coast",
+                        "elevationBand":  "upland",
+                        "terrainType":  "gate_citadel",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  32,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "ore",
+                                                     "coal",
+                                                     "defense",
+                                                     "route_control",
+                                                     "tax_collection"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.watchers_gate"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.watcher_coast_obsidian_steps",
+                        "slug":  "watcher_coast_obsidian_steps",
+                        "regionId":  "region.watcher_coast",
+                        "localityBandId":  "region_locality.watcher_coast_obsidian_steps",
+                        "biomeFamily":  "cliff_coast",
+                        "elevationBand":  "highland",
+                        "terrainType":  "obsidian_steps",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  37,
+                        "frictionByMode":  {
+                                               "foot":  1.2,
+                                               "horseback":  1.45,
+                                               "pack_animal":  1.3,
+                                               "wagon":  2,
+                                               "river_craft":  4,
+                                               "sea_vessel":  4
+                                           },
+                        "barrierTags":  [
+                                            "cliff",
+                                            "pass_country"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "ore",
+                                                     "coal",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "quarrying",
+                                                     "obsidian_cutting",
+                                                     "metal_supply"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.obsidian_stair",
+                                                      "settlement.blackglass_camp"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.watcher_coast_mistfen_edges",
+                        "slug":  "watcher_coast_mistfen_edges",
+                        "regionId":  "region.watcher_coast",
+                        "localityBandId":  "region_locality.watcher_coast_mistfen_edges",
+                        "biomeFamily":  "cliff_coast",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "mistfen_harbor",
+                        "freshwaterType":  "marsh",
+                        "habitabilityScore":  36,
+                        "frictionByMode":  {
+                                               "foot":  1.35,
+                                               "horseback":  1.6,
+                                               "pack_animal":  1.45,
+                                               "wagon":  2.3,
+                                               "river_craft":  1.05,
+                                               "sea_vessel":  1.4
+                                           },
+                        "barrierTags":  [
+                                            "marsh",
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk",
+                                           "miasma",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "herbs",
+                                                     "tea",
+                                                     "coastal_trade",
+                                                     "fishing",
+                                                     "marsh_supply"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.mistfen_landing"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.myridian_ports",
+                        "slug":  "myridian_ports",
+                        "regionId":  "region.myridian_chain",
+                        "localityBandId":  "region_locality.myridian_ports",
+                        "biomeFamily":  "mixed_forest_archipelago",
+                        "elevationBand":  "upland",
+                        "terrainType":  "archipelago_port",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  66,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "interregional_trade",
+                                                     "shipbuilding",
+                                                     "customs"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.starfall_port",
+                                                      "settlement.harbormast_quay",
+                                                      "settlement.foammarket_ferry"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.myridian_pearl_shoals",
+                        "slug":  "myridian_pearl_shoals",
+                        "regionId":  "region.myridian_chain",
+                        "localityBandId":  "region_locality.myridian_pearl_shoals",
+                        "biomeFamily":  "mixed_forest_archipelago",
+                        "elevationBand":  "upland",
+                        "terrainType":  "pearl_shoals",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  63,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "pearling",
+                                                     "fishing",
+                                                     "salt_curing"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.pearlwake"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.myridian_beacon_bastions",
+                        "slug":  "myridian_beacon_bastions",
+                        "regionId":  "region.myridian_chain",
+                        "localityBandId":  "region_locality.myridian_beacon_bastions",
+                        "biomeFamily":  "mixed_forest_archipelago",
+                        "elevationBand":  "upland",
+                        "terrainType":  "beacon_bastion",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  57,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "stone",
+                                                     "clay",
+                                                     "beacon_signaling",
+                                                     "coastal_defense",
+                                                     "market_transfer"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.chainlight_bastion"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.lantern_harbors",
+                        "slug":  "lantern_harbors",
+                        "regionId":  "region.lantern_isles",
+                        "localityBandId":  "region_locality.lantern_harbors",
+                        "biomeFamily":  "seasonal_tropical_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "reef_harbor",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  58,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "brokerage",
+                                                     "resupply",
+                                                     "light_manufacture"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.lantern_key"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.lantern_reef_depths",
+                        "slug":  "lantern_reef_depths",
+                        "regionId":  "region.lantern_isles",
+                        "localityBandId":  "region_locality.lantern_reef_depths",
+                        "biomeFamily":  "seasonal_tropical_forest",
+                        "elevationBand":  "subterranean",
+                        "terrainType":  "reef_depths",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  54,
+                        "frictionByMode":  {
+                                               "foot":  1.4,
+                                               "horseback":  3,
+                                               "pack_animal":  2,
+                                               "wagon":  4,
+                                               "river_craft":  5,
+                                               "sea_vessel":  5
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access",
+                                            "subterranean_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "pearling",
+                                                     "reef_craft",
+                                                     "sea_trade"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.lantern_deep"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.lantern_shrine_gardens",
+                        "slug":  "lantern_shrine_gardens",
+                        "regionId":  "region.lantern_isles",
+                        "localityBandId":  "region_locality.lantern_shrine_gardens",
+                        "biomeFamily":  "seasonal_tropical_forest",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "shrine_garden",
+                        "freshwaterType":  "stream",
+                        "habitabilityScore":  56,
+                        "frictionByMode":  {
+                                               "foot":  0.95,
+                                               "horseback":  0.9,
+                                               "pack_animal":  0.95,
+                                               "wagon":  1,
+                                               "river_craft":  1,
+                                               "sea_vessel":  2
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "record_copying",
+                                                     "herb_cultivation",
+                                                     "traveler_relief"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.driftglass_outpost",
+                                                      "settlement.glasswake_shrine"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.serpents_storm_havens",
+                        "slug":  "serpents_storm_havens",
+                        "regionId":  "region.serpents_wake",
+                        "localityBandId":  "region_locality.serpents_storm_havens",
+                        "biomeFamily":  "mangrove",
+                        "elevationBand":  "upland",
+                        "terrainType":  "storm_haven",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  41,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "herbs",
+                                                     "tea",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "salvage_trade",
+                                                     "shellfish_harvest",
+                                                     "passage_services"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.stormfang_haven"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.serpents_reef_anchorages",
+                        "slug":  "serpents_reef_anchorages",
+                        "regionId":  "region.serpents_wake",
+                        "localityBandId":  "region_locality.serpents_reef_anchorages",
+                        "biomeFamily":  "mangrove",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "reef_anchorage",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  35,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "salt",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "smuggling",
+                                                     "storm_salvage",
+                                                     "raiding"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.blackreef_anchorage",
+                                                      "settlement.squallhook_refuge"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.serpents_watch_musters",
+                        "slug":  "serpents_watch_musters",
+                        "regionId":  "region.serpents_wake",
+                        "localityBandId":  "region_locality.serpents_watch_musters",
+                        "biomeFamily":  "mangrove",
+                        "elevationBand":  "upland",
+                        "terrainType":  "watch_waystation",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  32,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "signal_duty",
+                                                     "coastal_security",
+                                                     "escort_mustering"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.stormhook_watch"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.dawnreach_aurora_harbors",
+                        "slug":  "dawnreach_aurora_harbors",
+                        "regionId":  "region.dawnreach_isles",
+                        "localityBandId":  "region_locality.dawnreach_aurora_harbors",
+                        "biomeFamily":  "taiga",
+                        "elevationBand":  "lowland",
+                        "terrainType":  "cold_harbor",
+                        "freshwaterType":  "coast",
+                        "habitabilityScore":  32,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.15,
+                                               "river_craft":  0.95,
+                                               "sea_vessel":  0.9
+                                           },
+                        "barrierTags":  [
+                                            "coastal_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk",
+                                           "weather_risk",
+                                           "bandit_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "whaling",
+                                                     "cold_fishery",
+                                                     "resupply"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.aurora_anchorage",
+                                                      "settlement.icehook_jetty"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.dawnreach_nacre_depths",
+                        "slug":  "dawnreach_nacre_depths",
+                        "regionId":  "region.dawnreach_isles",
+                        "localityBandId":  "region_locality.dawnreach_nacre_depths",
+                        "biomeFamily":  "taiga",
+                        "elevationBand":  "subterranean",
+                        "terrainType":  "nacre_depths",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  28,
+                        "frictionByMode":  {
+                                               "foot":  1.4,
+                                               "horseback":  3,
+                                               "pack_animal":  2,
+                                               "wagon":  4,
+                                               "river_craft":  5,
+                                               "sea_vessel":  5
+                                           },
+                        "barrierTags":  [
+                                            "subterranean_access"
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "luxury_goods",
+                                                     "dyes",
+                                                     "spices",
+                                                     "pearling",
+                                                     "cold_water_trade",
+                                                     "sea_craft"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.nacredeep"
+                                                  ]
+                    },
+                    {
+                        "id":  "world_hex.dawnreach_whalebone_watches",
+                        "slug":  "dawnreach_whalebone_watches",
+                        "regionId":  "region.dawnreach_isles",
+                        "localityBandId":  "region_locality.dawnreach_whalebone_watches",
+                        "biomeFamily":  "taiga",
+                        "elevationBand":  "upland",
+                        "terrainType":  "whalebone_watch",
+                        "freshwaterType":  "none",
+                        "habitabilityScore":  24,
+                        "frictionByMode":  {
+                                               "foot":  1,
+                                               "horseback":  1,
+                                               "pack_animal":  1,
+                                               "wagon":  1.1,
+                                               "river_craft":  1.5,
+                                               "sea_vessel":  1.5
+                                           },
+                        "barrierTags":  [
+
+                                        ],
+                        "hazardTags":  [
+                                           "wildlife_risk"
+                                       ],
+                        "resourceAffinityTags":  [
+                                                     "fish",
+                                                     "shellfish",
+                                                     "whaling",
+                                                     "lookout_service",
+                                                     "marine_harvest"
+                                                 ],
+                        "anchoredSettlementIds":  [
+                                                      "settlement.whalebone_watch"
+                                                  ]
+                    }
+                ]
+}

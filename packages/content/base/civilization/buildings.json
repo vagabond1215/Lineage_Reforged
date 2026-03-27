@@ -1,0 +1,1088 @@
+{
+  "records": [
+    {
+      "id": "building.fieldstead",
+      "slug": "fieldstead",
+      "name": "Fieldstead",
+      "category": "agrarian",
+      "summary": "Primary agrarian holding that ties plots, flocks, barns, and granary space into one working unit.",
+      "hostedWorkplaceIds": [
+        "workplace.garden_plots",
+        "workplace.flax_stead",
+        "workplace.sheepfold"
+      ],
+      "serviceFunctions": [
+        "food_storage",
+        "draft_yard"
+      ],
+      "triggerBusinessTypes": [
+        "farm_estates",
+        "pasture_runs"
+      ],
+      "compatibleSettlementTypes": [
+        "hamlet",
+        "village",
+        "estate",
+        "market_town",
+        "town"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      },
+      "storageProfiles": [
+        {
+          "storageType": "granary",
+          "capacityUnits": 120,
+          "goodsFocus": [
+            "grain",
+            "flour",
+            "horse_fodder"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "building.apiary_herbary",
+      "slug": "apiary_herbary",
+      "name": "Apiary And Herbary",
+      "category": "agrarian",
+      "summary": "Garden and hive compound supporting herb drying, beeswax, and pollination-heavy production.",
+      "hostedWorkplaceIds": [
+        "workplace.apiary_yard",
+        "workplace.herbalist_garden"
+      ],
+      "serviceFunctions": [
+        "drying_loft"
+      ],
+      "triggerBusinessTypes": [
+        "farm_estates",
+        "herb_and_dye_houses"
+      ],
+      "compatibleSettlementTypes": [
+        "hamlet",
+        "village",
+        "estate",
+        "market_town",
+        "town",
+        "monastery"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.hunters_lodge",
+      "slug": "hunters_lodge",
+      "name": "Hunter's Lodge",
+      "category": "extractive",
+      "summary": "Forest-edge compound for hunting, trapping, curing, and wild harvest staging.",
+      "hostedWorkplaceIds": [
+        "workplace.hunters_camp",
+        "workplace.gatherers_hut"
+      ],
+      "serviceFunctions": [
+        "frontier_store",
+        "hide_drying"
+      ],
+      "triggerBusinessTypes": [
+        "gathering_and_trapping"
+      ],
+      "compatibleSettlementTypes": [
+        "camp",
+        "hamlet",
+        "village",
+        "outpost",
+        "waystation",
+        "fort"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "pack"
+        ]
+      }
+    },
+    {
+      "id": "building.riverside_fishery",
+      "slug": "riverside_fishery",
+      "name": "Riverside Fishery",
+      "category": "maritime",
+      "summary": "Riverbank or dockside fishery with net sheds, cleaning space, and ferry or boat access.",
+      "hostedWorkplaceIds": [
+        "workplace.anglers_camp",
+        "workplace.riverbank_gatherers"
+      ],
+      "serviceFunctions": [
+        "boat_landing",
+        "fish_handling"
+      ],
+      "triggerBusinessTypes": [
+        "fishing_docks"
+      ],
+      "compatibleSettlementTypes": [
+        "ferry_post",
+        "hamlet",
+        "village",
+        "harbor_town",
+        "market_town",
+        "town",
+        "port_city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 1,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": true,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": true,
+        "requiredRouteModes": [
+          "river"
+        ]
+      }
+    },
+    {
+      "id": "building.timber_lodge",
+      "slug": "timber_lodge",
+      "name": "Timber Lodge",
+      "category": "extractive",
+      "summary": "Forest work yard for logging, sawing, charcoal making, and bulk fuel handling.",
+      "hostedWorkplaceIds": [
+        "workplace.woodcutters_camp",
+        "workplace.sawmill",
+        "workplace.charcoal_kiln",
+        "workplace.fuel_yard"
+      ],
+      "serviceFunctions": [
+        "timber_sorting",
+        "fuel_storage"
+      ],
+      "triggerBusinessTypes": [
+        "logging_yards",
+        "woodworking_yards"
+      ],
+      "compatibleSettlementTypes": [
+        "camp",
+        "hamlet",
+        "village",
+        "town",
+        "outpost",
+        "waystation"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "road",
+          "pack"
+        ]
+      }
+    },
+    {
+      "id": "building.extraction_yard",
+      "slug": "extraction_yard",
+      "name": "Extraction Yard",
+      "category": "extractive",
+      "summary": "Hard-country extraction compound for pits, brine works, quarries, and mineheads.",
+      "hostedWorkplaceIds": [
+        "workplace.clay_pit",
+        "workplace.peat_cutters",
+        "workplace.salt_pans",
+        "workplace.quarry_camp",
+        "workplace.deep_shaft_mine"
+      ],
+      "serviceFunctions": [
+        "ore_sorting",
+        "stone_stockyard"
+      ],
+      "triggerBusinessTypes": [
+        "mine_works",
+        "construction_yards"
+      ],
+      "compatibleSettlementTypes": [
+        "camp",
+        "outpost",
+        "village",
+        "town",
+        "fort",
+        "citadel"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface",
+          "subterranean"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "road",
+          "pack"
+        ]
+      }
+    },
+    {
+      "id": "building.stoneworks_block",
+      "slug": "stoneworks_block",
+      "name": "Stoneworks Block",
+      "category": "industrial",
+      "summary": "Masonry and brickmaking block supporting bulk building stock and kiln-fired construction goods.",
+      "hostedWorkplaceIds": [
+        "workplace.masons_yard",
+        "workplace.brickworks",
+        "workplace.lime_kiln"
+      ],
+      "serviceFunctions": [
+        "construction_stockyard"
+      ],
+      "triggerBusinessTypes": [
+        "construction_yards"
+      ],
+      "compatibleSettlementTypes": [
+        "village",
+        "market_town",
+        "town",
+        "city",
+        "fort",
+        "citadel",
+        "port_city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 1,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "road"
+        ]
+      }
+    },
+    {
+      "id": "building.reedworks_shed",
+      "slug": "reedworks_shed",
+      "name": "Reedworks Shed",
+      "category": "industrial",
+      "summary": "Light craft shed for mats, basket frames, and marsh or river-reed processing.",
+      "hostedWorkplaceIds": [
+        "workplace.reed_weaving_shed"
+      ],
+      "serviceFunctions": [
+        "reed_drying"
+      ],
+      "triggerBusinessTypes": [
+        "woodworking_yards",
+        "fishing_docks"
+      ],
+      "compatibleSettlementTypes": [
+        "hamlet",
+        "village",
+        "ferry_post",
+        "market_town",
+        "town"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": true,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.loom_and_tailor_house",
+      "slug": "loom_and_tailor_house",
+      "name": "Loom And Tailor House",
+      "category": "industrial",
+      "summary": "Clothmaking hall that spins, dyes, cuts, and sews common apparel and textile stock.",
+      "hostedWorkplaceIds": [
+        "workplace.loomhouse",
+        "workplace.dye_house",
+        "workplace.tailors_hall"
+      ],
+      "serviceFunctions": [
+        "cloth_storage"
+      ],
+      "triggerBusinessTypes": [
+        "textile_houses"
+      ],
+      "compatibleSettlementTypes": [
+        "village",
+        "market_town",
+        "town",
+        "city",
+        "port_city",
+        "monastery"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.tannery_block",
+      "slug": "tannery_block",
+      "name": "Tannery Block",
+      "category": "industrial",
+      "summary": "Hide-processing block with cure pits, drying racks, and parchment handling.",
+      "hostedWorkplaceIds": [
+        "workplace.tannery",
+        "workplace.parchment_house"
+      ],
+      "serviceFunctions": [
+        "hide_drying",
+        "waste_handling"
+      ],
+      "triggerBusinessTypes": [
+        "pasture_runs",
+        "gathering_and_trapping",
+        "sanitation_and_soapworks"
+      ],
+      "compatibleSettlementTypes": [
+        "hamlet",
+        "village",
+        "market_town",
+        "town",
+        "city",
+        "port_city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 1,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": true,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.food_market_block",
+      "slug": "food_market_block",
+      "name": "Food Market Block",
+      "category": "industrial",
+      "summary": "Mill, bake, butcher, smoking, and preserving block for staple food processing.",
+      "hostedWorkplaceIds": [
+        "workplace.millhouse",
+        "workplace.bakehouse",
+        "workplace.bakery",
+        "workplace.kitchen",
+        "workplace.butchers_block",
+        "workplace.smokehouse",
+        "workplace.preservers_hearth"
+      ],
+      "serviceFunctions": [
+        "market_food_stalls"
+      ],
+      "triggerBusinessTypes": [
+        "farm_estates",
+        "mills_and_granaries"
+      ],
+      "compatibleSettlementTypes": [
+        "village",
+        "market_town",
+        "town",
+        "city",
+        "harbor_town",
+        "port_city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      },
+      "storageProfiles": [
+        {
+          "storageType": "granary",
+          "capacityUnits": 80,
+          "goodsFocus": [
+            "grain",
+            "flour",
+            "bread_loaf",
+            "cured_meat"
+          ]
+        },
+        {
+          "storageType": "cellar",
+          "capacityUnits": 55,
+          "goodsFocus": [
+            "berry_preserve_jar",
+            "fresh_cheese",
+            "public_bath"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "building.drinkhouse_cellar",
+      "slug": "drinkhouse_cellar",
+      "name": "Drinkhouse Cellar",
+      "category": "hospitality",
+      "summary": "Brewing, vintning, roasting, and public-house block organized around casks and cellar storage.",
+      "hostedWorkplaceIds": [
+        "workplace.brewery",
+        "workplace.vintners_press",
+        "workplace.tavern",
+        "workplace.tea_house",
+        "workplace.roasters_kilnhouse",
+        "workplace.sugar_boilers_house",
+        "workplace.inn"
+      ],
+      "serviceFunctions": [
+        "lodging",
+        "cask_cellaring"
+      ],
+      "triggerBusinessTypes": [
+        "inns_and_taprooms",
+        "market_warehouses"
+      ],
+      "compatibleSettlementTypes": [
+        "market_town",
+        "town",
+        "city",
+        "harbor_town",
+        "port_city",
+        "waystation"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      },
+      "storageProfiles": [
+        {
+          "storageType": "cellar",
+          "capacityUnits": 70,
+          "goodsFocus": [
+            "ale_cask",
+            "wine_cask",
+            "fruit_syrup"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "building.forge_block",
+      "slug": "forge_block",
+      "name": "Forge Block",
+      "category": "industrial",
+      "summary": "High-heat industrial block for smelting, bloom refining, smithing, and armoring.",
+      "hostedWorkplaceIds": [
+        "workplace.smelter_hall",
+        "workplace.bloomery_forge",
+        "workplace.weaponsmith_forge",
+        "workplace.armorers_forge"
+      ],
+      "serviceFunctions": [
+        "coal_storage",
+        "ingot_stockyard"
+      ],
+      "triggerBusinessTypes": [
+        "smelters_and_toolshops",
+        "construction_yards"
+      ],
+      "compatibleSettlementTypes": [
+        "village",
+        "market_town",
+        "town",
+        "city",
+        "fort",
+        "citadel",
+        "port_city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 1,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "road"
+        ]
+      }
+    },
+    {
+      "id": "building.cartwright_and_cooper_yard",
+      "slug": "cartwright_and_cooper_yard",
+      "name": "Cartwright And Cooper Yard",
+      "category": "industrial",
+      "summary": "Joinery and haulage yard for carts, wheels, frames, casks, and other bulky wooden goods.",
+      "hostedWorkplaceIds": [
+        "workplace.cartwright_yard",
+        "workplace.coopers_shop",
+        "workplace.fletchers_shop"
+      ],
+      "serviceFunctions": [
+        "haulage_staging",
+        "bulk_container_storage"
+      ],
+      "triggerBusinessTypes": [
+        "teamster_yards",
+        "woodworking_yards",
+        "market_warehouses"
+      ],
+      "compatibleSettlementTypes": [
+        "village",
+        "market_town",
+        "town",
+        "city",
+        "harbor_town",
+        "port_city",
+        "fort"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 1,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "road"
+        ]
+      },
+      "storageProfiles": [
+        {
+          "storageType": "warehouse",
+          "capacityUnits": 95,
+          "goodsFocus": [
+            "crate",
+            "cask",
+            "wagon_frame",
+            "pack_wagon"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "building.kiln_and_glass_yard",
+      "slug": "kiln_and_glass_yard",
+      "name": "Kiln And Glass Yard",
+      "category": "industrial",
+      "summary": "Fired-goods yard for pottery, glass, jars, and lighting vessels.",
+      "hostedWorkplaceIds": [
+        "workplace.glassworks",
+        "workplace.pottery_kiln",
+        "workplace.chandlery"
+      ],
+      "serviceFunctions": [
+        "fragile_goods_storage"
+      ],
+      "triggerBusinessTypes": [
+        "sanitation_and_soapworks",
+        "market_warehouses"
+      ],
+      "compatibleSettlementTypes": [
+        "village",
+        "market_town",
+        "town",
+        "city",
+        "harbor_town",
+        "port_city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.scriptoria_quarter",
+      "slug": "scriptoria_quarter",
+      "name": "Scriptoria Quarter",
+      "category": "civic",
+      "summary": "Paper, binding, and copying quarter for administration, contracts, and long-form records.",
+      "hostedWorkplaceIds": [
+        "workplace.paper_mill",
+        "workplace.bookbindery",
+        "workplace.scriptorium"
+      ],
+      "serviceFunctions": [
+        "archives",
+        "record_storage"
+      ],
+      "triggerBusinessTypes": [
+        "scribal_houses",
+        "guild_halls"
+      ],
+      "compatibleSettlementTypes": [
+        "town",
+        "city",
+        "port_city",
+        "citadel",
+        "monastery"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      },
+      "storageProfiles": [
+        {
+          "storageType": "vault",
+          "capacityUnits": 35,
+          "goodsFocus": [
+            "ledger",
+            "record_book",
+            "reference_book"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "building.alchemical_house",
+      "slug": "alchemical_house",
+      "name": "Alchemical House",
+      "category": "civic",
+      "summary": "Controlled compound for medicines, salves, laboratory work, and civic treatment services.",
+      "hostedWorkplaceIds": [
+        "workplace.alchemists_atelier",
+        "workplace.apothecary_shop",
+        "workplace.physickers_conservatory"
+      ],
+      "serviceFunctions": [
+        "clinic",
+        "controlled_storage"
+      ],
+      "triggerBusinessTypes": [
+        "sanitation_and_soapworks",
+        "guild_halls"
+      ],
+      "compatibleSettlementTypes": [
+        "market_town",
+        "town",
+        "city",
+        "port_city",
+        "monastery"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 1,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": true,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.bath_house",
+      "slug": "bath_house",
+      "name": "Bath House",
+      "category": "service",
+      "summary": "Public washing and steam facility that improves hygiene and urban service capacity.",
+      "hostedWorkplaceIds": [
+        "workplace.bath_house"
+      ],
+      "serviceFunctions": [
+        "public_hygiene",
+        "laundering"
+      ],
+      "triggerBusinessTypes": [
+        "sanitation_and_soapworks",
+        "inns_and_taprooms"
+      ],
+      "compatibleSettlementTypes": [
+        "market_town",
+        "town",
+        "city",
+        "port_city",
+        "harbor_town",
+        "monastery"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 1,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": true,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.warehouse_block",
+      "slug": "warehouse_block",
+      "name": "Warehouse Block",
+      "category": "storage",
+      "summary": "Large-volume dry storage supporting trade turnover, reserves, and caravan staging.",
+      "hostedWorkplaceIds": [],
+      "serviceFunctions": [
+        "storage.warehouse",
+        "market_exchange",
+        "reserve_stock"
+      ],
+      "triggerBusinessTypes": [
+        "market_warehouses",
+        "teamster_yards"
+      ],
+      "compatibleSettlementTypes": [
+        "market_town",
+        "town",
+        "city",
+        "harbor_town",
+        "port_city",
+        "fort"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 1,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "road"
+        ]
+      },
+      "storageProfiles": [
+        {
+          "storageType": "warehouse",
+          "capacityUnits": 140,
+          "goodsFocus": [
+            "grain",
+            "timber_beam",
+            "crate",
+            "cask"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "building.barracks_depot",
+      "slug": "barracks_depot",
+      "name": "Barracks Depot",
+      "category": "military",
+      "summary": "Guard barracks and reserve stores that support escort, policing, and frontier security.",
+      "hostedWorkplaceIds": [],
+      "serviceFunctions": [
+        "garrison",
+        "military_storage",
+        "escort_staging"
+      ],
+      "triggerBusinessTypes": [
+        "barracks_and_supply_depots"
+      ],
+      "compatibleSettlementTypes": [
+        "outpost",
+        "fort",
+        "citadel",
+        "town",
+        "city",
+        "port_city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 0,
+        "fortificationTier": 1
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      },
+      "storageProfiles": [
+        {
+          "storageType": "vault",
+          "capacityUnits": 45,
+          "goodsFocus": [
+            "replacement_arms",
+            "bolts",
+            "frontier_security"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "building.guildhall_row",
+      "slug": "guildhall_row",
+      "name": "Guildhall Row",
+      "category": "civic",
+      "summary": "Cluster of guild halls, exchanges, and contract counters that formalize urban commerce and services.",
+      "hostedWorkplaceIds": [],
+      "serviceFunctions": [
+        "guild_hall",
+        "contract_board",
+        "merchant_exchange"
+      ],
+      "triggerBusinessTypes": [
+        "guild_halls",
+        "market_warehouses"
+      ],
+      "compatibleSettlementTypes": [
+        "market_town",
+        "town",
+        "city",
+        "harbor_town",
+        "port_city",
+        "citadel"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 1,
+        "waterTier": 0,
+        "harborTier": 0,
+        "marketTier": 1,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": false,
+        "requiresCoastalAccess": false,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": []
+      }
+    },
+    {
+      "id": "building.harbor_quay",
+      "slug": "harbor_quay",
+      "name": "Harbor Quay",
+      "category": "maritime",
+      "summary": "Port-side service frontage for cargo handling, customs, ferries, and coastal staging.",
+      "hostedWorkplaceIds": [],
+      "serviceFunctions": [
+        "port_handling",
+        "ferry_berth",
+        "dry_storage"
+      ],
+      "triggerBusinessTypes": [
+        "fishing_docks",
+        "shipyards_and_roperies",
+        "market_warehouses"
+      ],
+      "compatibleSettlementTypes": [
+        "harbor_town",
+        "port_city",
+        "ferry_post",
+        "town",
+        "city"
+      ],
+      "requiredInfrastructure": {
+        "roadTier": 0,
+        "waterTier": 1,
+        "harborTier": 1,
+        "marketTier": 0,
+        "fortificationTier": 0
+      },
+      "placeability": {
+        "supportedSiteClasses": [
+          "surface"
+        ],
+        "allowedTerrainContexts": [],
+        "requiresWaterAccess": true,
+        "requiresCoastalAccess": true,
+        "requiresRiverAccess": false,
+        "requiredRouteModes": [
+          "coastal",
+          "sea_lane"
+        ]
+      }
+    }
+  ]
+}

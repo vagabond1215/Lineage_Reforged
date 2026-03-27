@@ -5858,7 +5858,9 @@
                         "primaryOutput":  "glass_vial",
                         "byProducts":  [
                                            "cullet",
-                                           "glass_sheet"
+                                           "glass_sheet",
+                                           "glass_bottle",
+                                           "glass_jar"
                                        ],
                         "recipeProfile":  {
                                               "recipeClass":  "glassmaking",
@@ -6145,6 +6147,14 @@
                                    ],
                         "primaryOutput":  "crate",
                         "byProducts":  [
+                                           "basket",
+                                           "bucket",
+                                           "cellar_rack",
+                                           "sack",
+                                           "jar",
+                                           "pack_frame",
+                                           "wagon_wheel",
+                                           "wagon_fittings",
                                            "wooden_stool",
                                            "offcut_lumber"
                                        ],
@@ -11943,6 +11953,14 @@
                                    ],
                         "primaryOutput":  "casual_tunic",
                         "byProducts":  [
+                                           "apron",
+                                           "work_hat",
+                                           "backpack",
+                                           "sack",
+                                           "pack_harness",
+                                           "sled_harness",
+                                           "reins",
+                                           "saddle",
                                            "travel_hood",
                                            "work_gloves",
                                            "utility_belt",
@@ -12107,6 +12125,8 @@
                                    ],
                         "primaryOutput":  "travel_cloak",
                         "byProducts":  [
+                                           "casual_cloak",
+                                           "blanket",
                                            "padded_gambeson",
                                            "cloth_scrap"
                                        ],
@@ -12347,7 +12367,8 @@
                         "byProducts":  [
                                            "cord",
                                            "binding_strip",
-                                           "wick"
+                                           "wick",
+                                           "rope"
                                        ],
                         "recipeProfile":  {
                                               "recipeClass":  "assembly",
@@ -12668,6 +12689,13 @@
                                    ],
                         "primaryOutput":  "hammer",
                         "byProducts":  [
+                                           "hoe",
+                                           "sickle",
+                                           "scythe",
+                                           "rake",
+                                           "shovel",
+                                           "pitchfork",
+                                           "thresher_flail",
                                            "pickaxe",
                                            "butcher_knife",
                                            "fillet_knife",
@@ -12857,6 +12885,7 @@
                         "primaryOutput":  "brigandine_plate",
                         "byProducts":  [
                                            "mail_coif",
+                                           "plate_helm",
                                            "metal_scrap",
                                            "tallow_scrap"
                                        ],

@@ -23,6 +23,7 @@ import {
   type SettlementContentRecord
 } from "./content.js";
 import { resolveCoverageDimension, resolveResourceFamilies } from "./resource-taxonomy.js";
+import { resolveSettlementSupplyCapability } from "./spatial-world.js";
 
 const LEVEL_ORDER: EconomyHierarchyLevel[] = ["workplace", "building", "settlement", "subregion", "region", "continent"];
 const LEVEL_INDEX = new Map(LEVEL_ORDER.map((level, index) => [level, index]));
@@ -436,6 +437,15 @@ function buildWorkplaceNode(
   const specializationFactor = getSettlementEconomicSupplyFactor(settlement, itemKey);
   const tradeAccessFactor = getTradeAccessFactor(settlement, locality);
   const survivalFactor = getSurvivalProductionFactor(settlement);
+  const spatialCapability = resolveSettlementSupplyCapability({
+    settlementId: settlement.id,
+    itemKey
+  });
+  const spatialFactor = spatialCapability.usable
+    ? spatialCapability.supplyFactor
+    : role === "secondary" && spatialCapability.accessible
+      ? spatialCapability.supplyFactor * 0.55
+      : spatialCapability.supplyFactor;
   const supplyRate =
     getPopulationFactor(settlement) *
     getInfrastructureFactor(settlement) *
@@ -445,6 +455,7 @@ function buildWorkplaceNode(
     specializationFactor *
     tradeAccessFactor *
     survivalFactor *
+    spatialFactor *
     baseWeight;
 
   addFlow(balanceMap, itemKey, supplyRate, 0);

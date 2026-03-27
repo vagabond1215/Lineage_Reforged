@@ -316,6 +316,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "ale"
+                                        ],
                         "roles":  [
                                       "ingredient",
                                       "trade_good",
@@ -4629,6 +4632,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "barrel"
+                                        ],
                         "roles":  [
                                       "material",
                                       "trade_good"
@@ -4683,6 +4689,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "boots"
+                                        ],
                         "valueProfile":  {
                                              "valueMode":  "recipe_derived",
                                              "materialCostModel":  "input_rollup",
@@ -4743,6 +4752,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "tunic"
+                                        ],
                         "valueProfile":  {
                                              "valueMode":  "recipe_derived",
                                              "materialCostModel":  "input_rollup",
@@ -8021,6 +8033,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "meat"
+                                        ],
                         "roles":  [
                                       "ingredient",
                                       "trade_good"
@@ -11095,6 +11110,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "dairy"
+                                        ],
                         "roles":  [
                                       "consumable",
                                       "ingredient",
@@ -11542,6 +11560,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "wild_meat"
+                                        ],
                         "roles":  [
                                       "ingredient",
                                       "trade_good",
@@ -19577,6 +19598,10 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "oil",
+                                            "lamp_oil"
+                                        ],
                         "valueProfile":  {
                                              "valueMode":  "recipe_derived",
                                              "materialCostModel":  "input_rollup",
@@ -20252,6 +20277,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "harness"
+                                        ],
                         "valueProfile":  {
                                              "valueMode":  "recipe_derived",
                                              "materialCostModel":  "input_rollup",
@@ -21502,6 +21530,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "helmet"
+                                        ],
                         "valueProfile":  {
                                              "valueMode":  "recipe_derived",
                                              "materialCostModel":  "input_rollup",
@@ -29102,6 +29133,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "flail"
+                                        ],
                         "valueProfile":  {
                                              "valueMode":  "recipe_derived",
                                              "materialCostModel":  "input_rollup",
@@ -29694,6 +29728,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "cloak"
+                                        ],
                         "tags":  [
                                      "textile",
                                      "finished",
@@ -29729,6 +29766,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "hood"
+                                        ],
                         "tags":  [
                                      "clothing",
                                      "finished",
@@ -30332,6 +30372,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "produce"
+                                        ],
                         "roles":  [
                                       "ingredient",
                                       "trade_good"
@@ -31474,6 +31517,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "wine"
+                                        ],
                         "roles":  [
                                       "ingredient",
                                       "trade_good",
@@ -32214,6 +32260,9 @@
                         "currencyId":  "currency.crown_standard",
                         "valueUnit":  "copper_penny",
                         "marketable":  true,
+                        "aliasKeys":  [
+                                            "gloves"
+                                        ],
                         "tags":  [
                                      "clothing",
                                      "finished",
@@ -32528,6 +32577,346 @@
                                              "laborIntensity":  "moderate",
                                              "processingIntensity":  "standard",
                                              "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.plow",
+                        "itemKey":  "plow",
+                        "name":  "Plow",
+                        "itemClass":  "tool",
+                        "itemBranch":  "agriculture",
+                        "itemSubBranch":  "field",
+                        "baseValue":  52,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "heavy",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "hard",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.pitchfork",
+                        "itemKey":  "pitchfork",
+                        "name":  "Pitchfork",
+                        "itemClass":  "tool",
+                        "itemBranch":  "agriculture",
+                        "itemSubBranch":  "hand_tool",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.reins",
+                        "itemKey":  "reins",
+                        "name":  "Reins",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "agriculture",
+                        "itemSubBranch":  "tack",
+                        "baseValue":  10,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.saddle",
+                        "itemKey":  "saddle",
+                        "name":  "Saddle",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "agriculture",
+                        "itemSubBranch":  "tack",
+                        "baseValue":  34,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.pack_frame",
+                        "itemKey":  "pack_frame",
+                        "name":  "Pack Frame",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "land",
+                        "itemSubBranch":  "utility",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.wagon_wheel",
+                        "itemKey":  "wagon_wheel",
+                        "name":  "Wagon Wheel",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "land",
+                        "itemSubBranch":  "component",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.wagon_fittings",
+                        "itemKey":  "wagon_fittings",
+                        "name":  "Wagon Fittings",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "metal",
+                        "itemSubBranch":  "fitting",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "precision",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.sack",
+                        "itemKey":  "sack",
+                        "name":  "Sack",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "textile",
+                        "itemSubBranch":  "container",
+                        "baseValue":  8,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "easy",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.jar",
+                        "itemKey":  "jar",
+                        "name":  "Jar",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "utility",
+                        "itemSubBranch":  "container",
+                        "baseValue":  9,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "easy",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.glass_bottle",
+                        "itemKey":  "glass_bottle",
+                        "name":  "Glass Bottle",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "utility",
+                        "itemSubBranch":  "container",
+                        "baseValue":  16,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "fuel_heavy",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.glass_jar",
+                        "itemKey":  "glass_jar",
+                        "name":  "Glass Jar",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "utility",
+                        "itemSubBranch":  "container",
+                        "baseValue":  18,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "fuel_heavy",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.backpack",
+                        "itemKey":  "backpack",
+                        "name":  "Backpack",
+                        "itemClass":  "accessory",
+                        "itemBranch":  "travel",
+                        "itemSubBranch":  "pack",
+                        "baseValue":  28,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "moderate",
+                                             "demandBand":  "utility"
+                                         }
+                    },
+                    {
+                        "id":  "item.apron",
+                        "itemKey":  "apron",
+                        "name":  "Apron",
+                        "itemClass":  "clothing",
+                        "itemBranch":  "workwear",
+                        "itemSubBranch":  "torso",
+                        "baseValue":  14,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "easy",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.work_hat",
+                        "itemKey":  "work_hat",
+                        "name":  "Work Hat",
+                        "itemClass":  "clothing",
+                        "itemBranch":  "workwear",
+                        "itemSubBranch":  "headwear",
+                        "baseValue":  12,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "light",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "easy",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.soap",
+                        "itemKey":  "soap",
+                        "name":  "Soap",
+                        "itemClass":  "consumable",
+                        "itemBranch":  "household",
+                        "itemSubBranch":  "hygiene",
+                        "baseValue":  7,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "easy",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.blanket",
+                        "itemKey":  "blanket",
+                        "name":  "Blanket",
+                        "itemClass":  "clothing",
+                        "itemBranch":  "textile",
+                        "itemSubBranch":  "bedding",
+                        "baseValue":  24,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "easy",
+                                             "demandBand":  "common"
+                                         }
+                    },
+                    {
+                        "id":  "item.rope",
+                        "itemKey":  "rope",
+                        "name":  "Rope",
+                        "itemClass":  "commodity",
+                        "itemBranch":  "textile",
+                        "itemSubBranch":  "cordage",
+                        "baseValue":  20,
+                        "currencyId":  "currency.crown_standard",
+                        "valueUnit":  "copper_penny",
+                        "marketable":  true,
+                        "valueProfile":  {
+                                             "valueMode":  "recipe_derived",
+                                             "materialCostModel":  "input_rollup",
+                                             "laborIntensity":  "moderate",
+                                             "processingIntensity":  "standard",
+                                             "difficultyTier":  "easy",
                                              "demandBand":  "utility"
                                          }
                     },

@@ -74,6 +74,21 @@
                   "type": "number",
                   "minimum": 0.01
                 },
+                "baseKilometersPerDay": {
+                  "type": "number",
+                  "minimum": 0.01
+                },
+                "allowedEdgeTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                  }
+                },
+                "barrierSensitivity": {
+                  "type": "string",
+                  "enum": ["low", "moderate", "high", "very_high"]
+                },
                 "notes": {
                   "type": "string",
                   "minLength": 1
@@ -338,6 +353,10 @@
             "coastal_lane"
           ]
         },
+        "routeType": {
+          "type": "string",
+          "enum": ["road", "trail", "river", "ferry", "pass", "sea_lane"]
+        },
         "distanceMiles": {
           "type": "number",
           "minimum": 1
@@ -379,6 +398,49 @@
             "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
           }
         },
+        "orderedHexIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "edgeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^world_hex_edge\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "accessRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "signage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "corridorName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "forward": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reverse": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "intraHexDistanceKm": {
+          "type": "number",
+          "minimum": 0.01
+        },
         "travelTimeEstimates": {
           "type": "array",
           "minItems": 1,
@@ -400,9 +462,8 @@
         "name",
         "fromSettlementId",
         "toSettlementId",
-        "laneClass",
+        "routeClass",
         "distanceMiles",
-        "seaRegionIds",
         "terrainTags",
         "featureTags",
         "availableModeIds",
@@ -426,12 +487,15 @@
           "type": "string",
           "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
         },
-        "laneClass": {
+        "routeClass": {
           "type": "string",
           "enum": [
-            "intercoastal",
-            "open_ocean"
+            "coastal_lane"
           ]
+        },
+        "routeType": {
+          "type": "string",
+          "enum": ["sea_lane"]
         },
         "distanceMiles": {
           "type": "number",
@@ -439,7 +503,6 @@
         },
         "seaRegionIds": {
           "type": "array",
-          "minItems": 1,
           "items": {
             "type": "string",
             "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
@@ -481,6 +544,49 @@
             "type": "string",
             "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
           }
+        },
+        "orderedHexIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "edgeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^world_hex_edge\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "accessRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "signage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "corridorName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "forward": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reverse": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "intraHexDistanceKm": {
+          "type": "number",
+          "minimum": 0.01
         },
         "travelTimeEstimates": {
           "type": "array",

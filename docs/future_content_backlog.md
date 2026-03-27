@@ -54,45 +54,66 @@ This file tracks content and systems that are intentionally deferred.
 #### Regionally updated supply and demand
 
 - Status: partially deferred
-- Prerequisite: hierarchy ledgers now exist; remaining prerequisites are trade-lane throughput resolution, storage fulfillment, settlement stockpiles, and kingdom definitions
+- Prerequisite: hierarchy ledgers, settlement market states, transport runtime, and first-pass autonomous trade dispatch now exist; remaining prerequisites are longer-horizon storage fulfillment, kingdom definitions, and broader market-service consumers
 - Intended owner: economy simulation, market systems, and region data
 - Intended implementation:
   - first-pass macro-region ecology, region survivability, locality catchment, and import/export baselines now exist for the authored world
   - the civilization tick now builds per-tick supply/demand ledgers and shortfall/surplus summaries across `workplace`, `building`, `settlement`, `region`, and top-level continent ledger nodes
   - guild halls now contribute building-level supply/demand pressure and can issue quests from those ledgers, including synthesized adventurers-guild fallback presence when a settlement has other guild business but no explicit adventurers hall
-  - remaining work is to resolve actual fulfillment across travel lanes, move goods between stockpiles, and layer kingdom-level aggregation once kingdoms exist
+  - the civilization tick now performs first-pass deterministic trade dispatch from protected surplus into real caravan movement, with stock removal at origin, delivery at destination, and local price pressure updates routed through the transport system
+  - remaining work is to deepen stockpile fulfillment beyond first-pass dispatch, reconcile longer-horizon storage drawdown/replenishment, and layer kingdom-level aggregation once kingdoms exist
   - tie shortages, surpluses, and trade specialization to local ecology, infrastructure, workplace density, and route throughput instead of treating ledgers as descriptive totals only
 
 #### Settlement consumption, growth, and routing
 
 - Status: partially deferred
-- Prerequisite: authored region-first settlement and locality data now exists; remaining prerequisites are runtime population-consumption rules, route throughput, migration/urban growth logic, corridor-aware routing, and region-aware infrastructure service effects
+- Prerequisite: authored region-first settlement and locality data, the hex spatial layer, deterministic corridor routing, first-pass caravan runtime, settlement population/business/infrastructure derivation, and autonomous trade dispatch now exist; remaining prerequisites are household consumption drawdown, migration and urban-growth logic, business lifecycle simulation, and richer seasonal route-throughput effects
 - Intended owner: region data, economy simulation, settlement simulation, and infrastructure routing systems
 - Intended implementation:
   - authored settlement records now live in `packages/content/base/world/settlements.json`
   - authored locality-band records now live in `packages/content/base/world/region_localities.json`
-  - settlement records now derive simulation truth from `macroRegionId`, `regionId`, `localityBandId`, `siteClass`, `terrainContext`, survivability, and trade dependency rather than `mapLocation`
-  - authored map scale benchmarks and route metadata still live in `packages/content/base/world/world_maps.json` and `packages/content/base/world/travel_networks.json`, but they are no longer settlement-placement truth
+  - settlement records now derive simulation truth from `macroRegionId`, `regionId`, `localityBandId`, `hexAnchorId`, `siteClass`, `terrainContext`, survivability, and trade dependency rather than `mapLocation`
+  - authored map scale benchmarks and optional route geometry still live in `packages/content/base/world/world_maps.json` and `packages/content/base/world/travel_networks.json`, but they are no longer settlement-placement or travel-truth ownership
   - browser-facing raster map layers and feature overlays remain useful for display/debug/reference ownership
   - the settlement layer now includes both primary centers and a first dependent-settlement layer of estates, hamlets, monasteries, ferry posts, camps, and similar support sites
   - settlement records now include authored guild-building presence for major human trade, craft, logistics, and adventuring nodes
-  - use those records plus region/locality data as the canonical layer for domestic production, regional trade links, infrastructure level, and population-center identity
-  - add runtime settlement demand, storage pressure, migration, and urban growth instead of leaving settlement sizes as static authored values
+  - the spatial world layer now lives in `packages/content/base/world/world_hexes.json`, `packages/content/base/world/world_hex_edges.json`, and hex/corridor-aware travel records, with runtime consumers deriving settlement resource access and infrastructure-gated supply from nearby reachable hexes
+  - `packages/engines/civilization-engine/src/settlement-simulation.ts` now derives population structure, labor classes, infrastructure throughput/storage/security, transport availability, and business composition from settlement scale, ecology, and route context
+  - `packages/engines/civilization-engine/src/trade-runtime.ts` now detects surplus-demand opportunities, enforces protected reserves, dispatch cadence, throughput slots, fill-ratio and profit thresholds, destination absorption, and asset reservations, then dispatches caravans automatically through the existing segment-based transport runtime
+  - `packages/engines/civilization-engine/src/index.ts` now emits settlement and trade deltas alongside economy, market, logistics, and quest updates
+  - use those records plus region/locality/hex data as the canonical layer for domestic production, regional trade links, infrastructure level, and population-center identity
+  - remaining work is to add explicit household consumption drawdown, long-horizon storage depletion/replenishment, migration, urban growth, business opening/closure, and infrastructure-service degradation instead of leaving settlement sizes and enterprise counts mostly static between ticks
 
 #### Region-first settlement truth and map demotion
 
 - Status: partially deferred
-- Prerequisite: the region-first location refactor is now in place across `regions.json`, `regional_ecology_profiles.json`, `region_localities.json`, `settlements.json`, schemas, linting, and economy loaders; remaining prerequisites are corridor-first route records and route/trade runtime consumers
+- Prerequisite: the region-first location refactor is now in place across `regions.json`, `regional_ecology_profiles.json`, `region_localities.json`, `settlements.json`, `world_hexes.json`, `world_hex_edges.json`, schemas, linting, and economy loaders; remaining prerequisites are route throughput, caravan/trade runtime consumers, and optional weather/season overlays on segment travel
 - Intended owner: world region content, settlement schemas, travel data, content lint, and civilization runtime loaders
 - Intended implementation:
   - `packages/content/base/world/regions.json` and `packages/content/base/world/regional_ecology_profiles.json` now own survivability, density, catchment, and supply/demand baseline fields used by runtime systems
   - `packages/content/base/world/region_localities.json` now formalizes the `macro region -> region -> locality band -> settlement/site` hierarchy and locality-band terrain-pocket logic
-  - `packages/content/base/world/settlements.json` now uses region/locality identity, `siteClass`, `terrainContext`, `economicModel`, `survivalModel`, and `tradeDependencyProfile` as settlement simulation truth, with old map coordinates retained only under optional `visualMapRef`
+  - `packages/content/base/world/settlements.json` now uses region/locality identity, `hexAnchorId`, `siteClass`, `terrainContext`, `economicModel`, `survivalModel`, and `tradeDependencyProfile` as settlement simulation truth, with old map coordinates retained only under optional `visualMapRef`
+  - `packages/content/base/world/world_hexes.json` now provides the coarse spatial continuity layer, while `packages/content/base/world/world_hex_edges.json` owns adjacency, edge barriers, route quality, and travel-mode permissions
+  - `packages/content/base/world/travel_networks.json` now uses hex-ordered route records and segment-aware corridor metadata as travel truth, with `pathPoints` and similar geometry retained only as optional visual overlays
   - `tools/content-lint/index.mjs` and `packages/schemas/world/settlement.schema.json` now validate region-first settlement truth and no longer require pixel-coordinate placement or biome/climate polygon membership
   - biome and elevation influence are now expressed through region and locality simulation fields rather than brittle raster-coordinate truth
   - `packages/content/base/world/world_maps.json`, `packages/content/base/world/world_map_features.json`, and the related browser/scripts pipeline are now optional visual/debug/reference ownership instead of settlement-truth ownership
-  - remaining work is to refactor `packages/content/base/world/travel_networks.json` further toward corridor-first route records so trade/path systems no longer lean on optional endpoint geometry
-  - remaining work is to let future import/export baselines, settlement dependency, caravan routing, and trade simulation consume the region-first settlement model end to end
+  - remaining work is to let future route throughput, import/export fulfillment, caravan routing, and trade simulation consume the region-first spatial model end to end
+
+#### Hex-grid route throughput and caravan logistics
+
+- Status: partially deferred
+- Prerequisite: the deterministic hex grid, adjacency edges, route records, settlement resource access, mode-aware best-route resolver, transport profiles, first-pass caravan runtime, and autonomous trade dispatch now exist; remaining prerequisites are richer corridor queueing, ferry/toll consumption, weather/season overlays, return-position tracking, and convoy attrition or encounter layers
+- Intended owner: travel simulation, economy fulfillment, logistics runtime, and future caravan systems
+- Intended implementation:
+  - use `packages/content/base/world/world_hexes.json`, `packages/content/base/world/world_hex_edges.json`, and `packages/content/base/world/travel_networks.json` as the single spatial/travel truth for convoy and caravan movement
+  - `packages/content/base/world/transport_profiles.json` now owns harness, draft-animal, vehicle, and ship profiles for deterministic transport resolution
+  - `packages/engines/civilization-engine/src/transport-runtime.ts` now resolves vehicle/animal compatibility, nonlinear load and pull scaling, fatigue/rest, segment-by-segment movement, stock loading/unloading, and destination delivery against the authored route network
+  - `packages/engines/civilization-engine/src/index.ts` now advances caravan transport state during civilization ticks and surfaces logistics deltas alongside economy and market updates
+  - `packages/engines/civilization-engine/src/trade-runtime.ts` now uses settlement-derived throughput, protected reserves, destination absorption, route validity, vehicle availability, and route-scale limits to dispatch caravans deterministically instead of requiring dispatch to be a purely explicit action
+  - remaining work is to deepen corridor throughput from a first-pass route-scale limit into per-segment queueing, ferry/toll consumption, explicit return positioning, multi-unit convoy state, and richer stockpile transfer policies
+  - layer optional weather/season modifiers and convoy attrition on segment travel after the deterministic baseline is exercised by settlement demand and trade fulfillment
+  - keep caravan routing deterministic and explainable, using the current segment-level penalty breakdowns as the future debugging surface
 
 ### Crafting And Item Expansion
 
@@ -165,6 +186,17 @@ This file tracks content and systems that are intentionally deferred.
   - keep infrastructure tiers gated by technology, materials, and labor rather than staffing
   - preserve the direct-build rule for higher tiers and the higher-labor retrofit rule for upgrades so infrastructure remains distinct from workplaces
   - add runtime-aware canal routing, lock throughput, and drydock usage after transport simulation can consume infrastructure service outputs directly
+
+#### Settlement plot and building instantiation
+
+- Status: partially complete
+- Prerequisite: runtime district, plot, building-condition, repair, and morale initialization now exist; remaining prerequisite is player-facing construction/repair interaction and long-horizon building turnover
+- Intended owner: settlement spatial simulation, building placement, plot/building gameplay, and future construction systems
+- Intended implementation:
+  - use `packages/content/base/civilization/buildings.json` as the canonical building-capability layer, including hosted workplaces, service functions, storage types, and terrain/placeability constraints
+  - keep the current building layer as simulation truth for capacity and function; runtime settlement initialization now derives districts, plots, building instances, vacancy, decay, repair pressure, and morale directly from that layer
+  - add player-facing construction, redevelopment, frontage choice, and repair prioritization later on top of the current runtime plot/building state instead of replacing it
+  - let future placeability consume `hexAnchorId`, `terrainContext`, locality route access, and settlement infrastructure instead of reintroducing pixel placement or arbitrary building slots
 
 ### Knowledge and Research
 

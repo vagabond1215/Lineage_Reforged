@@ -12,6 +12,17 @@ import {
   resolveItemValueAtSettlement,
   resolveLocalMarketPrice
 } from "./runtime-economy.js";
+import {
+  advanceTransportState
+} from "./transport-runtime.js";
+import {
+  buildSettlementSimulationProfiles,
+  resolveSettlementSimulationProfile
+} from "./settlement-simulation.js";
+import {
+  evaluateAutonomousTradeOpportunities,
+  runAutonomousTradeDispatch
+} from "./trade-runtime.js";
 
 export {
   buildSettlementMarketStates,
@@ -20,6 +31,37 @@ export {
   resolveLocalMarketPrice
 } from "./runtime-economy.js";
 
+export {
+  advanceTransportState,
+  applyStockAdjustmentsToMarketStates,
+  createEmptyCivilizationTransportState,
+  dispatchCaravan,
+  resolveTransportPerformance
+} from "./transport-runtime.js";
+
+export {
+  buildSettlementSimulationProfiles,
+  resolveSettlementSimulationProfile
+} from "./settlement-simulation.js";
+
+export {
+  evaluateAutonomousTradeOpportunities,
+  runAutonomousTradeDispatch
+} from "./trade-runtime.js";
+
+export {
+  buildSimulationConsistencyReport
+} from "./simulation-consistency.js";
+
+export {
+  buildSpatialWorldContext,
+  describeRouteDirection,
+  resolveBestRoute,
+  resolveHexResourceAvailability,
+  resolveSettlementResourceAccess,
+  resolveSettlementSupplyCapability
+} from "./spatial-world.js";
+
 export function tickCivilization(context: CivilizationTickContext): TickResult<CivilizationDelta> {
   const { economy: rebuiltEconomy, warnings: bootstrapWarnings } = buildEconomyStateFromContent(context.state.settlements, context.clock);
   context.state.economy.nodes = rebuiltEconomy.nodes;
@@ -27,11 +69,25 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
 
   const { snapshots, warnings: economyWarnings } = aggregateEconomyHierarchy(context.state.economy);
   const levelTotals = summarizeEconomyLevels(snapshots);
-  const marketStates = buildSettlementMarketStates({
+  let marketStates = buildSettlementMarketStates({
     settlementIds: context.state.settlements,
     snapshots,
     clock: context.clock
   });
+  const transportResult = advanceTransportState({
+    transportState: context.state.transport,
+    marketStates,
+    elapsedDays: 1,
+    tick: context.clock.tick
+  });
+  marketStates = transportResult.marketStates;
+  const autoTradeResult = runAutonomousTradeDispatch({
+    settlementIds: context.state.settlements,
+    marketStates,
+    transportState: transportResult.transportState,
+    tick: context.clock.tick
+  });
+  marketStates = autoTradeResult.marketStates;
   const { nextState: nextQuestState, warnings: questWarnings } = generateQuestOffers(
     context.state.settlements,
     snapshots,
@@ -42,6 +98,7 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
   context.state.economy.lastSnapshots = snapshots;
   context.state.economy.lastLevelTotals = levelTotals;
   context.state.economy.marketStates = marketStates;
+  context.state.transport = autoTradeResult.transportState;
   context.state.quests = nextQuestState;
 
   const settlementSnapshots = snapshots.filter((snapshot) => snapshot.level === "settlement");
@@ -104,6 +161,81 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
     }
   };
 
+  const logisticsDelta: CivilizationDelta = {
+    kind: "logistics",
+    payload: {
+      tick: context.clock.tick,
+      caravanCount: autoTradeResult.transportState.caravans.length,
+      activeCaravanCount: autoTradeResult.transportState.caravans.filter((caravan) => caravan.status === "in_transit").length,
+      restingCaravanCount: autoTradeResult.transportState.caravans.filter((caravan) => caravan.status === "resting").length,
+      arrivedCaravanCount: autoTradeResult.transportState.caravans.filter((caravan) => caravan.status === "arrived").length,
+      blockedCaravanCount: autoTradeResult.transportState.caravans.filter((caravan) => caravan.status === "blocked").length,
+      appliedStockAdjustmentCount: autoTradeResult.transportState.stockAdjustments.length,
+      reservedTransportUnitCount: autoTradeResult.transportState.assetReservations.length,
+      routeProgressUpdates: transportResult.results.length
+    }
+  };
+
+  const tradeDelta: CivilizationDelta = {
+    kind: "trade",
+    payload: {
+      tick: context.clock.tick,
+      evaluatedOpportunityCount: autoTradeResult.opportunities.length,
+      viableOpportunityCount: autoTradeResult.opportunities.filter((opportunity) => opportunity.viable).length,
+      dispatchedCount: autoTradeResult.dispatched.length,
+      reservedTransportUnitCount: autoTradeResult.transportState.assetReservations.length,
+      topRoutes: autoTradeResult.dispatched
+        .flatMap((opportunity) => opportunity.routeIds)
+        .slice(0, 8),
+      topItems: autoTradeResult.dispatched.map((opportunity) => opportunity.itemKey).slice(0, 8)
+    }
+  };
+
+  const settlementDelta: CivilizationDelta = {
+    kind: "settlement",
+    payload: {
+      tick: context.clock.tick,
+      settlementProfileCount: autoTradeResult.settlementProfiles.length,
+      totalPopulation: autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.population.totalPopulation, 0),
+      totalWorkforcePopulation: autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.population.workforcePopulation, 0),
+      totalBusinessCount: autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.businesses.length, 0),
+      totalDistrictCount: autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.districts.length, 0),
+      totalPlotCount: autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.plots.length, 0),
+      vacantPlotCount: autoTradeResult.settlementProfiles.reduce(
+        (sum, profile) => sum + profile.plots.filter((plot) => plot.state === "vacant").length,
+        0
+      ),
+      degradedPlotCount: autoTradeResult.settlementProfiles.reduce(
+        (sum, profile) => sum + profile.plots.filter((plot) => plot.state === "dilapidated" || plot.state === "abandoned").length,
+        0
+      ),
+      totalRepairProjectCount: autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.repairProjects.length, 0),
+      averageMoraleScore:
+        autoTradeResult.settlementProfiles.length > 0
+          ? Number(
+              (
+                autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.morale.moraleScore, 0) /
+                autoTradeResult.settlementProfiles.length
+              ).toFixed(4)
+            )
+          : 0,
+      totalTransportUnitAvailability: autoTradeResult.settlementProfiles.reduce(
+        (sum, profile) =>
+          sum + profile.infrastructure.transportAvailability.reduce((inner, entry) => inner + entry.availableUnits, 0),
+        0
+      ),
+      averageStorageUtilization:
+        autoTradeResult.settlementProfiles.length > 0
+          ? Number(
+              (
+                autoTradeResult.settlementProfiles.reduce((sum, profile) => sum + profile.infrastructure.storageUtilization, 0) /
+                autoTradeResult.settlementProfiles.length
+              ).toFixed(4)
+            )
+          : 0
+    }
+  };
+
   const questDelta: CivilizationDelta = {
     kind: "quests",
     payload: {
@@ -120,7 +252,7 @@ export function tickCivilization(context: CivilizationTickContext): TickResult<C
   return {
     domain: "civilization",
     appliedTick: context.clock.tick,
-    deltas: [economyDelta, marketDelta, questDelta],
+    deltas: [economyDelta, marketDelta, logisticsDelta, tradeDelta, settlementDelta, questDelta],
     emittedEvents: [
       createEvent(EVENT_TYPES.ECONOMY_LEDGER_UPDATED, "civilization", context.clock.tick, {
         snapshotCount: snapshots.length,

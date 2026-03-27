@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "fromHexId",
+          "toHexId",
+          "edgeType",
+          "hexSpan",
+          "routeQuality",
+          "crossingDifficulty",
+          "barrierTags",
+          "allowedTravelModes",
+          "directionFrom",
+          "directionTo",
+          "corridorName"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^world_hex_edge\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "fromHexId": {
+            "type": "string",
+            "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "toHexId": {
+            "type": "string",
+            "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "edgeType": {
+            "type": "string",
+            "enum": ["road", "trail", "river", "pass", "ferry", "sea_lane", "none"]
+          },
+          "hexSpan": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "routeQuality": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "crossingDifficulty": {
+            "type": "number",
+            "minimum": 0.1
+          },
+          "barrierTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "allowedTravelModes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "directionFrom": {
+            "type": "string",
+            "minLength": 1
+          },
+          "directionTo": {
+            "type": "string",
+            "minLength": 1
+          },
+          "corridorName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "terrainTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "featureTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

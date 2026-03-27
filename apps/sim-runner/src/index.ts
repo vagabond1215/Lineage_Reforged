@@ -164,6 +164,14 @@ export function runSingleTick(): void {
           lastLevelTotals: [],
           marketStates: []
         },
+        transport: {
+          caravans: [],
+          stockAdjustments: [],
+          nextCaravanOrdinal: 1,
+          assetReservations: [],
+          lastEvaluatedOpportunities: [],
+          lastProcessedTick: 0
+        },
         quests: {
           activeOffers: [],
           lastGeneratedTick: 0

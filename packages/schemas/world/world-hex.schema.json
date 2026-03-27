@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "regionId",
+          "localityBandId",
+          "biomeFamily",
+          "elevationBand",
+          "terrainType",
+          "freshwaterType",
+          "habitabilityScore",
+          "frictionByMode",
+          "barrierTags",
+          "hazardTags",
+          "resourceAffinityTags",
+          "anchoredSettlementIds"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "regionId": {
+            "type": "string",
+            "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "localityBandId": {
+            "type": "string",
+            "pattern": "^region_locality\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "biomeFamily": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "elevationBand": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "terrainType": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "freshwaterType": {
+            "type": "string",
+            "enum": ["none", "stream", "river", "coast", "marsh"]
+          },
+          "habitabilityScore": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "frictionByMode": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["foot", "horseback", "pack_animal", "wagon", "river_craft", "sea_vessel"],
+            "properties": {
+              "foot": { "type": "number", "minimum": 0.1 },
+              "horseback": { "type": "number", "minimum": 0.1 },
+              "pack_animal": { "type": "number", "minimum": 0.1 },
+              "wagon": { "type": "number", "minimum": 0.1 },
+              "river_craft": { "type": "number", "minimum": 0.1 },
+              "sea_vessel": { "type": "number", "minimum": 0.1 }
+            }
+          },
+          "barrierTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "hazardTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "resourceAffinityTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          },
+          "anchoredSettlementIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -13,11 +13,13 @@ test("region-first world data exposes survivability and locality hierarchy", asy
   const ecologyProfiles = await loadRecords("packages/content/base/world/regional_ecology_profiles.json");
   const localities = await loadRecords("packages/content/base/world/region_localities.json");
   const settlements = await loadRecords("packages/content/base/world/settlements.json");
+  const hexes = await loadRecords("packages/content/base/world/world_hexes.json");
 
   assert.ok(regions.length > 0, "expected authored regions");
   assert.ok(ecologyProfiles.length > 0, "expected ecology profiles");
   assert.ok(localities.length > 0, "expected region locality bands");
   assert.ok(settlements.length > 0, "expected authored settlements");
+  assert.ok(hexes.length > 0, "expected authored world hexes");
 
   for (const region of regions) {
     if (region.regionType === "ocean") {
@@ -56,9 +58,11 @@ test("settlements derive from locality bands instead of pixel truth", async () =
   const regions = await loadRecords("packages/content/base/world/regions.json");
   const localities = await loadRecords("packages/content/base/world/region_localities.json");
   const settlements = await loadRecords("packages/content/base/world/settlements.json");
+  const hexes = await loadRecords("packages/content/base/world/world_hexes.json");
 
   const regionById = new Map(regions.map((region) => [region.id, region]));
   const localityById = new Map(localities.map((locality) => [locality.id, locality]));
+  const hexById = new Map(hexes.map((hex) => [hex.id, hex]));
 
   for (const locality of localities) {
     const parentRegion = regionById.get(locality.regionId);
@@ -73,10 +77,15 @@ test("settlements derive from locality bands instead of pixel truth", async () =
   for (const settlement of settlements) {
     const locality = localityById.get(settlement.localityBandId);
     assert.ok(locality, `missing locality ${settlement.localityBandId} for ${settlement.id}`);
+    const hex = hexById.get(settlement.hexAnchorId);
+    assert.ok(hex, `missing hex ${settlement.hexAnchorId} for ${settlement.id}`);
     assert.equal(settlement.regionId, locality.regionId, `${settlement.id} region mismatch`);
     assert.equal(settlement.macroRegionId, locality.macroRegionId, `${settlement.id} macro region mismatch`);
     assert.ok(locality.supportedSiteClasses.includes(settlement.siteClass), `${settlement.id} site class not supported`);
     assert.equal(settlement.terrainContext, locality.localityType, `${settlement.id} terrain context mismatch`);
+    assert.equal(hex.regionId, settlement.regionId, `${settlement.id} hex region mismatch`);
+    assert.equal(hex.localityBandId, settlement.localityBandId, `${settlement.id} hex locality mismatch`);
+    assert.ok(hex.anchoredSettlementIds.includes(settlement.id), `${settlement.id} missing from anchoredSettlementIds`);
     assert.equal("mapLocation" in settlement, false, `${settlement.id} still exposes mapLocation`);
     assert.equal(typeof settlement.populationBand, "string");
     assert.equal(typeof settlement.settlementType, "string");

@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "slug", "name", "summary", "harnessProfiles", "animalProfiles", "vehicleProfiles"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^transport_profile\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "harnessProfiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/harnessProfile"
+            }
+          },
+          "animalProfiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/animalProfile"
+            }
+          },
+          "vehicleProfiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/vehicleProfile"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "harnessProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "supportedTransportTypes", "compatibleAnimalIds", "efficiencyModifier", "notes"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^harness\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supportedTransportTypes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["foot", "mounted", "vehicle", "ship"]
+          }
+        },
+        "compatibleAnimalIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^animal\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "efficiencyModifier": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "animalProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "compatibleHarnessIds",
+        "pullStrength",
+        "packCapacityUnits",
+        "speedModifier",
+        "enduranceHours",
+        "inclineHandling",
+        "sprintFactor",
+        "diminishingExponent",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^animal\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compatibleHarnessIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^harness\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "pullStrength": {
+          "type": "number",
+          "minimum": 1
+        },
+        "packCapacityUnits": {
+          "type": "number",
+          "minimum": 1
+        },
+        "speedModifier": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "enduranceHours": {
+          "type": "number",
+          "minimum": 1
+        },
+        "inclineHandling": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "sprintFactor": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "diminishingExponent": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "vehicleProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "transportType",
+        "propulsionType",
+        "routeModeId",
+        "cargoCapacityUnits",
+        "baseWeightUnits",
+        "crewRequired",
+        "baseEnduranceHours",
+        "restDaysPerFatigueCycle",
+        "maxAnimals",
+        "optimalAnimals",
+        "requiredHarnessId",
+        "minimumRoadTier",
+        "minimumWaterTier",
+        "minimumHarborTier",
+        "minimumMarketTier",
+        "minimumFillRatio",
+        "loadingDays",
+        "unloadingDays",
+        "routeScaleCost",
+        "terrainModifiers",
+        "speedModifier",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^vehicle\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transportType": {
+          "type": "string",
+          "enum": ["vehicle", "ship"]
+        },
+        "propulsionType": {
+          "type": "string",
+          "enum": ["human", "draft_animals", "pack_train", "crew"]
+        },
+        "routeModeId": {
+          "type": "string",
+          "pattern": "^travel_mode\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "cargoCapacityUnits": {
+          "type": "number",
+          "minimum": 1
+        },
+        "baseWeightUnits": {
+          "type": "number",
+          "minimum": 1
+        },
+        "crewRequired": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "baseEnduranceHours": {
+          "type": "number",
+          "minimum": 1
+        },
+        "restDaysPerFatigueCycle": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxAnimals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "optimalAnimals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requiredHarnessId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^harness\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimumRoadTier": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimumWaterTier": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimumHarborTier": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimumMarketTier": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimumFillRatio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "loadingDays": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unloadingDays": {
+          "type": "number",
+          "minimum": 0
+        },
+        "routeScaleCost": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "terrainModifiers": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["road", "trail", "pass", "river", "ferry", "sea_lane"],
+          "properties": {
+            "road": { "type": "number", "minimum": 0.01 },
+            "trail": { "type": "number", "minimum": 0.01 },
+            "pass": { "type": "number", "minimum": 0.01 },
+            "river": { "type": "number", "minimum": 0.01 },
+            "ferry": { "type": "number", "minimum": 0.01 },
+            "sea_lane": { "type": "number", "minimum": 0.01 }
+          }
+        },
+        "speedModifier": {
+          "type": "number",
+          "minimum": 0.1
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

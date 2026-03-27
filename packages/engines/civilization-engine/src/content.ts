@@ -60,6 +60,7 @@ export interface SettlementContentRecord {
   macroRegionId: string;
   regionId: string;
   localityBandId: string;
+  hexAnchorId: string;
   settlementType: string;
   siteClass: "surface" | "subterranean" | "underwater";
   terrainContext: string;
@@ -367,6 +368,237 @@ export interface RegionLocalityContentRecord {
   supportedSiteClasses: Array<"surface" | "subterranean" | "underwater">;
 }
 
+export interface ResourceEcologyProfileRecord {
+  compatibleBiomeIds?: string[];
+  compatibleClimateBands?: string[];
+  compatibleElevationBands?: string[];
+  compatibleLocalityTags?: string[];
+  freshwaterAffinity?: "none" | "stream" | "river" | "coast" | "marsh" | "any";
+  rarityTendency?: "abundant" | "common" | "uncommon" | "rare";
+}
+
+export interface BiomeContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  climateBand: string;
+  baseFertility: number;
+  hazards: string[];
+}
+
+export interface HabitatContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  shape: string;
+  biomeId?: string;
+  biomeIds?: string[];
+}
+
+export interface FloraContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  type: string;
+  habitatIds: string[];
+  ecologyProfile?: ResourceEcologyProfileRecord;
+  template?: Record<string, unknown>;
+}
+
+export interface FaunaContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  type: string;
+  habitatIds: string[];
+  dangerClass: string;
+  ecologyProfile?: ResourceEcologyProfileRecord;
+  template?: Record<string, unknown>;
+}
+
+export interface MineralContentRecord {
+  id: string;
+  slug: string;
+  itemKey: string;
+  name: string;
+  tier: number;
+  depositForms: string[];
+  extractionTypes: string[];
+  ecologyProfile?: ResourceEcologyProfileRecord;
+}
+
+export interface WorldHexContentRecord {
+  id: string;
+  slug: string;
+  regionId: string;
+  localityBandId: string;
+  biomeFamily: string;
+  elevationBand: string;
+  terrainType: string;
+  freshwaterType: "none" | "stream" | "river" | "coast" | "marsh";
+  habitabilityScore: number;
+  frictionByMode: Record<string, number>;
+  barrierTags: string[];
+  hazardTags: string[];
+  resourceAffinityTags: string[];
+  anchoredSettlementIds: string[];
+}
+
+export interface WorldHexEdgeContentRecord {
+  id: string;
+  fromHexId: string;
+  toHexId: string;
+  edgeType: string;
+  hexSpan: number;
+  routeQuality: string;
+  crossingDifficulty: number;
+  barrierTags: string[];
+  allowedTravelModes: string[];
+  directionFrom: string;
+  directionTo: string;
+  corridorName: string;
+  terrainTags?: string[];
+  featureTags?: string[];
+}
+
+export interface TravelModeProfileRecord {
+  id: string;
+  name: string;
+  domain: "land" | "water";
+  baseMilesPerDay: number;
+  baseKilometersPerDay?: number;
+  allowedEdgeTypes?: string[];
+  barrierSensitivity?: "low" | "moderate" | "high" | "very_high";
+  notes: string;
+}
+
+export interface TravelTimeEstimateRecord {
+  modeId: string;
+  expectedDays: number;
+  varianceDays: number;
+}
+
+export interface TravelVarianceRuleRecord {
+  tag: string;
+  name: string;
+  summary: string;
+  modeEffects: Array<{
+    modeId: string;
+    speedMultiplier: number;
+    variancePercent: number;
+  }>;
+}
+
+export interface TravelRouteRecord {
+  id: string;
+  name: string;
+  fromSettlementId: string;
+  toSettlementId: string;
+  routeClass: string;
+  routeType?: string;
+  availableModeIds: string[];
+  notes: string;
+  terrainTags: string[];
+  featureTags: string[];
+  distanceMiles: number;
+  travelTimeEstimates: TravelTimeEstimateRecord[];
+  orderedHexIds?: string[];
+  edgeIds?: string[];
+  accessRequirements?: string[];
+  signage?: {
+    corridorName?: string;
+    forward?: string;
+    reverse?: string;
+  };
+  intraHexDistanceKm?: number;
+  seaRegionIds?: string[];
+}
+
+export interface TravelNetworkContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  mapId?: string;
+  summary: string;
+  modeProfiles: TravelModeProfileRecord[];
+  travelBenchmarks: Array<{
+    modeId: string;
+    summary: string;
+    examples: Array<{
+      distanceKilometers: number;
+      distanceMiles: number;
+      expectedDaysMin: number;
+      expectedDaysMax: number;
+    }>;
+  }>;
+  terrainVarianceRules: TravelVarianceRuleRecord[];
+  featureVarianceRules: TravelVarianceRuleRecord[];
+  routeRecords: TravelRouteRecord[];
+  interPortShipRoutes: TravelRouteRecord[];
+}
+
+export interface TransportHarnessProfileRecord {
+  id: string;
+  name: string;
+  supportedTransportTypes: Array<"foot" | "mounted" | "vehicle" | "ship">;
+  compatibleAnimalIds: string[];
+  efficiencyModifier: number;
+  notes: string;
+}
+
+export interface TransportAnimalProfileRecord {
+  id: string;
+  slug: string;
+  name: string;
+  compatibleHarnessIds: string[];
+  pullStrength: number;
+  packCapacityUnits: number;
+  speedModifier: number;
+  enduranceHours: number;
+  inclineHandling: number;
+  sprintFactor: number;
+  diminishingExponent: number;
+  notes: string;
+}
+
+export interface TransportVehicleProfileRecord {
+  id: string;
+  slug: string;
+  name: string;
+  transportType: "vehicle" | "ship";
+  propulsionType: "human" | "draft_animals" | "pack_train" | "crew";
+  routeModeId: string;
+  cargoCapacityUnits: number;
+  baseWeightUnits: number;
+  crewRequired: number;
+  baseEnduranceHours: number;
+  restDaysPerFatigueCycle: number;
+  maxAnimals: number;
+  optimalAnimals: number;
+  requiredHarnessId: string | null;
+  minimumRoadTier: number;
+  minimumWaterTier: number;
+  minimumHarborTier: number;
+  minimumMarketTier: number;
+  minimumFillRatio: number;
+  loadingDays: number;
+  unloadingDays: number;
+  routeScaleCost: number;
+  terrainModifiers: Record<string, number>;
+  speedModifier: number;
+  notes: string;
+}
+
+export interface TransportProfileCatalogRecord {
+  id: string;
+  slug: string;
+  name: string;
+  summary: string;
+  harnessProfiles: TransportHarnessProfileRecord[];
+  animalProfiles: TransportAnimalProfileRecord[];
+  vehicleProfiles: TransportVehicleProfileRecord[];
+}
+
 export interface ItemValueProfileRecord {
   valueMode: "source_derived" | "recipe_derived";
   materialCostModel: "source_effort" | "input_rollup";
@@ -479,6 +711,40 @@ export interface WorkplaceContentRecord {
   };
 }
 
+export interface BuildingStorageProfileRecord {
+  storageType: "granary" | "cellar" | "warehouse" | "vault";
+  capacityUnits: number;
+  goodsFocus: string[];
+}
+
+export interface BuildingContentRecord {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  summary: string;
+  hostedWorkplaceIds: string[];
+  serviceFunctions: string[];
+  triggerBusinessTypes: string[];
+  compatibleSettlementTypes: string[];
+  requiredInfrastructure: {
+    roadTier: number;
+    waterTier: number;
+    harborTier: number;
+    marketTier: number;
+    fortificationTier: number;
+  };
+  placeability: {
+    supportedSiteClasses: Array<"surface" | "subterranean" | "underwater">;
+    allowedTerrainContexts: string[];
+    requiresWaterAccess: boolean;
+    requiresCoastalAccess: boolean;
+    requiresRiverAccess: boolean;
+    requiredRouteModes: string[];
+  };
+  storageProfiles?: BuildingStorageProfileRecord[];
+}
+
 export interface RecipeSkillCheckRecord {
   skillId: string;
   minimumRank: number;
@@ -579,6 +845,13 @@ export function loadSettlementContent(): SettlementContentRecord[] {
   return parsed.records;
 }
 
+export function loadBuildingContent(): BuildingContentRecord[] {
+  const parsed = loadJsonFile<{ records: BuildingContentRecord[] }>(
+    "../../../content/base/civilization/buildings.json"
+  );
+  return parsed.records;
+}
+
 export function loadQuestTemplates(): QuestTemplateRecord[] {
   const parsed = loadJsonFile<{ records: QuestTemplateRecord[] }>("../../../content/base/civilization/quest_templates.json");
   return parsed.records;
@@ -622,8 +895,59 @@ export function loadRegionLocalityContent(): RegionLocalityContentRecord[] {
   return parsed.records;
 }
 
+export function loadWorldHexContent(): WorldHexContentRecord[] {
+  const parsed = loadJsonFile<{ records: WorldHexContentRecord[] }>("../../../content/base/world/world_hexes.json");
+  return parsed.records;
+}
+
+export function loadWorldHexEdgeContent(): WorldHexEdgeContentRecord[] {
+  const parsed = loadJsonFile<{ records: WorldHexEdgeContentRecord[] }>(
+    "../../../content/base/world/world_hex_edges.json"
+  );
+  return parsed.records;
+}
+
+export function loadTravelNetworkContent(): TravelNetworkContentRecord[] {
+  const parsed = loadJsonFile<{ records: TravelNetworkContentRecord[] }>(
+    "../../../content/base/world/travel_networks.json"
+  );
+  return parsed.records;
+}
+
+export function loadTransportProfileContent(): TransportProfileCatalogRecord[] {
+  const parsed = loadJsonFile<{ records: TransportProfileCatalogRecord[] }>(
+    "../../../content/base/world/transport_profiles.json"
+  );
+  return parsed.records;
+}
+
 export function loadWorldMapContent(): WorldMapContentRecord[] {
   const parsed = loadJsonFile<{ records: WorldMapContentRecord[] }>("../../../content/base/world/world_maps.json");
+  return parsed.records;
+}
+
+export function loadBiomeContent(): BiomeContentRecord[] {
+  const parsed = loadJsonFile<{ records: BiomeContentRecord[] }>("../../../content/base/world/biomes.json");
+  return parsed.records;
+}
+
+export function loadHabitatContent(): HabitatContentRecord[] {
+  const parsed = loadJsonFile<{ records: HabitatContentRecord[] }>("../../../content/base/world/habitats.json");
+  return parsed.records;
+}
+
+export function loadFloraContent(): FloraContentRecord[] {
+  const parsed = loadJsonFile<{ records: FloraContentRecord[] }>("../../../content/base/world/flora.json");
+  return parsed.records;
+}
+
+export function loadFaunaContent(): FaunaContentRecord[] {
+  const parsed = loadJsonFile<{ records: FaunaContentRecord[] }>("../../../content/base/world/fauna.json");
+  return parsed.records;
+}
+
+export function loadMineralContent(): MineralContentRecord[] {
+  const parsed = loadJsonFile<{ records: MineralContentRecord[] }>("../../../content/base/world/minerals.json");
   return parsed.records;
 }
 

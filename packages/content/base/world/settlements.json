@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "settlement.aurelis",
@@ -281,7 +281,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_south",
                                              "biomeZoneId":  "map_biome.first_world.verdant_thalos_woodland",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.verdant_thalos_coastal_bays"
                     },
                     {
                         "id":  "settlement.vinecross",
@@ -511,7 +512,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_south",
                                              "biomeZoneId":  "map_biome.first_world.verdant_thalos_woodland",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.verdant_thalos_inland_estates"
                     },
                     {
                         "id":  "settlement.oliveford",
@@ -712,7 +714,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_south",
                                              "biomeZoneId":  "map_biome.first_world.verdant_thalos_woodland",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.verdant_thalos_inland_estates"
                     },
                     {
                         "id":  "settlement.sunmeadow",
@@ -928,7 +931,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_south",
                                              "biomeZoneId":  "map_biome.first_world.verdant_thalos_woodland",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.verdant_thalos_inland_estates"
                     },
                     {
                         "id":  "settlement.redcliff_quay",
@@ -1151,7 +1155,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_south",
                                              "biomeZoneId":  "map_biome.first_world.verdant_thalos_woodland",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.verdant_thalos_coastal_bays"
                     },
                     {
                         "id":  "settlement.stonevein",
@@ -1326,7 +1331,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_plateau",
                                              "biomeZoneId":  "map_biome.first_world.auric_marches_underdark",
                                              "notes":  "Authored as a subterranean site anchored beneath the local surface coordinate."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.auric_marches_ore_ridges"
                     },
                     {
                         "id":  "settlement.coppergate",
@@ -1550,7 +1556,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_plateau",
                                              "biomeZoneId":  "map_biome.first_world.auric_marches_steppe",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.auric_marches_ore_ridges"
                     },
                     {
                         "id":  "settlement.sunscar_watch",
@@ -1739,7 +1746,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_plateau",
                                              "biomeZoneId":  "map_biome.first_world.auric_marches_steppe",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.auric_marches_caravan_marches"
                     },
                     {
                         "id":  "settlement.brineharbor",
@@ -1946,7 +1954,8 @@
                                              "climateZoneId":  "map_climate.first_world.shattercap_marine",
                                              "biomeZoneId":  "map_biome.first_world.shattercap_isles_conifer",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.shattercap_deep_harbors"
                     },
                     {
                         "id":  "settlement.northhook_keep",
@@ -2104,7 +2113,8 @@
                                              "climateZoneId":  "map_climate.first_world.shattercap_marine",
                                              "biomeZoneId":  "map_biome.first_world.shattercap_isles_conifer",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.shattercap_beacon_cliffs"
                     },
                     {
                         "id":  "settlement.gullsreach",
@@ -2272,7 +2282,8 @@
                                              "climateZoneId":  "map_climate.first_world.shattercap_marine",
                                              "biomeZoneId":  "map_biome.first_world.shattercap_isles_conifer",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.shattercap_deep_harbors"
                     },
                     {
                         "id":  "settlement.highcrown",
@@ -2551,7 +2562,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_rivers",
                                              "biomeZoneId":  "map_biome.first_world.sapphire_rivers_mixed",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sapphire_rivers_royal_floodplain"
                     },
                     {
                         "id":  "settlement.blueflow",
@@ -2797,7 +2809,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_rivers",
                                              "biomeZoneId":  "map_biome.first_world.sapphire_rivers_mixed",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sapphire_rivers_royal_floodplain"
                     },
                     {
                         "id":  "settlement.ledgerford",
@@ -3018,7 +3031,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_rivers",
                                              "biomeZoneId":  "map_biome.first_world.sapphire_rivers_mixed",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sapphire_rivers_royal_floodplain"
                     },
                     {
                         "id":  "settlement.kingsbridge",
@@ -3247,7 +3261,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_rivers",
                                              "biomeZoneId":  "map_biome.first_world.sapphire_rivers_mixed",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sapphire_rivers_bridge_corridors"
                     },
                     {
                         "id":  "settlement.harvestrest",
@@ -3511,7 +3526,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_south",
                                              "biomeZoneId":  "map_biome.first_world.jade_expanse_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.jade_expanse_granary_core"
                     },
                     {
                         "id":  "settlement.greenharrow",
@@ -3720,7 +3736,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_south",
                                              "biomeZoneId":  "map_biome.first_world.jade_expanse_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.jade_expanse_orchard_steppe"
                     },
                     {
                         "id":  "settlement.golden_barrow",
@@ -3936,7 +3953,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_south",
                                              "biomeZoneId":  "map_biome.first_world.jade_expanse_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.jade_expanse_granary_core"
                     },
                     {
                         "id":  "settlement.orchardhome",
@@ -4154,7 +4172,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_south",
                                              "biomeZoneId":  "map_biome.first_world.jade_expanse_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.jade_expanse_orchard_steppe"
                     },
                     {
                         "id":  "settlement.silvergrove",
@@ -4316,7 +4335,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_north",
                                              "biomeZoneId":  "map_biome.first_world.crownlands_taiga",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.crownlands_forest_vales"
                     },
                     {
                         "id":  "settlement.headwater_bastion",
@@ -4479,7 +4499,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_north",
                                              "biomeZoneId":  "map_biome.first_world.crownlands_taiga",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.crownlands_headwater_passes"
                     },
                     {
                         "id":  "settlement.whitebark_gate",
@@ -4695,7 +4716,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_north",
                                              "biomeZoneId":  "map_biome.first_world.crownlands_taiga",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.crownlands_forest_vales"
                     },
                     {
                         "id":  "settlement.ashsaddle",
@@ -4902,7 +4924,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_interior",
                                              "biomeZoneId":  "map_biome.first_world.embersteppe_steppe",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.embersteppe_herd_plains"
                     },
                     {
                         "id":  "settlement.coalspur",
@@ -5120,7 +5143,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_interior",
                                              "biomeZoneId":  "map_biome.first_world.embersteppe_steppe",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.embersteppe_herd_plains"
                     },
                     {
                         "id":  "settlement.stepwell_redoubt",
@@ -5305,7 +5329,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_interior",
                                              "biomeZoneId":  "map_biome.first_world.embersteppe_steppe",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.embersteppe_stepwell_corridors"
                     },
                     {
                         "id":  "settlement.passglass_hold",
@@ -5465,7 +5490,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_spine",
                                              "biomeZoneId":  "map_biome.first_world.windward_spine_holdfast",
                                              "notes":  "Authored as a subterranean site anchored beneath the local surface coordinate."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.windward_spine_mountain_holds"
                     },
                     {
                         "id":  "settlement.northpass_redoubt",
@@ -5629,7 +5655,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_spine",
                                              "biomeZoneId":  "map_biome.first_world.windward_spine_alpine",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.windward_spine_alpine_passes"
                     },
                     {
                         "id":  "settlement.slatewake",
@@ -5840,7 +5867,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_spine",
                                              "biomeZoneId":  "map_biome.first_world.windward_spine_alpine",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.windward_spine_mountain_holds"
                     },
                     {
                         "id":  "settlement.verdeward",
@@ -6002,7 +6030,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_forest",
                                              "biomeZoneId":  "map_biome.first_world.green_reach_rainforest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.green_reach_heartwood"
                     },
                     {
                         "id":  "settlement.timbercross",
@@ -6242,7 +6271,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_forest",
                                              "biomeZoneId":  "map_biome.first_world.green_reach_rainforest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.green_reach_timber_edges"
                     },
                     {
                         "id":  "settlement.dyehollow",
@@ -6444,7 +6474,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_forest",
                                              "biomeZoneId":  "map_biome.first_world.green_reach_rainforest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.green_reach_heartwood"
                     },
                     {
                         "id":  "settlement.seabanner",
@@ -6739,7 +6770,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_coast",
                                              "biomeZoneId":  "map_biome.first_world.sailors_verge_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sailors_verge_grand_harbors"
                     },
                     {
                         "id":  "settlement.tidecrown",
@@ -6993,7 +7025,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_coast",
                                              "biomeZoneId":  "map_biome.first_world.sailors_verge_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sailors_verge_grand_harbors"
                     },
                     {
                         "id":  "settlement.islemarket",
@@ -7200,7 +7233,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_coast",
                                              "biomeZoneId":  "map_biome.first_world.sailors_verge_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sailors_verge_citrus_trade_belt"
                     },
                     {
                         "id":  "settlement.mastfield",
@@ -7418,7 +7452,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_coast",
                                              "biomeZoneId":  "map_biome.first_world.sailors_verge_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sailors_verge_citrus_trade_belt"
                     },
                     {
                         "id":  "settlement.riverthrone",
@@ -7712,7 +7747,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.heart_basin_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.heart_basin_river_capitals"
                     },
                     {
                         "id":  "settlement.granary_crown",
@@ -7954,7 +7990,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.heart_basin_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.heart_basin_river_capitals"
                     },
                     {
                         "id":  "settlement.millrun",
@@ -8162,7 +8199,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.heart_basin_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.heart_basin_market_mills"
                     },
                     {
                         "id":  "settlement.basinford",
@@ -8391,7 +8429,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.heart_basin_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.heart_basin_market_mills"
                     },
                     {
                         "id":  "settlement.pasturemeet",
@@ -8598,7 +8637,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.emerald_mantle_deciduous",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.emerald_mantle_pasture_uplands"
                     },
                     {
                         "id":  "settlement.longmeadow",
@@ -8792,7 +8832,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.emerald_mantle_deciduous",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.emerald_mantle_orchard_meadows"
                     },
                     {
                         "id":  "settlement.applemarsh",
@@ -8967,7 +9008,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.emerald_mantle_deciduous",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.emerald_mantle_orchard_meadows"
                     },
                     {
                         "id":  "settlement.breaksail",
@@ -9196,7 +9238,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_coast",
                                              "biomeZoneId":  "map_biome.first_world.stormcap_coast_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.stormcap_coast_storm_harbors"
                     },
                     {
                         "id":  "settlement.stormwatch_citadel",
@@ -9369,7 +9412,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_coast",
                                              "biomeZoneId":  "map_biome.first_world.stormcap_coast_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.stormcap_coast_watch_citadels"
                     },
                     {
                         "id":  "settlement.southlight",
@@ -9545,7 +9589,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_coast",
                                              "biomeZoneId":  "map_biome.first_world.stormcap_coast_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.stormcap_coast_storm_harbors"
                     },
                     {
                         "id":  "settlement.sunspire_reach",
@@ -9827,7 +9872,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_valleys",
                                              "biomeZoneId":  "map_biome.first_world.silver_valleys_seasonal_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.silver_valleys_sunspire_vales"
                     },
                     {
                         "id":  "settlement.silvermere",
@@ -10041,7 +10087,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_valleys",
                                              "biomeZoneId":  "map_biome.first_world.silver_valleys_seasonal_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.silver_valleys_sunspire_vales"
                     },
                     {
                         "id":  "settlement.confederate_ford",
@@ -10276,7 +10323,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_valleys",
                                              "biomeZoneId":  "map_biome.first_world.silver_valleys_seasonal_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.silver_valleys_ford_corridors"
                     },
                     {
                         "id":  "settlement.redroot_warrens",
@@ -10431,7 +10479,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_valleys",
                                              "biomeZoneId":  "map_biome.first_world.silver_valleys_warrens",
                                              "notes":  "Authored as a subterranean site anchored beneath the local surface coordinate."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.silver_valleys_warrens_below"
                     },
                     {
                         "id":  "settlement.saltfang_anchorage",
@@ -10645,7 +10694,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_thorn",
                                              "biomeZoneId":  "map_biome.first_world.thorn_peninsula_dry_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.thorn_peninsula_salt_anchorage"
                     },
                     {
                         "id":  "settlement.thornwatch",
@@ -10841,7 +10891,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_thorn",
                                              "biomeZoneId":  "map_biome.first_world.thorn_peninsula_dry_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.thorn_peninsula_watch_forts"
                     },
                     {
                         "id":  "settlement.spicehook",
@@ -11051,7 +11102,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_thorn",
                                              "biomeZoneId":  "map_biome.first_world.thorn_peninsula_dry_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.thorn_peninsula_spice_markets"
                     },
                     {
                         "id":  "settlement.watchers_gate",
@@ -11274,7 +11326,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_watcher",
                                              "biomeZoneId":  "map_biome.first_world.watcher_coast_cliffs",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.watcher_coast_gate_citadels"
                     },
                     {
                         "id":  "settlement.obsidian_stair",
@@ -11481,7 +11534,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_watcher",
                                              "biomeZoneId":  "map_biome.first_world.watcher_coast_cliffs",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.watcher_coast_obsidian_steps"
                     },
                     {
                         "id":  "settlement.mistfen_landing",
@@ -11691,7 +11745,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_watcher",
                                              "biomeZoneId":  "map_biome.first_world.watcher_coast_mangrove",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.watcher_coast_mistfen_edges"
                     },
                     {
                         "id":  "settlement.starfall_port",
@@ -11933,7 +11988,8 @@
                                              "climateZoneId":  "map_climate.first_world.myridian_chain",
                                              "biomeZoneId":  "map_biome.first_world.myridian_chain_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.myridian_ports"
                     },
                     {
                         "id":  "settlement.pearlwake",
@@ -12126,7 +12182,8 @@
                                              "climateZoneId":  "map_climate.first_world.myridian_chain",
                                              "biomeZoneId":  "map_biome.first_world.myridian_chain_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.myridian_pearl_shoals"
                     },
                     {
                         "id":  "settlement.chainlight_bastion",
@@ -12283,7 +12340,8 @@
                                              "climateZoneId":  "map_climate.first_world.myridian_chain",
                                              "biomeZoneId":  "map_biome.first_world.myridian_chain_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.myridian_beacon_bastions"
                     },
                     {
                         "id":  "settlement.harbormast_quay",
@@ -12489,7 +12547,8 @@
                                              "climateZoneId":  "map_climate.first_world.myridian_chain",
                                              "biomeZoneId":  "map_biome.first_world.myridian_chain_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.myridian_ports"
                     },
                     {
                         "id":  "settlement.lantern_key",
@@ -12699,7 +12758,8 @@
                                              "climateZoneId":  "map_climate.first_world.lantern_isles",
                                              "biomeZoneId":  "map_biome.first_world.lantern_isles_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.lantern_harbors"
                     },
                     {
                         "id":  "settlement.driftglass_outpost",
@@ -12859,7 +12919,8 @@
                                              "climateZoneId":  "map_climate.first_world.lantern_isles",
                                              "biomeZoneId":  "map_biome.first_world.lantern_isles_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.lantern_shrine_gardens"
                     },
                     {
                         "id":  "settlement.lantern_deep",
@@ -12996,7 +13057,8 @@
                                              "climateZoneId":  "map_climate.first_world.lantern_isles",
                                              "biomeZoneId":  "map_biome.first_world.lantern_isles_deepwater",
                                              "notes":  "Authored as a submerged trade enclave anchored beneath the surface coordinate."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.lantern_reef_depths"
                     },
                     {
                         "id":  "settlement.stormfang_haven",
@@ -13195,7 +13257,8 @@
                                              "climateZoneId":  "map_climate.first_world.serpents_wake",
                                              "biomeZoneId":  "map_biome.first_world.serpents_wake_mangrove",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.serpents_storm_havens"
                     },
                     {
                         "id":  "settlement.blackreef_anchorage",
@@ -13350,7 +13413,8 @@
                                              "climateZoneId":  "map_climate.first_world.serpents_wake",
                                              "biomeZoneId":  "map_biome.first_world.serpents_wake_mangrove",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.serpents_reef_anchorages"
                     },
                     {
                         "id":  "settlement.squallhook_refuge",
@@ -13512,7 +13576,8 @@
                                              "climateZoneId":  "map_climate.first_world.serpents_wake",
                                              "biomeZoneId":  "map_biome.first_world.serpents_wake_mangrove",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.serpents_reef_anchorages"
                     },
                     {
                         "id":  "settlement.aurora_anchorage",
@@ -13711,7 +13776,8 @@
                                              "climateZoneId":  "map_climate.first_world.dawnreach_isles",
                                              "biomeZoneId":  "map_biome.first_world.dawnreach_tundra",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.dawnreach_aurora_harbors"
                     },
                     {
                         "id":  "settlement.whalebone_watch",
@@ -13873,7 +13939,8 @@
                                              "climateZoneId":  "map_climate.first_world.dawnreach_isles",
                                              "biomeZoneId":  "map_biome.first_world.dawnreach_tundra",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.dawnreach_whalebone_watches"
                     },
                     {
                         "id":  "settlement.nacredeep",
@@ -14010,7 +14077,8 @@
                                              "climateZoneId":  "map_climate.first_world.dawnreach_isles",
                                              "biomeZoneId":  "map_biome.first_world.dawnreach_deepwater",
                                              "notes":  "Authored as a submerged trade enclave anchored beneath the surface coordinate."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.dawnreach_nacre_depths"
                     },
                     {
                         "id":  "settlement.quarrymule_camp",
@@ -14157,7 +14225,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_plateau",
                                              "biomeZoneId":  "map_biome.first_world.auric_marches_steppe",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.auric_marches_ore_ridges"
                     },
                     {
                         "id":  "settlement.moonwell_grove",
@@ -14304,7 +14373,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_north",
                                              "biomeZoneId":  "map_biome.first_world.crownlands_taiga",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.crownlands_forest_vales"
                     },
                     {
                         "id":  "settlement.icehook_jetty",
@@ -14485,7 +14555,8 @@
                                              "climateZoneId":  "map_climate.first_world.dawnreach_isles",
                                              "biomeZoneId":  "map_biome.first_world.dawnreach_tundra",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.dawnreach_aurora_harbors"
                     },
                     {
                         "id":  "settlement.redreed_ford",
@@ -14673,7 +14744,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_interior",
                                              "biomeZoneId":  "map_biome.first_world.embersteppe_steppe",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.embersteppe_stepwell_corridors"
                     },
                     {
                         "id":  "settlement.haywarden_estate",
@@ -14848,7 +14920,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.emerald_mantle_deciduous",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.emerald_mantle_pasture_uplands"
                     },
                     {
                         "id":  "settlement.barkmill_hamlet",
@@ -15026,7 +15099,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_forest",
                                              "biomeZoneId":  "map_biome.first_world.green_reach_rainforest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.green_reach_timber_edges"
                     },
                     {
                         "id":  "settlement.southlock_ferry",
@@ -15211,7 +15285,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_basin",
                                              "biomeZoneId":  "map_biome.first_world.heart_basin_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.heart_basin_market_mills"
                     },
                     {
                         "id":  "settlement.barleyhearth_estate",
@@ -15386,7 +15461,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_south",
                                              "biomeZoneId":  "map_biome.first_world.jade_expanse_prairie",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.jade_expanse_orchard_steppe"
                     },
                     {
                         "id":  "settlement.glasswake_shrine",
@@ -15580,7 +15656,8 @@
                                              "climateZoneId":  "map_climate.first_world.lantern_isles",
                                              "biomeZoneId":  "map_biome.first_world.lantern_isles_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.lantern_shrine_gardens"
                     },
                     {
                         "id":  "settlement.foammarket_ferry",
@@ -15761,7 +15838,8 @@
                                              "climateZoneId":  "map_climate.first_world.myridian_chain",
                                              "biomeZoneId":  "map_biome.first_world.myridian_chain_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.myridian_ports"
                     },
                     {
                         "id":  "settlement.dockreed_estate",
@@ -15945,7 +16023,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_coast",
                                              "biomeZoneId":  "map_biome.first_world.sailors_verge_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sailors_verge_citrus_trade_belt"
                     },
                     {
                         "id":  "settlement.bridgewatch_ferry",
@@ -16119,7 +16198,8 @@
                                              "climateZoneId":  "map_climate.first_world.valtherion_rivers",
                                              "biomeZoneId":  "map_biome.first_world.sapphire_rivers_mixed",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.sapphire_rivers_bridge_corridors"
                     },
                     {
                         "id":  "settlement.stormhook_watch",
@@ -16284,7 +16364,8 @@
                                              "climateZoneId":  "map_climate.first_world.serpents_wake",
                                              "biomeZoneId":  "map_biome.first_world.serpents_wake_mangrove",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.serpents_watch_musters"
                     },
                     {
                         "id":  "settlement.kelpnet_hamlet",
@@ -16467,7 +16548,8 @@
                                              "climateZoneId":  "map_climate.first_world.shattercap_marine",
                                              "biomeZoneId":  "map_biome.first_world.shattercap_isles_conifer",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.shattercap_deep_harbors"
                     },
                     {
                         "id":  "settlement.sunpasture_estate",
@@ -16645,7 +16727,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_valleys",
                                              "biomeZoneId":  "map_biome.first_world.silver_valleys_seasonal_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.silver_valleys_ford_corridors"
                     },
                     {
                         "id":  "settlement.cliffsalt_priory",
@@ -16839,7 +16922,8 @@
                                              "climateZoneId":  "map_climate.first_world.draemor_coast",
                                              "biomeZoneId":  "map_biome.first_world.stormcap_coast_chaparral",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.stormcap_coast_watch_citadels"
                     },
                     {
                         "id":  "settlement.pepperfield_estate",
@@ -17018,7 +17102,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_thorn",
                                              "biomeZoneId":  "map_biome.first_world.thorn_peninsula_dry_forest",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.thorn_peninsula_spice_markets"
                     },
                     {
                         "id":  "settlement.caskbank_estate",
@@ -17192,7 +17277,8 @@
                                              "climateZoneId":  "map_climate.first_world.kaelvar_south",
                                              "biomeZoneId":  "map_biome.first_world.verdant_thalos_woodland",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.verdant_thalos_inland_estates"
                     },
                     {
                         "id":  "settlement.blackglass_camp",
@@ -17368,7 +17454,8 @@
                                              "climateZoneId":  "map_climate.first_world.talmyra_watcher",
                                              "biomeZoneId":  "map_biome.first_world.watcher_coast_cliffs",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.watcher_coast_obsidian_steps"
                     },
                     {
                         "id":  "settlement.deepecho_camp",
@@ -17514,7 +17601,8 @@
                                              "climateZoneId":  "map_climate.first_world.serathyl_spine",
                                              "biomeZoneId":  "map_biome.first_world.windward_spine_alpine",
                                              "notes":  "Authored surface-site coordinate on the shared 2048x1152 world map."
-                                         }
+                                         },
+                        "hexAnchorId":  "world_hex.windward_spine_mountain_holds"
                     }
                 ]
 }
