@@ -199,7 +199,7 @@ export function LoadGameScreen({
                 <div>Slot: {selectedSlot.label}</div>
                 <div className="mt-1">Type: {selectedSlot.kind === 'quick' ? 'Quick Save' : 'Manual Save'}</div>
                 <div className="mt-1">Lineage: {selectedSlot.lineageLabel}</div>
-                <div className="mt-1">Class: {selectedSlot.classLabel}</div>
+                <div className="mt-1">Path: {selectedSlot.classLabel}</div>
                 <div className="mt-1">Level: {selectedSlot.level}</div>
                 <div className="mt-1">Region: {selectedSlot.regionLabel}</div>
                 <div className="mt-1">Settlement: {selectedSlot.settlementLabel}</div>

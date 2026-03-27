@@ -10,17 +10,18 @@ import {
   validateCharacterCreationStep
 } from '../characterCreationForm.js';
 import {
-  backgroundOptions,
-  classOptions,
-  lineageOptions
-} from '../starterTemplates.js';
+  getBackstoryOptionsForLineage,
+  getBackstoryStartAccessProfileId,
+  getLineageIdentityCatalog,
+  lineageOptions,
+  pathOptions
+} from '../characterCreationCatalog.js';
 import {
   buildCharacterCreationPreview,
   type CharacterCreationPreview
 } from '../newGameSnapshot.js';
 import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
 import {
-  getPreferredWorldSettlementOption,
   getWorldContinentOptions,
   getWorldRegionOptions,
   getWorldSettlementOptions,
@@ -44,11 +45,37 @@ type CharacterCreationScreenProps = {
 const selectionButtonClass =
   'rounded-[22px] border px-4 py-4 text-left transition';
 
-function renderMetric(label: string, value: string) {
+function buildHeightChoices([minHeight, maxHeight]: [number, number]): number[] {
+  const spread = maxHeight - minHeight;
+  const rawChoices = [
+    minHeight,
+    Math.round(minHeight + spread * 0.25),
+    Math.round(minHeight + spread * 0.5),
+    Math.round(minHeight + spread * 0.75),
+    maxHeight
+  ];
+
+  return Array.from(new Set(rawChoices)).sort((left, right) => left - right);
+}
+
+function renderMetricList(
+  title: string,
+  metrics: Array<{ id: string; label: string; value: string | null }>
+) {
   return (
-    <div className="rounded-[20px] border border-white/10 bg-black/10 p-3">
-      <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{label}</div>
-      <div className="mt-2 text-lg text-slate-50">{value}</div>
+    <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
+      <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{title}</div>
+      <div className="mt-3 space-y-3">
+        {metrics.map((metric) => (
+          <div
+            key={metric.id}
+            className="flex items-center justify-between gap-4 border-b border-white/8 pb-3 last:border-b-0 last:pb-0"
+          >
+            <div className="text-sm text-slate-300">{metric.label}</div>
+            <div className="text-base font-semibold text-slate-50">{metric.value ?? 'Pending'}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -103,6 +130,37 @@ function renderOptionGrid(
   );
 }
 
+function renderIdentityGrid(
+  title: string,
+  options: Array<{ id: string; label: string; description: string }>,
+  selectedId: string,
+  onSelect: (id: string) => void,
+  activeClassName: string
+) {
+  return (
+    <div>
+      <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">{title}</div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {options.map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            onClick={() => onSelect(option.id)}
+            className={`${selectionButtonClass} ${
+              selectedId === option.id
+                ? activeClassName
+                : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
+            }`}
+          >
+            <div className="text-base font-semibold">{option.label}</div>
+            <div className="mt-2 text-sm leading-6 text-white/75">{option.description}</div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function CharacterCreationScreen({
   form,
   slots,
@@ -115,10 +173,12 @@ export function CharacterCreationScreen({
   onConfirmOverwrite,
   onCancelOverwrite
 }: CharacterCreationScreenProps) {
-  const [currentStepId, setCurrentStepId] = useState<CharacterCreationStepId>('identity');
+  const [currentStepId, setCurrentStepId] = useState<CharacterCreationStepId>('lineage');
   const [showValidation, setShowValidation] = useState(false);
   const manualSlots = slots.filter((slot) => slot.kind === 'manual');
   const preview: CharacterCreationPreview = buildCharacterCreationPreview(form);
+  const identityCatalog = getLineageIdentityCatalog(form.lineageId);
+  const backstoryOptions = getBackstoryOptionsForLineage(form.lineageId);
   const continentOptions = getWorldContinentOptions().map((option) => ({
     id: option.id,
     label: option.label,
@@ -143,7 +203,7 @@ export function CharacterCreationScreen({
     continentId: form.continentId,
     regionId: form.regionId,
     classId: form.classId,
-    backgroundId: form.backgroundId
+    backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
   }).map((option) => ({
     id: option.id,
     label: option.label,
@@ -159,7 +219,7 @@ export function CharacterCreationScreen({
     regionId: form.regionId,
     settlementId: form.startingSettlementId,
     classId: form.classId,
-    backgroundId: form.backgroundId
+    backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
   });
   const currentStep =
     CHARACTER_CREATION_STEPS.find((step) => step.id === currentStepId) ??
@@ -178,98 +238,46 @@ export function CharacterCreationScreen({
     onChange(nextForm);
   };
 
-  const updateContinent = (continentId: string) => {
-    const nextRegion = getWorldRegionOptions(continentId)[0];
-    const nextSettlement = nextRegion
-      ? getPreferredWorldSettlementOption({
-          continentId,
-          regionId: nextRegion.id,
-          classId: form.classId,
-          backgroundId: form.backgroundId
-        })
-      : null;
+  const updateLineage = (lineageId: string) => {
+    updateForm({
+      lineageId,
+      heightCm: null,
+      buildId: '',
+      hairColorId: '',
+      hairHighlightColorId: '',
+      eyeColorId: '',
+      skinToneId: '',
+      backgroundId: '',
+      startingSettlementId: ''
+    });
+  };
 
+  const updateContinent = (continentId: string) => {
     updateForm({
       continentId,
-      regionId: nextRegion?.id ?? '',
-      startingSettlementId: nextSettlement?.id ?? ''
+      regionId: '',
+      startingSettlementId: ''
     });
   };
 
   const updateRegion = (regionId: string) => {
-    const nextSettlement = getPreferredWorldSettlementOption({
-      continentId: form.continentId,
-      regionId,
-      classId: form.classId,
-      backgroundId: form.backgroundId
-    });
-
     updateForm({
       regionId,
-      startingSettlementId: nextSettlement?.id ?? ''
+      startingSettlementId: ''
     });
   };
 
-  const reconcileStartSelection = (nextClassId: string, nextBackgroundId: string) => {
-    const currentSelection = resolveWorldSelection({
-      continentId: form.continentId,
-      regionId: form.regionId,
-      settlementId: form.startingSettlementId,
-      classId: nextClassId,
-      backgroundId: nextBackgroundId
-    });
-
-    if (currentSelection?.settlement.access.accessStatus === 'allowed') {
-      return {
-        continentId: form.continentId,
-        regionId: form.regionId,
-        startingSettlementId: form.startingSettlementId
-      };
-    }
-
-    const currentRegionSettlement = getPreferredWorldSettlementOption({
-      continentId: form.continentId,
-      regionId: form.regionId,
-      classId: nextClassId,
-      backgroundId: nextBackgroundId
-    });
-
-    if (currentRegionSettlement) {
-      return {
-        continentId: form.continentId,
-        regionId: form.regionId,
-        startingSettlementId: currentRegionSettlement.id
-      };
-    }
-
-    const fallbackRegion = getWorldRegionOptions(form.continentId)[0];
-    const fallbackSettlement = fallbackRegion
-      ? getPreferredWorldSettlementOption({
-          continentId: form.continentId,
-          regionId: fallbackRegion.id,
-          classId: nextClassId,
-          backgroundId: nextBackgroundId
-        })
-      : null;
-
-    return {
-      continentId: form.continentId,
-      regionId: fallbackRegion?.id ?? form.regionId,
-      startingSettlementId: fallbackSettlement?.id ?? ''
-    };
-  };
-
-  const updateClass = (classId: string) => {
+  const updatePath = (classId: string) => {
     updateForm({
       classId,
-      ...reconcileStartSelection(classId, form.backgroundId)
+      startingSettlementId: ''
     });
   };
 
-  const updateBackground = (backgroundId: string) => {
+  const updateBackstory = (backgroundId: string) => {
     updateForm({
       backgroundId,
-      ...reconcileStartSelection(form.classId, backgroundId)
+      startingSettlementId: ''
     });
   };
 
@@ -296,44 +304,16 @@ export function CharacterCreationScreen({
   };
 
   let stepContent = (
-    <Card title="Identity" accent="var(--color-character)">
-      <div className="space-y-4">
-        <label className="block">
-          <span className="mb-2 block text-[11px] uppercase tracking-[0.18em] text-slate-500">
-            Character Name
-          </span>
-          <input
-            type="text"
-            value={form.playerName}
-            onChange={(event) => updateForm({ playerName: event.target.value })}
-            placeholder="Enter a character name"
-            className="w-full rounded-[22px] border border-white/10 bg-black/20 px-4 py-3 text-slate-50 outline-none transition focus:border-amber-300/30"
-          />
-          {showValidation && currentStepValidation.errors.playerName && (
-            <div className="mt-2 text-sm text-rose-300">{currentStepValidation.errors.playerName}</div>
-          )}
-        </label>
-
-        <div>
-          <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">Sex Profile</div>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {(['male', 'female', 'neutral'] as const).map((sexId) => (
-              <button
-                key={sexId}
-                type="button"
-                onClick={() => updateForm({ sexId })}
-                className={`${selectionButtonClass} ${
-                  form.sexId === sexId
-                    ? 'border-amber-300/25 bg-amber-200/10 text-amber-50'
-                    : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
-                }`}
-              >
-                <div className="text-base font-semibold">{sexId[0]!.toUpperCase() + sexId.slice(1)}</div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+    <Card title="Lineage" accent="var(--color-world)">
+      {renderOptionGrid(
+        lineageOptions,
+        form.lineageId,
+        (lineageId) => updateLineage(lineageId),
+        'border-cyan-300/25 bg-cyan-200/10 text-cyan-50'
+      )}
+      {showValidation && currentStepValidation.errors.lineageId && (
+        <div className="mt-3 text-sm text-rose-300">{currentStepValidation.errors.lineageId}</div>
+      )}
     </Card>
   );
 
@@ -343,30 +323,186 @@ export function CharacterCreationScreen({
         {renderOptionGrid(
           lineageOptions,
           form.lineageId,
-          (lineageId) => updateForm({ lineageId }),
+          (lineageId) => updateLineage(lineageId),
           'border-cyan-300/25 bg-cyan-200/10 text-cyan-50'
         )}
-      </Card>
-    );
-  } else if (currentStepId === 'class') {
-    stepContent = (
-      <Card title="Starting Path" accent="var(--color-activity)">
-        {renderOptionGrid(
-          classOptions,
-          form.classId,
-          (classId) => updateClass(classId),
-          'border-orange-300/25 bg-orange-200/10 text-orange-50'
+        {showValidation && currentStepValidation.errors.lineageId && (
+          <div className="mt-3 text-sm text-rose-300">{currentStepValidation.errors.lineageId}</div>
         )}
       </Card>
     );
-  } else if (currentStepId === 'background') {
+  } else if (currentStepId === 'identity') {
     stepContent = (
-      <Card title="Background" accent="var(--color-codex)">
+      <Card title="Identity" accent="var(--color-character)">
+        {identityCatalog ? (
+          <div className="space-y-4">
+            <label className="block">
+              <span className="mb-2 block text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                Character Name
+              </span>
+              <input
+                type="text"
+                value={form.playerName}
+                onChange={(event) => updateForm({ playerName: event.target.value })}
+                placeholder="Enter a character name"
+                className="w-full rounded-[22px] border border-white/10 bg-black/20 px-4 py-3 text-slate-50 outline-none transition focus:border-amber-300/30"
+              />
+              {showValidation && currentStepValidation.errors.playerName && (
+                <div className="mt-2 text-sm text-rose-300">{currentStepValidation.errors.playerName}</div>
+              )}
+            </label>
+
+            <div>
+              <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">Sex</div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {(['male', 'female'] as const).map((sexId) => (
+                  <button
+                    key={sexId}
+                    type="button"
+                    onClick={() => updateForm({ sexId })}
+                    className={`${selectionButtonClass} ${
+                      form.sexId === sexId
+                        ? 'border-amber-300/25 bg-amber-200/10 text-amber-50'
+                        : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="text-base font-semibold">{sexId[0]!.toUpperCase() + sexId.slice(1)}</div>
+                  </button>
+                ))}
+              </div>
+              {showValidation && currentStepValidation.errors.sexId && (
+                <div className="mt-2 text-sm text-rose-300">{currentStepValidation.errors.sexId}</div>
+              )}
+            </div>
+
+            <div>
+              <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                Height Range
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {buildHeightChoices(identityCatalog.heightRangeCm).map((heightCm) => (
+                  <button
+                    key={heightCm}
+                    type="button"
+                    onClick={() => updateForm({ heightCm })}
+                    className={`${selectionButtonClass} ${
+                      form.heightCm === heightCm
+                        ? 'border-amber-300/25 bg-amber-200/10 text-amber-50'
+                        : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="text-base font-semibold">{heightCm} cm</div>
+                    <div className="mt-2 text-sm leading-6 text-white/75">
+                      {heightCm <= identityCatalog.heightRangeCm[0] + 3
+                        ? 'Shortest profile'
+                        : heightCm >= identityCatalog.heightRangeCm[1] - 3
+                          ? 'Tallest profile'
+                          : 'Within lineage norm'}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              {showValidation && currentStepValidation.errors.heightCm && (
+                <div className="mt-2 text-sm text-rose-300">{currentStepValidation.errors.heightCm}</div>
+              )}
+            </div>
+
+            {renderIdentityGrid(
+              'Build',
+              identityCatalog.buildOptions,
+              form.buildId,
+              (buildId) => updateForm({ buildId }),
+              'border-amber-300/25 bg-amber-200/10 text-amber-50'
+            )}
+            {showValidation && currentStepValidation.errors.buildId && (
+              <div className="-mt-1 text-sm text-rose-300">{currentStepValidation.errors.buildId}</div>
+            )}
+
+            {renderIdentityGrid(
+              'Skin Tone',
+              identityCatalog.skinToneOptions,
+              form.skinToneId,
+              (skinToneId) => updateForm({ skinToneId }),
+              'border-amber-300/25 bg-amber-200/10 text-amber-50'
+            )}
+            {showValidation && currentStepValidation.errors.skinToneId && (
+              <div className="-mt-1 text-sm text-rose-300">{currentStepValidation.errors.skinToneId}</div>
+            )}
+
+            {renderIdentityGrid(
+              'Hair Color',
+              identityCatalog.hairColorOptions,
+              form.hairColorId,
+              (hairColorId) => updateForm({ hairColorId }),
+              'border-amber-300/25 bg-amber-200/10 text-amber-50'
+            )}
+            {showValidation && currentStepValidation.errors.hairColorId && (
+              <div className="-mt-1 text-sm text-rose-300">{currentStepValidation.errors.hairColorId}</div>
+            )}
+
+            <div className="space-y-3">
+              {renderIdentityGrid(
+                'Hair Highlights',
+                identityCatalog.hairHighlightOptions,
+                form.hairHighlightColorId,
+                (hairHighlightColorId) => updateForm({ hairHighlightColorId }),
+                'border-amber-300/25 bg-amber-200/10 text-amber-50'
+              )}
+              <button
+                type="button"
+                onClick={() => updateForm({ hairHighlightColorId: '' })}
+                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10"
+              >
+                Clear Highlights
+              </button>
+              {showValidation && currentStepValidation.errors.hairHighlightColorId && (
+                <div className="text-sm text-rose-300">{currentStepValidation.errors.hairHighlightColorId}</div>
+              )}
+            </div>
+
+            {renderIdentityGrid(
+              'Eye Color',
+              identityCatalog.eyeColorOptions,
+              form.eyeColorId,
+              (eyeColorId) => updateForm({ eyeColorId }),
+              'border-amber-300/25 bg-amber-200/10 text-amber-50'
+            )}
+            {showValidation && currentStepValidation.errors.eyeColorId && (
+              <div className="-mt-1 text-sm text-rose-300">{currentStepValidation.errors.eyeColorId}</div>
+            )}
+          </div>
+        ) : (
+          <div className="rounded-[20px] border border-dashed border-white/10 bg-black/10 px-4 py-8 text-center text-sm text-slate-400">
+            Choose a lineage first to unlock race-valid identity options.
+          </div>
+        )}
+      </Card>
+    );
+  } else if (currentStepId === 'backstory') {
+    stepContent = (
+      <Card title="Backstory" accent="var(--color-codex)">
         {renderOptionGrid(
-          backgroundOptions,
+          backstoryOptions,
           form.backgroundId,
-          (backgroundId) => updateBackground(backgroundId),
+          (backgroundId) => updateBackstory(backgroundId),
           'border-[color:var(--color-codex)]/35 bg-[color:var(--color-codex)]/10 text-slate-100'
+        )}
+        {showValidation && currentStepValidation.errors.backgroundId && (
+          <div className="mt-3 text-sm text-rose-300">{currentStepValidation.errors.backgroundId}</div>
+        )}
+      </Card>
+    );
+  } else if (currentStepId === 'path') {
+    stepContent = (
+      <Card title="Path" accent="var(--color-activity)">
+        {renderOptionGrid(
+          pathOptions,
+          form.classId,
+          (classId) => updatePath(classId),
+          'border-orange-300/25 bg-orange-200/10 text-orange-50'
+        )}
+        {showValidation && currentStepValidation.errors.classId && (
+          <div className="mt-3 text-sm text-rose-300">{currentStepValidation.errors.classId}</div>
         )}
       </Card>
     );
@@ -433,8 +569,9 @@ export function CharacterCreationScreen({
               <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Chosen Origin</div>
               <div className="mt-2 text-xl text-slate-50">{preview.chosenOrigin}</div>
               <div className="mt-2 text-sm leading-6 text-slate-300">
-                {preview.backgroundLabel} starting from {preview.startingSettlement} in the {preview.startingRegion} of{' '}
-                {preview.startingContinent}.
+                {preview.isResolved && preview.backgroundLabel && preview.pathLabel && preview.startingSettlement && preview.startingRegion && preview.startingContinent
+                  ? `${preview.backgroundLabel} entering ${preview.startingSettlement} in ${preview.startingRegion}, following the ${preview.pathLabel} path.`
+                  : 'Choose the remaining lineage, identity, origin, and world fields to generate the opening state.'}
               </div>
             </div>
             <div className="rounded-[22px] border border-white/10 bg-black/10 p-4">
@@ -491,7 +628,7 @@ export function CharacterCreationScreen({
     <ScreenFrame
       eyebrow="Character Creation"
       title="Forge A New Character"
-      description="Build a first-pass campaign state through a deterministic multi-step creator. Each choice updates the right-side summary immediately, and finalize writes a shared save snapshot that the existing in-game UI can render directly."
+      description="Build a first-pass campaign state through lineage, visual identity, backstory, path, and legal world-start selection. Each choice updates the right-side summary immediately, and finalize writes a shared save snapshot that the existing in-game UI can render directly."
       accent="var(--color-character)"
       notice={notice}
       onDismissNotice={onDismissNotice}
@@ -585,57 +722,48 @@ export function CharacterCreationScreen({
                 <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Chosen Origin</div>
                 <div className="mt-2 text-base text-slate-50">{preview.chosenOrigin}</div>
                 <div className="mt-2 text-sm leading-6 text-slate-300">
-                  {preview.startingSettlement} | {preview.startingRegion} | {preview.startingContinent}
+                  {preview.isResolved && preview.startingSettlement && preview.startingRegion && preview.startingContinent
+                    ? `${preview.startingSettlement} | ${preview.startingRegion} | ${preview.startingContinent}`
+                    : 'Lineage, backstory, path, and legal start will appear here once selected.'}
                 </div>
               </div>
 
-              {selectedWorld && (
-                <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
-                  <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Starting Access</div>
-                  <div className="mt-2 text-base text-slate-50">
-                    {selectedWorld.settlement.access.accessStatus === 'allowed' ? 'Authorized Start' : 'Restricted Start'}
-                  </div>
-                  <div className="mt-2 text-sm leading-6 text-slate-300">
-                    {selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')} |{' '}
-                    {selectedWorld.settlement.access.lodgingType.replace(/_/g, ' ')}
-                  </div>
+              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
+                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Starting Access</div>
+                <div className="mt-2 text-base text-slate-50">{preview.startingAccessLabel}</div>
+                <div className="mt-2 text-sm leading-6 text-slate-300">{preview.startingAccessDetail}</div>
+              </div>
+
+              {renderMetricList('Identity', preview.identityMetrics)}
+              {renderMetricList('Starter Resources', preview.resourceMetrics)}
+              {renderMetricList('Starter Attributes', preview.attributeMetrics)}
+
+              {preview.isResolved && preview.starterSkills.length > 0 && renderTagBlock('Starting Skills', preview.starterSkills)}
+              {preview.isResolved && preview.starterTraits.length > 0 && renderTagBlock('Starting Traits', preview.starterTraits)}
+              {preview.isResolved && preview.starterGear.length > 0 && renderTagBlock('Equipped Gear', preview.starterGear)}
+
+              {preview.isResolved && preview.walletLabel && (
+                <div className="rounded-[20px] border border-white/10 bg-black/10 p-3">
+                  <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Wallet</div>
+                  <div className="mt-2 text-lg text-slate-50">{preview.walletLabel}</div>
                 </div>
               )}
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                {renderMetric('HP', preview.resourceMaxima.hp.toString())}
-                {renderMetric('MP', preview.resourceMaxima.mp.toString())}
-                {renderMetric('Stamina', preview.resourceMaxima.stamina.toString())}
-              </div>
+              {preview.isResolved && preview.starterPack.length > 0 && renderTagBlock('Starter Pack', preview.starterPack)}
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                {renderMetric('Strength', preview.attributes.STR.toString())}
-                {renderMetric('Agility', preview.attributes.AGI.toString())}
-                {renderMetric('Spirit', preview.attributes.SPT.toString())}
-              </div>
-
-              {renderTagBlock('Starting Skills', preview.starterSkills)}
-              {renderTagBlock('Starting Traits', preview.starterTraits)}
-              {renderTagBlock('Equipped Gear', preview.starterGear)}
-
-              <div className="rounded-[20px] border border-white/10 bg-black/10 p-3">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Wallet</div>
-                <div className="mt-2 text-lg text-slate-50">{preview.walletLabel}</div>
-              </div>
-
-              {renderTagBlock('Starter Pack', preview.starterPack)}
-
-              <div className="space-y-2">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Starter Notes</div>
-                {preview.starterNotes.slice(0, 4).map((note) => (
-                  <div
-                    key={note}
-                    className="rounded-[18px] border border-white/10 bg-white/5 px-3 py-2 text-sm leading-6 text-slate-300"
-                  >
-                    {note}
-                  </div>
-                ))}
-              </div>
+              {preview.isResolved && preview.starterNotes.length > 0 && (
+                <div className="space-y-2">
+                  <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Starter Notes</div>
+                  {preview.starterNotes.slice(0, 4).map((note) => (
+                    <div
+                      key={note}
+                      className="rounded-[18px] border border-white/10 bg-white/5 px-3 py-2 text-sm leading-6 text-slate-300"
+                    >
+                      {note}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </Card>
 

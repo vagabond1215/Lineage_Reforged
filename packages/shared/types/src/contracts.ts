@@ -801,6 +801,7 @@ export interface CivilizationState {
 
 export type PlayerAttributeKey = "STR" | "DEX" | "AGI" | "CON" | "VIT" | "WIS" | "INT" | "SPT" | "CHA";
 export type PlayerSexId = "male" | "female" | "neutral";
+export type PlayerIdentityBuildId = "slim" | "average" | "heavy" | "muscular";
 
 export interface PlayerResourceGrowthVector {
   hp: number;
@@ -1015,6 +1016,7 @@ export interface PlayerCoreData {
   sexId: PlayerSexId;
   classId: string | null;
   jobId: string | null;
+  identityProfile?: PlayerIdentityProfile | null;
 }
 
 export interface PlayerSaveMetadata {
@@ -1034,6 +1036,15 @@ export interface PlayerCurrencyState {
   gold: number;
   silver: number;
   copper: number;
+}
+
+export interface PlayerIdentityProfile {
+  heightCm: number | null;
+  buildId: PlayerIdentityBuildId | null;
+  hairColorId: string | null;
+  hairHighlightColorId: string | null;
+  eyeColorId: string | null;
+  skinToneId: string | null;
 }
 
 export interface PlayerReputationState {

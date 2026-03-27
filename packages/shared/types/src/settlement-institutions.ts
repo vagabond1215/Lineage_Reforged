@@ -923,21 +923,21 @@ export function deriveSettlementStartAccess(params: {
 
   if (params.landAuthorityType === "military_control") {
     accessStatus =
-      ["class.warrior", "class.explorer"].includes(params.classId) || params.backgroundId === "background.militia_retainer"
+      ["class.warrior", "class.explorer", "class.mariner"].includes(params.classId) || params.backgroundId === "background.militia_retainer"
         ? "allowed"
         : "restricted";
-    allowedClassIds.push("class.warrior", "class.explorer");
+    allowedClassIds.push("class.warrior", "class.explorer", "class.mariner");
     allowedBackgroundIds.push("background.militia_retainer");
     spawnMode = accessStatus === "allowed" ? "military_quarters" : "rented_lodging";
     lodgingType = accessStatus === "allowed" ? "barracks_bed" : "licensed_inn";
-    notes.push("Military settlements require either a service tie, a scouting role, or a formal sponsor.");
+    notes.push("Military settlements require either a service tie, a scouting or hunting role, or a formal sponsor.");
   } else if (params.landAuthorityType === "guild_controlled" || isHighTierCity) {
     accessStatus =
-      ["class.merchant", "class.artisan", "class.arcanist", "class.mariner"].includes(params.classId) ||
+      ["class.merchant", "class.artisan", "class.arcanist"].includes(params.classId) ||
       ["background.ledger_apprentice", "background.harbor_runner"].includes(params.backgroundId)
         ? "allowed"
         : "restricted";
-    allowedClassIds.push("class.merchant", "class.artisan", "class.arcanist", "class.mariner");
+    allowedClassIds.push("class.merchant", "class.artisan", "class.arcanist");
     allowedBackgroundIds.push("background.ledger_apprentice", "background.harbor_runner");
     spawnMode = accessStatus === "allowed" ? "guild_guest" : "rented_lodging";
     lodgingType = accessStatus === "allowed" ? "guild_bunk" : "licensed_inn";

@@ -253,12 +253,17 @@ export function CharacterPanel({
         </div>
       </Card>
       <Card title="Core Stats" accent={accent}>
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <div className="rounded-[22px] border border-white/8 bg-black/10">
           {characterData.coreStats.map((metric) => (
-            <div key={metric.id} className="rounded-[22px] border border-white/8 bg-black/10 p-4">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{metric.label}</div>
-              <div className="mt-2 text-2xl text-slate-50">{metric.value}</div>
-              <div className="mt-2 text-sm text-slate-400">{metric.detail}</div>
+            <div
+              key={metric.id}
+              className="flex items-start justify-between gap-4 border-b border-white/8 px-4 py-3 last:border-b-0"
+            >
+              <div>
+                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{metric.label}</div>
+                <div className="mt-1 text-sm text-slate-400">{metric.detail}</div>
+              </div>
+              <div className="text-xl font-semibold text-slate-50">{metric.value}</div>
             </div>
           ))}
         </div>

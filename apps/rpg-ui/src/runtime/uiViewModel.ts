@@ -1730,9 +1730,26 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
         }
       ],
       coreStats: [
+        {
+          id: 'hp',
+          label: 'HP',
+          value: `${snapshot.playerState.resources.hp.current} / ${snapshot.playerState.resources.hp.max}`,
+          detail: 'Current and maximum health'
+        },
+        {
+          id: 'mp',
+          label: 'MP',
+          value: `${snapshot.playerState.resources.mp.current} / ${snapshot.playerState.resources.mp.max}`,
+          detail: 'Current and maximum mana'
+        },
+        {
+          id: 'stamina',
+          label: 'Stamina',
+          value: `${snapshot.playerState.resources.stamina.current} / ${snapshot.playerState.resources.stamina.max}`,
+          detail: 'Current and maximum endurance'
+        },
         { id: 'str', label: 'Strength', value: snapshot.playerState.attributes.STR.toString(), detail: 'Load, impact, and physical labor' },
         { id: 'agi', label: 'Agility', value: snapshot.playerState.attributes.AGI.toString(), detail: 'Movement speed, balance, and evasion' },
-        { id: 'vit', label: 'Vitality', value: snapshot.playerState.attributes.VIT.toString(), detail: 'Endurance, recovery, and hardiness' },
         { id: 'spt', label: 'Spirit', value: snapshot.playerState.attributes.SPT.toString(), detail: 'Will, attunement, and magical stability' }
       ],
       activeEffects: Array.from(

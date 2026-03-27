@@ -42,20 +42,17 @@ const NO_ATTRIBUTE_ADJUSTMENTS: Record<PlayerSexId, PlayerAttributeAdjustments> 
   neutral: {}
 };
 
-export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord> = {
+type PlayableLineageSeed = Omit<PlayerLineageProfileRecord, "sexAttributeAdjustments">;
+
+const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
   "lineage.human": {
     id: "lineage.human",
     name: "Human",
     resourceBaseAdjustments: { hp: 0, mp: 0, stamina: 0 },
     resourceGrowthPerLevel: { hp: 2, mp: 1, stamina: 2 },
-    sexAttributeAdjustments: {
-      male: { STR: 1, AGI: -1 },
-      female: { STR: -1, AGI: 1 },
-      neutral: {}
-    },
     notes: [
-      "Human growth stays broadly balanced across all three pools.",
-      "Only humans currently use a small sex-based STR/AGI tradeoff, and the total adjustment stays net-neutral."
+      "Human growth stays balanced across physical resilience, reserve, and recovery.",
+      "Identity selections are visual only and do not change gameplay stats."
     ]
   },
   "lineage.elf": {
@@ -63,10 +60,19 @@ export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord>
     name: "Elf",
     resourceBaseAdjustments: { hp: -8, mp: 10, stamina: -4 },
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 1 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
     notes: [
-      "Elven profiles favor magical endurance over raw bodily durability.",
-      "No gameplay-sex variance is applied to elves."
+      "Elves favor magical reserve, finesse, and long-horizon control over raw durability.",
+      "Identity selections are visual only and do not change gameplay stats."
+    ]
+  },
+  "lineage.dark_elf": {
+    id: "lineage.dark_elf",
+    name: "Dark Elf",
+    resourceBaseAdjustments: { hp: -4, mp: 8, stamina: 2 },
+    resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 2 },
+    notes: [
+      "Dark elves balance magical depth with better travel endurance than surface elves.",
+      "Identity selections are visual only and do not change gameplay stats."
     ]
   },
   "lineage.dwarf": {
@@ -74,32 +80,9 @@ export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord>
     name: "Dwarf",
     resourceBaseAdjustments: { hp: 10, mp: -6, stamina: 8 },
     resourceGrowthPerLevel: { hp: 3, mp: 0, stamina: 2 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
     notes: [
-      "Dwarven growth favors endurance-heavy pools.",
-      "No gameplay-sex variance is applied to dwarves."
-    ]
-  },
-  "lineage.halfling": {
-    id: "lineage.halfling",
-    name: "Halfling",
-    resourceBaseAdjustments: { hp: -4, mp: 2, stamina: 6 },
-    resourceGrowthPerLevel: { hp: 1, mp: 1, stamina: 3 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
-    notes: [
-      "Halfling growth leans toward stamina and efficiency rather than raw HP.",
-      "No gameplay-sex variance is applied to halflings."
-    ]
-  },
-  "lineage.gnome": {
-    id: "lineage.gnome",
-    name: "Gnome",
-    resourceBaseAdjustments: { hp: -6, mp: 8, stamina: 0 },
-    resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 1 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
-    notes: [
-      "Gnomish growth favors cognition and reserve over raw durability.",
-      "No gameplay-sex variance is applied to gnomes."
+      "Dwarven growth favors steady toughness, labor endurance, and grounded momentum.",
+      "Identity selections are visual only and do not change gameplay stats."
     ]
   },
   "lineage.orc": {
@@ -107,10 +90,9 @@ export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord>
     name: "Orc",
     resourceBaseAdjustments: { hp: 8, mp: -4, stamina: 6 },
     resourceGrowthPerLevel: { hp: 3, mp: 0, stamina: 2 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
     notes: [
-      "Orc growth favors pressure-tolerant physical pools without adding bespoke sex variance.",
-      "No gameplay-sex variance is applied to orcs."
+      "Orc ancestry favors pressure-tolerant physical pools without extreme magical reserves.",
+      "Identity selections are visual only and do not change gameplay stats."
     ]
   },
   "lineage.goblin": {
@@ -118,10 +100,9 @@ export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord>
     name: "Goblin",
     resourceBaseAdjustments: { hp: -8, mp: 2, stamina: 10 },
     resourceGrowthPerLevel: { hp: 1, mp: 1, stamina: 3 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
     notes: [
-      "Goblin growth leans toward speed, resilience, and sustained motion rather than HP bulk.",
-      "No gameplay-sex variance is applied to goblins."
+      "Goblin ancestry leans toward motion, agility, and repeated exertion over direct toughness.",
+      "Identity selections are visual only and do not change gameplay stats."
     ]
   },
   "lineage.troll": {
@@ -129,10 +110,9 @@ export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord>
     name: "Troll",
     resourceBaseAdjustments: { hp: 16, mp: -8, stamina: 4 },
     resourceGrowthPerLevel: { hp: 4, mp: 0, stamina: 1 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
     notes: [
-      "Troll growth favors extreme HP expansion with lower magical reserve.",
-      "No gameplay-sex variance is applied to trolls."
+      "Troll ancestry drives extreme HP expansion and blunt staying power.",
+      "Identity selections are visual only and do not change gameplay stats."
     ]
   },
   "lineage.merfolk": {
@@ -140,50 +120,10 @@ export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord>
     name: "Merfolk",
     resourceBaseAdjustments: { hp: -2, mp: 4, stamina: 4 },
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 2 },
-    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS,
     notes: [
-      "Merfolk growth stays balanced between magical reserve and travel endurance.",
-      "No gameplay-sex variance is applied to merfolk."
+      "Merfolk ancestry balances reserve and endurance, especially for aquatic travel and rhythm.",
+      "Identity selections are visual only and do not change gameplay stats."
     ]
-  }
-};
-
-export const PLAYER_CLASS_PROFILES: Record<string, PlayerClassProfileRecord> = {
-  "class.explorer": {
-    id: "class.explorer",
-    name: "Explorer",
-    resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 2 },
-    notes: ["Explorer class growth supports travel stamina and broad utility."]
-  },
-  "class.warrior": {
-    id: "class.warrior",
-    name: "Warrior",
-    resourceGrowthPerClassLevel: { hp: 3, mp: 0, stamina: 2 },
-    notes: ["Warrior class growth prioritizes frontline durability."]
-  },
-  "class.arcanist": {
-    id: "class.arcanist",
-    name: "Arcanist",
-    resourceGrowthPerClassLevel: { hp: 0, mp: 3, stamina: 0 },
-    notes: ["Arcanist class growth pushes magical reserves over physical output."]
-  },
-  "class.artisan": {
-    id: "class.artisan",
-    name: "Artisan",
-    resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 1 },
-    notes: ["Artisan class growth remains evenly distributed."]
-  },
-  "class.merchant": {
-    id: "class.merchant",
-    name: "Merchant",
-    resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 1 },
-    notes: ["Merchant class growth favors balanced daily endurance."]
-  },
-  "class.mariner": {
-    id: "class.mariner",
-    name: "Mariner",
-    resourceGrowthPerClassLevel: { hp: 1, mp: 0, stamina: 3 },
-    notes: ["Mariner class growth favors sea-going stamina and steady effort."]
   }
 };
 
@@ -198,6 +138,17 @@ function addResourceVectors(
   };
 }
 
+function averageResourceVectors(
+  left: PlayerResourceGrowthVector,
+  right: PlayerResourceGrowthVector
+): PlayerResourceGrowthVector {
+  return {
+    hp: Math.floor((left.hp + right.hp) / 2),
+    mp: Math.floor((left.mp + right.mp) / 2),
+    stamina: Math.floor((left.stamina + right.stamina) / 2)
+  };
+}
+
 function scaleResourceVector(
   vector: PlayerResourceGrowthVector,
   factor: number
@@ -208,6 +159,137 @@ function scaleResourceVector(
     stamina: vector.stamina * factor
   };
 }
+
+function createPlayableLineage(seed: PlayableLineageSeed): PlayerLineageProfileRecord {
+  return {
+    ...seed,
+    sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS
+  };
+}
+
+function createHybridLineage(params: {
+  id: string;
+  name: string;
+  parentLineageIds: [string, string];
+  resourceBaseModifiers?: PlayerResourceGrowthVector;
+  resourceGrowthModifiers?: PlayerResourceGrowthVector;
+  notes: string[];
+}): PlayerLineageProfileRecord {
+  const [leftId, rightId] = params.parentLineageIds;
+  const left = LINEAGE_ANCESTRY[leftId];
+  const right = LINEAGE_ANCESTRY[rightId];
+
+  if (!left || !right) {
+    throw new Error(`Missing hybrid lineage parent data for ${params.id}`);
+  }
+
+  return createPlayableLineage({
+    id: params.id,
+    name: params.name,
+    resourceBaseAdjustments: addResourceVectors(
+      averageResourceVectors(left.resourceBaseAdjustments, right.resourceBaseAdjustments),
+      params.resourceBaseModifiers ?? ZERO_RESOURCE_GROWTH
+    ),
+    resourceGrowthPerLevel: addResourceVectors(
+      averageResourceVectors(left.resourceGrowthPerLevel, right.resourceGrowthPerLevel),
+      params.resourceGrowthModifiers ?? ZERO_RESOURCE_GROWTH
+    ),
+    notes: [
+      `${params.name} resource growth is derived from averaged ${left.name} and ${right.name} ancestry, then tuned with only minor hybrid modifiers.`,
+      ...params.notes
+    ]
+  });
+}
+
+export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord> = {
+  "lineage.human": createPlayableLineage(LINEAGE_ANCESTRY["lineage.human"]),
+  "lineage.elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.elf"]),
+  "lineage.dark_elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dark_elf"]),
+  "lineage.dwarf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dwarf"]),
+  "lineage.half_troll": createHybridLineage({
+    id: "lineage.half_troll",
+    name: "Half-Troll",
+    parentLineageIds: ["lineage.human", "lineage.troll"],
+    resourceBaseModifiers: { hp: -1, mp: 1, stamina: 1 },
+    resourceGrowthModifiers: { hp: 0, mp: 1, stamina: 0 },
+    notes: [
+      "Half-trolls retain heavy physical staying power without reaching full troll bulk.",
+      "Their magical reserve remains lower than most lineages, but not utterly stunted."
+    ]
+  }),
+  "lineage.half_orc": createHybridLineage({
+    id: "lineage.half_orc",
+    name: "Half-Orc",
+    parentLineageIds: ["lineage.human", "lineage.orc"],
+    resourceBaseModifiers: { hp: 0, mp: 1, stamina: 1 },
+    resourceGrowthModifiers: { hp: 0, mp: 1, stamina: 0 },
+    notes: [
+      "Half-orcs keep durable frontline pools while remaining more adaptable than full-blooded orcs.",
+      "Their stamina curve stays strong enough for martial and frontier paths alike."
+    ]
+  }),
+  "lineage.half_goblin": createHybridLineage({
+    id: "lineage.half_goblin",
+    name: "Half-Goblin",
+    parentLineageIds: ["lineage.human", "lineage.goblin"],
+    resourceBaseModifiers: { hp: 0, mp: 1, stamina: 0 },
+    resourceGrowthModifiers: { hp: 0, mp: 0, stamina: 1 },
+    notes: [
+      "Half-goblins keep the mobility and improvisational stamina of goblin ancestry without the same HP penalty.",
+      "They are especially well-suited to skirmish, salvage, and routework starts."
+    ]
+  }),
+  "lineage.half_merfolk": createHybridLineage({
+    id: "lineage.half_merfolk",
+    name: "Half-Merfolk",
+    parentLineageIds: ["lineage.human", "lineage.merfolk"],
+    resourceBaseModifiers: { hp: 0, mp: 1, stamina: 1 },
+    resourceGrowthModifiers: { hp: 0, mp: 1, stamina: 0 },
+    notes: [
+      "Half-merfolk retain calm reserve growth and fluid travel endurance.",
+      "Their pool spread remains balanced enough for either magical or physical paths."
+    ]
+  })
+};
+
+export const PLAYER_CLASS_PROFILES: Record<string, PlayerClassProfileRecord> = {
+  "class.explorer": {
+    id: "class.explorer",
+    name: "Scout",
+    resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 2 },
+    notes: ["Scout path growth supports movement, observation, and durable travel stamina."]
+  },
+  "class.warrior": {
+    id: "class.warrior",
+    name: "Warrior",
+    resourceGrowthPerClassLevel: { hp: 3, mp: 0, stamina: 2 },
+    notes: ["Warrior path growth prioritizes direct durability and pressure resistance."]
+  },
+  "class.arcanist": {
+    id: "class.arcanist",
+    name: "Enchanter",
+    resourceGrowthPerClassLevel: { hp: 0, mp: 3, stamina: 1 },
+    notes: ["Enchanter path growth pushes reserve, focus, and magical throughput over bodily bulk."]
+  },
+  "class.artisan": {
+    id: "class.artisan",
+    name: "Craftsman",
+    resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 1 },
+    notes: ["Craftsman path growth remains even, favoring steady production over specialization spikes."]
+  },
+  "class.merchant": {
+    id: "class.merchant",
+    name: "Trader",
+    resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 1 },
+    notes: ["Trader path growth favors balanced daily endurance and measured reserve use."]
+  },
+  "class.mariner": {
+    id: "class.mariner",
+    name: "Hunter",
+    resourceGrowthPerClassLevel: { hp: 1, mp: 0, stamina: 3 },
+    notes: ["Hunter path growth favors pursuit stamina, range pressure, and repeat action economy."]
+  }
+};
 
 export function getPlayerLineageProfile(lineageId: string): PlayerLineageProfileRecord | undefined {
   return PLAYER_LINEAGE_PROFILES[lineageId];

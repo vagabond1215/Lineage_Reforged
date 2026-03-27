@@ -457,7 +457,7 @@ This file tracks content and systems that are intentionally deferred.
   - `packages/engines/game-engine/src/save-snapshot.ts` now provides a runtime-side snapshot helper, and `apps/rpg-ui/src/runtime/uiViewModel.ts` projects that snapshot shape into panel data
   - `apps/rpg-ui` now has a typed top-level flow with `MAIN_MENU`, `CHARACTER_CREATION`, `LOAD_GAME`, and `IN_GAME` states so the existing shell can be entered from a real front-end game loop instead of rendering immediately on boot
   - the UI now maintains three browser-local manual save slots plus a dedicated quick-save slot backed by `localStorage`, with serialized shared `SaveSnapshot` payloads, stored save metadata, explicit save/load/overwrite/delete/reset-all controls, and corrupt-slot isolation in the front-end shell
-  - the UI character creator now runs as a deterministic multi-step flow for name, sex, lineage, class, background, and starting settlement, with a live summary panel and a snapshot factory kept separate from the screen component
+  - the UI character creator now runs as a deterministic multi-step flow for lineage, identity, backstory, path, and legal world-start selection, with lineage-valid identity palettes, lineage-scoped backstory pools, a live summary panel, and a snapshot factory kept separate from the screen component
   - the world, activity, and quest tabs now expose a first playable snapshot-backed loop for accepting a contract, traveling between authored locations, advancing contract work shifts, resting, turning contracts in, and applying rewards to currency, XP, skills, reputation, codex entries, chronicle events, notifications, and operations
   - the detail column now also exposes per-section standard field audits and missing-reference callouts so each submenu window documents what data it expects to receive
   - the character tab now surfaces origin growth, wallet/inventory state, equipped gear refs, and discovery-chronicle records from the snapshot bridge instead of treating those windows as placeholders
@@ -468,7 +468,8 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to replace session-flag-driven objective progress, cargo markers, and codex unlock triggers with canonical quest/runtime state owned by the engine layer instead of the front-end command helper
   - remaining work is to replace the current UI-side equip-slot heuristics, session-flag item metadata stashing, and disabled consumable action hook with canonical item definitions plus engine-owned equip/use semantics
   - the character creator now resolves continent, region, and settlement selection from canonical world data instead of the earlier UI-authored settlement-template catalog
-  - remaining work is to replace the UI-authored character creation templates for backgrounds and starter loadouts with canonical content/database ownership once the player-content layer stabilizes
+  - remaining work is to replace the UI-authored character creation catalogs for identity palettes, backstories, paths, starter loadouts, and legal-start mappings with canonical content/database ownership once the player-content layer stabilizes
+  - remaining work is to validate the richer creator catalogs against canonical skill, item, and trait registries so the UI no longer depends on mixed placeholder refs during new-game generation
   - remaining work is to replace the UI-authored new-game snapshot builder and browser-local slot manager with engine-owned character creation, canonical save-slot metadata, and session persistence once runtime save semantics are finalized
 
 #### RPG UI section field coverage and missing references

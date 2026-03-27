@@ -16,19 +16,29 @@ import {
   deserializeSnapshot,
   serializeSnapshot
 } from '../../../../packages/shared/persistence/src/index.js';
-import type { CharacterCreationFormState } from './characterCreationForm.js';
 import {
-  getStarterBackgroundTemplate,
-  getStarterClassTemplate
-} from './starterTemplates.js';
+  hasCompleteCharacterCreationSelections,
+  type CharacterCreationFormState,
+  type CompleteCharacterCreationFormState
+} from './characterCreationForm.js';
+import {
+  getBackstoryStartAccessProfileId,
+  getBackstoryTemplate,
+  getIdentityOptionLabel,
+  getPathTemplate
+} from './characterCreationCatalog.js';
 import { resolveWorldSelection } from './worldSelectionCatalog.js';
 import { demoSnapshot } from '../runtime/demoSnapshot.js';
 
 type DerivedCharacterCreationState = {
   backgroundLabel: string;
+  lineageLabel: string;
+  pathLabel: string;
   startingContinentLabel: string;
   startingSettlementLabel: string;
   startingRegionLabel: string;
+  startingAccessLabel: string;
+  startingAccessDetail: string;
   chosenOriginLabel: string;
   attributes: PlayerAttributes;
   resources: {
@@ -48,20 +58,32 @@ type DerivedCharacterCreationState = {
   snapshot: SaveSnapshot;
 };
 
+type CharacterCreationPreviewMetric = {
+  id: string;
+  label: string;
+  value: string | null;
+};
+
 export type CharacterCreationPreview = {
+  isResolved: boolean;
   characterName: string;
   chosenOrigin: string;
-  backgroundLabel: string;
-  startingContinent: string;
-  startingSettlement: string;
-  startingRegion: string;
-  attributes: PlayerAttributes;
-  resourceMaxima: PlayerResourceGrowthVector;
+  lineageLabel: string | null;
+  backgroundLabel: string | null;
+  pathLabel: string | null;
+  startingContinent: string | null;
+  startingSettlement: string | null;
+  startingRegion: string | null;
+  startingAccessLabel: string;
+  startingAccessDetail: string;
+  identityMetrics: CharacterCreationPreviewMetric[];
+  resourceMetrics: CharacterCreationPreviewMetric[];
+  attributeMetrics: CharacterCreationPreviewMetric[];
   starterSkills: string[];
   starterTraits: string[];
   starterGear: string[];
   starterPack: string[];
-  walletLabel: string;
+  walletLabel: string | null;
   starterNotes: string[];
 };
 
@@ -106,6 +128,90 @@ function humanizeId(value: string | null | undefined): string {
 
 function formatWallet(currency: PlayerCurrencyState): string {
   return `${currency.gold}g ${currency.silver}s ${currency.copper}c`;
+}
+
+function buildPreviewMetric(
+  id: string,
+  label: string,
+  value: number | null
+): CharacterCreationPreviewMetric {
+  return {
+    id,
+    label,
+    value: value === null ? null : value.toString()
+  };
+}
+
+function buildTextMetric(
+  id: string,
+  label: string,
+  value: string | null
+): CharacterCreationPreviewMetric {
+  return {
+    id,
+    label,
+    value
+  };
+}
+
+function buildIdentityMetrics(
+  form: Pick<
+    CharacterCreationFormState,
+    'sexId' | 'lineageId' | 'heightCm' | 'buildId' | 'hairColorId' | 'hairHighlightColorId' | 'eyeColorId' | 'skinToneId'
+  >
+): CharacterCreationPreviewMetric[] {
+  const sexLabel = form.sexId ? `${form.sexId[0]!.toUpperCase()}${form.sexId.slice(1)}` : null;
+  const buildLabel = getIdentityOptionLabel(form.lineageId, 'buildOptions', form.buildId);
+  const hairLabel = getIdentityOptionLabel(form.lineageId, 'hairColorOptions', form.hairColorId);
+  const highlightLabel = form.hairHighlightColorId
+    ? getIdentityOptionLabel(form.lineageId, 'hairHighlightOptions', form.hairHighlightColorId)
+    : 'None';
+  const eyeLabel = getIdentityOptionLabel(form.lineageId, 'eyeColorOptions', form.eyeColorId);
+  const skinLabel = getIdentityOptionLabel(form.lineageId, 'skinToneOptions', form.skinToneId);
+
+  return [
+    buildTextMetric('sex', 'Sex', sexLabel),
+    buildTextMetric('height', 'Height', form.heightCm === null ? null : `${form.heightCm} cm`),
+    buildTextMetric('build', 'Build', buildLabel),
+    buildTextMetric('hair', 'Hair', hairLabel),
+    buildTextMetric('highlight', 'Highlight', highlightLabel),
+    buildTextMetric('eyes', 'Eyes', eyeLabel),
+    buildTextMetric('skin', 'Skin', skinLabel)
+  ];
+}
+
+function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCreationPreview {
+  return {
+    isResolved: false,
+    characterName: form.playerName.trim() || 'Name Pending',
+    chosenOrigin: 'An unproven wanderer without a sworn past, path, or legal start yet.',
+    lineageLabel: null,
+    backgroundLabel: null,
+    pathLabel: null,
+    startingContinent: null,
+    startingSettlement: null,
+    startingRegion: null,
+    startingAccessLabel: 'Awaiting legal start',
+    startingAccessDetail:
+      'Choose lineage, identity, backstory, path, and settlement to generate a legal opening.',
+    identityMetrics: buildIdentityMetrics(form),
+    resourceMetrics: [
+      buildPreviewMetric('hp', 'HP', null),
+      buildPreviewMetric('mp', 'MP', null),
+      buildPreviewMetric('stamina', 'Stamina', null)
+    ],
+    attributeMetrics: [
+      buildPreviewMetric('str', 'Strength', null),
+      buildPreviewMetric('agi', 'Agility', null),
+      buildPreviewMetric('spt', 'Spirit', null)
+    ],
+    starterSkills: [],
+    starterTraits: [],
+    starterGear: [],
+    starterPack: [],
+    walletLabel: null,
+    starterNotes: []
+  };
 }
 
 function slugifyPlayerName(playerName: string): string {
@@ -211,7 +317,7 @@ function buildStarterTraits(
 function buildStarterEquipment(classId: string): EquipmentState {
   return {
     ...EMPTY_EQUIPMENT,
-    ...getStarterClassTemplate(classId).equipment
+    ...getPathTemplate(classId).equipment
   };
 }
 
@@ -219,8 +325,8 @@ function buildStarterInventory(
   classId: string,
   backgroundId: string
 ) {
-  const classTemplate = getStarterClassTemplate(classId);
-  const backgroundTemplate = getStarterBackgroundTemplate(backgroundId);
+  const classTemplate = getPathTemplate(classId);
+  const backgroundTemplate = getBackstoryTemplate(backgroundId);
 
   return {
     bags: [
@@ -243,7 +349,7 @@ function buildStarterSessionState(
   form: CharacterCreationFormState,
   selectedWorld: NonNullable<ReturnType<typeof resolveWorldSelection>>
 ): SaveSnapshot['sessionState'] {
-  const backgroundTemplate = getStarterBackgroundTemplate(form.backgroundId);
+  const backgroundTemplate = getBackstoryTemplate(form.backgroundId);
   const settlementRecord = selectedWorld.settlementRecord;
   const locationType =
     settlementRecord.settlementType === 'fort' || settlementRecord.settlementType === 'citadel'
@@ -367,17 +473,17 @@ function buildStarterSessionState(
 }
 
 function deriveCharacterCreationState(
-  form: CharacterCreationFormState
+  form: CompleteCharacterCreationFormState
 ): DerivedCharacterCreationState {
   const baseSnapshot = cloneSnapshot(demoSnapshot);
-  const classTemplate = getStarterClassTemplate(form.classId);
-  const backgroundTemplate = getStarterBackgroundTemplate(form.backgroundId);
+  const classTemplate = getPathTemplate(form.classId);
+  const backgroundTemplate = getBackstoryTemplate(form.backgroundId);
   const selectedWorld = resolveWorldSelection({
     continentId: form.continentId,
     regionId: form.regionId,
     settlementId: form.startingSettlementId,
     classId: form.classId,
-    backgroundId: form.backgroundId
+    backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
   });
 
   if (!selectedWorld) {
@@ -475,7 +581,15 @@ function deriveCharacterCreationState(
         lineageId: form.lineageId,
         sexId: form.sexId,
         classId: form.classId,
-        jobId: backgroundTemplate.jobId
+        jobId: backgroundTemplate.jobId,
+        identityProfile: {
+          heightCm: form.heightCm,
+          buildId: form.buildId,
+          hairColorId: form.hairColorId,
+          hairHighlightColorId: form.hairHighlightColorId || null,
+          eyeColorId: form.eyeColorId,
+          skinToneId: form.skinToneId
+        }
       },
       attributes,
       resources: resourceResolution.resources,
@@ -529,10 +643,17 @@ function deriveCharacterCreationState(
 
   return {
     backgroundLabel: backgroundTemplate.label,
+    lineageLabel: originProfile.lineageLabel,
+    pathLabel: classTemplate.label,
     startingContinentLabel: selectedWorld.continent.label,
     startingSettlementLabel: selectedWorld.settlement.label,
     startingRegionLabel: selectedWorld.region.label,
-    chosenOriginLabel: `${backgroundTemplate.label} of ${selectedWorld.settlement.label}`,
+    startingAccessLabel:
+      selectedWorld.settlement.access.accessStatus === 'allowed' ? 'Authorized Start' : 'Restricted Start',
+    startingAccessDetail:
+      selectedWorld.settlement.access.notes[0] ??
+      `${selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')} | ${selectedWorld.settlement.access.lodgingType.replace(/_/g, ' ')}`,
+    chosenOriginLabel: `${originProfile.lineageLabel} ${backgroundTemplate.label} on the ${classTemplate.label} path`,
     attributes,
     resources: {
       hp: resourceResolution.resources.hp.max,
@@ -562,22 +683,36 @@ function deriveCharacterCreationState(
 export function buildCharacterCreationPreview(
   form: CharacterCreationFormState
 ): CharacterCreationPreview {
+  if (!hasCompleteCharacterCreationSelections(form)) {
+    return buildPlaceholderPreview(form);
+  }
+
   try {
     const derived = deriveCharacterCreationState(form);
 
     return {
-      characterName: form.playerName.trim() || 'Unnamed Adventurer',
+      isResolved: true,
+      characterName: form.playerName.trim() || 'Name Pending',
       chosenOrigin: derived.chosenOriginLabel,
+      lineageLabel: derived.lineageLabel,
       backgroundLabel: derived.backgroundLabel,
+      pathLabel: derived.pathLabel,
       startingContinent: derived.startingContinentLabel,
       startingSettlement: derived.startingSettlementLabel,
       startingRegion: derived.startingRegionLabel,
-      attributes: derived.attributes,
-      resourceMaxima: {
-        hp: derived.resources.hp,
-        mp: derived.resources.mp,
-        stamina: derived.resources.stamina
-      },
+      startingAccessLabel: derived.startingAccessLabel,
+      startingAccessDetail: derived.startingAccessDetail,
+      identityMetrics: buildIdentityMetrics(form),
+      resourceMetrics: [
+        buildPreviewMetric('hp', 'HP', derived.resources.hp),
+        buildPreviewMetric('mp', 'MP', derived.resources.mp),
+        buildPreviewMetric('stamina', 'Stamina', derived.resources.stamina)
+      ],
+      attributeMetrics: [
+        buildPreviewMetric('str', 'Strength', derived.attributes.STR),
+        buildPreviewMetric('agi', 'Agility', derived.attributes.AGI),
+        buildPreviewMetric('spt', 'Spirit', derived.attributes.SPT)
+      ],
       starterSkills: derived.starterSkillLabels,
       starterTraits: derived.starterTraitLabels,
       starterGear: derived.gearLabels,
@@ -586,14 +721,14 @@ export function buildCharacterCreationPreview(
       starterNotes: derived.starterNotes.filter((note) => note.trim().length > 0)
     };
   } catch (error) {
-    const classTemplate = getStarterClassTemplate(form.classId);
-    const backgroundTemplate = getStarterBackgroundTemplate(form.backgroundId);
+    const classTemplate = getPathTemplate(form.classId);
+    const backgroundTemplate = getBackstoryTemplate(form.backgroundId);
     const selectedWorld = resolveWorldSelection({
       continentId: form.continentId,
       regionId: form.regionId,
       settlementId: form.startingSettlementId,
       classId: form.classId,
-      backgroundId: form.backgroundId
+      backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
     });
     const originProfile = resolvePlayerOriginProfile(
       {
@@ -616,14 +751,31 @@ export function buildCharacterCreationPreview(
     const inventory = buildStarterInventory(form.classId, form.backgroundId);
 
     return {
-      characterName: form.playerName.trim() || 'Unnamed Adventurer',
-      chosenOrigin: `${backgroundTemplate.label} of ${selectedWorld?.settlement.label ?? 'Unknown Start'}`,
+      isResolved: true,
+      characterName: form.playerName.trim() || 'Name Pending',
+      chosenOrigin: `${originProfile.lineageLabel} ${backgroundTemplate.label} on the ${classTemplate.label} path`,
+      lineageLabel: originProfile.lineageLabel,
       backgroundLabel: backgroundTemplate.label,
+      pathLabel: classTemplate.label,
       startingContinent: selectedWorld?.continent.label ?? 'Unknown Continent',
       startingSettlement: selectedWorld?.settlement.label ?? 'Unknown Settlement',
       startingRegion: selectedWorld?.region.label ?? 'Unknown Region',
-      attributes,
-      resourceMaxima: originProfile.resolvedResourceMaxima,
+      startingAccessLabel:
+        selectedWorld?.settlement.access.accessStatus === 'allowed' ? 'Authorized Start' : 'Start Unavailable',
+      startingAccessDetail:
+        selectedWorld?.settlement.access.notes[0] ??
+        'Select a legal start to finalize the campaign.',
+      identityMetrics: buildIdentityMetrics(form),
+      resourceMetrics: [
+        buildPreviewMetric('hp', 'HP', originProfile.resolvedResourceMaxima.hp),
+        buildPreviewMetric('mp', 'MP', originProfile.resolvedResourceMaxima.mp),
+        buildPreviewMetric('stamina', 'Stamina', originProfile.resolvedResourceMaxima.stamina)
+      ],
+      attributeMetrics: [
+        buildPreviewMetric('str', 'Strength', attributes.STR),
+        buildPreviewMetric('agi', 'Agility', attributes.AGI),
+        buildPreviewMetric('spt', 'Spirit', attributes.SPT)
+      ],
       starterSkills: classTemplate.skills.map((skill) => `${humanizeId(skill.id)} ${skill.rank}`),
       starterTraits: backgroundTemplate.traitIds.map((traitId) => humanizeId(traitId)),
       starterGear: Object.values(buildStarterEquipment(form.classId)).flatMap((item) => (item ? [humanizeId(item.itemKey)] : [])),
@@ -641,6 +793,10 @@ export function buildCharacterCreationPreview(
 export function createNewGameSnapshot(
   form: CharacterCreationFormState
 ): SaveSnapshot {
+  if (!hasCompleteCharacterCreationSelections(form)) {
+    throw new Error('Complete character creation before starting the campaign.');
+  }
+
   return deriveCharacterCreationState({
     ...form,
     playerName: form.playerName.trim()
