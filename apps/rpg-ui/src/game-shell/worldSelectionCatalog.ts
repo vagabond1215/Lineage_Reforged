@@ -18,13 +18,13 @@ import {
   deriveSettlementReligion,
   deriveSettlementStartAccess
 } from "../../../../packages/shared/types/src/index.js";
-import guildsRaw from "../../../../packages/content/base/civilization/guilds.json?raw";
-import crystalCatalogRaw from "../../../../packages/content/base/world/crystal_catalog.json?raw";
-import magicInfrastructureRaw from "../../../../packages/content/base/world/magic_infrastructure.json?raw";
-import regionLocalitiesRaw from "../../../../packages/content/base/world/region_localities.json?raw";
-import regionsRaw from "../../../../packages/content/base/world/regions.json?raw";
-import religionsRaw from "../../../../packages/content/base/world/religions.json?raw";
-import settlementsRaw from "../../../../packages/content/base/world/settlements.json?raw";
+import guildsCatalog from "../../../../packages/content/base/civilization/guilds.json";
+import crystalCatalogData from "../../../../packages/content/base/world/crystal_catalog.json";
+import magicInfrastructureCatalog from "../../../../packages/content/base/world/magic_infrastructure.json";
+import regionLocalitiesCatalog from "../../../../packages/content/base/world/region_localities.json";
+import regionsCatalog from "../../../../packages/content/base/world/regions.json";
+import religionsCatalog from "../../../../packages/content/base/world/religions.json";
+import settlementsCatalog from "../../../../packages/content/base/world/settlements.json";
 
 type RegionRecord = InstitutionRegionRecord & {
   summary?: string;
@@ -54,6 +54,10 @@ type SettlementRecord = InstitutionSettlementRecord & {
 };
 
 type LocalityRecord = InstitutionLocalityRecord;
+
+type RecordsCatalog<T> = {
+  records: T[];
+};
 
 export interface WorldContinentOption {
   id: string;
@@ -104,17 +108,13 @@ export interface ResolvedWorldSelection {
   localityRecord: LocalityRecord;
 }
 
-function parseRecords<T>(raw: string): T[] {
-  return (JSON.parse(raw) as { records: T[] }).records;
-}
-
-const regionRecords = parseRecords<RegionRecord>(regionsRaw);
-const localityRecords = parseRecords<LocalityRecord>(regionLocalitiesRaw);
-const settlementRecords = parseRecords<SettlementRecord>(settlementsRaw);
-const guildCatalog = parseRecords<InstitutionGuildCatalogRecord>(guildsRaw);
-const religionCatalog = parseRecords<ReligionCatalogRecord>(religionsRaw)[0] ?? null;
-const magicCatalog = parseRecords<MagicInfrastructureCatalogRecord>(magicInfrastructureRaw);
-const crystalCatalog = parseRecords<CrystalCatalogRecord>(crystalCatalogRaw);
+const regionRecords = (regionsCatalog as RecordsCatalog<RegionRecord>).records;
+const localityRecords = (regionLocalitiesCatalog as RecordsCatalog<LocalityRecord>).records;
+const settlementRecords = (settlementsCatalog as RecordsCatalog<SettlementRecord>).records;
+const guildCatalog = (guildsCatalog as RecordsCatalog<InstitutionGuildCatalogRecord>).records;
+const religionCatalog = (religionsCatalog as RecordsCatalog<ReligionCatalogRecord>).records[0] ?? null;
+const magicCatalog = (magicInfrastructureCatalog as RecordsCatalog<MagicInfrastructureCatalogRecord>).records;
+const crystalCatalog = (crystalCatalogData as RecordsCatalog<CrystalCatalogRecord>).records;
 
 const regionById = new Map(regionRecords.map((record) => [record.id, record]));
 const localityById = new Map(localityRecords.map((record) => [record.id, record]));
