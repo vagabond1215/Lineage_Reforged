@@ -38,6 +38,7 @@ export type IconName =
   | 'moon'
   | 'dice'
   | 'info'
+  | 'eye'
   | 'tree'
   | 'grain'
   | 'fruit'

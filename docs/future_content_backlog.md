@@ -451,7 +451,7 @@ This file tracks content and systems that are intentionally deferred.
 - Prerequisite: shared player/session snapshot fields and a browser-safe UI projection layer now exist; remaining prerequisite is runtime generation of those session records from actual simulation systems
 - Intended owner: `apps/rpg-ui`, `packages/shared`, and engine/session runtime layers
 - Intended implementation:
-  - player-facing root launchers now exist as `Play Cataclysm.cmd`, `Open Content Browser.cmd`, and `Launch Game + Browser.cmd` so the current UI/browser stack can be entered from the project root without terminal knowledge
+  - a player-facing root launcher now exists as `Play Cataclysm.cmd` so the current UI/browser flow can be entered from the project root without terminal knowledge
   - the React/Tailwind shell now reads from a save/session snapshot bridge instead of the earlier freeform mock-data module, and the in-game shell now owns a typed game-session provider that separates raw active snapshots, derived UI view models, and local navigation state while leaving `demoSnapshot` as development-only seed data
   - shared contracts now carry location, currency, reputation, titles, tracked activity, notifications, codex records, quest journal records, chronicle records, operations, origin profiles, inventory/equipment, and the player discovery chronicle in a session-facing shape the UI can project directly
   - `packages/engines/game-engine/src/save-snapshot.ts` now provides a runtime-side snapshot helper, and `apps/rpg-ui/src/runtime/uiViewModel.ts` projects that snapshot shape into panel data
@@ -471,6 +471,9 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to promote the new shell layout state such as collapsed system tabs, right-side detail visibility, and in-game settings-panel state into canonical UI preferences or session-owned persistence if those presentation choices need to survive reloads instead of resetting per mount
   - the character creator now resolves continent, region, and settlement selection from canonical world data instead of the earlier UI-authored settlement-template catalog
   - remaining work is to replace the UI-authored character creation catalogs for identity palettes, backstories, paths, starter loadouts, and legal-start mappings with canonical content/database ownership once the player-content layer stabilizes
+  - the character creator now serves lineage and continent card art from `apps/rpg-ui/public/character-creator`, uses hover-preview eye affordances on lineage/continent/region/settlement cards, and defaults the live summary to collapsed on continent, region, and settlement steps so those cards can claim more space
+  - remaining work is to move the current UI-owned lineage/continent card art manifests, expanded lineage color palettes, sex or height or build tradeoff tables, and any future region or settlement card art into canonical player-content ownership once the player-content layer can author visual identity and starting-stat modifiers directly
+  - remaining work is to extend the current region and settlement card hover-preview scaffolding with real decorative art once those image assets exist; prerequisite is authored regional and settlement art, and intended owner is `apps/rpg-ui` until canonical presentation content absorbs that responsibility
   - remaining work is to replace the current creator-side lineage-fit heuristic for uncommon city locals and nobles with canonical settlement demographics or authored lineage-presence data so those hooks do not stay UI-inferred forever
   - remaining work is to validate the richer creator catalogs against canonical skill, item, and trait registries so the UI no longer depends on mixed placeholder refs during new-game generation
   - remaining work is to replace the UI-authored new-game snapshot builder and browser-local slot manager with engine-owned character creation, canonical save-slot metadata, and session persistence once runtime save semantics are finalized
@@ -505,9 +508,8 @@ This file tracks content and systems that are intentionally deferred.
 #### Desktop packaging and embedded launch flow
 
 - Status: deferred
-- Prerequisite: root-level player/browser launchers now exist; remaining prerequisites are a stable production build pipeline for `apps/rpg-ui`, packaged asset bundling for the content browser, and a clear ownership decision for running or embedding the simulation/runtime host in desktop builds
+- Prerequisite: a root-level player launcher now exists; remaining prerequisites are a stable production build pipeline for `apps/rpg-ui` and a clear ownership decision for running or embedding the simulation/runtime host in desktop builds
 - Intended owner: desktop packaging, `apps/rpg-ui`, and future app-host/runtime integration layers
 - Intended implementation:
-  - keep `Play Cataclysm.cmd`, `Open Content Browser.cmd`, and `Launch Game + Browser.cmd` as the current non-technical root entrypoints while the project remains browser-hosted in development
+  - keep `Play Cataclysm.cmd` as the current non-technical root entrypoint while the project remains browser-hosted in development
   - package the player UI into a desktop shell once the save flow, launcher behavior, and runtime bridge are stable enough that browser-specific boot assumptions can be removed
-  - decide whether the content browser ships as a separate desktop utility, a secondary window inside the same host, or a development-only companion tool before installer/update work begins

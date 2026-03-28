@@ -801,7 +801,16 @@ export interface CivilizationState {
 
 export type PlayerAttributeKey = "STR" | "DEX" | "AGI" | "CON" | "VIT" | "WIS" | "INT" | "SPT" | "CHA";
 export type PlayerSexId = "male" | "female" | "neutral";
-export type PlayerIdentityBuildId = "slim" | "average" | "heavy" | "muscular";
+export type PlayerIdentityBuildId =
+  | "petite"
+  | "slim"
+  | "average"
+  | "muscular"
+  | "stocky"
+  | "heavy"
+  | "scholarly"
+  | "mystic"
+  | "poised";
 
 export interface PlayerResourceGrowthVector {
   hp: number;

@@ -38,7 +38,7 @@ const ZERO_RESOURCE_GROWTH: PlayerResourceGrowthVector = {
 
 const NO_ATTRIBUTE_ADJUSTMENTS: Record<PlayerSexId, PlayerAttributeAdjustments> = {
   male: {},
-  female: {},
+  female: { AGI: 1, STR: -1 },
   neutral: {}
 };
 
@@ -52,7 +52,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 2, mp: 1, stamina: 2 },
     notes: [
       "Human growth stays balanced across physical resilience, reserve, and recovery.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.elf": {
@@ -62,7 +62,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 1 },
     notes: [
       "Elves favor magical reserve, finesse, and long-horizon control over raw durability.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.dark_elf": {
@@ -72,7 +72,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 2 },
     notes: [
       "Dark elves balance magical depth with better travel endurance than surface elves.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.dwarf": {
@@ -82,7 +82,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 3, mp: 0, stamina: 2 },
     notes: [
       "Dwarven growth favors steady toughness, labor endurance, and grounded momentum.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.gnome": {
@@ -92,7 +92,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 1, mp: 3, stamina: 1 },
     notes: [
       "Gnomes favor sharp reserve growth, nimble motion, and inventive problem-solving over raw bodily power.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.halfling": {
@@ -102,7 +102,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 1, mp: 1, stamina: 3 },
     notes: [
       "Halflings favor evasive endurance, steady travel stamina, and quiet resilience rather than direct physical force.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.orc": {
@@ -112,7 +112,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 3, mp: 0, stamina: 2 },
     notes: [
       "Orc ancestry favors pressure-tolerant physical pools without extreme magical reserves.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.goblin": {
@@ -122,7 +122,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 1, mp: 1, stamina: 3 },
     notes: [
       "Goblin ancestry leans toward motion, agility, and repeated exertion over direct toughness.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.troll": {
@@ -132,7 +132,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 4, mp: 0, stamina: 1 },
     notes: [
       "Troll ancestry drives extreme HP expansion and blunt staying power.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   },
   "lineage.merfolk": {
@@ -142,7 +142,7 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 2 },
     notes: [
       "Merfolk ancestry balances reserve and endurance, especially for aquatic travel and rhythm.",
-      "Identity selections are visual only and do not change gameplay stats."
+      "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
     ]
   }
 };
@@ -222,12 +222,12 @@ function createHybridLineage(params: {
 }
 
 export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord> = {
-  "lineage.human": createPlayableLineage(LINEAGE_ANCESTRY["lineage.human"]),
-  "lineage.elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.elf"]),
-  "lineage.dark_elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dark_elf"]),
-  "lineage.dwarf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dwarf"]),
-  "lineage.gnome": createPlayableLineage(LINEAGE_ANCESTRY["lineage.gnome"]),
-  "lineage.halfling": createPlayableLineage(LINEAGE_ANCESTRY["lineage.halfling"]),
+  "lineage.human": createPlayableLineage(LINEAGE_ANCESTRY["lineage.human"]!),
+  "lineage.elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.elf"]!),
+  "lineage.dark_elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dark_elf"]!),
+  "lineage.dwarf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dwarf"]!),
+  "lineage.gnome": createPlayableLineage(LINEAGE_ANCESTRY["lineage.gnome"]!),
+  "lineage.halfling": createPlayableLineage(LINEAGE_ANCESTRY["lineage.halfling"]!),
   "lineage.half_troll": createHybridLineage({
     id: "lineage.half_troll",
     name: "Half-Troll",

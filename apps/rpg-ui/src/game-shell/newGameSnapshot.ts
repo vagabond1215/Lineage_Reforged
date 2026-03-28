@@ -27,8 +27,14 @@ import { applyCharacterAttributeAllocation } from './characterAttributes.js';
 import {
   getBackstoryStartAccessProfileId,
   getBackstoryTemplate,
+  getBuildAttributeAdjustments,
+  getBuildLabel,
   getHeightBandLabel,
+  getHeightBandAttributeAdjustments,
   getIdentityOptionLabel,
+  getLineageBaseAttributes,
+  isCompatibleBackstorySelection,
+  getPathAttributeAdjustments,
   getRepresentativeHeightCm,
   getPathTemplate
 } from './characterCreationCatalog.js';
@@ -168,6 +174,7 @@ function buildIdentityMetrics(
     | 'sexId'
     | 'lineageId'
     | 'heightBandId'
+    | 'buildId'
     | 'hairColorId'
     | 'eyeColorId'
     | 'skinToneId'
@@ -175,6 +182,7 @@ function buildIdentityMetrics(
 ): CharacterCreationPreviewMetric[] {
   const sexLabel = form.sexId ? `${form.sexId[0]!.toUpperCase()}${form.sexId.slice(1)}` : null;
   const heightLabel = getHeightBandLabel(form.heightBandId);
+  const buildLabel = getBuildLabel(form.buildId);
   const hairLabel = getIdentityOptionLabel(form.lineageId, 'hairColorOptions', form.hairColorId);
   const eyeLabel = getIdentityOptionLabel(form.lineageId, 'eyeColorOptions', form.eyeColorId);
   const skinLabel = getIdentityOptionLabel(form.lineageId, 'skinToneOptions', form.skinToneId);
@@ -182,6 +190,7 @@ function buildIdentityMetrics(
   return [
     buildTextMetric('sex', 'Sex', sexLabel),
     buildTextMetric('height', 'Height', heightLabel),
+    buildTextMetric('build', 'Build', buildLabel),
     buildTextMetric('hair', 'Hair', hairLabel),
     buildTextMetric('eyes', 'Eyes', eyeLabel),
     buildTextMetric('skin', 'Skin', skinLabel)
@@ -202,6 +211,67 @@ function buildAttributeMetrics(
     buildPreviewMetric('spt', 'SPT', attributes?.SPT ?? null),
     buildPreviewMetric('cha', 'CHA', attributes?.CHA ?? null)
   ];
+}
+
+function resolveWorkingCharacterAttributes(
+  form: Pick<
+    CharacterCreationFormState,
+    | 'sexId'
+    | 'lineageId'
+    | 'classId'
+    | 'backgroundId'
+    | 'heightBandId'
+    | 'buildId'
+    | 'attributeAllocation'
+  >,
+  selectedWorld?: ReturnType<typeof resolveWorldSelection> | null
+): PlayerAttributes {
+  const hasPathSelection = form.classId.trim().length > 0;
+  const resolvedClassId = hasPathSelection ? getPathTemplate(form.classId).id : 'class.explorer';
+  const resolvedLineageId = form.lineageId.trim() || 'lineage.human';
+  const resolvedSexId = form.sexId === 'female' ? 'female' : 'male';
+  const originProfile = resolvePlayerOriginProfile(
+    {
+      lineageId: resolvedLineageId,
+      classId: resolvedClassId,
+      sexId: resolvedSexId
+    },
+    {
+      level: 1,
+      classLevel: 1
+    }
+  );
+
+  let attributes = getLineageBaseAttributes(resolvedLineageId);
+
+  if (hasPathSelection) {
+    attributes = applyAttributeAdjustments(
+      attributes,
+      getPathAttributeAdjustments(resolvedClassId)
+    );
+  }
+  attributes = applyAttributeAdjustments(attributes, originProfile.attributeAdjustments);
+
+  if (
+    form.backgroundId.trim().length > 0 &&
+    isCompatibleBackstorySelection(resolvedLineageId, form.backgroundId)
+  ) {
+    attributes = applyAttributeAdjustments(
+      attributes,
+      getBackstoryTemplate(form.backgroundId, selectedWorld).attributeAdjustments
+    );
+  }
+
+  attributes = applyAttributeAdjustments(
+    attributes,
+    getHeightBandAttributeAdjustments(form.heightBandId)
+  );
+  attributes = applyAttributeAdjustments(
+    attributes,
+    getBuildAttributeAdjustments(form.buildId)
+  );
+
+  return applyCharacterAttributeAllocation(attributes, form.attributeAllocation);
 }
 
 function formatNarrativeList(values: string[], fallback: string): string {
@@ -247,11 +317,13 @@ function buildReviewNarrative(params: {
 }
 
 function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCreationPreview {
+  const provisionalAttributes = resolveWorkingCharacterAttributes(form);
+
   return {
     isResolved: false,
     characterName: form.playerName.trim() || 'Name Pending',
     chosenOrigin: 'An unproven soul with no sworn past, chosen path, or lawful arrival yet.',
-    lineageLabel: null,
+    lineageLabel: form.lineageId.trim() ? humanizeId(form.lineageId) : null,
     backgroundLabel: null,
     pathLabel: null,
     startingContinent: null,
@@ -266,7 +338,7 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
       buildPreviewMetric('mp', 'MP', null),
       buildPreviewMetric('stamina', 'Stamina', null)
     ],
-    attributeMetrics: buildAttributeMetrics(null),
+    attributeMetrics: buildAttributeMetrics(provisionalAttributes),
     starterSkills: [],
     starterTraits: [],
     starterGear: [],
@@ -578,17 +650,9 @@ function deriveCharacterCreationState(
     },
     progression
   );
-  const baseAttributes = applyAttributeAdjustments(
-    classTemplate.baseAttributes,
-    originProfile.attributeAdjustments
-  );
-  const adjustedAttributes = applyAttributeAdjustments(
-    baseAttributes,
-    backgroundTemplate.attributeAdjustments
-  );
-  const attributes = applyCharacterAttributeAllocation(
-    adjustedAttributes,
-    form.attributeAllocation
+  const attributes = resolveWorkingCharacterAttributes(
+    form,
+    selectedWorld
   );
   const equipment = buildStarterEquipment(form.classId);
   const inventory = buildStarterInventory(form.classId, form.backgroundId);
@@ -654,7 +718,7 @@ function deriveCharacterCreationState(
         jobId: backgroundTemplate.jobId,
         identityProfile: {
           heightCm: getRepresentativeHeightCm(form.lineageId, form.heightBandId),
-          buildId: null,
+          buildId: form.buildId,
           hairColorId: form.hairColorId,
           hairHighlightColorId: null,
           eyeColorId: form.eyeColorId,
@@ -833,14 +897,7 @@ export function buildCharacterCreationPreview(
         classLevel: 1
       }
     );
-    const adjustedAttributes = applyAttributeAdjustments(
-      applyAttributeAdjustments(classTemplate.baseAttributes, originProfile.attributeAdjustments),
-      backgroundTemplate.attributeAdjustments
-    );
-    const attributes = applyCharacterAttributeAllocation(
-      adjustedAttributes,
-      form.attributeAllocation
-    );
+    const attributes = resolveWorkingCharacterAttributes(form, selectedWorld);
     const currency = mergeCurrency(classTemplate.currency, backgroundTemplate.currencyBonus);
     const inventory = buildStarterInventory(form.classId, form.backgroundId);
 

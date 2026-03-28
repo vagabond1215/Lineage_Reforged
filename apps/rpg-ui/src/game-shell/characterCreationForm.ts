@@ -1,4 +1,7 @@
-import type { PlayerSexId } from '../../../../packages/shared/types/src/index.js';
+import type {
+  PlayerIdentityBuildId,
+  PlayerSexId
+} from '../../../../packages/shared/types/src/index.js';
 import type { ManualSaveSlotId } from './state.js';
 import {
   createEmptyCharacterAttributeAllocation,
@@ -6,6 +9,7 @@ import {
   type CharacterCreationAttributeAllocation
 } from './characterAttributes.js';
 import {
+  getBuildLabel,
   type HeightBandId,
   getBackstoryStartAccessProfileId,
   getLineageIdentityCatalog,
@@ -22,6 +26,7 @@ import {
 
 export type CharacterCreationSexId = '' | Extract<PlayerSexId, 'male' | 'female'>;
 export type CharacterCreationHeightBandId = '' | HeightBandId;
+export type CharacterCreationBuildId = '' | PlayerIdentityBuildId;
 
 export type CharacterCreationStepId =
   | 'lineage'
@@ -39,6 +44,7 @@ export type CharacterCreationField =
   | 'sexId'
   | 'lineageId'
   | 'heightBandId'
+  | 'buildId'
   | 'hairColorId'
   | 'eyeColorId'
   | 'skinToneId'
@@ -55,6 +61,7 @@ export interface CharacterCreationFormState {
   sexId: CharacterCreationSexId;
   lineageId: string;
   heightBandId: CharacterCreationHeightBandId;
+  buildId: CharacterCreationBuildId;
   hairColorId: string;
   eyeColorId: string;
   skinToneId: string;
@@ -82,6 +89,7 @@ export interface CharacterCreationValidationResult {
 export interface CompleteCharacterCreationFormState extends CharacterCreationFormState {
   sexId: Extract<PlayerSexId, 'male' | 'female'>;
   heightBandId: HeightBandId;
+  buildId: PlayerIdentityBuildId;
 }
 
 export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
@@ -95,7 +103,7 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
     id: 'identity',
     label: 'Identity',
     description: 'Choose visible presentation only: name, sex, stature, and lineage-valid coloration.',
-    fields: ['playerName', 'sexId', 'heightBandId', 'hairColorId', 'eyeColorId', 'skinToneId']
+    fields: ['playerName', 'sexId', 'heightBandId', 'buildId', 'hairColorId', 'eyeColorId', 'skinToneId']
   },
   {
     id: 'continent',
@@ -143,6 +151,7 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
       'sexId',
       'lineageId',
       'heightBandId',
+      'buildId',
       'hairColorId',
       'eyeColorId',
       'skinToneId',
@@ -163,9 +172,10 @@ export function createDefaultCharacterCreationFormState(
 ): CharacterCreationFormState {
   return {
     playerName: '',
-    sexId: '',
-    lineageId: '',
-    heightBandId: '',
+    sexId: 'male',
+    lineageId: 'lineage.human',
+    heightBandId: 'normal',
+    buildId: 'average',
     hairColorId: '',
     eyeColorId: '',
     skinToneId: '',
@@ -186,6 +196,7 @@ export function hasCompleteCharacterCreationSelections(
     form.sexId &&
       form.lineageId.trim() &&
       form.heightBandId &&
+      form.buildId &&
       form.hairColorId.trim() &&
       form.eyeColorId.trim() &&
       form.skinToneId.trim() &&
@@ -246,12 +257,20 @@ export function validateCharacterCreationForm(
 
   if (!identityCatalog) {
     errors.heightBandId = 'Choose a lineage before setting identity details.';
+    errors.buildId = 'Choose a lineage before setting identity details.';
     errors.hairColorId = 'Choose a lineage before setting identity details.';
     errors.eyeColorId = 'Choose a lineage before setting identity details.';
     errors.skinToneId = 'Choose a lineage before setting identity details.';
   } else {
     if (!identityCatalog.heightBands.some((option) => option.id === form.heightBandId)) {
       errors.heightBandId = 'Choose a valid height profile.';
+    }
+
+    if (!identityCatalog.buildOptions.some((option) => option.id === form.buildId)) {
+      errors.buildId =
+        getBuildLabel(form.buildId) === null
+          ? 'Choose a valid build profile.'
+          : 'Choose a valid build for the selected lineage.';
     }
 
     if (!identityCatalog.hairColorOptions.some((option) => option.id === form.hairColorId)) {

@@ -73,6 +73,11 @@ export interface WorldContinentOption {
   description: string;
 }
 
+export interface WorldCardArt {
+  imageUrl: string;
+  backgroundPosition?: string;
+}
+
 export interface WorldRegionResourceIcon {
   icon: IconName;
   label: string;
@@ -137,6 +142,45 @@ const crystalCatalog = (crystalCatalogData as RecordsCatalog<CrystalCatalogRecor
 
 const regionById = new Map(regionRecords.map((record) => [record.id, record]));
 const localityById = new Map(localityRecords.map((record) => [record.id, record]));
+
+const CONTINENT_CARD_ART: Record<string, WorldCardArt> = {
+  "region.kaelvar": {
+    imageUrl: "/character-creator/continents/continent-kaelvar.png",
+    backgroundPosition: "center 18%"
+  },
+  "region.valtherion": {
+    imageUrl: "/character-creator/continents/continent-valtherion.png",
+    backgroundPosition: "center 24%"
+  },
+  "region.serathyl": {
+    imageUrl: "/character-creator/continents/continent-serathyl.png",
+    backgroundPosition: "center 22%"
+  },
+  "region.draemor": {
+    imageUrl: "/character-creator/continents/continent-draemor.png",
+    backgroundPosition: "center 20%"
+  },
+  "region.talmyra": {
+    imageUrl: "/character-creator/continents/continent-talmyra.png",
+    backgroundPosition: "center 18%"
+  },
+  "region.myridian_chain": {
+    imageUrl: "/character-creator/continents/continent-myridian-chain.png",
+    backgroundPosition: "center 34%"
+  },
+  "region.lantern_isles": {
+    imageUrl: "/character-creator/continents/continent-lantern-isles.png",
+    backgroundPosition: "center 32%"
+  },
+  "region.serpents_wake": {
+    imageUrl: "/character-creator/continents/continent-serpents-wake.png",
+    backgroundPosition: "center 28%"
+  },
+  "region.dawnreach_isles": {
+    imageUrl: "/character-creator/continents/continent-dawnreach-isles.png",
+    backgroundPosition: "center 32%"
+  }
+};
 
 function titleCase(value: string): string {
   return value
@@ -678,6 +722,10 @@ export function getWorldContinentOptions(): WorldContinentOption[] {
         description: describeContinent(record)
       };
     });
+}
+
+export function getContinentCardArt(continentId: string): WorldCardArt | null {
+  return CONTINENT_CARD_ART[continentId] ?? null;
 }
 
 export function getWorldRegionOptions(continentId: string): WorldRegionOption[] {
