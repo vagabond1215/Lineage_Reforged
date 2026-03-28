@@ -65,7 +65,7 @@ const FAVORITE_ITEM_PREFIX = 'ui.character.favorite-item.';
 const ITEM_STASH_PREFIX = 'ui.character.item-stash.';
 
 const EQUIPMENT_SLOT_LABELS: Record<EquipmentSlotId, string> = {
-  'slot.weapon.left': 'Weapon Left',
+  'slot.weapon.left': 'Held / Offhand',
   'slot.weapon.right': 'Weapon Right',
   'slot.armor.head': 'Head',
   'slot.armor.shoulder': 'Shoulder',
@@ -94,7 +94,7 @@ const EQUIPPABLE_ITEM_SLOT_HINTS: Partial<Record<string, EquipmentSlotId>> = {
   oilskin_coat: 'slot.armor.chest',
   craft_gloves: 'slot.armor.hand',
   apprentice_focus: 'slot.accessory.neck',
-  trade_ledger: 'slot.accessory.arms',
+  trade_ledger: 'slot.weapon.left',
   field_chart_case: 'slot.accessory.waist',
   waterproof_chart_case: 'slot.accessory.waist'
 };
@@ -216,7 +216,7 @@ function inferEquipmentSlot(itemKey: string): EquipmentSlotId | null {
   }
 
   if (itemKey.includes('ledger')) {
-    return 'slot.accessory.arms';
+    return 'slot.weapon.left';
   }
 
   if (itemKey.includes('case')) {
@@ -227,6 +227,10 @@ function inferEquipmentSlot(itemKey: string): EquipmentSlotId | null {
 }
 
 function getItemCategory(itemKey: string): Exclude<CharacterInventoryCategory, 'all'> {
+  if (itemKey.includes('ledger')) {
+    return 'tool';
+  }
+
   const hintedSlot = inferEquipmentSlot(itemKey);
 
   if (hintedSlot?.startsWith('slot.weapon')) {

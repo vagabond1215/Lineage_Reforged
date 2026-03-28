@@ -6,17 +6,12 @@ type ProgressBarProps = {
 };
 
 export function ProgressBar({ label, value, max, color }: ProgressBarProps) {
-  const percent = Math.max(0, Math.min(100, (value / max) * 100));
+  const safeMax = Math.max(max, 1);
+  const percent = Math.max(0, Math.min(100, (value / safeMax) * 100));
 
   return (
-    <div className="flex min-w-[150px] flex-col gap-1">
-      <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-slate-400">
-        <span>{label}</span>
-        <span className="text-slate-200">
-          {value}/{max}
-        </span>
-      </div>
-      <div className="h-2 overflow-hidden rounded-full bg-white/8">
+    <div className="relative min-w-[170px]" aria-label={label}>
+      <div className="h-8 overflow-hidden rounded-full border border-white/10 bg-black/25">
         <div
           className="h-full rounded-full transition-[width]"
           style={{
@@ -24,6 +19,9 @@ export function ProgressBar({ label, value, max, color }: ProgressBarProps) {
             background: `linear-gradient(90deg, ${color} 0%, color-mix(in srgb, ${color} 62%, white) 100%)`
           }}
         />
+      </div>
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-sm font-semibold text-white">
+        {value}/{max}
       </div>
     </div>
   );

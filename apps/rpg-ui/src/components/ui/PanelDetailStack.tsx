@@ -1,5 +1,4 @@
 import type { DetailGroup } from '../../types';
-import { Card } from './Card';
 import { DetailCard } from './DetailCard';
 
 type DetailCardData = {
@@ -19,13 +18,15 @@ type PanelDetailStackProps = {
 export function PanelDetailStack({
   accent,
   primary,
-  sectionDetail,
-  emptyTitle,
-  emptyMessage
+  sectionDetail
 }: PanelDetailStackProps) {
+  if (!primary && !sectionDetail) {
+    return null;
+  }
+
   return (
     <div className="panel-scroll h-full space-y-4 overflow-auto pr-1">
-      {primary ? (
+      {primary && (
         <DetailCard
           accent={accent}
           title={primary.title}
@@ -33,10 +34,6 @@ export function PanelDetailStack({
           groups={primary.groups}
           className=""
         />
-      ) : (
-        <Card title={emptyTitle} accent={accent}>
-          <p className="text-sm text-slate-400">{emptyMessage}</p>
-        </Card>
       )}
       {sectionDetail && (
         <DetailCard

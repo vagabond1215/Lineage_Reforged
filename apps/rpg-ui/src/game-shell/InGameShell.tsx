@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { startTransition, useDeferredValue, useState } from 'react';
+import { startTransition, useState } from 'react';
 import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
 import { SideNav } from '../components/SideNav';
 import { TopStatusBar } from '../components/TopStatusBar';
@@ -41,13 +41,15 @@ function InGameShellContent({
   onQuickSave,
   onReturnToMainMenu
 }: InGameShellContentProps) {
-  const [activeTab, setActiveTab] = useState<TabId>('character');
-  const [searchQuery, setSearchQuery] = useState('');
-  const deferredSearch = useDeferredValue(searchQuery);
+  const [activeTab, setActiveTab] = useState<TabId | null>('character');
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const { snapshot, uiViewModel, updateSnapshot } = useGameSession();
   const activeSlot = slots.find((slot) => slot.id === activeSlotId) ?? null;
   const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
   const pinnedIds = snapshot.sessionState.pinnedRecordIds;
+  const trackedQuestEntry =
+    snapshot.sessionState.questJournal.find((entry) => entry.id === snapshot.sessionState.trackedQuestId) ??
+    null;
   const activeNav =
     uiViewModel.navItems.find((item) => item.id === activeTab) ??
     uiViewModel.navItems[0]!;
@@ -55,7 +57,7 @@ function InGameShellContent({
 
   const sharedPanelProps = {
     accent,
-    searchQuery: deferredSearch,
+    searchQuery: '',
     pinnedIds,
     onTogglePin: (id: string) => {
       const nextPinnedIds = pinnedIds.includes(id)
@@ -72,9 +74,11 @@ function InGameShellContent({
     }
   };
 
-  let activePanel = <CharacterPanel {...sharedPanelProps} />;
+  let activePanel = <div className="h-full" />;
 
-  if (activeTab === 'world') {
+  if (activeTab === 'character') {
+    activePanel = <CharacterPanel {...sharedPanelProps} />;
+  } else if (activeTab === 'world') {
     activePanel = <WorldPanel {...sharedPanelProps} />;
   } else if (activeTab === 'activity') {
     activePanel = <ActivityPanel {...sharedPanelProps} />;
@@ -88,19 +92,25 @@ function InGameShellContent({
 
   return (
     <div className="h-screen overflow-hidden" style={{ '--tab-accent': accent } as CSSProperties}>
-      <div className="flex h-full flex-col gap-4 p-4">
-        {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}
-        <div className="min-h-0 flex-1">
-          <AppLayout
-            topBar={
-              <div className="space-y-4">
-                <TopStatusBar
-                  {...uiViewModel.topBar}
-                  meters={uiViewModel.topBarMeters}
-                  searchValue={searchQuery}
-                  onSearchChange={setSearchQuery}
-                  notifications={uiViewModel.notifications}
-                />
+      <AppLayout
+        topBar={
+          <>
+            <TopStatusBar
+              {...uiViewModel.topBar}
+              trackedQuestDetail={
+                trackedQuestEntry
+                  ? {
+                      summary: trackedQuestEntry.summary,
+                      objectives: trackedQuestEntry.objectives,
+                      relatedLocations: trackedQuestEntry.relatedLocations
+                    }
+                  : null
+              }
+              meters={uiViewModel.topBarMeters}
+              notifications={uiViewModel.notifications}
+              settingsOpen={settingsOpen}
+              onToggleSettings={() => setSettingsOpen((current) => !current)}
+              settingsContent={
                 <InGameSaveControls
                   activeSlot={activeSlot}
                   quickSaveSlot={quickSaveSlot}
@@ -108,24 +118,31 @@ function InGameShellContent({
                   onSave={onSave}
                   onQuickSave={onQuickSave}
                   onReturnToMainMenu={onReturnToMainMenu}
+                  embedded
                 />
+              }
+            />
+            {notice && (
+              <div className="px-4 pt-4">
+                <NoticeBanner notice={notice} onDismiss={onDismissNotice} />
               </div>
+            )}
+          </>
+        }
+        sideNav={
+          <SideNav
+            items={uiViewModel.navItems}
+            activeTab={activeTab}
+            onChange={(tab) =>
+              startTransition(() => {
+                setSettingsOpen(false);
+                setActiveTab((current) => (current === tab ? null : tab));
+              })
             }
-            sideNav={
-              <SideNav
-                items={uiViewModel.navItems}
-                activeTab={activeTab}
-                onChange={(tab) =>
-                  startTransition(() => {
-                    setActiveTab(tab);
-                  })
-                }
-              />
-            }
-            activePanel={activePanel}
           />
-        </div>
-      </div>
+        }
+        activePanel={activePanel}
+      />
     </div>
   );
 }

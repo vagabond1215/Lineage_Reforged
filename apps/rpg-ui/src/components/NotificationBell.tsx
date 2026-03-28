@@ -11,11 +11,11 @@ export function NotificationBell({ items }: NotificationBellProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative z-[110]">
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="relative rounded-2xl border border-white/10 bg-white/5 p-3 text-slate-200 transition hover:bg-white/10"
+        className="relative rounded-full border border-white/10 bg-white/5 p-3 text-slate-200 transition hover:bg-white/10"
         aria-label="Open notifications"
       >
         <Icon name="bell" className="h-5 w-5" />
@@ -24,7 +24,7 @@ export function NotificationBell({ items }: NotificationBellProps) {
         </span>
       </button>
       {open && (
-        <div className="absolute right-0 top-[calc(100%+12px)] z-40 w-80 rounded-[24px] border border-white/10 bg-slate-950/96 p-4 shadow-2xl backdrop-blur-xl">
+        <div className="absolute right-0 top-[calc(100%+12px)] z-[120] w-80 max-w-[calc(100vw-2rem)] rounded-[24px] border border-white/10 bg-slate-950/96 p-4 shadow-2xl backdrop-blur-xl">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="text-base text-slate-50">Notifications</h3>
             <button
@@ -35,7 +35,7 @@ export function NotificationBell({ items }: NotificationBellProps) {
               Close
             </button>
           </div>
-          <div className="space-y-3">
+          <div className="max-h-[65vh] space-y-3 overflow-y-auto pr-1">
             {items.map((item) => (
               <article key={item.id} className="rounded-[20px] border border-white/8 bg-black/20 p-3">
                 <div className="flex items-center justify-between gap-3">

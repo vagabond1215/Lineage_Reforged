@@ -21,7 +21,6 @@ import {
   getTrackedSkill,
   sortInventoryEntries,
   toggleFavoriteItem,
-  toggleTrackedSkill,
   unequipItem,
   type CharacterInventoryCategory,
   type CharacterInventorySort,
@@ -297,34 +296,6 @@ export function CharacterPanel({
   const skillsMain = (
     <div className="panel-scroll h-full space-y-4 overflow-auto">
       {noticeBlock}
-      <Card title="Skill Actions" accent={accent}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="text-sm text-slate-300">
-            {selectedSkill ? `${selectedSkill.title} can be tracked for quick focus.` : 'Select a skill to manage it.'}
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <ActionButton
-              label={trackedSkillId === selectedSkill?.id ? 'Clear Tracked Skill' : 'Mark Tracked Skill'}
-              onClick={() => {
-                if (!selectedSkill) return;
-                const nextSnapshot = toggleTrackedSkill(snapshot, selectedSkill.id);
-                applyNotice(nextSnapshot, {
-                  tone: 'accent',
-                  title: getTrackedSkill(nextSnapshot) === selectedSkill.id ? 'Skill Tracked' : 'Tracked Skill Cleared',
-                  detail: `${selectedSkill.title} ${getTrackedSkill(nextSnapshot) === selectedSkill.id ? 'is now tracked.' : 'is no longer tracked.'}`
-                });
-              }}
-              disabled={!selectedSkill}
-              tone="accent"
-            />
-            <ActionButton
-              label={selectedSkill && pinnedIds.includes(selectedSkill.id) ? 'Unpin Skill' : 'Pin Skill'}
-              onClick={() => selectedSkill && onTogglePin(selectedSkill.id)}
-              disabled={!selectedSkill}
-            />
-          </div>
-        </div>
-      </Card>
       <SelectionList
         title="Skill Ledger"
         items={filteredSkillItems}

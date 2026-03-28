@@ -8,6 +8,7 @@ type InGameSaveControlsProps = {
   onSave: () => void;
   onQuickSave: () => void;
   onReturnToMainMenu: () => void;
+  embedded?: boolean;
 };
 
 export function InGameSaveControls({
@@ -16,10 +17,11 @@ export function InGameSaveControls({
   hasUnsavedChanges,
   onSave,
   onQuickSave,
-  onReturnToMainMenu
+  onReturnToMainMenu,
+  embedded = false
 }: InGameSaveControlsProps) {
-  return (
-    <Card title="Save Controls" accent="var(--color-chronicle)">
+  const content = (
+    <>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex min-w-[240px] flex-1 flex-wrap gap-3">
           <div className="rounded-[22px] border border-white/10 bg-black/10 px-4 py-3">
@@ -81,6 +83,16 @@ export function InGameSaveControls({
           </button>
         </div>
       </div>
+    </>
+  );
+
+  if (embedded) {
+    return content;
+  }
+
+  return (
+    <Card title="Save Controls" accent="var(--color-chronicle)">
+      {content}
     </Card>
   );
 }

@@ -37,6 +37,7 @@ export type IconName =
   | 'sun'
   | 'moon'
   | 'dice'
+  | 'info'
   | 'tree'
   | 'grain'
   | 'fruit'
