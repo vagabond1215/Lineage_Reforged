@@ -1,6 +1,11 @@
 import type { PlayerSexId } from '../../../../packages/shared/types/src/index.js';
 import type { ManualSaveSlotId } from './state.js';
 import {
+  createEmptyCharacterAttributeAllocation,
+  getAllocatedCharacterAttributePoints,
+  type CharacterCreationAttributeAllocation
+} from './characterAttributes.js';
+import {
   type HeightBandId,
   getBackstoryStartAccessProfileId,
   getLineageIdentityCatalog,
@@ -26,6 +31,7 @@ export type CharacterCreationStepId =
   | 'settlement'
   | 'backstory'
   | 'path'
+  | 'attributes'
   | 'review';
 
 export type CharacterCreationField =
@@ -41,6 +47,7 @@ export type CharacterCreationField =
   | 'continentId'
   | 'regionId'
   | 'startingSettlementId'
+  | 'attributeAllocation'
   | 'saveSlotId';
 
 export interface CharacterCreationFormState {
@@ -56,6 +63,7 @@ export interface CharacterCreationFormState {
   continentId: string;
   regionId: string;
   startingSettlementId: string;
+  attributeAllocation: CharacterCreationAttributeAllocation;
   saveSlotId: ManualSaveSlotId;
 }
 
@@ -120,6 +128,12 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
     fields: ['classId']
   },
   {
+    id: 'attributes',
+    label: 'Attributes',
+    description: 'Distribute 10 discretionary stat points across the nine core attributes before final review.',
+    fields: ['attributeAllocation']
+  },
+  {
     id: 'review',
     label: 'Finalize',
     description: 'Review the generated starter state, choose a save slot, and begin the campaign.',
@@ -136,7 +150,8 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
       'backgroundId',
       'continentId',
       'regionId',
-      'startingSettlementId'
+      'startingSettlementId',
+      'attributeAllocation'
     ]
   }
 ];
@@ -159,6 +174,7 @@ export function createDefaultCharacterCreationFormState(
     continentId: '',
     regionId: '',
     startingSettlementId: '',
+    attributeAllocation: createEmptyCharacterAttributeAllocation(),
     saveSlotId
   };
 }
@@ -297,6 +313,17 @@ export function validateCharacterCreationForm(
 
   if (!form.saveSlotId) {
     errors.saveSlotId = 'Choose a save slot.';
+  }
+
+  const allocatedAttributePoints = getAllocatedCharacterAttributePoints(
+    form.attributeAllocation
+  );
+
+  if (allocatedAttributePoints !== 10) {
+    errors.attributeAllocation =
+      allocatedAttributePoints > 10
+        ? 'Spend no more than 10 attribute points.'
+        : `Spend ${10 - allocatedAttributePoints} more attribute point${10 - allocatedAttributePoints === 1 ? '' : 's'} before continuing.`;
   }
 
   return {

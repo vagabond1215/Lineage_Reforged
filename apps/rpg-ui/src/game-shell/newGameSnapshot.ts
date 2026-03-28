@@ -10,7 +10,8 @@ import {
   type PlayerResourceGrowthVector,
   type PlayerSkillState,
   type PlayerTraitState,
-  type SaveSnapshot
+  type SaveSnapshot,
+  type WorldLocationType
 } from '../../../../packages/shared/types/src/index.js';
 import {
   deserializeSnapshot,
@@ -18,9 +19,11 @@ import {
 } from '../../../../packages/shared/persistence/src/index.js';
 import {
   hasCompleteCharacterCreationSelections,
+  validateCharacterCreationForm,
   type CharacterCreationFormState,
   type CompleteCharacterCreationFormState
 } from './characterCreationForm.js';
+import { applyCharacterAttributeAllocation } from './characterAttributes.js';
 import {
   getBackstoryStartAccessProfileId,
   getBackstoryTemplate,
@@ -271,7 +274,7 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
     walletLabel: null,
     starterNotes: [],
     reviewNarrative:
-      'A life is still being forged. Choose lineage, identity, homeland, settlement, backstory, and path to shape the opening of the journey.'
+      'A life is still being forged. Choose lineage, identity, homeland, settlement, backstory, path, and final attribute allocation to shape the opening of the journey.'
   };
 }
 
@@ -412,7 +415,7 @@ function buildStarterSessionState(
 ): SaveSnapshot['sessionState'] {
   const backgroundTemplate = getBackstoryTemplate(form.backgroundId, selectedWorld);
   const settlementRecord = selectedWorld.settlementRecord;
-  const locationType =
+  const locationType: WorldLocationType =
     settlementRecord.settlementType === 'fort' || settlementRecord.settlementType === 'citadel'
       ? 'fort'
       : settlementRecord.settlementType === 'harbor_town' || settlementRecord.settlementType === 'port_city'
@@ -579,9 +582,13 @@ function deriveCharacterCreationState(
     classTemplate.baseAttributes,
     originProfile.attributeAdjustments
   );
-  const attributes = applyAttributeAdjustments(
+  const adjustedAttributes = applyAttributeAdjustments(
     baseAttributes,
     backgroundTemplate.attributeAdjustments
+  );
+  const attributes = applyCharacterAttributeAllocation(
+    adjustedAttributes,
+    form.attributeAllocation
   );
   const equipment = buildStarterEquipment(form.classId);
   const inventory = buildStarterInventory(form.classId, form.backgroundId);
@@ -823,14 +830,16 @@ export function buildCharacterCreationPreview(
       },
       {
         level: 1,
-        classLevel: 1,
-        unspentAttributePoints: 0,
-        unspentSkillPoints: 0
+        classLevel: 1
       }
     );
-    const attributes = applyAttributeAdjustments(
+    const adjustedAttributes = applyAttributeAdjustments(
       applyAttributeAdjustments(classTemplate.baseAttributes, originProfile.attributeAdjustments),
       backgroundTemplate.attributeAdjustments
+    );
+    const attributes = applyCharacterAttributeAllocation(
+      adjustedAttributes,
+      form.attributeAllocation
     );
     const currency = mergeCurrency(classTemplate.currency, backgroundTemplate.currencyBonus);
     const inventory = buildStarterInventory(form.classId, form.backgroundId);
@@ -894,6 +903,14 @@ export function buildCharacterCreationPreview(
 export function createNewGameSnapshot(
   form: CharacterCreationFormState
 ): SaveSnapshot {
+  const validation = validateCharacterCreationForm(form);
+
+  if (!validation.isValid) {
+    throw new Error(
+      Object.values(validation.errors)[0] ?? 'Complete character creation before starting the campaign.'
+    );
+  }
+
   if (!hasCompleteCharacterCreationSelections(form)) {
     throw new Error('Complete character creation before starting the campaign.');
   }

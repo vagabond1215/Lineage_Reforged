@@ -11,6 +11,7 @@
   --color-panel: rgba(12, 17, 26, 0.85);
   --color-panel-strong: rgba(16, 22, 34, 0.94);
   --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.2);
   --color-text: #edf2ff;
   --color-muted: #94a0b7;
   --color-character: #d4ad55;
@@ -30,6 +31,11 @@
   --color-text-strong: #f8fafc;
   --color-text-soft: #cbd5e1;
   --color-muted-strong: #94a3b8;
+  --color-accent-contrast: #f8fafc;
+  --color-creator-card: rgba(19, 26, 38, 0.9);
+  --color-creator-card-strong: rgba(25, 34, 48, 0.96);
+  --color-creator-card-hover: rgba(30, 40, 56, 0.98);
+  --color-creator-card-shadow: rgba(0, 0, 0, 0.28);
 }
 
 :root[data-theme='light'] {
@@ -38,6 +44,7 @@
   --color-panel: rgba(255, 249, 240, 0.9);
   --color-panel-strong: rgba(255, 253, 248, 0.96);
   --color-border: rgba(78, 58, 34, 0.16);
+  --color-border-strong: rgba(78, 58, 34, 0.28);
   --color-text: #2a1f16;
   --color-muted: #705a49;
   --color-shell-bg: #f1e8d8;
@@ -50,6 +57,11 @@
   --color-text-strong: #20160d;
   --color-text-soft: #4a3727;
   --color-muted-strong: #6c5848;
+  --color-accent-contrast: #24190f;
+  --color-creator-card: rgba(252, 246, 237, 0.96);
+  --color-creator-card-strong: rgba(245, 235, 220, 0.98);
+  --color-creator-card-hover: rgba(242, 229, 211, 0.98);
+  --color-creator-card-shadow: rgba(94, 69, 41, 0.12);
 }
 
 * {
