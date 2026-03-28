@@ -3,13 +3,49 @@ import type { TagTone } from '../types.js';
 import type { CharacterCreationFormState } from './characterCreationForm.js';
 
 export type AppScreen = 'MAIN_MENU' | 'CHARACTER_CREATION' | 'LOAD_GAME' | 'SETTINGS' | 'IN_GAME';
-export type ManualSaveSlotId =
-  | 'slot-1'
-  | 'slot-2'
-  | 'slot-3'
-  | 'slot-4'
-  | 'slot-5'
-  | 'slot-6';
+type ManualSaveSlotNumber =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  | 21
+  | 22
+  | 23
+  | 24
+  | 25
+  | 26
+  | 27
+  | 28
+  | 29
+  | 30
+  | 31
+  | 32
+  | 33
+  | 34
+  | 35
+  | 36
+  | 37
+  | 38
+  | 39
+  | 40;
+
+export type ManualSaveSlotId = `slot-${ManualSaveSlotNumber}`;
 export type QuickSaveSlotId = 'quick-save';
 export type SaveSlotId = ManualSaveSlotId | QuickSaveSlotId;
 export type SaveSlotKind = 'manual' | 'quick';
@@ -155,18 +191,46 @@ export type GameShellAction =
       notice: GameShellNotice | null;
     };
 
+export const MANUAL_SAVE_SLOT_COUNT = 40;
+export const MANUAL_SAVE_SLOTS_PER_PAGE = 8;
+export const MANUAL_SAVE_PAGE_COUNT =
+  MANUAL_SAVE_SLOT_COUNT / MANUAL_SAVE_SLOTS_PER_PAGE;
+
+function toRomanNumeral(value: number): string {
+  const parts: Array<[number, string]> = [
+    [40, 'XL'],
+    [10, 'X'],
+    [9, 'IX'],
+    [5, 'V'],
+    [4, 'IV'],
+    [1, 'I']
+  ];
+  let remaining = value;
+  let result = '';
+
+  for (const [amount, numeral] of parts) {
+    while (remaining >= amount) {
+      result += numeral;
+      remaining -= amount;
+    }
+  }
+
+  return result;
+}
+
 export const MANUAL_SAVE_SLOT_ORDER: ReadonlyArray<{
   id: ManualSaveSlotId;
   label: string;
   kind: 'manual';
-}> = [
-  { id: 'slot-1', label: 'Slot I', kind: 'manual' },
-  { id: 'slot-2', label: 'Slot II', kind: 'manual' },
-  { id: 'slot-3', label: 'Slot III', kind: 'manual' },
-  { id: 'slot-4', label: 'Slot IV', kind: 'manual' },
-  { id: 'slot-5', label: 'Slot V', kind: 'manual' },
-  { id: 'slot-6', label: 'Slot VI', kind: 'manual' }
-];
+}> = Array.from({ length: MANUAL_SAVE_SLOT_COUNT }, (_, index) => {
+  const slotNumber = (index + 1) as ManualSaveSlotNumber;
+
+  return {
+    id: `slot-${slotNumber}` as ManualSaveSlotId,
+    label: `Slot ${toRomanNumeral(slotNumber)}`,
+    kind: 'manual' as const
+  };
+});
 
 export const QUICK_SAVE_SLOT: Readonly<{
   id: QuickSaveSlotId;

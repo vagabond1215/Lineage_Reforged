@@ -71,6 +71,7 @@ const textInputClass =
 
 const selectedSwatchBorder = 'rgba(251,191,36,0.85)';
 const ATTRIBUTE_POINT_BUDGET = 10;
+const STEP_UNLOCK_FEEDBACK_MS = 1600;
 
 function getSelectableCardClass(
   selected: boolean,
@@ -95,6 +96,44 @@ function getSelectableCardClass(
       return `${creatorCardBase} border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card-strong)]`;
     default:
       return `${creatorCardBase} ${creatorCardUnselected}`;
+  }
+}
+
+function getRegionResourceTone(icon: Parameters<typeof Icon>[0]['name']): {
+  wrapper: string;
+  icon: string;
+} {
+  switch (icon) {
+    case 'tree':
+      return {
+        wrapper: 'border-emerald-300/25 bg-emerald-400/12',
+        icon: 'text-emerald-100'
+      };
+    case 'grain':
+      return {
+        wrapper: 'border-amber-300/25 bg-amber-400/12',
+        icon: 'text-amber-100'
+      };
+    case 'fruit':
+      return {
+        wrapper: 'border-orange-300/25 bg-orange-400/12',
+        icon: 'text-orange-100'
+      };
+    case 'vegetable':
+      return {
+        wrapper: 'border-lime-300/25 bg-lime-400/12',
+        icon: 'text-lime-100'
+      };
+    case 'animal':
+      return {
+        wrapper: 'border-sky-300/25 bg-sky-400/12',
+        icon: 'text-sky-100'
+      };
+    default:
+      return {
+        wrapper: 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)]',
+        icon: 'text-[color:var(--color-text-strong)]'
+      };
   }
 }
 
@@ -156,6 +195,10 @@ export function CharacterCreationNarrativeScreen({
     firstInvalid === -1
       ? CHARACTER_CREATION_STEPS.length - 1
       : Math.max(firstInvalid, currentIndex);
+  const [recentlyUnlockedStepIds, setRecentlyUnlockedStepIds] = useState<
+    CharacterCreationStepId[]
+  >([]);
+  const previousMaxUnlockedRef = useRef(maxUnlocked);
   const previousStepId = getPreviousCharacterCreationStepId(currentStepId);
   const selectedSlot = slots.find((slot) => slot.id === form.saveSlotId) ?? null;
   const needsOverwrite =
@@ -193,6 +236,36 @@ export function CharacterCreationNarrativeScreen({
   useEffect(() => {
     containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentStepId]);
+
+  useEffect(() => {
+    const previousMaxUnlocked = previousMaxUnlockedRef.current;
+    previousMaxUnlockedRef.current = maxUnlocked;
+
+    if (maxUnlocked <= previousMaxUnlocked) {
+      return;
+    }
+
+    const newlyUnlocked = CHARACTER_CREATION_STEPS.slice(
+      previousMaxUnlocked + 1,
+      maxUnlocked + 1
+    ).map((step) => step.id);
+
+    if (newlyUnlocked.length === 0) {
+      return;
+    }
+
+    setRecentlyUnlockedStepIds((current) =>
+      Array.from(new Set([...current, ...newlyUnlocked]))
+    );
+
+    const timeoutId = window.setTimeout(() => {
+      setRecentlyUnlockedStepIds((current) =>
+        current.filter((stepId) => !newlyUnlocked.includes(stepId))
+      );
+    }, STEP_UNLOCK_FEEDBACK_MS);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [maxUnlocked]);
 
   const goToStep = (stepId: CharacterCreationStepId) => {
     setCurrentStepId(stepId);
@@ -248,20 +321,20 @@ export function CharacterCreationNarrativeScreen({
     setShowValidation(false);
   };
 
-  const renderMetricRows = (
+  const renderStatList = (
     values: Array<{ id: string; label: string; value: string | null }>
   ) => (
-    <div className={summaryBlockClass}>
-      <div className="space-y-3">
+    <div className={`${insetBlockClass} px-3 py-3`}>
+      <div className="space-y-2.5">
         {values.map((value) => (
           <div
             key={value.id}
-            className="flex items-center justify-between gap-4 border-b border-[color:var(--color-border)] pb-3 last:border-b-0 last:pb-0"
+            className="flex items-center justify-between gap-3 border-b border-[color:var(--color-border)] pb-2.5 last:border-b-0 last:pb-0"
           >
-            <div className="text-sm text-[color:var(--color-text-soft)]">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
               {value.label}
             </div>
-            <div className="text-base font-semibold text-[color:var(--color-text-strong)]">
+            <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
               {value.value ?? 'Pending'}
             </div>
           </div>
@@ -270,28 +343,89 @@ export function CharacterCreationNarrativeScreen({
     </div>
   );
 
-  const renderMetricTiles = (
-    values: Array<{ id: string; label: string; value: string | null }>,
-    columnsClassName: string
-  ) => (
-    <div className={summaryBlockClass}>
-      <div className={`grid gap-2 ${columnsClassName}`}>
-        {values.map((value) => (
-          <div
-            key={value.id}
-            className={`${insetBlockClass} px-3 py-2 text-center`}
-          >
-            <div className="text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
-              {value.label}
-            </div>
-            <div className="mt-1 text-base font-semibold text-[color:var(--color-text-strong)]">
-              {value.value ?? 'Pending'}
-            </div>
-          </div>
-        ))}
+  const renderResourceBars = (
+    values: Array<{ id: string; label: string; value: string | null }>
+  ) => {
+    const parsedValues = values.map((value) => {
+      const numericValue =
+        value.value === null ? null : Number.parseInt(value.value, 10);
+
+      return {
+        ...value,
+        numericValue:
+          numericValue === null || Number.isNaN(numericValue) ? null : numericValue
+      };
+    });
+    const scaleMax = Math.max(
+      1,
+      ...parsedValues.map((value) => value.numericValue ?? 0)
+    );
+
+    return (
+      <div className={summaryBlockClass}>
+        <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+          Resources
+        </div>
+        <div className="mt-3 space-y-3">
+          {parsedValues.map((value) => {
+            const fillPercent =
+              value.numericValue === null
+                ? 0
+                : Math.max(18, (value.numericValue / scaleMax) * 100);
+            const tone =
+              value.id === 'hp'
+                ? {
+                    labelClass: 'text-rose-200/85',
+                    fill:
+                      'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
+                    shadow: '0 0 18px rgba(248,113,113,0.24)'
+                  }
+                : value.id === 'mp'
+                  ? {
+                      labelClass: 'text-sky-200/85',
+                      fill:
+                        'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
+                      shadow: '0 0 18px rgba(96,165,250,0.24)'
+                    }
+                  : {
+                      labelClass: 'text-emerald-200/85',
+                      fill:
+                        'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
+                      shadow: '0 0 18px rgba(74,222,128,0.24)'
+                    };
+
+            return (
+              <div
+                key={value.id}
+                className={`${insetBlockClass} px-3 py-3`}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div
+                    className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.labelClass}`}
+                  >
+                    {value.label}
+                  </div>
+                  <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
+                    {value.value ?? 'Pending'}
+                  </div>
+                </div>
+                <div className="mt-3 h-2.5 overflow-hidden rounded-full border border-[color:var(--color-border)] bg-black/20">
+                  <div
+                    className="h-full rounded-full transition-[width] duration-500"
+                    style={{
+                      width: `${fillPercent}%`,
+                      background: tone.fill,
+                      boxShadow: tone.shadow
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const swatches = (
     title: string,
@@ -361,28 +495,8 @@ export function CharacterCreationNarrativeScreen({
                 'lineage'
               )} p-5 text-left`}
             >
-              <div className="gap-5 md:grid md:grid-cols-[148px_minmax(0,1fr)]">
-                <div className={`${insetBlockClass} p-3`}>
-                  <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                    Base Attributes
-                  </div>
-                  <div className="space-y-2">
-                    {statRows.map((row) => (
-                      <div
-                        key={`${option.id}.${row.key}`}
-                        className="flex items-center justify-between gap-3 border-b border-[color:var(--color-border)] pb-2 text-sm last:border-b-0 last:pb-0"
-                      >
-                        <span className="font-semibold text-[color:var(--color-text-soft)]">
-                          {row.key}
-                        </span>
-                        <span className="text-[color:var(--color-text-strong)]">
-                          {row.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-4 md:mt-0">
+              <div className="space-y-4">
+                <div>
                   <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                     {option.label}
                   </div>
@@ -394,6 +508,15 @@ export function CharacterCreationNarrativeScreen({
                   <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
                     {option.description}
                   </div>
+                </div>
+                <div className="max-w-[11rem]">
+                  {renderStatList(
+                    statRows.map((row) => ({
+                      id: `${option.id}.${row.key}`,
+                      label: row.key,
+                      value: row.value.toString()
+                    }))
+                  )}
                 </div>
               </div>
             </button>
@@ -557,21 +680,56 @@ export function CharacterCreationNarrativeScreen({
               'region'
             )} p-5 text-left`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-start justify-between gap-3">
               <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                 {option.label}
               </div>
-              <div className="flex gap-1 text-[color:var(--color-text-soft)]">
-                {option.resourceIcons.map((icon) => (
-                  <Icon key={`${option.id}.${icon}`} name={icon} className="h-4 w-4" />
-                ))}
-              </div>
+              {option.resourceIcons.length > 0 && (
+                <div className="flex flex-wrap justify-end gap-2">
+                  {option.resourceIcons.map((resource) => {
+                    const tone = getRegionResourceTone(resource.icon);
+
+                    return (
+                      <Tooltip
+                        key={`${option.id}.${resource.icon}`}
+                        content={
+                          <span className="block text-left">
+                            <span className="font-semibold text-slate-50">
+                              {resource.label}
+                            </span>
+                            <span className="mt-1 block text-slate-300">
+                              {resource.description}
+                            </span>
+                          </span>
+                        }
+                        panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
+                      >
+                        <span
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
+                          aria-label={resource.label}
+                        >
+                          <Icon
+                            name={resource.icon}
+                            className={`h-[18px] w-[18px] ${tone.icon}`}
+                          />
+                        </span>
+                      </Tooltip>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-            <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-              {option.description}
-            </div>
-            <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
-              {option.resourceNarrative}
+            <div
+              className={`${insetBlockClass} mt-4 px-4 py-4 text-sm leading-7 text-[color:var(--color-text-soft)]`}
+            >
+              {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
+                <p
+                  key={`${option.id}.paragraph.${paragraphIndex}`}
+                  className={paragraphIndex === 0 ? '' : 'mt-3'}
+                >
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </button>
         ))}
@@ -800,7 +958,7 @@ export function CharacterCreationNarrativeScreen({
           </div>
         </Card>
         <Card>
-          <div className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             {slots
               .filter((slot) => slot.kind === 'manual')
               .map((slot) => (
@@ -947,22 +1105,62 @@ export function CharacterCreationNarrativeScreen({
                 type="button"
                 onClick={() => index <= maxUnlocked && goToStep(step.id)}
                 disabled={index > maxUnlocked}
-                className="flex flex-col items-center gap-1.5 text-center disabled:cursor-not-allowed"
+                className="flex w-full max-w-[84px] flex-col items-center gap-1.5 rounded-[20px] px-2 py-2 text-center transition disabled:cursor-not-allowed"
               >
-                <span
-                  className={`flex h-12 w-12 items-center justify-center rounded-full border-[4px] text-sm font-semibold ${
-                    step.id === currentStepId
-                      ? 'border-amber-300/85 bg-amber-200/18 text-[color:var(--color-accent-contrast)] shadow-[0_0_22px_rgba(251,191,36,0.35)]'
-                      : validations[step.id].isValid
-                        ? 'border-emerald-300/75 bg-emerald-200/18 text-[color:var(--color-accent-contrast)] opacity-100'
-                        : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] opacity-45'
-                  }`}
-                >
-                  {index + 1}
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.12em] text-[color:var(--color-text-soft)]">
-                  {step.label}
-                </span>
+                {(() => {
+                  const locked = index > maxUnlocked;
+                  const active = step.id === currentStepId;
+                  const complete = validations[step.id].isValid;
+                  const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
+                  const circleClass = active
+                    ? 'border-amber-300/85 bg-amber-200/18 text-[color:var(--color-accent-contrast)] shadow-[0_0_22px_rgba(251,191,36,0.32)]'
+                    : locked
+                      ? 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)] opacity-45'
+                      : complete
+                        ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
+                        : 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]';
+                  const statusLabel = active
+                    ? 'Active'
+                    : locked
+                      ? 'Locked'
+                      : complete
+                        ? 'Ready'
+                        : 'Unlocked';
+                  const statusClass = active
+                    ? 'text-amber-200/90'
+                    : locked
+                      ? 'text-[color:var(--color-muted)]'
+                      : complete
+                        ? 'text-emerald-200/90'
+                        : 'text-sky-200/90';
+
+                  return (
+                    <>
+                      <span
+                        className={`relative flex h-12 w-12 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
+                          recentlyUnlocked && !active && !locked
+                            ? 'animate-pulse shadow-[0_0_0_1px_rgba(134,239,172,0.26),0_0_18px_rgba(134,239,172,0.22)]'
+                            : ''
+                        } ${circleClass}`}
+                      >
+                        {index + 1}
+                        {locked && (
+                          <span className="absolute -right-1 -top-1 inline-flex h-5 w-5 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] text-[color:var(--color-muted)]">
+                            <Icon name="lock" className="h-3 w-3" />
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-[10px] uppercase tracking-[0.12em] text-[color:var(--color-text-soft)]">
+                        {step.label}
+                      </span>
+                      <span
+                        className={`text-[9px] uppercase tracking-[0.18em] ${statusClass}`}
+                      >
+                        {statusLabel}
+                      </span>
+                    </>
+                  );
+                })()}
               </button>
             ))}
           </div>
@@ -988,9 +1186,15 @@ export function CharacterCreationNarrativeScreen({
                     {preview.characterName}
                   </div>
                 </div>
-                {renderMetricRows(preview.identityMetrics)}
-                {renderMetricTiles(preview.resourceMetrics, 'grid-cols-3')}
-                {renderMetricTiles(preview.attributeMetrics, 'grid-cols-3')}
+                <div className={summaryBlockClass}>
+                  <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                    Attributes
+                  </div>
+                  <div className="mt-3">
+                    {renderStatList(preview.attributeMetrics)}
+                  </div>
+                </div>
+                {renderResourceBars(preview.resourceMetrics)}
                 {preview.isResolved && preview.starterSkills.length > 0 && (
                   <div>{renderTags('Starting Skills', preview.starterSkills)}</div>
                 )}

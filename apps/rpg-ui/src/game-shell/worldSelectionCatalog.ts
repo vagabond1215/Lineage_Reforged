@@ -73,17 +73,23 @@ export interface WorldContinentOption {
   description: string;
 }
 
+export interface WorldRegionResourceIcon {
+  icon: IconName;
+  label: string;
+  description: string;
+}
+
 export interface WorldRegionOption {
   id: string;
   continentId: string;
   label: string;
   terrainAndBiome: string;
   resourceAvailability: string[];
-  resourceIcons: IconName[];
+  resourceIcons: WorldRegionResourceIcon[];
   populationDensity: string;
   economicProfile: string[];
   description: string;
-  resourceNarrative: string;
+  descriptionParagraphs: string[];
 }
 
 export interface SettlementLandRestrictionSummary {
@@ -169,6 +175,88 @@ function formatNarrativeList(values: string[], emptyValue: string): string {
   return `${filtered.slice(0, -1).join(", ")}, and ${filtered[filtered.length - 1]}`;
 }
 
+function narrativePhrase(value: string): string {
+  return titleCase(value).toLowerCase();
+}
+
+function uniqueNarrativeValues(
+  values: Array<string | null | undefined>,
+  limit: number
+): string[] {
+  return Array.from(
+    new Set(
+      values
+        .filter((value): value is string => Boolean(value && value.trim().length > 0))
+        .map((value) => narrativePhrase(value))
+    )
+  ).slice(0, limit);
+}
+
+function hashString(value: string): number {
+  let hash = 2166136261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return hash >>> 0;
+}
+
+function pickSeeded<T>(seedBase: string, salt: string, values: readonly T[]): T {
+  return values[hashString(`${seedBase}:${salt}`) % values.length]!;
+}
+
+function joinSentences(values: string[]): string {
+  return values
+    .filter((value) => value.trim().length > 0)
+    .map((value) => ensureSentence(value))
+    .join(" ");
+}
+
+const REGION_RESOURCE_ICON_RULES: ReadonlyArray<{
+  icon: IconName;
+  label: string;
+  description: string;
+  test: RegExp;
+}> = [
+  {
+    icon: "tree",
+    label: "Timber",
+    description:
+      "Wood, lumber, resin, and other forest materials are easy to source here.",
+    test: /(timber|wood|forest|grove|lumber|tree|hardwood|rare_hardwood|resin|resin_timber|paper_inputs)/
+  },
+  {
+    icon: "grain",
+    label: "Field Crops",
+    description:
+      "Staple grains and broad farm harvests support food stores and everyday trade.",
+    test: /(grain|wheat|barley|rye|farm|field|crop|flax|valley_produce|beer)/
+  },
+  {
+    icon: "fruit",
+    label: "Orchards",
+    description:
+      "Fruit trees, orchard goods, oil crops, or vineyard harvests are part of the region's output.",
+    test: /(fruit|orchard|apple|pear|berry|vine|citrus|olive_oil|wine|tropical_fruit)/
+  },
+  {
+    icon: "vegetable",
+    label: "Garden Produce",
+    description:
+      "Vegetables, herbs, dyes, and smaller cultivated goods are commonly worked here.",
+    test: /(vegetable|root|herb|garden|bean|onion|turnip|dyes|spices)/
+  },
+  {
+    icon: "animal",
+    label: "Herd And Catch",
+    description:
+      "Livestock, wool, hides, fish, or hunted game help sustain local livelihoods.",
+    test: /(livestock|animal|cattle|horse|sheep|goat|game|hunt|fish|furs|hides|leather|wool|goat_wool|mountain_wool|pack_animals|horses|cold_fish|river_fish|smoked_fish)/
+  }
+];
+
 function deriveDifficulty(score: number | undefined): {
   label: "Gentle" | "Mild" | "Harsh";
   tone: "success" | "warning" | "danger";
@@ -228,38 +316,200 @@ function describeContinent(record: RegionRecord): string {
     .join(" ");
 }
 
-function describeRegionSummary(record: RegionRecord): string {
+function buildRegionTradeSentence(
+  seedBase: string,
+  context: {
+    name: string;
+    resourceList: string;
+    primary: string;
+    secondary: string;
+    frontier: boolean;
+    coastal: boolean;
+    riverland: boolean;
+  }
+): string {
+  if (context.frontier) {
+    return pickSeeded(seedBase, "trade-frontier", [
+      `Trade tends to stay practical rather than ornate, with routes valued for reliability more than luxury.`,
+      `Markets favor durable goods and steady turnover, because distance and exposure punish anything too fragile.`,
+      `Commerce is shaped by necessity first, so dependable shipments matter more than fashionable surplus.`
+    ]);
+  }
+
+  if (context.coastal) {
+    return pickSeeded(seedBase, "trade-coastal", [
+      `Harbor traffic and shoreline exchange keep ${context.resourceList} circulating well beyond the nearest town.`,
+      `Coastwise movement gives ${context.primary} and ${context.secondary} a broader market than the inland roads alone could support.`,
+      `Sea-facing trade helps carry local output outward, turning nearby landfall and dock traffic into steady demand.`
+    ]);
+  }
+
+  if (context.riverland) {
+    return pickSeeded(seedBase, "trade-river", [
+      `River movement keeps prices and supply tied together, so useful goods rarely stay isolated for long.`,
+      `Waterborne traffic gives local markets an easier rhythm, letting everyday output move with unusual regularity.`,
+      `Boats, ferries, and river settlements help keep trade nimble even when the roads are slower.`
+    ]);
+  }
+
+  return pickSeeded(seedBase, "trade-general", [
+    `Regional markets revolve around ${context.resourceList}, giving the area a practical economy with few idle trades.`,
+    `Workshops, storehouses, and caravans all end up leaning on ${context.primary} and ${context.secondary} before long.`,
+    `That balance gives the region a stable working economy instead of one narrow export story.`
+  ]);
+}
+
+function buildRegionScarcitySentence(
+  seedBase: string,
+  context: {
+    tertiary: string | null;
+    fringe: string | null;
+    climateList: string;
+  }
+): string {
+  if (context.tertiary && context.fringe && context.tertiary !== context.fringe) {
+    return pickSeeded(seedBase, "scarcity-paired", [
+      `${context.tertiary} and ${context.fringe} show up in smaller pockets, so strangers usually do better with local guidance than guesswork.`,
+      `Beyond the better-known staples, ${context.tertiary} and ${context.fringe} tend to appear by district, season, or local knowledge.`,
+      `${context.tertiary} and ${context.fringe} are both present, but usually in a more selective and uneven spread than the leading goods.`
+    ]);
+  }
+
+  if (context.tertiary) {
+    return pickSeeded(seedBase, "scarcity-single", [
+      `${context.tertiary} is still worth noting, though finding it consistently usually depends on knowing which pockets of land to trust.`,
+      `${context.tertiary} appears often enough to matter, but not so evenly that newcomers can count on it everywhere.`,
+      `${context.tertiary} remains part of the regional picture, usually in smaller runs or narrower local bands.`
+    ]);
+  }
+
+  if (context.climateList.length > 0) {
+    return pickSeeded(seedBase, "scarcity-climate", [
+      `Travel planning still bends around ${context.climateList}, which can matter as much as inventory when someone moves through the district.`,
+      `Weather remains part of the local bargaining logic, because ${context.climateList} can change what is easy to move from one stop to the next.`,
+      `Even without a rare specialty good, the region still rewards people who respect its ${context.climateList} conditions.`
+    ]);
+  }
+
+  return pickSeeded(seedBase, "scarcity-fallback", [
+    `Local knowledge matters more than rumor once someone starts looking beyond the main staples.`,
+    `The broad picture is easy enough to read, but the best opportunities still sit with people who know the ground well.`,
+    `Visitors usually learn that the obvious goods are only part of the story once they start asking the right locals.`
+  ]);
+}
+
+function buildRegionGeographySentence(
+  seedBase: string,
+  context: {
+    name: string;
+    elevation: string;
+    biomeList: string;
+    climateList: string;
+  }
+): string {
+  const climateClause =
+    context.climateList.length > 0
+      ? ` under ${context.climateList} conditions`
+      : "";
+
+  return pickSeeded(seedBase, "geography", [
+    `${context.name} stretches across ${context.elevation}, with ${context.biomeList} giving most of the landscape its character${climateClause}.`,
+    `Most of the region is ${context.elevation}, and ${context.biomeList} set the tone of travel, settlement, and field work${climateClause}.`,
+    `${titleCase(context.elevation)} shapes the region first, while ${context.biomeList} fill in the day-to-day feel of the land${climateClause}.`
+  ]);
+}
+
+function buildRegionDescriptionParagraphs(record: RegionRecord): string[] {
+  const seedBase = `${record.id}:${record.name}`;
   const summary = ensureSentence(record.summary ?? `${record.name} is a regional start area`);
-  const biomeNarrative = formatNarrativeList(
-    (record.environmentProfile?.dominantBiomeMix ?? []).map(titleCase),
-    "mixed country"
-  ).toLowerCase();
+  const climateEntries = Array.isArray(record.environmentProfile?.climateTendencies)
+    ? record.environmentProfile?.climateTendencies
+    : [record.environmentProfile?.climateTendencies];
+  const biomes = uniqueNarrativeValues(
+    record.environmentProfile?.dominantBiomeMix ?? [],
+    3
+  );
+  const climates = uniqueNarrativeValues(climateEntries, 2);
+  const resources = uniqueNarrativeValues(
+    [
+      ...(record.economicProfile?.supplyStrengths ?? []),
+      ...(record.economicProfile?.majorExports ?? [])
+    ],
+    4
+  );
+  const elevation = narrativePhrase(
+    record.environmentProfile?.elevationProfile ?? "mixed terrain"
+  );
+  const biomeList = formatNarrativeList(biomes, "mixed country");
+  const climateList = formatNarrativeList(climates, "");
+  const resourceList = formatNarrativeList(resources.slice(0, 3), "mixed staples");
+  const primary = resources[0] ?? "mixed staples";
+  const secondary = resources[1] ?? primary;
+  const tertiary = resources[2] ?? null;
+  const fringe = resources[3] ?? null;
+  const geographySentence = buildRegionGeographySentence(seedBase, {
+    name: record.name,
+    elevation,
+    biomeList,
+    climateList
+  });
+  const tradeSentence = buildRegionTradeSentence(seedBase, {
+    name: record.name,
+    resourceList,
+    primary,
+    secondary,
+    frontier:
+      climates.includes("frontier") || record.tags.some((tag) => tag.includes("frontier")),
+    coastal: /(coast|marine|shoals|estuary|mangrove)/.test(
+      `${record.environmentProfile?.elevationProfile ?? ""} ${(record.environmentProfile?.dominantBiomeMix ?? []).join(" ")}`
+    ),
+    riverland: /(river|floodplain|marsh)/.test(
+      (record.environmentProfile?.dominantBiomeMix ?? []).join(" ")
+    )
+  });
+  const scarcitySentence = buildRegionScarcitySentence(seedBase, {
+    tertiary,
+    fringe,
+    climateList
+  });
+  const identitySentence = pickSeeded(seedBase, "identity", [
+    `${record.name} reads as a working region where ${resourceList} matter more than ornament.`,
+    `The region carries itself like a practical country of ${biomeList} and useful output rather than idle excess.`,
+    `${record.name} feels defined by what its land can sustain, not by any one ceremonial image.`
+  ]);
+  const resourceSentence = pickSeeded(seedBase, "resource", [
+    `Local labor leans hardest on ${primary}, while ${secondary} is never far from the next bargain, workshop, or storehouse.`,
+    `${primary} anchors much of the region's daily output, with ${secondary} adding steady value once goods begin to move.`,
+    `The surest local wealth starts with ${primary}, and ${secondary} usually follows close behind in common trade.`
+  ]);
+  const travelerSentence = pickSeeded(seedBase, "traveler", [
+    `A traveler notices the economy as quickly as the scenery, because useful goods sit close to everyday life here.`,
+    `Visitors usually read the region through its roads, stalls, and working ground as much as through any formal border.`,
+    `The place introduces itself through its labor and terrain at the same time, which makes it feel lived-in rather than staged.`
+  ]);
+  const paragraphs = pickSeeded(seedBase, "template", [
+    [
+      joinSentences([summary, geographySentence]),
+      joinSentences([resourceSentence, tradeSentence, scarcitySentence])
+    ],
+    [
+      joinSentences([summary, resourceSentence]),
+      joinSentences([geographySentence, tradeSentence, scarcitySentence])
+    ],
+    [
+      joinSentences([summary, travelerSentence]),
+      joinSentences([geographySentence, resourceSentence, scarcitySentence])
+    ],
+    [
+      joinSentences([summary, identitySentence]),
+      joinSentences([resourceSentence, tradeSentence, scarcitySentence])
+    ]
+  ]);
 
-  return `${summary} Much of the land is defined by ${biomeNarrative}.`;
+  return paragraphs.filter((paragraph) => paragraph.trim().length > 0);
 }
 
-function describeRegionResources(record: RegionRecord): string {
-  const primaryResources = record.economicProfile?.supplyStrengths?.slice(0, 4) ?? record.economicProfile?.majorExports?.slice(0, 4) ?? [];
-  const [abundant, common, secondary, fringe] = primaryResources.map(titleCase);
-  const resourceNarrativeParts: string[] = [];
-
-  if (abundant) {
-    resourceNarrativeParts.push(`In the ${record.name}, ${abundant} is found in abundance.`);
-  }
-  if (common) {
-    resourceNarrativeParts.push(`${common} is commonly worked, traded, or gathered across the district.`);
-  }
-  if (secondary) {
-    resourceNarrativeParts.push(`Travelers can also expect smaller but reliable measures of ${secondary}.`);
-  }
-  if (fringe) {
-    resourceNarrativeParts.push(`${fringe} appears less often, but seasoned locals still know where to seek it.`);
-  }
-
-  return resourceNarrativeParts.join(" ") || `In the ${record.name}, resources are present in mixed and shifting measure rather than one dominant bounty.`;
-}
-
-function deriveRegionResourceIcons(record: RegionRecord): IconName[] {
+function deriveRegionResourceIcons(record: RegionRecord): WorldRegionResourceIcon[] {
   const keywords = [
     ...(record.economicProfile?.supplyStrengths ?? []),
     ...(record.economicProfile?.majorExports ?? []),
@@ -267,31 +517,14 @@ function deriveRegionResourceIcons(record: RegionRecord): IconName[] {
   ]
     .join(" ")
     .toLowerCase();
-  const icons: IconName[] = [];
 
-  const addIcon = (iconName: IconName) => {
-    if (!icons.includes(iconName)) {
-      icons.push(iconName);
-    }
-  };
-
-  if (/(timber|wood|forest|grove|lumber|tree)/.test(keywords)) {
-    addIcon("tree");
-  }
-  if (/(grain|wheat|barley|rye|farm|field|crop)/.test(keywords)) {
-    addIcon("grain");
-  }
-  if (/(fruit|orchard|apple|pear|berry|vine|citrus)/.test(keywords)) {
-    addIcon("fruit");
-  }
-  if (/(vegetable|root|herb|garden|bean|onion|turnip)/.test(keywords)) {
-    addIcon("vegetable");
-  }
-  if (/(livestock|animal|cattle|horse|sheep|goat|game|hunt|fish)/.test(keywords)) {
-    addIcon("animal");
-  }
-
-  return icons.slice(0, 4);
+  return REGION_RESOURCE_ICON_RULES.filter((rule) => rule.test.test(keywords))
+    .slice(0, 4)
+    .map(({ icon, label, description }) => ({
+      icon,
+      label,
+      description
+    }));
 }
 
 function deriveAuthorityLabel(settlement: SettlementRecord, landAuthorityType: LandAuthorityType): string {
@@ -455,22 +688,26 @@ export function getWorldRegionOptions(continentId: string): WorldRegionOption[] 
       : regionRecords.filter((record) => record.id === continentId && record.regionType === "island_system");
 
   return sourceRegions
-    .map((record) => ({
-      id: record.id,
-      continentId,
-      label: record.name,
-      terrainAndBiome: `${record.environmentProfile?.elevationProfile ?? "mixed terrain"} | ${(record.environmentProfile?.dominantBiomeMix ?? []).join(", ")}`,
-      resourceAvailability:
-        record.economicProfile?.supplyStrengths?.slice(0, 4) ?? record.economicProfile?.majorExports?.slice(0, 4) ?? [],
-      resourceIcons: deriveRegionResourceIcons(record),
-      populationDensity: titleCase(record.simulationProfile?.densityBand ?? "moderate"),
-      economicProfile: [
-        record.economicProfile?.majorExports?.[0],
-        record.economicProfile?.majorImports?.[0]
-      ].filter((value): value is string => Boolean(value)),
-      description: describeRegionSummary(record),
-      resourceNarrative: describeRegionResources(record)
-    }));
+    .map((record) => {
+      const descriptionParagraphs = buildRegionDescriptionParagraphs(record);
+
+      return {
+        id: record.id,
+        continentId,
+        label: record.name,
+        terrainAndBiome: `${record.environmentProfile?.elevationProfile ?? "mixed terrain"} | ${(record.environmentProfile?.dominantBiomeMix ?? []).join(", ")}`,
+        resourceAvailability:
+          record.economicProfile?.supplyStrengths?.slice(0, 4) ?? record.economicProfile?.majorExports?.slice(0, 4) ?? [],
+        resourceIcons: deriveRegionResourceIcons(record),
+        populationDensity: titleCase(record.simulationProfile?.densityBand ?? "moderate"),
+        economicProfile: [
+          record.economicProfile?.majorExports?.[0],
+          record.economicProfile?.majorImports?.[0]
+        ].filter((value): value is string => Boolean(value)),
+        description: descriptionParagraphs.join(" "),
+        descriptionParagraphs
+      };
+    });
 }
 
 export function getWorldSettlementOptions(params: {

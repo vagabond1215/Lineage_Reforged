@@ -1,7 +1,13 @@
 import { useMemo, useState } from 'react';
 import { Icon } from '../../components/icons';
 import { Card } from '../../components/ui/Card';
-import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
+import {
+  MANUAL_SAVE_PAGE_COUNT,
+  MANUAL_SAVE_SLOTS_PER_PAGE,
+  type GameShellNotice,
+  type ManualSaveSlotId,
+  type SaveSlotSummary
+} from '../state.js';
 import { NoticeBanner } from './NoticeBanner.js';
 
 type MainMenuScreenProps = {
@@ -38,7 +44,7 @@ export function MainMenuScreen({
   onOpenSettings,
   onExit
 }: MainMenuScreenProps) {
-  const [showExtraRow, setShowExtraRow] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
   const [pendingDeleteSlotId, setPendingDeleteSlotId] = useState<ManualSaveSlotId | null>(null);
 
   const manualSlots = useMemo(
@@ -49,7 +55,11 @@ export function MainMenuScreen({
     [slots]
   );
   const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
-  const slotRows = showExtraRow ? [manualSlots.slice(0, 3), manualSlots.slice(3, 6)] : [manualSlots.slice(0, 3)];
+  const slotPageStart = currentPage * MANUAL_SAVE_SLOTS_PER_PAGE;
+  const visibleSlots = manualSlots.slice(
+    slotPageStart,
+    slotPageStart + MANUAL_SAVE_SLOTS_PER_PAGE
+  );
   const pendingDeleteSlot =
     manualSlots.find((slot) => slot.id === pendingDeleteSlotId) ?? null;
 
@@ -90,115 +100,128 @@ export function MainMenuScreen({
 
         <Card accent="var(--color-world)">
           <div className="space-y-5">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-3">
                 <div className="text-lg font-semibold text-[color:var(--color-text-strong)]">
                   Game Data
                 </div>
-                <div className="mt-2 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                  Select an occupied ledger to resume that campaign, or claim an empty one to begin a new journey in that exact slot.
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: MANUAL_SAVE_PAGE_COUNT }, (_, pageIndex) => {
+                    const pageLabelStart =
+                      pageIndex * MANUAL_SAVE_SLOTS_PER_PAGE + 1;
+                    const pageLabelEnd =
+                      pageLabelStart + MANUAL_SAVE_SLOTS_PER_PAGE - 1;
+                    const active = currentPage === pageIndex;
+
+                    return (
+                      <button
+                        key={`page.${pageIndex}`}
+                        type="button"
+                        onClick={() => setCurrentPage(pageIndex)}
+                        className={`inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-semibold transition ${
+                          active
+                            ? 'border-amber-300/60 bg-amber-200/18 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(251,191,36,0.24)]'
+                            : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-surface-strong)]'
+                        }`}
+                        aria-label={`Show save slots ${pageLabelStart} through ${pageLabelEnd}`}
+                        aria-pressed={active}
+                        title={`Slots ${pageLabelStart}-${pageLabelEnd}`}
+                      >
+                        {pageIndex + 1}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowExtraRow((current) => !current)}
-                className="rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] px-4 py-2 text-sm text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]"
-              >
-                {showExtraRow ? 'Hide Extra Row' : 'Add Another Row'}
-              </button>
             </div>
 
-            <div className="space-y-4">
-              {slotRows.map((row, rowIndex) => (
-                <div key={`row.${rowIndex}`} className="grid gap-4 xl:grid-cols-3">
-                  {row.map((slot) => (
-                    <div
-                      key={slot.id}
-                      onClick={() => onActivateSlot(slot.id)}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter' || event.key === ' ') {
-                          event.preventDefault();
-                          onActivateSlot(slot.id);
-                        }
+            <div className="grid gap-4 grid-cols-2 xl:grid-cols-4">
+              {visibleSlots.map((slot) => (
+                <div
+                  key={slot.id}
+                  onClick={() => onActivateSlot(slot.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      onActivateSlot(slot.id);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  className={`group relative flex min-h-[20rem] h-full flex-col overflow-hidden rounded-[28px] border p-5 text-left transition ${
+                    slot.hasSave
+                      ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
+                      : 'border-dashed border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
+                  }`}
+                >
+                  {slot.hasSave && (
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setPendingDeleteSlotId(slot.id);
                       }}
-                      role="button"
-                      tabIndex={0}
-                      className={`group relative overflow-hidden rounded-[28px] border p-5 text-left transition ${
-                        slot.hasSave
-                          ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
-                          : 'border-dashed border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
-                      }`}
+                      className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-rose-300/25 bg-rose-200/10 text-rose-100 transition hover:bg-rose-200/20"
+                      aria-label={`Delete ${slot.label}`}
+                      title="Delete save"
                     >
-                      {slot.hasSave && (
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            setPendingDeleteSlotId(slot.id);
-                          }}
-                          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-rose-300/25 bg-rose-200/10 text-rose-100 transition hover:bg-rose-200/20"
-                          aria-label={`Delete ${slot.label}`}
-                          title="Delete save"
-                        >
-                          <Icon name="trash" className="h-4 w-4" />
-                        </button>
-                      )}
+                      <Icon name="trash" className="h-4 w-4" />
+                    </button>
+                  )}
 
-                      <div className="pr-14">
-                        <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-strong)]">
-                          {slot.label}
-                        </div>
-                        <div className="mt-4 text-2xl font-semibold text-[color:var(--color-text-strong)]">
-                          {slot.hasSave ? slot.playerName : 'New Game'}
-                        </div>
-                        <div className="mt-2 min-h-[48px] text-sm leading-6 text-[color:var(--color-text-soft)]">
-                          {slot.hasSave
-                            ? slot.settlementLabel ?? slot.regionLabel ?? 'Unknown City'
-                            : 'A blank ledger awaiting a new life, a new road, and a new beginning.'}
-                        </div>
-                      </div>
-
-                      <div className="mt-5 space-y-3">
-                        {slot.hasSave ? (
-                          <>
-                            <div className="grid gap-3 sm:grid-cols-2">
-                              <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
-                                <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                                  City
-                                </div>
-                                <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
-                                  {slot.settlementLabel ?? slot.regionLabel ?? 'Unknown'}
-                                </div>
-                              </div>
-                              <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
-                                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                                  <Icon name="coin" className="h-3.5 w-3.5" />
-                                  Gold
-                                </div>
-                                <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
-                                  {formatGold(slot.gold)}
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
-                              <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                                <Icon name="clock" className="h-3.5 w-3.5" />
-                                Save File Time And Date
-                              </div>
-                              <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-strong)]">
-                                {getSlotDateLabel(slot)}
-                              </div>
-                            </div>
-                          </>
-                        ) : (
-                          <div className="rounded-[20px] border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3 text-sm leading-6 text-[color:var(--color-text-soft)]">
-                            Select this slot to begin character creation here. Any new campaign started from this card will be written back into this same save slot.
-                          </div>
-                        )}
-                      </div>
+                  <div className="flex-1 pr-14">
+                    <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-strong)]">
+                      {slot.label}
                     </div>
-                  ))}
+                    <div className="mt-4 text-2xl font-semibold text-[color:var(--color-text-strong)]">
+                      {slot.hasSave ? slot.playerName : 'New Game'}
+                    </div>
+                    <div className="mt-2 min-h-[48px] text-sm leading-6 text-[color:var(--color-text-soft)]">
+                      {slot.hasSave
+                        ? slot.settlementLabel ?? slot.regionLabel ?? 'Unknown City'
+                        : 'A blank ledger awaiting a new life, a new road, and a new beginning.'}
+                    </div>
+                  </div>
+
+                  <div className="mt-5 space-y-3">
+                    {slot.hasSave ? (
+                      <>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
+                            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                              City
+                            </div>
+                            <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
+                              {slot.settlementLabel ?? slot.regionLabel ?? 'Unknown'}
+                            </div>
+                          </div>
+                          <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
+                            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                              <Icon name="coin" className="h-3.5 w-3.5" />
+                              Gold
+                            </div>
+                            <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
+                              {formatGold(slot.gold)}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
+                          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                            <Icon name="clock" className="h-3.5 w-3.5" />
+                            Save File Time And Date
+                          </div>
+                          <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-strong)]">
+                            {getSlotDateLabel(slot)}
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="rounded-[20px] border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3 text-sm leading-6 text-[color:var(--color-text-soft)]">
+                        Select this slot to begin character creation here. Any new campaign started from this card will be written back into this same save slot.
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

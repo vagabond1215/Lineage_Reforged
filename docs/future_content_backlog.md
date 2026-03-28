@@ -475,8 +475,8 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to validate the richer creator catalogs against canonical skill, item, and trait registries so the UI no longer depends on mixed placeholder refs during new-game generation
   - remaining work is to replace the UI-authored new-game snapshot builder and browser-local slot manager with engine-owned character creation, canonical save-slot metadata, and session persistence once runtime save semantics are finalized
   - the launcher now persists a root light or dark theme choice through browser storage, but only the character creator currently exposes a dedicated theme toggle; remaining work is to unify theme-aware component styling across the broader launcher shell
-  - the main menu now treats manual saves as expandable game-data ledgers with direct load, direct new-game targeting, and per-slot deletion, but remaining work is to move beyond the current fixed-row browser-local assumptions if save management later gains engine-owned profiles or account-scoped storage
-  - the character creator now uses UI-authored lineage name pools, narrative backstory accordions, and heuristic region resource icons; remaining work is to replace those with canonical cultural naming data, settlement demographics, and authored resource-presentation metadata once those content layers exist
+  - the main menu now treats manual saves as five page-based game-data ledgers over forty browser-local manual slots with direct load, direct new-game targeting, and per-slot deletion; remaining work is to replace the browser-local slot manager with engine-owned profiles or account-scoped storage if save management grows beyond local ledgers
+  - the character creator now uses UI-authored lineage name pools, narrative backstory accordions, heuristic region resource icon metadata, and seeded region-description prose; remaining work is to replace those with canonical cultural naming data, settlement demographics, and authored resource-presentation metadata once those content layers exist
 
 #### RPG UI section field coverage and missing references
 
