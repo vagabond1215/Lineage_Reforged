@@ -3,7 +3,13 @@ import type { TagTone } from '../types.js';
 import type { CharacterCreationFormState } from './characterCreationForm.js';
 
 export type AppScreen = 'MAIN_MENU' | 'CHARACTER_CREATION' | 'LOAD_GAME' | 'SETTINGS' | 'IN_GAME';
-export type ManualSaveSlotId = 'slot-1' | 'slot-2' | 'slot-3';
+export type ManualSaveSlotId =
+  | 'slot-1'
+  | 'slot-2'
+  | 'slot-3'
+  | 'slot-4'
+  | 'slot-5'
+  | 'slot-6';
 export type QuickSaveSlotId = 'quick-save';
 export type SaveSlotId = ManualSaveSlotId | QuickSaveSlotId;
 export type SaveSlotKind = 'manual' | 'quick';
@@ -17,6 +23,7 @@ export interface SaveSlotMetadata {
   classLabel: string | null;
   regionLabel: string;
   settlementLabel: string | null;
+  gold: number;
   inGameDate: string;
   totalPlayTicks: number;
   capturedAtTick: number;
@@ -37,6 +44,7 @@ export interface SaveSlotSummary {
   level: number | null;
   regionLabel: string | null;
   settlementLabel: string | null;
+  gold: number | null;
   inGameDate: string | null;
   lastSavedAt: string | null;
   lastSavedLabel: string | null;
@@ -154,7 +162,10 @@ export const MANUAL_SAVE_SLOT_ORDER: ReadonlyArray<{
 }> = [
   { id: 'slot-1', label: 'Slot I', kind: 'manual' },
   { id: 'slot-2', label: 'Slot II', kind: 'manual' },
-  { id: 'slot-3', label: 'Slot III', kind: 'manual' }
+  { id: 'slot-3', label: 'Slot III', kind: 'manual' },
+  { id: 'slot-4', label: 'Slot IV', kind: 'manual' },
+  { id: 'slot-5', label: 'Slot V', kind: 'manual' },
+  { id: 'slot-6', label: 'Slot VI', kind: 'manual' }
 ];
 
 export const QUICK_SAVE_SLOT: Readonly<{
@@ -191,6 +202,7 @@ function createEmptySaveSlotSummary(slot: {
     level: null,
     regionLabel: null,
     settlementLabel: null,
+    gold: null,
     inGameDate: null,
     lastSavedAt: null,
     lastSavedLabel: null,

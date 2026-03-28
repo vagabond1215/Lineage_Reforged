@@ -28,7 +28,20 @@ export type IconName =
   | 'queue'
   | 'plus'
   | 'minus'
-  | 'star';
+  | 'star'
+  | 'gear'
+  | 'closeCircle'
+  | 'trash'
+  | 'arrowLeft'
+  | 'menu'
+  | 'sun'
+  | 'moon'
+  | 'dice'
+  | 'tree'
+  | 'grain'
+  | 'fruit'
+  | 'vegetable'
+  | 'animal';
 
 export type TagTone = 'accent' | 'success' | 'warning' | 'neutral' | 'danger';
 

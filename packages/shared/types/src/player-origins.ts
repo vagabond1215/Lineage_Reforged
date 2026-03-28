@@ -85,6 +85,26 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
       "Identity selections are visual only and do not change gameplay stats."
     ]
   },
+  "lineage.gnome": {
+    id: "lineage.gnome",
+    name: "Gnome",
+    resourceBaseAdjustments: { hp: -10, mp: 12, stamina: -2 },
+    resourceGrowthPerLevel: { hp: 1, mp: 3, stamina: 1 },
+    notes: [
+      "Gnomes favor sharp reserve growth, nimble motion, and inventive problem-solving over raw bodily power.",
+      "Identity selections are visual only and do not change gameplay stats."
+    ]
+  },
+  "lineage.halfling": {
+    id: "lineage.halfling",
+    name: "Halfling",
+    resourceBaseAdjustments: { hp: -4, mp: 0, stamina: 8 },
+    resourceGrowthPerLevel: { hp: 1, mp: 1, stamina: 3 },
+    notes: [
+      "Halflings favor evasive endurance, steady travel stamina, and quiet resilience rather than direct physical force.",
+      "Identity selections are visual only and do not change gameplay stats."
+    ]
+  },
   "lineage.orc": {
     id: "lineage.orc",
     name: "Orc",
@@ -206,6 +226,8 @@ export const PLAYER_LINEAGE_PROFILES: Record<string, PlayerLineageProfileRecord>
   "lineage.elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.elf"]),
   "lineage.dark_elf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dark_elf"]),
   "lineage.dwarf": createPlayableLineage(LINEAGE_ANCESTRY["lineage.dwarf"]),
+  "lineage.gnome": createPlayableLineage(LINEAGE_ANCESTRY["lineage.gnome"]),
+  "lineage.halfling": createPlayableLineage(LINEAGE_ANCESTRY["lineage.halfling"]),
   "lineage.half_troll": createHybridLineage({
     id: "lineage.half_troll",
     name: "Half-Troll",

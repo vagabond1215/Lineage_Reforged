@@ -4,6 +4,7 @@ import type {
   InstitutionLocalityRecord,
   InstitutionRegionRecord,
   InstitutionSettlementRecord,
+  LandAuthorityType,
   MagicInfrastructureCatalogRecord,
   ReligionCatalogRecord,
   SettlementGuildInstanceState,
@@ -18,6 +19,7 @@ import {
   deriveSettlementReligion,
   deriveSettlementStartAccess
 } from "../../../../packages/shared/types/src/index.js";
+import type { IconName } from "../types.js";
 import guildsCatalog from "../../../../packages/content/base/civilization/guilds.json";
 import crystalCatalogData from "../../../../packages/content/base/world/crystal_catalog.json";
 import magicInfrastructureCatalog from "../../../../packages/content/base/world/magic_infrastructure.json";
@@ -64,7 +66,8 @@ export interface WorldContinentOption {
   label: string;
   climate: string;
   biomeMix: string[];
-  survivabilityLabel: string;
+  difficultyLabel: string;
+  difficultyTone: "success" | "warning" | "danger";
   dominantResources: string[];
   tradeCharacteristics: string[];
   description: string;
@@ -76,9 +79,18 @@ export interface WorldRegionOption {
   label: string;
   terrainAndBiome: string;
   resourceAvailability: string[];
+  resourceIcons: IconName[];
   populationDensity: string;
   economicProfile: string[];
   description: string;
+  resourceNarrative: string;
+}
+
+export interface SettlementLandRestrictionSummary {
+  authorityLabel: string;
+  propertyNarrative: string;
+  currentStanding: string;
+  purchaseRequirements: string[];
 }
 
 export interface WorldSettlementOption {
@@ -94,6 +106,7 @@ export interface WorldSettlementOption {
   developmentLevel: string;
   access: SettlementStartAccessState;
   landAuthorityType: ReturnType<typeof deriveLandAuthorityType>;
+  landRestriction: SettlementLandRestrictionSummary;
   guilds: SettlementGuildInstanceState[];
   magic: SettlementMagicServiceState[];
   description: string;
@@ -126,18 +139,47 @@ function titleCase(value: string): string {
     .join(" ");
 }
 
+function ensureSentence(value: string): string {
+  if (value.trim().length === 0) {
+    return "";
+  }
+
+  return /[.!?]$/.test(value.trim()) ? value.trim() : `${value.trim()}.`;
+}
+
 function formatPopulation(value: number): string {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
-function deriveSurvivabilityLabel(score: number | undefined): string {
+function formatNarrativeList(values: string[], emptyValue: string): string {
+  const filtered = values.filter((value) => value.trim().length > 0);
+
+  if (filtered.length === 0) {
+    return emptyValue;
+  }
+
+  if (filtered.length === 1) {
+    return filtered[0]!;
+  }
+
+  if (filtered.length === 2) {
+    return `${filtered[0]} and ${filtered[1]}`;
+  }
+
+  return `${filtered.slice(0, -1).join(", ")}, and ${filtered[filtered.length - 1]}`;
+}
+
+function deriveDifficulty(score: number | undefined): {
+  label: "Gentle" | "Mild" | "Harsh";
+  tone: "success" | "warning" | "danger";
+} {
   if ((score ?? 0) >= 80) {
-    return "High";
+    return { label: "Gentle", tone: "success" };
   }
   if ((score ?? 0) >= 60) {
-    return "Moderate";
+    return { label: "Mild", tone: "warning" };
   }
-  return "Harsh";
+  return { label: "Harsh", tone: "danger" };
 }
 
 function deriveTradeRole(settlement: SettlementRecord): string {
@@ -159,6 +201,164 @@ function deriveDevelopmentLevel(settlement: SettlementRecord): string {
     return "Moderate";
   }
   return "Low";
+}
+
+function describeContinent(record: RegionRecord): string {
+  const summary = ensureSentence(record.summary ?? `${record.name} is a major world landmass`);
+  const biomeNarrative = formatNarrativeList(
+    (record.environmentProfile?.dominantBiomeMix ?? []).map(titleCase),
+    "varied terrain"
+  ).toLowerCase();
+  const exportNarrative = formatNarrativeList(
+    (record.economicProfile?.majorExports?.slice(0, 3) ?? record.economicProfile?.supplyStrengths?.slice(0, 3) ?? []).map(titleCase),
+    "mixed staples"
+  ).toLowerCase();
+  const importNarrative = formatNarrativeList(
+    (record.economicProfile?.majorImports?.slice(0, 2) ?? record.economicProfile?.demandPressures?.slice(0, 2) ?? []).map(titleCase),
+    ""
+  ).toLowerCase();
+
+  return [
+    summary,
+    `It is a continent of ${biomeNarrative}.`,
+    `${titleCase(record.name)} is best known for ${exportNarrative}.`,
+    importNarrative ? `Merchants crossing its roads and shores often seek ${importNarrative} from beyond its own holdings.` : ""
+  ]
+    .filter((entry) => entry.length > 0)
+    .join(" ");
+}
+
+function describeRegionSummary(record: RegionRecord): string {
+  const summary = ensureSentence(record.summary ?? `${record.name} is a regional start area`);
+  const biomeNarrative = formatNarrativeList(
+    (record.environmentProfile?.dominantBiomeMix ?? []).map(titleCase),
+    "mixed country"
+  ).toLowerCase();
+
+  return `${summary} Much of the land is defined by ${biomeNarrative}.`;
+}
+
+function describeRegionResources(record: RegionRecord): string {
+  const primaryResources = record.economicProfile?.supplyStrengths?.slice(0, 4) ?? record.economicProfile?.majorExports?.slice(0, 4) ?? [];
+  const [abundant, common, secondary, fringe] = primaryResources.map(titleCase);
+  const resourceNarrativeParts: string[] = [];
+
+  if (abundant) {
+    resourceNarrativeParts.push(`In the ${record.name}, ${abundant} is found in abundance.`);
+  }
+  if (common) {
+    resourceNarrativeParts.push(`${common} is commonly worked, traded, or gathered across the district.`);
+  }
+  if (secondary) {
+    resourceNarrativeParts.push(`Travelers can also expect smaller but reliable measures of ${secondary}.`);
+  }
+  if (fringe) {
+    resourceNarrativeParts.push(`${fringe} appears less often, but seasoned locals still know where to seek it.`);
+  }
+
+  return resourceNarrativeParts.join(" ") || `In the ${record.name}, resources are present in mixed and shifting measure rather than one dominant bounty.`;
+}
+
+function deriveRegionResourceIcons(record: RegionRecord): IconName[] {
+  const keywords = [
+    ...(record.economicProfile?.supplyStrengths ?? []),
+    ...(record.economicProfile?.majorExports ?? []),
+    ...(record.environmentProfile?.dominantBiomeMix ?? [])
+  ]
+    .join(" ")
+    .toLowerCase();
+  const icons: IconName[] = [];
+
+  const addIcon = (iconName: IconName) => {
+    if (!icons.includes(iconName)) {
+      icons.push(iconName);
+    }
+  };
+
+  if (/(timber|wood|forest|grove|lumber|tree)/.test(keywords)) {
+    addIcon("tree");
+  }
+  if (/(grain|wheat|barley|rye|farm|field|crop)/.test(keywords)) {
+    addIcon("grain");
+  }
+  if (/(fruit|orchard|apple|pear|berry|vine|citrus)/.test(keywords)) {
+    addIcon("fruit");
+  }
+  if (/(vegetable|root|herb|garden|bean|onion|turnip)/.test(keywords)) {
+    addIcon("vegetable");
+  }
+  if (/(livestock|animal|cattle|horse|sheep|goat|game|hunt|fish)/.test(keywords)) {
+    addIcon("animal");
+  }
+
+  return icons.slice(0, 4);
+}
+
+function deriveAuthorityLabel(settlement: SettlementRecord, landAuthorityType: LandAuthorityType): string {
+  if (settlement.identityTags.includes("monastery") || settlement.purposeTags.includes("pilgrimage")) {
+    return `${settlement.name} Temple Estates`;
+  }
+
+  switch (landAuthorityType) {
+    case "military_control":
+      return `${settlement.name} Garrison Command`;
+    case "guild_controlled":
+      return `${settlement.name} Market Charter`;
+    case "frontier_claim":
+      return `${settlement.name} Frontier Office`;
+    case "noble_direct":
+      return `${settlement.name} Estate Holders`;
+    case "mixed":
+      return `${settlement.name} Mixed Council`;
+    default:
+      return `${settlement.name} Civic Council`;
+  }
+}
+
+function deriveLandRestrictionSummary(params: {
+  settlement: SettlementRecord;
+  landAuthorityType: LandAuthorityType;
+  access: SettlementStartAccessState;
+  hasPathAndBackstory: boolean;
+}): SettlementLandRestrictionSummary {
+  const authorityLabel = deriveAuthorityLabel(params.settlement, params.landAuthorityType);
+  const purchaseRequirements: string[] = [];
+  let propertyNarrative = "";
+
+  if (params.landAuthorityType === "military_control") {
+    propertyNarrative = `Plots here are held by ${authorityLabel}, and they do not sell land within the walls. Any holding near the garrison is granted only through service, favor, or formal sponsorship.`;
+  } else if (params.landAuthorityType === "guild_controlled") {
+    propertyNarrative = `Plots here are held by ${authorityLabel}, and they do not sell city lots freely. Workshop frontage and central holdings are leased only through charter, while some outer wards may be opened to proven petitioners.`;
+    purchaseRequirements.push("coin", "guild standing", "a declared business plan", "working capital");
+  } else if (params.landAuthorityType === "frontier_claim") {
+    propertyNarrative = `Plots here are marked by ${authorityLabel}, and they will hear claims for rough land beyond the safest streets. Holdings are easier to secure, but the burden of clearing and defending them falls on the buyer.`;
+    purchaseRequirements.push("coin", "tools or labor", "proof of intent to improve the claim");
+  } else if (params.landAuthorityType === "noble_direct") {
+    propertyNarrative = `Plots here are held by ${authorityLabel}, and they do not part with choice land lightly. Some fringe estates may be granted or leased, but the inner wards remain in the hands of titled houses and their retainers.`;
+    purchaseRequirements.push("coin", "standing", "sponsorship", "proof of usefulness");
+  } else if (params.landAuthorityType === "mixed") {
+    propertyNarrative = `Plots here are divided under ${authorityLabel}. Some city parcels change hands through council petition, while outer holdings are more easily bought or leased by households with good standing.`;
+    purchaseRequirements.push("coin", "local standing", "declared household or trade purpose");
+  } else if (params.settlement.identityTags.includes("monastery") || params.settlement.purposeTags.includes("pilgrimage")) {
+    propertyNarrative = `Plots here are watched by ${authorityLabel}, and they do not sell the sacred precincts. A few outer plots may be leased to trusted households who do not disturb the holy order.`;
+    purchaseRequirements.push("coin", "good standing", "temple approval");
+  } else {
+    propertyNarrative = `Plots here are held by ${authorityLabel}, and they will hear petitions for private lots within and beyond the settled wards. The nearer the market streets, the more carefully each claim is weighed.`;
+    purchaseRequirements.push("coin", "good standing", "declared trade or household purpose");
+  }
+
+  const currentStanding = !params.hasPathAndBackstory
+    ? "No clerk or magistrate has judged your standing here yet. Declare both your past and your chosen path before the city can speak on what place, if any, may be granted to you."
+    : params.access.accessStatus === "allowed"
+      ? "As matters now stand, you would be admitted lawfully and your petition for residence or purchase would at least be heard."
+      : `As matters now stand, this city would not yet grant you a lawful place within its bounds. ${params.access.notes[0] ?? "A different past, path, or destination would be needed."}`;
+
+  return {
+    authorityLabel,
+    propertyNarrative,
+    currentStanding,
+    purchaseRequirements: params.hasPathAndBackstory ? purchaseRequirements : []
+  };
 }
 
 function deriveSettlementDetails(
@@ -222,24 +422,29 @@ function deriveSettlementDetails(
 export function getWorldContinentOptions(): WorldContinentOption[] {
   return regionRecords
     .filter((record) => record.regionType === "continent" || record.regionType === "island_system")
-    .map((record) => ({
-      id: record.id,
-      label: record.name,
-      climate: Array.isArray(record.environmentProfile?.climateTendencies)
-        ? record.environmentProfile?.climateTendencies.join(", ")
-        : record.environmentProfile?.climateTendencies ?? "Unknown climate",
-      biomeMix: record.environmentProfile?.dominantBiomeMix ?? [],
-      survivabilityLabel: deriveSurvivabilityLabel(record.simulationProfile?.habitationScore),
-      dominantResources:
-        record.economicProfile?.majorExports?.slice(0, 4) ??
-        record.economicProfile?.supplyStrengths?.slice(0, 4) ??
-        [],
-      tradeCharacteristics:
-        record.economicProfile?.majorImports?.slice(0, 2) ??
-        record.economicProfile?.demandPressures?.slice(0, 2) ??
-        [],
-      description: record.summary ?? `${record.name} is a major world landmass.`
-    }));
+    .map((record) => {
+      const difficulty = deriveDifficulty(record.simulationProfile?.habitationScore);
+
+      return {
+        id: record.id,
+        label: record.name,
+        climate: Array.isArray(record.environmentProfile?.climateTendencies)
+          ? record.environmentProfile?.climateTendencies.join(", ")
+          : record.environmentProfile?.climateTendencies ?? "Unknown climate",
+        biomeMix: record.environmentProfile?.dominantBiomeMix ?? [],
+        difficultyLabel: difficulty.label,
+        difficultyTone: difficulty.tone,
+        dominantResources:
+          record.economicProfile?.majorExports?.slice(0, 4) ??
+          record.economicProfile?.supplyStrengths?.slice(0, 4) ??
+          [],
+        tradeCharacteristics:
+          record.economicProfile?.majorImports?.slice(0, 2) ??
+          record.economicProfile?.demandPressures?.slice(0, 2) ??
+          [],
+        description: describeContinent(record)
+      };
+    });
 }
 
 export function getWorldRegionOptions(continentId: string): WorldRegionOption[] {
@@ -257,12 +462,14 @@ export function getWorldRegionOptions(continentId: string): WorldRegionOption[] 
       terrainAndBiome: `${record.environmentProfile?.elevationProfile ?? "mixed terrain"} | ${(record.environmentProfile?.dominantBiomeMix ?? []).join(", ")}`,
       resourceAvailability:
         record.economicProfile?.supplyStrengths?.slice(0, 4) ?? record.economicProfile?.majorExports?.slice(0, 4) ?? [],
+      resourceIcons: deriveRegionResourceIcons(record),
       populationDensity: titleCase(record.simulationProfile?.densityBand ?? "moderate"),
       economicProfile: [
         record.economicProfile?.majorExports?.[0],
         record.economicProfile?.majorImports?.[0]
       ].filter((value): value is string => Boolean(value)),
-      description: record.summary ?? `${record.name} is a derived regional start area.`
+      description: describeRegionSummary(record),
+      resourceNarrative: describeRegionResources(record)
     }));
 }
 
@@ -283,6 +490,7 @@ export function getWorldSettlementOptions(params: {
       }
 
       const details = deriveSettlementDetails(record, region, locality, params.classId, params.backgroundId);
+      const hasPathAndBackstory = params.classId.trim().length > 0 && params.backgroundId.trim().length > 0;
 
       return {
         id: record.id,
@@ -297,9 +505,15 @@ export function getWorldSettlementOptions(params: {
         developmentLevel: deriveDevelopmentLevel(record),
         access: details.access,
         landAuthorityType: details.landAuthorityType,
+        landRestriction: deriveLandRestrictionSummary({
+          settlement: record,
+          landAuthorityType: details.landAuthorityType,
+          access: details.access,
+          hasPathAndBackstory
+        }),
         guilds: details.guilds,
         magic: details.magic,
-        description: record.summary
+        description: ensureSentence(record.summary)
       };
     })
     .filter((record): record is WorldSettlementOption => record !== null);

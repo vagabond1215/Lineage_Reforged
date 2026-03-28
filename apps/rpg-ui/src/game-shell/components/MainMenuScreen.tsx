@@ -1,228 +1,268 @@
+import { useMemo, useState } from 'react';
 import { Icon } from '../../components/icons';
 import { Card } from '../../components/ui/Card';
-import type { GameShellNotice, SaveSlotSummary } from '../state.js';
-import { ScreenFrame } from './ScreenFrame.js';
+import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
+import { NoticeBanner } from './NoticeBanner.js';
 
 type MainMenuScreenProps = {
   slots: SaveSlotSummary[];
   notice: GameShellNotice | null;
   onDismissNotice: () => void;
-  onContinue: () => void;
-  onNewGame: () => void;
-  onLoadGame: () => void;
+  onActivateSlot: (slotId: ManualSaveSlotId) => void;
+  onDeleteSlot: (slotId: ManualSaveSlotId) => void;
   onOpenSettings: () => void;
   onExit: () => void;
 };
 
-const actionButtonClass =
-  'flex w-full items-center justify-between rounded-[26px] border px-5 py-4 text-left transition';
+const circleButtonClass =
+  'inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]';
+
+function formatGold(gold: number | null): string {
+  if (gold === null) {
+    return 'Uncounted';
+  }
+
+  return `${new Intl.NumberFormat('en-US').format(gold)} gold`;
+}
+
+function getSlotDateLabel(slot: SaveSlotSummary): string {
+  return slot.lastSavedLabel ?? 'No save recorded';
+}
 
 export function MainMenuScreen({
   slots,
   notice,
   onDismissNotice,
-  onContinue,
-  onNewGame,
-  onLoadGame,
+  onActivateSlot,
+  onDeleteSlot,
   onOpenSettings,
   onExit
 }: MainMenuScreenProps) {
-  const manualSlots = slots.filter((slot) => slot.kind === 'manual');
+  const [showExtraRow, setShowExtraRow] = useState(false);
+  const [pendingDeleteSlotId, setPendingDeleteSlotId] = useState<ManualSaveSlotId | null>(null);
+
+  const manualSlots = useMemo(
+    () =>
+      slots.filter(
+        (slot): slot is SaveSlotSummary & { id: ManualSaveSlotId } => slot.kind === 'manual'
+      ),
+    [slots]
+  );
   const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
-  const populatedSlots = slots.filter((slot) => slot.hasSave);
-  const latestSave = [...populatedSlots].sort((left, right) =>
-    (right.lastSavedAt ?? '').localeCompare(left.lastSavedAt ?? '')
-  )[0];
+  const slotRows = showExtraRow ? [manualSlots.slice(0, 3), manualSlots.slice(3, 6)] : [manualSlots.slice(0, 3)];
+  const pendingDeleteSlot =
+    manualSlots.find((slot) => slot.id === pendingDeleteSlotId) ?? null;
 
   return (
-    <>
-      <ScreenFrame
-        eyebrow="Main Menu"
-        title="Cataclysm RPG"
-        description="Continue the newest campaign, begin a fresh one, load a specific browser-local save, open launcher settings, or exit. Manual slots and the dedicated quick-save slot all share the same real snapshot model."
-        accent="var(--color-character)"
-        notice={notice}
-        onDismissNotice={onDismissNotice}
-        mainContent={
-          <div className="space-y-4">
-            <Card title="Campaign Gate" accent="var(--color-character)">
-              <div className="space-y-3">
-                <button
-                  type="button"
-                  onClick={onContinue}
-                  disabled={!latestSave}
-                  className={`${actionButtonClass} border-emerald-300/25 bg-emerald-200/10 text-emerald-50 hover:bg-emerald-200/14 disabled:cursor-not-allowed disabled:opacity-45`}
-                >
-                  <span>
-                    <span className="block text-lg font-semibold">Continue</span>
-                    <span className="mt-1 block text-sm text-emerald-100/80">
-                      {latestSave
-                        ? `Load the most recent campaign: ${latestSave.playerName}.`
-                        : 'Disabled until a real save exists in this browser.'}
-                    </span>
-                  </span>
-                  <Icon name="chevron" className="h-5 w-5" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onNewGame}
-                  className={`${actionButtonClass} border-amber-300/25 bg-amber-200/10 text-amber-50 hover:bg-amber-200/14`}
-                >
-                  <span>
-                    <span className="block text-lg font-semibold">New Game</span>
-                    <span className="mt-1 block text-sm text-amber-100/80">
-                      Create a character, choose a save slot, and enter the world.
-                    </span>
-                  </span>
-                  <Icon name="chevron" className="h-5 w-5" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onLoadGame}
-                  className={`${actionButtonClass} border-cyan-300/20 bg-cyan-200/10 text-cyan-50 hover:bg-cyan-200/14`}
-                >
-                    <span>
-                      <span className="block text-lg font-semibold">Load Game</span>
-                      <span className="mt-1 block text-sm text-cyan-100/80">
-                        Open one of the three manual slots or the dedicated quick-save slot stored in this browser.
-                      </span>
-                    </span>
-                    <Icon name="chevron" className="h-5 w-5" />
-                </button>
-
+    <div className="h-screen overflow-auto px-4 pb-8 pt-4 sm:px-6">
+      <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-5">
+        <div className="sticky top-0 z-30">
+          <div className="rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] px-5 py-4 shadow-panel backdrop-blur-xl">
+            <div className="flex items-center justify-between gap-4">
+              <div className="text-5xl font-semibold tracking-[0.08em] text-[color:var(--color-text-strong)] sm:text-6xl">
+                Cataclysm
+              </div>
+              <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={onOpenSettings}
-                  className={`${actionButtonClass} border-indigo-300/20 bg-indigo-200/10 text-indigo-50 hover:bg-indigo-200/14`}
+                  className={circleButtonClass}
+                  aria-label="Open settings"
+                  title="Settings"
                 >
-                  <span>
-                    <span className="block text-lg font-semibold">Settings</span>
-                    <span className="mt-1 block text-sm text-indigo-100/80">
-                      Open launcher settings, save storage details, and reset controls.
-                    </span>
-                  </span>
-                  <Icon name="chevron" className="h-5 w-5" />
+                  <Icon name="gear" className="h-5 w-5" />
                 </button>
-
                 <button
                   type="button"
                   onClick={onExit}
-                  className={`${actionButtonClass} border-white/10 bg-white/5 text-slate-100 hover:bg-white/10`}
+                  className={circleButtonClass}
+                  aria-label="Exit"
+                  title="Exit"
                 >
-                  <span>
-                    <span className="block text-lg font-semibold">Exit</span>
-                    <span className="mt-1 block text-sm text-slate-300">
-                      Attempt to close the tab, then fall back to browser guidance if blocked.
-                    </span>
-                  </span>
-                  <Icon name="chevron" className="h-5 w-5" />
+                  <Icon name="closeCircle" className="h-5 w-5" />
                 </button>
               </div>
-            </Card>
+            </div>
+          </div>
+        </div>
 
-            <Card title="Save Vault" accent="var(--color-world)">
-              <div className="grid gap-3 md:grid-cols-3">
-                <div className="rounded-[22px] border border-white/10 bg-black/10 p-4">
-                  <div className="text-[11px] uppercase tracking-[0.2em] text-slate-500">
-                    Occupied Slots
-                  </div>
-                  <div className="mt-2 text-3xl text-slate-50">
-                    {manualSlots.filter((slot) => slot.hasSave).length} / 3
-                  </div>
-                  <div className="mt-2 text-sm text-slate-400">
-                    Manual slots remain available for new campaigns and overwrite-safe saves.
-                  </div>
+        {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}
+
+        <Card accent="var(--color-world)">
+          <div className="space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div className="text-lg font-semibold text-[color:var(--color-text-strong)]">
+                  Game Data
                 </div>
-
-                <div className="rounded-[22px] border border-white/10 bg-black/10 p-4">
-                  <div className="text-[11px] uppercase tracking-[0.2em] text-slate-500">
-                    Latest Save
-                  </div>
-                  <div className="mt-2 text-2xl text-slate-50">
-                    {latestSave?.playerName ?? 'No local saves'}
-                  </div>
-                  <div className="mt-2 text-sm text-slate-400">
-                    {latestSave?.lastSavedLabel ?? 'Start a new campaign to create a slot.'}
-                  </div>
-                </div>
-
-                <div className="rounded-[22px] border border-white/10 bg-black/10 p-4">
-                  <div className="text-[11px] uppercase tracking-[0.2em] text-slate-500">
-                    Quick Save
-                  </div>
-                  <div className="mt-2 text-2xl text-slate-50">
-                    {quickSaveSlot?.hasSave ? quickSaveSlot.playerName : 'Unused'}
-                  </div>
-                  <div className="mt-2 text-sm text-slate-400">
-                    {quickSaveSlot?.hasSave
-                      ? quickSaveSlot.lastSavedLabel
-                      : 'The quick-save slot stays separate from the three manual slots.'}
-                  </div>
+                <div className="mt-2 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                  Select an occupied ledger to resume that campaign, or claim an empty one to begin a new journey in that exact slot.
                 </div>
               </div>
-            </Card>
-          </div>
-        }
-        sideContent={
-          <Card title="Local Save Slots" accent="var(--color-world)" className="h-full">
-            <div className="space-y-3">
-              {slots.map((slot) => (
-                <div
-                  key={slot.id}
-                  className={`rounded-[24px] border p-4 ${
-                    slot.hasSave
-                      ? 'border-white/12 bg-white/5'
-                      : 'border-dashed border-white/10 bg-black/10'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <div className="text-sm font-semibold text-slate-100">{slot.label}</div>
-                      <div className="text-xs uppercase tracking-[0.18em] text-slate-500">
-                        {slot.hasSave
-                          ? slot.kind === 'quick'
-                            ? 'Quick Save Ready'
-                            : 'Occupied'
-                          : slot.status === 'corrupt'
-                            ? 'Corrupt Data'
-                            : 'Empty'}
-                      </div>
-                    </div>
-                    <div className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-slate-300">
-                      {slot.kind === 'quick' ? 'Quick' : slot.snapshotVersion ?? 'Ready'}
-                    </div>
-                  </div>
+              <button
+                type="button"
+                onClick={() => setShowExtraRow((current) => !current)}
+                className="rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] px-4 py-2 text-sm text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]"
+              >
+                {showExtraRow ? 'Hide Extra Row' : 'Add Another Row'}
+              </button>
+            </div>
 
-                  {slot.hasSave ? (
-                    <div className="mt-3 space-y-1 text-sm text-slate-300">
-                      <div className="text-base text-slate-50">{slot.playerName}</div>
-                      <div>
-                        {slot.lineageLabel} | {slot.classLabel}
+            <div className="space-y-4">
+              {slotRows.map((row, rowIndex) => (
+                <div key={`row.${rowIndex}`} className="grid gap-4 xl:grid-cols-3">
+                  {row.map((slot) => (
+                    <div
+                      key={slot.id}
+                      onClick={() => onActivateSlot(slot.id)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          onActivateSlot(slot.id);
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      className={`group relative overflow-hidden rounded-[28px] border p-5 text-left transition ${
+                        slot.hasSave
+                          ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
+                          : 'border-dashed border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
+                      }`}
+                    >
+                      {slot.hasSave && (
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setPendingDeleteSlotId(slot.id);
+                          }}
+                          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-rose-300/25 bg-rose-200/10 text-rose-100 transition hover:bg-rose-200/20"
+                          aria-label={`Delete ${slot.label}`}
+                          title="Delete save"
+                        >
+                          <Icon name="trash" className="h-4 w-4" />
+                        </button>
+                      )}
+
+                      <div className="pr-14">
+                        <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-strong)]">
+                          {slot.label}
+                        </div>
+                        <div className="mt-4 text-2xl font-semibold text-[color:var(--color-text-strong)]">
+                          {slot.hasSave ? slot.playerName : 'New Game'}
+                        </div>
+                        <div className="mt-2 min-h-[48px] text-sm leading-6 text-[color:var(--color-text-soft)]">
+                          {slot.hasSave
+                            ? slot.settlementLabel ?? slot.regionLabel ?? 'Unknown City'
+                            : 'A blank ledger awaiting a new life, a new road, and a new beginning.'}
+                        </div>
                       </div>
-                      <div>Level {slot.level}</div>
-                      <div>{slot.settlementLabel}</div>
-                      <div>{slot.inGameDate}</div>
-                      <div className="text-slate-500">{slot.lastSavedLabel}</div>
+
+                      <div className="mt-5 space-y-3">
+                        {slot.hasSave ? (
+                          <>
+                            <div className="grid gap-3 sm:grid-cols-2">
+                              <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
+                                <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                                  City
+                                </div>
+                                <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
+                                  {slot.settlementLabel ?? slot.regionLabel ?? 'Unknown'}
+                                </div>
+                              </div>
+                              <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
+                                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                                  <Icon name="coin" className="h-3.5 w-3.5" />
+                                  Gold
+                                </div>
+                                <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
+                                  {formatGold(slot.gold)}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
+                              <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                                <Icon name="clock" className="h-3.5 w-3.5" />
+                                Save File Time And Date
+                              </div>
+                              <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-strong)]">
+                                {getSlotDateLabel(slot)}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="rounded-[20px] border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3 text-sm leading-6 text-[color:var(--color-text-soft)]">
+                            Select this slot to begin character creation here. Any new campaign started from this card will be written back into this same save slot.
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  ) : slot.status === 'corrupt' ? (
-                    <div className="mt-3 text-sm text-rose-200/80">
-                      This slot contains unreadable local data. Open Load Game to delete or replace it safely.
-                    </div>
-                  ) : (
-                    <div className="mt-3 text-sm text-slate-500">
-                      {slot.kind === 'quick'
-                        ? 'Quick Save will populate this slot from inside the in-game shell.'
-                        : 'This slot will be offered first during character creation.'}
-                    </div>
-                  )}
+                  ))}
                 </div>
               ))}
             </div>
-          </Card>
-        }
-      />
-    </>
+
+            {quickSaveSlot && (
+              <div className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-4 py-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-strong)]">
+                      Quick Save
+                    </div>
+                    <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-soft)]">
+                      {quickSaveSlot.hasSave
+                        ? `${quickSaveSlot.playerName ?? 'A campaign'} also rests in the dedicated quick-save slot.`
+                        : 'The dedicated quick-save slot remains reserved for in-game use.'}
+                    </div>
+                  </div>
+                  {quickSaveSlot.hasSave && (
+                    <div className="text-sm text-[color:var(--color-text-strong)]">
+                      {quickSaveSlot.lastSavedLabel}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </Card>
+      </div>
+
+      {pendingDeleteSlot && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/55 px-4">
+          <div className="w-full max-w-md rounded-[28px] border border-rose-300/20 bg-[color:var(--color-panel-strong)] p-6 shadow-2xl">
+            <div className="text-[11px] uppercase tracking-[0.22em] text-rose-200/75">
+              Delete Save
+            </div>
+            <div className="mt-3 text-xl font-semibold text-[color:var(--color-text-strong)]">
+              Remove {pendingDeleteSlot.label}?
+            </div>
+            <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+              This will erase the local save data for {pendingDeleteSlot.playerName ?? pendingDeleteSlot.label} from this browser.
+            </div>
+            <div className="mt-6 flex flex-wrap justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setPendingDeleteSlotId(null)}
+                className="rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] px-4 py-2 text-sm text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const slotId = pendingDeleteSlot.id;
+                  setPendingDeleteSlotId(null);
+                  onDeleteSlot(slotId);
+                }}
+                className="rounded-full border border-rose-300/25 bg-rose-200/10 px-4 py-2 text-sm text-rose-100 transition hover:bg-rose-200/20"
+              >
+                Delete Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

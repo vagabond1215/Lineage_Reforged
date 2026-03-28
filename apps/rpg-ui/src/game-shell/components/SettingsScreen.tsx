@@ -26,7 +26,7 @@ export function SettingsScreen({
     <ScreenFrame
       eyebrow="Settings"
       title="Launcher Settings"
-      description="The launcher uses the browser-local save system directly. Resetting save data here clears the same real save slots used by Continue, New Game, Load Game, and in-session saves."
+      description="The launcher uses the browser-local save system directly. Resetting save data here clears the same real save ledgers used by the main menu, character creation, and in-session saves."
       accent="var(--color-chronicle)"
       notice={notice}
       onDismissNotice={onDismissNotice}
@@ -45,9 +45,9 @@ export function SettingsScreen({
             <div className="grid gap-3 md:grid-cols-3">
               <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Manual Slots</div>
-                <div className="mt-2 text-3xl text-slate-50">{occupiedManualSlots} / 3</div>
+                <div className="mt-2 text-3xl text-slate-50">{occupiedManualSlots} / 6</div>
                 <div className="mt-2 text-sm text-slate-400">
-                  Manual campaign slots remain browser-local and overwrite-safe.
+                  Manual campaign slots remain browser-local and overwrite-safe, with an additional row available from the main menu.
                 </div>
               </div>
 
@@ -55,7 +55,7 @@ export function SettingsScreen({
                 <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Quick Save</div>
                 <div className="mt-2 text-2xl text-slate-50">{quickSaveReady ? 'Ready' : 'Unused'}</div>
                 <div className="mt-2 text-sm text-slate-400">
-                  Quick Save stays separate from the three manual slots.
+                  Quick Save stays separate from the manual game-data ledgers.
                 </div>
               </div>
 
@@ -114,10 +114,10 @@ export function SettingsScreen({
         <Card title="Launcher Notes" accent="var(--color-character)">
           <div className="space-y-4 text-sm leading-7 text-slate-300">
             <p>
-              `Continue` loads the newest save record automatically when one exists.
+              Empty ledgers on the main menu begin character creation directly in that chosen slot.
             </p>
             <p>
-              `New Game` and `Load Game` both use the same real save system, so there is no separate placeholder launcher state.
+              Occupied ledgers on the main menu load their campaign directly, while the quick-save slot remains separate for in-session use.
             </p>
             <p>
               The start screen remains the mandatory application entry point. There is no launch bypass directly into the in-game shell.

@@ -1,6 +1,7 @@
 import type { PlayerSexId } from '../../../../packages/shared/types/src/index.js';
 import type { ManualSaveSlotId } from './state.js';
 import {
+  type HeightBandId,
   getBackstoryStartAccessProfileId,
   getLineageIdentityCatalog,
   isCompatibleBackstorySelection,
@@ -10,29 +11,29 @@ import {
 import {
   getWorldContinentOptions,
   getWorldRegionOptions,
+  getWorldSettlementOptions,
   resolveWorldSelection
 } from './worldSelectionCatalog.js';
 
 export type CharacterCreationSexId = '' | Extract<PlayerSexId, 'male' | 'female'>;
+export type CharacterCreationHeightBandId = '' | HeightBandId;
 
 export type CharacterCreationStepId =
   | 'lineage'
   | 'identity'
-  | 'backstory'
-  | 'path'
   | 'continent'
   | 'region'
   | 'settlement'
+  | 'backstory'
+  | 'path'
   | 'review';
 
 export type CharacterCreationField =
   | 'playerName'
   | 'sexId'
   | 'lineageId'
-  | 'heightCm'
-  | 'buildId'
+  | 'heightBandId'
   | 'hairColorId'
-  | 'hairHighlightColorId'
   | 'eyeColorId'
   | 'skinToneId'
   | 'classId'
@@ -46,10 +47,8 @@ export interface CharacterCreationFormState {
   playerName: string;
   sexId: CharacterCreationSexId;
   lineageId: string;
-  heightCm: number | null;
-  buildId: string;
+  heightBandId: CharacterCreationHeightBandId;
   hairColorId: string;
-  hairHighlightColorId: string;
   eyeColorId: string;
   skinToneId: string;
   classId: string;
@@ -74,7 +73,7 @@ export interface CharacterCreationValidationResult {
 
 export interface CompleteCharacterCreationFormState extends CharacterCreationFormState {
   sexId: Extract<PlayerSexId, 'male' | 'female'>;
-  heightCm: number;
+  heightBandId: HeightBandId;
 }
 
 export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
@@ -87,20 +86,8 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
   {
     id: 'identity',
     label: 'Identity',
-    description: 'Choose visible presentation only: name, sex, height, build, and lineage-valid coloration.',
-    fields: ['playerName', 'sexId', 'heightCm', 'buildId', 'hairColorId', 'hairHighlightColorId', 'eyeColorId', 'skinToneId']
-  },
-  {
-    id: 'backstory',
-    label: 'Backstory',
-    description: 'Choose the character\'s past. Backstories seed job identity, traits, skills, and starting kit by lineage.',
-    fields: ['backgroundId']
-  },
-  {
-    id: 'path',
-    label: 'Path',
-    description: 'Choose the character\'s future direction and starting specialization.',
-    fields: ['classId']
+    description: 'Choose visible presentation only: name, sex, stature, and lineage-valid coloration.',
+    fields: ['playerName', 'sexId', 'heightBandId', 'hairColorId', 'eyeColorId', 'skinToneId']
   },
   {
     id: 'continent',
@@ -121,6 +108,18 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
     fields: ['startingSettlementId']
   },
   {
+    id: 'backstory',
+    label: 'Backstory',
+    description: 'Choose the character\'s past. Backstories seed job identity, traits, skills, and starting kit by lineage.',
+    fields: ['backgroundId']
+  },
+  {
+    id: 'path',
+    label: 'Path',
+    description: 'Choose the character\'s future direction and starting specialization.',
+    fields: ['classId']
+  },
+  {
     id: 'review',
     label: 'Finalize',
     description: 'Review the generated starter state, choose a save slot, and begin the campaign.',
@@ -129,10 +128,8 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
       'playerName',
       'sexId',
       'lineageId',
-      'heightCm',
-      'buildId',
+      'heightBandId',
       'hairColorId',
-      'hairHighlightColorId',
       'eyeColorId',
       'skinToneId',
       'classId',
@@ -153,10 +150,8 @@ export function createDefaultCharacterCreationFormState(
     playerName: '',
     sexId: '',
     lineageId: '',
-    heightCm: null,
-    buildId: '',
+    heightBandId: '',
     hairColorId: '',
-    hairHighlightColorId: '',
     eyeColorId: '',
     skinToneId: '',
     classId: '',
@@ -174,8 +169,7 @@ export function hasCompleteCharacterCreationSelections(
   return Boolean(
     form.sexId &&
       form.lineageId.trim() &&
-      form.heightCm !== null &&
-      form.buildId.trim() &&
+      form.heightBandId &&
       form.hairColorId.trim() &&
       form.eyeColorId.trim() &&
       form.skinToneId.trim() &&
@@ -235,31 +229,17 @@ export function validateCharacterCreationForm(
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
 
   if (!identityCatalog) {
-    errors.heightCm = 'Choose a lineage before setting identity details.';
-    errors.buildId = 'Choose a lineage before setting identity details.';
+    errors.heightBandId = 'Choose a lineage before setting identity details.';
     errors.hairColorId = 'Choose a lineage before setting identity details.';
     errors.eyeColorId = 'Choose a lineage before setting identity details.';
     errors.skinToneId = 'Choose a lineage before setting identity details.';
   } else {
-    if (form.heightCm === null) {
-      errors.heightCm = 'Choose a height option.';
-    } else if (form.heightCm < identityCatalog.heightRangeCm[0] || form.heightCm > identityCatalog.heightRangeCm[1]) {
-      errors.heightCm = 'Choose a height inside the selected lineage range.';
-    }
-
-    if (!identityCatalog.buildOptions.some((option) => option.id === form.buildId)) {
-      errors.buildId = 'Choose a valid build.';
+    if (!identityCatalog.heightBands.some((option) => option.id === form.heightBandId)) {
+      errors.heightBandId = 'Choose a valid height profile.';
     }
 
     if (!identityCatalog.hairColorOptions.some((option) => option.id === form.hairColorId)) {
       errors.hairColorId = 'Choose a valid hair color.';
-    }
-
-    if (
-      form.hairHighlightColorId &&
-      !identityCatalog.hairHighlightOptions.some((option) => option.id === form.hairHighlightColorId)
-    ) {
-      errors.hairHighlightColorId = 'Choose a valid highlight color or leave it empty.';
     }
 
     if (!identityCatalog.eyeColorOptions.some((option) => option.id === form.eyeColorId)) {
@@ -287,18 +267,32 @@ export function validateCharacterCreationForm(
     errors.regionId = 'Choose a valid region for the selected continent.';
   }
 
-  const resolvedSelection = resolveWorldSelection({
+  const basicSettlementOptions = getWorldSettlementOptions({
     continentId: form.continentId,
     regionId: form.regionId,
-    settlementId: form.startingSettlementId,
-    classId: form.classId,
-    backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
+    classId: '',
+    backgroundId: ''
   });
+  const hasSettlementSelection = basicSettlementOptions.some(
+    (settlement) => settlement.id === form.startingSettlementId
+  );
 
-  if (!resolvedSelection) {
+  if (!hasSettlementSelection) {
     errors.startingSettlementId = 'Choose a valid starting settlement.';
-  } else if (resolvedSelection.settlement.access.accessStatus !== 'allowed') {
-    errors.startingSettlementId = resolvedSelection.settlement.access.notes[0] ?? 'This start is restricted.';
+  } else if (isKnownPathId(form.classId) && form.backgroundId.trim()) {
+    const resolvedSelection = resolveWorldSelection({
+      continentId: form.continentId,
+      regionId: form.regionId,
+      settlementId: form.startingSettlementId,
+      classId: form.classId,
+      backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
+    });
+
+    if (!resolvedSelection) {
+      errors.startingSettlementId = 'Choose a valid starting settlement.';
+    } else if (resolvedSelection.settlement.access.accessStatus !== 'allowed') {
+      errors.startingSettlementId = resolvedSelection.settlement.access.notes[0] ?? 'This start is restricted.';
+    }
   }
 
   if (!form.saveSlotId) {
@@ -315,6 +309,25 @@ export function validateCharacterCreationStep(
   form: CharacterCreationFormState,
   stepId: CharacterCreationStepId
 ): CharacterCreationValidationResult {
+  if (stepId === 'settlement') {
+    const errors: Partial<Record<CharacterCreationField, string>> = {};
+    const settlementOptions = getWorldSettlementOptions({
+      continentId: form.continentId,
+      regionId: form.regionId,
+      classId: '',
+      backgroundId: ''
+    });
+
+    if (!settlementOptions.some((settlement) => settlement.id === form.startingSettlementId)) {
+      errors.startingSettlementId = 'Choose a settlement before continuing.';
+    }
+
+    return {
+      isValid: Object.keys(errors).length === 0,
+      errors
+    };
+  }
+
   const fullValidation = validateCharacterCreationForm(form);
   const step = CHARACTER_CREATION_STEPS.find((item) => item.id === stepId);
 

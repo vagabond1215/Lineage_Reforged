@@ -154,6 +154,7 @@ function isSaveSlotMetadata(value: unknown): value is SaveSlotMetadata {
     typeof value.characterName === 'string' &&
     typeof value.level === 'number' &&
     typeof value.regionLabel === 'string' &&
+    (typeof value.gold === 'number' || value.gold === undefined) &&
     typeof value.inGameDate === 'string' &&
     typeof value.totalPlayTicks === 'number' &&
     typeof value.capturedAtTick === 'number' &&
@@ -210,6 +211,7 @@ function createSlotSummary(
     level: metadata?.level ?? null,
     regionLabel: metadata?.regionLabel ?? null,
     settlementLabel: metadata?.settlementLabel ?? null,
+    gold: metadata?.gold ?? null,
     inGameDate: metadata?.inGameDate ?? null,
     lastSavedAt: metadata?.lastSavedAt ?? null,
     lastSavedLabel: metadata ? formatSavedAt(metadata.lastSavedAt) : null,
@@ -336,6 +338,7 @@ export function buildSaveMetadata(slotId: SaveSlotId, snapshot: SaveSnapshot): S
     settlementLabel: snapshot.playerState.location.settlementId
       ? humanizeId(snapshot.playerState.location.settlementId)
       : null,
+    gold: snapshot.playerState.currency.gold,
     inGameDate: formatInGameDate(snapshot),
     totalPlayTicks: snapshot.playerState.saveMeta.totalPlayTicks,
     capturedAtTick: snapshot.capturedAtTick,

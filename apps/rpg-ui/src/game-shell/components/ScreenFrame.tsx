@@ -30,7 +30,7 @@ export function ScreenFrame({
     <div className="h-screen overflow-auto p-4 sm:p-6">
       <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4">
         <Card eyebrow={eyebrow} title={title} accent={accent} actions={headerActions}>
-          <div className="max-w-3xl text-sm leading-7 text-slate-300">{description}</div>
+          <div className="max-w-3xl text-sm leading-7 text-[color:var(--color-text-soft)]">{description}</div>
         </Card>
 
         {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}

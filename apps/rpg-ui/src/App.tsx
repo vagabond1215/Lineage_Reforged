@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { InGameShell } from './game-shell/InGameShell';
 import {
   createDefaultCharacterCreationFormState,
@@ -27,8 +27,13 @@ import {
   getSaveSlotLabel,
   type GameShellNotice,
   type GameShellState,
+  type ManualSaveSlotId,
   type SaveSlotId
 } from './game-shell/state';
+
+type ThemeMode = 'dark' | 'light';
+
+const THEME_STORAGE_KEY = 'cataclysm-rpg.theme-mode';
 
 function buildStorageNotice(action: string, error: unknown): GameShellNotice {
   const detail =
@@ -67,6 +72,39 @@ function createAppState(_: undefined): GameShellState {
 
 export default function App() {
   const [state, dispatch] = useReducer(gameShellReducer, undefined, createAppState);
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+    if (typeof window === 'undefined') {
+      return 'dark';
+    }
+
+    try {
+      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+      return storedTheme === 'light' ? 'light' : 'dark';
+    } catch {
+      return 'dark';
+    }
+  });
+
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    document.documentElement.dataset.theme = themeMode;
+    document.documentElement.style.colorScheme = themeMode;
+
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+      } catch {
+        // Theme persistence is optional when browser storage is blocked.
+      }
+    }
+  }, [themeMode]);
+
+  const toggleThemeMode = () => {
+    setThemeMode((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  };
 
   const dismissNotice = () => {
     dispatch({ type: 'SET_NOTICE', notice: null });
@@ -96,12 +134,14 @@ export default function App() {
     });
   };
 
-  const openCharacterCreation = () => {
+  const openCharacterCreation = (targetSlotId?: ManualSaveSlotId) => {
     const next = listSlotsWithFallback('read');
     dispatch({
       type: 'OPEN_CHARACTER_CREATION',
       slots: next.slots,
-      form: createDefaultCharacterCreationFormState(getPreferredSaveSlotId(next.slots)),
+      form: createDefaultCharacterCreationFormState(
+        targetSlotId ?? getPreferredSaveSlotId(next.slots)
+      ),
       notice: next.notice
     });
   };
@@ -278,7 +318,7 @@ export default function App() {
   };
 
   const handleDeleteSave = (slotId: SaveSlotId) => {
-    if (state.screen !== 'LOAD_GAME') {
+    if (state.screen !== 'LOAD_GAME' && state.screen !== 'MAIN_MENU') {
       return;
     }
 
@@ -286,20 +326,70 @@ export default function App() {
       deleteSave(slotId);
       const next = listSlotsWithFallback('read');
 
-      dispatch({
-        type: 'OPEN_LOAD_GAME',
-        slots: next.slots,
-        selectedSlotId: getPreferredLoadSlotId(next.slots),
-        notice: next.notice ?? {
-          tone: 'success',
-          title: 'Save Deleted',
-          detail: `${getSaveSlotLabel(slotId)} was removed from local browser storage.`
-        }
-      });
+      if (state.screen === 'LOAD_GAME') {
+        dispatch({
+          type: 'OPEN_LOAD_GAME',
+          slots: next.slots,
+          selectedSlotId: getPreferredLoadSlotId(next.slots),
+          notice: next.notice ?? {
+            tone: 'success',
+            title: 'Save Deleted',
+            detail: `${getSaveSlotLabel(slotId)} was removed from local browser storage.`
+          }
+        });
+      } else {
+        dispatch({
+          type: 'SHOW_MAIN_MENU',
+          slots: next.slots,
+          notice: next.notice ?? {
+            tone: 'success',
+            title: 'Save Deleted',
+            detail: `${getSaveSlotLabel(slotId)} was removed from local browser storage.`
+          }
+        });
+      }
     } catch (error) {
       dispatch({
         type: 'SET_NOTICE',
         notice: buildStorageNotice('delete a local save', error)
+      });
+    }
+  };
+
+  const handleGameDataSlot = (slotId: ManualSaveSlotId) => {
+    const next = listSlotsWithFallback('read');
+    const selectedSlot = next.slots.find((slot) => slot.id === slotId);
+
+    if (!selectedSlot?.hasSave) {
+      openCharacterCreation(slotId);
+      return;
+    }
+
+    try {
+      const snapshot = loadSave(slotId);
+
+      if (!snapshot) {
+        dispatch({
+          type: 'SHOW_MAIN_MENU',
+          slots: next.slots,
+          notice: next.notice ?? {
+            tone: 'warning',
+            title: 'Save Not Available',
+            detail: `${getSaveSlotLabel(slotId)} could not be loaded from local browser storage.`
+          }
+        });
+        return;
+      }
+
+      enterGame(slotId, snapshot, {
+        tone: 'accent',
+        title: 'Save Loaded',
+        detail: `Continuing ${snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
+      });
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('load a local save', error)
       });
     }
   };
@@ -428,40 +518,39 @@ export default function App() {
     }
   };
 
+  let content = null;
+
   if (state.screen === 'MAIN_MENU') {
-    return (
+    content = (
       <MainMenuScreen
         slots={state.slots}
         notice={state.notice}
         onDismissNotice={dismissNotice}
-        onContinue={continueLatestGame}
-        onNewGame={openCharacterCreation}
-        onLoadGame={openLoadGame}
+        onActivateSlot={handleGameDataSlot}
+        onDeleteSlot={handleDeleteSave}
         onOpenSettings={openSettings}
         onExit={handleExit}
       />
     );
-  }
-
-  if (state.screen === 'CHARACTER_CREATION') {
-    return (
+  } else if (state.screen === 'CHARACTER_CREATION') {
+    content = (
       <CharacterCreationScreen
         form={state.form}
         slots={state.slots}
         notice={state.notice}
         pendingOverwriteSlotId={state.pendingOverwriteSlotId}
         onDismissNotice={dismissNotice}
-        onBack={() => showMainMenu()}
+        onReturnToMainMenu={() => showMainMenu()}
         onChange={(form) => dispatch({ type: 'UPDATE_CHARACTER_CREATION_FORM', form })}
         onCreateGame={() => attemptCreateGame(false)}
         onConfirmOverwrite={() => attemptCreateGame(true)}
         onCancelOverwrite={() => dispatch({ type: 'SET_CHARACTER_OVERWRITE', slotId: null })}
+        themeMode={themeMode}
+        onToggleThemeMode={toggleThemeMode}
       />
     );
-  }
-
-  if (state.screen === 'LOAD_GAME') {
-    return (
+  } else if (state.screen === 'LOAD_GAME') {
+    content = (
       <LoadGameScreen
         slots={state.slots}
         notice={state.notice}
@@ -473,10 +562,8 @@ export default function App() {
         onDeleteSlot={handleDeleteSave}
       />
     );
-  }
-
-  if (state.screen === 'SETTINGS') {
-    return (
+  } else if (state.screen === 'SETTINGS') {
+    content = (
       <SettingsScreen
         slots={state.slots}
         notice={state.notice}
@@ -485,26 +572,32 @@ export default function App() {
         onResetSaves={handleResetSaves}
       />
     );
+  } else {
+    content = (
+      <InGameShell
+        snapshot={state.snapshot}
+        slots={state.slots}
+        activeSlotId={state.activeSlotId}
+        hasUnsavedChanges={state.hasUnsavedChanges}
+        notice={state.notice}
+        onDismissNotice={dismissNotice}
+        onSnapshotChange={(snapshot) => {
+          dispatch({
+            type: 'UPDATE_IN_GAME_SNAPSHOT',
+            slots: state.slots,
+            snapshot
+          });
+        }}
+        onSave={handleSaveGame}
+        onQuickSave={handleQuickSaveGame}
+        onReturnToMainMenu={handleReturnToMainMenu}
+      />
+    );
   }
 
   return (
-    <InGameShell
-      snapshot={state.snapshot}
-      slots={state.slots}
-      activeSlotId={state.activeSlotId}
-      hasUnsavedChanges={state.hasUnsavedChanges}
-      notice={state.notice}
-      onDismissNotice={dismissNotice}
-      onSnapshotChange={(snapshot) => {
-        dispatch({
-          type: 'UPDATE_IN_GAME_SNAPSHOT',
-          slots: state.slots,
-          snapshot
-        });
-      }}
-      onSave={handleSaveGame}
-      onQuickSave={handleQuickSaveGame}
-      onReturnToMainMenu={handleReturnToMainMenu}
-    />
+    <div data-theme={themeMode} className="min-h-screen">
+      {content}
+    </div>
   );
 }
