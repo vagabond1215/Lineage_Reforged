@@ -560,7 +560,7 @@ export function CharacterCreationNarrativeScreen({
       <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
         {title}
       </div>
-      <div className="grid grid-cols-5 justify-items-start gap-y-1.5 gap-x-0 sm:grid-cols-9">
+      <div className="flex flex-wrap items-start gap-x-1 gap-y-1.5">
         {options.map((option) => {
           const selected = option.id === selectedId;
           const opacityClass = !selectedId
@@ -584,7 +584,7 @@ export function CharacterCreationNarrativeScreen({
                 onClick={() =>
                   onChange({ [key]: option.id } as Partial<CharacterCreationFormState>)
                 }
-                className={`h-12 w-12 rounded-full border-[3px] transition ${opacityClass}`}
+                className={`h-11 w-11 rounded-full border-[3px] transition ${opacityClass}`}
                 style={{
                   backgroundColor:
                     option.swatch?.background ?? 'var(--color-creator-card)',
@@ -642,72 +642,78 @@ export function CharacterCreationNarrativeScreen({
                 }}
                 className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
               >
-              {art && (
-                <>
-                  <div
-                    className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
-                      selected
-                        ? 'opacity-92 group-hover:opacity-44'
-                        : 'opacity-30 group-hover:opacity-80'
-                    }`}
-                    style={{
-                      backgroundImage: `url(${art.imageUrl})`,
-                      backgroundPosition: art.backgroundPosition ?? 'center center'
-                    }}
-                  />
-                  <div
-                    className={`absolute inset-0 bg-[linear-gradient(112deg,rgba(7,12,20,0.96)_0%,rgba(8,14,24,0.88)_38%,rgba(10,18,28,0.66)_66%,rgba(8,14,24,0.9)_100%)] transition duration-300 ${
-                      selected ? 'opacity-30 group-hover:opacity-78' : 'group-hover:opacity-65'
-                    }`}
-                  />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
-                </>
-              )}
-              <div
-                className={`relative z-10 pr-[7.65rem] transition duration-200 ${
-                  selected
-                    ? 'min-h-[24rem] opacity-0 group-hover:opacity-100'
-                    : 'min-h-[12rem] group-hover:opacity-0'
-                }`}
-              >
-                <div>
-                  <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                    {option.label}
-                  </div>
-                  <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                    {option.description}
-                  </div>
-                </div>
-                <div className="absolute right-0 top-1 bottom-2 flex w-[7.15rem] items-start justify-end">
-                  <div className="h-full w-full rounded-r-[22px] border-l border-[color:var(--color-border)] bg-[rgba(4,9,17,0.78)] px-2 py-2 backdrop-blur-md">
-                    <div className="space-y-0.5">
-                      {statRows.map((row) => (
-                        <div
-                          key={`${option.id}.${row.key}`}
-                          className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-0.5 border-b border-[color:var(--color-border)] pb-0.5 last:border-b-0 last:pb-0"
-                        >
-                          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
-                            {row.key}
-                          </div>
-                          <div className="justify-self-end text-sm font-semibold text-[color:var(--color-text-strong)]">
-                            {row.value}
-                          </div>
-                        </div>
-                      ))}
+                {art && (
+                  <>
+                    <div
+                      className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
+                        selected
+                          ? 'opacity-100 group-hover:opacity-92'
+                          : 'opacity-30 group-hover:opacity-80'
+                      }`}
+                      style={{
+                        backgroundImage: `url(${art.imageUrl})`,
+                        backgroundPosition: art.backgroundPosition ?? 'center center'
+                      }}
+                    />
+                    {!selected && (
+                      <>
+                        <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(7,12,20,0.96)_0%,rgba(8,14,24,0.88)_38%,rgba(10,18,28,0.66)_66%,rgba(8,14,24,0.9)_100%)] transition duration-300 group-hover:opacity-65" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
+                      </>
+                    )}
+                  </>
+                )}
+                {!selected && (
+                  <div className="relative z-10 min-h-[12rem] pr-[7.1rem] transition duration-200 group-hover:opacity-0">
+                    <div>
+                      <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                        {option.label}
+                      </div>
+                      <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                        {option.description}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                )}
+                {selected && (
+                  <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[43%] bg-[rgba(4,9,17,0.72)] px-5 py-5 opacity-0 backdrop-blur-md transition duration-200 group-hover:opacity-100">
+                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                      {option.label}
+                    </div>
+                    <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      {option.description}
+                    </div>
+                  </div>
+                )}
               </button>
-              {selected && (
-                <button
-                  type="button"
-                  onClick={() => advanceSelectionStep('lineage')}
-                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(4,9,17,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(8,16,28,0.94)]"
-                >
-                  {getSelectionAdvanceLabel('lineage')}
-                </button>
-              )}
+              <div className="absolute inset-y-0 right-0 z-20 flex w-[7rem] flex-col justify-between border-l border-[color:var(--color-border)] bg-[rgba(4,9,17,0.82)] px-2 py-3 backdrop-blur-md">
+                <div className="space-y-0.5">
+                  {statRows.map((row) => (
+                    <div
+                      key={`${option.id}.${row.key}.rail`}
+                      className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-0 border-b border-[color:var(--color-border)] pb-0.5 last:border-b-0 last:pb-0"
+                    >
+                      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                        {row.key}
+                      </div>
+                      <div className="justify-self-end text-sm font-semibold text-[color:var(--color-text-strong)]">
+                        {row.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {selected ? (
+                  <button
+                    type="button"
+                    onClick={() => advanceSelectionStep('lineage')}
+                    className="rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(4,9,17,0.92)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(8,16,28,0.98)]"
+                  >
+                    {getSelectionAdvanceLabel('lineage')}
+                  </button>
+                ) : (
+                  <div />
+                )}
+              </div>
             </div>
           );
         })}
@@ -786,7 +792,7 @@ export function CharacterCreationNarrativeScreen({
                   key={option.id}
                   type="button"
                   onClick={() => onChange({ heightBandId: option.id })}
-                  className={`flex aspect-square min-h-[104px] flex-col items-center justify-center rounded-[18px] border px-3 py-3 text-center transition ${
+                  className={`flex h-[84px] min-h-[84px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
                     form.heightBandId === option.id
                       ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                       : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
@@ -796,14 +802,14 @@ export function CharacterCreationNarrativeScreen({
                   <div className="grid h-full w-full grid-rows-3 place-items-center">
                     <div className="text-[15px] font-semibold leading-none">{option.label}</div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
                         tradeoff.positive ? '' : 'opacity-0'
                       }`}
                     >
                       {tradeoff.positive ?? '\u00A0'}
                     </div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
                         tradeoff.negative ? '' : 'opacity-0'
                       }`}
                     >
@@ -828,7 +834,7 @@ export function CharacterCreationNarrativeScreen({
                   key={option.id}
                   type="button"
                   onClick={() => onChange({ buildId: option.id })}
-                  className={`flex aspect-square min-h-[104px] flex-col items-center justify-center rounded-[18px] border px-3 py-3 text-center transition ${
+                  className={`flex h-[84px] min-h-[84px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
                     form.buildId === option.id
                       ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                       : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
@@ -838,14 +844,14 @@ export function CharacterCreationNarrativeScreen({
                   <div className="grid h-full w-full grid-rows-3 place-items-center">
                     <div className="text-[15px] font-semibold leading-none">{option.label}</div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
                         tradeoff.positive ? '' : 'opacity-0'
                       }`}
                     >
                       {tradeoff.positive ?? '\u00A0'}
                     </div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
                         tradeoff.negative ? '' : 'opacity-0'
                       }`}
                     >
@@ -898,7 +904,7 @@ export function CharacterCreationNarrativeScreen({
               className={`${getSelectableCardClass(
                 selected,
                 'continent'
-              )} group relative overflow-hidden ${selected ? 'min-h-[24rem]' : ''}`}
+              )} group relative overflow-hidden ${selected ? 'min-h-[28rem]' : ''}`}
               style={selected ? activeOutlineStyle : undefined}
             >
               <button
@@ -922,7 +928,7 @@ export function CharacterCreationNarrativeScreen({
                     <div
                       className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
                         selected
-                          ? 'opacity-92 group-hover:opacity-42'
+                          ? 'opacity-100 group-hover:opacity-96'
                           : 'opacity-28 group-hover:opacity-80'
                       }`}
                       style={{
@@ -930,40 +936,71 @@ export function CharacterCreationNarrativeScreen({
                         backgroundPosition: art.backgroundPosition ?? 'center center'
                       }}
                     />
-                    <div
-                      className={`absolute inset-0 bg-[linear-gradient(112deg,rgba(8,16,14,0.95)_0%,rgba(10,22,18,0.88)_42%,rgba(10,20,28,0.58)_72%,rgba(8,16,14,0.88)_100%)] transition duration-300 ${
-                        selected ? 'opacity-26 group-hover:opacity-74' : 'group-hover:opacity-65'
-                      }`}
-                    />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(74,222,128,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
+                    {!selected && (
+                      <>
+                        <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(8,16,14,0.95)_0%,rgba(10,22,18,0.88)_42%,rgba(10,20,28,0.58)_72%,rgba(8,16,14,0.88)_100%)] transition duration-300 group-hover:opacity-65" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(74,222,128,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
+                      </>
+                    )}
                   </>
                 )}
                 <div
                   className={`relative z-10 transition duration-200 ${
                     selected
-                      ? 'min-h-[24rem] opacity-0 group-hover:opacity-100'
+                      ? 'min-h-[28rem]'
                       : 'group-hover:opacity-0'
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                      {option.label}
-                    </div>
-                    <span
-                      className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
-                        option.difficultyTone === 'success'
-                          ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
-                          : option.difficultyTone === 'warning'
-                            ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
-                            : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
-                      }`}
-                    >
-                      {option.difficultyLabel}
-                    </span>
-                  </div>
-                  <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                    {option.description}
-                  </div>
+                  {selected ? (
+                    <>
+                      <div className="inline-flex rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(8,16,14,0.48)] px-4 py-2 text-lg font-semibold text-[color:var(--color-text-strong)] backdrop-blur-sm">
+                        {option.label}
+                      </div>
+                      <div className="pointer-events-none absolute inset-y-0 left-0 w-[42%] bg-[rgba(8,16,14,0.66)] px-5 py-5 opacity-0 backdrop-blur-md transition duration-200 group-hover:opacity-100">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                            {option.label}
+                          </div>
+                          <span
+                            className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
+                              option.difficultyTone === 'success'
+                                ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
+                                : option.difficultyTone === 'warning'
+                                  ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
+                                  : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
+                            }`}
+                          >
+                            {option.difficultyLabel}
+                          </span>
+                        </div>
+                        <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                          {option.description}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                          {option.label}
+                        </div>
+                        <span
+                          className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
+                            option.difficultyTone === 'success'
+                              ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
+                              : option.difficultyTone === 'warning'
+                                ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
+                                : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
+                          }`}
+                        >
+                          {option.difficultyLabel}
+                        </span>
+                      </div>
+                      <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                        {option.description}
+                      </div>
+                    </>
+                  )}
                 </div>
               </button>
               {selected && (
