@@ -167,7 +167,7 @@ const HEIGHT_BANDS: HeightBandOption[] = [
   },
   {
     id: "normal",
-    label: "Average",
+    label: "Normal",
     description: "Near the usual middle height for this lineage. No attribute change.",
     attributeAdjustments: {}
   },

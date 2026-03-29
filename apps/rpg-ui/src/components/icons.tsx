@@ -265,13 +265,6 @@ export function Icon({ name, className = 'h-5 w-5' }: IconProps) {
           <circle cx="12" cy="7.2" r="0.8" fill="currentColor" stroke="none" />
         </svg>
       );
-    case 'eye':
-      return (
-        <svg {...shared}>
-          <path d="M2.8 12s3.5-6 9.2-6 9.2 6 9.2 6-3.5 6-9.2 6-9.2-6-9.2-6Z" />
-          <circle cx="12" cy="12" r="2.8" />
-        </svg>
-      );
     case 'tree':
       return (
         <svg {...shared}>

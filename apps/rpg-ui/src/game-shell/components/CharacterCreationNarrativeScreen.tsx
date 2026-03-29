@@ -73,7 +73,6 @@ const insetBlockClass =
 const textInputClass =
   'w-full rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] px-4 py-3 text-[color:var(--color-text-strong)] outline-none transition placeholder:text-[color:var(--color-muted)] focus:border-[color:var(--color-border-strong)]';
 
-const selectedSwatchBorder = 'rgba(251,191,36,0.85)';
 const ATTRIBUTE_POINT_BUDGET = 10;
 const STEP_UNLOCK_FEEDBACK_MS = 1600;
 const SUMMARY_COLLAPSED_STEP_IDS = new Set<CharacterCreationStepId>([
@@ -197,6 +196,16 @@ export function CharacterCreationNarrativeScreen({
   const [summaryVisible, setSummaryVisible] = useState(true);
   const preview = buildCharacterCreationPreview(form);
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
+  const activeOutlineColor =
+    themeMode === 'dark' ? 'rgba(255,255,255,0.92)' : 'rgba(0,0,0,0.88)';
+  const activeOutlineShadow =
+    themeMode === 'dark'
+      ? '0 0 0 1px rgba(255,255,255,0.22), 0 0 22px rgba(255,255,255,0.16)'
+      : '0 0 0 1px rgba(0,0,0,0.18), 0 0 18px rgba(0,0,0,0.12)';
+  const activeOutlineStyle = {
+    borderColor: activeOutlineColor,
+    boxShadow: activeOutlineShadow
+  };
   const continents = getWorldContinentOptions();
   const regions = getWorldRegionOptions(form.continentId);
   const settlements = getWorldSettlementOptions({
@@ -253,14 +262,12 @@ export function CharacterCreationNarrativeScreen({
   const previewAttributeMap = new Map(
     preview.attributeMetrics.map((metric) => [metric.label as PlayerAttributeKey, metric])
   );
-  const summaryIdentityLine = [
-    getHeightBandLabel(form.heightBandId),
-    getBuildLabel(form.buildId),
-    getSexSummaryLabel(form.sexId),
-    preview.lineageLabel
-  ]
-    .filter((value): value is string => Boolean(value))
-    .join(' / ');
+  const summaryIdentityRows = [
+    { label: 'Height', value: getHeightBandLabel(form.heightBandId) ?? 'Pending' },
+    { label: 'Build', value: getBuildLabel(form.buildId) ?? 'Pending' },
+    { label: 'Sex', value: getSexSummaryLabel(form.sexId) ?? 'Pending' },
+    { label: 'Race', value: preview.lineageLabel ?? 'Pending' }
+  ];
   const getPreviewAttributeValue = (
     attributeKey: PlayerAttributeKey,
     fallback = 10
@@ -398,7 +405,7 @@ export function CharacterCreationNarrativeScreen({
             key={value.id}
             className={`grid grid-cols-[auto_minmax(0,1fr)] items-center border-b border-[color:var(--color-border)] last:border-b-0 ${
               options?.compact
-                ? 'gap-x-2 pb-1 last:pb-0'
+                ? 'gap-x-1.5 pb-1 last:pb-0'
                 : 'gap-x-3 pb-2.5 last:pb-0'
             }`}
           >
@@ -531,7 +538,7 @@ export function CharacterCreationNarrativeScreen({
       <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
         {title}
       </div>
-      <div className="grid grid-cols-5 gap-2 sm:grid-cols-9">
+      <div className="grid grid-cols-5 justify-items-start gap-y-2 gap-x-0 sm:grid-cols-9">
         {options.map((option) => {
           const selected = option.id === selectedId;
           const opacityClass = !selectedId
@@ -560,10 +567,10 @@ export function CharacterCreationNarrativeScreen({
                   backgroundColor:
                     option.swatch?.background ?? 'var(--color-creator-card)',
                   borderColor: selected
-                    ? selectedSwatchBorder
+                    ? activeOutlineColor
                     : option.swatch?.border ?? 'rgba(255,255,255,0.28)',
                   boxShadow: selected
-                    ? '0 0 0 1px rgba(251,191,36,0.32), 0 0 22px rgba(251,191,36,0.18)'
+                    ? activeOutlineShadow
                     : 'none'
                 }}
                 aria-label={`${title}: ${option.label}`}
@@ -603,6 +610,7 @@ export function CharacterCreationNarrativeScreen({
                 form.lineageId === option.id,
                 'lineage'
               )} group relative overflow-hidden p-5 text-left`}
+              style={form.lineageId === option.id ? activeOutlineStyle : undefined}
             >
               {art && (
                 <>
@@ -621,31 +629,28 @@ export function CharacterCreationNarrativeScreen({
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
                 </>
               )}
-              <span
-                className={`absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-black/35 text-[color:var(--color-accent-contrast)] transition ${
-                  art ? 'opacity-70 group-hover:opacity-100' : 'opacity-40 group-hover:opacity-75'
-                }`}
-                aria-hidden="true"
-              >
-                <Icon name="eye" className="h-[18px] w-[18px]" />
-              </span>
-              <div className="relative z-10 grid gap-4 sm:grid-cols-[minmax(0,1fr)_8.5rem] sm:items-start">
-                  <div>
+              <div className="relative z-10 min-h-[12rem] pr-[8.75rem] transition duration-200 group-hover:opacity-0">
+                <div>
                   <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                     {option.label}
                   </div>
                   <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
                     {option.description}
                   </div>
-                  </div>
-                <div className="w-full max-w-[8.5rem] sm:justify-self-end">
+                </div>
+                <div className="absolute inset-y-0 right-0 flex w-[8.25rem] items-stretch">
                   {renderStatList(
                     statRows.map((row) => ({
                       id: `${option.id}.${row.key}`,
                       label: row.key,
                       value: row.value.toString()
                     })),
-                    { compact: true }
+                    {
+                      compact: true,
+                      frame: false,
+                      className:
+                        'h-full rounded-l-[22px] border-l border-[color:var(--color-border)] bg-[rgba(5,10,18,0.68)] px-3 py-3 backdrop-blur-sm'
+                    }
                   )}
                 </div>
               </div>
@@ -668,7 +673,22 @@ export function CharacterCreationNarrativeScreen({
               className={textInputClass}
             />
           </label>
-          <div className="flex items-center gap-2 pb-1">
+          <div className="flex items-end gap-2 self-end">
+            <button
+              type="button"
+              onClick={() =>
+                onChange({
+                  playerName: generateRandomCharacterName(
+                    form.lineageId || 'lineage.human',
+                    form.sexId
+                  )
+                })
+              }
+              className="mr-1 flex h-12 w-12 items-center justify-center rounded-full border-4 border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]"
+              title="Random name"
+            >
+              <Icon name="dice" className="h-5 w-5" />
+            </button>
             {([
               {
                 id: 'male',
@@ -687,9 +707,10 @@ export function CharacterCreationNarrativeScreen({
                   onClick={() => onChange({ sexId: sex.id })}
                   className={`flex h-12 w-12 items-center justify-center rounded-full border-4 text-xl font-semibold leading-none transition ${
                     form.sexId === sex.id
-                      ? 'border-amber-300/85 bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                       : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                   }`}
+                  style={form.sexId === sex.id ? activeOutlineStyle : undefined}
                   aria-label={sex.id === 'male' ? 'Male' : 'Female'}
                 >
                   {sex.symbol}
@@ -697,37 +718,23 @@ export function CharacterCreationNarrativeScreen({
               </Tooltip>
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() =>
-              onChange({
-                playerName: generateRandomCharacterName(
-                  form.lineageId || 'lineage.human',
-                  form.sexId
-                )
-              })
-            }
-            className={topButton}
-            title="Random name"
-          >
-            <Icon name="dice" className="h-5 w-5" />
-          </button>
         </div>
-        <div className="grid gap-3 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start">
-          <div className="pt-3 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+        <div className="space-y-2">
+          <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
             Height
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid max-w-[24rem] grid-cols-3 gap-3">
             {identityCatalog.heightBands.map((option) => (
               <button
                 key={option.id}
                 type="button"
                 onClick={() => onChange({ heightBandId: option.id })}
-                className={`flex min-h-[84px] flex-col justify-between rounded-[18px] border px-3 py-3 text-center transition ${
+                className={`flex aspect-square min-h-[96px] flex-col items-start justify-between rounded-[18px] border px-3 py-3 text-left transition ${
                   form.heightBandId === option.id
-                    ? 'border-amber-300/85 bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                    ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                     : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                 }`}
+                style={form.heightBandId === option.id ? activeOutlineStyle : undefined}
               >
                 <div className="text-sm font-semibold">{option.label}</div>
                 <div className="text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)]">
@@ -737,21 +744,22 @@ export function CharacterCreationNarrativeScreen({
             ))}
           </div>
         </div>
-        <div className="grid gap-3 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start">
-          <div className="pt-3 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+        <div className="space-y-2">
+          <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
             Build
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid max-w-[24rem] grid-cols-3 gap-3">
             {identityCatalog.buildOptions.map((option) => (
               <button
                 key={option.id}
                 type="button"
                 onClick={() => onChange({ buildId: option.id })}
-                className={`flex min-h-[84px] flex-col justify-between rounded-[18px] border px-3 py-3 text-center transition ${
+                className={`flex aspect-square min-h-[96px] flex-col items-start justify-between rounded-[18px] border px-3 py-3 text-left transition ${
                   form.buildId === option.id
-                    ? 'border-amber-300/85 bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                    ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                     : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                 }`}
+                style={form.buildId === option.id ? activeOutlineStyle : undefined}
               >
                 <div className="text-sm font-semibold">{option.label}</div>
                 <div className="text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)]">
@@ -791,7 +799,7 @@ export function CharacterCreationNarrativeScreen({
     );
   } else if (currentStepId === 'continent') {
     mainContent = (
-      <div className="grid gap-4 xl:grid-cols-2">
+      <div className="grid gap-4">
         {continents.map((option) => {
           const art = getContinentCardArt(option.id);
 
@@ -811,6 +819,7 @@ export function CharacterCreationNarrativeScreen({
                 form.continentId === option.id,
                 'continent'
               )} group relative overflow-hidden p-5 text-left`}
+              style={form.continentId === option.id ? activeOutlineStyle : undefined}
             >
               {art && (
                 <>
@@ -829,15 +838,7 @@ export function CharacterCreationNarrativeScreen({
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(74,222,128,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
                 </>
               )}
-              <span
-                className={`absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-black/35 text-[color:var(--color-accent-contrast)] transition ${
-                  art ? 'opacity-70 group-hover:opacity-100' : 'opacity-40 group-hover:opacity-75'
-                }`}
-                aria-hidden="true"
-              >
-                <Icon name="eye" className="h-[18px] w-[18px]" />
-              </span>
-              <div className="relative z-10">
+              <div className="relative z-10 transition duration-200 group-hover:opacity-0">
                 <div className="flex items-start justify-between gap-3">
                   <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                     {option.label}
@@ -865,7 +866,7 @@ export function CharacterCreationNarrativeScreen({
     );
   } else if (currentStepId === 'region') {
     mainContent = (
-      <div className="grid gap-4 xl:grid-cols-2">
+      <div className="grid gap-4">
         {regions.map((option) => (
           <button
             key={option.id}
@@ -881,13 +882,8 @@ export function CharacterCreationNarrativeScreen({
               form.regionId === option.id,
               'region'
             )} group relative overflow-hidden p-5 text-left`}
+            style={form.regionId === option.id ? activeOutlineStyle : undefined}
           >
-            <span
-              className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-black/25 text-[color:var(--color-accent-contrast)] opacity-40 transition group-hover:opacity-75"
-              aria-hidden="true"
-            >
-              <Icon name="eye" className="h-[18px] w-[18px]" />
-            </span>
             <div className="flex items-start justify-between gap-3">
               <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                 {option.label}
@@ -945,7 +941,7 @@ export function CharacterCreationNarrativeScreen({
     );
   } else if (currentStepId === 'settlement') {
     mainContent = (
-      <div className="grid gap-4 xl:grid-cols-2">
+      <div className="grid gap-4">
         {settlements.map((option) => (
           <button
             key={option.id}
@@ -960,13 +956,10 @@ export function CharacterCreationNarrativeScreen({
               form.startingSettlementId === option.id,
               'settlement'
             )} group relative overflow-hidden p-5 text-left`}
+            style={
+              form.startingSettlementId === option.id ? activeOutlineStyle : undefined
+            }
           >
-            <span
-              className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-black/25 text-[color:var(--color-accent-contrast)] opacity-40 transition group-hover:opacity-75"
-              aria-hidden="true"
-            >
-              <Icon name="eye" className="h-[18px] w-[18px]" />
-            </span>
             <div className="flex items-start justify-between gap-3">
               <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                 {option.label}
@@ -998,6 +991,7 @@ export function CharacterCreationNarrativeScreen({
               form.backgroundId === option.id,
               'backstory'
             )}
+            style={form.backgroundId === option.id ? activeOutlineStyle : undefined}
           >
             <button
               type="button"
@@ -1051,6 +1045,7 @@ export function CharacterCreationNarrativeScreen({
               form.classId === option.id,
               'path'
             )} p-5 text-left`}
+            style={form.classId === option.id ? activeOutlineStyle : undefined}
           >
             <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
               {option.label}
@@ -1186,6 +1181,7 @@ export function CharacterCreationNarrativeScreen({
                     slot.id === form.saveSlotId,
                     'slot'
                   )} w-full p-4 text-left`}
+                  style={slot.id === form.saveSlotId ? activeOutlineStyle : undefined}
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
@@ -1316,9 +1312,10 @@ export function CharacterCreationNarrativeScreen({
               aria-pressed={summaryVisible}
               className={`rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
                 summaryVisible
-                  ? 'border-amber-300/35 bg-amber-200/14 text-[color:var(--color-accent-contrast)]'
+                  ? 'bg-amber-200/14 text-[color:var(--color-accent-contrast)]'
                   : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-soft)]'
               }`}
+              style={summaryVisible ? activeOutlineStyle : undefined}
             >
               Summary
             </button>
@@ -1328,18 +1325,18 @@ export function CharacterCreationNarrativeScreen({
         <div
           className={`grid flex-1 gap-4 ${
             summaryVisible
-              ? 'xl:grid-cols-[88px_minmax(0,1fr)_240px]'
-              : 'xl:grid-cols-[88px_minmax(0,1fr)]'
+              ? 'xl:grid-cols-[120px_minmax(0,1fr)_240px]'
+              : 'xl:grid-cols-[120px_minmax(0,1fr)]'
           }`}
         >
-          <div className="sticky top-20 flex flex-col items-center gap-2">
+          <div className="sticky top-20 flex flex-col items-start gap-1">
             {CHARACTER_CREATION_STEPS.map((step, index) => (
               <button
                 key={step.id}
                 type="button"
                 onClick={() => index <= maxUnlocked && goToStep(step.id)}
                 disabled={index > maxUnlocked}
-                className="flex w-full max-w-[84px] flex-col items-center gap-1.5 rounded-[20px] px-2 py-2 text-center transition disabled:cursor-not-allowed"
+                className="flex w-full items-center gap-3 rounded-[16px] px-0 py-1.5 text-left transition disabled:cursor-not-allowed"
               >
                 {(() => {
                   const locked = index > maxUnlocked;
@@ -1347,50 +1344,35 @@ export function CharacterCreationNarrativeScreen({
                   const complete = validations[step.id].isValid;
                   const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
                   const circleClass = active
-                    ? 'border-amber-300/85 bg-amber-200/18 text-[color:var(--color-accent-contrast)] shadow-[0_0_22px_rgba(251,191,36,0.32)]'
+                    ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                     : locked
                       ? 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)] opacity-45'
                       : complete
                         ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
                         : 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]';
-                  const statusLabel = active
-                    ? 'Active'
-                    : locked
-                      ? 'Locked'
-                      : complete
-                        ? 'Ready'
-                        : 'Unlocked';
-                  const statusClass = active
-                    ? 'text-amber-200/90'
-                    : locked
-                      ? 'text-[color:var(--color-muted)]'
-                      : complete
-                        ? 'text-emerald-200/90'
-                        : 'text-sky-200/90';
+                  const labelClass = locked
+                    ? 'text-[color:var(--color-muted)]'
+                    : 'text-[color:var(--color-text-soft)]';
 
                   return (
                     <>
                       <span
-                        className={`relative flex h-12 w-12 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
+                        className={`relative flex h-11 w-11 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
                           recentlyUnlocked && !active && !locked
                             ? 'animate-pulse shadow-[0_0_0_1px_rgba(134,239,172,0.26),0_0_18px_rgba(134,239,172,0.22)]'
                             : ''
                         } ${circleClass}`}
+                        style={active ? activeOutlineStyle : undefined}
                       >
                         {index + 1}
                         {locked && (
-                          <span className="absolute -right-1 -top-1 inline-flex h-5 w-5 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] text-[color:var(--color-muted)]">
+                          <span className="absolute -right-1 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] text-[color:var(--color-muted)]">
                             <Icon name="lock" className="h-3 w-3" />
                           </span>
                         )}
                       </span>
-                      <span className="text-[10px] uppercase tracking-[0.12em] text-[color:var(--color-text-soft)]">
+                      <span className={`text-[11px] uppercase tracking-[0.14em] ${labelClass}`}>
                         {step.label}
-                      </span>
-                      <span
-                        className={`text-[9px] uppercase tracking-[0.18em] ${statusClass}`}
-                      >
-                        {statusLabel}
                       </span>
                     </>
                   );
@@ -1417,11 +1399,21 @@ export function CharacterCreationNarrativeScreen({
                     <div className="text-2xl font-semibold text-[color:var(--color-text-strong)]">
                       {preview.characterName}
                     </div>
-                    {summaryIdentityLine && (
-                      <div className="mt-1 text-sm text-[color:var(--color-text-soft)]">
-                        {summaryIdentityLine}
-                      </div>
-                    )}
+                    <div className="mt-2 space-y-1.5">
+                      {summaryIdentityRows.map((row) => (
+                        <div
+                          key={row.label}
+                          className="grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-2 border-b border-[color:var(--color-border)] pb-1 last:border-b-0 last:pb-0"
+                        >
+                          <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                            {row.label}
+                          </div>
+                          <div className="text-sm text-[color:var(--color-text-soft)]">
+                            {row.value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                   {renderStatList(preview.attributeMetrics, {
                     compact: true,
