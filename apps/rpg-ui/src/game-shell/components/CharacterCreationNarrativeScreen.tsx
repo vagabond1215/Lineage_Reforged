@@ -100,6 +100,7 @@ const CONTINENT_SELECTION_PANEL_WIDTH = 'clamp(13rem, 22%, 18rem)';
 const CONTINENT_SELECTION_IMAGE_LEFT = `calc(${CONTINENT_SELECTION_PANEL_WIDTH} + 1px)`;
 
 const ATTRIBUTE_POINT_BUDGET = 10;
+const LINEAGE_ART_ROTATION_MS = 7000;
 const STEP_UNLOCK_FEEDBACK_MS = 1600;
 const SUMMARY_COLLAPSED_STEP_IDS = new Set<CharacterCreationStepId>([
   'continent',
@@ -301,8 +302,10 @@ export function CharacterCreationNarrativeScreen({
     useState<CharacterCreationStepId>('lineage');
   const [showValidation, setShowValidation] = useState(false);
   const [summaryVisible, setSummaryVisible] = useState(true);
+  const [showAlternateLineageArt, setShowAlternateLineageArt] = useState(false);
   const preview = buildCharacterCreationPreview(form);
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
+  const selectedLineageArt = getLineageCardArt(form.lineageId);
   const activeOutlineColor =
     themeMode === 'dark' ? 'rgba(255,255,255,0.92)' : 'rgba(0,0,0,0.88)';
   const activeOutlineShadow =
@@ -403,6 +406,24 @@ export function CharacterCreationNarrativeScreen({
   useEffect(() => {
     setSummaryVisible(!SUMMARY_COLLAPSED_STEP_IDS.has(currentStepId));
   }, [currentStepId]);
+
+  useEffect(() => {
+    setShowAlternateLineageArt(false);
+
+    if (
+      currentStepId !== 'lineage' ||
+      form.lineageId.trim().length === 0 ||
+      !selectedLineageArt?.secondaryImageUrl
+    ) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setShowAlternateLineageArt((current) => !current);
+    }, LINEAGE_ART_ROTATION_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, [currentStepId, form.lineageId, selectedLineageArt?.secondaryImageUrl]);
 
   useEffect(() => {
     const previousMaxUnlocked = previousMaxUnlockedRef.current;
@@ -712,9 +733,12 @@ export function CharacterCreationNarrativeScreen({
           const statRows = parsePresentedAttributeValues(option.notes[0] ?? '');
           const art = getLineageCardArt(option.id);
           const selected = form.lineageId === option.id;
-          const lineageImageUrl = selected
-            ? art?.selectedImageUrl ?? art?.imageUrl
-            : art?.imageUrl;
+          const lineagePrimaryImageUrl = art?.imageUrl;
+          const lineageSecondaryImageUrl = art?.secondaryImageUrl ?? null;
+          const activeLineageImageUrl =
+            selected && showAlternateLineageArt && lineageSecondaryImageUrl
+              ? lineageSecondaryImageUrl
+              : lineagePrimaryImageUrl;
 
           return (
             <div
@@ -747,20 +771,33 @@ export function CharacterCreationNarrativeScreen({
                 {art && (
                   <>
                     {selected ? (
-                      <div
-                        className="lineage-card-image-base absolute inset-0"
-                        style={{
-                          backgroundImage: `url(${lineageImageUrl})`,
-                          ...(art.selectedBackgroundPosition
-                            ? { backgroundPosition: art.selectedBackgroundPosition }
-                            : {})
-                        }}
-                      />
+                      <>
+                        {lineagePrimaryImageUrl && (
+                          <div
+                            className="lineage-card-image-base absolute inset-0 transition-opacity duration-700"
+                            style={{
+                              backgroundImage: `url(${lineagePrimaryImageUrl})`,
+                              opacity: showAlternateLineageArt && lineageSecondaryImageUrl ? 0 : 1
+                            }}
+                          />
+                        )}
+                        {lineageSecondaryImageUrl && (
+                          <div
+                            className="lineage-card-image-base absolute inset-0 transition-opacity duration-700"
+                            style={{
+                              backgroundImage: `url(${lineageSecondaryImageUrl})`,
+                              backgroundPosition:
+                                art.secondaryBackgroundPosition ?? art.backgroundPosition,
+                              opacity: showAlternateLineageArt ? 1 : 0
+                            }}
+                          />
+                        )}
+                      </>
                     ) : (
                       <div
                         className="absolute inset-0 bg-cover bg-no-repeat opacity-30 transition duration-500 ease-out group-hover:scale-[1.03] group-hover:opacity-80"
                         style={{
-                          backgroundImage: `url(${lineageImageUrl})`,
+                          backgroundImage: `url(${activeLineageImageUrl})`,
                           backgroundPosition: art.backgroundPosition ?? 'center center'
                         }}
                       />

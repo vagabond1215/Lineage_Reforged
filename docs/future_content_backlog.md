@@ -12,6 +12,7 @@ This file tracks content and systems that are intentionally deferred.
 
 ## Run Notes
 
+- 2026-03-29: Added the human secondary lineage card image and changed expanded lineage cards to start on primary art and alternate to secondary art on a timed cycle while expanded; no new deferred follow-up was introduced by this UI/content pass.
 - 2026-03-29: Wired secondary lineage and continent character-creation card art into the RPG UI and isolated region-card resource tooltip hover state; no new deferred follow-up was introduced by this UI/content pass.
 - 2026-03-29: Expanded the character-creation lineage name pools across all playable races; no new deferred follow-up was introduced by this content pass.
 
