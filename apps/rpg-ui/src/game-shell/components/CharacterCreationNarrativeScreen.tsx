@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { PlayerAttributeKey } from '../../../../../packages/shared/types/src/index.js';
+import {
+  BASE_PLAYER_RESOURCE_MAXIMA,
+  type PlayerAttributeKey
+} from '../../../../../packages/shared/types/src/index.js';
 import { Icon } from '../../components/icons';
 import { Card } from '../../components/ui/Card';
 import { Tooltip } from '../../components/ui/Tooltip';
 import {
   CHARACTER_CREATION_STEPS,
+  createDefaultCharacterCreationFormState,
   getNextCharacterCreationStepId,
   getPreviousCharacterCreationStepId,
   type CharacterCreationStepId,
@@ -76,6 +80,22 @@ const insetBlockClass =
 const textInputClass =
   'w-full rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] px-4 py-3 text-[color:var(--color-text-strong)] outline-none transition placeholder:text-[color:var(--color-muted)] focus:border-[color:var(--color-border-strong)]';
 
+const identitySectionWidthClass = 'w-full max-w-[26.75rem]';
+
+const identityChoiceGridClass = `${identitySectionWidthClass} grid grid-cols-3 gap-3`;
+
+const identityPaletteGridClass =
+  `${identitySectionWidthClass} grid grid-cols-9 items-start gap-x-1 gap-y-1.5`;
+
+const selectionOverlayBase =
+  'absolute inset-y-0 left-0 z-10 flex w-[54%] max-w-[34rem] items-stretch overflow-hidden opacity-0 translate-x-5 transition duration-500 ease-out group-hover:translate-x-0 group-hover:opacity-100';
+
+const continentSelectionOverlayBase =
+  'absolute bottom-px left-px top-px z-10 flex w-[20%] items-stretch overflow-hidden rounded-l-[23px]';
+
+const lineageSelectionOverlayBase =
+  'absolute inset-y-0 left-0 right-[7rem] z-10 flex items-stretch overflow-hidden';
+
 const ATTRIBUTE_POINT_BUDGET = 10;
 const STEP_UNLOCK_FEEDBACK_MS = 1600;
 const SUMMARY_COLLAPSED_STEP_IDS = new Set<CharacterCreationStepId>([
@@ -83,6 +103,58 @@ const SUMMARY_COLLAPSED_STEP_IDS = new Set<CharacterCreationStepId>([
   'region',
   'settlement'
 ]);
+
+type ResourceBarId = 'hp' | 'mp' | 'stamina';
+
+function parseResourceMetricValue(
+  metrics: Array<{ id: string; value: string | null }>,
+  id: ResourceBarId
+): number | null {
+  const metric = metrics.find((entry) => entry.id === id);
+
+  if (!metric?.value) {
+    return null;
+  }
+
+  const parsedValue = Number.parseInt(metric.value, 10);
+
+  return Number.isNaN(parsedValue) ? null : parsedValue;
+}
+
+const DEFAULT_RESOURCE_BAR_BASELINE: Record<ResourceBarId, number> = (() => {
+  const defaultPreview = buildCharacterCreationPreview(
+    createDefaultCharacterCreationFormState('slot-1')
+  );
+
+  return {
+    hp:
+      parseResourceMetricValue(defaultPreview.resourceMetrics, 'hp') ??
+      BASE_PLAYER_RESOURCE_MAXIMA.hp,
+    mp:
+      parseResourceMetricValue(defaultPreview.resourceMetrics, 'mp') ??
+      BASE_PLAYER_RESOURCE_MAXIMA.mp,
+    stamina:
+      parseResourceMetricValue(defaultPreview.resourceMetrics, 'stamina') ??
+      BASE_PLAYER_RESOURCE_MAXIMA.stamina
+  };
+})();
+
+function getResourceBarFillPercent(
+  resourceId: ResourceBarId,
+  numericValue: number | null
+): number {
+  if (numericValue === null || Number.isNaN(numericValue)) {
+    return 0;
+  }
+
+  const baseline = DEFAULT_RESOURCE_BAR_BASELINE[resourceId];
+
+  if (baseline <= 0) {
+    return 0;
+  }
+
+  return Math.max(0, Math.min(100, (numericValue / (baseline * 2)) * 100));
+}
 
 function getSelectableCardClass(
   selected: boolean,
@@ -107,6 +179,23 @@ function getSelectableCardClass(
       return `${creatorCardBase} border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card-strong)]`;
     default:
       return `${creatorCardBase} ${creatorCardUnselected}`;
+  }
+}
+
+function getSelectionOverlayGradientClass(
+  tone: 'lineage' | 'continent' | 'region' | 'settlement'
+): string {
+  switch (tone) {
+    case 'lineage':
+      return 'bg-[linear-gradient(90deg,rgba(4,9,17,0.96)_0%,rgba(5,10,18,0.96)_22%,rgba(6,11,19,0.88)_40%,rgba(7,12,20,0.62)_58%,rgba(8,14,23,0.3)_78%,rgba(9,16,26,0.08)_92%,rgba(9,16,26,0)_100%)]';
+    case 'continent':
+      return 'bg-[linear-gradient(90deg,rgba(8,16,14,0.92)_0%,rgba(10,22,18,0.86)_56%,rgba(12,28,22,0.5)_80%,rgba(12,28,22,0.12)_92%,rgba(12,28,22,0)_100%)]';
+    case 'region':
+      return 'bg-[linear-gradient(90deg,rgba(7,12,20,0.92)_0%,rgba(9,16,28,0.86)_56%,rgba(10,20,32,0.5)_80%,rgba(10,20,32,0.12)_92%,rgba(10,20,32,0)_100%)]';
+    case 'settlement':
+      return 'bg-[linear-gradient(90deg,rgba(16,12,8,0.92)_0%,rgba(24,16,10,0.86)_56%,rgba(32,18,10,0.5)_80%,rgba(32,18,10,0.12)_92%,rgba(32,18,10,0)_100%)]';
+    default:
+      return '';
   }
 }
 
@@ -249,6 +338,8 @@ export function CharacterCreationNarrativeScreen({
   );
   const currentValidation = validations[currentStepId];
   const fullValidation = validateCharacterCreationForm(form);
+  const regionSelectionLocked = form.continentId.trim().length === 0;
+  const settlementSelectionLocked = form.regionId.trim().length === 0;
   const currentIndex = CHARACTER_CREATION_STEPS.findIndex(
     (step) => step.id === currentStepId
   );
@@ -283,17 +374,6 @@ export function CharacterCreationNarrativeScreen({
     { label: 'Sex', value: getSexSummaryLabel(form.sexId) ?? 'Pending' },
     { label: 'Race', value: preview.lineageLabel ?? 'Pending' }
   ];
-  const getPreviewAttributeValue = (
-    attributeKey: PlayerAttributeKey,
-    fallback = 10
-  ): number => {
-    const rawValue = previewAttributeMap.get(attributeKey)?.value ?? null;
-    const numericValue =
-      rawValue === null ? Number.NaN : Number.parseInt(rawValue, 10);
-
-    return Number.isNaN(numericValue) ? fallback : numericValue;
-  };
-
   const allocationRows = CHARACTER_ATTRIBUTE_ORDER.map((attributeKey) => {
     const presentation = CHARACTER_ATTRIBUTE_PRESENTATIONS[attributeKey];
     const allocated = form.attributeAllocation[attributeKey] ?? 0;
@@ -351,8 +431,30 @@ export function CharacterCreationNarrativeScreen({
     return () => window.clearTimeout(timeoutId);
   }, [maxUnlocked]);
 
+  const getStepDependencyLock = (stepId: CharacterCreationStepId) => {
+    if (stepId === 'region' && regionSelectionLocked) {
+      return {
+        locked: true,
+        redirectStep: 'continent' as CharacterCreationStepId
+      };
+    }
+
+    if (stepId === 'settlement' && settlementSelectionLocked) {
+      return {
+        locked: true,
+        redirectStep: 'region' as CharacterCreationStepId
+      };
+    }
+
+    return {
+      locked: false,
+      redirectStep: null
+    };
+  };
+
   const goToStep = (stepId: CharacterCreationStepId) => {
-    setCurrentStepId(stepId);
+    const dependencyLock = getStepDependencyLock(stepId);
+    setCurrentStepId(dependencyLock.redirectStep ?? stepId);
     setShowValidation(false);
   };
 
@@ -475,22 +577,16 @@ export function CharacterCreationNarrativeScreen({
     const parsedValues = values.map((value) => {
       const numericValue =
         value.value === null ? null : Number.parseInt(value.value, 10);
-      const driverAttributeAverage =
-        value.id === 'hp'
-          ? (getPreviewAttributeValue('CON') + getPreviewAttributeValue('VIT')) / 2
-          : value.id === 'mp'
-            ? (getPreviewAttributeValue('INT') + getPreviewAttributeValue('SPT')) / 2
-            : (
-                getPreviewAttributeValue('AGI') +
-                getPreviewAttributeValue('CON') +
-                getPreviewAttributeValue('VIT')
-              ) / 3;
+      const normalizedValue =
+        numericValue === null || Number.isNaN(numericValue) ? null : numericValue;
 
       return {
         ...value,
-        numericValue:
-          numericValue === null || Number.isNaN(numericValue) ? null : numericValue,
-        fillPercent: Math.max(0, Math.min(100, driverAttributeAverage * 5))
+        numericValue: normalizedValue,
+        fillPercent:
+          normalizedValue === null
+            ? 0
+            : getResourceBarFillPercent(value.id as ResourceBarId, normalizedValue)
       };
     });
 
@@ -526,10 +622,10 @@ export function CharacterCreationNarrativeScreen({
               >
                 {value.label}: {value.value ?? 'Pending'}
               </div>
-              <div className="relative mt-1.5 h-5 overflow-hidden rounded-full border border-[color:var(--color-border)] bg-black/20">
+              <div className="relative mt-1.5 h-5 overflow-hidden rounded-[6px] border border-[color:var(--color-border)] bg-black/20">
                 <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-white/12" />
                 <div
-                  className="h-full rounded-full transition-[width] duration-500"
+                  className="h-full rounded-[4px] transition-[width] duration-500"
                   style={{
                     width: `${value.fillPercent}%`,
                     background: tone.fill,
@@ -556,11 +652,11 @@ export function CharacterCreationNarrativeScreen({
     selectedId: string,
     key: 'skinToneId' | 'hairColorId' | 'eyeColorId'
   ) => (
-    <div>
+    <div className={identitySectionWidthClass}>
       <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
         {title}
       </div>
-      <div className="flex flex-wrap items-start gap-x-1 gap-y-1.5">
+      <div className={identityPaletteGridClass}>
         {options.map((option) => {
           const selected = option.id === selectedId;
           const opacityClass = !selectedId
@@ -620,7 +716,7 @@ export function CharacterCreationNarrativeScreen({
               className={`${getSelectableCardClass(
                 selected,
                 'lineage'
-              )} group relative overflow-hidden ${selected ? 'min-h-[24rem]' : ''}`}
+              )} group relative overflow-hidden ${selected ? 'lineage-card-selected min-h-[30rem]' : ''}`}
               style={selected ? activeOutlineStyle : undefined}
             >
               <button
@@ -640,21 +736,26 @@ export function CharacterCreationNarrativeScreen({
                     backgroundId: ''
                   });
                 }}
-                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
+                className={`block h-full w-full text-left ${selected ? 'pb-20' : 'p-5'}`}
               >
                 {art && (
                   <>
-                    <div
-                      className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
-                        selected
-                          ? 'opacity-100 group-hover:opacity-92'
-                          : 'opacity-30 group-hover:opacity-80'
-                      }`}
-                      style={{
-                        backgroundImage: `url(${art.imageUrl})`,
-                        backgroundPosition: art.backgroundPosition ?? 'center center'
-                      }}
-                    />
+                    {selected ? (
+                      <div
+                        className="lineage-card-image-base absolute inset-0"
+                        style={{
+                          backgroundImage: `url(${art.imageUrl})`
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className="absolute inset-0 bg-cover bg-no-repeat opacity-30 transition duration-500 ease-out group-hover:scale-[1.03] group-hover:opacity-80"
+                        style={{
+                          backgroundImage: `url(${art.imageUrl})`,
+                          backgroundPosition: art.backgroundPosition ?? 'center center'
+                        }}
+                      />
+                    )}
                     {!selected && (
                       <>
                         <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(7,12,20,0.96)_0%,rgba(8,14,24,0.88)_38%,rgba(10,18,28,0.66)_66%,rgba(8,14,24,0.9)_100%)] transition duration-300 group-hover:opacity-65" />
@@ -676,27 +777,43 @@ export function CharacterCreationNarrativeScreen({
                   </div>
                 )}
                 {selected && (
-                  <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[43%] bg-[rgba(4,9,17,0.72)] px-5 py-5 opacity-0 backdrop-blur-md transition duration-200 group-hover:opacity-100">
-                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                      {option.label}
-                    </div>
-                    <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                      {option.description}
+                  <div className={`${lineageSelectionOverlayBase} lineage-card-overlay`}>
+                    <div
+                      className={`lineage-card-overlay-surface relative h-full w-full ${getSelectionOverlayGradientClass(
+                        'lineage'
+                      )}`}
+                    >
+                      <div className="flex h-full items-start px-5 py-6">
+                        <div className="w-[40%] min-w-[17rem] pr-8">
+                          <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                            {option.label}
+                          </div>
+                          <div className="mt-4 text-[13px] leading-7 text-[color:var(--color-text-soft)]">
+                            {option.description}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
               </button>
-              <div className="absolute inset-y-0 right-0 z-20 flex w-[7rem] flex-col justify-between border-l border-[color:var(--color-border)] bg-[rgba(4,9,17,0.82)] px-2 py-3 backdrop-blur-md">
-                <div className="space-y-0.5">
+              <div
+                className={`absolute inset-y-0 right-0 z-20 flex w-[7rem] flex-col justify-between bg-[rgba(4,9,17,0.98)] px-2.5 pb-3 pt-1.5 ${
+                  selected
+                    ? 'border-l border-l-white/85'
+                    : 'border-l border-l-[color:var(--color-border)]'
+                }`}
+              >
+                <div className="space-y-px">
                   {statRows.map((row) => (
                     <div
                       key={`${option.id}.${row.key}.rail`}
-                      className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-0 border-b border-[color:var(--color-border)] pb-0.5 last:border-b-0 last:pb-0"
+                      className="grid min-h-[1.2rem] grid-cols-[minmax(0,1fr)_1.7rem] items-center gap-x-1 pb-0.5 pt-0 first:pt-0"
                     >
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] leading-none text-[color:var(--color-muted-strong)]">
                         {row.key}
                       </div>
-                      <div className="justify-self-end text-sm font-semibold text-[color:var(--color-text-strong)]">
+                      <div className="w-[1.7rem] justify-self-end text-right text-[11px] font-semibold tracking-[0.14em] leading-none text-[color:var(--color-text-strong)]">
                         {row.value}
                       </div>
                     </div>
@@ -722,8 +839,8 @@ export function CharacterCreationNarrativeScreen({
   } else if (currentStepId === 'identity' && identityCatalog) {
     mainContent = (
       <div className="space-y-6">
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="min-w-[16rem] max-w-[20rem] flex-1">
+        <div className={`${identitySectionWidthClass} flex flex-wrap items-end gap-3`}>
+          <label className="min-w-0 flex-1">
             <span className="mb-2 block text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
               Name
             </span>
@@ -783,7 +900,7 @@ export function CharacterCreationNarrativeScreen({
           <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
             Height
           </div>
-          <div className="grid max-w-[24rem] grid-cols-3 gap-3">
+          <div className={identityChoiceGridClass}>
             {identityCatalog.heightBands.map((option) => {
               const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
 
@@ -792,24 +909,24 @@ export function CharacterCreationNarrativeScreen({
                   key={option.id}
                   type="button"
                   onClick={() => onChange({ heightBandId: option.id })}
-                  className={`flex h-[84px] min-h-[84px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
+                  className={`flex h-[70px] min-h-[70px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
                     form.heightBandId === option.id
                       ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                       : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                   }`}
                   style={form.heightBandId === option.id ? activeOutlineStyle : undefined}
                 >
-                  <div className="grid h-full w-full grid-rows-3 place-items-center">
-                    <div className="text-[15px] font-semibold leading-none">{option.label}</div>
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-center">
+                    <div className="text-[15px] font-semibold leading-[1.02]">{option.label}</div>
                     <div
-                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
                         tradeoff.positive ? '' : 'opacity-0'
                       }`}
                     >
                       {tradeoff.positive ?? '\u00A0'}
                     </div>
                     <div
-                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
                         tradeoff.negative ? '' : 'opacity-0'
                       }`}
                     >
@@ -825,7 +942,7 @@ export function CharacterCreationNarrativeScreen({
           <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
             Build
           </div>
-          <div className="grid max-w-[24rem] grid-cols-3 gap-3">
+          <div className={identityChoiceGridClass}>
             {identityCatalog.buildOptions.map((option) => {
               const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
 
@@ -834,24 +951,24 @@ export function CharacterCreationNarrativeScreen({
                   key={option.id}
                   type="button"
                   onClick={() => onChange({ buildId: option.id })}
-                  className={`flex h-[84px] min-h-[84px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
+                  className={`flex h-[70px] min-h-[70px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
                     form.buildId === option.id
                       ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                       : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                   }`}
                   style={form.buildId === option.id ? activeOutlineStyle : undefined}
                 >
-                  <div className="grid h-full w-full grid-rows-3 place-items-center">
-                    <div className="text-[15px] font-semibold leading-none">{option.label}</div>
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-center">
+                    <div className="text-[15px] font-semibold leading-[1.02]">{option.label}</div>
                     <div
-                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
                         tradeoff.positive ? '' : 'opacity-0'
                       }`}
                     >
                       {tradeoff.positive ?? '\u00A0'}
                     </div>
                     <div
-                      className={`text-[10px] uppercase tracking-[0.14em] leading-none text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
                         tradeoff.negative ? '' : 'opacity-0'
                       }`}
                     >
@@ -926,14 +1043,18 @@ export function CharacterCreationNarrativeScreen({
                 {art && (
                   <>
                     <div
-                      className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
+                      className={`absolute inset-y-0 right-0 bg-no-repeat transition duration-500 ease-out ${
                         selected
-                          ? 'opacity-100 group-hover:opacity-96'
-                          : 'opacity-28 group-hover:opacity-80'
+                          ? 'opacity-100'
+                          : 'bg-cover opacity-28 group-hover:scale-[1.03] group-hover:opacity-80'
                       }`}
                       style={{
                         backgroundImage: `url(${art.imageUrl})`,
-                        backgroundPosition: art.backgroundPosition ?? 'center center'
+                        left: selected ? '20%' : 0,
+                        backgroundPosition: selected
+                          ? 'right top'
+                          : art.backgroundPosition ?? 'center center',
+                        backgroundSize: selected ? 'auto 100%' : undefined
                       }}
                     />
                     {!selected && (
@@ -952,32 +1073,31 @@ export function CharacterCreationNarrativeScreen({
                   }`}
                 >
                   {selected ? (
-                    <>
-                      <div className="inline-flex rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(8,16,14,0.48)] px-4 py-2 text-lg font-semibold text-[color:var(--color-text-strong)] backdrop-blur-sm">
-                        {option.label}
-                      </div>
-                      <div className="pointer-events-none absolute inset-y-0 left-0 w-[42%] bg-[rgba(8,16,14,0.66)] px-5 py-5 opacity-0 backdrop-blur-md transition duration-200 group-hover:opacity-100">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                            {option.label}
-                          </div>
-                          <span
-                            className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
+                    <div className={continentSelectionOverlayBase}>
+                      <div className="h-full w-full rounded-l-[23px] bg-[rgba(8,16,14,0.96)]">
+                        <div className="flex h-full flex-col px-4 py-5">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                              {option.label}
+                            </div>
+                            <span
+                              className={`inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
                               option.difficultyTone === 'success'
                                 ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
                                 : option.difficultyTone === 'warning'
                                   ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
                                   : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
-                            }`}
-                          >
-                            {option.difficultyLabel}
-                          </span>
-                        </div>
-                        <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                          {option.description}
+                              }`}
+                            >
+                              {option.difficultyLabel}
+                            </span>
+                          </div>
+                          <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                            {option.description}
+                          </div>
                         </div>
                       </div>
-                    </>
+                    </div>
                   ) : (
                     <>
                       <div className="flex items-start justify-between gap-3">
@@ -1018,7 +1138,22 @@ export function CharacterCreationNarrativeScreen({
       </div>
     );
   } else if (currentStepId === 'region') {
-    mainContent = (
+    mainContent = regionSelectionLocked ? (
+      <Card>
+        <div className="space-y-4">
+          <div className="text-sm leading-7 text-[color:var(--color-text-soft)]">
+            Choose a continent before selecting a region.
+          </div>
+          <button
+            type="button"
+            onClick={() => goToStep('continent')}
+            className={topPillButton}
+          >
+            Choose Continent
+          </button>
+        </div>
+      </Card>
+    ) : (
       <div className="grid gap-4">
         {regions.map((option) => {
           const selected = form.regionId === option.id;
@@ -1054,61 +1189,124 @@ export function CharacterCreationNarrativeScreen({
                 />
                 <div
                   className={`relative z-10 transition duration-200 ${
-                    selected ? 'min-h-[22rem] opacity-0 group-hover:opacity-100' : 'group-hover:opacity-0'
+                    selected ? 'min-h-[22rem]' : 'group-hover:opacity-0'
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                      {option.label}
-                    </div>
-                    {option.resourceIcons.length > 0 && (
-                      <div className="flex flex-wrap justify-end gap-2">
-                        {option.resourceIcons.map((resource) => {
-                          const tone = getRegionResourceTone(resource.icon);
+                  {!selected && (
+                    <>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                          {option.label}
+                        </div>
+                        {option.resourceIcons.length > 0 && (
+                          <div className="flex flex-wrap justify-end gap-2">
+                            {option.resourceIcons.map((resource) => {
+                              const tone = getRegionResourceTone(resource.icon);
 
-                          return (
-                            <Tooltip
-                              key={`${option.id}.${resource.icon}`}
-                              content={
-                                <span className="block text-left">
-                                  <span className="font-semibold text-slate-50">
-                                    {resource.label}
+                              return (
+                                <Tooltip
+                                  key={`${option.id}.${resource.icon}`}
+                                  content={
+                                    <span className="block text-left">
+                                      <span className="font-semibold text-slate-50">
+                                        {resource.label}
+                                      </span>
+                                      <span className="mt-1 block text-slate-300">
+                                        {resource.description}
+                                      </span>
+                                    </span>
+                                  }
+                                  panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
+                                >
+                                  <span
+                                    className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
+                                    aria-label={resource.label}
+                                  >
+                                    <Icon
+                                      name={resource.icon}
+                                      className={`h-[18px] w-[18px] ${tone.icon}`}
+                                    />
                                   </span>
-                                  <span className="mt-1 block text-slate-300">
-                                    {resource.description}
-                                  </span>
-                                </span>
-                              }
-                              panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
-                            >
-                              <span
-                                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
-                                aria-label={resource.label}
-                              >
-                                <Icon
-                                  name={resource.icon}
-                                  className={`h-[18px] w-[18px] ${tone.icon}`}
-                                />
-                              </span>
-                            </Tooltip>
-                          );
-                        })}
+                                </Tooltip>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <div
-                    className={`${insetBlockClass} mt-4 px-4 py-4 text-sm leading-7 text-[color:var(--color-text-soft)]`}
-                  >
-                    {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
-                      <p
-                        key={`${option.id}.paragraph.${paragraphIndex}`}
-                        className={paragraphIndex === 0 ? '' : 'mt-3'}
+                      <div
+                        className={`${insetBlockClass} mt-4 px-4 py-4 text-sm leading-7 text-[color:var(--color-text-soft)]`}
                       >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
+                        {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
+                          <p
+                            key={`${option.id}.paragraph.${paragraphIndex}`}
+                            className={paragraphIndex === 0 ? '' : 'mt-3'}
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
+                {selected && (
+                  <div className={selectionOverlayBase}>
+                    <div
+                      className={`h-full w-full px-5 py-5 pr-14 backdrop-blur-xl ${getSelectionOverlayGradientClass(
+                        'region'
+                      )}`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                          {option.label}
+                        </div>
+                        {option.resourceIcons.length > 0 && (
+                          <div className="flex flex-wrap justify-end gap-2">
+                            {option.resourceIcons.map((resource) => {
+                              const tone = getRegionResourceTone(resource.icon);
+
+                              return (
+                                <Tooltip
+                                  key={`${option.id}.${resource.icon}.selected`}
+                                  content={
+                                    <span className="block text-left">
+                                      <span className="font-semibold text-slate-50">
+                                        {resource.label}
+                                      </span>
+                                      <span className="mt-1 block text-slate-300">
+                                        {resource.description}
+                                      </span>
+                                    </span>
+                                  }
+                                  panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
+                                >
+                                  <span
+                                    className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
+                                    aria-label={resource.label}
+                                  >
+                                    <Icon
+                                      name={resource.icon}
+                                      className={`h-[18px] w-[18px] ${tone.icon}`}
+                                    />
+                                  </span>
+                                </Tooltip>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                      <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                        {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
+                          <p
+                            key={`${option.id}.paragraph.selected.${paragraphIndex}`}
+                            className={paragraphIndex === 0 ? '' : 'mt-3'}
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </button>
               {selected && (
                 <button
@@ -1125,7 +1323,22 @@ export function CharacterCreationNarrativeScreen({
       </div>
     );
   } else if (currentStepId === 'settlement') {
-    mainContent = (
+    mainContent = settlementSelectionLocked ? (
+      <Card>
+        <div className="space-y-4">
+          <div className="text-sm leading-7 text-[color:var(--color-text-soft)]">
+            Choose a region before selecting a settlement.
+          </div>
+          <button
+            type="button"
+            onClick={() => goToStep('region')}
+            className={topPillButton}
+          >
+            Choose Region
+          </button>
+        </div>
+      </Card>
+    ) : (
       <div className="grid gap-4">
         {settlements.map((option) => {
           const selected = form.startingSettlementId === option.id;
@@ -1160,27 +1373,58 @@ export function CharacterCreationNarrativeScreen({
                 />
                 <div
                   className={`relative z-10 transition duration-200 ${
-                    selected ? 'min-h-[22rem] opacity-0 group-hover:opacity-100' : 'group-hover:opacity-0'
+                    selected ? 'min-h-[22rem]' : 'group-hover:opacity-0'
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                      {option.label}
-                    </div>
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
-                      Pop {option.populationSize}
-                    </div>
-                  </div>
-                  <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                    {option.description}
-                  </div>
-                  <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
-                    <p>{option.landRestriction.propertyNarrative}</p>
-                    <p className="mt-2 text-[color:var(--color-text-strong)]">
-                      {option.landRestriction.currentStanding}
-                    </p>
-                  </div>
+                  {!selected && (
+                    <>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                          {option.label}
+                        </div>
+                        <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+                          Pop {option.populationSize}
+                        </div>
+                      </div>
+                      <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                        {option.description}
+                      </div>
+                      <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
+                        <p>{option.landRestriction.propertyNarrative}</p>
+                        <p className="mt-2 text-[color:var(--color-text-strong)]">
+                          {option.landRestriction.currentStanding}
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
+                {selected && (
+                  <div className={selectionOverlayBase}>
+                    <div
+                      className={`h-full w-full px-5 py-5 pr-14 backdrop-blur-xl ${getSelectionOverlayGradientClass(
+                        'settlement'
+                      )}`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                          {option.label}
+                        </div>
+                        <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+                          Pop {option.populationSize}
+                        </div>
+                      </div>
+                      <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                        {option.description}
+                      </div>
+                      <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
+                        <p>{option.landRestriction.propertyNarrative}</p>
+                        <p className="mt-2 text-[color:var(--color-text-strong)]">
+                          {option.landRestriction.currentStanding}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </button>
               {selected && (
                 <button
@@ -1462,9 +1706,15 @@ export function CharacterCreationNarrativeScreen({
   }
 
   return (
-    <div ref={containerRef} className="h-screen overflow-auto px-4 pb-6 pt-4 sm:px-6">
-      <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4">
-        <div className="sticky top-0 z-30 rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] px-4 py-2 shadow-panel backdrop-blur-xl">
+    <div ref={containerRef} className="h-screen overflow-auto pb-6">
+      <div
+        className="sticky top-0 z-30 border-b border-[color:var(--color-border)] shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-2xl"
+        style={{
+          background:
+            'linear-gradient(135deg, rgba(17, 23, 34, 0.84), rgba(8, 12, 19, 0.66)), radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 34%), radial-gradient(circle at bottom right, rgba(212, 173, 85, 0.08), transparent 28%)'
+        }}
+      >
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
           <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
             <div className="flex items-center gap-2">
               <button
@@ -1536,7 +1786,13 @@ export function CharacterCreationNarrativeScreen({
             </div>
           </div>
         </div>
-        {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}
+      </div>
+      {notice && (
+        <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6">
+          <NoticeBanner notice={notice} onDismiss={onDismissNotice} />
+        </div>
+      )}
+      <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4 px-4 pt-4 sm:px-6">
         <div
           className={`grid flex-1 gap-4 ${
             summaryVisible
@@ -1545,55 +1801,60 @@ export function CharacterCreationNarrativeScreen({
           }`}
         >
           <div className="sticky top-20 flex flex-col items-start gap-1">
-            {CHARACTER_CREATION_STEPS.map((step, index) => (
-              <button
-                key={step.id}
-                type="button"
-                onClick={() => index <= maxUnlocked && goToStep(step.id)}
-                disabled={index > maxUnlocked}
-                className="grid w-full grid-cols-[44px_minmax(0,1fr)] items-center gap-3 rounded-[16px] px-0 py-1.5 text-left transition disabled:cursor-not-allowed"
-              >
-                {(() => {
-                  const locked = index > maxUnlocked;
-                  const active = step.id === currentStepId;
-                  const complete = validations[step.id].isValid;
-                  const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
-                  const circleClass = active
-                    ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
-                    : locked
-                      ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)]'
-                      : complete
-                        ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
-                        : 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]';
-                  const labelClass = locked
-                    ? 'text-[color:var(--color-muted)]'
-                    : 'text-[color:var(--color-text-soft)]';
+            {CHARACTER_CREATION_STEPS.map((step, index) => {
+              const dependencyLock = getStepDependencyLock(step.id);
+              const disabled = index > maxUnlocked || dependencyLock.locked;
 
-                  return (
-                    <>
-                      <span
-                        className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
-                          recentlyUnlocked && !active && !locked
-                            ? 'animate-pulse shadow-[0_0_0_1px_rgba(134,239,172,0.26),0_0_18px_rgba(134,239,172,0.22)]'
-                            : ''
-                        } ${circleClass}`}
-                        style={active ? activeOutlineStyle : undefined}
-                      >
-                        {index + 1}
-                        {locked && (
-                          <span className="absolute -right-1 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] text-[color:var(--color-muted)]">
-                            <Icon name="lock" className="h-3 w-3" />
-                          </span>
-                        )}
-                      </span>
-                      <span className={`text-[11px] uppercase tracking-[0.14em] ${labelClass}`}>
-                        {step.label}
-                      </span>
-                    </>
-                  );
-                })()}
-              </button>
-            ))}
+              return (
+                <button
+                  key={step.id}
+                  type="button"
+                  onClick={() => !disabled && goToStep(step.id)}
+                  disabled={disabled}
+                  className="grid w-full grid-cols-[44px_minmax(0,1fr)] items-center gap-3 rounded-[16px] px-0 py-1.5 text-left transition disabled:cursor-not-allowed"
+                >
+                  {(() => {
+                    const locked = disabled;
+                    const active = step.id === currentStepId;
+                    const complete = validations[step.id].isValid;
+                    const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
+                    const circleClass = active
+                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      : locked
+                        ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)]'
+                        : complete
+                          ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
+                          : 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]';
+                    const labelClass = locked
+                      ? 'text-[color:var(--color-muted)]'
+                      : 'text-[color:var(--color-text-soft)]';
+
+                    return (
+                      <>
+                        <span
+                          className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
+                            recentlyUnlocked && !active && !locked
+                              ? 'animate-pulse shadow-[0_0_0_1px_rgba(134,239,172,0.26),0_0_18px_rgba(134,239,172,0.22)]'
+                              : ''
+                          } ${circleClass}`}
+                          style={active ? activeOutlineStyle : undefined}
+                        >
+                          {index + 1}
+                          {locked && (
+                            <span className="absolute -right-1 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] text-[color:var(--color-muted)]">
+                              <Icon name="lock" className="h-3 w-3" />
+                            </span>
+                          )}
+                        </span>
+                        <span className={`text-[11px] uppercase tracking-[0.14em] ${labelClass}`}>
+                          {step.label}
+                        </span>
+                      </>
+                    );
+                  })()}
+                </button>
+              );
+            })}
           </div>
           <div className="space-y-4">
             {mainContent}

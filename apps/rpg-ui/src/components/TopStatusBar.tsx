@@ -49,8 +49,14 @@ export function TopStatusBar({
     Boolean(trackedQuestDetail?.relatedLocations.length);
 
   return (
-    <header className="sticky top-0 z-[80] border-b border-white/10 bg-[color:var(--color-panel-strong)]/95 shadow-panel backdrop-blur-xl">
-      <div className="px-4 pb-4 pt-3">
+    <header
+      className="sticky top-0 z-[80] border-b border-white/10 shadow-[0_18px_48px_rgba(0,0,0,0.28)] backdrop-blur-2xl"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(15, 23, 42, 0.84), rgba(7, 11, 18, 0.66)), radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 34%), radial-gradient(circle at bottom right, rgba(148, 163, 184, 0.1), transparent 28%)'
+      }}
+    >
+      <div className="mx-auto max-w-[112rem] px-4 pb-4 pt-3">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-[220px]">
             <h1 className="text-2xl text-slate-50">{name}</h1>

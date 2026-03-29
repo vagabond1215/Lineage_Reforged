@@ -126,3 +126,24 @@ select {
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 42px 42px;
 }
+
+.lineage-card-selected .lineage-card-image-base {
+  background-position: calc(100% - 7rem) top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.lineage-card-selected .lineage-card-overlay {
+  opacity: 0;
+  transform: translateX(-1.25rem);
+  transition:
+    opacity 280ms ease,
+    transform 440ms ease;
+  transition-delay: 220ms;
+}
+
+.lineage-card-selected:hover .lineage-card-overlay {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0ms;
+}

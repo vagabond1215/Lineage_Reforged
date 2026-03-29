@@ -10,6 +10,10 @@ This file tracks content and systems that are intentionally deferred.
 - Revise prerequisites and implementation notes when the plan changes.
 - Remove items only when the underlying content and wiring are actually implemented.
 
+## Run Notes
+
+- 2026-03-29: Expanded the character-creation lineage name pools across all playable races; no new deferred follow-up was introduced by this content pass.
+
 ## Deferred Systems
 
 ### Arcane Documents

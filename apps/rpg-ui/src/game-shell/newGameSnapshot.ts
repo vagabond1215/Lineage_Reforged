@@ -77,6 +77,39 @@ type CharacterCreationPreviewMetric = {
   value: string | null;
 };
 
+const DEFAULT_PREVIEW_ATTRIBUTES: PlayerAttributes = {
+  STR: 10,
+  DEX: 10,
+  AGI: 10,
+  CON: 10,
+  VIT: 10,
+  WIS: 10,
+  INT: 10,
+  SPT: 10,
+  CHA: 10
+};
+
+const PREVIEW_RESOURCE_ATTRIBUTE_SCALING = {
+  hp: {
+    keys: ['CON', 'VIT'] as const,
+    perPoint: 4
+  },
+  mp: {
+    keys: ['INT', 'SPT'] as const,
+    perPoint: 4
+  },
+  stamina: {
+    keys: ['AGI', 'CON', 'VIT'] as const,
+    perPoint: 3
+  }
+} satisfies Record<
+  'hp' | 'mp' | 'stamina',
+  {
+    keys: readonly (keyof PlayerAttributes)[];
+    perPoint: number;
+  }
+>;
+
 export type CharacterCreationPreview = {
   isResolved: boolean;
   characterName: string;
@@ -335,11 +368,23 @@ function resolveWorkingCharacterResources(
     [],
     demoSnapshot.clock.tick
   );
+  const applyPreviewAttributeDelta = (
+    resource: 'hp' | 'mp' | 'stamina',
+    baseValue: number
+  ): number => {
+    const scaling = PREVIEW_RESOURCE_ATTRIBUTE_SCALING[resource];
+    const attributeDelta = scaling.keys.reduce(
+      (total, key) => total + (attributes[key] - DEFAULT_PREVIEW_ATTRIBUTES[key]),
+      0
+    );
+
+    return Math.max(1, baseValue + attributeDelta * scaling.perPoint);
+  };
 
   return {
-    hp: resourceResolution.resources.hp.max,
-    mp: resourceResolution.resources.mp.max,
-    stamina: resourceResolution.resources.stamina.max
+    hp: applyPreviewAttributeDelta('hp', resourceResolution.resources.hp.max),
+    mp: applyPreviewAttributeDelta('mp', resourceResolution.resources.mp.max),
+    stamina: applyPreviewAttributeDelta('stamina', resourceResolution.resources.stamina.max)
   };
 }
 
@@ -894,9 +939,9 @@ function deriveCharacterCreationState(
     }),
     attributes,
     resources: {
-      hp: resourceResolution.resources.hp.max,
-      mp: resourceResolution.resources.mp.max,
-      stamina: resourceResolution.resources.stamina.max
+      hp: resourceResolution.resources.hp.current,
+      mp: resourceResolution.resources.mp.current,
+      stamina: resourceResolution.resources.stamina.current
     },
     skills,
     traits,
@@ -978,6 +1023,7 @@ export function buildCharacterCreationPreview(
       }
     );
     const attributes = resolveWorkingCharacterAttributes(form, selectedWorld);
+    const resolvedResources = resolveWorkingCharacterResources(form, attributes);
     const currency = mergeCurrency(classTemplate.currency, backgroundTemplate.currencyBonus);
     const inventory = buildStarterInventory(form.classId, form.backgroundId);
 
@@ -1000,9 +1046,9 @@ export function buildCharacterCreationPreview(
         'Select a lawful settlement combination to finish the opening.',
       identityMetrics: buildIdentityMetrics(form),
       resourceMetrics: [
-        buildPreviewMetric('hp', 'HP', originProfile.resolvedResourceMaxima.hp),
-        buildPreviewMetric('mp', 'MP', originProfile.resolvedResourceMaxima.mp),
-        buildPreviewMetric('stamina', 'Stamina', originProfile.resolvedResourceMaxima.stamina)
+        buildPreviewMetric('hp', 'HP', resolvedResources.hp),
+        buildPreviewMetric('mp', 'MP', resolvedResources.mp),
+        buildPreviewMetric('stamina', 'Stamina', resolvedResources.stamina)
       ],
       attributeMetrics: buildAttributeMetrics(attributes),
       starterSkills: classTemplate.skills.map((skill) => `${humanizeId(skill.id)} ${skill.rank}`),
