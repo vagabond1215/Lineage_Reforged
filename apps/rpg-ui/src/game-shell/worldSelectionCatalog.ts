@@ -99,6 +99,12 @@ export interface WorldRegionOption {
   descriptionParagraphs: string[];
 }
 
+type RegionPresentationOverride = {
+  cardArt?: WorldCardArt;
+  descriptionParagraphs?: string[];
+  resourceIcons?: WorldRegionResourceIcon[];
+};
+
 export interface SettlementLandRestrictionSummary {
   authorityLabel: string;
   propertyNarrative: string;
@@ -190,6 +196,71 @@ const CONTINENT_CARD_ART: Record<string, WorldCardArt> = {
     imageUrl: "/character-creator/continents/continent-dawnreach-isles.png",
     selectedImageUrl: "/character-creator/continents/continent-dawnreach-isles-selected.png",
     backgroundPosition: "center 32%"
+  }
+};
+
+const REGION_PRESENTATION_OVERRIDES: Record<string, RegionPresentationOverride> = {
+  "region.auric_marches": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-auric-marches.png",
+      backgroundPosition: "center center"
+    },
+    descriptionParagraphs: [
+      "Travelers who cross into the Auric Marches quickly learn that this is a land that gives nothing freely. The wind runs constant across the uplands, carrying dust from the ore ridges and the distant glow of smelters that never fully go dark. Settlements are few, and none exist by accident; each one stands where the ground yields copper, iron, or stone enough to justify the cost of keeping people alive.",
+      "Food is not grown here in any reliable quantity. A few hardy herds graze the tougher stretches of land, and small plots cling to sheltered basins, but most meals arrive by caravan. Grain, wine, oil, and preserved goods travel north from the southern peninsula, and their arrival is watched as closely as any shipment of ore. A delayed caravan is not an inconvenience; it is a problem that spreads quickly.",
+      "What the Marches lack in comfort, they repay in material wealth. Copper veins run broad and accessible in places, while iron is drawn from deeper workings, especially in the great dwarven delves such as Stonevein. Quarry stone, charcoal, and metal goods move constantly along the caravan roads, forming the backbone of Kaelvar's industry.",
+      "To travel here is to move between wells, forts, and waystations spaced carefully along known routes. Stray from them, and the land reminds you very quickly why so few try to tame it. Those who remain are practical people; miners, haulers, and guards drawn not by the land itself, but by what lies beneath it."
+    ]
+  },
+  "region.verdant_thalos": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-verdant-thalos.png",
+      backgroundPosition: "center center"
+    },
+    descriptionParagraphs: [
+      "Verdant Thalos is often described as the gentlest face of Kaelvar, though its ease is the result of careful tending rather than fortune alone. The southern peninsula stretches through rolling hills and sheltered coasts, where vineyards, olive groves, and orchards shape the land as much as the seasons do.",
+      "Inland, the estates are orderly and productive. Wheat and barley fields spread between low terraces, flanked by grazing land and orchard belts. Villages such as Oliveford and market towns like Vinecross serve as the quiet machinery of the region, gathering fruit, oil, wool, and grain before sending them along well-kept roads toward the coast. Dairy, vegetables, and livestock are common, and few settlements here lack a stable local food supply.",
+      "Along the bays, the landscape shifts from field to harbor. Cities like Aurelis rise where the land meets calm water, their docks filled with ships carrying oil, wine, cloth, and timber outward across the sea. These ports also draw in what the region cannot fully provide on its own; additional grain, metals from the Marches, and rarer goods from beyond Kaelvar.",
+      "Despite its abundance, Verdant Thalos is not isolated in its prosperity. Its tools depend on imported ore, its markets rely on steady trade, and its balance is maintained through constant exchange. To visitors, it appears orderly and welcoming; to those who understand it, it is a carefully managed system where land, labor, and trade are all expected to perform."
+    ],
+    resourceIcons: [
+      {
+        icon: "grain",
+        label: "Field Crops",
+        description:
+          "Wheat, barley, and other staple harvests anchor the peninsula's estate belts and local granaries."
+      },
+      {
+        icon: "fruit",
+        label: "Orchards",
+        description:
+          "Olive groves, orchards, vineyards, and oil crops shape both the landscape and the export economy."
+      },
+      {
+        icon: "vegetable",
+        label: "Garden Produce",
+        description:
+          "Vegetables, herbs, dairy gardens, and smaller market crops fill the gaps between the larger estate harvests."
+      },
+      {
+        icon: "animal",
+        label: "Fish And Game",
+        description:
+          "Grazing herds, wool flocks, dairy stock, and coastal catch all contribute to everyday supply."
+      }
+    ]
+  },
+  "region.shattercap_isles": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-shattercap-isles.png",
+      backgroundPosition: "center center"
+    },
+    descriptionParagraphs: [
+      "North of the mainland, the Shattercap Isles rise from cold waters in a scatter of broken stone and narrow harbors. The sea defines everything here; the weather, the work, and the limits of where people can live.",
+      "Most settlements cling to deep, reliable harbors where ships can anchor safely against the unpredictable northern waters. Fishing fleets leave at first light and return with cod and other cold-water catch, much of it salted and packed for shipment south. Salt itself is gathered in quantity along the coasts, making it one of the Isles' most consistent exports.",
+      "The land offers little beyond this. Soil is thin, and what pasture exists supports only small herds. A handful of hardy crops grow in sheltered pockets, but they are not enough to sustain the population. Grain, vegetables, and wine arrive by ship from Verdant Thalos, and few island communities could endure long without that connection.",
+      "Beyond the harbors, the terrain grows harsher. Beacon cliffs rise along the outer edges, crowned with watch posts and signal towers that keep constant vigil over the surrounding seas. These are not places of comfort, but of necessity; warning of storms, guiding ships, and marking the boundaries of safe passage. To an outsider, the Isles can feel stark and unforgiving. To those who live there, they are simply honest. The sea provides, the land endures, and everything else comes by sail."
+    ]
   }
 };
 
@@ -305,9 +376,9 @@ const REGION_RESOURCE_ICON_RULES: ReadonlyArray<{
   },
   {
     icon: "animal",
-    label: "Herd And Catch",
+    label: "Fish And Game",
     description:
-      "Livestock, wool, hides, fish, or hunted game help sustain local livelihoods.",
+      "Fisheries, grazing herds, wool, hides, and hunted game help sustain local livelihoods.",
     test: /(livestock|animal|cattle|horse|sheep|goat|game|hunt|fish|furs|hides|leather|wool|goat_wool|mountain_wool|pack_animals|horses|cold_fish|river_fish|smoked_fish)/
   }
 ];
@@ -475,6 +546,12 @@ function buildRegionGeographySentence(
 }
 
 function buildRegionDescriptionParagraphs(record: RegionRecord): string[] {
+  const override = REGION_PRESENTATION_OVERRIDES[record.id]?.descriptionParagraphs;
+
+  if (override) {
+    return override;
+  }
+
   const seedBase = `${record.id}:${record.name}`;
   const summary = ensureSentence(record.summary ?? `${record.name} is a regional start area`);
   const climateEntries = Array.isArray(record.environmentProfile?.climateTendencies)
@@ -565,6 +642,12 @@ function buildRegionDescriptionParagraphs(record: RegionRecord): string[] {
 }
 
 function deriveRegionResourceIcons(record: RegionRecord): WorldRegionResourceIcon[] {
+  const override = REGION_PRESENTATION_OVERRIDES[record.id]?.resourceIcons;
+
+  if (override) {
+    return override;
+  }
+
   const keywords = [
     ...(record.economicProfile?.supplyStrengths ?? []),
     ...(record.economicProfile?.majorExports ?? []),
@@ -737,6 +820,10 @@ export function getWorldContinentOptions(): WorldContinentOption[] {
 
 export function getContinentCardArt(continentId: string): WorldCardArt | null {
   return CONTINENT_CARD_ART[continentId] ?? null;
+}
+
+export function getRegionCardArt(regionId: string): WorldCardArt | null {
+  return REGION_PRESENTATION_OVERRIDES[regionId]?.cardArt ?? null;
 }
 
 export function getWorldRegionOptions(continentId: string): WorldRegionOption[] {

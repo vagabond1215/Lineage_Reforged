@@ -115,11 +115,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -395,11 +395,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -624,7 +624,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -826,11 +826,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -1042,7 +1042,7 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -1444,7 +1444,7 @@
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -1668,7 +1668,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -1859,11 +1859,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -2065,11 +2065,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -2225,7 +2225,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -2403,11 +2403,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -2679,11 +2679,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -2924,11 +2924,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -3144,11 +3144,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           }
                                       ],
@@ -3374,11 +3374,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -3640,11 +3640,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -3848,11 +3848,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -4066,11 +4066,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -4610,11 +4610,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -4830,11 +4830,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           }
                                       ],
@@ -5037,11 +5037,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -5252,7 +5252,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -5599,7 +5599,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -5766,7 +5766,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -6142,11 +6142,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -6382,11 +6382,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -6590,11 +6590,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -6883,11 +6883,11 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -7138,11 +7138,11 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -7345,11 +7345,11 @@
                                               "percentage":  6
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -7568,11 +7568,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -7861,11 +7861,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -8104,11 +8104,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -8312,11 +8312,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -8543,11 +8543,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -8750,11 +8750,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -8945,11 +8945,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -9121,11 +9121,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -9347,15 +9347,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -9524,15 +9524,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -9708,15 +9708,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -9987,15 +9987,15 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  2
                                           }
                                       ],
@@ -10202,15 +10202,15 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  2
                                           }
                                       ],
@@ -10414,15 +10414,15 @@
                                                   },
                         "racialMix":  [
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  54
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  30
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  10
                                           },
                                           {
@@ -10593,15 +10593,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  2
                                           }
                                       ],
@@ -10805,15 +10805,15 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -11003,15 +11003,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -11216,15 +11216,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -11437,15 +11437,15 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -11646,15 +11646,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -11858,11 +11858,11 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -12100,11 +12100,11 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -12291,11 +12291,11 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -12452,11 +12452,11 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           }
                                       ],
@@ -12660,15 +12660,15 @@
                                               "percentage":  5
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  2
                                           }
                                       ],
@@ -12870,11 +12870,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -13011,7 +13011,7 @@
                                                   },
                         "racialMix":  [
                                           {
-                                              "race":  "merfolk",
+                                              "race":  "half_merfolk",
                                               "percentage":  100
                                           }
                                       ],
@@ -13154,11 +13154,11 @@
                                               "percentage":  46
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  24
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  18
                                           },
                                           {
@@ -13178,7 +13178,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  3
                                           }
                                       ],
@@ -13348,15 +13348,15 @@
                                                   },
                         "racialMix":  [
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  46
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  34
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  10
                                           },
                                           {
@@ -13524,15 +13524,15 @@
                                               "percentage":  3
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  2
                                           }
                                       ],
@@ -13689,15 +13689,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -13888,11 +13888,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -14031,7 +14031,7 @@
                                                   },
                         "racialMix":  [
                                           {
-                                              "race":  "merfolk",
+                                              "race":  "half_merfolk",
                                               "percentage":  100
                                           }
                                       ],
@@ -14483,15 +14483,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -14665,11 +14665,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -14856,7 +14856,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -15031,11 +15031,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -15209,7 +15209,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -15397,7 +15397,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -15572,15 +15572,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -15766,15 +15766,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -15950,15 +15950,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -16134,7 +16134,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -16307,11 +16307,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -16475,15 +16475,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -16659,11 +16659,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -16838,15 +16838,15 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           },
                                           {
-                                              "race":  "trolls",
+                                              "race":  "half_trolls",
                                               "percentage":  1
                                           }
                                       ],
@@ -17034,11 +17034,11 @@
                                               "percentage":  4
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],
@@ -17213,7 +17213,7 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  1
                                           }
                                       ],
@@ -17386,11 +17386,11 @@
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "orcs",
+                                              "race":  "half_orcs",
                                               "percentage":  2
                                           },
                                           {
-                                              "race":  "goblins",
+                                              "race":  "half_goblins",
                                               "percentage":  1
                                           }
                                       ],

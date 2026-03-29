@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "region.kaelvar",
@@ -42,19 +42,19 @@
                                                                                 "percentage":  6
                                                                             },
                                                                             {
-                                                                                "race":  "orcs",
+                                                                                "race":  "half_orcs",
                                                                                 "percentage":  8
                                                                             },
                                                                             {
-                                                                                "race":  "goblins",
+                                                                                "race":  "half_goblins",
                                                                                 "percentage":  7
                                                                             },
                                                                             {
-                                                                                "race":  "trolls",
+                                                                                "race":  "half_trolls",
                                                                                 "percentage":  2
                                                                             },
                                                                             {
-                                                                                "race":  "merfolk",
+                                                                                "race":  "half_merfolk",
                                                                                 "percentage":  2
                                                                             }
                                                                         ]
@@ -201,19 +201,19 @@
                                                                                 "percentage":  7
                                                                             },
                                                                             {
-                                                                                "race":  "orcs",
+                                                                                "race":  "half_orcs",
                                                                                 "percentage":  4
                                                                             },
                                                                             {
-                                                                                "race":  "goblins",
+                                                                                "race":  "half_goblins",
                                                                                 "percentage":  2
                                                                             },
                                                                             {
-                                                                                "race":  "trolls",
+                                                                                "race":  "half_trolls",
                                                                                 "percentage":  1
                                                                             },
                                                                             {
-                                                                                "race":  "merfolk",
+                                                                                "race":  "half_merfolk",
                                                                                 "percentage":  1
                                                                             }
                                                                         ]
@@ -358,19 +358,19 @@
                                                                                 "percentage":  7
                                                                             },
                                                                             {
-                                                                                "race":  "orcs",
+                                                                                "race":  "half_orcs",
                                                                                 "percentage":  6
                                                                             },
                                                                             {
-                                                                                "race":  "goblins",
+                                                                                "race":  "half_goblins",
                                                                                 "percentage":  3
                                                                             },
                                                                             {
-                                                                                "race":  "trolls",
+                                                                                "race":  "half_trolls",
                                                                                 "percentage":  1
                                                                             },
                                                                             {
-                                                                                "race":  "merfolk",
+                                                                                "race":  "half_merfolk",
                                                                                 "percentage":  1
                                                                             }
                                                                         ]
@@ -510,19 +510,19 @@
                                                                                 "percentage":  7
                                                                             },
                                                                             {
-                                                                                "race":  "orcs",
+                                                                                "race":  "half_orcs",
                                                                                 "percentage":  5
                                                                             },
                                                                             {
-                                                                                "race":  "goblins",
+                                                                                "race":  "half_goblins",
                                                                                 "percentage":  2
                                                                             },
                                                                             {
-                                                                                "race":  "trolls",
+                                                                                "race":  "half_trolls",
                                                                                 "percentage":  1
                                                                             },
                                                                             {
-                                                                                "race":  "merfolk",
+                                                                                "race":  "half_merfolk",
                                                                                 "percentage":  1
                                                                             }
                                                                         ]
@@ -638,11 +638,11 @@
                         "demographicProfile":  {
                                                    "raceDistribution":  [
                                                                             {
-                                                                                "race":  "orcs",
+                                                                                "race":  "half_orcs",
                                                                                 "percentage":  25
                                                                             },
                                                                             {
-                                                                                "race":  "goblins",
+                                                                                "race":  "half_goblins",
                                                                                 "percentage":  18
                                                                             },
                                                                             {
@@ -658,7 +658,7 @@
                                                                                 "percentage":  9
                                                                             },
                                                                             {
-                                                                                "race":  "trolls",
+                                                                                "race":  "half_trolls",
                                                                                 "percentage":  7
                                                                             },
                                                                             {
@@ -670,7 +670,7 @@
                                                                                 "percentage":  4
                                                                             },
                                                                             {
-                                                                                "race":  "merfolk",
+                                                                                "race":  "half_merfolk",
                                                                                 "percentage":  3
                                                                             }
                                                                         ]
@@ -2282,7 +2282,7 @@
                                                                                 "percentage":  10
                                                                             },
                                                                             {
-                                                                                "race":  "merfolk",
+                                                                                "race":  "half_merfolk",
                                                                                 "percentage":  5
                                                                             }
                                                                         ]

@@ -37,6 +37,7 @@ import { buildCharacterCreationPreview } from '../newGameSnapshot.js';
 import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
 import {
   getContinentCardArt,
+  getRegionCardArt,
   getWorldContinentOptions,
   getWorldRegionOptions,
   getWorldSettlementOptions,
@@ -1208,6 +1209,7 @@ export function CharacterCreationNarrativeScreen({
     ) : (
       <div className="grid gap-4">
         {regions.map((option) => {
+          const art = getRegionCardArt(option.id);
           const selected = form.regionId === option.id;
 
           return (
@@ -1235,8 +1237,31 @@ export function CharacterCreationNarrativeScreen({
                 className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
               >
                 <div
+                  className={`absolute inset-0 transition duration-300 ${
+                    art
+                      ? selected
+                        ? 'opacity-100'
+                        : 'bg-cover bg-no-repeat opacity-24 group-hover:scale-[1.03] group-hover:opacity-82'
+                      : 'opacity-0'
+                  }`}
+                  style={
+                    art
+                      ? {
+                          backgroundImage: `url(${art.imageUrl})`,
+                          backgroundPosition: art.backgroundPosition ?? 'center center'
+                        }
+                      : undefined
+                  }
+                />
+                <div
                   className={`absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_24%),linear-gradient(132deg,rgba(7,12,20,0.94),rgba(10,18,28,0.72))] transition duration-300 ${
-                    selected ? 'opacity-92 group-hover:opacity-34' : 'opacity-24 group-hover:opacity-72'
+                    art
+                      ? selected
+                        ? 'opacity-74 group-hover:opacity-42'
+                        : 'opacity-70 group-hover:opacity-46'
+                      : selected
+                        ? 'opacity-92 group-hover:opacity-34'
+                        : 'opacity-24 group-hover:opacity-72'
                   }`}
                 />
                 <div
