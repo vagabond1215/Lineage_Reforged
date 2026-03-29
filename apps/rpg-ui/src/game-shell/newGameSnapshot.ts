@@ -401,7 +401,7 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
 
   return {
     isResolved: false,
-    characterName: form.playerName.trim() || 'Name Pending',
+    characterName: form.playerName.trim(),
     chosenOrigin: 'An unproven soul with no sworn past, chosen path, or lawful arrival yet.',
     lineageLabel: form.lineageId.trim() ? humanizeId(form.lineageId) : null,
     backgroundLabel: null,
@@ -931,7 +931,7 @@ export function buildCharacterCreationPreview(
 
     return {
       isResolved: true,
-      characterName: form.playerName.trim() || 'Name Pending',
+      characterName: form.playerName.trim(),
       chosenOrigin: derived.chosenOriginLabel,
       lineageLabel: derived.lineageLabel,
       backgroundLabel: derived.backgroundLabel,
@@ -983,7 +983,7 @@ export function buildCharacterCreationPreview(
 
     return {
       isResolved: true,
-      characterName: form.playerName.trim() || 'Name Pending',
+      characterName: form.playerName.trim(),
       chosenOrigin: `${originProfile.lineageLabel} ${backgroundTemplate.label}`,
       lineageLabel: originProfile.lineageLabel,
       backgroundLabel: backgroundTemplate.label,
@@ -1019,7 +1019,7 @@ export function buildCharacterCreationPreview(
       ],
       reviewNarrative: selectedWorld
         ? buildReviewNarrative({
-            characterName: form.playerName.trim() || 'Name Pending',
+            characterName: form.playerName.trim(),
             pathLabel: classTemplate.label,
             backstoryHook: backgroundTemplate.hookLine.replace(/\.$/, ''),
             settlementLabel: selectedWorld.settlement.label,

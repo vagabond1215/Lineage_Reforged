@@ -382,6 +382,21 @@ export function CharacterCreationNarrativeScreen({
     }
   };
 
+  const setSelection = (nextForm: Partial<CharacterCreationFormState>) => {
+    onChange(nextForm);
+    setShowValidation(false);
+  };
+
+  const advanceSelectionStep = (stepId: CharacterCreationStepId) => {
+    const following = getNextCharacterCreationStepId(stepId);
+    if (following) {
+      goToStep(following);
+    }
+  };
+
+  const getSelectionAdvanceLabel = (stepId: CharacterCreationStepId) =>
+    stepId === 'settlement' ? 'Confirm' : 'Next';
+
   const updateAttributeAllocation = (
     attributeKey: PlayerAttributeKey,
     delta: -1 | 1
@@ -597,34 +612,42 @@ export function CharacterCreationNarrativeScreen({
         {lineageOptions.map((option) => {
           const statRows = parsePresentedAttributeValues(option.notes[0] ?? '');
           const art = getLineageCardArt(option.id);
+          const selected = form.lineageId === option.id;
 
           return (
-            <button
+            <div
               key={option.id}
-              type="button"
-              onClick={() =>
-                choose('lineage', form.lineageId, option.id, {
-                  lineageId: option.id,
-                  heightBandId: form.heightBandId || 'normal',
-                  buildId: form.buildId || 'average',
-                  hairColorId: '',
-                  eyeColorId: '',
-                  skinToneId: '',
-                  backgroundId: ''
-                })
-              }
               className={`${getSelectableCardClass(
-                form.lineageId === option.id,
+                selected,
                 'lineage'
-              )} group relative overflow-hidden p-5 text-left`}
-              style={form.lineageId === option.id ? activeOutlineStyle : undefined}
+              )} group relative overflow-hidden ${selected ? 'min-h-[24rem]' : ''}`}
+              style={selected ? activeOutlineStyle : undefined}
             >
+              <button
+                type="button"
+                onClick={() => {
+                  if (selected) {
+                    return;
+                  }
+
+                  setSelection({
+                    lineageId: option.id,
+                    heightBandId: form.heightBandId || 'normal',
+                    buildId: form.buildId || 'average',
+                    hairColorId: '',
+                    eyeColorId: '',
+                    skinToneId: '',
+                    backgroundId: ''
+                  });
+                }}
+                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
+              >
               {art && (
                 <>
                   <div
                     className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
-                      form.lineageId === option.id
-                        ? 'opacity-45 group-hover:opacity-90'
+                      selected
+                        ? 'opacity-92 group-hover:opacity-44'
                         : 'opacity-30 group-hover:opacity-80'
                     }`}
                     style={{
@@ -632,11 +655,21 @@ export function CharacterCreationNarrativeScreen({
                       backgroundPosition: art.backgroundPosition ?? 'center center'
                     }}
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(7,12,20,0.96)_0%,rgba(8,14,24,0.88)_38%,rgba(10,18,28,0.66)_66%,rgba(8,14,24,0.9)_100%)] transition duration-300 group-hover:opacity-65" />
+                  <div
+                    className={`absolute inset-0 bg-[linear-gradient(112deg,rgba(7,12,20,0.96)_0%,rgba(8,14,24,0.88)_38%,rgba(10,18,28,0.66)_66%,rgba(8,14,24,0.9)_100%)] transition duration-300 ${
+                      selected ? 'opacity-30 group-hover:opacity-78' : 'group-hover:opacity-65'
+                    }`}
+                  />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
                 </>
               )}
-              <div className="relative z-10 min-h-[12rem] pr-[8.25rem] transition duration-200 group-hover:opacity-0">
+              <div
+                className={`relative z-10 pr-[7.65rem] transition duration-200 ${
+                  selected
+                    ? 'min-h-[24rem] opacity-0 group-hover:opacity-100'
+                    : 'min-h-[12rem] group-hover:opacity-0'
+                }`}
+              >
                 <div>
                   <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                     {option.label}
@@ -645,13 +678,13 @@ export function CharacterCreationNarrativeScreen({
                     {option.description}
                   </div>
                 </div>
-                <div className="absolute right-0 top-2 bottom-2 flex w-[7.8rem] items-start justify-end">
-                  <div className="h-full w-full rounded-r-[22px] border-l border-[color:var(--color-border)] bg-[rgba(4,9,17,0.76)] px-2.5 py-2.5 backdrop-blur-md">
-                    <div className="space-y-1">
+                <div className="absolute right-0 top-1 bottom-2 flex w-[7.15rem] items-start justify-end">
+                  <div className="h-full w-full rounded-r-[22px] border-l border-[color:var(--color-border)] bg-[rgba(4,9,17,0.78)] px-2 py-2 backdrop-blur-md">
+                    <div className="space-y-0.5">
                       {statRows.map((row) => (
                         <div
                           key={`${option.id}.${row.key}`}
-                          className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-1 border-b border-[color:var(--color-border)] pb-0.5 last:border-b-0 last:pb-0"
+                          className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-0.5 border-b border-[color:var(--color-border)] pb-0.5 last:border-b-0 last:pb-0"
                         >
                           <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
                             {row.key}
@@ -665,7 +698,17 @@ export function CharacterCreationNarrativeScreen({
                   </div>
                 </div>
               </div>
-            </button>
+              </button>
+              {selected && (
+                <button
+                  type="button"
+                  onClick={() => advanceSelectionStep('lineage')}
+                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(4,9,17,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(8,16,28,0.94)]"
+                >
+                  {getSelectionAdvanceLabel('lineage')}
+                </button>
+              )}
+            </div>
           );
         })}
       </div>
@@ -847,64 +890,92 @@ export function CharacterCreationNarrativeScreen({
       <div className="grid gap-4">
         {continents.map((option) => {
           const art = getContinentCardArt(option.id);
+          const selected = form.continentId === option.id;
 
           return (
-            <button
+            <div
               key={option.id}
-              type="button"
-              onClick={() =>
-                choose('continent', form.continentId, option.id, {
-                  continentId: option.id,
-                  regionId: '',
-                  startingSettlementId: '',
-                  backgroundId: ''
-                })
-              }
               className={`${getSelectableCardClass(
-                form.continentId === option.id,
+                selected,
                 'continent'
-              )} group relative overflow-hidden p-5 text-left`}
-              style={form.continentId === option.id ? activeOutlineStyle : undefined}
+              )} group relative overflow-hidden ${selected ? 'min-h-[24rem]' : ''}`}
+              style={selected ? activeOutlineStyle : undefined}
             >
-              {art && (
-                <>
-                  <div
-                    className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
-                      form.continentId === option.id
-                        ? 'opacity-45 group-hover:opacity-90'
-                        : 'opacity-28 group-hover:opacity-80'
-                    }`}
-                    style={{
-                      backgroundImage: `url(${art.imageUrl})`,
-                      backgroundPosition: art.backgroundPosition ?? 'center center'
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(8,16,14,0.95)_0%,rgba(10,22,18,0.88)_42%,rgba(10,20,28,0.58)_72%,rgba(8,16,14,0.88)_100%)] transition duration-300 group-hover:opacity-65" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(74,222,128,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
-                </>
-              )}
-              <div className="relative z-10 transition duration-200 group-hover:opacity-0">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                    {option.label}
+              <button
+                type="button"
+                onClick={() => {
+                  if (selected) {
+                    return;
+                  }
+
+                  setSelection({
+                    continentId: option.id,
+                    regionId: '',
+                    startingSettlementId: '',
+                    backgroundId: ''
+                  });
+                }}
+                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
+              >
+                {art && (
+                  <>
+                    <div
+                      className={`absolute inset-0 bg-cover bg-no-repeat transition duration-300 group-hover:scale-[1.03] ${
+                        selected
+                          ? 'opacity-92 group-hover:opacity-42'
+                          : 'opacity-28 group-hover:opacity-80'
+                      }`}
+                      style={{
+                        backgroundImage: `url(${art.imageUrl})`,
+                        backgroundPosition: art.backgroundPosition ?? 'center center'
+                      }}
+                    />
+                    <div
+                      className={`absolute inset-0 bg-[linear-gradient(112deg,rgba(8,16,14,0.95)_0%,rgba(10,22,18,0.88)_42%,rgba(10,20,28,0.58)_72%,rgba(8,16,14,0.88)_100%)] transition duration-300 ${
+                        selected ? 'opacity-26 group-hover:opacity-74' : 'group-hover:opacity-65'
+                      }`}
+                    />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(74,222,128,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
+                  </>
+                )}
+                <div
+                  className={`relative z-10 transition duration-200 ${
+                    selected
+                      ? 'min-h-[24rem] opacity-0 group-hover:opacity-100'
+                      : 'group-hover:opacity-0'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                      {option.label}
+                    </div>
+                    <span
+                      className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
+                        option.difficultyTone === 'success'
+                          ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
+                          : option.difficultyTone === 'warning'
+                            ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
+                            : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
+                      }`}
+                    >
+                      {option.difficultyLabel}
+                    </span>
                   </div>
-                  <span
-                    className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
-                      option.difficultyTone === 'success'
-                        ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
-                        : option.difficultyTone === 'warning'
-                          ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
-                          : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
-                    }`}
-                  >
-                    {option.difficultyLabel}
-                  </span>
+                  <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                    {option.description}
+                  </div>
                 </div>
-                <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                  {option.description}
-                </div>
-              </div>
-            </button>
+              </button>
+              {selected && (
+                <button
+                  type="button"
+                  onClick={() => advanceSelectionStep('continent')}
+                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(8,16,14,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(10,22,18,0.94)]"
+                >
+                  {getSelectionAdvanceLabel('continent')}
+                </button>
+              )}
+            </div>
           );
         })}
       </div>
@@ -912,118 +983,180 @@ export function CharacterCreationNarrativeScreen({
   } else if (currentStepId === 'region') {
     mainContent = (
       <div className="grid gap-4">
-        {regions.map((option) => (
-          <button
-            key={option.id}
-            type="button"
-            onClick={() =>
-              choose('region', form.regionId, option.id, {
-                regionId: option.id,
-                startingSettlementId: '',
-                backgroundId: ''
-              })
-            }
-            className={`${getSelectableCardClass(
-              form.regionId === option.id,
-              'region'
-            )} group relative overflow-hidden p-5 text-left`}
-            style={form.regionId === option.id ? activeOutlineStyle : undefined}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                {option.label}
-              </div>
-              {option.resourceIcons.length > 0 && (
-                <div className="flex flex-wrap justify-end gap-2">
-                  {option.resourceIcons.map((resource) => {
-                    const tone = getRegionResourceTone(resource.icon);
+        {regions.map((option) => {
+          const selected = form.regionId === option.id;
 
-                    return (
-                      <Tooltip
-                        key={`${option.id}.${resource.icon}`}
-                        content={
-                          <span className="block text-left">
-                            <span className="font-semibold text-slate-50">
-                              {resource.label}
-                            </span>
-                            <span className="mt-1 block text-slate-300">
-                              {resource.description}
-                            </span>
-                          </span>
-                        }
-                        panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
+          return (
+            <div
+              key={option.id}
+              className={`${getSelectableCardClass(
+                selected,
+                'region'
+              )} group relative overflow-hidden ${selected ? 'min-h-[22rem]' : ''}`}
+              style={selected ? activeOutlineStyle : undefined}
+            >
+              <button
+                type="button"
+                onClick={() => {
+                  if (selected) {
+                    return;
+                  }
+
+                  setSelection({
+                    regionId: option.id,
+                    startingSettlementId: '',
+                    backgroundId: ''
+                  });
+                }}
+                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
+              >
+                <div
+                  className={`absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_24%),linear-gradient(132deg,rgba(7,12,20,0.94),rgba(10,18,28,0.72))] transition duration-300 ${
+                    selected ? 'opacity-92 group-hover:opacity-34' : 'opacity-24 group-hover:opacity-72'
+                  }`}
+                />
+                <div
+                  className={`relative z-10 transition duration-200 ${
+                    selected ? 'min-h-[22rem] opacity-0 group-hover:opacity-100' : 'group-hover:opacity-0'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                      {option.label}
+                    </div>
+                    {option.resourceIcons.length > 0 && (
+                      <div className="flex flex-wrap justify-end gap-2">
+                        {option.resourceIcons.map((resource) => {
+                          const tone = getRegionResourceTone(resource.icon);
+
+                          return (
+                            <Tooltip
+                              key={`${option.id}.${resource.icon}`}
+                              content={
+                                <span className="block text-left">
+                                  <span className="font-semibold text-slate-50">
+                                    {resource.label}
+                                  </span>
+                                  <span className="mt-1 block text-slate-300">
+                                    {resource.description}
+                                  </span>
+                                </span>
+                              }
+                              panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
+                            >
+                              <span
+                                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
+                                aria-label={resource.label}
+                              >
+                                <Icon
+                                  name={resource.icon}
+                                  className={`h-[18px] w-[18px] ${tone.icon}`}
+                                />
+                              </span>
+                            </Tooltip>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className={`${insetBlockClass} mt-4 px-4 py-4 text-sm leading-7 text-[color:var(--color-text-soft)]`}
+                  >
+                    {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
+                      <p
+                        key={`${option.id}.paragraph.${paragraphIndex}`}
+                        className={paragraphIndex === 0 ? '' : 'mt-3'}
                       >
-                        <span
-                          className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
-                          aria-label={resource.label}
-                        >
-                          <Icon
-                            name={resource.icon}
-                            className={`h-[18px] w-[18px] ${tone.icon}`}
-                          />
-                        </span>
-                      </Tooltip>
-                    );
-                  })}
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
                 </div>
+              </button>
+              {selected && (
+                <button
+                  type="button"
+                  onClick={() => advanceSelectionStep('region')}
+                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(7,12,20,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(10,18,28,0.94)]"
+                >
+                  {getSelectionAdvanceLabel('region')}
+                </button>
               )}
             </div>
-            <div
-              className={`${insetBlockClass} mt-4 px-4 py-4 text-sm leading-7 text-[color:var(--color-text-soft)]`}
-            >
-              {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
-                <p
-                  key={`${option.id}.paragraph.${paragraphIndex}`}
-                  className={paragraphIndex === 0 ? '' : 'mt-3'}
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </button>
-        ))}
+          );
+        })}
       </div>
     );
   } else if (currentStepId === 'settlement') {
     mainContent = (
       <div className="grid gap-4">
-        {settlements.map((option) => (
-          <button
-            key={option.id}
-            type="button"
-            onClick={() =>
-              choose('settlement', form.startingSettlementId, option.id, {
-                startingSettlementId: option.id,
-                backgroundId: ''
-              })
-            }
-            className={`${getSelectableCardClass(
-              form.startingSettlementId === option.id,
-              'settlement'
-            )} group relative overflow-hidden p-5 text-left`}
-            style={
-              form.startingSettlementId === option.id ? activeOutlineStyle : undefined
-            }
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                {option.label}
-              </div>
-              <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
-                Pop {option.populationSize}
-              </div>
+        {settlements.map((option) => {
+          const selected = form.startingSettlementId === option.id;
+
+          return (
+            <div
+              key={option.id}
+              className={`${getSelectableCardClass(
+                selected,
+                'settlement'
+              )} group relative overflow-hidden ${selected ? 'min-h-[22rem]' : ''}`}
+              style={selected ? activeOutlineStyle : undefined}
+            >
+              <button
+                type="button"
+                onClick={() => {
+                  if (selected) {
+                    return;
+                  }
+
+                  setSelection({
+                    startingSettlementId: option.id,
+                    backgroundId: ''
+                  });
+                }}
+                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
+              >
+                <div
+                  className={`absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.16),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(248,113,113,0.14),transparent_22%),linear-gradient(132deg,rgba(16,12,8,0.94),rgba(28,18,10,0.72))] transition duration-300 ${
+                    selected ? 'opacity-92 group-hover:opacity-34' : 'opacity-24 group-hover:opacity-72'
+                  }`}
+                />
+                <div
+                  className={`relative z-10 transition duration-200 ${
+                    selected ? 'min-h-[22rem] opacity-0 group-hover:opacity-100' : 'group-hover:opacity-0'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                      {option.label}
+                    </div>
+                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+                      Pop {option.populationSize}
+                    </div>
+                  </div>
+                  <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                    {option.description}
+                  </div>
+                  <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
+                    <p>{option.landRestriction.propertyNarrative}</p>
+                    <p className="mt-2 text-[color:var(--color-text-strong)]">
+                      {option.landRestriction.currentStanding}
+                    </p>
+                  </div>
+                </div>
+              </button>
+              {selected && (
+                <button
+                  type="button"
+                  onClick={() => advanceSelectionStep('settlement')}
+                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(16,12,8,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(28,18,10,0.94)]"
+                >
+                  {getSelectionAdvanceLabel('settlement')}
+                </button>
+              )}
             </div>
-            <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-              {option.description}
-            </div>
-            <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
-              <p>{option.landRestriction.propertyNarrative}</p>
-              <p className="mt-2 text-[color:var(--color-text-strong)]">
-                {option.landRestriction.currentStanding}
-              </p>
-            </div>
-          </button>
-        ))}
+          );
+        })}
       </div>
     );
   } else if (currentStepId === 'backstory') {
@@ -1444,7 +1577,8 @@ export function CharacterCreationNarrativeScreen({
                     <div className="text-2xl font-semibold text-[color:var(--color-text-strong)]">
                       {preview.characterName}
                     </div>
-                    <div className="mt-2 space-y-1.5">
+                    <div className="mt-3 border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                      <div className="space-y-1.5">
                       {summaryIdentityRows.map((row) => (
                         <div
                           key={row.label}
@@ -1458,15 +1592,20 @@ export function CharacterCreationNarrativeScreen({
                           </div>
                         </div>
                       ))}
+                      </div>
                     </div>
                   </div>
-                  {renderStatList(preview.attributeMetrics, {
-                    compact: true,
-                    frame: false
-                  })}
-                  {renderResourceBars(preview.resourceMetrics, {
-                    frame: false
-                  })}
+                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                    {renderStatList(preview.attributeMetrics, {
+                      compact: true,
+                      frame: false
+                    })}
+                  </div>
+                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                    {renderResourceBars(preview.resourceMetrics, {
+                      frame: false
+                    })}
+                  </div>
                   {preview.isResolved && preview.starterSkills.length > 0 && (
                     <div>{renderTags('Starting Skills', preview.starterSkills)}</div>
                   )}
