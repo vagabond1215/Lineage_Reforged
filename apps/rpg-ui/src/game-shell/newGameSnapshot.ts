@@ -274,6 +274,75 @@ function resolveWorkingCharacterAttributes(
   return applyCharacterAttributeAllocation(attributes, form.attributeAllocation);
 }
 
+function resolveWorkingCharacterResources(
+  form: Pick<
+    CharacterCreationFormState,
+    | 'sexId'
+    | 'lineageId'
+    | 'classId'
+    | 'heightBandId'
+    | 'buildId'
+    | 'attributeAllocation'
+  >,
+  attributes: PlayerAttributes
+): {
+  hp: number;
+  mp: number;
+  stamina: number;
+} {
+  const resolvedClassId = form.classId.trim().length > 0 ? form.classId : 'class.explorer';
+  const resolvedLineageId = form.lineageId.trim() || 'lineage.human';
+  const resolvedSexId = form.sexId === 'female' ? 'female' : 'male';
+  const originProfile = resolvePlayerOriginProfile(
+    {
+      lineageId: resolvedLineageId,
+      classId: resolvedClassId,
+      sexId: resolvedSexId
+    },
+    {
+      level: 1,
+      classLevel: 1
+    }
+  );
+  const resourceRuntime = createEmptyPlayerResourceRuntimeState();
+  const resourceResolution = resolvePlayerResources(
+    {
+      playerId: 'player.preview',
+      attributes,
+      resources: {
+        hp: {
+          current: originProfile.resolvedResourceMaxima.hp,
+          max: originProfile.resolvedResourceMaxima.hp
+        },
+        mp: {
+          current: originProfile.resolvedResourceMaxima.mp,
+          max: originProfile.resolvedResourceMaxima.mp
+        },
+        stamina: {
+          current: originProfile.resolvedResourceMaxima.stamina,
+          max: originProfile.resolvedResourceMaxima.stamina
+        },
+        xp: {
+          current: 0,
+          total: 0,
+          toNextLevel: 1000
+        }
+      },
+      originProfile,
+      equipment: form.classId.trim().length > 0 ? buildStarterEquipment(form.classId) : EMPTY_EQUIPMENT,
+      resourceRuntime
+    },
+    [],
+    demoSnapshot.clock.tick
+  );
+
+  return {
+    hp: resourceResolution.resources.hp.max,
+    mp: resourceResolution.resources.mp.max,
+    stamina: resourceResolution.resources.stamina.max
+  };
+}
+
 function formatNarrativeList(values: string[], fallback: string): string {
   const filtered = values.filter((value) => value.trim().length > 0);
 
@@ -318,6 +387,17 @@ function buildReviewNarrative(params: {
 
 function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCreationPreview {
   const provisionalAttributes = resolveWorkingCharacterAttributes(form);
+  const provisionalResources = (() => {
+    try {
+      return resolveWorkingCharacterResources(form, provisionalAttributes);
+    } catch {
+      return {
+        hp: null,
+        mp: null,
+        stamina: null
+      };
+    }
+  })();
 
   return {
     isResolved: false,
@@ -334,9 +414,9 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
       'Choose a homeland, city, backstory, and path before the local authorities can be judged.',
     identityMetrics: buildIdentityMetrics(form),
     resourceMetrics: [
-      buildPreviewMetric('hp', 'HP', null),
-      buildPreviewMetric('mp', 'MP', null),
-      buildPreviewMetric('stamina', 'Stamina', null)
+      buildPreviewMetric('hp', 'HP', provisionalResources.hp),
+      buildPreviewMetric('mp', 'MP', provisionalResources.mp),
+      buildPreviewMetric('stamina', 'Stamina', provisionalResources.stamina)
     ],
     attributeMetrics: buildAttributeMetrics(provisionalAttributes),
     starterSkills: [],

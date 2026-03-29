@@ -9,6 +9,35 @@ if (-not (Test-Path $logDir)) {
     New-Item -ItemType Directory -Path $logDir | Out-Null
 }
 
+function Open-UiUrlInDefaultBrowser {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Url,
+        [Parameter(Mandatory = $true)]
+        [string]$LogPath
+    )
+
+    try {
+        Start-Process -FilePath $Url -ErrorAction Stop | Out-Null
+        Add-Content -Path $LogPath -Value "[$(Get-Date -Format s)] Browser launch requested via Start-Process for $Url."
+        return $true
+    }
+    catch {
+        Add-Content -Path $LogPath -Value "[$(Get-Date -Format s)] Browser launch via Start-Process failed for $Url. $($_.Exception.Message)"
+    }
+
+    try {
+        Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'start', '', $Url -WindowStyle Hidden -ErrorAction Stop | Out-Null
+        Add-Content -Path $LogPath -Value "[$(Get-Date -Format s)] Browser launch requested via cmd fallback for $Url."
+        return $true
+    }
+    catch {
+        Add-Content -Path $LogPath -Value "[$(Get-Date -Format s)] Browser launch via cmd fallback failed for $Url. $($_.Exception.Message)"
+    }
+
+    return $false
+}
+
 Add-Content -Path $bootLog -Value "[$(Get-Date -Format s)] Launch requested."
 
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
@@ -47,15 +76,18 @@ for ($attempt = 0; $attempt -lt 30 -and -not $opened; $attempt += 1) {
 
     try {
         Invoke-WebRequest -UseBasicParsing -Uri $uiUrl -TimeoutSec 2 | Out-Null
-        Start-Process $uiUrl
-        $opened = $true
+        $opened = Open-UiUrlInDefaultBrowser -Url $uiUrl -LogPath $bootLog
     }
     catch {
     }
 }
 
 if (-not $opened) {
-    Start-Process $uiUrl
+    $opened = Open-UiUrlInDefaultBrowser -Url $uiUrl -LogPath $bootLog
+}
+
+if (-not $opened) {
+    Add-Content -Path $bootLog -Value "[$(Get-Date -Format s)] UI launch completed, but the default browser could not be opened automatically."
 }
 
 Add-Content -Path $bootLog -Value "[$(Get-Date -Format s)] UI launch request completed."

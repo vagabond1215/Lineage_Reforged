@@ -54,7 +54,7 @@ Example design intent already captured in content:
 
 Use the root launchers for the current playable UI flow:
 
-- Double-click `Play Cataclysm.cmd` to start the RPG UI from the project root and open it in the browser
+- Double-click `Play Cataclysm.cmd` to start the RPG UI from the project root and open it in your default browser
 
 Launcher logs are written under `logs/`.
 

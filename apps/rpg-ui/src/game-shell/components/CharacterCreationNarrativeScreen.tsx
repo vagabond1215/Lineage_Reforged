@@ -58,6 +58,9 @@ type Props = {
 const topButton =
   'inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]';
 
+const topPillButton =
+  'inline-flex h-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] px-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-soft)] transition hover:bg-[color:var(--color-creator-card-hover)]';
+
 const creatorCardBase =
   'rounded-[24px] border bg-[color:var(--color-creator-card)] shadow-[0_18px_42px_var(--color-creator-card-shadow)] backdrop-blur-sm transition';
 
@@ -147,18 +150,30 @@ function getRegionResourceTone(icon: Parameters<typeof Icon>[0]['name']): {
 
 function formatAttributeTradeoff(
   adjustments: Partial<Record<PlayerAttributeKey, number>>
-): string {
-  const parts = CHARACTER_ATTRIBUTE_ORDER.flatMap((attributeKey) => {
+): { positive: string | null; negative: string | null } {
+  const positive = CHARACTER_ATTRIBUTE_ORDER.flatMap((attributeKey) => {
     const value = adjustments[attributeKey] ?? 0;
 
-    if (value === 0) {
+    if (value <= 0) {
       return [];
     }
 
-    return [`${value > 0 ? '+' : ''}${value} ${attributeKey}`];
+    return [`+${value} ${attributeKey}`];
+  });
+  const negative = CHARACTER_ATTRIBUTE_ORDER.flatMap((attributeKey) => {
+    const value = adjustments[attributeKey] ?? 0;
+
+    if (value >= 0) {
+      return [];
+    }
+
+    return [`${value} ${attributeKey}`];
   });
 
-  return parts.length > 0 ? parts.join(' ') : 'No Change';
+  return {
+    positive: positive.length > 0 ? positive.join(' / ') : null,
+    negative: negative.length > 0 ? negative.join(' / ') : null
+  };
 }
 
 function getSexSummaryLabel(
@@ -465,46 +480,38 @@ export function CharacterCreationNarrativeScreen({
     });
 
     const content = (
-      <div className="space-y-2.5">
+      <div className="space-y-3">
         {parsedValues.map((value) => {
-            const tone =
-              value.id === 'hp'
+          const tone =
+            value.id === 'hp'
+              ? {
+                  labelClass: 'text-rose-200/85',
+                  fill:
+                    'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
+                  shadow: '0 0 18px rgba(248,113,113,0.24)'
+                }
+              : value.id === 'mp'
                 ? {
-                    labelClass: 'text-rose-200/85',
+                    labelClass: 'text-sky-200/85',
                     fill:
-                      'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
-                    shadow: '0 0 18px rgba(248,113,113,0.24)'
+                      'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
+                    shadow: '0 0 18px rgba(96,165,250,0.24)'
                   }
-                : value.id === 'mp'
-                  ? {
-                      labelClass: 'text-sky-200/85',
-                      fill:
-                        'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
-                      shadow: '0 0 18px rgba(96,165,250,0.24)'
-                    }
-                  : {
-                      labelClass: 'text-emerald-200/85',
-                      fill:
-                        'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
-                      shadow: '0 0 18px rgba(74,222,128,0.24)'
-                    };
+                : {
+                    labelClass: 'text-emerald-200/85',
+                    fill:
+                      'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
+                    shadow: '0 0 18px rgba(74,222,128,0.24)'
+                  };
 
           return (
-            <div
-              key={value.id}
-              className="border-b border-[color:var(--color-border)] pb-2.5 last:border-b-0 last:pb-0"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <div
-                  className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.labelClass}`}
-                >
-                  {value.label}
-                </div>
-                <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
-                  {value.value ?? 'Pending'}
-                </div>
+            <div key={value.id}>
+              <div
+                className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.labelClass}`}
+              >
+                {value.label}: {value.value ?? 'Pending'}
               </div>
-              <div className="relative mt-2 h-2.5 overflow-hidden rounded-full border border-[color:var(--color-border)] bg-black/20">
+              <div className="relative mt-1.5 h-5 overflow-hidden rounded-full border border-[color:var(--color-border)] bg-black/20">
                 <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-white/12" />
                 <div
                   className="h-full rounded-full transition-[width] duration-500"
@@ -538,7 +545,7 @@ export function CharacterCreationNarrativeScreen({
       <div className="mb-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
         {title}
       </div>
-      <div className="grid grid-cols-5 justify-items-start gap-y-2 gap-x-0 sm:grid-cols-9">
+      <div className="grid grid-cols-5 justify-items-start gap-y-1.5 gap-x-0 sm:grid-cols-9">
         {options.map((option) => {
           const selected = option.id === selectedId;
           const opacityClass = !selectedId
@@ -629,7 +636,7 @@ export function CharacterCreationNarrativeScreen({
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
                 </>
               )}
-              <div className="relative z-10 min-h-[12rem] pr-[8.75rem] transition duration-200 group-hover:opacity-0">
+              <div className="relative z-10 min-h-[12rem] pr-[8.25rem] transition duration-200 group-hover:opacity-0">
                 <div>
                   <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
                     {option.label}
@@ -638,20 +645,24 @@ export function CharacterCreationNarrativeScreen({
                     {option.description}
                   </div>
                 </div>
-                <div className="absolute inset-y-0 right-0 flex w-[8.25rem] items-stretch">
-                  {renderStatList(
-                    statRows.map((row) => ({
-                      id: `${option.id}.${row.key}`,
-                      label: row.key,
-                      value: row.value.toString()
-                    })),
-                    {
-                      compact: true,
-                      frame: false,
-                      className:
-                        'h-full rounded-l-[22px] border-l border-[color:var(--color-border)] bg-[rgba(5,10,18,0.68)] px-3 py-3 backdrop-blur-sm'
-                    }
-                  )}
+                <div className="absolute right-0 top-2 bottom-2 flex w-[7.8rem] items-start justify-end">
+                  <div className="h-full w-full rounded-r-[22px] border-l border-[color:var(--color-border)] bg-[rgba(4,9,17,0.76)] px-2.5 py-2.5 backdrop-blur-md">
+                    <div className="space-y-1">
+                      {statRows.map((row) => (
+                        <div
+                          key={`${option.id}.${row.key}`}
+                          className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-1 border-b border-[color:var(--color-border)] pb-0.5 last:border-b-0 last:pb-0"
+                        >
+                          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                            {row.key}
+                          </div>
+                          <div className="justify-self-end text-sm font-semibold text-[color:var(--color-text-strong)]">
+                            {row.value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </button>
@@ -673,7 +684,7 @@ export function CharacterCreationNarrativeScreen({
               className={textInputClass}
             />
           </label>
-          <div className="flex items-end gap-2 self-end">
+          <div className="flex items-center gap-2.5 self-end pb-px">
             <button
               type="button"
               onClick={() =>
@@ -684,7 +695,7 @@ export function CharacterCreationNarrativeScreen({
                   )
                 })
               }
-              className="mr-1 flex h-12 w-12 items-center justify-center rounded-full border-4 border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]"
+              className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]"
               title="Random name"
             >
               <Icon name="dice" className="h-5 w-5" />
@@ -724,24 +735,41 @@ export function CharacterCreationNarrativeScreen({
             Height
           </div>
           <div className="grid max-w-[24rem] grid-cols-3 gap-3">
-            {identityCatalog.heightBands.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                onClick={() => onChange({ heightBandId: option.id })}
-                className={`flex aspect-square min-h-[96px] flex-col items-start justify-between rounded-[18px] border px-3 py-3 text-left transition ${
-                  form.heightBandId === option.id
-                    ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
-                    : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
-                }`}
-                style={form.heightBandId === option.id ? activeOutlineStyle : undefined}
-              >
-                <div className="text-sm font-semibold">{option.label}</div>
-                <div className="text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)]">
-                  {formatAttributeTradeoff(option.attributeAdjustments)}
-                </div>
-              </button>
-            ))}
+            {identityCatalog.heightBands.map((option) => {
+              const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
+
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => onChange({ heightBandId: option.id })}
+                  className={`flex aspect-square min-h-[104px] flex-col items-center justify-center rounded-[18px] border px-3 py-3 text-center transition ${
+                    form.heightBandId === option.id
+                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
+                  }`}
+                  style={form.heightBandId === option.id ? activeOutlineStyle : undefined}
+                >
+                  <div className="grid h-full w-full grid-rows-3 place-items-center">
+                    <div className="text-[15px] font-semibold leading-none">{option.label}</div>
+                    <div
+                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                        tradeoff.positive ? '' : 'opacity-0'
+                      }`}
+                    >
+                      {tradeoff.positive ?? '\u00A0'}
+                    </div>
+                    <div
+                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                        tradeoff.negative ? '' : 'opacity-0'
+                      }`}
+                    >
+                      {tradeoff.negative ?? '\u00A0'}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
         <div className="space-y-2">
@@ -749,24 +777,41 @@ export function CharacterCreationNarrativeScreen({
             Build
           </div>
           <div className="grid max-w-[24rem] grid-cols-3 gap-3">
-            {identityCatalog.buildOptions.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                onClick={() => onChange({ buildId: option.id })}
-                className={`flex aspect-square min-h-[96px] flex-col items-start justify-between rounded-[18px] border px-3 py-3 text-left transition ${
-                  form.buildId === option.id
-                    ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
-                    : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
-                }`}
-                style={form.buildId === option.id ? activeOutlineStyle : undefined}
-              >
-                <div className="text-sm font-semibold">{option.label}</div>
-                <div className="text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)]">
-                  {formatAttributeTradeoff(option.attributeAdjustments)}
-                </div>
-              </button>
-            ))}
+            {identityCatalog.buildOptions.map((option) => {
+              const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
+
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => onChange({ buildId: option.id })}
+                  className={`flex aspect-square min-h-[104px] flex-col items-center justify-center rounded-[18px] border px-3 py-3 text-center transition ${
+                    form.buildId === option.id
+                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
+                  }`}
+                  style={form.buildId === option.id ? activeOutlineStyle : undefined}
+                >
+                  <div className="grid h-full w-full grid-rows-3 place-items-center">
+                    <div className="text-[15px] font-semibold leading-none">{option.label}</div>
+                    <div
+                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                        tradeoff.positive ? '' : 'opacity-0'
+                      }`}
+                    >
+                      {tradeoff.positive ?? '\u00A0'}
+                    </div>
+                    <div
+                      className={`text-[11px] uppercase tracking-[0.14em] text-[color:var(--color-text-soft)] ${
+                        tradeoff.negative ? '' : 'opacity-0'
+                      }`}
+                    >
+                      {tradeoff.negative ?? '\u00A0'}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
         {swatches(
@@ -1249,7 +1294,7 @@ export function CharacterCreationNarrativeScreen({
   return (
     <div ref={containerRef} className="h-screen overflow-auto px-4 pb-6 pt-4 sm:px-6">
       <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4">
-        <div className="sticky top-0 z-30 rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] px-4 py-3 shadow-panel backdrop-blur-xl">
+        <div className="sticky top-0 z-30 rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] px-4 py-2 shadow-panel backdrop-blur-xl">
           <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
             <div className="flex items-center gap-2">
               <button
@@ -1289,44 +1334,44 @@ export function CharacterCreationNarrativeScreen({
                 </button>
               </Tooltip>
             </div>
-            <button
-              type="button"
-              onClick={onToggleThemeMode}
-              className={`${topButton} justify-self-end`}
-              title={
-                themeMode === 'dark'
-                  ? 'Switch to light mode'
-                  : 'Switch to dark mode'
-              }
-            >
-              <Icon
-                name={themeMode === 'dark' ? 'sun' : 'moon'}
-                className="h-5 w-5"
-              />
-            </button>
-          </div>
-          <div className="mt-3 flex justify-end">
-            <button
-              type="button"
-              onClick={() => setSummaryVisible((current) => !current)}
-              aria-pressed={summaryVisible}
-              className={`rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
-                summaryVisible
-                  ? 'bg-amber-200/14 text-[color:var(--color-accent-contrast)]'
-                  : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-soft)]'
-              }`}
-              style={summaryVisible ? activeOutlineStyle : undefined}
-            >
-              Summary
-            </button>
+            <div className="flex items-center justify-self-end gap-2">
+              <button
+                type="button"
+                onClick={() => setSummaryVisible((current) => !current)}
+                aria-pressed={summaryVisible}
+                className={`${topPillButton} min-w-[7.4rem] ${
+                  summaryVisible
+                    ? 'bg-amber-200/14 text-[color:var(--color-accent-contrast)]'
+                    : ''
+                }`}
+                style={summaryVisible ? activeOutlineStyle : undefined}
+              >
+                Summary
+              </button>
+              <button
+                type="button"
+                onClick={onToggleThemeMode}
+                className={topButton}
+                title={
+                  themeMode === 'dark'
+                    ? 'Switch to light mode'
+                    : 'Switch to dark mode'
+                }
+              >
+                <Icon
+                  name={themeMode === 'dark' ? 'sun' : 'moon'}
+                  className="h-5 w-5"
+                />
+              </button>
+            </div>
           </div>
         </div>
         {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}
         <div
           className={`grid flex-1 gap-4 ${
             summaryVisible
-              ? 'xl:grid-cols-[120px_minmax(0,1fr)_240px]'
-              : 'xl:grid-cols-[120px_minmax(0,1fr)]'
+              ? 'xl:grid-cols-[144px_minmax(0,1fr)_204px]'
+              : 'xl:grid-cols-[144px_minmax(0,1fr)]'
           }`}
         >
           <div className="sticky top-20 flex flex-col items-start gap-1">
@@ -1336,7 +1381,7 @@ export function CharacterCreationNarrativeScreen({
                 type="button"
                 onClick={() => index <= maxUnlocked && goToStep(step.id)}
                 disabled={index > maxUnlocked}
-                className="flex w-full items-center gap-3 rounded-[16px] px-0 py-1.5 text-left transition disabled:cursor-not-allowed"
+                className="grid w-full grid-cols-[44px_minmax(0,1fr)] items-center gap-3 rounded-[16px] px-0 py-1.5 text-left transition disabled:cursor-not-allowed"
               >
                 {(() => {
                   const locked = index > maxUnlocked;
@@ -1346,7 +1391,7 @@ export function CharacterCreationNarrativeScreen({
                   const circleClass = active
                     ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
                     : locked
-                      ? 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)] opacity-45'
+                      ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)]'
                       : complete
                         ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
                         : 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]';
@@ -1357,7 +1402,7 @@ export function CharacterCreationNarrativeScreen({
                   return (
                     <>
                       <span
-                        className={`relative flex h-11 w-11 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
+                        className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
                           recentlyUnlocked && !active && !locked
                             ? 'animate-pulse shadow-[0_0_0_1px_rgba(134,239,172,0.26),0_0_18px_rgba(134,239,172,0.22)]'
                             : ''
@@ -1403,12 +1448,12 @@ export function CharacterCreationNarrativeScreen({
                       {summaryIdentityRows.map((row) => (
                         <div
                           key={row.label}
-                          className="grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-2 border-b border-[color:var(--color-border)] pb-1 last:border-b-0 last:pb-0"
+                          className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 border-b border-[color:var(--color-border)] pb-1 last:border-b-0 last:pb-0"
                         >
                           <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
                             {row.label}
                           </div>
-                          <div className="text-sm text-[color:var(--color-text-soft)]">
+                          <div className="justify-self-end text-right text-sm text-[color:var(--color-text-soft)]">
                             {row.value}
                           </div>
                         </div>
