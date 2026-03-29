@@ -75,7 +75,9 @@ export interface WorldContinentOption {
 
 export interface WorldCardArt {
   imageUrl: string;
+  selectedImageUrl?: string;
   backgroundPosition?: string;
+  selectedBackgroundPosition?: string;
 }
 
 export interface WorldRegionResourceIcon {
@@ -146,38 +148,47 @@ const localityById = new Map(localityRecords.map((record) => [record.id, record]
 const CONTINENT_CARD_ART: Record<string, WorldCardArt> = {
   "region.kaelvar": {
     imageUrl: "/character-creator/continents/continent-kaelvar.png",
+    selectedImageUrl: "/character-creator/continents/continent-kaelvar-selected.png",
     backgroundPosition: "center 18%"
   },
   "region.valtherion": {
     imageUrl: "/character-creator/continents/continent-valtherion.png",
+    selectedImageUrl: "/character-creator/continents/continent-valtherion-selected.png",
     backgroundPosition: "center 24%"
   },
   "region.serathyl": {
     imageUrl: "/character-creator/continents/continent-serathyl.png",
+    selectedImageUrl: "/character-creator/continents/continent-serathyl-selected.png",
     backgroundPosition: "center 22%"
   },
   "region.draemor": {
     imageUrl: "/character-creator/continents/continent-draemor.png",
+    selectedImageUrl: "/character-creator/continents/continent-draemor-selected.png",
     backgroundPosition: "center 20%"
   },
   "region.talmyra": {
     imageUrl: "/character-creator/continents/continent-talmyra.png",
+    selectedImageUrl: "/character-creator/continents/continent-talmyra-selected.png",
     backgroundPosition: "center 18%"
   },
   "region.myridian_chain": {
     imageUrl: "/character-creator/continents/continent-myridian-chain.png",
+    selectedImageUrl: "/character-creator/continents/continent-myridian-chain-selected.png",
     backgroundPosition: "center 34%"
   },
   "region.lantern_isles": {
     imageUrl: "/character-creator/continents/continent-lantern-isles.png",
+    selectedImageUrl: "/character-creator/continents/continent-lantern-isles-selected.png",
     backgroundPosition: "center 32%"
   },
   "region.serpents_wake": {
     imageUrl: "/character-creator/continents/continent-serpents-wake.png",
+    selectedImageUrl: "/character-creator/continents/continent-serpents-wake-selected.png",
     backgroundPosition: "center 28%"
   },
   "region.dawnreach_isles": {
     imageUrl: "/character-creator/continents/continent-dawnreach-isles.png",
+    selectedImageUrl: "/character-creator/continents/continent-dawnreach-isles-selected.png",
     backgroundPosition: "center 32%"
   }
 };

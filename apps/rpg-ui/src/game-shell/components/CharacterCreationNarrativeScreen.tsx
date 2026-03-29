@@ -91,10 +91,13 @@ const selectionOverlayBase =
   'absolute inset-y-0 left-0 z-10 flex w-[54%] max-w-[34rem] items-stretch overflow-hidden opacity-0 translate-x-5 transition duration-500 ease-out group-hover:translate-x-0 group-hover:opacity-100';
 
 const continentSelectionOverlayBase =
-  'absolute bottom-px left-px top-px z-10 flex w-[20%] items-stretch overflow-hidden rounded-l-[23px]';
+  'absolute bottom-px left-px top-px z-10 flex items-stretch overflow-hidden rounded-l-[23px]';
 
 const lineageSelectionOverlayBase =
   'absolute inset-y-0 left-0 right-[7rem] z-10 flex items-stretch overflow-hidden';
+
+const CONTINENT_SELECTION_PANEL_WIDTH = 'clamp(13rem, 22%, 18rem)';
+const CONTINENT_SELECTION_IMAGE_LEFT = `calc(${CONTINENT_SELECTION_PANEL_WIDTH} + 1px)`;
 
 const ATTRIBUTE_POINT_BUDGET = 10;
 const STEP_UNLOCK_FEEDBACK_MS = 1600;
@@ -709,6 +712,9 @@ export function CharacterCreationNarrativeScreen({
           const statRows = parsePresentedAttributeValues(option.notes[0] ?? '');
           const art = getLineageCardArt(option.id);
           const selected = form.lineageId === option.id;
+          const lineageImageUrl = selected
+            ? art?.selectedImageUrl ?? art?.imageUrl
+            : art?.imageUrl;
 
           return (
             <div
@@ -744,14 +750,17 @@ export function CharacterCreationNarrativeScreen({
                       <div
                         className="lineage-card-image-base absolute inset-0"
                         style={{
-                          backgroundImage: `url(${art.imageUrl})`
+                          backgroundImage: `url(${lineageImageUrl})`,
+                          ...(art.selectedBackgroundPosition
+                            ? { backgroundPosition: art.selectedBackgroundPosition }
+                            : {})
                         }}
                       />
                     ) : (
                       <div
                         className="absolute inset-0 bg-cover bg-no-repeat opacity-30 transition duration-500 ease-out group-hover:scale-[1.03] group-hover:opacity-80"
                         style={{
-                          backgroundImage: `url(${art.imageUrl})`,
+                          backgroundImage: `url(${lineageImageUrl})`,
                           backgroundPosition: art.backgroundPosition ?? 'center center'
                         }}
                       />
@@ -1014,6 +1023,12 @@ export function CharacterCreationNarrativeScreen({
         {continents.map((option) => {
           const art = getContinentCardArt(option.id);
           const selected = form.continentId === option.id;
+          const continentImageUrl = selected
+            ? art?.selectedImageUrl ?? art?.imageUrl
+            : art?.imageUrl;
+          const continentBackgroundPosition = selected
+            ? art?.selectedBackgroundPosition ?? art?.backgroundPosition ?? 'center center'
+            : art?.backgroundPosition ?? 'center center';
 
           return (
             <div
@@ -1038,23 +1053,21 @@ export function CharacterCreationNarrativeScreen({
                     backgroundId: ''
                   });
                 }}
-                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
+                className={`block h-full w-full text-left ${selected ? 'pb-20' : 'p-5'}`}
               >
                 {art && (
                   <>
                     <div
-                      className={`absolute inset-y-0 right-0 bg-no-repeat transition duration-500 ease-out ${
+                      className={`absolute bg-no-repeat transition duration-500 ease-out ${
                         selected
-                          ? 'opacity-100'
-                          : 'bg-cover opacity-28 group-hover:scale-[1.03] group-hover:opacity-80'
+                          ? 'bottom-px right-px top-px opacity-100'
+                          : 'inset-y-0 right-0 bg-cover opacity-28 group-hover:scale-[1.03] group-hover:opacity-80'
                       }`}
                       style={{
-                        backgroundImage: `url(${art.imageUrl})`,
-                        left: selected ? '20%' : 0,
-                        backgroundPosition: selected
-                          ? 'right top'
-                          : art.backgroundPosition ?? 'center center',
-                        backgroundSize: selected ? 'auto 100%' : undefined
+                        backgroundImage: `url(${continentImageUrl})`,
+                        left: selected ? CONTINENT_SELECTION_IMAGE_LEFT : 0,
+                        backgroundPosition: continentBackgroundPosition,
+                        backgroundSize: selected ? 'cover' : undefined
                       }}
                     />
                     {!selected && (
@@ -1065,40 +1078,42 @@ export function CharacterCreationNarrativeScreen({
                     )}
                   </>
                 )}
+                {selected && (
+                  <div
+                    className={`${continentSelectionOverlayBase} bg-[rgba(8,16,14,0.96)]`}
+                    style={{ width: CONTINENT_SELECTION_PANEL_WIDTH }}
+                  >
+                    <div className="flex h-full flex-col px-4 py-5">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                          {option.label}
+                        </div>
+                        <span
+                          className={`inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
+                          option.difficultyTone === 'success'
+                            ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
+                            : option.difficultyTone === 'warning'
+                              ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
+                              : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
+                          }`}
+                        >
+                          {option.difficultyLabel}
+                        </span>
+                      </div>
+                      <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                        {option.description}
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div
                   className={`relative z-10 transition duration-200 ${
                     selected
-                      ? 'min-h-[28rem]'
+                      ? 'min-h-[28rem] w-full'
                       : 'group-hover:opacity-0'
                   }`}
                 >
-                  {selected ? (
-                    <div className={continentSelectionOverlayBase}>
-                      <div className="h-full w-full rounded-l-[23px] bg-[rgba(8,16,14,0.96)]">
-                        <div className="flex h-full flex-col px-4 py-5">
-                          <div className="flex items-start justify-between gap-3">
-                            <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                              {option.label}
-                            </div>
-                            <span
-                              className={`inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
-                              option.difficultyTone === 'success'
-                                ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
-                                : option.difficultyTone === 'warning'
-                                  ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
-                                  : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
-                              }`}
-                            >
-                              {option.difficultyLabel}
-                            </span>
-                          </div>
-                          <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                            {option.description}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
+                  {!selected && (
                     <>
                       <div className="flex items-start justify-between gap-3">
                         <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">

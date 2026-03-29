@@ -113,7 +113,9 @@ export interface LineageIdentityCatalog {
 
 export interface LineageCardArt {
   imageUrl: string;
+  selectedImageUrl?: string;
   backgroundPosition?: string;
+  selectedBackgroundPosition?: string;
 }
 
 export interface StarterBackstoryTemplate extends CharacterCreationOption {
@@ -2186,38 +2188,47 @@ const LINEAGE_CARD_ART: Record<string, LineageCardArt> = {
   },
   "lineage.dwarf": {
     imageUrl: "/character-creator/lineages/lineage-dwarf.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-dwarf-selected.png",
     backgroundPosition: "center 28%"
   },
   "lineage.gnome": {
     imageUrl: "/character-creator/lineages/lineage-gnome.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-gnome-selected.png",
     backgroundPosition: "center 24%"
   },
   "lineage.halfling": {
     imageUrl: "/character-creator/lineages/lineage-halfling.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-halfling-selected.png",
     backgroundPosition: "center 24%"
   },
   "lineage.elf": {
     imageUrl: "/character-creator/lineages/lineage-elf.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-elf-selected.png",
     backgroundPosition: "center 22%"
   },
   "lineage.dark_elf": {
     imageUrl: "/character-creator/lineages/lineage-dark-elf.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-dark-elf-selected.png",
     backgroundPosition: "center 18%"
   },
   "lineage.half_troll": {
     imageUrl: "/character-creator/lineages/lineage-half-troll.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-half-troll-selected.png",
     backgroundPosition: "center 24%"
   },
   "lineage.half_orc": {
     imageUrl: "/character-creator/lineages/lineage-half-orc.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-half-orc-selected.png",
     backgroundPosition: "center 20%"
   },
   "lineage.half_goblin": {
     imageUrl: "/character-creator/lineages/lineage-half-goblin.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-half-goblin-selected.png",
     backgroundPosition: "center 22%"
   },
   "lineage.half_merfolk": {
     imageUrl: "/character-creator/lineages/lineage-half-merfolk.png",
+    selectedImageUrl: "/character-creator/lineages/lineage-half-merfolk-selected.png",
     backgroundPosition: "center 18%"
   }
 };
