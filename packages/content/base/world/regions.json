@@ -2653,6 +2653,1177 @@
                                                         }
                     },
                     {
+                        "id":  "region.starfall_isle",
+                        "slug":  "starfall_isle",
+                        "name":  "Starfall Isle",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.myridian_chain",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "myridian_inner_trade_hub",
+                        "summary":  "The main customs island of the Myridian Chain, where relay harbors, bonded warehouses, and ferry slips crowd around the safest deepwater port in the northern archipelago.",
+                        "tags":  [
+                                     "subregion",
+                                     "island",
+                                     "harbor",
+                                     "trade_hub"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "mixed_forest_archipelago",
+                                                                            "temperate_rainforest",
+                                                                            "marine_shelf"
+                                                                        ],
+                                                   "elevationProfile":  "sheltered_harbor_island",
+                                                   "climateTendencies":  [
+                                                                             "mild_wet_maritime",
+                                                                             "fog_prone_harbors"
+                                                                         ],
+                                                   "freshwaterAvailability":  "moderate_high",
+                                                   "climateSeverity":  "moderate",
+                                                   "agriculturalPotential":  "low_moderate",
+                                                   "extractivePotential":  "limited",
+                                                   "hazardLevel":  "moderate"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  68,
+                                                  "foodProductionCapacity":  42,
+                                                  "waterAvailability":  66,
+                                                  "climateBurden":  40,
+                                                  "hazardPressure":  38,
+                                                  "infrastructureDifficulty":  44,
+                                                  "populationCapacity":  4000000,
+                                                  "densityBand":  "moderate"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "moderate",
+                                                  "settlementPattern":  "Deepwater harbors, bonded quays, and short-haul ferry villages ring the defensible coves of the island.",
+                                                  "estimatedPopulationMillions":  4,
+                                                  "populationCapacityMillions":  4,
+                                                  "urbanPopulationPercent":  38,
+                                                  "ruralPopulationPercent":  62
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "brokerage",
+                                                                     "ship_repair",
+                                                                     "salt_fish",
+                                                                     "customs_services"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "bulk_timber",
+                                                                     "forged_metal",
+                                                                     "cloth"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "brokerage",
+                                                                        "ship_repair",
+                                                                        "customs_services",
+                                                                        "salt_fish",
+                                                                        "ferry_trade"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "bulk_timber",
+                                                                        "forged_metal",
+                                                                        "cloth"
+                                                                    ],
+                                                "importBias":  0.71,
+                                                "exportBias":  0.74,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  1,
+                                                                                 "town":  2,
+                                                                                 "village":  3,
+                                                                                 "outpost":  1,
+                                                                                 "strategic_site":  2
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Deepwater harbors, bonded quays, and short-haul ferry villages ring the defensible coves of the island."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.pearlwake_keys",
+                        "slug":  "pearlwake_keys",
+                        "name":  "The Pearlwake Keys",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.myridian_chain",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "myridian_pearl_shelf",
+                        "summary":  "A ring of low coral keys and shoal villages where pearl divers, salt fishers, and reef pilots work the shelves between safer Myridian anchorages.",
+                        "tags":  [
+                                     "subregion",
+                                     "keys",
+                                     "shoals",
+                                     "pearls"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "marine_shelf",
+                                                                            "chaparral",
+                                                                            "rocky_shoals"
+                                                                        ],
+                                                   "elevationProfile":  "low_coral_keys",
+                                                   "climateTendencies":  [
+                                                                             "mild_wet_maritime",
+                                                                             "tide_cut_channels"
+                                                                         ],
+                                                   "freshwaterAvailability":  "moderate",
+                                                   "climateSeverity":  "moderate",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "moderate",
+                                                   "hazardLevel":  "moderate"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  55,
+                                                  "foodProductionCapacity":  44,
+                                                  "waterAvailability":  50,
+                                                  "climateBurden":  45,
+                                                  "hazardPressure":  46,
+                                                  "infrastructureDifficulty":  58,
+                                                  "populationCapacity":  1800000,
+                                                  "densityBand":  "low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "low",
+                                                  "settlementPattern":  "Harbor towns and curing villages cling to the shoals while divers and pilots work the wider shelf.",
+                                                  "estimatedPopulationMillions":  1.8,
+                                                  "populationCapacityMillions":  1.8,
+                                                  "urbanPopulationPercent":  26,
+                                                  "ruralPopulationPercent":  74
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "pearls",
+                                                                     "salt_fish",
+                                                                     "shellcraft"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "timber",
+                                                                     "metal_goods"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "pearls",
+                                                                        "salt_fish",
+                                                                        "reef_piloting",
+                                                                        "shellcraft"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "timber",
+                                                                        "metal_goods"
+                                                                    ],
+                                                "importBias":  0.74,
+                                                "exportBias":  0.63,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  1,
+                                                                                 "village":  3,
+                                                                                 "outpost":  2,
+                                                                                 "strategic_site":  1
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Harbor towns and curing villages cling to the shoals while divers and pilots work the wider shelf."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.zenith_isle",
+                        "slug":  "zenith_isle",
+                        "name":  "Zenith Isle",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.myridian_chain",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "myridian_outer_watch",
+                        "summary":  "The highest and most exposed watch-island in the outer ring, where beacon forts, warning towers, and patrol crews guard the northern lanes into the Myridian Chain.",
+                        "tags":  [
+                                     "subregion",
+                                     "outer_isles",
+                                     "beacons",
+                                     "fortified"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "rocky_shoals",
+                                                                            "marine_shelf",
+                                                                            "mixed_forest_archipelago"
+                                                                        ],
+                                                   "elevationProfile":  "storm_beaten_outer_isles",
+                                                   "climateTendencies":  [
+                                                                             "mild_wet_maritime",
+                                                                             "gale_exposed"
+                                                                         ],
+                                                   "freshwaterAvailability":  "low_moderate",
+                                                   "climateSeverity":  "moderate_high",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "low_moderate",
+                                                   "hazardLevel":  "high"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  42,
+                                                  "foodProductionCapacity":  20,
+                                                  "waterAvailability":  32,
+                                                  "climateBurden":  56,
+                                                  "hazardPressure":  58,
+                                                  "infrastructureDifficulty":  68,
+                                                  "populationCapacity":  800000,
+                                                  "densityBand":  "very_low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "very_low",
+                                                  "settlementPattern":  "Small garrisons and signal keeps hold the only reliable landings on the exposed edge islands.",
+                                                  "estimatedPopulationMillions":  0.8,
+                                                  "populationCapacityMillions":  0.8,
+                                                  "urbanPopulationPercent":  18,
+                                                  "ruralPopulationPercent":  82
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "beacon_services",
+                                                                     "coastal_patrols",
+                                                                     "quarry_stone"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "cloth",
+                                                                     "forged_metal"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "beacon_services",
+                                                                        "coastal_patrols",
+                                                                        "quarry_stone",
+                                                                        "salvage_transfer"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "cloth",
+                                                                        "forged_metal",
+                                                                        "timber"
+                                                                    ],
+                                                "importBias":  0.82,
+                                                "exportBias":  0.49,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  0,
+                                                                                 "village":  1,
+                                                                                 "outpost":  3,
+                                                                                 "strategic_site":  3
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Small garrisons and signal keeps hold the only reliable landings on the exposed edge islands."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.lantern_crown",
+                        "slug":  "lantern_crown",
+                        "name":  "The Lantern Crown",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.lantern_isles",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "lantern_inner_harbors",
+                        "summary":  "The safest surface island cluster in the Lantern Isles, where broker harbors, reef pilots, and opportunistic free ports sit behind bright reefs and seasonal gardens.",
+                        "tags":  [
+                                     "subregion",
+                                     "harbor",
+                                     "reef",
+                                     "trade_hub"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "seasonal_tropical_forest",
+                                                                            "chaparral",
+                                                                            "mangrove"
+                                                                        ],
+                                                   "elevationProfile":  "low_volcanic_harbor_islands",
+                                                   "climateTendencies":  [
+                                                                             "hot_seasonal",
+                                                                             "wet_coastal_belts"
+                                                                         ],
+                                                   "freshwaterAvailability":  "moderate",
+                                                   "climateSeverity":  "moderate",
+                                                   "agriculturalPotential":  "moderate",
+                                                   "extractivePotential":  "limited",
+                                                   "hazardLevel":  "moderate"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  61,
+                                                  "foodProductionCapacity":  48,
+                                                  "waterAvailability":  58,
+                                                  "climateBurden":  48,
+                                                  "hazardPressure":  42,
+                                                  "infrastructureDifficulty":  50,
+                                                  "populationCapacity":  1500000,
+                                                  "densityBand":  "low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "low",
+                                                  "settlementPattern":  "Broker harbors and market wards pack the inner coves while gardens and reef farms spread across the brighter slopes.",
+                                                  "estimatedPopulationMillions":  1.5,
+                                                  "populationCapacityMillions":  1.5,
+                                                  "urbanPopulationPercent":  32,
+                                                  "ruralPopulationPercent":  68
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "brokerage",
+                                                                     "citrus",
+                                                                     "fish",
+                                                                     "light_craft"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "iron",
+                                                                     "draft_animals"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "brokerage",
+                                                                        "citrus",
+                                                                        "fish",
+                                                                        "light_craft",
+                                                                        "resupply"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "iron",
+                                                                        "draft_animals",
+                                                                        "bulk_timber"
+                                                                    ],
+                                                "importBias":  0.63,
+                                                "exportBias":  0.68,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  2,
+                                                                                 "village":  2,
+                                                                                 "outpost":  1,
+                                                                                 "strategic_site":  1
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Broker harbors and market wards pack the inner coves while gardens and reef farms spread across the brighter slopes."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.glasswake_quay",
+                        "slug":  "glasswake_quay",
+                        "name":  "Glasswake Quay",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.lantern_isles",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "lantern_outer_shrines",
+                        "summary":  "A quieter quay-island of shrine estates, shell kilns, and traveler refuges where herb gardens and lookout posts make the mid-ocean routes barely livable.",
+                        "tags":  [
+                                     "subregion",
+                                     "cay",
+                                     "shrine",
+                                     "lookout"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "chaparral",
+                                                                            "seasonal_tropical_forest",
+                                                                            "mangrove"
+                                                                        ],
+                                                   "elevationProfile":  "reef_ringed_cay",
+                                                   "climateTendencies":  [
+                                                                             "hot_seasonal",
+                                                                             "salt_wind"
+                                                                         ],
+                                                   "freshwaterAvailability":  "moderate",
+                                                   "climateSeverity":  "moderate",
+                                                   "agriculturalPotential":  "low_moderate",
+                                                   "extractivePotential":  "limited",
+                                                   "hazardLevel":  "moderate"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  49,
+                                                  "foodProductionCapacity":  38,
+                                                  "waterAvailability":  46,
+                                                  "climateBurden":  50,
+                                                  "hazardPressure":  45,
+                                                  "infrastructureDifficulty":  56,
+                                                  "populationCapacity":  700000,
+                                                  "densityBand":  "very_low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "very_low",
+                                                  "settlementPattern":  "Monasteries, lookout outposts, and herb plots occupy the few sheltered rises above the reef line.",
+                                                  "estimatedPopulationMillions":  0.7,
+                                                  "populationCapacityMillions":  0.7,
+                                                  "urbanPopulationPercent":  14,
+                                                  "ruralPopulationPercent":  86
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "herbs",
+                                                                     "copied_ledgers",
+                                                                     "shell_lime"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "iron",
+                                                                     "worked_wood"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "herbs",
+                                                                        "traveler_relief",
+                                                                        "shell_lime",
+                                                                        "copied_ledgers"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "iron",
+                                                                        "worked_wood",
+                                                                        "cloth"
+                                                                    ],
+                                                "importBias":  0.76,
+                                                "exportBias":  0.47,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  0,
+                                                                                 "village":  1,
+                                                                                 "outpost":  2,
+                                                                                 "strategic_site":  1
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Monasteries, lookout outposts, and herb plots occupy the few sheltered rises above the reef line."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.deepglow_reef",
+                        "slug":  "deepglow_reef",
+                        "name":  "Deepglow Reef",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.lantern_isles",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "lantern_undersea_shelf",
+                        "summary":  "A luminous reef shelf and sea-cave complex beneath the islands, home to hidden merfolk craft halls, pearl beds, and submerged exchange routes.",
+                        "tags":  [
+                                     "subregion",
+                                     "reef",
+                                     "merfolk",
+                                     "undersea"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "mangrove",
+                                                                            "marine_shelf",
+                                                                            "chaparral"
+                                                                        ],
+                                                   "elevationProfile":  "submerged_reef_shelf",
+                                                   "climateTendencies":  [
+                                                                             "hot_seasonal",
+                                                                             "sheltered_currents"
+                                                                         ],
+                                                   "freshwaterAvailability":  "low_moderate",
+                                                   "climateSeverity":  "moderate",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "moderate",
+                                                   "hazardLevel":  "moderate"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  46,
+                                                  "foodProductionCapacity":  42,
+                                                  "waterAvailability":  52,
+                                                  "climateBurden":  46,
+                                                  "hazardPressure":  44,
+                                                  "infrastructureDifficulty":  62,
+                                                  "populationCapacity":  800000,
+                                                  "densityBand":  "low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "low",
+                                                  "settlementPattern":  "Merfolk enclaves and hidden exchange chambers cluster through the reef shelf rather than across the exposed surface.",
+                                                  "estimatedPopulationMillions":  0.8,
+                                                  "populationCapacityMillions":  0.8,
+                                                  "urbanPopulationPercent":  44,
+                                                  "ruralPopulationPercent":  56
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "pearls",
+                                                                     "reef_craft",
+                                                                     "sea_trade"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "iron",
+                                                                     "cloth"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "pearls",
+                                                                        "reef_craft",
+                                                                        "sea_trade",
+                                                                        "fish"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "iron",
+                                                                        "cloth",
+                                                                        "surface_timber"
+                                                                    ],
+                                                "importBias":  0.72,
+                                                "exportBias":  0.58,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  1,
+                                                                                 "town":  1,
+                                                                                 "village":  0,
+                                                                                 "outpost":  0,
+                                                                                 "strategic_site":  0
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Merfolk enclaves and hidden exchange chambers cluster through the reef shelf rather than across the exposed surface."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.stormfang_isle",
+                        "slug":  "stormfang_isle",
+                        "name":  "Stormfang Isle",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.serpents_wake",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "serpents_central_harbor",
+                        "summary":  "One of the few larger islands in the Wake with a harbor deep enough for repair yards, convoy musters, and rough law to coexist beneath the storms.",
+                        "tags":  [
+                                     "subregion",
+                                     "island",
+                                     "harbor",
+                                     "salvage"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "mangrove",
+                                                                            "dry_forest",
+                                                                            "reef_shelf"
+                                                                        ],
+                                                   "elevationProfile":  "storm_cut_harbor_island",
+                                                   "climateTendencies":  [
+                                                                             "hot_wet",
+                                                                             "storm_exposed",
+                                                                             "flood_prone"
+                                                                         ],
+                                                   "freshwaterAvailability":  "high_but_managed",
+                                                   "climateSeverity":  "high",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "limited_moderate",
+                                                   "hazardLevel":  "high"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  48,
+                                                  "foodProductionCapacity":  38,
+                                                  "waterAvailability":  60,
+                                                  "climateBurden":  60,
+                                                  "hazardPressure":  62,
+                                                  "infrastructureDifficulty":  64,
+                                                  "populationCapacity":  850000,
+                                                  "densityBand":  "low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "low",
+                                                  "settlementPattern":  "Repair coves, salvage yards, and hard fishing wards hold the only denser settlement around the island's safer anchorages.",
+                                                  "estimatedPopulationMillions":  0.85,
+                                                  "populationCapacityMillions":  0.85,
+                                                  "urbanPopulationPercent":  28,
+                                                  "ruralPopulationPercent":  72
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "salt_fish",
+                                                                     "passage_services",
+                                                                     "salvage_trade"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "iron",
+                                                                     "cloth"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "salt_fish",
+                                                                        "passage_services",
+                                                                        "salvage_trade",
+                                                                        "shellfish"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "iron",
+                                                                        "cloth",
+                                                                        "worked_timber"
+                                                                    ],
+                                                "importBias":  0.79,
+                                                "exportBias":  0.55,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  1,
+                                                                                 "village":  1,
+                                                                                 "outpost":  1,
+                                                                                 "strategic_site":  1
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Repair coves, salvage yards, and hard fishing wards hold the only denser settlement around the island's safer anchorages."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.blackreef_keys",
+                        "slug":  "blackreef_keys",
+                        "name":  "The Blackreef Keys",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.serpents_wake",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "serpents_reef_channels",
+                        "summary":  "A broken spread of black-stone reefs and pirate anchorages where smuggling, raiding, and storm salvage remain the surest economy.",
+                        "tags":  [
+                                     "subregion",
+                                     "keys",
+                                     "piracy",
+                                     "reefs"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "reef_shelf",
+                                                                            "mangrove",
+                                                                            "dry_forest"
+                                                                        ],
+                                                   "elevationProfile":  "black_reef_islets",
+                                                   "climateTendencies":  [
+                                                                             "hot_wet",
+                                                                             "storm_exposed"
+                                                                         ],
+                                                   "freshwaterAvailability":  "scarce",
+                                                   "climateSeverity":  "high",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "limited",
+                                                   "hazardLevel":  "very_high"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  34,
+                                                  "foodProductionCapacity":  24,
+                                                  "waterAvailability":  40,
+                                                  "climateBurden":  64,
+                                                  "hazardPressure":  76,
+                                                  "infrastructureDifficulty":  74,
+                                                  "populationCapacity":  500000,
+                                                  "densityBand":  "very_low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "very_low",
+                                                  "settlementPattern":  "Tiny pirate holds and salvage camps occupy hidden channels between reef-torn islets.",
+                                                  "estimatedPopulationMillions":  0.5,
+                                                  "populationCapacityMillions":  0.5,
+                                                  "urbanPopulationPercent":  16,
+                                                  "ruralPopulationPercent":  84
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "salvage_goods",
+                                                                     "smuggling",
+                                                                     "salt_fish"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "iron",
+                                                                     "cloth"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "salvage_goods",
+                                                                        "smuggling",
+                                                                        "salt_fish",
+                                                                        "mangrove_timber"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "iron",
+                                                                        "cloth",
+                                                                        "medicine"
+                                                                    ],
+                                                "importBias":  0.85,
+                                                "exportBias":  0.5,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  0,
+                                                                                 "village":  0,
+                                                                                 "outpost":  3,
+                                                                                 "strategic_site":  1
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Tiny pirate holds and salvage camps occupy hidden channels between reef-torn islets."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.stormhook_reach",
+                        "slug":  "stormhook_reach",
+                        "name":  "Stormhook Reach",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.serpents_wake",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "serpents_outer_watch",
+                        "summary":  "The outer watch islands of the Wake, marked by signal heights, escort musters, and settlements small enough to live or vanish by convoy season.",
+                        "tags":  [
+                                     "subregion",
+                                     "watch_isles",
+                                     "escort",
+                                     "frontier"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "reef_shelf",
+                                                                            "savanna",
+                                                                            "dry_forest"
+                                                                        ],
+                                                   "elevationProfile":  "exposed_watch_islands",
+                                                   "climateTendencies":  [
+                                                                             "hot_wet",
+                                                                             "storm_exposed",
+                                                                             "wind_hard"
+                                                                         ],
+                                                   "freshwaterAvailability":  "scarce",
+                                                   "climateSeverity":  "very_high",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "limited",
+                                                   "hazardLevel":  "very_high"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  28,
+                                                  "foodProductionCapacity":  18,
+                                                  "waterAvailability":  36,
+                                                  "climateBurden":  68,
+                                                  "hazardPressure":  80,
+                                                  "infrastructureDifficulty":  76,
+                                                  "populationCapacity":  250000,
+                                                  "densityBand":  "very_low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "very_low",
+                                                  "settlementPattern":  "Signal crews, escorts, and seasonal camps occupy the only viable pockets between weather breaks.",
+                                                  "estimatedPopulationMillions":  0.25,
+                                                  "populationCapacityMillions":  0.25,
+                                                  "urbanPopulationPercent":  12,
+                                                  "ruralPopulationPercent":  88
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "escort_services",
+                                                                     "lookout_service",
+                                                                     "shellfish"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "timber",
+                                                                     "forged_metal"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "escort_services",
+                                                                        "lookout_service",
+                                                                        "shellfish"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "timber",
+                                                                        "forged_metal",
+                                                                        "cloth"
+                                                                    ],
+                                                "importBias":  0.88,
+                                                "exportBias":  0.42,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  0,
+                                                                                 "village":  0,
+                                                                                 "outpost":  2,
+                                                                                 "strategic_site":  2
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Signal crews, escorts, and seasonal camps occupy the only viable pockets between weather breaks."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.aurora_reach",
+                        "slug":  "aurora_reach",
+                        "name":  "Aurora Reach",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.dawnreach_isles",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "dawnreach_harbor_belt",
+                        "summary":  "The most viable harbor belt in Dawnreach, where cold-water anchorages, cod fleets, and ice pilots keep a thin eastward trade alive.",
+                        "tags":  [
+                                     "subregion",
+                                     "harbor",
+                                     "cold_marine",
+                                     "frontier"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "taiga",
+                                                                            "conifer_forest",
+                                                                            "cold_marine"
+                                                                        ],
+                                                   "elevationProfile":  "rugged_cold_harbor_islands",
+                                                   "climateTendencies":  [
+                                                                             "long_winters",
+                                                                             "short_growing_season",
+                                                                             "cold_maritime"
+                                                                         ],
+                                                   "freshwaterAvailability":  "moderate",
+                                                   "climateSeverity":  "very_high",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "limited_moderate",
+                                                   "hazardLevel":  "high"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  40,
+                                                  "foodProductionCapacity":  30,
+                                                  "waterAvailability":  48,
+                                                  "climateBurden":  70,
+                                                  "hazardPressure":  50,
+                                                  "infrastructureDifficulty":  66,
+                                                  "populationCapacity":  450000,
+                                                  "densityBand":  "low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "low",
+                                                  "settlementPattern":  "Harbor hamlets and whaling quays survive where cliffs and current give rare shelter from the eastern sea.",
+                                                  "estimatedPopulationMillions":  0.45,
+                                                  "populationCapacityMillions":  0.45,
+                                                  "urbanPopulationPercent":  24,
+                                                  "ruralPopulationPercent":  76
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "cold_fish",
+                                                                     "resin",
+                                                                     "ice_piloting"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "textiles",
+                                                                     "forged_metal"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "cold_fish",
+                                                                        "resin",
+                                                                        "ice_piloting",
+                                                                        "conifer_timber"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "textiles",
+                                                                        "forged_metal",
+                                                                        "lamp_oil"
+                                                                    ],
+                                                "importBias":  0.84,
+                                                "exportBias":  0.5,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  1,
+                                                                                 "village":  1,
+                                                                                 "outpost":  1,
+                                                                                 "strategic_site":  1
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Harbor hamlets and whaling quays survive where cliffs and current give rare shelter from the eastern sea."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.nacre_shelf",
+                        "slug":  "nacre_shelf",
+                        "name":  "The Nacre Shelf",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.dawnreach_isles",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "dawnreach_undersea_shelf",
+                        "summary":  "A rare sheltered shelf beneath Dawnreach where nacre caverns, pearl beds, and merfolk craft halls survive below the worst of the weather.",
+                        "tags":  [
+                                     "subregion",
+                                     "shelf",
+                                     "merfolk",
+                                     "undersea"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "cold_marine",
+                                                                            "conifer_forest",
+                                                                            "taiga"
+                                                                        ],
+                                                   "elevationProfile":  "submerged_cold_shelf",
+                                                   "climateTendencies":  [
+                                                                             "cold_maritime",
+                                                                             "sheltered_currents"
+                                                                         ],
+                                                   "freshwaterAvailability":  "low_moderate",
+                                                   "climateSeverity":  "high",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "moderate",
+                                                   "hazardLevel":  "moderate"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  32,
+                                                  "foodProductionCapacity":  34,
+                                                  "waterAvailability":  44,
+                                                  "climateBurden":  62,
+                                                  "hazardPressure":  46,
+                                                  "infrastructureDifficulty":  68,
+                                                  "populationCapacity":  220000,
+                                                  "densityBand":  "very_low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "very_low",
+                                                  "settlementPattern":  "Merfolk neighborhoods and craft halls cluster along the shelf rather than on the storm-struck surface.",
+                                                  "estimatedPopulationMillions":  0.22,
+                                                  "populationCapacityMillions":  0.22,
+                                                  "urbanPopulationPercent":  42,
+                                                  "ruralPopulationPercent":  58
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "pearls",
+                                                                     "sea_craft",
+                                                                     "cold_water_trade"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "textiles",
+                                                                     "forged_metal"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "pearls",
+                                                                        "sea_craft",
+                                                                        "cold_water_trade",
+                                                                        "fish"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "textiles",
+                                                                        "forged_metal",
+                                                                        "surface_timber"
+                                                                    ],
+                                                "importBias":  0.8,
+                                                "exportBias":  0.56,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  1,
+                                                                                 "town":  0,
+                                                                                 "village":  0,
+                                                                                 "outpost":  0,
+                                                                                 "strategic_site":  0
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Merfolk neighborhoods and craft halls cluster along the shelf rather than on the storm-struck surface."
+                                                                                }
+                                                        }
+                    },
+                    {
+                        "id":  "region.whalebone_edge",
+                        "slug":  "whalebone_edge",
+                        "name":  "Whalebone Edge",
+                        "regionType":  "subregion",
+                        "aliases":  [
+
+                                    ],
+                        "parentRegionId":  "region.dawnreach_isles",
+                        "mapIds":  [
+                                       "world_map.first_world"
+                                   ],
+                        "positionLabel":  "dawnreach_outer_watch",
+                        "summary":  "An exposed rim of lookout islands and processing camps where whales, seals, and storms decide whether a season pays or kills.",
+                        "tags":  [
+                                     "subregion",
+                                     "whaling",
+                                     "lookout",
+                                     "exposed_coast"
+                                 ],
+                        "environmentProfile":  {
+                                                   "dominantBiomeMix":  [
+                                                                            "tundra",
+                                                                            "cold_marine",
+                                                                            "conifer_forest"
+                                                                        ],
+                                                   "elevationProfile":  "exposed_outer_isles",
+                                                   "climateTendencies":  [
+                                                                             "long_winters",
+                                                                             "cold_maritime",
+                                                                             "storm_exposed"
+                                                                         ],
+                                                   "freshwaterAvailability":  "scarce",
+                                                   "climateSeverity":  "very_high",
+                                                   "agriculturalPotential":  "low",
+                                                   "extractivePotential":  "limited",
+                                                   "hazardLevel":  "very_high"
+                                               },
+                        "simulationProfile":  {
+                                                  "habitationScore":  20,
+                                                  "foodProductionCapacity":  18,
+                                                  "waterAvailability":  28,
+                                                  "climateBurden":  78,
+                                                  "hazardPressure":  68,
+                                                  "infrastructureDifficulty":  80,
+                                                  "populationCapacity":  120000,
+                                                  "densityBand":  "very_low"
+                                              },
+                        "populationProfile":  {
+                                                  "densityBand":  "very_low",
+                                                  "settlementPattern":  "Lookout camps and whale-processing stations endure only on the hardest coasts and only for as long as the season allows.",
+                                                  "estimatedPopulationMillions":  0.12,
+                                                  "populationCapacityMillions":  0.12,
+                                                  "urbanPopulationPercent":  8,
+                                                  "ruralPopulationPercent":  92
+                                              },
+                        "economicProfile":  {
+                                                "majorExports":  [
+                                                                     "whaling",
+                                                                     "cold_fish",
+                                                                     "lookout_service"
+                                                                 ],
+                                                "majorImports":  [
+                                                                     "grain",
+                                                                     "textiles",
+                                                                     "forged_metal"
+                                                                 ],
+                                                "supplyStrengths":  [
+                                                                        "whaling",
+                                                                        "cold_fish",
+                                                                        "lookout_service",
+                                                                        "furs"
+                                                                    ],
+                                                "demandPressures":  [
+                                                                        "grain",
+                                                                        "textiles",
+                                                                        "forged_metal",
+                                                                        "rope"
+                                                                    ],
+                                                "importBias":  0.9,
+                                                "exportBias":  0.38,
+                                                "resourceDiversityBand":  "moderate"
+                                            },
+                        "settlementDistributionModel":  {
+                                                            "targetCounts":  {
+                                                                                 "city":  0,
+                                                                                 "town":  0,
+                                                                                 "village":  0,
+                                                                                 "outpost":  2,
+                                                                                 "strategic_site":  1
+                                                                             },
+                                                            "generationRules":  {
+                                                                                    "asymmetryMode":  "region_locality_weighted",
+                                                                                    "survivabilityDriver":  "simulation_profile",
+                                                                                    "settlementPattern":  "Lookout camps and whale-processing stations endure only on the hardest coasts and only for as long as the season allows."
+                                                                                }
+                                                        }
+                    },
+                    {
                         "id":  "region.azure_vast",
                         "slug":  "azure_vast",
                         "name":  "The Azure Vast",

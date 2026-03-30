@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type WheelEvent } from 'react';
 import {
   BASE_PLAYER_RESOURCE_MAXIMA,
   type PlayerAttributeKey
@@ -41,7 +41,8 @@ import {
   getWorldContinentOptions,
   getWorldRegionOptions,
   getWorldSettlementOptions,
-  resolveWorldSelection
+  resolveWorldSelection,
+  type WorldRegionOption
 } from '../worldSelectionCatalog.js';
 import { NoticeBanner } from './NoticeBanner.js';
 
@@ -99,6 +100,8 @@ const lineageSelectionOverlayBase =
 
 const CONTINENT_SELECTION_PANEL_WIDTH = 'clamp(13rem, 22%, 18rem)';
 const CONTINENT_SELECTION_IMAGE_LEFT = `calc(${CONTINENT_SELECTION_PANEL_WIDTH} + 1px)`;
+const REGION_SELECTION_PANEL_WIDTH = 'clamp(15rem, 24%, 19.5rem)';
+const REGION_SELECTION_IMAGE_LEFT = `calc(${REGION_SELECTION_PANEL_WIDTH} + 1px)`;
 
 const ATTRIBUTE_POINT_BUDGET = 10;
 const LINEAGE_ART_ROTATION_MS = 7000;
@@ -204,35 +207,79 @@ function getSelectionOverlayGradientClass(
   }
 }
 
-function getRegionResourceTone(icon: Parameters<typeof Icon>[0]['name']): {
+function getDifficultyBadgeClass(tone: 'success' | 'warning' | 'danger'): string {
+  if (tone === 'success') {
+    return 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]';
+  }
+
+  if (tone === 'warning') {
+    return 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]';
+  }
+
+  return 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]';
+}
+
+function getOpaqueDifficultyBadgeClass(tone: 'success' | 'warning' | 'danger'): string {
+  if (tone === 'success') {
+    return 'border-emerald-900/80 bg-emerald-500 text-white shadow-[0_10px_24px_rgba(16,185,129,0.35)]';
+  }
+
+  if (tone === 'warning') {
+    return 'border-amber-900/80 bg-amber-500 text-black shadow-[0_10px_24px_rgba(245,158,11,0.3)]';
+  }
+
+  return 'border-rose-900/80 bg-rose-500 text-white shadow-[0_10px_24px_rgba(244,63,94,0.32)]';
+}
+
+function getRegionResourceTone(resourceTone: string | undefined): {
   wrapper: string;
   icon: string;
 } {
-  switch (icon) {
+  switch (resourceTone) {
+    case 'timber':
     case 'tree':
       return {
         wrapper: 'border-emerald-300/25 bg-emerald-400/12',
         icon: 'text-emerald-100'
       };
+    case 'fieldCrops':
     case 'grain':
       return {
         wrapper: 'border-amber-300/25 bg-amber-400/12',
         icon: 'text-amber-100'
       };
+    case 'orchards':
     case 'fruit':
       return {
         wrapper: 'border-orange-300/25 bg-orange-400/12',
         icon: 'text-orange-100'
       };
+    case 'gardenProduce':
     case 'vegetable':
       return {
         wrapper: 'border-lime-300/25 bg-lime-400/12',
         icon: 'text-lime-100'
       };
+    case 'fishAndGame':
     case 'animal':
       return {
         wrapper: 'border-sky-300/25 bg-sky-400/12',
         icon: 'text-sky-100'
+      };
+    case 'livestock':
+      return {
+        wrapper: 'border-cyan-300/25 bg-cyan-400/12',
+        icon: 'text-cyan-100'
+      };
+    case 'ore':
+      return {
+        wrapper: 'border-stone-300/25 bg-stone-300/12',
+        icon: 'text-stone-100'
+      };
+    case 'stone':
+      return {
+        wrapper: 'border-slate-300/25 bg-slate-400/12',
+        icon: 'text-slate-100'
       };
     default:
       return {
@@ -240,6 +287,93 @@ function getRegionResourceTone(icon: Parameters<typeof Icon>[0]['name']): {
         icon: 'text-[color:var(--color-text-strong)]'
       };
   }
+}
+
+function handleContainedScrollWheel(event: WheelEvent<HTMLDivElement>) {
+  const container = event.currentTarget;
+
+  if (container.scrollHeight <= container.clientHeight) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+  container.scrollTop += event.deltaY;
+}
+
+function routeContainedScrollWheel(
+  event: WheelEvent<HTMLDivElement>,
+  container: HTMLDivElement | null
+) {
+  if (!container || container.scrollHeight <= container.clientHeight) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+  container.scrollTop += event.deltaY;
+  container.focus({ preventScroll: true });
+}
+
+function renderRegionResourceIcons(
+  option: WorldRegionOption,
+  keySuffix: string,
+  variant: 'preview' | 'selected',
+  wrapperClassName = 'mt-3 flex flex-wrap gap-1'
+) {
+  if (option.resourceIcons.length === 0) {
+    return null;
+  }
+
+  const imageSizeClass = variant === 'selected' ? 'h-[84px] w-[84px]' : 'h-[52px] w-[52px]';
+  const iconSizeClass = variant === 'selected' ? 'h-[60px] w-[60px]' : 'h-[35px] w-[35px]';
+  const visualClass =
+    variant === 'selected' ? 'drop-shadow-[0_2px_8px_rgba(0,0,0,0.28)]' : '';
+
+  return (
+    <div className={wrapperClassName}>
+      {option.resourceIcons.map((resource) => {
+        const tone = getRegionResourceTone(resource.tone ?? resource.icon);
+
+        return (
+          <Tooltip
+            key={`${option.id}.${resource.label}.${keySuffix}`}
+            content={
+              <span className="block text-left">
+                <span className="font-semibold text-[color:var(--color-text-strong)]">
+                  {resource.label}
+                </span>
+                <span className="mt-1 block text-[color:var(--color-text-soft)]">
+                  {resource.description}
+                </span>
+              </span>
+            }
+            panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
+          >
+            <span
+              className={`inline-flex ${imageSizeClass} cursor-help items-center justify-center`}
+              aria-label={resource.label}
+              tabIndex={0}
+            >
+              {resource.imageUrl ? (
+                <img
+                  src={resource.imageUrl}
+                  alt=""
+                  aria-hidden="true"
+                  className={`${imageSizeClass} ${visualClass} object-contain`}
+                />
+              ) : resource.icon ? (
+                <Icon
+                  name={resource.icon}
+                  className={`${iconSizeClass} ${tone.icon} ${visualClass}`}
+                />
+              ) : null}
+            </span>
+          </Tooltip>
+        );
+      })}
+    </div>
+  );
 }
 
 function formatAttributeTradeoff(
@@ -299,6 +433,7 @@ export function CharacterCreationNarrativeScreen({
   onToggleThemeMode
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const selectedRegionDescriptionRef = useRef<HTMLDivElement | null>(null);
   const [currentStepId, setCurrentStepId] =
     useState<CharacterCreationStepId>('lineage');
   const [showValidation, setShowValidation] = useState(false);
@@ -317,6 +452,32 @@ export function CharacterCreationNarrativeScreen({
     borderColor: activeOutlineColor,
     boxShadow: activeOutlineShadow
   };
+  const imageCardTitleClass =
+    themeMode === 'dark' ? 'text-[color:var(--color-text-strong)]' : 'text-slate-50';
+  const imageCardBodyClass =
+    themeMode === 'dark' ? 'text-[color:var(--color-text-soft)]' : 'text-slate-200';
+  const imageCardMetaClass =
+    themeMode === 'dark'
+      ? 'text-[color:var(--color-muted-strong)]'
+      : 'text-slate-300';
+  const lightSurfaceButtonClass =
+    'bg-[rgba(252,246,237,0.94)] text-[color:var(--color-text-strong)] hover:bg-[rgba(245,235,220,0.98)]';
+  const selectedContinentPanelClass =
+    themeMode === 'dark'
+      ? 'bg-[rgba(8,16,14,0.96)]'
+      : 'bg-[rgba(252,247,239,0.97)]';
+  const selectedRegionPanelSurfaceClass =
+    themeMode === 'dark'
+      ? 'bg-[rgba(7,12,20,0.96)]'
+      : 'bg-[rgba(252,247,239,0.97)]';
+  const lineageRailSurfaceClass =
+    themeMode === 'dark'
+      ? 'bg-[rgba(4,9,17,0.98)]'
+      : 'bg-[rgba(252,247,239,0.97)]';
+  const topBarBackground =
+    themeMode === 'dark'
+      ? 'linear-gradient(135deg, rgba(17, 23, 34, 0.84), rgba(8, 12, 19, 0.66)), radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 34%), radial-gradient(circle at bottom right, rgba(212, 173, 85, 0.08), transparent 28%)'
+      : 'linear-gradient(135deg, rgba(255, 249, 240, 0.94), rgba(245, 235, 220, 0.88)), radial-gradient(circle at top left, rgba(120, 87, 47, 0.12), transparent 34%), radial-gradient(circle at bottom right, rgba(77, 185, 175, 0.1), transparent 28%)';
   const continents = getWorldContinentOptions();
   const regions = getWorldRegionOptions(form.continentId);
   const settlements = getWorldSettlementOptions({
@@ -694,8 +855,12 @@ export function CharacterCreationNarrativeScreen({
               key={option.id}
               content={
                 <span className="block text-center">
-                  <span className="font-semibold text-slate-50">{option.label}</span>
-                  <span className="mt-1 block text-slate-300">{option.description}</span>
+                  <span className="font-semibold text-[color:var(--color-text-strong)]">
+                    {option.label}
+                  </span>
+                  <span className="mt-1 block text-[color:var(--color-text-soft)]">
+                    {option.description}
+                  </span>
                 </span>
               }
               panelClassName="w-44 text-center leading-5"
@@ -814,10 +979,10 @@ export function CharacterCreationNarrativeScreen({
                 {!selected && (
                   <div className="relative z-10 min-h-[12rem] pr-[7.1rem] transition duration-200 group-hover:opacity-0">
                     <div>
-                      <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                      <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
                         {option.label}
                       </div>
-                      <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      <div className={`mt-4 text-sm leading-7 ${imageCardBodyClass}`}>
                         {option.description}
                       </div>
                     </div>
@@ -832,10 +997,10 @@ export function CharacterCreationNarrativeScreen({
                     >
                       <div className="flex h-full items-start px-5 py-6">
                         <div className="w-[40%] min-w-[17rem] pr-8">
-                          <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                          <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
                             {option.label}
                           </div>
-                          <div className="mt-4 text-[13px] leading-7 text-[color:var(--color-text-soft)]">
+                          <div className={`mt-4 text-[13px] leading-7 ${imageCardBodyClass}`}>
                             {option.description}
                           </div>
                         </div>
@@ -845,9 +1010,11 @@ export function CharacterCreationNarrativeScreen({
                 )}
               </button>
               <div
-                className={`absolute inset-y-0 right-0 z-20 flex w-[7rem] flex-col justify-between bg-[rgba(4,9,17,0.98)] px-2.5 pb-3 pt-1.5 ${
+                className={`absolute inset-y-0 right-0 z-20 flex w-[7rem] flex-col justify-between ${lineageRailSurfaceClass} px-2.5 pb-3 pt-1.5 ${
                   selected
-                    ? 'border-l border-l-white/85'
+                    ? themeMode === 'dark'
+                      ? 'border-l border-l-white/85'
+                      : 'border-l border-l-[rgba(78,58,34,0.24)]'
                     : 'border-l border-l-[color:var(--color-border)]'
                 }`}
               >
@@ -870,7 +1037,11 @@ export function CharacterCreationNarrativeScreen({
                   <button
                     type="button"
                     onClick={() => advanceSelectionStep('lineage')}
-                    className="rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(4,9,17,0.92)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(8,16,28,0.98)]"
+                    className={`rounded-full border border-[color:var(--color-border-strong)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
+                      themeMode === 'dark'
+                        ? 'bg-[rgba(4,9,17,0.92)] text-[color:var(--color-text-strong)] hover:bg-[rgba(8,16,28,0.98)]'
+                        : lightSurfaceButtonClass
+                    }`}
                   >
                     {getSelectionAdvanceLabel('lineage')}
                   </button>
@@ -1118,31 +1289,29 @@ export function CharacterCreationNarrativeScreen({
                 )}
                 {selected && (
                   <div
-                    className={`${continentSelectionOverlayBase} bg-[rgba(8,16,14,0.96)]`}
+                    className={`${continentSelectionOverlayBase} ${selectedContinentPanelClass} ${
+                      themeMode === 'light' ? 'border-r border-[rgba(78,58,34,0.14)]' : ''
+                    }`}
                     style={{ width: CONTINENT_SELECTION_PANEL_WIDTH }}
                   >
                     <div className="flex h-full flex-col px-4 py-5">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                          {option.label}
-                        </div>
-                        <span
-                          className={`inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
-                          option.difficultyTone === 'success'
-                            ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
-                            : option.difficultyTone === 'warning'
-                              ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
-                              : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
-                          }`}
-                        >
-                          {option.difficultyLabel}
-                        </span>
+                      <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                        {option.label}
                       </div>
                       <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
                         {option.description}
                       </div>
                     </div>
                   </div>
+                )}
+                {selected && (
+                  <span
+                    className={`absolute right-5 top-5 z-20 inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${getOpaqueDifficultyBadgeClass(
+                      option.difficultyTone
+                    )}`}
+                  >
+                    {option.difficultyLabel}
+                  </span>
                 )}
                 <div
                   className={`relative z-10 transition duration-200 ${
@@ -1154,7 +1323,7 @@ export function CharacterCreationNarrativeScreen({
                   {!selected && (
                     <>
                       <div className="flex items-start justify-between gap-3">
-                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                        <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
                           {option.label}
                         </div>
                         <span
@@ -1169,7 +1338,7 @@ export function CharacterCreationNarrativeScreen({
                           {option.difficultyLabel}
                         </span>
                       </div>
-                      <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      <div className={`mt-3 text-sm leading-7 ${imageCardBodyClass}`}>
                         {option.description}
                       </div>
                     </>
@@ -1180,7 +1349,11 @@ export function CharacterCreationNarrativeScreen({
                 <button
                   type="button"
                   onClick={() => advanceSelectionStep('continent')}
-                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(8,16,14,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(10,22,18,0.94)]"
+                  className={`absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
+                    themeMode === 'dark'
+                      ? 'bg-[rgba(8,16,14,0.84)] text-[color:var(--color-text-strong)] hover:bg-[rgba(10,22,18,0.94)]'
+                      : lightSurfaceButtonClass
+                  }`}
                 >
                   {getSelectionAdvanceLabel('continent')}
                 </button>
@@ -1211,167 +1384,76 @@ export function CharacterCreationNarrativeScreen({
         {regions.map((option) => {
           const art = getRegionCardArt(option.id);
           const selected = form.regionId === option.id;
-
-          return (
-            <div
-              key={option.id}
-              className={`${getSelectableCardClass(
-                selected,
-                'region'
-              )} group relative overflow-hidden ${selected ? 'min-h-[22rem]' : ''}`}
-              style={selected ? activeOutlineStyle : undefined}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  if (selected) {
-                    return;
-                  }
-
-                  setSelection({
-                    regionId: option.id,
-                    startingSettlementId: '',
-                    backgroundId: ''
-                  });
-                }}
-                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
-              >
-                <div
-                  className={`absolute inset-0 transition duration-300 ${
-                    art
-                      ? selected
-                        ? 'opacity-100'
-                        : 'bg-cover bg-no-repeat opacity-24 group-hover:scale-[1.03] group-hover:opacity-82'
-                      : 'opacity-0'
-                  }`}
-                  style={
-                    art
-                      ? {
-                          backgroundImage: `url(${art.imageUrl})`,
-                          backgroundPosition: art.backgroundPosition ?? 'center center'
-                        }
-                      : undefined
-                  }
-                />
-                <div
-                  className={`absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_24%),linear-gradient(132deg,rgba(7,12,20,0.94),rgba(10,18,28,0.72))] transition duration-300 ${
-                    art
-                      ? selected
-                        ? 'opacity-74 group-hover:opacity-42'
-                        : 'opacity-70 group-hover:opacity-46'
-                      : selected
-                        ? 'opacity-92 group-hover:opacity-34'
-                        : 'opacity-24 group-hover:opacity-72'
-                  }`}
-                />
-                <div
-                  className={`relative z-10 transition duration-200 ${
-                    selected ? 'min-h-[22rem]' : 'group-hover:opacity-0'
-                  }`}
-                >
+          const regionBackgroundPosition = art?.backgroundPosition ?? 'center center';
+          const regionSelectedBackgroundPosition =
+            art?.selectedBackgroundPosition ?? 'right center';
+          const regionPreviewParagraph =
+            option.descriptionParagraphs[0] ?? option.description;
+          const selectedRegionPanelClass = art
+            ? 'absolute bottom-px left-px top-px z-10 flex items-stretch rounded-l-[23px]'
+            : 'absolute inset-px z-10 flex items-stretch rounded-[23px]';
+          const regionCardContent = (
+            <>
+              {art && (
+                <>
+                  <div
+                    className={`absolute bg-no-repeat transition duration-500 ease-out ${
+                      selected
+                        ? 'bottom-px right-px top-px opacity-100'
+                        : 'inset-y-0 right-0 bg-cover opacity-24 group-hover:scale-[1.03] group-hover:opacity-82'
+                    }`}
+                    style={{
+                      backgroundImage: `url(${art.imageUrl})`,
+                      left: selected ? REGION_SELECTION_IMAGE_LEFT : 0,
+                      backgroundPosition: selected
+                        ? regionSelectedBackgroundPosition
+                        : regionBackgroundPosition,
+                      backgroundSize: selected ? 'cover' : undefined
+                    }}
+                  />
                   {!selected && (
                     <>
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                          {option.label}
-                        </div>
-                        {option.resourceIcons.length > 0 && (
-                          <div className="flex flex-wrap justify-end gap-2">
-                            {option.resourceIcons.map((resource) => {
-                              const tone = getRegionResourceTone(resource.icon);
-
-                              return (
-                                <Tooltip
-                                  key={`${option.id}.${resource.icon}`}
-                                  content={
-                                    <span className="block text-left">
-                                      <span className="font-semibold text-slate-50">
-                                        {resource.label}
-                                      </span>
-                                      <span className="mt-1 block text-slate-300">
-                                        {resource.description}
-                                      </span>
-                                    </span>
-                                  }
-                                  panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
-                                >
-                                  <span
-                                    className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
-                                    aria-label={resource.label}
-                                  >
-                                    <Icon
-                                      name={resource.icon}
-                                      className={`h-[18px] w-[18px] ${tone.icon}`}
-                                    />
-                                  </span>
-                                </Tooltip>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                      <div
-                        className={`${insetBlockClass} mt-4 px-4 py-4 text-sm leading-7 text-[color:var(--color-text-soft)]`}
-                      >
-                        {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
-                          <p
-                            key={`${option.id}.paragraph.${paragraphIndex}`}
-                            className={paragraphIndex === 0 ? '' : 'mt-3'}
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
+                      <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(7,12,20,0.96)_0%,rgba(9,16,28,0.9)_44%,rgba(10,20,32,0.54)_74%,rgba(7,12,20,0.88)_100%)] transition duration-300 group-hover:opacity-64" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_24%)] transition duration-300 group-hover:opacity-88" />
                     </>
                   )}
-                </div>
-                {selected && (
-                  <div className={selectionOverlayBase}>
-                    <div
-                      className={`h-full w-full px-5 py-5 pr-14 backdrop-blur-xl ${getSelectionOverlayGradientClass(
-                        'region'
-                      )}`}
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-                          {option.label}
-                        </div>
-                        {option.resourceIcons.length > 0 && (
-                          <div className="flex flex-wrap justify-end gap-2">
-                            {option.resourceIcons.map((resource) => {
-                              const tone = getRegionResourceTone(resource.icon);
-
-                              return (
-                                <Tooltip
-                                  key={`${option.id}.${resource.icon}.selected`}
-                                  content={
-                                    <span className="block text-left">
-                                      <span className="font-semibold text-slate-50">
-                                        {resource.label}
-                                      </span>
-                                      <span className="mt-1 block text-slate-300">
-                                        {resource.description}
-                                      </span>
-                                    </span>
-                                  }
-                                  panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
-                                >
-                                  <span
-                                    className={`inline-flex h-9 w-9 items-center justify-center rounded-full border ${tone.wrapper}`}
-                                    aria-label={resource.label}
-                                  >
-                                    <Icon
-                                      name={resource.icon}
-                                      className={`h-[18px] w-[18px] ${tone.icon}`}
-                                    />
-                                  </span>
-                                </Tooltip>
-                              );
-                            })}
-                          </div>
-                        )}
+                </>
+              )}
+              {selected && (
+                <>
+                  <div
+                    className={`${selectedRegionPanelClass} ${selectedRegionPanelSurfaceClass} ${
+                      art && themeMode === 'light' ? 'border-r border-[rgba(78,58,34,0.14)]' : ''
+                    }`}
+                    style={art ? { width: REGION_SELECTION_PANEL_WIDTH } : undefined}
+                    onMouseEnter={() => {
+                      selectedRegionDescriptionRef.current?.focus({ preventScroll: true });
+                    }}
+                    onWheelCapture={(event) => {
+                      routeContainedScrollWheel(event, selectedRegionDescriptionRef.current);
+                    }}
+                  >
+                    <div className="flex h-full min-h-0 flex-col px-4 py-5">
+                      <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold text-[color:var(--color-text-strong)]">
+                        {option.label}
                       </div>
-                      <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      {(!art || option.resourceIcons.length === 0) &&
+                        renderRegionResourceIcons(
+                          option,
+                          'selected',
+                          'selected',
+                          'mt-2 -mx-2.5 flex flex-nowrap items-center gap-0'
+                        )}
+                      <div
+                        className="region-description-scroll mt-4 min-h-0 flex-1 overflow-y-auto overscroll-contain text-sm leading-7 text-[color:var(--color-text-soft)] outline-none"
+                        ref={selectedRegionDescriptionRef}
+                        tabIndex={0}
+                        aria-label={`${option.label} description`}
+                        onMouseEnter={(event) => {
+                          event.currentTarget.focus({ preventScroll: true });
+                        }}
+                        onWheelCapture={handleContainedScrollWheel}
+                      >
                         {option.descriptionParagraphs.map((paragraph, paragraphIndex) => (
                           <p
                             key={`${option.id}.paragraph.selected.${paragraphIndex}`}
@@ -1383,13 +1465,101 @@ export function CharacterCreationNarrativeScreen({
                       </div>
                     </div>
                   </div>
+                  {art && option.resourceIcons.length > 0 && (
+                    <div
+                      className="absolute top-4 z-20"
+                      style={{ left: `calc(${REGION_SELECTION_IMAGE_LEFT} + 0.75rem)` }}
+                    >
+                      {renderRegionResourceIcons(
+                        option,
+                        'selected-image',
+                        'selected',
+                        'flex flex-nowrap items-center gap-0'
+                      )}
+                    </div>
+                  )}
+                  <span
+                    className={`absolute right-4 top-4 z-20 inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${getOpaqueDifficultyBadgeClass(
+                      option.difficultyTone
+                    )}`}
+                  >
+                    {option.difficultyLabel}
+                  </span>
+                </>
+              )}
+              <div
+                className={`relative z-10 transition duration-200 ${
+                  selected
+                    ? 'pointer-events-none min-h-[28rem] w-full'
+                    : 'group-hover:opacity-0'
+                }`}
+              >
+                {!selected && (
+                  <>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex flex-1 items-center gap-2">
+                        <div className={`truncate text-xl font-semibold ${imageCardTitleClass}`}>
+                          {option.label}
+                        </div>
+                        {renderRegionResourceIcons(
+                          option,
+                          'preview',
+                          'preview',
+                          'flex shrink-0 flex-wrap items-center gap-1'
+                        )}
+                      </div>
+                      <span
+                        className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${getDifficultyBadgeClass(
+                          option.difficultyTone
+                        )}`}
+                      >
+                        {option.difficultyLabel}
+                      </span>
+                    </div>
+                    <div className={`mt-3 max-w-[38rem] text-sm leading-7 ${imageCardBodyClass}`}>
+                      <p className="max-h-[9rem] overflow-hidden">{regionPreviewParagraph}</p>
+                    </div>
+                  </>
                 )}
-              </button>
+              </div>
+            </>
+          );
+
+          return (
+            <div
+              key={option.id}
+              className={`${getSelectableCardClass(
+                selected,
+                'region'
+              )} group relative overflow-hidden ${selected ? 'min-h-[28rem]' : ''}`}
+              style={selected ? activeOutlineStyle : undefined}
+            >
+              {selected ? (
+                <div className="relative h-full w-full pb-20 text-left">{regionCardContent}</div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelection({
+                      regionId: option.id,
+                      startingSettlementId: '',
+                      backgroundId: ''
+                    });
+                  }}
+                  className="block h-full w-full p-5 text-left"
+                >
+                  {regionCardContent}
+                </button>
+              )}
               {selected && (
                 <button
                   type="button"
                   onClick={() => advanceSelectionStep('region')}
-                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(7,12,20,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(10,18,28,0.94)]"
+                  className={`absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
+                    themeMode === 'dark'
+                      ? 'bg-[rgba(7,12,20,0.84)] text-[color:var(--color-text-strong)] hover:bg-[rgba(10,18,28,0.94)]'
+                      : lightSurfaceButtonClass
+                  }`}
                 >
                   {getSelectionAdvanceLabel('region')}
                 </button>
@@ -1456,14 +1626,14 @@ export function CharacterCreationNarrativeScreen({
                   {!selected && (
                     <>
                       <div className="flex items-start justify-between gap-3">
-                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                        <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
                           {option.label}
                         </div>
-                        <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+                        <div className={`text-xs uppercase tracking-[0.16em] ${imageCardMetaClass}`}>
                           Pop {option.populationSize}
                         </div>
                       </div>
-                      <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      <div className={`mt-3 text-sm leading-7 ${imageCardBodyClass}`}>
                         {option.description}
                       </div>
                       <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
@@ -1483,14 +1653,14 @@ export function CharacterCreationNarrativeScreen({
                       )}`}
                     >
                       <div className="flex items-start justify-between gap-3">
-                        <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                        <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
                           {option.label}
                         </div>
-                        <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+                        <div className={`text-xs uppercase tracking-[0.16em] ${imageCardMetaClass}`}>
                           Pop {option.populationSize}
                         </div>
                       </div>
-                      <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      <div className={`mt-3 text-sm leading-7 ${imageCardBodyClass}`}>
                         {option.description}
                       </div>
                       <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
@@ -1507,7 +1677,11 @@ export function CharacterCreationNarrativeScreen({
                 <button
                   type="button"
                   onClick={() => advanceSelectionStep('settlement')}
-                  className="absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] bg-[rgba(16,12,8,0.84)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-strong)] transition hover:bg-[rgba(28,18,10,0.94)]"
+                  className={`absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
+                    themeMode === 'dark'
+                      ? 'bg-[rgba(16,12,8,0.84)] text-[color:var(--color-text-strong)] hover:bg-[rgba(28,18,10,0.94)]'
+                      : lightSurfaceButtonClass
+                  }`}
                 >
                   {getSelectionAdvanceLabel('settlement')}
                 </button>
@@ -1785,10 +1959,13 @@ export function CharacterCreationNarrativeScreen({
   return (
     <div ref={containerRef} className="h-screen overflow-auto pb-6">
       <div
-        className="sticky top-0 z-30 border-b border-[color:var(--color-border)] shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-2xl"
+        className={`sticky top-0 z-30 border-b border-[color:var(--color-border)] backdrop-blur-2xl ${
+          themeMode === 'dark'
+            ? 'shadow-[0_18px_48px_rgba(0,0,0,0.32)]'
+            : 'shadow-[0_18px_38px_rgba(94,69,41,0.12)]'
+        }`}
         style={{
-          background:
-            'linear-gradient(135deg, rgba(17, 23, 34, 0.84), rgba(8, 12, 19, 0.66)), radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 34%), radial-gradient(circle at bottom right, rgba(212, 173, 85, 0.08), transparent 28%)'
+          background: topBarBackground
         }}
       >
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">

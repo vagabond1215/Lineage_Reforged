@@ -80,16 +80,30 @@ export interface WorldCardArt {
   selectedBackgroundPosition?: string;
 }
 
+export type WorldRegionResourceTone =
+  | "timber"
+  | "fieldCrops"
+  | "orchards"
+  | "gardenProduce"
+  | "fishAndGame"
+  | "livestock"
+  | "ore"
+  | "stone";
+
 export interface WorldRegionResourceIcon {
-  icon: IconName;
+  tone: WorldRegionResourceTone;
   label: string;
   description: string;
+  icon?: IconName;
+  imageUrl?: string;
 }
 
 export interface WorldRegionOption {
   id: string;
   continentId: string;
   label: string;
+  difficultyLabel: string;
+  difficultyTone: "success" | "warning" | "danger";
   terrainAndBiome: string;
   resourceAvailability: string[];
   resourceIcons: WorldRegionResourceIcon[];
@@ -199,11 +213,49 @@ const CONTINENT_CARD_ART: Record<string, WorldCardArt> = {
   }
 };
 
+const REGION_RESOURCE_IMAGE_URLS: Record<WorldRegionResourceTone, string> = {
+  timber: "/character-creator/region-resources/resource-timber.png",
+  fieldCrops: "/character-creator/region-resources/resource-field-crops.png",
+  orchards: "/character-creator/region-resources/resource-orchards.png",
+  gardenProduce: "/character-creator/region-resources/resource-garden-produce.png",
+  fishAndGame: "/character-creator/region-resources/resource-fish-and-game.png",
+  livestock: "/character-creator/region-resources/resource-livestock.png",
+  ore: "/character-creator/region-resources/resource-ore.png",
+  stone: "/character-creator/region-resources/resource-stone.png"
+};
+
+const REGION_RESOURCE_FALLBACK_ICONS: Record<WorldRegionResourceTone, IconName> = {
+  timber: "tree",
+  fieldCrops: "grain",
+  orchards: "fruit",
+  gardenProduce: "vegetable",
+  fishAndGame: "animal",
+  livestock: "animal",
+  ore: "coin",
+  stone: "queue"
+};
+
+function createRegionResourceIcon(params: {
+  tone: WorldRegionResourceTone;
+  label: string;
+  description: string;
+  icon?: IconName;
+}): WorldRegionResourceIcon {
+  return {
+    tone: params.tone,
+    label: params.label,
+    description: params.description,
+    icon: params.icon ?? REGION_RESOURCE_FALLBACK_ICONS[params.tone],
+    imageUrl: REGION_RESOURCE_IMAGE_URLS[params.tone]
+  };
+}
+
 const REGION_PRESENTATION_OVERRIDES: Record<string, RegionPresentationOverride> = {
   "region.auric_marches": {
     cardArt: {
       imageUrl: "/character-creator/regions/region-auric-marches.png",
-      backgroundPosition: "center center"
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
     },
     descriptionParagraphs: [
       "Travelers who cross into the Auric Marches quickly learn that this is a land that gives nothing freely. The wind runs constant across the uplands, carrying dust from the ore ridges and the distant glow of smelters that never fully go dark. Settlements are few, and none exist by accident; each one stands where the ground yields copper, iron, or stone enough to justify the cost of keeping people alive.",
@@ -215,7 +267,8 @@ const REGION_PRESENTATION_OVERRIDES: Record<string, RegionPresentationOverride> 
   "region.verdant_thalos": {
     cardArt: {
       imageUrl: "/character-creator/regions/region-verdant-thalos.png",
-      backgroundPosition: "center center"
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
     },
     descriptionParagraphs: [
       "Verdant Thalos is often described as the gentlest face of Kaelvar, though its ease is the result of careful tending rather than fortune alone. The southern peninsula stretches through rolling hills and sheltered coasts, where vineyards, olive groves, and orchards shape the land as much as the seasons do.",
@@ -224,42 +277,409 @@ const REGION_PRESENTATION_OVERRIDES: Record<string, RegionPresentationOverride> 
       "Despite its abundance, Verdant Thalos is not isolated in its prosperity. Its tools depend on imported ore, its markets rely on steady trade, and its balance is maintained through constant exchange. To visitors, it appears orderly and welcoming; to those who understand it, it is a carefully managed system where land, labor, and trade are all expected to perform."
     ],
     resourceIcons: [
-      {
-        icon: "grain",
+      createRegionResourceIcon({
+        tone: "fieldCrops",
         label: "Field Crops",
         description:
           "Wheat, barley, and other staple harvests anchor the peninsula's estate belts and local granaries."
-      },
-      {
-        icon: "fruit",
+      }),
+      createRegionResourceIcon({
+        tone: "orchards",
         label: "Orchards",
         description:
           "Olive groves, orchards, vineyards, and oil crops shape both the landscape and the export economy."
-      },
-      {
-        icon: "vegetable",
+      }),
+      createRegionResourceIcon({
+        tone: "gardenProduce",
         label: "Garden Produce",
         description:
           "Vegetables, herbs, dairy gardens, and smaller market crops fill the gaps between the larger estate harvests."
-      },
-      {
-        icon: "animal",
-        label: "Fish And Game",
+      }),
+      createRegionResourceIcon({
+        tone: "livestock",
+        label: "Livestock",
         description:
-          "Grazing herds, wool flocks, dairy stock, and coastal catch all contribute to everyday supply."
-      }
+          "Grazing herds, wool flocks, and dairy stock make the peninsula's agricultural belt resilient and tradable."
+      }),
+      createRegionResourceIcon({
+        tone: "timber",
+        label: "Timber",
+        description:
+          "Managed woodlands and ship-facing lumber yards provide structural timber for estates, workshops, and coastal trade."
+      })
     ]
   },
   "region.shattercap_isles": {
     cardArt: {
       imageUrl: "/character-creator/regions/region-shattercap-isles.png",
-      backgroundPosition: "center center"
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
     },
     descriptionParagraphs: [
       "North of the mainland, the Shattercap Isles rise from cold waters in a scatter of broken stone and narrow harbors. The sea defines everything here; the weather, the work, and the limits of where people can live.",
       "Most settlements cling to deep, reliable harbors where ships can anchor safely against the unpredictable northern waters. Fishing fleets leave at first light and return with cod and other cold-water catch, much of it salted and packed for shipment south. Salt itself is gathered in quantity along the coasts, making it one of the Isles' most consistent exports.",
       "The land offers little beyond this. Soil is thin, and what pasture exists supports only small herds. A handful of hardy crops grow in sheltered pockets, but they are not enough to sustain the population. Grain, vegetables, and wine arrive by ship from Verdant Thalos, and few island communities could endure long without that connection.",
       "Beyond the harbors, the terrain grows harsher. Beacon cliffs rise along the outer edges, crowned with watch posts and signal towers that keep constant vigil over the surrounding seas. These are not places of comfort, but of necessity; warning of storms, guiding ships, and marking the boundaries of safe passage. To an outsider, the Isles can feel stark and unforgiving. To those who live there, they are simply honest. The sea provides, the land endures, and everything else comes by sail."
+    ]
+  },
+  "region.crownlands": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-crownlands.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "The Crownlands stand as the old heart of Valtherion, a region where the land has long been settled and carefully kept. Broad forest vales open into cultivated clearings, and rivers run steady between towns that seem as though they were placed with deliberate care rather than chance. Roads are reliable, settlements enduring, and the sense of continuity is felt in both stone and timber alike.",
+      "The land provides well enough for those who dwell here, though never in excess. Grain and root crops are raised in the valleys, while livestock and managed game supplement the table. Rivers offer fish in steady supply, and the forests yield herbs and forage to those who know where to look. Few communities go without, though few would claim abundance.",
+      "In materials, the Crownlands are better favored. Timber is plentiful and well-managed, iron is worked in moderate quantity, and stone is drawn where needed for walls, halls, and roads. Furs and smoked fish are common exports, and craftsmen here are known more for reliability than extravagance.",
+      "Travelers often remark that the Crownlands feel older than the rest of Valtherion; not in years alone, but in habit. Things are maintained, not rebuilt; improved, not replaced. It is a land that endures by design."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "fieldCrops",
+        label: "Field Crops",
+        description:
+          "Grain and root harvests from the river vales keep most Crownlands communities provisioned without true surplus."
+      }),
+      createRegionResourceIcon({
+        tone: "fishAndGame",
+        label: "Fish And Game",
+        description:
+          "Managed hunting grounds, river fish, furs, and smoked catch remain part of both the table and the trade roads."
+      }),
+      createRegionResourceIcon({
+        tone: "timber",
+        label: "Timber",
+        description:
+          "Old, carefully managed forests provide the beams, planks, and fuel that keep the region built to last."
+      }),
+      createRegionResourceIcon({
+        tone: "ore",
+        label: "Ore",
+        description:
+          "Iron is worked in moderate quantity, supporting dependable smithing rather than spectacular mineral wealth."
+      }),
+      createRegionResourceIcon({
+        tone: "stone",
+        label: "Stone",
+        description:
+          "Local quarries and cut-stone works support the roads, walls, bridges, and halls that define the old realm."
+      })
+    ]
+  },
+  "region.embersteppe": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-embersteppe.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "The Embersteppe spreads wide beneath an open sky, a land of grass and wind where distance is measured not in miles, but in days between water. The soil runs dry and red in places, and the horizon is rarely broken except by herds, low settlements, or the faint glow of controlled burns that renew the grazing lands.",
+      "Life here follows the movement of animals more than the rhythm of crops. Herds of cattle, sheep, and horses form the foundation of both sustenance and wealth, and the people of the steppe are as skilled in their care as any farmer is with plow or field. Grain is grown where it can be, but it is never enough to stand alone, and much of it arrives from outside.",
+      "The land offers little in timber or worked material, and so tools, wood, and finer goods are brought in through caravan trade. In return, the Embersteppe yields hides, wool, livestock, and the finest horse stock in Valtherion. Copper is found in places, though it is not the region's defining strength.",
+      "Settlements gather where water allows; around wells, crossings, and guarded routes, but much of life remains in motion. To travel here is to feel the scale of the land and the independence of those who live upon it, where survival depends not on walls, but on knowledge of wind, grass, and season."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "livestock",
+        label: "Livestock",
+        description:
+          "Cattle, sheep, and horse herds are the core wealth of the steppe and the first measure of local stability."
+      }),
+      createRegionResourceIcon({
+        tone: "fieldCrops",
+        label: "Field Crops",
+        description:
+          "Limited grain harvests appear where water and soil allow, but they do not carry the region on their own."
+      }),
+      createRegionResourceIcon({
+        tone: "ore",
+        label: "Ore",
+        description:
+          "Copper is worked in scattered pockets, adding trade value without replacing the steppe's pastoral identity."
+      })
+    ]
+  },
+  "region.sapphire_rivers": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-sapphire-rivers.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "The Sapphire Rivers form the great living network of Valtherion, a region where water and land work in constant partnership. Wide channels wind through fertile plains, feeding fields, orchards, and settlements that stretch in near-continuous succession along their banks.",
+      "Here, the land yields generously. Grain grows in abundance, vegetables and flax fill the fields, and the river itself provides fish enough to sustain both local populations and trade beyond. Food is not merely sufficient; it is surplus, and much of it travels outward to support regions less fortunate.",
+      "Settlements cluster at crossings, bends, and tributaries, where bridges and docks give rise to markets, mills, and thriving towns. Barges move steadily along the water, carrying grain, cloth, and crafted goods between communities. The river is both road and resource, and its flow dictates the pace of life as surely as any law.",
+      "Stone, clay, and reeds are drawn easily from the land, supporting construction and craft, while metals are brought in from elsewhere. Yet it is not materials that define the Sapphire Rivers, but motion; of water, of goods, and of people. Travelers often find the region lively and full, a place where nearly every stretch of land serves a purpose, and where the work of the continent is plainly visible."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "fieldCrops",
+        label: "Field Crops",
+        description:
+          "Grain, flax, and broad river-fed harvests make the basin one of Valtherion's major surplus producers."
+      }),
+      createRegionResourceIcon({
+        tone: "orchards",
+        label: "Orchards",
+        description:
+          "Fruit belts along the wider channels add steady value to the already fertile plain."
+      }),
+      createRegionResourceIcon({
+        tone: "gardenProduce",
+        label: "Garden Produce",
+        description:
+          "Vegetables, flax, reeds, and other water-favored crops fill the lands between the larger grain tracts."
+      }),
+      createRegionResourceIcon({
+        tone: "fishAndGame",
+        label: "Fish And Game",
+        description:
+          "River fisheries support both local food security and outward trade from the busiest crossings."
+      }),
+      createRegionResourceIcon({
+        tone: "stone",
+        label: "Stone",
+        description:
+          "Stone, clay, and riverbank building materials are easy to draw from the basin for roads, docks, and mills."
+      })
+    ]
+  },
+  "region.jade_expanse": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-jade-expanse.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "The Jade Expanse stretches across the southern reaches of Valtherion as a broad and fertile heartland, where fields, orchards, and pasturelands extend farther than the eye can follow. In season, the land takes on a deep green hue that gives the region its name, broken only by roads, farmsteads, and the distant rise of market towns.",
+      "This is a land of abundance, though of a particular kind. Grain is grown in great quantity, supported by wide, open plains and well-managed fields. Orchard belts produce fruit in equal measure, and livestock, especially horses, are raised across the pasturelands that lie between cultivated zones. Brewing, storage, and trade define much of daily life, with granaries and cask houses standing as prominently as any hall or tower.",
+      "Yet for all its richness in food and animal stock, the Jade Expanse lacks certain materials. Timber is scarce, and metal is not found in useful quantity, requiring both to be brought in from other regions. In this way, the Expanse trades its surplus harvest for the tools and structures it cannot produce itself.",
+      "Settlements are numerous and well-spaced, tied together by wagon roads that carry grain, livestock, and goods toward distant markets. To the traveler, the region presents itself as generous and open, its wealth visible not in hidden resources, but in the sheer scale of what it produces. It is said that if Valtherion has a granary, it lies here, and that much of the continent eats, in some part, from the fields of the Jade Expanse."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "fieldCrops",
+        label: "Field Crops",
+        description:
+          "Broad grain harvests and brewing grain dominate the Expanse and feed markets well beyond its own roads."
+      }),
+      createRegionResourceIcon({
+        tone: "orchards",
+        label: "Orchards",
+        description:
+          "Fruit belts and cask-bound orchard output are the region's second great food strength after grain."
+      }),
+      createRegionResourceIcon({
+        tone: "livestock",
+        label: "Livestock",
+        description:
+          "Pasturelands support cattle and horse breeding on a scale few regions of Valtherion can match."
+      })
+    ]
+  },
+  "region.sailors_verge": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-sailors-verge.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "Along the western and southern coasts of Serathyl stretches the Sailor's Verge, a region where land and sea meet in constant exchange. Estuaries widen into deep harbors, and the coastline is lined with ports whose masts form forests of their own. Here, trade is not an activity but a condition of life; ships arrive, depart, and are rebuilt in an unbroken cycle that defines the rhythm of the region.",
+      "The Verge is fed by both water and land. Fisheries provide a steady yield, and coastal estates cultivate citrus groves, grain fields, and flax, supplying both food and sailcloth to the ports they serve. Yet the land alone does not sustain the region. Much of what is required to build and maintain its fleets, including iron, stone, and additional grain, must be brought in through the very trade networks the region commands.",
+      "Shipyards, ropewalks, and curing houses dominate the working districts of its cities, while quieter hinterlands feed them with produce and fiber. Salt is gathered and used in preservation, and the smell of brine and timber is never far from any harbor street.",
+      "To travelers, the Sailor's Verge appears vibrant and restless, a place where wealth flows in tides and fortunes are made as quickly as they are spent. It is the outward face of Serathyl, and the point through which the continent meets the wider world."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "fishAndGame",
+        label: "Fish And Game",
+        description:
+          "Coastal fisheries provide a steady catch that feeds the ports and supports preserved exports."
+      }),
+      createRegionResourceIcon({
+        tone: "orchards",
+        label: "Orchards",
+        description:
+          "Citrus groves and other coastal estate fruit harvests thrive along the milder sea-facing lands."
+      }),
+      createRegionResourceIcon({
+        tone: "fieldCrops",
+        label: "Field Crops",
+        description:
+          "Grain fields and staple coastal harvests help provision the ports even if trade still carries the larger burden."
+      }),
+      createRegionResourceIcon({
+        tone: "gardenProduce",
+        label: "Garden Produce",
+        description:
+          "Flax, salt-cured produce, and other smaller estate goods support sailcloth, markets, and preservation work."
+      })
+    ]
+  },
+  "region.green_reach": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-green-reach.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "Inland from the coast lies the Green Reach, a region of deep forest and careful stewardship where the land is neither wild nor fully subdued. Towering hardwoods dominate the interior, broken by rivers that carry both water and timber toward the lowlands. The forest is worked, but not recklessly; its value lies as much in continuity as in yield.",
+      "Settlements gather along the forest's edges and river routes, where logs can be cut, bound, and floated downstream to distant markets. Within the deeper heartwood, quieter communities tend to craft, herbal study, and the long management of the forest itself. Dyes, resins, and rare botanical goods are drawn from these woods, often as valuable as the timber that defines the region.",
+      "Food is present, but never abundant. Small clearings and riverbanks support limited agriculture, while fishing and foraging supplement what cannot be grown. Grain and heavier goods are commonly brought in from beyond the forest, exchanged for lumber and crafted materials.",
+      "The Green Reach is a place of patience. Its roads are fewer, its growth deliberate, and its people accustomed to working within the boundaries the forest allows. To pass through it is to move beneath a living canopy that shapes not only the land, but the lives built within it."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "timber",
+        label: "Timber",
+        description:
+          "Hardwood, managed logging, and river-borne lumber are the Reach's defining material strength."
+      }),
+      createRegionResourceIcon({
+        tone: "gardenProduce",
+        label: "Garden Produce",
+        description:
+          "Dyes, resins, herbs, and other botanical goods make the worked forest valuable beyond straight lumber."
+      }),
+      createRegionResourceIcon({
+        tone: "fishAndGame",
+        label: "Fish And Game",
+        description:
+          "Fishing, foraging, and woodland game help cover the food the deeper forest cannot reliably grow."
+      })
+    ]
+  },
+  "region.windward_spine": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-windward-spine.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "Rising along Serathyl's northern reaches, the Windward Spine forms a jagged mountain chain that governs both weather and passage across the continent. Its peaks are cold, its passes narrow, and its slopes carved into terraces, holds, and fortified routes that serve as the only reliable crossings.",
+      "Life here is shaped by necessity rather than comfort. Agriculture is nearly absent, and what little food exists locally is drawn from sparse grazing and stored provisions. Most sustenance arrives from lower lands, carried along guarded routes that are as valuable as the goods they transport.",
+      "In contrast, the mountains yield considerable wealth in material. Stone is abundant and well-worked, while iron and silver are drawn from deep veins within the range. Settlements such as mountain holds anchor themselves directly into the rock, combining habitation, industry, and defense into a single structure. Along the higher passes, forts and outposts stand watch, controlling movement and exacting toll from those who cross.",
+      "To travelers, the Windward Spine is both barrier and gateway. It is a land that resists settlement yet commands importance, where every road is deliberate and every hold serves a purpose. Few remain longer than they must, but all who cross it remember the journey."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "ore",
+        label: "Ore",
+        description:
+          "Iron and silver veins make the Spine materially wealthy even where daily life remains austere."
+      }),
+      createRegionResourceIcon({
+        tone: "stone",
+        label: "Stone",
+        description:
+          "Quarry stone and worked mountain rock shape the holds, forts, and pass roads cut through the range."
+      }),
+      createRegionResourceIcon({
+        tone: "livestock",
+        label: "Livestock",
+        description:
+          "Sparse grazing and mountain wool are modest but necessary supports for the highland settlements."
+      })
+    ]
+  },
+  "region.heart_basin": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-heart-basin.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "At the center of Draemor lies the Heart Basin, a vast and fertile river network that defines the continent's identity as surely as any crown or banner. Wide, slow-moving waterways branch across the land, feeding floodplains that yield harvests in remarkable abundance. Fields stretch uninterrupted for miles, broken only by granaries, mills, and the clustered rooftops of farming towns.",
+      "The Basin is first and foremost a producer of food. Grain dominates the landscape, supported by vegetables, livestock, and orchard belts that fill in the margins between river and road. Storage is as important as growth; granaries rise as prominently as halls, and much of the region's labor is devoted not to cultivation alone, but to preserving and distributing what is grown.",
+      "Trade flows outward along the rivers. Barges heavy with grain and produce move steadily toward distant markets, supplying regions that cannot sustain themselves. While the Basin produces in excess, it still draws in what it cannot easily provide, including refined tools, worked metals, and certain finished goods, but these needs are minor compared to the scale of its exports.",
+      "To the traveler, the Heart Basin feels expansive and grounded. It is a land defined not by landmarks, but by continuity; field after field, river after river, all working toward a single purpose: to feed."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "fieldCrops",
+        label: "Field Crops",
+        description:
+          "Broad grain harvests dominate the Basin and make it the primary food-exporting heartland of Draemor."
+      }),
+      createRegionResourceIcon({
+        tone: "gardenProduce",
+        label: "Garden Produce",
+        description:
+          "Vegetables and other river-fed produce fill the margins between the grain tracts and the market roads."
+      }),
+      createRegionResourceIcon({
+        tone: "livestock",
+        label: "Livestock",
+        description:
+          "Cattle and other herd stock help diversify the Basin's food surplus and keep the market towns provisioned."
+      }),
+      createRegionResourceIcon({
+        tone: "orchards",
+        label: "Orchards",
+        description:
+          "Orchard belts and managed fruit lands round out the Basin's dependable harvest economy."
+      })
+    ]
+  },
+  "region.emerald_mantle": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-emerald-mantle.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "Encircling the Basin is the Emerald Mantle, a broad lowland belt where the land shifts from pure cultivation to a more varied and balanced countryside. Here, pasturelands, villages, and working roads define the region, creating a network of settlements that support both local life and the demands of the inner basin.",
+      "The Mantle produces a wide range of goods, though rarely in the overwhelming quantities seen at the center. Livestock is common, with cattle and herd animals grazing across open fields, while orchards and managed groves provide fruit and secondary crops. Timber appears here in meaningful quantity, alongside hides and other products tied to animal husbandry.",
+      "Unlike the Basin, the Emerald Mantle is less about scale and more about distribution. Market towns and road networks connect the interior to the outer regions, moving goods in all directions; food outward, materials inward, and everything in between. It serves as both buffer and bridge, ensuring that the productivity of Draemor does not remain isolated.",
+      "Visitors often find the Mantle the most approachable part of the continent. It is neither as vast as the Basin nor as harsh as the coast, but instead a lived-in landscape of villages, trade routes, and steady work."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "livestock",
+        label: "Livestock",
+        description:
+          "Cattle, herd stock, hides, and other husbandry goods are common across the Mantle's open lowlands."
+      }),
+      createRegionResourceIcon({
+        tone: "orchards",
+        label: "Orchards",
+        description:
+          "Fruit belts and managed groves support the Mantle's secondary harvests and market-road trade."
+      }),
+      createRegionResourceIcon({
+        tone: "timber",
+        label: "Timber",
+        description:
+          "Usable woodland and worked lumber appear here in meaningful quantity, unlike the more field-bound inner basin."
+      }),
+      createRegionResourceIcon({
+        tone: "gardenProduce",
+        label: "Garden Produce",
+        description:
+          "Herbs and smaller mixed-country harvests add variety to the Mantle's steadier flow of village goods."
+      })
+    ]
+  },
+  "region.stormcap_coast": {
+    cardArt: {
+      imageUrl: "/character-creator/regions/region-stormcap-coast.png",
+      backgroundPosition: "center center",
+      selectedBackgroundPosition: "right center"
+    },
+    descriptionParagraphs: [
+      "At Draemor's southern edge, the Stormcap Coast meets the sea with a harsher face than the inland plains might suggest. Winds roll in unchecked, storms gather quickly, and the shoreline is shaped more by endurance than by ease of settlement. Harbors exist where they must, not where they are most convenient.",
+      "The sea defines the region's output. Fisheries provide a steady and reliable yield, with cold-water catches forming the backbone of local sustenance and trade. Salt, drawn from coastal works and used in preservation, ensures that fish can travel inland to the Basin and beyond. Ports here are practical and hardened, built to withstand both weather and the demands of constant use.",
+      "Agriculture exists only in limited form, constrained by terrain and climate, and much of the region's food is supplemented by shipments from the interior. In return, the Coast supplies what the inland cannot: marine goods, preserved fish, and access to open sea trade.",
+      "To travelers, the Stormcap Coast feels like a boundary. It is where the ordered productivity of Draemor gives way to something less predictable, where the land ends and the wider world begins. Its ports are not the grandest, but they are among the most resilient."
+    ],
+    resourceIcons: [
+      createRegionResourceIcon({
+        tone: "fishAndGame",
+        label: "Fish And Game",
+        description:
+          "Cold-water fisheries and preserved catches are the Coast's defining sustenance and its most dependable outward trade."
+      })
     ]
   }
 };
@@ -341,45 +761,66 @@ function joinSentences(values: string[]): string {
 }
 
 const REGION_RESOURCE_ICON_RULES: ReadonlyArray<{
-  icon: IconName;
+  tone: WorldRegionResourceTone;
   label: string;
   description: string;
   test: RegExp;
 }> = [
   {
-    icon: "tree",
+    tone: "timber",
     label: "Timber",
     description:
       "Wood, lumber, resin, and other forest materials are easy to source here.",
     test: /(timber|wood|forest|grove|lumber|tree|hardwood|rare_hardwood|resin|resin_timber|paper_inputs)/
   },
   {
-    icon: "grain",
+    tone: "fieldCrops",
     label: "Field Crops",
     description:
       "Staple grains and broad farm harvests support food stores and everyday trade.",
     test: /(grain|wheat|barley|rye|farm|field|crop|flax|valley_produce|beer)/
   },
   {
-    icon: "fruit",
+    tone: "orchards",
     label: "Orchards",
     description:
       "Fruit trees, orchard goods, oil crops, or vineyard harvests are part of the region's output.",
     test: /(fruit|orchard|apple|pear|berry|vine|citrus|olive_oil|wine|tropical_fruit)/
   },
   {
-    icon: "vegetable",
+    tone: "gardenProduce",
     label: "Garden Produce",
     description:
       "Vegetables, herbs, dyes, and smaller cultivated goods are commonly worked here.",
     test: /(vegetable|root|herb|garden|bean|onion|turnip|dyes|spices)/
   },
   {
-    icon: "animal",
+    tone: "livestock",
+    label: "Livestock",
+    description:
+      "Grazing herds, wool, hides, and animal stock are central to the region's day-to-day economy.",
+    test: /(livestock|animal|cattle|horse|sheep|goat|hides|leather|wool|goat_wool|mountain_wool|pack_animals|horses)/
+  },
+  {
+    tone: "fishAndGame",
     label: "Fish And Game",
     description:
-      "Fisheries, grazing herds, wool, hides, and hunted game help sustain local livelihoods.",
-    test: /(livestock|animal|cattle|horse|sheep|goat|game|hunt|fish|furs|hides|leather|wool|goat_wool|mountain_wool|pack_animals|horses|cold_fish|river_fish|smoked_fish)/
+      "Fisheries, furs, smoked catch, and hunted game help sustain local livelihoods.",
+    test: /(game|hunt|fish|furs|cold_fish|river_fish|smoked_fish)/
+  },
+  {
+    tone: "ore",
+    label: "Ore",
+    description:
+      "Metal-bearing ground supports mining, smelting, or ore-haul trade in this region.",
+    test: /(copper|iron|ore|gold|silver|tin|precious_metals|gems)/
+  },
+  {
+    tone: "stone",
+    label: "Stone",
+    description:
+      "Quarry stone, workable rock, clay, or other hard building materials are easy to draw from the land.",
+    test: /(stone|quarry|granite|marble|clay|slate)/
   }
 ];
 
@@ -393,6 +834,28 @@ function deriveDifficulty(score: number | undefined): {
   if ((score ?? 0) >= 60) {
     return { label: "Mild", tone: "warning" };
   }
+  return { label: "Harsh", tone: "danger" };
+}
+
+function deriveRegionDifficulty(record: RegionRecord): {
+  label: "Gentle" | "Mild" | "Harsh";
+  tone: "success" | "warning" | "danger";
+} {
+  const profile = record.simulationProfile;
+  const stabilityScore =
+    (profile?.foodProductionCapacity ?? 0) * 0.4 +
+    (profile?.waterAvailability ?? 0) * 0.25 +
+    (100 - (profile?.climateBurden ?? 100)) * 0.2 +
+    (100 - (profile?.hazardPressure ?? 100)) * 0.15;
+
+  if (stabilityScore >= 75) {
+    return { label: "Gentle", tone: "success" };
+  }
+
+  if (stabilityScore >= 52) {
+    return { label: "Mild", tone: "warning" };
+  }
+
   return { label: "Harsh", tone: "danger" };
 }
 
@@ -658,11 +1121,13 @@ function deriveRegionResourceIcons(record: RegionRecord): WorldRegionResourceIco
 
   return REGION_RESOURCE_ICON_RULES.filter((rule) => rule.test.test(keywords))
     .slice(0, 4)
-    .map(({ icon, label, description }) => ({
-      icon,
-      label,
-      description
-    }));
+    .map(({ tone, label, description }) =>
+      createRegionResourceIcon({
+        tone,
+        label,
+        description
+      })
+    );
 }
 
 function deriveAuthorityLabel(settlement: SettlementRecord, landAuthorityType: LandAuthorityType): string {
@@ -836,11 +1301,14 @@ export function getWorldRegionOptions(continentId: string): WorldRegionOption[] 
   return sourceRegions
     .map((record) => {
       const descriptionParagraphs = buildRegionDescriptionParagraphs(record);
+      const difficulty = deriveRegionDifficulty(record);
 
       return {
         id: record.id,
         continentId,
         label: record.name,
+        difficultyLabel: difficulty.label,
+        difficultyTone: difficulty.tone,
         terrainAndBiome: `${record.environmentProfile?.elevationProfile ?? "mixed terrain"} | ${(record.environmentProfile?.dominantBiomeMix ?? []).join(", ")}`,
         resourceAvailability:
           record.economicProfile?.supplyStrengths?.slice(0, 4) ?? record.economicProfile?.majorExports?.slice(0, 4) ?? [],

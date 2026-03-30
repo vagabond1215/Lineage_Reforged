@@ -6361,8 +6361,8 @@ async function validateWorldMapsAgainstRegions() {
       if (!parent) {
         throw new Error(`packages/content/base/world/regions.json parentRegionId '${region.parentRegionId}' missing on record ${recordId}`);
       }
-      if (parent.regionType !== "continent") {
-        throw new Error(`packages/content/base/world/regions.json subregion parent '${region.parentRegionId}' must be a continent on record ${recordId}`);
+      if (parent.regionType !== "continent" && parent.regionType !== "island_system") {
+        throw new Error(`packages/content/base/world/regions.json subregion parent '${region.parentRegionId}' must be a continent or island_system on record ${recordId}`);
       }
     }
     else if ("parentRegionId" in region) {

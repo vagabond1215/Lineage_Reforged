@@ -75640,7 +75640,8 @@
                                                      "id":  "feature.crossing_foammarket_ferry",
                                                      "name":  "Foammarket Ferry",
                                                      "regionIds":  [
-                                                                       "region.myridian_chain"
+                                                                       "region.myridian_chain",
+                                                                       "region.starfall_isle"
                                                                    ],
                                                      "point":  {
                                                                    "x":  760,
@@ -76676,7 +76677,8 @@
                                                "id":  "map_biome.first_world.lantern_isles_deepwater",
                                                "name":  "Lantern Deepwater",
                                                "regionIds":  [
-                                                                 "region.lantern_isles"
+                                                                 "region.lantern_isles",
+                                                                 "region.deepglow_reef"
                                                              ],
                                                "notes":  "The hidden merfolk basin beneath the Lantern Isles is tracked as deep marine water.",
                                                "biomeId":  "biome.marine.marine",
@@ -102951,7 +102953,8 @@
                                                "id":  "map_biome.first_world.dawnreach_deepwater",
                                                "name":  "Nacredeep Basin",
                                                "regionIds":  [
-                                                                 "region.dawnreach_isles"
+                                                                 "region.dawnreach_isles",
+                                                                 "region.nacre_shelf"
                                                              ],
                                                "notes":  "The hidden merfolk trade basin east of Dawnreach is tracked as deep marine water.",
                                                "biomeId":  "biome.marine.marine",

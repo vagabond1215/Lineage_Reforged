@@ -1454,7 +1454,7 @@
                     {
                         "id":  "world_hex.myridian_ports",
                         "slug":  "myridian_ports",
-                        "regionId":  "region.myridian_chain",
+                        "regionId":  "region.starfall_isle",
                         "localityBandId":  "region_locality.myridian_ports",
                         "biomeFamily":  "mixed_forest_archipelago",
                         "elevationBand":  "upland",
@@ -1496,7 +1496,7 @@
                     {
                         "id":  "world_hex.myridian_pearl_shoals",
                         "slug":  "myridian_pearl_shoals",
-                        "regionId":  "region.myridian_chain",
+                        "regionId":  "region.pearlwake_keys",
                         "localityBandId":  "region_locality.myridian_pearl_shoals",
                         "biomeFamily":  "mixed_forest_archipelago",
                         "elevationBand":  "upland",
@@ -1535,7 +1535,7 @@
                     {
                         "id":  "world_hex.myridian_beacon_bastions",
                         "slug":  "myridian_beacon_bastions",
-                        "regionId":  "region.myridian_chain",
+                        "regionId":  "region.zenith_isle",
                         "localityBandId":  "region_locality.myridian_beacon_bastions",
                         "biomeFamily":  "mixed_forest_archipelago",
                         "elevationBand":  "upland",
@@ -1570,7 +1570,7 @@
                     {
                         "id":  "world_hex.lantern_harbors",
                         "slug":  "lantern_harbors",
-                        "regionId":  "region.lantern_isles",
+                        "regionId":  "region.lantern_crown",
                         "localityBandId":  "region_locality.lantern_harbors",
                         "biomeFamily":  "seasonal_tropical_forest",
                         "elevationBand":  "lowland",
@@ -1611,7 +1611,7 @@
                     {
                         "id":  "world_hex.lantern_reef_depths",
                         "slug":  "lantern_reef_depths",
-                        "regionId":  "region.lantern_isles",
+                        "regionId":  "region.deepglow_reef",
                         "localityBandId":  "region_locality.lantern_reef_depths",
                         "biomeFamily":  "seasonal_tropical_forest",
                         "elevationBand":  "subterranean",
@@ -1651,7 +1651,7 @@
                     {
                         "id":  "world_hex.lantern_shrine_gardens",
                         "slug":  "lantern_shrine_gardens",
-                        "regionId":  "region.lantern_isles",
+                        "regionId":  "region.glasswake_quay",
                         "localityBandId":  "region_locality.lantern_shrine_gardens",
                         "biomeFamily":  "seasonal_tropical_forest",
                         "elevationBand":  "lowland",
@@ -1690,7 +1690,7 @@
                     {
                         "id":  "world_hex.serpents_storm_havens",
                         "slug":  "serpents_storm_havens",
-                        "regionId":  "region.serpents_wake",
+                        "regionId":  "region.stormfang_isle",
                         "localityBandId":  "region_locality.serpents_storm_havens",
                         "biomeFamily":  "mangrove",
                         "elevationBand":  "upland",
@@ -1732,7 +1732,7 @@
                     {
                         "id":  "world_hex.serpents_reef_anchorages",
                         "slug":  "serpents_reef_anchorages",
-                        "regionId":  "region.serpents_wake",
+                        "regionId":  "region.blackreef_keys",
                         "localityBandId":  "region_locality.serpents_reef_anchorages",
                         "biomeFamily":  "mangrove",
                         "elevationBand":  "lowland",
@@ -1773,7 +1773,7 @@
                     {
                         "id":  "world_hex.serpents_watch_musters",
                         "slug":  "serpents_watch_musters",
-                        "regionId":  "region.serpents_wake",
+                        "regionId":  "region.stormhook_reach",
                         "localityBandId":  "region_locality.serpents_watch_musters",
                         "biomeFamily":  "mangrove",
                         "elevationBand":  "upland",
@@ -1806,7 +1806,7 @@
                     {
                         "id":  "world_hex.dawnreach_aurora_harbors",
                         "slug":  "dawnreach_aurora_harbors",
-                        "regionId":  "region.dawnreach_isles",
+                        "regionId":  "region.aurora_reach",
                         "localityBandId":  "region_locality.dawnreach_aurora_harbors",
                         "biomeFamily":  "taiga",
                         "elevationBand":  "lowland",
@@ -1847,7 +1847,7 @@
                     {
                         "id":  "world_hex.dawnreach_nacre_depths",
                         "slug":  "dawnreach_nacre_depths",
-                        "regionId":  "region.dawnreach_isles",
+                        "regionId":  "region.nacre_shelf",
                         "localityBandId":  "region_locality.dawnreach_nacre_depths",
                         "biomeFamily":  "taiga",
                         "elevationBand":  "subterranean",
@@ -1885,7 +1885,7 @@
                     {
                         "id":  "world_hex.dawnreach_whalebone_watches",
                         "slug":  "dawnreach_whalebone_watches",
-                        "regionId":  "region.dawnreach_isles",
+                        "regionId":  "region.whalebone_edge",
                         "localityBandId":  "region_locality.dawnreach_whalebone_watches",
                         "biomeFamily":  "taiga",
                         "elevationBand":  "upland",

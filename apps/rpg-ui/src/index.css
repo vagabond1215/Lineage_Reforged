@@ -36,6 +36,11 @@
   --color-creator-card-strong: rgba(25, 34, 48, 0.96);
   --color-creator-card-hover: rgba(30, 40, 56, 0.98);
   --color-creator-card-shadow: rgba(0, 0, 0, 0.28);
+  --color-tooltip-bg: rgba(2, 6, 23, 0.95);
+  --color-tooltip-border: rgba(255, 255, 255, 0.1);
+  --color-tooltip-text: #e2e8f0;
+  --color-scrollbar-thumb: rgba(255, 255, 255, 0.14);
+  --color-scrollbar-track: transparent;
 }
 
 :root[data-theme='light'] {
@@ -62,6 +67,11 @@
   --color-creator-card-strong: rgba(245, 235, 220, 0.98);
   --color-creator-card-hover: rgba(242, 229, 211, 0.98);
   --color-creator-card-shadow: rgba(94, 69, 41, 0.12);
+  --color-tooltip-bg: rgba(255, 250, 243, 0.98);
+  --color-tooltip-border: rgba(78, 58, 34, 0.16);
+  --color-tooltip-text: #352417;
+  --color-scrollbar-thumb: rgba(120, 87, 47, 0.24);
+  --color-scrollbar-track: transparent;
 }
 
 * {
@@ -107,7 +117,7 @@ select {
 
 .panel-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
 .panel-scroll::-webkit-scrollbar {
@@ -116,8 +126,19 @@ select {
 }
 
 .panel-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--color-scrollbar-thumb);
   border-radius: 999px;
+}
+
+.region-description-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.region-description-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .soft-grid {
