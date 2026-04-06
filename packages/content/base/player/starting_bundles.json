@@ -1,0 +1,139 @@
+{
+  "records": [
+    {
+      "id": "starting_bundle.laborer",
+      "name": "Laborer Bundle",
+      "summary": "Basic work gear, simple clothes, and enough supply to start on hard terms.",
+      "fixedItems": [
+        { "itemId": "item.lumber_axe", "quantity": 1 },
+        { "itemId": "item.casual_tunic", "quantity": 1 },
+        { "itemId": "item.rope", "quantity": 1 },
+        { "itemId": "item.ration_bundle", "quantity": 1 }
+      ],
+      "startingCurrency": {
+        "gold": 8,
+        "silver": 4,
+        "copper": 0
+      }
+    },
+    {
+      "id": "starting_bundle.hunter",
+      "name": "Hunter Bundle",
+      "summary": "A modest ranged hunting loadout with field dressings and travel food.",
+      "fixedItems": [
+        { "itemId": "item.short_bow", "quantity": 1 },
+        { "itemId": "item.arrow_bundle", "quantity": 1 },
+        { "itemId": "item.skinning_knife", "quantity": 1 },
+        { "itemId": "item.field_bandage", "quantity": 3 },
+        { "itemId": "item.ration_bundle", "quantity": 1 }
+      ],
+      "startingCurrency": {
+        "gold": 10,
+        "silver": 4,
+        "copper": 0
+      }
+    },
+    {
+      "id": "starting_bundle.warrior",
+      "name": "Warrior Bundle",
+      "summary": "A disciplined martial start with one chosen weapon, a shield, light armor, and food.",
+      "fixedItems": [
+        { "itemId": "item.buckler_shield", "quantity": 1 },
+        { "itemId": "item.leather_light_armor", "quantity": 1 },
+        { "itemId": "item.ration_bundle", "quantity": 1 }
+      ],
+      "choiceGroups": [
+        {
+          "id": "starting_bundle.warrior.weapon",
+          "label": "Primary Weapon",
+          "options": [
+            { "itemId": "item.arming_sword", "quantity": 1 },
+            { "itemId": "item.war_spear", "quantity": 1 }
+          ]
+        }
+      ],
+      "startingCurrency": {
+        "gold": 9,
+        "silver": 3,
+        "copper": 0
+      }
+    },
+    {
+      "id": "starting_bundle.crafter",
+      "name": "Crafter Bundle",
+      "summary": "Practical tools, workwear, and a modest support pack for useful labor.",
+      "fixedItems": [
+        { "itemId": "item.casual_tunic", "quantity": 1 },
+        { "itemId": "item.field_bandage", "quantity": 2 },
+        { "itemId": "item.ration_bundle", "quantity": 1 }
+      ],
+      "choiceGroups": [
+        {
+          "id": "starting_bundle.crafter.specialist_kit",
+          "label": "Specialist Kit",
+          "options": [
+            { "itemId": "item.agriculture_kit", "quantity": 1 },
+            { "itemId": "item.pickaxe", "quantity": 1 },
+            { "itemId": "item.awl", "quantity": 1 }
+          ]
+        }
+      ],
+      "startingCurrency": {
+        "gold": 11,
+        "silver": 5,
+        "copper": 0
+      }
+    },
+    {
+      "id": "starting_bundle.arcanist",
+      "name": "Arcanist Bundle",
+      "summary": "A practical magical starter pack built around a focus, notes pouch, and light travel gear.",
+      "fixedItems": [
+        { "itemId": "item.battle_staff", "quantity": 1 },
+        { "itemId": "item.casual_tunic", "quantity": 1 },
+        { "itemId": "item.herb_pouch", "quantity": 1 },
+        { "itemId": "item.focus_draught", "quantity": 1 },
+        { "itemId": "item.ration_bundle", "quantity": 1 }
+      ],
+      "startingCurrency": {
+        "gold": 9,
+        "silver": 6,
+        "copper": 0
+      }
+    },
+    {
+      "id": "starting_bundle.traveler",
+      "name": "Traveler Bundle",
+      "summary": "A route-ready kit built for movement, weather, and uncertain lodging.",
+      "fixedItems": [
+        { "itemId": "item.butcher_knife", "quantity": 1 },
+        { "itemId": "item.travel_cloak", "quantity": 1 },
+        { "itemId": "item.bedroll_kit", "quantity": 1 },
+        { "itemId": "item.rope", "quantity": 1 },
+        { "itemId": "item.compass", "quantity": 1 }
+      ],
+      "startingCurrency": {
+        "gold": 16,
+        "silver": 8,
+        "copper": 0
+      }
+    },
+    {
+      "id": "starting_bundle.trader",
+      "name": "Trader Bundle",
+      "summary": "Ledger tools, travel basics, and a heavier purse for commercial beginnings.",
+      "fixedItems": [
+        { "itemId": "item.ledger", "quantity": 1 },
+        { "itemId": "item.travel_pouch", "quantity": 1 },
+        { "itemId": "item.casual_tunic", "quantity": 1 },
+        { "itemId": "item.compass", "quantity": 1 },
+        { "itemId": "item.ration_bundle", "quantity": 1 }
+      ],
+      "startingCurrency": {
+        "gold": 22,
+        "silver": 12,
+        "copper": 0
+      }
+    }
+  ]
+}

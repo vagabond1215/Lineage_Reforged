@@ -1,4 +1,10 @@
-import { createSaveSnapshotFromGameContext, runGameTick } from "../../../packages/engines/game-engine/src/index.js";
+import {
+  createDefaultGameState,
+  createDefaultPlayerCombatProfile,
+  createEmptySessionState,
+  createSaveSnapshotFromGameContext,
+  runGameTick
+} from "../../../packages/engines/game-engine/src/index.js";
 import { createInitialClock } from "../../../packages/shared/time/src/index.js";
 import {
   applyAttributeAdjustments,
@@ -39,12 +45,14 @@ export function runSingleTick(): void {
     playerName: "Sehir",
     lineageId: "lineage.human",
     sexId: "male" as const,
-    classId: "class.explorer",
-    jobId: "job.royal_advisor"
+    classId: null,
+    jobId: null,
+    backstoryId: "backstory.local",
+    startingBundleId: "starting_bundle.traveler"
   };
   const playerProgression = {
     level: 1,
-    classLevel: 1,
+    classLevel: 0,
     unspentAttributePoints: 0,
     unspentSkillPoints: 0
   };
@@ -80,7 +88,7 @@ export function runSingleTick(): void {
       id: "effect.arcane_focus",
       label: "Arcane Focus",
       sourceType: "buff",
-      sourceId: "spell.arcane.focused_breath",
+      sourceId: "spell.light.enhancing.bless",
       maxFlat: { mp: 10 },
       maxPercent: {},
       tickDeltaFlat: { mp: 2 },
@@ -105,7 +113,7 @@ export function runSingleTick(): void {
       amount: -4,
       kind: "spell_cost",
       sourceType: "spell",
-      sourceId: "spell.arcane.mana_bolt"
+      sourceId: "spell.fire.elemental.firebolt"
     },
     {
       id: "change.dock_sprint",
@@ -134,10 +142,7 @@ export function runSingleTick(): void {
     seed: 42,
     db,
     incomingEvents: [],
-    state: {
-      worldVersion: "0.1.0",
-      activeScenario: "bootstrap"
-    },
+    state: createDefaultGameState("normal"),
     worldContext: {
       clock,
       seed: 42,
@@ -145,8 +150,16 @@ export function runSingleTick(): void {
       incomingEvents: [],
       climateProfileId: "standard",
       state: {
-        activeRegions: ["region-001"],
-        weatherState: {}
+        activeRegions: ["region.kaelvar"],
+        weatherState: {},
+        encounterContext: {
+          regionId: "region.kaelvar",
+          settlementId: "settlement.aurelis",
+          siteId: null,
+          worldHexId: null,
+          habitatTags: ["roadside_ditch", "frontier_track", "quarry_edge"],
+          hazardPressure: 42
+        }
       }
     },
     civilizationContext: {
@@ -186,7 +199,7 @@ export function runSingleTick(): void {
       saveSlotId: "slot-001",
       state: {
         playerId: "player-001",
-        regionId: "region-001",
+        regionId: "region.kaelvar",
         coreData: playerCoreData,
         attributes: playerAttributes,
         resources: {
@@ -207,61 +220,47 @@ export function runSingleTick(): void {
         resourceRuntime: playerResourceRuntime,
         progression: playerProgression,
         skills: [
-          { id: "skill.innate.dodge", rank: 1, source: "innate" },
-          { id: "skill.innate.block", rank: 1, source: "innate" },
-          { id: "skill.innate.parry", rank: 1, source: "innate" },
-          { id: "skill.innate.climb", rank: 1, source: "innate" },
-          { id: "skill.innate.jump", rank: 1, source: "innate" },
-          { id: "skill.innate.throw", rank: 1, source: "innate" }
+          { id: "skill.combat.weapon.sword", rank: 12, source: "trained" },
+          { id: "skill.combat.defense.shield_handling", rank: 10, source: "trained" },
+          { id: "skill.combat.defense.evasion", rank: 8, source: "trained" },
+          { id: "skill.resource.spotting.fauna", rank: 6, source: "trained" }
         ],
         spells: [
           {
-            id: "spell.arcane.mana_bolt",
-            school: "arcane",
-            element: "arcane",
+            id: "spell.fire.elemental.firebolt",
+            school: "elemental",
+            element: "fire",
             rank: 1,
             source: "learned"
           }
         ],
         abilities: [
           {
-            id: "ability.combat.shield_bash",
-            category: "weapon",
+            id: "ability.melee.guard_break",
+            category: "melee",
             rank: 1,
             source: "learned"
           }
         ],
         traits: [
-          { id: "trait.hardy", source: "innate" }
+          { id: "trait.lineage.human.adaptable", source: "lineage" }
         ],
         equipment: {
-          "slot.weapon.left": null,
+          "slot.weapon.left": {
+            itemId: "item.buckler_shield",
+            itemKey: "buckler_shield",
+            quantity: 1,
+            durability: 0.9
+          },
           "slot.weapon.right": {
-            itemId: "item.cadet_blade",
-            itemKey: "cadet_blade",
+            itemId: "item.arming_sword",
+            itemKey: "arming_sword",
             quantity: 1,
             durability: 0.82
           },
           "slot.armor.head": null,
           "slot.armor.shoulder": null,
-          "slot.armor.chest": {
-            itemId: "item.field_harness",
-            itemKey: "field_harness",
-            quantity: 1,
-            durability: 0.91,
-            resourceModifiers: [
-              {
-                id: "equipment.field_harness",
-                label: "Field Harness",
-                sourceType: "equipment",
-                sourceId: "item.field_harness",
-                maxFlat: { hp: 8, stamina: 10 },
-                maxPercent: {},
-                tickDeltaFlat: { stamina: 1 },
-                notes: ["Travel harness improves endurance and reduces passive fatigue."]
-              }
-            ]
-          },
+          "slot.armor.chest": null,
           "slot.armor.arm": null,
           "slot.armor.hand": null,
           "slot.armor.waist": null,
@@ -269,24 +268,7 @@ export function runSingleTick(): void {
           "slot.armor.foot": null,
           "slot.accessory.ear": null,
           "slot.accessory.eyes": null,
-          "slot.accessory.neck": {
-            itemId: "item.mana_prism",
-            itemKey: "mana_prism",
-            quantity: 1,
-            durability: 0.96,
-            resourceModifiers: [
-              {
-                id: "equipment.mana_prism",
-                label: "Mana Prism",
-                sourceType: "equipment",
-                sourceId: "item.mana_prism",
-                maxFlat: { mp: 12 },
-                maxPercent: {},
-                tickDeltaFlat: { mp: 1 },
-                notes: ["A small prism steadily feeds mana back into the bearer."]
-              }
-            ]
-          },
+          "slot.accessory.neck": null,
           "slot.accessory.arms": null,
           "slot.accessory.fingers": null,
           "slot.accessory.waist": null,
@@ -298,7 +280,9 @@ export function runSingleTick(): void {
               id: "bag.starter",
               label: "Starter Satchel",
               slotCapacity: 16,
-              stacks: []
+              stacks: [
+                { itemId: "item.field_bandage", itemKey: "field_bandage", quantity: 3 }
+              ]
             }
           ],
           overflow: []
@@ -332,28 +316,37 @@ export function runSingleTick(): void {
         ],
         titles: [
           {
-            id: "title.royal_advisor",
-            label: "Royal Advisor",
-            source: "court_service",
+            id: "title.combat.sword.novice",
+            name: "Novice",
+            family: "combat",
+            trackId: "title_track.combat.sword",
+            sourceSkillId: "skill.combat.weapon.sword",
+            milestone: {
+              threshold: 50,
+              requiresMasteryTrial: false,
+              trialId: null
+            },
             equipped: true,
-            effects: ["audience_access", "civic_authority"]
+            effects: ["combat.sword.accuracy"]
           }
         ],
         discoveryChronicle: {
           entries: [],
           lastUpdatedTick: null
         },
-        discoveredRegions: ["region-001"],
+        discoveredRegions: ["region.kaelvar"],
         activeQuestIds: [],
         completedQuestIds: [],
         flags: [],
+        combatProfile: createDefaultPlayerCombatProfile(),
         saveMeta: {
           totalPlayTicks: 0,
           lastRestAtTick: 0,
           lastSavedAtTick: 0
         }
       }
-    }
+    },
+    sessionState: createEmptySessionState()
   };
 
   const result = runGameTick(context);

@@ -28,7 +28,8 @@ import {
   type GameShellNotice,
   type GameShellState,
   type ManualSaveSlotId,
-  type SaveSlotId
+  type SaveSlotId,
+  type SaveSlotSummary
 } from './game-shell/state';
 
 type ThemeMode = 'dark' | 'light';
@@ -70,6 +71,46 @@ function createAppState(_: undefined): GameShellState {
   return createInitialGameShellState(slots, notice);
 }
 
+function formatSaveNoticeTimestamp(savedAt: string | null, savedLabel: string | null): string {
+  if (savedLabel) {
+    return savedLabel;
+  }
+
+  if (!savedAt) {
+    return 'an unknown time';
+  }
+
+  const parsed = new Date(savedAt);
+
+  if (Number.isNaN(parsed.valueOf())) {
+    return 'an unknown time';
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'medium',
+    timeStyle: 'short'
+  }).format(parsed);
+}
+
+function formatSaveDestination(slotId: SaveSlotId): string {
+  return slotId === 'quick-save' ? 'quicksave' : getSaveSlotLabel(slotId).toLowerCase();
+}
+
+function buildSaveStatusNotice(slot: Pick<SaveSlotSummary, 'id' | 'playerName' | 'lastSavedAt' | 'lastSavedLabel'>): GameShellNotice {
+  const playerName = slot.playerName ?? 'Unknown character';
+  const savedAt = formatSaveNoticeTimestamp(slot.lastSavedAt, slot.lastSavedLabel);
+  const message = `Game Data for ${playerName} saved to ${formatSaveDestination(slot.id)} at ${savedAt}.`;
+
+  return {
+    tone: 'accent',
+    title: 'Game Data Saved',
+    detail: message,
+    message,
+    compact: true,
+    autoDismissMs: 15000
+  };
+}
+
 export default function App() {
   const [state, dispatch] = useReducer(gameShellReducer, undefined, createAppState);
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
@@ -101,6 +142,26 @@ export default function App() {
       }
     }
   }, [themeMode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const autoDismissMs = state.notice?.autoDismissMs ?? null;
+
+    if (!autoDismissMs || autoDismissMs <= 0) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      dispatch({ type: 'SET_NOTICE', notice: null });
+    }, autoDismissMs);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [state.notice]);
 
   const toggleThemeMode = () => {
     setThemeMode((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
@@ -416,7 +477,7 @@ export default function App() {
     }
 
     try {
-      createSave(
+      const savedSlot = createSave(
         state.activeSlotId,
         state.snapshot,
         buildSaveMetadata(state.activeSlotId, state.snapshot)
@@ -427,11 +488,7 @@ export default function App() {
         type: 'COMPLETE_IN_GAME_SAVE',
         slots: next.slots,
         activeSlotId: state.activeSlotId,
-        notice: next.notice ?? {
-          tone: 'success',
-          title: 'Game Saved',
-          detail: `${state.snapshot.playerState.coreData.playerName} was saved to ${getSaveSlotLabel(state.activeSlotId)}.`
-        }
+        notice: next.notice ?? buildSaveStatusNotice(savedSlot)
       });
     } catch (error) {
       dispatch({
@@ -447,18 +504,14 @@ export default function App() {
     }
 
     try {
-      quickSave(state.snapshot);
+      const savedSlot = quickSave(state.snapshot);
 
       const next = listSlotsWithFallback('read');
       dispatch({
         type: 'COMPLETE_IN_GAME_SAVE',
         slots: next.slots,
         activeSlotId: state.activeSlotId,
-        notice: next.notice ?? {
-          tone: 'accent',
-          title: 'Quick Save Complete',
-          detail: `${state.snapshot.playerState.coreData.playerName} was written to the dedicated quick-save slot.`
-        }
+        notice: next.notice ?? buildSaveStatusNotice(savedSlot)
       });
     } catch (error) {
       dispatch({
@@ -483,19 +536,27 @@ export default function App() {
       }
     }
 
-    showMainMenu(
-      state.hasUnsavedChanges
-        ? {
-            tone: 'warning',
-            title: 'Returned Without Saving',
-            detail: 'Unsaved in-memory changes were discarded when the session returned to the main menu.'
-          }
-        : {
-            tone: 'accent',
-            title: 'Returned To Main Menu',
-            detail: 'The current session was left safely and the main menu is ready.'
-          }
-    );
+    const next = listSlotsWithFallback('read');
+    const activeSlot = next.slots.find((slot) => slot.id === state.activeSlotId) ?? null;
+
+    dispatch({
+      type: 'SHOW_MAIN_MENU',
+      slots: next.slots,
+      notice: next.notice ??
+        (state.hasUnsavedChanges
+          ? {
+              tone: 'warning',
+              title: 'Returned Without Saving',
+              detail: 'Unsaved in-memory changes were discarded when the session returned to the main menu.'
+            }
+          : activeSlot?.hasSave
+            ? buildSaveStatusNotice(activeSlot)
+            : {
+                tone: 'accent',
+                title: 'Returned To Main Menu',
+                detail: 'The current session was left safely and the main menu is ready.'
+              })
+    });
   };
 
   const handleExit = () => {
@@ -528,8 +589,11 @@ export default function App() {
         onDismissNotice={dismissNotice}
         onActivateSlot={handleGameDataSlot}
         onDeleteSlot={handleDeleteSave}
+        onContinue={continueLatestGame}
         onOpenSettings={openSettings}
         onExit={handleExit}
+        themeMode={themeMode}
+        onToggleThemeMode={toggleThemeMode}
       />
     );
   } else if (state.screen === 'CHARACTER_CREATION') {
@@ -570,6 +634,8 @@ export default function App() {
         onDismissNotice={dismissNotice}
         onBack={() => showMainMenu()}
         onResetSaves={handleResetSaves}
+        themeMode={themeMode}
+        onToggleThemeMode={toggleThemeMode}
       />
     );
   } else {

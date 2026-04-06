@@ -1,0 +1,953 @@
+{
+  "records": [
+    {
+      "id": "progression_track.resource",
+      "name": "Resource Progression",
+      "trackType": "resource",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 1.02,
+        "difficultyWeight": 0.58,
+        "performanceWeight": 0.2,
+        "trialWeight": 0.16,
+        "eventWeight": 0.1,
+        "repeatPenaltyPerUse": 0.08
+      },
+      "breakthroughSources": {
+        "strongPerformance": 28,
+        "trials": 44,
+        "difficulty": 24,
+        "events": 16,
+        "rngBonusMax": 8
+      }
+    },
+    {
+      "id": "progression_track.survival",
+      "name": "Survival Progression",
+      "trackType": "survival",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.98,
+        "difficultyWeight": 0.55,
+        "performanceWeight": 0.18,
+        "trialWeight": 0.18,
+        "eventWeight": 0.12,
+        "repeatPenaltyPerUse": 0.06
+      },
+      "breakthroughSources": {
+        "strongPerformance": 24,
+        "trials": 40,
+        "difficulty": 22,
+        "events": 20,
+        "rngBonusMax": 6
+      }
+    },
+    {
+      "id": "progression_track.combat_fundamentals",
+      "name": "Combat Fundamentals Progression",
+      "trackType": "combat_fundamentals",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 1.08,
+        "difficultyWeight": 0.62,
+        "performanceWeight": 0.24,
+        "trialWeight": 0.14,
+        "eventWeight": 0.1,
+        "repeatPenaltyPerUse": 0.09
+      },
+      "breakthroughSources": {
+        "strongPerformance": 32,
+        "trials": 36,
+        "difficulty": 26,
+        "events": 14,
+        "rngBonusMax": 10
+      }
+    },
+    {
+      "id": "progression_track.weapon",
+      "name": "Weapon Progression",
+      "trackType": "weapon",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 1.1,
+        "difficultyWeight": 0.64,
+        "performanceWeight": 0.24,
+        "trialWeight": 0.14,
+        "eventWeight": 0.1,
+        "repeatPenaltyPerUse": 0.1
+      },
+      "breakthroughSources": {
+        "strongPerformance": 34,
+        "trials": 36,
+        "difficulty": 26,
+        "events": 14,
+        "rngBonusMax": 10
+      }
+    },
+    {
+      "id": "progression_track.defense",
+      "name": "Defense Progression",
+      "trackType": "defense",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 1.03,
+        "difficultyWeight": 0.6,
+        "performanceWeight": 0.21,
+        "trialWeight": 0.14,
+        "eventWeight": 0.12,
+        "repeatPenaltyPerUse": 0.08
+      },
+      "breakthroughSources": {
+        "strongPerformance": 28,
+        "trials": 38,
+        "difficulty": 24,
+        "events": 18,
+        "rngBonusMax": 8
+      }
+    },
+    {
+      "id": "progression_track.armor",
+      "name": "Armor Progression",
+      "trackType": "armor",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.96,
+        "difficultyWeight": 0.61,
+        "performanceWeight": 0.18,
+        "trialWeight": 0.16,
+        "eventWeight": 0.1,
+        "repeatPenaltyPerUse": 0.08
+      },
+      "breakthroughSources": {
+        "strongPerformance": 22,
+        "trials": 40,
+        "difficulty": 28,
+        "events": 14,
+        "rngBonusMax": 6
+      }
+    },
+    {
+      "id": "progression_track.tactical_combat",
+      "name": "Tactical Combat Progression",
+      "trackType": "tactical_combat",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.94,
+        "difficultyWeight": 0.52,
+        "performanceWeight": 0.18,
+        "trialWeight": 0.22,
+        "eventWeight": 0.14,
+        "repeatPenaltyPerUse": 0.05
+      },
+      "breakthroughSources": {
+        "strongPerformance": 20,
+        "trials": 42,
+        "difficulty": 18,
+        "events": 24,
+        "rngBonusMax": 6
+      }
+    },
+    {
+      "id": "progression_track.magic_core",
+      "name": "Magic Core Progression",
+      "trackType": "magic_core",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.98,
+        "difficultyWeight": 0.58,
+        "performanceWeight": 0.2,
+        "trialWeight": 0.22,
+        "eventWeight": 0.12,
+        "repeatPenaltyPerUse": 0.09
+      },
+      "breakthroughSources": {
+        "strongPerformance": 24,
+        "trials": 40,
+        "difficulty": 22,
+        "events": 18,
+        "rngBonusMax": 8
+      }
+    },
+    {
+      "id": "progression_track.magic_school",
+      "name": "Magic School Progression",
+      "trackType": "magic_school",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.96,
+        "difficultyWeight": 0.6,
+        "performanceWeight": 0.2,
+        "trialWeight": 0.22,
+        "eventWeight": 0.12,
+        "repeatPenaltyPerUse": 0.1
+      },
+      "breakthroughSources": {
+        "strongPerformance": 22,
+        "trials": 40,
+        "difficulty": 24,
+        "events": 18,
+        "rngBonusMax": 8
+      }
+    },
+    {
+      "id": "progression_track.crafting",
+      "name": "Crafting Progression",
+      "trackType": "crafting",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.92,
+        "difficultyWeight": 0.7,
+        "performanceWeight": 0.18,
+        "trialWeight": 0.12,
+        "eventWeight": 0.1,
+        "repeatPenaltyPerUse": 0.12
+      },
+      "breakthroughSources": {
+        "strongPerformance": 24,
+        "trials": 44,
+        "difficulty": 30,
+        "events": 10,
+        "rngBonusMax": 5
+      }
+    },
+    {
+      "id": "progression_track.settlement",
+      "name": "Settlement Progression",
+      "trackType": "settlement",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.9,
+        "difficultyWeight": 0.5,
+        "performanceWeight": 0.16,
+        "trialWeight": 0.18,
+        "eventWeight": 0.2,
+        "repeatPenaltyPerUse": 0.05
+      },
+      "breakthroughSources": {
+        "strongPerformance": 18,
+        "trials": 34,
+        "difficulty": 18,
+        "events": 30,
+        "rngBonusMax": 5
+      }
+    },
+    {
+      "id": "progression_track.leadership",
+      "name": "Leadership Progression",
+      "trackType": "leadership",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.92,
+        "difficultyWeight": 0.48,
+        "performanceWeight": 0.18,
+        "trialWeight": 0.2,
+        "eventWeight": 0.24,
+        "repeatPenaltyPerUse": 0.04
+      },
+      "breakthroughSources": {
+        "strongPerformance": 18,
+        "trials": 36,
+        "difficulty": 16,
+        "events": 32,
+        "rngBonusMax": 5
+      }
+    },
+    {
+      "id": "progression_track.knowledge",
+      "name": "Knowledge Progression",
+      "trackType": "knowledge",
+      "rankRange": {
+        "min": 1,
+        "max": 125
+      },
+      "bands": [
+        {
+          "id": "clumsy",
+          "label": "Clumsy",
+          "minRank": 1,
+          "maxRank": 30,
+          "softCapRank": 30,
+          "requiresBreakthrough": false
+        },
+        {
+          "id": "familiar",
+          "label": "Familiar",
+          "minRank": 25,
+          "maxRank": 55,
+          "softCapRank": 55,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "proficient",
+          "label": "Proficient",
+          "minRank": 50,
+          "maxRank": 80,
+          "softCapRank": 80,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "skilled",
+          "label": "Skilled",
+          "minRank": 75,
+          "maxRank": 100,
+          "softCapRank": 100,
+          "requiresBreakthrough": true
+        },
+        {
+          "id": "mastery",
+          "label": "Mastery",
+          "minRank": 100,
+          "maxRank": 125,
+          "softCapRank": 125,
+          "requiresBreakthrough": true,
+          "requiresMasteryTrial": true
+        }
+      ],
+      "breakthroughGateRanks": [
+        30,
+        55,
+        80,
+        100
+      ],
+      "gainModel": {
+        "baseGainPerUse": 0.95,
+        "difficultyWeight": 0.5,
+        "performanceWeight": 0.16,
+        "trialWeight": 0.2,
+        "eventWeight": 0.18,
+        "repeatPenaltyPerUse": 0.06
+      },
+      "breakthroughSources": {
+        "strongPerformance": 20,
+        "trials": 40,
+        "difficulty": 20,
+        "events": 24,
+        "rngBonusMax": 5
+      }
+    }
+  ]
+}

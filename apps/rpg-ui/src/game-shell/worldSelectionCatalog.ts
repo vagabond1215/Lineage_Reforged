@@ -78,6 +78,8 @@ export interface WorldCardArt {
   selectedImageUrl?: string;
   backgroundPosition?: string;
   selectedBackgroundPosition?: string;
+  backgroundSize?: string;
+  selectedBackgroundSize?: string;
 }
 
 export type WorldRegionResourceTone =
@@ -135,6 +137,7 @@ export interface WorldSettlementOption {
   settlementType: string;
   dominantIndustries: string[];
   keyResources: string[];
+  resourceIcons: WorldRegionResourceIcon[];
   tradeRole: string;
   developmentLevel: string;
   access: SettlementStartAccessState;
@@ -684,6 +687,96 @@ const REGION_PRESENTATION_OVERRIDES: Record<string, RegionPresentationOverride> 
   }
 };
 
+function createSettlementCardArt(assetSlug: string): WorldCardArt {
+  return {
+    imageUrl: `/character-creator/settlements/settlement-${assetSlug}.png`,
+    backgroundPosition: "center 22%",
+    selectedBackgroundPosition: "center 24%",
+    selectedBackgroundSize: "auto 126%"
+  };
+}
+
+const SETTLEMENT_CARD_ART_IDS = [
+  "settlement.applemarsh",
+  "settlement.ashsaddle",
+  "settlement.aurelis",
+  "settlement.barkmill_hamlet",
+  "settlement.barleyhearth_estate",
+  "settlement.basinford",
+  "settlement.blackglass_camp",
+  "settlement.blueflow",
+  "settlement.breaksail",
+  "settlement.bridgewatch_ferry",
+  "settlement.brineharbor",
+  "settlement.caskbank_estate",
+  "settlement.cliffsalt_priory",
+  "settlement.coalspur",
+  "settlement.confederate_ford",
+  "settlement.coppergate",
+  "settlement.deepecho_camp",
+  "settlement.dockreed_estate",
+  "settlement.golden_barrow",
+  "settlement.granary_crown",
+  "settlement.greenharrow",
+  "settlement.gullsreach",
+  "settlement.harvestrest",
+  "settlement.haywarden_estate",
+  "settlement.headwater_bastion",
+  "settlement.highcrown",
+  "settlement.islemarket",
+  "settlement.kelpnet_hamlet",
+  "settlement.kingsbridge",
+  "settlement.ledgerford",
+  "settlement.longmeadow",
+  "settlement.mastfield",
+  "settlement.millrun",
+  "settlement.mistfen_landing",
+  "settlement.moonwell_grove",
+  "settlement.northhook_keep",
+  "settlement.northpass_redoubt",
+  "settlement.obsidian_stair",
+  "settlement.oliveford",
+  "settlement.orchardhome",
+  "settlement.passglass_hold",
+  "settlement.pasturemeet",
+  "settlement.quarrymule_camp",
+  "settlement.redcliff_quay",
+  "settlement.redreed_ford",
+  "settlement.redroot_warrens",
+  "settlement.riverthrone",
+  "settlement.saltfang_anchorage",
+  "settlement.seabanner",
+  "settlement.silvergrove",
+  "settlement.silvermere",
+  "settlement.slatewake",
+  "settlement.southlight",
+  "settlement.southlock_ferry",
+  "settlement.spicehook",
+  "settlement.stepwell_redoubt",
+  "settlement.stonevein",
+  "settlement.stormwatch_citadel",
+  "settlement.sunmeadow",
+  "settlement.sunpasture_estate",
+  "settlement.sunscar_watch",
+  "settlement.sunspire_reach",
+  "settlement.thornwatch",
+  "settlement.tidecrown",
+  "settlement.timbercross",
+  "settlement.verdeward",
+  "settlement.vinecross",
+  "settlement.watchers_gate",
+  "settlement.whitebark_gate"
+] as const;
+
+const SETTLEMENT_CARD_ART: Record<string, WorldCardArt> = Object.fromEntries(
+  SETTLEMENT_CARD_ART_IDS.map((settlementId) => [
+    settlementId,
+    createSettlementCardArt(
+      settlementId.replace(/^settlement\./, "").replaceAll("_", "-")
+    )
+  ])
+) as Record<string, WorldCardArt>;
+
 function titleCase(value: string): string {
   return value
     .split("_")
@@ -1104,6 +1197,27 @@ function buildRegionDescriptionParagraphs(record: RegionRecord): string[] {
   return paragraphs.filter((paragraph) => paragraph.trim().length > 0);
 }
 
+function deriveResourceIconsFromKeywords(
+  keywords: string,
+  fallback: WorldRegionResourceIcon[] = []
+): WorldRegionResourceIcon[] {
+  const matched = REGION_RESOURCE_ICON_RULES.filter((rule) => rule.test.test(keywords))
+    .slice(0, 4)
+    .map(({ tone, label, description }) =>
+      createRegionResourceIcon({
+        tone,
+        label,
+        description
+      })
+    );
+
+  if (matched.length > 0) {
+    return matched;
+  }
+
+  return fallback.slice(0, 4);
+}
+
 function deriveRegionResourceIcons(record: RegionRecord): WorldRegionResourceIcon[] {
   const override = REGION_PRESENTATION_OVERRIDES[record.id]?.resourceIcons;
 
@@ -1119,15 +1233,28 @@ function deriveRegionResourceIcons(record: RegionRecord): WorldRegionResourceIco
     .join(" ")
     .toLowerCase();
 
-  return REGION_RESOURCE_ICON_RULES.filter((rule) => rule.test.test(keywords))
-    .slice(0, 4)
-    .map(({ tone, label, description }) =>
-      createRegionResourceIcon({
-        tone,
-        label,
-        description
-      })
-    );
+  return deriveResourceIconsFromKeywords(keywords);
+}
+
+function deriveSettlementResourceIcons(
+  settlement: SettlementRecord,
+  region: RegionRecord
+): WorldRegionResourceIcon[] {
+  const fallback = deriveRegionResourceIcons(region);
+  const keywords = [
+    settlement.settlementType,
+    settlement.economicModel.dominantRole,
+    ...(settlement.economicModel.secondaryRoles ?? []),
+    ...(settlement.domesticResourceProfile.primaryGoods ?? []),
+    ...(settlement.domesticResourceProfile.secondaryGoods ?? []),
+    ...(settlement.identityTags ?? []),
+    ...(settlement.purposeTags ?? []),
+    ...(region.economicProfile?.supplyStrengths ?? [])
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  return deriveResourceIconsFromKeywords(keywords, fallback);
 }
 
 function deriveAuthorityLabel(settlement: SettlementRecord, landAuthorityType: LandAuthorityType): string {
@@ -1155,7 +1282,7 @@ function deriveLandRestrictionSummary(params: {
   settlement: SettlementRecord;
   landAuthorityType: LandAuthorityType;
   access: SettlementStartAccessState;
-  hasPathAndBackstory: boolean;
+  hasBackstorySelection: boolean;
 }): SettlementLandRestrictionSummary {
   const authorityLabel = deriveAuthorityLabel(params.settlement, params.landAuthorityType);
   const purchaseRequirements: string[] = [];
@@ -1183,17 +1310,17 @@ function deriveLandRestrictionSummary(params: {
     purchaseRequirements.push("coin", "good standing", "declared trade or household purpose");
   }
 
-  const currentStanding = !params.hasPathAndBackstory
-    ? "No clerk or magistrate has judged your standing here yet. Declare both your past and your chosen path before the city can speak on what place, if any, may be granted to you."
+  const currentStanding = !params.hasBackstorySelection
+    ? "No clerk or magistrate has judged your standing here yet. Declare your backstory and lawful standing before the city can speak on what place, if any, may be granted to you."
     : params.access.accessStatus === "allowed"
       ? "As matters now stand, you would be admitted lawfully and your petition for residence or purchase would at least be heard."
-      : `As matters now stand, this city would not yet grant you a lawful place within its bounds. ${params.access.notes[0] ?? "A different past, path, or destination would be needed."}`;
+      : `As matters now stand, this city would not yet grant you a lawful place within its bounds. ${params.access.notes[0] ?? "A different backstory, sponsor, or destination would be needed."}`;
 
   return {
     authorityLabel,
     propertyNarrative,
     currentStanding,
-    purchaseRequirements: params.hasPathAndBackstory ? purchaseRequirements : []
+    purchaseRequirements: params.hasBackstorySelection ? purchaseRequirements : []
   };
 }
 
@@ -1201,15 +1328,13 @@ function deriveSettlementDetails(
   settlement: SettlementRecord,
   region: RegionRecord,
   locality: LocalityRecord,
-  classId: string,
-  backgroundId: string
+  backstoryId: string
 ): Pick<WorldSettlementOption, "access" | "landAuthorityType" | "guilds" | "magic"> {
   const landAuthorityType = deriveLandAuthorityType(settlement);
   const access = deriveSettlementStartAccess({
     settlement,
     landAuthorityType,
-    classId,
-    backgroundId
+    backstoryId
   });
 
   if (!religionCatalog) {
@@ -1291,6 +1416,10 @@ export function getRegionCardArt(regionId: string): WorldCardArt | null {
   return REGION_PRESENTATION_OVERRIDES[regionId]?.cardArt ?? null;
 }
 
+export function getSettlementCardArt(settlementId: string): WorldCardArt | null {
+  return SETTLEMENT_CARD_ART[settlementId] ?? null;
+}
+
 export function getWorldRegionOptions(continentId: string): WorldRegionOption[] {
   const childRegions = regionRecords.filter((record) => record.parentRegionId === continentId && record.regionType === "subregion");
   const sourceRegions =
@@ -1327,8 +1456,7 @@ export function getWorldRegionOptions(continentId: string): WorldRegionOption[] 
 export function getWorldSettlementOptions(params: {
   continentId: string;
   regionId: string;
-  classId: string;
-  backgroundId: string;
+  backstoryId: string;
 }): WorldSettlementOption[] {
   return settlementRecords
     .filter((record) => record.macroRegionId === params.continentId && record.regionId === params.regionId)
@@ -1340,8 +1468,8 @@ export function getWorldSettlementOptions(params: {
         return null;
       }
 
-      const details = deriveSettlementDetails(record, region, locality, params.classId, params.backgroundId);
-      const hasPathAndBackstory = params.classId.trim().length > 0 && params.backgroundId.trim().length > 0;
+      const details = deriveSettlementDetails(record, region, locality, params.backstoryId);
+      const hasBackstorySelection = params.backstoryId.trim().length > 0;
 
       return {
         id: record.id,
@@ -1352,6 +1480,7 @@ export function getWorldSettlementOptions(params: {
         settlementType: titleCase(record.settlementType),
         dominantIndustries: [record.economicModel.dominantRole, ...record.economicModel.secondaryRoles].slice(0, 4).map(titleCase),
         keyResources: [...record.domesticResourceProfile.primaryGoods, ...record.domesticResourceProfile.secondaryGoods].slice(0, 4),
+        resourceIcons: deriveSettlementResourceIcons(record, region),
         tradeRole: deriveTradeRole(record),
         developmentLevel: deriveDevelopmentLevel(record),
         access: details.access,
@@ -1360,7 +1489,7 @@ export function getWorldSettlementOptions(params: {
           settlement: record,
           landAuthorityType: details.landAuthorityType,
           access: details.access,
-          hasPathAndBackstory
+          hasBackstorySelection
         }),
         guilds: details.guilds,
         magic: details.magic,
@@ -1373,15 +1502,14 @@ export function getWorldSettlementOptions(params: {
 export function getPreferredWorldSettlementOption(params: {
   continentId: string;
   regionId: string;
-  classId: string;
-  backgroundId: string;
+  backstoryId: string;
 }): WorldSettlementOption | null {
   const options = getWorldSettlementOptions(params);
 
   return options.find((option) => option.access.accessStatus === "allowed") ?? options[0] ?? null;
 }
 
-export function getDefaultWorldSelection(classId: string, backgroundId: string): {
+export function getDefaultWorldSelection(backstoryId: string): {
   continentId: string;
   regionId: string;
   settlementId: string;
@@ -1395,8 +1523,7 @@ export function getDefaultWorldSelection(classId: string, backgroundId: string):
         settlement: getPreferredWorldSettlementOption({
           continentId: continent.id,
           regionId: region.id,
-          classId,
-          backgroundId
+          backstoryId
         })
       }))
     )
@@ -1408,8 +1535,7 @@ export function getDefaultWorldSelection(classId: string, backgroundId: string):
       ? getPreferredWorldSettlementOption({
           continentId: fallbackContinent.id,
           regionId: fallbackRegion.id,
-          classId,
-          backgroundId
+          backstoryId
         })
       : null;
   const continent = firstAllowedSelection?.continent ?? fallbackContinent;
@@ -1427,16 +1553,14 @@ export function resolveWorldSelection(params: {
   continentId: string;
   regionId: string;
   settlementId: string;
-  classId: string;
-  backgroundId: string;
+  backstoryId: string;
 }): ResolvedWorldSelection | null {
   const continent = getWorldContinentOptions().find((record) => record.id === params.continentId);
   const regionOption = getWorldRegionOptions(params.continentId).find((record) => record.id === params.regionId);
   const settlementOption = getWorldSettlementOptions({
     continentId: params.continentId,
     regionId: params.regionId,
-    classId: params.classId,
-    backgroundId: params.backgroundId
+    backstoryId: params.backstoryId
   }).find((record) => record.id === params.settlementId);
   const settlementRecord = settlementRecords.find((record) => record.id === params.settlementId);
   const regionRecord = settlementRecord ? regionById.get(settlementRecord.regionId) : null;

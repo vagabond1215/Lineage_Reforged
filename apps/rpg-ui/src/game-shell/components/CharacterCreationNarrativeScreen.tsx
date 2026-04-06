@@ -23,26 +23,31 @@ import {
   parsePresentedAttributeValues
 } from '../characterAttributes.js';
 import {
+  createDefaultStartingBundleChoiceSelections,
   generateRandomCharacterName,
+  getAgeBandLabel,
+  getAgeBandRangeLabel,
+  getStartingBundleTemplate,
   getBuildLabel,
   getHeightBandLabel,
   getBackstoryOptionsForSelection,
-  getBackstoryStartAccessProfileId,
   getLineageCardArt,
   getLineageIdentityCatalog,
   lineageOptions,
-  pathOptions
+  startingBundleOptions
 } from '../characterCreationCatalog.js';
 import { buildCharacterCreationPreview } from '../newGameSnapshot.js';
 import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
 import {
   getContinentCardArt,
   getRegionCardArt,
+  getSettlementCardArt,
   getWorldContinentOptions,
   getWorldRegionOptions,
   getWorldSettlementOptions,
   resolveWorldSelection,
-  type WorldRegionOption
+  type WorldRegionOption,
+  type WorldRegionResourceIcon
 } from '../worldSelectionCatalog.js';
 import { NoticeBanner } from './NoticeBanner.js';
 
@@ -85,23 +90,23 @@ const textInputClass =
 const identitySectionWidthClass = 'w-full max-w-[26.75rem]';
 
 const identityChoiceGridClass = `${identitySectionWidthClass} grid grid-cols-3 gap-3`;
+const identitySectionDividerClass =
+  `${identitySectionWidthClass} h-px bg-[color:var(--color-border)]/80`;
 
 const identityPaletteGridClass =
   `${identitySectionWidthClass} grid grid-cols-9 items-start gap-x-1 gap-y-1.5`;
 
-const selectionOverlayBase =
-  'absolute inset-y-0 left-0 z-10 flex w-[54%] max-w-[34rem] items-stretch overflow-hidden opacity-0 translate-x-5 transition duration-500 ease-out group-hover:translate-x-0 group-hover:opacity-100';
-
 const continentSelectionOverlayBase =
-  'absolute bottom-px left-px top-px z-10 flex items-stretch overflow-hidden rounded-l-[23px]';
+  'absolute inset-y-0 left-0 z-10 flex items-stretch overflow-hidden rounded-l-[24px]';
 
 const lineageSelectionOverlayBase =
   'absolute inset-y-0 left-0 right-[7rem] z-10 flex items-stretch overflow-hidden';
 
-const CONTINENT_SELECTION_PANEL_WIDTH = 'clamp(13rem, 22%, 18rem)';
-const CONTINENT_SELECTION_IMAGE_LEFT = `calc(${CONTINENT_SELECTION_PANEL_WIDTH} + 1px)`;
-const REGION_SELECTION_PANEL_WIDTH = 'clamp(15rem, 24%, 19.5rem)';
-const REGION_SELECTION_IMAGE_LEFT = `calc(${REGION_SELECTION_PANEL_WIDTH} + 1px)`;
+const CONTINENT_SELECTION_PANEL_WIDTH = 'clamp(16rem, 28%, 21rem)';
+const CONTINENT_SELECTION_IMAGE_LEFT = CONTINENT_SELECTION_PANEL_WIDTH;
+const REGION_SELECTION_PANEL_WIDTH = 'clamp(16rem, 26%, 21rem)';
+const REGION_SELECTION_IMAGE_LEFT = REGION_SELECTION_PANEL_WIDTH;
+const COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS = 'min-h-[14rem]';
 
 const ATTRIBUTE_POINT_BUDGET = 10;
 const LINEAGE_ART_ROTATION_MS = 7000;
@@ -166,7 +171,7 @@ function getResourceBarFillPercent(
 
 function getSelectableCardClass(
   selected: boolean,
-  tone: 'lineage' | 'continent' | 'region' | 'settlement' | 'backstory' | 'path' | 'slot'
+  tone: 'lineage' | 'continent' | 'region' | 'settlement' | 'backstory' | 'starting_bundle' | 'slot'
 ): string {
   if (!selected) {
     return `${creatorCardBase} ${creatorCardUnselected}`;
@@ -181,7 +186,7 @@ function getSelectableCardClass(
       return `${creatorCardBase} border-emerald-400/50 bg-[color:var(--color-creator-card-strong)]`;
     case 'backstory':
       return `${creatorCardBase} border-stone-400/45 bg-[color:var(--color-creator-card-strong)]`;
-    case 'path':
+    case 'starting_bundle':
       return `${creatorCardBase} border-orange-400/50 bg-[color:var(--color-creator-card-strong)]`;
     case 'slot':
       return `${creatorCardBase} border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card-strong)]`;
@@ -191,8 +196,24 @@ function getSelectableCardClass(
 }
 
 function getSelectionOverlayGradientClass(
-  tone: 'lineage' | 'continent' | 'region' | 'settlement'
+  tone: 'lineage' | 'continent' | 'region' | 'settlement',
+  themeMode: 'dark' | 'light'
 ): string {
+  if (themeMode === 'light') {
+    switch (tone) {
+      case 'lineage':
+        return 'bg-[linear-gradient(90deg,rgba(244,248,255,0.98)_0%,rgba(240,245,252,0.96)_24%,rgba(235,241,249,0.88)_42%,rgba(227,236,247,0.64)_60%,rgba(220,230,243,0.28)_80%,rgba(217,227,241,0.08)_92%,rgba(217,227,241,0)_100%)]';
+      case 'continent':
+        return 'bg-[linear-gradient(90deg,rgba(240,248,244,0.96)_0%,rgba(234,243,239,0.92)_56%,rgba(224,237,230,0.5)_80%,rgba(224,237,230,0.12)_92%,rgba(224,237,230,0)_100%)]';
+      case 'region':
+        return 'bg-[linear-gradient(90deg,rgba(244,248,255,0.97)_0%,rgba(236,242,251,0.92)_56%,rgba(226,235,247,0.52)_80%,rgba(226,235,247,0.12)_92%,rgba(226,235,247,0)_100%)]';
+      case 'settlement':
+        return 'bg-[linear-gradient(90deg,rgba(246,248,252,0.97)_0%,rgba(239,243,249,0.92)_56%,rgba(228,236,246,0.52)_80%,rgba(228,236,246,0.12)_92%,rgba(228,236,246,0)_100%)]';
+      default:
+        return '';
+    }
+  }
+
   switch (tone) {
     case 'lineage':
       return 'bg-[linear-gradient(90deg,rgba(4,9,17,0.96)_0%,rgba(5,10,18,0.96)_22%,rgba(6,11,19,0.88)_40%,rgba(7,12,20,0.62)_58%,rgba(8,14,23,0.3)_78%,rgba(9,16,26,0.08)_92%,rgba(9,16,26,0)_100%)]';
@@ -209,26 +230,18 @@ function getSelectionOverlayGradientClass(
 
 function getDifficultyBadgeClass(tone: 'success' | 'warning' | 'danger'): string {
   if (tone === 'success') {
-    return 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]';
+    return 'border border-emerald-950/35 ring-1 ring-[color:var(--color-border-strong)] bg-emerald-500 text-white shadow-[0_10px_24px_rgba(16,185,129,0.24)]';
   }
 
   if (tone === 'warning') {
-    return 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]';
+    return 'border border-amber-950/30 ring-1 ring-[color:var(--color-border-strong)] bg-amber-400 text-slate-950 shadow-[0_10px_24px_rgba(245,158,11,0.22)]';
   }
 
-  return 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]';
+  return 'border border-rose-950/35 ring-1 ring-[color:var(--color-border-strong)] bg-rose-500 text-white shadow-[0_10px_24px_rgba(244,63,94,0.24)]';
 }
 
 function getOpaqueDifficultyBadgeClass(tone: 'success' | 'warning' | 'danger'): string {
-  if (tone === 'success') {
-    return 'border-emerald-900/80 bg-emerald-500 text-white shadow-[0_10px_24px_rgba(16,185,129,0.35)]';
-  }
-
-  if (tone === 'warning') {
-    return 'border-amber-900/80 bg-amber-500 text-black shadow-[0_10px_24px_rgba(245,158,11,0.3)]';
-  }
-
-  return 'border-rose-900/80 bg-rose-500 text-white shadow-[0_10px_24px_rgba(244,63,94,0.32)]';
+  return getDifficultyBadgeClass(tone);
 }
 
 function getRegionResourceTone(resourceTone: string | undefined): {
@@ -316,7 +329,10 @@ function routeContainedScrollWheel(
 }
 
 function renderRegionResourceIcons(
-  option: WorldRegionOption,
+  option: {
+    id: string;
+    resourceIcons: WorldRegionResourceIcon[];
+  },
   keySuffix: string,
   variant: 'preview' | 'selected',
   wrapperClassName = 'mt-3 flex flex-wrap gap-1'
@@ -348,7 +364,10 @@ function renderRegionResourceIcons(
                 </span>
               </span>
             }
+            align="start"
             panelClassName="w-56 max-w-[min(14rem,calc(100vw-2rem))] text-left leading-5"
+            portal
+            side="bottom"
           >
             <span
               className={`inline-flex ${imageSizeClass} cursor-help items-center justify-center`}
@@ -418,6 +437,31 @@ function getSexSummaryLabel(
   return null;
 }
 
+function pickRandomValue<T>(values: readonly T[]): T | null {
+  if (values.length === 0) {
+    return null;
+  }
+
+  return values[Math.floor(Math.random() * values.length)] ?? null;
+}
+
+function formatIdentityNarrativeSummary(
+  form: Pick<
+    CharacterCreationFormState,
+    'sexId' | 'ageBandId' | 'heightBandId' | 'buildId'
+  >,
+  lineageLabel: string | null
+): string {
+  const heightLabel = (getHeightBandLabel(form.heightBandId) ?? 'unshaped').toLowerCase();
+  const ageLabel = (getAgeBandLabel(form.ageBandId) ?? 'ageless').toLowerCase();
+  const raceLabel = (lineageLabel ?? 'wanderer').toLowerCase();
+  const sexLabel = (getSexSummaryLabel(form.sexId) ?? 'soul').toLowerCase();
+  const buildLabel = (getBuildLabel(form.buildId) ?? 'unfinished').toLowerCase();
+  const article = /^[aeiou]/i.test(heightLabel) ? 'An' : 'A';
+
+  return `${article} ${heightLabel} ${ageLabel} ${raceLabel} ${sexLabel} with a ${buildLabel} build.`;
+}
+
 export function CharacterCreationNarrativeScreen({
   form,
   slots,
@@ -434,6 +478,7 @@ export function CharacterCreationNarrativeScreen({
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const selectedRegionDescriptionRef = useRef<HTMLDivElement | null>(null);
+  const selectedSettlementDescriptionRef = useRef<HTMLDivElement | null>(null);
   const [currentStepId, setCurrentStepId] =
     useState<CharacterCreationStepId>('lineage');
   const [showValidation, setShowValidation] = useState(false);
@@ -443,55 +488,75 @@ export function CharacterCreationNarrativeScreen({
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
   const selectedLineageArt = getLineageCardArt(form.lineageId);
   const activeOutlineColor =
-    themeMode === 'dark' ? 'rgba(255,255,255,0.92)' : 'rgba(0,0,0,0.88)';
+    themeMode === 'dark' ? 'rgba(255,255,255,0.92)' : 'rgba(15,23,42,0.82)';
   const activeOutlineShadow =
     themeMode === 'dark'
       ? '0 0 0 1px rgba(255,255,255,0.22), 0 0 22px rgba(255,255,255,0.16)'
-      : '0 0 0 1px rgba(0,0,0,0.18), 0 0 18px rgba(0,0,0,0.12)';
+      : '0 0 0 1px rgba(15,23,42,0.14), 0 0 18px rgba(96,165,250,0.18)';
   const activeOutlineStyle = {
     borderColor: activeOutlineColor,
     boxShadow: activeOutlineShadow
   };
-  const imageCardTitleClass =
-    themeMode === 'dark' ? 'text-[color:var(--color-text-strong)]' : 'text-slate-50';
-  const imageCardBodyClass =
-    themeMode === 'dark' ? 'text-[color:var(--color-text-soft)]' : 'text-slate-200';
-  const imageCardMetaClass =
-    themeMode === 'dark'
-      ? 'text-[color:var(--color-muted-strong)]'
-      : 'text-slate-300';
+  const imageCardTitleClass = 'text-[color:var(--color-text-strong)]';
+  const imageCardBodyClass = 'text-[color:var(--color-text-soft)]';
+  const imageCardMetaClass = 'text-[color:var(--color-muted-strong)]';
   const lightSurfaceButtonClass =
-    'bg-[rgba(252,246,237,0.94)] text-[color:var(--color-text-strong)] hover:bg-[rgba(245,235,220,0.98)]';
-  const selectedContinentPanelClass =
+    'bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-creator-card-hover)]';
+  const collapsedSettlementMetaBadgeClass =
     themeMode === 'dark'
-      ? 'bg-[rgba(8,16,14,0.96)]'
-      : 'bg-[rgba(252,247,239,0.97)]';
-  const selectedRegionPanelSurfaceClass =
+      ? 'border-white/12 bg-[rgba(8,12,18,0.68)] text-[color:var(--color-text-strong)]'
+      : 'border-slate-500/20 bg-[rgba(255,255,255,0.78)] text-[color:var(--color-text-strong)] shadow-[0_10px_24px_rgba(15,23,42,0.08)]';
+  const selectedSettlementMetaBadgeClass =
     themeMode === 'dark'
-      ? 'bg-[rgba(7,12,20,0.96)]'
-      : 'bg-[rgba(252,247,239,0.97)]';
-  const lineageRailSurfaceClass =
+      ? 'border-white/12 bg-[rgba(12,18,28,0.84)] text-[color:var(--color-text-strong)]'
+      : 'border-slate-500/25 bg-[rgba(248,250,252,0.94)] text-[color:var(--color-text-strong)] shadow-[0_10px_24px_rgba(15,23,42,0.1)]';
+  const selectedSettlementArtFadeClass =
     themeMode === 'dark'
-      ? 'bg-[rgba(4,9,17,0.98)]'
-      : 'bg-[rgba(252,247,239,0.97)]';
+      ? 'bg-[linear-gradient(180deg,rgba(8,12,18,0.04)_0%,rgba(8,12,18,0.06)_46%,rgba(8,12,18,0.34)_74%,rgba(8,12,18,0.84)_100%)]'
+      : 'bg-[linear-gradient(180deg,rgba(248,250,252,0.02)_0%,rgba(248,250,252,0.04)_46%,rgba(226,232,240,0.26)_74%,rgba(226,232,240,0.76)_100%)]';
+  const selectedIdentityControlClass =
+    themeMode === 'dark'
+      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+      : 'border-[color:var(--color-border-strong)] bg-[rgba(220,231,246,0.96)] text-[color:var(--color-text-strong)] shadow-[0_14px_30px_rgba(96,165,250,0.14)]';
+  const selectedIdentityMetaClass =
+    themeMode === 'dark'
+      ? 'text-[color:var(--color-text-soft)]'
+      : 'text-[color:var(--color-text-strong)]';
+  const unselectedIdentityMetaClass =
+    themeMode === 'dark'
+      ? 'text-[color:var(--color-text-soft)]'
+      : 'text-[color:var(--color-text-soft)]';
+  const selectedContinentPanelClass = 'bg-[color:var(--color-creator-card-strong)]';
+  const selectedRegionPanelSurfaceClass = 'bg-[color:var(--color-creator-card-strong)]';
+  const selectedTextPanelEdgeClass =
+    themeMode === 'dark'
+      ? 'border-r border-white/15'
+      : 'border-r border-slate-600/30';
+  const lineageRailSurfaceClass = 'bg-[color:var(--color-creator-card-strong)]';
+  const collapsedHoverLabelSurfaceClass =
+    'pointer-events-none absolute inset-y-0 left-0 z-10 flex items-center overflow-hidden rounded-l-[24px] opacity-0 -translate-x-6 transition duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:translate-x-0 group-focus-within:opacity-100';
+  const collapsedStandardHoverLabelSurfaceClass = 'w-[15rem] max-w-[56%]';
+  const collapsedHoverLabelTextClass =
+    'w-full pl-5 pr-6 text-[24px] font-semibold leading-tight text-[color:var(--color-text-strong)]';
+  const collapsedLineageHoverLabelSurfaceClass = 'w-[14.5rem] max-w-[calc(100%-7rem)]';
+  const inactiveIdentitySwatchBorderColor =
+    themeMode === 'dark' ? 'rgba(255,255,255,0.28)' : 'rgba(71,85,105,0.28)';
   const topBarBackground =
     themeMode === 'dark'
       ? 'linear-gradient(135deg, rgba(17, 23, 34, 0.84), rgba(8, 12, 19, 0.66)), radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 34%), radial-gradient(circle at bottom right, rgba(212, 173, 85, 0.08), transparent 28%)'
-      : 'linear-gradient(135deg, rgba(255, 249, 240, 0.94), rgba(245, 235, 220, 0.88)), radial-gradient(circle at top left, rgba(120, 87, 47, 0.12), transparent 34%), radial-gradient(circle at bottom right, rgba(77, 185, 175, 0.1), transparent 28%)';
+      : 'linear-gradient(135deg, rgba(248, 251, 255, 0.96), rgba(228, 236, 248, 0.9)), radial-gradient(circle at top left, rgba(96, 165, 250, 0.14), transparent 36%), radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.08), transparent 28%)';
   const continents = getWorldContinentOptions();
   const regions = getWorldRegionOptions(form.continentId);
   const settlements = getWorldSettlementOptions({
     continentId: form.continentId,
     regionId: form.regionId,
-    classId: form.classId,
-    backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
+    backstoryId: form.backstoryId
   });
   const selectedWorld = resolveWorldSelection({
     continentId: form.continentId,
     regionId: form.regionId,
     settlementId: form.startingSettlementId,
-    classId: form.classId,
-    backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
+    backstoryId: form.backstoryId
   });
   const backstories = getBackstoryOptionsForSelection(form.lineageId, selectedWorld);
   const validations = useMemo(
@@ -536,12 +601,11 @@ export function CharacterCreationNarrativeScreen({
   const previewAttributeMap = new Map(
     preview.attributeMetrics.map((metric) => [metric.label as PlayerAttributeKey, metric])
   );
-  const summaryIdentityRows = [
-    { label: 'Height', value: getHeightBandLabel(form.heightBandId) ?? 'Pending' },
-    { label: 'Build', value: getBuildLabel(form.buildId) ?? 'Pending' },
-    { label: 'Sex', value: getSexSummaryLabel(form.sexId) ?? 'Pending' },
-    { label: 'Race', value: preview.lineageLabel ?? 'Pending' }
-  ];
+  const summaryCharacterName = preview.characterName.trim() || 'Unnamed Wanderer';
+  const summaryIdentityNarrative = formatIdentityNarrativeSummary(
+    form,
+    preview.lineageLabel
+  );
   const allocationRows = CHARACTER_ATTRIBUTE_ORDER.map((attributeKey) => {
     const presentation = CHARACTER_ATTRIBUTE_PRESENTATIONS[attributeKey];
     const allocated = form.attributeAllocation[attributeKey] ?? 0;
@@ -675,6 +739,34 @@ export function CharacterCreationNarrativeScreen({
     setShowValidation(false);
   };
 
+  const randomizeIdentitySelection = () => {
+    if (!identityCatalog) {
+      return;
+    }
+
+    const nextSex = pickRandomValue(['male', 'female'] as const) ?? 'male';
+    const nextAgeBandId = pickRandomValue(identityCatalog.ageBands)?.id ?? 'prime_age';
+    const nextHeightBandId = pickRandomValue(identityCatalog.heightBands)?.id ?? 'normal';
+    const nextBuildId = pickRandomValue(identityCatalog.buildOptions)?.id ?? 'average';
+    const nextSkinToneId =
+      pickRandomValue(identityCatalog.skinToneOptions)?.id ?? form.skinToneId;
+    const nextHairColorId =
+      pickRandomValue(identityCatalog.hairColorOptions)?.id ?? form.hairColorId;
+    const nextEyeColorId =
+      pickRandomValue(identityCatalog.eyeColorOptions)?.id ?? form.eyeColorId;
+
+    setSelection({
+      playerName: generateRandomCharacterName(form.lineageId || 'lineage.human', nextSex),
+      sexId: nextSex,
+      ageBandId: nextAgeBandId,
+      heightBandId: nextHeightBandId,
+      buildId: nextBuildId,
+      skinToneId: nextSkinToneId,
+      hairColorId: nextHairColorId,
+      eyeColorId: nextEyeColorId
+    });
+  };
+
   const advanceSelectionStep = (stepId: CharacterCreationStepId) => {
     const following = getNextCharacterCreationStepId(stepId);
     if (following) {
@@ -781,30 +873,59 @@ export function CharacterCreationNarrativeScreen({
         {parsedValues.map((value) => {
           const tone =
             value.id === 'hp'
-              ? {
-                  labelClass: 'text-rose-200/85',
-                  fill:
-                    'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
-                  shadow: '0 0 18px rgba(248,113,113,0.24)'
-                }
-              : value.id === 'mp'
+              ? themeMode === 'light'
                 ? {
-                    labelClass: 'text-sky-200/85',
+                    labelClass: 'text-rose-700',
                     fill:
-                      'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
-                    shadow: '0 0 18px rgba(96,165,250,0.24)'
+                      'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
+                    shadow: '0 0 18px rgba(248,113,113,0.24)'
                   }
                 : {
-                    labelClass: 'text-emerald-200/85',
+                    labelClass: 'text-rose-200/85',
                     fill:
-                      'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
-                    shadow: '0 0 18px rgba(74,222,128,0.24)'
-                  };
+                      'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
+                    shadow: '0 0 18px rgba(248,113,113,0.24)'
+                  }
+              : value.id === 'mp'
+                ? themeMode === 'light'
+                  ? {
+                      labelClass: 'text-sky-700',
+                      fill:
+                        'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
+                      shadow: '0 0 18px rgba(96,165,250,0.24)'
+                    }
+                  : {
+                      labelClass: 'text-sky-200/85',
+                      fill:
+                        'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
+                      shadow: '0 0 18px rgba(96,165,250,0.24)'
+                    }
+                : themeMode === 'light'
+                  ? {
+                      labelClass: 'text-emerald-700',
+                      fill:
+                        'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
+                      shadow: '0 0 18px rgba(74,222,128,0.24)'
+                    }
+                  : {
+                      labelClass: 'text-emerald-200/85',
+                      fill:
+                        'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
+                      shadow: '0 0 18px rgba(74,222,128,0.24)'
+                    };
+          const lightModeLabelStyle =
+            themeMode === 'light'
+              ? {
+                  textShadow:
+                    '0 1px 0 rgba(255,255,255,0.9), 0 0 6px rgba(255,255,255,0.35)'
+                }
+              : undefined;
 
           return (
             <div key={value.id}>
               <div
                 className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.labelClass}`}
+                style={lightModeLabelStyle}
               >
                 {value.label}: {value.value ?? 'Pending'}
               </div>
@@ -876,7 +997,7 @@ export function CharacterCreationNarrativeScreen({
                     option.swatch?.background ?? 'var(--color-creator-card)',
                   borderColor: selected
                     ? activeOutlineColor
-                    : option.swatch?.border ?? 'rgba(255,255,255,0.28)',
+                    : option.swatch?.border ?? inactiveIdentitySwatchBorderColor,
                   boxShadow: selected
                     ? activeOutlineShadow
                     : 'none'
@@ -912,7 +1033,11 @@ export function CharacterCreationNarrativeScreen({
               className={`${getSelectableCardClass(
                 selected,
                 'lineage'
-              )} group relative overflow-hidden ${selected ? 'lineage-card-selected min-h-[30rem]' : ''}`}
+              )} group relative overflow-hidden ${
+                selected
+                  ? 'lineage-card-selected min-h-[30rem]'
+                  : COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS
+              }`}
               style={selected ? activeOutlineStyle : undefined}
             >
               <button
@@ -924,12 +1049,12 @@ export function CharacterCreationNarrativeScreen({
 
                   setSelection({
                     lineageId: option.id,
+                    ageBandId: form.ageBandId || 'prime_age',
                     heightBandId: form.heightBandId || 'normal',
                     buildId: form.buildId || 'average',
                     hairColorId: '',
                     eyeColorId: '',
-                    skinToneId: '',
-                    backgroundId: ''
+                    skinToneId: ''
                   });
                 }}
                 className={`block h-full w-full text-left ${selected ? 'pb-20' : 'p-5'}`}
@@ -960,31 +1085,40 @@ export function CharacterCreationNarrativeScreen({
                         )}
                       </>
                     ) : (
-                      <div
-                        className="absolute inset-0 bg-cover bg-no-repeat opacity-30 transition duration-500 ease-out group-hover:scale-[1.03] group-hover:opacity-80"
-                        style={{
-                          backgroundImage: `url(${activeLineageImageUrl})`,
-                          backgroundPosition: art.backgroundPosition ?? 'center center'
-                        }}
-                      />
+                      <>
+                        <div
+                          className="selector-card-ambient-art absolute inset-0 opacity-28 transition duration-500 ease-out group-hover:opacity-36"
+                          style={{
+                            backgroundImage: `url(${activeLineageImageUrl})`,
+                            backgroundPosition: art.backgroundPosition ?? 'center center'
+                          }}
+                        />
+                        <div
+                          className="selector-card-width-art absolute inset-0 opacity-100 transition duration-500 ease-out group-hover:scale-[1.01]"
+                          style={{
+                            backgroundImage: `url(${activeLineageImageUrl})`,
+                            backgroundPosition: art.backgroundPosition ?? 'center center'
+                          }}
+                        />
+                      </>
                     )}
                     {!selected && (
                       <>
-                        <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(7,12,20,0.96)_0%,rgba(8,14,24,0.88)_38%,rgba(10,18,28,0.66)_66%,rgba(8,14,24,0.9)_100%)] transition duration-300 group-hover:opacity-65" />
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.04)_0%,rgba(15,23,42,0.18)_100%)] transition duration-300 group-hover:opacity-90" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.14),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.1),transparent_28%)] transition duration-300 group-hover:opacity-95" />
                       </>
                     )}
                   </>
                 )}
                 {!selected && (
-                  <div className="relative z-10 min-h-[12rem] pr-[7.1rem] transition duration-200 group-hover:opacity-0">
-                    <div>
-                      <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
-                        {option.label}
-                      </div>
-                      <div className={`mt-4 text-sm leading-7 ${imageCardBodyClass}`}>
-                        {option.description}
-                      </div>
+                  <div
+                    className={`${collapsedHoverLabelSurfaceClass} ${collapsedLineageHoverLabelSurfaceClass} ${getSelectionOverlayGradientClass(
+                      'lineage',
+                      themeMode
+                    )}`}
+                  >
+                    <div className={collapsedHoverLabelTextClass}>
+                      {option.label}
                     </div>
                   </div>
                 )}
@@ -992,7 +1126,8 @@ export function CharacterCreationNarrativeScreen({
                   <div className={`${lineageSelectionOverlayBase} lineage-card-overlay`}>
                     <div
                       className={`lineage-card-overlay-surface relative h-full w-full ${getSelectionOverlayGradientClass(
-                        'lineage'
+                        'lineage',
+                        themeMode
                       )}`}
                     >
                       <div className="flex h-full items-start px-5 py-6">
@@ -1010,24 +1145,40 @@ export function CharacterCreationNarrativeScreen({
                 )}
               </button>
               <div
-                className={`absolute inset-y-0 right-0 z-20 flex w-[7rem] flex-col justify-between ${lineageRailSurfaceClass} px-2.5 pb-3 pt-1.5 ${
+                className={`absolute inset-y-0 right-0 z-20 flex w-[7rem] flex-col justify-between ${lineageRailSurfaceClass} ${
+                  selected ? 'px-2 pb-2.5 pt-1' : 'px-2.5 pb-3 pt-1.5'
+                } ${
                   selected
                     ? themeMode === 'dark'
                       ? 'border-l border-l-white/85'
-                      : 'border-l border-l-[rgba(78,58,34,0.24)]'
+                      : 'border-l border-l-[color:var(--color-border-strong)]'
                     : 'border-l border-l-[color:var(--color-border)]'
                 }`}
               >
-                <div className="space-y-px">
+                <div className={selected ? 'space-y-0.5' : 'space-y-px'}>
                   {statRows.map((row) => (
                     <div
                       key={`${option.id}.${row.key}.rail`}
-                      className="grid min-h-[1.2rem] grid-cols-[minmax(0,1fr)_1.7rem] items-center gap-x-1 pb-0.5 pt-0 first:pt-0"
+                      className={`grid items-center first:pt-0 ${
+                        selected
+                          ? 'min-h-[1.35rem] grid-cols-[minmax(0,1fr)_1.95rem] gap-x-0.5 py-px'
+                          : 'min-h-[1.2rem] grid-cols-[minmax(0,1fr)_1.7rem] gap-x-1 pb-0.5 pt-0'
+                      }`}
                     >
-                      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] leading-none text-[color:var(--color-muted-strong)]">
+                      <div
+                        className={`font-semibold uppercase leading-none text-[color:var(--color-muted-strong)] ${
+                          selected ? 'text-[14px] tracking-[0.1em]' : 'text-[11px] tracking-[0.14em]'
+                        }`}
+                      >
                         {row.key}
                       </div>
-                      <div className="w-[1.7rem] justify-self-end text-right text-[11px] font-semibold tracking-[0.14em] leading-none text-[color:var(--color-text-strong)]">
+                      <div
+                        className={`justify-self-end text-right font-semibold leading-none text-[color:var(--color-text-strong)] ${
+                          selected
+                            ? 'w-[1.95rem] text-[14px] tracking-[0.1em]'
+                            : 'w-[1.7rem] text-[11px] tracking-[0.14em]'
+                        }`}
+                      >
                         {row.value}
                       </div>
                     </div>
@@ -1056,15 +1207,28 @@ export function CharacterCreationNarrativeScreen({
     );
   } else if (currentStepId === 'identity' && identityCatalog) {
     mainContent = (
-      <div className="space-y-6">
+      <div className="space-y-3">
+        <div className={`${identityChoiceGridClass} justify-items-center`}>
+          <div className="col-start-2">
+            <button
+              type="button"
+              onClick={randomizeIdentitySelection}
+              className="flex h-32 w-32 items-center justify-center rounded-full border-4 border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]"
+              title="Randomize name, sex, age, height, build, and coloration"
+              aria-label="Randomize name, sex, age, height, build, and coloration"
+            >
+              <Icon name="dice" className="h-14 w-14" />
+            </button>
+          </div>
+        </div>
+        <div className={identitySectionDividerClass} />
         <div className={`${identitySectionWidthClass} flex flex-wrap items-end gap-3`}>
           <label className="min-w-0 flex-1">
-            <span className="mb-2 block text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-              Name
-            </span>
             <input
               value={form.playerName}
               onChange={(event) => onChange({ playerName: event.target.value })}
+              placeholder="Name"
+              aria-label="Character name"
               className={textInputClass}
             />
           </label>
@@ -1102,7 +1266,7 @@ export function CharacterCreationNarrativeScreen({
                   onClick={() => onChange({ sexId: sex.id })}
                   className={`flex h-12 w-12 items-center justify-center rounded-full border-4 text-xl font-semibold leading-none transition ${
                     form.sexId === sex.id
-                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      ? selectedIdentityControlClass
                       : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                   }`}
                   style={form.sexId === sex.id ? activeOutlineStyle : undefined}
@@ -1114,10 +1278,8 @@ export function CharacterCreationNarrativeScreen({
             ))}
           </div>
         </div>
+        <div className={identitySectionDividerClass} />
         <div className="space-y-2">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-            Height
-          </div>
           <div className={identityChoiceGridClass}>
             {identityCatalog.heightBands.map((option) => {
               const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
@@ -1129,7 +1291,7 @@ export function CharacterCreationNarrativeScreen({
                   onClick={() => onChange({ heightBandId: option.id })}
                   className={`flex h-[70px] min-h-[70px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
                     form.heightBandId === option.id
-                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      ? selectedIdentityControlClass
                       : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                   }`}
                   style={form.heightBandId === option.id ? activeOutlineStyle : undefined}
@@ -1137,14 +1299,22 @@ export function CharacterCreationNarrativeScreen({
                   <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-center">
                     <div className="text-[15px] font-semibold leading-[1.02]">{option.label}</div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
+                        form.heightBandId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      } ${
                         tradeoff.positive ? '' : 'opacity-0'
                       }`}
                     >
                       {tradeoff.positive ?? '\u00A0'}
                     </div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
+                        form.heightBandId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      } ${
                         tradeoff.negative ? '' : 'opacity-0'
                       }`}
                     >
@@ -1156,10 +1326,67 @@ export function CharacterCreationNarrativeScreen({
             })}
           </div>
         </div>
+        <div className={identitySectionDividerClass} />
         <div className="space-y-2">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-            Build
+          <div className={identityChoiceGridClass}>
+            {identityCatalog.ageBands.map((option) => {
+              const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
+              const ageRangeLabel =
+                getAgeBandRangeLabel(form.lineageId, form.sexId, option.id) ?? 'Age range pending';
+
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => onChange({ ageBandId: option.id })}
+                  className={`flex h-[92px] min-h-[92px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
+                    form.ageBandId === option.id
+                      ? selectedIdentityControlClass
+                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
+                  }`}
+                  style={form.ageBandId === option.id ? activeOutlineStyle : undefined}
+                >
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-center">
+                    <div className="text-[15px] font-semibold leading-[1.02]">{option.label}</div>
+                    <div
+                      className={`text-[10px] tracking-[0.08em] leading-[1.05] ${
+                        form.ageBandId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      }`}
+                    >
+                      {ageRangeLabel}
+                    </div>
+                    <div
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
+                        form.ageBandId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      } ${
+                        tradeoff.positive ? '' : 'opacity-0'
+                      }`}
+                    >
+                      {tradeoff.positive ?? '\u00A0'}
+                    </div>
+                    <div
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
+                        form.ageBandId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      } ${
+                        tradeoff.negative ? '' : 'opacity-0'
+                      }`}
+                    >
+                      {tradeoff.negative ?? '\u00A0'}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
+        </div>
+        <div className={identitySectionDividerClass} />
+        <div className="space-y-2">
           <div className={identityChoiceGridClass}>
             {identityCatalog.buildOptions.map((option) => {
               const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
@@ -1171,7 +1398,7 @@ export function CharacterCreationNarrativeScreen({
                   onClick={() => onChange({ buildId: option.id })}
                   className={`flex h-[70px] min-h-[70px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
                     form.buildId === option.id
-                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      ? selectedIdentityControlClass
                       : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
                   }`}
                   style={form.buildId === option.id ? activeOutlineStyle : undefined}
@@ -1179,14 +1406,22 @@ export function CharacterCreationNarrativeScreen({
                   <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-center">
                     <div className="text-[15px] font-semibold leading-[1.02]">{option.label}</div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
+                        form.buildId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      } ${
                         tradeoff.positive ? '' : 'opacity-0'
                       }`}
                     >
                       {tradeoff.positive ?? '\u00A0'}
                     </div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] text-[color:var(--color-text-soft)] ${
+                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
+                        form.buildId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      } ${
                         tradeoff.negative ? '' : 'opacity-0'
                       }`}
                     >
@@ -1236,7 +1471,7 @@ export function CharacterCreationNarrativeScreen({
             ? art?.selectedImageUrl ?? art?.imageUrl
             : art?.imageUrl;
           const continentBackgroundPosition = selected
-            ? art?.selectedBackgroundPosition ?? art?.backgroundPosition ?? 'center center'
+            ? art?.selectedBackgroundPosition ?? 'right bottom'
             : art?.backgroundPosition ?? 'center center';
 
           return (
@@ -1245,7 +1480,9 @@ export function CharacterCreationNarrativeScreen({
               className={`${getSelectableCardClass(
                 selected,
                 'continent'
-              )} group relative overflow-hidden ${selected ? 'min-h-[28rem]' : ''}`}
+              )} group relative overflow-hidden ${
+                selected ? 'min-h-[28rem]' : COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS
+              }`}
               style={selected ? activeOutlineStyle : undefined}
             >
               <button
@@ -1258,90 +1495,86 @@ export function CharacterCreationNarrativeScreen({
                   setSelection({
                     continentId: option.id,
                     regionId: '',
-                    startingSettlementId: '',
-                    backgroundId: ''
+                    startingSettlementId: ''
                   });
                 }}
-                className={`block h-full w-full text-left ${selected ? 'pb-20' : 'p-5'}`}
+                className={`block h-full w-full text-left ${selected ? 'pb-20' : ''}`}
               >
                 {art && (
                   <>
+                    {!selected && (
+                      <div
+                        className="selector-card-ambient-art absolute inset-0 opacity-26 transition duration-500 ease-out group-hover:opacity-34"
+                        style={{
+                          backgroundImage: `url(${continentImageUrl})`,
+                          backgroundPosition: continentBackgroundPosition
+                        }}
+                      />
+                    )}
                     <div
-                      className={`absolute bg-no-repeat transition duration-500 ease-out ${
+                      className={`absolute transition duration-500 ease-out ${
+                        selected ? 'selector-card-fitted-art' : 'selector-card-width-art'
+                      } ${
                         selected
                           ? 'bottom-px right-px top-px opacity-100'
-                          : 'inset-y-0 right-0 bg-cover opacity-28 group-hover:scale-[1.03] group-hover:opacity-80'
+                          : 'inset-0 opacity-100 group-hover:scale-[1.01]'
                       }`}
                       style={{
                         backgroundImage: `url(${continentImageUrl})`,
                         left: selected ? CONTINENT_SELECTION_IMAGE_LEFT : 0,
-                        backgroundPosition: continentBackgroundPosition,
-                        backgroundSize: selected ? 'cover' : undefined
+                        backgroundPosition: continentBackgroundPosition
                       }}
                     />
                     {!selected && (
                       <>
-                        <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(8,16,14,0.95)_0%,rgba(10,22,18,0.88)_42%,rgba(10,20,28,0.58)_72%,rgba(8,16,14,0.88)_100%)] transition duration-300 group-hover:opacity-65" />
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(74,222,128,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.12),transparent_28%)] transition duration-300 group-hover:opacity-90" />
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.04)_0%,rgba(15,23,42,0.14)_100%)] transition duration-300 group-hover:opacity-90" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(74,222,128,0.14),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.12),transparent_28%)] transition duration-300 group-hover:opacity-95" />
                       </>
                     )}
                   </>
                 )}
                 {selected && (
                   <div
-                    className={`${continentSelectionOverlayBase} ${selectedContinentPanelClass} ${
-                      themeMode === 'light' ? 'border-r border-[rgba(78,58,34,0.14)]' : ''
-                    }`}
+                    className={`${continentSelectionOverlayBase} ${selectedContinentPanelClass} ${selectedTextPanelEdgeClass}`}
                     style={{ width: CONTINENT_SELECTION_PANEL_WIDTH }}
                   >
-                    <div className="flex h-full flex-col px-4 py-5">
-                      <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                    <div className="flex h-full flex-col px-5 py-5">
+                      <div className="text-[1.35rem] font-semibold leading-tight text-[color:var(--color-text-strong)]">
                         {option.label}
                       </div>
-                      <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      <div className="mt-4 text-[15px] leading-7 text-[color:var(--color-text-soft)]">
                         {option.description}
                       </div>
                     </div>
                   </div>
                 )}
-                {selected && (
-                  <span
-                    className={`absolute right-5 top-5 z-20 inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${getOpaqueDifficultyBadgeClass(
-                      option.difficultyTone
-                    )}`}
-                  >
-                    {option.difficultyLabel}
-                  </span>
-                )}
+                <span
+                  className={`absolute right-5 top-5 z-20 inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
+                    selected
+                      ? getOpaqueDifficultyBadgeClass(option.difficultyTone)
+                      : getDifficultyBadgeClass(option.difficultyTone)
+                  }`}
+                >
+                  {option.difficultyLabel}
+                </span>
                 <div
                   className={`relative z-10 transition duration-200 ${
                     selected
                       ? 'min-h-[28rem] w-full'
-                      : 'group-hover:opacity-0'
+                      : COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS
                   }`}
                 >
                   {!selected && (
-                    <>
-                      <div className="flex items-start justify-between gap-3">
-                        <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
-                          {option.label}
-                        </div>
-                        <span
-                          className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${
-                            option.difficultyTone === 'success'
-                              ? 'border-emerald-400/35 bg-emerald-300/15 text-[color:var(--color-accent-contrast)]'
-                              : option.difficultyTone === 'warning'
-                                ? 'border-amber-400/35 bg-amber-300/15 text-[color:var(--color-accent-contrast)]'
-                                : 'border-rose-400/35 bg-rose-300/15 text-[color:var(--color-accent-contrast)]'
-                          }`}
-                        >
-                          {option.difficultyLabel}
-                        </span>
+                    <div
+                      className={`${collapsedHoverLabelSurfaceClass} ${collapsedStandardHoverLabelSurfaceClass} ${getSelectionOverlayGradientClass(
+                        'continent',
+                        themeMode
+                      )}`}
+                    >
+                      <div className={collapsedHoverLabelTextClass}>
+                        {option.label}
                       </div>
-                      <div className={`mt-3 text-sm leading-7 ${imageCardBodyClass}`}>
-                        {option.description}
-                      </div>
-                    </>
+                    </div>
                   )}
                 </div>
               </button>
@@ -1387,34 +1620,42 @@ export function CharacterCreationNarrativeScreen({
           const regionBackgroundPosition = art?.backgroundPosition ?? 'center center';
           const regionSelectedBackgroundPosition =
             art?.selectedBackgroundPosition ?? 'right center';
-          const regionPreviewParagraph =
-            option.descriptionParagraphs[0] ?? option.description;
           const selectedRegionPanelClass = art
-            ? 'absolute bottom-px left-px top-px z-10 flex items-stretch rounded-l-[23px]'
+            ? 'absolute inset-y-0 left-0 z-10 flex items-stretch overflow-hidden rounded-l-[24px]'
             : 'absolute inset-px z-10 flex items-stretch rounded-[23px]';
           const regionCardContent = (
             <>
               {art && (
                 <>
+                  {!selected && (
+                    <div
+                      className="selector-card-ambient-art absolute inset-0 opacity-24 transition duration-500 ease-out group-hover:opacity-34"
+                      style={{
+                        backgroundImage: `url(${art.imageUrl})`,
+                        backgroundPosition: regionBackgroundPosition
+                      }}
+                    />
+                  )}
                   <div
-                    className={`absolute bg-no-repeat transition duration-500 ease-out ${
+                    className={`absolute transition duration-500 ease-out ${
+                      selected ? 'selector-card-fitted-art' : 'selector-card-width-art'
+                    } ${
                       selected
                         ? 'bottom-px right-px top-px opacity-100'
-                        : 'inset-y-0 right-0 bg-cover opacity-24 group-hover:scale-[1.03] group-hover:opacity-82'
+                        : 'inset-0 opacity-100 group-hover:scale-[1.01]'
                     }`}
                     style={{
                       backgroundImage: `url(${art.imageUrl})`,
                       left: selected ? REGION_SELECTION_IMAGE_LEFT : 0,
                       backgroundPosition: selected
                         ? regionSelectedBackgroundPosition
-                        : regionBackgroundPosition,
-                      backgroundSize: selected ? 'cover' : undefined
+                        : regionBackgroundPosition
                     }}
                   />
                   {!selected && (
                     <>
-                      <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(7,12,20,0.96)_0%,rgba(9,16,28,0.9)_44%,rgba(10,20,32,0.54)_74%,rgba(7,12,20,0.88)_100%)] transition duration-300 group-hover:opacity-64" />
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_24%)] transition duration-300 group-hover:opacity-88" />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.04)_0%,rgba(15,23,42,0.14)_100%)] transition duration-300 group-hover:opacity-90" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.16),transparent_24%)] transition duration-300 group-hover:opacity-94" />
                     </>
                   )}
                 </>
@@ -1423,7 +1664,7 @@ export function CharacterCreationNarrativeScreen({
                 <>
                   <div
                     className={`${selectedRegionPanelClass} ${selectedRegionPanelSurfaceClass} ${
-                      art && themeMode === 'light' ? 'border-r border-[rgba(78,58,34,0.14)]' : ''
+                      art ? selectedTextPanelEdgeClass : ''
                     }`}
                     style={art ? { width: REGION_SELECTION_PANEL_WIDTH } : undefined}
                     onMouseEnter={() => {
@@ -1434,7 +1675,7 @@ export function CharacterCreationNarrativeScreen({
                     }}
                   >
                     <div className="flex h-full min-h-0 flex-col px-4 py-5">
-                      <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold text-[color:var(--color-text-strong)]">
+                      <div className="text-xl font-semibold leading-tight text-[color:var(--color-text-strong)]">
                         {option.label}
                       </div>
                       {(!art || option.resourceIcons.length === 0) &&
@@ -1491,33 +1732,37 @@ export function CharacterCreationNarrativeScreen({
                 className={`relative z-10 transition duration-200 ${
                   selected
                     ? 'pointer-events-none min-h-[28rem] w-full'
-                    : 'group-hover:opacity-0'
+                    : COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS
                 }`}
               >
                 {!selected && (
                   <>
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0 flex flex-1 items-center gap-2">
-                        <div className={`truncate text-xl font-semibold ${imageCardTitleClass}`}>
-                          {option.label}
-                        </div>
+                    {option.resourceIcons.length > 0 && (
+                      <div className="absolute left-4 top-3 z-20">
                         {renderRegionResourceIcons(
                           option,
                           'preview',
                           'preview',
-                          'flex shrink-0 flex-wrap items-center gap-1'
+                          'flex shrink-0 flex-nowrap items-center gap-0.5'
                         )}
                       </div>
-                      <span
-                        className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${getDifficultyBadgeClass(
-                          option.difficultyTone
-                        )}`}
-                      >
-                        {option.difficultyLabel}
-                      </span>
-                    </div>
-                    <div className={`mt-3 max-w-[38rem] text-sm leading-7 ${imageCardBodyClass}`}>
-                      <p className="max-h-[9rem] overflow-hidden">{regionPreviewParagraph}</p>
+                    )}
+                    <span
+                      className={`absolute right-4 top-4 z-20 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${getDifficultyBadgeClass(
+                        option.difficultyTone
+                      )}`}
+                    >
+                      {option.difficultyLabel}
+                    </span>
+                    <div
+                      className={`${collapsedHoverLabelSurfaceClass} ${collapsedStandardHoverLabelSurfaceClass} ${getSelectionOverlayGradientClass(
+                        'region',
+                        themeMode
+                      )}`}
+                    >
+                      <div className={collapsedHoverLabelTextClass}>
+                        {option.label}
+                      </div>
                     </div>
                   </>
                 )}
@@ -1531,7 +1776,9 @@ export function CharacterCreationNarrativeScreen({
               className={`${getSelectableCardClass(
                 selected,
                 'region'
-              )} group relative overflow-hidden ${selected ? 'min-h-[28rem]' : ''}`}
+              )} group relative overflow-hidden ${
+                selected ? 'min-h-[28rem]' : COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS
+              }`}
               style={selected ? activeOutlineStyle : undefined}
             >
               {selected ? (
@@ -1542,11 +1789,10 @@ export function CharacterCreationNarrativeScreen({
                   onClick={() => {
                     setSelection({
                       regionId: option.id,
-                      startingSettlementId: '',
-                      backgroundId: ''
+                      startingSettlementId: ''
                     });
                   }}
-                  className="block h-full w-full p-5 text-left"
+                  className="block h-full w-full text-left"
                 >
                   {regionCardContent}
                 </button>
@@ -1588,82 +1834,141 @@ export function CharacterCreationNarrativeScreen({
     ) : (
       <div className="grid gap-4">
         {settlements.map((option) => {
+          const art = getSettlementCardArt(option.id);
           const selected = form.startingSettlementId === option.id;
-
-          return (
-            <div
-              key={option.id}
-              className={`${getSelectableCardClass(
-                selected,
-                'settlement'
-              )} group relative overflow-hidden ${selected ? 'min-h-[22rem]' : ''}`}
-              style={selected ? activeOutlineStyle : undefined}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  if (selected) {
-                    return;
-                  }
-
-                  setSelection({
-                    startingSettlementId: option.id,
-                    backgroundId: ''
-                  });
-                }}
-                className={`block h-full w-full p-5 text-left ${selected ? 'pb-20' : ''}`}
-              >
-                <div
-                  className={`absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.16),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(248,113,113,0.14),transparent_22%),linear-gradient(132deg,rgba(16,12,8,0.94),rgba(28,18,10,0.72))] transition duration-300 ${
-                    selected ? 'opacity-92 group-hover:opacity-34' : 'opacity-24 group-hover:opacity-72'
-                  }`}
-                />
-                <div
-                  className={`relative z-10 transition duration-200 ${
-                    selected ? 'min-h-[22rem]' : 'group-hover:opacity-0'
-                  }`}
-                >
+          const settlementBackgroundPosition = art?.backgroundPosition ?? 'center center';
+          const settlementSelectedBackgroundPosition =
+            art?.selectedBackgroundPosition ?? 'center center';
+          const selectedSettlementPanelClass = art
+            ? 'absolute inset-y-0 left-0 z-10 flex items-stretch overflow-hidden rounded-l-[24px]'
+            : 'absolute inset-px z-10 overflow-hidden rounded-[23px]';
+          const settlementCardContent = (
+            <>
+              {art ? (
+                <>
+                  {!selected && (
+                    <div
+                      className="selector-card-ambient-art absolute inset-0 opacity-24 transition duration-500 ease-out group-hover:opacity-34"
+                      style={{
+                        backgroundImage: `url(${art.imageUrl})`,
+                        backgroundPosition: settlementBackgroundPosition,
+                        backgroundSize: art.backgroundSize
+                      }}
+                    />
+                  )}
+                  <div
+                    className={`absolute transition duration-500 ease-out ${
+                      selected ? 'selector-card-fitted-art' : 'selector-card-width-art'
+                    } ${
+                      selected
+                        ? 'bottom-px right-px top-px opacity-100'
+                        : 'inset-0 opacity-100 group-hover:scale-[1.01]'
+                    }`}
+                    style={{
+                      backgroundImage: `url(${art.imageUrl})`,
+                      left: selected ? REGION_SELECTION_IMAGE_LEFT : 0,
+                      backgroundPosition: selected
+                        ? settlementSelectedBackgroundPosition
+                        : settlementBackgroundPosition,
+                      backgroundSize: selected
+                        ? art.selectedBackgroundSize
+                        : art.backgroundSize
+                    }}
+                  />
                   {!selected && (
                     <>
-                      <div className="flex items-start justify-between gap-3">
-                        <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
-                          {option.label}
-                        </div>
-                        <div className={`text-xs uppercase tracking-[0.16em] ${imageCardMetaClass}`}>
-                          Pop {option.populationSize}
-                        </div>
-                      </div>
-                      <div className={`mt-3 text-sm leading-7 ${imageCardBodyClass}`}>
-                        {option.description}
-                      </div>
-                      <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
-                        <p>{option.landRestriction.propertyNarrative}</p>
-                        <p className="mt-2 text-[color:var(--color-text-strong)]">
-                          {option.landRestriction.currentStanding}
-                        </p>
-                      </div>
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.04)_0%,rgba(15,23,42,0.14)_100%)] transition duration-300 group-hover:opacity-90" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.14),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(248,113,113,0.14),transparent_24%)] transition duration-300 group-hover:opacity-94" />
                     </>
                   )}
-                </div>
-                {selected && (
-                  <div className={selectionOverlayBase}>
+                  {selected && (
                     <div
-                      className={`h-full w-full px-5 py-5 pr-14 backdrop-blur-xl ${getSelectionOverlayGradientClass(
-                        'settlement'
-                      )}`}
-                    >
-                      <div className="flex items-start justify-between gap-3">
+                      className={`absolute bottom-px right-px top-px z-[1] ${selectedSettlementArtFadeClass}`}
+                      style={{ left: REGION_SELECTION_IMAGE_LEFT }}
+                    />
+                  )}
+                </>
+              ) : (
+                <div
+                  className={`absolute inset-0 transition duration-300 ${
+                    themeMode === 'dark'
+                      ? 'bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.16),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(248,113,113,0.14),transparent_22%),linear-gradient(132deg,rgba(16,12,8,0.94),rgba(28,18,10,0.72))]'
+                      : 'bg-[radial-gradient(circle_at_top_right,rgba(96,165,250,0.16),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(129,140,248,0.14),transparent_22%),linear-gradient(132deg,rgba(236,242,250,0.94),rgba(217,226,240,0.78))]'
+                  } ${
+                    selected ? 'opacity-92' : 'opacity-26 group-hover:opacity-76'
+                  }`}
+                />
+              )}
+              {selected && (
+                <div
+                  className={`${selectedSettlementPanelClass} ${selectedRegionPanelSurfaceClass} ${
+                    art ? selectedTextPanelEdgeClass : ''
+                  }`}
+                  style={art ? { width: REGION_SELECTION_PANEL_WIDTH } : undefined}
+                  onMouseEnter={() => {
+                    selectedSettlementDescriptionRef.current?.focus({
+                      preventScroll: true
+                    });
+                  }}
+                  onWheelCapture={(event) => {
+                    routeContainedScrollWheel(
+                      event,
+                      selectedSettlementDescriptionRef.current
+                    );
+                  }}
+                >
+                  <div className="flex h-full min-h-[28rem] flex-col px-5 py-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
                         <div className={`text-xl font-semibold ${imageCardTitleClass}`}>
                           {option.label}
                         </div>
-                        <div className={`text-xs uppercase tracking-[0.16em] ${imageCardMetaClass}`}>
-                          Pop {option.populationSize}
+                        <div
+                          className={`mt-1 text-[11px] uppercase tracking-[0.16em] ${imageCardMetaClass}`}
+                        >
+                          {option.settlementType} / {option.tradeRole} /{' '}
+                          {option.developmentLevel}
                         </div>
                       </div>
-                      <div className={`mt-3 text-sm leading-7 ${imageCardBodyClass}`}>
-                        {option.description}
+                      {!art && (
+                        <span
+                          className={`inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${selectedSettlementMetaBadgeClass}`}
+                        >
+                          Pop {option.populationSize}
+                        </span>
+                      )}
+                    </div>
+                    {(!art || option.resourceIcons.length === 0) &&
+                      renderRegionResourceIcons(
+                        option,
+                        'selected',
+                        'selected',
+                        'mt-2 -mx-2.5 flex flex-nowrap items-center gap-0'
+                      )}
+                    <div
+                      className={`mt-4 min-h-0 flex-1 space-y-4 text-sm leading-7 text-[color:var(--color-text-soft)] ${
+                        art
+                          ? 'region-description-scroll overflow-y-auto overscroll-contain pr-1 outline-none'
+                          : 'overflow-y-auto overscroll-contain pr-1'
+                      }`}
+                      ref={selectedSettlementDescriptionRef}
+                      tabIndex={0}
+                      aria-label={`${option.label} description`}
+                      onMouseEnter={(event) => {
+                        event.currentTarget.focus({ preventScroll: true });
+                      }}
+                      onWheelCapture={handleContainedScrollWheel}
+                    >
+                      <p>{option.description}</p>
+                      <div
+                        className={`grid gap-2 text-[11px] uppercase tracking-[0.16em] ${imageCardMetaClass}`}
+                      >
+                        <div>{option.dominantIndustries.join(' / ')}</div>
+                        <div>{option.keyResources.join(' / ')}</div>
                       </div>
-                      <div className={`${insetBlockClass} mt-4 px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}>
+                      <div
+                        className={`${insetBlockClass} px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}
+                      >
                         <p>{option.landRestriction.propertyNarrative}</p>
                         <p className="mt-2 text-[color:var(--color-text-strong)]">
                           {option.landRestriction.currentStanding}
@@ -1671,8 +1976,94 @@ export function CharacterCreationNarrativeScreen({
                       </div>
                     </div>
                   </div>
+                </div>
+              )}
+              {selected && art && option.resourceIcons.length > 0 && (
+                <div
+                  className="absolute top-4 z-20"
+                  style={{ left: `calc(${REGION_SELECTION_IMAGE_LEFT} + 0.75rem)` }}
+                >
+                  {renderRegionResourceIcons(
+                    option,
+                    'selected-image',
+                    'selected',
+                    'flex flex-nowrap items-center gap-0'
+                  )}
+                </div>
+              )}
+              {selected && art && (
+                <span
+                  className={`absolute right-4 top-4 z-20 inline-flex shrink-0 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${selectedSettlementMetaBadgeClass}`}
+                >
+                  Pop {option.populationSize}
+                </span>
+              )}
+              <div
+                className={`relative z-10 transition duration-200 ${
+                  selected
+                    ? 'pointer-events-none min-h-[28rem] w-full'
+                    : COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS
+                }`}
+              >
+                {!selected && (
+                  <>
+                    {option.resourceIcons.length > 0 && (
+                      <div className="absolute left-4 top-3 z-20">
+                        {renderRegionResourceIcons(
+                          option,
+                          'preview',
+                          'preview',
+                          'flex shrink-0 flex-nowrap items-center gap-0.5'
+                        )}
+                      </div>
+                    )}
+                    <span
+                      className={`absolute right-4 top-4 z-20 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] backdrop-blur-sm ${collapsedSettlementMetaBadgeClass}`}
+                    >
+                      Pop {option.populationSize}
+                    </span>
+                    <div
+                      className={`${collapsedHoverLabelSurfaceClass} ${collapsedStandardHoverLabelSurfaceClass} ${getSelectionOverlayGradientClass(
+                        'settlement',
+                        themeMode
+                      )}`}
+                    >
+                      <div className={collapsedHoverLabelTextClass}>
+                        {option.label}
+                      </div>
+                    </div>
+                  </>
                 )}
-              </button>
+              </div>
+            </>
+          );
+
+          return (
+            <div
+              key={option.id}
+              className={`${getSelectableCardClass(
+                selected,
+                'settlement'
+              )} group relative overflow-hidden ${
+                selected ? 'min-h-[28rem]' : COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS
+              }`}
+              style={selected ? activeOutlineStyle : undefined}
+            >
+              {selected ? (
+                <div className="relative h-full w-full pb-20 text-left">
+                  {settlementCardContent}
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelection({ startingSettlementId: option.id });
+                  }}
+                  className="block h-full w-full text-left"
+                >
+                  {settlementCardContent}
+                </button>
+              )}
               {selected && (
                 <button
                   type="button"
@@ -1698,16 +2089,16 @@ export function CharacterCreationNarrativeScreen({
           <div
             key={option.id}
             className={getSelectableCardClass(
-              form.backgroundId === option.id,
+              form.backstoryId === option.id,
               'backstory'
             )}
-            style={form.backgroundId === option.id ? activeOutlineStyle : undefined}
+            style={form.backstoryId === option.id ? activeOutlineStyle : undefined}
           >
             <button
               type="button"
               onClick={() =>
-                choose('backstory', form.backgroundId, option.id, {
-                  backgroundId: option.id
+                choose('backstory', form.backstoryId, option.id, {
+                  backstoryId: option.id
                 })
               }
               className="w-full px-5 py-4 text-left"
@@ -1716,24 +2107,24 @@ export function CharacterCreationNarrativeScreen({
                 {option.label}
               </div>
               <div className="mt-2 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                {option.hookLine}
+                {option.summaryText}
               </div>
             </button>
-            {form.backgroundId === option.id && (
+            {form.backstoryId === option.id && (
               <div className="border-t border-[color:var(--color-border)] px-5 py-4">
-                <div className="space-y-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                  <p>{option.narrativeParagraphs[0]}</p>
-                  <p>{option.narrativeParagraphs[1]}</p>
+                <div className="text-sm leading-7 text-[color:var(--color-text-soft)]">
+                  {option.detailText}
                 </div>
-                <div className="mt-4 space-y-2">
-                  {option.varianceLines.map((line) => (
-                    <div
-                      key={`${option.id}.${line}`}
-                      className={`${insetBlockClass} px-3 py-3 text-sm leading-7 text-[color:var(--color-text-soft)]`}
-                    >
-                      {line}
-                    </div>
-                  ))}
+                <div className="mt-4 space-y-3">
+                  {option.startingSkillLabels.length > 0 && (
+                    <div>{renderTags('Starting Skills', option.startingSkillLabels)}</div>
+                  )}
+                  {option.startingKnowledgeLabels.length > 0 && (
+                    <div>{renderTags('Starting Knowledge', option.startingKnowledgeLabels)}</div>
+                  )}
+                  {option.startingAbilityLabels.length > 0 && (
+                    <div>{renderTags('Starting Ability', option.startingAbilityLabels)}</div>
+                  )}
                 </div>
               </div>
             )}
@@ -1741,30 +2132,103 @@ export function CharacterCreationNarrativeScreen({
         ))}
       </div>
     );
-  } else if (currentStepId === 'path') {
+  } else if (currentStepId === 'starting_bundle') {
     mainContent = (
       <div className="grid gap-4 xl:grid-cols-2">
-        {pathOptions.map((option) => (
-          <button
-            key={option.id}
-            type="button"
-            onClick={() =>
-              choose('path', form.classId, option.id, { classId: option.id })
-            }
-            className={`${getSelectableCardClass(
-              form.classId === option.id,
-              'path'
-            )} p-5 text-left`}
-            style={form.classId === option.id ? activeOutlineStyle : undefined}
-          >
-            <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
-              {option.label}
-            </div>
-            <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-              {option.description}
-            </div>
-          </button>
-        ))}
+        {startingBundleOptions.map((option) => {
+          const bundle = getStartingBundleTemplate(option.id);
+
+          return (
+                <div
+                  key={option.id}
+                  className={getSelectableCardClass(
+                    form.startingBundleId === option.id,
+                    'starting_bundle'
+                  )}
+                  style={form.startingBundleId === option.id ? activeOutlineStyle : undefined}
+                >
+                  <button
+                    type="button"
+                    onClick={() =>
+                      choose('starting_bundle', form.startingBundleId, option.id, {
+                        startingBundleId: option.id,
+                        startingBundleChoiceSelections:
+                          createDefaultStartingBundleChoiceSelections(option.id)
+                      })
+                    }
+                    className="w-full px-5 py-5 text-left"
+                  >
+                    <div className="text-xl font-semibold text-[color:var(--color-text-strong)]">
+                      {option.label}
+                    </div>
+                    <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                      {option.description}
+                    </div>
+                    <div className="mt-4 space-y-3">
+                      {bundle.fixedItemLabels.length > 0 && (
+                        <div>{renderTags('Fixed Items', bundle.fixedItemLabels)}</div>
+                      )}
+                      {bundle.choiceGroups.length > 0 &&
+                        bundle.choiceGroups.map((group) => (
+                          <div key={group.id}>{renderTags(group.label, group.optionLabels)}</div>
+                        ))}
+                      <div>
+                        {renderTags('Funds', [
+                          `${bundle.startingCurrency.gold}g ${bundle.startingCurrency.silver}s ${bundle.startingCurrency.copper}c`
+                        ])}
+                      </div>
+                    </div>
+                  </button>
+                  {form.startingBundleId === option.id && bundle.choiceGroups.length > 0 && (
+                    <div className="border-t border-[color:var(--color-border)] px-5 py-4">
+                      <div className="space-y-4">
+                        {bundle.choiceGroups.map((group) => (
+                          <div key={group.id} className="space-y-2">
+                            <div className="text-[11px] uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+                              {group.label}
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {group.options.map((stack, index) => {
+                                const selectedChoice =
+                                  form.startingBundleChoiceSelections[group.id] === stack.itemId;
+                                const optionLabel =
+                                  group.optionLabels[index] ?? stack.itemKey;
+
+                                return (
+                                  <button
+                                    key={`${group.id}.${stack.itemId}`}
+                                    type="button"
+                                    onClick={() =>
+                                      setSelection({
+                                        startingBundleChoiceSelections: {
+                                          ...form.startingBundleChoiceSelections,
+                                          [group.id]: stack.itemId
+                                        }
+                                      })
+                                    }
+                                    className={`rounded-full border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition ${
+                                      selectedChoice
+                                        ? selectedIdentityControlClass
+                                        : `border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] ${
+                                            themeMode === 'dark'
+                                              ? 'text-[color:var(--color-text-soft)] hover:bg-[color:var(--color-creator-card-hover)]'
+                                              : 'text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-creator-card-hover)]'
+                                          }`
+                                    }`}
+                                  >
+                                    {optionLabel}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
       </div>
     );
   } else if (currentStepId === 'attributes') {
@@ -1797,8 +2261,8 @@ export function CharacterCreationNarrativeScreen({
                         <div className="min-w-[3rem] text-lg font-semibold text-[color:var(--color-text-strong)]">
                           {row.attributeKey}
                         </div>
-                        <div className="text-sm text-[color:var(--color-text-soft)]">
-                          Current {row.baseValue ?? 'Pending'}
+                        <div className="min-w-0 text-sm text-[color:var(--color-text-soft)]">
+                          {row.inlineEffect}
                         </div>
                       </div>
                     </div>
@@ -1829,23 +2293,6 @@ export function CharacterCreationNarrativeScreen({
                 </div>
               ))}
             </div>
-          </div>
-        </Card>
-        <Card>
-          <div className="grid gap-3 lg:grid-cols-2">
-            {allocationRows.map((row) => (
-              <div
-                key={`${row.attributeKey}.description`}
-                className={`${insetBlockClass} px-4 py-4`}
-              >
-                <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
-                  {row.attributeKey} - {row.label}
-                </div>
-                <div className="mt-2 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                  {row.shortEffect} {row.gameplayEffect}
-                </div>
-              </div>
-            ))}
           </div>
         </Card>
       </div>
@@ -1962,7 +2409,7 @@ export function CharacterCreationNarrativeScreen({
         className={`sticky top-0 z-30 border-b border-[color:var(--color-border)] backdrop-blur-2xl ${
           themeMode === 'dark'
             ? 'shadow-[0_18px_48px_rgba(0,0,0,0.32)]'
-            : 'shadow-[0_18px_38px_rgba(94,69,41,0.12)]'
+            : 'shadow-[0_18px_38px_rgba(51,65,85,0.12)]'
         }`}
         style={{
           background: topBarBackground
@@ -1994,9 +2441,9 @@ export function CharacterCreationNarrativeScreen({
                 content={
                   <span>
                     Choose the blood in your veins, the face you show the world,
-                    the city that raised you, the past that shaped you, the path
-                    you will claim, and the 10 stat points that define your first
-                    real strengths.
+                    the city that raised you, the past that shaped you, the
+                    starter bundle you carry, and the 10 stat points that define
+                    your first real strengths.
                   </span>
                 }
               >
@@ -2073,12 +2520,18 @@ export function CharacterCreationNarrativeScreen({
                     const complete = validations[step.id].isValid;
                     const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
                     const circleClass = active
-                      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                      ? themeMode === 'dark'
+                        ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
+                        : 'bg-[rgba(220,231,246,0.96)] text-[color:var(--color-text-strong)]'
                       : locked
                         ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)]'
                         : complete
-                          ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
-                          : 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]';
+                          ? themeMode === 'dark'
+                            ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
+                            : 'border-emerald-400/70 bg-[rgba(209,250,229,0.96)] text-[color:var(--color-text-strong)] shadow-[0_0_18px_rgba(74,222,128,0.16)]'
+                          : themeMode === 'dark'
+                            ? 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]'
+                            : 'border-sky-400/55 bg-[rgba(219,234,254,0.94)] text-slate-700 shadow-[0_0_18px_rgba(96,165,250,0.14)]';
                     const labelClass = locked
                       ? 'text-[color:var(--color-muted)]'
                       : 'text-[color:var(--color-text-soft)]';
@@ -2117,6 +2570,7 @@ export function CharacterCreationNarrativeScreen({
               currentStepId !== 'review' && (
                 <div className="text-sm text-rose-300">
                   {currentValidation.errors.attributeAllocation ??
+                    Object.values(currentValidation.errors)[0] ??
                     'Complete the required choices on this step before moving on.'}
                 </div>
               )}
@@ -2127,23 +2581,11 @@ export function CharacterCreationNarrativeScreen({
                 <div className="space-y-4">
                   <div>
                     <div className="text-2xl font-semibold text-[color:var(--color-text-strong)]">
-                      {preview.characterName}
+                      {summaryCharacterName}
                     </div>
                     <div className="mt-3 border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                      <div className="space-y-1.5">
-                      {summaryIdentityRows.map((row) => (
-                        <div
-                          key={row.label}
-                          className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 border-b border-[color:var(--color-border)] pb-1 last:border-b-0 last:pb-0"
-                        >
-                          <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
-                            {row.label}
-                          </div>
-                          <div className="justify-self-end text-right text-sm text-[color:var(--color-text-soft)]">
-                            {row.value}
-                          </div>
-                        </div>
-                      ))}
+                      <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+                        {summaryIdentityNarrative}
                       </div>
                     </div>
                   </div>
@@ -2160,6 +2602,9 @@ export function CharacterCreationNarrativeScreen({
                   </div>
                   {preview.isResolved && preview.starterSkills.length > 0 && (
                     <div>{renderTags('Starting Skills', preview.starterSkills)}</div>
+                  )}
+                  {preview.isResolved && preview.starterKnowledge.length > 0 && (
+                    <div>{renderTags('Starting Knowledge', preview.starterKnowledge)}</div>
                   )}
                   {preview.isResolved && preview.starterTraits.length > 0 && (
                     <div>{renderTags('Starting Traits', preview.starterTraits)}</div>

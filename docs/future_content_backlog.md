@@ -12,6 +12,35 @@ This file tracks content and systems that are intentionally deferred.
 
 ## Run Notes
 
+- 2026-04-06: Moved 47 loose root settlement image intake files into canonical `apps/rpg-ui/public/character-creator/settlements/` runtime filenames, normalized the mismatched `Riverthorne` and `SeaBanner` intake names onto the canonical `riverthrone` and `seabanner` settlement slugs, archived unmatched `Mossfen.png` under `unused assets/settlements/2026-04-06-unmatched-intake/`, extended the settlement card-art registry so the new images can be used in the character creator, and regenerated `apps/rpg-ui/dist` through `npx vite build`; remaining settlement-art gaps are narrowed below.
+- 2026-04-04: Widened the occupied save-card text block so the name and summary lines can use the full inner card width below the delete button, shortened the save-card height to better match the contained copy, reduced the character-name size slightly again, and centered `Empty` in unoccupied cards; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-04: Nudged the main-menu save-card slot header row downward to align the slot label and save timestamp with the trash button center, then lowered the remaining occupied-card copy while shrinking the character-name and metadata typography slightly for a cleaner compact stack; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-04: Tightened the compact launcher save-status banner again so its slate-blue accent state now matches the active game-data page button border, fill opacity, and shadow treatment exactly in light mode; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-04: Reworked the launcher save-status notice into a compact single-line banner by removing the unused tone eyebrow, switching the light-theme accent state to a slate-blue panel with light text and standard borders, replacing the safe-return copy with a saved-to-slot or quicksave timestamp message, and auto-dismissing that compact save banner after 15 seconds; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-04: Refined the light-mode main-menu game-data ledger by moving the Cataclysm wordmark back to the left, re-centering Continue, returning theme/settings beside Exit, strengthening the visible active page state, darkening the shared notice banner treatment, and compacting occupied save cards into one-line names plus two-line origin/location/funds summaries with inline save timestamps; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-04: Moved the new root-level Kaelvar and Valtherion settlement art intake into canonical `apps/rpg-ui/public/character-creator/settlements/` filenames, wired settlement card art overrides plus region-style image-backed settlement cards with fallback for uncovered starts, and regenerated `apps/rpg-ui/dist` through `npx vite build`; `npm.cmd run build` still stops on the pre-existing unrelated typecheck failures across `apps/rpg-ui/src/features/*`, `src/runtime/uiViewModel.ts`, `src/game-shell/gameplayLoop.ts`, `packages/shared/time/src/index.ts`, and `packages/shared/types/src/settlement-institutions.ts`.
+- 2026-04-03: Replaced the shared settings icon again with a more conventional centered cog outline after the previous custom gear still read slightly off-center in the launcher UI; `apps/rpg-ui` should be revalidated through the normal Vite build after this UI pass, and no new deferred follow-up was introduced.
+- 2026-04-03: Tightened two remaining light-mode character-creation contrast issues by giving unlocked step-rail circles a darker slate-on-pale-blue treatment and switching the live-summary HP/MP/Stamina labels and values to darker theme-aware tones with a light outline so they stay readable on pale cards; `apps/rpg-ui` should be revalidated through the normal Vite build after this UI pass, and no new deferred follow-up was introduced.
+- 2026-04-03: Refined the light-mode main menu presentation by replacing the save-page selector highlight with a slate-blue active state, rebuilding the main menu header into a docked slate-blue bar with centered Continue access, swapping manual slot labels from Roman numerals to Arabic numbers, simplifying empty-slot cards down to `Slot N` plus `Empty`, and replacing the shared settings glyph with a cleaner standard gear outline; `apps/rpg-ui` should be revalidated through the normal Vite build after this UI pass, and no new deferred follow-up was introduced.
+- 2026-04-03: Hardened the identity-layer cleanup by finishing the creator/snapshot/player-origin semantic rename from `background*` to `backstory*`, removing the dead starter class/background template file, enforcing backstory starting-ability and knowledge-track allowlists in content validation plus snapshot assembly, requiring explicit canonical starting-bundle choice selections with no silent first-option fallback, and moving settlement lawful-start authorization onto a deterministic backstory access registry without changing combat/spawn ownership; focused identity-content and settlement-runtime tests should now cover the stricter rules, `apps/rpg-ui` still needs normal build validation, and `tool:content-lint` is still expected to stop on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-03: Replaced the mixed character-creation `background + path/class` model with canonical authored `backstories` and `starting_bundles`, moved settlement-lawful-start gating onto backstory-driven standing, made new characters classless and jobless at creation, added backstory knowledge familiarity to starter state, and removed the remaining creator-facing elemental-destiny wording without changing combat/spawn ownership or spell authoring; targeted schema, settlement-institution, and save-roundtrip tests now pass, `apps/rpg-ui` passes `npx vite build`, and `tool:content-lint` still stops on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-02: Cleaned the character-creation identity layout by moving the large full-identity randomizer above the name/sex controls, removing the extra Randomize Identity and Name/Height/Age/Build section labels, and replacing those headings with tighter separator lines so the identity stack reads cleaner without changing the underlying selection logic; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-02: Expanded the character-creation identity step with lineage-and-sex-aware age ranges, a large full-identity randomizer, a wisdom-oriented replacement for the old Average build, and a single-sentence live-summary identity narrative while wiring the new age band through form validation, preview attribute math, and saved identity profile state; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI/content pass.
+- 2026-04-02: Simplified the character-creation discretionary attribute step by replacing the redundant `Current <value>` row label with concrete gameplay-facing inline attribute feeds on each stat row and removing the separate lower attribute-description card grid; `apps/rpg-ui` validation should continue through the normal Vite build, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-02: Normalized the player identity/progression cleanup pass onto the approved canonical model by expanding the skill tree to the missing combat/survival/resource/crafting/knowledge/settlement/leadership branches, replacing drifted title names with the approved domain-based families, rewriting lineage traits to the approved innate packages, replacing the old `spell.arcane.*` placeholder set with the finalized flat placeholder spell list, and retargeting combat hooks, abilities, items, quests, starter/demo/save fixtures, and tests to the new ids without changing combat/spawn ownership; focused combat/progression/schema/save tests pass under `node --test --test-isolation=none`, and `npm.cmd run tool:content-lint` still stops on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-02: Upgraded the shared RPG UI tooltip to support opt-in portal rendering plus side/alignment placement, then moved character-creation region and settlement resource-icon tooltips onto that portal path with left-start anchoring so they render above clipped card shells instead of being cut off at the card edge; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-02: Tightened character-creation selector parity by removing the extra collapsed continent-card height, rebuilding settlement cards onto the same collapsed card shell used by regions with settlement-derived resource icons and consistent population badges, and expanding every playable lineage's skin, hair, and eye palette by one additional row with broader lore-friendly variation; `apps/rpg-ui` now passes `npx vite build`, and no new deferred follow-up was introduced by this UI/content pass.
+- 2026-04-02: Rebuilt the player identity and progression layer around a hierarchical skill tree, lineage trait packages, canonical milestone titles, a baseline active-ability catalog, a full placeholder spell catalog, structured skill-effect and item-use combat hooks, and content-driven combat action discovery; starter/demo/save/combat fixtures now use the canonical ids, focused player/combat/save/schema tests pass under `node --test --test-isolation=none`, and `tool:content-lint` still stops on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-02: Recovered the partial combat/spawn foundation by verifying ownership across `GameState`, `PlayerState`, and `SessionState`, extending monster/combat/spawn schemas and `content-lint` coverage for combat roles, tactics presets, encounter templates, spawn profiles, and monster combat fields, normalizing the remaining canonical app/demo/test fixture ids that still referenced removed player or world records, adding focused combat/spawn unit coverage plus save/schema validation, and completing the missing engine `.js` bridge layer so the top-level `game-engine` entrypoint imports cleanly again; focused validation now passes and `tool:content-lint` still stops only on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-02: Replaced the FFXI-seeded player placeholder catalogs with a canonical foundation pass: skills now use layered system/knowledge/specialization records plus progression tracks, knowledge tracks, skill-effect profiles, reusable trials, spell scaling channels, and item use profiles; dependent quest, crafting, item, schema, shared-type, database, lint, and economy surfaces were retargeted to the new ids, focused source-level tests now pass, and `tool:content-lint` now gets past BOM-prefixed JSON parsing but still stops on a pre-existing invalid `packages/content/base/world/flora.json` record (`flora.alder_sapling.harvest.active`) outside this player/progression scope.
+- 2026-03-30: Replaced the selected continent and region description-panel faux inner glow with a true seam border, widened the expanded continent description panel slightly so its copy block reads less cramped, and re-anchored the collapsed hover-title gradient overlays to the card edge so their left/top/bottom contours now nest cleanly against the card border; no new deferred follow-up was introduced by this UI pass.
+- 2026-03-30: Added a light-mode-only text shadow treatment to the character-creation live summary resource-bar labels and values so the colored HP, MP, and stamina readouts stay legible against the pale summary card background; no new deferred follow-up was introduced by this UI pass.
+- 2026-03-30: Fixed the character-creation light-mode step rail so active and completed step-number circles now use dark readable numerals on their tinted fills instead of inheriting low-contrast light text; no new deferred follow-up was introduced by this UI pass.
+- 2026-03-30: Removed the selected continent and region ambient blur filler so right-anchored art no longer creates a fuzzy strip beside the left description panel, added a cleaner theme-aware edge shadow on those description panels, switched all survivability difficulty tags to the same opaque bordered treatment in both collapsed and selected states, and narrowed the collapsed hover-title gradient overlays so more card art remains visible behind the title; no new deferred follow-up was introduced by this UI pass.
+- 2026-03-30: Changed the collapsed lineage, continent, and region card titles from opaque hover pills to vertically centered semitransparent gradient overlays keyed to the same tone-specific selection gradients as the expanded card copy, increased the collapsed title size, and tightened the light-mode identity-step contrast by giving selected sex, height, and build controls real light-mode selected surfaces plus darker selected text while also strengthening the light-theme border and muted-text tokens for creator inputs, separators, and swatch edges; no new deferred follow-up was introduced by this UI pass.
+- 2026-03-30: Created a root-level `unused assets/continents` archive for inactive continent art, moved the previous active continent image set out of the live `public` and `dist` folders into that archive, moved the loose root-supplied continent images into the canonical `apps/rpg-ui/public/character-creator/continents/` filenames with matching selected variants, mirrored the finalized active set into `apps/rpg-ui/dist/character-creator/continents/` because the UI build is still blocked elsewhere, and documented active-versus-archived asset handling rules in `README.md`; no new deferred follow-up was introduced by this asset-management pass.
+- 2026-03-30: Refined the character-creation collapsed card presentation so lineage, continent, and region cards now use width-fit art with hover-only name labels, restored the expanded lineage card art behavior while enlarging the selected lineage stat rail typography slightly, removed the opaque collapsed region/continent header bars around survivability and resource markers, and retuned expanded continent cards to anchor art toward the bottom-right while giving the left text panel a modest width and type increase; no new deferred follow-up was introduced by this UI pass.
+- 2026-03-30: Added launcher theme toggles to the main menu and settings screen, fixed the light-mode settings back-button contrast, shifted the light-mode UI palette from sepia toward light gray and slate-blue surfaces, changed collapsed character-creation selector cards to keep art visible by default and reveal descriptions on hover, and switched continent and region selector art to full-height fitted presentation while leaving settlement cards on themed decorative backgrounds because no authored settlement image set exists yet; no new deferred follow-up was introduced by this UI pass.
 - 2026-03-30: Refined the new island-chain subregions by finalizing the Zenith Isle and Glasswake Quay naming pass, fixed `content-lint` so subregions can legally belong to island systems, added child-island associations to the fine-grained Foammarket Ferry, Lantern Deepwater, and Nacredeep Basin map features while preserving macro island-system tags, and confirmed the current authored travel and trade layers already resolve through settlement and hex links without requiring broader route-network rewrites; no new deferred follow-up was introduced by this data pass.
 - 2026-03-30: Replaced the character-creator continent card art with the new root-supplied continent images while preserving the existing card asset slots, and split the Myridian Chain, Lantern Isles, Serpent's Wake, and Dawnreach Isles into named child island subregions wired through regions, localities, settlements, and world hexes so island-region selection no longer repeats the parent island-system name; no new deferred follow-up was introduced by this UI/content pass.
 - 2026-03-29: Added authored Draemor region presentation overrides for the Heart Basin, the Emerald Mantle, and the Stormcap Coast, moved their new region art into the character-creator region asset folder, and supplied matching description/resource tooltip content; no new deferred follow-up was introduced by this UI/content pass.
@@ -34,24 +63,110 @@ This file tracks content and systems that are intentionally deferred.
 
 ## Deferred Systems
 
+### Player Identity And Progression
+
+#### Broader milestone-title authoring beyond the representative canonical tracks
+
+- Status: deferred
+- Prerequisite: confirm which additional skill families should receive authored 50 / 100 / 125+trial title tracks before expanding beyond the current representative combat, crafting, magic, knowledge, and reserved faith samples
+- Intended owner: `packages/content/base/player/titles.json`, `packages/content/base/player/trials.json`, and the player progression/title helpers
+- Intended implementation:
+  - keep the current pass limited to the approved naming convention plus a representative authored title set instead of auto-generating titles for every skill
+  - add wider authored title coverage only after milestone ownership is decided for more weapon, craft, school, knowledge, settlement, and leadership tracks
+  - preserve canonical authored records and trial-linked mastery milestones rather than falling back to freeform runtime labels
+
+#### Faith or divine title expansion after faith progression surfaces exist
+
+- Status: deferred
+- Prerequisite: authored faith/divine progression tracks, milestone sources, and associated trial or reputation ownership do not exist yet; only the reserved title family scaffold is in place
+- Intended owner: player title content plus future religion or divine progression systems
+- Intended implementation:
+  - keep the reserved `faith` family limited to `Acolyte`, `Votary`, and `Avatar` scaffolding until divine progression has canonical source skills, tracks, or equivalent milestone owners
+  - add real faith-title records only when religion-aligned progression sources can grant them cleanly
+  - keep the ownership with authored title content and progression helpers instead of ad hoc runtime title generation
+
+#### Spell branching and deeper combat-resolution follow-up after the flat placeholder set is exercised
+
+- Status: deferred
+- Prerequisite: the finalized flat placeholder spell catalog now exists, but spell trees, branch unlock rules, richer status resolution, and generated-item runtime handling are still intentionally light
+- Intended owner: `packages/content/base/player/spells.json`, `packages/content/base/player/skill_effects.json`, and the game/player combat-resolution layers
+- Intended implementation:
+  - keep the current pass on flat canonical placeholders, validated scaling channels, and content-driven action discovery only
+  - add spell-branch progression, richer status and buff resolution, berry-item runtime consumption rules, and broader school-specific combat formulas in a later progression/combat-resolution pass
+  - treat the current spell hooks and generated-item metadata as the canonical bridge into that later implementation instead of layering interim compatibility aliases back in
+
+#### Progression-based elemental affinity system after non-restrictive character metadata exists
+
+- Status: deferred
+- Prerequisite: character creation, lineage, backstory, and starter data no longer enforce elemental restrictions; the next prerequisite is deciding what non-blocking affinity metadata should live on progression or discovery systems without becoming a creation lock
+- Intended owner: player progression content and helpers, not lineage traits, backstories, or starter bundles
+- Intended implementation:
+  - keep creation-time character data element-neutral so no lineage, backstory, or starting bundle blocks spell or school access
+  - add future affinity state as progression-earned or play-earned metadata only after its ownership is defined cleanly
+  - keep world, item, crystal, catalyst, and infrastructure affinity rules separate from character progression affinity
+
+#### Affinity growth and antagonistic element interactions after progression ownership is defined
+
+- Status: deferred
+- Prerequisite: a non-restrictive progression-owned affinity model must exist first; antagonistic element rules should not be reintroduced through creator data or starter content
+- Intended owner: player progression systems plus later combat or status-resolution layers
+- Intended implementation:
+  - add affinity growth through use, study, trials, or equivalent progression sources instead of fixed creation choices
+  - model opposing or antagonistic element interactions only after the owning progression state is stable
+  - keep those interactions descriptive or additive at first rather than turning them into hard access locks
+
+#### Affinity integration into skill progression and combat effects after the next progression/combat pass
+
+- Status: deferred
+- Prerequisite: the future non-restrictive affinity model and the next deeper progression/combat-resolution pass must both exist first
+- Intended owner: `packages/engines/player-engine/src/progression.ts`, combat effect resolution, and player spell or skill content hooks
+- Intended implementation:
+  - wire future affinity state into spell scaling, school progression, crit or weakness hooks, and other combat-effect channels only after the owning formulas are stable
+  - avoid pushing affinity assumptions back into starter templates, lineage data, or other identity-layer records
+  - keep this work downstream from the current backstory and starting-bundle separation so starter identity remains content-clean
+
+#### Remaining class/profile cleanup after classless character creation
+
+- Status: deferred
+- Prerequisite: new characters now start with `classId` and `jobId` unset, but shared save contracts, origin-profile helpers, and some UI projections still carry class-growth scaffolding for future systems
+- Intended owner: shared player contracts, origin-profile helpers, save metadata, and any future class system work
+- Intended implementation:
+  - keep nullable class and job fields until a future class-system decision either reclaims them cleanly or removes them outright
+  - continue treating character creation as classless and bundle-driven rather than reviving path ownership through save or UI layers
+  - only remove the remaining class-profile scaffolding when the downstream progression and save semantics are ready for that narrower cleanup
+
+### UI Fixture Cleanup
+
+#### RPG UI starter/demo narrative ids
+
+- Status: deferred
+- Prerequisite: move the RPG UI shell off its local placeholder quest/location record layer or formally author that layer as canonical starter content first
+- Intended owner: `apps/rpg-ui` gameplay-shell starter/demo fixtures, not world simulation content
+- Intended implementation:
+  - the combat recovery pass normalized canonical region, settlement, market, route, spell, ability, trait, item, and save-state ids, but the gameplay shell still carries locally scoped quest/location/story ids such as the starter survey loop
+  - replace those local ids and their remaining old-world narrative labels only after the UI’s starter-flow records either become authored content or are explicitly retained as UI-local fixtures with a clean naming pass
+  - keep future cleanup isolated to the UI/demo shell so it does not blur ownership with canonical world or combat data
+
 ### Arcane Documents
 
 #### Magical books and tomes
 
 - Status: deferred
-- Prerequisite: establish the canonical spell database and spell metadata first; the current starter FFXI-style placeholder catalog is not yet enough to author stable tome items
-- Intended owner: `enchanters`, with follow-on support from `scriptorium` and `bookbindery` content
+- Prerequisite: the canonical spell catalog, structured schools/traditions, and spell metadata now exist; remaining prerequisites are stable spell branching, inscription rules, charge/decay handling, and item/runtime consumers for spell-bearing documents
+- Intended owner: `enchanter-authored arcane documents`, with follow-on support from `scriptorium` and `bookbindery` content
 - Intended implementation:
-  - define spell-bearing book item families after spells have stable tiers, schools, and storage rules
-  - add arcane copy, binding, and attunement rules after mundane book production is settled
+  - define spell-bearing book item families only after spell branches, tiers, and storage or attunement rules are stable enough to support durable authored items
+  - keep magical tomes on the enchanter-authored arcane-document path instead of splitting ownership across generic book content
+  - add arcane copy, binding, and attunement rules after mundane book production and spell inscription constraints are both settled
 
 #### Magical scrolls
 
 - Status: deferred
-- Prerequisite: establish the canonical spell database and spell metadata first; the current starter FFXI-style placeholder catalog is not yet enough to author stable scroll items
-- Intended owner: `enchanters`, with scroll substrate support from `scriptorium`
+- Prerequisite: the canonical spell catalog, structured schools/traditions, and spell metadata now exist; remaining prerequisites are stable spell branching, inscription rules, charge/decay handling, and item/runtime consumers for spell-bearing documents
+- Intended owner: `enchanter-authored arcane documents`, with scroll substrate support from `scriptorium`
 - Intended implementation:
-  - define spell scroll payloads after spell data can describe charges, decay, and inscription limits
+  - define spell scroll payloads only after spell data can describe charges, decay, inscription limits, and discharge behavior cleanly
+  - keep magical scrolls on the same enchanter-authored arcane-document ownership path as tomes and spell manuscripts
   - layer magical scroll production onto the non-magical scroll pipeline instead of duplicating it
 
 ### Cartography
@@ -149,14 +264,15 @@ This file tracks content and systems that are intentionally deferred.
   - defer prestige-metal weapons, ceremonial armor, elite furnishings, luxury garments, and decorative household lines until the new base material families are exercised by enough real recipes to justify further splits
   - use future expansion to add material-specific visible outputs only where the material difference affects durability, weight, value, or regional trade identity instead of adding cosmetic variants
 
-#### Magical books, magical scrolls, and enchanter-authored arcane documents remain blocked on the spell database
+#### Magical books, magical scrolls, and enchanter-authored arcane documents after inscription rules stabilize
 
 - Status: deferred
-- Prerequisite: establish the canonical spell database and spell metadata first; the new mundane paper, binding, ink, and book production support is intentionally not a license to add magical documents early
-- Intended owner: `enchanters`, with downstream support from `scriptorium`, `bookbindery`, and future spell content
+- Prerequisite: the canonical spell catalog and spell metadata now exist; remaining prerequisites are inscription rules, spell-branch stability, charge or attunement handling, and item/runtime consumers for spell-bearing documents
+- Intended owner: `enchanter-authored arcane documents`, with downstream support from `scriptorium`, `bookbindery`, and future spell content
 - Intended implementation:
-  - keep mundane books, blank ledgers, scroll stock, and stationery as the current ownership layer until spell payloads exist
-  - add magical books / tomes, magical scrolls, and enchanter-authored arcane documents only after spell schools, charges, attunement, and inscription rules are authored canonically
+  - keep mundane books, blank ledgers, scroll stock, and stationery as the current ownership layer until spell inscription payloads and item consumers exist
+  - add magical books / tomes, magical scrolls, and enchanter-authored arcane documents only after spell branches, charges, attunement, and inscription rules are authored canonically
+  - keep all spell-bearing document ownership under the enchanter-authored arcane-document path so future tome, scroll, and manuscript systems do not fork into competing implementations
 
 #### Enchanter workplace wiring and lapidary production chains after runtime craft consumers exist
 
@@ -386,27 +502,86 @@ This file tracks content and systems that are intentionally deferred.
   - add canonical item stat/value/weight metadata refs so inventory and equipment rows can project real authored data instead of humanized item keys and stack ids alone
   - add runtime discovery emitters, dedupe rules, and codex sync ownership so flora/fauna/mineral/item/note discoveries are written by live simulation systems instead of demo snapshot payloads
 
-#### FFXI-style placeholder progression catalogs and canonical replacement
+#### Modular progression foundation follow-through
 
 - Status: partially deferred
-- Prerequisite: starter authored progression catalogs now exist; remaining prerequisites are a canonical class/job taxonomy, fuller BG-Wiki placeholder ingestion, player-content validation/seed tooling, and runtime consumers for unlocks and gain rules
-- Intended owner: player content databases, combat systems, spell systems, craft systems, and later progression tooling
+- Prerequisite: the canonical player foundation now exists across the hierarchical skill tree, lineage trait packages, titles, abilities, spells, progression tracks, knowledge tracks, skill effects, trials, items, schemas, shared contracts, combat hooks, and linting; remaining prerequisites are runtime progression gain consumers, broader class/job ownership, and expanded authored combat/craft/magic content
+- Intended owner: player content databases, player-engine runtime, combat systems, spell systems, craft systems, and later progression tooling
 - Intended implementation:
-  - player attributes, skills, abilities, spells, and traits now live as richer authored progression catalogs with SQLite storage support instead of minimal placeholder rows
-  - the current pass intentionally uses FFXI-style taxonomy and representative records from BG-Wiki as a temporary stand-in while the game-native class, skill, and spell roster is still fluid
-  - the current spell catalog now guarantees at least five authored spells for each supported element and each current black/white magic discipline, so downstream systems can assume basic elemental and subtype diversity
-  - remaining work is to ingest broader placeholder coverage beyond that minimum-diversity floor, especially the full black-magic and white-magic line coverage referenced in the authored spell catalog metadata
-  - map any placeholder job or role assumptions onto the canonical player class/job taxonomy before runtime unlock logic depends on these records
-  - add content-lint or seed-pipeline validation for the richer player catalogs so progression models, unlock rules, and effect payloads are checked the same way broader world content is checked
-  - replace the temporary FFXI-inspired records with organic game-native abilities, traits, spells, and skill families once the downstream combat, crafting, and progression systems stabilize
+  - the current foundation now uses a hierarchical skill tree with container categories, rankable branch or leaf skills, canonical progression tracks, and milestone-title metadata instead of the old placeholder flat catalog
+  - `packages/content/base/player/progression_tracks.json`, `knowledge_tracks.json`, `skill_effects.json`, and `trials.json` now own reusable breakthrough, identification, effect-channel, and trial definitions instead of embedding those rules ad hoc inside individual skills or spells
+  - `tools/content-lint/index.mjs` now validates player catalogs and their cross-system refs against quests, items, and crafting surfaces instead of leaving player content outside the main validation pass
+  - remaining work is to let live actions award skill gain, breakthrough progress, and trial advancement through runtime systems instead of leaving the new models data-only
+  - expand the spell, ability, and specialization roster only when each addition has clear structured effects and governing skill ownership; do not reintroduce placeholder tier spam or vague passive filler
+  - keep future growth keyed to the new progression-track and skill-effect model rather than adding one-off rank rules inside UI or runtime fixtures
+
+#### Canonical title expansion and faith-title follow-through
+
+- Status: deferred
+- Prerequisite: the canonical title schema, milestone metadata, representative title records, and runtime title state now exist; remaining prerequisites are broader skill-family authoring coverage, title-equip gameplay consumers, and faith or divine progression systems
+- Intended owner: `packages/content/base/player/titles.json`, player-engine progression helpers, religion or faith content, and combat/crafting/magic/knowledge systems
+- Intended implementation:
+  - expand the current representative 50 / 100 / 125+trial title samples into broader authored coverage only after each skill family has stable milestone hooks and progression ownership
+  - keep the reserved `faith` title family blocked until religion, favor, or divine progression systems can own milestone logic and equip rules cleanly
+  - continue resolving titles through canonical ids, track ids, source skill ids, and milestone metadata rather than drifting back to freeform runtime labels
+
+#### Spell branching and advanced combat-resolution follow-through
+
+- Status: deferred
+- Prerequisite: the placeholder spell catalog, structured spell metadata, skill effects, and content-driven combat action discovery now exist; remaining prerequisites are non-placeholder spell trees, deeper combat-resolution rules for support and control hooks, and item-runtime consumers for generated spell support items
+- Intended owner: player spell content, combat runtime, item systems, and progression tooling
+- Intended implementation:
+  - branch elemental, enfeebling, enhancing, healing, druidic, ninjutsu, and performance content beyond placeholders only when each branch has stable governing-skill ownership and real resolution hooks
+  - deepen runtime handling for bind, ward, anthem, shadow-step, and similar hooks instead of leaving them as lightweight status proxies in the current combat pass
+  - keep `berry` as a spell-generated, party-limited, dissipating support item and not a crafting input or normal resource when the item-runtime follow-through is implemented
+
+#### Background and settlement trait families after non-lineage ownership exists
+
+- Status: deferred
+- Prerequisite: lineage trait packages now exist; remaining prerequisites are background generation rules, settlement-origin ownership, and non-lineage runtime consumers for social, economic, and start-state effects
+- Intended owner: starter generation, player trait content, world start systems, and UI/session adapters
+- Intended implementation:
+  - keep the current trait catalog limited to lineage, innate, and supernatural records instead of reviving the removed background or settlement placeholders
+  - reintroduce background or settlement traits only after they can be generated and consumed canonically rather than being hardcoded into starter snapshots
+  - keep lineage traits aligned to playable lineage ids and avoid mixing pure-ancestry aliases back into starter generation
+
+#### Trade and social skill families on top of the progression foundation
+
+- Status: deferred
+- Prerequisite: the new progression foundation now exists; remaining prerequisites are a clearer merchant, negotiation, reputation, and service-interaction runtime model so trade/social skills have real consumers
+- Intended owner: player progression content, economy systems, quest systems, and UI/session adapters
+- Intended implementation:
+  - add concrete trade/social skills only after barter, negotiation, appraisal, persuasion, favors, and service access have authored checks or runtime consequences
+  - keep `Trade / Social` as a category container for now instead of filling it with non-functional flavor skills
+  - route future trade/social gain through the same progression tracks, trials, and skill-effect channels used by the current system/knowledge/combat/craft/magic foundation
+
+#### Traversal and mobility specializations after travel runtime ownership exists
+
+- Status: deferred
+- Prerequisite: authored travel networks and transport runtime now exist; remaining prerequisites are player-facing traversal actions, terrain penalties, and movement-resolution hooks that can consume mobility skill ranks meaningfully
+- Intended owner: player progression content, travel systems, and world interaction runtime
+- Intended implementation:
+  - keep traversal out of the current skill catalog until climbing, swimming, sailing, mount handling, and routecraft can affect real action resolution instead of serving as broad flavor gates
+  - when traversal skills return, wire them through explicit action types, item/tool use profiles, and travel/trial hooks rather than reviving the removed placeholder innate-skill bucket
+  - prefer a narrower set of meaningful movement specializations over a broad list of rarely-consumed mobility tags
+
+#### Ecology record identification difficulty authoring
+
+- Status: deferred
+- Prerequisite: knowledge tracks and auto-identify thresholds now exist; remaining prerequisite is a deliberate flora/fauna/mineral source audit so identification difficulty and rarity are authored against real ecology records instead of guessed in bulk
+- Intended owner: world ecology content, player knowledge systems, and codex/discovery surfaces
+- Intended implementation:
+  - annotate flora, fauna, and mineral records with authored identification difficulty once the ecology pass is ready to normalize those datasets
+  - use domain knowledge first, universal knowledge as weak support, and spotting as a minor assist exactly as the current knowledge-track foundation expects
+  - keep the current player foundation generic until the ecology datasets are clean enough to support stable identify thresholds and discovery outcomes
 
 #### Canonical skill, job, workplace, and employment architecture refactor
 
-- Status: deferred
-- Prerequisite: replace the current FFXI-style placeholder skill taxonomy, freeform workplace job ids, and quest-only party/deployment assumptions with canonical cross-system registries plus runtime consumers
+- Status: partially deferred
+- Prerequisite: the placeholder player skill taxonomy has now been replaced by the canonical progression foundation; remaining prerequisites are job registries, workplace role ownership, and shared runtime consumers for employment, hiring, and non-quest action execution
 - Intended owner: player progression content, civilization/workplace content, quest systems, simulation runtime, and UI/session adapters
 - Intended implementation:
-  - replace the current `packages/content/base/player/skills.json` taxonomy with a game-native permanent skill model organized around combat, magic, crafting, gathering, trade, survival, social, and utility families instead of the current FFXI-derived weapon/magic/craft split
+  - build future job and workplace systems on top of the current permanent skill model instead of replacing it again
   - introduce a canonical `jobs.json` so professions become explicit temporary employment roles with required skills, preferred skills, workplace eligibility, progression tiers, and compensation expectations instead of remaining embedded string ids inside workplace staffing curves and player state
   - refactor `packages/content/base/civilization/workplaces.json` so workplaces own capacity, role slots, productivity rules, and multi-role burden semantics while jobs own role identity and worker-fit logic
   - generalize the current quest action/deployment concepts into a reusable context-aware action system that can power travel, gathering, trade, hiring, labor, party assignments, and building interactions outside quest trees
@@ -479,7 +654,7 @@ This file tracks content and systems that are intentionally deferred.
   - `packages/engines/game-engine/src/save-snapshot.ts` now provides a runtime-side snapshot helper, and `apps/rpg-ui/src/runtime/uiViewModel.ts` projects that snapshot shape into panel data
   - `apps/rpg-ui` now has a typed top-level flow with `MAIN_MENU`, `CHARACTER_CREATION`, `LOAD_GAME`, and `IN_GAME` states so the existing shell can be entered from a real front-end game loop instead of rendering immediately on boot
   - the UI now maintains six browser-local manual save slots plus a dedicated quick-save slot backed by `localStorage`, with serialized shared `SaveSnapshot` payloads, stored save metadata, explicit save/load/overwrite/delete/reset-all controls, and corrupt-slot isolation in the front-end shell
-  - the UI character creator now runs as a deterministic multi-step flow for lineage, identity, continent, region, settlement, backstory, path, manual attribute allocation, and review, with lineage-valid identity palettes, settlement-aware backstory pools, a slimmer live summary, and a snapshot factory kept separate from the screen component
+  - the UI character creator now runs as a deterministic multi-step flow for lineage, identity, continent, region, settlement, backstory, starting bundle, manual attribute allocation, and review, with lineage-valid identity palettes, settlement-aware backstory pools, authored starting-bundle loadouts, a slimmer live summary, and a snapshot factory kept separate from the screen component
   - the world, activity, and quest tabs now expose a first playable snapshot-backed loop for accepting a contract, traveling between authored locations, advancing contract work shifts, resting, turning contracts in, and applying rewards to currency, XP, skills, reputation, codex entries, chronicle events, notifications, and operations
   - the detail column now also exposes per-section standard field audits and missing-reference callouts so each submenu window documents what data it expects to receive
   - the character tab now surfaces origin growth, wallet/inventory state, equipped gear refs, and discovery-chronicle records from the snapshot bridge instead of treating those windows as placeholders
@@ -495,8 +670,8 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to replace the UI-authored character creation catalogs for identity palettes, backstories, paths, starter loadouts, and legal-start mappings with canonical content/database ownership once the player-content layer stabilizes
   - the character creator now serves lineage and continent card art from `apps/rpg-ui/public/character-creator`, brings decorative art to the foreground on hover for image-backed cards, expands selected lineage/continent/region/settlement cards into art-forward confirm surfaces with left-side hover narrative overlays, keeps a slimmer live summary behind an inline top-bar toggle that defaults collapsed on continent, region, and settlement steps, and uses a denser left-aligned step rail plus edge-mounted lineage stat panes with embedded advance controls to preserve card space
   - remaining work is to move the current UI-owned lineage/continent card art manifests, expanded lineage color palettes, sex or height or build tradeoff tables, and any future region or settlement card art into canonical player-content ownership once the player-content layer can author visual identity and starting-stat modifiers directly
-  - the character creator now also uses authored region card art, image-backed region resource icons, explicit presentation overrides for the Kaelvar trio plus the current Valtherion quartet, and a continent-style split selected layout for region cards, while settlement cards remain on the older art-light presentation
-  - remaining work is to extend the settlement card hover-preview scaffolding with real decorative art once those settlement image assets exist; intended owner is `apps/rpg-ui` until canonical presentation content absorbs that responsibility
+  - the character creator now also uses authored region card art, image-backed region resource icons, explicit presentation overrides for the Kaelvar trio plus the current Valtherion quartet, and a continent-style split selected layout for region cards; settlement cards now use the same image-backed treatment across the earlier Kaelvar and Valtherion set plus the newly added Sapphire Rivers, Serathyl mainland, Draemor mainland, Talmyra mainland, Watcher Coast, and most Thorn Peninsula starts, while uncovered settlements still fall back to the older art-light presentation
+  - remaining work is to extend the settlement art registry and authored image set to the still-uncovered named starts: `Dyehollow`, `Pepperfield Estate`, `Starfall Port`, `Foammarket Ferry`, `Harbormast Quay`, `Pearlwake`, `Chainlight Bastion`, `Lantern Key`, `Driftglass Outpost`, `Glasswake Shrine`, `Lantern Deep`, `Stormfang Haven`, `Blackreef Anchorage`, `Squallhook Refuge`, `Aurora Anchorage`, `Icehook Jetty`, `Whalebone Watch`, `Nacredeep`, and `Stormhook Watch`; intended owner is `apps/rpg-ui` until canonical presentation content absorbs that responsibility
   - remaining work is to replace the current creator-side lineage-fit heuristic for uncommon city locals and nobles with canonical settlement demographics or authored lineage-presence data so those hooks do not stay UI-inferred forever
   - remaining work is to validate the richer creator catalogs against canonical skill, item, and trait registries so the UI no longer depends on mixed placeholder refs during new-game generation
   - remaining work is to replace the UI-authored new-game snapshot builder and browser-local slot manager with engine-owned character creation, canonical save-slot metadata, and session persistence once runtime save semantics are finalized

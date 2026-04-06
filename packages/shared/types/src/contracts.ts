@@ -1,3 +1,13 @@
+import type {
+  CombatEncounterHistoryEntryState,
+  CombatEncounterState,
+  CombatModeState,
+  CombatUiState,
+  PartyRuntimeState
+} from "./combat.js";
+import type { ResolvedSpawnCandidateState } from "./encounters.js";
+import type { PlayerCombatProfileState } from "./tactics.js";
+
 export type DomainKey = "world" | "civilization" | "player" | "game";
 
 export type SeasonName = "Winter" | "Thaw" | "Spring" | "Summer" | "Harvest" | "Withering";
@@ -44,6 +54,15 @@ export interface TickContextBase<TState = Record<string, unknown>> {
 export interface WorldState {
   activeRegions: string[];
   weatherState: Record<string, unknown>;
+  encounterContext?: {
+    regionId: string;
+    settlementId?: string | null;
+    siteId?: string | null;
+    worldHexId?: string | null;
+    habitatTags: string[];
+    hazardPressure: number;
+  };
+  pendingSpawnCandidates?: ResolvedSpawnCandidateState[];
 }
 
 export type EconomyHierarchyLevel = "workplace" | "building" | "settlement" | "subregion" | "region" | "continent";
@@ -681,6 +700,8 @@ export interface CraftResolutionOutputState {
   totalValueBasis: number;
 }
 
+export type CraftSkillDimension = "timeEfficiency" | "waste" | "quality" | "quantity";
+
 export interface CraftResolutionStepState {
   stepId: string;
   stageRef: string;
@@ -698,6 +719,9 @@ export interface CraftResolutionStepState {
   processingTimeHours: number;
   materialDifficultyFactor: number;
   skillTimeFactor: number;
+  skillQualityFactor: number;
+  quantityFactor: number;
+  appliedDimensions: CraftSkillDimension[];
   laborRate: number;
   notes: string[];
 }
@@ -801,6 +825,7 @@ export interface CivilizationState {
 
 export type PlayerAttributeKey = "STR" | "DEX" | "AGI" | "CON" | "VIT" | "WIS" | "INT" | "SPT" | "CHA";
 export type PlayerSexId = "male" | "female" | "neutral";
+export type PlayerIdentityAgeBandId = "young_adult" | "prime_age" | "middle_aged";
 export type PlayerIdentityBuildId =
   | "petite"
   | "slim"
@@ -938,12 +963,228 @@ export interface PlayerProgression {
   unspentSkillPoints: number;
 }
 
+export type SkillProgressionBandId = "clumsy" | "familiar" | "proficient" | "skilled" | "mastery";
+export type ProgressionTrackType =
+  | "resource"
+  | "survival"
+  | "combat_fundamentals"
+  | "weapon"
+  | "defense"
+  | "armor"
+  | "tactical_combat"
+  | "magic_core"
+  | "magic_school"
+  | "crafting"
+  | "settlement"
+  | "leadership"
+  | "knowledge";
+export type SpellScalingChannel =
+  | "power"
+  | "duration"
+  | "magnitude"
+  | "radius"
+  | "manaEfficiency"
+  | "accuracy"
+  | "healingPower"
+  | "barrier"
+  | "charges"
+  | "statusChance"
+  | "summonPotency"
+  | "tempo";
+
+export interface SkillProgressionBandState {
+  id: SkillProgressionBandId;
+  label: string;
+  minRank: number;
+  maxRank: number;
+  softCapRank: number;
+  requiresBreakthrough: boolean;
+  requiresMasteryTrial?: boolean;
+}
+
+export interface SkillProgressionTrackState {
+  id: string;
+  name: string;
+  trackType: ProgressionTrackType;
+  rankRange: {
+    min: number;
+    max: number;
+  };
+  bands: SkillProgressionBandState[];
+  breakthroughGateRanks: number[];
+  gainModel: Record<string, number>;
+  breakthroughSources: Record<string, number>;
+}
+
+export interface KnowledgeSupportWeightsState {
+  domainKnowledge: number;
+  universalKnowledge: number;
+  spotting: number;
+}
+
+export interface KnowledgeTrackThresholdState {
+  common: number;
+  uncommon: number;
+  rare: number;
+  obscure: number;
+}
+
+export interface KnowledgeTrackState {
+  id: string;
+  name?: string;
+  domain?: string;
+  knowledgeSkillId: string;
+  spottingSkillId?: string;
+  identifySkillId?: string;
+  universalSupportSkillId?: string;
+  supportWeights: KnowledgeSupportWeightsState;
+  identifyDifficulty: KnowledgeTrackThresholdState;
+  autoIdentifyThresholds: KnowledgeTrackThresholdState;
+}
+
+export interface SkillLevelingState {
+  defaultRank: number;
+  maximumRank: number;
+}
+
+export interface SkillCombatHooksState {
+  skillEffectIds: string[];
+  actionGrantTags: string[];
+  tacticalTags: string[];
+  titleModifierTags: string[];
+  spellTags: string[];
+  resolutionHooks: string[];
+}
+
+export interface SkillEffectScalingState {
+  mode: string;
+  base: number;
+  perRank: number;
+  perAttributePoint?: number;
+}
+
+export interface SkillEffectChannelState {
+  actionType?: string;
+  actionTags?: string[];
+  grantType?: string;
+  effectChannel: string;
+  scaling: SkillEffectScalingState;
+  combatTags?: string[];
+  resolutionHooks?: string[];
+}
+
+export interface SkillEffectProfileState {
+  id: string;
+  skillId: string;
+  name: string;
+  channels: SkillEffectChannelState[];
+}
+
+export interface ActionCostProfileState {
+  hp?: number;
+  mp?: number;
+  stamina?: number;
+}
+
+export interface ActionTargetConditionState {
+  scope: "actor" | "target";
+  condition: string;
+  qualifier?: string;
+}
+
+export interface ActionTargetProfileState {
+  disposition: "ally" | "enemy" | "self" | "any";
+  shape: string;
+  range: string;
+  maxTargets: number;
+  requiresAccuracy: boolean;
+}
+
+export interface ActionActivationProfileState {
+  type: "active" | "reaction" | "passive";
+  actionType: string;
+  timing: string;
+  executionTimeTicks: number;
+  recoveryTimeTicks: number;
+  interruptible: boolean;
+  costs: ActionCostProfileState;
+}
+
+export interface SpellItemGenerationHookState {
+  generatedItemId: string;
+  generatedItemName: string;
+  charges: number;
+  partyLimited: boolean;
+  dissipatesOnChargeLoss: boolean;
+  combatTags: string[];
+}
+
+export interface TitleMilestoneState {
+  threshold: number;
+  requiresMasteryTrial: boolean;
+  trialId?: string | null;
+}
+
+export interface TrialCheckpointState {
+  id: string;
+  label: string;
+  progressRequired: number;
+}
+
+export interface TrialDefinitionState {
+  id: string;
+  name: string;
+  associatedSkillId: string;
+  thresholdToPass: number;
+  progress: number;
+  maxPotential: number;
+  checkpoints: TrialCheckpointState[];
+  rewards: Record<string, unknown>[];
+  penalties: Record<string, unknown>[];
+}
+
+export interface PlayerSkillProgressState {
+  progressionTrackId?: string;
+  currentBandId?: SkillProgressionBandId;
+  unlockedBandIds: SkillProgressionBandId[];
+  breakthroughProgress: number;
+  lastBreakthroughRank?: number | null;
+}
+
+export interface PlayerTrialProgressState {
+  trialId: string;
+  associatedSkillId: string;
+  progress: number;
+  maxPotential: number;
+  completedCheckpointIds: string[];
+  passed: boolean;
+  failed: boolean;
+}
+
+export interface ItemUseProfileState {
+  actionType: string;
+  primarySkillId: string;
+  supportSkillIds: string[];
+  requiredSkillRank: number;
+  masteryRank: number;
+  effectChannels: string[];
+  handlingType?: "weapon" | "shield" | "armor" | "tool" | "hybrid";
+  proficiencySkillId?: string;
+  hybridSkillIds?: string[];
+  combatTags?: string[];
+  resolutionHooks?: string[];
+  targetProfile?: ActionTargetProfileState;
+  activation?: ActionActivationProfileState;
+  grantTags?: string[];
+}
+
 export type PlayerSkillSource = "innate" | "trained";
 
 export interface PlayerSkillState {
   id: string;
   rank: number;
   source: PlayerSkillSource;
+  progression?: PlayerSkillProgressState;
 }
 
 export type LearnedPowerSource = "learned" | "taught";
@@ -951,12 +1192,14 @@ export type LearnedPowerSource = "learned" | "taught";
 export interface PlayerSpellState {
   id: string;
   school: string;
+  tradition?: string;
+  discipline?: string;
   element?: string;
   rank: number;
   source: LearnedPowerSource;
 }
 
-export type PlayerAbilityCategory = "class" | "job" | "weapon" | "general";
+export type PlayerAbilityCategory = "melee" | "ranged" | "tactical" | "defensive" | "command" | "reaction";
 
 export interface PlayerAbilityState {
   id: string;
@@ -965,7 +1208,7 @@ export interface PlayerAbilityState {
   source: LearnedPowerSource;
 }
 
-export type PlayerTraitSource = "innate" | "lineage" | "class" | "equipment" | "story";
+export type PlayerTraitSource = "innate" | "lineage" | "supernatural";
 
 export interface PlayerTraitState {
   id: string;
@@ -1025,6 +1268,8 @@ export interface PlayerCoreData {
   sexId: PlayerSexId;
   classId: string | null;
   jobId: string | null;
+  backstoryId?: string | null;
+  startingBundleId?: string | null;
   identityProfile?: PlayerIdentityProfile | null;
 }
 
@@ -1049,6 +1294,7 @@ export interface PlayerCurrencyState {
 
 export interface PlayerIdentityProfile {
   heightCm: number | null;
+  ageBandId: PlayerIdentityAgeBandId | null;
   buildId: PlayerIdentityBuildId | null;
   hairColorId: string | null;
   hairHighlightColorId: string | null;
@@ -1066,8 +1312,11 @@ export interface PlayerReputationState {
 
 export interface PlayerTitleState {
   id: string;
-  label: string;
-  source: string;
+  name: string;
+  family: string;
+  trackId: string;
+  sourceSkillId: string | null;
+  milestone: TitleMilestoneState;
   equipped: boolean;
   effects: string[];
 }
@@ -1097,6 +1346,11 @@ export interface PlayerDiscoveryChronicleEntryState {
 export interface PlayerDiscoveryChronicleState {
   entries: PlayerDiscoveryChronicleEntryState[];
   lastUpdatedTick: number | null;
+}
+
+export interface PlayerKnowledgeFamiliarityState {
+  trackId: string;
+  level: number;
 }
 
 export interface PlayerOriginProfileState {
@@ -1241,6 +1495,7 @@ export interface SessionState {
   codexEntries: CodexEntryState[];
   questJournal: QuestJournalEntryState[];
   chronicle: ChronicleEventState[];
+  combatUi: CombatUiState;
 }
 
 export interface PlayerState {
@@ -1255,6 +1510,7 @@ export interface PlayerState {
   spells: PlayerSpellState[];
   abilities: PlayerAbilityState[];
   traits: PlayerTraitState[];
+  activeTrials?: PlayerTrialProgressState[];
   equipment: EquipmentState;
   inventory: PlayerInventoryState;
   activeEffects: string[];
@@ -1263,17 +1519,23 @@ export interface PlayerState {
   originProfile: PlayerOriginProfileState;
   reputation: PlayerReputationState[];
   titles: PlayerTitleState[];
+  knowledgeFamiliarity?: PlayerKnowledgeFamiliarityState[];
   discoveryChronicle: PlayerDiscoveryChronicleState;
   discoveredRegions: string[];
   activeQuestIds: string[];
   completedQuestIds: string[];
   flags: string[];
+  combatProfile: PlayerCombatProfileState;
   saveMeta: PlayerSaveMetadata;
 }
 
 export interface GameState {
   worldVersion: string;
   activeScenario: string;
+  mode: CombatModeState;
+  party: PartyRuntimeState;
+  activeEncounter: CombatEncounterState | null;
+  combatHistory: CombatEncounterHistoryEntryState[];
 }
 
 export interface WorldTickContext extends TickContextBase<WorldState> {
@@ -1292,6 +1554,7 @@ export interface GameTickContext extends TickContextBase<GameState> {
   worldContext: WorldTickContext;
   civilizationContext: CivilizationTickContext;
   playerContext: PlayerTickContext;
+  sessionState?: SessionState;
 }
 
 export interface WorldDelta {
@@ -1322,13 +1585,14 @@ export interface PlayerDelta {
     | "traits"
     | "discovery"
     | "reputation"
-    | "titles";
+    | "titles"
+    | "combat_profile";
   playerId: string;
   payload: Record<string, unknown>;
 }
 
 export interface GameDelta {
-  kind: "orchestration" | "events";
+  kind: "orchestration" | "events" | "combat";
   payload: Record<string, unknown>;
 }
 
@@ -1366,6 +1630,7 @@ export interface SaveSnapshot {
   snapshotVersion: string;
   capturedAtTick: number;
   clock: SimulationClock;
+  gameState: GameState;
   playerState: PlayerState;
   worldState: WorldState;
   civilizationState: CivilizationState;

@@ -1,293 +1,1008 @@
 {
-  "sourceReferences": [
-    {
-      "id": "bgwiki_job_traits",
-      "label": "BG-Wiki Job Traits",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Job_Traits"
-    },
-    {
-      "id": "starter_lineages",
-      "label": "Starter lineage trait seeds",
-      "url": "internal:player-origins"
-    }
-  ],
   "records": [
     {
-      "id": "trait.race.human_adaptability",
-      "name": "Human Adaptability",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.human.adaptable",
+      "name": "Adaptable",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Balanced starter trait reflecting human flexibility across disciplines.",
+      "description": "Humans translate practice into broad usable progress faster than most lineages.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.human", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "skill_gain_rate", "mode": "percent", "value": 0.03 },
-        { "kind": "modifier", "stat": "reputation_gain", "mode": "percent", "value": 0.02 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.human"
+        }
       ],
-      "tags": ["racial", "starter"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "progression.skill_gain",
+          "mode": "percent",
+          "value": 0.03,
+          "scope": "self"
+        },
+        {
+          "channel": "progression.breakthrough_gain",
+          "mode": "percent",
+          "value": 0.05,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "progression"
+      ]
     },
     {
-      "id": "trait.race.elf_arcane_attunement",
+      "id": "trait.lineage.human.resilient",
+      "name": "Resilient",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Humans recover from ordinary hardship with dependable stamina and durability.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.human"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "resource.max.stamina",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self"
+        },
+        {
+          "channel": "resource.regen.hp",
+          "mode": "flat",
+          "value": 0.15,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "endurance"
+      ]
+    },
+    {
+      "id": "trait.lineage.human.socially_versatile",
+      "name": "Socially Versatile",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Humans adapt quickly to expectations in civic and social exchanges.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.human"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.leadership.negotiation"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.settlement.trade"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "social"
+      ]
+    },
+    {
+      "id": "trait.lineage.elf.keen_senses",
+      "name": "Keen Senses",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Elves notice movement, detail, and natural signs before most others do.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.elf"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "awareness.range",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self",
+          "skillId": "skill.resource.spotting.fauna"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "awareness"
+      ]
+    },
+    {
+      "id": "trait.lineage.elf.graceful",
+      "name": "Graceful",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Elven motion preserves balance and evasion even under pressure.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.elf"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "combat.evasion",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self"
+        },
+        {
+          "channel": "movement.recovery",
+          "mode": "percent",
+          "value": 0.04,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "mobility"
+      ]
+    },
+    {
+      "id": "trait.lineage.elf.arcane_attunement",
       "name": "Arcane Attunement",
-      "family": "racial",
-      "sourceType": "race",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter elf trait that favors magical precision and MP economy over brute force.",
+      "description": "Elves sustain magical resonance with unusual steadiness across schools and elements.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.elf", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "mp_max", "mode": "flat", "value": 8 },
-        { "kind": "modifier", "stat": "spell_accuracy", "mode": "flat", "value": 4 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.elf"
+        }
       ],
-      "tags": ["racial", "starter", "magic"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "resource.max.mp",
+          "mode": "flat",
+          "value": 8,
+          "scope": "self"
+        },
+        {
+          "channel": "magic.accuracy",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "magic"
+      ]
     },
     {
-      "id": "trait.race.dwarf_stonecunning",
-      "name": "Stonecunning",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.dark_elf.darkvision",
+      "name": "Darkvision",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter dwarf trait that emphasizes durability and stone-aligned resilience.",
+      "description": "Dark elves keep reliable awareness in poor light and obscuring ground.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.dwarf", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "hp_max", "mode": "flat", "value": 10 },
-        { "kind": "resistance", "stat": "earth", "mode": "flat", "value": 5 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.dark_elf"
+        }
       ],
-      "tags": ["racial", "starter", "defense"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "awareness.darkness",
+          "mode": "flat",
+          "value": 6,
+          "scope": "self"
+        },
+        {
+          "channel": "combat.accuracy",
+          "mode": "flat",
+          "value": 2,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "vision"
+      ]
     },
     {
-      "id": "trait.race.halfling_lightfoot",
-      "name": "Lightfoot",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.dark_elf.cruel_precision",
+      "name": "Cruel Precision",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter halfling trait that rewards mobility and precision movement.",
+      "description": "Dark elves exploit hesitation and exposed openings with punishing precision.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.halfling", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "evasion", "mode": "flat", "value": 4 },
-        { "kind": "modifier", "stat": "climb_speed", "mode": "percent", "value": 0.08 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.dark_elf"
+        }
       ],
-      "tags": ["racial", "starter", "mobility"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "combat.critical_rate",
+          "mode": "flat",
+          "value": 0.03,
+          "scope": "self"
+        },
+        {
+          "channel": "combat.accuracy",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "combat"
+      ]
     },
     {
-      "id": "trait.race.gnome_tinkers_focus",
-      "name": "Tinker's Focus",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.dark_elf.shadow_adapted",
+      "name": "Shadow Adapted",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter gnome trait that favors fine craft and stable magical handling.",
+      "description": "Dark elves move and cast more comfortably in obscured spaces.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.gnome", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "craft_quality", "mode": "flat", "value": 4 },
-        { "kind": "modifier", "stat": "mp_max", "mode": "flat", "value": 4 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.dark_elf"
+        }
       ],
-      "tags": ["racial", "starter", "craft"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "combat.evasion",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.magic.school.dark"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "shadow"
+      ]
     },
     {
-      "id": "trait.race.orc_blooded_drive",
-      "name": "Blooded Drive",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.gnome.tinkers_mind",
+      "name": "Tinker's Mind",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter orc trait tuned toward physical aggression and sustained exertion.",
+      "description": "Gnomes hold intricate practical systems clearly in working memory.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.orc", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "attack_power", "mode": "flat", "value": 4 },
-        { "kind": "modifier", "stat": "stamina_max", "mode": "flat", "value": 6 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.gnome"
+        }
       ],
-      "tags": ["racial", "starter", "offense"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self",
+          "skillId": "skill.crafting.engineering"
+        },
+        {
+          "channel": "craft.formula_efficiency",
+          "mode": "percent",
+          "value": 0.04,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "crafting"
+      ]
     },
     {
-      "id": "trait.race.goblin_scrapper_instinct",
-      "name": "Scrapper Instinct",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.gnome.quick_hands",
+      "name": "Quick Hands",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter goblin trait for scavenging, thrown tools, and improvised value extraction.",
+      "description": "Gnomes excel at fast adjustments, fine assembly, and small-tool work.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.goblin", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "salvage_yield", "mode": "percent", "value": 0.05 },
-        { "kind": "modifier", "stat": "throwing_accuracy", "mode": "flat", "value": 3 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.gnome"
+        }
       ],
-      "tags": ["racial", "starter", "utility"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "craft.speed",
+          "mode": "percent",
+          "value": 0.04,
+          "scope": "self"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.crafting.fletching"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "dexterity"
+      ]
     },
     {
-      "id": "trait.race.troll_regenerative_frame",
-      "name": "Regenerative Frame",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.gnome.small_frame",
+      "name": "Small Frame",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter troll trait that favors passive recovery and blunt resilience.",
+      "description": "A gnome's compact profile makes them harder to pin down.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.troll", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "hp_regen", "mode": "flat", "value": 0.05 },
-        { "kind": "modifier", "stat": "stagger_resistance", "mode": "flat", "value": 4 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.gnome"
+        }
       ],
-      "tags": ["racial", "starter", "defense"],
-      "placeholderSourceId": "starter_lineages"
+      "modifiers": [
+        {
+          "channel": "combat.evasion",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self"
+        },
+        {
+          "channel": "stealth.detection_avoidance",
+          "mode": "percent",
+          "value": 0.04,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "mobility"
+      ]
     },
     {
-      "id": "trait.race.merfolk_tidebound",
-      "name": "Tidebound",
-      "family": "racial",
-      "sourceType": "race",
+      "id": "trait.lineage.halfling.lucky",
+      "name": "Lucky",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Starter merfolk trait for aquatic mobility and water-aspected resistance.",
+      "description": "Halflings turn near-misses and small edges into practical advantage.",
       "stackingRule": "highest_only",
-      "unlockRules": [{ "type": "race", "id": "lineage.merfolk", "level": 1 }],
-      "effects": [
-        { "kind": "modifier", "stat": "swim_speed", "mode": "percent", "value": 0.12 },
-        { "kind": "resistance", "stat": "water", "mode": "flat", "value": 6 }
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.halfling"
+        }
       ],
-      "tags": ["racial", "starter", "naval"],
-      "placeholderSourceId": "starter_lineages"
-    },
-    {
-      "id": "trait.job.attack_bonus_i",
-      "name": "Attack Bonus I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "FFXI-style passive attack increase granted through martial progression.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.vanguard", "level": 10 }],
-      "effects": [{ "kind": "modifier", "stat": "attack_power", "mode": "flat", "value": 6 }],
-      "tags": ["ffxi", "job_trait", "offense"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.defense_bonus_i",
-      "name": "Defense Bonus I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "FFXI-style passive defense increase for sturdier front-line roles.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.tank", "level": 10 }],
-      "effects": [{ "kind": "modifier", "stat": "defense", "mode": "flat", "value": 6 }],
-      "tags": ["ffxi", "job_trait", "defense"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.accuracy_bonus_i",
-      "name": "Accuracy Bonus I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "FFXI-style passive accuracy increase for precise weapon users.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.skirmisher", "level": 10 }],
-      "effects": [{ "kind": "modifier", "stat": "accuracy", "mode": "flat", "value": 8 }],
-      "tags": ["ffxi", "job_trait", "precision"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.fast_cast_i",
-      "name": "Fast Cast I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "Passive casting-speed improvement for flexible support and hybrid casters.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.hybrid_caster", "level": 12 }],
-      "effects": [{ "kind": "modifier", "stat": "cast_time", "mode": "percent", "value": -0.08 }],
-      "tags": ["ffxi", "job_trait", "magic"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.magic_attack_bonus_i",
-      "name": "Magic Attack Bonus I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "Passive increase to offensive spell output.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.offensive_caster", "level": 14 }],
-      "effects": [{ "kind": "modifier", "stat": "spell_power", "mode": "flat", "value": 6 }],
-      "tags": ["ffxi", "job_trait", "magic"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.clear_mind_i",
-      "name": "Clear Mind I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "Passive MP regeneration improvement inspired by FFXI caster traits.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.caster", "level": 15 }],
-      "effects": [{ "kind": "modifier", "stat": "mp_regen", "mode": "flat", "value": 0.05 }],
-      "tags": ["ffxi", "job_trait", "resource"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.auto_regen_i",
-      "name": "Auto Regen I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "Passive HP regeneration trait for durable jobs and prestige progressions.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.tank", "level": 20 }],
-      "effects": [{ "kind": "modifier", "stat": "hp_regen", "mode": "flat", "value": 0.04 }],
-      "tags": ["ffxi", "job_trait", "resource"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.dual_wield_i",
-      "name": "Dual Wield I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "Passive off-hand efficiency trait for paired-weapon combatants.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.dagger", "rank": 35 }],
-      "effects": [{ "kind": "modifier", "stat": "offhand_delay", "mode": "percent", "value": -0.08 }],
-      "tags": ["ffxi", "job_trait", "weapon"],
-      "placeholderSourceId": "bgwiki_job_traits"
-    },
-    {
-      "id": "trait.job.shield_mastery_i",
-      "name": "Shield Mastery I",
-      "family": "job",
-      "sourceType": "job",
-      "tier": 1,
-      "description": "Passive shield-use trait that improves guard stability and shield resource flow.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.defense.shield", "rank": 30 }],
-      "effects": [
-        { "kind": "modifier", "stat": "shield_block_rate", "mode": "flat", "value": 4 },
-        { "kind": "modifier", "stat": "stamina_on_block", "mode": "flat", "value": 1 }
+      "modifiers": [
+        {
+          "channel": "combat.critical_rate",
+          "mode": "flat",
+          "value": 0.02,
+          "scope": "self"
+        },
+        {
+          "channel": "progression.breakthrough_gain",
+          "mode": "percent",
+          "value": 0.03,
+          "scope": "self"
+        }
       ],
-      "tags": ["ffxi", "job_trait", "shield"],
-      "placeholderSourceId": "bgwiki_job_traits"
+      "tags": [
+        "lineage",
+        "fortune"
+      ]
     },
     {
-      "id": "trait.job.treasure_hunter_i",
-      "name": "Treasure Hunter I",
-      "family": "job",
-      "sourceType": "job",
+      "id": "trait.lineage.halfling.quiet_step",
+      "name": "Quiet Step",
+      "family": "lineage",
+      "sourceType": "lineage",
       "tier": 1,
-      "description": "Passive drop-quality and rare-roll improvement inspired by thief-style progression.",
-      "stackingRule": "best_tier_only",
-      "unlockRules": [{ "type": "role_tag", "id": "role.scout", "level": 15 }],
-      "effects": [{ "kind": "modifier", "stat": "loot_quality", "mode": "percent", "value": 0.05 }],
-      "tags": ["ffxi", "job_trait", "utility"],
-      "placeholderSourceId": "bgwiki_job_traits"
+      "description": "Halflings place weight softly and keep their movement profile small.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.halfling"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "stealth.detection_avoidance",
+          "mode": "percent",
+          "value": 0.06,
+          "scope": "self"
+        },
+        {
+          "channel": "movement.noise",
+          "mode": "percent",
+          "value": -0.08,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "stealth"
+      ]
+    },
+    {
+      "id": "trait.lineage.halfling.nimble",
+      "name": "Nimble",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Halflings recover balance quickly and change direction with little waste.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.halfling"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "combat.evasion",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self"
+        },
+        {
+          "channel": "movement.recovery",
+          "mode": "percent",
+          "value": 0.03,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "mobility"
+      ]
+    },
+    {
+      "id": "trait.lineage.dwarf.stone_sense",
+      "name": "Stone Sense",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Dwarves read rock quality, worked seams, and structural weakness by instinct.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.dwarf"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self",
+          "skillId": "skill.knowledge.minerals"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self",
+          "skillId": "skill.resource.identify.minerals"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "stone"
+      ]
+    },
+    {
+      "id": "trait.lineage.dwarf.stout",
+      "name": "Stout",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Dwarves resist shove, fatigue, and blunt hardship with dense stability.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.dwarf"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "resource.max.hp",
+          "mode": "flat",
+          "value": 6,
+          "scope": "self"
+        },
+        {
+          "channel": "status.resistance",
+          "mode": "percent",
+          "value": 0.04,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "hardiness"
+      ]
+    },
+    {
+      "id": "trait.lineage.dwarf.darkvision",
+      "name": "Darkvision",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Dwarves keep practical sight and hazard awareness in tunnels and low light.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.dwarf"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "awareness.darkness",
+          "mode": "flat",
+          "value": 6,
+          "scope": "self"
+        },
+        {
+          "channel": "hazard.reading",
+          "mode": "percent",
+          "value": 0.03,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "vision"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_orc.brutal_strength",
+      "name": "Brutal Strength",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half orcs turn raw force into punishing close-range impact.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_orc"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "combat.melee_power",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.combat.weapon.axe"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "combat"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_orc.battle_hardened",
+      "name": "Battle Hardened",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half orcs stay effective through pain, noise, and battlefield disorder.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_orc"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "resource.max.hp",
+          "mode": "flat",
+          "value": 5,
+          "scope": "self"
+        },
+        {
+          "channel": "status.resistance",
+          "mode": "percent",
+          "value": 0.05,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "endurance"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_orc.ferocious_recovery",
+      "name": "Ferocious Recovery",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half orcs recover from injury with unusually aggressive momentum.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_orc"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "resource.regen.hp",
+          "mode": "flat",
+          "value": 0.2,
+          "scope": "self"
+        },
+        {
+          "channel": "resource.regen.stamina",
+          "mode": "flat",
+          "value": 0.2,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "recovery"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_troll.massive_build",
+      "name": "Massive Build",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half trolls bring leverage, reach, and physical presence that smaller lineages cannot match.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_troll"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "resource.max.hp",
+          "mode": "flat",
+          "value": 8,
+          "scope": "self"
+        },
+        {
+          "channel": "combat.stagger",
+          "mode": "flat",
+          "value": 0.04,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "mass"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_troll.thick_hide",
+      "name": "Thick Hide",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half troll skin and frame naturally absorb a little more punishment.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_troll"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "damage_mitigation",
+          "mode": "percent",
+          "value": 0.04,
+          "scope": "self"
+        },
+        {
+          "channel": "status.resistance",
+          "mode": "percent",
+          "value": 0.03,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "defense"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_troll.regenerative_constitution",
+      "name": "Regenerative Constitution",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half trolls recover steadily from ordinary wounds even without ideal rest.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_troll"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "resource.regen.hp",
+          "mode": "flat",
+          "value": 0.3,
+          "scope": "self"
+        },
+        {
+          "channel": "wound_recovery",
+          "mode": "percent",
+          "value": 0.05,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "recovery"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_goblin.scavenger_instinct",
+      "name": "Scavenger Instinct",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half goblins spot usable scraps, overlooked value, and recovery opportunities quickly.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_goblin"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.resource.gathering"
+        },
+        {
+          "channel": "loot.salvage_yield",
+          "mode": "percent",
+          "value": 0.05,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "resource"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_goblin.cunning",
+      "name": "Cunning",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half goblins solve problems through misdirection and efficient opportunism.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_goblin"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.magic.school.ninjutsu"
+        },
+        {
+          "channel": "combat.accuracy",
+          "mode": "flat",
+          "value": 2,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "tactics"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_goblin.quick_reflexes",
+      "name": "Quick Reflexes",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half goblins recover from surprise quickly and act on short windows.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_goblin"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "combat.evasion",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self"
+        },
+        {
+          "channel": "initiative",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "reflex"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_merfolk.water_adapted",
+      "name": "Water Adapted",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half merfolk move and breathe more efficiently around water.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_merfolk"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "swim.efficiency",
+          "mode": "percent",
+          "value": 0.08,
+          "scope": "self"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 4,
+          "scope": "self",
+          "skillId": "skill.survival.swimming"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "water"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_merfolk.tidal_sense",
+      "name": "Tidal Sense",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half merfolk read currents, tides, and living water movement with exceptional sensitivity.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_merfolk"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.survival.water_safety"
+        },
+        {
+          "channel": "skill.rank_bonus",
+          "mode": "flat",
+          "value": 3,
+          "scope": "self",
+          "skillId": "skill.resource.spotting.fauna"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "water"
+      ]
+    },
+    {
+      "id": "trait.lineage.half_merfolk.breath_discipline",
+      "name": "Breath Discipline",
+      "family": "lineage",
+      "sourceType": "lineage",
+      "tier": 1,
+      "description": "Half merfolk regulate breath and pacing under pressure better than most mixed lineages.",
+      "stackingRule": "highest_only",
+      "unlockRules": [
+        {
+          "type": "lineage",
+          "id": "lineage.half_merfolk"
+        }
+      ],
+      "modifiers": [
+        {
+          "channel": "resource.max.stamina",
+          "mode": "flat",
+          "value": 5,
+          "scope": "self"
+        },
+        {
+          "channel": "resource.regen.stamina",
+          "mode": "flat",
+          "value": 0.15,
+          "scope": "self"
+        }
+      ],
+      "tags": [
+        "lineage",
+        "discipline"
+      ]
     }
   ]
 }

@@ -14,6 +14,14 @@ TypeScript-first, headless simulation scaffold for a survival / builder / RPG pr
 - `tests`: unit, integration, and simulation scaffolding.
 - `docs`: architecture notes and data dictionaries.
 
+## Asset Handling
+
+- UI-facing active art belongs under `apps/rpg-ui/public/` in the feature-specific folder that actually serves it at runtime. Character creator card art should live under `apps/rpg-ui/public/character-creator/<category>/` and keep the canonical filenames referenced by `apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts`.
+- Content-owned source art that exists to support canonical world data, map rendering, or content tooling belongs under the relevant `packages/content/...` path, such as `packages/content/base/world/map_assets/`.
+- Replaced, inactive, or intentionally archived images should be moved into `unused assets/<category>/` at the repo root instead of being left in active asset folders or loose in the root.
+- Root-level loose image files should be treated as temporary intake only. During the same Codex run that uses them, either move them into the correct active asset folder with the canonical runtime filename or archive them under `unused assets/`.
+- `apps/rpg-ui/dist/` is generated output, not the primary source of truth. When the UI build is healthy, let the build regenerate `dist`. If build issues temporarily prevent regeneration but the checked-in runtime assets still need to stay usable, mirror the finalized active files from `apps/rpg-ui/public/` into the matching `dist` location as a follow-up step rather than authoring assets in `dist` first.
+
 ## Current Data Systems
 
 - World data: biomes, habitats, flora, fauna, calendar, climate profiles, regional ecology profiles, named regions, region locality bands, region-first settlements and dependent sites, shared guild definitions, authored travel networks, world-map metadata, and coordinate-backed world-map feature geometry retained as optional visual/reference support.

@@ -62,10 +62,10 @@ const OPERATION_PORTER_ID = 'operation.quest.rivet_shortfall_relief';
 const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
   'location.saltmere': {
     id: 'location.saltmere',
-    name: 'Saltmere',
-    regionId: 'region.sable_coast',
-    regionLabel: 'Sable Coast',
-    settlementId: 'settlement.saltmere',
+    name: 'Aurelis',
+    regionId: 'region.verdant_thalos',
+    regionLabel: 'Verdant Thalos',
+    settlementId: 'settlement.aurelis',
     siteLabel: 'Harbor Quarter',
     worldMapId: 'world_map.first_world',
     travelTicks: 0,
@@ -81,10 +81,10 @@ const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
   },
   'location.westreach': {
     id: 'location.westreach',
-    name: 'Westreach',
-    regionId: 'region.stoneward_march',
-    regionLabel: 'Stoneward March',
-    settlementId: 'settlement.westreach',
+    name: 'Stonevein',
+    regionId: 'region.auric_marches',
+    regionLabel: 'The Auric Marches',
+    settlementId: 'settlement.stonevein',
     siteLabel: 'Market Ward',
     worldMapId: 'world_map.first_world',
     travelTicks: 6,
@@ -100,10 +100,10 @@ const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
   },
   'location.ashen_reef': {
     id: 'location.ashen_reef',
-    name: 'Ashen Reef',
-    regionId: 'region.glasswater',
-    regionLabel: 'Glasswater',
-    settlementId: 'settlement.ashen_reef',
+    name: 'Starfall Port',
+    regionId: 'region.starfall_isle',
+    regionLabel: 'Starfall Isle',
+    settlementId: 'settlement.starfall_port',
     siteLabel: 'Survey Anchorage',
     worldMapId: 'world_map.first_world',
     travelTicks: 4,
@@ -119,10 +119,10 @@ const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
   },
   'location.crown_bastion': {
     id: 'location.crown_bastion',
-    name: 'Crown Bastion',
-    regionId: 'region.northwall',
-    regionLabel: 'Northwall',
-    settlementId: 'settlement.crown_bastion',
+    name: 'Sunspire Reach',
+    regionId: 'region.silver_valleys',
+    regionLabel: 'Silver Valleys',
+    settlementId: 'settlement.sunspire_reach',
     siteLabel: 'Gate Muster',
     worldMapId: 'world_map.first_world',
     travelTicks: 8,
@@ -164,19 +164,19 @@ function formatTickTime(snapshot: SaveSnapshot): string {
 function getCurrentLocationId(snapshot: SaveSnapshot): string | null {
   const settlementId = snapshot.playerState.location.settlementId;
 
-  if (settlementId === 'settlement.saltmere') {
+  if (settlementId === 'settlement.aurelis') {
     return 'location.saltmere';
   }
 
-  if (settlementId === 'settlement.westreach') {
+  if (settlementId === 'settlement.stonevein') {
     return 'location.westreach';
   }
 
-  if (settlementId === 'settlement.ashen_reef') {
+  if (settlementId === 'settlement.starfall_port') {
     return 'location.ashen_reef';
   }
 
-  if (settlementId === 'settlement.crown_bastion') {
+  if (settlementId === 'settlement.sunspire_reach') {
     return 'location.crown_bastion';
   }
 
@@ -750,7 +750,7 @@ function syncWorldRecords(snapshot: SaveSnapshot): PanelRecordState[] {
   const rivetCompleted = findQuest(snapshot, 'quest.rivet_shortfall_relief')?.category === 'completed';
 
   return snapshot.sessionState.worldRecords.map((record) => {
-    if (record.id === 'route.saltmere_ashen_reef' && surveyComplete) {
+    if (record.id === 'route.aurelis_starfall_port' && surveyComplete) {
       return {
         ...record,
         status: 'Risk: charted',
@@ -763,7 +763,7 @@ function syncWorldRecords(snapshot: SaveSnapshot): PanelRecordState[] {
       };
     }
 
-    if (record.id === 'travel.scout_ashen_reef') {
+    if (record.id === 'travel.scout_starfall_port') {
       return {
         ...record,
         status: surveyComplete
@@ -1299,7 +1299,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
       );
       nextSnapshot.playerState.skills = addOrUpdateSkill(
         nextSnapshot.playerState.skills,
-        'skill.navigation',
+        'skill.knowledge.universal',
         1
       );
       nextSnapshot.sessionState.operations = upsertOperation(
@@ -1340,7 +1340,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
       );
       nextSnapshot.playerState.skills = addOrUpdateSkill(
         nextSnapshot.playerState.skills,
-        'skill.survival',
+        'skill.resource.identify.flora',
         1
       );
       addDiscoveryEntry(nextSnapshot);
@@ -1411,7 +1411,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
     });
     nextSnapshot.playerState.skills = addOrUpdateSkill(
       nextSnapshot.playerState.skills,
-      'skill.mercantile',
+      'skill.resource.identify.minerals',
       1
     );
     nextSnapshot.sessionState.operations = upsertOperation(
@@ -1491,7 +1491,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
 export function restAtCurrentSettlement(snapshot: SaveSnapshot): GameplayActionResult {
   const locationId = getCurrentLocationId(snapshot);
 
-  if (!locationId || locationId === 'location.ashen_reef') {
+  if (!locationId) {
     return {
       snapshot,
       notice: createNotice('warning', 'Rest Unavailable', 'A proper rest stop is only available inside a settlement for this first playable loop.')
@@ -1584,7 +1584,7 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
   if (questId === 'quest.ashen_reef_survey') {
     addCurrency(nextSnapshot, { gold: 5, silver: 8 });
     applyExperience(nextSnapshot, 120);
-    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.navigation', 1);
+    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.universal', 1);
     nextSnapshot.playerState.reputation = addOrUpdateReputation(
       nextSnapshot.playerState.reputation,
       'rep.harbor_office',
@@ -1626,7 +1626,7 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
     removeInventoryQuantity(nextSnapshot.playerState.inventory, RIVET_CRATE_ITEM_KEY, 6);
     addCurrency(nextSnapshot, { gold: 4, silver: 1 });
     applyExperience(nextSnapshot, 90);
-    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.mercantile', 1);
+    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.minerals', 1);
     nextSnapshot.playerState.reputation = addOrUpdateReputation(
       nextSnapshot.playerState.reputation,
       'rep.guild_consortium',

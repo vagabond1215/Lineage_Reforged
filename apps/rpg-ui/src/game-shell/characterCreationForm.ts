@@ -1,4 +1,5 @@
 import type {
+  PlayerIdentityAgeBandId,
   PlayerIdentityBuildId,
   PlayerSexId
 } from '../../../../packages/shared/types/src/index.js';
@@ -10,12 +11,14 @@ import {
 } from './characterAttributes.js';
 import {
   getBuildLabel,
+  hasValidStartingBundleChoiceSelections,
   type HeightBandId,
-  getBackstoryStartAccessProfileId,
   getLineageIdentityCatalog,
-  isCompatibleBackstorySelection,
+  isKnownBackstoryId,
   isKnownLineageId,
-  isKnownPathId
+  isKnownStartingBundleId,
+  validateStartingBundleChoiceSelections,
+  type StartingBundleChoiceSelections
 } from './characterCreationCatalog.js';
 import {
   getWorldContinentOptions,
@@ -25,6 +28,7 @@ import {
 } from './worldSelectionCatalog.js';
 
 export type CharacterCreationSexId = '' | Extract<PlayerSexId, 'male' | 'female'>;
+export type CharacterCreationAgeBandId = '' | PlayerIdentityAgeBandId;
 export type CharacterCreationHeightBandId = '' | HeightBandId;
 export type CharacterCreationBuildId = '' | PlayerIdentityBuildId;
 
@@ -35,7 +39,7 @@ export type CharacterCreationStepId =
   | 'region'
   | 'settlement'
   | 'backstory'
-  | 'path'
+  | 'starting_bundle'
   | 'attributes'
   | 'review';
 
@@ -43,13 +47,14 @@ export type CharacterCreationField =
   | 'playerName'
   | 'sexId'
   | 'lineageId'
+  | 'ageBandId'
   | 'heightBandId'
   | 'buildId'
   | 'hairColorId'
   | 'eyeColorId'
   | 'skinToneId'
-  | 'classId'
-  | 'backgroundId'
+  | 'startingBundleId'
+  | 'backstoryId'
   | 'continentId'
   | 'regionId'
   | 'startingSettlementId'
@@ -60,13 +65,15 @@ export interface CharacterCreationFormState {
   playerName: string;
   sexId: CharacterCreationSexId;
   lineageId: string;
+  ageBandId: CharacterCreationAgeBandId;
   heightBandId: CharacterCreationHeightBandId;
   buildId: CharacterCreationBuildId;
   hairColorId: string;
   eyeColorId: string;
   skinToneId: string;
-  classId: string;
-  backgroundId: string;
+  startingBundleId: string;
+  startingBundleChoiceSelections: StartingBundleChoiceSelections;
+  backstoryId: string;
   continentId: string;
   regionId: string;
   startingSettlementId: string;
@@ -88,6 +95,7 @@ export interface CharacterCreationValidationResult {
 
 export interface CompleteCharacterCreationFormState extends CharacterCreationFormState {
   sexId: Extract<PlayerSexId, 'male' | 'female'>;
+  ageBandId: PlayerIdentityAgeBandId;
   heightBandId: HeightBandId;
   buildId: PlayerIdentityBuildId;
 }
@@ -102,8 +110,8 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
   {
     id: 'identity',
     label: 'Identity',
-    description: 'Choose visible presentation only: name, sex, stature, and lineage-valid coloration.',
-    fields: ['playerName', 'sexId', 'heightBandId', 'buildId', 'hairColorId', 'eyeColorId', 'skinToneId']
+    description: 'Choose visible presentation only: name, sex, age, stature, build, and lineage-valid coloration.',
+    fields: ['playerName', 'sexId', 'ageBandId', 'heightBandId', 'buildId', 'hairColorId', 'eyeColorId', 'skinToneId']
   },
   {
     id: 'continent',
@@ -126,14 +134,14 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
   {
     id: 'backstory',
     label: 'Backstory',
-    description: 'Choose the character\'s past. Backstories seed job identity, traits, skills, and starting kit by lineage.',
-    fields: ['backgroundId']
+    description: 'Choose the character\'s past. Backstories seed narrative identity, starting skills, knowledge familiarity, and rare thematic abilities.',
+    fields: ['backstoryId']
   },
   {
-    id: 'path',
-    label: 'Path',
-    description: 'Choose the character\'s future direction and starting specialization.',
-    fields: ['classId']
+    id: 'starting_bundle',
+    label: 'Starting Bundle',
+    description: 'Choose the starter kit that determines opening gear, tools, consumables, and coin only.',
+    fields: ['startingBundleId']
   },
   {
     id: 'attributes',
@@ -150,13 +158,14 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
       'playerName',
       'sexId',
       'lineageId',
+      'ageBandId',
       'heightBandId',
       'buildId',
       'hairColorId',
       'eyeColorId',
       'skinToneId',
-      'classId',
-      'backgroundId',
+      'startingBundleId',
+      'backstoryId',
       'continentId',
       'regionId',
       'startingSettlementId',
@@ -174,13 +183,15 @@ export function createDefaultCharacterCreationFormState(
     playerName: '',
     sexId: 'male',
     lineageId: 'lineage.human',
+    ageBandId: 'prime_age',
     heightBandId: 'normal',
     buildId: 'average',
     hairColorId: '',
     eyeColorId: '',
     skinToneId: '',
-    classId: '',
-    backgroundId: '',
+    startingBundleId: '',
+    startingBundleChoiceSelections: {},
+    backstoryId: '',
     continentId: '',
     regionId: '',
     startingSettlementId: '',
@@ -195,13 +206,18 @@ export function hasCompleteCharacterCreationSelections(
   return Boolean(
     form.sexId &&
       form.lineageId.trim() &&
+      form.ageBandId &&
       form.heightBandId &&
       form.buildId &&
       form.hairColorId.trim() &&
       form.eyeColorId.trim() &&
       form.skinToneId.trim() &&
-      form.backgroundId.trim() &&
-      form.classId.trim() &&
+      form.backstoryId.trim() &&
+      form.startingBundleId.trim() &&
+      hasValidStartingBundleChoiceSelections(
+        form.startingBundleId,
+        form.startingBundleChoiceSelections
+      ) &&
       form.continentId.trim() &&
       form.regionId.trim() &&
       form.startingSettlementId.trim()
@@ -256,12 +272,17 @@ export function validateCharacterCreationForm(
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
 
   if (!identityCatalog) {
+    errors.ageBandId = 'Choose a lineage before setting identity details.';
     errors.heightBandId = 'Choose a lineage before setting identity details.';
     errors.buildId = 'Choose a lineage before setting identity details.';
     errors.hairColorId = 'Choose a lineage before setting identity details.';
     errors.eyeColorId = 'Choose a lineage before setting identity details.';
     errors.skinToneId = 'Choose a lineage before setting identity details.';
   } else {
+    if (!identityCatalog.ageBands.some((option) => option.id === form.ageBandId)) {
+      errors.ageBandId = 'Choose a valid age profile.';
+    }
+
     if (!identityCatalog.heightBands.some((option) => option.id === form.heightBandId)) {
       errors.heightBandId = 'Choose a valid height profile.';
     }
@@ -286,12 +307,21 @@ export function validateCharacterCreationForm(
     }
   }
 
-  if (!isCompatibleBackstorySelection(form.lineageId, form.backgroundId)) {
-    errors.backgroundId = 'Choose a valid backstory for the selected lineage.';
+  if (!isKnownBackstoryId(form.backstoryId)) {
+    errors.backstoryId = 'Choose a valid backstory.';
   }
 
-  if (!isKnownPathId(form.classId)) {
-    errors.classId = 'Choose a valid path.';
+  if (!isKnownStartingBundleId(form.startingBundleId)) {
+    errors.startingBundleId = 'Choose a valid starting bundle.';
+  } else {
+    const startingBundleChoiceError = validateStartingBundleChoiceSelections(
+      form.startingBundleId,
+      form.startingBundleChoiceSelections
+    );
+
+    if (startingBundleChoiceError) {
+      errors.startingBundleId = startingBundleChoiceError;
+    }
   }
 
   if (!getWorldContinentOptions().some((continent) => continent.id === form.continentId)) {
@@ -305,8 +335,7 @@ export function validateCharacterCreationForm(
   const basicSettlementOptions = getWorldSettlementOptions({
     continentId: form.continentId,
     regionId: form.regionId,
-    classId: '',
-    backgroundId: ''
+    backstoryId: ''
   });
   const hasSettlementSelection = basicSettlementOptions.some(
     (settlement) => settlement.id === form.startingSettlementId
@@ -314,13 +343,12 @@ export function validateCharacterCreationForm(
 
   if (!hasSettlementSelection) {
     errors.startingSettlementId = 'Choose a valid starting settlement.';
-  } else if (isKnownPathId(form.classId) && form.backgroundId.trim()) {
+  } else if (isKnownBackstoryId(form.backstoryId)) {
     const resolvedSelection = resolveWorldSelection({
       continentId: form.continentId,
       regionId: form.regionId,
       settlementId: form.startingSettlementId,
-      classId: form.classId,
-      backgroundId: getBackstoryStartAccessProfileId(form.backgroundId)
+      backstoryId: form.backstoryId
     });
 
     if (!resolvedSelection) {
@@ -360,8 +388,7 @@ export function validateCharacterCreationStep(
     const settlementOptions = getWorldSettlementOptions({
       continentId: form.continentId,
       regionId: form.regionId,
-      classId: '',
-      backgroundId: ''
+      backstoryId: ''
     });
 
     if (!settlementOptions.some((settlement) => settlement.id === form.startingSettlementId)) {

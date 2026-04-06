@@ -12,15 +12,31 @@ const sampleSnapshot = {
     season: "Thaw",
     year: 1
   },
+  gameState: {
+    worldVersion: "0.1.0",
+    activeScenario: "bootstrap",
+    mode: {
+      id: "normal",
+      combatPauseAllowed: true
+    },
+    party: {
+      leaderCombatantId: null,
+      members: []
+    },
+    activeEncounter: null,
+    combatHistory: []
+  },
   playerState: {
     playerId: "player-001",
-    regionId: "region-001",
+    regionId: "region.kaelvar",
     coreData: {
       playerName: "Sehir",
       lineageId: "lineage.human",
       sexId: "male",
       classId: null,
-      jobId: "job.royal_advisor"
+      jobId: null,
+      backstoryId: "backstory.local_hero",
+      startingBundleId: "starting_bundle.traveler"
     },
     attributes: {
       STR: 11,
@@ -125,7 +141,7 @@ const sampleSnapshot = {
           amount: -2,
           kind: "spell_cost",
           sourceType: "spell",
-          sourceId: "spell.arcane.mana_bolt",
+          sourceId: "spell.fire.elemental.firebolt",
           appliedTick: 24,
           before: 62,
           after: 60
@@ -139,34 +155,34 @@ const sampleSnapshot = {
       unspentSkillPoints: 1
     },
     skills: [
-      { id: "skill.innate.dodge", rank: 2, source: "innate" },
-      { id: "skill.innate.parry", rank: 1, source: "innate" }
+      { id: "skill.combat.weapon.sword", rank: 2, source: "trained" },
+      { id: "skill.combat.defense.evasion", rank: 1, source: "trained" }
     ],
     spells: [
       {
-        id: "spell.arcane.mana_bolt",
-        school: "arcane",
-        element: "arcane",
+        id: "spell.fire.elemental.firebolt",
+        school: "elemental",
+        element: "fire",
         rank: 2,
         source: "learned"
       }
     ],
     abilities: [
       {
-        id: "ability.combat.shield_bash",
-        category: "weapon",
+        id: "ability.melee.guard_break",
+        category: "melee",
         rank: 1,
         source: "learned"
       }
     ],
     traits: [
-      { id: "trait.hardy", source: "innate" }
+      { id: "trait.lineage.human.adaptable", source: "lineage" }
     ],
     equipment: {
       "slot.weapon.left": null,
       "slot.weapon.right": {
-        itemId: "item.shortsword",
-        itemKey: "shortsword",
+        itemId: "item.arming_sword",
+        itemKey: "arming_sword",
         quantity: 1,
         durability: 0.92
       },
@@ -193,7 +209,7 @@ const sampleSnapshot = {
           label: "Starter Satchel",
           slotCapacity: 16,
           stacks: [
-            { itemId: "item.bandage", itemKey: "bandage", quantity: 3 }
+            { itemId: "item.field_bandage", itemKey: "field_bandage", quantity: 3 }
           ]
         }
       ],
@@ -201,10 +217,10 @@ const sampleSnapshot = {
     },
     activeEffects: [],
     location: {
-      settlementId: "settlement-001",
-      siteLabel: "Gate District",
+      settlementId: "settlement.aurelis",
+      siteLabel: "Harbor Quarter",
       worldMapId: "world_map.first_world",
-      knownSettlementIds: ["settlement-001"]
+      knownSettlementIds: ["settlement.aurelis"]
     },
     currency: {
       gold: 12,
@@ -258,21 +274,35 @@ const sampleSnapshot = {
     ],
     titles: [
       {
-        id: "title.intro_survivor",
-        label: "Intro Survivor",
-        source: "story",
+        id: "title.combat.sword.novice",
+        name: "Novice",
+        family: "combat",
+        trackId: "title_track.combat.sword",
+        sourceSkillId: "skill.combat.weapon.sword",
+        milestone: {
+          threshold: 50,
+          requiresMasteryTrial: false,
+          trialId: null
+        },
         equipped: true,
-        effects: ["camp_access"]
+        effects: ["combat.sword.accuracy"]
       }
+    ],
+    knowledgeFamiliarity: [
+      { trackId: "knowledge_track.resources_universal", level: 25 }
     ],
     discoveryChronicle: {
       entries: [],
       lastUpdatedTick: null
     },
-    discoveredRegions: ["region-001", "region-002"],
+    discoveredRegions: ["region.kaelvar", "region.valtherion"],
     activeQuestIds: ["quest.arrive_westfall"],
     completedQuestIds: ["quest.intro"],
     flags: ["tutorial.complete"],
+    combatProfile: {
+      preferredMode: "normal",
+      memberPreferences: []
+    },
     saveMeta: {
       totalPlayTicks: 240,
       lastRestAtTick: 18,
@@ -280,12 +310,12 @@ const sampleSnapshot = {
     }
   },
   worldState: {
-    activeRegions: ["region-001"],
+    activeRegions: ["region.kaelvar"],
     weatherState: { climateProfileId: "climate.standard" }
   },
   civilizationState: {
-    settlements: ["settlement-001"],
-    markets: ["market-001"],
+    settlements: ["settlement.aurelis"],
+    markets: ["market.aurelis"],
     economy: {
       nodes: [],
       lastSnapshots: [],
@@ -324,7 +354,13 @@ const sampleSnapshot = {
     operations: [],
     codexEntries: [],
     questJournal: [],
-    chronicle: []
+    chronicle: [],
+    combatUi: {
+      selectedPartyMemberId: null,
+      selectedEnemyTargetId: null,
+      stagedCommand: null,
+      lastIssuedCommand: null
+    }
   }
 };
 

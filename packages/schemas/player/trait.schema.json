@@ -2,52 +2,57 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerTraitRecord",
   "type": "object",
-  "required": ["id", "name", "family", "sourceType", "tier", "description", "stackingRule", "effects"],
+  "additionalProperties": false,
+  "required": ["id", "name", "family", "sourceType", "tier", "description", "stackingRule", "unlockRules", "modifiers"],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
     "family": { "type": "string" },
-    "sourceType": { "type": "string" },
+    "sourceType": {
+      "type": "string",
+      "enum": ["lineage", "innate", "supernatural"]
+    },
     "tier": { "type": "integer", "minimum": 1 },
     "description": { "type": "string" },
     "stackingRule": { "type": "string" },
     "unlockRules": {
       "type": "array",
-      "items": { "$ref": "#/$defs/unlockRule" }
+      "items": { "$ref": "#/$defs/unlockRule" },
+      "minItems": 1
     },
-    "effects": {
+    "modifiers": {
       "type": "array",
-      "items": { "$ref": "#/$defs/effectRule" },
+      "items": { "$ref": "#/$defs/modifier" },
       "minItems": 1
     },
     "tags": {
       "type": "array",
-      "items": { "type": "string" }
-    },
-    "placeholderSourceId": { "type": "string" }
+      "items": { "type": "string" },
+      "uniqueItems": true
+    }
   },
   "$defs": {
     "unlockRule": {
       "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
       "properties": {
         "type": { "type": "string" },
         "id": { "type": "string" },
-        "level": { "type": "integer" }
-      },
-      "required": ["type", "id"],
-      "additionalProperties": true
+        "level": { "type": "integer", "minimum": 0 }
+      }
     },
-    "effectRule": {
+    "modifier": {
       "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "mode", "value", "scope"],
       "properties": {
-        "kind": { "type": "string" },
-        "stat": { "type": "string" },
+        "channel": { "type": "string" },
         "mode": { "type": "string" },
-        "value": { "type": "number" }
-      },
-      "required": ["kind", "stat", "mode", "value"],
-      "additionalProperties": true
+        "value": { "type": "number" },
+        "scope": { "type": "string" },
+        "skillId": { "type": "string" }
+      }
     }
-  },
-  "additionalProperties": true
+  }
 }

@@ -1,12 +1,3 @@
-CREATE TABLE IF NOT EXISTS player_progression_models (
-  id TEXT PRIMARY KEY,
-  entity_kind TEXT NOT NULL,
-  name TEXT NOT NULL,
-  description TEXT,
-  config_json TEXT NOT NULL,
-  source_reference TEXT
-);
-
 CREATE TABLE IF NOT EXISTS player_attributes (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
@@ -33,58 +24,89 @@ CREATE TABLE IF NOT EXISTS player_equipment_slots (
   max_items INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS player_progression_tracks (
+  id TEXT PRIMARY KEY,
+  track_type TEXT NOT NULL,
+  rank_min INTEGER NOT NULL,
+  rank_max INTEGER NOT NULL,
+  bands_json TEXT NOT NULL,
+  breakthrough_gate_ranks_json TEXT NOT NULL,
+  gain_model_json TEXT NOT NULL,
+  breakthrough_sources_json TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS player_knowledge_tracks (
+  id TEXT PRIMARY KEY,
+  knowledge_skill_id TEXT NOT NULL,
+  spotting_skill_id TEXT NOT NULL,
+  identify_skill_id TEXT NOT NULL,
+  universal_support_skill_id TEXT NOT NULL,
+  support_weights_json TEXT NOT NULL,
+  identify_difficulty_json TEXT NOT NULL,
+  auto_identify_thresholds_json TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS player_skill_effects (
+  id TEXT PRIMARY KEY,
+  skill_id TEXT NOT NULL,
+  name TEXT NOT NULL,
+  channels_json TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS player_trials (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  associated_skill_id TEXT NOT NULL,
+  threshold_to_pass REAL NOT NULL,
+  progress REAL NOT NULL,
+  max_potential REAL NOT NULL,
+  checkpoints_json TEXT NOT NULL,
+  rewards_json TEXT NOT NULL,
+  penalties_json TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS player_skills (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
-  kind TEXT NOT NULL,
-  family TEXT NOT NULL,
+  layer TEXT NOT NULL,
+  category TEXT NOT NULL,
+  group_id TEXT NOT NULL,
   default_rank INTEGER NOT NULL,
-  default_cap INTEGER NOT NULL,
+  maximum_rank INTEGER NOT NULL,
   governing_attributes_json TEXT NOT NULL,
-  progression_model_id TEXT NOT NULL,
+  progression_track_id TEXT NOT NULL,
+  knowledge_track_id TEXT,
+  effect_profile_id TEXT,
   description TEXT NOT NULL,
-  gain_sources_json TEXT NOT NULL DEFAULT '[]',
-  tags_json TEXT NOT NULL DEFAULT '[]',
-  source_reference TEXT
+  tags_json TEXT NOT NULL DEFAULT '[]'
 );
 
 CREATE TABLE IF NOT EXISTS player_abilities (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
-  ability_type TEXT NOT NULL,
-  family TEXT NOT NULL,
-  resource_model_id TEXT NOT NULL,
-  scaling_attribute TEXT NOT NULL,
-  scaling_skill_id TEXT,
-  required_weapon_skill_id TEXT,
-  required_skill_rank INTEGER,
-  cooldown_ticks INTEGER NOT NULL,
-  stamina_cost INTEGER NOT NULL,
+  category TEXT NOT NULL,
   description TEXT NOT NULL,
-  unlock_rules_json TEXT NOT NULL DEFAULT '[]',
-  effect_profile_json TEXT NOT NULL DEFAULT '[]',
-  tags_json TEXT NOT NULL DEFAULT '[]',
-  source_reference TEXT
+  activation_json TEXT NOT NULL,
+  requirements_json TEXT NOT NULL,
+  links_json TEXT NOT NULL,
+  effects_json TEXT NOT NULL,
+  effect_tags_json TEXT NOT NULL DEFAULT '[]'
 );
 
 CREATE TABLE IF NOT EXISTS player_spells (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   school TEXT NOT NULL,
-  discipline TEXT NOT NULL,
   element TEXT,
   mana_cost INTEGER NOT NULL,
-  scaling_attribute TEXT NOT NULL,
+  cast_time_ticks INTEGER NOT NULL,
   governing_skill_id TEXT NOT NULL,
-  progression_model_id TEXT NOT NULL,
-  tier INTEGER NOT NULL DEFAULT 1,
-  power_rating REAL NOT NULL DEFAULT 0,
-  effect_complexity REAL NOT NULL DEFAULT 0,
-  required_level INTEGER NOT NULL DEFAULT 0,
-  description TEXT NOT NULL,
+  scaling_attribute TEXT NOT NULL,
   effect_tags_json TEXT NOT NULL DEFAULT '[]',
-  target_profile TEXT,
-  source_reference TEXT
+  scaling_channels_json TEXT NOT NULL DEFAULT '[]',
+  target_profile_json TEXT NOT NULL,
+  effects_json TEXT NOT NULL,
+  description TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS player_traits (
@@ -96,9 +118,8 @@ CREATE TABLE IF NOT EXISTS player_traits (
   description TEXT NOT NULL,
   stacking_rule TEXT NOT NULL,
   unlock_rules_json TEXT NOT NULL DEFAULT '[]',
-  effects_json TEXT NOT NULL,
-  tags_json TEXT NOT NULL DEFAULT '[]',
-  source_reference TEXT
+  modifiers_json TEXT NOT NULL,
+  tags_json TEXT NOT NULL DEFAULT '[]'
 );
 
 CREATE TABLE IF NOT EXISTS player_resources (

@@ -56,10 +56,16 @@ export interface SaveSlotMetadata {
   characterName: string;
   level: number;
   lineageLabel: string | null;
+  sexLabel: string | null;
   classLabel: string | null;
+  backstoryLabel: string | null;
+  startingBundleLabel: string | null;
   regionLabel: string;
   settlementLabel: string | null;
+  startingSettlementLabel: string | null;
+  currentLocationLabel: string | null;
   gold: number;
+  fundsLabel: string;
   inGameDate: string;
   totalPlayTicks: number;
   capturedAtTick: number;
@@ -76,11 +82,17 @@ export interface SaveSlotSummary {
   metadata: SaveSlotMetadata | null;
   playerName: string | null;
   lineageLabel: string | null;
+  sexLabel: string | null;
   classLabel: string | null;
+  backstoryLabel: string | null;
+  startingBundleLabel: string | null;
   level: number | null;
   regionLabel: string | null;
   settlementLabel: string | null;
+  startingSettlementLabel: string | null;
+  currentLocationLabel: string | null;
   gold: number | null;
+  fundsLabel: string | null;
   inGameDate: string | null;
   lastSavedAt: string | null;
   lastSavedLabel: string | null;
@@ -93,6 +105,9 @@ export interface GameShellNotice {
   tone: TagTone;
   title: string;
   detail: string;
+  message?: string;
+  compact?: boolean;
+  autoDismissMs?: number | null;
 }
 
 type GameShellBaseState = {
@@ -196,28 +211,6 @@ export const MANUAL_SAVE_SLOTS_PER_PAGE = 8;
 export const MANUAL_SAVE_PAGE_COUNT =
   MANUAL_SAVE_SLOT_COUNT / MANUAL_SAVE_SLOTS_PER_PAGE;
 
-function toRomanNumeral(value: number): string {
-  const parts: Array<[number, string]> = [
-    [40, 'XL'],
-    [10, 'X'],
-    [9, 'IX'],
-    [5, 'V'],
-    [4, 'IV'],
-    [1, 'I']
-  ];
-  let remaining = value;
-  let result = '';
-
-  for (const [amount, numeral] of parts) {
-    while (remaining >= amount) {
-      result += numeral;
-      remaining -= amount;
-    }
-  }
-
-  return result;
-}
-
 export const MANUAL_SAVE_SLOT_ORDER: ReadonlyArray<{
   id: ManualSaveSlotId;
   label: string;
@@ -227,7 +220,7 @@ export const MANUAL_SAVE_SLOT_ORDER: ReadonlyArray<{
 
   return {
     id: `slot-${slotNumber}` as ManualSaveSlotId,
-    label: `Slot ${toRomanNumeral(slotNumber)}`,
+    label: `Slot ${slotNumber}`,
     kind: 'manual' as const
   };
 });
@@ -262,11 +255,17 @@ function createEmptySaveSlotSummary(slot: {
     metadata: null,
     playerName: null,
     lineageLabel: null,
+    sexLabel: null,
     classLabel: null,
+    backstoryLabel: null,
+    startingBundleLabel: null,
     level: null,
     regionLabel: null,
     settlementLabel: null,
+    startingSettlementLabel: null,
+    currentLocationLabel: null,
     gold: null,
+    fundsLabel: null,
     inGameDate: null,
     lastSavedAt: null,
     lastSavedLabel: null,

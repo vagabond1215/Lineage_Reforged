@@ -23,6 +23,7 @@ import {
   type MaterialDifficultyProfileRecord,
   type ProductionChainRecord,
   type RecipeProcessingStepRecord,
+  type RecipeSkillDimension,
   type RecipeSkillCheckRecord,
   type SettlementContentRecord,
   type WorkplaceContentRecord,
@@ -143,6 +144,9 @@ interface SkillEffectResult {
   timeFactor: number;
   wasteMultiplier: number;
   laborRateFactor: number;
+  qualityFactor: number;
+  quantityFactor: number;
+  appliedDimensions: RecipeSkillDimension[];
   notes: string[];
 }
 
@@ -620,14 +624,21 @@ function createSkillEffect(
       timeFactor: 1,
       wasteMultiplier: 1,
       laborRateFactor: laborPressure,
+      qualityFactor: 1,
+      quantityFactor: 1,
+      appliedDimensions: ["timeEfficiency", "waste", "quality"],
       notes: explicitRank === undefined ? ["no explicit skill gate on step"] : []
     };
   }
 
+  const appliedDimensions = skillCheck.allowedDimensions ?? ["timeEfficiency", "waste", "quality"];
+  const dimensionSet = new Set(appliedDimensions);
   const inferredRank = explicitRank ?? Math.max(skillCheck.minimumRank * 0.85, skillCheck.efficiencyRank / laborPressure);
   let timeFactor = 1;
   let wasteMultiplier = 1;
   let laborRateFactor = laborPressure;
+  let qualityFactor = 1;
+  let quantityFactor = 1;
   const notes: string[] = [];
 
   if (inferredRank >= skillCheck.efficiencyRank) {
@@ -636,9 +647,10 @@ function createSkillEffect(
       0,
       1
     );
-    timeFactor = roundNumber(0.88 - overageRatio * 0.11);
-    wasteMultiplier = 1;
-    laborRateFactor = roundNumber(laborPressure * (0.95 - overageRatio * 0.08));
+    timeFactor = dimensionSet.has("timeEfficiency") ? roundNumber(0.88 - overageRatio * 0.11) : 1;
+    wasteMultiplier = dimensionSet.has("waste") ? 1 : 1;
+    laborRateFactor = dimensionSet.has("timeEfficiency") ? roundNumber(laborPressure * (0.95 - overageRatio * 0.08)) : laborPressure;
+    qualityFactor = dimensionSet.has("quality") ? roundNumber(1.04 + overageRatio * 0.12) : 1;
     notes.push("worker exceeds efficiency threshold");
   } else if (inferredRank >= skillCheck.minimumRank) {
     const progressRatio = clamp(
@@ -646,16 +658,32 @@ function createSkillEffect(
       0,
       1
     );
-    timeFactor = roundNumber(1.14 - progressRatio * 0.26);
-    wasteMultiplier = roundNumber(1.08 - progressRatio * 0.08);
-    laborRateFactor = roundNumber(laborPressure * (1.04 - progressRatio * 0.09));
+    timeFactor = dimensionSet.has("timeEfficiency") ? roundNumber(1.14 - progressRatio * 0.26) : 1;
+    wasteMultiplier = dimensionSet.has("waste") ? roundNumber(1.08 - progressRatio * 0.08) : 1;
+    laborRateFactor = dimensionSet.has("timeEfficiency") ? roundNumber(laborPressure * (1.04 - progressRatio * 0.09)) : laborPressure;
+    qualityFactor = dimensionSet.has("quality") ? roundNumber(0.92 + progressRatio * 0.12) : 1;
     notes.push("worker clears minimum threshold but has remaining inefficiency");
   } else {
     const shortfallRatio = clamp((skillCheck.minimumRank - inferredRank) / Math.max(skillCheck.minimumRank, 1), 0, 1.5);
-    timeFactor = roundNumber(1.22 + shortfallRatio * 0.75);
-    wasteMultiplier = roundNumber(1.14 + shortfallRatio * 0.36);
-    laborRateFactor = roundNumber(laborPressure * (1.08 + shortfallRatio * 0.24));
+    timeFactor = dimensionSet.has("timeEfficiency") ? roundNumber(1.22 + shortfallRatio * 0.75) : 1;
+    wasteMultiplier = dimensionSet.has("waste") ? roundNumber(1.14 + shortfallRatio * 0.36) : 1;
+    laborRateFactor = dimensionSet.has("timeEfficiency") ? roundNumber(laborPressure * (1.08 + shortfallRatio * 0.24)) : laborPressure;
+    qualityFactor = dimensionSet.has("quality") ? roundNumber(Math.max(0.72, 0.9 - shortfallRatio * 0.12)) : 1;
     notes.push("worker is below minimum threshold");
+  }
+
+  if (dimensionSet.has("quantity")) {
+    const quantityRank = skillCheck.quantityRank ?? skillCheck.qualityRank;
+    if (inferredRank >= quantityRank) {
+      const ratio = clamp((inferredRank - quantityRank) / Math.max(125 - quantityRank, 1), 0, 1);
+      quantityFactor = roundNumber(1.02 + ratio * 0.1);
+    } else if (inferredRank >= skillCheck.minimumRank) {
+      const ratio = clamp((inferredRank - skillCheck.minimumRank) / Math.max(quantityRank - skillCheck.minimumRank, 1), 0, 1);
+      quantityFactor = roundNumber(0.92 + ratio * 0.1);
+    } else {
+      const ratio = clamp((skillCheck.minimumRank - inferredRank) / Math.max(skillCheck.minimumRank, 1), 0, 1);
+      quantityFactor = roundNumber(Math.max(0.72, 0.9 - ratio * 0.18));
+    }
   }
 
   return {
@@ -666,6 +694,9 @@ function createSkillEffect(
     timeFactor,
     wasteMultiplier,
     laborRateFactor,
+    qualityFactor,
+    quantityFactor,
+    appliedDimensions,
     notes
   };
 }
@@ -910,6 +941,8 @@ function estimateCraftResolution(
   const inputConsumption = new Map<string, CraftResolutionInputState>();
   const outputs = new Map<string, { itemKey: string; quantity: number; role: "primary" | "byproduct" | "waste"; unitValueBasis: number; totalValueBasis: number }>();
   const stepBreakdown = [] as CraftResolutionExplanationState["stepBreakdown"];
+  const qualityFactors: number[] = [];
+  const quantityFactors: number[] = [];
 
   let totalTime = 0;
   let totalMaterialCost = 0;
@@ -973,7 +1006,8 @@ function estimateCraftResolution(
     const stepNotes = [
       ...skillEffect.notes,
       materialDifficulty.note,
-      ...toolPenalty.notes
+      ...toolPenalty.notes,
+      `applied dimensions: ${skillEffect.appliedDimensions.join(", ")}`
     ];
     if (request.fuelAvailable === false && step.processingIntensity === "fuel_heavy") {
       stepNotes.push("fuel shortfall increased time and processing overhead");
@@ -996,12 +1030,30 @@ function estimateCraftResolution(
       processingTimeHours,
       materialDifficultyFactor: materialDifficulty.factor,
       skillTimeFactor: skillEffect.timeFactor,
+      skillQualityFactor: skillEffect.qualityFactor,
+      quantityFactor: skillEffect.quantityFactor,
+      appliedDimensions: skillEffect.appliedDimensions,
       laborRate,
       notes: stepNotes
     });
+
+    if (skillEffect.appliedDimensions.includes("quality")) {
+      qualityFactors.push(skillEffect.qualityFactor);
+    }
+    if (skillEffect.appliedDimensions.includes("quantity")) {
+      quantityFactors.push(skillEffect.quantityFactor);
+    }
   }
 
   const totalCost = roundNumber(totalMaterialCost + totalLaborCost + totalProcessingCost + totalWasteCost);
+  const finalQualityFactor =
+    qualityFactors.length > 0
+      ? roundNumber(qualityFactors.reduce((sum, value) => sum + value, 0) / qualityFactors.length)
+      : 1;
+  const finalQuantityFactor =
+    quantityFactors.length > 0
+      ? roundNumber(quantityFactors.reduce((sum, value) => sum + value, 0) / quantityFactors.length)
+      : 1;
   const lastStep = chain.recipeProfile.processingSteps.at(-1);
   const lastWorkplace = lastStep?.stageRef.startsWith("workplace.") ? indexes.workplaceById.get(lastStep.stageRef) : undefined;
   const finalOutputs = lastStep
@@ -1009,22 +1061,25 @@ function estimateCraftResolution(
     : { primaryOutputs: [request.targetOutputItemKey], byproducts: [] };
 
   for (const itemKey of finalOutputs.primaryOutputs) {
+    const unitValueBasis = roundNumber((totalCost / Math.max(finalOutputs.primaryOutputs.length, 1)) * finalQualityFactor);
+    const quantity = roundNumber(finalQuantityFactor);
     outputs.set(itemKey, {
       itemKey,
-      quantity: 1,
+      quantity,
       role: "primary",
-      unitValueBasis: roundNumber(totalCost / Math.max(finalOutputs.primaryOutputs.length, 1)),
-      totalValueBasis: roundNumber(totalCost / Math.max(finalOutputs.primaryOutputs.length, 1))
+      unitValueBasis,
+      totalValueBasis: roundNumber(unitValueBasis * quantity)
     });
   }
 
   for (const itemKey of finalOutputs.byproducts) {
+    const quantity = roundNumber(finalQuantityFactor);
     outputs.set(itemKey, {
       itemKey,
-      quantity: 1,
+      quantity,
       role: "byproduct",
-      unitValueBasis: roundNumber(totalCost * 0.12),
-      totalValueBasis: roundNumber(totalCost * 0.12)
+      unitValueBasis: roundNumber(totalCost * 0.12 * finalQualityFactor),
+      totalValueBasis: roundNumber(totalCost * 0.12 * finalQualityFactor * quantity)
     });
   }
 
@@ -1033,7 +1088,7 @@ function estimateCraftResolution(
     settlementId: context.settlementId,
     primarySkillId: chain.recipeProfile.primarySkillId,
     targetOutputItemKey: request.targetOutputItemKey,
-    outputQuantity: finalOutputs.primaryOutputs.length,
+    outputQuantity: roundNumber(finalOutputs.primaryOutputs.length * finalQuantityFactor),
     processingTimeHours: roundNumber(totalTime),
     laborCost: roundNumber(totalLaborCost),
     materialCost: roundNumber(totalMaterialCost),
@@ -1055,6 +1110,8 @@ function estimateCraftResolution(
       stepBreakdown,
       notes: [
         `production capacity modifier ${productionCapacityModifier}`,
+        `final quality factor ${finalQualityFactor}`,
+        `final quantity factor ${finalQuantityFactor}`,
         request.fuelAvailable === false ? "fuel penalties applied where relevant" : "fuel assumptions satisfied",
         request.availableToolTags ? "tool availability evaluated against workplace requirements" : "tool availability assumed sufficient"
       ]

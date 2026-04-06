@@ -1,0 +1,178 @@
+{
+  "records": [
+    {
+      "id": "spawn.kaelvar.frontier_tracks",
+      "name": "Kaelvar Frontier Tracks",
+      "regionIds": [
+        "region.kaelvar"
+      ],
+      "worldHexIds": [],
+      "settlementIds": [],
+      "siteIds": [],
+      "habitatTags": [
+        "roadside_ditch",
+        "frontier_track",
+        "quarry_edge"
+      ],
+      "minHazardPressure": 20,
+      "maxHazardPressure": 55,
+      "spawnRatePerDay": 35,
+      "densityBand": "sporadic",
+      "hostilityWeights": {
+        "hostile": 90,
+        "friendly": 5,
+        "neutral": 5
+      },
+      "allowedMovementModes": [
+        "roaming",
+        "fixed"
+      ],
+      "encounterWeights": [
+        {
+          "encounterTemplateId": "encounter.kaelvar.roadside_kobold_patrol",
+          "weight": 7
+        },
+        {
+          "encounterTemplateId": "encounter.kaelvar.auric_sapper_cell",
+          "weight": 4,
+          "minHazardPressure": 35,
+          "maxHazardPressure": 60
+        }
+      ]
+    },
+    {
+      "id": "spawn.kaelvar.brushland",
+      "name": "Kaelvar Brushland",
+      "regionIds": [
+        "region.kaelvar"
+      ],
+      "worldHexIds": [],
+      "settlementIds": [],
+      "siteIds": [],
+      "habitatTags": [
+        "forest_edge",
+        "farm_border",
+        "oak_scrub"
+      ],
+      "minHazardPressure": 15,
+      "maxHazardPressure": 50,
+      "spawnRatePerDay": 28,
+      "densityBand": "steady",
+      "hostilityWeights": {
+        "hostile": 85,
+        "friendly": 10,
+        "neutral": 5
+      },
+      "allowedMovementModes": [
+        "roaming"
+      ],
+      "encounterWeights": [
+        {
+          "encounterTemplateId": "encounter.kaelvar.brushland_boars",
+          "weight": 8
+        }
+      ]
+    },
+    {
+      "id": "spawn.valtherion.damp_lowlands",
+      "name": "Valtherion Damp Lowlands",
+      "regionIds": [
+        "region.valtherion"
+      ],
+      "worldHexIds": [],
+      "settlementIds": [],
+      "siteIds": [],
+      "habitatTags": [
+        "ditch",
+        "cellar",
+        "sewer_edge",
+        "reed_marsh"
+      ],
+      "minHazardPressure": 18,
+      "maxHazardPressure": 52,
+      "spawnRatePerDay": 32,
+      "densityBand": "steady",
+      "hostilityWeights": {
+        "hostile": 88,
+        "friendly": 6,
+        "neutral": 6
+      },
+      "allowedMovementModes": [
+        "roaming"
+      ],
+      "encounterWeights": [
+        {
+          "encounterTemplateId": "encounter.valtherion.lowland_slime_bloom",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "id": "spawn.talmyra.stormscar",
+      "name": "Talmyra Stormscar",
+      "regionIds": [
+        "region.talmyra"
+      ],
+      "worldHexIds": [],
+      "settlementIds": [],
+      "siteIds": [],
+      "habitatTags": [
+        "river_ford",
+        "ash_field",
+        "charred_hills"
+      ],
+      "minHazardPressure": 45,
+      "maxHazardPressure": 80,
+      "spawnRatePerDay": 20,
+      "densityBand": "rare",
+      "hostilityWeights": {
+        "hostile": 95,
+        "friendly": 0,
+        "neutral": 5
+      },
+      "allowedMovementModes": [
+        "roaming"
+      ],
+      "encounterWeights": [
+        {
+          "encounterTemplateId": "encounter.talmyra.stormscar_manifestation",
+          "weight": 8
+        }
+      ]
+    },
+    {
+      "id": "spawn.serathyl.barrowgrounds",
+      "name": "Serathyl Barrowgrounds",
+      "regionIds": [
+        "region.serathyl"
+      ],
+      "worldHexIds": [],
+      "settlementIds": [],
+      "siteIds": [],
+      "habitatTags": [
+        "ruins",
+        "crypt",
+        "graveyard"
+      ],
+      "minHazardPressure": 40,
+      "maxHazardPressure": 78,
+      "spawnRatePerDay": 18,
+      "densityBand": "sporadic",
+      "hostilityWeights": {
+        "hostile": 96,
+        "friendly": 0,
+        "neutral": 4
+      },
+      "allowedMovementModes": [
+        "fixed",
+        "roaming"
+      ],
+      "encounterWeights": [
+        {
+          "encounterTemplateId": "encounter.serathyl.barrow_watch",
+          "weight": 9
+        }
+      ]
+    }
+  ]
+}

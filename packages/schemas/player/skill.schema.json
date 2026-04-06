@@ -2,40 +2,91 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerSkillRecord",
   "type": "object",
+  "additionalProperties": false,
   "required": [
     "id",
     "name",
-    "kind",
-    "family",
-    "defaultRank",
-    "defaultCap",
+    "category",
+    "domain",
+    "parentSkillId",
+    "description",
+    "leveling",
+    "progressionTrackId",
     "governingAttributes",
-    "progressionModelId",
-    "description"
+    "combatHooks",
+    "itemHookTags"
   ],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
-    "kind": { "type": "string" },
-    "family": { "type": "string" },
-    "defaultRank": { "type": "integer", "minimum": 0 },
-    "defaultCap": { "type": "integer", "minimum": 1 },
+    "category": {
+      "type": "string",
+      "enum": ["resource", "survival", "combat", "magic", "crafting", "knowledge", "settlement", "leadership"]
+    },
+    "domain": { "type": "string" },
+    "parentSkillId": {
+      "type": ["string", "null"]
+    },
+    "description": { "type": "string" },
+    "leveling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["defaultRank", "maximumRank"],
+      "properties": {
+        "defaultRank": { "type": "integer", "minimum": 1, "maximum": 125 },
+        "maximumRank": { "type": "integer", "minimum": 1, "maximum": 125 }
+      }
+    },
+    "progressionTrackId": { "type": "string" },
     "governingAttributes": {
       "type": "array",
       "items": { "type": "string" },
-      "minItems": 1
+      "minItems": 1,
+      "uniqueItems": true
     },
-    "progressionModelId": { "type": "string" },
-    "description": { "type": "string" },
-    "gainSources": {
+    "combatHooks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillEffectIds", "actionGrantTags", "tacticalTags", "titleModifierTags", "spellTags", "resolutionHooks"],
+      "properties": {
+        "skillEffectIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "actionGrantTags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "tacticalTags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "titleModifierTags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "spellTags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "resolutionHooks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "itemHookTags": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string" },
+      "uniqueItems": true
     },
-    "tags": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "placeholderSourceId": { "type": "string" }
-  },
-  "additionalProperties": true
+    "knowledgeTrackId": { "type": "string" },
+    "milestoneTitleTrackId": { "type": "string" }
+  }
 }

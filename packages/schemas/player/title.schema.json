@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerTitleRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "family", "trackId", "milestone", "description", "effects", "tags"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "family": {
+      "type": "string",
+      "enum": ["combat", "crafting", "magic", "knowledge", "faith"]
+    },
+    "trackId": { "type": "string" },
+    "sourceSkillId": {
+      "type": ["string", "null"]
+    },
+    "milestone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["threshold", "requiresMasteryTrial"],
+      "properties": {
+        "threshold": { "type": "integer", "enum": [50, 100, 125] },
+        "requiresMasteryTrial": { "type": "boolean" },
+        "trialId": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "description": { "type": "string" },
+    "effects": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "reserved": { "type": "boolean" }
+  }
+}

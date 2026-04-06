@@ -1,0 +1,315 @@
+{
+  "records": [
+    {
+      "id": "title.combat.sword.novice",
+      "name": "Novice",
+      "family": "combat",
+      "trackId": "title_track.combat.sword",
+      "sourceSkillId": "skill.combat.weapon.sword",
+      "milestone": {
+        "threshold": 50,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Marks dependable sword discipline.",
+      "effects": [
+        "combat.sword.accuracy"
+      ],
+      "tags": [
+        "combat",
+        "sword"
+      ]
+    },
+    {
+      "id": "title.combat.sword.veteran",
+      "name": "Veteran",
+      "family": "combat",
+      "trackId": "title_track.combat.sword",
+      "sourceSkillId": "skill.combat.weapon.sword",
+      "milestone": {
+        "threshold": 100,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Granted to a seasoned sword-user.",
+      "effects": [
+        "combat.sword.damage",
+        "combat.sword.parry"
+      ],
+      "tags": [
+        "combat",
+        "sword"
+      ]
+    },
+    {
+      "id": "title.combat.sword.master",
+      "name": "Master",
+      "family": "combat",
+      "trackId": "title_track.combat.sword",
+      "sourceSkillId": "skill.combat.weapon.sword",
+      "milestone": {
+        "threshold": 125,
+        "requiresMasteryTrial": true,
+        "trialId": "trial.combat.sword.mastery"
+      },
+      "description": "Reserved for sword mastery proven through trial.",
+      "effects": [
+        "combat.sword.mastery",
+        "command.respect"
+      ],
+      "tags": [
+        "combat",
+        "sword"
+      ]
+    },
+    {
+      "id": "title.crafting.blacksmithing.apprentice",
+      "name": "Apprentice",
+      "family": "crafting",
+      "trackId": "title_track.crafting.blacksmithing",
+      "sourceSkillId": "skill.crafting.blacksmithing",
+      "milestone": {
+        "threshold": 50,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Recognizes reliable forge work.",
+      "effects": [
+        "craft.blacksmithing.quality"
+      ],
+      "tags": [
+        "crafting",
+        "blacksmithing"
+      ]
+    },
+    {
+      "id": "title.crafting.blacksmithing.journeyman",
+      "name": "Journeyman",
+      "family": "crafting",
+      "trackId": "title_track.crafting.blacksmithing",
+      "sourceSkillId": "skill.crafting.blacksmithing",
+      "milestone": {
+        "threshold": 100,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Marks a smith trusted without close oversight.",
+      "effects": [
+        "craft.blacksmithing.efficiency",
+        "craft.blacksmithing.consistency"
+      ],
+      "tags": [
+        "crafting",
+        "blacksmithing"
+      ]
+    },
+    {
+      "id": "title.crafting.blacksmithing.master",
+      "name": "Master",
+      "family": "crafting",
+      "trackId": "title_track.crafting.blacksmithing",
+      "sourceSkillId": "skill.crafting.blacksmithing",
+      "milestone": {
+        "threshold": 125,
+        "requiresMasteryTrial": true,
+        "trialId": "trial.crafting.blacksmithing.mastery"
+      },
+      "description": "Reserved for blacksmithing mastery proven through trial.",
+      "effects": [
+        "craft.blacksmithing.mastery",
+        "settlement.forge_access"
+      ],
+      "tags": [
+        "crafting",
+        "blacksmithing"
+      ]
+    },
+    {
+      "id": "title.magic.elemental.initiate",
+      "name": "Initiate",
+      "family": "magic",
+      "trackId": "title_track.magic.elemental",
+      "sourceSkillId": "skill.magic.school.elemental",
+      "milestone": {
+        "threshold": 50,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Marks dependable elemental casting.",
+      "effects": [
+        "magic.elemental.power"
+      ],
+      "tags": [
+        "magic",
+        "elemental"
+      ]
+    },
+    {
+      "id": "title.magic.elemental.adept",
+      "name": "Adept",
+      "family": "magic",
+      "trackId": "title_track.magic.elemental",
+      "sourceSkillId": "skill.magic.school.elemental",
+      "milestone": {
+        "threshold": 100,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Recognizes high control over offensive elemental shaping.",
+      "effects": [
+        "magic.elemental.accuracy",
+        "magic.elemental.efficiency"
+      ],
+      "tags": [
+        "magic",
+        "elemental"
+      ]
+    },
+    {
+      "id": "title.magic.elemental.master",
+      "name": "Master",
+      "family": "magic",
+      "trackId": "title_track.magic.elemental",
+      "sourceSkillId": "skill.magic.school.elemental",
+      "milestone": {
+        "threshold": 125,
+        "requiresMasteryTrial": true,
+        "trialId": "trial.magic.elemental.mastery"
+      },
+      "description": "Reserved for elemental mastery proven through catalytic trial.",
+      "effects": [
+        "magic.elemental.mastery",
+        "magic.channel_control"
+      ],
+      "tags": [
+        "magic",
+        "elemental"
+      ]
+    },
+    {
+      "id": "title.knowledge.flora.student",
+      "name": "Student",
+      "family": "knowledge",
+      "trackId": "title_track.knowledge.flora",
+      "sourceSkillId": "skill.knowledge.flora",
+      "milestone": {
+        "threshold": 50,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Marks reliable classification of common plant life.",
+      "effects": [
+        "knowledge.flora.identify"
+      ],
+      "tags": [
+        "knowledge",
+        "flora"
+      ]
+    },
+    {
+      "id": "title.knowledge.flora.scholar",
+      "name": "Scholar",
+      "family": "knowledge",
+      "trackId": "title_track.knowledge.flora",
+      "sourceSkillId": "skill.knowledge.flora",
+      "milestone": {
+        "threshold": 100,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Recognizes proven plant knowledge across dangerous and obscure specimens.",
+      "effects": [
+        "knowledge.flora.auto_identify",
+        "settlement.education_access"
+      ],
+      "tags": [
+        "knowledge",
+        "flora"
+      ]
+    },
+    {
+      "id": "title.knowledge.flora.master",
+      "name": "Master",
+      "family": "knowledge",
+      "trackId": "title_track.knowledge.flora",
+      "sourceSkillId": "skill.knowledge.flora",
+      "milestone": {
+        "threshold": 125,
+        "requiresMasteryTrial": true,
+        "trialId": "trial.knowledge.flora.mastery"
+      },
+      "description": "Reserved for flora mastery proven through formal distinction.",
+      "effects": [
+        "knowledge.flora.mastery",
+        "craft.alchemy.discovery"
+      ],
+      "tags": [
+        "knowledge",
+        "flora"
+      ]
+    },
+    {
+      "id": "title.faith.devotion.acolyte",
+      "name": "Acolyte",
+      "family": "faith",
+      "trackId": "title_track.faith.devotion",
+      "sourceSkillId": null,
+      "milestone": {
+        "threshold": 50,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Reserved faith title family entry for future devotional progression.",
+      "effects": [
+        "faith.devotion.reserved"
+      ],
+      "tags": [
+        "faith",
+        "reserved"
+      ],
+      "reserved": true
+    },
+    {
+      "id": "title.faith.devotion.votary",
+      "name": "Votary",
+      "family": "faith",
+      "trackId": "title_track.faith.devotion",
+      "sourceSkillId": null,
+      "milestone": {
+        "threshold": 100,
+        "requiresMasteryTrial": false,
+        "trialId": null
+      },
+      "description": "Reserved faith title family entry for future devotional progression.",
+      "effects": [
+        "faith.devotion.reserved"
+      ],
+      "tags": [
+        "faith",
+        "reserved"
+      ],
+      "reserved": true
+    },
+    {
+      "id": "title.faith.devotion.avatar",
+      "name": "Avatar",
+      "family": "faith",
+      "trackId": "title_track.faith.devotion",
+      "sourceSkillId": null,
+      "milestone": {
+        "threshold": 125,
+        "requiresMasteryTrial": true,
+        "trialId": null
+      },
+      "description": "Reserved faith title family entry for future devotional progression.",
+      "effects": [
+        "faith.devotion.reserved"
+      ],
+      "tags": [
+        "faith",
+        "reserved"
+      ],
+      "reserved": true
+    }
+  ]
+}

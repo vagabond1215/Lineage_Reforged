@@ -71,6 +71,31 @@ export type StartSpawnMode =
   | "military_quarters"
   | "frontier_entry"
   | "temple_guesthouse";
+export type StartLawfulStanding =
+  | "ordinary"
+  | "chartered"
+  | "military_clearance"
+  | "frontier_tolerated"
+  | "temple_guest"
+  | "unrecognized";
+export type StartAuthorityTier =
+  | "open"
+  | "chartered"
+  | "military"
+  | "frontier"
+  | "temple";
+export type StartSponsorCategory =
+  | "none"
+  | "civic_hospitality"
+  | "merchant_house"
+  | "craft_house"
+  | "performance_circuit"
+  | "scholarly_order"
+  | "temple_order"
+  | "military_service"
+  | "frontier_service"
+  | "local_recognition"
+  | "noble_patronage";
 export type ReligiousSiteType = "shrine" | "temple" | "great_temple" | "convergence_site";
 export type MagicServiceScale = "none" | "limited" | "moderate" | "strong";
 
@@ -340,8 +365,10 @@ export interface SettlementStartAccessState {
   accessStatus: StartAccessStatus;
   spawnMode: StartSpawnMode;
   lodgingType: string;
-  allowedClassIds: string[];
-  allowedBackgroundIds: string[];
+  lawfulStanding: StartLawfulStanding;
+  authorityTier: StartAuthorityTier;
+  sponsorCategory: StartSponsorCategory;
+  allowedBackstoryIds: string[];
   notes: string[];
 }
 
@@ -395,6 +422,110 @@ const ACCESS_BY_AUTHORITY: Record<LandAuthorityType, DistrictAccessRequirement> 
   guild_controlled: "chartered",
   mixed: "licensed"
 };
+
+type SettlementStartAccessRegistryRow = {
+  backstoryId: string;
+  lawfulStanding: StartLawfulStanding;
+  authorityTier: Extract<StartAuthorityTier, "chartered" | "military">;
+  sponsorCategory: StartSponsorCategory;
+  restrictedSettlementTypes?: string[];
+  disallowedOriginContexts?: string[];
+};
+
+const START_AUTHORITY_TIER_WEIGHT: Record<StartAuthorityTier, number> = {
+  open: 1,
+  temple: 2,
+  frontier: 3,
+  chartered: 4,
+  military: 5
+};
+
+const SETTLEMENT_START_ACCESS_REGISTRY: SettlementStartAccessRegistryRow[] = [
+  {
+    backstoryId: "backstory.military_brat",
+    lawfulStanding: "military_clearance",
+    authorityTier: "military",
+    sponsorCategory: "military_service"
+  },
+  {
+    backstoryId: "backstory.scouts_ward",
+    lawfulStanding: "military_clearance",
+    authorityTier: "military",
+    sponsorCategory: "frontier_service"
+  },
+  {
+    backstoryId: "backstory.village_hunter",
+    lawfulStanding: "military_clearance",
+    authorityTier: "military",
+    sponsorCategory: "frontier_service"
+  },
+  {
+    backstoryId: "backstory.local_hero",
+    lawfulStanding: "military_clearance",
+    authorityTier: "military",
+    sponsorCategory: "local_recognition"
+  },
+  {
+    backstoryId: "backstory.minor_noble",
+    lawfulStanding: "military_clearance",
+    authorityTier: "military",
+    sponsorCategory: "noble_patronage"
+  },
+  {
+    backstoryId: "backstory.merchants_child",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "merchant_house"
+  },
+  {
+    backstoryId: "backstory.craftsmans_child",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "craft_house"
+  },
+  {
+    backstoryId: "backstory.carpenters_child",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "craft_house"
+  },
+  {
+    backstoryId: "backstory.performer",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "performance_circuit"
+  },
+  {
+    backstoryId: "backstory.scholars_apprentice",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "scholarly_order"
+  },
+  {
+    backstoryId: "backstory.temple_acolyte",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "temple_order"
+  },
+  {
+    backstoryId: "backstory.hedge_adept",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "scholarly_order"
+  },
+  {
+    backstoryId: "backstory.minor_noble",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "noble_patronage"
+  },
+  {
+    backstoryId: "backstory.local_hero",
+    lawfulStanding: "chartered",
+    authorityTier: "chartered",
+    sponsorCategory: "local_recognition"
+  }
+];
 
 function clamp(value: number, minimum: number, maximum: number): number {
   return Math.min(Math.max(value, minimum), maximum);
@@ -905,52 +1036,176 @@ export function deriveSettlementMagicInfrastructure(params: {
   });
 }
 
+function deriveRequiredStartAuthorityTier(params: {
+  settlement: InstitutionSettlementRecord;
+  landAuthorityType: LandAuthorityType;
+}): StartAuthorityTier {
+  const isHighTierCity =
+    params.settlement.populationBand === "major" ||
+    (params.settlement.populationBand === "large" &&
+      params.settlement.infrastructureProfile.marketTier >= 4);
+
+  if (params.landAuthorityType === "military_control") {
+    return "military";
+  }
+
+  if (params.landAuthorityType === "guild_controlled" || isHighTierCity) {
+    return "chartered";
+  }
+
+  if (params.landAuthorityType === "frontier_claim") {
+    return "frontier";
+  }
+
+  if (
+    params.settlement.identityTags.includes("monastery") ||
+    params.settlement.purposeTags.includes("pilgrimage")
+  ) {
+    return "temple";
+  }
+
+  return "open";
+}
+
+function getSettlementStartAccessSpecificity(
+  row: SettlementStartAccessRegistryRow
+): number {
+  return (
+    (row.restrictedSettlementTypes?.length ?? 0) +
+    (row.disallowedOriginContexts?.length ?? 0)
+  );
+}
+
+function isSettlementStartAccessRowApplicable(
+  row: SettlementStartAccessRegistryRow,
+  settlement: InstitutionSettlementRecord,
+  authorityTier: Extract<StartAuthorityTier, "chartered" | "military">
+): boolean {
+  if (row.authorityTier !== authorityTier) {
+    return false;
+  }
+
+  if (
+    row.restrictedSettlementTypes &&
+    row.restrictedSettlementTypes.length > 0 &&
+    !row.restrictedSettlementTypes.includes(settlement.settlementType)
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+function getApplicableSettlementStartAccessRows(params: {
+  settlement: InstitutionSettlementRecord;
+  authorityTier: StartAuthorityTier;
+}): SettlementStartAccessRegistryRow[] {
+  if (params.authorityTier !== "chartered" && params.authorityTier !== "military") {
+    return [];
+  }
+
+  return SETTLEMENT_START_ACCESS_REGISTRY.filter((row) =>
+    isSettlementStartAccessRowApplicable(
+      row,
+      params.settlement,
+      params.authorityTier
+    )
+  );
+}
+
+function resolveSettlementStartAccessRow(params: {
+  settlement: InstitutionSettlementRecord;
+  authorityTier: StartAuthorityTier;
+  backstoryId: string;
+}): SettlementStartAccessRegistryRow | null {
+  const matches = getApplicableSettlementStartAccessRows({
+    settlement: params.settlement,
+    authorityTier: params.authorityTier
+  })
+    .map((row, index) => ({ row, index }))
+    .filter(({ row }) => row.backstoryId === params.backstoryId);
+
+  if (matches.length === 0) {
+    return null;
+  }
+
+  matches.sort((left, right) => {
+    const specificityDelta =
+      getSettlementStartAccessSpecificity(right.row) -
+      getSettlementStartAccessSpecificity(left.row);
+
+    if (specificityDelta !== 0) {
+      return specificityDelta;
+    }
+
+    const authorityDelta =
+      START_AUTHORITY_TIER_WEIGHT[right.row.authorityTier] -
+      START_AUTHORITY_TIER_WEIGHT[left.row.authorityTier];
+
+    if (authorityDelta !== 0) {
+      return authorityDelta;
+    }
+
+    return left.index - right.index;
+  });
+
+  return matches[0]?.row ?? null;
+}
+
 export function deriveSettlementStartAccess(params: {
   settlement: InstitutionSettlementRecord;
   landAuthorityType: LandAuthorityType;
-  classId: string;
-  backgroundId: string;
+  backstoryId: string;
 }): SettlementStartAccessState {
-  const isHighTierCity =
-    params.settlement.populationBand === "major" ||
-    (params.settlement.populationBand === "large" && params.settlement.infrastructureProfile.marketTier >= 4);
-  const allowedClassIds: string[] = [];
-  const allowedBackgroundIds: string[] = [];
+  const authorityTier = deriveRequiredStartAuthorityTier(params);
+  const applicableRegistryRows = getApplicableSettlementStartAccessRows({
+    settlement: params.settlement,
+    authorityTier
+  });
+  const matchedRegistryRow = resolveSettlementStartAccessRow({
+    settlement: params.settlement,
+    authorityTier,
+    backstoryId: params.backstoryId
+  });
+  const allowedBackstoryIds: string[] = [];
   let accessStatus: StartAccessStatus = "allowed";
   let spawnMode: StartSpawnMode = "rented_lodging";
   let lodgingType = "rented_room";
+  let lawfulStanding: StartLawfulStanding = "ordinary";
+  let sponsorCategory: StartSponsorCategory = "civic_hospitality";
   const notes: string[] = [];
 
-  if (params.landAuthorityType === "military_control") {
-    accessStatus =
-      ["class.warrior", "class.explorer", "class.mariner"].includes(params.classId) || params.backgroundId === "background.militia_retainer"
-        ? "allowed"
-        : "restricted";
-    allowedClassIds.push("class.warrior", "class.explorer", "class.mariner");
-    allowedBackgroundIds.push("background.militia_retainer");
+  if (authorityTier === "military") {
+    accessStatus = matchedRegistryRow ? "allowed" : "restricted";
+    allowedBackstoryIds.push(...applicableRegistryRows.map((row) => row.backstoryId));
     spawnMode = accessStatus === "allowed" ? "military_quarters" : "rented_lodging";
     lodgingType = accessStatus === "allowed" ? "barracks_bed" : "licensed_inn";
-    notes.push("Military settlements require either a service tie, a scouting or hunting role, or a formal sponsor.");
-  } else if (params.landAuthorityType === "guild_controlled" || isHighTierCity) {
-    accessStatus =
-      ["class.merchant", "class.artisan", "class.arcanist"].includes(params.classId) ||
-      ["background.ledger_apprentice", "background.harbor_runner"].includes(params.backgroundId)
-        ? "allowed"
-        : "restricted";
-    allowedClassIds.push("class.merchant", "class.artisan", "class.arcanist");
-    allowedBackgroundIds.push("background.ledger_apprentice", "background.harbor_runner");
+    lawfulStanding = matchedRegistryRow?.lawfulStanding ?? "unrecognized";
+    sponsorCategory = matchedRegistryRow?.sponsorCategory ?? "none";
+    notes.push("Military settlements require a service-tied backstory, hunting or scouting standing, or a formal noble sponsor.");
+  } else if (authorityTier === "chartered") {
+    accessStatus = matchedRegistryRow ? "allowed" : "restricted";
+    allowedBackstoryIds.push(...applicableRegistryRows.map((row) => row.backstoryId));
     spawnMode = accessStatus === "allowed" ? "guild_guest" : "rented_lodging";
     lodgingType = accessStatus === "allowed" ? "guild_bunk" : "licensed_inn";
-    notes.push("Chartered markets and high-status cities do not allow a free unlicensed start.");
-  } else if (params.landAuthorityType === "frontier_claim") {
+    lawfulStanding = matchedRegistryRow?.lawfulStanding ?? "unrecognized";
+    sponsorCategory = matchedRegistryRow?.sponsorCategory ?? "none";
+    notes.push("Chartered markets and high-status cities require a recognized backstory or lawful sponsor before a start is permitted.");
+  } else if (authorityTier === "frontier") {
     spawnMode = "frontier_entry";
     lodgingType = "trail_shelter";
+    lawfulStanding = "frontier_tolerated";
+    sponsorCategory = "frontier_service";
     notes.push("Frontier claims allow freer entry, but the starting shelter is rough and temporary.");
-  } else if (params.settlement.identityTags.includes("monastery") || params.settlement.purposeTags.includes("pilgrimage")) {
+  } else if (authorityTier === "temple") {
     spawnMode = "temple_guesthouse";
     lodgingType = "guest_cell";
+    lawfulStanding = "temple_guest";
+    sponsorCategory = "temple_order";
     notes.push("Religious settlements route new arrivals through temple guest housing rather than private property grants.");
   } else {
+    lawfulStanding = "ordinary";
+    sponsorCategory = "civic_hospitality";
     notes.push("No free property is granted at start; the default arrival is rented or chartered lodging.");
   }
 
@@ -959,8 +1214,10 @@ export function deriveSettlementStartAccess(params: {
     accessStatus,
     spawnMode,
     lodgingType,
-    allowedClassIds,
-    allowedBackgroundIds,
+    lawfulStanding,
+    authorityTier,
+    sponsorCategory,
+    allowedBackstoryIds: Array.from(new Set(allowedBackstoryIds)),
     notes
   };
 }
@@ -1245,8 +1502,7 @@ export function deriveSettlementInstitutionProfile(params: {
     startAccess: deriveSettlementStartAccess({
       settlement: params.settlement,
       landAuthorityType,
-      classId: "class.explorer",
-      backgroundId: "background.harbor_runner"
+      backstoryId: "backstory.local_hero"
     }),
     explanation: [
       `Land authority derived as ${landAuthorityType} from settlement type, administrative role, and identity tags.`,

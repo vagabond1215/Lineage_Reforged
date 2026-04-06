@@ -1,0 +1,215 @@
+{
+  "records": [
+    {
+      "id": "encounter.kaelvar.roadside_kobold_patrol",
+      "name": "Roadside Kobold Patrol",
+      "summary": "A small scouting knot of kobolds watching frontier lanes for weak traffic.",
+      "disposition": "hostile",
+      "movementMode": "roaming",
+      "regionIds": [
+        "region.kaelvar"
+      ],
+      "habitatTags": [
+        "roadside_ditch",
+        "frontier_track",
+        "quarry_edge"
+      ],
+      "tags": [
+        "kobold",
+        "ambush",
+        "frontier"
+      ],
+      "difficultyBand": "low",
+      "members": [
+        {
+          "monsterId": "monster.kobold_scout",
+          "minCount": 1,
+          "maxCount": 2,
+          "roleId": "ranged_pressure"
+        },
+        {
+          "monsterId": "monster.kobold_raider",
+          "minCount": 1,
+          "maxCount": 2,
+          "roleId": "frontliner"
+        }
+      ]
+    },
+    {
+      "id": "encounter.kaelvar.auric_sapper_cell",
+      "name": "Auric Sapper Cell",
+      "summary": "Tunnel fighters and scavengers operating close to unstable mine cuts.",
+      "disposition": "hostile",
+      "movementMode": "fixed",
+      "regionIds": [
+        "region.kaelvar"
+      ],
+      "habitatTags": [
+        "mine_tunnel",
+        "collapsed_passage",
+        "quarry_edge"
+      ],
+      "tags": [
+        "kobold",
+        "mine",
+        "sapper"
+      ],
+      "difficultyBand": "moderate",
+      "members": [
+        {
+          "monsterId": "monster.kobold_tunnel_sapper",
+          "minCount": 1,
+          "maxCount": 1,
+          "roleId": "disruptor"
+        },
+        {
+          "monsterId": "monster.kobold_scavenger",
+          "minCount": 1,
+          "maxCount": 2,
+          "roleId": "opportunist"
+        }
+      ]
+    },
+    {
+      "id": "encounter.kaelvar.brushland_boars",
+      "name": "Brushland Boars",
+      "summary": "Territorial boars breaking through scrub and field borders.",
+      "disposition": "hostile",
+      "movementMode": "roaming",
+      "regionIds": [
+        "region.kaelvar"
+      ],
+      "habitatTags": [
+        "forest_edge",
+        "farm_border",
+        "oak_scrub"
+      ],
+      "tags": [
+        "beast",
+        "charger",
+        "brushland"
+      ],
+      "difficultyBand": "moderate",
+      "members": [
+        {
+          "monsterId": "monster.dire_boar",
+          "minCount": 1,
+          "maxCount": 2,
+          "roleId": "frontliner"
+        }
+      ]
+    },
+    {
+      "id": "encounter.valtherion.lowland_slime_bloom",
+      "name": "Lowland Slime Bloom",
+      "summary": "Oozes and vermin overflowing from damp lowland drainage channels.",
+      "disposition": "hostile",
+      "movementMode": "roaming",
+      "regionIds": [
+        "region.valtherion"
+      ],
+      "habitatTags": [
+        "ditch",
+        "cellar",
+        "sewer_edge",
+        "reed_marsh"
+      ],
+      "tags": [
+        "ooze",
+        "vermin",
+        "damp"
+      ],
+      "difficultyBand": "low",
+      "members": [
+        {
+          "monsterId": "monster.green_slime",
+          "minCount": 1,
+          "maxCount": 2,
+          "roleId": "debuffer_controller"
+        },
+        {
+          "monsterId": "monster.granary_rat",
+          "minCount": 1,
+          "maxCount": 2,
+          "roleId": "opportunist"
+        }
+      ]
+    },
+    {
+      "id": "encounter.talmyra.stormscar_manifestation",
+      "name": "Stormscar Manifestation",
+      "summary": "A storm elemental pushing embers and frightened beasts before it.",
+      "disposition": "hostile",
+      "movementMode": "roaming",
+      "regionIds": [
+        "region.talmyra"
+      ],
+      "habitatTags": [
+        "river_ford",
+        "ash_field",
+        "charred_hills"
+      ],
+      "tags": [
+        "elemental",
+        "storm",
+        "hazard"
+      ],
+      "difficultyBand": "high",
+      "members": [
+        {
+          "monsterId": "monster.storm_elemental",
+          "minCount": 1,
+          "maxCount": 1,
+          "roleId": "ranged_pressure"
+        },
+        {
+          "monsterId": "monster.ember_boar",
+          "minCount": 1,
+          "maxCount": 1,
+          "roleId": "frontliner"
+        }
+      ]
+    },
+    {
+      "id": "encounter.serathyl.barrow_watch",
+      "name": "Barrow Watch",
+      "summary": "Restless dead patrolling the approaches to a barrow breach.",
+      "disposition": "hostile",
+      "movementMode": "fixed",
+      "regionIds": [
+        "region.serathyl"
+      ],
+      "habitatTags": [
+        "ruins",
+        "crypt",
+        "graveyard"
+      ],
+      "tags": [
+        "undead",
+        "barrow",
+        "watch"
+      ],
+      "difficultyBand": "high",
+      "members": [
+        {
+          "monsterId": "monster.grave_skeleton",
+          "minCount": 1,
+          "maxCount": 2,
+          "roleId": "frontliner"
+        },
+        {
+          "monsterId": "monster.barrow_wight",
+          "minCount": 1,
+          "maxCount": 1,
+          "roleId": "debuffer_controller"
+        },
+        {
+          "monsterId": "monster.grave_ghoul",
+          "minCount": 1,
+          "maxCount": 1,
+          "roleId": "disruptor"
+        }
+      ]
+    }
+  ]
+}

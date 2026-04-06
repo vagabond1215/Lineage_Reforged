@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerTrialRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "associatedSkillId", "thresholdToPass", "progress", "maxPotential", "checkpoints", "rewards", "penalties"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "associatedSkillId": { "type": "string" },
+    "thresholdToPass": { "type": "number", "minimum": 0 },
+    "progress": { "type": "number", "minimum": 0 },
+    "maxPotential": { "type": "number", "minimum": 0 },
+    "checkpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "threshold"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "threshold": { "type": "number", "minimum": 0 }
+        }
+      },
+      "minItems": 1
+    },
+    "rewards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string" }
+        }
+      }
+    },
+    "penalties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -94,10 +94,11 @@ export function LoadGameScreen({
                       <div className="text-base text-slate-50">{slot.playerName}</div>
                       <div>{slot.lastSavedLabel}</div>
                       <div>
-                        {slot.lineageLabel} | {slot.classLabel}
+                        {slot.lineageLabel} | {slot.backstoryLabel ?? slot.classLabel ?? 'Classless'}
                       </div>
-                      <div>Level {slot.level}</div>
+                      <div>{slot.startingBundleLabel ?? 'No starter bundle recorded'}</div>
                       <div>{slot.settlementLabel ?? slot.regionLabel}</div>
+                      <div>Level {slot.level}</div>
                       <div>{slot.inGameDate}</div>
                       <div>{slot.playtimeLabel}</div>
                       <div>Tick {slot.capturedAtTick}</div>
@@ -199,7 +200,8 @@ export function LoadGameScreen({
                 <div>Slot: {selectedSlot.label}</div>
                 <div className="mt-1">Type: {selectedSlot.kind === 'quick' ? 'Quick Save' : 'Manual Save'}</div>
                 <div className="mt-1">Lineage: {selectedSlot.lineageLabel}</div>
-                <div className="mt-1">Path: {selectedSlot.classLabel}</div>
+                <div className="mt-1">Backstory: {selectedSlot.backstoryLabel ?? selectedSlot.classLabel ?? 'Unrecorded'}</div>
+                <div className="mt-1">Bundle: {selectedSlot.startingBundleLabel ?? 'Unrecorded'}</div>
                 <div className="mt-1">Level: {selectedSlot.level}</div>
                 <div className="mt-1">Region: {selectedSlot.regionLabel}</div>
                 <div className="mt-1">Settlement: {selectedSlot.settlementLabel}</div>

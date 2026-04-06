@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerProgressionTrackRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "trackType", "rankRange", "bands", "breakthroughGateRanks", "gainModel", "breakthroughSources"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "trackType": {
+      "type": "string",
+      "enum": [
+        "resource",
+        "survival",
+        "combat_fundamentals",
+        "weapon",
+        "defense",
+        "armor",
+        "tactical_combat",
+        "magic_core",
+        "magic_school",
+        "crafting",
+        "settlement",
+        "leadership",
+        "knowledge"
+      ]
+    },
+    "rankRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 1, "maximum": 125 },
+        "max": { "type": "integer", "minimum": 1, "maximum": 125 }
+      }
+    },
+    "bands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "minRank", "maxRank", "softCapRank", "requiresBreakthrough"],
+        "properties": {
+          "id": { "type": "string", "enum": ["clumsy", "familiar", "proficient", "skilled", "mastery"] },
+          "label": { "type": "string" },
+          "minRank": { "type": "integer", "minimum": 1, "maximum": 125 },
+          "maxRank": { "type": "integer", "minimum": 1, "maximum": 125 },
+          "softCapRank": { "type": "integer", "minimum": 1, "maximum": 125 },
+          "requiresBreakthrough": { "type": "boolean" },
+          "requiresMasteryTrial": { "type": "boolean" }
+        }
+      },
+      "minItems": 5
+    },
+    "breakthroughGateRanks": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1, "maximum": 125 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "gainModel": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "breakthroughSources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    }
+  }
+}

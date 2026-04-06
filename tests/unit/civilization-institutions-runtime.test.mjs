@@ -89,24 +89,36 @@ test("start access rules enforce restrictions for controlled settlements without
   const restrictedCityStart = deriveSettlementStartAccess({
     settlement: majorCity,
     landAuthorityType: majorCityAuthority,
-    classId: "class.explorer",
-    backgroundId: "background.wayfinder_apprentice"
+    backstoryId: "backstory.local"
   });
   const authorizedCityStart = deriveSettlementStartAccess({
     settlement: majorCity,
     landAuthorityType: majorCityAuthority,
-    classId: "class.merchant",
-    backgroundId: "background.ledger_apprentice"
+    backstoryId: "backstory.merchants_child"
+  });
+  const authorizedMilitaryStart = deriveSettlementStartAccess({
+    settlement: militarySettlement,
+    landAuthorityType: militaryAuthority,
+    backstoryId: "backstory.local_hero"
   });
   const restrictedMilitaryStart = deriveSettlementStartAccess({
     settlement: militarySettlement,
     landAuthorityType: militaryAuthority,
-    classId: "class.merchant",
-    backgroundId: "background.ledger_apprentice"
+    backstoryId: "backstory.merchants_child"
   });
 
   assert.equal(restrictedCityStart.accessStatus, "restricted");
   assert.equal(authorizedCityStart.accessStatus, "allowed");
+  assert.equal(authorizedCityStart.authorityTier, "chartered");
+  assert.equal(authorizedCityStart.lawfulStanding, "chartered");
+  assert.equal(authorizedCityStart.sponsorCategory, "merchant_house");
   assert.equal(restrictedMilitaryStart.accessStatus, "restricted");
+  assert.equal(restrictedMilitaryStart.authorityTier, "military");
+  assert.equal(restrictedMilitaryStart.lawfulStanding, "unrecognized");
+  assert.equal(restrictedMilitaryStart.sponsorCategory, "none");
+  assert.equal(authorizedMilitaryStart.accessStatus, "allowed");
+  assert.equal(authorizedMilitaryStart.authorityTier, "military");
+  assert.equal(authorizedMilitaryStart.lawfulStanding, "military_clearance");
+  assert.equal(authorizedMilitaryStart.sponsorCategory, "local_recognition");
   assert.ok(restrictedCityStart.notes.some((note) => /free property|licensed|chartered/i.test(note)));
 });

@@ -2,20 +2,25 @@ import {
   PLAYER_LINEAGE_PROFILES,
   type InventoryStack,
   type PlayerAttributeAdjustments,
+  type PlayerAbilityState,
   type PlayerAttributes,
+  type PlayerAbilityCategory,
   type PlayerCurrencyState,
+  type PlayerIdentityAgeBandId,
   type PlayerIdentityBuildId,
   type PlayerSkillState,
   type PlayerSexId
 } from "../../../../packages/shared/types/src/index.js";
-import {
-  STARTER_CLASS_TEMPLATES,
-  type CharacterCreationOption,
-  type StarterClassTemplate
-} from "./starterTemplates.js";
+import abilityCatalogData from "../../../../packages/content/base/player/abilities.json";
+import backstoryCatalogData from "../../../../packages/content/base/player/backstories.json";
+import itemCatalogData from "../../../../packages/content/base/items/items.json";
+import knowledgeTrackCatalogData from "../../../../packages/content/base/player/knowledge_tracks.json";
+import skillCatalogData from "../../../../packages/content/base/player/skills.json";
+import startingBundleCatalogData from "../../../../packages/content/base/player/starting_bundles.json";
 import type { ResolvedWorldSelection } from "./worldSelectionCatalog.js";
 
 export type HeightBandId = "short" | "normal" | "tall";
+export type AgeBandId = PlayerIdentityAgeBandId;
 export type BackstoryArchetypeId =
   | "local"
   | "vagabond"
@@ -35,6 +40,11 @@ type LineageIdentitySeed = {
   eyeColorOptions: IdentityPaletteOption[];
 };
 
+type LineagePaletteExpansion = Pick<
+  LineageIdentitySeed,
+  "skinToneOptions" | "hairColorOptions" | "eyeColorOptions"
+>;
+
 type LineageFlavor = {
   vagabondOrigin: string;
   vagabondMotives: string;
@@ -49,23 +59,18 @@ type LineageFlavor = {
   nobleUncommonFamily: string;
 };
 
-type BackstoryMechanics = {
-  startAccessProfileId: string;
-  jobId: string;
-  attributeAdjustments: PlayerAttributeAdjustments;
-  skillBonuses: PlayerSkillState[];
-  traitIds: string[];
-  inventoryBonuses: InventoryStack[];
-  currencyBonus: PlayerCurrencyState;
-  passiveBonusLabel: string;
-};
-
 type LineagePresentation = {
   label: string;
   description: string;
   stats: string;
   notes: string[];
 };
+
+type IdentityAgeRange = [number, number];
+type LineageAgeRangeProfile = Record<
+  Extract<PlayerSexId, "male" | "female">,
+  Record<AgeBandId, IdentityAgeRange>
+>;
 
 type NamePool = {
   male: string[];
@@ -81,6 +86,13 @@ export interface SwatchPresentation {
 
 export interface HeightBandOption {
   id: HeightBandId;
+  label: string;
+  description: string;
+  attributeAdjustments: PlayerAttributeAdjustments;
+}
+
+export interface AgeBandOption {
+  id: AgeBandId;
   label: string;
   description: string;
   attributeAdjustments: PlayerAttributeAdjustments;
@@ -105,6 +117,7 @@ export interface LineageIdentityCatalog {
   lineageLabel: string;
   heightRangeCm: [number, number];
   heightBands: HeightBandOption[];
+  ageBands: AgeBandOption[];
   buildOptions: BuildOption[];
   skinToneOptions: IdentityPaletteOption[];
   hairColorOptions: IdentityPaletteOption[];
@@ -118,20 +131,39 @@ export interface LineageCardArt {
   secondaryBackgroundPosition?: string;
 }
 
-export interface StarterBackstoryTemplate extends CharacterCreationOption {
-  archetypeId: BackstoryArchetypeId;
-  hookLine: string;
-  narrativeParagraphs: [string, string];
-  passiveBonusLabel: string;
-  varianceLines: string[];
-  jobId: string;
-  attributeAdjustments: PlayerAttributeAdjustments;
-  skillBonuses: PlayerSkillState[];
-  traitIds: string[];
-  inventoryBonuses: InventoryStack[];
-  currencyBonus: PlayerCurrencyState;
-  startAccessProfileId: string;
+export interface CharacterCreationOption {
+  id: string;
+  label: string;
+  description: string;
+  notes: string[];
 }
+
+export interface StarterBackstoryTemplate extends CharacterCreationOption {
+  summaryText: string;
+  detailText: string;
+  startingSkills: PlayerSkillState[];
+  startingKnowledge: Array<{ trackId: string; level: number }>;
+  startingAbilityIds: string[];
+  startingSkillLabels: string[];
+  startingKnowledgeLabels: string[];
+  startingAbilityLabels: string[];
+}
+
+export interface StartingBundleChoiceGroup {
+  id: string;
+  label: string;
+  options: InventoryStack[];
+  optionLabels: string[];
+}
+
+export interface StartingBundleTemplate extends CharacterCreationOption {
+  fixedItems: InventoryStack[];
+  fixedItemLabels: string[];
+  choiceGroups: StartingBundleChoiceGroup[];
+  startingCurrency: PlayerCurrencyState;
+}
+
+export type StartingBundleChoiceSelections = Record<string, string>;
 
 const PLAYABLE_LINEAGE_IDS = [
   "lineage.human",
@@ -181,6 +213,27 @@ const HEIGHT_BANDS: HeightBandOption[] = [
   }
 ];
 
+const AGE_BANDS: AgeBandOption[] = [
+  {
+    id: "young_adult",
+    label: "Young Adult",
+    description: "Early adulthood with quick reactions and less seasoned judgment. +1 AGI, -1 WIS.",
+    attributeAdjustments: { AGI: 1, WIS: -1 }
+  },
+  {
+    id: "prime_age",
+    label: "Prime Age",
+    description: "Full-grown physical prime with stronger raw force and slightly less spring than youth. +1 STR, -1 AGI.",
+    attributeAdjustments: { STR: 1, AGI: -1 }
+  },
+  {
+    id: "middle_aged",
+    label: "Middle Aged",
+    description: "Seasoned and measured, with experience trading off some raw force. +1 WIS, -1 STR.",
+    attributeAdjustments: { WIS: 1, STR: -1 }
+  }
+];
+
 const BUILD_OPTIONS: BuildOption[] = [
   {
     id: "petite",
@@ -196,9 +249,9 @@ const BUILD_OPTIONS: BuildOption[] = [
   },
   {
     id: "average",
-    label: "Average",
-    description: "Balanced build with no attribute change.",
-    attributeAdjustments: {}
+    label: "Grounded",
+    description: "Measured posture and practical awareness. +1 WIS, -1 STR.",
+    attributeAdjustments: { WIS: 1, STR: -1 }
   },
   {
     id: "muscular",
@@ -238,66 +291,128 @@ const BUILD_OPTIONS: BuildOption[] = [
   }
 ];
 
-const PATH_OVERRIDES: Record<string, Pick<StarterClassTemplate, "label" | "description" | "notes">> = {
-  "class.explorer": {
-    label: "Scout",
-    description: "A practical road-wise path shaped by reconnaissance, travel craft, and field survival.",
-    notes: ["Progresses toward swift travel, observation, and adaptable routecraft."]
+const LINEAGE_AGE_RANGES: Record<string, LineageAgeRangeProfile> = {
+  "lineage.human": {
+    male: {
+      young_adult: [18, 27],
+      prime_age: [28, 44],
+      middle_aged: [45, 62]
+    },
+    female: {
+      young_adult: [18, 29],
+      prime_age: [30, 46],
+      middle_aged: [47, 64]
+    }
   },
-  "class.warrior": {
-    label: "Warrior",
-    description: "A martial path built on discipline, weapon confidence, and direct battlefield presence.",
-    notes: ["Progresses toward frontline resilience, pressure, and guarded offense."]
+  "lineage.elf": {
+    male: {
+      young_adult: [40, 85],
+      prime_age: [86, 180],
+      middle_aged: [181, 320]
+    },
+    female: {
+      young_adult: [42, 92],
+      prime_age: [93, 190],
+      middle_aged: [191, 340]
+    }
   },
-  "class.arcanist": {
-    label: "Enchanter",
-    description: "A mystical path devoted to crafted power, reserve control, and disciplined elemental shaping.",
-    notes: ["Progresses toward crystal work, focus, and magical throughput."]
+  "lineage.dark_elf": {
+    male: {
+      young_adult: [35, 78],
+      prime_age: [79, 165],
+      middle_aged: [166, 290]
+    },
+    female: {
+      young_adult: [37, 84],
+      prime_age: [85, 174],
+      middle_aged: [175, 305]
+    }
   },
-  "class.artisan": {
-    label: "Craftsman",
-    description: "A maker's path centered on useful workmanship, repair, and patient mastery of material.",
-    notes: ["Progresses toward utility, quality work, and practical invention."]
+  "lineage.gnome": {
+    male: {
+      young_adult: [24, 50],
+      prime_age: [51, 98],
+      middle_aged: [99, 160]
+    },
+    female: {
+      young_adult: [26, 54],
+      prime_age: [55, 106],
+      middle_aged: [107, 170]
+    }
   },
-  "class.merchant": {
-    label: "Trader",
-    description: "A commercial path guided by value, timing, and the leverage of negotiated advantage.",
-    notes: ["Progresses toward bargaining strength, appraisal, and market influence."]
+  "lineage.halfling": {
+    male: {
+      young_adult: [20, 42],
+      prime_age: [43, 84],
+      middle_aged: [85, 135]
+    },
+    female: {
+      young_adult: [21, 45],
+      prime_age: [46, 88],
+      middle_aged: [89, 142]
+    }
   },
-  "class.mariner": {
-    label: "Hunter",
-    description: "A pursuing path shaped by endurance, patience, and the calm pressure of a practiced chase.",
-    notes: ["Progresses toward pursuit stamina, ranged discipline, and relentless field craft."]
+  "lineage.dwarf": {
+    male: {
+      young_adult: [28, 55],
+      prime_age: [56, 110],
+      middle_aged: [111, 180]
+    },
+    female: {
+      young_adult: [30, 58],
+      prime_age: [59, 118],
+      middle_aged: [119, 190]
+    }
+  },
+  "lineage.half_orc": {
+    male: {
+      young_adult: [16, 24],
+      prime_age: [25, 38],
+      middle_aged: [39, 52]
+    },
+    female: {
+      young_adult: [17, 26],
+      prime_age: [27, 40],
+      middle_aged: [41, 55]
+    }
+  },
+  "lineage.half_troll": {
+    male: {
+      young_adult: [18, 32],
+      prime_age: [33, 52],
+      middle_aged: [53, 72]
+    },
+    female: {
+      young_adult: [19, 34],
+      prime_age: [35, 56],
+      middle_aged: [57, 76]
+    }
+  },
+  "lineage.half_goblin": {
+    male: {
+      young_adult: [16, 23],
+      prime_age: [24, 36],
+      middle_aged: [37, 48]
+    },
+    female: {
+      young_adult: [17, 25],
+      prime_age: [26, 38],
+      middle_aged: [39, 51]
+    }
+  },
+  "lineage.half_merfolk": {
+    male: {
+      young_adult: [20, 40],
+      prime_age: [41, 80],
+      middle_aged: [81, 130]
+    },
+    female: {
+      young_adult: [22, 44],
+      prime_age: [45, 88],
+      middle_aged: [89, 140]
+    }
   }
 };
-
-const PATH_TEMPLATE_FALLBACK = "class.explorer";
-
-const PATH_TEMPLATES: Record<string, StarterClassTemplate> = Object.fromEntries(
-  Object.entries(STARTER_CLASS_TEMPLATES).map(([id, template]) => [
-    id,
-    {
-      ...template,
-      ...(PATH_OVERRIDES[id] ?? {})
-    }
-  ])
-);
-
-function stack(itemKey: string, quantity: number): InventoryStack {
-  return {
-    itemId: `item.${itemKey}`,
-    itemKey,
-    quantity
-  };
-}
-
-function skill(id: string, rank: number): PlayerSkillState {
-  return {
-    id,
-    rank,
-    source: "trained"
-  };
-}
 
 function paletteOption(
   id: string,
@@ -534,40 +649,6 @@ function pickDeterministic<T>(values: readonly T[], seed: string): T {
   return values[Math.abs(hash) % values.length]!;
 }
 
-function getLineageKey(lineageId: string): string {
-  const segments = lineageId.split(".");
-  return segments[segments.length - 1] ?? lineageId;
-}
-
-function getBackstoryId(lineageId: string, archetypeId: BackstoryArchetypeId): string {
-  return `background.${getLineageKey(lineageId)}.${archetypeId}`;
-}
-
-function parseBackstoryId(
-  backgroundId: string
-): { lineageId: string; archetypeId: BackstoryArchetypeId } | null {
-  const segments = backgroundId.split(".");
-
-  if (segments.length !== 3 || segments[0] !== "background") {
-    return null;
-  }
-
-  const lineageId = `lineage.${segments[1]}`;
-  const archetypeId = segments[2] as BackstoryArchetypeId;
-
-  if (!PLAYABLE_LINEAGE_IDS.includes(lineageId as (typeof PLAYABLE_LINEAGE_IDS)[number])) {
-    return null;
-  }
-  if (!BACKSTORY_ARCHETYPE_ORDER.includes(archetypeId)) {
-    return null;
-  }
-
-  return {
-    lineageId,
-    archetypeId
-  };
-}
-
 const COMMON_SKIN_TONES = [
   paletteOption("skin.fair", "Fair", "A lighter skin tone.", "#dcb8a4", "#22150f"),
   paletteOption("skin.warm", "Warm", "A warm mid-tone complexion.", "#c59367", "#23150b"),
@@ -612,6 +693,42 @@ const HUMAN_EYES = [
   paletteOption("eyes.steel_blue", "Steel Blue", "Muted steel-blue eyes.", "#6f86a4", "#13202d"),
   paletteOption("eyes.sea_green", "Sea Green", "Cool blue-green eyes.", "#4f8d80")
 ] as const;
+
+const HUMAN_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.porcelain_rose", "Porcelain Rose", "A very light complexion with pink warmth.", "#efd2ca", "#23140f"),
+    paletteOption("skin.blush_fair", "Blush Fair", "A pale complexion with healthy rose undertones.", "#e6c0b6", "#23140f"),
+    paletteOption("skin.peach_cream", "Peach Cream", "A soft peach-fair complexion.", "#e9c3ab", "#23140f"),
+    paletteOption("skin.light_beige", "Light Beige", "A light neutral complexion.", "#d9b39a", "#22150e"),
+    paletteOption("skin.rose_tan", "Rose Tan", "A tan complexion with red warmth.", "#be8369"),
+    paletteOption("skin.sun_peach", "Sun Peach", "A peach-tan complexion touched by sun.", "#d39a78", "#241508"),
+    paletteOption("skin.cocoa", "Cocoa", "A medium-dark cocoa complexion.", "#815744"),
+    paletteOption("skin.espresso", "Espresso", "A deep espresso-brown complexion.", "#4c3026"),
+    paletteOption("skin.rich_mahogany", "Rich Mahogany", "A deep brown complexion with red undertones.", "#693d30")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.strawberry_blonde", "Strawberry Blonde", "A bright blonde with a rose-red cast.", "#d89c75", "#201509"),
+    paletteOption("hair.pale_gold", "Pale Gold", "A pale golden hair tone.", "#e3ca97", "#211707"),
+    paletteOption("hair.sunset_copper", "Sunset Copper", "A bright orange-copper hair tone.", "#cc6e42"),
+    paletteOption("hair.flame_red", "Flame Red", "A vivid flame-red hair tone.", "#bf4d2f"),
+    paletteOption("hair.maple", "Maple", "Warm maple-red hair.", "#a8573b"),
+    paletteOption("hair.rose_brown", "Rose Brown", "Brown hair with a muted rose cast.", "#88584a"),
+    paletteOption("hair.dark_cherry", "Dark Cherry", "A dark cherry-red hair tone.", "#6f2f33"),
+    paletteOption("hair.toasted_copper", "Toasted Copper", "A burnished copper-orange hair tone.", "#b55a34"),
+    paletteOption("hair.wheat_blonde", "Wheat Blonde", "A dry pale wheat-blonde hair tone.", "#dec18a", "#211708")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.vivid_blue", "Vivid Blue", "Bright vivid blue eyes.", "#4f86dc", "#0f1f34"),
+    paletteOption("eyes.glacier_blue", "Glacier Blue", "Pale bright blue eyes.", "#8fb7ef", "#0f1f33"),
+    paletteOption("eyes.emerald", "Emerald", "Vibrant emerald-green eyes.", "#2f9b5a"),
+    paletteOption("eyes.verdant", "Verdant", "Bright leaf-green eyes.", "#5fb33c"),
+    paletteOption("eyes.aquamarine", "Aquamarine", "Bright blue-green eyes.", "#4bb3b7"),
+    paletteOption("eyes.honey_hazel", "Honey Hazel", "Hazel eyes lit with warm honey tones.", "#b68941", "#211507"),
+    paletteOption("eyes.charcoal", "Charcoal", "Dark charcoal-gray eyes.", "#5e6671", "#f8fafc"),
+    paletteOption("eyes.amethyst_gray", "Amethyst Gray", "Gray eyes with a faint amethyst cast.", "#8d7fa8"),
+    paletteOption("eyes.gold_green", "Gold Green", "Green eyes flecked with gold.", "#8aa544", "#1e1808")
+  ]
+};
 
 const ELVEN_SKIN = [
   paletteOption("skin.moon", "Moon", "Very pale skin with cool undertones.", "#efe5dd", "#221915"),
@@ -658,6 +775,42 @@ const ELVEN_EYES = [
   paletteOption("eyes.moonstone", "Moonstone", "Cool moonstone-gray eyes.", "#b8c3d1", "#15202b")
 ] as const;
 
+const ELVEN_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.alabaster", "Alabaster", "A near-luminous pale complexion.", "#f4e8df", "#221814"),
+    paletteOption("skin.petal", "Petal", "A pale complexion with rose undertones.", "#e5c5bc", "#231510"),
+    paletteOption("skin.cream_gold", "Cream Gold", "A pale golden complexion.", "#dfc29d", "#23170e"),
+    paletteOption("skin.honey_glow", "Honey Glow", "A warm complexion with bright gold warmth.", "#cf9d73", "#241507"),
+    paletteOption("skin.forest_beige", "Forest Beige", "A soft woodland beige complexion.", "#c7a48a", "#23170f"),
+    paletteOption("skin.maple_bronze", "Maple Bronze", "A red-bronze woodland complexion.", "#a87252"),
+    paletteOption("skin.redwood", "Redwood", "A deep red-brown complexion.", "#85543d"),
+    paletteOption("skin.twilight_beige", "Twilight Beige", "A cool beige complexion with dusk undertones.", "#b8a294", "#211613"),
+    paletteOption("skin.sun_umber", "Sun Umber", "A warm umber complexion with gold undertones.", "#946747")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.sunfire", "Sunfire", "Bright gold-orange hair.", "#d89d58", "#221608"),
+    paletteOption("hair.autumn_copper", "Autumn Copper", "A rich orange-copper hair tone.", "#b9653e"),
+    paletteOption("hair.maple_red", "Maple Red", "A luminous red-maple hair tone.", "#a64d39"),
+    paletteOption("hair.meadow_green", "Meadow Green", "A bright meadow-green hair tone.", "#7d9a69"),
+    paletteOption("hair.glacier_blue", "Glacier Blue", "A bright icy blue hair tone.", "#a6c6e4", "#11202d"),
+    paletteOption("hair.mint_silver", "Mint Silver", "Silver hair with a pale mint cast.", "#bfccc3", "#17201d"),
+    paletteOption("hair.coral_blonde", "Coral Blonde", "A pale blonde with coral warmth.", "#deb091", "#23150d"),
+    paletteOption("hair.willow_black", "Willow Black", "A deep black softened with green cast.", "#1a1d1a"),
+    paletteOption("hair.blossom_rose", "Blossom Rose", "A brighter rose-gold hair tone.", "#d19592", "#25140f")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.emerald", "Emerald", "Bright emerald eyes.", "#34a066"),
+    paletteOption("eyes.sapphire", "Sapphire", "A vivid sapphire-blue gaze.", "#4d7fd7", "#102032"),
+    paletteOption("eyes.spring_green", "Spring Green", "A bright spring-green gaze.", "#6abf47"),
+    paletteOption("eyes.aqua", "Aqua", "Clear bright aqua eyes.", "#6dc7d6", "#13202a"),
+    paletteOption("eyes.rose_quartz", "Rose Quartz", "Soft rose-violet eyes.", "#bf8fb0", "#211419"),
+    paletteOption("eyes.peridot", "Peridot", "Luminous yellow-green eyes.", "#9fbc45", "#1c1708"),
+    paletteOption("eyes.ice_blue", "Ice Blue", "A clear pale blue gaze.", "#a8c7ec", "#102032"),
+    paletteOption("eyes.star_violet", "Star Violet", "A brighter star-violet gaze.", "#8b67c2"),
+    paletteOption("eyes.sun_gold", "Sun Gold", "Bright sun-gold eyes.", "#dcb04c", "#231607")
+  ]
+};
+
 const DARK_ELF_SKIN = [
   paletteOption("skin.dusk", "Dusk Violet", "Muted violet-gray skin.", "#7b6a82"),
   paletteOption("skin.ash_brown", "Ash Brown", "Smoke-touched brown skin.", "#6a524b"),
@@ -702,6 +855,42 @@ const DARK_ELF_EYES = [
   paletteOption("eyes.indigo", "Indigo", "Indigo-dark eyes.", "#475990"),
   paletteOption("eyes.pale_gold", "Pale Gold", "Pale gold eyes.", "#d6c28e", "#231907")
 ] as const;
+
+const DARK_ELF_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.ashen_lilac", "Ashen Lilac", "Pale lilac-gray skin.", "#a294a7", "#1e1620"),
+    paletteOption("skin.deep_indigo", "Deep Indigo", "Dark blue-violet skin.", "#36354f"),
+    paletteOption("skin.smoke_violet", "Smoke Violet", "Smoky violet-brown skin.", "#6f5f6f"),
+    paletteOption("skin.night_blue", "Night Blue", "A cool blue-gray complexion.", "#4d556a"),
+    paletteOption("skin.plum_umber", "Plum Umber", "Umber skin with plum undertones.", "#573c46"),
+    paletteOption("skin.obsidian_blue", "Obsidian Blue", "Near-black skin with cold blue cast.", "#252b38"),
+    paletteOption("skin.cinder_gray", "Cinder Gray", "A cinder-gray complexion.", "#72707d"),
+    paletteOption("skin.ghost_lilac", "Ghost Lilac", "A pale spectral lilac complexion.", "#b2a0ba", "#1c1620"),
+    paletteOption("skin.red_shade", "Red Shade", "A shadowed brown complexion with red cast.", "#634047")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.crimson_black", "Crimson Black", "Black hair with a wine-red sheen.", "#321a22"),
+    paletteOption("hair.cobalt_silver", "Cobalt Silver", "Silver hair with a cobalt cast.", "#9fb2d4", "#13202c"),
+    paletteOption("hair.dark_teal", "Dark Teal", "A deep teal-black hair tone.", "#214c53"),
+    paletteOption("hair.red_violet", "Red Violet", "A brighter red-violet hair tone.", "#7f445d"),
+    paletteOption("hair.moon_orchid", "Moon Orchid", "Pale silver-orchid hair.", "#b6a7c6", "#1c1824"),
+    paletteOption("hair.ember_white", "Ember White", "Pale hair with warm ember cast.", "#e5d5c9", "#1d1814"),
+    paletteOption("hair.void_blue", "Void Blue", "A cold deep blue-black hair tone.", "#1a2440"),
+    paletteOption("hair.pale_rose", "Pale Rose", "A pale rose-silver hair tone.", "#d8bcc6", "#201417"),
+    paletteOption("hair.garnet", "Garnet", "A dark garnet-red hair tone.", "#692b39")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.viridian", "Viridian", "A sharp viridian-green gaze.", "#2e9a78"),
+    paletteOption("eyes.cobalt", "Cobalt", "Bright cobalt-blue eyes.", "#4f6fd5", "#112031"),
+    paletteOption("eyes.blue_flame", "Blue Flame", "Cold bright blue eyes.", "#7bb7ff", "#102032"),
+    paletteOption("eyes.magenta", "Magenta", "A bright magenta-violet gaze.", "#a14bb0"),
+    paletteOption("eyes.frost_cyan", "Frost Cyan", "Pale icy cyan eyes.", "#a3d8df", "#13202a"),
+    paletteOption("eyes.jade", "Jade", "Deep jade-green eyes.", "#4aa06c"),
+    paletteOption("eyes.sun_gold", "Sun Gold", "Bright gold eyes.", "#e0b75b", "#221708"),
+    paletteOption("eyes.white_fire", "White Fire", "Pale eyes with a stark white-blue glow.", "#eef2f8", "#16202b"),
+    paletteOption("eyes.rose_crimson", "Rose Crimson", "A rich crimson-red gaze.", "#b14258")
+  ]
+};
 
 const DWARVEN_SKIN = [
   paletteOption("skin.granite", "Granite Fair", "Pale stone-like skin.", "#d5c2b5", "#271a14"),
@@ -748,6 +937,42 @@ const DWARVEN_EYES = [
   paletteOption("eyes.ice_blue", "Ice Blue", "Pale icy blue eyes.", "#9eb8d6", "#112033")
 ] as const;
 
+const DWARVEN_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.rose_granite", "Rose Granite", "A pale granite complexion with rose warmth.", "#dcc0b2", "#261812"),
+    paletteOption("skin.barley", "Barley", "A light barley-gold complexion.", "#cda77e", "#24160c"),
+    paletteOption("skin.ruddy_hearth", "Ruddy Hearth", "A ruddy complexion touched by forge heat.", "#bd8361"),
+    paletteOption("skin.hearth_tan", "Hearth Tan", "A warm lived-in tan complexion.", "#b27d58", "#251508"),
+    paletteOption("skin.red_granite", "Red Granite", "A weathered red-granite complexion.", "#9a6a55"),
+    paletteOption("skin.soot_bronze", "Soot Bronze", "A bronze complexion darkened by smoke.", "#805844"),
+    paletteOption("skin.quarry_gray", "Quarry Gray", "A cool quarry-gray complexion.", "#998b83", "#1f1713"),
+    paletteOption("skin.dark_ochre", "Dark Ochre", "A deep ochre-brown complexion.", "#72513f"),
+    paletteOption("skin.molten_copper", "Molten Copper", "A bright copper-bronze complexion.", "#b26f4d")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.fire_copper", "Fire Copper", "A bright forge-copper hair tone.", "#c35f30"),
+    paletteOption("hair.bright_ginger", "Bright Ginger", "A lively orange-red hair tone.", "#d6773d"),
+    paletteOption("hair.amber_blonde", "Amber Blonde", "A rich amber-gold hair tone.", "#d2a65f", "#211608"),
+    paletteOption("hair.burnished_gold", "Burnished Gold", "A deep metallic gold hair tone.", "#c08b42", "#211507"),
+    paletteOption("hair.brick_red", "Brick Red", "A dense brick-red hair tone.", "#9a4730"),
+    paletteOption("hair.oxblood", "Oxblood", "A dark oxblood-red hair tone.", "#632c28"),
+    paletteOption("hair.basalt", "Basalt", "A matte basalt-black hair tone.", "#272421"),
+    paletteOption("hair.pearl_white", "Pearl White", "A pale white hair tone with mineral sheen.", "#ebe6dc", "#1c1814"),
+    paletteOption("hair.deep_walnut", "Deep Walnut", "A deep walnut-brown hair tone.", "#5a3a2d")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.emerald", "Emerald", "A bright gem-green gaze.", "#3c9360"),
+    paletteOption("eyes.sapphire", "Sapphire", "A vivid sapphire-blue gaze.", "#4e7bc6", "#102032"),
+    paletteOption("eyes.topaz", "Topaz", "A bright topaz-gold gaze.", "#d09d44", "#221607"),
+    paletteOption("eyes.bronze", "Bronze", "A warm bronze-brown gaze.", "#a26a42"),
+    paletteOption("eyes.river_green", "River Green", "A cool river-green gaze.", "#588870"),
+    paletteOption("eyes.ice_gray", "Ice Gray", "A pale icy gray gaze.", "#b8c2ce", "#16202b"),
+    paletteOption("eyes.ember_gold", "Ember Gold", "Gold eyes lit by ember warmth.", "#dfb35d", "#231607"),
+    paletteOption("eyes.cobalt", "Cobalt", "A deeper cobalt-blue gaze.", "#4964b1", "#102031"),
+    paletteOption("eyes.pale_green", "Pale Green", "A light mineral-green gaze.", "#8fb084", "#152018")
+  ]
+};
+
 const GNOMISH_SKIN = [
   paletteOption("skin.ivory", "Ivory", "A pale clever-looking complexion.", "#ead9cb", "#241712"),
   paletteOption("skin.rose", "Rose", "A pink-warm complexion.", "#d6ad9a", "#261610"),
@@ -792,6 +1017,42 @@ const GNOMISH_EYES = [
   paletteOption("eyes.gold", "Gold", "Gold-flecked eyes.", "#d0ad52", "#231707"),
   paletteOption("eyes.rose", "Rose", "Rare rose-gray eyes.", "#c597a8", "#211419")
 ] as const;
+
+const GNOMISH_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.cream", "Cream", "A soft cream-fair complexion.", "#f0dcc8", "#23150f"),
+    paletteOption("skin.rosy_peach", "Rosy Peach", "A lively peach complexion with rose warmth.", "#e3b8a5", "#24150f"),
+    paletteOption("skin.soft_beige", "Soft Beige", "A light beige complexion.", "#d7b49a", "#22150e"),
+    paletteOption("skin.bright_honey", "Bright Honey", "A bright honey-gold complexion.", "#cf9c70", "#241508"),
+    paletteOption("skin.maple", "Maple", "A warm maple-brown complexion.", "#a77255"),
+    paletteOption("skin.dusk_beige", "Dusk Beige", "A cool beige complexion.", "#c2aea2", "#201714"),
+    paletteOption("skin.earth_brown", "Earth Brown", "A grounded dark-brown complexion.", "#755342"),
+    paletteOption("skin.cider", "Cider", "A warm red-gold complexion.", "#bf8462"),
+    paletteOption("skin.sable", "Sable", "A rich sable-brown complexion.", "#66493c")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.tangerine", "Tangerine", "A bright tangerine-orange hair tone.", "#db7f42"),
+    paletteOption("hair.ruby_copper", "Ruby Copper", "Copper hair with vivid red shine.", "#c75c44"),
+    paletteOption("hair.sky_blue", "Sky Blue", "A bright sky-blue hair tone.", "#73a9df", "#112032"),
+    paletteOption("hair.bright_green", "Bright Green", "A playful bright-green hair tone.", "#6ca552"),
+    paletteOption("hair.coral", "Coral", "A bright coral-red hair tone.", "#dc7a68"),
+    paletteOption("hair.marigold", "Marigold", "A bold marigold-gold hair tone.", "#d79b44", "#221608"),
+    paletteOption("hair.mulberry", "Mulberry", "A rich mulberry-red hair tone.", "#8b4b67"),
+    paletteOption("hair.mint", "Mint", "A pale mint-green hair tone.", "#9fc5aa", "#17201a"),
+    paletteOption("hair.midnight_blue", "Midnight Blue", "A brightened midnight-blue hair tone.", "#30467a")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.vivid_blue", "Vivid Blue", "A bright energetic blue gaze.", "#4e8fe6", "#102032"),
+    paletteOption("eyes.verdant", "Verdant", "A bright green gaze.", "#5fbf4a"),
+    paletteOption("eyes.aquamarine", "Aquamarine", "A bright blue-green gaze.", "#54babd"),
+    paletteOption("eyes.sun_gold", "Sun Gold", "A bright gold gaze.", "#d5ac4c", "#221607"),
+    paletteOption("eyes.copper", "Copper", "A playful copper gaze.", "#bf7649"),
+    paletteOption("eyes.rose_violet", "Rose Violet", "A rose-violet gaze.", "#ae78c0"),
+    paletteOption("eyes.bright_hazel", "Bright Hazel", "Hazel eyes with strong gold light.", "#b28742", "#211507"),
+    paletteOption("eyes.ice_lilac", "Ice Lilac", "Pale icy lilac eyes.", "#c0b8d9", "#1b1824"),
+    paletteOption("eyes.seafoam", "Seafoam", "A light seafoam-blue gaze.", "#7ac9be", "#13201a")
+  ]
+};
 
 const HALFLING_SKIN = [
   paletteOption("skin.fair", "Fair", "A sun-kissed fair complexion.", "#dfbea8", "#24150f"),
@@ -838,6 +1099,42 @@ const HALFLING_EYES = [
   paletteOption("eyes.sea_blue", "Sea Blue", "Soft sea-blue eyes.", "#7a9dc5", "#122032")
 ] as const;
 
+const HALFLING_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.cream_fair", "Cream Fair", "A light cream complexion.", "#eed2bf", "#24150f"),
+    paletteOption("skin.rosy_fair", "Rosy Fair", "A fair complexion with lively pink warmth.", "#e7c0b1", "#24150f"),
+    paletteOption("skin.peach_rose", "Peach Rose", "A peach complexion with rosy undertones.", "#dfb099", "#24150f"),
+    paletteOption("skin.light_olive", "Light Olive", "A light olive complexion.", "#b38b6c", "#24150c"),
+    paletteOption("skin.warm_amber", "Warm Amber", "A bright amber complexion.", "#d29b67", "#231507"),
+    paletteOption("skin.sun_bronze", "Sun Bronze", "A warm bronze complexion.", "#ae744f"),
+    paletteOption("skin.cider_brown", "Cider Brown", "A brown complexion with red warmth.", "#8d5b43"),
+    paletteOption("skin.soft_sable", "Soft Sable", "A dark soft-brown complexion.", "#6a4739"),
+    paletteOption("skin.apple_beige", "Apple Beige", "A light beige complexion with orchard warmth.", "#d2b097", "#22150f")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.strawberry", "Strawberry", "A lively strawberry-blonde hair tone.", "#d48c66"),
+    paletteOption("hair.bright_copper", "Bright Copper", "A bright copper-orange hair tone.", "#c9673d"),
+    paletteOption("hair.flame", "Flame", "A vivid flame-red hair tone.", "#c84f34"),
+    paletteOption("hair.autumn_orange", "Autumn Orange", "A cheerful orange-red hair tone.", "#d47a43"),
+    paletteOption("hair.butter_blonde", "Butter Blonde", "A pale buttery blonde hair tone.", "#e0c88b", "#201708"),
+    paletteOption("hair.rose_brown", "Rose Brown", "A brown hair tone with rosy warmth.", "#915d4d"),
+    paletteOption("hair.brick_red", "Brick Red", "A dense brick-red hair tone.", "#9e513d"),
+    paletteOption("hair.maple", "Maple", "A warm maple-red hair tone.", "#af603f"),
+    paletteOption("hair.plum_brown", "Plum Brown", "A dark brown hair tone with plum cast.", "#5f3c46")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.vivid_blue", "Vivid Blue", "A bright clear blue gaze.", "#5b93e2", "#102032"),
+    paletteOption("eyes.emerald", "Emerald", "A bright emerald-green gaze.", "#40985f"),
+    paletteOption("eyes.bright_hazel", "Bright Hazel", "Hazel eyes lit with bright gold.", "#b48942", "#211507"),
+    paletteOption("eyes.amber_gold", "Amber Gold", "A bright amber-gold gaze.", "#d3a149", "#221607"),
+    paletteOption("eyes.slate_blue", "Slate Blue", "A calm slate-blue gaze.", "#708cb8", "#112032"),
+    paletteOption("eyes.sea_green", "Sea Green", "A lively green-blue gaze.", "#54a394"),
+    paletteOption("eyes.jade", "Jade", "A rich jade-green gaze.", "#4e9563"),
+    paletteOption("eyes.honey", "Honey", "A warm honey-brown gaze.", "#c39243", "#211507"),
+    paletteOption("eyes.bright_gray", "Bright Gray", "A pale bright-gray gaze.", "#c0c8d2", "#15202b")
+  ]
+};
+
 const HALF_TROLL_SKIN = [
   paletteOption("skin.marsh", "Marsh Sallow", "Pale olive skin.", "#9d9b70", "#181a0d"),
   paletteOption("skin.bark", "Bark Brown", "Bark-brown skin.", "#6b563f"),
@@ -882,6 +1179,42 @@ const HALF_TROLL_EYES = [
   paletteOption("eyes.teal", "Teal", "Dark marsh-teal eyes.", "#467b7d"),
   paletteOption("eyes.red_brown", "Red Brown", "Dark red-brown eyes.", "#7a4636")
 ] as const;
+
+const HALF_TROLL_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.pale_lichen", "Pale Lichen", "A pale lichen-green complexion.", "#b1af87", "#1a190e"),
+    paletteOption("skin.clay_green", "Clay Green", "A clay-brown complexion with green cast.", "#85755b"),
+    paletteOption("skin.dusk_olive", "Dusk Olive", "A shadowed olive complexion.", "#777455"),
+    paletteOption("skin.storm_umber", "Storm Umber", "A gray-brown storm-dark complexion.", "#685d55"),
+    paletteOption("skin.pale_sage", "Pale Sage", "A pale sage complexion.", "#a4a78a", "#19190f"),
+    paletteOption("skin.moss_brown", "Moss Brown", "A green-brown moss complexion.", "#66704c"),
+    paletteOption("skin.deep_bog", "Deep Bog", "A deep bog-brown complexion.", "#4b443a"),
+    paletteOption("skin.reed_tan", "Reed Tan", "A weathered reed-gold complexion.", "#bb9a6a", "#201708"),
+    paletteOption("skin.fern_gray", "Fern Gray", "A gray complexion with fern-green undertones.", "#7e8473")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.copper_ochre", "Copper Ochre", "A muddy copper-orange hair tone.", "#bc7040"),
+    paletteOption("hair.ember_rust", "Ember Rust", "A bright rust-red hair tone.", "#a55635"),
+    paletteOption("hair.bright_reed", "Bright Reed", "A pale reed-blonde hair tone.", "#ccb07a", "#21180b"),
+    paletteOption("hair.dark_teal", "Dark Teal", "A dark marsh-teal hair tone.", "#345d63"),
+    paletteOption("hair.clay_red", "Clay Red", "A clay-red hair tone.", "#954e3a"),
+    paletteOption("hair.lichen_green", "Lichen Green", "A pale lichen-green hair tone.", "#8a9b73", "#1b1a10"),
+    paletteOption("hair.pale_moss", "Pale Moss", "A faded moss-green hair tone.", "#a1ab82", "#1a190f"),
+    paletteOption("hair.iron_brown", "Iron Brown", "A deep iron-brown hair tone.", "#5f4d42"),
+    paletteOption("hair.ash_blonde", "Ash Blonde", "A cold pale-blonde hair tone.", "#d4c7a7", "#1d180e")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.bright_teal", "Bright Teal", "A bright teal gaze.", "#4aa0a2"),
+    paletteOption("eyes.vivid_green", "Vivid Green", "A bright green gaze.", "#5ca045"),
+    paletteOption("eyes.river_blue", "River Blue", "A cool river-blue gaze.", "#72a0d0", "#102032"),
+    paletteOption("eyes.sulfur_gold", "Sulfur Gold", "A sharp sulfur-gold gaze.", "#c8aa41", "#1f1707"),
+    paletteOption("eyes.amber_green", "Amber Green", "Green eyes with amber light.", "#899b46", "#1e1808"),
+    paletteOption("eyes.storm_blue", "Storm Blue", "A steely storm-blue gaze.", "#6983ac", "#102032"),
+    paletteOption("eyes.ember_amber", "Ember Amber", "Amber eyes with ember-red warmth.", "#c6783d"),
+    paletteOption("eyes.pale_gray", "Pale Gray", "A pale gray gaze.", "#c2c7c7", "#182020"),
+    paletteOption("eyes.red_umber", "Red Umber", "A dark red-brown gaze.", "#8a4b3d")
+  ]
+};
 
 const HALF_ORC_SKIN = [
   paletteOption("skin.bronze", "Bronze", "Warm bronze skin.", "#ae8259", "#23150d"),
@@ -928,6 +1261,42 @@ const HALF_ORC_EYES = [
   paletteOption("eyes.ice", "Ice", "Pale icy eyes.", "#c7d7e6", "#14202c")
 ] as const;
 
+const HALF_ORC_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.pale_ochre", "Pale Ochre", "A pale ochre complexion.", "#c2b07a", "#1d180d"),
+    paletteOption("skin.sun_olive", "Sun Olive", "A brighter olive complexion.", "#9f935e", "#1b190c"),
+    paletteOption("skin.khaki", "Khaki", "A muted khaki-tan complexion.", "#b7a06f", "#1f180d"),
+    paletteOption("skin.red_clay", "Red Clay", "A warm red-clay complexion.", "#ad7153"),
+    paletteOption("skin.warm_sienna", "Warm Sienna", "A sienna-brown complexion with red warmth.", "#8b5a43"),
+    paletteOption("skin.dark_olive", "Dark Olive", "A deep olive-brown complexion.", "#67613f"),
+    paletteOption("skin.stone_tan", "Stone Tan", "A weathered tan complexion.", "#b18d68", "#221508"),
+    paletteOption("skin.golden_brown", "Golden Brown", "A warm golden-brown complexion.", "#9f744e"),
+    paletteOption("skin.night_umber", "Night Umber", "A deep shadowed umber complexion.", "#49372c")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.bronze_red", "Bronze Red", "A bronze-red hair tone.", "#a85c38"),
+    paletteOption("hair.ember_orange", "Ember Orange", "A bright ember-orange hair tone.", "#ca6732"),
+    paletteOption("hair.tawny_gold", "Tawny Gold", "A tawny golden hair tone.", "#c49a58", "#211607"),
+    paletteOption("hair.charcoal_red", "Charcoal Red", "Dark hair with red cast.", "#4e2625"),
+    paletteOption("hair.rusty_copper", "Rusty Copper", "A rusty copper hair tone.", "#b8643e"),
+    paletteOption("hair.pale_steel", "Pale Steel", "A pale steel-gray hair tone.", "#b9c0c6", "#17202a"),
+    paletteOption("hair.cedar_brown", "Cedar Brown", "A warm cedar-brown hair tone.", "#7b5037"),
+    paletteOption("hair.blood_russet", "Blood Russet", "A deep red-russet hair tone.", "#833c31"),
+    paletteOption("hair.straw_blonde", "Straw Blonde", "A dry straw-blonde hair tone.", "#d7bf81", "#21180a")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.emerald", "Emerald", "A bright emerald-green gaze.", "#3f9a57"),
+    paletteOption("eyes.cobalt", "Cobalt", "A rare bright cobalt-blue gaze.", "#4a72cd", "#102032"),
+    paletteOption("eyes.viridian", "Viridian", "A strong viridian-green gaze.", "#3f9a72"),
+    paletteOption("eyes.fire_amber", "Fire Amber", "A bright fire-amber gaze.", "#d78f45", "#221607"),
+    paletteOption("eyes.bright_hazel", "Bright Hazel", "Hazel eyes with hard gold light.", "#ad8342", "#211507"),
+    paletteOption("eyes.slate_blue", "Slate Blue", "A cool slate-blue gaze.", "#6e8cbb", "#102032"),
+    paletteOption("eyes.sun_yellow", "Sun Yellow", "A sharp yellow gaze.", "#d3b548", "#1f1707"),
+    paletteOption("eyes.steel_gray", "Steel Gray", "A hard steel-gray gaze.", "#aab4bf", "#15202b"),
+    paletteOption("eyes.sea_green", "Sea Green", "A rare sea-green gaze.", "#51958c")
+  ]
+};
+
 const HALF_GOBLIN_SKIN = [
   paletteOption("skin.pale_moss", "Pale Moss", "Muted green-beige skin.", "#a7a478", "#17180d"),
   paletteOption("skin.loam", "Loam Tan", "Brown-tan skin.", "#a07854"),
@@ -973,6 +1342,42 @@ const HALF_GOBLIN_EYES = [
   paletteOption("eyes.violet", "Violet", "Uncommon violet eyes.", "#7a63aa")
 ] as const;
 
+const HALF_GOBLIN_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.moss_cream", "Moss Cream", "A pale cream complexion with moss-green cast.", "#c6c19d", "#1b190f"),
+    paletteOption("skin.yellow_olive", "Yellow Olive", "A brighter yellow-olive complexion.", "#aaa05d", "#1d1808"),
+    paletteOption("skin.clay_green", "Clay Green", "A clay complexion with green undertones.", "#87725a"),
+    paletteOption("skin.brown_reed", "Brown Reed", "A reed-brown complexion.", "#9a825a", "#1f180c"),
+    paletteOption("skin.storm_olive", "Storm Olive", "A cool storm-dark olive complexion.", "#6e6b51"),
+    paletteOption("skin.peat_green", "Peat Green", "A dark peat-green complexion.", "#555642"),
+    paletteOption("skin.pale_tan", "Pale Tan", "A pale tan complexion.", "#c2a07a", "#221508"),
+    paletteOption("skin.marsh_gold", "Marsh Gold", "A muted marsh-gold complexion.", "#a49463", "#1e180b"),
+    paletteOption("skin.dark_loam", "Dark Loam", "A dark loam-brown complexion.", "#5a473a")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.orange_rust", "Orange Rust", "A vivid rust-orange hair tone.", "#c96f39"),
+    paletteOption("hair.copper_wire", "Copper Wire", "A bright wiry copper hair tone.", "#bb6035"),
+    paletteOption("hair.sun_brass", "Sun Brass", "A bright brass-gold hair tone.", "#d2ae5d", "#211607"),
+    paletteOption("hair.faded_orange", "Faded Orange", "A dry faded-orange hair tone.", "#d0895c"),
+    paletteOption("hair.berry_red", "Berry Red", "A strong berry-red hair tone.", "#9c4450"),
+    paletteOption("hair.lake_blue", "Lake Blue", "A rare bright lake-blue hair tone.", "#538ab3", "#122032"),
+    paletteOption("hair.hedge_green", "Hedge Green", "A lively hedge-green hair tone.", "#708952"),
+    paletteOption("hair.pale_teal", "Pale Teal", "A pale teal hair tone.", "#82afb0", "#152020"),
+    paletteOption("hair.smoke_blonde", "Smoke Blonde", "A pale smoke-blonde hair tone.", "#d6c1a0", "#1d180f")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.vivid_green", "Vivid Green", "A bright sharp-green gaze.", "#58af44"),
+    paletteOption("eyes.bright_blue", "Bright Blue", "A bright rare blue gaze.", "#4b8bdd", "#102032"),
+    paletteOption("eyes.lime_gold", "Lime Gold", "A yellow-green gaze with gold brightness.", "#b5bf46", "#1e1707"),
+    paletteOption("eyes.aqua", "Aqua", "A bright aqua gaze.", "#64c0c8", "#12202a"),
+    paletteOption("eyes.ember_red", "Ember Red", "A hot ember-red gaze.", "#b64a3d"),
+    paletteOption("eyes.honey", "Honey", "A warm honey-brown gaze.", "#c38d46", "#211507"),
+    paletteOption("eyes.emerald", "Emerald", "A rich emerald-green gaze.", "#3e9d5b"),
+    paletteOption("eyes.ice_gray", "Ice Gray", "A pale icy-gray gaze.", "#bcc7d6", "#15202b"),
+    paletteOption("eyes.bright_violet", "Bright Violet", "A bright violet gaze.", "#8a63c5")
+  ]
+};
+
 const HALF_MERFOLK_SKIN = [
   paletteOption("skin.pearl", "Pearl", "Pale skin with sea-light undertones.", "#e6ddd1", "#261d16"),
   paletteOption("skin.tide", "Tide Bronze", "Soft bronze skin.", "#bf9466", "#26160c"),
@@ -1017,67 +1422,120 @@ const HALF_MERFOLK_EYES = [
   paletteOption("eyes.gold", "Gold", "Sunlit gold eyes.", "#d8b45a", "#221808"),
   paletteOption("eyes.indigo", "Indigo", "Deep indigo eyes.", "#4b5f93")
 ] as const;
+
+const HALF_MERFOLK_PALETTE_EXPANSION: LineagePaletteExpansion = {
+  skinToneOptions: [
+    paletteOption("skin.shell_rose", "Shell Rose", "A pale shell complexion with rose warmth.", "#ead2c8", "#251711"),
+    paletteOption("skin.foam_pale", "Foam Pale", "A pale sea-foam complexion.", "#d9e0db", "#18201b"),
+    paletteOption("skin.brine_olive", "Brine Olive", "A muted olive complexion with sea-cast.", "#9ca489", "#18190f"),
+    paletteOption("skin.sun_coral", "Sun Coral", "A bright coral-tan complexion.", "#d59b82", "#24140f"),
+    paletteOption("skin.bright_tide", "Bright Tide", "A light cool-tan complexion.", "#c7b59d", "#201914"),
+    paletteOption("skin.reef_bronze", "Reef Bronze", "A bronze complexion with sea warmth.", "#a67859"),
+    paletteOption("skin.blue_sand", "Blue Sand", "A cool sand complexion with blue undertones.", "#b8b7ba", "#171a1c"),
+    paletteOption("skin.deep_coral", "Deep Coral", "A darker coral-brown complexion.", "#956556"),
+    paletteOption("skin.pale_aqua", "Pale Aqua", "A pale complexion with faint aqua cast.", "#d6dfdd", "#17201d")
+  ],
+  hairColorOptions: [
+    paletteOption("hair.bright_coral", "Bright Coral", "A bright coral-red hair tone.", "#d77767"),
+    paletteOption("hair.sunset_orange", "Sunset Orange", "A bright orange-gold hair tone.", "#d6894b"),
+    paletteOption("hair.sea_red", "Sea Red", "A vivid red hair tone.", "#b64f42"),
+    paletteOption("hair.kelp_black", "Kelp Black", "A dark black hair tone with green cast.", "#17201b"),
+    paletteOption("hair.bright_aqua", "Bright Aqua", "A bright aqua-blue hair tone.", "#69bccc", "#11202c"),
+    paletteOption("hair.sapphire", "Sapphire", "A rich sapphire-blue hair tone.", "#3563b2", "#102032"),
+    paletteOption("hair.mint", "Mint", "A pale mint-green hair tone.", "#95c8bb", "#13201b"),
+    paletteOption("hair.pearl_blonde", "Pearl Blonde", "A pale pearl-blonde hair tone.", "#e6d8b3", "#201707"),
+    paletteOption("hair.rose_gold", "Rose Gold", "A warm rose-gold hair tone.", "#d0968d", "#24140f")
+  ],
+  eyeColorOptions: [
+    paletteOption("eyes.vivid_sapphire", "Vivid Sapphire", "A bright sapphire-blue gaze.", "#4d85e1", "#102032"),
+    paletteOption("eyes.sea_emerald", "Sea Emerald", "A bright sea-emerald gaze.", "#3fa28b"),
+    paletteOption("eyes.bright_aqua", "Bright Aqua", "A bright aqua gaze.", "#65cbd0", "#13202a"),
+    paletteOption("eyes.crystal_blue", "Crystal Blue", "A pale crystal-blue gaze.", "#9fd5ef", "#112032"),
+    paletteOption("eyes.coral_amber", "Coral Amber", "A warm coral-amber gaze.", "#d58d5d", "#221507"),
+    paletteOption("eyes.sun_gold", "Sun Gold", "A bright sun-gold gaze.", "#deb85b", "#221707"),
+    paletteOption("eyes.deep_violet", "Deep Violet", "A deep sea-violet gaze.", "#7b67aa"),
+    paletteOption("eyes.silver_blue", "Silver Blue", "A pale silver-blue gaze.", "#b1c6df", "#14202c"),
+    paletteOption("eyes.bright_turquoise", "Bright Turquoise", "A bright turquoise gaze.", "#49b7b4")
+  ]
+};
+
+function applyLineagePaletteExpansion(
+  seed: LineageIdentitySeed,
+  expansion?: LineagePaletteExpansion
+): LineageIdentitySeed {
+  if (!expansion) {
+    return seed;
+  }
+
+  return {
+    ...seed,
+    skinToneOptions: [...seed.skinToneOptions, ...expansion.skinToneOptions],
+    hairColorOptions: [...seed.hairColorOptions, ...expansion.hairColorOptions],
+    eyeColorOptions: [...seed.eyeColorOptions, ...expansion.eyeColorOptions]
+  };
+}
+
 const LINEAGE_IDENTITY_SEEDS: Record<string, LineageIdentitySeed> = {
-  "lineage.human": {
+  "lineage.human": applyLineagePaletteExpansion({
     heightRangeCm: [157, 188],
     skinToneOptions: [...COMMON_SKIN_TONES],
     hairColorOptions: [...HUMAN_HAIR],
     eyeColorOptions: [...HUMAN_EYES]
-  },
-  "lineage.dwarf": {
+  }, HUMAN_PALETTE_EXPANSION),
+  "lineage.dwarf": applyLineagePaletteExpansion({
     heightRangeCm: [129, 151],
     skinToneOptions: [...DWARVEN_SKIN],
     hairColorOptions: [...DWARVEN_HAIR],
     eyeColorOptions: [...DWARVEN_EYES]
-  },
-  "lineage.gnome": {
+  }, DWARVEN_PALETTE_EXPANSION),
+  "lineage.gnome": applyLineagePaletteExpansion({
     heightRangeCm: [118, 138],
     skinToneOptions: [...GNOMISH_SKIN],
     hairColorOptions: [...GNOMISH_HAIR],
     eyeColorOptions: [...GNOMISH_EYES]
-  },
-  "lineage.halfling": {
+  }, GNOMISH_PALETTE_EXPANSION),
+  "lineage.halfling": applyLineagePaletteExpansion({
     heightRangeCm: [102, 124],
     skinToneOptions: [...HALFLING_SKIN],
     hairColorOptions: [...HALFLING_HAIR],
     eyeColorOptions: [...HALFLING_EYES]
-  },
-  "lineage.elf": {
+  }, HALFLING_PALETTE_EXPANSION),
+  "lineage.elf": applyLineagePaletteExpansion({
     heightRangeCm: [165, 193],
     skinToneOptions: [...ELVEN_SKIN],
     hairColorOptions: [...ELVEN_HAIR],
     eyeColorOptions: [...ELVEN_EYES]
-  },
-  "lineage.dark_elf": {
+  }, ELVEN_PALETTE_EXPANSION),
+  "lineage.dark_elf": applyLineagePaletteExpansion({
     heightRangeCm: [160, 189],
     skinToneOptions: [...DARK_ELF_SKIN],
     hairColorOptions: [...DARK_ELF_HAIR],
     eyeColorOptions: [...DARK_ELF_EYES]
-  },
-  "lineage.half_troll": {
+  }, DARK_ELF_PALETTE_EXPANSION),
+  "lineage.half_troll": applyLineagePaletteExpansion({
     heightRangeCm: [174, 205],
     skinToneOptions: [...HALF_TROLL_SKIN],
     hairColorOptions: [...HALF_TROLL_HAIR],
     eyeColorOptions: [...HALF_TROLL_EYES]
-  },
-  "lineage.half_orc": {
+  }, HALF_TROLL_PALETTE_EXPANSION),
+  "lineage.half_orc": applyLineagePaletteExpansion({
     heightRangeCm: [166, 196],
     skinToneOptions: [...HALF_ORC_SKIN],
     hairColorOptions: [...HALF_ORC_HAIR],
     eyeColorOptions: [...HALF_ORC_EYES]
-  },
-  "lineage.half_goblin": {
+  }, HALF_ORC_PALETTE_EXPANSION),
+  "lineage.half_goblin": applyLineagePaletteExpansion({
     heightRangeCm: [146, 173],
     skinToneOptions: [...HALF_GOBLIN_SKIN],
     hairColorOptions: [...HALF_GOBLIN_HAIR],
     eyeColorOptions: [...HALF_GOBLIN_EYES]
-  },
-  "lineage.half_merfolk": {
+  }, HALF_GOBLIN_PALETTE_EXPANSION),
+  "lineage.half_merfolk": applyLineagePaletteExpansion({
     heightRangeCm: [158, 187],
     skinToneOptions: [...HALF_MERFOLK_SKIN],
     hairColorOptions: [...HALF_MERFOLK_HAIR],
     eyeColorOptions: [...HALF_MERFOLK_EYES]
-  }
+  }, HALF_MERFOLK_PALETTE_EXPANSION)
 };
 
 const LINEAGE_PRESENTATIONS: Record<string, LineagePresentation> = {
@@ -1809,93 +2267,6 @@ const NAME_POOLS: Record<string, NamePool> = {
   }
 };
 
-const BACKSTORY_ARCHETYPE_ORDER: BackstoryArchetypeId[] = [
-  "local",
-  "vagabond",
-  "exile",
-  "merchant",
-  "craftsman",
-  "performer",
-  "minor_noble"
-];
-
-const BACKSTORY_MECHANICS: Record<BackstoryArchetypeId, BackstoryMechanics> = {
-  local: {
-    startAccessProfileId: "background.harbor_runner",
-    jobId: "job.local_born",
-    attributeAdjustments: { WIS: 1, CHA: 1 },
-    skillBonuses: [skill("skill.story.community_ties", 1)],
-    traitIds: ["trait.story.known_face", "trait.story.modest_holding"],
-    inventoryBonuses: [stack("modest_holding_deed", 1), stack("work_clothes", 1), stack("food_rations", 3)],
-    currencyBonus: { gold: 18, silver: 4, copper: 0 },
-    passiveBonusLabel:
-      "Known Face: Increase fame gain and wages by 5% in the local area, and decrease action time there by 10%."
-  },
-  vagabond: {
-    startAccessProfileId: "background.wayfinder_apprentice",
-    jobId: "job.vagabond",
-    attributeAdjustments: { AGI: 1, WIS: 1 },
-    skillBonuses: [skill("skill.story.scavenge", 1)],
-    traitIds: ["trait.story.road_hardened", "trait.story.worn_mount"],
-    inventoryBonuses: [stack("worn_mount", 1), stack("bedroll", 1), stack("flint_and_tinder", 1)],
-    currencyBonus: { gold: 8, silver: 2, copper: 0 },
-    passiveBonusLabel: "Road-Hardened: Reduced survival penalties."
-  },
-  exile: {
-    startAccessProfileId: "background.wayfinder_apprentice",
-    jobId: "job.exile",
-    attributeAdjustments: { CON: 1, WIS: 1 },
-    skillBonuses: [skill("skill.story.endure", 1)],
-    traitIds: ["trait.story.marked", "trait.story.exile_heirloom"],
-    inventoryBonuses: [stack("exile_heirloom", 1), stack("worn_clothing", 1), stack("food_rations", 1)],
-    currencyBonus: { gold: 0, silver: 0, copper: 0 },
-    passiveBonusLabel: "Marked: Higher suspicion, stronger intimidation."
-  },
-  merchant: {
-    startAccessProfileId: "background.ledger_apprentice",
-    jobId: "job.merchant_house",
-    attributeAdjustments: { INT: 1, CHA: 1 },
-    skillBonuses: [skill("skill.story.barter", 1)],
-    traitIds: ["trait.story.appraiser"],
-    inventoryBonuses: [stack("market_stall_permit", 1), stack("ledger_and_writing_tools", 1), stack("travel_clothes", 1)],
-    currencyBonus: { gold: 36, silver: 8, copper: 0 },
-    passiveBonusLabel:
-      "Appraiser: Can estimate item value and avoid being overcharged or underpaid."
-  },
-  craftsman: {
-    startAccessProfileId: "background.ledger_apprentice",
-    jobId: "job.apprentice_craftsman",
-    attributeAdjustments: { DEX: 1, INT: 1 },
-    skillBonuses: [skill("skill.story.field_repair", 1)],
-    traitIds: ["trait.story.skilled_hands"],
-    inventoryBonuses: [stack("trade_tools", 1), stack("raw_materials", 1), stack("durable_work_clothes", 1)],
-    currencyBonus: { gold: 20, silver: 5, copper: 0 },
-    passiveBonusLabel:
-      "Skilled Hands: Items you craft have slightly improved durability or quality."
-  },
-  performer: {
-    startAccessProfileId: "background.ledger_apprentice",
-    jobId: "job.performer",
-    attributeAdjustments: { CHA: 1, DEX: 1 },
-    skillBonuses: [skill("skill.story.perform", 1)],
-    traitIds: ["trait.story.captivating_presence", "trait.story.performers_guild_token"],
-    inventoryBonuses: [stack("performers_guild_token", 1), stack("performance_focus", 1), stack("themed_outfit", 1)],
-    currencyBonus: { gold: 24, silver: 9, copper: 0 },
-    passiveBonusLabel: "Captivating Presence: Improved success in social and crowd-based interactions."
-  },
-  minor_noble: {
-    startAccessProfileId: "background.ledger_apprentice",
-    jobId: "job.minor_noble",
-    attributeAdjustments: { CHA: 1, WIS: 1 },
-    skillBonuses: [skill("skill.story.invoke_status", 1)],
-    traitIds: ["trait.story.noble_bearing", "trait.story.signet_of_standing"],
-    inventoryBonuses: [stack("signet_ring_of_standing", 1), stack("fine_clothing_house_colors", 1), stack("letter_of_introduction", 1)],
-    currencyBonus: { gold: 60, silver: 12, copper: 0 },
-    passiveBonusLabel:
-      "Noble Bearing: Strong advantage in formal, structured, and hierarchical interactions."
-  }
-};
-
 function getSettlementLabel(selectedWorld?: ResolvedWorldSelection | null): string {
   return selectedWorld?.settlement.label ?? "the chosen city";
 }
@@ -2079,7 +2450,7 @@ function buildNarrative(
           : `You were raised in ${settlementLabel}, where family, place, and memory are tightly braided together.`,
         narrativeParagraphs: [
           `You were born here. ${flavor.localFamily}. Your upbringing was shaped by ${flavor.localUpbringing}, and by the quiet certainty that this place would always know your face before it knew your ambitions. ${uncommon ? getUncommonContext("local", lineageId, selectedWorld) : ""}`,
-          `${settlementLabel} is known for ${opportunity}, and no one needs to explain that promise to you. As childhood gives way to adulthood, roots alone no longer feel like enough. You stand ready to choose a real path with home beneath your feet instead of rumor beneath your boots.`
+          `${settlementLabel} is known for ${opportunity}, and no one needs to explain that promise to you. As childhood gives way to adulthood, roots alone no longer feel like enough. You stand ready to choose the life you will begin with home beneath your feet instead of rumor beneath your boots.`
         ],
         worldHookLine: `You know ${settlementLabel} from the inside and understand what life in ${regionLabel} truly asks of its people.`
       };
@@ -2167,7 +2538,146 @@ export const lineageOptions: CharacterCreationOption[] = PLAYABLE_LINEAGE_IDS.ma
   };
 });
 
-export const pathOptions: CharacterCreationOption[] = Object.values(PATH_TEMPLATES).map((template) => ({
+type BackstoryContentRecord = (typeof backstoryCatalogData.records)[number];
+type StartingBundleContentRecord = (typeof startingBundleCatalogData.records)[number];
+
+const BACKSTORY_STARTING_ABILITY_ALLOWLIST: Record<string, readonly string[]> = {
+  "backstory.village_hunter": ["ability.ranged.quick_shot"],
+  "backstory.military_brat": ["ability.command.hold_formation"]
+};
+
+const skillNameById = new Map(skillCatalogData.records.map((record) => [record.id, record.name]));
+const abilityNameById = new Map(abilityCatalogData.records.map((record) => [record.id, record.name]));
+const abilityCategoryById = new Map(
+  abilityCatalogData.records.map((record) => [record.id, record.category as PlayerAbilityCategory])
+);
+const itemRecordById = new Map(itemCatalogData.records.map((record) => [record.id, record]));
+const knowledgeTrackNameById = new Map(knowledgeTrackCatalogData.records.map((record) => [record.id, record.name ?? record.id]));
+
+function humanizeRecordId(value: string): string {
+  const segments = value.split(".");
+  const lastSegment = segments[segments.length - 1] ?? value;
+
+  return lastSegment
+    .split("_")
+    .filter((segment) => segment.length > 0)
+    .map((segment) => segment[0]!.toUpperCase() + segment.slice(1))
+    .join(" ");
+}
+
+function formatCurrencySummary(currency: PlayerCurrencyState): string {
+  const parts = [
+    currency.gold > 0 ? `${currency.gold}g` : null,
+    currency.silver > 0 ? `${currency.silver}s` : null,
+    currency.copper > 0 ? `${currency.copper}c` : null
+  ].filter((value): value is string => value !== null);
+
+  return parts.length > 0 ? parts.join(" ") : "No coin";
+}
+
+function toItemKey(itemId: string): string {
+  return itemId.split(".").pop() ?? itemId;
+}
+
+function toInventoryStack(itemId: string, quantity: number): InventoryStack {
+  return {
+    itemId,
+    itemKey: toItemKey(itemId),
+    quantity
+  };
+}
+
+function formatItemLabel(itemId: string, quantity: number): string {
+  const name = itemRecordById.get(itemId)?.name ?? humanizeRecordId(itemId);
+  return quantity > 1 ? `${name} x${quantity}` : name;
+}
+
+function formatSkillLabel(skillId: string, rank: number): string {
+  return `${skillNameById.get(skillId) ?? humanizeRecordId(skillId)} ${rank}`;
+}
+
+function formatKnowledgeLabel(trackId: string, level: number): string {
+  return `${knowledgeTrackNameById.get(trackId) ?? humanizeRecordId(trackId)} ${level}`;
+}
+
+function buildBackstoryTemplateFromContent(record: BackstoryContentRecord): StarterBackstoryTemplate {
+  const startingSkills = record.startingSkills.map((entry) => ({
+    id: entry.skillId,
+    rank: entry.level,
+    source: "trained" as const
+  }));
+  const startingKnowledge = (record.startingKnowledge ?? []).map((entry) => ({
+    trackId: entry.trackId,
+    level: entry.level
+  }));
+  const startingAbilityIds = [...(record.startingAbilityIds ?? [])];
+  const startingSkillLabels = startingSkills.map((entry) => formatSkillLabel(entry.id, entry.rank));
+  const startingKnowledgeLabels = startingKnowledge.map((entry) => formatKnowledgeLabel(entry.trackId, entry.level));
+  const startingAbilityLabels = startingAbilityIds.map((abilityId) => abilityNameById.get(abilityId) ?? humanizeRecordId(abilityId));
+
+  return {
+    id: record.id,
+    label: record.name,
+    description: record.summary,
+    notes: [
+      startingSkillLabels.length > 0 ? `Skills: ${startingSkillLabels.slice(0, 3).join(", ")}` : "Skills: None",
+      startingKnowledgeLabels.length > 0 ? `Knowledge: ${startingKnowledgeLabels.join(", ")}` : "Knowledge: None",
+      ...(startingAbilityLabels.length > 0 ? [`Ability: ${startingAbilityLabels[0]}`] : [])
+    ],
+    summaryText: record.summary,
+    detailText: record.description,
+    startingSkills,
+    startingKnowledge,
+    startingAbilityIds,
+    startingSkillLabels,
+    startingKnowledgeLabels,
+    startingAbilityLabels
+  };
+}
+
+function buildStartingBundleTemplateFromContent(record: StartingBundleContentRecord): StartingBundleTemplate {
+  const fixedItems = (record.fixedItems ?? []).map((entry) => toInventoryStack(entry.itemId, entry.quantity));
+  const fixedItemLabels = fixedItems.map((entry) => formatItemLabel(entry.itemId, entry.quantity));
+  const choiceGroups = (record.choiceGroups ?? []).map((group) => ({
+    id: group.id,
+    label: group.label,
+    options: group.options.map((entry) => toInventoryStack(entry.itemId, entry.quantity)),
+    optionLabels: group.options.map((entry) => formatItemLabel(entry.itemId, entry.quantity))
+  }));
+  const startingCurrency = record.startingCurrency ?? { gold: 0, silver: 0, copper: 0 };
+
+  return {
+    id: record.id,
+    label: record.name,
+    description: record.summary,
+    notes: [
+      ...(fixedItemLabels.length > 0 ? [`Fixed: ${fixedItemLabels.slice(0, 3).join(", ")}`] : []),
+      ...choiceGroups.map((group) => `${group.label}: ${group.optionLabels.join(" / ")}`),
+      `Coin: ${formatCurrencySummary(startingCurrency)}`
+    ],
+    fixedItems,
+    fixedItemLabels,
+    choiceGroups,
+    startingCurrency
+  };
+}
+
+const BACKSTORY_TEMPLATES: Record<string, StarterBackstoryTemplate> = Object.fromEntries(
+  backstoryCatalogData.records.map((record) => [record.id, buildBackstoryTemplateFromContent(record)])
+);
+
+const STARTING_BUNDLE_TEMPLATES: Record<string, StartingBundleTemplate> = Object.fromEntries(
+  startingBundleCatalogData.records.map((record) => [record.id, buildStartingBundleTemplateFromContent(record)])
+);
+
+export const startingBundleOptions: CharacterCreationOption[] = Object.values(STARTING_BUNDLE_TEMPLATES).map((template) => ({
+  id: template.id,
+  label: template.label,
+  description: template.description,
+  notes: template.notes
+}));
+
+export const backstoryOptions: CharacterCreationOption[] = Object.values(BACKSTORY_TEMPLATES).map((template) => ({
   id: template.id,
   label: template.label,
   description: template.description,
@@ -2238,18 +2748,165 @@ export function isKnownLineageId(lineageId: string): boolean {
   return lineageId in PLAYER_LINEAGE_PROFILES && lineageId in LINEAGE_IDENTITY_SEEDS;
 }
 
-export function isKnownPathId(pathId: string): boolean {
-  return pathId in PATH_TEMPLATES;
+export function isKnownStartingBundleId(startingBundleId: string): boolean {
+  return startingBundleId in STARTING_BUNDLE_TEMPLATES;
 }
 
-export function getPathTemplate(classId: string): StarterClassTemplate {
-  return PATH_TEMPLATES[classId] ?? PATH_TEMPLATES[PATH_TEMPLATE_FALLBACK]!;
+export function isKnownBackstoryId(backstoryId: string): boolean {
+  return backstoryId in BACKSTORY_TEMPLATES;
 }
 
-export function getPathAttributeAdjustments(
-  classId: string
-): PlayerAttributeAdjustments {
-  return buildAttributeAdjustmentsFromTemplate(getPathTemplate(classId).baseAttributes);
+export function getStartingBundleTemplate(startingBundleId: string): StartingBundleTemplate {
+  const template = STARTING_BUNDLE_TEMPLATES[startingBundleId];
+
+  if (!template) {
+    throw new Error(`Unknown starting bundle '${startingBundleId}'.`);
+  }
+
+  return template;
+}
+
+export function createDefaultStartingBundleChoiceSelections(
+  startingBundleId: string
+): StartingBundleChoiceSelections {
+  const bundle = getStartingBundleTemplate(startingBundleId);
+
+  return Object.fromEntries(
+    bundle.choiceGroups
+      .map((group) => {
+        const firstOption = group.options[0];
+        return firstOption ? [group.id, firstOption.itemId] : null;
+      })
+      .filter((entry): entry is [string, string] => entry !== null)
+  );
+}
+
+export function validateStartingBundleChoiceSelections(
+  startingBundleId: string,
+  choiceSelections: StartingBundleChoiceSelections
+): string | null {
+  const bundle = getStartingBundleTemplate(startingBundleId);
+  const expectedGroupIds = new Set(bundle.choiceGroups.map((group) => group.id));
+
+  for (const groupId of Object.keys(choiceSelections)) {
+    if (!expectedGroupIds.has(groupId)) {
+      return "Selected starting bundle choices are no longer valid for this bundle.";
+    }
+  }
+
+  for (const group of bundle.choiceGroups) {
+    const selectedItemId = choiceSelections[group.id];
+
+    if (typeof selectedItemId !== "string" || selectedItemId.trim().length === 0) {
+      return `Choose a valid option for ${group.label}.`;
+    }
+
+    if (!group.options.some((option) => option.itemId === selectedItemId)) {
+      return `Choose a canonical option for ${group.label}.`;
+    }
+  }
+
+  return null;
+}
+
+export function hasValidStartingBundleChoiceSelections(
+  startingBundleId: string,
+  choiceSelections: StartingBundleChoiceSelections
+): boolean {
+  try {
+    return validateStartingBundleChoiceSelections(startingBundleId, choiceSelections) === null;
+  } catch {
+    return false;
+  }
+}
+
+export function getStartingBundleSelectedStacks(
+  startingBundleId: string,
+  choiceSelections: StartingBundleChoiceSelections
+): InventoryStack[] {
+  const bundle = getStartingBundleTemplate(startingBundleId);
+  const validationError = validateStartingBundleChoiceSelections(
+    startingBundleId,
+    choiceSelections
+  );
+
+  if (validationError) {
+    throw new Error(validationError);
+  }
+
+  return [
+    ...bundle.fixedItems.map((item) => ({ ...item })),
+    ...bundle.choiceGroups.map((group) => {
+      const selectedItemId = choiceSelections[group.id]!;
+      const selectedOption = group.options.find((option) => option.itemId === selectedItemId);
+
+      if (!selectedOption) {
+        throw new Error(`Selected bundle option '${selectedItemId}' is not valid for ${group.label}.`);
+      }
+
+      return { ...selectedOption };
+    })
+  ];
+}
+
+export function getStartingBundleItemLabels(
+  startingBundleId: string,
+  choiceSelections: StartingBundleChoiceSelections
+): string[] {
+  const bundle = getStartingBundleTemplate(startingBundleId);
+  const validationError = validateStartingBundleChoiceSelections(
+    startingBundleId,
+    choiceSelections
+  );
+
+  if (validationError) {
+    throw new Error(validationError);
+  }
+
+  return [
+    ...bundle.fixedItemLabels,
+    ...bundle.choiceGroups.map((group) => {
+      const selectedItemId = choiceSelections[group.id]!;
+      const selectedOptionIndex = group.options.findIndex((option) => option.itemId === selectedItemId);
+
+      if (selectedOptionIndex < 0) {
+        throw new Error(`Selected bundle option '${selectedItemId}' is not valid for ${group.label}.`);
+      }
+
+      return (
+        group.optionLabels[selectedOptionIndex] ??
+        formatItemLabel(selectedItemId, group.options[selectedOptionIndex]?.quantity ?? 1)
+      );
+    })
+  ];
+}
+
+export function getStartingAbilityStates(backstoryId: string): PlayerAbilityState[] {
+  const template = getBackstoryTemplate(backstoryId);
+  const allowedAbilityIds = new Set(
+    BACKSTORY_STARTING_ABILITY_ALLOWLIST[backstoryId] ?? []
+  );
+
+  return template.startingAbilityIds.flatMap((abilityId) => {
+    if (!allowedAbilityIds.has(abilityId)) {
+      throw new Error(`Backstory '${backstoryId}' cannot grant starting ability '${abilityId}'.`);
+    }
+
+    const category = abilityCategoryById.get(abilityId);
+
+    if (!category) {
+      throw new Error(`Starting ability '${abilityId}' is missing canonical category data.`);
+    }
+
+    return [
+      {
+        id: abilityId,
+        category,
+        rank: 1,
+        source: "learned" as const
+      }
+    ];
+  });
 }
 
 export function getLineageBaseAttributes(lineageId: string): PlayerAttributes {
@@ -2273,6 +2930,7 @@ export function getLineageIdentityCatalog(lineageId: string): LineageIdentityCat
     lineageLabel: profile.name,
     heightRangeCm: seed.heightRangeCm,
     heightBands: HEIGHT_BANDS,
+    ageBands: AGE_BANDS,
     buildOptions: BUILD_OPTIONS,
     skinToneOptions: sortIdentityPaletteOptions(seed.skinToneOptions, "skin"),
     hairColorOptions: sortIdentityPaletteOptions(seed.hairColorOptions, "hair"),
@@ -2313,6 +2971,41 @@ export function getHeightBandAttributeAdjustments(
   return HEIGHT_BANDS.find((option) => option.id === heightBandId)?.attributeAdjustments ?? {};
 }
 
+export function getAgeBandLabel(ageBandId: AgeBandId | "" | null): string | null {
+  if (!ageBandId) {
+    return null;
+  }
+
+  return AGE_BANDS.find((option) => option.id === ageBandId)?.label ?? null;
+}
+
+export function getAgeBandRangeLabel(
+  lineageId: string,
+  sexId: Extract<PlayerSexId, "male" | "female"> | "",
+  ageBandId: AgeBandId | "" | null
+): string | null {
+  if (!ageBandId) {
+    return null;
+  }
+
+  const resolvedSex = sexId === "female" ? "female" : "male";
+  const range =
+    LINEAGE_AGE_RANGES[lineageId]?.[resolvedSex]?.[ageBandId] ??
+    LINEAGE_AGE_RANGES["lineage.human"]?.[resolvedSex]?.[ageBandId];
+
+  if (!range) {
+    return null;
+  }
+
+  return `${range[0]}-${range[1]} years`;
+}
+
+export function getAgeBandAttributeAdjustments(
+  ageBandId: AgeBandId | "" | null
+): PlayerAttributeAdjustments {
+  return AGE_BANDS.find((option) => option.id === ageBandId)?.attributeAdjustments ?? {};
+}
+
 export function getBuildLabel(
   buildId: PlayerIdentityBuildId | "" | null
 ): string | null {
@@ -2342,27 +3035,21 @@ export function getIdentityOptionLabel(
   return catalog[collectionKey].find((option) => option.id === optionId)?.label ?? null;
 }
 
-export function isCompatibleBackstorySelection(lineageId: string, backgroundId: string): boolean {
-  const parsed = parseBackstoryId(backgroundId);
-  return parsed !== null && parsed.lineageId === lineageId;
-}
-
-export function getBackstoryStartAccessProfileId(backgroundId: string): string {
-  const parsed = parseBackstoryId(backgroundId);
-  return parsed
-    ? BACKSTORY_MECHANICS[parsed.archetypeId].startAccessProfileId
-    : "background.wayfinder_apprentice";
+export function isCompatibleBackstorySelection(lineageId: string, backstoryId: string): boolean {
+  return isKnownLineageId(lineageId) && isKnownBackstoryId(backstoryId);
 }
 
 export function getBackstoryTemplate(
-  backgroundId: string,
+  backstoryId: string,
   selectedWorld?: ResolvedWorldSelection | null
 ): StarterBackstoryTemplate {
-  const parsed = parseBackstoryId(backgroundId) ?? {
-    lineageId: "lineage.human",
-    archetypeId: "local" as const
-  };
-  const template = buildBackstoryTemplate(parsed.lineageId, parsed.archetypeId, selectedWorld);
+  void selectedWorld;
+  const template = BACKSTORY_TEMPLATES[backstoryId];
+
+  if (!template) {
+    throw new Error(`Unknown backstory '${backstoryId}'.`);
+  }
+
   return template;
 }
 
@@ -2370,13 +3057,12 @@ export function getBackstoryOptionsForSelection(
   lineageId: string,
   selectedWorld?: ResolvedWorldSelection | null
 ): StarterBackstoryTemplate[] {
+  void selectedWorld;
   if (!isKnownLineageId(lineageId)) {
     return [];
   }
 
-  return BACKSTORY_ARCHETYPE_ORDER.map((archetypeId) =>
-    buildBackstoryTemplate(lineageId, archetypeId, selectedWorld)
-  );
+  return Object.values(BACKSTORY_TEMPLATES);
 }
 
 export function generateRandomCharacterName(
@@ -2388,32 +3074,4 @@ export function generateRandomCharacterName(
   const firstName = pickDeterministic(pool[resolvedSex], `${lineageId}.${resolvedSex}.${Math.random()}`);
   const surname = pickDeterministic(pool.surnames, `${lineageId}.surname.${Math.random()}`);
   return `${firstName} ${surname}`;
-}
-
-function buildBackstoryTemplate(
-  lineageId: string,
-  archetypeId: BackstoryArchetypeId,
-  selectedWorld?: ResolvedWorldSelection | null
-): StarterBackstoryTemplate {
-  const mechanics = BACKSTORY_MECHANICS[archetypeId];
-  const narrative = buildNarrative(lineageId, archetypeId, selectedWorld);
-
-  return {
-    id: getBackstoryId(lineageId, archetypeId),
-    label: narrative.label,
-    description: narrative.description,
-    notes: [narrative.worldHookLine, mechanics.passiveBonusLabel],
-    archetypeId,
-    hookLine: narrative.hookLine,
-    narrativeParagraphs: narrative.narrativeParagraphs,
-    passiveBonusLabel: mechanics.passiveBonusLabel,
-    varianceLines: getVarianceLines(archetypeId),
-    jobId: mechanics.jobId,
-    attributeAdjustments: mechanics.attributeAdjustments,
-    skillBonuses: mechanics.skillBonuses,
-    traitIds: mechanics.traitIds,
-    inventoryBonuses: mechanics.inventoryBonuses,
-    currencyBonus: mechanics.currencyBonus,
-    startAccessProfileId: mechanics.startAccessProfileId
-  };
 }

@@ -8,8 +8,7 @@ export type CharacterCreationAttributeAllocation = Record<PlayerAttributeKey, nu
 export type CharacterAttributePresentation = {
   key: PlayerAttributeKey;
   label: string;
-  shortEffect: string;
-  gameplayEffect: string;
+  inlineEffect: string;
 };
 
 export const CHARACTER_ATTRIBUTE_ORDER: PlayerAttributeKey[] = [
@@ -31,65 +30,47 @@ export const CHARACTER_ATTRIBUTE_PRESENTATIONS: Record<
   STR: {
     key: 'STR',
     label: 'Strength',
-    shortEffect: 'Physical power, carrying, and impact.',
-    gameplayEffect:
-      'Improves hard labor, heavy hits, hauling, and other force-driven checks.'
+    inlineEffect: 'Melee damage, stagger force, carry weight, heavy-weapon pressure'
   },
   DEX: {
     key: 'DEX',
     label: 'Dexterity',
-    shortEffect: 'Precision, tool handling, and ranged control.',
-    gameplayEffect:
-      'Supports accurate strikes, fine craft work, delicate interactions, and steady aim.'
+    inlineEffect: 'Ranged damage, hit rate, crit rate, finesse and tool precision'
   },
   AGI: {
     key: 'AGI',
     label: 'Agility',
-    shortEffect: 'Movement speed, balance, and evasion.',
-    gameplayEffect:
-      'Helps traversal, balance, dodge-heavy play, and contributes to stamina recovery.'
+    inlineEffect: 'Attack speed, evasion, movement speed, balance, action tempo'
   },
   CON: {
     key: 'CON',
     label: 'Constitution',
-    shortEffect: 'Resistance to strain and injury.',
-    gameplayEffect:
-      'Feeds HP and stamina recovery while improving survival under punishment and fatigue.'
+    inlineEffect: 'HP, guard strength, stamina stability, effect resistance, survivability'
   },
   VIT: {
     key: 'VIT',
     label: 'Vitality',
-    shortEffect: 'Endurance, recovery, and hardiness.',
-    gameplayEffect:
-      'Strengthens long-haul resilience and also feeds HP and stamina recovery.'
+    inlineEffect: 'HP, stamina, regeneration, injury tolerance, long-fight endurance'
   },
   WIS: {
     key: 'WIS',
     label: 'Wisdom',
-    shortEffect: 'Judgment, medicine, and perception.',
-    gameplayEffect:
-      'Supports observation, treatment, disciplined choices, and practical field awareness.'
+    inlineEffect: 'Healing power, spell resistance, perception, medicine, control resistance'
   },
   INT: {
     key: 'INT',
     label: 'Intelligence',
-    shortEffect: 'Planning, analysis, and technical learning.',
-    gameplayEffect:
-      'Improves scholarship, crafting logic, technical problem solving, and MP recovery.'
+    inlineEffect: 'Spell power, MP, elemental control, crafting logic, knowledge checks'
   },
   SPT: {
     key: 'SPT',
     label: 'Spirit',
-    shortEffect: 'Will, attunement, and magical stability.',
-    gameplayEffect:
-      'Supports spell control, attunement, mental steadiness, and MP recovery.'
+    inlineEffect: 'Spell power, mana recovery, spell resistance, resonance, willpower'
   },
   CHA: {
     key: 'CHA',
     label: 'Charisma',
-    shortEffect: 'Influence, command, and negotiation.',
-    gameplayEffect:
-      'Improves bargaining, leadership, persuasion, and other social leverage checks.'
+    inlineEffect: 'Command strength, party support, negotiation, prices, social leverage'
   }
 };
 

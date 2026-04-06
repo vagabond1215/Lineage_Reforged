@@ -1,0 +1,188 @@
+{
+  "records": [
+    {
+      "id": "trial.combat.sword.mastery",
+      "name": "Hundred Cuts Without Error",
+      "associatedSkillId": "skill.combat.weapon.sword",
+      "thresholdToPass": 85,
+      "progress": 0,
+      "maxPotential": 100,
+      "checkpoints": [
+        {
+          "id": "checkpoint.opening",
+          "label": "Read the opening line",
+          "threshold": 25
+        },
+        {
+          "id": "checkpoint.control",
+          "label": "Control the exchange",
+          "threshold": 55
+        },
+        {
+          "id": "checkpoint.finish",
+          "label": "Finish cleanly",
+          "threshold": 85
+        }
+      ],
+      "rewards": [
+        {
+          "type": "breakthrough_progress",
+          "skillId": "skill.combat.weapon.sword",
+          "amount": 40
+        },
+        {
+          "type": "unlock_mastery",
+          "skillId": "skill.combat.weapon.sword"
+        }
+      ],
+      "penalties": [
+        {
+          "type": "max_potential_loss",
+          "amount": 20
+        },
+        {
+          "type": "progress_loss",
+          "amount": 15
+        }
+      ]
+    },
+    {
+      "id": "trial.crafting.blacksmithing.mastery",
+      "name": "Forge a Flawless Working Edge",
+      "associatedSkillId": "skill.crafting.blacksmithing",
+      "thresholdToPass": 82,
+      "progress": 0,
+      "maxPotential": 100,
+      "checkpoints": [
+        {
+          "id": "checkpoint.heat",
+          "label": "Control the heat",
+          "threshold": 22
+        },
+        {
+          "id": "checkpoint.shape",
+          "label": "Hold the profile",
+          "threshold": 52
+        },
+        {
+          "id": "checkpoint.finish",
+          "label": "Finish without warping",
+          "threshold": 82
+        }
+      ],
+      "rewards": [
+        {
+          "type": "breakthrough_progress",
+          "skillId": "skill.crafting.blacksmithing",
+          "amount": 40
+        },
+        {
+          "type": "unlock_mastery",
+          "skillId": "skill.crafting.blacksmithing"
+        }
+      ],
+      "penalties": [
+        {
+          "type": "max_potential_loss",
+          "amount": 18
+        },
+        {
+          "type": "progress_loss",
+          "amount": 14
+        }
+      ]
+    },
+    {
+      "id": "trial.magic.elemental.mastery",
+      "name": "Bind the Catalyst Storm",
+      "associatedSkillId": "skill.magic.school.elemental",
+      "thresholdToPass": 90,
+      "progress": 0,
+      "maxPotential": 100,
+      "checkpoints": [
+        {
+          "id": "checkpoint.balance",
+          "label": "Balance the flux",
+          "threshold": 28
+        },
+        {
+          "id": "checkpoint.shape",
+          "label": "Hold the shape",
+          "threshold": 60
+        },
+        {
+          "id": "checkpoint.release",
+          "label": "Release without backlash",
+          "threshold": 90
+        }
+      ],
+      "rewards": [
+        {
+          "type": "breakthrough_progress",
+          "skillId": "skill.magic.school.elemental",
+          "amount": 50
+        },
+        {
+          "type": "unlock_mastery",
+          "skillId": "skill.magic.school.elemental"
+        }
+      ],
+      "penalties": [
+        {
+          "type": "max_potential_loss",
+          "amount": 25
+        },
+        {
+          "type": "progress_loss",
+          "amount": 18
+        }
+      ]
+    },
+    {
+      "id": "trial.knowledge.flora.mastery",
+      "name": "Name the Silent Grove",
+      "associatedSkillId": "skill.knowledge.flora",
+      "thresholdToPass": 80,
+      "progress": 0,
+      "maxPotential": 100,
+      "checkpoints": [
+        {
+          "id": "checkpoint.observe",
+          "label": "Observe living signs",
+          "threshold": 20
+        },
+        {
+          "id": "checkpoint.classify",
+          "label": "Classify the specimens",
+          "threshold": 48
+        },
+        {
+          "id": "checkpoint.prove",
+          "label": "Prove the dangerous distinctions",
+          "threshold": 80
+        }
+      ],
+      "rewards": [
+        {
+          "type": "breakthrough_progress",
+          "skillId": "skill.knowledge.flora",
+          "amount": 35
+        },
+        {
+          "type": "unlock_mastery",
+          "skillId": "skill.knowledge.flora"
+        }
+      ],
+      "penalties": [
+        {
+          "type": "max_potential_loss",
+          "amount": 18
+        },
+        {
+          "type": "progress_loss",
+          "amount": 12
+        }
+      ]
+    }
+  ]
+}

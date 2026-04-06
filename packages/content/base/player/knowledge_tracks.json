@@ -1,0 +1,105 @@
+{
+  "records": [
+    {
+      "id": "knowledge_track.flora",
+      "name": "Flora Knowledge Track",
+      "domain": "flora",
+      "knowledgeSkillId": "skill.knowledge.flora",
+      "spottingSkillId": "skill.resource.spotting.flora",
+      "identifySkillId": "skill.resource.identify.flora",
+      "universalSupportSkillId": "skill.knowledge.universal",
+      "supportWeights": {
+        "domainKnowledge": 1,
+        "universalKnowledge": 0.35,
+        "spotting": 0.2
+      },
+      "identifyDifficulty": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      },
+      "autoIdentifyThresholds": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      }
+    },
+    {
+      "id": "knowledge_track.fauna",
+      "name": "Fauna Knowledge Track",
+      "domain": "fauna",
+      "knowledgeSkillId": "skill.knowledge.fauna",
+      "spottingSkillId": "skill.resource.spotting.fauna",
+      "identifySkillId": "skill.resource.identify.fauna",
+      "universalSupportSkillId": "skill.knowledge.universal",
+      "supportWeights": {
+        "domainKnowledge": 1,
+        "universalKnowledge": 0.35,
+        "spotting": 0.2
+      },
+      "identifyDifficulty": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      },
+      "autoIdentifyThresholds": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      }
+    },
+    {
+      "id": "knowledge_track.minerals",
+      "name": "Mineral Knowledge Track",
+      "domain": "minerals",
+      "knowledgeSkillId": "skill.knowledge.minerals",
+      "spottingSkillId": "skill.resource.spotting.minerals",
+      "identifySkillId": "skill.resource.identify.minerals",
+      "universalSupportSkillId": "skill.knowledge.universal",
+      "supportWeights": {
+        "domainKnowledge": 1,
+        "universalKnowledge": 0.35,
+        "spotting": 0.2
+      },
+      "identifyDifficulty": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      },
+      "autoIdentifyThresholds": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      }
+    },
+    {
+      "id": "knowledge_track.resources_universal",
+      "name": "Universal Resource Knowledge Track",
+      "domain": "universal",
+      "knowledgeSkillId": "skill.knowledge.universal",
+      "supportWeights": {
+        "domainKnowledge": 0.5,
+        "universalKnowledge": 1,
+        "spotting": 0
+      },
+      "identifyDifficulty": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      },
+      "autoIdentifyThresholds": {
+        "common": 25,
+        "uncommon": 50,
+        "rare": 75,
+        "obscure": 100
+      }
+    }
+  ]
+}

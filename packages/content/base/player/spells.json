@@ -1,1249 +1,2663 @@
 {
-  "sourceReferences": [
-    {
-      "id": "bgwiki_black_magic",
-      "label": "BG-Wiki Black Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Black_Magic"
-    },
-    {
-      "id": "bgwiki_dark_magic",
-      "label": "BG-Wiki Dark Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Dark_Magic"
-    },
-    {
-      "id": "bgwiki_elemental_magic",
-      "label": "BG-Wiki Elemental Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Elemental_Magic"
-    },
-    {
-      "id": "bgwiki_enfeebling_magic",
-      "label": "BG-Wiki Enfeebling Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Enfeebling_Magic"
-    },
-    {
-      "id": "bgwiki_white_magic",
-      "label": "BG-Wiki White Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:White_Magic"
-    },
-    {
-      "id": "bgwiki_divine_magic",
-      "label": "BG-Wiki Divine Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Divine_Magic"
-    },
-    {
-      "id": "bgwiki_enhancing_magic",
-      "label": "BG-Wiki Enhancing Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Enhancing_Magic"
-    },
-    {
-      "id": "bgwiki_healing_magic",
-      "label": "BG-Wiki Healing Magic",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Healing_Magic"
-    }
-  ],
-  "elements": [
-    { "id": "element.light", "name": "Light" },
-    { "id": "element.dark", "name": "Dark" },
-    { "id": "element.earth", "name": "Stone" },
-    { "id": "element.water", "name": "Water" },
-    { "id": "element.wind", "name": "Wind" },
-    { "id": "element.fire", "name": "Fire" },
-    { "id": "element.ice", "name": "Ice" },
-    { "id": "element.thunder", "name": "Thunder" }
-  ],
-  "catalogs": [
-    {
-      "id": "catalog.black_magic",
-      "name": "Black Magic",
-      "sourceReferenceId": "bgwiki_black_magic",
-      "recordCountReference": 178,
-      "disciplineIds": ["elemental_magic", "dark_magic", "enfeebling_magic"],
-      "notes": "This authored file currently seeds a progression-ready subset while preserving the BG-Wiki placeholder count for future ingestion."
-    },
-    {
-      "id": "catalog.white_magic",
-      "name": "White Magic",
-      "sourceReferenceId": "bgwiki_white_magic",
-      "recordCountReference": 187,
-      "disciplineIds": ["divine_magic", "enfeebling_magic", "enhancing_magic", "healing_magic"],
-      "notes": "This authored file currently seeds a progression-ready subset while preserving the BG-Wiki placeholder count for future ingestion."
-    }
-  ],
-  "progressionModels": [
-    {
-      "id": "spell_cost.direct_damage",
-      "name": "Direct Damage Cost Curve",
-      "description": "Mana cost scales primarily with tier and power rating, with smaller adjustments for area size and added status pressure.",
-      "formula": {
-        "baseCost": 4,
-        "levelMultiplier": 0.3,
-        "powerMultiplier": 4.0,
-        "effectComplexityMultiplier": 2.0,
-        "areaMultiplier": 1.5,
-        "durationMultiplier": 0.25
-      }
-    },
-    {
-      "id": "spell_cost.enfeeble",
-      "name": "Enfeebling Cost Curve",
-      "description": "Mana cost scales with control strength, duration, and secondary effect complexity.",
-      "formula": {
-        "baseCost": 6,
-        "levelMultiplier": 0.25,
-        "powerMultiplier": 1.5,
-        "effectComplexityMultiplier": 3.5,
-        "areaMultiplier": 1.25,
-        "durationMultiplier": 0.45
-      }
-    },
-    {
-      "id": "spell_cost.healing",
-      "name": "Healing Cost Curve",
-      "description": "Mana cost scales with recovery amount, target count, and additional cleanse or revival functions.",
-      "formula": {
-        "baseCost": 6,
-        "levelMultiplier": 0.35,
-        "powerMultiplier": 3.0,
-        "effectComplexityMultiplier": 2.5,
-        "areaMultiplier": 1.75,
-        "durationMultiplier": 0.2
-      }
-    },
-    {
-      "id": "spell_cost.buff",
-      "name": "Buff and Ward Cost Curve",
-      "description": "Mana cost scales with duration, breadth of effect, and the number of protected stats or resistances.",
-      "formula": {
-        "baseCost": 5,
-        "levelMultiplier": 0.25,
-        "powerMultiplier": 1.5,
-        "effectComplexityMultiplier": 2.75,
-        "areaMultiplier": 1.4,
-        "durationMultiplier": 0.5
-      }
-    }
-  ],
   "records": [
     {
-      "id": "spell.black.elemental.stone",
-      "name": "Stone",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "earth",
-      "manaCost": 4,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 1,
-      "powerRating": 1.0,
-      "effectComplexity": 0.8,
-      "requiredLevel": 1,
-      "description": "Baseline earth-aspected direct-damage spell.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
+      "id": "spell.fire.elemental.firebolt",
+      "name": "Firebolt",
+      "school": "elemental",
+      "tradition": "arcane",
+      "element": "fire",
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "fire"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.fire.elemental.firebolt"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.fire"
+      ],
+      "description": "Direct fire damage."
     },
     {
-      "id": "spell.black.elemental.stone_ii",
-      "name": "Stone II",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "earth",
-      "manaCost": 12,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.1,
-      "effectComplexity": 1.0,
-      "requiredLevel": 15,
-      "description": "Second-tier earth nuke with stronger power scaling and higher MP demand.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
+      "id": "spell.fire.enfeebling.burn",
+      "name": "Burn",
+      "school": "enfeebling",
+      "tradition": "arcane",
+      "element": "fire",
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "control",
+        "fire"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.fire.enfeebling.burn"
+      },
+      "resolutionHooks": [
+        "status.burn",
+        "school.enfeebling",
+        "element.fire"
+      ],
+      "description": "Applies damage over time."
     },
     {
-      "id": "spell.black.elemental.water",
-      "name": "Water",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
+      "id": "spell.fire.enhancing.ember_spikes",
+      "name": "Ember Spikes",
+      "school": "enhancing",
+      "tradition": "arcane",
+      "element": "fire",
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "reactive",
+        "fire"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.fire.enhancing.ember_spikes"
+      },
+      "resolutionHooks": [
+        "buff.ember_spikes",
+        "school.enhancing",
+        "element.fire"
+      ],
+      "description": "Reactive damage with a small burn chance on hit."
+    },
+    {
+      "id": "spell.fire.healing.warmth",
+      "name": "Warmth",
+      "school": "healing",
+      "tradition": "arcane",
+      "element": "fire",
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "fire"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "duration",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.fire.healing.warmth"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "buff.warmth",
+        "school.healing",
+        "element.fire"
+      ],
+      "description": "Removes cold or water debuffs and grants minor regeneration."
+    },
+    {
+      "id": "spell.water.elemental.waterjet",
+      "name": "Waterjet",
+      "school": "elemental",
+      "tradition": "arcane",
       "element": "water",
-      "manaCost": 4,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 1,
-      "powerRating": 1.0,
-      "effectComplexity": 0.8,
-      "requiredLevel": 3,
-      "description": "Baseline water-aspected direct-damage spell.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "water"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.water.elemental.waterjet"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.water"
+      ],
+      "description": "Pressurized water damage."
     },
     {
-      "id": "spell.black.elemental.water_ii",
-      "name": "Water II",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
+      "id": "spell.water.enfeebling.drench",
+      "name": "Drench",
+      "school": "enfeebling",
+      "tradition": "arcane",
       "element": "water",
-      "manaCost": 12,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.1,
-      "effectComplexity": 1.0,
-      "requiredLevel": 17,
-      "description": "Second-tier water nuke with higher mana cost tied to stronger output.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "hostile",
+        "water"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.water.enfeebling.drench"
+      },
+      "resolutionHooks": [
+        "debuff.soaked",
+        "school.enfeebling",
+        "element.water"
+      ],
+      "description": "Applies soaked reducing effectiveness."
     },
     {
-      "id": "spell.black.elemental.waterga",
-      "name": "Waterga",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
+      "id": "spell.water.enhancing.waterbreath",
+      "name": "Waterbreath",
+      "school": "enhancing",
+      "tradition": "arcane",
       "element": "water",
-      "manaCost": 24,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.0,
-      "effectComplexity": 1.6,
-      "requiredLevel": 29,
-      "description": "Area water nuke that trades efficiency for broad target coverage.",
-      "effectTags": ["damage", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "utility",
+        "water"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.water.enhancing.waterbreath"
+      },
+      "resolutionHooks": [
+        "buff.waterbreath",
+        "school.enhancing",
+        "element.water"
+      ],
+      "description": "Allows underwater breathing and improves aquatic efficiency."
     },
     {
-      "id": "spell.black.elemental.aero",
-      "name": "Aero",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "wind",
-      "manaCost": 5,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 1,
-      "powerRating": 1.1,
-      "effectComplexity": 0.8,
-      "requiredLevel": 5,
-      "description": "Baseline wind-aspected direct-damage spell.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.aero_ii",
-      "name": "Aero II",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "wind",
-      "manaCost": 13,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.2,
-      "effectComplexity": 1.0,
-      "requiredLevel": 19,
-      "description": "Second-tier wind nuke with higher output and MP commitment.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.aeroga",
-      "name": "Aeroga",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "wind",
-      "manaCost": 25,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.1,
-      "effectComplexity": 1.65,
-      "requiredLevel": 30,
-      "description": "Area wind nuke used to broaden elemental coverage and crowd pressure.",
-      "effectTags": ["damage", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.fire",
-      "name": "Fire",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "fire",
-      "manaCost": 6,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 1,
-      "powerRating": 1.2,
-      "effectComplexity": 0.85,
-      "requiredLevel": 8,
-      "description": "Baseline fire nuke tuned slightly hotter than the lower elemental starters.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.fire_ii",
-      "name": "Fire II",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "fire",
-      "manaCost": 15,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.4,
-      "effectComplexity": 1.05,
-      "requiredLevel": 23,
-      "description": "Second-tier fire nuke with clearly higher MP cost tied to elevated potency.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.fire_iii",
-      "name": "Fire III",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "fire",
-      "manaCost": 32,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 3,
-      "powerRating": 3.6,
-      "effectComplexity": 1.2,
-      "requiredLevel": 38,
-      "description": "Third-tier fire nuke with a steeper MP curve tied to higher destructive output.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.firaga_ii",
-      "name": "Firaga II",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "fire",
-      "manaCost": 46,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 3,
-      "powerRating": 3.4,
-      "effectComplexity": 2.0,
-      "requiredLevel": 46,
-      "description": "Higher-tier area fire spell with strong burst and substantial mana demand.",
-      "effectTags": ["damage", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.blizzard",
-      "name": "Blizzard",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "ice",
-      "manaCost": 6,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 1,
-      "powerRating": 1.2,
-      "effectComplexity": 0.85,
-      "requiredLevel": 8,
-      "description": "Baseline ice nuke for direct magical offense.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.blizzard_ii",
-      "name": "Blizzard II",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "ice",
-      "manaCost": 15,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.4,
-      "effectComplexity": 1.05,
-      "requiredLevel": 23,
-      "description": "Second-tier ice nuke with stronger burst scaling.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.blizzard_iii",
-      "name": "Blizzard III",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "ice",
-      "manaCost": 32,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 3,
-      "powerRating": 3.6,
-      "effectComplexity": 1.2,
-      "requiredLevel": 38,
-      "description": "Third-tier ice nuke with stronger burst scaling and a higher MP burden.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.blizzaga",
-      "name": "Blizzaga",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "ice",
-      "manaCost": 28,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.3,
-      "effectComplexity": 1.7,
-      "requiredLevel": 32,
-      "description": "Area ice nuke for crowd pressure and broadened elemental coverage.",
-      "effectTags": ["damage", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.thunder",
-      "name": "Thunder",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "thunder",
-      "manaCost": 7,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 1,
-      "powerRating": 1.3,
-      "effectComplexity": 0.9,
-      "requiredLevel": 10,
-      "description": "Baseline thunder nuke with slightly higher volatility and cost.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.thunder_ii",
-      "name": "Thunder II",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "thunder",
-      "manaCost": 16,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.5,
-      "effectComplexity": 1.1,
-      "requiredLevel": 25,
-      "description": "Second-tier thunder nuke with elevated mana demand and burst potential.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.thunder_iii",
-      "name": "Thunder III",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "thunder",
-      "manaCost": 34,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 3,
-      "powerRating": 3.8,
-      "effectComplexity": 1.25,
-      "requiredLevel": 40,
-      "description": "Third-tier thunder nuke with the strongest single-target burst among the base elemental lines.",
-      "effectTags": ["damage", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.thundaga",
-      "name": "Thundaga",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "thunder",
-      "manaCost": 30,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.5,
-      "effectComplexity": 1.8,
-      "requiredLevel": 34,
-      "description": "Area thunder nuke with strong burst and broad battlefield coverage.",
-      "effectTags": ["damage", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.burst",
-      "name": "Burst",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "thunder",
-      "manaCost": 58,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 4,
-      "powerRating": 5.0,
-      "effectComplexity": 1.9,
-      "requiredLevel": 55,
-      "description": "Ancient-style thunder spell with high mana consumption proportional to its power tier.",
-      "effectTags": ["damage", "single_target", "ancient_magic"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.stonega",
-      "name": "Stonega",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "earth",
-      "manaCost": 24,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.0,
-      "effectComplexity": 1.6,
-      "requiredLevel": 28,
-      "description": "Area earth nuke demonstrating how target breadth increases MP consumption.",
-      "effectTags": ["damage", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.elemental.firaga",
-      "name": "Firaga",
-      "school": "black_magic",
-      "discipline": "elemental_magic",
-      "element": "fire",
-      "manaCost": 28,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.elemental_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.3,
-      "effectComplexity": 1.7,
-      "requiredLevel": 32,
-      "description": "Area fire nuke with stronger power and a correspondingly higher MP burden.",
-      "effectTags": ["damage", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_elemental_magic"
-    },
-    {
-      "id": "spell.black.dark.drain",
-      "name": "Drain",
-      "school": "black_magic",
-      "discipline": "dark_magic",
-      "element": "dark",
-      "manaCost": 21,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.dark_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 2,
-      "powerRating": 1.8,
-      "effectComplexity": 1.7,
-      "requiredLevel": 12,
-      "description": "Dark spell that transfers a portion of the target's vitality to the caster.",
-      "effectTags": ["damage", "self_heal", "drain"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_dark_magic"
-    },
-    {
-      "id": "spell.black.dark.aspir",
-      "name": "Aspir",
-      "school": "black_magic",
-      "discipline": "dark_magic",
-      "element": "dark",
-      "manaCost": 14,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.dark_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 2,
-      "powerRating": 1.3,
-      "effectComplexity": 1.6,
-      "requiredLevel": 18,
-      "description": "Dark spell that siphons MP from the target.",
-      "effectTags": ["resource_drain", "mp"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_dark_magic"
-    },
-    {
-      "id": "spell.black.dark.stun",
-      "name": "Stun",
-      "school": "black_magic",
-      "discipline": "dark_magic",
-      "element": "dark",
-      "manaCost": 25,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.dark_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 3,
-      "powerRating": 1.0,
-      "effectComplexity": 2.4,
-      "requiredLevel": 37,
-      "description": "Short but powerful interruption spell with elevated effect complexity.",
-      "effectTags": ["control", "stun"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_dark_magic"
-    },
-    {
-      "id": "spell.black.dark.bio",
-      "name": "Bio",
-      "school": "black_magic",
-      "discipline": "dark_magic",
-      "element": "dark",
-      "manaCost": 9,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.dark_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 1,
-      "powerRating": 0.8,
-      "effectComplexity": 1.5,
-      "requiredLevel": 4,
-      "description": "Damage-over-time shadow spell with a light offensive debuff rider.",
-      "effectTags": ["damage_over_time", "debuff"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_dark_magic"
-    },
-    {
-      "id": "spell.black.dark.bio_ii",
-      "name": "Bio II",
-      "school": "black_magic",
-      "discipline": "dark_magic",
-      "element": "dark",
-      "manaCost": 21,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.dark_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 2,
-      "powerRating": 1.5,
-      "effectComplexity": 1.9,
-      "requiredLevel": 28,
-      "description": "Stronger Bio variant with improved duration and potency.",
-      "effectTags": ["damage_over_time", "debuff"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_dark_magic"
-    },
-    {
-      "id": "spell.black.enfeebling.sleep",
-      "name": "Sleep",
-      "school": "black_magic",
-      "discipline": "enfeebling_magic",
-      "element": "dark",
-      "manaCost": 19,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.enfeebling_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 2,
-      "powerRating": 0.9,
-      "effectComplexity": 2.1,
-      "requiredLevel": 20,
-      "description": "Single-target sleep spell used for battlefield control.",
-      "effectTags": ["control", "sleep"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_enfeebling_magic"
-    },
-    {
-      "id": "spell.black.enfeebling.blind",
-      "name": "Blind",
-      "school": "black_magic",
-      "discipline": "enfeebling_magic",
-      "element": "dark",
-      "manaCost": 7,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.enfeebling_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 1,
-      "powerRating": 0.5,
-      "effectComplexity": 1.4,
-      "requiredLevel": 7,
-      "description": "Accuracy-reducing enfeeble for controlling incoming threat.",
-      "effectTags": ["debuff", "accuracy_down"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_enfeebling_magic"
-    },
-    {
-      "id": "spell.black.enfeebling.poison",
-      "name": "Poison",
-      "school": "black_magic",
-      "discipline": "enfeebling_magic",
+      "id": "spell.water.healing.mend",
+      "name": "Mend",
+      "school": "healing",
+      "tradition": "arcane",
       "element": "water",
-      "manaCost": 8,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.enfeebling_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 1,
-      "powerRating": 0.6,
-      "effectComplexity": 1.5,
-      "requiredLevel": 6,
-      "description": "Basic damage-over-time enfeeble.",
-      "effectTags": ["damage_over_time", "poison"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_enfeebling_magic"
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "water"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.water.healing.mend"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "school.healing",
+        "element.water"
+      ],
+      "description": "Restores a small amount of health."
     },
     {
-      "id": "spell.black.enfeebling.break",
-      "name": "Break",
-      "school": "black_magic",
-      "discipline": "enfeebling_magic",
-      "element": "earth",
-      "manaCost": 26,
-      "scalingAttribute": "attr.INT",
-      "governingSkillId": "skill.magic.enfeebling_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 3,
-      "powerRating": 0.9,
-      "effectComplexity": 2.5,
-      "requiredLevel": 39,
-      "description": "Petrification-style control spell with high effect complexity and MP demand.",
-      "effectTags": ["control", "petrify"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_enfeebling_magic"
+      "id": "spell.air.elemental.windblade",
+      "name": "Windblade",
+      "school": "elemental",
+      "tradition": "arcane",
+      "element": "air",
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "air"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.air.elemental.windblade"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.air"
+      ],
+      "description": "Slicing wind damage."
     },
     {
-      "id": "spell.white.healing.cure",
-      "name": "Cure",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 8,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 1,
-      "powerRating": 1.2,
-      "effectComplexity": 0.8,
-      "requiredLevel": 1,
-      "description": "Baseline single-target restorative spell.",
-      "effectTags": ["healing"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
+      "id": "spell.air.enfeebling.gust",
+      "name": "Gust",
+      "school": "enfeebling",
+      "tradition": "arcane",
+      "element": "air",
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "hostile",
+        "air"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.air.enfeebling.gust"
+      },
+      "resolutionHooks": [
+        "status.stagger",
+        "school.enfeebling",
+        "element.air"
+      ],
+      "description": "Pushes or staggers target."
     },
     {
-      "id": "spell.white.healing.cure_ii",
-      "name": "Cure II",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 24,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 2,
-      "powerRating": 2.4,
-      "effectComplexity": 1.0,
-      "requiredLevel": 15,
-      "description": "Second-tier single-target cure with much higher output and matching MP cost.",
-      "effectTags": ["healing"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.healing.cure_iii",
-      "name": "Cure III",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 46,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 3,
-      "powerRating": 3.8,
-      "effectComplexity": 1.2,
-      "requiredLevel": 30,
-      "description": "Mid-tier cure spell tuned for heavier burst healing.",
-      "effectTags": ["healing"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.healing.cure_iv",
-      "name": "Cure IV",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 88,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 4,
-      "powerRating": 5.7,
-      "effectComplexity": 1.35,
-      "requiredLevel": 48,
-      "description": "High-tier single-target cure with sharply increased MP cost tied to output.",
-      "effectTags": ["healing"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.healing.curaga",
-      "name": "Curaga",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 36,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 2,
-      "powerRating": 2.0,
-      "effectComplexity": 1.8,
-      "requiredLevel": 25,
-      "description": "Area healing spell that demonstrates the cost impact of target breadth.",
-      "effectTags": ["healing", "area"],
-      "targetProfile": "aoe_party",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.healing.curaga_ii",
-      "name": "Curaga II",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 60,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 3,
-      "powerRating": 3.2,
-      "effectComplexity": 2.0,
-      "requiredLevel": 40,
-      "description": "Stronger area heal with expanded recovery per cast.",
-      "effectTags": ["healing", "area"],
-      "targetProfile": "aoe_party",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.healing.regen",
-      "name": "Regen",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 15,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 1,
-      "powerRating": 1.0,
-      "effectComplexity": 1.5,
-      "requiredLevel": 18,
-      "description": "Gradual healing-over-time spell for sustain play.",
-      "effectTags": ["healing_over_time", "buff"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.healing.regen_ii",
-      "name": "Regen II",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 36,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 2,
-      "powerRating": 2.2,
-      "effectComplexity": 1.8,
-      "requiredLevel": 44,
-      "description": "Improved regen with stronger long-duration recovery.",
-      "effectTags": ["healing_over_time", "buff"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.healing.raise",
-      "name": "Raise",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 150,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 5,
-      "powerRating": 0.0,
-      "effectComplexity": 4.0,
-      "requiredLevel": 25,
-      "description": "Revives a fallen ally; revival utility drives a very high MP cost despite no direct damage output.",
-      "effectTags": ["revive"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
-    },
-    {
-      "id": "spell.white.enhancing.protect",
-      "name": "Protect",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
-      "element": "light",
-      "manaCost": 9,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 1,
-      "powerRating": 0.8,
-      "effectComplexity": 1.1,
-      "requiredLevel": 7,
-      "description": "Baseline defense-increasing ward.",
-      "effectTags": ["buff", "defense"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
-    },
-    {
-      "id": "spell.white.enhancing.protect_ii",
-      "name": "Protect II",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
-      "element": "light",
-      "manaCost": 28,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 2,
-      "powerRating": 1.6,
-      "effectComplexity": 1.3,
-      "requiredLevel": 28,
-      "description": "Stronger defense ward with longer duration and greater effect depth.",
-      "effectTags": ["buff", "defense"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
-    },
-    {
-      "id": "spell.white.enhancing.shell",
-      "name": "Shell",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
-      "element": "light",
-      "manaCost": 11,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 1,
-      "powerRating": 0.9,
-      "effectComplexity": 1.2,
-      "requiredLevel": 11,
-      "description": "Baseline magic-defense ward.",
-      "effectTags": ["buff", "magic_defense"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
-    },
-    {
-      "id": "spell.white.enhancing.shell_ii",
-      "name": "Shell II",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
-      "element": "light",
-      "manaCost": 30,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 2,
-      "powerRating": 1.7,
-      "effectComplexity": 1.4,
-      "requiredLevel": 30,
-      "description": "Improved magical ward with higher potency and duration.",
-      "effectTags": ["buff", "magic_defense"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
-    },
-    {
-      "id": "spell.white.enhancing.haste",
+      "id": "spell.air.enhancing.haste",
       "name": "Haste",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
-      "element": "wind",
-      "manaCost": 40,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 3,
-      "powerRating": 1.5,
-      "effectComplexity": 2.2,
-      "requiredLevel": 38,
-      "description": "Powerful tempo buff whose efficiency boost makes it expensive for its raw power rating.",
-      "effectTags": ["buff", "speed"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
+      "school": "enhancing",
+      "tradition": "arcane",
+      "element": "air",
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "tempo",
+        "air"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.air.enhancing.haste"
+      },
+      "resolutionHooks": [
+        "buff.haste",
+        "school.enhancing",
+        "element.air"
+      ],
+      "description": "Increases action speed."
     },
     {
-      "id": "spell.white.enhancing.blink",
-      "name": "Blink",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
-      "element": "wind",
-      "manaCost": 20,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 2,
-      "powerRating": 1.0,
-      "effectComplexity": 1.9,
-      "requiredLevel": 25,
-      "description": "Creates a limited-hit avoidance ward.",
-      "effectTags": ["buff", "avoidance"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
+      "id": "spell.air.healing.breath",
+      "name": "Breath",
+      "school": "healing",
+      "tradition": "arcane",
+      "element": "air",
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "air"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.air.healing.breath"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "restore.stamina",
+        "school.healing",
+        "element.air"
+      ],
+      "description": "Restores stamina and minor health."
     },
     {
-      "id": "spell.white.enhancing.stoneskin",
-      "name": "Stoneskin",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
+      "id": "spell.earth.elemental.stone_spike",
+      "name": "Stone Spike",
+      "school": "elemental",
+      "tradition": "arcane",
       "element": "earth",
-      "manaCost": 29,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 2,
-      "powerRating": 1.3,
-      "effectComplexity": 2.1,
-      "requiredLevel": 34,
-      "description": "Converts enhancing skill into a temporary damage-absorption barrier.",
-      "effectTags": ["buff", "barrier"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "earth"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.earth.elemental.stone_spike"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.earth"
+      ],
+      "description": "Piercing earth damage."
     },
     {
-      "id": "spell.white.enhancing.aquaveil",
-      "name": "Aquaveil",
-      "school": "white_magic",
-      "discipline": "enhancing_magic",
-      "element": "water",
-      "manaCost": 18,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enhancing_magic",
-      "progressionModelId": "spell_cost.buff",
-      "tier": 2,
-      "powerRating": 0.8,
-      "effectComplexity": 1.8,
-      "requiredLevel": 21,
-      "description": "Casting-stability ward that reduces interruption pressure.",
-      "effectTags": ["buff", "casting_stability"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_enhancing_magic"
+      "id": "spell.earth.enfeebling.quicksand",
+      "name": "Quicksand",
+      "school": "enfeebling",
+      "tradition": "arcane",
+      "element": "earth",
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "hostile",
+        "earth"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.earth.enfeebling.quicksand"
+      },
+      "resolutionHooks": [
+        "status.slow",
+        "school.enfeebling",
+        "element.earth"
+      ],
+      "description": "Slows and hinders movement."
     },
     {
-      "id": "spell.white.healing.poisona",
-      "name": "Poisona",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 8,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 1,
-      "powerRating": 0.4,
-      "effectComplexity": 1.3,
-      "requiredLevel": 5,
-      "description": "Removes poison from a single ally.",
-      "effectTags": ["cleanse", "poison"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
+      "id": "spell.earth.enhancing.stone_skin",
+      "name": "Stone Skin",
+      "school": "enhancing",
+      "tradition": "arcane",
+      "element": "earth",
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "defense",
+        "earth"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.earth.enhancing.stone_skin"
+      },
+      "resolutionHooks": [
+        "buff.protect",
+        "school.enhancing",
+        "element.earth"
+      ],
+      "description": "Increases physical damage resistance."
     },
     {
-      "id": "spell.white.healing.paralyna",
-      "name": "Paralyna",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 12,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 1,
-      "powerRating": 0.4,
-      "effectComplexity": 1.5,
-      "requiredLevel": 18,
-      "description": "Removes paralysis from a single ally.",
-      "effectTags": ["cleanse", "paralysis"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
+      "id": "spell.earth.healing.renew",
+      "name": "Renew",
+      "school": "healing",
+      "tradition": "arcane",
+      "element": "earth",
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "earth"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "duration",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.earth.healing.renew"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "buff.regeneration",
+        "school.healing",
+        "element.earth"
+      ],
+      "description": "Gradual health regeneration."
     },
     {
-      "id": "spell.white.healing.silena",
-      "name": "Silena",
-      "school": "white_magic",
-      "discipline": "healing_magic",
-      "element": "light",
-      "manaCost": 24,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.healing_magic",
-      "progressionModelId": "spell_cost.healing",
-      "tier": 2,
-      "powerRating": 0.5,
-      "effectComplexity": 1.8,
-      "requiredLevel": 34,
-      "description": "Removes silence from a single ally.",
-      "effectTags": ["cleanse", "silence"],
-      "targetProfile": "single_ally",
-      "placeholderSourceId": "bgwiki_healing_magic"
+      "id": "spell.lightning.elemental.spark",
+      "name": "Spark",
+      "school": "elemental",
+      "tradition": "arcane",
+      "element": "lightning",
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "lightning"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.lightning.elemental.spark"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.lightning"
+      ],
+      "description": "Fast electrical damage."
     },
     {
-      "id": "spell.white.enfeebling.paralyze",
-      "name": "Paralyze",
-      "school": "white_magic",
-      "discipline": "enfeebling_magic",
+      "id": "spell.lightning.enfeebling.shock",
+      "name": "Shock",
+      "school": "enfeebling",
+      "tradition": "arcane",
+      "element": "lightning",
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "hostile",
+        "lightning"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.lightning.enfeebling.shock"
+      },
+      "resolutionHooks": [
+        "interrupt.primary",
+        "school.enfeebling",
+        "element.lightning"
+      ],
+      "description": "Increases interrupt chance and disrupts actions."
+    },
+    {
+      "id": "spell.lightning.enhancing.charge",
+      "name": "Charge",
+      "school": "enhancing",
+      "tradition": "arcane",
+      "element": "lightning",
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "offense",
+        "lightning"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.lightning.enhancing.charge"
+      },
+      "resolutionHooks": [
+        "buff.charge",
+        "school.enhancing",
+        "element.lightning"
+      ],
+      "description": "Boosts offensive output or energy."
+    },
+    {
+      "id": "spell.lightning.healing.surge",
+      "name": "Surge",
+      "school": "healing",
+      "tradition": "arcane",
+      "element": "lightning",
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "lightning"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.lightning.healing.surge"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "school.healing",
+        "element.lightning"
+      ],
+      "description": "Restores health with a quick burst."
+    },
+    {
+      "id": "spell.ice.elemental.ice_shard",
+      "name": "Ice Shard",
+      "school": "elemental",
+      "tradition": "arcane",
       "element": "ice",
-      "manaCost": 12,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enfeebling_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 1,
-      "powerRating": 0.7,
-      "effectComplexity": 1.9,
-      "requiredLevel": 13,
-      "description": "White-magic enfeeble that intermittently locks enemy actions.",
-      "effectTags": ["debuff", "paralysis"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_enfeebling_magic"
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "ice"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.ice.elemental.ice_shard"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.ice"
+      ],
+      "description": "Sharp cold damage."
     },
     {
-      "id": "spell.white.enfeebling.slow",
-      "name": "Slow",
-      "school": "white_magic",
-      "discipline": "enfeebling_magic",
-      "element": "earth",
-      "manaCost": 15,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.enfeebling_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 1,
-      "powerRating": 0.7,
-      "effectComplexity": 2.0,
-      "requiredLevel": 18,
-      "description": "White-magic attack-speed reducer with moderate control complexity.",
-      "effectTags": ["debuff", "slow"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_enfeebling_magic"
+      "id": "spell.ice.enfeebling.freeze",
+      "name": "Freeze",
+      "school": "enfeebling",
+      "tradition": "arcane",
+      "element": "ice",
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "hostile",
+        "ice"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.ice.enfeebling.freeze"
+      },
+      "resolutionHooks": [
+        "status.bind",
+        "school.enfeebling",
+        "element.ice"
+      ],
+      "description": "Slows or immobilizes target."
     },
     {
-      "id": "spell.white.divine.banish",
-      "name": "Banish",
-      "school": "white_magic",
-      "discipline": "divine_magic",
+      "id": "spell.ice.enhancing.frostguard",
+      "name": "Frostguard",
+      "school": "enhancing",
+      "tradition": "arcane",
+      "element": "ice",
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "defense",
+        "ice"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.ice.enhancing.frostguard"
+      },
+      "resolutionHooks": [
+        "buff.ward",
+        "school.enhancing",
+        "element.ice"
+      ],
+      "description": "Reduces damage and control effects."
+    },
+    {
+      "id": "spell.ice.healing.preserve",
+      "name": "Preserve",
+      "school": "healing",
+      "tradition": "arcane",
+      "element": "ice",
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "ice"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "duration",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.ice.healing.preserve"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "buff.preserve",
+        "school.healing",
+        "element.ice"
+      ],
+      "description": "Stabilizes health and prevents further loss."
+    },
+    {
+      "id": "spell.light.elemental.radiance",
+      "name": "Radiance",
+      "school": "elemental",
+      "tradition": "arcane",
       "element": "light",
-      "manaCost": 15,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.divine_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 1,
-      "powerRating": 1.4,
-      "effectComplexity": 1.1,
-      "requiredLevel": 15,
-      "description": "Direct holy damage spell tied to divine magic growth.",
-      "effectTags": ["damage", "light"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_divine_magic"
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "light"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.light.elemental.radiance"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.light"
+      ],
+      "description": "Pure light damage."
     },
     {
-      "id": "spell.white.divine.banish_ii",
-      "name": "Banish II",
-      "school": "white_magic",
-      "discipline": "divine_magic",
+      "id": "spell.light.enfeebling.blind",
+      "name": "Blind",
+      "school": "enfeebling",
+      "tradition": "arcane",
       "element": "light",
-      "manaCost": 36,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.divine_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.6,
-      "effectComplexity": 1.2,
-      "requiredLevel": 34,
-      "description": "Improved holy strike with a higher light-damage payload and matching MP cost.",
-      "effectTags": ["damage", "light"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_divine_magic"
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "hostile",
+        "light"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.light.enfeebling.blind"
+      },
+      "resolutionHooks": [
+        "debuff.blind",
+        "school.enfeebling",
+        "element.light"
+      ],
+      "description": "Reduces accuracy and awareness."
     },
     {
-      "id": "spell.white.divine.banishga",
-      "name": "Banishga",
-      "school": "white_magic",
-      "discipline": "divine_magic",
+      "id": "spell.light.enhancing.bless",
+      "name": "Bless",
+      "school": "enhancing",
+      "tradition": "arcane",
       "element": "light",
-      "manaCost": 44,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.divine_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 2,
-      "powerRating": 2.2,
-      "effectComplexity": 1.9,
-      "requiredLevel": 40,
-      "description": "Area holy damage spell that broadens divine-magic coverage into group offense.",
-      "effectTags": ["damage", "light", "area"],
-      "targetProfile": "aoe_enemy",
-      "placeholderSourceId": "bgwiki_divine_magic"
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "support",
+        "light"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.light.enhancing.bless"
+      },
+      "resolutionHooks": [
+        "buff.bless",
+        "school.enhancing",
+        "element.light"
+      ],
+      "description": "Increases overall effectiveness."
     },
     {
-      "id": "spell.white.divine.flash",
-      "name": "Flash",
-      "school": "white_magic",
-      "discipline": "divine_magic",
+      "id": "spell.light.healing.restore",
+      "name": "Restore",
+      "school": "healing",
+      "tradition": "arcane",
       "element": "light",
-      "manaCost": 25,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.divine_magic",
-      "progressionModelId": "spell_cost.enfeeble",
-      "tier": 2,
-      "powerRating": 0.6,
-      "effectComplexity": 2.4,
-      "requiredLevel": 37,
-      "description": "High-control divine enmity and accuracy-disruption spell.",
-      "effectTags": ["debuff", "accuracy_down", "threat"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_divine_magic"
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "light"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.light.healing.restore"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "school.healing",
+        "element.light"
+      ],
+      "description": "Restores a significant amount of health."
     },
     {
-      "id": "spell.white.divine.holy",
-      "name": "Holy",
-      "school": "white_magic",
-      "discipline": "divine_magic",
-      "element": "light",
-      "manaCost": 72,
-      "scalingAttribute": "attr.WIS",
-      "governingSkillId": "skill.magic.divine_magic",
-      "progressionModelId": "spell_cost.direct_damage",
-      "tier": 4,
-      "powerRating": 5.2,
-      "effectComplexity": 1.6,
-      "requiredLevel": 56,
-      "description": "High-tier divine blast with heavy MP consumption proportional to its holy power.",
-      "effectTags": ["damage", "light", "single_target"],
-      "targetProfile": "single_enemy",
-      "placeholderSourceId": "bgwiki_divine_magic"
+      "id": "spell.shadow.elemental.void_bolt",
+      "name": "Void Bolt",
+      "school": "elemental",
+      "tradition": "arcane",
+      "element": "shadow",
+      "governingSkillId": "skill.magic.school.elemental",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "damage",
+        "hostile",
+        "elemental",
+        "shadow"
+      ],
+      "scalingChannels": [
+        "power",
+        "radius",
+        "manaEfficiency",
+        "accuracy"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.shadow.elemental.void_bolt"
+      },
+      "resolutionHooks": [
+        "damage.magic",
+        "school.elemental",
+        "element.shadow"
+      ],
+      "description": "Dark energy damage."
+    },
+    {
+      "id": "spell.shadow.enfeebling.curse",
+      "name": "Curse",
+      "school": "enfeebling",
+      "tradition": "arcane",
+      "element": "shadow",
+      "governingSkillId": "skill.magic.school.enfeebling",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "hostile",
+        "shadow"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 6,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.shadow.enfeebling.curse"
+      },
+      "resolutionHooks": [
+        "debuff.curse",
+        "school.enfeebling",
+        "element.shadow"
+      ],
+      "description": "Reduces multiple target attributes."
+    },
+    {
+      "id": "spell.shadow.enhancing.veil",
+      "name": "Veil",
+      "school": "enhancing",
+      "tradition": "arcane",
+      "element": "shadow",
+      "governingSkillId": "skill.magic.school.enhancing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "defense",
+        "shadow"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.shadow.enhancing.veil"
+      },
+      "resolutionHooks": [
+        "buff.veil",
+        "school.enhancing",
+        "element.shadow"
+      ],
+      "description": "Reduces detection and incoming damage."
+    },
+    {
+      "id": "spell.shadow.healing.drain",
+      "name": "Drain",
+      "school": "healing",
+      "tradition": "arcane",
+      "element": "shadow",
+      "governingSkillId": "skill.magic.school.healing",
+      "governingAttributes": [
+        "attr.INT",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "support",
+        "shadow"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 4,
+        "interruptible": true,
+        "costs": {
+          "mp": 12,
+          "stamina": 1
+        },
+        "actionType": "spell.shadow.healing.drain"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "damage.magic",
+        "school.healing",
+        "element.shadow"
+      ],
+      "description": "Converts damage dealt into health."
+    },
+    {
+      "id": "spell.druidic.control.root",
+      "name": "Root",
+      "school": "control",
+      "governingSkillId": "skill.magic.school.druidic",
+      "governingAttributes": [
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "nature",
+        "hostile"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.druidic.control.root"
+      },
+      "resolutionHooks": [
+        "status.bind",
+        "school.control",
+        "tradition.druidic"
+      ],
+      "description": "Immobilizes target using plant growth.",
+      "tradition": "druidic"
+    },
+    {
+      "id": "spell.druidic.control.vinebind",
+      "name": "Vinebind",
+      "school": "control",
+      "governingSkillId": "skill.magic.school.druidic",
+      "governingAttributes": [
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "nature",
+        "hostile"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.druidic.control.vinebind"
+      },
+      "resolutionHooks": [
+        "status.bind",
+        "school.control",
+        "tradition.druidic"
+      ],
+      "description": "Restrains movement more strongly than root.",
+      "tradition": "druidic"
+    },
+    {
+      "id": "spell.druidic.utility.speak_plant",
+      "name": "Speak Plant",
+      "school": "utility",
+      "governingSkillId": "skill.magic.school.druidic",
+      "governingAttributes": [
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "utility",
+        "nature",
+        "social"
+      ],
+      "scalingChannels": [
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 2,
+        "interruptible": true,
+        "costs": {
+          "mp": 8,
+          "stamina": 1
+        },
+        "actionType": "spell.druidic.utility.speak_plant"
+      },
+      "resolutionHooks": [
+        "utility.speak_plant",
+        "school.utility",
+        "tradition.druidic"
+      ],
+      "description": "Allows communication with plant life.",
+      "tradition": "druidic"
+    },
+    {
+      "id": "spell.druidic.utility.speak_beast",
+      "name": "Speak Beast",
+      "school": "utility",
+      "governingSkillId": "skill.magic.school.druidic",
+      "governingAttributes": [
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "utility",
+        "nature",
+        "social"
+      ],
+      "scalingChannels": [
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 2,
+        "interruptible": true,
+        "costs": {
+          "mp": 8,
+          "stamina": 1
+        },
+        "actionType": "spell.druidic.utility.speak_beast"
+      },
+      "resolutionHooks": [
+        "utility.speak_beast",
+        "school.utility",
+        "tradition.druidic"
+      ],
+      "description": "Allows communication with animals.",
+      "tradition": "druidic"
+    },
+    {
+      "id": "spell.druidic.healing.berry",
+      "name": "Berry",
+      "school": "healing",
+      "governingSkillId": "skill.magic.school.druidic",
+      "governingAttributes": [
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "nature",
+        "support",
+        "berry"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "charges",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.druidic.healing.berry"
+      },
+      "resolutionHooks": [
+        "support.berry",
+        "school.healing",
+        "tradition.druidic"
+      ],
+      "description": "Generates charge-based consumable healing berries usable only by caster and party.",
+      "tradition": "druidic",
+      "itemGenerationHooks": [
+        {
+          "generatedItemId": "generated_item.druidic.berry",
+          "generatedItemName": "Druidic Berry",
+          "charges": 4,
+          "partyLimited": true,
+          "dissipatesOnChargeLoss": true,
+          "combatTags": [
+            "support",
+            "berry",
+            "healing",
+            "party_limited"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spell.druidic.healing.bloom",
+      "name": "Bloom",
+      "school": "healing",
+      "governingSkillId": "skill.magic.school.druidic",
+      "governingAttributes": [
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "nature",
+        "support",
+        "area"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "duration",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.druidic.healing.bloom"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "buff.regeneration",
+        "school.healing",
+        "tradition.druidic"
+      ],
+      "description": "Creates area-based regeneration.",
+      "tradition": "druidic"
+    },
+    {
+      "id": "spell.druidic.enhancing.thornskin",
+      "name": "Thornskin",
+      "school": "enhancing",
+      "governingSkillId": "skill.magic.school.druidic",
+      "governingAttributes": [
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "nature",
+        "reactive"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "single_target",
+        "range": "magic",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.druidic.enhancing.thornskin"
+      },
+      "resolutionHooks": [
+        "buff.thornskin",
+        "school.enhancing",
+        "tradition.druidic"
+      ],
+      "description": "Applies reactive damage to attackers.",
+      "tradition": "druidic"
+    },
+    {
+      "id": "spell.ninjutsu.utility.shadowstep",
+      "name": "Shadowstep",
+      "school": "utility",
+      "governingSkillId": "skill.magic.school.ninjutsu",
+      "governingAttributes": [
+        "attr.DEX",
+        "attr.AGI"
+      ],
+      "effectTags": [
+        "utility",
+        "mobility",
+        "stealth"
+      ],
+      "scalingChannels": [
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 2,
+        "interruptible": true,
+        "costs": {
+          "mp": 8,
+          "stamina": 3
+        },
+        "actionType": "spell.ninjutsu.utility.shadowstep"
+      },
+      "resolutionHooks": [
+        "mobility.shadow_step",
+        "school.utility",
+        "discipline.ninjutsu"
+      ],
+      "description": "Short range reposition.",
+      "discipline": "ninjutsu"
+    },
+    {
+      "id": "spell.ninjutsu.ranged.shuriken",
+      "name": "Shuriken",
+      "school": "ranged",
+      "governingSkillId": "skill.magic.school.ninjutsu",
+      "governingAttributes": [
+        "attr.DEX",
+        "attr.AGI"
+      ],
+      "effectTags": [
+        "damage",
+        "ranged",
+        "stealth"
+      ],
+      "scalingChannels": [
+        "power",
+        "accuracy",
+        "manaEfficiency",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "ranged",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 3
+        },
+        "actionType": "spell.ninjutsu.ranged.shuriken"
+      },
+      "resolutionHooks": [
+        "damage.ranged",
+        "school.ranged",
+        "discipline.ninjutsu"
+      ],
+      "description": "Fast low-commitment ranged attack.",
+      "discipline": "ninjutsu"
+    },
+    {
+      "id": "spell.ninjutsu.enfeebling.blind_powder",
+      "name": "Blind Powder",
+      "school": "enfeebling",
+      "governingSkillId": "skill.magic.school.ninjutsu",
+      "governingAttributes": [
+        "attr.DEX",
+        "attr.AGI"
+      ],
+      "effectTags": [
+        "control",
+        "stealth",
+        "hostile"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "ranged",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 3
+        },
+        "actionType": "spell.ninjutsu.enfeebling.blind_powder"
+      },
+      "resolutionHooks": [
+        "debuff.blind",
+        "school.enfeebling",
+        "discipline.ninjutsu"
+      ],
+      "description": "Reduces accuracy and awareness.",
+      "discipline": "ninjutsu"
+    },
+    {
+      "id": "spell.ninjutsu.utility.smoke",
+      "name": "Smoke",
+      "school": "utility",
+      "governingSkillId": "skill.magic.school.ninjutsu",
+      "governingAttributes": [
+        "attr.DEX",
+        "attr.AGI"
+      ],
+      "effectTags": [
+        "utility",
+        "stealth",
+        "area"
+      ],
+      "scalingChannels": [
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "area",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 2,
+        "interruptible": true,
+        "costs": {
+          "mp": 8,
+          "stamina": 3
+        },
+        "actionType": "spell.ninjutsu.utility.smoke"
+      },
+      "resolutionHooks": [
+        "field.smoke",
+        "school.utility",
+        "discipline.ninjutsu"
+      ],
+      "description": "Creates obscured area and breaks targeting.",
+      "discipline": "ninjutsu"
+    },
+    {
+      "id": "spell.ninjutsu.enhancing.haze",
+      "name": "Haze",
+      "school": "enhancing",
+      "governingSkillId": "skill.magic.school.ninjutsu",
+      "governingAttributes": [
+        "attr.DEX",
+        "attr.AGI"
+      ],
+      "effectTags": [
+        "buff",
+        "stealth",
+        "evasion"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 3
+        },
+        "actionType": "spell.ninjutsu.enhancing.haze"
+      },
+      "resolutionHooks": [
+        "buff.haze",
+        "school.enhancing",
+        "discipline.ninjutsu"
+      ],
+      "description": "Increases evasion and reduces detectability.",
+      "discipline": "ninjutsu"
+    },
+    {
+      "id": "spell.ninjutsu.utility.mirror",
+      "name": "Mirror",
+      "school": "utility",
+      "governingSkillId": "skill.magic.school.ninjutsu",
+      "governingAttributes": [
+        "attr.DEX",
+        "attr.AGI"
+      ],
+      "effectTags": [
+        "utility",
+        "stealth",
+        "illusion"
+      ],
+      "scalingChannels": [
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 2,
+        "interruptible": true,
+        "costs": {
+          "mp": 8,
+          "stamina": 3
+        },
+        "actionType": "spell.ninjutsu.utility.mirror"
+      },
+      "resolutionHooks": [
+        "utility.mirror",
+        "school.utility",
+        "discipline.ninjutsu"
+      ],
+      "description": "Creates illusion or decoy.",
+      "discipline": "ninjutsu"
+    },
+    {
+      "id": "spell.performance.enhancing.war_song",
+      "name": "War Song",
+      "school": "enhancing",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "performance",
+        "offense"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.enhancing.war_song"
+      },
+      "resolutionHooks": [
+        "buff.war_song",
+        "school.enhancing",
+        "discipline.performance"
+      ],
+      "description": "Increases attack power for allies.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.enhancing.battle_rhythm",
+      "name": "Battle Rhythm",
+      "school": "enhancing",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "performance",
+        "tempo"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.enhancing.battle_rhythm"
+      },
+      "resolutionHooks": [
+        "buff.anthem",
+        "school.enhancing",
+        "discipline.performance"
+      ],
+      "description": "Increases attack speed.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.enhancing.guard_song",
+      "name": "Guard Song",
+      "school": "enhancing",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "performance",
+        "defense"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.enhancing.guard_song"
+      },
+      "resolutionHooks": [
+        "buff.protect",
+        "school.enhancing",
+        "discipline.performance"
+      ],
+      "description": "Increases defense.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.enhancing.stone_dance",
+      "name": "Stone Dance",
+      "school": "enhancing",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "performance",
+        "defense"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "barrier"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.enhancing.stone_dance"
+      },
+      "resolutionHooks": [
+        "buff.ward",
+        "school.enhancing",
+        "discipline.performance"
+      ],
+      "description": "Reduces incoming damage.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.healing.regen_song",
+      "name": "Regen Song",
+      "school": "healing",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "performance",
+        "support"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "duration",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.healing.regen_song"
+      },
+      "resolutionHooks": [
+        "heal.hp",
+        "buff.regeneration",
+        "school.healing",
+        "discipline.performance"
+      ],
+      "description": "Restores health over time.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.healing.mana_song",
+      "name": "Mana Song",
+      "school": "healing",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "healing",
+        "performance",
+        "support"
+      ],
+      "scalingChannels": [
+        "power",
+        "healingPower",
+        "duration",
+        "manaEfficiency"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.healing.mana_song"
+      },
+      "resolutionHooks": [
+        "restore.mp",
+        "school.healing",
+        "discipline.performance"
+      ],
+      "description": "Restores mana over time.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.utility.march",
+      "name": "March",
+      "school": "utility",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "utility",
+        "performance",
+        "tempo"
+      ],
+      "scalingChannels": [
+        "duration",
+        "manaEfficiency",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 2,
+        "interruptible": true,
+        "costs": {
+          "mp": 8,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.utility.march"
+      },
+      "resolutionHooks": [
+        "buff.march",
+        "school.utility",
+        "discipline.performance"
+      ],
+      "description": "Increases movement speed.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.enhancing.grace",
+      "name": "Grace",
+      "school": "enhancing",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "buff",
+        "performance",
+        "evasion"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "tempo"
+      ],
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.enhancing.grace"
+      },
+      "resolutionHooks": [
+        "buff.grace",
+        "school.enhancing",
+        "discipline.performance"
+      ],
+      "description": "Improves evasion and balance.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.enfeebling.dirge",
+      "name": "Dirge",
+      "school": "enfeebling",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "performance",
+        "hostile"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.enfeebling.dirge"
+      },
+      "resolutionHooks": [
+        "debuff.dirge",
+        "school.enfeebling",
+        "discipline.performance"
+      ],
+      "description": "Weakens enemies in range.",
+      "discipline": "performance"
+    },
+    {
+      "id": "spell.performance.enfeebling.discord",
+      "name": "Discord",
+      "school": "enfeebling",
+      "governingSkillId": "skill.magic.school.performance",
+      "governingAttributes": [
+        "attr.CHA",
+        "attr.SPT"
+      ],
+      "effectTags": [
+        "control",
+        "performance",
+        "hostile"
+      ],
+      "scalingChannels": [
+        "magnitude",
+        "duration",
+        "manaEfficiency",
+        "accuracy",
+        "statusChance"
+      ],
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "area",
+        "range": "magic",
+        "maxTargets": 4,
+        "requiresAccuracy": true
+      },
+      "castProfile": {
+        "type": "active",
+        "timing": "cast",
+        "executionTimeTicks": 5,
+        "recoveryTimeTicks": 3,
+        "interruptible": true,
+        "costs": {
+          "mp": 10,
+          "stamina": 1
+        },
+        "actionType": "spell.performance.enfeebling.discord"
+      },
+      "resolutionHooks": [
+        "debuff.discord",
+        "school.enfeebling",
+        "discipline.performance"
+      ],
+      "description": "Reduces enemy coordination and effectiveness.",
+      "discipline": "performance"
     }
   ]
 }

@@ -45,32 +45,32 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
-  --color-bg: #f4ecdf;
-  --color-panel: rgba(255, 249, 240, 0.9);
-  --color-panel-strong: rgba(255, 253, 248, 0.96);
-  --color-border: rgba(78, 58, 34, 0.16);
-  --color-border-strong: rgba(78, 58, 34, 0.28);
-  --color-text: #2a1f16;
-  --color-muted: #705a49;
-  --color-shell-bg: #f1e8d8;
-  --color-shell-bg-end: #ede1ce;
-  --color-shell-radial-a: rgba(77, 185, 175, 0.16);
-  --color-shell-radial-b: rgba(212, 173, 85, 0.14);
-  --color-shell-radial-c: rgba(141, 105, 210, 0.08);
-  --color-surface-soft: rgba(120, 87, 47, 0.08);
-  --color-surface-strong: rgba(120, 87, 47, 0.12);
-  --color-text-strong: #20160d;
-  --color-text-soft: #4a3727;
-  --color-muted-strong: #6c5848;
-  --color-accent-contrast: #24190f;
-  --color-creator-card: rgba(252, 246, 237, 0.96);
-  --color-creator-card-strong: rgba(245, 235, 220, 0.98);
-  --color-creator-card-hover: rgba(242, 229, 211, 0.98);
-  --color-creator-card-shadow: rgba(94, 69, 41, 0.12);
-  --color-tooltip-bg: rgba(255, 250, 243, 0.98);
-  --color-tooltip-border: rgba(78, 58, 34, 0.16);
-  --color-tooltip-text: #352417;
-  --color-scrollbar-thumb: rgba(120, 87, 47, 0.24);
+  --color-bg: #e4ebf5;
+  --color-panel: rgba(244, 248, 255, 0.88);
+  --color-panel-strong: rgba(250, 252, 255, 0.96);
+  --color-border: rgba(71, 85, 105, 0.24);
+  --color-border-strong: rgba(71, 85, 105, 0.42);
+  --color-text: #172235;
+  --color-muted: #5c6e84;
+  --color-shell-bg: #d6e0ee;
+  --color-shell-bg-end: #eef3fa;
+  --color-shell-radial-a: rgba(96, 165, 250, 0.18);
+  --color-shell-radial-b: rgba(148, 163, 184, 0.18);
+  --color-shell-radial-c: rgba(99, 102, 241, 0.12);
+  --color-surface-soft: rgba(100, 116, 139, 0.1);
+  --color-surface-strong: rgba(100, 116, 139, 0.18);
+  --color-text-strong: #0f172a;
+  --color-text-soft: #334155;
+  --color-muted-strong: #55657a;
+  --color-accent-contrast: #f8fafc;
+  --color-creator-card: rgba(245, 249, 255, 0.94);
+  --color-creator-card-strong: rgba(233, 240, 249, 0.98);
+  --color-creator-card-hover: rgba(224, 233, 245, 0.98);
+  --color-creator-card-shadow: rgba(51, 65, 85, 0.12);
+  --color-tooltip-bg: rgba(248, 251, 255, 0.98);
+  --color-tooltip-border: rgba(71, 85, 105, 0.16);
+  --color-tooltip-text: #1e293b;
+  --color-scrollbar-thumb: rgba(100, 116, 139, 0.28);
   --color-scrollbar-track: transparent;
 }
 
@@ -152,6 +152,23 @@ select {
   background-position: calc(100% - 7rem) top;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.selector-card-ambient-art {
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(18px) saturate(0.9);
+  transform: scale(1.08);
+}
+
+.selector-card-fitted-art {
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+.selector-card-width-art {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 }
 
 .lineage-card-selected .lineage-card-overlay {

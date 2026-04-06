@@ -279,37 +279,37 @@ export const PLAYER_CLASS_PROFILES: Record<string, PlayerClassProfileRecord> = {
     id: "class.explorer",
     name: "Scout",
     resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 2 },
-    notes: ["Scout path growth supports movement, observation, and durable travel stamina."]
+    notes: ["Scout class growth supports movement, observation, and durable travel stamina."]
   },
   "class.warrior": {
     id: "class.warrior",
     name: "Warrior",
     resourceGrowthPerClassLevel: { hp: 3, mp: 0, stamina: 2 },
-    notes: ["Warrior path growth prioritizes direct durability and pressure resistance."]
+    notes: ["Warrior class growth prioritizes direct durability and pressure resistance."]
   },
   "class.arcanist": {
     id: "class.arcanist",
     name: "Enchanter",
     resourceGrowthPerClassLevel: { hp: 0, mp: 3, stamina: 1 },
-    notes: ["Enchanter path growth pushes reserve, focus, and magical throughput over bodily bulk."]
+    notes: ["Enchanter class growth pushes reserve, focus, and magical throughput over bodily bulk."]
   },
   "class.artisan": {
     id: "class.artisan",
     name: "Craftsman",
     resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 1 },
-    notes: ["Craftsman path growth remains even, favoring steady production over specialization spikes."]
+    notes: ["Craftsman class growth remains even, favoring steady production over specialization spikes."]
   },
   "class.merchant": {
     id: "class.merchant",
     name: "Trader",
     resourceGrowthPerClassLevel: { hp: 1, mp: 1, stamina: 1 },
-    notes: ["Trader path growth favors balanced daily endurance and measured reserve use."]
+    notes: ["Trader class growth favors balanced daily endurance and measured reserve use."]
   },
   "class.mariner": {
     id: "class.mariner",
     name: "Hunter",
     resourceGrowthPerClassLevel: { hp: 1, mp: 0, stamina: 3 },
-    notes: ["Hunter path growth favors pursuit stamina, range pressure, and repeat action economy."]
+    notes: ["Hunter class growth favors pursuit stamina, range pressure, and repeat action economy."]
   }
 };
 

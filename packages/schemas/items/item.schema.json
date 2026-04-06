@@ -230,6 +230,188 @@
                                                },
                        "spoilageProfileId":  {
                                                 "type":  "string"
+                                            },
+                       "useProfiles":  {
+                                           "type":  "array",
+                                           "items":  {
+                                                         "type":  "object",
+                                                         "additionalProperties":  false,
+                                                         "required":  [
+                                                                          "actionType",
+                                                                          "primarySkillId",
+                                                                          "supportSkillIds",
+                                                                          "requiredSkillRank",
+                                                                          "masteryRank",
+                                                                          "effectChannels"
+                                                                      ],
+                                                         "properties":  {
+                                                                            "actionType":  {
+                                                                                               "type":  "string"
+                                                                                           },
+                                                                            "primarySkillId":  {
+                                                                                                   "type":  "string"
+                                                                                               },
+                                                                            "supportSkillIds":  {
+                                                                                                     "type":  "array",
+                                                                                                     "items":  {
+                                                                                                                   "type":  "string"
+                                                                                                               },
+                                                                                                     "uniqueItems":  true
+                                                                                                 },
+                                                                            "requiredSkillRank":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "minimum":  0,
+                                                                                                       "maximum":  125
+                                                                                                   },
+                                                                            "masteryRank":  {
+                                                                                                "type":  "integer",
+                                                                                                "minimum":  0,
+                                                                                                "maximum":  125
+                                                                                            },
+                                                                            "effectChannels":  {
+                                                                                                   "type":  "array",
+                                                                                                   "items":  {
+                                                                                                                 "type":  "string"
+                                                                                                             },
+                                                                                                   "minItems":  1,
+                                                                                                   "uniqueItems":  true
+                                                                                               },
+                                                                            "handlingType":  {
+                                                                                                  "type":  "string",
+                                                                                                  "enum":  [
+                                                                                                               "weapon",
+                                                                                                               "shield",
+                                                                                                               "armor",
+                                                                                                               "tool",
+                                                                                                               "hybrid"
+                                                                                                           ]
+                                                                                              },
+                                                                            "proficiencySkillId":  {
+                                                                                                         "type":  "string"
+                                                                                                     },
+                                                                            "hybridSkillIds":  {
+                                                                                                   "type":  "array",
+                                                                                                   "items":  {
+                                                                                                                 "type":  "string"
+                                                                                                             },
+                                                                                                   "uniqueItems":  true
+                                                                                               },
+                                                                            "combatTags":  {
+                                                                                               "type":  "array",
+                                                                                               "items":  {
+                                                                                                             "type":  "string"
+                                                                                                         },
+                                                                                               "uniqueItems":  true
+                                                                                           },
+                                                                            "resolutionHooks":  {
+                                                                                                    "type":  "array",
+                                                                                                    "items":  {
+                                                                                                                  "type":  "string"
+                                                                                                              },
+                                                                                                    "uniqueItems":  true
+                                                                                                },
+                                                                            "grantTags":  {
+                                                                                              "type":  "array",
+                                                                                              "items":  {
+                                                                                                            "type":  "string"
+                                                                                                        },
+                                                                                              "uniqueItems":  true
+                                                                                          },
+                                                                            "targetProfile":  {
+                                                                                                  "type":  "object",
+                                                                                                  "additionalProperties":  false,
+                                                                                                  "required":  [
+                                                                                                                   "disposition",
+                                                                                                                   "shape",
+                                                                                                                   "range",
+                                                                                                                   "maxTargets",
+                                                                                                                   "requiresAccuracy"
+                                                                                                               ],
+                                                                                                  "properties":  {
+                                                                                                                     "disposition":  {
+                                                                                                                                          "type":  "string",
+                                                                                                                                          "enum":  [
+                                                                                                                                                       "ally",
+                                                                                                                                                       "enemy",
+                                                                                                                                                       "self",
+                                                                                                                                                       "any"
+                                                                                                                                                   ]
+                                                                                                                                      },
+                                                                                                                     "shape":  {
+                                                                                                                                   "type":  "string"
+                                                                                                                               },
+                                                                                                                     "range":  {
+                                                                                                                                   "type":  "string"
+                                                                                                                               },
+                                                                                                                     "maxTargets":  {
+                                                                                                                                         "type":  "integer",
+                                                                                                                                         "minimum":  1
+                                                                                                                                     },
+                                                                                                                     "requiresAccuracy":  {
+                                                                                                                                                 "type":  "boolean"
+                                                                                                                                             }
+                                                                                                                 }
+                                                                                              },
+                                                                            "activation":  {
+                                                                                               "type":  "object",
+                                                                                               "additionalProperties":  false,
+                                                                                               "required":  [
+                                                                                                                "type",
+                                                                                                                "actionType",
+                                                                                                                "timing",
+                                                                                                                "executionTimeTicks",
+                                                                                                                "recoveryTimeTicks",
+                                                                                                                "interruptible",
+                                                                                                                "costs"
+                                                                                                            ],
+                                                                                               "properties":  {
+                                                                                                                  "type":  {
+                                                                                                                               "type":  "string",
+                                                                                                                               "enum":  [
+                                                                                                                                            "active",
+                                                                                                                                            "reaction",
+                                                                                                                                            "passive"
+                                                                                                                                        ]
+                                                                                                                           },
+                                                                                                                  "actionType":  {
+                                                                                                                                     "type":  "string"
+                                                                                                                                 },
+                                                                                                                  "timing":  {
+                                                                                                                                 "type":  "string"
+                                                                                                                             },
+                                                                                                                  "executionTimeTicks":  {
+                                                                                                                                               "type":  "integer",
+                                                                                                                                               "minimum":  0
+                                                                                                                                           },
+                                                                                                                  "recoveryTimeTicks":  {
+                                                                                                                                              "type":  "integer",
+                                                                                                                                              "minimum":  0
+                                                                                                                                          },
+                                                                                                                  "interruptible":  {
+                                                                                                                                      "type":  "boolean"
+                                                                                                                                  },
+                                                                                                                  "costs":  {
+                                                                                                                                "type":  "object",
+                                                                                                                                "additionalProperties":  false,
+                                                                                                                                "properties":  {
+                                                                                                                                                   "hp":  {
+                                                                                                                                                              "type":  "number",
+                                                                                                                                                              "minimum":  0
+                                                                                                                                                          },
+                                                                                                                                                   "mp":  {
+                                                                                                                                                              "type":  "number",
+                                                                                                                                                              "minimum":  0
+                                                                                                                                                          },
+                                                                                                                                                   "stamina":  {
+                                                                                                                                                                   "type":  "number",
+                                                                                                                                                                   "minimum":  0
+                                                                                                                                                               }
+                                                                                                                                               }
+                                                                                                                            }
+                                                                                                              }
+                                                                                           }
+                                                                        }
+                                                     }
                                             }
                    }
 }

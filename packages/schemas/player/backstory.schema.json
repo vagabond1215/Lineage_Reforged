@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BackstoryRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "summary", "description", "startingSkills", "startingKnowledge"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "summary": { "type": "string" },
+    "description": { "type": "string" },
+    "startingSkills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/skillLevel" },
+      "minItems": 1
+    },
+    "startingKnowledge": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/knowledgeLevel" }
+    },
+    "startingAbilityIds": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "skillLevel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "level"],
+      "properties": {
+        "skillId": { "type": "string" },
+        "level": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "knowledgeLevel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trackId", "level"],
+      "properties": {
+        "trackId": { "type": "string" },
+        "level": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

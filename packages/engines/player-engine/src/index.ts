@@ -5,6 +5,19 @@ import {
   type TickResult
 } from "../../../shared/types/src/index.js";
 
+export {
+  SKILL_PROGRESSION_BANDS,
+  SPELL_SCALING_CHANNELS_BY_SCHOOL,
+  accumulateBreakthroughProgress,
+  applyBreakthroughGating,
+  evaluateTrialOutcome,
+  resolveKnowledgeAssistance,
+  resolveItemUseProfile,
+  resolveEligibleTitleMilestones,
+  resolveSkillBand,
+  validateSpellScalingChannelsForSchool
+} from "./progression.js";
+
 export function tickPlayer(context: PlayerTickContext): TickResult<PlayerDelta> {
   const resourceResolution = resolvePlayerResources(context.state, context.incomingEvents, context.clock.tick);
   context.state.resources = resourceResolution.resources;

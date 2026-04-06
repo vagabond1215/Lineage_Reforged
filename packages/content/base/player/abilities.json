@@ -1,327 +1,2011 @@
 {
-  "sourceReferences": [
-    {
-      "id": "bgwiki_job_ability",
-      "label": "BG-Wiki Job Ability",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Job_Ability"
-    },
-    {
-      "id": "bgwiki_weapon_skills",
-      "label": "BG-Wiki Weapon Skills",
-      "url": "https://www.bg-wiki.com/ffxi/Category:Weapon_Skills"
-    }
-  ],
-  "resourceModels": [
-    {
-      "id": "ability_cost.tactical_cooldown",
-      "name": "Tactical Cooldown",
-      "description": "Ability relies on timing and readiness more than stamina expenditure.",
-      "staminaCostRange": { "min": 0, "max": 12 },
-      "cooldownRangeTicks": { "min": 8, "max": 180 }
-    },
-    {
-      "id": "ability_cost.stamina_burst",
-      "name": "Stamina Burst",
-      "description": "Ability is an active exertion with meaningful stamina drain and a short-to-medium recast.",
-      "staminaCostRange": { "min": 8, "max": 28 },
-      "cooldownRangeTicks": { "min": 6, "max": 75 }
-    },
-    {
-      "id": "ability_cost.weapon_skill",
-      "name": "Weapon Skill",
-      "description": "Ability is gated by weapon proficiency and converts stamina into weapon-specific burst output.",
-      "staminaCostRange": { "min": 14, "max": 36 },
-      "cooldownRangeTicks": { "min": 10, "max": 45 }
-    }
-  ],
   "records": [
     {
-      "id": "ability.martial.provoke",
-      "name": "Provoke",
-      "abilityType": "job_ability",
-      "family": "tactical_control",
-      "resourceModelId": "ability_cost.tactical_cooldown",
-      "scalingAttribute": "attr.CHA",
-      "cooldownTicks": 20,
-      "staminaCost": 4,
-      "description": "Forces hostile attention toward the user and briefly stabilizes front-line control.",
-      "unlockRules": [{ "type": "role_tag", "id": "role.tank", "level": 1 }],
-      "effectProfile": [{ "kind": "threat", "basePower": 18, "scalesWith": "attr.CHA" }],
-      "tags": ["ffxi", "control", "threat"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.martial.berserk",
-      "name": "Berserk",
-      "abilityType": "job_ability",
-      "family": "offensive_stance",
-      "resourceModelId": "ability_cost.tactical_cooldown",
-      "scalingAttribute": "attr.STR",
-      "cooldownTicks": 60,
-      "staminaCost": 8,
-      "description": "Trades defense for increased physical offense for a short combat window.",
-      "unlockRules": [{ "type": "role_tag", "id": "role.vanguard", "level": 8 }],
-      "effectProfile": [
-        { "kind": "buff", "stat": "attack_power", "mode": "percent", "value": 0.18 },
-        { "kind": "debuff", "stat": "defense", "mode": "percent", "value": -0.1 }
+      "id": "ability.melee.sunder",
+      "name": "Sunder",
+      "category": "melee",
+      "description": "Drives a heavy cut into armor seams and exposed structure.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.sunder",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 7
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.axe",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.axe"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.axe",
+        "skill.combat.melee_combat"
       ],
-      "tags": ["ffxi", "stance", "offense"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.martial.defender",
-      "name": "Defender",
-      "abilityType": "job_ability",
-      "family": "defensive_stance",
-      "resourceModelId": "ability_cost.tactical_cooldown",
-      "scalingAttribute": "attr.CON",
-      "cooldownTicks": 60,
-      "staminaCost": 6,
-      "description": "Trades attack for stronger mitigation and guard stability.",
-      "unlockRules": [{ "type": "role_tag", "id": "role.tank", "level": 8 }],
-      "effectProfile": [
-        { "kind": "buff", "stat": "defense", "mode": "percent", "value": 0.18 },
-        { "kind": "debuff", "stat": "attack_power", "mode": "percent", "value": -0.1 }
+      "governingAttributeIds": [
+        "attr.STR"
       ],
-      "tags": ["ffxi", "stance", "defense"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.martial.shield_bash",
-      "name": "Shield Bash",
-      "abilityType": "job_ability",
-      "family": "control_strike",
-      "resourceModelId": "ability_cost.stamina_burst",
-      "scalingAttribute": "attr.STR",
-      "scalingSkillId": "skill.defense.shield",
-      "requiredWeaponSkillId": "skill.defense.shield",
-      "requiredSkillRank": 20,
-      "cooldownTicks": 14,
-      "staminaCost": 16,
-      "description": "A close-range shield strike that can interrupt or briefly stun the target.",
-      "unlockRules": [{ "type": "equipment_category", "id": "shield", "level": 1 }],
-      "effectProfile": [
-        { "kind": "damage", "basePower": 14, "scalesWith": "attr.STR" },
-        { "kind": "status", "statusId": "stun", "chance": 0.35, "durationTicks": 4 }
+      "effectChannels": [
+        "damage",
+        "armorBreak"
       ],
-      "tags": ["ffxi", "control", "shield"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.skirmisher.sneak_attack",
-      "name": "Sneak Attack",
-      "abilityType": "job_ability",
-      "family": "burst_setup",
-      "resourceModelId": "ability_cost.tactical_cooldown",
-      "scalingAttribute": "attr.DEX",
-      "cooldownTicks": 28,
-      "staminaCost": 10,
-      "description": "Empowers the next qualifying strike from a positional advantage.",
-      "unlockRules": [{ "type": "role_tag", "id": "role.skirmisher", "level": 10 }],
-      "effectProfile": [{ "kind": "next_hit_bonus", "basePower": 20, "scalesWith": "attr.DEX" }],
-      "tags": ["ffxi", "burst", "precision"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.skirmisher.flee",
-      "name": "Flee",
-      "abilityType": "job_ability",
-      "family": "mobility",
-      "resourceModelId": "ability_cost.tactical_cooldown",
-      "scalingAttribute": "attr.AGI",
-      "cooldownTicks": 90,
-      "staminaCost": 0,
-      "description": "Temporarily spikes movement speed and disengagement capability.",
-      "unlockRules": [{ "type": "role_tag", "id": "role.skirmisher", "level": 5 }],
-      "effectProfile": [{ "kind": "buff", "stat": "move_speed", "mode": "percent", "value": 0.35 }],
-      "tags": ["ffxi", "mobility"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.monk.chakra",
-      "name": "Chakra",
-      "abilityType": "job_ability",
-      "family": "self_recovery",
-      "resourceModelId": "ability_cost.tactical_cooldown",
-      "scalingAttribute": "attr.VIT",
-      "cooldownTicks": 72,
-      "staminaCost": 6,
-      "description": "Centers the user and converts discipline into a modest self-heal and cleanse.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.hand_to_hand", "rank": 40 }],
-      "effectProfile": [
-        { "kind": "heal", "basePower": 22, "scalesWith": "attr.VIT" },
-        { "kind": "cleanse", "target": "self", "limit": 1 }
+      "combatTags": [
+        "melee",
+        "armor_break",
+        "axe"
       ],
-      "tags": ["ffxi", "recovery"],
-      "placeholderSourceId": "bgwiki_job_ability"
+      "resolutionHooks": [
+        "damage.melee",
+        "armor.sunder"
+      ]
     },
     {
-      "id": "ability.ranger.barrage",
-      "name": "Barrage",
-      "abilityType": "job_ability",
-      "family": "ranged_burst",
-      "resourceModelId": "ability_cost.stamina_burst",
-      "scalingAttribute": "attr.DEX",
-      "scalingSkillId": "skill.weapon.archery",
-      "requiredWeaponSkillId": "skill.weapon.archery",
-      "requiredSkillRank": 35,
-      "cooldownTicks": 24,
-      "staminaCost": 18,
-      "description": "Releases a controlled rapid volley with improved burst potential.",
-      "unlockRules": [{ "type": "role_tag", "id": "role.ranged", "level": 15 }],
-      "effectProfile": [{ "kind": "multi_hit", "basePower": 3, "scalesWith": "skill.weapon.archery" }],
-      "tags": ["ffxi", "ranged", "burst"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.samurai.meditate",
-      "name": "Meditate",
-      "abilityType": "job_ability",
-      "family": "resource_conversion",
-      "resourceModelId": "ability_cost.tactical_cooldown",
-      "scalingAttribute": "attr.SPT",
-      "cooldownTicks": 55,
-      "staminaCost": 0,
-      "description": "Focuses breathing and stance to restore combat momentum and stabilize stamina recovery.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.great_katana", "rank": 30 }],
-      "effectProfile": [
-        { "kind": "resource_restore", "resourceId": "stamina", "basePower": 18, "scalesWith": "attr.SPT" },
-        { "kind": "buff", "stat": "stamina_regen", "mode": "flat", "value": 0.12 }
+      "id": "ability.melee.cleave",
+      "name": "Cleave",
+      "category": "melee",
+      "description": "Turns a committed swing into broad melee pressure.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.cleave",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 8
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.axe",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.axe"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "arc",
+        "range": "melee",
+        "maxTargets": 2,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.axe",
+        "skill.combat.melee_combat"
       ],
-      "tags": ["ffxi", "resource"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.dragoon.jump",
-      "name": "Jump",
-      "abilityType": "job_ability",
-      "family": "mobility_strike",
-      "resourceModelId": "ability_cost.stamina_burst",
-      "scalingAttribute": "attr.AGI",
-      "scalingSkillId": "skill.weapon.polearm",
-      "requiredWeaponSkillId": "skill.weapon.polearm",
-      "requiredSkillRank": 25,
-      "cooldownTicks": 12,
-      "staminaCost": 16,
-      "description": "Leaps into range with an evasive strike that repositions the user.",
-      "unlockRules": [{ "type": "role_tag", "id": "role.mobile_melee", "level": 10 }],
-      "effectProfile": [
-        { "kind": "damage", "basePower": 16, "scalesWith": "skill.weapon.polearm" },
-        { "kind": "movement", "pattern": "engage_or_disengage", "distance": 1 }
+      "governingAttributeIds": [
+        "attr.STR"
       ],
-      "tags": ["ffxi", "mobility", "polearm"],
-      "placeholderSourceId": "bgwiki_job_ability"
-    },
-    {
-      "id": "ability.weapon.fast_blade",
-      "name": "Fast Blade",
-      "abilityType": "weapon_skill",
-      "family": "sword_weapon_skill",
-      "resourceModelId": "ability_cost.weapon_skill",
-      "scalingAttribute": "attr.DEX",
-      "scalingSkillId": "skill.weapon.sword",
-      "requiredWeaponSkillId": "skill.weapon.sword",
-      "requiredSkillRank": 25,
-      "cooldownTicks": 14,
-      "staminaCost": 18,
-      "description": "Quick sword finisher that converts weapon mastery into a reliable burst strike.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.sword", "rank": 25 }],
-      "effectProfile": [{ "kind": "damage", "basePower": 20, "scalesWith": "skill.weapon.sword" }],
-      "tags": ["ffxi", "weapon_skill", "sword"],
-      "placeholderSourceId": "bgwiki_weapon_skills"
-    },
-    {
-      "id": "ability.weapon.burning_blade",
-      "name": "Burning Blade",
-      "abilityType": "weapon_skill",
-      "family": "sword_weapon_skill",
-      "resourceModelId": "ability_cost.weapon_skill",
-      "scalingAttribute": "attr.INT",
-      "scalingSkillId": "skill.weapon.sword",
-      "requiredWeaponSkillId": "skill.weapon.sword",
-      "requiredSkillRank": 40,
-      "cooldownTicks": 18,
-      "staminaCost": 20,
-      "description": "Imbues a sword finisher with fire-aspected burst damage.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.sword", "rank": 40 }],
-      "effectProfile": [
-        { "kind": "damage", "basePower": 18, "scalesWith": "skill.weapon.sword" },
-        { "kind": "elemental_bonus", "element": "fire", "basePower": 8 }
+      "effectChannels": [
+        "damage",
+        "pressure"
       ],
-      "tags": ["ffxi", "weapon_skill", "sword", "fire"],
-      "placeholderSourceId": "bgwiki_weapon_skills"
+      "combatTags": [
+        "melee",
+        "sweep",
+        "axe"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "pressure.arc"
+      ]
     },
     {
-      "id": "ability.weapon.combo",
-      "name": "Combo",
-      "abilityType": "weapon_skill",
-      "family": "hand_to_hand_weapon_skill",
-      "resourceModelId": "ability_cost.weapon_skill",
-      "scalingAttribute": "attr.STR",
-      "scalingSkillId": "skill.weapon.hand_to_hand",
-      "requiredWeaponSkillId": "skill.weapon.hand_to_hand",
-      "requiredSkillRank": 20,
-      "cooldownTicks": 12,
-      "staminaCost": 18,
-      "description": "Converts hand-to-hand tempo into a concentrated multi-hit finisher.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.hand_to_hand", "rank": 20 }],
-      "effectProfile": [{ "kind": "multi_hit", "basePower": 2, "scalesWith": "skill.weapon.hand_to_hand" }],
-      "tags": ["ffxi", "weapon_skill", "hand_to_hand"],
-      "placeholderSourceId": "bgwiki_weapon_skills"
+      "id": "ability.melee.pierce",
+      "name": "Pierce",
+      "category": "melee",
+      "description": "Focuses reach and line control into a direct penetrating strike.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.pierce",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.polearm",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.polearm"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.polearm",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "penetration"
+      ],
+      "combatTags": [
+        "melee",
+        "pierce",
+        "spear"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "armor.pierce"
+      ]
     },
     {
-      "id": "ability.weapon.raging_axe",
-      "name": "Raging Axe",
-      "abilityType": "weapon_skill",
-      "family": "axe_weapon_skill",
-      "resourceModelId": "ability_cost.weapon_skill",
-      "scalingAttribute": "attr.STR",
-      "scalingSkillId": "skill.weapon.axe",
-      "requiredWeaponSkillId": "skill.weapon.axe",
-      "requiredSkillRank": 25,
-      "cooldownTicks": 16,
-      "staminaCost": 22,
-      "description": "Heavy one-handed axe finisher with strong front-loaded physical damage.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.axe", "rank": 25 }],
-      "effectProfile": [{ "kind": "damage", "basePower": 22, "scalesWith": "skill.weapon.axe" }],
-      "tags": ["ffxi", "weapon_skill", "axe"],
-      "placeholderSourceId": "bgwiki_weapon_skills"
+      "id": "ability.melee.crushing_blow",
+      "name": "Crushing Blow",
+      "category": "melee",
+      "description": "Commits body weight into a blunt force finish.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.crushing_blow",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 8
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.staff",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.staff"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.staff",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "stagger"
+      ],
+      "combatTags": [
+        "melee",
+        "blunt",
+        "staff"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "status.stagger"
+      ]
     },
     {
-      "id": "ability.weapon.sidewinder",
-      "name": "Sidewinder",
-      "abilityType": "weapon_skill",
-      "family": "archery_weapon_skill",
-      "resourceModelId": "ability_cost.weapon_skill",
-      "scalingAttribute": "attr.DEX",
-      "scalingSkillId": "skill.weapon.archery",
-      "requiredWeaponSkillId": "skill.weapon.archery",
-      "requiredSkillRank": 75,
-      "cooldownTicks": 24,
-      "staminaCost": 30,
-      "description": "High-commitment ranged finisher with exceptional burst but heavier execution cost.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.archery", "rank": 75 }],
-      "effectProfile": [{ "kind": "damage", "basePower": 34, "scalesWith": "skill.weapon.archery" }],
-      "tags": ["ffxi", "weapon_skill", "archery", "burst"],
-      "placeholderSourceId": "bgwiki_weapon_skills"
+      "id": "ability.melee.guard_break",
+      "name": "Guard Break",
+      "category": "melee",
+      "description": "Shocks a defender out of structure and opens the next exchange.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.guard_break",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 7
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.defense.shield_handling",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "shield"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.defense.shield_handling",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "interrupt",
+        "stagger"
+      ],
+      "combatTags": [
+        "melee",
+        "interrupt",
+        "shield"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "interrupt.primary",
+        "status.stagger"
+      ]
     },
     {
-      "id": "ability.weapon.tachi_enpi",
-      "name": "Tachi: Enpi",
-      "abilityType": "weapon_skill",
-      "family": "great_katana_weapon_skill",
-      "resourceModelId": "ability_cost.weapon_skill",
-      "scalingAttribute": "attr.AGI",
-      "scalingSkillId": "skill.weapon.great_katana",
-      "requiredWeaponSkillId": "skill.weapon.great_katana",
-      "requiredSkillRank": 30,
-      "cooldownTicks": 16,
-      "staminaCost": 22,
-      "description": "A measured great-katana finisher that rewards timing and disciplined burst windows.",
-      "unlockRules": [{ "type": "skill_rank", "id": "skill.weapon.great_katana", "rank": 30 }],
-      "effectProfile": [{ "kind": "damage", "basePower": 24, "scalesWith": "skill.weapon.great_katana" }],
-      "tags": ["ffxi", "weapon_skill", "great_katana"],
-      "placeholderSourceId": "bgwiki_weapon_skills"
+      "id": "ability.melee.backstab",
+      "name": "Backstab",
+      "category": "melee",
+      "description": "Exploits an unguarded angle for high close-range damage.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.backstab",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.dagger",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.dagger"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.dagger",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "critChance"
+      ],
+      "combatTags": [
+        "melee",
+        "stealth",
+        "dagger"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "crit.backstab"
+      ]
+    },
+    {
+      "id": "ability.melee.execute",
+      "name": "Execute",
+      "category": "melee",
+      "description": "Delivers a finishing strike against helpless prey.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.execute",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 10
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.sword",
+            "minRank": 18
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 12
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.sword",
+          "weapon.axe",
+          "weapon.dagger"
+        ],
+        "targetConditionsAny": [
+          {
+            "scope": "target",
+            "condition": "incapacitated"
+          },
+          {
+            "scope": "target",
+            "condition": "helpless"
+          }
+        ]
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.sword",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "execution"
+      ],
+      "combatTags": [
+        "melee",
+        "finisher"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "execute.helpless"
+      ]
+    },
+    {
+      "id": "ability.melee.feint",
+      "name": "Feint",
+      "category": "melee",
+      "description": "Trades raw force for misdirection and a better next line.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.feint",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 4
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.sword",
+            "minRank": 8
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.sword",
+          "weapon.dagger"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.sword",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "accuracy",
+        "evasionPenalty"
+      ],
+      "combatTags": [
+        "melee",
+        "setup"
+      ],
+      "resolutionHooks": [
+        "setup.feint"
+      ]
+    },
+    {
+      "id": "ability.reaction.riposte",
+      "name": "Riposte",
+      "category": "reaction",
+      "description": "Answers a defended line with an immediate counter.",
+      "activation": {
+        "type": "reaction",
+        "actionType": "ability.reaction.riposte",
+        "timing": "interrupt_window",
+        "executionTimeTicks": 1,
+        "recoveryTimeTicks": 3,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.defense.parrying",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "defense.parrying",
+          "weapon.sword"
+        ],
+        "targetConditionsAny": [
+          {
+            "scope": "actor",
+            "condition": "parry_window"
+          }
+        ]
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.defense.parrying",
+        "skill.combat.weapon.sword"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "counter"
+      ],
+      "combatTags": [
+        "reaction",
+        "counter"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "reaction.riposte"
+      ]
+    },
+    {
+      "id": "ability.melee.pommel_strike",
+      "name": "Pommel Strike",
+      "category": "melee",
+      "description": "Snaps a close blunt hit into the target to disrupt rhythm.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.pommel_strike",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.sword",
+            "minRank": 8
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.sword"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.sword",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "stagger"
+      ],
+      "combatTags": [
+        "melee",
+        "control",
+        "sword"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "status.stagger"
+      ]
+    },
+    {
+      "id": "ability.ranged.headshot",
+      "name": "Headshot",
+      "category": "ranged",
+      "description": "A committed precision shot aimed at a vulnerable line.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.ranged.headshot",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 7
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.archery",
+            "minRank": 14
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 12
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.archery"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "ranged",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.archery",
+        "skill.combat.ranged_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "critChance"
+      ],
+      "combatTags": [
+        "ranged",
+        "precision"
+      ],
+      "resolutionHooks": [
+        "damage.ranged",
+        "crit.headshot"
+      ]
+    },
+    {
+      "id": "ability.ranged.pinning_shot",
+      "name": "Pinning Shot",
+      "category": "ranged",
+      "description": "Pins a target in place long enough to set the line.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.ranged.pinning_shot",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.archery",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.archery"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "ranged",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.archery",
+        "skill.combat.tactics.target_priority"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "slow"
+      ],
+      "combatTags": [
+        "ranged",
+        "control"
+      ],
+      "resolutionHooks": [
+        "damage.ranged",
+        "status.pinned"
+      ]
+    },
+    {
+      "id": "ability.ranged.power_shot",
+      "name": "Power Shot",
+      "category": "ranged",
+      "description": "Trades speed for a more forceful ranged release.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.ranged.power_shot",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 7
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.archery",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.archery"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "ranged",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.archery",
+        "skill.combat.ranged_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "penetration"
+      ],
+      "combatTags": [
+        "ranged",
+        "power"
+      ],
+      "resolutionHooks": [
+        "damage.ranged",
+        "armor.pierce"
+      ]
+    },
+    {
+      "id": "ability.ranged.quick_shot",
+      "name": "Quick Shot",
+      "category": "ranged",
+      "description": "Fires fast to maintain ranged pressure with lower commitment.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.ranged.quick_shot",
+        "timing": "instant",
+        "executionTimeTicks": 2,
+        "recoveryTimeTicks": 3,
+        "interruptible": false,
+        "costs": {
+          "stamina": 4
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.archery",
+            "minRank": 8
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.AGI",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.archery"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "ranged",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.archery",
+        "skill.combat.ranged_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.AGI"
+      ],
+      "effectChannels": [
+        "accuracy",
+        "damage"
+      ],
+      "combatTags": [
+        "ranged",
+        "tempo"
+      ],
+      "resolutionHooks": [
+        "damage.ranged",
+        "tempo.quick"
+      ]
+    },
+    {
+      "id": "ability.ranged.volley",
+      "name": "Volley",
+      "category": "ranged",
+      "description": "Sends repeated fire through a threatened lane.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.ranged.volley",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 9
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.archery",
+            "minRank": 14
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.archery"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "line",
+        "range": "ranged",
+        "maxTargets": 3,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.archery",
+        "skill.combat.tactics.target_priority"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "pressure"
+      ],
+      "combatTags": [
+        "ranged",
+        "multi_target"
+      ],
+      "resolutionHooks": [
+        "damage.ranged",
+        "pressure.volley"
+      ]
+    },
+    {
+      "id": "ability.ranged.disabling_shot",
+      "name": "Disabling Shot",
+      "category": "ranged",
+      "description": "Seeks a limb or joint to reduce enemy output.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.ranged.disabling_shot",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.archery",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.archery"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "ranged",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.archery",
+        "skill.combat.ranged_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "accuracyPenalty"
+      ],
+      "combatTags": [
+        "ranged",
+        "debuff"
+      ],
+      "resolutionHooks": [
+        "damage.ranged",
+        "debuff.disabled"
+      ]
+    },
+    {
+      "id": "ability.tactical.brace",
+      "name": "Brace",
+      "category": "tactical",
+      "description": "Anchors stance and prepares for incoming force.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.tactical.brace",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.polearm",
+            "minRank": 8
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.CON",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.polearm"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.polearm",
+        "skill.combat.tactics.formation_discipline"
+      ],
+      "governingAttributeIds": [
+        "attr.CON"
+      ],
+      "effectChannels": [
+        "damageMitigation",
+        "counter"
+      ],
+      "combatTags": [
+        "tactical",
+        "brace"
+      ],
+      "resolutionHooks": [
+        "stance.brace"
+      ]
+    },
+    {
+      "id": "ability.tactical.hook",
+      "name": "Hook",
+      "category": "tactical",
+      "description": "Pulls a target off their preferred line and spacing.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.tactical.hook",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.axe",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.axe"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.axe",
+        "skill.combat.combat_fundamentals"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "reposition"
+      ],
+      "combatTags": [
+        "tactical",
+        "control"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "reposition.pull"
+      ]
+    },
+    {
+      "id": "ability.melee.lunge",
+      "name": "Lunge",
+      "category": "melee",
+      "description": "Extends reach for a sharp committed entry.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.lunge",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.polearm",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.AGI",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.polearm"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "reach",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.polearm",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.AGI"
+      ],
+      "effectChannels": [
+        "damage",
+        "accuracy"
+      ],
+      "combatTags": [
+        "melee",
+        "reach"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "reach.lunge"
+      ]
+    },
+    {
+      "id": "ability.melee.overhead_chop",
+      "name": "Overhead Chop",
+      "category": "melee",
+      "description": "Drops force straight through a defended line.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.overhead_chop",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 8
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.axe",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.axe"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.axe",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "guardPressure"
+      ],
+      "combatTags": [
+        "melee",
+        "axe"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "guard.overhead"
+      ]
+    },
+    {
+      "id": "ability.melee.split_guard",
+      "name": "Split Guard",
+      "category": "melee",
+      "description": "Breaks a defensive pattern open for a follow-up line.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.split_guard",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.sword",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.sword"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.sword",
+        "skill.combat.defense.parrying"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "accuracy"
+      ],
+      "combatTags": [
+        "melee",
+        "setup"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "guard.split"
+      ]
+    },
+    {
+      "id": "ability.melee.quick_cut",
+      "name": "Quick Cut",
+      "category": "melee",
+      "description": "Applies a fast low-commitment cut to keep tempo.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.quick_cut",
+        "timing": "instant",
+        "executionTimeTicks": 2,
+        "recoveryTimeTicks": 2,
+        "interruptible": false,
+        "costs": {
+          "stamina": 4
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.dagger",
+            "minRank": 8
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.dagger",
+          "weapon.sword"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.dagger",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "tempo"
+      ],
+      "combatTags": [
+        "melee",
+        "tempo"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "tempo.quick"
+      ]
+    },
+    {
+      "id": "ability.melee.hamstring",
+      "name": "Hamstring",
+      "category": "melee",
+      "description": "Targets movement to reduce the target?s escape options.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.hamstring",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.dagger",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.DEX",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.dagger",
+          "weapon.sword"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.dagger",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.DEX"
+      ],
+      "effectChannels": [
+        "damage",
+        "slow"
+      ],
+      "combatTags": [
+        "melee",
+        "debuff"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "status.hamstrung"
+      ]
+    },
+    {
+      "id": "ability.melee.kidney_strike",
+      "name": "Kidney Strike",
+      "category": "melee",
+      "description": "A close dirty hit that punishes poor guard discipline.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.kidney_strike",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.dagger",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.AGI",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.dagger"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.dagger",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.AGI"
+      ],
+      "effectChannels": [
+        "damage",
+        "stagger"
+      ],
+      "combatTags": [
+        "melee",
+        "control",
+        "dagger"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "status.stagger"
+      ]
+    },
+    {
+      "id": "ability.tactical.grapple",
+      "name": "Grapple",
+      "category": "tactical",
+      "description": "Closes distance and contests body control directly.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.tactical.grapple",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 6
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.hand_to_hand",
+            "minRank": 8
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.hand_to_hand"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.hand_to_hand",
+        "skill.combat.combat_fundamentals"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "control",
+        "reposition"
+      ],
+      "combatTags": [
+        "tactical",
+        "grapple"
+      ],
+      "resolutionHooks": [
+        "control.grapple"
+      ]
+    },
+    {
+      "id": "ability.tactical.takedown",
+      "name": "Takedown",
+      "category": "tactical",
+      "description": "Converts close control into a grounded target.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.tactical.takedown",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 7
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.hand_to_hand",
+            "minRank": 12
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.hand_to_hand"
+        ],
+        "targetConditionsAny": [
+          {
+            "scope": "target",
+            "condition": "grappled"
+          }
+        ]
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.hand_to_hand",
+        "skill.combat.combat_fundamentals"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "control"
+      ],
+      "combatTags": [
+        "tactical",
+        "grapple"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "status.prone"
+      ]
+    },
+    {
+      "id": "ability.melee.stunning_blow",
+      "name": "Stunning Blow",
+      "category": "melee",
+      "description": "Commits to a concussive hit that can rob the target of action.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.melee.stunning_blow",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 8
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.weapon.staff",
+            "minRank": 14
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.STR",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "weapon.staff",
+          "weapon.axe"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "melee",
+        "maxTargets": 1,
+        "requiresAccuracy": true
+      },
+      "governingSkillIds": [
+        "skill.combat.weapon.staff",
+        "skill.combat.melee_combat"
+      ],
+      "governingAttributeIds": [
+        "attr.STR"
+      ],
+      "effectChannels": [
+        "damage",
+        "stun"
+      ],
+      "combatTags": [
+        "melee",
+        "control"
+      ],
+      "resolutionHooks": [
+        "damage.melee",
+        "status.stun"
+      ]
+    },
+    {
+      "id": "ability.defensive.defensive_stance",
+      "name": "Defensive Stance",
+      "category": "defensive",
+      "description": "Settles into a guarded posture that favors survival over burst.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.defensive.defensive_stance",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.defense.shield_handling",
+            "minRank": 8
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.CON",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [
+          "shield",
+          "armor.light_armor",
+          "armor.medium_armor",
+          "armor.heavy_armor"
+        ],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "self",
+        "shape": "self",
+        "range": "self",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "governingSkillIds": [
+        "skill.combat.defense.shield_handling",
+        "skill.combat.armor.medium_armor"
+      ],
+      "governingAttributeIds": [
+        "attr.CON"
+      ],
+      "effectChannels": [
+        "blockChance",
+        "damageMitigation"
+      ],
+      "combatTags": [
+        "defensive",
+        "stance"
+      ],
+      "resolutionHooks": [
+        "stance.defensive"
+      ]
+    },
+    {
+      "id": "ability.command.press_the_attack",
+      "name": "Press the Attack",
+      "category": "command",
+      "description": "Calls for allied aggression and sustained pressure.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.command.press_the_attack",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.tactics.party_tactics",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.CHA",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "line",
+        "range": "command",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "governingSkillIds": [
+        "skill.combat.tactics.party_tactics",
+        "skill.leadership.command"
+      ],
+      "governingAttributeIds": [
+        "attr.CHA"
+      ],
+      "effectChannels": [
+        "damage",
+        "accuracy"
+      ],
+      "combatTags": [
+        "command",
+        "offense"
+      ],
+      "resolutionHooks": [
+        "command.pressure"
+      ]
+    },
+    {
+      "id": "ability.command.hold_formation",
+      "name": "Hold Formation",
+      "category": "command",
+      "description": "Keeps the allied line tight and harder to dislodge.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.command.hold_formation",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 5
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.tactics.formation_discipline",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.CHA",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "line",
+        "range": "command",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "governingSkillIds": [
+        "skill.combat.tactics.formation_discipline",
+        "skill.leadership.command"
+      ],
+      "governingAttributeIds": [
+        "attr.CHA"
+      ],
+      "effectChannels": [
+        "damageMitigation",
+        "blockChance"
+      ],
+      "combatTags": [
+        "command",
+        "formation"
+      ],
+      "resolutionHooks": [
+        "command.formation"
+      ]
+    },
+    {
+      "id": "ability.command.focus_target",
+      "name": "Focus Target",
+      "category": "command",
+      "description": "Directs allied attention onto one enemy priority.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.command.focus_target",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 4
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.tactics.target_priority",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.CHA",
+            "minValue": 11
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "enemy",
+        "shape": "single_target",
+        "range": "command",
+        "maxTargets": 1,
+        "requiresAccuracy": false
+      },
+      "governingSkillIds": [
+        "skill.combat.tactics.target_priority",
+        "skill.leadership.formation_control"
+      ],
+      "governingAttributeIds": [
+        "attr.CHA"
+      ],
+      "effectChannels": [
+        "threat",
+        "accuracy"
+      ],
+      "combatTags": [
+        "command",
+        "focus_fire"
+      ],
+      "resolutionHooks": [
+        "command.focus_target"
+      ]
+    },
+    {
+      "id": "ability.command.fall_back",
+      "name": "Fall Back",
+      "category": "command",
+      "description": "Orders a controlled disengagement that preserves party structure.",
+      "activation": {
+        "type": "active",
+        "actionType": "ability.command.fall_back",
+        "timing": "instant",
+        "executionTimeTicks": 3,
+        "recoveryTimeTicks": 4,
+        "interruptible": false,
+        "costs": {
+          "stamina": 4
+        }
+      },
+      "requirements": {
+        "skillRanks": [
+          {
+            "id": "skill.combat.tactics.formation_discipline",
+            "minRank": 10
+          }
+        ],
+        "attributes": [
+          {
+            "id": "attr.WIS",
+            "minValue": 10
+          }
+        ],
+        "equipmentTagsAny": [],
+        "handlingTagsAny": [],
+        "targetConditionsAny": []
+      },
+      "targetProfile": {
+        "disposition": "ally",
+        "shape": "line",
+        "range": "command",
+        "maxTargets": 4,
+        "requiresAccuracy": false
+      },
+      "governingSkillIds": [
+        "skill.combat.tactics.formation_discipline",
+        "skill.leadership.command"
+      ],
+      "governingAttributeIds": [
+        "attr.WIS"
+      ],
+      "effectChannels": [
+        "evasion",
+        "recoveryWindow"
+      ],
+      "combatTags": [
+        "command",
+        "withdrawal"
+      ],
+      "resolutionHooks": [
+        "command.fall_back"
+      ]
     }
   ]
 }

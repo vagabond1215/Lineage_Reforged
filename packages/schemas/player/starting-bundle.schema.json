@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StartingBundleRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "summary"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "summary": { "type": "string" },
+    "fixedItems": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/itemStack" },
+      "minItems": 1
+    },
+    "choiceGroups": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/choiceGroup" },
+      "minItems": 1
+    },
+    "startingCurrency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gold", "silver", "copper"],
+      "properties": {
+        "gold": { "type": "integer", "minimum": 0 },
+        "silver": { "type": "integer", "minimum": 0 },
+        "copper": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "itemStack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemId", "quantity"],
+      "properties": {
+        "itemId": { "type": "string" },
+        "quantity": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "choiceGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "options"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "options": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/itemStack" },
+          "minItems": 2
+        }
+      }
+    }
+  }
+}

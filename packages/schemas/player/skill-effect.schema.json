@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerSkillEffectRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "skillId", "name", "family", "channels"],
+  "properties": {
+    "id": { "type": "string" },
+    "skillId": { "type": "string" },
+    "name": { "type": "string" },
+    "family": { "type": "string" },
+    "channels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["effectChannel", "scaling"],
+        "properties": {
+          "actionType": { "type": "string" },
+          "actionTags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "grantType": { "type": "string" },
+          "effectChannel": { "type": "string" },
+          "combatTags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "resolutionHooks": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "scaling": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["mode", "base", "perRank"],
+            "properties": {
+              "mode": { "type": "string" },
+              "base": { "type": "number" },
+              "perRank": { "type": "number" },
+              "perAttributePoint": { "type": "number" }
+            }
+          }
+        }
+      },
+      "minItems": 1
+    }
+  }
+}

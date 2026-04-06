@@ -2,38 +2,128 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerSpellRecord",
   "type": "object",
+  "additionalProperties": false,
   "required": [
     "id",
     "name",
     "school",
-    "discipline",
-    "manaCost",
-    "scalingAttribute",
     "governingSkillId",
-    "progressionModelId",
+    "effectTags",
+    "scalingChannels",
+    "targetProfile",
+    "castProfile",
+    "resolutionHooks",
     "description"
   ],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
-    "school": { "type": "string" },
+    "school": {
+      "type": "string",
+      "enum": ["elemental", "enfeebling", "enhancing", "healing", "control", "utility", "ranged"]
+    },
+    "tradition": { "type": "string" },
     "discipline": { "type": "string" },
     "element": { "type": "string" },
-    "manaCost": { "type": "integer", "minimum": 0 },
-    "scalingAttribute": { "type": "string" },
     "governingSkillId": { "type": "string" },
-    "progressionModelId": { "type": "string" },
-    "tier": { "type": "integer", "minimum": 1 },
-    "powerRating": { "type": "number", "minimum": 0 },
-    "effectComplexity": { "type": "number", "minimum": 0 },
-    "requiredLevel": { "type": "integer", "minimum": 0 },
-    "description": { "type": "string" },
+    "governingAttributes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
     "effectTags": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
     },
-    "targetProfile": { "type": "string" },
-    "placeholderSourceId": { "type": "string" }
+    "scalingChannels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "power",
+          "duration",
+          "magnitude",
+          "radius",
+          "manaEfficiency",
+          "accuracy",
+          "healingPower",
+          "barrier",
+          "charges",
+          "statusChance",
+          "summonPotency",
+          "tempo"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "targetProfile": { "$ref": "#/$defs/targetProfile" },
+    "castProfile": { "$ref": "#/$defs/castProfile" },
+    "resolutionHooks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "itemGenerationHooks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/itemGenerationHook" }
+    },
+    "description": { "type": "string" }
   },
-  "additionalProperties": true
+  "$defs": {
+    "targetProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "shape", "range", "maxTargets", "requiresAccuracy"],
+      "properties": {
+        "disposition": { "type": "string", "enum": ["ally", "enemy", "self", "any"] },
+        "shape": { "type": "string" },
+        "range": { "type": "string" },
+        "maxTargets": { "type": "integer", "minimum": 1 },
+        "requiresAccuracy": { "type": "boolean" }
+      }
+    },
+    "castProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "actionType", "timing", "executionTimeTicks", "recoveryTimeTicks", "interruptible", "costs"],
+      "properties": {
+        "type": { "type": "string", "enum": ["active", "reaction", "passive"] },
+        "actionType": { "type": "string" },
+        "timing": { "type": "string" },
+        "executionTimeTicks": { "type": "integer", "minimum": 0 },
+        "recoveryTimeTicks": { "type": "integer", "minimum": 0 },
+        "interruptible": { "type": "boolean" },
+        "costs": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "hp": { "type": "number", "minimum": 0 },
+            "mp": { "type": "number", "minimum": 0 },
+            "stamina": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "itemGenerationHook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generatedItemId", "generatedItemName", "charges", "partyLimited", "dissipatesOnChargeLoss", "combatTags"],
+      "properties": {
+        "generatedItemId": { "type": "string" },
+        "generatedItemName": { "type": "string" },
+        "charges": { "type": "integer", "minimum": 1 },
+        "partyLimited": { "type": "boolean" },
+        "dissipatesOnChargeLoss": { "type": "boolean" },
+        "combatTags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
 }

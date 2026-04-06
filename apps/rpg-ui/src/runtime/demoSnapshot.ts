@@ -6,17 +6,69 @@ import {
   type SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
 
+function createDefaultPlayerCombatProfile() {
+  return {
+    preferredMode: 'normal' as const,
+    memberPreferences: []
+  };
+}
+
+function createDefaultGameState() {
+  return {
+    worldVersion: '0.1.0',
+    activeScenario: 'bootstrap',
+    mode: {
+      id: 'normal' as const,
+      combatPauseAllowed: true
+    },
+    party: {
+      leaderCombatantId: null,
+      members: []
+    },
+    activeEncounter: null,
+    combatHistory: []
+  };
+}
+
+function createEmptySessionState() {
+  return {
+    activeEvents: [],
+    flags: [],
+    triggers: [],
+    completedEvents: [],
+    trackedQuestId: null,
+    currentActivity: null,
+    pinnedRecordIds: [],
+    notifications: [],
+    knownLocations: [],
+    worldRecords: [],
+    activityRecords: [],
+    operations: [],
+    codexEntries: [],
+    questJournal: [],
+    chronicle: [],
+    combatUi: {
+      selectedPartyMemberId: null,
+      selectedEnemyTargetId: null,
+      stagedCommand: null,
+      lastIssuedCommand: null
+    }
+  };
+}
+
 const demoCoreData = {
   playerName: 'Arden Voss',
   lineageId: 'lineage.human',
   sexId: 'female' as const,
-  classId: 'class.explorer',
-  jobId: 'job.merchant_captain'
+  classId: null,
+  jobId: null,
+  backstoryId: 'backstory.local_hero',
+  startingBundleId: 'starting_bundle.traveler'
 };
 
 const demoProgression = {
   level: 27,
-  classLevel: 27,
+  classLevel: 0,
   unspentAttributePoints: 1,
   unspentSkillPoints: 2
 };
@@ -39,28 +91,28 @@ const demoAttributes = applyAttributeAdjustments(
 const demoEquipment = {
   'slot.weapon.left': null,
   'slot.weapon.right': {
-    itemId: 'item.surveyor_cutlass',
-    itemKey: 'surveyor_cutlass',
+    itemId: 'item.composite_bow',
+    itemKey: 'composite_bow',
     quantity: 1,
     durability: 0.94
   },
   'slot.armor.head': null,
   'slot.armor.shoulder': null,
   'slot.armor.chest': {
-    itemId: 'item.shipwright_harness',
-    itemKey: 'shipwright_harness',
+    itemId: 'item.travel_cloak',
+    itemKey: 'travel_cloak',
     quantity: 1,
     durability: 0.88,
     resourceModifiers: [
       {
-        id: 'equipment.shipwright_harness',
-        label: 'Shipwright Harness',
+        id: 'equipment.travel_cloak',
+        label: 'Travel Cloak',
         sourceType: 'equipment' as const,
-        sourceId: 'item.shipwright_harness',
+        sourceId: 'item.travel_cloak',
         maxFlat: { hp: 6, stamina: 12 },
         maxPercent: {},
         tickDeltaFlat: { stamina: 1 },
-        notes: ['Rigging harness distributes load and reduces travel fatigue.']
+        notes: ['Layered travel gear reduces fatigue and helps keep watch longer in rough weather.']
       }
     ]
   },
@@ -75,20 +127,20 @@ const demoEquipment = {
   'slot.accessory.arms': null,
   'slot.accessory.fingers': null,
   'slot.accessory.waist': {
-    itemId: 'item.chart_case',
-    itemKey: 'waterproof_chart_case',
+    itemId: 'item.compass',
+    itemKey: 'compass',
     quantity: 1,
     durability: 0.91,
     resourceModifiers: [
       {
-        id: 'equipment.waterproof_chart_case',
-        label: 'Waterproof Chart Case',
+        id: 'equipment.compass',
+        label: 'Compass',
         sourceType: 'equipment' as const,
-        sourceId: 'item.chart_case',
+        sourceId: 'item.compass',
         maxFlat: { mp: 8 },
         maxPercent: {},
         tickDeltaFlat: {},
-        notes: ['Organized field notes reduce magical and mental strain while charting.']
+        notes: ['A reliable compass trims hesitation and keeps the expedition mentally composed on long routes.']
       }
     ]
   },
@@ -122,11 +174,11 @@ demoResourceRuntime.modifiers = [
     id: 'effect.sea_legs_ii',
     label: 'Sea Legs II',
     sourceType: 'trait',
-    sourceId: 'trait.sea_legs_ii',
+    sourceId: 'trait.lineage.human.adaptable',
     maxFlat: { stamina: 6 },
     maxPercent: {},
     tickDeltaFlat: { stamina: 1 },
-    notes: ['Long sea travel makes stamina recovery steadier while underway.']
+    notes: ['Seasoned expedition routines make long-haul travel recovery steadier while underway.']
   }
 ];
 demoResourceRuntime.pendingChanges = [
@@ -146,7 +198,7 @@ demoResourceRuntime.pendingChanges = [
     amount: -7,
     kind: 'spell_cost',
     sourceType: 'spell',
-    sourceId: 'spell.storm.shock_spear'
+    sourceId: 'spell.fire.elemental.firebolt'
   },
   {
     id: 'change.long_watch',
@@ -187,45 +239,45 @@ export const demoSnapshot: SaveSnapshot = {
     season: 'Withering',
     year: 302
   },
+  gameState: createDefaultGameState(),
   playerState: {
     playerId: 'player.arden_voss',
-    regionId: 'region.sable_coast',
+    regionId: 'region.verdant_thalos',
     coreData: demoCoreData,
     attributes: demoAttributes,
     resources: demoResourceResolution.resources,
     resourceRuntime: demoResourceResolution.resourceRuntime,
     progression: demoProgression,
     skills: [
-      { id: 'skill.navigation', rank: 9, source: 'trained' },
-      { id: 'skill.mercantile', rank: 7, source: 'trained' },
-      { id: 'skill.shipwright', rank: 6, source: 'trained' }
+      { id: 'skill.resource.spotting.fauna', rank: 9, source: 'trained' },
+      { id: 'skill.knowledge.universal', rank: 7, source: 'trained' },
+      { id: 'skill.combat.weapon.archery', rank: 6, source: 'trained' }
     ],
     spells: [
       {
-        id: 'spell.storm.shock_spear',
+        id: 'spell.fire.elemental.firebolt',
         school: 'elemental',
-        element: 'lightning',
+        element: 'fire',
         rank: 3,
         source: 'learned'
       }
     ],
     abilities: [
       {
-        id: 'ability.mobility.combat_roll',
-        category: 'general',
+        id: 'ability.ranged.quick_shot',
+        category: 'ranged',
         rank: 2,
         source: 'learned'
       },
       {
-        id: 'ability.combat.shield_bash',
-        category: 'weapon',
+        id: 'ability.command.focus_target',
+        category: 'command',
         rank: 1,
         source: 'learned'
       }
     ],
     traits: [
-      { id: 'trait.sea_legs_ii', source: 'story' },
-      { id: 'trait.ledger_mind', source: 'story' }
+      { id: 'trait.lineage.human.adaptable', source: 'lineage' }
     ],
     equipment: demoEquipment,
     inventory: {
@@ -235,9 +287,9 @@ export const demoSnapshot: SaveSnapshot = {
           label: 'Captain Satchel',
           slotCapacity: 20,
           stacks: [
-            { itemId: 'item.ration_pack', itemKey: 'ration_pack', quantity: 6 },
-            { itemId: 'item.bandage', itemKey: 'bandage', quantity: 4 },
-            { itemId: 'item.coral_sample', itemKey: 'tideglass_coral_sample', quantity: 2 }
+            { itemId: 'item.arrow_bundle', itemKey: 'arrow_bundle', quantity: 1 },
+            { itemId: 'item.field_bandage', itemKey: 'field_bandage', quantity: 4 },
+            { itemId: 'item.compass', itemKey: 'compass', quantity: 1 }
           ]
         }
       ],
@@ -245,10 +297,10 @@ export const demoSnapshot: SaveSnapshot = {
     },
     activeEffects: ['Saltproof Cloak', 'Survey Charter', 'Harbor Rested', 'Sea Legs II'],
     location: {
-      settlementId: 'settlement.saltmere',
+      settlementId: 'settlement.aurelis',
       siteLabel: 'Harbor Quarter',
       worldMapId: 'world_map.first_world',
-      knownSettlementIds: ['settlement.saltmere', 'settlement.westreach', 'settlement.crown_bastion']
+      knownSettlementIds: ['settlement.aurelis', 'settlement.stonevein', 'settlement.sunspire_reach']
     },
     currency: {
       gold: 2418,
@@ -274,18 +326,32 @@ export const demoSnapshot: SaveSnapshot = {
     ],
     titles: [
       {
-        id: 'title.sea_cartographer',
-        label: 'Sea Cartographer',
-        source: 'regional_exploration',
+        id: 'title.knowledge.flora.scholar',
+        name: 'Scholar',
+        family: 'knowledge',
+        trackId: 'title_track.knowledge.flora',
+        sourceSkillId: 'skill.knowledge.flora',
+        milestone: {
+          threshold: 100,
+          requiresMasteryTrial: false,
+          trialId: null
+        },
         equipped: true,
-        effects: ['map_discovery_bonus', 'codex_insight_bonus']
+        effects: ['knowledge.flora.auto_identify', 'settlement.education_access']
       },
       {
-        id: 'title.third_banner_reserve',
-        label: 'Third Banner Reserve',
-        source: 'military_service',
+        id: 'title.magic.elemental.initiate',
+        name: 'Initiate',
+        family: 'magic',
+        trackId: 'title_track.magic.elemental',
+        sourceSkillId: 'skill.magic.school.elemental',
+        milestone: {
+          threshold: 50,
+          requiresMasteryTrial: false,
+          trialId: null
+        },
         equipped: false,
-        effects: ['command_access', 'barracks_access']
+        effects: ['magic.elemental.power']
       }
     ],
     discoveryChronicle: {
@@ -309,7 +375,7 @@ export const demoSnapshot: SaveSnapshot = {
           title: 'Galehound',
           discoveredAtTick: 1389,
           discoveredAtLabel: 'Yesterday, Midday',
-          regionLabel: 'Stoneward March',
+          regionLabel: 'The Auric Marches',
           sourceType: 'escort',
           sourceId: 'quest.stonepass_escort',
           notes: ['Observed fresh tracks and pack behavior near cliff lanes.']
@@ -321,7 +387,7 @@ export const demoSnapshot: SaveSnapshot = {
           title: 'Deepiron',
           discoveredAtTick: 1360,
           discoveredAtLabel: '2 days ago',
-          regionLabel: 'Stoneward March',
+          regionLabel: 'The Auric Marches',
           sourceType: 'trade',
           sourceId: 'contract.rivet_shortfall_relief',
           notes: ['Assayed as shipyard-grade stock for rivet shortages.']
@@ -333,9 +399,9 @@ export const demoSnapshot: SaveSnapshot = {
           title: 'Survey Kit',
           discoveredAtTick: 1320,
           discoveredAtLabel: '4 days ago',
-          regionLabel: 'Saltmere',
+          regionLabel: 'Aurelis',
           sourceType: 'purchase',
-          sourceId: 'market.saltmere',
+          sourceId: 'market.aurelis',
           notes: ['Standardized field kit adopted for charting runs.']
         },
         {
@@ -353,10 +419,11 @@ export const demoSnapshot: SaveSnapshot = {
       ],
       lastUpdatedTick: 1438
     },
-    discoveredRegions: ['region.sable_coast', 'region.stoneward_march', 'region.glasswater'],
+    discoveredRegions: ['region.verdant_thalos', 'region.auric_marches', 'region.starfall_isle'],
     activeQuestIds: ['quest.ashen_reef_survey', 'quest.rivet_shortfall_relief'],
     completedQuestIds: ['quest.ledger_recovery'],
     flags: ['weather.storm_front_active', 'guild.harbor_priority'],
+    combatProfile: createDefaultPlayerCombatProfile(),
     saveMeta: {
       totalPlayTicks: 52340,
       lastRestAtTick: 1412,
@@ -364,15 +431,15 @@ export const demoSnapshot: SaveSnapshot = {
     }
   },
   worldState: {
-    activeRegions: ['region.sable_coast', 'region.stoneward_march'],
+    activeRegions: ['region.verdant_thalos', 'region.auric_marches'],
     weatherState: {
       stormFront: 'Ashen Reef',
       tideWindow: 'dusk'
     }
   },
   civilizationState: {
-    settlements: ['settlement.saltmere', 'settlement.westreach', 'settlement.crown_bastion'],
-    markets: ['market.saltmere', 'market.westreach'],
+    settlements: ['settlement.aurelis', 'settlement.stonevein', 'settlement.sunspire_reach'],
+    markets: ['market.aurelis', 'market.stonevein'],
     economy: {
       nodes: [],
       lastSnapshots: [],
@@ -394,6 +461,7 @@ export const demoSnapshot: SaveSnapshot = {
     }
   },
   sessionState: {
+    ...createEmptySessionState(),
     activeEvents: ['event.weather.shift', 'event.market.price.updated'],
     flags: ['tutorial.complete', 'route.ashen_reef_scouted'],
     triggers: ['trigger.harbor_notice'],
@@ -405,7 +473,7 @@ export const demoSnapshot: SaveSnapshot = {
       category: 'Travel',
       detail: 'Preparing a safe reef departure window'
     },
-    pinnedRecordIds: ['quest.ashen_reef_survey', 'region.sable_coast', 'flora.tideglass_coral'],
+    pinnedRecordIds: ['quest.ashen_reef_survey', 'region.verdant_thalos', 'flora.tideglass_coral'],
     notifications: [
       {
         id: 'note.caravan.westreach',
@@ -432,8 +500,8 @@ export const demoSnapshot: SaveSnapshot = {
     knownLocations: [
       {
         id: 'location.saltmere',
-        name: 'Saltmere',
-        regionLabel: 'Sable Coast',
+        name: 'Aurelis',
+        regionLabel: 'Verdant Thalos',
         type: 'harbor',
         x: 58,
         y: 44,
@@ -442,8 +510,8 @@ export const demoSnapshot: SaveSnapshot = {
       },
       {
         id: 'location.westreach',
-        name: 'Westreach',
-        regionLabel: 'Stoneward March',
+        name: 'Stonevein',
+        regionLabel: 'The Auric Marches',
         type: 'settlement',
         x: 31,
         y: 39,
@@ -452,8 +520,8 @@ export const demoSnapshot: SaveSnapshot = {
       },
       {
         id: 'location.ashen_reef',
-        name: 'Ashen Reef',
-        regionLabel: 'Glasswater',
+        name: 'Starfall Port',
+        regionLabel: 'Starfall Isle',
         type: 'ruin',
         x: 68,
         y: 58,
@@ -462,8 +530,8 @@ export const demoSnapshot: SaveSnapshot = {
       },
       {
         id: 'location.crown_bastion',
-        name: 'Crown Bastion',
-        regionLabel: 'Northwall',
+        name: 'Sunspire Reach',
+        regionLabel: 'Silver Valleys',
         type: 'fort',
         x: 48,
         y: 22,
@@ -473,13 +541,13 @@ export const demoSnapshot: SaveSnapshot = {
     ],
     worldRecords: [
       {
-        id: 'region.sable_coast',
+        id: 'region.verdant_thalos',
         sectionId: 'region',
-        title: 'Sable Coast',
-        subtitle: 'Storm-carved littoral region',
+        title: 'Verdant Thalos',
+        subtitle: 'Fertile coastal peninsula',
         meta: 'Coastal frontier',
         status: 'Moderate danger',
-        summary: 'A wealthy but weather-beaten coast defined by trade, reefs, and guild ports.',
+        summary: 'A wealthy southern peninsula of bays, vineyards, orchards, and crown market roads.',
         tags: ['Salt', 'Fish', 'Ship Timber'],
         detailEntries: [
           { label: 'Climate', value: 'Wind-heavy, cold rain' },
@@ -488,10 +556,10 @@ export const demoSnapshot: SaveSnapshot = {
         ]
       },
       {
-        id: 'region.stoneward_march',
+        id: 'region.auric_marches',
         sectionId: 'region',
-        title: 'Stoneward March',
-        subtitle: 'Inland hills and mining roads',
+        title: 'The Auric Marches',
+        subtitle: 'Ore ridges and smelter roads',
         meta: 'Industrial interior',
         status: 'Stable',
         summary: 'A fortified production corridor feeding tools and masonry to the coast.',
@@ -503,10 +571,10 @@ export const demoSnapshot: SaveSnapshot = {
         ]
       },
       {
-        id: 'settlement.saltmere',
+        id: 'settlement.aurelis',
         sectionId: 'settlement',
-        title: 'Saltmere',
-        subtitle: 'Harbor city',
+        title: 'Aurelis',
+        subtitle: 'Harbor capital',
         meta: 'Population 48,200',
         status: 'Supply surplus: rope',
         summary: 'Primary coastal trade hub with shipyards, guild halls, and naval patrol piers.',
@@ -518,10 +586,10 @@ export const demoSnapshot: SaveSnapshot = {
         ]
       },
       {
-        id: 'settlement.westreach',
+        id: 'settlement.stonevein',
         sectionId: 'settlement',
-        title: 'Westreach',
-        subtitle: 'March market town',
+        title: 'Stonevein',
+        subtitle: 'Dwarven ore city',
         meta: 'Population 11,400',
         status: 'Ore surplus',
         summary: 'A fortified trade town supplying worked ore, stone blocks, and caravan labor.',
@@ -533,9 +601,9 @@ export const demoSnapshot: SaveSnapshot = {
         ]
       },
       {
-        id: 'route.saltmere_westreach',
+        id: 'route.aurelis_stonevein',
         sectionId: 'trade-routes',
-        title: 'Saltmere to Westreach',
+        title: 'Aurelis to Stonevein',
         subtitle: 'Coastal road and upland rise',
         meta: '146 miles',
         status: 'Risk: low',
@@ -548,9 +616,9 @@ export const demoSnapshot: SaveSnapshot = {
         ]
       },
       {
-        id: 'route.saltmere_ashen_reef',
+        id: 'route.aurelis_starfall_port',
         sectionId: 'trade-routes',
-        title: 'Saltmere to Ashen Reef',
+        title: 'Aurelis to Starfall Port',
         subtitle: 'Open-water charting lane',
         meta: '83 nautical miles',
         status: 'Risk: high',
@@ -563,9 +631,9 @@ export const demoSnapshot: SaveSnapshot = {
         ]
       },
       {
-        id: 'travel.scout_ashen_reef',
+        id: 'travel.scout_starfall_port',
         sectionId: 'travel',
-        title: 'Scout Ashen Reef',
+        title: 'Scout Starfall Port',
         subtitle: 'Player-planned travel action',
         meta: 'Departs at dusk',
         status: 'Weather lock',

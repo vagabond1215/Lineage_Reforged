@@ -517,7 +517,7 @@ function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]>
     VIT: 'Endurance, recovery, and hardiness',
     WIS: 'Judgment, medicine, and perception',
     INT: 'Planning, analysis, and technical learning',
-    SPT: 'Will, attunement, and magical stability',
+    SPT: 'Will, resonance, and magical stability',
     CHA: 'Influence, command, and negotiation'
   };
 
@@ -710,14 +710,22 @@ function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]>
 
   const titles = playerState.titles.map((title) => ({
     id: title.id,
-    title: title.label,
-    subtitle: humanizeId(title.source),
+    title: title.name,
+    subtitle: `${humanizeId(title.family)} • ${humanizeId(title.trackId)}`,
     meta: title.equipped ? 'Equipped' : 'Stored',
     tags: ['Title'],
-    detailTitle: title.label,
-    detailSummary: `${title.label} reflects a progression milestone and can influence access, recognition, or passive bonuses.`,
+    detailTitle: title.name,
+    detailSummary: `${title.name} reflects a canonical milestone title and can influence recognition, access, or passive bonuses.`,
     detailGroups: buildDetailGroup('Bonuses', [
-      { label: 'Source', value: humanizeId(title.source) },
+      { label: 'Family', value: humanizeId(title.family) },
+      { label: 'Track', value: humanizeId(title.trackId) },
+      { label: 'Source Skill', value: title.sourceSkillId ? humanizeId(title.sourceSkillId) : 'Reserved / None' },
+      {
+        label: 'Milestone',
+        value: title.milestone.requiresMasteryTrial
+          ? `${title.milestone.threshold} + mastery trial`
+          : title.milestone.threshold.toString()
+      },
       { label: 'Equipped', value: title.equipped ? 'Yes' : 'No' },
       { label: 'Effects', value: title.effects.join(', ') }
     ])
@@ -782,7 +790,7 @@ function buildCharacterWindowDetails(
     ...snapshot.playerState.resourceRuntime.modifiers.map((modifier) => modifier.label)
   ]).size;
   const equippedTitles =
-    snapshot.playerState.titles.filter((title) => title.equipped).map((title) => title.label).join(', ') ||
+    snapshot.playerState.titles.filter((title) => title.equipped).map((title) => title.name).join(', ') ||
     'None equipped';
 
   return {
@@ -1538,8 +1546,11 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
   const inventoryCapacity = getInventoryCapacity(snapshot.playerState.inventory);
   const occupiedEquipmentSlots = getOccupiedEquipmentSlots(snapshot);
   const discoverySummary = summarizeDiscoveryCategories(snapshot.playerState.discoveryChronicle.entries);
-  const backgroundLabel = snapshot.playerState.coreData.jobId
-    ? humanizeId(snapshot.playerState.coreData.jobId)
+  const backstoryLabel = snapshot.playerState.coreData.backstoryId
+    ? humanizeId(snapshot.playerState.coreData.backstoryId)
+    : null;
+  const startingBundleLabel = snapshot.playerState.coreData.startingBundleId
+    ? humanizeId(snapshot.playerState.coreData.startingBundleId)
     : null;
   const worldLists = worldSections.reduce<Record<string, ListItem[]>>((groups, section) => {
     if (section.id === 'world-map') {
@@ -1750,7 +1761,7 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
         },
         { id: 'str', label: 'Strength', value: snapshot.playerState.attributes.STR.toString(), detail: 'Load, impact, and physical labor' },
         { id: 'agi', label: 'Agility', value: snapshot.playerState.attributes.AGI.toString(), detail: 'Movement speed, balance, and evasion' },
-        { id: 'spt', label: 'Spirit', value: snapshot.playerState.attributes.SPT.toString(), detail: 'Will, attunement, and magical stability' }
+        { id: 'spt', label: 'Spirit', value: snapshot.playerState.attributes.SPT.toString(), detail: 'Will, resonance, and magical stability' }
       ],
       activeEffects: Array.from(
         new Set([
@@ -1761,8 +1772,9 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
       roleTags: [
         snapshot.playerState.originProfile.lineageLabel,
         snapshot.playerState.originProfile.classLabel ?? 'Classless',
-        ...(snapshot.playerState.coreData.jobId ? [humanizeId(snapshot.playerState.coreData.jobId)] : []),
-        ...snapshot.playerState.titles.filter((title) => title.equipped).map((title) => title.label)
+        ...(backstoryLabel ? [backstoryLabel] : []),
+        ...(startingBundleLabel ? [startingBundleLabel] : []),
+        ...snapshot.playerState.titles.filter((title) => title.equipped).map((title) => title.name)
       ],
       overviewDetail: {
         title: 'Runtime Bridge',
@@ -1781,7 +1793,8 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
             title: 'Origin Profile',
             entries: [
               { label: 'Origin', value: formatOriginLabel(snapshot.playerState.originProfile) },
-              ...(backgroundLabel ? [{ label: 'Background', value: backgroundLabel }] : []),
+              ...(backstoryLabel ? [{ label: 'Backstory', value: backstoryLabel }] : []),
+              ...(startingBundleLabel ? [{ label: 'Starting Bundle', value: startingBundleLabel }] : []),
               {
                 label: 'Attribute Variance',
                 value: summarizeAttributeAdjustments(snapshot.playerState.originProfile.attributeAdjustments)

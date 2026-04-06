@@ -115,6 +115,76 @@ function formatInGameDate(snapshot: SaveSnapshot): string {
   return `${snapshot.clock.day} ${monthLabel}, Year ${snapshot.clock.year}`;
 }
 
+function formatFunds(snapshot: SaveSnapshot): string {
+  const { gold, silver, copper } = snapshot.playerState.currency;
+  const numberFormat = new Intl.NumberFormat('en-US');
+  const parts: string[] = [];
+
+  if (gold > 0 || (silver === 0 && copper === 0)) {
+    parts.push(`${numberFormat.format(gold)}g`);
+  }
+
+  if (silver > 0) {
+    parts.push(`${numberFormat.format(silver)}s`);
+  }
+
+  if (copper > 0) {
+    parts.push(`${numberFormat.format(copper)}c`);
+  }
+
+  return parts.join(' ');
+}
+
+function formatSexLabel(snapshot: SaveSnapshot): string {
+  return humanizeId(snapshot.playerState.coreData.sexId);
+}
+
+function getStartingSettlementId(snapshot: SaveSnapshot): string | null {
+  const startFlag = snapshot.playerState.flags.find(
+    (flag) =>
+      flag.startsWith('player.start.') &&
+      !flag.startsWith('player.start_authority.') &&
+      !flag.startsWith('player.start_mode.')
+  );
+
+  if (!startFlag) {
+    return null;
+  }
+
+  return startFlag.slice('player.start.'.length) || null;
+}
+
+function getStartingSettlementLabel(snapshot: SaveSnapshot): string | null {
+  const startingSettlementId = getStartingSettlementId(snapshot);
+
+  if (startingSettlementId) {
+    return humanizeId(startingSettlementId);
+  }
+
+  const firstKnownLocation = snapshot.sessionState.knownLocations[0];
+
+  if (firstKnownLocation?.name) {
+    return firstKnownLocation.name;
+  }
+
+  return snapshot.playerState.location.settlementId
+    ? humanizeId(snapshot.playerState.location.settlementId)
+    : null;
+}
+
+function getCurrentLocationLabel(snapshot: SaveSnapshot): string | null {
+  const siteLabel = snapshot.playerState.location.siteLabel?.trim() || null;
+  const settlementLabel = snapshot.playerState.location.settlementId
+    ? humanizeId(snapshot.playerState.location.settlementId)
+    : null;
+
+  if (siteLabel && settlementLabel && siteLabel !== settlementLabel) {
+    return `${siteLabel}, ${settlementLabel}`;
+  }
+
+  return siteLabel ?? settlementLabel ?? humanizeId(snapshot.playerState.regionId);
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
@@ -132,15 +202,21 @@ function isSaveSnapshot(value: unknown): value is SaveSnapshot {
     typeof value.clock.day === 'number' &&
     typeof value.clock.month === 'number' &&
     typeof value.clock.year === 'number' &&
+    isRecord(value.gameState) &&
+    typeof value.gameState.worldVersion === 'string' &&
+    typeof value.gameState.activeScenario === 'string' &&
     isRecord(value.playerState) &&
     isRecord(value.playerState.coreData) &&
     typeof value.playerState.coreData.playerName === 'string' &&
     isRecord(value.playerState.progression) &&
     typeof value.playerState.progression.level === 'number' &&
     isRecord(value.playerState.location) &&
+    isRecord(value.playerState.combatProfile) &&
+    typeof value.playerState.combatProfile.preferredMode === 'string' &&
     isRecord(value.playerState.saveMeta) &&
     typeof value.playerState.saveMeta.totalPlayTicks === 'number' &&
-    isRecord(value.sessionState)
+    isRecord(value.sessionState) &&
+    isRecord(value.sessionState.combatUi)
   );
 }
 
@@ -154,7 +230,15 @@ function isSaveSlotMetadata(value: unknown): value is SaveSlotMetadata {
     typeof value.characterName === 'string' &&
     typeof value.level === 'number' &&
     typeof value.regionLabel === 'string' &&
+    (typeof value.sexLabel === 'string' || value.sexLabel === null || value.sexLabel === undefined) &&
+    (typeof value.startingSettlementLabel === 'string' ||
+      value.startingSettlementLabel === null ||
+      value.startingSettlementLabel === undefined) &&
+    (typeof value.currentLocationLabel === 'string' ||
+      value.currentLocationLabel === null ||
+      value.currentLocationLabel === undefined) &&
     (typeof value.gold === 'number' || value.gold === undefined) &&
+    (typeof value.fundsLabel === 'string' || value.fundsLabel === undefined) &&
     typeof value.inGameDate === 'string' &&
     typeof value.totalPlayTicks === 'number' &&
     typeof value.capturedAtTick === 'number' &&
@@ -207,17 +291,45 @@ function createSlotSummary(
     metadata,
     playerName: metadata?.characterName ?? null,
     lineageLabel: metadata?.lineageLabel ?? null,
+    sexLabel: metadata?.sexLabel ?? null,
     classLabel: metadata?.classLabel ?? null,
+    backstoryLabel: metadata?.backstoryLabel ?? null,
+    startingBundleLabel: metadata?.startingBundleLabel ?? null,
     level: metadata?.level ?? null,
     regionLabel: metadata?.regionLabel ?? null,
     settlementLabel: metadata?.settlementLabel ?? null,
+    startingSettlementLabel: metadata?.startingSettlementLabel ?? null,
+    currentLocationLabel: metadata?.currentLocationLabel ?? null,
     gold: metadata?.gold ?? null,
+    fundsLabel: metadata?.fundsLabel ?? null,
     inGameDate: metadata?.inGameDate ?? null,
     lastSavedAt: metadata?.lastSavedAt ?? null,
     lastSavedLabel: metadata ? formatSavedAt(metadata.lastSavedAt) : null,
     playtimeLabel: metadata ? formatPlaytime(metadata.totalPlayTicks) : null,
     capturedAtTick: metadata?.capturedAtTick ?? null,
     snapshotVersion: metadata?.snapshotVersion ?? null
+  };
+}
+
+function normalizeSaveMetadata(
+  slotId: SaveSlotId,
+  snapshot: SaveSnapshot,
+  metadata: SaveSlotMetadata,
+  savedAt: string
+): SaveSlotMetadata {
+  const derivedMetadata = buildSaveMetadata(slotId, snapshot);
+
+  return {
+    ...derivedMetadata,
+    ...metadata,
+    slotId,
+    sexLabel: metadata.sexLabel ?? derivedMetadata.sexLabel,
+    startingSettlementLabel:
+      metadata.startingSettlementLabel ?? derivedMetadata.startingSettlementLabel,
+    currentLocationLabel:
+      metadata.currentLocationLabel ?? derivedMetadata.currentLocationLabel,
+    fundsLabel: metadata.fundsLabel ?? derivedMetadata.fundsLabel,
+    lastSavedAt: metadata.lastSavedAt ?? savedAt
   };
 }
 
@@ -271,10 +383,15 @@ function inspectStoredSave(slotId: SaveSlotId): SaveInspectResult {
           version: 1,
           slotId,
           savedAt: parsed.savedAt,
-          metadata: {
-            ...buildSaveMetadata(slotId, snapshot),
-            lastSavedAt: parsed.savedAt
-          },
+          metadata: normalizeSaveMetadata(
+            slotId,
+            snapshot,
+            {
+              ...buildSaveMetadata(slotId, snapshot),
+              lastSavedAt: parsed.savedAt
+            },
+            parsed.savedAt
+          ),
           snapshot: parsed.snapshot
         },
         snapshot
@@ -311,7 +428,10 @@ function inspectStoredSave(slotId: SaveSlotId): SaveInspectResult {
 
     return {
       status: 'ready',
-      envelope: parsed,
+      envelope: {
+        ...parsed,
+        metadata: normalizeSaveMetadata(slotId, snapshot, parsed.metadata, parsed.savedAt)
+      },
       snapshot
     };
   } catch {
@@ -331,14 +451,26 @@ export function buildSaveMetadata(slotId: SaveSlotId, snapshot: SaveSnapshot): S
     lineageLabel:
       snapshot.playerState.originProfile.lineageLabel ??
       humanizeId(snapshot.playerState.coreData.lineageId),
+    sexLabel: formatSexLabel(snapshot),
     classLabel:
       snapshot.playerState.originProfile.classLabel ??
-      humanizeId(snapshot.playerState.coreData.classId),
+      (snapshot.playerState.coreData.classId
+        ? humanizeId(snapshot.playerState.coreData.classId)
+        : null),
+    backstoryLabel: snapshot.playerState.coreData.backstoryId
+      ? humanizeId(snapshot.playerState.coreData.backstoryId)
+      : null,
+    startingBundleLabel: snapshot.playerState.coreData.startingBundleId
+      ? humanizeId(snapshot.playerState.coreData.startingBundleId)
+      : null,
     regionLabel: humanizeId(snapshot.playerState.regionId),
     settlementLabel: snapshot.playerState.location.settlementId
       ? humanizeId(snapshot.playerState.location.settlementId)
       : null,
+    startingSettlementLabel: getStartingSettlementLabel(snapshot),
+    currentLocationLabel: getCurrentLocationLabel(snapshot),
     gold: snapshot.playerState.currency.gold,
+    fundsLabel: formatFunds(snapshot),
     inGameDate: formatInGameDate(snapshot),
     totalPlayTicks: snapshot.playerState.saveMeta.totalPlayTicks,
     capturedAtTick: snapshot.capturedAtTick,

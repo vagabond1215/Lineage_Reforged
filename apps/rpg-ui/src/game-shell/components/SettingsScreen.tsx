@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Icon } from '../../components/icons';
 import { Card } from '../../components/ui/Card';
 import type { GameShellNotice, SaveSlotSummary } from '../state.js';
 import { ScreenFrame } from './ScreenFrame.js';
@@ -9,6 +10,8 @@ type SettingsScreenProps = {
   onDismissNotice: () => void;
   onBack: () => void;
   onResetSaves: () => void;
+  themeMode: 'dark' | 'light';
+  onToggleThemeMode: () => void;
 };
 
 export function SettingsScreen({
@@ -16,11 +19,15 @@ export function SettingsScreen({
   notice,
   onDismissNotice,
   onBack,
-  onResetSaves
+  onResetSaves,
+  themeMode,
+  onToggleThemeMode
 }: SettingsScreenProps) {
   const [confirmingReset, setConfirmingReset] = useState(false);
   const occupiedManualSlots = slots.filter((slot) => slot.kind === 'manual' && slot.hasSave).length;
   const quickSaveReady = slots.some((slot) => slot.kind === 'quick' && slot.hasSave);
+  const headerButtonClass =
+    'inline-flex items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]';
 
   return (
     <ScreenFrame
@@ -31,38 +38,52 @@ export function SettingsScreen({
       notice={notice}
       onDismissNotice={onDismissNotice}
       headerActions={
-        <button
-          type="button"
-          onClick={onBack}
-          className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10"
-        >
-          Back
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onToggleThemeMode}
+            className={`${headerButtonClass} h-11 w-11`}
+            aria-label={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            <Icon
+              name={themeMode === 'dark' ? 'sun' : 'moon'}
+              className="h-5 w-5"
+            />
+          </button>
+          <button
+            type="button"
+            onClick={onBack}
+            className={`${headerButtonClass} px-4 py-2 text-sm font-medium`}
+          >
+            Back
+          </button>
+        </div>
       }
       mainContent={
         <div className="space-y-4">
           <Card title="Save Storage" accent="var(--color-world)">
             <div className="grid gap-3 md:grid-cols-3">
-              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Manual Slots</div>
-                <div className="mt-2 text-3xl text-slate-50">{occupiedManualSlots} / 6</div>
-                <div className="mt-2 text-sm text-slate-400">
+              <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] p-4">
+                <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">Manual Slots</div>
+                <div className="mt-2 text-3xl text-[color:var(--color-text-strong)]">{occupiedManualSlots} / 6</div>
+                <div className="mt-2 text-sm text-[color:var(--color-text-soft)]">
                   Manual campaign slots remain browser-local and overwrite-safe, with an additional row available from the main menu.
                 </div>
               </div>
 
-              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Quick Save</div>
-                <div className="mt-2 text-2xl text-slate-50">{quickSaveReady ? 'Ready' : 'Unused'}</div>
-                <div className="mt-2 text-sm text-slate-400">
+              <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] p-4">
+                <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">Quick Save</div>
+                <div className="mt-2 text-2xl text-[color:var(--color-text-strong)]">{quickSaveReady ? 'Ready' : 'Unused'}</div>
+                <div className="mt-2 text-sm text-[color:var(--color-text-soft)]">
                   Quick Save stays separate from the manual game-data ledgers.
                 </div>
               </div>
 
-              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Storage Backend</div>
-                <div className="mt-2 text-2xl text-slate-50">Browser Local</div>
-                <div className="mt-2 text-sm text-slate-400">
+              <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] p-4">
+                <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">Storage Backend</div>
+                <div className="mt-2 text-2xl text-[color:var(--color-text-strong)]">Browser Local</div>
+                <div className="mt-2 text-sm text-[color:var(--color-text-soft)]">
                   Save snapshots are stored with the shared local snapshot serializer.
                 </div>
               </div>
@@ -72,14 +93,14 @@ export function SettingsScreen({
           <Card title="Save Reset" accent="var(--color-chronicle)">
             {confirmingReset ? (
               <div className="space-y-4">
-                <div className="text-sm leading-7 text-slate-300">
+                <div className="text-sm leading-7 text-[color:var(--color-text-soft)]">
                   This clears all manual save slots and the dedicated quick-save slot for this browser profile.
                 </div>
                 <div className="flex flex-wrap justify-end gap-3">
                   <button
                     type="button"
                     onClick={() => setConfirmingReset(false)}
-                    className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10"
+                    className={`${headerButtonClass} px-4 py-2 text-sm`}
                   >
                     Cancel
                   </button>
@@ -112,7 +133,7 @@ export function SettingsScreen({
       }
       sideContent={
         <Card title="Launcher Notes" accent="var(--color-character)">
-          <div className="space-y-4 text-sm leading-7 text-slate-300">
+          <div className="space-y-4 text-sm leading-7 text-[color:var(--color-text-soft)]">
             <p>
               Empty ledgers on the main menu begin character creation directly in that chosen slot.
             </p>

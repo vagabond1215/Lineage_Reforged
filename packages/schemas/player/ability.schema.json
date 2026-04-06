@@ -2,77 +2,149 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerAbilityRecord",
   "type": "object",
+  "additionalProperties": false,
   "required": [
     "id",
     "name",
-    "abilityType",
-    "family",
-    "resourceModelId",
-    "scalingAttribute",
-    "cooldownTicks",
-    "staminaCost",
-    "description"
+    "category",
+    "description",
+    "activation",
+    "requirements",
+    "targetProfile",
+    "governingSkillIds",
+    "effectChannels",
+    "combatTags",
+    "resolutionHooks"
   ],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
-    "abilityType": { "type": "string" },
-    "family": { "type": "string" },
-    "resourceModelId": { "type": "string" },
-    "scalingAttribute": { "type": "string" },
-    "scalingSkillId": { "type": "string" },
-    "requiredWeaponSkillId": { "type": "string" },
-    "requiredSkillRank": { "type": "integer", "minimum": 0 },
-    "cooldownTicks": { "type": "integer", "minimum": 0 },
-    "staminaCost": { "type": "integer", "minimum": 0 },
+    "category": {
+      "type": "string",
+      "enum": ["melee", "ranged", "tactical", "defensive", "command", "reaction"]
+    },
     "description": { "type": "string" },
-    "unlockRules": {
+    "activation": { "$ref": "#/$defs/activation" },
+    "requirements": { "$ref": "#/$defs/requirements" },
+    "targetProfile": { "$ref": "#/$defs/targetProfile" },
+    "governingSkillIds": {
       "type": "array",
-      "items": { "$ref": "#/$defs/unlockRule" }
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
     },
-    "effectProfile": {
+    "governingAttributeIds": {
       "type": "array",
-      "items": { "$ref": "#/$defs/effectRule" }
+      "items": { "type": "string" },
+      "uniqueItems": true
     },
-    "tags": {
+    "effectChannels": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
     },
-    "placeholderSourceId": { "type": "string" }
-  },
-  "$defs": {
-    "unlockRule": {
-      "type": "object",
-      "properties": {
-        "type": { "type": "string" },
-        "id": { "type": "string" },
-        "level": { "type": "integer" },
-        "rank": { "type": "integer" }
-      },
-      "required": ["type", "id"],
-      "additionalProperties": true
+    "combatTags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
     },
-    "effectRule": {
-      "type": "object",
-      "properties": {
-        "kind": { "type": "string" },
-        "stat": { "type": "string" },
-        "mode": { "type": "string" },
-        "value": { "type": "number" },
-        "basePower": { "type": "number" },
-        "scalesWith": { "type": "string" },
-        "statusId": { "type": "string" },
-        "chance": { "type": "number" },
-        "durationTicks": { "type": "integer" },
-        "target": { "type": "string" },
-        "pattern": { "type": "string" },
-        "distance": { "type": "integer" },
-        "resourceId": { "type": "string" },
-        "element": { "type": "string" }
-      },
-      "required": ["kind"],
-      "additionalProperties": true
+    "resolutionHooks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
     }
   },
-  "additionalProperties": true
+  "$defs": {
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "actionType", "timing", "executionTimeTicks", "recoveryTimeTicks", "interruptible", "costs"],
+      "properties": {
+        "type": { "type": "string", "enum": ["active", "reaction", "passive"] },
+        "actionType": { "type": "string" },
+        "timing": { "type": "string" },
+        "executionTimeTicks": { "type": "integer", "minimum": 0 },
+        "recoveryTimeTicks": { "type": "integer", "minimum": 0 },
+        "interruptible": { "type": "boolean" },
+        "costs": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "hp": { "type": "number", "minimum": 0 },
+            "mp": { "type": "number", "minimum": 0 },
+            "stamina": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillRanks", "attributes", "equipmentTagsAny", "handlingTagsAny", "targetConditionsAny"],
+      "properties": {
+        "skillRanks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "minRank"],
+            "properties": {
+              "id": { "type": "string" },
+              "minRank": { "type": "integer", "minimum": 0, "maximum": 125 }
+            }
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "minValue"],
+            "properties": {
+              "id": { "type": "string" },
+              "minValue": { "type": "number", "minimum": 0 }
+            }
+          }
+        },
+        "equipmentTagsAny": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "handlingTagsAny": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "targetConditionsAny": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["scope", "condition"],
+            "properties": {
+              "scope": { "type": "string", "enum": ["actor", "target"] },
+              "condition": { "type": "string" },
+              "qualifier": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "targetProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "shape", "range", "maxTargets", "requiresAccuracy"],
+      "properties": {
+        "disposition": { "type": "string", "enum": ["ally", "enemy", "self", "any"] },
+        "shape": { "type": "string" },
+        "range": { "type": "string" },
+        "maxTargets": { "type": "integer", "minimum": 1 },
+        "requiresAccuracy": { "type": "boolean" }
+      }
+    }
+  }
 }

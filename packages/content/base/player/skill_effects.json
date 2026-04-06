@@ -1,0 +1,1969 @@
+{
+  "records": [
+    {
+      "id": "skill_effect.combat.weapon.hand_to_hand",
+      "skillId": "skill.combat.weapon.hand_to_hand",
+      "name": "Hand To Hand Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.hand_to_hand"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.hand_to_hand"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.hand_to_hand"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.hand_to_hand"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "pressure",
+          "combatTags": [
+            "weapon.hand_to_hand",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.tactical.grapple",
+          "actionTags": [
+            "weapon.hand_to_hand"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.dagger",
+      "skillId": "skill.combat.weapon.dagger",
+      "name": "Dagger Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.dagger"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.dagger"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.dagger"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.dagger"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "critChance",
+          "combatTags": [
+            "weapon.dagger",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.backstab",
+          "actionTags": [
+            "weapon.dagger"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.sword",
+      "skillId": "skill.combat.weapon.sword",
+      "name": "Sword Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.sword"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.sword"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.sword"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.sword"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "guardPressure",
+          "combatTags": [
+            "weapon.sword",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.split_guard",
+          "actionTags": [
+            "weapon.sword"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.great_sword",
+      "skillId": "skill.combat.weapon.great_sword",
+      "name": "Great Sword Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.great_sword"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.great_sword"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.great_sword"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.great_sword"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.great_sword",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.overhead_chop",
+          "actionTags": [
+            "weapon.great_sword"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.axe",
+      "skillId": "skill.combat.weapon.axe",
+      "name": "Axe Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.axe"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.axe"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.axe"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.axe"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "armorBreak",
+          "combatTags": [
+            "weapon.axe",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.sunder",
+          "actionTags": [
+            "weapon.axe"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.great_axe",
+      "skillId": "skill.combat.weapon.great_axe",
+      "name": "Great Axe Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.great_axe"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.great_axe"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.great_axe"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.great_axe"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "pressure",
+          "combatTags": [
+            "weapon.great_axe",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.cleave",
+          "actionTags": [
+            "weapon.great_axe"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.polearm",
+      "skillId": "skill.combat.weapon.polearm",
+      "name": "Polearm Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.polearm"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.polearm"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.polearm"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.polearm"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "penetration",
+          "combatTags": [
+            "weapon.polearm",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.lunge",
+          "actionTags": [
+            "weapon.polearm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.scythe",
+      "skillId": "skill.combat.weapon.scythe",
+      "name": "Scythe Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.scythe"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.scythe"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.scythe"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.scythe"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "pressure",
+          "combatTags": [
+            "weapon.scythe",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.tactical.hook",
+          "actionTags": [
+            "weapon.scythe"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.club",
+      "skillId": "skill.combat.weapon.club",
+      "name": "Club Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.club"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.club"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.club"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.club"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "statusChance",
+          "combatTags": [
+            "weapon.club",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.crushing_blow",
+          "actionTags": [
+            "weapon.club"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.staff",
+      "skillId": "skill.combat.weapon.staff",
+      "name": "Staff Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.staff"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.staff"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.staff"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.staff"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "weapon.staff",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.pommel_strike",
+          "actionTags": [
+            "weapon.staff"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.archery",
+      "skillId": "skill.combat.weapon.archery",
+      "name": "Archery Weapon Effects",
+      "family": "ranged_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.archery"
+          ],
+          "resolutionHooks": [
+            "damage.ranged"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.ranged.primary",
+          "actionTags": [
+            "weapon.archery"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.archery"
+          ],
+          "resolutionHooks": [
+            "damage.ranged"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.ranged.primary",
+          "actionTags": [
+            "weapon.archery"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "critChance",
+          "combatTags": [
+            "weapon.archery",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.ranged.headshot",
+          "actionTags": [
+            "weapon.archery"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.throwing",
+      "skillId": "skill.combat.weapon.throwing",
+      "name": "Throwing Weapon Effects",
+      "family": "ranged_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.throwing"
+          ],
+          "resolutionHooks": [
+            "damage.ranged"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.ranged.primary",
+          "actionTags": [
+            "weapon.throwing"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.throwing"
+          ],
+          "resolutionHooks": [
+            "damage.ranged"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.ranged.primary",
+          "actionTags": [
+            "weapon.throwing"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.throwing",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.ranged.quick_shot",
+          "actionTags": [
+            "weapon.throwing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.weapon.exotic_weapons",
+      "skillId": "skill.combat.weapon.exotic_weapons",
+      "name": "Exotic Weapons Weapon Effects",
+      "family": "melee_weapon",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damage",
+          "combatTags": [
+            "weapon.exotic_weapons"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.exotic_weapons"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "weapon.exotic_weapons"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.05,
+            "perRank": 0.011
+          },
+          "actionType": "combat.attack.melee.basic",
+          "actionTags": [
+            "weapon.exotic_weapons"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "weapon.exotic_weapons",
+            "signature"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.008
+          },
+          "actionType": "ability.melee.feint",
+          "actionTags": [
+            "weapon.exotic_weapons"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.defense.evasion",
+      "skillId": "skill.combat.defense.evasion",
+      "name": "Evasion Defensive Effects",
+      "family": "defensive_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "defense.evasion"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "ability.defensive.defensive_stance"
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damageMitigation",
+          "combatTags": [
+            "defense.evasion",
+            "defense"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.009
+          },
+          "actionType": "ability.defensive.defensive_stance"
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.defense.parrying",
+      "skillId": "skill.combat.defense.parrying",
+      "name": "Parrying Defensive Effects",
+      "family": "defensive_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "counter",
+          "combatTags": [
+            "defense.parrying"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "ability.reaction.riposte",
+          "actionTags": [
+            "defense.parrying"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damageMitigation",
+          "combatTags": [
+            "defense.parrying",
+            "defense"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.009
+          },
+          "actionType": "ability.reaction.riposte",
+          "actionTags": [
+            "defense.parrying"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.defense.guard",
+      "skillId": "skill.combat.defense.guard",
+      "name": "Guard Defensive Effects",
+      "family": "defensive_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "barrier",
+          "combatTags": [
+            "defense.guard"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "ability.defensive.defensive_stance",
+          "actionTags": [
+            "defense.guard"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damageMitigation",
+          "combatTags": [
+            "defense.guard",
+            "defense"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.009
+          },
+          "actionType": "ability.defensive.defensive_stance",
+          "actionTags": [
+            "defense.guard"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.defense.shield_handling",
+      "skillId": "skill.combat.defense.shield_handling",
+      "name": "Shield Handling Defensive Effects",
+      "family": "defensive_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "blockChance",
+          "combatTags": [
+            "defense.shield_handling"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "defense.shield_handling"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damageMitigation",
+          "combatTags": [
+            "defense.shield_handling",
+            "defense"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.009
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "defense.shield_handling"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.cloth_armor",
+      "skillId": "skill.combat.armor.cloth_armor",
+      "name": "Cloth Armor Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "armor.cloth_armor"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "armor.handling.cloth",
+          "actionTags": [
+            "armor.cloth_armor"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.cloth_armor",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "armor.handling.cloth",
+          "actionTags": [
+            "armor.cloth_armor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.light_armor",
+      "skillId": "skill.combat.armor.light_armor",
+      "name": "Light Armor Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "evasion",
+          "combatTags": [
+            "armor.light_armor"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "armor.handling.light",
+          "actionTags": [
+            "armor.light_armor"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.light_armor",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "armor.handling.light",
+          "actionTags": [
+            "armor.light_armor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.medium_armor",
+      "skillId": "skill.combat.armor.medium_armor",
+      "name": "Medium Armor Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "barrier",
+          "combatTags": [
+            "armor.medium_armor"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "armor.handling.medium",
+          "actionTags": [
+            "armor.medium_armor"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.medium_armor",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "armor.handling.medium",
+          "actionTags": [
+            "armor.medium_armor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.heavy_armor",
+      "skillId": "skill.combat.armor.heavy_armor",
+      "name": "Heavy Armor Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "mitigation",
+          "combatTags": [
+            "armor.heavy_armor"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "armor.handling.heavy",
+          "actionTags": [
+            "armor.heavy_armor"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.heavy_armor",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "armor.handling.heavy",
+          "actionTags": [
+            "armor.heavy_armor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.plate_armor",
+      "skillId": "skill.combat.armor.plate_armor",
+      "name": "Plate Armor Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "mitigation",
+          "combatTags": [
+            "armor.plate_armor"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "armor.handling.plate",
+          "actionTags": [
+            "armor.plate_armor"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.plate_armor",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "armor.handling.plate",
+          "actionTags": [
+            "armor.plate_armor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.small_shields",
+      "skillId": "skill.combat.armor.small_shields",
+      "name": "Small Shields Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "blockChance",
+          "combatTags": [
+            "armor.small_shields"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "armor.small_shields"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.small_shields",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "armor.small_shields"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.medium_shields",
+      "skillId": "skill.combat.armor.medium_shields",
+      "name": "Medium Shields Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "damageMitigation",
+          "combatTags": [
+            "armor.medium_shields"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "armor.medium_shields"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.medium_shields",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "armor.medium_shields"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.armor.large_shields",
+      "skillId": "skill.combat.armor.large_shields",
+      "name": "Large Shields Armor Effects",
+      "family": "armor_handling",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "guardPressure",
+          "combatTags": [
+            "armor.large_shields"
+          ],
+          "resolutionHooks": [
+            "damage.melee"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "armor.large_shields"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "staggerResistance",
+          "combatTags": [
+            "armor.large_shields",
+            "armor"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "combat.interrupt.shield_bash",
+          "actionTags": [
+            "armor.large_shields"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.tactics.party_tactics",
+      "skillId": "skill.combat.tactics.party_tactics",
+      "name": "Party Tactics Tactical Effects",
+      "family": "tactical",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "tactical.party_tactics"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.009
+          },
+          "actionType": "ability.command.press_the_attack"
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "tactical.party_tactics",
+            "command"
+          ],
+          "resolutionHooks": [
+            "command.pressure",
+            "command.formation",
+            "command.fall_back"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "ability.command.press_the_attack"
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.tactics.target_priority",
+      "skillId": "skill.combat.tactics.target_priority",
+      "name": "Target Priority Tactical Effects",
+      "family": "tactical",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "accuracy",
+          "combatTags": [
+            "tactical.target_priority"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.009
+          },
+          "actionType": "ability.command.focus_target"
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "tactical.target_priority",
+            "command"
+          ],
+          "resolutionHooks": [
+            "command.pressure",
+            "command.formation",
+            "command.fall_back"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "ability.command.focus_target"
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.tactics.interrupting",
+      "skillId": "skill.combat.tactics.interrupting",
+      "name": "Interrupting Tactical Effects",
+      "family": "tactical",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "interrupt",
+          "combatTags": [
+            "tactical.interrupting"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.009
+          },
+          "actionType": "combat.interrupt.shield_bash"
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "tactical.interrupting",
+            "command"
+          ],
+          "resolutionHooks": [
+            "command.pressure",
+            "command.formation",
+            "command.fall_back"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "combat.interrupt.shield_bash"
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.tactics.formation_discipline",
+      "skillId": "skill.combat.tactics.formation_discipline",
+      "name": "Formation Discipline Tactical Effects",
+      "family": "tactical",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "barrier",
+          "combatTags": [
+            "tactical.formation_discipline"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.009
+          },
+          "actionType": "ability.command.hold_formation"
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "tactical.formation_discipline",
+            "command"
+          ],
+          "resolutionHooks": [
+            "command.pressure",
+            "command.formation",
+            "command.fall_back"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "ability.command.hold_formation"
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.tactics.threat_control",
+      "skillId": "skill.combat.tactics.threat_control",
+      "name": "Threat Control Tactical Effects",
+      "family": "tactical",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "pressure",
+          "combatTags": [
+            "tactical.threat_control"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.009
+          },
+          "actionType": "ability.command.fall_back"
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "tactical.threat_control",
+            "command"
+          ],
+          "resolutionHooks": [
+            "command.pressure",
+            "command.formation",
+            "command.fall_back"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "ability.command.fall_back"
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.combat.tactics.weakness_exploitation",
+      "skillId": "skill.combat.tactics.weakness_exploitation",
+      "name": "Weakness Exploitation Tactical Effects",
+      "family": "tactical",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "critChance",
+          "combatTags": [
+            "tactical.weakness_exploitation"
+          ],
+          "resolutionHooks": [],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.009
+          },
+          "actionType": "ability.melee.guard_break"
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "tactical.weakness_exploitation",
+            "command"
+          ],
+          "resolutionHooks": [
+            "command.pressure",
+            "command.formation",
+            "command.fall_back"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.02,
+            "perRank": 0.007
+          },
+          "actionType": "ability.melee.guard_break"
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.magic.school.elemental",
+      "skillId": "skill.magic.school.elemental",
+      "name": "Elemental Spell Effects",
+      "family": "offensive_school",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "power",
+          "combatTags": [
+            "school.elemental"
+          ],
+          "resolutionHooks": [
+            "damage.magic"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionTags": [
+            "school.elemental"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "manaEfficiency",
+          "combatTags": [
+            "school.elemental",
+            "magic"
+          ],
+          "resolutionHooks": [
+            "damage.magic"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionTags": [
+            "school.elemental"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.magic.school.enfeebling",
+      "skillId": "skill.magic.school.enfeebling",
+      "name": "Enfeebling Spell Effects",
+      "family": "offensive_school",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "magnitude",
+          "combatTags": [
+            "school.enfeebling"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "status.bind"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionTags": [
+            "school.enfeebling"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "manaEfficiency",
+          "combatTags": [
+            "school.enfeebling",
+            "magic"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "status.bind"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionTags": [
+            "school.enfeebling"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.magic.school.enhancing",
+      "skillId": "skill.magic.school.enhancing",
+      "name": "Enhancing Spell Effects",
+      "family": "support_school",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "barrier",
+          "combatTags": [
+            "school.enhancing"
+          ],
+          "resolutionHooks": [
+            "buff.protect",
+            "buff.ward"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionTags": [
+            "school.enhancing"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "manaEfficiency",
+          "combatTags": [
+            "school.enhancing",
+            "magic"
+          ],
+          "resolutionHooks": [
+            "buff.protect",
+            "buff.ward"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionTags": [
+            "school.enhancing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.magic.school.healing",
+      "skillId": "skill.magic.school.healing",
+      "name": "Healing Spell Effects",
+      "family": "support_school",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "healingPower",
+          "combatTags": [
+            "school.healing"
+          ],
+          "resolutionHooks": [
+            "heal.hp"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionTags": [
+            "school.healing"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "manaEfficiency",
+          "combatTags": [
+            "school.healing",
+            "magic"
+          ],
+          "resolutionHooks": [
+            "heal.hp"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionTags": [
+            "school.healing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.magic.school.druidic",
+      "skillId": "skill.magic.school.druidic",
+      "name": "Druidic Spell Effects",
+      "family": "support_school",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "charges",
+          "combatTags": [
+            "tradition.druidic"
+          ],
+          "resolutionHooks": [
+            "support.berry",
+            "heal.hp"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionTags": [
+            "tradition.druidic"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "manaEfficiency",
+          "combatTags": [
+            "tradition.druidic",
+            "magic"
+          ],
+          "resolutionHooks": [
+            "support.berry",
+            "heal.hp"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionTags": [
+            "tradition.druidic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.magic.school.ninjutsu",
+      "skillId": "skill.magic.school.ninjutsu",
+      "name": "Ninjutsu Spell Effects",
+      "family": "support_school",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "tempo",
+          "combatTags": [
+            "discipline.ninjutsu"
+          ],
+          "resolutionHooks": [
+            "damage.ranged",
+            "mobility.shadow_step"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionTags": [
+            "discipline.ninjutsu"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "manaEfficiency",
+          "combatTags": [
+            "discipline.ninjutsu",
+            "magic"
+          ],
+          "resolutionHooks": [
+            "damage.ranged",
+            "mobility.shadow_step"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionTags": [
+            "discipline.ninjutsu"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_effect.magic.school.performance",
+      "skillId": "skill.magic.school.performance",
+      "name": "Performance Spell Effects",
+      "family": "support_school",
+      "channels": [
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "magnitude",
+          "combatTags": [
+            "discipline.performance"
+          ],
+          "resolutionHooks": [
+            "buff.anthem",
+            "heal.hp"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.04,
+            "perRank": 0.01
+          },
+          "actionTags": [
+            "discipline.performance"
+          ]
+        },
+        {
+          "grantType": "passive_bonus",
+          "effectChannel": "manaEfficiency",
+          "combatTags": [
+            "discipline.performance",
+            "magic"
+          ],
+          "resolutionHooks": [
+            "buff.anthem",
+            "heal.hp"
+          ],
+          "scaling": {
+            "mode": "per_rank",
+            "base": 0.03,
+            "perRank": 0.008
+          },
+          "actionTags": [
+            "discipline.performance"
+          ]
+        }
+      ]
+    }
+  ]
+}

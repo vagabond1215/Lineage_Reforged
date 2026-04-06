@@ -16,23 +16,30 @@ type MainMenuScreenProps = {
   onDismissNotice: () => void;
   onActivateSlot: (slotId: ManualSaveSlotId) => void;
   onDeleteSlot: (slotId: ManualSaveSlotId) => void;
+  onContinue: () => void;
   onOpenSettings: () => void;
   onExit: () => void;
+  themeMode: 'dark' | 'light';
+  onToggleThemeMode: () => void;
 };
 
-const circleButtonClass =
-  'inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]';
-
-function formatGold(gold: number | null): string {
-  if (gold === null) {
-    return 'Uncounted';
+function formatSlotHeaderTimestamp(savedAt: string | null): string {
+  if (!savedAt) {
+    return 'No save';
   }
 
-  return `${new Intl.NumberFormat('en-US').format(gold)} gold`;
-}
+  const parsed = new Date(savedAt);
 
-function getSlotDateLabel(slot: SaveSlotSummary): string {
-  return slot.lastSavedLabel ?? 'No save recorded';
+  if (Number.isNaN(parsed.valueOf())) {
+    return 'Unknown save';
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit'
+  }).format(parsed);
 }
 
 export function MainMenuScreen({
@@ -41,8 +48,11 @@ export function MainMenuScreen({
   onDismissNotice,
   onActivateSlot,
   onDeleteSlot,
+  onContinue,
   onOpenSettings,
-  onExit
+  onExit,
+  themeMode,
+  onToggleThemeMode
 }: MainMenuScreenProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [pendingDeleteSlotId, setPendingDeleteSlotId] = useState<ManualSaveSlotId | null>(null);
@@ -54,7 +64,7 @@ export function MainMenuScreen({
       ),
     [slots]
   );
-  const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
+  const hasContinueSave = slots.some((slot) => slot.hasSave);
   const slotPageStart = currentPage * MANUAL_SAVE_SLOTS_PER_PAGE;
   const visibleSlots = manualSlots.slice(
     slotPageStart,
@@ -62,21 +72,87 @@ export function MainMenuScreen({
   );
   const pendingDeleteSlot =
     manualSlots.find((slot) => slot.id === pendingDeleteSlotId) ?? null;
+  const topBarBackground =
+    themeMode === 'dark'
+      ? 'linear-gradient(135deg, rgba(21, 27, 39, 0.88), rgba(10, 14, 22, 0.72)), radial-gradient(circle at top left, rgba(148, 163, 184, 0.18), transparent 36%), radial-gradient(circle at bottom right, rgba(96, 165, 250, 0.1), transparent 30%)'
+      : 'linear-gradient(135deg, rgba(229, 237, 249, 0.98), rgba(211, 223, 242, 0.94)), radial-gradient(circle at top left, rgba(96, 165, 250, 0.16), transparent 38%), radial-gradient(circle at bottom right, rgba(100, 116, 139, 0.12), transparent 30%)';
+  const iconButtonClass =
+    themeMode === 'dark'
+      ? 'inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]'
+      : 'inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-400/45 bg-slate-100/90 text-slate-700 shadow-[0_10px_20px_rgba(148,163,184,0.18)] transition hover:bg-slate-200/95';
+  const continueButtonClass =
+    themeMode === 'dark'
+      ? 'inline-flex h-11 items-center justify-center rounded-full border border-slate-300/25 bg-slate-300/12 px-5 text-sm font-semibold tracking-[0.04em] text-slate-100 transition hover:bg-slate-300/18 disabled:cursor-not-allowed disabled:opacity-45'
+      : 'inline-flex h-11 items-center justify-center rounded-full border border-slate-500/45 bg-slate-100/92 px-5 text-sm font-semibold tracking-[0.04em] text-slate-700 shadow-[0_12px_24px_rgba(148,163,184,0.18)] transition hover:bg-slate-200/96 disabled:cursor-not-allowed disabled:opacity-45';
+  const activePageButtonClass =
+    themeMode === 'dark'
+      ? 'border-slate-300/45 bg-slate-300/22 text-slate-50 shadow-[0_0_18px_rgba(148,163,184,0.24)]'
+      : 'border-slate-700/70 bg-slate-600/95 text-slate-50 shadow-[0_12px_24px_rgba(71,85,105,0.3)]';
+  const deleteButtonClass =
+    themeMode === 'dark'
+      ? 'absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-rose-300/25 bg-rose-200/10 text-rose-100 transition hover:bg-rose-200/20'
+      : 'absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-rose-400/35 bg-rose-100/80 text-rose-600 shadow-[0_10px_18px_rgba(251,113,133,0.16)] transition hover:bg-rose-200/85';
+  const deleteConfirmPanelClass =
+    themeMode === 'dark'
+      ? 'w-full max-w-md rounded-[28px] border border-rose-300/20 bg-[color:var(--color-panel-strong)] p-6 shadow-2xl'
+      : 'w-full max-w-md rounded-[28px] border border-rose-300/30 bg-[color:var(--color-panel-strong)] p-6 shadow-[0_28px_48px_rgba(15,23,42,0.18)]';
+  const deleteConfirmEyebrowClass =
+    themeMode === 'dark'
+      ? 'text-[11px] uppercase tracking-[0.22em] text-rose-200/75'
+      : 'text-[11px] uppercase tracking-[0.22em] text-rose-600/75';
+  const deleteConfirmActionClass =
+    themeMode === 'dark'
+      ? 'rounded-full border border-rose-300/25 bg-rose-200/10 px-4 py-2 text-sm text-rose-100 transition hover:bg-rose-200/20'
+      : 'rounded-full border border-rose-400/35 bg-rose-100/80 px-4 py-2 text-sm text-rose-700 transition hover:bg-rose-200/85';
 
   return (
     <div className="h-screen overflow-auto px-4 pb-8 pt-4 sm:px-6">
       <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-5">
         <div className="sticky top-0 z-30">
-          <div className="rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] px-5 py-4 shadow-panel backdrop-blur-xl">
-            <div className="flex items-center justify-between gap-4">
-              <div className="text-5xl font-semibold tracking-[0.08em] text-[color:var(--color-text-strong)] sm:text-6xl">
-                Cataclysm
+          <div
+            className={`rounded-[30px] border px-5 py-3 backdrop-blur-xl ${
+              themeMode === 'dark'
+                ? 'border-white/10 shadow-[0_18px_48px_rgba(0,0,0,0.32)]'
+                : 'border-slate-300/60 shadow-[0_18px_38px_rgba(51,65,85,0.12)]'
+            }`}
+            style={{ background: topBarBackground }}
+          >
+            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4">
+              <div className="min-w-0 justify-self-start">
+                <div className="truncate text-left text-4xl font-semibold tracking-[0.08em] text-[color:var(--color-text-strong)] sm:text-5xl">
+                  Cataclysm
+                </div>
               </div>
-              <div className="flex items-center gap-3">
+
+              <div className="flex items-center justify-center">
+                <button
+                  type="button"
+                  onClick={onContinue}
+                  disabled={!hasContinueSave}
+                  className={continueButtonClass}
+                  title={hasContinueSave ? 'Continue the latest campaign' : 'No save available to continue'}
+                >
+                  Continue
+                </button>
+              </div>
+
+              <div className="flex items-center justify-self-end gap-3">
+                <button
+                  type="button"
+                  onClick={onToggleThemeMode}
+                  className={iconButtonClass}
+                  aria-label={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                  title={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  <Icon
+                    name={themeMode === 'dark' ? 'sun' : 'moon'}
+                    className="h-5 w-5"
+                  />
+                </button>
                 <button
                   type="button"
                   onClick={onOpenSettings}
-                  className={circleButtonClass}
+                  className={iconButtonClass}
                   aria-label="Open settings"
                   title="Settings"
                 >
@@ -85,7 +161,7 @@ export function MainMenuScreen({
                 <button
                   type="button"
                   onClick={onExit}
-                  className={circleButtonClass}
+                  className={iconButtonClass}
                   aria-label="Exit"
                   title="Exit"
                 >
@@ -120,7 +196,7 @@ export function MainMenuScreen({
                         onClick={() => setCurrentPage(pageIndex)}
                         className={`inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-semibold transition ${
                           active
-                            ? 'border-amber-300/60 bg-amber-200/18 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(251,191,36,0.24)]'
+                            ? activePageButtonClass
                             : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-surface-strong)]'
                         }`}
                         aria-label={`Show save slots ${pageLabelStart} through ${pageLabelEnd}`}
@@ -148,7 +224,7 @@ export function MainMenuScreen({
                   }}
                   role="button"
                   tabIndex={0}
-                  className={`group relative flex min-h-[20rem] h-full flex-col overflow-hidden rounded-[28px] border p-5 text-left transition ${
+                  className={`group relative flex min-h-[12rem] h-full flex-col overflow-hidden rounded-[28px] border p-5 text-left transition ${
                     slot.hasSave
                       ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
                       : 'border-dashed border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] hover:bg-[color:var(--color-surface-strong)]'
@@ -161,7 +237,7 @@ export function MainMenuScreen({
                         event.stopPropagation();
                         setPendingDeleteSlotId(slot.id);
                       }}
-                      className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-rose-300/25 bg-rose-200/10 text-rose-100 transition hover:bg-rose-200/20"
+                      className={deleteButtonClass}
                       aria-label={`Delete ${slot.label}`}
                       title="Delete save"
                     >
@@ -169,92 +245,58 @@ export function MainMenuScreen({
                     </button>
                   )}
 
-                  <div className="flex-1 pr-14">
-                    <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-strong)]">
-                      {slot.label}
+                  <div className="flex flex-1 flex-col">
+                    <div className={`mt-2 flex items-center justify-between gap-4 ${slot.hasSave ? 'pr-14' : ''}`}>
+                      <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-strong)]">
+                        {slot.label}
+                      </div>
+                      {slot.hasSave && (
+                        <div className="whitespace-nowrap text-right text-[11px] tracking-[0.2em] text-[color:var(--color-muted-strong)]">
+                          {formatSlotHeaderTimestamp(slot.lastSavedAt)}
+                        </div>
+                      )}
                     </div>
-                    <div className="mt-4 text-2xl font-semibold text-[color:var(--color-text-strong)]">
-                      {slot.hasSave ? slot.playerName : 'New Game'}
-                    </div>
-                    <div className="mt-2 min-h-[48px] text-sm leading-6 text-[color:var(--color-text-soft)]">
-                      {slot.hasSave
-                        ? slot.settlementLabel ?? slot.regionLabel ?? 'Unknown City'
-                        : 'A blank ledger awaiting a new life, a new road, and a new beginning.'}
-                    </div>
-                  </div>
-
-                  <div className="mt-5 space-y-3">
                     {slot.hasSave ? (
                       <>
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
-                            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                              City
-                            </div>
-                            <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
-                              {slot.settlementLabel ?? slot.regionLabel ?? 'Unknown'}
-                            </div>
-                          </div>
-                          <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
-                            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                              <Icon name="coin" className="h-3.5 w-3.5" />
-                              Gold
-                            </div>
-                            <div className="mt-2 text-base text-[color:var(--color-text-strong)]">
-                              {formatGold(slot.gold)}
-                            </div>
-                          </div>
+                        <div className="mt-5 overflow-hidden text-[clamp(1rem,1.6vw,1.48rem)] font-semibold leading-tight text-[color:var(--color-text-strong)] whitespace-nowrap text-ellipsis">
+                          {slot.playerName}
                         </div>
-
-                        <div className="rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3">
-                          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                            <Icon name="clock" className="h-3.5 w-3.5" />
-                            Save File Time And Date
+                        <div className="mt-4 space-y-2 text-[13px] leading-5 text-[color:var(--color-text-soft)]">
+                          <div className="truncate">
+                            Level {slot.level ?? '?'} {slot.lineageLabel ?? 'Wanderer'}{' '}
+                            {slot.sexLabel ?? 'Unknown'} from{' '}
+                            {slot.startingSettlementLabel ??
+                              slot.settlementLabel ??
+                              slot.regionLabel ??
+                              'Unknown settlement'}
                           </div>
-                          <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-strong)]">
-                            {getSlotDateLabel(slot)}
+                          <div className="truncate">
+                            {slot.backstoryLabel ?? slot.classLabel ?? 'Unrecorded'} in{' '}
+                            {slot.currentLocationLabel ??
+                              slot.settlementLabel ??
+                              slot.regionLabel ??
+                              'Unknown location'}{' '}
+                            with {slot.fundsLabel ?? 'Uncounted'}
                           </div>
                         </div>
                       </>
                     ) : (
-                      <div className="rounded-[20px] border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-3 text-sm leading-6 text-[color:var(--color-text-soft)]">
-                        Select this slot to begin character creation here. Any new campaign started from this card will be written back into this same save slot.
+                      <div className="flex flex-1 items-center justify-center text-center text-2xl font-semibold text-[color:var(--color-text-strong)]">
+                        Empty
                       </div>
                     )}
                   </div>
                 </div>
               ))}
             </div>
-
-            {quickSaveSlot && (
-              <div className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-4 py-4">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted-strong)]">
-                      Quick Save
-                    </div>
-                    <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-soft)]">
-                      {quickSaveSlot.hasSave
-                        ? `${quickSaveSlot.playerName ?? 'A campaign'} also rests in the dedicated quick-save slot.`
-                        : 'The dedicated quick-save slot remains reserved for in-game use.'}
-                    </div>
-                  </div>
-                  {quickSaveSlot.hasSave && (
-                    <div className="text-sm text-[color:var(--color-text-strong)]">
-                      {quickSaveSlot.lastSavedLabel}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         </Card>
       </div>
 
       {pendingDeleteSlot && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/55 px-4">
-          <div className="w-full max-w-md rounded-[28px] border border-rose-300/20 bg-[color:var(--color-panel-strong)] p-6 shadow-2xl">
-            <div className="text-[11px] uppercase tracking-[0.22em] text-rose-200/75">
+          <div className={deleteConfirmPanelClass}>
+            <div className={deleteConfirmEyebrowClass}>
               Delete Save
             </div>
             <div className="mt-3 text-xl font-semibold text-[color:var(--color-text-strong)]">
@@ -278,7 +320,7 @@ export function MainMenuScreen({
                   setPendingDeleteSlotId(null);
                   onDeleteSlot(slotId);
                 }}
-                className="rounded-full border border-rose-300/25 bg-rose-200/10 px-4 py-2 text-sm text-rose-100 transition hover:bg-rose-200/20"
+                className={deleteConfirmActionClass}
               >
                 Delete Save
               </button>

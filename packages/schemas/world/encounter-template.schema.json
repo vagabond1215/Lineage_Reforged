@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "summary",
+          "disposition",
+          "movementMode",
+          "regionIds",
+          "habitatTags",
+          "tags",
+          "difficultyBand",
+          "members"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^encounter\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+          },
+          "name": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string", "minLength": 1 },
+          "disposition": {
+            "type": "string",
+            "enum": ["hostile", "friendly", "neutral"]
+          },
+          "movementMode": {
+            "type": "string",
+            "enum": ["roaming", "fixed"]
+          },
+          "regionIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "habitatTags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "difficultyBand": {
+            "type": "string",
+            "enum": ["low", "moderate", "high", "severe"]
+          },
+          "members": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["monsterId", "minCount", "maxCount", "roleId"],
+              "properties": {
+                "monsterId": {
+                  "type": "string",
+                  "pattern": "^monster\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                },
+                "minCount": { "type": "integer", "minimum": 1 },
+                "maxCount": { "type": "integer", "minimum": 1 },
+                "roleId": {
+                  "type": "string",
+                  "enum": [
+                    "frontliner",
+                    "disruptor",
+                    "ranged_pressure",
+                    "healer",
+                    "support_buffer",
+                    "debuffer_controller",
+                    "opportunist",
+                    "tank_protector",
+                    "flexible_adaptive"
+                  ]
+                }
+              }
+            }
+          },
+          "alliedTemplateIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^encounter\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}

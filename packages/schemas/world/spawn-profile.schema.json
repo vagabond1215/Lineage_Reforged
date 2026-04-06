@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "regionIds",
+          "worldHexIds",
+          "settlementIds",
+          "siteIds",
+          "habitatTags",
+          "minHazardPressure",
+          "maxHazardPressure",
+          "spawnRatePerDay",
+          "densityBand",
+          "hostilityWeights",
+          "allowedMovementModes",
+          "encounterWeights"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^spawn\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+          },
+          "name": { "type": "string", "minLength": 1 },
+          "regionIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "worldHexIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "settlementIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "siteIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "habitatTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "minHazardPressure": { "type": "number", "minimum": 0 },
+          "maxHazardPressure": { "type": "number", "minimum": 0 },
+          "spawnRatePerDay": { "type": "number", "minimum": 0, "maximum": 100 },
+          "densityBand": {
+            "type": "string",
+            "enum": ["rare", "sporadic", "steady", "dense"]
+          },
+          "hostilityWeights": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hostile", "friendly", "neutral"],
+            "properties": {
+              "hostile": { "type": "number", "minimum": 0 },
+              "friendly": { "type": "number", "minimum": 0 },
+              "neutral": { "type": "number", "minimum": 0 }
+            }
+          },
+          "allowedMovementModes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": ["roaming", "fixed"]
+            },
+            "uniqueItems": true
+          },
+          "encounterWeights": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["encounterTemplateId", "weight"],
+              "properties": {
+                "encounterTemplateId": {
+                  "type": "string",
+                  "pattern": "^encounter\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                },
+                "weight": { "type": "number", "minimum": 1 },
+                "minHazardPressure": { "type": "number", "minimum": 0 },
+                "maxHazardPressure": { "type": "number", "minimum": 0 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

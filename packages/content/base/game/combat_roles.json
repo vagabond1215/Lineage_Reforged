@@ -1,0 +1,605 @@
+{
+  "records": [
+    {
+      "id": "frontliner",
+      "name": "Frontliner",
+      "summary": "Commits to close-range pressure and forces enemy attention onto the forward line.",
+      "preferredActionTypes": [
+        "combat.attack.melee.basic",
+        "combat.interrupt.shield_bash"
+      ],
+      "defaultTactics": {
+        "roleId": "frontliner",
+        "preferences": {
+          "favorInterrupts": "normal",
+          "favorDamage": "high",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "low",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "normal",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "high",
+          "favorMeleeEngagement": "high",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "normal"
+        },
+        "spellPreferences": {
+          "preferredSchools": [],
+          "preferredElements": [],
+          "preferredTier": "balanced",
+          "buffPriority": "normal",
+          "debuffPriority": "normal",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "frontliner.highest_threat",
+            "rule": "highest_threat",
+            "weight": 10,
+            "scope": "enemy"
+          },
+          {
+            "id": "frontliner.focus_target",
+            "rule": "focus_current_player_target",
+            "weight": 8,
+            "scope": "enemy"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "disruptor",
+      "name": "Disruptor",
+      "summary": "Prioritizes interruption windows, broken formations, and fragile enemy actions.",
+      "preferredActionTypes": [
+        "combat.interrupt.shield_bash",
+        "combat.attack.control.primary"
+      ],
+      "defaultTactics": {
+        "roleId": "disruptor",
+        "preferences": {
+          "favorInterrupts": "critical",
+          "favorDamage": "normal",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "normal",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "high",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "normal",
+          "favorMeleeEngagement": "normal",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "normal"
+        },
+        "spellPreferences": {
+          "preferredSchools": [
+            "enfeebling"
+          ],
+          "preferredElements": [],
+          "preferredTier": "balanced",
+          "buffPriority": "normal",
+          "debuffPriority": "critical",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "disruptor.casting",
+            "rule": "currently_casting",
+            "weight": 12,
+            "scope": "enemy"
+          },
+          {
+            "id": "disruptor.interruptable",
+            "rule": "easiest_to_interrupt",
+            "weight": 10,
+            "scope": "enemy"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "ranged_pressure",
+      "name": "Ranged Pressure",
+      "summary": "Maintains distance and repeatedly pressures exposed targets from range.",
+      "preferredActionTypes": [
+        "combat.attack.ranged.basic",
+        "combat.attack.magic.elemental"
+      ],
+      "defaultTactics": {
+        "roleId": "ranged_pressure",
+        "preferences": {
+          "favorInterrupts": "normal",
+          "favorDamage": "high",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "normal",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "normal",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "high",
+          "favorMeleeEngagement": "avoid",
+          "favorRangedEngagement": "high",
+          "favorMagicEngagement": "normal"
+        },
+        "spellPreferences": {
+          "preferredSchools": [
+            "elemental"
+          ],
+          "preferredElements": [],
+          "preferredTier": "high",
+          "buffPriority": "normal",
+          "debuffPriority": "normal",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "ranged.lowest_hp",
+            "rule": "lowest_hp",
+            "weight": 10,
+            "scope": "enemy"
+          },
+          {
+            "id": "ranged.focus_target",
+            "rule": "focus_current_player_target",
+            "weight": 7,
+            "scope": "enemy"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "healer",
+      "name": "Healer",
+      "summary": "Stabilizes allied HP and preserves the party through triage-first decision making.",
+      "preferredActionTypes": [
+        "spell.cast.healing.primary",
+        "spell.cast.enhancing.primary"
+      ],
+      "defaultTactics": {
+        "roleId": "healer",
+        "preferences": {
+          "favorInterrupts": "normal",
+          "favorDamage": "avoid",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "high",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "critical",
+          "favorEnfeebling": "normal",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "normal",
+          "favorMeleeEngagement": "normal",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "high"
+        },
+        "spellPreferences": {
+          "preferredSchools": [
+            "healing",
+            "enhancing"
+          ],
+          "preferredElements": [],
+          "preferredTier": "low",
+          "buffPriority": "high",
+          "debuffPriority": "normal",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "healer.lowest_hp",
+            "rule": "lowest_hp",
+            "weight": 14,
+            "scope": "ally"
+          },
+          {
+            "id": "healer.lowest_max_hp",
+            "rule": "lowest_max_hp",
+            "weight": 6,
+            "scope": "ally"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "support_buffer",
+      "name": "Support Buffer",
+      "summary": "Keeps allied throughput stable with durable buffs and reserve-aware spell use.",
+      "preferredActionTypes": [
+        "spell.cast.enhancing.primary",
+        "spell.cast.healing.primary"
+      ],
+      "defaultTactics": {
+        "roleId": "support_buffer",
+        "preferences": {
+          "favorInterrupts": "normal",
+          "favorDamage": "normal",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "normal",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "normal",
+          "favorEnhancing": "critical",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "normal",
+          "favorMeleeEngagement": "normal",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "high"
+        },
+        "spellPreferences": {
+          "preferredSchools": [
+            "enhancing",
+            "healing"
+          ],
+          "preferredElements": [],
+          "preferredTier": "balanced",
+          "buffPriority": "critical",
+          "debuffPriority": "normal",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "support.highest_max_hp",
+            "rule": "highest_max_hp",
+            "weight": 9,
+            "scope": "ally"
+          },
+          {
+            "id": "support.focus_player",
+            "rule": "focus_current_player_target",
+            "weight": 3,
+            "scope": "ally"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "debuffer_controller",
+      "name": "Debuffer / Controller",
+      "summary": "Wins time through status pressure, disruption, and cast denial.",
+      "preferredActionTypes": [
+        "combat.attack.control.primary",
+        "spell.cast.enfeebling.primary"
+      ],
+      "defaultTactics": {
+        "roleId": "debuffer_controller",
+        "preferences": {
+          "favorInterrupts": "high",
+          "favorDamage": "low",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "normal",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "critical",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "normal",
+          "favorMeleeEngagement": "normal",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "high"
+        },
+        "spellPreferences": {
+          "preferredSchools": [
+            "enfeebling"
+          ],
+          "preferredElements": [],
+          "preferredTier": "balanced",
+          "buffPriority": "normal",
+          "debuffPriority": "critical",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "controller.casting",
+            "rule": "currently_casting",
+            "weight": 11,
+            "scope": "enemy"
+          },
+          {
+            "id": "controller.highest_threat",
+            "rule": "highest_threat",
+            "weight": 8,
+            "scope": "enemy"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "opportunist",
+      "name": "Opportunist",
+      "summary": "Breaks onto weak targets, finishes low-health enemies, and exploits short openings.",
+      "preferredActionTypes": [
+        "combat.attack.melee.basic",
+        "combat.attack.ranged.basic"
+      ],
+      "defaultTactics": {
+        "roleId": "opportunist",
+        "preferences": {
+          "favorInterrupts": "normal",
+          "favorDamage": "high",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "normal",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "normal",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "high",
+          "favorMeleeEngagement": "normal",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "normal"
+        },
+        "spellPreferences": {
+          "preferredSchools": [],
+          "preferredElements": [],
+          "preferredTier": "balanced",
+          "buffPriority": "normal",
+          "debuffPriority": "normal",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "opportunist.lowest_hp",
+            "rule": "lowest_hp",
+            "weight": 12,
+            "scope": "enemy"
+          },
+          {
+            "id": "opportunist.focus_target",
+            "rule": "focus_current_player_target",
+            "weight": 6,
+            "scope": "enemy"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "tank_protector",
+      "name": "Tank / Protector",
+      "summary": "Absorbs hostile focus, contests high-threat targets, and protects fragile allies.",
+      "preferredActionTypes": [
+        "combat.attack.melee.basic",
+        "combat.interrupt.shield_bash"
+      ],
+      "defaultTactics": {
+        "roleId": "tank_protector",
+        "preferences": {
+          "favorInterrupts": "high",
+          "favorDamage": "low",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "normal",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "normal",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "normal",
+          "favorMeleeEngagement": "high",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "normal"
+        },
+        "spellPreferences": {
+          "preferredSchools": [],
+          "preferredElements": [],
+          "preferredTier": "balanced",
+          "buffPriority": "normal",
+          "debuffPriority": "normal",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "tank.highest_threat",
+            "rule": "highest_threat",
+            "weight": 13,
+            "scope": "enemy"
+          },
+          {
+            "id": "tank.focus_target",
+            "rule": "focus_current_player_target",
+            "weight": 9,
+            "scope": "enemy"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    },
+    {
+      "id": "flexible_adaptive",
+      "name": "Flexible / Adaptive",
+      "summary": "Balances pressure, conservation, and support while honoring the current player focus.",
+      "preferredActionTypes": [
+        "combat.attack.melee.basic",
+        "combat.attack.ranged.basic",
+        "spell.cast.elemental.primary"
+      ],
+      "defaultTactics": {
+        "roleId": "flexible_adaptive",
+        "preferences": {
+          "favorInterrupts": "normal",
+          "favorDamage": "normal",
+          "favorLowTierSpells": "normal",
+          "favorHighTierSpells": "normal",
+          "favorConservation": "normal",
+          "favorWeaknessExploitation": "normal",
+          "favorHealingUrgency": "normal",
+          "favorEnfeebling": "normal",
+          "favorEnhancing": "normal",
+          "favorAreaEffects": "normal",
+          "favorSingleTargetPressure": "normal",
+          "favorMeleeEngagement": "normal",
+          "favorRangedEngagement": "normal",
+          "favorMagicEngagement": "normal"
+        },
+        "spellPreferences": {
+          "preferredSchools": [
+            "elemental",
+            "healing"
+          ],
+          "preferredElements": [],
+          "preferredTier": "balanced",
+          "buffPriority": "normal",
+          "debuffPriority": "normal",
+          "resourceConservationThresholds": {
+            "mpRatio": 0.25,
+            "staminaRatio": 0.25
+          }
+        },
+        "targetPreferences": [
+          {
+            "id": "adaptive.focus_target",
+            "rule": "focus_current_player_target",
+            "weight": 9,
+            "scope": "enemy"
+          },
+          {
+            "id": "adaptive.lowest_hp",
+            "rule": "lowest_hp",
+            "weight": 6,
+            "scope": "enemy"
+          }
+        ],
+        "focusDirectives": {
+          "focusTargetIds": [],
+          "ignoreTargetIds": [],
+          "priorityTargetIds": [],
+          "deprioritizedTargetIds": [],
+          "meleeFocusTargetIds": [],
+          "meleeIgnoreTargetIds": [],
+          "rangedFocusTargetIds": [],
+          "rangedIgnoreTargetIds": [],
+          "magicFocusTargetIds": [],
+          "magicIgnoreTargetIds": []
+        }
+      }
+    }
+  ]
+}

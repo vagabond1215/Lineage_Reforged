@@ -616,6 +616,41 @@ export interface MaterialDifficultyProfileRecord {
   processingCostImpact: "light" | "moderate" | "heavy";
 }
 
+export interface ItemUseProfileRecord {
+  actionType: string;
+  primarySkillId: string;
+  supportSkillIds: string[];
+  requiredSkillRank: number;
+  masteryRank: number;
+  effectChannels: string[];
+  handlingType?: "weapon" | "shield" | "armor" | "hybrid";
+  proficiencySkillId?: string;
+  hybridSkillIds?: string[];
+  combatTags?: string[];
+  resolutionHooks?: string[];
+  grantTags?: string[];
+  targetProfile?: {
+    disposition: "ally" | "enemy" | "self" | "any";
+    shape: string;
+    range: string;
+    maxTargets: number;
+    requiresAccuracy: boolean;
+  };
+  activation?: {
+    type: "active" | "reaction" | "passive";
+    actionType: string;
+    timing: string;
+    executionTimeTicks: number;
+    recoveryTimeTicks: number;
+    interruptible: boolean;
+    costs: {
+      hp?: number;
+      mp?: number;
+      stamina?: number;
+    };
+  };
+}
+
 export interface ItemContentRecord {
   id: string;
   itemKey: string;
@@ -633,6 +668,7 @@ export interface ItemContentRecord {
   stage?: string;
   valueProfile: ItemValueProfileRecord;
   materialDifficultyProfile?: MaterialDifficultyProfileRecord;
+  useProfiles?: ItemUseProfileRecord[];
 }
 
 export interface MarketPricingProfileRecord {
@@ -745,12 +781,16 @@ export interface BuildingContentRecord {
   storageProfiles?: BuildingStorageProfileRecord[];
 }
 
+export type RecipeSkillDimension = "timeEfficiency" | "waste" | "quality" | "quantity";
+
 export interface RecipeSkillCheckRecord {
   skillId: string;
   minimumRank: number;
   efficiencyRank: number;
   qualityRank: number;
   lowSkillOutcome: "higher_labor_and_waste";
+  allowedDimensions?: RecipeSkillDimension[];
+  quantityRank?: number;
 }
 
 export interface RecipeProcessingStepRecord {
@@ -807,11 +847,207 @@ export interface ProductionChainRecord {
 export interface SkillContentRecord {
   id: string;
   name: string;
-  kind: string;
+  category: string;
+  domain: string;
+  parentSkillId: string | null;
+  description: string;
+  leveling: {
+    defaultRank: number;
+    maximumRank: number;
+  };
+  progressionTrackId: string;
+  governingAttributes: string[];
+  combatHooks: {
+    skillEffectIds: string[];
+    actionGrantTags: string[];
+    tacticalTags: string[];
+    titleModifierTags: string[];
+    spellTags: string[];
+    resolutionHooks: string[];
+  };
+  itemHookTags: string[];
+  knowledgeTrackId?: string;
+  milestoneTitleTrackId?: string;
+}
+
+export interface PlayerAbilityContentRecord {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  activation: ItemUseProfileRecord["activation"];
+  requirements: {
+    skillRanks: Array<{ id: string; minRank: number }>;
+    attributes: Array<{ id: string; minValue: number }>;
+    equipmentTagsAny: string[];
+    handlingTagsAny: string[];
+    targetConditionsAny: Array<{ scope: "actor" | "target"; condition: string; qualifier?: string }>;
+  };
+  targetProfile: NonNullable<ItemUseProfileRecord["targetProfile"]>;
+  governingSkillIds: string[];
+  governingAttributeIds?: string[];
+  effectChannels: string[];
+  combatTags: string[];
+  resolutionHooks: string[];
+}
+
+export interface PlayerSpellContentRecord {
+  id: string;
+  name: string;
+  school: string;
+  tradition?: string;
+  discipline?: string;
+  element?: string;
+  governingSkillId: string;
+  governingAttributes?: string[];
+  effectTags: string[];
+  scalingChannels: string[];
+  targetProfile: NonNullable<ItemUseProfileRecord["targetProfile"]>;
+  castProfile: NonNullable<ItemUseProfileRecord["activation"]>;
+  resolutionHooks: string[];
+  itemGenerationHooks?: Array<{
+    generatedItemId: string;
+    generatedItemName: string;
+    charges: number;
+    partyLimited: boolean;
+    dissipatesOnChargeLoss: boolean;
+    combatTags: string[];
+  }>;
+  description: string;
+}
+
+export interface PlayerTraitContentRecord {
+  id: string;
+  name: string;
   family: string;
-  defaultRank: number;
-  defaultCap: number;
-  progressionModelId: string;
+  sourceType: string;
+  tier: number;
+  description: string;
+  stackingRule: string;
+  unlockRules: Array<{ type: string; id: string; level?: number }>;
+  modifiers: Array<{ channel: string; mode: string; value: number; scope: string; skillId?: string }>;
+  tags?: string[];
+}
+
+export interface PlayerBackstoryContentRecord {
+  id: string;
+  name: string;
+  summary: string;
+  description: string;
+  startingSkills: Array<{
+    skillId: string;
+    level: number;
+  }>;
+  startingKnowledge: Array<{
+    trackId: string;
+    level: number;
+  }>;
+  startingAbilityIds?: string[];
+}
+
+export interface PlayerStartingBundleContentRecord {
+  id: string;
+  name: string;
+  summary: string;
+  fixedItems?: Array<{
+    itemId: string;
+    quantity: number;
+  }>;
+  choiceGroups?: Array<{
+    id: string;
+    label: string;
+    options: Array<{
+      itemId: string;
+      quantity: number;
+    }>;
+  }>;
+  startingCurrency?: {
+    gold: number;
+    silver: number;
+    copper: number;
+  };
+}
+
+export interface ProgressionTrackRecord {
+  id: string;
+  name: string;
+  trackType: string;
+  rankRange: { min: number; max: number };
+  bands: Array<{
+    id: string;
+    label: string;
+    minRank: number;
+    maxRank: number;
+    softCapRank: number;
+    requiresBreakthrough: boolean;
+    requiresMasteryTrial?: boolean;
+  }>;
+  breakthroughGateRanks: number[];
+  gainModel: Record<string, number>;
+  breakthroughSources: Record<string, number>;
+}
+
+export interface KnowledgeTrackRecord {
+  id: string;
+  name?: string;
+  domain?: string;
+  knowledgeSkillId: string;
+  spottingSkillId?: string;
+  identifySkillId?: string;
+  universalSupportSkillId?: string;
+  supportWeights: Record<string, number>;
+  identifyDifficulty: Record<string, number>;
+  autoIdentifyThresholds: Record<string, number>;
+}
+
+export interface SkillEffectContentRecord {
+  id: string;
+  skillId: string;
+  name: string;
+  family: string;
+  channels: Array<{
+    actionType?: string;
+    actionTags?: string[];
+    grantType?: string;
+    effectChannel: string;
+    combatTags?: string[];
+    resolutionHooks?: string[];
+    scaling: {
+      mode: string;
+      base: number;
+      perRank: number;
+      perAttributePoint?: number;
+    };
+  }>;
+}
+
+export interface TrialContentRecord {
+  id: string;
+  name: string;
+  associatedSkillId: string;
+  thresholdToPass: number;
+  progress: number;
+  maxPotential: number;
+  checkpoints: Array<{ id: string; label: string; threshold: number }>;
+  rewards: Array<Record<string, unknown>>;
+  penalties: Array<Record<string, unknown>>;
+}
+
+export interface TitleContentRecord {
+  id: string;
+  name: string;
+  family: string;
+  trackId: string;
+  sourceSkillId: string | null;
+  milestone: {
+    threshold: 50 | 100 | 125;
+    requiresMasteryTrial: boolean;
+    trialId: string | null;
+  };
+  description: string;
+  effects: string[];
+  tags: string[];
+  reserved?: boolean;
 }
 
 export interface ReligionContentRecord {
@@ -905,7 +1141,8 @@ function loadJsonFile<T>(relativePath: string): T {
   }
 
   const fileUrl = new URL(relativePath, import.meta.url);
-  const parsed = JSON.parse(readFileSync(fileUrl, "utf8")) as T;
+  const raw = readFileSync(fileUrl, "utf8");
+  const parsed = JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw) as T;
   contentCache.set(relativePath, parsed);
   return parsed;
 }
@@ -1048,6 +1285,68 @@ export function loadWorkplaceContent(): WorkplaceContentRecord[] {
 
 export function loadSkillContent(): SkillContentRecord[] {
   const parsed = loadJsonFile<{ records: SkillContentRecord[] }>("../../../content/base/player/skills.json");
+  return parsed.records;
+}
+
+export function loadPlayerAbilityContent(): PlayerAbilityContentRecord[] {
+  const parsed = loadJsonFile<{ records: PlayerAbilityContentRecord[] }>(
+    "../../../content/base/player/abilities.json"
+  );
+  return parsed.records;
+}
+
+export function loadPlayerSpellContent(): PlayerSpellContentRecord[] {
+  const parsed = loadJsonFile<{ records: PlayerSpellContentRecord[] }>("../../../content/base/player/spells.json");
+  return parsed.records;
+}
+
+export function loadPlayerTraitContent(): PlayerTraitContentRecord[] {
+  const parsed = loadJsonFile<{ records: PlayerTraitContentRecord[] }>("../../../content/base/player/traits.json");
+  return parsed.records;
+}
+
+export function loadPlayerBackstoryContent(): PlayerBackstoryContentRecord[] {
+  const parsed = loadJsonFile<{ records: PlayerBackstoryContentRecord[] }>(
+    "../../../content/base/player/backstories.json"
+  );
+  return parsed.records;
+}
+
+export function loadPlayerStartingBundleContent(): PlayerStartingBundleContentRecord[] {
+  const parsed = loadJsonFile<{ records: PlayerStartingBundleContentRecord[] }>(
+    "../../../content/base/player/starting_bundles.json"
+  );
+  return parsed.records;
+}
+
+export function loadProgressionTrackContent(): ProgressionTrackRecord[] {
+  const parsed = loadJsonFile<{ records: ProgressionTrackRecord[] }>(
+    "../../../content/base/player/progression_tracks.json"
+  );
+  return parsed.records;
+}
+
+export function loadKnowledgeTrackContent(): KnowledgeTrackRecord[] {
+  const parsed = loadJsonFile<{ records: KnowledgeTrackRecord[] }>(
+    "../../../content/base/player/knowledge_tracks.json"
+  );
+  return parsed.records;
+}
+
+export function loadSkillEffectContent(): SkillEffectContentRecord[] {
+  const parsed = loadJsonFile<{ records: SkillEffectContentRecord[] }>(
+    "../../../content/base/player/skill_effects.json"
+  );
+  return parsed.records;
+}
+
+export function loadTrialContent(): TrialContentRecord[] {
+  const parsed = loadJsonFile<{ records: TrialContentRecord[] }>("../../../content/base/player/trials.json");
+  return parsed.records;
+}
+
+export function loadTitleContent(): TitleContentRecord[] {
+  const parsed = loadJsonFile<{ records: TitleContentRecord[] }>("../../../content/base/player/titles.json");
   return parsed.records;
 }
 

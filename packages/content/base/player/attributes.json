@@ -2,20 +2,36 @@
   "resourceFormulaBindings": [
     {
       "resourceId": "hp",
-      "drivingAttributes": ["attr.VIT", "attr.CON"],
-      "secondaryAttributes": ["attr.STR"],
+      "drivingAttributes": [
+        "attr.VIT",
+        "attr.CON"
+      ],
+      "secondaryAttributes": [
+        "attr.STR"
+      ],
       "notes": "Lineage and class growth establish the baseline while vitality and constitution bias maximum HP and natural recovery."
     },
     {
       "resourceId": "mp",
-      "drivingAttributes": ["attr.INT", "attr.WIS", "attr.SPT"],
-      "secondaryAttributes": ["attr.CHA"],
-      "notes": "Spell capacity is primarily mental and spiritual; charisma supports ritual control and party-facing support magic."
+      "drivingAttributes": [
+        "attr.INT",
+        "attr.WIS",
+        "attr.SPT"
+      ],
+      "secondaryAttributes": [
+        "attr.CHA"
+      ],
+      "notes": "Spell capacity is primarily mental and spiritual; charisma supports force of will and ritual clarity."
     },
     {
       "resourceId": "stamina",
-      "drivingAttributes": ["attr.CON", "attr.AGI"],
-      "secondaryAttributes": ["attr.STR"],
+      "drivingAttributes": [
+        "attr.CON",
+        "attr.AGI"
+      ],
+      "secondaryAttributes": [
+        "attr.STR"
+      ],
       "notes": "Stamina pools and recovery rate are driven by conditioning, movement efficiency, and explosive exertion."
     }
   ],
@@ -27,14 +43,37 @@
       "category": "physical",
       "default": 10,
       "description": "Measures lifting power, leverage, and the force carried into melee actions.",
-      "derivedStats": ["melee_power", "carry_capacity", "shield_control", "stamina_burst"],
-      "skillAffinities": ["skill.weapon.hand_to_hand", "skill.weapon.axe", "skill.weapon.great_axe", "skill.weapon.great_sword", "skill.defense.guard"],
+      "derivedStats": [
+        "melee_power",
+        "carry_capacity",
+        "shield_control",
+        "stamina_burst"
+      ],
+      "skillAffinities": [
+        "skill.combat.weapon.axe",
+        "skill.combat.weapon.great_sword",
+        "skill.combat.defense.shield_handling",
+        "skill.resource.woodcutting",
+        "skill.crafting.blacksmithing"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.25, "regenPerPoint": 0.0 },
-        "mp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "stamina": { "maxPerPoint": 0.6, "regenPerPoint": 0.01 }
+        "hp": {
+          "maxPerPoint": 0.25,
+          "regenPerPoint": 0
+        },
+        "mp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "stamina": {
+          "maxPerPoint": 0.6,
+          "regenPerPoint": 0.01
+        }
       },
-      "tags": ["martial", "load_bearing"]
+      "tags": [
+        "martial",
+        "load_bearing"
+      ]
     },
     {
       "id": "attr.DEX",
@@ -43,14 +82,37 @@
       "category": "physical",
       "default": 10,
       "description": "Measures hand precision, release timing, and exact control over weapons, tools, and spell gestures.",
-      "derivedStats": ["accuracy", "critical_rate", "fine_craft_quality", "trap_handling"],
-      "skillAffinities": ["skill.weapon.dagger", "skill.weapon.sword", "skill.weapon.marksmanship", "skill.weapon.throwing", "skill.craft.goldsmithing"],
+      "derivedStats": [
+        "accuracy",
+        "critical_rate",
+        "fine_craft_quality",
+        "trap_handling"
+      ],
+      "skillAffinities": [
+        "skill.combat.weapon.archery",
+        "skill.combat.weapon.dagger",
+        "skill.resource.identify.minerals",
+        "skill.resource.spotting.fauna",
+        "skill.crafting.fletching"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "mp": { "maxPerPoint": 0.1, "regenPerPoint": 0.0 },
-        "stamina": { "maxPerPoint": 0.2, "regenPerPoint": 0.01 }
+        "hp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "mp": {
+          "maxPerPoint": 0.1,
+          "regenPerPoint": 0
+        },
+        "stamina": {
+          "maxPerPoint": 0.2,
+          "regenPerPoint": 0.01
+        }
       },
-      "tags": ["precision", "finesse"]
+      "tags": [
+        "precision",
+        "finesse"
+      ]
     },
     {
       "id": "attr.AGI",
@@ -59,14 +121,37 @@
       "category": "physical",
       "default": 10,
       "description": "Measures balance, footwork, reaction speed, and whole-body economy of movement.",
-      "derivedStats": ["evasion", "initiative", "movement_speed", "stamina_efficiency"],
-      "skillAffinities": ["skill.defense.evasion", "skill.weapon.katana", "skill.weapon.archery", "skill.innate.climb", "skill.innate.swim"],
+      "derivedStats": [
+        "evasion",
+        "initiative",
+        "movement_speed",
+        "stamina_efficiency"
+      ],
+      "skillAffinities": [
+        "skill.combat.defense.evasion",
+        "skill.combat.weapon.archery",
+        "skill.resource.gathering",
+        "skill.resource.spotting.fauna",
+        "skill.survival.climbing"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "mp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "stamina": { "maxPerPoint": 0.75, "regenPerPoint": 0.02 }
+        "hp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "mp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "stamina": {
+          "maxPerPoint": 0.75,
+          "regenPerPoint": 0.02
+        }
       },
-      "tags": ["mobility", "reflex"]
+      "tags": [
+        "mobility",
+        "reflex"
+      ]
     },
     {
       "id": "attr.CON",
@@ -75,14 +160,37 @@
       "category": "physical",
       "default": 10,
       "description": "Measures exertion tolerance, endurance, and how well the body sustains repeated strain.",
-      "derivedStats": ["stamina_capacity", "fatigue_resistance", "poise", "illness_resistance"],
-      "skillAffinities": ["skill.defense.shield", "skill.defense.parrying", "skill.craft.smithing", "skill.craft.fishing"],
+      "derivedStats": [
+        "stamina_capacity",
+        "fatigue_resistance",
+        "poise",
+        "illness_resistance"
+      ],
+      "skillAffinities": [
+        "skill.combat.defense.shield_handling",
+        "skill.resource.mining",
+        "skill.survival.fire_control",
+        "skill.crafting.blacksmithing",
+        "skill.crafting.leatherworking"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.75, "regenPerPoint": 0.01 },
-        "mp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "stamina": { "maxPerPoint": 1.0, "regenPerPoint": 0.03 }
+        "hp": {
+          "maxPerPoint": 0.75,
+          "regenPerPoint": 0.01
+        },
+        "mp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "stamina": {
+          "maxPerPoint": 1,
+          "regenPerPoint": 0.03
+        }
       },
-      "tags": ["endurance", "conditioning"]
+      "tags": [
+        "endurance",
+        "conditioning"
+      ]
     },
     {
       "id": "attr.VIT",
@@ -91,14 +199,37 @@
       "category": "physical",
       "default": 10,
       "description": "Measures hardiness, cellular recovery, and the ability to stay standing through injury or attrition.",
-      "derivedStats": ["hp_capacity", "hp_regeneration", "damage_soak", "wound_recovery"],
-      "skillAffinities": ["skill.weapon.club", "skill.weapon.staff", "skill.defense.guard", "skill.craft.leathercraft"],
+      "derivedStats": [
+        "hp_capacity",
+        "hp_regeneration",
+        "damage_soak",
+        "wound_recovery"
+      ],
+      "skillAffinities": [
+        "skill.combat.weapon.staff",
+        "skill.combat.armor.heavy_armor",
+        "skill.resource.hunting",
+        "skill.survival.endurance",
+        "skill.magic.school.healing"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 1.1, "regenPerPoint": 0.03 },
-        "mp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "stamina": { "maxPerPoint": 0.4, "regenPerPoint": 0.02 }
+        "hp": {
+          "maxPerPoint": 1.1,
+          "regenPerPoint": 0.03
+        },
+        "mp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "stamina": {
+          "maxPerPoint": 0.4,
+          "regenPerPoint": 0.02
+        }
       },
-      "tags": ["recovery", "hardiness"]
+      "tags": [
+        "recovery",
+        "hardiness"
+      ]
     },
     {
       "id": "attr.WIS",
@@ -106,15 +237,38 @@
       "shortCode": "WIS",
       "category": "mental",
       "default": 10,
-      "description": "Measures judgment, discipline, and the ability to sustain beneficial magic and tactical support.",
-      "derivedStats": ["healing_potency", "status_resistance", "support_duration", "threat_control"],
-      "skillAffinities": ["skill.magic.healing_magic", "skill.magic.enhancing_magic", "skill.magic.divine_magic", "skill.craft.cooking"],
+      "description": "Measures judgment, discipline, and the ability to sustain beneficial magic and practical field decisions.",
+      "derivedStats": [
+        "healing_potency",
+        "status_resistance",
+        "support_duration",
+        "hazard_reading"
+      ],
+      "skillAffinities": [
+        "skill.magic.school.healing",
+        "skill.magic.school.enhancing",
+        "skill.knowledge.flora",
+        "skill.resource.identify.flora",
+        "skill.crafting.cooking"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "mp": { "maxPerPoint": 0.75, "regenPerPoint": 0.02 },
-        "stamina": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 }
+        "hp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "mp": {
+          "maxPerPoint": 0.75,
+          "regenPerPoint": 0.02
+        },
+        "stamina": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        }
       },
-      "tags": ["discipline", "restoration"]
+      "tags": [
+        "discipline",
+        "restoration"
+      ]
     },
     {
       "id": "attr.INT",
@@ -122,15 +276,38 @@
       "shortCode": "INT",
       "category": "mental",
       "default": 10,
-      "description": "Measures analytical power, arcane comprehension, and the capacity to shape high-complexity spells.",
-      "derivedStats": ["spell_accuracy", "spell_power", "craft_formula_efficiency", "knowledge_checks"],
-      "skillAffinities": ["skill.magic.elemental_magic", "skill.magic.dark_magic", "skill.magic.enfeebling_magic", "skill.craft.alchemy"],
+      "description": "Measures analytical power, arcane comprehension, and the capacity to shape high-complexity spells or processes.",
+      "derivedStats": [
+        "spell_accuracy",
+        "spell_power",
+        "craft_formula_efficiency",
+        "knowledge_checks"
+      ],
+      "skillAffinities": [
+        "skill.magic.school.elemental",
+        "skill.magic.school.enfeebling",
+        "skill.knowledge.minerals",
+        "skill.resource.identify.minerals",
+        "skill.crafting.alchemy"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "mp": { "maxPerPoint": 1.0, "regenPerPoint": 0.02 },
-        "stamina": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 }
+        "hp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "mp": {
+          "maxPerPoint": 1,
+          "regenPerPoint": 0.02
+        },
+        "stamina": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        }
       },
-      "tags": ["arcane", "analysis"]
+      "tags": [
+        "arcane",
+        "analysis"
+      ]
     },
     {
       "id": "attr.SPT",
@@ -138,15 +315,38 @@
       "shortCode": "SPT",
       "category": "mental",
       "default": 10,
-      "description": "Measures attunement, focus under pressure, and the capacity to channel supernatural forces safely.",
-      "derivedStats": ["mp_regeneration", "concentration", "summoning_control", "aura_stability"],
-      "skillAffinities": ["skill.magic.summoning_magic", "skill.magic.geomancy", "skill.magic.handbell", "skill.magic.blue_magic"],
+      "description": "Measures spiritual resonance, focus under pressure, and the capacity to channel supernatural forces safely.",
+      "derivedStats": [
+        "mp_regeneration",
+        "concentration",
+        "aura_stability",
+        "ritual_control"
+      ],
+      "skillAffinities": [
+        "skill.magic.mana_control",
+        "skill.magic.school.elemental",
+        "skill.magic.school.healing",
+        "skill.magic.school.performance",
+        "skill.knowledge.universal"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "mp": { "maxPerPoint": 0.85, "regenPerPoint": 0.03 },
-        "stamina": { "maxPerPoint": 0.1, "regenPerPoint": 0.0 }
+        "hp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "mp": {
+          "maxPerPoint": 0.85,
+          "regenPerPoint": 0.03
+        },
+        "stamina": {
+          "maxPerPoint": 0.1,
+          "regenPerPoint": 0
+        }
       },
-      "tags": ["channeling", "attunement"]
+      "tags": [
+        "channeling",
+        "resonance"
+      ]
     },
     {
       "id": "attr.CHA",
@@ -154,15 +354,38 @@
       "shortCode": "CHA",
       "category": "social",
       "default": 10,
-      "description": "Measures force of presence, emotional projection, and influence over allies, contracts, and morale.",
-      "derivedStats": ["morale", "song_potency", "merchant_leverage", "summon_affinity"],
-      "skillAffinities": ["skill.magic.singing", "skill.magic.string_instrument", "skill.magic.wind_instrument", "skill.craft.cooking"],
+      "description": "Measures force of presence, emotional projection, and the ability to steady allies or direct attention.",
+      "derivedStats": [
+        "morale",
+        "threat_control",
+        "party_support",
+        "negotiation_pressure"
+      ],
+      "skillAffinities": [
+        "skill.magic.school.performance",
+        "skill.knowledge.cultural_knowledge",
+        "skill.leadership.command",
+        "skill.leadership.negotiation",
+        "skill.settlement.trade"
+      ],
       "resourceInfluence": {
-        "hp": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 },
-        "mp": { "maxPerPoint": 0.35, "regenPerPoint": 0.01 },
-        "stamina": { "maxPerPoint": 0.0, "regenPerPoint": 0.0 }
+        "hp": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        },
+        "mp": {
+          "maxPerPoint": 0.35,
+          "regenPerPoint": 0.01
+        },
+        "stamina": {
+          "maxPerPoint": 0,
+          "regenPerPoint": 0
+        }
       },
-      "tags": ["leadership", "expression"]
+      "tags": [
+        "leadership",
+        "expression"
+      ]
     }
   ]
 }

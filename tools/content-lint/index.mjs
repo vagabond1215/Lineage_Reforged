@@ -1,5 +1,10 @@
-﻿import { readFile } from "node:fs/promises";
+﻿import { readFile as readFileRaw } from "node:fs/promises";
 import path from "node:path";
+
+async function readFile(filePath, options) {
+  const raw = await readFileRaw(filePath, options);
+  return typeof raw === "string" && raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw;
+}
 
 const ROOT = process.cwd();
 const SLUG_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
@@ -203,6 +208,93 @@ const ITEM_WORKABILITY_VALUES = new Set(["easy", "moderate", "hard"]);
 const ITEM_HARDNESS_VALUES = new Set(["soft", "medium", "hard"]);
 const ITEM_REFINEMENT_DIFFICULTIES = new Set(["low", "moderate", "high"]);
 const ITEM_PROCESSING_COST_IMPACTS = new Set(["light", "moderate", "heavy"]);
+const PLAYER_SKILL_CATEGORIES = new Set(["resource", "survival", "combat", "magic", "crafting", "knowledge", "settlement", "leadership"]);
+const PLAYER_PROGRESS_TRACK_TYPES = new Set([
+  "resource",
+  "survival",
+  "combat_fundamentals",
+  "weapon",
+  "defense",
+  "armor",
+  "tactical_combat",
+  "magic_core",
+  "magic_school",
+  "crafting",
+  "settlement",
+  "leadership",
+  "knowledge"
+]);
+const PLAYER_ABILITY_CATEGORIES = new Set(["melee", "ranged", "tactical", "defensive", "command", "reaction"]);
+const PLAYER_SPELL_SCHOOLS = new Set(["elemental", "enfeebling", "enhancing", "healing", "druidic", "ninjutsu", "performance"]);
+const PLAYER_SPELL_SCALING_CHANNELS = new Set([
+  "power",
+  "duration",
+  "magnitude",
+  "radius",
+  "manaEfficiency",
+  "accuracy",
+  "healingPower",
+  "barrier",
+  "charges",
+  "statusChance",
+  "summonPotency",
+  "tempo"
+]);
+const PLAYER_TITLE_FAMILIES = new Set(["combat", "crafting", "magic", "knowledge", "faith"]);
+const PLAYER_CRAFT_SKILL_DIMENSIONS = new Set(["timeEfficiency", "waste", "quality", "quantity"]);
+const TACTICAL_ROLE_IDS = new Set([
+  "frontliner",
+  "disruptor",
+  "ranged_pressure",
+  "healer",
+  "support_buffer",
+  "debuffer_controller",
+  "opportunist",
+  "tank_protector",
+  "flexible_adaptive"
+]);
+const TACTICAL_BIASES = new Set(["avoid", "low", "normal", "high", "critical"]);
+const SPELL_TIER_PREFERENCES = new Set(["low", "balanced", "high"]);
+const COMBAT_TARGET_RULE_IDS = new Set([
+  "lowest_hp",
+  "highest_hp",
+  "lowest_mp",
+  "highest_mp",
+  "lowest_stamina",
+  "highest_stamina",
+  "lowest_max_hp",
+  "highest_max_hp",
+  "lowest_max_mp",
+  "highest_max_mp",
+  "lowest_max_stamina",
+  "highest_max_stamina",
+  "weakest_to_element",
+  "highest_threat",
+  "currently_casting",
+  "easiest_to_interrupt",
+  "nearest",
+  "farthest",
+  "focus_current_player_target",
+  "ignore_specific_targets",
+  "melee_focus",
+  "melee_ignore",
+  "ranged_focus",
+  "ranged_ignore",
+  "magic_focus",
+  "magic_ignore"
+]);
+const COMBAT_ENCOUNTER_DISPOSITIONS = new Set(["hostile", "friendly", "neutral"]);
+const COMBAT_MOVEMENT_MODES = new Set(["roaming", "fixed"]);
+const COMBAT_DENSITY_BANDS = new Set(["rare", "sporadic", "steady", "dense"]);
+const COMBAT_PREFERRED_RANGES = new Set(["melee", "ranged", "magic"]);
+const COMBAT_ACTION_PACKAGE_IDS = new Set([
+  "melee_skirmisher",
+  "melee_brute",
+  "disruptor_bash",
+  "ranged_harrier",
+  "elemental_burst",
+  "enfeebling_burst"
+]);
 const CHAIN_RECIPE_CLASSES = new Set([
   "alchemy",
   "rendering",
@@ -378,11 +470,123 @@ const checks = [
     forbidGeoQualifierInName: false
   },
   {
+    file: "packages/content/base/player/attributes.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validatePlayerAttributes: true
+  },
+  {
+    file: "packages/content/base/player/skills.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validatePlayerSkills: true
+  },
+  {
+    file: "packages/content/base/player/abilities.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validatePlayerAbilities: true
+  },
+  {
+    file: "packages/content/base/player/spells.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validatePlayerSpells: true
+  },
+  {
+    file: "packages/content/base/player/traits.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validatePlayerTraits: true
+  },
+  {
+    file: "packages/content/base/player/backstories.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validatePlayerBackstories: true
+  },
+  {
+    file: "packages/content/base/player/starting_bundles.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validatePlayerStartingBundles: true
+  },
+  {
+    file: "packages/content/base/player/progression_tracks.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateProgressionTracks: true
+  },
+  {
+    file: "packages/content/base/player/knowledge_tracks.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateKnowledgeTracks: true
+  },
+  {
+    file: "packages/content/base/player/skill_effects.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateSkillEffects: true
+  },
+  {
+    file: "packages/content/base/player/trials.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateTrials: true
+  },
+  {
+    file: "packages/content/base/player/titles.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateTitles: true
+  },
+  {
+    file: "packages/content/base/game/combat_roles.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateCombatRoles: true
+  },
+  {
+    file: "packages/content/base/game/tactics_presets.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateTacticsPresets: true
+  },
+  {
     file: "packages/content/base/world/monsters.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
     forbidGeoQualifierInName: false,
     validateMonsters: true
+  },
+  {
+    file: "packages/content/base/world/encounter_templates.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateEncounterTemplates: true
+  },
+  {
+    file: "packages/content/base/world/spawn_profiles.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateSpawnProfiles: true
   },
   {
     file: "packages/content/base/player/equipment_slots.json",
@@ -519,6 +723,18 @@ function ensureStringArray(relativePath, recordId, field, value, minLength = 0) 
   for (const entry of value) {
     if (typeof entry !== "string") {
       throw new Error(`${relativePath} has non-string value in ${field} on record ${recordId}`);
+    }
+  }
+}
+
+function ensureIntegerArray(relativePath, recordId, field, value, minLength = 0) {
+  if (!Array.isArray(value) || value.length < minLength) {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+
+  for (const entry of value) {
+    if (!Number.isInteger(entry)) {
+      throw new Error(`${relativePath} has non-integer ${field} entry on record ${recordId}`);
     }
   }
 }
@@ -3267,6 +3483,24 @@ async function validateProductionChains(relativePath, records) {
           step.skillCheck.lowSkillOutcome,
           CHAIN_LOW_SKILL_OUTCOMES
         );
+        if ("allowedDimensions" in step.skillCheck) {
+          ensureStringArray(relativePath, recordId, `${stepField}.skillCheck.allowedDimensions`, step.skillCheck.allowedDimensions, 1);
+          for (const dimension of step.skillCheck.allowedDimensions) {
+            ensureSetMembership(
+              relativePath,
+              recordId,
+              `${stepField}.skillCheck.allowedDimensions`,
+              dimension,
+              PLAYER_CRAFT_SKILL_DIMENSIONS
+            );
+          }
+        }
+        if ("quantityRank" in step.skillCheck) {
+          ensureInteger(relativePath, recordId, `${stepField}.skillCheck.quantityRank`, step.skillCheck.quantityRank, 1);
+          if (!(step.skillCheck.allowedDimensions ?? []).includes("quantity")) {
+            throw new Error(`${relativePath} has quantityRank without quantity dimension on ${stepField} for record ${recordId}`);
+          }
+        }
       }
     }
 
@@ -4243,6 +4477,316 @@ function validateQuestTemplates(relativePath, records) {
   }
 }
 
+function validateCombatFocusDirectives(relativePath, recordId, fieldName, directives) {
+  if (!isObject(directives)) {
+    throw new Error(`${relativePath} has invalid ${fieldName} on record ${recordId}`);
+  }
+
+  for (const key of [
+    "focusTargetIds",
+    "ignoreTargetIds",
+    "priorityTargetIds",
+    "deprioritizedTargetIds",
+    "meleeFocusTargetIds",
+    "meleeIgnoreTargetIds",
+    "rangedFocusTargetIds",
+    "rangedIgnoreTargetIds",
+    "magicFocusTargetIds",
+    "magicIgnoreTargetIds"
+  ]) {
+    ensureStringArray(relativePath, recordId, `${fieldName}.${key}`, directives[key], 0);
+  }
+}
+
+function validateCombatTargetPreferences(relativePath, recordId, fieldName, preferences) {
+  if (!Array.isArray(preferences) || preferences.length === 0) {
+    throw new Error(`${relativePath} has invalid ${fieldName} on record ${recordId}`);
+  }
+
+  for (const [index, preference] of preferences.entries()) {
+    const entryField = `${fieldName}[${index}]`;
+    if (!isObject(preference)) {
+      throw new Error(`${relativePath} has invalid ${entryField} on record ${recordId}`);
+    }
+    ensureString(relativePath, recordId, `${entryField}.id`, preference.id);
+    ensureSetMembership(relativePath, recordId, `${entryField}.rule`, preference.rule, COMBAT_TARGET_RULE_IDS);
+    ensureNumber(relativePath, recordId, `${entryField}.weight`, preference.weight, 0);
+    ensureSetMembership(
+      relativePath,
+      recordId,
+      `${entryField}.scope`,
+      preference.scope,
+      new Set(["ally", "enemy", "any"])
+    );
+    if ("actionTypes" in preference) {
+      ensureStringArray(relativePath, recordId, `${entryField}.actionTypes`, preference.actionTypes, 1);
+    }
+    if ("element" in preference) {
+      ensureString(relativePath, recordId, `${entryField}.element`, preference.element);
+    }
+    if ("sourceTargetIds" in preference) {
+      ensureStringArray(relativePath, recordId, `${entryField}.sourceTargetIds`, preference.sourceTargetIds, 1);
+    }
+  }
+}
+
+function validateCombatTactics(relativePath, recordId, fieldName, tactics) {
+  if (!isObject(tactics)) {
+    throw new Error(`${relativePath} has invalid ${fieldName} on record ${recordId}`);
+  }
+
+  ensureSetMembership(relativePath, recordId, `${fieldName}.roleId`, tactics.roleId, TACTICAL_ROLE_IDS);
+
+  if (!isObject(tactics.preferences)) {
+    throw new Error(`${relativePath} has invalid ${fieldName}.preferences on record ${recordId}`);
+  }
+  for (const key of [
+    "favorInterrupts",
+    "favorDamage",
+    "favorLowTierSpells",
+    "favorHighTierSpells",
+    "favorConservation",
+    "favorWeaknessExploitation",
+    "favorHealingUrgency",
+    "favorEnfeebling",
+    "favorEnhancing",
+    "favorAreaEffects",
+    "favorSingleTargetPressure",
+    "favorMeleeEngagement",
+    "favorRangedEngagement",
+    "favorMagicEngagement"
+  ]) {
+    ensureSetMembership(relativePath, recordId, `${fieldName}.preferences.${key}`, tactics.preferences[key], TACTICAL_BIASES);
+  }
+
+  if (!isObject(tactics.spellPreferences)) {
+    throw new Error(`${relativePath} has invalid ${fieldName}.spellPreferences on record ${recordId}`);
+  }
+  ensureStringArray(
+    relativePath,
+    recordId,
+    `${fieldName}.spellPreferences.preferredSchools`,
+    tactics.spellPreferences.preferredSchools,
+    0
+  );
+  ensureStringArray(
+    relativePath,
+    recordId,
+    `${fieldName}.spellPreferences.preferredElements`,
+    tactics.spellPreferences.preferredElements,
+    0
+  );
+  ensureSetMembership(
+    relativePath,
+    recordId,
+    `${fieldName}.spellPreferences.preferredTier`,
+    tactics.spellPreferences.preferredTier,
+    SPELL_TIER_PREFERENCES
+  );
+  ensureSetMembership(
+    relativePath,
+    recordId,
+    `${fieldName}.spellPreferences.buffPriority`,
+    tactics.spellPreferences.buffPriority,
+    TACTICAL_BIASES
+  );
+  ensureSetMembership(
+    relativePath,
+    recordId,
+    `${fieldName}.spellPreferences.debuffPriority`,
+    tactics.spellPreferences.debuffPriority,
+    TACTICAL_BIASES
+  );
+  if (!isObject(tactics.spellPreferences.resourceConservationThresholds)) {
+    throw new Error(`${relativePath} has invalid ${fieldName}.spellPreferences.resourceConservationThresholds on record ${recordId}`);
+  }
+  for (const key of ["mpRatio", "staminaRatio"]) {
+    ensureNumber(
+      relativePath,
+      recordId,
+      `${fieldName}.spellPreferences.resourceConservationThresholds.${key}`,
+      tactics.spellPreferences.resourceConservationThresholds[key],
+      0
+    );
+    if (tactics.spellPreferences.resourceConservationThresholds[key] > 1) {
+      throw new Error(`${relativePath} has ${fieldName}.spellPreferences.resourceConservationThresholds.${key} above 1 on record ${recordId}`);
+    }
+  }
+
+  validateCombatTargetPreferences(relativePath, recordId, `${fieldName}.targetPreferences`, tactics.targetPreferences);
+  validateCombatFocusDirectives(relativePath, recordId, `${fieldName}.focusDirectives`, tactics.focusDirectives);
+}
+
+function validateCombatRoles(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureSetMembership(relativePath, recordId, "id", record.id, TACTICAL_ROLE_IDS);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate combat role id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureStringArray(relativePath, recordId, "preferredActionTypes", record.preferredActionTypes, 1);
+    validateCombatTactics(relativePath, recordId, "defaultTactics", record.defaultTactics);
+    if (record.defaultTactics.roleId !== record.id) {
+      throw new Error(`${relativePath} defaultTactics.roleId must match id on record ${recordId}`);
+    }
+  }
+}
+
+function validateTacticsPresets(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate tactics preset id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "disposition", record.disposition, new Set(["ally", "enemy", "neutral"]));
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureSetMembership(relativePath, recordId, "roleId", record.roleId, TACTICAL_ROLE_IDS);
+    validateCombatTactics(relativePath, recordId, "tactics", record.tactics);
+    if (record.tactics.roleId !== record.roleId) {
+      throw new Error(`${relativePath} tactics.roleId must match roleId on record ${recordId}`);
+    }
+    ensureStringArray(relativePath, recordId, "tags", record.tags, 1);
+  }
+}
+
+function validateEncounterTemplates(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^encounter\.[a-z0-9]+(?:[._][a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid encounter id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate encounter id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureSetMembership(relativePath, recordId, "disposition", record.disposition, COMBAT_ENCOUNTER_DISPOSITIONS);
+    ensureSetMembership(relativePath, recordId, "movementMode", record.movementMode, COMBAT_MOVEMENT_MODES);
+    ensureStringArray(relativePath, recordId, "regionIds", record.regionIds, 1);
+    ensureStringArray(relativePath, recordId, "habitatTags", record.habitatTags, 1);
+    ensureStringArray(relativePath, recordId, "tags", record.tags, 1);
+    ensureSetMembership(relativePath, recordId, "difficultyBand", record.difficultyBand, MONSTER_THREATS);
+
+    if (!Array.isArray(record.members) || record.members.length === 0) {
+      throw new Error(`${relativePath} has invalid members on record ${recordId}`);
+    }
+    for (const [index, member] of record.members.entries()) {
+      const field = `members[${index}]`;
+      if (!isObject(member)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.monsterId`, member.monsterId);
+      ensureInteger(relativePath, recordId, `${field}.minCount`, member.minCount, 1);
+      ensureInteger(relativePath, recordId, `${field}.maxCount`, member.maxCount, 1);
+      if (member.maxCount < member.minCount) {
+        throw new Error(`${relativePath} has ${field}.maxCount below minCount on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, `${field}.roleId`, member.roleId, TACTICAL_ROLE_IDS);
+    }
+
+    if ("alliedTemplateIds" in record) {
+      ensureStringArray(relativePath, recordId, "alliedTemplateIds", record.alliedTemplateIds, 1);
+      for (const alliedId of record.alliedTemplateIds) {
+        if (!/^encounter\.[a-z0-9]+(?:[._][a-z0-9]+)*$/.test(alliedId)) {
+          throw new Error(`${relativePath} has invalid alliedTemplateIds value '${alliedId}' on record ${recordId}`);
+        }
+      }
+    }
+  }
+}
+
+function validateSpawnProfiles(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (!/^spawn\.[a-z0-9]+(?:[._][a-z0-9]+)*$/.test(record.id)) {
+      throw new Error(`${relativePath} has invalid spawn profile id '${record.id}' on record ${recordId}`);
+    }
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate spawn profile id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureStringArray(relativePath, recordId, "regionIds", record.regionIds, 1);
+    ensureStringArray(relativePath, recordId, "worldHexIds", record.worldHexIds, 0);
+    ensureStringArray(relativePath, recordId, "settlementIds", record.settlementIds, 0);
+    ensureStringArray(relativePath, recordId, "siteIds", record.siteIds, 0);
+    ensureStringArray(relativePath, recordId, "habitatTags", record.habitatTags, 0);
+    ensureNumber(relativePath, recordId, "minHazardPressure", record.minHazardPressure, 0);
+    ensureNumber(relativePath, recordId, "maxHazardPressure", record.maxHazardPressure, 0);
+    if (record.maxHazardPressure < record.minHazardPressure) {
+      throw new Error(`${relativePath} has maxHazardPressure below minHazardPressure on record ${recordId}`);
+    }
+    ensureNumber(relativePath, recordId, "spawnRatePerDay", record.spawnRatePerDay, 0);
+    if (record.spawnRatePerDay > 100) {
+      throw new Error(`${relativePath} has spawnRatePerDay above 100 on record ${recordId}`);
+    }
+    ensureSetMembership(relativePath, recordId, "densityBand", record.densityBand, COMBAT_DENSITY_BANDS);
+    if (!isObject(record.hostilityWeights)) {
+      throw new Error(`${relativePath} has invalid hostilityWeights on record ${recordId}`);
+    }
+    let totalHostilityWeight = 0;
+    for (const key of ["hostile", "friendly", "neutral"]) {
+      ensureNumber(relativePath, recordId, `hostilityWeights.${key}`, record.hostilityWeights[key], 0);
+      totalHostilityWeight += record.hostilityWeights[key];
+    }
+    if (totalHostilityWeight <= 0) {
+      throw new Error(`${relativePath} hostilityWeights total must be positive on record ${recordId}`);
+    }
+
+    ensureStringArray(relativePath, recordId, "allowedMovementModes", record.allowedMovementModes, 1);
+    for (const movementMode of record.allowedMovementModes) {
+      ensureSetMembership(relativePath, recordId, "allowedMovementModes", movementMode, COMBAT_MOVEMENT_MODES);
+    }
+
+    if (!Array.isArray(record.encounterWeights) || record.encounterWeights.length === 0) {
+      throw new Error(`${relativePath} has invalid encounterWeights on record ${recordId}`);
+    }
+    const seenEncounterIds = new Set();
+    for (const [index, weightRecord] of record.encounterWeights.entries()) {
+      const field = `encounterWeights[${index}]`;
+      if (!isObject(weightRecord)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.encounterTemplateId`, weightRecord.encounterTemplateId);
+      ensureNumber(relativePath, recordId, `${field}.weight`, weightRecord.weight, 1);
+      if (seenEncounterIds.has(weightRecord.encounterTemplateId)) {
+        throw new Error(`${relativePath} has duplicate ${field}.encounterTemplateId '${weightRecord.encounterTemplateId}' on record ${recordId}`);
+      }
+      seenEncounterIds.add(weightRecord.encounterTemplateId);
+      if ("minHazardPressure" in weightRecord) {
+        ensureNumber(relativePath, recordId, `${field}.minHazardPressure`, weightRecord.minHazardPressure, 0);
+      }
+      if ("maxHazardPressure" in weightRecord) {
+        ensureNumber(relativePath, recordId, `${field}.maxHazardPressure`, weightRecord.maxHazardPressure, 0);
+      }
+      if (
+        "minHazardPressure" in weightRecord &&
+        "maxHazardPressure" in weightRecord &&
+        weightRecord.maxHazardPressure < weightRecord.minHazardPressure
+      ) {
+        throw new Error(`${relativePath} has ${field}.maxHazardPressure below minHazardPressure on record ${recordId}`);
+      }
+    }
+  }
+}
+
 function validateMonsters(relativePath, records) {
   const seenIds = new Set();
   const seenSlugs = new Set();
@@ -4395,6 +4939,54 @@ function validateMonsters(relativePath, records) {
           seenValues.add(value);
         }
       }
+    }
+
+    if (!isObject(record.combatProfile)) {
+      throw new Error(`${relativePath} has invalid combatProfile on record ${recordId}`);
+    }
+    for (const field of [
+      "baseHp",
+      "baseMp",
+      "baseStamina",
+      "baseAccuracy",
+      "baseDefense",
+      "baseEvasion",
+      "baseAttackSpeed",
+      "baseRecoverySpeed",
+      "threatRating"
+    ]) {
+      ensureNumber(relativePath, recordId, `combatProfile.${field}`, record.combatProfile[field], 0);
+    }
+    if (record.combatProfile.baseHp < 1 || record.combatProfile.baseStamina < 1) {
+      throw new Error(`${relativePath} has invalid combatProfile base resource minima on record ${recordId}`);
+    }
+    ensureSetMembership(
+      relativePath,
+      recordId,
+      "combatProfile.preferredRange",
+      record.combatProfile.preferredRange,
+      COMBAT_PREFERRED_RANGES
+    );
+
+    ensureSetMembership(relativePath, recordId, "defaultRole", record.defaultRole, TACTICAL_ROLE_IDS);
+    ensureStringArray(relativePath, recordId, "actionPackageIds", record.actionPackageIds, 1);
+    for (const actionPackageId of record.actionPackageIds) {
+      ensureSetMembership(relativePath, recordId, "actionPackageIds", actionPackageId, COMBAT_ACTION_PACKAGE_IDS);
+    }
+
+    if (!isObject(record.difficultyScalingHooks)) {
+      throw new Error(`${relativePath} has invalid difficultyScalingHooks on record ${recordId}`);
+    }
+    for (const field of [
+      "hpPerTier",
+      "mpPerTier",
+      "staminaPerTier",
+      "accuracyPerTier",
+      "defensePerTier",
+      "actionTimeMultiplierPerTier",
+      "recoveryMultiplierPerTier"
+    ]) {
+      ensureNumber(relativePath, recordId, `difficultyScalingHooks.${field}`, record.difficultyScalingHooks[field], 0);
     }
   }
 }
@@ -5229,6 +5821,433 @@ function validateWorldMapFeatures(relativePath, records) {
   }
 }
 
+function validatePlayerAttributes(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate player attribute id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "shortCode", record.shortCode);
+    ensureString(relativePath, recordId, "category", record.category);
+    ensureFiniteNumber(relativePath, recordId, "default", record.default);
+    ensureString(relativePath, recordId, "description", record.description);
+    ensureStringArray(relativePath, recordId, "derivedStats", record.derivedStats ?? [], 0);
+    ensureStringArray(relativePath, recordId, "skillAffinities", record.skillAffinities ?? [], 0);
+
+    if (record.resourceInfluence !== undefined) {
+      if (!isObject(record.resourceInfluence)) {
+        throw new Error(`${relativePath} has invalid resourceInfluence on record ${recordId}`);
+      }
+      for (const resourceId of ["hp", "mp", "stamina"]) {
+        if (record.resourceInfluence[resourceId] === undefined) {
+          continue;
+        }
+        if (!isObject(record.resourceInfluence[resourceId])) {
+          throw new Error(`${relativePath} has invalid resourceInfluence.${resourceId} on record ${recordId}`);
+        }
+      }
+    }
+  }
+}
+
+function validatePlayerSkills(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate player skill id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "category", record.category, PLAYER_SKILL_CATEGORIES);
+    ensureString(relativePath, recordId, "domain", record.domain);
+    if (record.parentSkillId !== null && record.parentSkillId !== undefined) {
+      ensureString(relativePath, recordId, "parentSkillId", record.parentSkillId);
+    }
+    ensureString(relativePath, recordId, "description", record.description);
+    if (!isObject(record.leveling)) {
+      throw new Error(`${relativePath} has invalid leveling on record ${recordId}`);
+    }
+    ensureInteger(relativePath, recordId, "leveling.defaultRank", record.leveling.defaultRank, 1);
+    ensureInteger(relativePath, recordId, "leveling.maximumRank", record.leveling.maximumRank, 1);
+    if (record.leveling.maximumRank > 125) {
+      throw new Error(`${relativePath} has leveling.maximumRank above 125 on record ${recordId}`);
+    }
+    ensureStringArray(relativePath, recordId, "governingAttributes", record.governingAttributes, 1);
+    ensureString(relativePath, recordId, "progressionTrackId", record.progressionTrackId);
+    if (!isObject(record.combatHooks)) {
+      throw new Error(`${relativePath} has invalid combatHooks on record ${recordId}`);
+    }
+    ensureStringArray(relativePath, recordId, "combatHooks.skillEffectIds", record.combatHooks.skillEffectIds ?? [], 0);
+    ensureStringArray(relativePath, recordId, "combatHooks.actionGrantTags", record.combatHooks.actionGrantTags ?? [], 0);
+    ensureStringArray(relativePath, recordId, "combatHooks.tacticalTags", record.combatHooks.tacticalTags ?? [], 0);
+    ensureStringArray(relativePath, recordId, "combatHooks.titleModifierTags", record.combatHooks.titleModifierTags ?? [], 0);
+    ensureStringArray(relativePath, recordId, "combatHooks.spellTags", record.combatHooks.spellTags ?? [], 0);
+    ensureStringArray(relativePath, recordId, "combatHooks.resolutionHooks", record.combatHooks.resolutionHooks ?? [], 0);
+    ensureStringArray(relativePath, recordId, "itemHookTags", record.itemHookTags ?? [], 0);
+    if (record.knowledgeTrackId !== undefined) {
+      ensureString(relativePath, recordId, "knowledgeTrackId", record.knowledgeTrackId);
+    }
+    if (record.milestoneTitleTrackId !== undefined) {
+      ensureString(relativePath, recordId, "milestoneTitleTrackId", record.milestoneTitleTrackId);
+    }
+  }
+}
+
+function validatePlayerAbilities(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate player ability id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "category", record.category, PLAYER_ABILITY_CATEGORIES);
+    ensureString(relativePath, recordId, "description", record.description);
+
+    if (!isObject(record.activation)) {
+      throw new Error(`${relativePath} has invalid activation on record ${recordId}`);
+    }
+    ensureSetMembership(relativePath, recordId, "activation.type", record.activation.type, new Set(["active", "reaction", "passive"]));
+    ensureString(relativePath, recordId, "activation.actionType", record.activation.actionType);
+    ensureString(relativePath, recordId, "activation.timing", record.activation.timing);
+    ensureInteger(relativePath, recordId, "activation.executionTimeTicks", record.activation.executionTimeTicks, 0);
+    ensureInteger(relativePath, recordId, "activation.recoveryTimeTicks", record.activation.recoveryTimeTicks, 0);
+    if (!isObject(record.activation.costs)) {
+      throw new Error(`${relativePath} has invalid activation.costs on record ${recordId}`);
+    }
+
+    if (!isObject(record.requirements)) {
+      throw new Error(`${relativePath} has invalid requirements on record ${recordId}`);
+    }
+    for (const field of ["skillRanks", "attributes", "equipmentTagsAny", "handlingTagsAny", "targetConditionsAny"]) {
+      if (!Array.isArray(record.requirements[field])) {
+        throw new Error(`${relativePath} requirements must define ${field} array on record ${recordId}`);
+      }
+    }
+    if (!isObject(record.targetProfile)) {
+      throw new Error(`${relativePath} has invalid targetProfile on record ${recordId}`);
+    }
+    ensureStringArray(relativePath, recordId, "governingSkillIds", record.governingSkillIds ?? [], 1);
+    ensureStringArray(relativePath, recordId, "governingAttributeIds", record.governingAttributeIds ?? [], 0);
+    ensureStringArray(relativePath, recordId, "effectChannels", record.effectChannels ?? [], 1);
+    ensureStringArray(relativePath, recordId, "combatTags", record.combatTags ?? [], 1);
+    ensureStringArray(relativePath, recordId, "resolutionHooks", record.resolutionHooks ?? [], 1);
+  }
+}
+
+function validatePlayerSpells(relativePath, records) {
+  const seenIds = new Set();
+  const allowedScalingBySchool = {
+    elemental: new Set(["power", "radius", "manaEfficiency", "accuracy"]),
+    enfeebling: new Set(["magnitude", "duration", "manaEfficiency", "accuracy"]),
+    enhancing: new Set(["magnitude", "duration", "manaEfficiency", "barrier"]),
+    healing: new Set(["power", "healingPower", "manaEfficiency"]),
+    druidic: new Set(["charges", "duration", "summonPotency"]),
+    ninjutsu: new Set(["accuracy", "duration", "statusChance", "manaEfficiency"]),
+    performance: new Set(["magnitude", "duration", "tempo", "manaEfficiency"])
+  };
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate player spell id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "school", record.school, PLAYER_SPELL_SCHOOLS);
+    ensureString(relativePath, recordId, "governingSkillId", record.governingSkillId);
+    ensureStringArray(relativePath, recordId, "governingAttributes", record.governingAttributes ?? [], 0);
+    ensureString(relativePath, recordId, "description", record.description);
+    ensureStringArray(relativePath, recordId, "effectTags", record.effectTags, 1);
+    ensureStringArray(relativePath, recordId, "scalingChannels", record.scalingChannels, 1);
+    for (const channel of record.scalingChannels) {
+      ensureSetMembership(relativePath, recordId, "scalingChannels", channel, PLAYER_SPELL_SCALING_CHANNELS);
+      if (!allowedScalingBySchool[record.school].has(channel)) {
+        throw new Error(`${relativePath} has invalid scaling channel '${channel}' for school '${record.school}' on record ${recordId}`);
+      }
+    }
+    if (!isObject(record.targetProfile)) {
+      throw new Error(`${relativePath} has invalid targetProfile on record ${recordId}`);
+    }
+    if (!isObject(record.castProfile)) {
+      throw new Error(`${relativePath} has invalid castProfile on record ${recordId}`);
+    }
+    ensureStringArray(relativePath, recordId, "resolutionHooks", record.resolutionHooks ?? [], 1);
+  }
+}
+
+function validatePlayerTraits(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate player trait id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "family", record.family);
+    ensureString(relativePath, recordId, "sourceType", record.sourceType);
+    ensureInteger(relativePath, recordId, "tier", record.tier, 1);
+    ensureString(relativePath, recordId, "description", record.description);
+    ensureString(relativePath, recordId, "stackingRule", record.stackingRule);
+    if (!Array.isArray(record.unlockRules) || record.unlockRules.length === 0) {
+      throw new Error(`${relativePath} has empty unlockRules on record ${recordId}`);
+    }
+    if (!Array.isArray(record.modifiers) || record.modifiers.length === 0) {
+      throw new Error(`${relativePath} has empty modifiers on record ${recordId}`);
+    }
+  }
+}
+
+const PLAYER_BACKSTORY_KNOWLEDGE_TRACK_ALLOWLIST = new Set([
+  "knowledge_track.flora",
+  "knowledge_track.fauna",
+  "knowledge_track.minerals",
+  "knowledge_track.resources_universal"
+]);
+
+const PLAYER_BACKSTORY_STARTING_ABILITY_ALLOWLIST = new Map([
+  ["backstory.village_hunter", new Set(["ability.ranged.quick_shot"])],
+  ["backstory.military_brat", new Set(["ability.command.hold_formation"])]
+]);
+
+function validatePlayerBackstories(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate backstory id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "summary", record.summary);
+    ensureString(relativePath, recordId, "description", record.description);
+    if (!Array.isArray(record.startingSkills) || record.startingSkills.length === 0) {
+      throw new Error(`${relativePath} has empty startingSkills on record ${recordId}`);
+    }
+    if (!Array.isArray(record.startingKnowledge)) {
+      throw new Error(`${relativePath} has invalid startingKnowledge on record ${recordId}`);
+    }
+    if (record.startingAbilityIds !== undefined && (!Array.isArray(record.startingAbilityIds) || record.startingAbilityIds.length > 1)) {
+      throw new Error(`${relativePath} startingAbilityIds must contain at most one id on record ${recordId}`);
+    }
+    for (const knowledge of record.startingKnowledge ?? []) {
+      if (!PLAYER_BACKSTORY_KNOWLEDGE_TRACK_ALLOWLIST.has(knowledge.trackId)) {
+        throw new Error(`${relativePath} startingKnowledge '${knowledge.trackId}' is not part of the canonical backstory knowledge-track allowlist on record ${recordId}`);
+      }
+    }
+    const allowedAbilityIds =
+      PLAYER_BACKSTORY_STARTING_ABILITY_ALLOWLIST.get(record.id) ?? new Set();
+    for (const abilityId of record.startingAbilityIds ?? []) {
+      if (!allowedAbilityIds.has(abilityId)) {
+        throw new Error(`${relativePath} startingAbilityIds '${abilityId}' is not allowed on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validatePlayerStartingBundles(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate starting bundle id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "summary", record.summary);
+
+    const hasFixedItems = Array.isArray(record.fixedItems) && record.fixedItems.length > 0;
+    const hasChoiceGroups = Array.isArray(record.choiceGroups) && record.choiceGroups.length > 0;
+    const hasCurrency = isObject(record.startingCurrency);
+
+    if (!hasFixedItems && !hasChoiceGroups && !hasCurrency) {
+      throw new Error(`${relativePath} must define fixedItems, choiceGroups, or startingCurrency on record ${recordId}`);
+    }
+
+    const seenGroupIds = new Set();
+    for (const group of record.choiceGroups ?? []) {
+      ensureString(relativePath, recordId, "choiceGroups.id", group.id);
+      ensureString(relativePath, recordId, "choiceGroups.label", group.label);
+      if (seenGroupIds.has(group.id)) {
+        throw new Error(`${relativePath} has duplicate choice group id '${group.id}' on record ${recordId}`);
+      }
+      seenGroupIds.add(group.id);
+
+      const seenOptionItemIds = new Set();
+      for (const option of group.options ?? []) {
+        if (seenOptionItemIds.has(option.itemId)) {
+          throw new Error(`${relativePath} choice group '${group.id}' repeats item '${option.itemId}' on record ${recordId}`);
+        }
+        seenOptionItemIds.add(option.itemId);
+      }
+    }
+  }
+}
+
+function validateProgressionTracks(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate progression track id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureSetMembership(relativePath, recordId, "trackType", record.trackType, PLAYER_PROGRESS_TRACK_TYPES);
+    if (!isObject(record.rankRange)) {
+      throw new Error(`${relativePath} has invalid rankRange on record ${recordId}`);
+    }
+    ensureInteger(relativePath, recordId, "rankRange.min", record.rankRange.min, 1);
+    ensureInteger(relativePath, recordId, "rankRange.max", record.rankRange.max, 1);
+    if (!Array.isArray(record.bands) || record.bands.length !== 5) {
+      throw new Error(`${relativePath} must define exactly five bands on record ${recordId}`);
+    }
+    ensureIntegerArray(relativePath, recordId, "breakthroughGateRanks", record.breakthroughGateRanks, 1);
+    if (!isObject(record.gainModel)) {
+      throw new Error(`${relativePath} has invalid gainModel on record ${recordId}`);
+    }
+    if (!isObject(record.breakthroughSources)) {
+      throw new Error(`${relativePath} has invalid breakthroughSources on record ${recordId}`);
+    }
+  }
+}
+
+function validateKnowledgeTracks(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate knowledge track id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    for (const field of ["knowledgeSkillId", "spottingSkillId", "identifySkillId", "universalSupportSkillId"]) {
+      if (record[field] !== undefined) {
+        ensureString(relativePath, recordId, field, record[field]);
+      }
+    }
+    for (const field of ["supportWeights", "identifyDifficulty", "autoIdentifyThresholds"]) {
+      if (!isObject(record[field])) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateSkillEffects(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate skill effect id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "skillId", record.skillId);
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "family", record.family);
+    if (!Array.isArray(record.channels) || record.channels.length === 0) {
+      throw new Error(`${relativePath} has empty channels on record ${recordId}`);
+    }
+    for (const [index, channel] of record.channels.entries()) {
+      if (!isObject(channel)) {
+        throw new Error(`${relativePath} has invalid channels[${index}] on record ${recordId}`);
+      }
+      if (channel.actionType !== undefined) {
+        ensureString(relativePath, recordId, `channels[${index}].actionType`, channel.actionType);
+      }
+      ensureString(relativePath, recordId, `channels[${index}].effectChannel`, channel.effectChannel);
+      if (!isObject(channel.scaling)) {
+        throw new Error(`${relativePath} has invalid channels[${index}].scaling on record ${recordId}`);
+      }
+    }
+  }
+}
+
+function validateTrials(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate trial id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureString(relativePath, recordId, "associatedSkillId", record.associatedSkillId);
+    ensureFiniteNumber(relativePath, recordId, "thresholdToPass", record.thresholdToPass);
+    ensureFiniteNumber(relativePath, recordId, "progress", record.progress);
+    ensureFiniteNumber(relativePath, recordId, "maxPotential", record.maxPotential);
+    if (!Array.isArray(record.checkpoints) || record.checkpoints.length === 0) {
+      throw new Error(`${relativePath} has empty checkpoints on record ${recordId}`);
+    }
+    if (!Array.isArray(record.rewards) || !Array.isArray(record.penalties)) {
+      throw new Error(`${relativePath} must define rewards and penalties arrays on record ${recordId}`);
+    }
+  }
+}
+
+function validateTitles(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate title id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureString(relativePath, recordId, "name", record.name);
+    ensureSetMembership(relativePath, recordId, "family", record.family, PLAYER_TITLE_FAMILIES);
+    ensureString(relativePath, recordId, "trackId", record.trackId);
+    if (record.sourceSkillId !== undefined && record.sourceSkillId !== null) {
+      ensureString(relativePath, recordId, "sourceSkillId", record.sourceSkillId);
+    }
+    if (!isObject(record.milestone)) {
+      throw new Error(`${relativePath} has invalid milestone on record ${recordId}`);
+    }
+    ensureInteger(relativePath, recordId, "milestone.threshold", record.milestone.threshold, 50);
+    ensureString(relativePath, recordId, "description", record.description);
+    ensureStringArray(relativePath, recordId, "effects", record.effects ?? [], 1);
+    ensureStringArray(relativePath, recordId, "tags", record.tags ?? [], 1);
+  }
+}
+
 function validateRecords(relativePath, parsed, check) {
   if (!Array.isArray(parsed.records)) {
     throw new Error(`${relativePath} has non-array records`);
@@ -5272,6 +6291,48 @@ function validateRecords(relativePath, parsed, check) {
   if (check.validateMarketItemValues) {
     validateMarketItemValues(relativePath, parsed.records);
   }
+  if (check.validatePlayerAttributes) {
+    validatePlayerAttributes(relativePath, parsed.records);
+  }
+  if (check.validatePlayerSkills) {
+    validatePlayerSkills(relativePath, parsed.records);
+  }
+  if (check.validatePlayerAbilities) {
+    validatePlayerAbilities(relativePath, parsed.records);
+  }
+  if (check.validatePlayerSpells) {
+    validatePlayerSpells(relativePath, parsed.records);
+  }
+  if (check.validatePlayerTraits) {
+    validatePlayerTraits(relativePath, parsed.records);
+  }
+  if (check.validatePlayerBackstories) {
+    validatePlayerBackstories(relativePath, parsed.records);
+  }
+  if (check.validatePlayerStartingBundles) {
+    validatePlayerStartingBundles(relativePath, parsed.records);
+  }
+  if (check.validateProgressionTracks) {
+    validateProgressionTracks(relativePath, parsed.records);
+  }
+  if (check.validateKnowledgeTracks) {
+    validateKnowledgeTracks(relativePath, parsed.records);
+  }
+  if (check.validateSkillEffects) {
+    validateSkillEffects(relativePath, parsed.records);
+  }
+  if (check.validateTrials) {
+    validateTrials(relativePath, parsed.records);
+  }
+  if (check.validateTitles) {
+    validateTitles(relativePath, parsed.records);
+  }
+  if (check.validateCombatRoles) {
+    validateCombatRoles(relativePath, parsed.records);
+  }
+  if (check.validateTacticsPresets) {
+    validateTacticsPresets(relativePath, parsed.records);
+  }
 
   if (check.validateFloraTemplate) {
     validateFloraTemplate(relativePath, parsed.records);
@@ -5313,6 +6374,12 @@ function validateRecords(relativePath, parsed, check) {
   }
   if (check.validateMonsters) {
     validateMonsters(relativePath, parsed.records);
+  }
+  if (check.validateEncounterTemplates) {
+    validateEncounterTemplates(relativePath, parsed.records);
+  }
+  if (check.validateSpawnProfiles) {
+    validateSpawnProfiles(relativePath, parsed.records);
   }
   if (check.validateSettlements) {
     validateSettlements(relativePath, parsed.records);
@@ -5484,6 +6551,43 @@ function validateItemCatalog(relativePath, records) {
       ensureString(relativePath, record.id, "spoilageProfileId", record.spoilageProfileId);
       if (!Array.isArray(record.roles) || (!record.roles.includes("consumable") && !record.roles.includes("ingredient"))) {
         throw new Error(`${relativePath} spoilageProfileId requires consumable or ingredient role on record ${record.id}`);
+      }
+    }
+
+    if (record.useProfiles !== undefined) {
+      if (!Array.isArray(record.useProfiles) || record.useProfiles.length === 0) {
+        throw new Error(`${relativePath} has invalid useProfiles on record ${record.id}`);
+      }
+      for (const [index, profile] of record.useProfiles.entries()) {
+        const field = `useProfiles[${index}]`;
+        if (!isObject(profile)) {
+          throw new Error(`${relativePath} has invalid ${field} on record ${record.id}`);
+        }
+        ensureString(relativePath, record.id, `${field}.actionType`, profile.actionType);
+        ensureString(relativePath, record.id, `${field}.primarySkillId`, profile.primarySkillId);
+        ensureStringArray(relativePath, record.id, `${field}.supportSkillIds`, profile.supportSkillIds, 0);
+        ensureInteger(relativePath, record.id, `${field}.requiredSkillRank`, profile.requiredSkillRank, 0);
+        ensureInteger(relativePath, record.id, `${field}.masteryRank`, profile.masteryRank, 0);
+        if (profile.masteryRank > 125) {
+          throw new Error(`${relativePath} has ${field}.masteryRank above 125 on record ${record.id}`);
+        }
+        ensureStringArray(relativePath, record.id, `${field}.effectChannels`, profile.effectChannels, 1);
+        if (profile.handlingType !== undefined) {
+          ensureSetMembership(
+            relativePath,
+            record.id,
+            `${field}.handlingType`,
+            profile.handlingType,
+            new Set(["weapon", "shield", "armor", "hybrid"])
+          );
+        }
+        if (profile.proficiencySkillId !== undefined) {
+          ensureString(relativePath, record.id, `${field}.proficiencySkillId`, profile.proficiencySkillId);
+        }
+        ensureStringArray(relativePath, record.id, `${field}.hybridSkillIds`, profile.hybridSkillIds ?? [], 0);
+        ensureStringArray(relativePath, record.id, `${field}.combatTags`, profile.combatTags ?? [], 0);
+        ensureStringArray(relativePath, record.id, `${field}.resolutionHooks`, profile.resolutionHooks ?? [], 0);
+        ensureStringArray(relativePath, record.id, `${field}.grantTags`, profile.grantTags ?? [], 0);
       }
     }
 
@@ -7119,6 +8223,448 @@ async function validateQuestArchetypesAgainstWorldData() {
   }
 }
 
+async function validateQuestDefinitionsAgainstWorldData() {
+  const definitionPath = path.join(ROOT, "packages/content/base/civilization/quest_definitions.json");
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
+  const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
+  const abilityPath = path.join(ROOT, "packages/content/base/player/abilities.json");
+  const spellPath = path.join(ROOT, "packages/content/base/player/spells.json");
+  const traitPath = path.join(ROOT, "packages/content/base/player/traits.json");
+
+  const definitionsParsed = JSON.parse(await readFile(definitionPath, "utf8"));
+  const itemParsed = JSON.parse(await readFile(itemPath, "utf8"));
+  const attributeParsed = JSON.parse(await readFile(attributePath, "utf8"));
+  const skillParsed = JSON.parse(await readFile(skillPath, "utf8"));
+  const abilityParsed = JSON.parse(await readFile(abilityPath, "utf8"));
+  const spellParsed = JSON.parse(await readFile(spellPath, "utf8"));
+  const traitParsed = JSON.parse(await readFile(traitPath, "utf8"));
+
+  if (
+    !Array.isArray(definitionsParsed.records) ||
+    !Array.isArray(itemParsed.records) ||
+    !Array.isArray(attributeParsed.records) ||
+    !Array.isArray(skillParsed.records) ||
+    !Array.isArray(abilityParsed.records) ||
+    !Array.isArray(spellParsed.records) ||
+    !Array.isArray(traitParsed.records)
+  ) {
+    throw new Error("content cross-check failed: quest definition dependencies are invalid");
+  }
+
+  const definitionFile = "packages/content/base/civilization/quest_definitions.json";
+  const itemKeys = new Set(itemParsed.records.map((record) => record.itemKey).filter((value) => typeof value === "string"));
+  const attributeIds = new Set(attributeParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const skillIds = new Set(skillParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const abilityIds = new Set(abilityParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const spellIds = new Set(spellParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+  const traitIds = new Set(traitParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+
+  const validateCheckTarget = (kind, targetId, recordId, nodeId) => {
+    if (typeof targetId !== "string" || targetId.length === 0) {
+      return;
+    }
+
+    if (kind === "attribute" && !attributeIds.has(targetId)) {
+      throw new Error(`${definitionFile} actionTree check targetId '${targetId}' missing attribute definition on record ${recordId}, node ${nodeId}`);
+    }
+    if (kind === "skill" && !skillIds.has(targetId)) {
+      throw new Error(`${definitionFile} actionTree check targetId '${targetId}' missing skill definition on record ${recordId}, node ${nodeId}`);
+    }
+    if (kind === "ability" && !abilityIds.has(targetId)) {
+      throw new Error(`${definitionFile} actionTree check targetId '${targetId}' missing ability definition on record ${recordId}, node ${nodeId}`);
+    }
+    if (kind === "spell" && !spellIds.has(targetId)) {
+      throw new Error(`${definitionFile} actionTree check targetId '${targetId}' missing spell definition on record ${recordId}, node ${nodeId}`);
+    }
+    if ((kind === "tool" || kind === "item") && !itemKeys.has(targetId)) {
+      throw new Error(`${definitionFile} actionTree check targetId '${targetId}' missing item definition on record ${recordId}, node ${nodeId}`);
+    }
+  };
+
+  for (const record of definitionsParsed.records) {
+    const recordId = record.id ?? "<unknown>";
+
+    for (const requirement of record.requirements?.requiredSkills ?? []) {
+      if (!skillIds.has(requirement.id)) {
+        throw new Error(`${definitionFile} requiredSkills id '${requirement.id}' missing skill definition on record ${recordId}`);
+      }
+    }
+    for (const requirement of record.requirements?.requiredAbilities ?? []) {
+      if (!abilityIds.has(requirement.id)) {
+        throw new Error(`${definitionFile} requiredAbilities id '${requirement.id}' missing ability definition on record ${recordId}`);
+      }
+    }
+    for (const requirement of record.requirements?.requiredSpells ?? []) {
+      if (!spellIds.has(requirement.id)) {
+        throw new Error(`${definitionFile} requiredSpells id '${requirement.id}' missing spell definition on record ${recordId}`);
+      }
+    }
+    for (const requirement of record.requirements?.requiredTraits ?? []) {
+      if (!traitIds.has(requirement.id)) {
+        throw new Error(`${definitionFile} requiredTraits id '${requirement.id}' missing trait definition on record ${recordId}`);
+      }
+    }
+
+    for (const itemKey of [
+      ...(record.requirements?.requiredItems ?? []),
+      ...(record.logistics?.requiredTools ?? []),
+      ...(record.logistics?.recommendedTools ?? []),
+      ...(record.logistics?.consumedItems ?? [])
+    ]) {
+      if (!itemKeys.has(itemKey)) {
+        throw new Error(`${definitionFile} item reference '${itemKey}' missing item definition on record ${recordId}`);
+      }
+    }
+
+    for (const spellId of record.logistics?.recommendedSpells ?? []) {
+      if (!spellIds.has(spellId)) {
+        throw new Error(`${definitionFile} recommendedSpells id '${spellId}' missing spell definition on record ${recordId}`);
+      }
+    }
+
+    const nodeIds = new Set((record.actionTree?.nodes ?? []).map((node) => node.id).filter((value) => typeof value === "string"));
+    const roleSlotIds = new Set((record.deployment?.roleSlots ?? []).map((slot) => slot.slotId).filter((value) => typeof value === "string"));
+
+    for (const slot of record.deployment?.roleSlots ?? []) {
+      for (const ref of slot.preferredChecks ?? []) {
+        if (typeof ref !== "string") {
+          continue;
+        }
+        if (ref.startsWith("attr.") && !attributeIds.has(ref)) {
+          throw new Error(`${definitionFile} preferredChecks '${ref}' missing attribute definition on record ${recordId}`);
+        }
+        if (ref.startsWith("skill.") && !skillIds.has(ref)) {
+          throw new Error(`${definitionFile} preferredChecks '${ref}' missing skill definition on record ${recordId}`);
+        }
+        if (ref.startsWith("ability.") && !abilityIds.has(ref)) {
+          throw new Error(`${definitionFile} preferredChecks '${ref}' missing ability definition on record ${recordId}`);
+        }
+        if (ref.startsWith("spell.") && !spellIds.has(ref)) {
+          throw new Error(`${definitionFile} preferredChecks '${ref}' missing spell definition on record ${recordId}`);
+        }
+        if (!ref.includes(".") && !itemKeys.has(ref)) {
+          throw new Error(`${definitionFile} preferredChecks '${ref}' missing item definition on record ${recordId}`);
+        }
+      }
+    }
+
+    for (const node of record.actionTree?.nodes ?? []) {
+      const nodeId = node.id ?? "<unknown>";
+      for (const assignedRole of node.assignedRoles ?? []) {
+        if (!roleSlotIds.has(assignedRole)) {
+          throw new Error(`${definitionFile} assignedRoles '${assignedRole}' missing deployment roleSlot on record ${recordId}, node ${nodeId}`);
+        }
+      }
+      for (const check of node.checks ?? []) {
+        validateCheckTarget(check.kind, check.targetId, recordId, nodeId);
+      }
+      for (const branch of Object.values(node.branches ?? {})) {
+        if (branch?.nextNodeId && !nodeIds.has(branch.nextNodeId)) {
+          throw new Error(`${definitionFile} branch nextNodeId '${branch.nextNodeId}' missing action node on record ${recordId}, node ${nodeId}`);
+        }
+      }
+    }
+  }
+}
+
+async function validatePlayerContentAgainstDependencies() {
+  const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
+  const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
+  const abilityPath = path.join(ROOT, "packages/content/base/player/abilities.json");
+  const spellPath = path.join(ROOT, "packages/content/base/player/spells.json");
+  const traitPath = path.join(ROOT, "packages/content/base/player/traits.json");
+  const backstoryPath = path.join(ROOT, "packages/content/base/player/backstories.json");
+  const startingBundlePath = path.join(ROOT, "packages/content/base/player/starting_bundles.json");
+  const progressionTrackPath = path.join(ROOT, "packages/content/base/player/progression_tracks.json");
+  const knowledgeTrackPath = path.join(ROOT, "packages/content/base/player/knowledge_tracks.json");
+  const skillEffectPath = path.join(ROOT, "packages/content/base/player/skill_effects.json");
+  const trialPath = path.join(ROOT, "packages/content/base/player/trials.json");
+  const titlePath = path.join(ROOT, "packages/content/base/player/titles.json");
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+
+  const attributesParsed = JSON.parse(await readFile(attributePath, "utf8"));
+  const skillsParsed = JSON.parse(await readFile(skillPath, "utf8"));
+  const abilitiesParsed = JSON.parse(await readFile(abilityPath, "utf8"));
+  const spellsParsed = JSON.parse(await readFile(spellPath, "utf8"));
+  const traitsParsed = JSON.parse(await readFile(traitPath, "utf8"));
+  const backstoriesParsed = JSON.parse(await readFile(backstoryPath, "utf8"));
+  const startingBundlesParsed = JSON.parse(await readFile(startingBundlePath, "utf8"));
+  const progressionParsed = JSON.parse(await readFile(progressionTrackPath, "utf8"));
+  const knowledgeParsed = JSON.parse(await readFile(knowledgeTrackPath, "utf8"));
+  const skillEffectsParsed = JSON.parse(await readFile(skillEffectPath, "utf8"));
+  const trialsParsed = JSON.parse(await readFile(trialPath, "utf8"));
+  const titlesParsed = JSON.parse(await readFile(titlePath, "utf8"));
+  const itemsParsed = JSON.parse(await readFile(itemPath, "utf8"));
+
+  const attributeIds = new Set(attributesParsed.records.map((record) => record.id));
+  const skillIds = new Set(skillsParsed.records.map((record) => record.id));
+  const abilityIds = new Set(abilitiesParsed.records.map((record) => record.id));
+  const progressionTrackIds = new Set(progressionParsed.records.map((record) => record.id));
+  const knowledgeTrackIds = new Set(knowledgeParsed.records.map((record) => record.id));
+  const skillEffectIds = new Set(skillEffectsParsed.records.map((record) => record.id));
+  const trialIds = new Set(trialsParsed.records.map((record) => record.id));
+  const itemIds = new Set(itemsParsed.records.map((record) => record.id));
+
+  for (const record of attributesParsed.records) {
+    for (const skillId of record.skillAffinities ?? []) {
+      if (!skillIds.has(skillId)) {
+        throw new Error(`packages/content/base/player/attributes.json skillAffinities '${skillId}' missing skill definition on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of skillsParsed.records) {
+    for (const attributeId of record.governingAttributes ?? []) {
+      if (!attributeIds.has(attributeId)) {
+        throw new Error(`packages/content/base/player/skills.json governingAttributes '${attributeId}' missing attribute definition on record ${record.id}`);
+      }
+    }
+    if (!progressionTrackIds.has(record.progressionTrackId)) {
+      throw new Error(`packages/content/base/player/skills.json progressionTrackId '${record.progressionTrackId}' missing progression track on record ${record.id}`);
+    }
+    if (record.knowledgeTrackId !== undefined && !knowledgeTrackIds.has(record.knowledgeTrackId)) {
+      throw new Error(`packages/content/base/player/skills.json knowledgeTrackId '${record.knowledgeTrackId}' missing knowledge track on record ${record.id}`);
+    }
+    for (const skillEffectId of record.combatHooks?.skillEffectIds ?? []) {
+      if (!skillEffectIds.has(skillEffectId)) {
+        throw new Error(`packages/content/base/player/skills.json combatHooks.skillEffectIds '${skillEffectId}' missing skill effect on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of abilitiesParsed.records) {
+    for (const requirement of record.requirements?.skillRanks ?? []) {
+      if (!skillIds.has(requirement.id)) {
+        throw new Error(`packages/content/base/player/abilities.json requirement skill '${requirement.id}' missing skill definition on record ${record.id}`);
+      }
+    }
+    for (const requirement of record.requirements?.attributes ?? []) {
+      if (!attributeIds.has(requirement.id)) {
+        throw new Error(`packages/content/base/player/abilities.json requirement attribute '${requirement.id}' missing attribute definition on record ${record.id}`);
+      }
+    }
+    for (const skillId of record.governingSkillIds ?? []) {
+      if (!skillIds.has(skillId)) {
+        throw new Error(`packages/content/base/player/abilities.json governingSkillIds '${skillId}' missing skill definition on record ${record.id}`);
+      }
+    }
+    for (const attributeId of record.governingAttributeIds ?? []) {
+      if (!attributeIds.has(attributeId)) {
+        throw new Error(`packages/content/base/player/abilities.json governingAttributeIds '${attributeId}' missing attribute definition on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of spellsParsed.records) {
+    if (!skillIds.has(record.governingSkillId)) {
+      throw new Error(`packages/content/base/player/spells.json governingSkillId '${record.governingSkillId}' missing skill definition on record ${record.id}`);
+    }
+    for (const attributeId of record.governingAttributes ?? []) {
+      if (!attributeIds.has(attributeId)) {
+        throw new Error(`packages/content/base/player/spells.json governingAttributes '${attributeId}' missing attribute definition on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of traitsParsed.records) {
+    for (const modifier of record.modifiers ?? []) {
+      if (modifier.skillId !== undefined && !skillIds.has(modifier.skillId)) {
+        throw new Error(`packages/content/base/player/traits.json modifier skill '${modifier.skillId}' missing skill definition on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of backstoriesParsed.records) {
+    for (const skill of record.startingSkills ?? []) {
+      if (!skillIds.has(skill.skillId)) {
+        throw new Error(`packages/content/base/player/backstories.json startingSkills '${skill.skillId}' missing skill definition on record ${record.id}`);
+      }
+    }
+    for (const knowledge of record.startingKnowledge ?? []) {
+      if (!knowledgeTrackIds.has(knowledge.trackId)) {
+        throw new Error(`packages/content/base/player/backstories.json startingKnowledge '${knowledge.trackId}' missing knowledge track on record ${record.id}`);
+      }
+    }
+    for (const abilityId of record.startingAbilityIds ?? []) {
+      if (!abilityIds.has(abilityId)) {
+        throw new Error(`packages/content/base/player/backstories.json startingAbilityIds '${abilityId}' missing ability definition on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of startingBundlesParsed.records) {
+    for (const item of record.fixedItems ?? []) {
+      if (!itemIds.has(item.itemId)) {
+        throw new Error(`packages/content/base/player/starting_bundles.json fixedItems '${item.itemId}' missing item definition on record ${record.id}`);
+      }
+    }
+    for (const group of record.choiceGroups ?? []) {
+      for (const option of group.options ?? []) {
+        if (!itemIds.has(option.itemId)) {
+          throw new Error(`packages/content/base/player/starting_bundles.json choiceGroups '${option.itemId}' missing item definition on record ${record.id}`);
+        }
+      }
+    }
+  }
+
+  for (const record of knowledgeParsed.records) {
+    for (const field of ["knowledgeSkillId", "spottingSkillId", "identifySkillId", "universalSupportSkillId"]) {
+      if (record[field] !== undefined && !skillIds.has(record[field])) {
+        throw new Error(`packages/content/base/player/knowledge_tracks.json ${field} '${record[field]}' missing skill definition on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of skillEffectsParsed.records) {
+    if (!skillIds.has(record.skillId)) {
+      throw new Error(`packages/content/base/player/skill_effects.json skillId '${record.skillId}' missing skill definition on record ${record.id}`);
+    }
+  }
+
+  for (const record of trialsParsed.records) {
+    if (!skillIds.has(record.associatedSkillId)) {
+      throw new Error(`packages/content/base/player/trials.json associatedSkillId '${record.associatedSkillId}' missing skill definition on record ${record.id}`);
+    }
+  }
+
+  for (const record of titlesParsed.records) {
+    if (record.sourceSkillId !== undefined && record.sourceSkillId !== null && !skillIds.has(record.sourceSkillId)) {
+      throw new Error(`packages/content/base/player/titles.json sourceSkillId '${record.sourceSkillId}' missing skill definition on record ${record.id}`);
+    }
+    if (record.milestone?.trialId !== undefined && record.milestone?.trialId !== null && !trialIds.has(record.milestone.trialId)) {
+      throw new Error(`packages/content/base/player/titles.json milestone.trialId '${record.milestone.trialId}' missing trial definition on record ${record.id}`);
+    }
+  }
+
+  for (const record of itemsParsed.records) {
+    for (const profile of record.useProfiles ?? []) {
+      if (!skillIds.has(profile.primarySkillId)) {
+        throw new Error(`packages/content/base/items/items.json useProfiles primarySkillId '${profile.primarySkillId}' missing skill definition on record ${record.id}`);
+      }
+      if (profile.proficiencySkillId !== undefined && !skillIds.has(profile.proficiencySkillId)) {
+        throw new Error(`packages/content/base/items/items.json useProfiles proficiencySkillId '${profile.proficiencySkillId}' missing skill definition on record ${record.id}`);
+      }
+      for (const skillId of profile.supportSkillIds ?? []) {
+        if (!skillIds.has(skillId)) {
+          throw new Error(`packages/content/base/items/items.json useProfiles supportSkillId '${skillId}' missing skill definition on record ${record.id}`);
+        }
+      }
+      for (const skillId of profile.hybridSkillIds ?? []) {
+        if (!skillIds.has(skillId)) {
+          throw new Error(`packages/content/base/items/items.json useProfiles hybridSkillId '${skillId}' missing skill definition on record ${record.id}`);
+        }
+      }
+    }
+  }
+
+  if (abilityIds.size === 0) {
+    throw new Error("content cross-check failed: player ability catalog is empty");
+  }
+}
+
+async function validateCombatFoundationAgainstDependencies() {
+  const combatRolePath = path.join(ROOT, "packages/content/base/game/combat_roles.json");
+  const tacticsPresetPath = path.join(ROOT, "packages/content/base/game/tactics_presets.json");
+  const encounterTemplatePath = path.join(ROOT, "packages/content/base/world/encounter_templates.json");
+  const spawnProfilePath = path.join(ROOT, "packages/content/base/world/spawn_profiles.json");
+  const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+  const worldHexPath = path.join(ROOT, "packages/content/base/world/world_hexes.json");
+
+  const combatRolesParsed = JSON.parse(await readFile(combatRolePath, "utf8"));
+  const tacticsPresetsParsed = JSON.parse(await readFile(tacticsPresetPath, "utf8"));
+  const encounterTemplatesParsed = JSON.parse(await readFile(encounterTemplatePath, "utf8"));
+  const spawnProfilesParsed = JSON.parse(await readFile(spawnProfilePath, "utf8"));
+  const monstersParsed = JSON.parse(await readFile(monsterPath, "utf8"));
+  const regionsParsed = JSON.parse(await readFile(regionPath, "utf8"));
+  const settlementsParsed = JSON.parse(await readFile(settlementPath, "utf8"));
+  const worldHexesParsed = JSON.parse(await readFile(worldHexPath, "utf8"));
+
+  const roleIds = new Set(combatRolesParsed.records.map((record) => record.id));
+  const presetIds = new Set(tacticsPresetsParsed.records.map((record) => record.id));
+  const encounterIds = new Set(encounterTemplatesParsed.records.map((record) => record.id));
+  const monsterIds = new Set(monstersParsed.records.map((record) => record.id));
+  const regionIds = new Set(regionsParsed.records.map((record) => record.id));
+  const settlementIds = new Set(settlementsParsed.records.map((record) => record.id));
+  const worldHexIds = new Set(worldHexesParsed.records.map((record) => record.id));
+
+  if (roleIds.size === 0 || presetIds.size === 0 || encounterIds.size === 0 || monsterIds.size === 0) {
+    throw new Error("content cross-check failed: combat foundation catalogs must not be empty");
+  }
+
+  for (const record of combatRolesParsed.records) {
+    if (record.defaultTactics.roleId !== record.id) {
+      throw new Error(`packages/content/base/game/combat_roles.json defaultTactics.roleId must match id on record ${record.id}`);
+    }
+  }
+
+  for (const record of tacticsPresetsParsed.records) {
+    if (!roleIds.has(record.roleId)) {
+      throw new Error(`packages/content/base/game/tactics_presets.json roleId '${record.roleId}' missing combat role on record ${record.id}`);
+    }
+    if (record.tactics.roleId !== record.roleId) {
+      throw new Error(`packages/content/base/game/tactics_presets.json tactics.roleId must match roleId on record ${record.id}`);
+    }
+  }
+
+  for (const record of monstersParsed.records) {
+    if (!roleIds.has(record.defaultRole)) {
+      throw new Error(`packages/content/base/world/monsters.json defaultRole '${record.defaultRole}' missing combat role on record ${record.id}`);
+    }
+  }
+
+  for (const record of encounterTemplatesParsed.records) {
+    for (const regionId of record.regionIds) {
+      if (!regionIds.has(regionId)) {
+        throw new Error(`packages/content/base/world/encounter_templates.json regionId '${regionId}' missing world region on record ${record.id}`);
+      }
+    }
+
+    for (const member of record.members) {
+      if (!monsterIds.has(member.monsterId)) {
+        throw new Error(`packages/content/base/world/encounter_templates.json monsterId '${member.monsterId}' missing monster record on record ${record.id}`);
+      }
+      if (!roleIds.has(member.roleId)) {
+        throw new Error(`packages/content/base/world/encounter_templates.json roleId '${member.roleId}' missing combat role on record ${record.id}`);
+      }
+    }
+
+    for (const alliedTemplateId of record.alliedTemplateIds ?? []) {
+      if (!encounterIds.has(alliedTemplateId)) {
+        throw new Error(`packages/content/base/world/encounter_templates.json alliedTemplateId '${alliedTemplateId}' missing encounter template on record ${record.id}`);
+      }
+      if (alliedTemplateId === record.id) {
+        throw new Error(`packages/content/base/world/encounter_templates.json alliedTemplateId cannot self-reference on record ${record.id}`);
+      }
+    }
+  }
+
+  for (const record of spawnProfilesParsed.records) {
+    for (const regionId of record.regionIds) {
+      if (!regionIds.has(regionId)) {
+        throw new Error(`packages/content/base/world/spawn_profiles.json regionId '${regionId}' missing world region on record ${record.id}`);
+      }
+    }
+    for (const settlementId of record.settlementIds) {
+      if (!settlementIds.has(settlementId)) {
+        throw new Error(`packages/content/base/world/spawn_profiles.json settlementId '${settlementId}' missing settlement on record ${record.id}`);
+      }
+    }
+    for (const worldHexId of record.worldHexIds) {
+      if (!worldHexIds.has(worldHexId)) {
+        throw new Error(`packages/content/base/world/spawn_profiles.json worldHexId '${worldHexId}' missing world hex on record ${record.id}`);
+      }
+    }
+    for (const encounterWeight of record.encounterWeights) {
+      if (!encounterIds.has(encounterWeight.encounterTemplateId)) {
+        throw new Error(`packages/content/base/world/spawn_profiles.json encounterTemplateId '${encounterWeight.encounterTemplateId}' missing encounter template on record ${record.id}`);
+      }
+    }
+  }
+}
+
 async function validateMonstersAgainstMarketValues() {
   const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
   const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
@@ -7405,6 +8951,9 @@ async function main() {
   await validateSettlementsAgainstRegions();
   await validateQuestTemplatesAgainstWorldData();
   await validateQuestArchetypesAgainstWorldData();
+  await validateQuestDefinitionsAgainstWorldData();
+  await validatePlayerContentAgainstDependencies();
+  await validateCombatFoundationAgainstDependencies();
   await validateMonstersAgainstMarketValues();
   await validateTravelNetworksAgainstWorldData();
   await validateTransportProfilesAgainstWorldData();

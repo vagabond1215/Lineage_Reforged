@@ -21,7 +21,11 @@
           "habitatTags",
           "behaviorTags",
           "drops",
-          "loot"
+          "loot",
+          "combatProfile",
+          "defaultRole",
+          "actionPackageIds",
+          "difficultyScalingHooks"
         ],
         "properties": {
           "id": {
@@ -200,6 +204,82 @@
                   "summoned_only"
                 ]
               }
+            }
+          },
+          "combatProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "baseHp",
+              "baseMp",
+              "baseStamina",
+              "baseAccuracy",
+              "baseDefense",
+              "baseEvasion",
+              "baseAttackSpeed",
+              "baseRecoverySpeed",
+              "threatRating",
+              "preferredRange"
+            ],
+            "properties": {
+              "baseHp": { "type": "integer", "minimum": 1 },
+              "baseMp": { "type": "integer", "minimum": 0 },
+              "baseStamina": { "type": "integer", "minimum": 1 },
+              "baseAccuracy": { "type": "integer", "minimum": 0 },
+              "baseDefense": { "type": "integer", "minimum": 0 },
+              "baseEvasion": { "type": "integer", "minimum": 0 },
+              "baseAttackSpeed": { "type": "integer", "minimum": 1 },
+              "baseRecoverySpeed": { "type": "integer", "minimum": 1 },
+              "threatRating": { "type": "integer", "minimum": 0 },
+              "preferredRange": {
+                "type": "string",
+                "enum": ["melee", "ranged", "magic"]
+              }
+            }
+          },
+          "defaultRole": {
+            "type": "string",
+            "enum": [
+              "frontliner",
+              "disruptor",
+              "ranged_pressure",
+              "healer",
+              "support_buffer",
+              "debuffer_controller",
+              "opportunist",
+              "tank_protector",
+              "flexible_adaptive"
+            ]
+          },
+          "actionPackageIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "uniqueItems": true
+          },
+          "difficultyScalingHooks": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "hpPerTier",
+              "mpPerTier",
+              "staminaPerTier",
+              "accuracyPerTier",
+              "defensePerTier",
+              "actionTimeMultiplierPerTier",
+              "recoveryMultiplierPerTier"
+            ],
+            "properties": {
+              "hpPerTier": { "type": "number", "minimum": 0 },
+              "mpPerTier": { "type": "number", "minimum": 0 },
+              "staminaPerTier": { "type": "number", "minimum": 0 },
+              "accuracyPerTier": { "type": "number", "minimum": 0 },
+              "defensePerTier": { "type": "number", "minimum": 0 },
+              "actionTimeMultiplierPerTier": { "type": "number", "minimum": 0 },
+              "recoveryMultiplierPerTier": { "type": "number", "minimum": 0 }
             }
           }
         }

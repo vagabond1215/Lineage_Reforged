@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/role" },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "bias": {
+      "type": "string",
+      "enum": ["avoid", "low", "normal", "high", "critical"]
+    },
+    "roleId": {
+      "type": "string",
+      "enum": [
+        "frontliner",
+        "disruptor",
+        "ranged_pressure",
+        "healer",
+        "support_buffer",
+        "debuffer_controller",
+        "opportunist",
+        "tank_protector",
+        "flexible_adaptive"
+      ]
+    },
+    "targetRule": {
+      "type": "string",
+      "enum": [
+        "lowest_hp",
+        "highest_hp",
+        "lowest_mp",
+        "highest_mp",
+        "lowest_stamina",
+        "highest_stamina",
+        "lowest_max_hp",
+        "highest_max_hp",
+        "lowest_max_mp",
+        "highest_max_mp",
+        "lowest_max_stamina",
+        "highest_max_stamina",
+        "weakest_to_element",
+        "highest_threat",
+        "currently_casting",
+        "easiest_to_interrupt",
+        "nearest",
+        "farthest",
+        "focus_current_player_target",
+        "ignore_specific_targets",
+        "melee_focus",
+        "melee_ignore",
+        "ranged_focus",
+        "ranged_ignore",
+        "magic_focus",
+        "magic_ignore"
+      ]
+    },
+    "focusDirectives": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "focusTargetIds",
+        "ignoreTargetIds",
+        "priorityTargetIds",
+        "deprioritizedTargetIds",
+        "meleeFocusTargetIds",
+        "meleeIgnoreTargetIds",
+        "rangedFocusTargetIds",
+        "rangedIgnoreTargetIds",
+        "magicFocusTargetIds",
+        "magicIgnoreTargetIds"
+      ],
+      "properties": {
+        "focusTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "ignoreTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "priorityTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "deprioritizedTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "meleeFocusTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "meleeIgnoreTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "rangedFocusTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "rangedIgnoreTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "magicFocusTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "magicIgnoreTargetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "targetPreference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "rule", "weight", "scope"],
+      "properties": {
+        "id": { "type": "string" },
+        "rule": { "$ref": "#/$defs/targetRule" },
+        "weight": { "type": "number", "minimum": 0 },
+        "scope": { "type": "string", "enum": ["ally", "enemy", "any"] },
+        "actionTypes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "element": { "type": "string" },
+        "sourceTargetIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "tactics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roleId", "preferences", "spellPreferences", "targetPreferences", "focusDirectives"],
+      "properties": {
+        "roleId": { "$ref": "#/$defs/roleId" },
+        "preferences": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "favorInterrupts",
+            "favorDamage",
+            "favorLowTierSpells",
+            "favorHighTierSpells",
+            "favorConservation",
+            "favorWeaknessExploitation",
+            "favorHealingUrgency",
+            "favorEnfeebling",
+            "favorEnhancing",
+            "favorAreaEffects",
+            "favorSingleTargetPressure",
+            "favorMeleeEngagement",
+            "favorRangedEngagement",
+            "favorMagicEngagement"
+          ],
+          "properties": {
+            "favorInterrupts": { "$ref": "#/$defs/bias" },
+            "favorDamage": { "$ref": "#/$defs/bias" },
+            "favorLowTierSpells": { "$ref": "#/$defs/bias" },
+            "favorHighTierSpells": { "$ref": "#/$defs/bias" },
+            "favorConservation": { "$ref": "#/$defs/bias" },
+            "favorWeaknessExploitation": { "$ref": "#/$defs/bias" },
+            "favorHealingUrgency": { "$ref": "#/$defs/bias" },
+            "favorEnfeebling": { "$ref": "#/$defs/bias" },
+            "favorEnhancing": { "$ref": "#/$defs/bias" },
+            "favorAreaEffects": { "$ref": "#/$defs/bias" },
+            "favorSingleTargetPressure": { "$ref": "#/$defs/bias" },
+            "favorMeleeEngagement": { "$ref": "#/$defs/bias" },
+            "favorRangedEngagement": { "$ref": "#/$defs/bias" },
+            "favorMagicEngagement": { "$ref": "#/$defs/bias" }
+          }
+        },
+        "spellPreferences": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "preferredSchools",
+            "preferredElements",
+            "preferredTier",
+            "buffPriority",
+            "debuffPriority",
+            "resourceConservationThresholds"
+          ],
+          "properties": {
+            "preferredSchools": {
+              "type": "array",
+              "items": { "type": "string" },
+              "uniqueItems": true
+            },
+            "preferredElements": {
+              "type": "array",
+              "items": { "type": "string" },
+              "uniqueItems": true
+            },
+            "preferredTier": {
+              "type": "string",
+              "enum": ["low", "balanced", "high"]
+            },
+            "buffPriority": { "$ref": "#/$defs/bias" },
+            "debuffPriority": { "$ref": "#/$defs/bias" },
+            "resourceConservationThresholds": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["mpRatio", "staminaRatio"],
+              "properties": {
+                "mpRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+                "staminaRatio": { "type": "number", "minimum": 0, "maximum": 1 }
+              }
+            }
+          }
+        },
+        "targetPreferences": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/targetPreference" },
+          "minItems": 1
+        },
+        "focusDirectives": { "$ref": "#/$defs/focusDirectives" }
+      }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "summary", "preferredActionTypes", "defaultTactics"],
+      "properties": {
+        "id": { "$ref": "#/$defs/roleId" },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "preferredActionTypes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "defaultTactics": { "$ref": "#/$defs/tactics" }
+      }
+    }
+  }
+}
