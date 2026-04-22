@@ -45,6 +45,10 @@ export type IconName =
   | 'animal';
 
 export type TagTone = 'accent' | 'success' | 'warning' | 'neutral' | 'danger';
+export type BodyStateSeverity = 'normal' | 'warning' | 'critical';
+export type BodyStateTrend = 'improving' | 'worsening' | 'stable';
+export type BodyStateAlertLevel = 'soft' | 'medium' | 'hard';
+export type StatMeterVisualState = 'normal' | 'warning' | 'critical';
 
 export type NavItem = {
   id: TabId;
@@ -59,6 +63,7 @@ export type StatMeter = {
   current: number;
   max: number;
   color: string;
+  visualState?: StatMeterVisualState;
 };
 
 export type NotificationItem = {
@@ -69,11 +74,96 @@ export type NotificationItem = {
   type: TagTone;
 };
 
+export type BodyStatePillViewModel = {
+  id: 'energy' | 'hydration' | 'fatigue' | 'protein' | 'intoxication';
+  label: string;
+  severity: BodyStateSeverity;
+  trend: BodyStateTrend;
+  tooltip: string;
+  emphasis?: BodyStateAlertLevel | null;
+};
+
+export type ConditionStripViewModel = {
+  primary: BodyStatePillViewModel[];
+  secondary: BodyStatePillViewModel[];
+  collapsedLabel: string;
+  expandedByDefault: boolean;
+};
+
+export type ReadinessIssueViewModel = {
+  id: string;
+  label: string;
+  detail: string;
+  severity: BodyStateSeverity;
+};
+
+export type RecommendedActionViewModel = {
+  id: 'drink' | 'rest' | 'eat';
+  label: 'Drink' | 'Rest' | 'Eat';
+  detail: string;
+};
+
+export type ReadinessCardViewModel = {
+  overallCondition: 'Ready' | 'Pressured' | 'Strained' | 'Compromised';
+  staminaRegenLabel: 'Steady' | 'Slowed' | 'Poor' | 'Suppressed';
+  recoveryLabel: 'Strong' | 'Fair' | 'Poor' | 'Impaired';
+  primaryIssues: ReadinessIssueViewModel[];
+  recommendedActions: RecommendedActionViewModel[];
+};
+
+export type RecoveryProjectionWindowViewModel = {
+  id: 'now' | 'short' | 'medium';
+  label: string;
+  energy: string;
+  fatigue: string;
+};
+
+export type RecoveryProjectionViewModel = {
+  windows: RecoveryProjectionWindowViewModel[];
+};
+
+export type ConsumableEffectDeltaLabel =
+  | 'Strong support'
+  | 'Helpful'
+  | 'Light support'
+  | 'No major change'
+  | 'Rises';
+
+export type ConsumableEffectPreviewViewModel = {
+  immediateEffects: {
+    energy: ConsumableEffectDeltaLabel;
+    protein: ConsumableEffectDeltaLabel;
+    hydration: ConsumableEffectDeltaLabel;
+    intoxication: ConsumableEffectDeltaLabel;
+  };
+  delayedRecovery: 'Boosts recovery' | 'Supports recovery' | 'Little recovery support' | 'May hinder recovery';
+  contextTag: 'Good for hydration' | 'Best after heavy exertion' | 'Light meal' | 'Drink with care';
+  highlighted: boolean;
+  highlightLabel?: 'Recommended' | 'Useful now';
+};
+
+export type ActionOutcomeRiskTier = 'safe' | 'straining' | 'risky';
+
+export type ActionOutcomePreviewViewModel = {
+  energy: 'Recovery' | 'No major change' | 'Minor drain' | 'Moderate drain' | 'Heavy drain';
+  hydration: 'Recovery' | 'No major change' | 'Minor drain' | 'Moderate drain' | 'Heavy drain';
+  fatigue: 'Recovery' | 'No change' | 'Increase' | 'Heavy increase';
+  riskTier: ActionOutcomeRiskTier;
+  warnings: string[];
+};
+
+export type MetricTooltip = {
+  title: string;
+  body: string;
+  footer?: string;
+};
+
 export type SummaryMetric = {
   id: string;
   label: string;
   value: string;
   detail: string;
+  tooltip?: MetricTooltip;
 };
 
 export type DetailEntry = {

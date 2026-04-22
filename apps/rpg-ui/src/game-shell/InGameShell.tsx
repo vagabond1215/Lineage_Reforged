@@ -1,6 +1,9 @@
 import type { CSSProperties } from 'react';
-import { startTransition, useState } from 'react';
-import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
+import { startTransition, useEffect, useState } from 'react';
+import type {
+  AccountProfileState,
+  SaveSnapshot
+} from '../../../../packages/shared/types/src/index.js';
 import { SideNav } from '../components/SideNav';
 import { TopStatusBar } from '../components/TopStatusBar';
 import { AppLayout } from '../components/layout/AppLayout';
@@ -17,6 +20,7 @@ import { NoticeBanner } from './components/NoticeBanner';
 import type { GameShellNotice, SaveSlotId, SaveSlotSummary } from './state.js';
 
 type InGameShellProps = {
+  accountProfile: AccountProfileState;
   snapshot: SaveSnapshot;
   slots: SaveSlotSummary[];
   activeSlotId: SaveSlotId;
@@ -26,6 +30,7 @@ type InGameShellProps = {
   onSnapshotChange: (snapshot: SaveSnapshot) => void;
   onSave: () => void;
   onQuickSave: () => void;
+  onRetireCharacter: () => void;
   onReturnToMainMenu: () => void;
 };
 
@@ -39,11 +44,18 @@ function InGameShellContent({
   onDismissNotice,
   onSave,
   onQuickSave,
+  onRetireCharacter,
   onReturnToMainMenu
 }: InGameShellContentProps) {
   const [activeTab, setActiveTab] = useState<TabId | null>('character');
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { snapshot, uiViewModel, updateSnapshot } = useGameSession();
+  const {
+    snapshot,
+    uiViewModel,
+    updateSnapshot,
+    bodyStatePresentation,
+    dismissBodyStateToast
+  } = useGameSession();
   const activeSlot = slots.find((slot) => slot.id === activeSlotId) ?? null;
   const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
   const pinnedIds = snapshot.sessionState.pinnedRecordIds;
@@ -90,6 +102,27 @@ function InGameShellContent({
     activePanel = <ChroniclePanel {...sharedPanelProps} />;
   }
 
+  useEffect(() => {
+    if (!bodyStatePresentation.toast || notice) {
+      return;
+    }
+
+    const autoDismissMs = bodyStatePresentation.toast.autoDismissMs ?? 6000;
+    const timeoutId = window.setTimeout(() => {
+      dismissBodyStateToast();
+    }, autoDismissMs);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [bodyStatePresentation.toast, dismissBodyStateToast, notice]);
+
+  useEffect(() => {
+    if (notice && bodyStatePresentation.toast) {
+      dismissBodyStateToast();
+    }
+  }, [bodyStatePresentation.toast, dismissBodyStateToast, notice]);
+
   return (
     <div className="h-screen overflow-hidden" style={{ '--tab-accent': accent } as CSSProperties}>
       <AppLayout
@@ -97,6 +130,7 @@ function InGameShellContent({
           <>
             <TopStatusBar
               {...uiViewModel.topBar}
+              readinessCard={uiViewModel.character.readinessCard}
               trackedQuestDetail={
                 trackedQuestEntry
                   ? {
@@ -117,6 +151,7 @@ function InGameShellContent({
                   hasUnsavedChanges={hasUnsavedChanges}
                   onSave={onSave}
                   onQuickSave={onQuickSave}
+                  onRetireCharacter={onRetireCharacter}
                   onReturnToMainMenu={onReturnToMainMenu}
                   embedded
                 />
@@ -125,6 +160,11 @@ function InGameShellContent({
             {notice && (
               <div className="px-4 pt-4">
                 <NoticeBanner notice={notice} onDismiss={onDismissNotice} />
+              </div>
+            )}
+            {!notice && bodyStatePresentation.toast && (
+              <div className="px-4 pt-4">
+                <NoticeBanner notice={bodyStatePresentation.toast} onDismiss={dismissBodyStateToast} />
               </div>
             )}
           </>
@@ -148,6 +188,7 @@ function InGameShellContent({
 }
 
 export function InGameShell({
+  accountProfile,
   snapshot,
   slots,
   activeSlotId,
@@ -157,10 +198,15 @@ export function InGameShell({
   onSnapshotChange,
   onSave,
   onQuickSave,
+  onRetireCharacter,
   onReturnToMainMenu
 }: InGameShellProps) {
   return (
-    <GameSessionProvider snapshot={snapshot} onSnapshotChange={onSnapshotChange}>
+    <GameSessionProvider
+      accountProfile={accountProfile}
+      snapshot={snapshot}
+      onSnapshotChange={onSnapshotChange}
+    >
       <InGameShellContent
         slots={slots}
         activeSlotId={activeSlotId}
@@ -169,6 +215,7 @@ export function InGameShell({
         onDismissNotice={onDismissNotice}
         onSave={onSave}
         onQuickSave={onQuickSave}
+        onRetireCharacter={onRetireCharacter}
         onReturnToMainMenu={onReturnToMainMenu}
       />
     </GameSessionProvider>

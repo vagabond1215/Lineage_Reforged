@@ -19,17 +19,25 @@ import {
 import {
   CHARACTER_ATTRIBUTE_ORDER,
   CHARACTER_ATTRIBUTE_PRESENTATIONS,
-  getAllocatedCharacterAttributePoints,
+  getCharacterAttributeTooltipContent,
+  isCharacterAttributeKey,
   parsePresentedAttributeValues
 } from '../characterAttributes.js';
 import {
   createDefaultStartingBundleChoiceSelections,
+  formatAgeBandModifierLine,
+  formatFocusModifierLine,
+  getAgeBandRangeLabel,
+  formatNatureModifierLine,
+  formatPhysiqueModifierLine,
   generateRandomCharacterName,
   getAgeBandLabel,
-  getAgeBandRangeLabel,
   getStartingBundleTemplate,
-  getBuildLabel,
+  getFocusLabel,
   getHeightBandLabel,
+  getNatureLabel,
+  getPhysiqueLabel,
+  getSexOptionForLineage,
   getBackstoryOptionsForSelection,
   getLineageCardArt,
   getLineageIdentityCatalog,
@@ -66,12 +74,6 @@ type Props = {
   onToggleThemeMode: () => void;
 };
 
-const topButton =
-  'inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]';
-
-const topPillButton =
-  'inline-flex h-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] px-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-soft)] transition hover:bg-[color:var(--color-creator-card-hover)]';
-
 const creatorCardBase =
   'rounded-[24px] border bg-[color:var(--color-creator-card)] shadow-[0_18px_42px_var(--color-creator-card-shadow)] backdrop-blur-sm transition';
 
@@ -90,6 +92,7 @@ const textInputClass =
 const identitySectionWidthClass = 'w-full max-w-[26.75rem]';
 
 const identityChoiceGridClass = `${identitySectionWidthClass} grid grid-cols-3 gap-3`;
+const identityChoiceListClass = `${identitySectionWidthClass} space-y-2`;
 const identitySectionDividerClass =
   `${identitySectionWidthClass} h-px bg-[color:var(--color-border)]/80`;
 
@@ -108,7 +111,6 @@ const REGION_SELECTION_PANEL_WIDTH = 'clamp(16rem, 26%, 21rem)';
 const REGION_SELECTION_IMAGE_LEFT = REGION_SELECTION_PANEL_WIDTH;
 const COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS = 'min-h-[14rem]';
 
-const ATTRIBUTE_POINT_BUDGET = 10;
 const LINEAGE_ART_ROTATION_MS = 7000;
 const STEP_UNLOCK_FEEDBACK_MS = 1600;
 const SUMMARY_COLLAPSED_STEP_IDS = new Set<CharacterCreationStepId>([
@@ -448,18 +450,43 @@ function pickRandomValue<T>(values: readonly T[]): T | null {
 function formatIdentityNarrativeSummary(
   form: Pick<
     CharacterCreationFormState,
-    'sexId' | 'ageBandId' | 'heightBandId' | 'buildId'
+    'sexId' | 'ageBandId' | 'heightBandId' | 'physiqueId' | 'natureId' | 'focusId'
   >,
   lineageLabel: string | null
 ): string {
-  const heightLabel = (getHeightBandLabel(form.heightBandId) ?? 'unshaped').toLowerCase();
+  const heightLabel = (getHeightBandLabel(form.heightBandId) ?? '').toLowerCase();
   const ageLabel = (getAgeBandLabel(form.ageBandId) ?? 'ageless').toLowerCase();
   const raceLabel = (lineageLabel ?? 'wanderer').toLowerCase();
   const sexLabel = (getSexSummaryLabel(form.sexId) ?? 'soul').toLowerCase();
-  const buildLabel = (getBuildLabel(form.buildId) ?? 'unfinished').toLowerCase();
-  const article = /^[aeiou]/i.test(heightLabel) ? 'An' : 'A';
+  const physiqueLabel = (getPhysiqueLabel(form.physiqueId) ?? 'unfinished').toLowerCase();
+  const natureLabel = (getNatureLabel(form.natureId) ?? 'unshaped').toLowerCase();
+  const focusLabel = (getFocusLabel(form.focusId) ?? 'uncertain').toLowerCase();
+  const heightDescriptor = heightLabel === 'normal' ? null : heightLabel;
+  const descriptor = [heightDescriptor, ageLabel, raceLabel, sexLabel]
+    .filter((value): value is string => Boolean(value && value.trim().length > 0))
+    .join(' ');
+  const article = /^[aeiou]/i.test(descriptor) ? 'An' : 'A';
+  const physiqueArticle = /^[aeiou]/i.test(physiqueLabel) ? 'an' : 'a';
 
-  return `${article} ${heightLabel} ${ageLabel} ${raceLabel} ${sexLabel} with a ${buildLabel} build.`;
+  return `${article} ${descriptor} with ${physiqueArticle} ${physiqueLabel} physique, ${natureLabel} nature, and ${focusLabel} focus.`;
+}
+
+function renderAttributeTooltip(attributeKey: PlayerAttributeKey) {
+  const tooltip = getCharacterAttributeTooltipContent(attributeKey);
+
+  return (
+    <span className="block text-left">
+      <span className="font-semibold text-[color:var(--color-text-strong)]">
+        {tooltip.title}
+      </span>
+      <span className="mt-1 block text-[color:var(--color-text-soft)]">
+        {tooltip.body}
+      </span>
+      <span className="mt-2 block text-[color:var(--color-muted-strong)]">
+        {tooltip.footer}
+      </span>
+    </span>
+  );
 }
 
 export function CharacterCreationNarrativeScreen({
@@ -497,6 +524,16 @@ export function CharacterCreationNarrativeScreen({
     borderColor: activeOutlineColor,
     boxShadow: activeOutlineShadow
   };
+  const darkTopBarButtonClass =
+    'border-slate-400/25 bg-[rgba(54,63,75,0.9)] text-slate-100 shadow-[0_10px_24px_rgba(2,6,23,0.22)] hover:border-slate-300/32 hover:bg-[rgba(69,80,95,0.96)]';
+  const topButtonClass =
+    themeMode === 'dark'
+      ? `inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${darkTopBarButtonClass}`
+      : 'inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]';
+  const topPillButtonClass =
+    themeMode === 'dark'
+      ? `inline-flex h-11 items-center justify-center rounded-full border px-4 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${darkTopBarButtonClass}`
+      : 'inline-flex h-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] px-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-soft)] transition hover:bg-[color:var(--color-creator-card-hover)]';
   const imageCardTitleClass = 'text-[color:var(--color-text-strong)]';
   const imageCardBodyClass = 'text-[color:var(--color-text-soft)]';
   const imageCardMetaClass = 'text-[color:var(--color-muted-strong)]';
@@ -593,37 +630,12 @@ export function CharacterCreationNarrativeScreen({
     selectedSlot?.kind === 'manual' &&
     selectedSlot.hasSave &&
     pendingOverwriteSlotId === selectedSlot.id;
-  const allocatedAttributePoints = getAllocatedCharacterAttributePoints(
-    form.attributeAllocation
-  );
-  const remainingAttributePoints =
-    ATTRIBUTE_POINT_BUDGET - allocatedAttributePoints;
-  const previewAttributeMap = new Map(
-    preview.attributeMetrics.map((metric) => [metric.label as PlayerAttributeKey, metric])
-  );
   const summaryCharacterName = preview.characterName.trim() || 'Unnamed Wanderer';
   const summaryIdentityNarrative = formatIdentityNarrativeSummary(
     form,
     preview.lineageLabel
   );
-  const allocationRows = CHARACTER_ATTRIBUTE_ORDER.map((attributeKey) => {
-    const presentation = CHARACTER_ATTRIBUTE_PRESENTATIONS[attributeKey];
-    const allocated = form.attributeAllocation[attributeKey] ?? 0;
-    const metricValue = previewAttributeMap.get(attributeKey)?.value ?? null;
-    const finalValue =
-      metricValue === null ? null : Number.parseInt(metricValue, 10);
-    const baseValue =
-      finalValue === null || Number.isNaN(finalValue) ? null : finalValue - allocated;
-
-    return {
-      ...presentation,
-      attributeKey,
-      allocated,
-      baseValue,
-      finalValue:
-        baseValue === null || Number.isNaN(baseValue) ? null : baseValue + allocated
-    };
-  });
+  const profileOutcomeRows = preview.generatedProfileMetrics;
 
   useEffect(() => {
     containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
@@ -745,9 +757,11 @@ export function CharacterCreationNarrativeScreen({
     }
 
     const nextSex = pickRandomValue(['male', 'female'] as const) ?? 'male';
-    const nextAgeBandId = pickRandomValue(identityCatalog.ageBands)?.id ?? 'prime_age';
+    const nextAgeBandId = pickRandomValue(identityCatalog.ageBands)?.id ?? 'prime';
     const nextHeightBandId = pickRandomValue(identityCatalog.heightBands)?.id ?? 'normal';
-    const nextBuildId = pickRandomValue(identityCatalog.buildOptions)?.id ?? 'average';
+    const nextPhysiqueId = pickRandomValue(identityCatalog.physiqueOptions)?.id ?? 'stocky';
+    const nextNatureId = pickRandomValue(identityCatalog.natureOptions)?.id ?? 'disciplined';
+    const nextFocusId = pickRandomValue(identityCatalog.focusOptions)?.id ?? 'balanced';
     const nextSkinToneId =
       pickRandomValue(identityCatalog.skinToneOptions)?.id ?? form.skinToneId;
     const nextHairColorId =
@@ -760,7 +774,9 @@ export function CharacterCreationNarrativeScreen({
       sexId: nextSex,
       ageBandId: nextAgeBandId,
       heightBandId: nextHeightBandId,
-      buildId: nextBuildId,
+      physiqueId: nextPhysiqueId,
+      natureId: nextNatureId,
+      focusId: nextFocusId,
       skinToneId: nextSkinToneId,
       hairColorId: nextHairColorId,
       eyeColorId: nextEyeColorId
@@ -776,29 +792,6 @@ export function CharacterCreationNarrativeScreen({
 
   const getSelectionAdvanceLabel = (stepId: CharacterCreationStepId) =>
     stepId === 'settlement' ? 'Confirm' : 'Next';
-
-  const updateAttributeAllocation = (
-    attributeKey: PlayerAttributeKey,
-    delta: -1 | 1
-  ) => {
-    const currentValue = form.attributeAllocation[attributeKey] ?? 0;
-
-    if (delta < 0 && currentValue <= 0) {
-      return;
-    }
-
-    if (delta > 0 && remainingAttributePoints <= 0) {
-      return;
-    }
-
-    onChange({
-      attributeAllocation: {
-        ...form.attributeAllocation,
-        [attributeKey]: currentValue + delta
-      }
-    });
-    setShowValidation(false);
-  };
 
   const renderStatList = (
     values: Array<{ id: string; label: string; value: string | null }>,
@@ -820,7 +813,18 @@ export function CharacterCreationNarrativeScreen({
             }`}
           >
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
-              {value.label}
+              {isCharacterAttributeKey(value.label) ? (
+                <Tooltip
+                  content={renderAttributeTooltip(value.label)}
+                  panelClassName="w-72 max-w-[min(18rem,calc(100vw-2rem))] text-left leading-5"
+                  portal
+                  align="start"
+                >
+                  <span className="cursor-help">{value.label}</span>
+                </Tooltip>
+              ) : (
+                value.label
+              )}
             </div>
             <div className="justify-self-end text-sm font-semibold text-[color:var(--color-text-strong)]">
               {value.value ?? 'Pending'}
@@ -1049,9 +1053,11 @@ export function CharacterCreationNarrativeScreen({
 
                   setSelection({
                     lineageId: option.id,
-                    ageBandId: form.ageBandId || 'prime_age',
+                    ageBandId: form.ageBandId || 'prime',
                     heightBandId: form.heightBandId || 'normal',
-                    buildId: form.buildId || 'average',
+                    physiqueId: form.physiqueId || 'stocky',
+                    natureId: form.natureId || 'disciplined',
+                    focusId: form.focusId || 'balanced',
                     hairColorId: '',
                     eyeColorId: '',
                     skinToneId: ''
@@ -1214,8 +1220,8 @@ export function CharacterCreationNarrativeScreen({
               type="button"
               onClick={randomizeIdentitySelection}
               className="flex h-32 w-32 items-center justify-center rounded-full border-4 border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]"
-              title="Randomize name, sex, age, height, build, and coloration"
-              aria-label="Randomize name, sex, age, height, build, and coloration"
+              title="Randomize name, sex, age, height, physique, nature, focus, and coloration"
+              aria-label="Randomize name, sex, age, height, physique, nature, focus, and coloration"
             >
               <Icon name="dice" className="h-14 w-14" />
             </button>
@@ -1248,38 +1254,39 @@ export function CharacterCreationNarrativeScreen({
             >
               <Icon name="dice" className="h-5 w-5" />
             </button>
-            {([
-              {
-                id: 'male',
-                symbol: '\u2642',
-                tip: 'Male. No attribute change.'
-              },
-              {
-                id: 'female',
-                symbol: '\u2640',
-                tip: 'Female. +1 AGI, -1 STR.'
-              }
-            ] as const).map((sex) => (
-              <Tooltip key={sex.id} content={<span>{sex.tip}</span>}>
-                <button
-                  type="button"
-                  onClick={() => onChange({ sexId: sex.id })}
-                  className={`flex h-12 w-12 items-center justify-center rounded-full border-4 text-xl font-semibold leading-none transition ${
-                    form.sexId === sex.id
-                      ? selectedIdentityControlClass
-                      : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
-                  }`}
-                  style={form.sexId === sex.id ? activeOutlineStyle : undefined}
-                  aria-label={sex.id === 'male' ? 'Male' : 'Female'}
-                >
-                  {sex.symbol}
-                </button>
-              </Tooltip>
-            ))}
+            {(['male', 'female'] as const).map((sexId) => {
+              const sexOption = getSexOptionForLineage(form.lineageId, sexId);
+
+              return (
+                <Tooltip key={sexId} content={<span>{sexOption.tooltipText}</span>}>
+                  <button
+                    type="button"
+                    onClick={() => onChange({ sexId })}
+                    className={`flex h-12 w-12 items-center justify-center rounded-full border-4 text-xl font-semibold leading-none transition ${
+                      form.sexId === sexId
+                        ? selectedIdentityControlClass
+                        : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
+                    }`}
+                    style={form.sexId === sexId ? activeOutlineStyle : undefined}
+                    aria-label={sexOption.label}
+                  >
+                    {sexOption.symbol}
+                  </button>
+                </Tooltip>
+              );
+            })}
           </div>
         </div>
         <div className={identitySectionDividerClass} />
-        <div className="space-y-2">
+        <div className={`${identitySectionWidthClass} space-y-3`}>
+          <div className="space-y-1">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+              Height
+            </div>
+            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+              Choose the stature that best fits the frame you want to bring into the world.
+            </div>
+          </div>
           <div className={identityChoiceGridClass}>
             {identityCatalog.heightBands.map((option) => {
               const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
@@ -1327,57 +1334,67 @@ export function CharacterCreationNarrativeScreen({
           </div>
         </div>
         <div className={identitySectionDividerClass} />
-        <div className="space-y-2">
-          <div className={identityChoiceGridClass}>
+        <div className={`${identitySectionWidthClass} space-y-3`}>
+          <div className="space-y-1">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+              Age
+            </div>
+            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+              Choose the season of life that best shapes how this character meets hardship and judgment.
+            </div>
+          </div>
+          <div className={identityChoiceListClass}>
             {identityCatalog.ageBands.map((option) => {
-              const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
-              const ageRangeLabel =
-                getAgeBandRangeLabel(form.lineageId, form.sexId, option.id) ?? 'Age range pending';
+              const modifierLine = option.modifierText;
+              const rangeLabel = getAgeBandRangeLabel(form.lineageId, form.sexId, option.id);
 
               return (
                 <button
                   key={option.id}
                   type="button"
                   onClick={() => onChange({ ageBandId: option.id })}
-                  className={`flex h-[92px] min-h-[92px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
+                  className={`flex w-full items-center rounded-[18px] border px-4 py-3 text-left transition ${
                     form.ageBandId === option.id
                       ? selectedIdentityControlClass
-                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
+                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card-strong)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-creator-card-hover)]'
                   }`}
                   style={form.ageBandId === option.id ? activeOutlineStyle : undefined}
                 >
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-center">
-                    <div className="text-[15px] font-semibold leading-[1.02]">{option.label}</div>
-                    <div
-                      className={`text-[10px] tracking-[0.08em] leading-[1.05] ${
-                        form.ageBandId === option.id
-                          ? selectedIdentityMetaClass
-                          : unselectedIdentityMetaClass
-                      }`}
-                    >
-                      {ageRangeLabel}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <div
+                        className={`text-[15px] font-semibold ${
+                          form.ageBandId === option.id
+                            ? selectedIdentityMetaClass
+                            : 'text-[color:var(--color-text-strong)]'
+                        }`}
+                      >
+                        {option.label}
+                      </div>
+                      {rangeLabel && (
+                        <div
+                          className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
+                            form.ageBandId === option.id
+                              ? 'border-white/18 bg-white/10 text-[color:var(--color-accent-contrast)]'
+                              : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted-strong)]'
+                          }`}
+                        >
+                          {rangeLabel}
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-1 text-sm leading-6 text-[color:var(--color-text-soft)]">
+                      {option.description}
                     </div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
+                      className={`mt-2 text-[11px] uppercase tracking-[0.14em] ${
                         form.ageBandId === option.id
                           ? selectedIdentityMetaClass
                           : unselectedIdentityMetaClass
-                      } ${
-                        tradeoff.positive ? '' : 'opacity-0'
                       }`}
+                      title={formatAgeBandModifierLine(form.lineageId, form.sexId, option.id) ?? option.label}
                     >
-                      {tradeoff.positive ?? '\u00A0'}
-                    </div>
-                    <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
-                        form.ageBandId === option.id
-                          ? selectedIdentityMetaClass
-                          : unselectedIdentityMetaClass
-                      } ${
-                        tradeoff.negative ? '' : 'opacity-0'
-                      }`}
-                    >
-                      {tradeoff.negative ?? '\u00A0'}
+                      {modifierLine}
                     </div>
                   </div>
                 </button>
@@ -1386,51 +1403,164 @@ export function CharacterCreationNarrativeScreen({
           </div>
         </div>
         <div className={identitySectionDividerClass} />
-        <div className="space-y-2">
-          <div className={identityChoiceGridClass}>
-            {identityCatalog.buildOptions.map((option) => {
-              const tradeoff = formatAttributeTradeoff(option.attributeAdjustments);
+        <div className={`${identitySectionWidthClass} space-y-3`}>
+          <div className="space-y-1">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+              Physique
+            </div>
+            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+              Choose the bodily profile that most strongly shapes how this character carries force, strain, and presence.
+            </div>
+          </div>
+          <div className={identityChoiceListClass}>
+            {identityCatalog.physiqueOptions.map((option) => {
+              const modifierLine = option.emphasisText;
 
               return (
                 <button
                   key={option.id}
                   type="button"
-                  onClick={() => onChange({ buildId: option.id })}
-                  className={`flex h-[70px] min-h-[70px] flex-col items-center justify-center rounded-[18px] border px-3 py-2 text-center transition ${
-                    form.buildId === option.id
+                  onClick={() => onChange({ physiqueId: option.id })}
+                  className={`flex w-full items-center rounded-[18px] border px-4 py-3 text-left transition ${
+                    form.physiqueId === option.id
                       ? selectedIdentityControlClass
-                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)]'
+                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card-strong)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-creator-card-hover)]'
                   }`}
-                  style={form.buildId === option.id ? activeOutlineStyle : undefined}
+                  style={form.physiqueId === option.id ? activeOutlineStyle : undefined}
                 >
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-center">
-                    <div className="text-[15px] font-semibold leading-[1.02]">{option.label}</div>
+                  <div className="min-w-0 flex-1">
                     <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
-                        form.buildId === option.id
+                      className={`text-[15px] font-semibold ${
+                        form.physiqueId === option.id
                           ? selectedIdentityMetaClass
-                          : unselectedIdentityMetaClass
-                      } ${
-                        tradeoff.positive ? '' : 'opacity-0'
+                          : 'text-[color:var(--color-text-strong)]'
                       }`}
                     >
-                      {tradeoff.positive ?? '\u00A0'}
+                      {option.label}
+                    </div>
+                    <div className="mt-1 text-sm leading-6 text-[color:var(--color-text-soft)]">
+                      {option.description}
                     </div>
                     <div
-                      className={`text-[11px] uppercase tracking-[0.12em] leading-[1.02] ${
-                        form.buildId === option.id
+                      className={`mt-2 text-[11px] uppercase tracking-[0.14em] ${
+                        form.physiqueId === option.id
                           ? selectedIdentityMetaClass
                           : unselectedIdentityMetaClass
-                      } ${
-                        tradeoff.negative ? '' : 'opacity-0'
                       }`}
+                      title={formatPhysiqueModifierLine(option.id) ?? option.label}
                     >
-                      {tradeoff.negative ?? '\u00A0'}
+                      {modifierLine}
                     </div>
                   </div>
                 </button>
               );
             })}
+          </div>
+        </div>
+        <div className={identitySectionDividerClass} />
+        <div className={`${identitySectionWidthClass} space-y-3`}>
+          <div className="space-y-1">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+              Nature
+            </div>
+            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+              Choose the temperament and social bearing that most strongly shapes how this character reads the world and meets other people.
+            </div>
+          </div>
+          <div className={identityChoiceListClass}>
+            {identityCatalog.natureOptions.map((option) => {
+              const modifierLine = option.emphasisText;
+
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => onChange({ natureId: option.id })}
+                  className={`flex w-full items-center rounded-[18px] border px-4 py-3 text-left transition ${
+                    form.natureId === option.id
+                      ? selectedIdentityControlClass
+                      : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card-strong)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-creator-card-hover)]'
+                  }`}
+                  style={form.natureId === option.id ? activeOutlineStyle : undefined}
+                >
+                  <div className="min-w-0 flex-1">
+                    <div
+                      className={`text-[15px] font-semibold ${
+                        form.natureId === option.id
+                          ? selectedIdentityMetaClass
+                          : 'text-[color:var(--color-text-strong)]'
+                      }`}
+                    >
+                      {option.label}
+                    </div>
+                    <div className="mt-1 text-sm leading-6 text-[color:var(--color-text-soft)]">
+                      {option.description}
+                    </div>
+                    <div
+                      className={`mt-2 text-[11px] uppercase tracking-[0.14em] ${
+                        form.natureId === option.id
+                          ? selectedIdentityMetaClass
+                          : unselectedIdentityMetaClass
+                      }`}
+                      title={formatNatureModifierLine(option.id) ?? option.label}
+                    >
+                      {modifierLine}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className={identitySectionDividerClass} />
+        <div className={`${identitySectionWidthClass} space-y-3`}>
+          <div className="space-y-1">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+              Focus
+            </div>
+            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+              Choose whether this character leans first on the body or on inward, learned, and social strengths when their life takes shape.
+            </div>
+          </div>
+          <div className={identityChoiceListClass}>
+            {identityCatalog.focusOptions.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => onChange({ focusId: option.id })}
+                className={`flex w-full items-center rounded-[18px] border px-4 py-3 text-left transition ${
+                  form.focusId === option.id
+                    ? selectedIdentityControlClass
+                    : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card-strong)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-creator-card-hover)]'
+                }`}
+                style={form.focusId === option.id ? activeOutlineStyle : undefined}
+              >
+                <div className="min-w-0 flex-1">
+                  <div
+                    className={`text-[15px] font-semibold ${
+                      form.focusId === option.id
+                        ? selectedIdentityMetaClass
+                        : 'text-[color:var(--color-text-strong)]'
+                    }`}
+                  >
+                    {option.label}
+                  </div>
+                  <div className="mt-1 text-sm leading-6 text-[color:var(--color-text-soft)]">
+                    {option.description}
+                  </div>
+                  <div
+                    className={`mt-2 text-[11px] uppercase tracking-[0.14em] ${
+                      form.focusId === option.id
+                        ? selectedIdentityMetaClass
+                        : unselectedIdentityMetaClass
+                    }`}
+                    title={formatFocusModifierLine(option.id) ?? option.label}
+                  >
+                    {option.modifierText}
+                  </div>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
         {swatches(
@@ -1606,7 +1736,7 @@ export function CharacterCreationNarrativeScreen({
           <button
             type="button"
             onClick={() => goToStep('continent')}
-            className={topPillButton}
+            className={topPillButtonClass}
           >
             Choose Continent
           </button>
@@ -1825,7 +1955,7 @@ export function CharacterCreationNarrativeScreen({
           <button
             type="button"
             onClick={() => goToStep('region')}
-            className={topPillButton}
+            className={topPillButtonClass}
           >
             Choose Region
           </button>
@@ -2117,10 +2247,7 @@ export function CharacterCreationNarrativeScreen({
                 </div>
                 <div className="mt-4 space-y-3">
                   {option.startingSkillLabels.length > 0 && (
-                    <div>{renderTags('Starting Skills', option.startingSkillLabels)}</div>
-                  )}
-                  {option.startingKnowledgeLabels.length > 0 && (
-                    <div>{renderTags('Starting Knowledge', option.startingKnowledgeLabels)}</div>
+                    <div>{renderTags('Starting Lore', option.startingSkillLabels)}</div>
                   )}
                   {option.startingAbilityLabels.length > 0 && (
                     <div>{renderTags('Starting Ability', option.startingAbilityLabels)}</div>
@@ -2231,72 +2358,6 @@ export function CharacterCreationNarrativeScreen({
             })}
       </div>
     );
-  } else if (currentStepId === 'attributes') {
-    mainContent = (
-      <div className="space-y-4">
-        <Card>
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                  Points To Spend
-                </div>
-                <div className="mt-1 text-2xl font-semibold text-[color:var(--color-text-strong)]">
-                  {Math.max(remainingAttributePoints, 0)}
-                </div>
-              </div>
-              <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
-                Distribute all {ATTRIBUTE_POINT_BUDGET} discretionary points before the final review.
-              </div>
-            </div>
-            <div className="space-y-3">
-              {allocationRows.map((row) => (
-                <div
-                  key={row.attributeKey}
-                  className={`${insetBlockClass} px-4 py-4`}
-                >
-                  <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-3">
-                        <div className="min-w-[3rem] text-lg font-semibold text-[color:var(--color-text-strong)]">
-                          {row.attributeKey}
-                        </div>
-                        <div className="min-w-0 text-sm text-[color:var(--color-text-soft)]">
-                          {row.inlineEffect}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 self-start lg:self-auto">
-                      <button
-                        type="button"
-                        onClick={() => updateAttributeAllocation(row.attributeKey, -1)}
-                        disabled={row.allocated <= 0}
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-lg text-[color:var(--color-text-strong)] transition disabled:cursor-not-allowed disabled:opacity-35"
-                        title={`Lower ${row.attributeKey}`}
-                      >
-                        -
-                      </button>
-                      <div className="min-w-[5.5rem] rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] px-4 py-2 text-center text-base font-semibold text-[color:var(--color-text-strong)]">
-                        {row.finalValue ?? 'Pending'}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => updateAttributeAllocation(row.attributeKey, 1)}
-                        disabled={remainingAttributePoints <= 0}
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-lg text-[color:var(--color-text-strong)] transition disabled:cursor-not-allowed disabled:opacity-35"
-                        title={`Raise ${row.attributeKey}`}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Card>
-      </div>
-    );
   } else {
     mainContent = (
       <div className="space-y-4">
@@ -2321,40 +2382,6 @@ export function CharacterCreationNarrativeScreen({
                 Complete the remaining selections before beginning the campaign.
               </div>
             )}
-          </div>
-        </Card>
-        <Card>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {slots
-              .filter((slot) => slot.kind === 'manual')
-              .map((slot) => (
-                <button
-                  key={slot.id}
-                  type="button"
-                  onClick={() =>
-                    onChange({ saveSlotId: slot.id as ManualSaveSlotId })
-                  }
-                  className={`${getSelectableCardClass(
-                    slot.id === form.saveSlotId,
-                    'slot'
-                  )} w-full p-4 text-left`}
-                  style={slot.id === form.saveSlotId ? activeOutlineStyle : undefined}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
-                      {slot.label}
-                    </div>
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
-                      {slot.hasSave ? 'Occupied' : 'New Game'}
-                    </div>
-                  </div>
-                  <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-soft)]">
-                    {slot.hasSave
-                      ? `${slot.playerName} | ${slot.lastSavedLabel}`
-                      : 'A clean slot ready for this campaign.'}
-                  </div>
-                </button>
-              ))}
           </div>
         </Card>
         {needsOverwrite && (
@@ -2422,7 +2449,7 @@ export function CharacterCreationNarrativeScreen({
                 type="button"
                 onClick={() => previousStepId && goToStep(previousStepId)}
                 disabled={!previousStepId}
-                className={`${topButton} disabled:cursor-not-allowed disabled:opacity-40`}
+                className={`${topButtonClass} disabled:cursor-not-allowed disabled:opacity-40`}
                 title="Previous step"
               >
                 <Icon name="arrowLeft" className="h-5 w-5" />
@@ -2430,7 +2457,7 @@ export function CharacterCreationNarrativeScreen({
               <button
                 type="button"
                 onClick={onReturnToMainMenu}
-                className={topButton}
+                className={topButtonClass}
                 title="Return to main menu"
               >
                 <Icon name="menu" className="h-5 w-5" />
@@ -2442,7 +2469,7 @@ export function CharacterCreationNarrativeScreen({
                   <span>
                     Choose the blood in your veins, the face you show the world,
                     the city that raised you, the past that shaped you, the
-                    starter bundle you carry, and the 10 stat points that define
+                    starter bundle you carry, and the profile mix that defines
                     your first real strengths.
                   </span>
                 }
@@ -2460,7 +2487,7 @@ export function CharacterCreationNarrativeScreen({
                 type="button"
                 onClick={() => setSummaryVisible((current) => !current)}
                 aria-pressed={summaryVisible}
-                className={`${topPillButton} min-w-[7.4rem] ${
+                className={`${topPillButtonClass} min-w-[7.4rem] ${
                   summaryVisible
                     ? 'bg-amber-200/14 text-[color:var(--color-accent-contrast)]'
                     : ''
@@ -2472,7 +2499,7 @@ export function CharacterCreationNarrativeScreen({
               <button
                 type="button"
                 onClick={onToggleThemeMode}
-                className={topButton}
+                className={topButtonClass}
                 title={
                   themeMode === 'dark'
                     ? 'Switch to light mode'
@@ -2569,8 +2596,7 @@ export function CharacterCreationNarrativeScreen({
               !currentValidation.isValid &&
               currentStepId !== 'review' && (
                 <div className="text-sm text-rose-300">
-                  {currentValidation.errors.attributeAllocation ??
-                    Object.values(currentValidation.errors)[0] ??
+                  {Object.values(currentValidation.errors)[0] ??
                     'Complete the required choices on this step before moving on.'}
                 </div>
               )}
@@ -2589,6 +2615,25 @@ export function CharacterCreationNarrativeScreen({
                       </div>
                     </div>
                   </div>
+                  {profileOutcomeRows.length > 0 && (
+                    <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                      <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                        Generated Profile Bonuses
+                      </div>
+                      <div className="mt-2 space-y-2.5">
+                        {profileOutcomeRows.map((metric) => (
+                          <div key={`profile-outcome.${metric.id}`} className="space-y-0.5">
+                            <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                              {metric.label}
+                            </div>
+                            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+                              {metric.value}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
                     {renderStatList(preview.attributeMetrics, {
                       compact: true,
@@ -2601,10 +2646,10 @@ export function CharacterCreationNarrativeScreen({
                     })}
                   </div>
                   {preview.isResolved && preview.starterSkills.length > 0 && (
-                    <div>{renderTags('Starting Skills', preview.starterSkills)}</div>
+                    <div>{renderTags('Starting Lore', preview.starterSkills)}</div>
                   )}
-                  {preview.isResolved && preview.starterKnowledge.length > 0 && (
-                    <div>{renderTags('Starting Knowledge', preview.starterKnowledge)}</div>
+                  {preview.isResolved && preview.starterLore.length > 0 && (
+                    <div>{renderTags('Lore Emphasis', preview.starterLore)}</div>
                   )}
                   {preview.isResolved && preview.starterTraits.length > 0 && (
                     <div>{renderTags('Starting Traits', preview.starterTraits)}</div>
@@ -2646,4 +2691,5 @@ export function CharacterCreationNarrativeScreen({
       </div>
     );
   }
+
 }

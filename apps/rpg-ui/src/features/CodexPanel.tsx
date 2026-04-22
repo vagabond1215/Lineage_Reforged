@@ -28,7 +28,9 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
     items: codexData.entries.find((item) => item.category === 'items')?.id ?? '',
     recipes: codexData.entries.find((item) => item.category === 'recipes')?.id ?? '',
     factions: codexData.entries.find((item) => item.category === 'factions')?.id ?? '',
-    notes: codexData.entries.find((item) => item.category === 'notes')?.id ?? ''
+    notes: codexData.entries.find((item) => item.category === 'notes')?.id ?? '',
+    deeds: codexData.entries.find((item) => item.category === 'deeds')?.id ?? '',
+    chronicles: codexData.entries.find((item) => item.category === 'chronicles')?.id ?? ''
   });
 
   const combinedQuery = `${searchQuery} ${localSearch}`.trim();
@@ -41,7 +43,9 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
       return false;
     }
 
-    if (regionFilter !== 'All Regions' && !item.tags?.includes(regionFilter)) {
+    const regionScopedSection = !['deeds', 'chronicles'].includes(activeSection);
+
+    if (regionScopedSection && regionFilter !== 'All Regions' && !item.tags?.includes(regionFilter)) {
       return false;
     }
 

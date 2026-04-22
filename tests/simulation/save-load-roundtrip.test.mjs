@@ -1,8 +1,19 @@
-import test from "node:test";
+﻿import test from "node:test";
 import assert from "node:assert/strict";
+import {
+  DEFAULT_ACCOUNT_ID,
+  createDefaultGameState
+} from "../../packages/engines/game-engine/src/index.ts";
+import {
+  createDefaultPlayerBodyState,
+  createDefaultPlayerStatGrowthState,
+  createPlayerProgressionState,
+  resolvePlayerEchoProgression
+} from "../../packages/engines/player-engine/src/index.ts";
 
 const sampleSnapshot = {
-  snapshotVersion: "0.1.0",
+  accountId: DEFAULT_ACCOUNT_ID,
+  snapshotVersion: "0.6.0",
   capturedAtTick: 24,
   clock: {
     tick: 24,
@@ -15,6 +26,10 @@ const sampleSnapshot = {
   gameState: {
     worldVersion: "0.1.0",
     activeScenario: "bootstrap",
+    runDifficulty: {
+      tier: "normal",
+      hardcore: false
+    },
     mode: {
       id: "normal",
       combatPauseAllowed: true
@@ -36,7 +51,18 @@ const sampleSnapshot = {
       classId: null,
       jobId: null,
       backstoryId: "backstory.local_hero",
-      startingBundleId: "starting_bundle.traveler"
+      startingBundleId: "starting_bundle.traveler",
+      identityProfile: {
+        heightCm: 176,
+        ageBandId: "prime",
+        physiqueId: "stocky",
+        natureId: "disciplined",
+        focusId: "balanced",
+        hairColorId: "brown",
+        hairHighlightColorId: null,
+        eyeColorId: "hazel",
+        skinToneId: "warm_beige"
+      }
     },
     attributes: {
       STR: 11,
@@ -49,12 +75,18 @@ const sampleSnapshot = {
       SPT: 10,
       CHA: 10
     },
+    statGrowth: createDefaultPlayerStatGrowthState(6),
     resources: {
       hp: { current: 120, max: 124 },
       mp: { current: 60, max: 62 },
       stamina: { current: 100, max: 104 },
       xp: { current: 0, total: 240, toNextLevel: 100 }
     },
+    bodyState: createDefaultPlayerBodyState({
+      tick: 24,
+      day: 6,
+      lineageId: "lineage.human"
+    }),
     resourceRuntime: {
       modifiers: [
         {
@@ -148,12 +180,14 @@ const sampleSnapshot = {
         }
       ]
     },
-    progression: {
-      level: 3,
-      classLevel: 0,
-      unspentAttributePoints: 2,
-      unspentSkillPoints: 1
-    },
+    progression: createPlayerProgressionState({
+      legacyGrowth: {
+        resourceGrowthLevel: 3,
+        classLevel: 0,
+        unspentAttributePoints: 2,
+        unspentSkillPoints: 1
+      }
+    }),
     skills: [
       { id: "skill.combat.weapon.sword", rank: 2, source: "trained" },
       { id: "skill.combat.defense.evasion", rank: 1, source: "trained" }
@@ -219,8 +253,7 @@ const sampleSnapshot = {
     location: {
       settlementId: "settlement.aurelis",
       siteLabel: "Harbor Quarter",
-      worldMapId: "world_map.first_world",
-      knownSettlementIds: ["settlement.aurelis"]
+      worldMapId: "world_map.first_world"
     },
     currency: {
       gold: 12,
@@ -263,7 +296,7 @@ const sampleSnapshot = {
         "No class growth applied."
       ]
     },
-    reputation: [
+    standing: [
       {
         id: "rep.harbor_office",
         label: "Harbor Office",
@@ -272,6 +305,39 @@ const sampleSnapshot = {
         effects: ["inspection_access"]
       }
     ],
+    reputation: {
+      fame: [
+        {
+          scope: "local",
+          scopeId: "settlement.aurelis",
+          branchId: "civic",
+          earned: 12,
+          currentEarned: 10,
+          historical: 12,
+          lastMeaningfulGainTick: 24
+        }
+      ],
+      notoriety: [],
+      notorietyEvents: [
+        {
+          id: "reputation.notoriety.local.settlement_aurelis.murder.major.48.1",
+          scope: "local",
+          scopeId: "settlement.aurelis",
+          settlementId: "settlement.aurelis",
+          categoryId: "murder",
+          severity: "major",
+          modifiers: ["public"],
+          earned: 9,
+          currentEarned: 7,
+          historical: 9,
+          occurredAtTick: 48,
+          lastMeaningfulGainTick: 48,
+          exposureState: "public",
+          attributionState: "identified",
+          unresolved: false
+        }
+      ]
+    },
     titles: [
       {
         id: "title.combat.sword.novice",
@@ -288,14 +354,23 @@ const sampleSnapshot = {
         effects: ["combat.sword.accuracy"]
       }
     ],
-    knowledgeFamiliarity: [
-      { trackId: "knowledge_track.resources_universal", level: 25 }
-    ],
+    achievements: {
+      unlocked: [
+        {
+          achievementId: "achievement.character.first_blooded",
+          unlockedAt: "2026-04-17T12:10:00.000Z"
+        }
+      ]
+    },
     discoveryChronicle: {
       entries: [],
       lastUpdatedTick: null
     },
-    discoveredRegions: ["region.kaelvar", "region.valtherion"],
+    geographicKnowledge: [
+      { scope: "continent", geographyId: "region.kaelvar", level: 1 },
+      { scope: "region", geographyId: "region.verdant_thalos", level: 1 },
+      { scope: "settlement", geographyId: "settlement.aurelis", level: 1 }
+    ],
     activeQuestIds: ["quest.arrive_westfall"],
     completedQuestIds: ["quest.intro"],
     flags: ["tutorial.complete"],
@@ -306,7 +381,8 @@ const sampleSnapshot = {
     saveMeta: {
       totalPlayTicks: 240,
       lastRestAtTick: 18,
-      lastSavedAtTick: 24
+      lastSavedAtTick: 24,
+      lastReputationDecayDay: 6
     }
   },
   worldState: {
@@ -364,9 +440,19 @@ const sampleSnapshot = {
   }
 };
 
+sampleSnapshot.playerState.progression = resolvePlayerEchoProgression(sampleSnapshot.playerState);
+
 test("save snapshot roundtrip preserves state", () => {
   const serialized = JSON.stringify(sampleSnapshot);
   const restored = JSON.parse(serialized);
 
   assert.deepEqual(restored, sampleSnapshot);
 });
+
+test("default game state includes locked normal non-hardcore run difficulty", () => {
+  assert.deepEqual(createDefaultGameState().runDifficulty, {
+    tier: "normal",
+    hardcore: false
+  });
+});
+

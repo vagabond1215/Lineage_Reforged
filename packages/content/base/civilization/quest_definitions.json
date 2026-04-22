@@ -128,7 +128,7 @@
         ],
         "requiredSkills": [
           {
-            "id": "skill.knowledge.universal",
+            "id": "skill.knowledge.general_lore",
             "minRank": 12
           },
           {
@@ -140,7 +140,7 @@
         "requiredSpells": [],
         "requiredTraits": [],
         "requiredItems": [],
-        "reputationRequirements": [
+        "standingRequirements": [
           {
             "id": "rep.harbor_authority.brineharbor",
             "minScore": 5
@@ -177,7 +177,7 @@
             "minPeople": 1,
             "maxPeople": 1,
             "preferredChecks": [
-              "skill.knowledge.universal",
+              "skill.knowledge.general_lore",
               "attr.WIS"
             ],
             "notes": "Handles charts, tide tables, and route calls."
@@ -228,7 +228,7 @@
       "rewards": {
         "coinBase": 26,
         "coinBonusOnPerfect": 12,
-        "reputationBase": 2,
+        "standingBase": 2,
         "itemRewards": [
           "trail_meal",
           "utility_salve"
@@ -263,7 +263,7 @@
             "checks": [
               {
                 "kind": "skill",
-                "targetId": "skill.knowledge.universal",
+                "targetId": "skill.knowledge.general_lore",
                 "minValue": 12,
                 "weight": 0.45,
                 "optional": false,
@@ -550,7 +550,7 @@
         "requiredItems": [
           "production_toolset"
         ],
-        "reputationRequirements": [],
+        "standingRequirements": [],
         "notes": [
           "Defender, Provoke, and Protect are strong mitigators on the ambush branch.",
           "More bodies help with load and axle recovery, but increase the convoy profile on the ridgeline."
@@ -646,7 +646,7 @@
       "rewards": {
         "coinBase": 42,
         "coinBonusOnPerfect": 18,
-        "reputationBase": 3,
+        "standingBase": 3,
         "itemRewards": [
           "trail_meal",
           "vigor_tonic"
@@ -947,7 +947,7 @@
         "requiredItems": [
           "utility_salve"
         ],
-        "reputationRequirements": [
+        "standingRequirements": [
           {
             "id": "rep.adventurers_guild.highcrown",
             "minScore": 8
@@ -1049,7 +1049,7 @@
       "rewards": {
         "coinBase": 54,
         "coinBonusOnPerfect": 24,
-        "reputationBase": 4,
+        "standingBase": 4,
         "itemRewards": [
           "record_scroll",
           "mend_elixir"
@@ -1328,7 +1328,7 @@
         "requiredSpells": [],
         "requiredTraits": [],
         "requiredItems": [],
-        "reputationRequirements": [
+        "standingRequirements": [
           {
             "id": "rep.civic_watch.aurelis",
             "minScore": 4
@@ -1423,7 +1423,7 @@
       "rewards": {
         "coinBase": 38,
         "coinBonusOnPerfect": 16,
-        "reputationBase": 3,
+        "standingBase": 3,
         "itemRewards": [
           "utility_salve"
         ],
@@ -1685,7 +1685,7 @@
           "poison_vial",
           "utility_salve"
         ],
-        "reputationRequirements": [],
+        "standingRequirements": [],
         "notes": [
           "This quest is explicitly structured like a small organized operation: planning slots, role discipline, materials, and failure branches compound fast.",
           "Too few people weakens leverage in the extraction phase; too many people increase noise in the setup phase."
@@ -1782,7 +1782,7 @@
       "rewards": {
         "coinBase": 64,
         "coinBonusOnPerfect": 28,
-        "reputationBase": 2,
+        "standingBase": 2,
         "itemRewards": [
           "poison_vial",
           "trail_meal"
@@ -2057,3 +2057,5 @@
     }
   ]
 }
+
+

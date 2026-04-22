@@ -1,26 +1,59 @@
-import {
+﻿import {
   PLAYER_LINEAGE_PROFILES,
   type InventoryStack,
+  type PlayerAttributeKey,
   type PlayerAttributeAdjustments,
   type PlayerAbilityState,
   type PlayerAttributes,
   type PlayerAbilityCategory,
   type PlayerCurrencyState,
   type PlayerIdentityAgeBandId,
-  type PlayerIdentityBuildId,
+  type PlayerIdentityFocusId,
+  type PlayerIdentityNatureId,
+  type PlayerIdentityPhysiqueId,
   type PlayerSkillState,
   type PlayerSexId
 } from "../../../../packages/shared/types/src/index.js";
-import abilityCatalogData from "../../../../packages/content/base/player/abilities.json";
-import backstoryCatalogData from "../../../../packages/content/base/player/backstories.json";
-import itemCatalogData from "../../../../packages/content/base/items/items.json";
-import knowledgeTrackCatalogData from "../../../../packages/content/base/player/knowledge_tracks.json";
-import skillCatalogData from "../../../../packages/content/base/player/skills.json";
-import startingBundleCatalogData from "../../../../packages/content/base/player/starting_bundles.json";
+import abilityCatalogData from "../../../../packages/content/base/player/abilities.json" with { type: "json" };
+import backstoryCatalogData from "../../../../packages/content/base/player/backstories.json" with { type: "json" };
+import itemCatalogData from "../../../../packages/content/base/items/items.json" with { type: "json" };
+import skillCatalogData from "../../../../packages/content/base/player/skills.json" with { type: "json" };
+import startingBundleCatalogData from "../../../../packages/content/base/player/starting_bundles.json" with { type: "json" };
 import type { ResolvedWorldSelection } from "./worldSelectionCatalog.js";
+import {
+  formatAgeBandDisplayLine,
+  formatAgeBandRange,
+  formatFocusDisplayLine,
+  formatHeightBandDisplayLine,
+  formatNatureDisplayLine,
+  formatPhysiqueDisplayLine,
+  getAgeBandOption,
+  getAgeBandOptions,
+  getFocusOption,
+  getFocusOptions,
+  getHeightBandOption,
+  getHeightBandOptions,
+  getNatureOption,
+  getNatureOptions,
+  getPhysiqueOption,
+  getPhysiqueOptions,
+  getSexOption,
+  normalizeAgeBandId,
+  normalizeFocusId,
+  normalizeNatureId,
+  normalizePhysiqueId,
+  resolveIdentityModifierSelections,
+  type AgeBandId,
+  type AgeBandOption,
+  type FocusOption,
+  type HeightBandId,
+  type HeightBandOption,
+  type NatureOption,
+  type PhysiqueOption,
+  type ResolvedCharacterCreationSexId,
+  type SexOption
+} from "./characterCreationIdentityOptions.js";
 
-export type HeightBandId = "short" | "normal" | "tall";
-export type AgeBandId = PlayerIdentityAgeBandId;
 export type BackstoryArchetypeId =
   | "local"
   | "vagabond"
@@ -66,12 +99,6 @@ type LineagePresentation = {
   notes: string[];
 };
 
-type IdentityAgeRange = [number, number];
-type LineageAgeRangeProfile = Record<
-  Extract<PlayerSexId, "male" | "female">,
-  Record<AgeBandId, IdentityAgeRange>
->;
-
 type NamePool = {
   male: string[];
   female: string[];
@@ -82,27 +109,6 @@ export interface SwatchPresentation {
   background: string;
   foreground: string;
   border: string;
-}
-
-export interface HeightBandOption {
-  id: HeightBandId;
-  label: string;
-  description: string;
-  attributeAdjustments: PlayerAttributeAdjustments;
-}
-
-export interface AgeBandOption {
-  id: AgeBandId;
-  label: string;
-  description: string;
-  attributeAdjustments: PlayerAttributeAdjustments;
-}
-
-export interface BuildOption {
-  id: PlayerIdentityBuildId;
-  label: string;
-  description: string;
-  attributeAdjustments: PlayerAttributeAdjustments;
 }
 
 export interface IdentityPaletteOption {
@@ -118,7 +124,9 @@ export interface LineageIdentityCatalog {
   heightRangeCm: [number, number];
   heightBands: HeightBandOption[];
   ageBands: AgeBandOption[];
-  buildOptions: BuildOption[];
+  physiqueOptions: PhysiqueOption[];
+  natureOptions: NatureOption[];
+  focusOptions: FocusOption[];
   skinToneOptions: IdentityPaletteOption[];
   hairColorOptions: IdentityPaletteOption[];
   eyeColorOptions: IdentityPaletteOption[];
@@ -131,6 +139,18 @@ export interface LineageCardArt {
   secondaryBackgroundPosition?: string;
 }
 
+export type {
+  AgeBandId,
+  AgeBandOption,
+  FocusOption,
+  HeightBandId,
+  HeightBandOption,
+  NatureOption,
+  PhysiqueOption,
+  ResolvedCharacterCreationSexId,
+  SexOption
+};
+
 export interface CharacterCreationOption {
   id: string;
   label: string;
@@ -141,11 +161,10 @@ export interface CharacterCreationOption {
 export interface StarterBackstoryTemplate extends CharacterCreationOption {
   summaryText: string;
   detailText: string;
+  attributeAdjustments: PlayerAttributeAdjustments;
   startingSkills: PlayerSkillState[];
-  startingKnowledge: Array<{ trackId: string; level: number }>;
   startingAbilityIds: string[];
   startingSkillLabels: string[];
-  startingKnowledgeLabels: string[];
   startingAbilityLabels: string[];
 }
 
@@ -191,228 +210,6 @@ const DEFAULT_ATTRIBUTE_BASELINE: PlayerAttributes = {
 };
 
 const ATTRIBUTE_KEYS = Object.keys(DEFAULT_ATTRIBUTE_BASELINE) as Array<keyof PlayerAttributes>;
-
-const HEIGHT_BANDS: HeightBandOption[] = [
-  {
-    id: "short",
-    label: "Short",
-    description: "Shorter and quicker for the lineage. +1 AGI, -1 STR.",
-    attributeAdjustments: { AGI: 1, STR: -1 }
-  },
-  {
-    id: "normal",
-    label: "Normal",
-    description: "Near the usual middle height for this lineage. No attribute change.",
-    attributeAdjustments: {}
-  },
-  {
-    id: "tall",
-    label: "Tall",
-    description: "Taller and longer-limbed for the lineage. +1 STR, -1 AGI.",
-    attributeAdjustments: { STR: 1, AGI: -1 }
-  }
-];
-
-const AGE_BANDS: AgeBandOption[] = [
-  {
-    id: "young_adult",
-    label: "Young Adult",
-    description: "Early adulthood with quick reactions and less seasoned judgment. +1 AGI, -1 WIS.",
-    attributeAdjustments: { AGI: 1, WIS: -1 }
-  },
-  {
-    id: "prime_age",
-    label: "Prime Age",
-    description: "Full-grown physical prime with stronger raw force and slightly less spring than youth. +1 STR, -1 AGI.",
-    attributeAdjustments: { STR: 1, AGI: -1 }
-  },
-  {
-    id: "middle_aged",
-    label: "Middle Aged",
-    description: "Seasoned and measured, with experience trading off some raw force. +1 WIS, -1 STR.",
-    attributeAdjustments: { WIS: 1, STR: -1 }
-  }
-];
-
-const BUILD_OPTIONS: BuildOption[] = [
-  {
-    id: "petite",
-    label: "Petite",
-    description: "Light-framed and precise. +1 DEX, -1 STR.",
-    attributeAdjustments: { DEX: 1, STR: -1 }
-  },
-  {
-    id: "slim",
-    label: "Slim",
-    description: "Lean and quick-footed. +1 AGI, -1 CON.",
-    attributeAdjustments: { AGI: 1, CON: -1 }
-  },
-  {
-    id: "average",
-    label: "Grounded",
-    description: "Measured posture and practical awareness. +1 WIS, -1 STR.",
-    attributeAdjustments: { WIS: 1, STR: -1 }
-  },
-  {
-    id: "muscular",
-    label: "Muscular",
-    description: "Powerful and dense with less fine control. +1 STR, -1 DEX.",
-    attributeAdjustments: { STR: 1, DEX: -1 }
-  },
-  {
-    id: "stocky",
-    label: "Stocky",
-    description: "Compact and durable with less nimble movement. +1 CON, -1 AGI.",
-    attributeAdjustments: { CON: 1, AGI: -1 }
-  },
-  {
-    id: "heavy",
-    label: "Heavy",
-    description: "Broad and hard to wear down, but less mobile. +1 VIT, -1 AGI.",
-    attributeAdjustments: { VIT: 1, AGI: -1 }
-  },
-  {
-    id: "scholarly",
-    label: "Scholarly",
-    description: "Book-shaped posture and a trained mind. +1 INT, -1 STR.",
-    attributeAdjustments: { INT: 1, STR: -1 }
-  },
-  {
-    id: "mystic",
-    label: "Mystic",
-    description: "Quietly centered and inwardly attuned. +1 SPT, -1 CON.",
-    attributeAdjustments: { SPT: 1, CON: -1 }
-  },
-  {
-    id: "poised",
-    label: "Poised",
-    description: "Composed presence and practiced social grace. +1 CHA, -1 VIT.",
-    attributeAdjustments: { CHA: 1, VIT: -1 }
-  }
-];
-
-const LINEAGE_AGE_RANGES: Record<string, LineageAgeRangeProfile> = {
-  "lineage.human": {
-    male: {
-      young_adult: [18, 27],
-      prime_age: [28, 44],
-      middle_aged: [45, 62]
-    },
-    female: {
-      young_adult: [18, 29],
-      prime_age: [30, 46],
-      middle_aged: [47, 64]
-    }
-  },
-  "lineage.elf": {
-    male: {
-      young_adult: [40, 85],
-      prime_age: [86, 180],
-      middle_aged: [181, 320]
-    },
-    female: {
-      young_adult: [42, 92],
-      prime_age: [93, 190],
-      middle_aged: [191, 340]
-    }
-  },
-  "lineage.dark_elf": {
-    male: {
-      young_adult: [35, 78],
-      prime_age: [79, 165],
-      middle_aged: [166, 290]
-    },
-    female: {
-      young_adult: [37, 84],
-      prime_age: [85, 174],
-      middle_aged: [175, 305]
-    }
-  },
-  "lineage.gnome": {
-    male: {
-      young_adult: [24, 50],
-      prime_age: [51, 98],
-      middle_aged: [99, 160]
-    },
-    female: {
-      young_adult: [26, 54],
-      prime_age: [55, 106],
-      middle_aged: [107, 170]
-    }
-  },
-  "lineage.halfling": {
-    male: {
-      young_adult: [20, 42],
-      prime_age: [43, 84],
-      middle_aged: [85, 135]
-    },
-    female: {
-      young_adult: [21, 45],
-      prime_age: [46, 88],
-      middle_aged: [89, 142]
-    }
-  },
-  "lineage.dwarf": {
-    male: {
-      young_adult: [28, 55],
-      prime_age: [56, 110],
-      middle_aged: [111, 180]
-    },
-    female: {
-      young_adult: [30, 58],
-      prime_age: [59, 118],
-      middle_aged: [119, 190]
-    }
-  },
-  "lineage.half_orc": {
-    male: {
-      young_adult: [16, 24],
-      prime_age: [25, 38],
-      middle_aged: [39, 52]
-    },
-    female: {
-      young_adult: [17, 26],
-      prime_age: [27, 40],
-      middle_aged: [41, 55]
-    }
-  },
-  "lineage.half_troll": {
-    male: {
-      young_adult: [18, 32],
-      prime_age: [33, 52],
-      middle_aged: [53, 72]
-    },
-    female: {
-      young_adult: [19, 34],
-      prime_age: [35, 56],
-      middle_aged: [57, 76]
-    }
-  },
-  "lineage.half_goblin": {
-    male: {
-      young_adult: [16, 23],
-      prime_age: [24, 36],
-      middle_aged: [37, 48]
-    },
-    female: {
-      young_adult: [17, 25],
-      prime_age: [26, 38],
-      middle_aged: [39, 51]
-    }
-  },
-  "lineage.half_merfolk": {
-    male: {
-      young_adult: [20, 40],
-      prime_age: [41, 80],
-      middle_aged: [81, 130]
-    },
-    female: {
-      young_adult: [22, 44],
-      prime_age: [45, 88],
-      middle_aged: [89, 140]
-    }
-  }
-};
 
 function paletteOption(
   id: string,
@@ -1542,14 +1339,14 @@ const LINEAGE_PRESENTATIONS: Record<string, LineagePresentation> = {
   "lineage.human": {
     label: "Human",
     description:
-      "Humans are the most widespread and adaptable people in the world, found in nearly every land from dense cities to remote frontier villages. Their numbers and ambition make them the dominant force across most regions, constantly expanding, trading, and rebuilding. While they lack extreme specialization, they excel through flexibility—quick to learn, quick to organize, and quick to rise. Whether as rulers, merchants, soldiers, or pioneers, humans thrive wherever opportunity exists.",
+      "Humans are the most widespread and adaptable people in the world, found in nearly every land from dense cities to remote frontier villages. Their numbers and ambition make them the dominant force across most regions, constantly expanding, trading, and rebuilding. While they lack extreme specialization, they excel through flexibilityâ€”quick to learn, quick to organize, and quick to rise. Whether as rulers, merchants, soldiers, or pioneers, humans thrive wherever opportunity exists.",
     stats: "STR 10 / DEX 10 / CON 10 / VIT 10 / AGI 10 / INT 10 / WIS 10 / SPT 10 / CHA 10",
     notes: ["Widespread and adaptable across nearly every settled land."]
   },
   "lineage.dwarf": {
     label: "Dwarf",
     description:
-      "Dwarves are a common but regionally concentrated people, most often found in mountain ranges, deep caverns, and heavily fortified strongholds carved into stone. Their societies are built on endurance, tradition, and craft, with entire lifetimes devoted to perfecting a trade or defending ancestral halls. They excel in resilience, engineering, and defensive warfare, standing unyielding against both time and enemy alike. Though slow to trust outsiders, their loyalty—once earned—is as unbreakable as the stone they shape.",
+      "Dwarves are a common but regionally concentrated people, most often found in mountain ranges, deep caverns, and heavily fortified strongholds carved into stone. Their societies are built on endurance, tradition, and craft, with entire lifetimes devoted to perfecting a trade or defending ancestral halls. They excel in resilience, engineering, and defensive warfare, standing unyielding against both time and enemy alike. Though slow to trust outsiders, their loyaltyâ€”once earnedâ€”is as unbreakable as the stone they shape.",
     stats: "STR 11 / DEX 8 / CON 12 / VIT 12 / AGI 7 / INT 10 / WIS 11 / SPT 10 / CHA 9",
     notes: ["Common in mountain and cavern strongholds, but rarely spread evenly."]
   },
@@ -1563,21 +1360,21 @@ const LINEAGE_PRESENTATIONS: Record<string, LineagePresentation> = {
   "lineage.halfling": {
     label: "Halfling",
     description:
-      "Halflings are a common yet often overlooked people, living in quiet rural communities, riverlands, and farmland nestled near larger civilizations. They favor comfort and simplicity, but beneath that lies a natural resilience and uncanny ability to survive hardship. They excel in stealth, evasion, and adaptability, slipping through danger rather than confronting it directly. Many underestimate halflings—few make that mistake twice.",
+      "Halflings are a common yet often overlooked people, living in quiet rural communities, riverlands, and farmland nestled near larger civilizations. They favor comfort and simplicity, but beneath that lies a natural resilience and uncanny ability to survive hardship. They excel in stealth, evasion, and adaptability, slipping through danger rather than confronting it directly. Many underestimate halflingsâ€”few make that mistake twice.",
     stats: "STR 7 / DEX 12 / CON 9 / VIT 10 / AGI 12 / INT 10 / WIS 10 / SPT 9 / CHA 11",
     notes: ["Common in rural lands, river settlements, and quiet farming country."]
   },
   "lineage.elf": {
     label: "Elf",
     description:
-      "Elves are an uncommon and ancient people, most often found in secluded forests, hidden sanctuaries, or regions rich with magic. Their long lives grant them deep perspective, and their culture emphasizes mastery, balance, and refinement. They excel in precision—whether in archery, magic, or movement—and favor skill and discipline over brute strength. Elven settlements are rarely seen, but their influence is quietly felt across the world.",
+      "Elves are an uncommon and ancient people, most often found in secluded forests, hidden sanctuaries, or regions rich with magic. Their long lives grant them deep perspective, and their culture emphasizes mastery, balance, and refinement. They excel in precisionâ€”whether in archery, magic, or movementâ€”and favor skill and discipline over brute strength. Elven settlements are rarely seen, but their influence is quietly felt across the world.",
     stats: "STR 7 / DEX 13 / CON 8 / VIT 9 / AGI 13 / INT 12 / WIS 11 / SPT 9 / CHA 8",
     notes: ["Uncommon, long-lived, and strongly tied to old forests and magic-rich lands."]
   },
   "lineage.dark_elf": {
     label: "Dark Elf",
     description:
-      "Dark Elves are a rare and secretive people, most often found in the deep underground, shadowed forests, or hidden enclaves far from the reach of surface kingdoms. Shaped by harsh environments and internal rivalries, their society values cunning, precision, and quiet power. They are not numerous, but their influence spreads through subtle means—assassins, spies, mages, and unseen hands that shift events from the dark. Dark Elves excel in stealth, agility, and shadow-aligned magic, favoring speed, control, and calculated strikes over direct confrontation. While often mistrusted or feared, their discipline and mastery make them among the most dangerous individuals in the world when operating within their element.",
+      "Dark Elves are a rare and secretive people, most often found in the deep underground, shadowed forests, or hidden enclaves far from the reach of surface kingdoms. Shaped by harsh environments and internal rivalries, their society values cunning, precision, and quiet power. They are not numerous, but their influence spreads through subtle meansâ€”assassins, spies, mages, and unseen hands that shift events from the dark. Dark Elves excel in stealth, agility, and shadow-aligned magic, favoring speed, control, and calculated strikes over direct confrontation. While often mistrusted or feared, their discipline and mastery make them among the most dangerous individuals in the world when operating within their element.",
     stats: "STR 6 / DEX 13 / CON 8 / VIT 9 / AGI 13 / INT 12 / WIS 10 / SPT 10 / CHA 9",
     notes: ["Rare, secretive, and most at home in darkness, hidden enclaves, and deep places."]
   },
@@ -1598,14 +1395,14 @@ const LINEAGE_PRESENTATIONS: Record<string, LineagePresentation> = {
   "lineage.half_goblin": {
     label: "Half Goblin",
     description:
-      "Half Goblins are an adaptable and opportunistic people, found most often in trade cities, slums, caravan routes, and unstable frontier regions. Their environment shapes them—they learn quickly, move quickly, and exploit any advantage they can find. They excel in speed, cunning, and improvisation, thriving in chaos where rigid systems fail. Whether as traders, scavengers, or fixers, they survive by staying one step ahead.",
+      "Half Goblins are an adaptable and opportunistic people, found most often in trade cities, slums, caravan routes, and unstable frontier regions. Their environment shapes themâ€”they learn quickly, move quickly, and exploit any advantage they can find. They excel in speed, cunning, and improvisation, thriving in chaos where rigid systems fail. Whether as traders, scavengers, or fixers, they survive by staying one step ahead.",
     stats: "STR 8 / DEX 13 / CON 9 / VIT 9 / AGI 13 / INT 11 / WIS 9 / SPT 8 / CHA 10",
     notes: ["Adaptable and opportunistic, especially in trade cities and unstable frontiers."]
   },
   "lineage.half_merfolk": {
     label: "Half Merfolk",
     description:
-      "Half Merfolk are rare and typically found along coastlines, island chains, river deltas, and major ports where land and sea meet. They carry a fluid nature in both body and temperament, moving easily between cultures and environments. They excel in swimming, navigation, and spirit-aligned magic, often serving as traders, guides, or intermediaries between distant peoples. Their presence is calm and compelling, like the tide—subtle, but powerful.",
+      "Half Merfolk are rare and typically found along coastlines, island chains, river deltas, and major ports where land and sea meet. They carry a fluid nature in both body and temperament, moving easily between cultures and environments. They excel in swimming, navigation, and spirit-aligned magic, often serving as traders, guides, or intermediaries between distant peoples. Their presence is calm and compelling, like the tideâ€”subtle, but powerful.",
     stats: "STR 8 / DEX 11 / CON 9 / VIT 10 / AGI 11 / INT 10 / WIS 11 / SPT 11 / CHA 9",
     notes: ["Rare and most often found where coast, river, and trade traffic converge."]
   }
@@ -2374,51 +2171,51 @@ function getVarianceLines(archetypeId: BackstoryArchetypeId): string[] {
   switch (archetypeId) {
     case "local":
       return [
-        "Major Item — Modest Holding: A small shack or cabin within your home region. Provides safe storage and rest, can be improved over time, and is recognized as yours by locals.",
+        "Major Item â€” Modest Holding: A small shack or cabin within your home region. Provides safe storage and rest, can be improved over time, and is recognized as yours by locals.",
         "Starting Items: Simple Weapon (Choose 1): Club / Knife / Short Spear; Tool Kit (Choose 1): Farming Tools / Wood Axe / Utility Kit; Work Clothes; Food Rations (3 days); Coin (Low).",
-        "Passive — Known Face: Increase fame gain and wages by 5% in local area. Decrease action time of actions in the local area by 10%.",
-        "Skill — Community Ties: Local NPCs are more trusting; reduced costs and increased success in basic interactions within your home region."
+        "Passive â€” Known Face: Increase fame gain and wages by 5% in local area. Decrease action time of actions in the local area by 10%.",
+        "Skill â€” Community Ties: Local NPCs are more trusting; reduced costs and increased success in basic interactions within your home region."
       ];
     case "vagabond":
       return [
-        "Major Item — Worn Mount: A hardy but aging mount that increases travel speed, offers limited carry support, and requires food and care.",
+        "Major Item â€” Worn Mount: A hardy but aging mount that increases travel speed, offers limited carry support, and requires food and care.",
         "Starting Items: Weapon Set (Choose 1): Rusted Sword / Sword + Buckler / Dual Knives / Staff; Tattered Cloak; Bedroll; Flint & Tinder; Food Rations (1 day); Coin (Very Low).",
-        "Passive — Road-Hardened: Reduced survival penalties.",
-        "Skill — Scavenge: Find usable scraps or supplies."
+        "Passive â€” Road-Hardened: Reduced survival penalties.",
+        "Skill â€” Scavenge: Find usable scraps or supplies."
       ];
     case "exile":
       return [
-        "Major Item — Heirloom: Ashbound Ring, Aether Thread Charm, Ironpulse Chain, or Warden's Token. The heirloom grants a small sustaining benefit and may open or complicate certain dealings among outcasts, criminals, and wary authorities.",
+        "Major Item â€” Heirloom: Ashbound Ring, Aether Thread Charm, Ironpulse Chain, or Warden's Token. The heirloom grants a small sustaining benefit and may open or complicate certain dealings among outcasts, criminals, and wary authorities.",
         "Starting Items: Improvised Weapon (Choose 1): Broken Blade / Heavy Stick / Stone Knife; Worn Clothing; Hidden Keepsake (Ring / Token / Letter); Food Rations (1 day); Coin (None).",
-        "Passive — Marked: Higher suspicion, stronger intimidation.",
-        "Skill — Endure: Ignore pain or fatigue briefly."
+        "Passive â€” Marked: Higher suspicion, stronger intimidation.",
+        "Skill â€” Endure: Ignore pain or fatigue briefly."
       ];
     case "merchant":
       return [
         "Starting Items: Market Stall Permit; Ledger and Writing Tools (5% buy-sell bonus); Travel Clothes; Moderate Coin Pouch.",
-        "Passive — Appraiser: Can estimate item value and avoid being overcharged or underpaid.",
-        "Skill — Barter: Temporarily improve trade outcomes or negotiate better deals."
+        "Passive â€” Appraiser: Can estimate item value and avoid being overcharged or underpaid.",
+        "Skill â€” Barter: Temporarily improve trade outcomes or negotiate better deals."
       ];
     case "craftsman":
       return [
         "Starting Items: Trade Tools (based on specialization); Basic Weapon (often self-made); Durable Work Clothes; Small Stock of Raw Materials; Modest Coin.",
-        "Passive — Skilled Hands: Items you craft have slightly improved durability or quality.",
-        "Skill — Field Repair: Repair damaged gear or create simple items from available materials."
+        "Passive â€” Skilled Hands: Items you craft have slightly improved durability or quality.",
+        "Skill â€” Field Repair: Repair damaged gear or create simple items from available materials."
       ];
     case "performer":
       return [
-        "Major Item — Performer's Guild Token: A recognized symbol of guild membership that grants access to taverns, courts, and performance venues and is acknowledged across many settlements.",
+        "Major Item â€” Performer's Guild Token: A recognized symbol of guild membership that grants access to taverns, courts, and performance venues and is acknowledged across many settlements.",
         "Starting Items: Performance Focus (Choose 1): Lute / Flute / Drum / Story Kit; Themed Outfit; Light Weapon (Choose 1): Dagger / Decorative Blade; Trinkets and Props; Coin (Low to Moderate).",
-        "Passive — Captivating Presence: Improved success in social and crowd-based interactions.",
-        "Skill — Perform: Earn coin, gather rumors, or influence mood and attention."
+        "Passive â€” Captivating Presence: Improved success in social and crowd-based interactions.",
+        "Skill â€” Perform: Earn coin, gather rumors, or influence mood and attention."
       ];
     case "minor_noble":
     default:
       return [
-        "Major Item — Signet Ring of Standing: A formal symbol of lineage and status recognized by officials, merchants, and nobility. It grants broad lawful movement within the country and serves as proof of identity and rank.",
+        "Major Item â€” Signet Ring of Standing: A formal symbol of lineage and status recognized by officials, merchants, and nobility. It grants broad lawful movement within the country and serves as proof of identity and rank.",
         "Starting Items: Fine Clothing (House Colors); Weapon (Choose 1): Rapier / Short Sword; Letter of Introduction; Personal Item (Choose 1): Family Heirloom / Debt Ledger / Sealed Correspondence; Coin (High relative to other starts).",
-        "Passive — Noble Bearing: Strong advantage in formal, structured, and hierarchical interactions.",
-        "Skill — Invoke Status: Leverage rank to gain access, favor, or temporary authority."
+        "Passive â€” Noble Bearing: Strong advantage in formal, structured, and hierarchical interactions.",
+        "Skill â€” Invoke Status: Leverage rank to gain access, favor, or temporary authority."
       ];
   }
 }
@@ -2552,8 +2349,6 @@ const abilityCategoryById = new Map(
   abilityCatalogData.records.map((record) => [record.id, record.category as PlayerAbilityCategory])
 );
 const itemRecordById = new Map(itemCatalogData.records.map((record) => [record.id, record]));
-const knowledgeTrackNameById = new Map(knowledgeTrackCatalogData.records.map((record) => [record.id, record.name ?? record.id]));
-
 function humanizeRecordId(value: string): string {
   const segments = value.split(".");
   const lastSegment = segments[segments.length - 1] ?? value;
@@ -2596,23 +2391,28 @@ function formatSkillLabel(skillId: string, rank: number): string {
   return `${skillNameById.get(skillId) ?? humanizeRecordId(skillId)} ${rank}`;
 }
 
-function formatKnowledgeLabel(trackId: string, level: number): string {
-  return `${knowledgeTrackNameById.get(trackId) ?? humanizeRecordId(trackId)} ${level}`;
+function formatAttributeAdjustmentSummary(adjustments: PlayerAttributeAdjustments): string {
+  const entries = ATTRIBUTE_KEYS.flatMap((key) => {
+    const value = adjustments[key] ?? 0;
+    if (value === 0) {
+      return [];
+    }
+
+    return [`${key} ${value > 0 ? `+${value}` : value}`];
+  });
+
+  return entries.length > 0 ? `Stats: ${entries.join(", ")}` : "Stats: No backstory adjustment";
 }
 
 function buildBackstoryTemplateFromContent(record: BackstoryContentRecord): StarterBackstoryTemplate {
+  const attributeAdjustments = record.attributeAdjustments ?? {};
   const startingSkills = record.startingSkills.map((entry) => ({
     id: entry.skillId,
     rank: entry.level,
     source: "trained" as const
   }));
-  const startingKnowledge = (record.startingKnowledge ?? []).map((entry) => ({
-    trackId: entry.trackId,
-    level: entry.level
-  }));
   const startingAbilityIds = [...(record.startingAbilityIds ?? [])];
   const startingSkillLabels = startingSkills.map((entry) => formatSkillLabel(entry.id, entry.rank));
-  const startingKnowledgeLabels = startingKnowledge.map((entry) => formatKnowledgeLabel(entry.trackId, entry.level));
   const startingAbilityLabels = startingAbilityIds.map((abilityId) => abilityNameById.get(abilityId) ?? humanizeRecordId(abilityId));
 
   return {
@@ -2620,17 +2420,16 @@ function buildBackstoryTemplateFromContent(record: BackstoryContentRecord): Star
     label: record.name,
     description: record.summary,
     notes: [
-      startingSkillLabels.length > 0 ? `Skills: ${startingSkillLabels.slice(0, 3).join(", ")}` : "Skills: None",
-      startingKnowledgeLabels.length > 0 ? `Knowledge: ${startingKnowledgeLabels.join(", ")}` : "Knowledge: None",
+      formatAttributeAdjustmentSummary(attributeAdjustments),
+      startingSkillLabels.length > 0 ? `Starting Lore: ${startingSkillLabels.slice(0, 3).join(", ")}` : "Starting Lore: None",
       ...(startingAbilityLabels.length > 0 ? [`Ability: ${startingAbilityLabels[0]}`] : [])
     ],
     summaryText: record.summary,
     detailText: record.description,
+    attributeAdjustments,
     startingSkills,
-    startingKnowledge,
     startingAbilityIds,
     startingSkillLabels,
-    startingKnowledgeLabels,
     startingAbilityLabels
   };
 }
@@ -2929,9 +2728,11 @@ export function getLineageIdentityCatalog(lineageId: string): LineageIdentityCat
     lineageId,
     lineageLabel: profile.name,
     heightRangeCm: seed.heightRangeCm,
-    heightBands: HEIGHT_BANDS,
-    ageBands: AGE_BANDS,
-    buildOptions: BUILD_OPTIONS,
+    heightBands: getHeightBandOptions(),
+    ageBands: getAgeBandOptions(),
+    physiqueOptions: getPhysiqueOptions(),
+    natureOptions: getNatureOptions(),
+    focusOptions: getFocusOptions(),
     skinToneOptions: sortIdentityPaletteOptions(seed.skinToneOptions, "skin"),
     hairColorOptions: sortIdentityPaletteOptions(seed.hairColorOptions, "hair"),
     eyeColorOptions: sortIdentityPaletteOptions(seed.eyeColorOptions, "eye")
@@ -2958,25 +2759,17 @@ export function getRepresentativeHeightCm(lineageId: string, heightBandId: Heigh
 }
 
 export function getHeightBandLabel(heightBandId: HeightBandId | "" | null): string | null {
-  if (!heightBandId) {
-    return null;
-  }
-
-  return HEIGHT_BANDS.find((option) => option.id === heightBandId)?.label ?? null;
+  return getHeightBandOption(heightBandId)?.label ?? null;
 }
 
 export function getHeightBandAttributeAdjustments(
   heightBandId: HeightBandId | "" | null
 ): PlayerAttributeAdjustments {
-  return HEIGHT_BANDS.find((option) => option.id === heightBandId)?.attributeAdjustments ?? {};
+  return getHeightBandOption(heightBandId)?.attributeAdjustments ?? {};
 }
 
 export function getAgeBandLabel(ageBandId: AgeBandId | "" | null): string | null {
-  if (!ageBandId) {
-    return null;
-  }
-
-  return AGE_BANDS.find((option) => option.id === ageBandId)?.label ?? null;
+  return getAgeBandOption(ageBandId)?.label ?? null;
 }
 
 export function getAgeBandRangeLabel(
@@ -2984,42 +2777,145 @@ export function getAgeBandRangeLabel(
   sexId: Extract<PlayerSexId, "male" | "female"> | "",
   ageBandId: AgeBandId | "" | null
 ): string | null {
-  if (!ageBandId) {
-    return null;
-  }
-
-  const resolvedSex = sexId === "female" ? "female" : "male";
-  const range =
-    LINEAGE_AGE_RANGES[lineageId]?.[resolvedSex]?.[ageBandId] ??
-    LINEAGE_AGE_RANGES["lineage.human"]?.[resolvedSex]?.[ageBandId];
-
-  if (!range) {
-    return null;
-  }
-
-  return `${range[0]}-${range[1]} years`;
+  return formatAgeBandRange(lineageId, sexId, ageBandId);
 }
 
 export function getAgeBandAttributeAdjustments(
   ageBandId: AgeBandId | "" | null
 ): PlayerAttributeAdjustments {
-  return AGE_BANDS.find((option) => option.id === ageBandId)?.attributeAdjustments ?? {};
+  return getAgeBandOption(ageBandId)?.attributeAdjustments ?? {};
 }
 
-export function getBuildLabel(
-  buildId: PlayerIdentityBuildId | "" | null
+export function getPhysiqueLabel(
+  physiqueId: PlayerIdentityPhysiqueId | "" | null
 ): string | null {
-  if (!buildId) {
-    return null;
-  }
-
-  return BUILD_OPTIONS.find((option) => option.id === buildId)?.label ?? null;
+  return getPhysiqueOption(physiqueId)?.label ?? null;
 }
 
-export function getBuildAttributeAdjustments(
-  buildId: PlayerIdentityBuildId | "" | null
+export function getNatureLabel(
+  natureId: PlayerIdentityNatureId | "" | null
+): string | null {
+  return getNatureOption(natureId)?.label ?? null;
+}
+
+export function getFocusLabel(
+  focusId: PlayerIdentityFocusId | "" | null
+): string | null {
+  return getFocusOption(focusId)?.label ?? null;
+}
+
+export function getPhysiqueWeights(
+  physiqueId: PlayerIdentityPhysiqueId | "" | null
+) {
+  return { ...(getPhysiqueOption(physiqueId)?.weights ?? {}) };
+}
+
+export function getNatureWeights(
+  natureId: PlayerIdentityNatureId | "" | null
+) {
+  return { ...(getNatureOption(natureId)?.weights ?? {}) };
+}
+
+export function getFocusShareShift(
+  focusId: PlayerIdentityFocusId | "" | null
+): number {
+  return getFocusOption(focusId)?.physiqueShareShift ?? 0;
+}
+
+export function getPhysiqueBaselineShare(
+  physiqueId: PlayerIdentityPhysiqueId | "" | null
+): number {
+  return getPhysiqueOption(physiqueId)?.baselinePhysiqueShare ?? 0.5;
+}
+
+export function getSexAttributeAdjustments(
+  lineageId: string,
+  sexId: Extract<PlayerSexId, "male" | "female"> | "" | null
 ): PlayerAttributeAdjustments {
-  return BUILD_OPTIONS.find((option) => option.id === buildId)?.attributeAdjustments ?? {};
+  return getSexOption(lineageId, sexId)?.attributeAdjustments ?? {};
+}
+
+export function getSexOptionForLineage(
+  lineageId: string,
+  sexId: Extract<PlayerSexId, "male" | "female"> | "" | null
+): SexOption {
+  return getSexOption(lineageId, sexId);
+}
+
+export function formatHeightBandModifierLine(
+  heightBandId: HeightBandId | "" | null
+): string | null {
+  return formatHeightBandDisplayLine(heightBandId);
+}
+
+export function formatAgeBandModifierLine(
+  lineageId: string,
+  sexId: Extract<PlayerSexId, "male" | "female"> | "",
+  ageBandId: AgeBandId | "" | null
+): string | null {
+  return formatAgeBandDisplayLine(lineageId, sexId, ageBandId);
+}
+
+export function formatPhysiqueModifierLine(
+  physiqueId: PlayerIdentityPhysiqueId | "" | null
+): string | null {
+  return formatPhysiqueDisplayLine(physiqueId);
+}
+
+export function formatNatureModifierLine(
+  natureId: PlayerIdentityNatureId | "" | null
+): string | null {
+  return formatNatureDisplayLine(natureId);
+}
+
+export function formatFocusModifierLine(
+  focusId: PlayerIdentityFocusId | "" | null
+): string | null {
+  return formatFocusDisplayLine(focusId);
+}
+
+export function resolveCharacterCreationIdentityModifiers(params: {
+  lineageId: string;
+  sexId: ResolvedCharacterCreationSexId | "" | null;
+  heightBandId: HeightBandId | "" | null;
+  ageBandId: AgeBandId | "" | null;
+  physiqueId: PlayerIdentityPhysiqueId | "" | null;
+  natureId: PlayerIdentityNatureId | "" | null;
+  focusId: PlayerIdentityFocusId | "" | null;
+}) {
+  return resolveIdentityModifierSelections(params);
+}
+
+export function resolveCanonicalAgeBandId(
+  ageBandId: PlayerIdentityAgeBandId | "" | null | undefined
+): AgeBandId | null {
+  return normalizeAgeBandId(ageBandId);
+}
+
+export function resolveCanonicalPhysiqueId(
+  physiqueId: PlayerIdentityPhysiqueId | "" | null | undefined
+): PlayerIdentityPhysiqueId | null {
+  return normalizePhysiqueId(physiqueId);
+}
+
+export function resolveCanonicalNatureId(
+  natureId: PlayerIdentityNatureId | "" | null | undefined
+): PlayerIdentityNatureId | null {
+  return normalizeNatureId(natureId);
+}
+
+export function resolveCanonicalFocusId(
+  focusId: PlayerIdentityFocusId | "" | null | undefined
+): PlayerIdentityFocusId | null {
+  return normalizeFocusId(focusId);
+}
+
+export function getBackstoryAttributeAdjustments(backstoryId: string): PlayerAttributeAdjustments {
+  return BACKSTORY_TEMPLATES[backstoryId]?.attributeAdjustments ?? {};
+}
+
+export function sumPlayerAttributes(attributes: PlayerAttributes): number {
+  return ATTRIBUTE_KEYS.reduce((total, key) => total + attributes[key], 0);
 }
 
 export function getIdentityOptionLabel(
@@ -3075,3 +2971,4 @@ export function generateRandomCharacterName(
   const surname = pickDeterministic(pool.surnames, `${lineageId}.surname.${Math.random()}`);
   return `${firstName} ${surname}`;
 }
+

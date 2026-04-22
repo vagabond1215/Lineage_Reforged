@@ -1,113 +1,135 @@
 import {
   deserializeSnapshot,
   serializeSnapshot
-} from '../../../../packages/shared/persistence/src/index.js';
-import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
+} from "../../../../packages/shared/persistence/src/index.js";
+import type { SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
+import {
+  createDefaultPlayerBodyState,
+  createRunDifficultyState,
+  syncPlayerRuntimeState
+} from "../../../../packages/engines/player-engine/src/index.js";
+import {
+  loadAccountProfile,
+  saveAccountProfile
+} from "./accountProfileManager.js";
 import {
   SAVE_SLOT_ORDER,
-  isManualSaveSlotId,
   type SaveSlotId,
   type SaveSlotKind,
   type SaveSlotMetadata,
   type SaveSlotStatus,
   type SaveSlotSummary
-} from './state.js';
+} from "./state.js";
 
 type StoredSaveEnvelope = {
-  version: 1;
+  version: 6;
+  accountId: string;
   slotId: SaveSlotId;
   savedAt: string;
   metadata: SaveSlotMetadata;
   snapshot: string;
 };
 
-type LegacyStoredSaveEnvelope = {
-  slotId: SaveSlotId;
-  savedAt: string;
-  snapshot: string;
-};
-
-const STORAGE_PREFIX = 'cataclysm-rpg-ui.saves.v1';
-const LEGACY_STORAGE_PREFIX = 'cataclysm-rpg-ui.save-slot';
+const STORAGE_PREFIX = "cataclysm-rpg-ui.saves.v6";
+const OBSOLETE_STORAGE_PREFIXES = [
+  "cataclysm-rpg-ui.saves.v5",
+  "cataclysm-rpg-ui.saves.v4",
+  "cataclysm-rpg-ui.saves.v3",
+  "cataclysm-rpg-ui.saves.v2",
+  "cataclysm-rpg-ui.saves.v1",
+  "cataclysm-rpg-ui.save-slot"
+] as const;
+const CURRENT_SNAPSHOT_VERSION = "0.6.0";
 const monthNames = [
-  'Deepfrost',
-  'Thawrise',
-  'Seedcall',
-  'Rainmere',
-  'Suncrest',
-  'Highbloom',
-  'Harvestfall',
-  'Redleaf',
-  'Frostwane',
-  'Longnight',
-  'Emberwane',
-  'Stormwane',
-  'Yearsend'
+  "Deepfrost",
+  "Thawrise",
+  "Seedcall",
+  "Rainmere",
+  "Suncrest",
+  "Highbloom",
+  "Harvestfall",
+  "Redleaf",
+  "Frostwane",
+  "Longnight",
+  "Emberwane",
+  "Stormwane",
+  "Yearsend"
 ];
 
 type SaveInspectResult =
   | {
-      status: 'empty';
+      status: "empty";
       envelope: null;
       snapshot: null;
     }
   | {
-      status: 'ready';
+      status: "ready";
       envelope: StoredSaveEnvelope;
       snapshot: SaveSnapshot;
     }
   | {
-      status: 'corrupt';
+      status: "corrupt";
+      envelope: null;
+      snapshot: null;
+    }
+  | {
+      status: "incompatible";
       envelope: null;
       snapshot: null;
     };
 
 function getStorage(): Storage {
-  if (typeof window === 'undefined') {
-    throw new Error('Local save storage is only available in the browser.');
+  if (typeof window === "undefined") {
+    throw new Error("Local save storage is only available in the browser.");
   }
 
   return window.localStorage;
 }
 
-function getStorageKey(slotId: SaveSlotId): string {
-  return `${STORAGE_PREFIX}.slot.${slotId}`;
+function getStorageKey(accountId: string, slotId: SaveSlotId): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.slot.${slotId}`;
 }
 
-function getLegacyStorageKey(slotId: SaveSlotId): string {
-  return `${LEGACY_STORAGE_PREFIX}.${slotId}`;
+function getObsoleteStorageKeys(slotId: SaveSlotId): string[] {
+  return [
+    `${OBSOLETE_STORAGE_PREFIXES[0]}.slot.${slotId}`,
+    `${OBSOLETE_STORAGE_PREFIXES[1]}.slot.${slotId}`,
+    `${OBSOLETE_STORAGE_PREFIXES[2]}.${slotId}`,
+    `${OBSOLETE_STORAGE_PREFIXES[3]}.${slotId}`,
+    `${OBSOLETE_STORAGE_PREFIXES[4]}.${slotId}`
+  ];
 }
 
 function humanizeId(value: string | null | undefined): string {
   if (!value) {
-    return 'Unknown';
+    return "Unknown";
   }
 
-  const segments = value.split('.');
+  const segments = value.split(".");
   const lastSegment = segments[segments.length - 1] ?? value;
 
   return lastSegment
-    .split('_')
+    .split("_")
     .filter((segment) => segment.length > 0)
     .map((segment) => segment[0]!.toUpperCase() + segment.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 function formatSavedAt(savedAt: string): string {
   const parsed = new Date(savedAt);
 
   if (Number.isNaN(parsed.valueOf())) {
-    return 'Unknown save time';
+    return "Unknown save time";
   }
 
-  return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'medium',
-    timeStyle: 'short'
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short"
   }).format(parsed);
 }
 
 function formatPlaytime(totalPlayTicks: number): string {
-  return `${new Intl.NumberFormat('en-US').format(totalPlayTicks)} ticks played`;
+  return `${new Intl.NumberFormat("en-US").format(totalPlayTicks)} ticks played`;
 }
 
 function formatInGameDate(snapshot: SaveSnapshot): string {
@@ -117,7 +139,7 @@ function formatInGameDate(snapshot: SaveSnapshot): string {
 
 function formatFunds(snapshot: SaveSnapshot): string {
   const { gold, silver, copper } = snapshot.playerState.currency;
-  const numberFormat = new Intl.NumberFormat('en-US');
+  const numberFormat = new Intl.NumberFormat("en-US");
   const parts: string[] = [];
 
   if (gold > 0 || (silver === 0 && copper === 0)) {
@@ -132,7 +154,7 @@ function formatFunds(snapshot: SaveSnapshot): string {
     parts.push(`${numberFormat.format(copper)}c`);
   }
 
-  return parts.join(' ');
+  return parts.join(" ");
 }
 
 function formatSexLabel(snapshot: SaveSnapshot): string {
@@ -142,16 +164,16 @@ function formatSexLabel(snapshot: SaveSnapshot): string {
 function getStartingSettlementId(snapshot: SaveSnapshot): string | null {
   const startFlag = snapshot.playerState.flags.find(
     (flag) =>
-      flag.startsWith('player.start.') &&
-      !flag.startsWith('player.start_authority.') &&
-      !flag.startsWith('player.start_mode.')
+      flag.startsWith("player.start.") &&
+      !flag.startsWith("player.start_authority.") &&
+      !flag.startsWith("player.start_mode.")
   );
 
   if (!startFlag) {
     return null;
   }
 
-  return startFlag.slice('player.start.'.length) || null;
+  return startFlag.slice("player.start.".length) || null;
 }
 
 function getStartingSettlementLabel(snapshot: SaveSnapshot): string | null {
@@ -186,7 +208,7 @@ function getCurrentLocationLabel(snapshot: SaveSnapshot): string | null {
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
+  return typeof value === "object" && value !== null;
 }
 
 function isSaveSnapshot(value: unknown): value is SaveSnapshot {
@@ -195,26 +217,27 @@ function isSaveSnapshot(value: unknown): value is SaveSnapshot {
   }
 
   return (
-    typeof value.snapshotVersion === 'string' &&
-    typeof value.capturedAtTick === 'number' &&
+    typeof value.accountId === "string" &&
+    typeof value.snapshotVersion === "string" &&
+    typeof value.capturedAtTick === "number" &&
     isRecord(value.clock) &&
-    typeof value.clock.tick === 'number' &&
-    typeof value.clock.day === 'number' &&
-    typeof value.clock.month === 'number' &&
-    typeof value.clock.year === 'number' &&
+    typeof value.clock.tick === "number" &&
+    typeof value.clock.day === "number" &&
+    typeof value.clock.month === "number" &&
+    typeof value.clock.year === "number" &&
     isRecord(value.gameState) &&
-    typeof value.gameState.worldVersion === 'string' &&
-    typeof value.gameState.activeScenario === 'string' &&
+    typeof value.gameState.worldVersion === "string" &&
+    typeof value.gameState.activeScenario === "string" &&
     isRecord(value.playerState) &&
     isRecord(value.playerState.coreData) &&
-    typeof value.playerState.coreData.playerName === 'string' &&
+    typeof value.playerState.coreData.playerName === "string" &&
     isRecord(value.playerState.progression) &&
-    typeof value.playerState.progression.level === 'number' &&
+    typeof value.playerState.progression.level === "number" &&
     isRecord(value.playerState.location) &&
     isRecord(value.playerState.combatProfile) &&
-    typeof value.playerState.combatProfile.preferredMode === 'string' &&
+    typeof value.playerState.combatProfile.preferredMode === "string" &&
     isRecord(value.playerState.saveMeta) &&
-    typeof value.playerState.saveMeta.totalPlayTicks === 'number' &&
+    typeof value.playerState.saveMeta.totalPlayTicks === "number" &&
     isRecord(value.sessionState) &&
     isRecord(value.sessionState.combatUi)
   );
@@ -226,24 +249,24 @@ function isSaveSlotMetadata(value: unknown): value is SaveSlotMetadata {
   }
 
   return (
-    typeof value.slotId === 'string' &&
-    typeof value.characterName === 'string' &&
-    typeof value.level === 'number' &&
-    typeof value.regionLabel === 'string' &&
-    (typeof value.sexLabel === 'string' || value.sexLabel === null || value.sexLabel === undefined) &&
-    (typeof value.startingSettlementLabel === 'string' ||
+    typeof value.slotId === "string" &&
+    typeof value.characterName === "string" &&
+    typeof value.level === "number" &&
+    typeof value.regionLabel === "string" &&
+    (typeof value.sexLabel === "string" || value.sexLabel === null || value.sexLabel === undefined) &&
+    (typeof value.startingSettlementLabel === "string" ||
       value.startingSettlementLabel === null ||
       value.startingSettlementLabel === undefined) &&
-    (typeof value.currentLocationLabel === 'string' ||
+    (typeof value.currentLocationLabel === "string" ||
       value.currentLocationLabel === null ||
       value.currentLocationLabel === undefined) &&
-    (typeof value.gold === 'number' || value.gold === undefined) &&
-    (typeof value.fundsLabel === 'string' || value.fundsLabel === undefined) &&
-    typeof value.inGameDate === 'string' &&
-    typeof value.totalPlayTicks === 'number' &&
-    typeof value.capturedAtTick === 'number' &&
-    typeof value.lastSavedAt === 'string' &&
-    typeof value.snapshotVersion === 'string'
+    (typeof value.gold === "number" || value.gold === undefined) &&
+    (typeof value.fundsLabel === "string" || value.fundsLabel === undefined) &&
+    typeof value.inGameDate === "string" &&
+    typeof value.totalPlayTicks === "number" &&
+    typeof value.capturedAtTick === "number" &&
+    typeof value.lastSavedAt === "string" &&
+    typeof value.snapshotVersion === "string"
   );
 }
 
@@ -253,24 +276,31 @@ function isStoredSaveEnvelope(value: unknown): value is StoredSaveEnvelope {
   }
 
   return (
-    value.version === 1 &&
-    typeof value.slotId === 'string' &&
-    typeof value.savedAt === 'string' &&
-    typeof value.snapshot === 'string' &&
+    value.version === 6 &&
+    typeof value.accountId === "string" &&
+    typeof value.slotId === "string" &&
+    typeof value.savedAt === "string" &&
+    typeof value.snapshot === "string" &&
     isSaveSlotMetadata(value.metadata)
   );
 }
 
-function isLegacyStoredSaveEnvelope(value: unknown): value is LegacyStoredSaveEnvelope {
-  if (!isRecord(value)) {
-    return false;
-  }
-
-  return (
-    typeof value.slotId === 'string' &&
-    typeof value.savedAt === 'string' &&
-    typeof value.snapshot === 'string'
+function migrateSnapshotForEcho(snapshot: SaveSnapshot): SaveSnapshot {
+  snapshot.gameState.runDifficulty = createRunDifficultyState(snapshot.gameState.runDifficulty);
+  snapshot.playerState.bodyState = snapshot.playerState.bodyState ?? createDefaultPlayerBodyState({
+    tick: snapshot.clock.tick,
+    day: snapshot.clock.day,
+    lineageId: snapshot.playerState.coreData.lineageId,
+    runDifficulty: snapshot.gameState.runDifficulty
+  });
+  syncPlayerRuntimeState(
+    snapshot.playerState,
+    snapshot.clock.tick,
+    snapshot.clock.day,
+    [],
+    snapshot.gameState.runDifficulty
   );
+  return snapshot;
 }
 
 function createSlotSummary(
@@ -287,7 +317,7 @@ function createSlotSummary(
     label: slot.label,
     kind: slot.kind,
     status,
-    hasSave: status === 'ready' && metadata !== null,
+    hasSave: status === "ready" && metadata !== null,
     metadata,
     playerName: metadata?.characterName ?? null,
     lineageLabel: metadata?.lineageLabel ?? null,
@@ -333,101 +363,62 @@ function normalizeSaveMetadata(
   };
 }
 
-function inspectStoredSave(slotId: SaveSlotId): SaveInspectResult {
+function inspectStoredSave(accountId: string, slotId: SaveSlotId): SaveInspectResult {
   const storage = getStorage();
-  const rawValue = storage.getItem(getStorageKey(slotId));
+  const rawValue = storage.getItem(getStorageKey(accountId, slotId));
 
   if (!rawValue) {
-    if (!isManualSaveSlotId(slotId)) {
+    if (getObsoleteStorageKeys(slotId).some((key) => storage.getItem(key) !== null)) {
       return {
-        status: 'empty',
-        envelope: null,
-        snapshot: null
-      };
-    }
-
-    const legacyValue = storage.getItem(getLegacyStorageKey(slotId));
-
-    if (!legacyValue) {
-      return {
-        status: 'empty',
-        envelope: null,
-        snapshot: null
-      };
-    }
-
-    try {
-      const parsed = JSON.parse(legacyValue) as unknown;
-
-      if (!isLegacyStoredSaveEnvelope(parsed) || parsed.slotId !== slotId) {
-        return {
-          status: 'corrupt',
-          envelope: null,
-          snapshot: null
-        };
-      }
-
-      const snapshot = deserializeSnapshot(parsed.snapshot);
-
-      if (!isSaveSnapshot(snapshot)) {
-        return {
-          status: 'corrupt',
-          envelope: null,
-          snapshot: null
-        };
-      }
-
-      return {
-        status: 'ready',
-        envelope: {
-          version: 1,
-          slotId,
-          savedAt: parsed.savedAt,
-          metadata: normalizeSaveMetadata(
-            slotId,
-            snapshot,
-            {
-              ...buildSaveMetadata(slotId, snapshot),
-              lastSavedAt: parsed.savedAt
-            },
-            parsed.savedAt
-          ),
-          snapshot: parsed.snapshot
-        },
-        snapshot
-      };
-    } catch {
-      return {
-        status: 'corrupt',
-        envelope: null,
-        snapshot: null
-      };
-    }
-  }
-
-  try {
-    const parsed = JSON.parse(rawValue) as unknown;
-
-    if (!isStoredSaveEnvelope(parsed) || parsed.slotId !== slotId || parsed.metadata.slotId !== slotId) {
-      return {
-        status: 'corrupt',
-        envelope: null,
-        snapshot: null
-      };
-    }
-
-    const snapshot = deserializeSnapshot(parsed.snapshot);
-
-    if (!isSaveSnapshot(snapshot)) {
-      return {
-        status: 'corrupt',
+        status: "incompatible",
         envelope: null,
         snapshot: null
       };
     }
 
     return {
-      status: 'ready',
+      status: "empty",
+      envelope: null,
+      snapshot: null
+    };
+  }
+
+  try {
+    const parsed = JSON.parse(rawValue) as unknown;
+
+    if (
+      !isStoredSaveEnvelope(parsed) ||
+      parsed.accountId !== accountId ||
+      parsed.slotId !== slotId ||
+      parsed.metadata.slotId !== slotId
+    ) {
+      return {
+        status: "corrupt",
+        envelope: null,
+        snapshot: null
+      };
+    }
+
+    const snapshot = migrateSnapshotForEcho(deserializeSnapshot(parsed.snapshot));
+
+    if (!isSaveSnapshot(snapshot) || snapshot.accountId !== accountId) {
+      return {
+        status: "corrupt",
+        envelope: null,
+        snapshot: null
+      };
+    }
+
+    if (snapshot.snapshotVersion !== CURRENT_SNAPSHOT_VERSION) {
+      return {
+        status: "incompatible",
+        envelope: null,
+        snapshot: null
+      };
+    }
+
+    return {
+      status: "ready",
       envelope: {
         ...parsed,
         metadata: normalizeSaveMetadata(slotId, snapshot, parsed.metadata, parsed.savedAt)
@@ -436,7 +427,7 @@ function inspectStoredSave(slotId: SaveSlotId): SaveInspectResult {
     };
   } catch {
     return {
-      status: 'corrupt',
+      status: "corrupt",
       envelope: null,
       snapshot: null
     };
@@ -479,14 +470,14 @@ export function buildSaveMetadata(slotId: SaveSlotId, snapshot: SaveSnapshot): S
   };
 }
 
-export function listSaves(): SaveSlotSummary[] {
+export function listSaves(accountId: string): SaveSlotSummary[] {
   getStorage();
 
   return SAVE_SLOT_ORDER.map((slot) => {
-    const inspected = inspectStoredSave(slot.id);
+    const inspected = inspectStoredSave(accountId, slot.id);
 
-    if (inspected.status === 'ready') {
-      return createSlotSummary(slot, 'ready', inspected.envelope.metadata);
+    if (inspected.status === "ready") {
+      return createSlotSummary(slot, "ready", inspected.envelope.metadata);
     }
 
     return createSlotSummary(slot, inspected.status, null);
@@ -494,13 +485,18 @@ export function listSaves(): SaveSlotSummary[] {
 }
 
 export function createSave(
+  accountId: string,
   slotId: SaveSlotId,
   snapshot: SaveSnapshot,
   metadata: SaveSlotMetadata
 ): SaveSlotSummary {
   const savedAt = new Date().toISOString();
+  const profile = loadAccountProfile(accountId);
+  const snapshotToPersist =
+    snapshot.accountId === accountId ? snapshot : { ...snapshot, accountId };
   const envelope: StoredSaveEnvelope = {
-    version: 1,
+    version: 6,
+    accountId,
     slotId,
     savedAt,
     metadata: {
@@ -508,47 +504,59 @@ export function createSave(
       slotId,
       lastSavedAt: savedAt
     },
-    snapshot: serializeSnapshot(snapshot)
+    snapshot: serializeSnapshot(snapshotToPersist)
   };
 
   const storage = getStorage();
-  storage.setItem(getStorageKey(slotId), JSON.stringify(envelope));
+  storage.setItem(getStorageKey(accountId, slotId), JSON.stringify(envelope));
 
-  if (isManualSaveSlotId(slotId)) {
-    storage.removeItem(getLegacyStorageKey(slotId));
+  for (const obsoleteKey of getObsoleteStorageKeys(slotId)) {
+    storage.removeItem(obsoleteKey);
   }
+
+  saveAccountProfile({
+    ...profile,
+    lastPlayedAt: savedAt
+  });
 
   const slot = SAVE_SLOT_ORDER.find((entry) => entry.id === slotId) ?? {
     id: slotId,
     label: slotId,
-    kind: 'manual' as const
+    kind: "manual" as const
   };
 
-  return createSlotSummary(slot, 'ready', envelope.metadata);
+  return createSlotSummary(slot, "ready", envelope.metadata);
 }
 
-export function loadSave(slotId: SaveSlotId): SaveSnapshot | null {
-  const inspected = inspectStoredSave(slotId);
-  return inspected.status === 'ready' ? inspected.snapshot : null;
+export function loadSave(accountId: string, slotId: SaveSlotId): SaveSnapshot | null {
+  const inspected = inspectStoredSave(accountId, slotId);
+  return inspected.status === "ready" ? inspected.snapshot : null;
 }
 
-export function deleteSave(slotId: SaveSlotId): void {
+export function deleteSave(accountId: string, slotId: SaveSlotId): void {
   const storage = getStorage();
-  storage.removeItem(getStorageKey(slotId));
+  storage.removeItem(getStorageKey(accountId, slotId));
 
-  if (isManualSaveSlotId(slotId)) {
-    storage.removeItem(getLegacyStorageKey(slotId));
+  for (const obsoleteKey of getObsoleteStorageKeys(slotId)) {
+    storage.removeItem(obsoleteKey);
   }
 }
 
-export function resetAllSaves(): void {
+export function resetAllSaves(accountId: string): void {
   const storage = getStorage();
   const keysToRemove: string[] = [];
+  const currentAccountPrefix = `${STORAGE_PREFIX}.account.${accountId}.`;
 
   for (let index = 0; index < storage.length; index += 1) {
     const key = storage.key(index);
+    if (!key) {
+      continue;
+    }
 
-    if (key?.startsWith(STORAGE_PREFIX) || key?.startsWith(LEGACY_STORAGE_PREFIX)) {
+    if (
+      key.startsWith(currentAccountPrefix) ||
+      OBSOLETE_STORAGE_PREFIXES.some((prefix) => key.startsWith(prefix))
+    ) {
       keysToRemove.push(key);
     }
   }
@@ -558,6 +566,6 @@ export function resetAllSaves(): void {
   }
 }
 
-export function quickSave(snapshot: SaveSnapshot): SaveSlotSummary {
-  return createSave('quick-save', snapshot, buildSaveMetadata('quick-save', snapshot));
+export function quickSave(accountId: string, snapshot: SaveSnapshot): SaveSlotSummary {
+  return createSave(accountId, "quick-save", snapshot, buildSaveMetadata("quick-save", snapshot));
 }

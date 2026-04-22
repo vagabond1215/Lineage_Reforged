@@ -1,5 +1,6 @@
 import type { GameTickContext, SaveSnapshot, SessionState } from "../../../shared/types/src/index.js";
 import { createEmptyCombatUiState } from "./combat/state.js";
+import { DEFAULT_ACCOUNT_ID } from "./legacy-account.js";
 
 export function createEmptySessionState(): SessionState {
   return {
@@ -25,9 +26,11 @@ export function createEmptySessionState(): SessionState {
 export function createSaveSnapshotFromGameContext(
   context: GameTickContext,
   sessionState: SessionState = context.sessionState ?? createEmptySessionState(),
-  snapshotVersion = "0.1.0"
+  snapshotVersion = "0.6.0",
+  accountId = DEFAULT_ACCOUNT_ID
 ): SaveSnapshot {
   return {
+    accountId,
     snapshotVersion,
     capturedAtTick: context.clock.tick,
     clock: context.clock,

@@ -1,18 +1,29 @@
 import {
-  applyAttributeAdjustments,
   createEmptyPlayerResourceRuntimeState,
   resolvePlayerOriginProfile,
   resolvePlayerResources,
   type EquipmentState,
+  type GeographicKnowledgeScope,
   type InventoryStack,
   type PlayerAttributes,
   type PlayerCurrencyState,
-  type PlayerKnowledgeFamiliarityState,
   type PlayerSkillState,
   type PlayerTraitState,
   type SaveSnapshot,
   type WorldLocationType
 } from '../../../../packages/shared/types/src/index.js';
+import {
+  createDefaultPlayerBodyState,
+  createRunDifficultyState,
+  createPlayerProgressionState,
+  syncPlayerRuntimeState
+} from '../../../../packages/engines/player-engine/src/index.js';
+import {
+  createDefaultCharacterAchievementsState
+} from '../../../../packages/engines/game-engine/src/account-achievement-state.js';
+import {
+  DEFAULT_ACCOUNT_ID
+} from '../../../../packages/engines/game-engine/src/legacy-account.js';
 import { deserializeSnapshot, serializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
 import {
   hasCompleteCharacterCreationSelections,
@@ -20,24 +31,28 @@ import {
   type CharacterCreationFormState,
   type CompleteCharacterCreationFormState
 } from './characterCreationForm.js';
-import { applyCharacterAttributeAllocation } from './characterAttributes.js';
+import { CHARACTER_ATTRIBUTE_ORDER } from './characterAttributes.js';
 import {
-  getAgeBandAttributeAdjustments,
-  getAgeBandLabel,
   getBackstoryTemplate,
-  getBuildAttributeAdjustments,
-  getBuildLabel,
-  getHeightBandAttributeAdjustments,
-  getHeightBandLabel,
+  formatAgeBandModifierLine,
+  formatHeightBandModifierLine,
   getIdentityOptionLabel,
-  getLineageBaseAttributes,
+  getFocusLabel,
+  getNatureLabel,
+  getPhysiqueLabel,
   getRepresentativeHeightCm,
+  getSexOptionForLineage,
+  resolveCanonicalAgeBandId,
+  resolveCanonicalFocusId,
+  resolveCanonicalNatureId,
+  resolveCanonicalPhysiqueId,
   getStartingAbilityStates,
   getStartingBundleSelectedStacks,
   getStartingBundleTemplate,
   isKnownBackstoryId,
   isKnownStartingBundleId
 } from './characterCreationCatalog.js';
+import { resolveCharacterCreationAttributes } from './characterCreationMath.js';
 import { resolveWorldSelection } from './worldSelectionCatalog.js';
 import { demoSnapshot } from '../runtime/demoSnapshot.js';
 
@@ -49,6 +64,7 @@ function createDefaultGameState() {
   return {
     worldVersion: '0.1.0',
     activeScenario: 'bootstrap',
+    runDifficulty: createRunDifficultyState(),
     mode: { id: 'normal' as const, combatPauseAllowed: true },
     party: { leaderCombatantId: null, members: [] },
     activeEncounter: null,
@@ -94,8 +110,9 @@ type DerivedCharacterCreationState = {
   chosenOriginLabel: string;
   reviewNarrative: string;
   attributes: PlayerAttributes;
+  generatedProfileMetrics: CharacterCreationPreviewMetric[];
   resources: { hp: number; mp: number; stamina: number };
-  knowledgeLabels: string[];
+  loreLabels: string[];
   currency: PlayerCurrencyState;
   gearLabels: string[];
   starterPackLabels: string[];
@@ -106,16 +123,6 @@ type DerivedCharacterCreationState = {
 };
 
 type CharacterCreationPreviewMetric = { id: string; label: string; value: string | null };
-
-const DEFAULT_PREVIEW_ATTRIBUTES: PlayerAttributes = {
-  STR: 10, DEX: 10, AGI: 10, CON: 10, VIT: 10, WIS: 10, INT: 10, SPT: 10, CHA: 10
-};
-
-const PREVIEW_RESOURCE_ATTRIBUTE_SCALING = {
-  hp: { keys: ['CON', 'VIT'] as const, perPoint: 4 },
-  mp: { keys: ['INT', 'SPT'] as const, perPoint: 4 },
-  stamina: { keys: ['AGI', 'CON', 'VIT'] as const, perPoint: 3 }
-};
 
 export type CharacterCreationPreview = {
   isResolved: boolean;
@@ -130,10 +137,11 @@ export type CharacterCreationPreview = {
   startingAccessLabel: string;
   startingAccessDetail: string;
   identityMetrics: CharacterCreationPreviewMetric[];
+  generatedProfileMetrics: CharacterCreationPreviewMetric[];
   resourceMetrics: CharacterCreationPreviewMetric[];
   attributeMetrics: CharacterCreationPreviewMetric[];
   starterSkills: string[];
-  starterKnowledge: string[];
+  starterLore: string[];
   starterTraits: string[];
   starterGear: string[];
   starterPack: string[];
@@ -202,37 +210,59 @@ function toMetric(id: string, label: string, value: number | string | null): Cha
 }
 
 function buildIdentityMetrics(
-  form: Pick<CharacterCreationFormState, 'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'buildId' | 'hairColorId' | 'eyeColorId' | 'skinToneId'>
+  form: Pick<
+    CharacterCreationFormState,
+    'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'physiqueId' | 'natureId' | 'focusId' | 'hairColorId' | 'eyeColorId' | 'skinToneId'
+  >
 ): CharacterCreationPreviewMetric[] {
+  const sexOption = getSexOptionForLineage(form.lineageId, form.sexId);
+
   return [
-    toMetric('sex', 'Sex', form.sexId ? `${form.sexId[0]!.toUpperCase()}${form.sexId.slice(1)}` : null),
-    toMetric('age', 'Age', getAgeBandLabel(form.ageBandId)),
-    toMetric('height', 'Height', getHeightBandLabel(form.heightBandId)),
-    toMetric('build', 'Build', getBuildLabel(form.buildId)),
+    toMetric('sex', 'Sex', `${sexOption.label} — ${sexOption.modifierText}`),
+    toMetric('age', 'Age', formatAgeBandModifierLine(form.lineageId, form.sexId, form.ageBandId)),
+    toMetric('height', 'Height', formatHeightBandModifierLine(form.heightBandId)),
+    toMetric('physique', 'Physique', getPhysiqueLabel(form.physiqueId)),
+    toMetric('nature', 'Nature', getNatureLabel(form.natureId)),
+    toMetric('focus', 'Focus', getFocusLabel(form.focusId)),
     toMetric('hair', 'Hair', getIdentityOptionLabel(form.lineageId, 'hairColorOptions', form.hairColorId)),
     toMetric('eyes', 'Eyes', getIdentityOptionLabel(form.lineageId, 'eyeColorOptions', form.eyeColorId)),
     toMetric('skin', 'Skin', getIdentityOptionLabel(form.lineageId, 'skinToneOptions', form.skinToneId))
   ];
 }
 
+function buildGeneratedProfileMetrics(attributes: PlayerAttributes): CharacterCreationPreviewMetric[] {
+  return CHARACTER_ATTRIBUTE_ORDER.flatMap((attributeKey) => {
+    const value = attributes[attributeKey];
+    return value > 0
+      ? [toMetric(`profile.${attributeKey.toLowerCase()}`, attributeKey, `+${value}`)]
+      : [];
+  });
+}
+
 function buildAttributeMetrics(attributes: PlayerAttributes | null): CharacterCreationPreviewMetric[] {
-  return ['STR', 'DEX', 'AGI', 'CON', 'VIT', 'WIS', 'INT', 'SPT', 'CHA'].map((label) =>
+  return CHARACTER_ATTRIBUTE_ORDER.map((label) =>
     toMetric(label.toLowerCase(), label, attributes ? attributes[label as keyof PlayerAttributes] : null)
   );
 }
 
 function resolveWorkingCharacterAttributes(
-  form: Pick<CharacterCreationFormState, 'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'buildId' | 'attributeAllocation'>
+  form: Pick<
+    CharacterCreationFormState,
+    'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'physiqueId' | 'natureId' | 'focusId' | 'backstoryId'
+  >
 ): PlayerAttributes {
-  const lineageId = form.lineageId.trim() || 'lineage.human';
-  const sexId = form.sexId === 'female' ? 'female' : 'male';
-  const originProfile = resolvePlayerOriginProfile({ lineageId, classId: null, sexId }, { level: 1, classLevel: 0 });
-  let attributes = getLineageBaseAttributes(lineageId);
-  attributes = applyAttributeAdjustments(attributes, originProfile.attributeAdjustments);
-  attributes = applyAttributeAdjustments(attributes, getAgeBandAttributeAdjustments(form.ageBandId));
-  attributes = applyAttributeAdjustments(attributes, getHeightBandAttributeAdjustments(form.heightBandId));
-  attributes = applyAttributeAdjustments(attributes, getBuildAttributeAdjustments(form.buildId));
-  return applyCharacterAttributeAllocation(attributes, form.attributeAllocation);
+  const resolution = resolveCharacterCreationAttributes({
+    lineageId: form.lineageId.trim() || 'lineage.human',
+    sexId: form.sexId,
+    ageBandId: form.ageBandId,
+    heightBandId: form.heightBandId,
+    physiqueId: form.physiqueId,
+    natureId: form.natureId,
+    focusId: form.focusId,
+    backstoryId: form.backstoryId
+  });
+
+  return resolution.finalAttributes;
 }
 
 function resolveWorkingCharacterResources(
@@ -242,11 +272,19 @@ function resolveWorkingCharacterResources(
 ) {
   const lineageId = form.lineageId.trim() || 'lineage.human';
   const sexId = form.sexId === 'female' ? 'female' : 'male';
-  const originProfile = resolvePlayerOriginProfile({ lineageId, classId: null, sexId }, { level: 1, classLevel: 0 });
+  const originProfile = resolvePlayerOriginProfile(
+    { lineageId, classId: null, sexId },
+    createPlayerProgressionState({ legacyGrowth: { resourceGrowthLevel: 1, classLevel: 0 } })
+  );
   const resolution = resolvePlayerResources(
     {
       playerId: 'player.preview',
       attributes,
+      bodyState: createDefaultPlayerBodyState({
+        tick: demoSnapshot.clock.tick,
+        day: demoSnapshot.clock.day,
+        lineageId
+      }),
       resources: {
         hp: { current: originProfile.resolvedResourceMaxima.hp, max: originProfile.resolvedResourceMaxima.hp },
         mp: { current: originProfile.resolvedResourceMaxima.mp, max: originProfile.resolvedResourceMaxima.mp },
@@ -260,20 +298,21 @@ function resolveWorkingCharacterResources(
     [],
     demoSnapshot.clock.tick
   );
-  const scale = (resource: 'hp' | 'mp' | 'stamina', baseValue: number) => {
-    const spec = PREVIEW_RESOURCE_ATTRIBUTE_SCALING[resource];
-    const delta = spec.keys.reduce((total, key) => total + (attributes[key] - DEFAULT_PREVIEW_ATTRIBUTES[key]), 0);
-    return Math.max(1, baseValue + delta * spec.perPoint);
-  };
   return {
-    hp: scale('hp', resolution.resources.hp.max),
-    mp: scale('mp', resolution.resources.mp.max),
-    stamina: scale('stamina', resolution.resources.stamina.max)
+    hp: resolution.resources.hp.current,
+    mp: resolution.resources.mp.current,
+    stamina: resolution.resources.stamina.current
   };
 }
 
 function buildStarterTraits(lineageId: string): PlayerTraitState[] {
   return (LINEAGE_TRAIT_IDS[lineageId] ?? []).map((id) => ({ id, source: 'lineage' }));
+}
+
+function resolveLoreSkillLabels(skills: PlayerSkillState[]): string[] {
+  return skills
+    .filter((skill) => skill.id.startsWith('skill.knowledge.'))
+    .map((skill) => humanizeId(skill.id));
 }
 
 function isWeaponItem(itemKey: string): boolean {
@@ -391,16 +430,28 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
     startingAccessLabel: 'Land restrictions undecided',
     startingAccessDetail: 'Choose a homeland, city, and backstory before the local authorities can judge lawful standing.',
     identityMetrics: buildIdentityMetrics(form),
+    generatedProfileMetrics: buildGeneratedProfileMetrics(
+      resolveCharacterCreationAttributes({
+        lineageId: form.lineageId.trim() || 'lineage.human',
+        sexId: form.sexId,
+        ageBandId: form.ageBandId,
+        heightBandId: form.heightBandId,
+        physiqueId: form.physiqueId,
+        natureId: form.natureId,
+        focusId: form.focusId,
+        backstoryId: form.backstoryId
+      }).generatedProfilePoints
+    ),
     resourceMetrics: [toMetric('hp', 'HP', resources.hp), toMetric('mp', 'MP', resources.mp), toMetric('stamina', 'Stamina', resources.stamina)],
     attributeMetrics: buildAttributeMetrics(attributes),
     starterSkills: backstory?.startingSkillLabels ?? [],
-    starterKnowledge: backstory?.startingKnowledgeLabels ?? [],
+    starterLore: backstory ? resolveLoreSkillLabels(backstory.startingSkills) : [],
     starterTraits: [],
     starterGear: Object.values(equipment).flatMap((item) => (item ? [humanizeId(item.itemKey)] : [])),
     starterPack: (inventory.bags[0]?.stacks ?? []).map((item) => `${humanizeId(item.itemKey)} x${item.quantity}`),
     walletLabel: bundle ? formatWallet(bundle.startingCurrency) : null,
     starterNotes: [backstory?.detailText ?? '', bundle?.description ?? ''].filter(Boolean),
-    reviewNarrative: 'A life is still being forged. Choose lineage, identity, homeland, settlement, backstory, starting bundle, and final attribute allocation to shape the opening of the journey.'
+    reviewNarrative: 'A life is still being forged. Choose lineage, identity, homeland, settlement, backstory, and a starting bundle to shape the opening of the journey.'
   };
 }
 
@@ -416,18 +467,55 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
     form.startingBundleId,
     form.startingBundleChoiceSelections
   );
-  const progression = { level: 1, classLevel: 0, unspentAttributePoints: 0, unspentSkillPoints: 0 };
+  const progression = createPlayerProgressionState({
+    legacyGrowth: {
+      resourceGrowthLevel: 1,
+      classLevel: 0,
+      unspentAttributePoints: 0,
+      unspentSkillPoints: 0
+    }
+  });
   const playerName = form.playerName.trim();
   const playerId = `player.${playerName.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'new_adventurer'}`;
   const originProfile = resolvePlayerOriginProfile({ lineageId: form.lineageId, classId: null, sexId: form.sexId }, progression);
-  const attributes = resolveWorkingCharacterAttributes(form);
+  const attributeResolution = resolveCharacterCreationAttributes({
+    lineageId: form.lineageId,
+    sexId: form.sexId,
+    ageBandId: form.ageBandId,
+    heightBandId: form.heightBandId,
+    physiqueId: form.physiqueId,
+    natureId: form.natureId,
+    focusId: form.focusId,
+    backstoryId: form.backstoryId
+  });
+
+  if (attributeResolution.errors.length > 0) {
+    throw new Error(attributeResolution.errors[0]);
+  }
+
+  const attributes = attributeResolution.finalAttributes;
+  const canonicalAgeBandId = resolveCanonicalAgeBandId(form.ageBandId);
+  const canonicalPhysiqueId = resolveCanonicalPhysiqueId(form.physiqueId);
+  const canonicalNatureId = resolveCanonicalNatureId(form.natureId);
+  const canonicalFocusId = resolveCanonicalFocusId(form.focusId);
+
+  if (!canonicalAgeBandId || !canonicalPhysiqueId || !canonicalNatureId || !canonicalFocusId) {
+    throw new Error("Character identity selections could not be resolved to canonical ids.");
+  }
   const equipment = buildStarterEquipment(bundleStacks);
   const inventory = buildStarterInventory(bundleStacks, equipment);
   const currency = { ...bundle.startingCurrency };
+  const bodyState = createDefaultPlayerBodyState({
+    tick: baseSnapshot.clock.tick,
+    day: baseSnapshot.clock.day,
+    lineageId: form.lineageId,
+    runDifficulty: baseSnapshot.gameState.runDifficulty
+  });
   const resources = resolvePlayerResources(
     {
       playerId,
       attributes,
+      bodyState,
       resources: {
         hp: { current: originProfile.resolvedResourceMaxima.hp, max: originProfile.resolvedResourceMaxima.hp },
         mp: { current: originProfile.resolvedResourceMaxima.mp, max: originProfile.resolvedResourceMaxima.mp },
@@ -441,7 +529,11 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
     [],
     baseSnapshot.clock.tick
   );
-  const knowledgeFamiliarity: PlayerKnowledgeFamiliarityState[] = backstory.startingKnowledge.map((entry) => ({ trackId: entry.trackId, level: entry.level }));
+  const geographicKnowledge = [
+    { scope: 'continent' as GeographicKnowledgeScope, geographyId: selectedWorld.continent.id, level: 1 },
+    { scope: 'region' as GeographicKnowledgeScope, geographyId: selectedWorld.region.id, level: 1 },
+    { scope: 'settlement' as GeographicKnowledgeScope, geographyId: selectedWorld.settlement.id, level: 1 }
+  ];
   const traits = buildStarterTraits(form.lineageId);
   const sessionState = buildSessionState(playerName, form, selectedWorld, backstory.label, bundle.label);
   const activeQuestIds = sessionState.questJournal.filter((entry) => entry.category === 'active' || entry.category === 'contracts').map((entry) => entry.id);
@@ -463,8 +555,10 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
         startingBundleId: form.startingBundleId,
         identityProfile: {
           heightCm: getRepresentativeHeightCm(form.lineageId, form.heightBandId),
-          ageBandId: form.ageBandId,
-          buildId: form.buildId,
+          ageBandId: canonicalAgeBandId,
+          physiqueId: canonicalPhysiqueId,
+          natureId: canonicalNatureId,
+          focusId: canonicalFocusId,
           hairColorId: form.hairColorId,
           hairHighlightColorId: null,
           eyeColorId: form.eyeColorId,
@@ -472,6 +566,7 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
         }
       },
       attributes,
+      bodyState,
       resources: resources.resources,
       resourceRuntime: resources.resourceRuntime,
       progression,
@@ -482,23 +577,44 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
       equipment,
       inventory,
       activeEffects: [],
-      location: { settlementId: selectedWorld.settlement.id, siteLabel: selectedWorld.settlement.label, worldMapId: selectedWorld.settlementRecord.visualMapRef?.mapId ?? null, knownSettlementIds: [selectedWorld.settlement.id] },
+      location: {
+        settlementId: selectedWorld.settlement.id,
+        siteLabel: selectedWorld.settlement.label,
+        worldMapId: selectedWorld.settlementRecord.visualMapRef?.mapId ?? null
+      },
       currency,
       originProfile,
-      reputation: [],
+      standing: [],
+      reputation: {
+        fame: [],
+        notoriety: [],
+        notorietyEvents: []
+      },
       titles: [],
-      knowledgeFamiliarity,
+      geographicKnowledge,
       discoveryChronicle: { entries: [], lastUpdatedTick: null },
-      discoveredRegions: [selectedWorld.region.id],
+      achievements: createDefaultCharacterAchievementsState(),
       activeQuestIds,
       completedQuestIds,
       flags: ['player.new_game', `player.backstory.${backstory.id}`, `player.starting_bundle.${bundle.id}`, `player.start.${selectedWorld.settlement.id}`, `player.start_authority.${selectedWorld.settlement.landAuthorityType}`, `player.start_mode.${selectedWorld.settlement.access.spawnMode}`],
       combatProfile: createDefaultPlayerCombatProfile(),
-      saveMeta: { totalPlayTicks: 0, lastRestAtTick: baseSnapshot.clock.tick, lastSavedAtTick: baseSnapshot.clock.tick }
+      saveMeta: {
+        totalPlayTicks: 0,
+        lastRestAtTick: baseSnapshot.clock.tick,
+        lastSavedAtTick: baseSnapshot.clock.tick,
+        lastReputationDecayDay: baseSnapshot.clock.day
+      }
     },
     worldState: { ...baseSnapshot.worldState, activeRegions: Array.from(new Set([selectedWorld.region.id, ...baseSnapshot.worldState.activeRegions])) },
     sessionState
   };
+  syncPlayerRuntimeState(
+    snapshot.playerState,
+    snapshot.clock.tick,
+    snapshot.clock.day,
+    [],
+    snapshot.gameState.runDifficulty
+  );
   const gearLabels = Object.values(equipment).flatMap((item) => (item ? [humanizeId(item.itemKey)] : []));
   const starterPackLabels = (inventory.bags[0]?.stacks ?? []).map((item) => `${humanizeId(item.itemKey)} x${item.quantity}`);
   return {
@@ -513,8 +629,9 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
     chosenOriginLabel: `${originProfile.lineageLabel} | ${backstory.label}`,
     reviewNarrative: buildReviewNarrative({ characterName: playerName, backstoryLabel: backstory.label, settlementLabel: selectedWorld.settlement.label, regionLabel: selectedWorld.region.label, bundleLabel: bundle.label, dominantIndustries: selectedWorld.settlement.dominantIndustries, keyResources: selectedWorld.settlement.keyResources, gearLabels, starterPackLabels, walletLabel: formatWallet(currency) }),
     attributes,
+    generatedProfileMetrics: buildGeneratedProfileMetrics(attributeResolution.generatedProfilePoints),
     resources: { hp: resources.resources.hp.current, mp: resources.resources.mp.current, stamina: resources.resources.stamina.current },
-    knowledgeLabels: backstory.startingKnowledgeLabels,
+    loreLabels: resolveLoreSkillLabels(backstory.startingSkills),
     currency,
     gearLabels,
     starterPackLabels,
@@ -542,10 +659,11 @@ export function buildCharacterCreationPreview(form: CharacterCreationFormState):
       startingAccessLabel: derived.startingAccessLabel,
       startingAccessDetail: derived.startingAccessDetail,
       identityMetrics: buildIdentityMetrics(form),
+      generatedProfileMetrics: derived.generatedProfileMetrics,
       resourceMetrics: [toMetric('hp', 'HP', derived.resources.hp), toMetric('mp', 'MP', derived.resources.mp), toMetric('stamina', 'Stamina', derived.resources.stamina)],
       attributeMetrics: buildAttributeMetrics(derived.attributes),
       starterSkills: derived.starterSkillLabels,
-      starterKnowledge: derived.knowledgeLabels,
+      starterLore: derived.loreLabels,
       starterTraits: derived.starterTraitLabels,
       starterGear: derived.gearLabels,
       starterPack: derived.starterPackLabels,
@@ -558,9 +676,20 @@ export function buildCharacterCreationPreview(form: CharacterCreationFormState):
   }
 }
 
-export function createNewGameSnapshot(form: CharacterCreationFormState): SaveSnapshot {
+export function createNewGameSnapshot(
+  form: CharacterCreationFormState,
+  accountId = DEFAULT_ACCOUNT_ID
+): SaveSnapshot {
   const validation = validateCharacterCreationForm(form);
   if (!validation.isValid) throw new Error(Object.values(validation.errors)[0] ?? 'Complete character creation before starting the campaign.');
   if (!hasCompleteCharacterCreationSelections(form)) throw new Error('Complete character creation before starting the campaign.');
-  return deriveCharacterCreationState({ ...form, playerName: form.playerName.trim() }).snapshot;
+  const snapshot = deriveCharacterCreationState({
+    ...form,
+    playerName: form.playerName.trim()
+  }).snapshot;
+
+  return {
+    ...snapshot,
+    accountId
+  };
 }

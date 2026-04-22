@@ -1,0 +1,86 @@
+{
+  "records": [
+    {
+      "id": "consume.ration_bundle",
+      "calories": 24,
+      "protein": 6,
+      "carbs": 10,
+      "fat": 5,
+      "hydration": 4,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.traveler_ration",
+      "calories": 22,
+      "protein": 5,
+      "carbs": 9,
+      "fat": 5,
+      "hydration": 3,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.trail_meal",
+      "calories": 30,
+      "protein": 7,
+      "carbs": 12,
+      "fat": 6,
+      "hydration": 5,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.bread_loaf",
+      "calories": 18,
+      "protein": 2,
+      "carbs": 12,
+      "fat": 1,
+      "hydration": 1,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.game_stew",
+      "calories": 34,
+      "protein": 10,
+      "carbs": 9,
+      "fat": 7,
+      "hydration": 10,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.seafood_stew",
+      "calories": 32,
+      "protein": 10,
+      "carbs": 8,
+      "fat": 6,
+      "hydration": 11,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.inn_hearty_meal",
+      "calories": 38,
+      "protein": 11,
+      "carbs": 13,
+      "fat": 8,
+      "hydration": 12,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.tavern_fish_plate",
+      "calories": 28,
+      "protein": 9,
+      "carbs": 7,
+      "fat": 5,
+      "hydration": 8,
+      "useVerb": "Eat"
+    },
+    {
+      "id": "consume.ale_cask",
+      "calories": 10,
+      "protein": 0,
+      "carbs": 5,
+      "fat": 0,
+      "hydration": 8,
+      "intoxication": 22,
+      "useVerb": "Drink"
+    }
+  ]
+}

@@ -1,10 +1,23 @@
-import {
+﻿import {
   applyAttributeAdjustments,
   createEmptyPlayerResourceRuntimeState,
   resolvePlayerOriginProfile,
   resolvePlayerResources,
   type SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
+import {
+  createDefaultPlayerBodyState,
+  createRunDifficultyState,
+  createDefaultPlayerStatGrowthState,
+  createPlayerProgressionState,
+  syncPlayerRuntimeState
+} from '../../../../packages/engines/player-engine/src/index.js';
+import {
+  createDefaultCharacterAchievementsState
+} from '../../../../packages/engines/game-engine/src/account-achievement-state.js';
+import {
+  DEFAULT_ACCOUNT_ID
+} from '../../../../packages/engines/game-engine/src/legacy-account.js';
 
 function createDefaultPlayerCombatProfile() {
   return {
@@ -17,6 +30,7 @@ function createDefaultGameState() {
   return {
     worldVersion: '0.1.0',
     activeScenario: 'bootstrap',
+    runDifficulty: createRunDifficultyState(),
     mode: {
       id: 'normal' as const,
       combatPauseAllowed: true
@@ -63,15 +77,28 @@ const demoCoreData = {
   classId: null,
   jobId: null,
   backstoryId: 'backstory.local_hero',
-  startingBundleId: 'starting_bundle.traveler'
+  startingBundleId: 'starting_bundle.traveler',
+  identityProfile: {
+    heightCm: 170,
+    ageBandId: 'prime' as const,
+    physiqueId: 'athletic' as const,
+    natureId: 'disciplined' as const,
+    focusId: 'balanced' as const,
+    hairColorId: 'brown',
+    hairHighlightColorId: null,
+    eyeColorId: 'hazel',
+    skinToneId: 'warm_beige'
+  }
 };
 
-const demoProgression = {
-  level: 27,
-  classLevel: 0,
-  unspentAttributePoints: 1,
-  unspentSkillPoints: 2
-};
+const demoProgression = createPlayerProgressionState({
+  legacyGrowth: {
+    resourceGrowthLevel: 27,
+    classLevel: 0,
+    unspentAttributePoints: 1,
+    unspentSkillPoints: 2
+  }
+});
 
 const demoOriginProfile = resolvePlayerOriginProfile(demoCoreData, demoProgression);
 const demoAttributes = applyAttributeAdjustments(
@@ -146,6 +173,22 @@ const demoEquipment = {
   },
   'slot.accessory.ankle': null
 };
+const demoBodyState = createDefaultPlayerBodyState({
+  tick: 1438,
+  day: 21,
+  lineageId: demoCoreData.lineageId,
+  runDifficulty: createDefaultGameState().runDifficulty
+});
+const demoStatGrowth = createDefaultPlayerStatGrowthState(21);
+demoStatGrowth.load.AGI = 4.8;
+demoStatGrowth.load.CON = 5.9;
+demoStatGrowth.load.WIS = 3.6;
+demoBodyState.energyReserve.quick = 58;
+demoBodyState.energyReserve.stored = 71;
+demoBodyState.hydrationLevel = 63;
+demoBodyState.fatigue = 29;
+demoBodyState.fatigueDebt = 14;
+demoBodyState.dailyHighIntensityLoad = 1;
 const demoResourceRuntime = createEmptyPlayerResourceRuntimeState();
 demoResourceRuntime.modifiers = [
   {
@@ -214,6 +257,7 @@ const demoResourceResolution = resolvePlayerResources(
   {
     playerId: 'player.arden_voss',
     attributes: demoAttributes,
+    bodyState: demoBodyState,
     resources: {
       hp: { current: 170, max: demoOriginProfile.resolvedResourceMaxima.hp },
       mp: { current: 115, max: demoOriginProfile.resolvedResourceMaxima.mp },
@@ -229,7 +273,8 @@ const demoResourceResolution = resolvePlayerResources(
 );
 
 export const demoSnapshot: SaveSnapshot = {
-  snapshotVersion: '0.1.0',
+  accountId: DEFAULT_ACCOUNT_ID,
+  snapshotVersion: '0.6.0',
   capturedAtTick: 1438,
   clock: {
     tick: 1438,
@@ -245,12 +290,14 @@ export const demoSnapshot: SaveSnapshot = {
     regionId: 'region.verdant_thalos',
     coreData: demoCoreData,
     attributes: demoAttributes,
+    statGrowth: demoStatGrowth,
+    bodyState: demoBodyState,
     resources: demoResourceResolution.resources,
     resourceRuntime: demoResourceResolution.resourceRuntime,
     progression: demoProgression,
     skills: [
       { id: 'skill.resource.spotting.fauna', rank: 9, source: 'trained' },
-      { id: 'skill.knowledge.universal', rank: 7, source: 'trained' },
+      { id: 'skill.knowledge.general_lore', rank: 7, source: 'trained' },
       { id: 'skill.combat.weapon.archery', rank: 6, source: 'trained' }
     ],
     spells: [
@@ -288,6 +335,7 @@ export const demoSnapshot: SaveSnapshot = {
           slotCapacity: 20,
           stacks: [
             { itemId: 'item.arrow_bundle', itemKey: 'arrow_bundle', quantity: 1 },
+            { itemId: 'item.ration_bundle', itemKey: 'ration_bundle', quantity: 2 },
             { itemId: 'item.field_bandage', itemKey: 'field_bandage', quantity: 4 },
             { itemId: 'item.compass', itemKey: 'compass', quantity: 1 }
           ]
@@ -299,8 +347,7 @@ export const demoSnapshot: SaveSnapshot = {
     location: {
       settlementId: 'settlement.aurelis',
       siteLabel: 'Harbor Quarter',
-      worldMapId: 'world_map.first_world',
-      knownSettlementIds: ['settlement.aurelis', 'settlement.stonevein', 'settlement.sunspire_reach']
+      worldMapId: 'world_map.first_world'
     },
     currency: {
       gold: 2418,
@@ -308,7 +355,7 @@ export const demoSnapshot: SaveSnapshot = {
       copper: 12
     },
     originProfile: demoOriginProfile,
-    reputation: [
+    standing: [
       {
         id: 'rep.harbor_office',
         label: 'Saltmere Harbor Office',
@@ -324,13 +371,37 @@ export const demoSnapshot: SaveSnapshot = {
         effects: ['priority_bids', 'credit_line']
       }
     ],
+    reputation: {
+      fame: [
+        {
+          scope: 'local',
+          scopeId: 'settlement.aurelis',
+          branchId: 'civic',
+          earned: 18,
+          currentEarned: 14,
+          historical: 18,
+          lastMeaningfulGainTick: 1438
+        },
+        {
+          scope: 'regional',
+          scopeId: 'region.verdant_thalos',
+          branchId: 'heroic',
+          earned: 8,
+          currentEarned: 7,
+          historical: 8,
+          lastMeaningfulGainTick: 1438
+        }
+      ],
+      notoriety: [],
+      notorietyEvents: []
+    },
     titles: [
       {
         id: 'title.knowledge.flora.scholar',
         name: 'Scholar',
         family: 'knowledge',
         trackId: 'title_track.knowledge.flora',
-        sourceSkillId: 'skill.knowledge.flora',
+        sourceSkillId: 'skill.knowledge.flora_lore',
         milestone: {
           threshold: 100,
           requiresMasteryTrial: false,
@@ -354,6 +425,7 @@ export const demoSnapshot: SaveSnapshot = {
         effects: ['magic.elemental.power']
       }
     ],
+    achievements: createDefaultCharacterAchievementsState(),
     discoveryChronicle: {
       entries: [
         {
@@ -419,7 +491,15 @@ export const demoSnapshot: SaveSnapshot = {
       ],
       lastUpdatedTick: 1438
     },
-    discoveredRegions: ['region.verdant_thalos', 'region.auric_marches', 'region.starfall_isle'],
+    geographicKnowledge: [
+      { scope: 'continent', geographyId: 'region.kaelvar', level: 1 },
+      { scope: 'region', geographyId: 'region.verdant_thalos', level: 1 },
+      { scope: 'region', geographyId: 'region.auric_marches', level: 1 },
+      { scope: 'region', geographyId: 'region.starfall_isle', level: 1 },
+      { scope: 'settlement', geographyId: 'settlement.aurelis', level: 1 },
+      { scope: 'settlement', geographyId: 'settlement.stonevein', level: 1 },
+      { scope: 'settlement', geographyId: 'settlement.sunspire_reach', level: 1 }
+    ],
     activeQuestIds: ['quest.ashen_reef_survey', 'quest.rivet_shortfall_relief'],
     completedQuestIds: ['quest.ledger_recovery'],
     flags: ['weather.storm_front_active', 'guild.harbor_priority'],
@@ -427,7 +507,8 @@ export const demoSnapshot: SaveSnapshot = {
     saveMeta: {
       totalPlayTicks: 52340,
       lastRestAtTick: 1412,
-      lastSavedAtTick: 1438
+      lastSavedAtTick: 1438,
+      lastReputationDecayDay: 18
     }
   },
   worldState: {
@@ -1079,3 +1160,14 @@ export const demoSnapshot: SaveSnapshot = {
     ]
   }
 };
+
+syncPlayerRuntimeState(
+  demoSnapshot.playerState,
+  demoSnapshot.clock.tick,
+  demoSnapshot.clock.day,
+  [],
+  demoSnapshot.gameState.runDifficulty
+);
+
+
+

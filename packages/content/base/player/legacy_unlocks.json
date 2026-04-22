@@ -1,0 +1,240 @@
+{
+  "records": [
+    {
+      "id": "legacy.unlock.account.ledger_seal",
+      "category": "Account",
+      "kind": "binary",
+      "title": "Ledger Seal",
+      "description": "Marks the account as carrying an authenticated Legacy record.",
+      "cost": {
+        "type": "fixed",
+        "amount": 1
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.flag.ledger_seal",
+          "value": true
+        }
+      ],
+      "tags": ["account", "cosmetic"]
+    },
+    {
+      "id": "legacy.unlock.chronicle.bound_index",
+      "category": "Chronicle",
+      "kind": "binary",
+      "title": "Bound Index",
+      "description": "Adds a prepared account marker for future Chronicle presentation upgrades.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1,
+          "outcome": "archived"
+        }
+      ],
+      "effects": [
+        {
+          "type": "chronicle_presentation",
+          "key": "legacy.chronicle.bound_index",
+          "value": true
+        }
+      ],
+      "tags": ["chronicle", "presentation"]
+    },
+    {
+      "id": "legacy.unlock.title.wayfarer_mark",
+      "category": "Titles",
+      "kind": "tiered",
+      "title": "Wayfarer's Mark",
+      "description": "Unlocks account title ranks that can later be surfaced in profile presentation.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 5, 10]
+      },
+      "rankRequirements": [
+        [
+          {
+            "type": "achievement",
+            "achievementId": "achievement.account.first_chronicle"
+          }
+        ],
+        [
+          {
+            "type": "run_count",
+            "count": 1,
+            "outcome": "archived"
+          }
+        ],
+        [
+          {
+            "type": "echo_peak",
+            "level": 8
+          }
+        ]
+      ],
+      "effects": [
+        {
+          "type": "profile_title",
+          "key": "title.legacy.wayfarer_mark"
+        }
+      ],
+      "tags": ["title", "cosmetic"]
+    },
+    {
+      "id": "legacy.unlock.origins.remembered_path",
+      "category": "Origins",
+      "kind": "tiered",
+      "title": "Remembered Path",
+      "description": "Records origin presentation ranks for future starting-story customization.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [3, 8, 16]
+      },
+      "rankRequirements": [
+        [
+          {
+            "type": "run_count",
+            "count": 1
+          }
+        ],
+        [
+          {
+            "type": "run_count",
+            "count": 2,
+            "outcome": "archived"
+          }
+        ],
+        [
+          {
+            "type": "survived_days",
+            "days": 10
+          }
+        ]
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.origin.remembered_path",
+          "value": true
+        }
+      ],
+      "tags": ["origin", "presentation"]
+    },
+    {
+      "id": "legacy.unlock.trait.recorded_temperament",
+      "category": "Traits",
+      "kind": "binary",
+      "title": "Recorded Temperament",
+      "description": "Preserves an account-level trait note for later non-power presentation.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 2
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.trait.recorded_temperament",
+          "value": true
+        }
+      ],
+      "tags": ["trait", "cosmetic"]
+    },
+    {
+      "id": "legacy.unlock.perk.campfire_notes",
+      "category": "Perks",
+      "kind": "incremental",
+      "title": "Campfire Notes",
+      "description": "Creates repeatable account notes for future quality-of-life presentation.",
+      "maxRank": 5,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 4, 7, 11, 16]
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.perk.campfire_notes",
+          "value": true
+        }
+      ],
+      "tags": ["account", "qol"]
+    },
+    {
+      "id": "legacy.unlock.heir.inheritance_thread",
+      "category": "Heir",
+      "kind": "incremental",
+      "title": "Inheritance Thread",
+      "description": "Tracks future inheritance-use upgrade ranks without activating heir starts yet.",
+      "maxRank": 5,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [8, 13, 21, 34, 55]
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1,
+          "outcome": "archived",
+          "archiveReason": "retired"
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_inheritance_uses",
+          "key": "legacy.heir.inheritance_thread",
+          "value": 1
+        }
+      ],
+      "tags": ["heir", "future"]
+    },
+    {
+      "id": "legacy.unlock.account.trade_charter",
+      "category": "Account",
+      "kind": "binary",
+      "title": "Trade Charter",
+      "description": "A future account charter gated by wealth systems that are not live yet.",
+      "cost": {
+        "type": "fixed",
+        "amount": 4
+      },
+      "requirements": [
+        {
+          "type": "wealth",
+          "amount": 1000
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.account.trade_charter",
+          "value": true
+        }
+      ],
+      "tags": ["account", "future"]
+    }
+  ]
+}

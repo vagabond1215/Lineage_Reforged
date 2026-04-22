@@ -2,7 +2,7 @@
 
 Generated: 2026-03-11
 
-This report compares current Cataclysm RPG content DB coverage against common survival/sim/builder patterns (RimWorld, ARK, Valheim, Terraria, Don't Starve, Satisfactory references).
+This report compares current Echoes of Legacy content DB coverage against common survival/sim/builder patterns (RimWorld, ARK, Valheim, Terraria, Don't Starve, Satisfactory references).
 
 ## Snapshot of Current Coverage
 - Market entries: 373

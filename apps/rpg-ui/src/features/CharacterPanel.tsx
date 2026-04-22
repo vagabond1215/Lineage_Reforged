@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { ConsumableEffectPreview } from '../components/body-state/ConsumableEffectPreview';
+import { ReadinessCard } from '../components/body-state/ReadinessCard';
 import { FavoriteButton } from '../components/ui/FavoriteButton';
 import { PanelLayout } from '../components/layout/PanelLayout';
 import { Card } from '../components/ui/Card';
@@ -15,6 +17,7 @@ import {
   buildInventoryEntries,
   buildSkillItems,
   buildTraitEffectItems,
+  consumeInventoryItem,
   equipInventoryItem,
   getFavoriteItemKeys,
   getInventoryCategories,
@@ -105,6 +108,28 @@ function toDetail(item: ListItem | undefined) {
   };
 }
 
+function renderMetricTooltip(metric: { tooltip?: { title: string; body: string; footer?: string } }) {
+  if (!metric.tooltip) {
+    return null;
+  }
+
+  return (
+    <span className="block text-left">
+      <span className="font-semibold text-[color:var(--color-text-strong)]">
+        {metric.tooltip.title}
+      </span>
+      <span className="mt-1 block text-[color:var(--color-text-soft)]">
+        {metric.tooltip.body}
+      </span>
+      {metric.tooltip.footer && (
+        <span className="mt-2 block text-[color:var(--color-muted-strong)]">
+          {metric.tooltip.footer}
+        </span>
+      )}
+    </span>
+  );
+}
+
 export function CharacterPanel({
   accent,
   searchQuery,
@@ -134,13 +159,31 @@ export function CharacterPanel({
         equipment: equipmentEntries.filter((entry) => entry.item).length,
         inventory: inventoryEntries.length,
         traits: traitItems.length,
+        'geographic-knowledge': characterData.lists.geographicKnowledge.length,
+        standing: characterData.lists.standing.length,
         reputation: characterData.lists.reputation.length,
         discoveries: characterData.lists.discoveries.length
       }),
-    [characterData.lists.attributes.length, characterData.lists.discoveries.length, characterData.lists.reputation.length, equipmentEntries, inventoryEntries.length, skillItems.length, traitItems.length]
+    [
+      characterData.lists.attributes.length,
+      characterData.lists.discoveries.length,
+      characterData.lists.geographicKnowledge.length,
+      characterData.lists.reputation.length,
+      characterData.lists.standing.length,
+      equipmentEntries,
+      inventoryEntries.length,
+      skillItems.length,
+      traitItems.length
+    ]
   );
 
   const attributeItems = characterData.lists.attributes.filter((item) =>
+    matchesQuery(searchQuery, item.title, item.subtitle, item.tags, item.detailSummary)
+  );
+  const standingItems = characterData.lists.standing.filter((item) =>
+    matchesQuery(searchQuery, item.title, item.subtitle, item.tags, item.detailSummary)
+  );
+  const geographicKnowledgeItems = characterData.lists.geographicKnowledge.filter((item) =>
     matchesQuery(searchQuery, item.title, item.subtitle, item.tags, item.detailSummary)
   );
   const reputationItems = characterData.lists.reputation.filter((item) =>
@@ -168,7 +211,7 @@ export function CharacterPanel({
       matchesQuery(searchQuery, entry.title, entry.containerLabel, [entry.category, entry.itemKey], entry.detail.summary)
     );
 
-    return sortInventoryEntries(bySearch, inventorySort, favoriteItemKeys);
+    return sortInventoryEntries(bySearch, inventorySort, favoriteItemKeys, inventoryCategory);
   }, [favoriteItemKeys, inventoryCategory, inventoryEntries, inventorySort, searchQuery]);
 
   const selectedAttribute = attributeItems.find((item) => item.id === selectedIds.attributes) ?? attributeItems[0];
@@ -176,6 +219,9 @@ export function CharacterPanel({
   const selectedEquipment = filteredEquipmentEntries.find((entry) => entry.id === selectedIds.equipment) ?? filteredEquipmentEntries[0];
   const selectedInventory = filteredInventoryEntries.find((entry) => entry.id === selectedIds.inventory) ?? filteredInventoryEntries[0];
   const selectedTrait = filteredTraitItems.find((item) => item.id === selectedIds.traits) ?? filteredTraitItems[0];
+  const selectedGeographicKnowledge =
+    geographicKnowledgeItems.find((item) => item.id === selectedIds['geographic-knowledge']) ?? geographicKnowledgeItems[0];
+  const selectedStanding = standingItems.find((item) => item.id === selectedIds.standing) ?? standingItems[0];
   const selectedReputation = reputationItems.find((item) => item.id === selectedIds.reputation) ?? reputationItems[0];
   const selectedDiscovery = discoveryItems.find((item) => item.id === selectedIds.discoveries) ?? discoveryItems[0];
 
@@ -189,9 +235,13 @@ export function CharacterPanel({
           : activeSection === 'equipment'
             ? selectedEquipment?.detail
             : activeSection === 'inventory'
-              ? selectedInventory?.detail
-              : activeSection === 'traits'
-                ? toDetail(selectedTrait)
+            ? selectedInventory?.detail
+            : activeSection === 'traits'
+              ? toDetail(selectedTrait)
+              : activeSection === 'geographic-knowledge'
+                ? toDetail(selectedGeographicKnowledge)
+                : activeSection === 'standing'
+                  ? toDetail(selectedStanding)
                 : activeSection === 'reputation'
                   ? toDetail(selectedReputation)
                   : toDetail(selectedDiscovery);
@@ -240,6 +290,10 @@ export function CharacterPanel({
   const overviewMain = (
     <div className="panel-scroll h-full space-y-4 overflow-auto">
       {noticeBlock}
+      <ReadinessCard
+        readiness={characterData.readinessCard}
+        projection={characterData.recoveryProjection}
+      />
       <Card title="Progression Snapshot" accent={accent}>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {characterData.overviewMetrics.map((metric) => (
@@ -259,7 +313,20 @@ export function CharacterPanel({
               className="flex items-start justify-between gap-4 border-b border-white/8 px-4 py-3 last:border-b-0"
             >
               <div>
-                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{metric.label}</div>
+                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                  {metric.tooltip ? (
+                    <Tooltip
+                      content={renderMetricTooltip(metric)}
+                      panelClassName="w-72 max-w-[min(18rem,calc(100vw-2rem))] text-left leading-5"
+                      portal
+                      align="start"
+                    >
+                      <span className="cursor-help">{metric.label}</span>
+                    </Tooltip>
+                  ) : (
+                    metric.label
+                  )}
+                </div>
                 <div className="mt-1 text-sm text-slate-400">{metric.detail}</div>
               </div>
               <div className="text-xl font-semibold text-slate-50">{metric.value}</div>
@@ -456,12 +523,20 @@ export function CharacterPanel({
                   <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">x{entry.quantity}</span>
                   <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">{entry.category}</span>
                   {entry.preferredSlotId && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('accent')}`}>Equipable</span>}
+                  {entry.consumePreview?.highlightLabel && (
+                    <span className="rounded-full border border-emerald-300/20 bg-emerald-200/10 px-2 py-1 text-[11px] text-emerald-50">
+                      {entry.consumePreview.highlightLabel}
+                    </span>
+                  )}
                 </div>
               </button>
             );
           })}
         </div>
       </Card>
+      {selectedInventory?.consumePreview && (
+        <ConsumableEffectPreview preview={selectedInventory.consumePreview} />
+      )}
       <Card title="Item Actions" accent={accent}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="text-sm text-slate-300">
@@ -486,11 +561,19 @@ export function CharacterPanel({
               onClick={() => selectedInventory && toggleFavorite(selectedInventory.itemKey, selectedInventory.title)}
               disabled={!selectedInventory}
             />
-            <Tooltip content="Consumable use hooks are not wired into the simulation yet.">
-              <span className="inline-flex">
-                <ActionButton label="Use Consumable" disabled tone="warning" />
-              </span>
-            </Tooltip>
+            <ActionButton
+              label="Use Consumable"
+              onClick={() => {
+                if (!selectedInventory) {
+                  return;
+                }
+
+                const result = consumeInventoryItem(snapshot, selectedInventory);
+                applyNotice(result.snapshot, result.notice);
+              }}
+              disabled={!selectedInventory || selectedInventory.category !== 'consumable'}
+              tone="warning"
+            />
           </div>
         </div>
       </Card>
@@ -510,6 +593,10 @@ export function CharacterPanel({
               ? inventoryMain
               : activeSection === 'traits'
                 ? listSection('Traits And Effects', filteredTraitItems, selectedTrait?.id, 'traits', 'No traits or effects match the active search.')
+                : activeSection === 'geographic-knowledge'
+                  ? listSection('Geographic Knowledge', geographicKnowledgeItems, selectedGeographicKnowledge?.id, 'geographic-knowledge', 'No known places match the active search.')
+                : activeSection === 'standing'
+                  ? listSection('Standing', standingItems, selectedStanding?.id, 'standing', 'No faction standing records match the active search.')
                 : activeSection === 'reputation'
                   ? listSection('Reputation', reputationItems, selectedReputation?.id, 'reputation', 'No reputation records match the active search.')
                   : listSection('Discoveries', discoveryItems, selectedDiscovery?.id, 'discoveries', 'No discoveries match the active search.');

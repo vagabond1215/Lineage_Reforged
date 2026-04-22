@@ -1,4 +1,4 @@
-{
+﻿{
   "records": [
     {
       "id": "title.combat.sword.novice",
@@ -191,7 +191,7 @@
       "name": "Student",
       "family": "knowledge",
       "trackId": "title_track.knowledge.flora",
-      "sourceSkillId": "skill.knowledge.flora",
+      "sourceSkillId": "skill.knowledge.flora_lore",
       "milestone": {
         "threshold": 50,
         "requiresMasteryTrial": false,
@@ -211,7 +211,7 @@
       "name": "Scholar",
       "family": "knowledge",
       "trackId": "title_track.knowledge.flora",
-      "sourceSkillId": "skill.knowledge.flora",
+      "sourceSkillId": "skill.knowledge.flora_lore",
       "milestone": {
         "threshold": 100,
         "requiresMasteryTrial": false,
@@ -232,7 +232,7 @@
       "name": "Master",
       "family": "knowledge",
       "trackId": "title_track.knowledge.flora",
-      "sourceSkillId": "skill.knowledge.flora",
+      "sourceSkillId": "skill.knowledge.flora_lore",
       "milestone": {
         "threshold": 125,
         "requiresMasteryTrial": true,
@@ -313,3 +313,6 @@
     }
   ]
 }
+
+
+

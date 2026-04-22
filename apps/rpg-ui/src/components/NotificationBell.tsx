@@ -9,13 +9,15 @@ type NotificationBellProps = {
 
 export function NotificationBell({ items }: NotificationBellProps) {
   const [open, setOpen] = useState(false);
+  const topBarButtonClass =
+    'rounded-full border border-slate-400/25 bg-[rgba(54,63,75,0.9)] p-3 text-slate-100 shadow-[0_10px_24px_rgba(2,6,23,0.22)] transition hover:border-slate-300/32 hover:bg-[rgba(69,80,95,0.96)]';
 
   return (
     <div className="relative z-[110]">
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="relative rounded-full border border-white/10 bg-white/5 p-3 text-slate-200 transition hover:bg-white/10"
+        className={`relative ${topBarButtonClass}`}
         aria-label="Open notifications"
       >
         <Icon name="bell" className="h-5 w-5" />

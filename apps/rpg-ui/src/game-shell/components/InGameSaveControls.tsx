@@ -7,6 +7,7 @@ type InGameSaveControlsProps = {
   hasUnsavedChanges: boolean;
   onSave: () => void;
   onQuickSave: () => void;
+  onRetireCharacter: () => void;
   onReturnToMainMenu: () => void;
   embedded?: boolean;
 };
@@ -17,6 +18,7 @@ export function InGameSaveControls({
   hasUnsavedChanges,
   onSave,
   onQuickSave,
+  onRetireCharacter,
   onReturnToMainMenu,
   embedded = false
 }: InGameSaveControlsProps) {
@@ -30,6 +32,8 @@ export function InGameSaveControls({
             <div className="mt-1 text-xs text-slate-400">
               {activeSlot?.hasSave
                 ? activeSlot.lastSavedLabel
+                : activeSlot?.status === 'incompatible'
+                  ? 'This slot contains data from an older incompatible save format that predates the account-scoped Legacy ledger.'
                 : activeSlot?.status === 'corrupt'
                   ? 'This slot previously held unreadable data.'
                   : 'No persisted save has been written yet.'}
@@ -73,6 +77,13 @@ export function InGameSaveControls({
             className="rounded-full border border-cyan-300/20 bg-cyan-200/10 px-4 py-2 text-sm text-cyan-50 transition hover:bg-cyan-200/15"
           >
             Quick Save
+          </button>
+          <button
+            type="button"
+            onClick={onRetireCharacter}
+            className="rounded-full border border-rose-300/20 bg-rose-200/10 px-4 py-2 text-sm text-rose-50 transition hover:bg-rose-200/15"
+          >
+            Retire Character
           </button>
           <button
             type="button"

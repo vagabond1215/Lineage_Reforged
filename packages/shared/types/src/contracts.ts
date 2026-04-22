@@ -796,6 +796,77 @@ export interface QuestOfferObjective {
   quantity: number;
 }
 
+export type ReputationScope = "local" | "regional" | "continental" | "world";
+export type ReputationAxis = "fame" | "notoriety";
+export type FameBranchId =
+  | "civic"
+  | "folk"
+  | "trade"
+  | "martial"
+  | "heroic"
+  | "political"
+  | "commercial"
+  | "historical"
+  | "legendary"
+  | "mythic";
+export type NotorietyCategoryId =
+  | "theft"
+  | "fraud"
+  | "violent"
+  | "murder"
+  | "arson"
+  | "banditry"
+  | "treason"
+  | "sacrilege"
+  | "smuggling";
+export type NotorietySeverityId = "minor" | "standard" | "major";
+export type NotorietyModifierId =
+  | "mass"
+  | "organized"
+  | "repeat"
+  | "public"
+  | "against_nobility"
+  | "against_temple"
+  | "wartime"
+  | "ritual";
+export type FameRecognitionBandId = "known" | "admired" | "renowned" | "legendary" | "mythic";
+export type ReputationHistoricalTierId = "common" | "historical" | "epic";
+export type NotorietySeriousnessClassId =
+  | "nuisance"
+  | "offender"
+  | "outlaw"
+  | "menace"
+  | "infamous"
+  | "atrocity_marked";
+export type ReputationExposureRequirement = "public" | "witnessed_or_reported" | "evidenced";
+export type NotorietyExposureState = "hidden" | ReputationExposureRequirement;
+export type NotorietyAttributionState = "unknown" | "identified" | "credible_link";
+
+export interface FameReputationAwardDefinitionState {
+  axis: "fame";
+  branchId: FameBranchId;
+  directEarnedScope: ReputationScope;
+  baseValue: number;
+  originSettlementIds?: string[];
+}
+
+export interface NotorietyReputationAwardDefinitionState {
+  axis: "notoriety";
+  categoryId: NotorietyCategoryId;
+  severity: NotorietySeverityId;
+  modifiers?: NotorietyModifierId[];
+  directEarnedScope: ReputationScope;
+  baseValue: number;
+  originSettlementIds?: string[];
+  exposureRequirement: ReputationExposureRequirement;
+  attributionRequired: boolean;
+  allowCredibleLink: boolean;
+}
+
+export type ReputationAwardDefinitionState =
+  | FameReputationAwardDefinitionState
+  | NotorietyReputationAwardDefinitionState;
+
 export interface QuestOfferState {
   id: string;
   templateId: string;
@@ -805,7 +876,8 @@ export interface QuestOfferState {
   category: QuestTemplateCategory;
   urgency: number;
   rewardCoin: number;
-  rewardReputation: number;
+  rewardStanding: number;
+  reputationAwards?: ReputationAwardDefinitionState[];
   objectives: QuestOfferObjective[];
   notes: string[];
 }
@@ -823,19 +895,34 @@ export interface CivilizationState {
   quests: CivilizationQuestState;
 }
 
-export type PlayerAttributeKey = "STR" | "DEX" | "AGI" | "CON" | "VIT" | "WIS" | "INT" | "SPT" | "CHA";
+export type PlayerAttributeKey = "STR" | "DEX" | "AGI" | "CON" | "VIT" | "INT" | "WIS" | "SPT" | "CHA";
 export type PlayerSexId = "male" | "female" | "neutral";
-export type PlayerIdentityAgeBandId = "young_adult" | "prime_age" | "middle_aged";
-export type PlayerIdentityBuildId =
-  | "petite"
-  | "slim"
-  | "average"
-  | "muscular"
+export type PlayerIdentityAgeBandId = "young_adult" | "prime" | "mature" | "senior";
+export type PlayerIdentityPhysiqueId =
+  | "large"
+  | "athletic"
+  | "hardy"
   | "stocky"
-  | "heavy"
-  | "scholarly"
-  | "mystic"
-  | "poised";
+  | "wiry"
+  | "compact"
+  | "lithe"
+  | "frail"
+  | "sickly"
+  | "sluggish";
+export type PlayerIdentityNatureId =
+  | "graceful"
+  | "poised"
+  | "comely"
+  | "insightful"
+  | "resolute"
+  | "commanding"
+  | "disciplined";
+export type PlayerIdentityFocusId =
+  | "martial"
+  | "practical"
+  | "balanced"
+  | "learned"
+  | "mystic";
 
 export interface PlayerResourceGrowthVector {
   hp: number;
@@ -956,11 +1043,432 @@ export interface PlayerResourceRuntimeState {
   history: PlayerResourceChangeRecordState[];
 }
 
-export interface PlayerProgression {
-  level: number;
+export type ActionIntensityTier = "low" | "moderate" | "high" | "extreme";
+export type BodyEnergyBandId = "well_fed" | "stable" | "low_energy" | "drained";
+export type BodyProteinBandId = "protein_rich" | "supported" | "thin_diet" | "deficient";
+export type BodyHydrationBandId =
+  | "optimal"
+  | "slightly_dehydrated"
+  | "dehydrated"
+  | "severely_dehydrated";
+export type BodyFatigueBandId = "fresh" | "strained" | "fatigued" | "exhausted";
+export type BodyIntoxicationBandId =
+  | "clear"
+  | "buzzed"
+  | "drunk"
+  | "heavily_intoxicated"
+  | "blackout_risk";
+export type RecoveryCampTierId = "none" | "basic" | "proper" | "secure_indoor";
+export type RecoverySafetyTierId = "unsafe" | "exposed" | "stable" | "secure";
+
+export interface PlayerBodyEnergyReserveState {
+  quick: number;
+  stored: number;
+}
+
+export interface ActionMetabolicProfileState {
+  intensity: ActionIntensityTier;
+  fatigueGain: number;
+  energyDemand: number;
+  hydrationDemand: number;
+  highIntensityLoad?: number;
+}
+
+export interface ActionAttributeLoadProfileState {
+  intensity: ActionIntensityTier;
+  weights: Partial<Record<PlayerAttributeKey, number>>;
+  sourceTag: string;
+  meaningfulInteraction?: boolean;
+}
+
+export interface RecoveryContextState {
+  sleepUnits: number;
+  campTier: RecoveryCampTierId;
+  safetyTier: RecoverySafetyTierId;
+  mealSupport?: number;
+  waterSupport?: number;
+}
+
+export interface RecoveryAssessmentState {
+  quality: number;
+  durationHours: number;
+}
+
+export interface ConsumableProfileState {
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  hydration?: number;
+  intoxication?: number;
+  useVerb?: string;
+}
+
+export interface ResolvedBodyState {
+  energyBand: BodyEnergyBandId;
+  proteinBand: BodyProteinBandId;
+  hydrationBand: BodyHydrationBandId;
+  fatigueBand: BodyFatigueBandId;
+  intoxicationBand: BodyIntoxicationBandId;
+  effectiveEnergy: number;
+  requiredProtein: number;
+  proteinCoverage: number;
+  staminaMaxMultiplier: number;
+  staminaRegenMultiplier: number;
+  actionEfficiencyMultiplier: number;
+  fatigueGainMultiplier: number;
+  recoveryEffectivenessMultiplier: number;
+  strengthEfficiencyMultiplier: number;
+  hydrationLossMultiplier: number;
+  warnings: string[];
+}
+
+export interface ResolvedAttributeTensionState {
+  precisionPenalty: number;
+  mobilityPenalty: number;
+  stabilityPenalty: number;
+  loadGenerationModifiers: Record<PlayerAttributeKey, number>;
+  warnings: string[];
+}
+
+export interface PlayerStatGrowthState {
+  load: Record<PlayerAttributeKey, number>;
+  progress: Record<PlayerAttributeKey, number>;
+  dailyConvertedLoad: Record<PlayerAttributeKey, number>;
+  dailyVarietyCount: Record<PlayerAttributeKey, number>;
+  dailyVarietySources: Record<PlayerAttributeKey, string[]>;
+  lastRecoveryTick: number | null;
+  lastDailyResetDay: number;
+}
+
+export interface StatGrowthThresholdState {
+  loadThreshold: number;
+  progressPerPoint: number;
+  dailySoftCap: number;
+  growthScale: number;
+  growthExponent: number;
+}
+
+export interface StatGrowthIntensityMultipliersState {
+  low: number;
+  moderate: number;
+  high: number;
+  extreme: number;
+}
+
+export interface StatGrowthSaturationRuleState {
+  startMultiplier: number;
+  hardCapMultiplier: number;
+  exponent: number;
+}
+
+export interface StatGrowthRecoveryCapacityState {
+  base: number;
+  constitutionWeight: number;
+  vitalityWeight: number;
+  wisdomWeight: number;
+  spiritWeight: number;
+}
+
+export interface StatGrowthRecoveryGateState {
+  minimumQuality: number;
+  minimumDurationHours: number;
+}
+
+export interface StatGrowthDiminishingRuleState {
+  trivialCutoff: number;
+  dailyExponent: number;
+  varietyBonusPerSource: number;
+  maxVarietyBonus: number;
+  loadDecayWithoutRecovery: number;
+  postRecoveryRetention: number;
+}
+
+export interface StatGrowthRngRuleState {
+  minimum: number;
+  maximum: number;
+}
+
+export interface StatGrowthTensionRuleState {
+  threshold: number;
+  gapStart: number;
+  precisionCap: number;
+  precisionPerGap: number;
+  mobilityCap: number;
+  mobilityPerGap: number;
+  stabilityCap: number;
+  stabilityPerGap: number;
+}
+
+export interface StatGrowthBalanceRuleState {
+  version: number;
+  intensityMultipliers: StatGrowthIntensityMultipliersState;
+  thresholds: Record<PlayerAttributeKey, StatGrowthThresholdState>;
+  saturation: StatGrowthSaturationRuleState;
+  recoveryCapacity: StatGrowthRecoveryCapacityState;
+  recoveryGate: StatGrowthRecoveryGateState;
+  diminishing: StatGrowthDiminishingRuleState;
+  rng: StatGrowthRngRuleState;
+  tension: StatGrowthTensionRuleState;
+}
+
+export type RunDifficultyTierId = "easy" | "normal" | "hard" | "brutal";
+
+export interface RunDifficultyState {
+  tier: RunDifficultyTierId;
+  hardcore: boolean;
+}
+
+export interface DifficultyStatGrowthRuleState {
+  loadThresholdScalar: number;
+  saturationScalar: number;
+  recoveryCapacityScalar: number;
+  minimumRecoveryQualityScalar: number;
+  minimumRecoveryDurationScalar: number;
+}
+
+export interface DifficultyProgressionRuleState {
+  requirementScalar: number;
+  meaningfulActionScalar: number;
+  antiTrivialityScalar: number;
+  trainingGateScalar: number;
+  retentionPressureScalar: number;
+}
+
+export interface DifficultyBodyStateRuleState {
+  deficitOnsetScalar: number;
+  surplusPersistenceScalar: number;
+  resourceDrainScalar: number;
+  recoveryEffectivenessScalar: number;
+  fatigueDebtPersistenceScalar: number;
+  penaltySeverityScalar: number;
+  starvationEscalationScalar: number;
+  dehydrationEscalationScalar: number;
+}
+
+export interface DifficultyEchoRuleState {
+  requirementScalar: number;
+}
+
+export interface DifficultyPrestigeRuleState {
+  rewardMultiplier: number;
+}
+
+export interface DifficultyTierRuleState {
+  statGrowth: DifficultyStatGrowthRuleState;
+  skillProgression: DifficultyProgressionRuleState;
+  knowledgeProgression: DifficultyProgressionRuleState;
+  bodyState: DifficultyBodyStateRuleState;
+  echo: DifficultyEchoRuleState;
+  prestige: DifficultyPrestigeRuleState;
+}
+
+export interface HardcoreDifficultyOverlayState {
+  recoveryScalar: number;
+  deficitRecoveryScalar: number;
+  aftereffectPersistenceScalar: number;
+  partialRecoveryScalar: number;
+  removeForgivenessCaps: boolean;
+  deathZeroesPrestige: boolean;
+  prestigeMultiplier: number;
+}
+
+export interface DifficultyBalanceRuleState {
+  version: number;
+  tiers: Record<RunDifficultyTierId, DifficultyTierRuleState>;
+  hardcore: HardcoreDifficultyOverlayState;
+}
+
+export interface ResolvedDifficultyModifiersState extends DifficultyTierRuleState {
+  tier: RunDifficultyTierId;
+  hardcoreEnabled: boolean;
+  hardcore: HardcoreDifficultyOverlayState | null;
+}
+
+export interface PlayerBodyState {
+  energyReserve: PlayerBodyEnergyReserveState;
+  energyBalance: number;
+  proteinSufficiency: number;
+  hydrationLevel: number;
+  fatigue: number;
+  fatigueDebt: number;
+  intoxicationLevel: number;
+  dailyCaloriesConsumed: number;
+  dailyProteinConsumed: number;
+  dailyCarbsConsumed: number;
+  dailyFatConsumed: number;
+  dailyHydrationConsumed: number;
+  dailyEnergyDemand: number;
+  dailyHighIntensityLoad: number;
+  energyDeficitDays: number;
+  starvationLoad: number;
+  proteinDeficitLoad: number;
+  lastAdvancedTick: number;
+  lastDailyRolloverDay: number;
+  resolved: ResolvedBodyState;
+}
+
+export interface BodyStateTargetRuleState {
+  dailyCalories: number;
+  dailyHydration: number;
+  proteinBaseline: number;
+  proteinLoadScale: number;
+}
+
+export interface BodyStateEnergyRuleState {
+  quickWeight: number;
+  storedWeight: number;
+  quickDecayByIntensity: Record<ActionIntensityTier, number>;
+  storedDecayByIntensity: Record<ActionIntensityTier, number>;
+  quickGainPerCalorie: number;
+  storedGainPerCalorie: number;
+  energyBands: {
+    wellFed: number;
+    stable: number;
+    lowEnergy: number;
+  };
+  staminaRegenMultipliers: Record<BodyEnergyBandId, number>;
+  fatigueGainMultipliers: Record<BodyEnergyBandId, number>;
+  recoveryMultipliers: Record<BodyEnergyBandId, number>;
+}
+
+export interface BodyStateProteinRuleState {
+  smoothing: number;
+  recoveryMultipliers: Record<BodyProteinBandId, number>;
+  strengthPenaltyByLoad: {
+    mild: number;
+    moderate: number;
+    severe: number;
+  };
+}
+
+export interface BodyStateHydrationRuleState {
+  passiveLossPerTick: number;
+  recoveryGainPerTick: number;
+  bands: {
+    optimal: number;
+    slightlyDehydrated: number;
+    dehydrated: number;
+  };
+  staminaRegenMultipliers: Record<BodyHydrationBandId, number>;
+  fatigueGainMultipliers: Record<BodyHydrationBandId, number>;
+  actionEfficiencyMultipliers: Record<BodyHydrationBandId, number>;
+}
+
+export interface BodyStateFatigueRuleState {
+  passiveRecoveryPerTick: number;
+  sleepRecoveryPerUnit: number;
+  carryoverThreshold: number;
+  carryoverScale: number;
+  actionEfficiencyPerPoint: number;
+  staminaMaxPerPoint: number;
+  staminaDebtMaxPerPoint: number;
+  staminaRegenPerPoint: number;
+  staminaDebtRegenPerPoint: number;
+}
+
+export interface BodyStateIntoxicationRuleState {
+  decayPerTick: number;
+  buzzedThreshold: number;
+  drunkThreshold: number;
+  heavilyIntoxicatedThreshold: number;
+  blackoutRiskThreshold: number;
+  mediumActionPenalty: number;
+  mediumHydrationLossMultiplier: number;
+  highActionPenalty: number;
+  highStaminaPenalty: number;
+  highHydrationLossMultiplier: number;
+  nextDayFatigueDebt: number;
+}
+
+export interface BodyStateStarvationRuleState {
+  dailyRecoveryWhenCovered: number;
+  maxDeficitDays: number;
+  stageTwoThreshold: number;
+  stageThreeThreshold: number;
+}
+
+export interface BodyStateRecoveryRuleState {
+  campMultipliers: Record<RecoveryCampTierId, number>;
+  safetyMultipliers: Record<RecoverySafetyTierId, number>;
+}
+
+export interface BodyStateBalanceRuleState {
+  version: number;
+  targets: BodyStateTargetRuleState;
+  energy: BodyStateEnergyRuleState;
+  protein: BodyStateProteinRuleState;
+  hydration: BodyStateHydrationRuleState;
+  fatigue: BodyStateFatigueRuleState;
+  intoxication: BodyStateIntoxicationRuleState;
+  starvation: BodyStateStarvationRuleState;
+  recovery: BodyStateRecoveryRuleState;
+}
+
+export interface EchoBalanceExponentsState {
+  skill: number;
+  stat: number;
+  knowledge: number;
+}
+
+export interface EchoBalanceWeightsState {
+  skills: number;
+  stats: number;
+  knowledge: number;
+}
+
+export interface EchoBalanceNormalizationState {
+  skillReferenceRank: number;
+  skillReferenceSlots: number;
+  knowledgeSkillReferenceRank: number;
+  knowledgeSkillReferenceSlots: number;
+  statReferenceDelta: number;
+  trackedAttributeKeys: PlayerAttributeKey[];
+}
+
+export interface EchoBalanceDiversityState {
+  thresholdRank: number;
+  bonusPerSkill: number;
+  maxMultiplier: number;
+}
+
+export interface EchoBalanceRuleState {
+  version: number;
+  exponents: EchoBalanceExponentsState;
+  weights: EchoBalanceWeightsState;
+  levelScale: number;
+  normalization: EchoBalanceNormalizationState;
+  diversity: EchoBalanceDiversityState;
+}
+
+export interface EchoRequirementState {
+  minLevel: number;
+  minEchoAdjusted?: number | null;
+}
+
+export interface PlayerEchoState {
+  balanceRuleId: string;
+  balanceRuleVersion: number;
+  skillContribution: number;
+  statContribution: number;
+  knowledgeContribution: number;
+  echoBase: number;
+  diversityCount: number;
+  diversityBonus: number;
+  echoAdjusted: number;
+}
+
+export interface PlayerLegacyGrowthState {
+  resourceGrowthLevel: number;
   classLevel: number;
   unspentAttributePoints: number;
   unspentSkillPoints: number;
+}
+
+export interface PlayerProgression {
+  level: number;
+  echo: PlayerEchoState;
+  legacyGrowth: PlayerLegacyGrowthState;
 }
 
 export type SkillProgressionBandId = "clumsy" | "familiar" | "proficient" | "skilled" | "mastery";
@@ -1018,28 +1526,28 @@ export interface SkillProgressionTrackState {
 
 export interface KnowledgeSupportWeightsState {
   domainKnowledge: number;
-  universalKnowledge: number;
+  generalLore: number;
   spotting: number;
 }
 
-export interface KnowledgeTrackThresholdState {
+export interface KnowledgeDomainThresholdState {
   common: number;
   uncommon: number;
   rare: number;
   obscure: number;
 }
 
-export interface KnowledgeTrackState {
+export interface KnowledgeDomainState {
   id: string;
   name?: string;
   domain?: string;
   knowledgeSkillId: string;
   spottingSkillId?: string;
   identifySkillId?: string;
-  universalSupportSkillId?: string;
+  generalSupportSkillId?: string;
   supportWeights: KnowledgeSupportWeightsState;
-  identifyDifficulty: KnowledgeTrackThresholdState;
-  autoIdentifyThresholds: KnowledgeTrackThresholdState;
+  identifyDifficulty: KnowledgeDomainThresholdState;
+  autoIdentifyThresholds: KnowledgeDomainThresholdState;
 }
 
 export interface SkillLevelingState {
@@ -1135,6 +1643,7 @@ export interface TrialDefinitionState {
   id: string;
   name: string;
   associatedSkillId: string;
+  echoRequirement?: EchoRequirementState | null;
   thresholdToPass: number;
   progress: number;
   maxPotential: number;
@@ -1277,13 +1786,13 @@ export interface PlayerSaveMetadata {
   totalPlayTicks: number;
   lastRestAtTick: number;
   lastSavedAtTick: number;
+  lastReputationDecayDay?: number | null;
 }
 
 export interface PlayerLocationState {
   settlementId: string | null;
   siteLabel: string | null;
   worldMapId: string | null;
-  knownSettlementIds: string[];
 }
 
 export interface PlayerCurrencyState {
@@ -1295,19 +1804,142 @@ export interface PlayerCurrencyState {
 export interface PlayerIdentityProfile {
   heightCm: number | null;
   ageBandId: PlayerIdentityAgeBandId | null;
-  buildId: PlayerIdentityBuildId | null;
+  physiqueId: PlayerIdentityPhysiqueId | null;
+  natureId: PlayerIdentityNatureId | null;
+  focusId: PlayerIdentityFocusId | null;
   hairColorId: string | null;
   hairHighlightColorId: string | null;
   eyeColorId: string | null;
   skinToneId: string | null;
 }
 
-export interface PlayerReputationState {
+export interface PlayerStandingState {
   id: string;
   label: string;
   standingLabel: string;
   score: number;
   effects: string[];
+}
+
+export type AchievementLayer = "account" | "character";
+export type AchievementCategory =
+  | "combat"
+  | "travel"
+  | "discovery"
+  | "crafting"
+  | "trade"
+  | "social"
+  | "reputation"
+  | "beginnings";
+export type AchievementRarity = "common" | "notable" | "legendary";
+export type AchievementMetricId =
+  | "character.combat.entries"
+  | "character.travel.entries"
+  | "character.discovery.entries"
+  | "character.crafting.entries"
+  | "character.trade.entries"
+  | "character.quests.completed"
+  | "character.reputation.historical_total"
+  | "account.combat.entries_total"
+  | "account.travel.entries_total"
+  | "account.discovery.entries_total"
+  | "account.crafting.entries_total"
+  | "account.trade.entries_total"
+  | "account.quests.completed_total"
+  | "account.reputation.historical_total"
+  | "account.runs.started"
+  | "account.starts.lineages"
+  | "account.starts.continents"
+  | "account.starts.regions"
+  | "account.starts.settlements";
+
+export interface AchievementRewardState {
+  legacyPoints?: number;
+  unlockId?: string;
+}
+
+export interface AchievementDefinitionState {
+  id: string;
+  layer: AchievementLayer;
+  category: AchievementCategory;
+  title: string;
+  description: string;
+  metricId: AchievementMetricId;
+  targetValue: number;
+  hiddenByDefault?: boolean;
+  rarity?: AchievementRarity;
+  reward?: AchievementRewardState;
+  tags?: string[];
+}
+
+export interface CharacterAchievementUnlockState {
+  achievementId: string;
+  unlockedAt: string;
+}
+
+export interface AccountAchievementUnlockState {
+  achievementId: string;
+  unlockedAt: string;
+  sourceCharacterId: string;
+  rewardTransactionId?: string;
+}
+
+export interface CharacterAchievementsState {
+  unlocked: CharacterAchievementUnlockState[];
+}
+
+export interface AccountAchievementsState {
+  unlocked: AccountAchievementUnlockState[];
+  revealedCharacterAchievementIds: string[];
+  cumulativeMetrics: Record<AchievementMetricId, number>;
+  characterMetricHighWaterMarks: Record<string, Partial<Record<AchievementMetricId, number>>>;
+}
+
+export type SaveSlotId = string;
+export type AccountRunHistoryOutcome = "active" | "retired" | "archived" | "deleted";
+export type AccountRunArchiveReason = "retired" | "dead" | "hardcore_dead";
+
+export interface RunLegacyPayoutBreakdownState {
+  progressionDepth: number;
+  notableDeeds: number;
+  survivalDepth: number;
+  milestoneQuality: number;
+  archiveReasonModifier: number;
+  challengeModifier: number;
+  shallowRunModifier: number;
+  repeatedWeakRunModifier: number;
+  rawScore: number;
+  modifiedScore: number;
+  finalAmount: number;
+}
+
+export interface AccountRunHistoryRecord {
+  characterId: string;
+  name: string;
+  lineageId: string;
+  startingContinentId: string;
+  startingRegionId: string;
+  startingSettlementId: string;
+  startedAt: string;
+  endedAt?: string;
+  lastSeenAt: string;
+  outcome: AccountRunHistoryOutcome;
+  archiveReason?: AccountRunArchiveReason;
+  echoLevelReached: number;
+  notableCharacterAchievementIds: string[];
+  legacyGranted?: number;
+  inheritanceUsesRemaining?: number;
+  totalPlayTicks?: number;
+  survivedDays?: number;
+  payoutEligible?: boolean;
+  payoutBreakdown?: RunLegacyPayoutBreakdownState;
+  legacyPayoutResolvedAt?: string;
+  legacyPayoutTransactionId?: string;
+  saveSlotIds: SaveSlotId[];
+}
+
+export interface AccountHistoryState {
+  runRecords: AccountRunHistoryRecord[];
 }
 
 export interface PlayerTitleState {
@@ -1348,9 +1980,130 @@ export interface PlayerDiscoveryChronicleState {
   lastUpdatedTick: number | null;
 }
 
-export interface PlayerKnowledgeFamiliarityState {
-  trackId: string;
+export type GeographicKnowledgeScope = "continent" | "region" | "settlement";
+
+export interface PlayerGeographicKnowledgeState {
+  scope: GeographicKnowledgeScope;
+  geographyId: string;
   level: number;
+}
+
+export interface PlayerFameBranchState {
+  scope: ReputationScope;
+  scopeId: string;
+  branchId: FameBranchId;
+  earned: number;
+  currentEarned: number;
+  historical: number;
+  lastMeaningfulGainTick: number | null;
+}
+
+export interface PlayerNotorietyCategoryState {
+  scope: ReputationScope;
+  scopeId: string;
+  categoryId: NotorietyCategoryId;
+  severity: NotorietySeverityId;
+  modifiers: NotorietyModifierId[];
+  modifiersSignature: string;
+  earned: number;
+  currentEarned: number;
+  historical: number;
+  lastMeaningfulGainTick: number | null;
+  repeatCount: number;
+}
+
+export interface PlayerNotorietyEventState {
+  id: string;
+  scope: ReputationScope;
+  scopeId: string;
+  settlementId: string;
+  categoryId: NotorietyCategoryId;
+  severity: NotorietySeverityId;
+  modifiers: NotorietyModifierId[];
+  earned: number;
+  currentEarned: number;
+  historical: number;
+  occurredAtTick: number;
+  lastMeaningfulGainTick: number | null;
+  exposureState: NotorietyExposureState;
+  attributionState: NotorietyAttributionState;
+  unresolved: boolean;
+}
+
+export interface PlayerReputationState {
+  fame: PlayerFameBranchState[];
+  notoriety: PlayerNotorietyCategoryState[];
+  notorietyEvents: PlayerNotorietyEventState[];
+}
+
+export interface ResolvedFameScopeState {
+  scope: ReputationScope;
+  scopeId: string;
+  currentEarned: number;
+  currentThreshold: number;
+  currentTotal: number;
+  historical: number;
+  topBranchId: FameBranchId | null;
+  recognitionBandId: FameRecognitionBandId | null;
+  historicalTier: ReputationHistoricalTierId;
+}
+
+export interface ResolvedNotorietyScopeState {
+  scope: ReputationScope;
+  scopeId: string;
+  currentEarned: number;
+  currentThreshold: number;
+  currentTotal: number;
+  historical: number;
+  topCategoryId: NotorietyCategoryId | null;
+  highestSeverity: NotorietySeverityId | null;
+  activeFlags: NotorietyModifierId[];
+  seriousnessClass: NotorietySeriousnessClassId;
+  historicalTier: ReputationHistoricalTierId;
+}
+
+export interface FameRecognitionBandThresholdState {
+  id: FameRecognitionBandId;
+  minimumCurrentTotal: number;
+  minimumHistorical: number;
+  directHigherScopeBonus: number;
+}
+
+export interface ReputationVectorWeightState {
+  value: number;
+  persistence: number;
+  seriousness: number;
+}
+
+export interface NotorietySeriousnessThresholdState {
+  id: NotorietySeriousnessClassId;
+  minimumScore: number;
+  minimumSeverity?: NotorietySeverityId | null;
+  violentOnly?: boolean;
+  requiredModifiers?: NotorietyModifierId[];
+  minimumDirectScope?: ReputationScope | null;
+}
+
+export interface ReputationBalanceRuleState {
+  version: number;
+  localCurrentDirectDecayPerDay: number;
+  regionalCurrentDirectDecayPerDay: number;
+  continentalCurrentDirectDecayPerDay: number;
+  worldCurrentDirectDecayPerDay: number;
+  regionalThresholdFloor: number;
+  continentalThresholdFloor: number;
+  worldThresholdFloor: number;
+  regionalCarryoverFactor: number;
+  continentalCarryoverFactor: number;
+  worldCarryoverFactor: number;
+  meaningfulContributionFloor: number;
+  fameBranchValidation: Record<ReputationScope, FameBranchId[]>;
+  notorietyCategoryWeights: Partial<Record<NotorietyCategoryId, ReputationVectorWeightState>>;
+  notorietySeverityMultipliers: Record<NotorietySeverityId, ReputationVectorWeightState>;
+  notorietyModifierMultipliers: Partial<Record<NotorietyModifierId, ReputationVectorWeightState>>;
+  simultaneousSeriousCrimePersistenceCap: number;
+  notorietySeriousnessThresholds: NotorietySeriousnessThresholdState[];
+  fameRecognitionBandThresholds: FameRecognitionBandThresholdState[];
 }
 
 export interface PlayerOriginProfileState {
@@ -1472,6 +2225,149 @@ export interface OperationState {
   priority: "Low" | "Normal" | "High";
 }
 
+export type LegacyTransactionKind = "grant" | "spend";
+
+export type LegacyUnlockCategory =
+  | "Origins"
+  | "Titles"
+  | "Perks"
+  | "Traits"
+  | "Account"
+  | "Chronicle"
+  | "Heir";
+
+export type LegacyUnlockKind = "binary" | "tiered" | "incremental";
+
+export type LegacyUnlockRequirementResolutionState =
+  | "eligible"
+  | "unmet"
+  | "unsupported";
+
+export type LegacyUnlockRequirementState =
+  | {
+      type: "achievement";
+      achievementId: string;
+    }
+  | {
+      type: "run_count";
+      count: number;
+      outcome?: AccountRunHistoryOutcome;
+      archiveReason?: AccountRunArchiveReason;
+    }
+  | {
+      type: "lineage_recorded";
+      lineageId: string;
+    }
+  | {
+      type: "echo_peak";
+      level: number;
+    }
+  | {
+      type: "survived_days";
+      days: number;
+    }
+  | {
+      type: "lifetime_legacy";
+      amount: number;
+    }
+  | {
+      type: "character_skill";
+      skillId: string;
+      rank: number;
+    }
+  | {
+      type: "role_rank";
+      roleId: string;
+      rank: number;
+    }
+  | {
+      type: "wealth";
+      amount: number;
+    };
+
+export type LegacyUnlockCostState =
+  | {
+      type: "fixed";
+      amount: number;
+    }
+  | {
+      type: "per_rank";
+      amounts: number[];
+    }
+  | {
+      type: "progressive";
+      baseAmount: number;
+      growthFactor: number;
+      thresholdJumps?: Array<{
+        rank: number;
+        multiplier: number;
+      }>;
+    };
+
+export type LegacyUnlockEffectKind =
+  | "account_flag"
+  | "profile_title"
+  | "chronicle_presentation"
+  | "future_heir_start"
+  | "future_inheritance_uses";
+
+export interface LegacyUnlockEffectState {
+  type: LegacyUnlockEffectKind;
+  key: string;
+  value?: string | number | boolean;
+}
+
+export interface LegacyUnlockDefinitionState {
+  id: string;
+  category: LegacyUnlockCategory;
+  kind: LegacyUnlockKind;
+  title: string;
+  description: string;
+  maxRank?: number;
+  cost: LegacyUnlockCostState;
+  requirements?: LegacyUnlockRequirementState[];
+  rankRequirements?: LegacyUnlockRequirementState[][];
+  effects: LegacyUnlockEffectState[];
+  tags?: string[];
+}
+
+export interface LegacyUnlockState {
+  unlockId: string;
+  unlockedAt: string;
+  sourceTransactionId: string;
+  rank?: number;
+}
+
+export interface LegacyTransactionState {
+  id: string;
+  kind: LegacyTransactionKind;
+  amount: number;
+  balanceAfter: number;
+  recordedAt: string;
+  summary: string;
+  sourceType: string;
+  sourceId: string;
+  unlockId?: string;
+}
+
+export interface AccountLegacyState {
+  legacyPoints: number;
+  lifetimeLegacyEarned: number;
+  legacyUnlocks: LegacyUnlockState[];
+  legacyTransactions: LegacyTransactionState[];
+}
+
+export interface AccountProfileState {
+  accountId: string;
+  displayName: string;
+  createdAt: string;
+  updatedAt: string;
+  lastPlayedAt?: string;
+  legacy: AccountLegacyState;
+  achievements: AccountAchievementsState;
+  history: AccountHistoryState;
+}
+
 export interface CurrentActivityState {
   id: string;
   label: string;
@@ -1503,8 +2399,10 @@ export interface PlayerState {
   regionId: string;
   coreData: PlayerCoreData;
   attributes: PlayerAttributes;
+  statGrowth: PlayerStatGrowthState;
   resources: PlayerResources;
   resourceRuntime: PlayerResourceRuntimeState;
+  bodyState: PlayerBodyState;
   progression: PlayerProgression;
   skills: PlayerSkillState[];
   spells: PlayerSpellState[];
@@ -1517,11 +2415,12 @@ export interface PlayerState {
   location: PlayerLocationState;
   currency: PlayerCurrencyState;
   originProfile: PlayerOriginProfileState;
-  reputation: PlayerReputationState[];
+  standing: PlayerStandingState[];
+  reputation: PlayerReputationState;
   titles: PlayerTitleState[];
-  knowledgeFamiliarity?: PlayerKnowledgeFamiliarityState[];
+  geographicKnowledge: PlayerGeographicKnowledgeState[];
   discoveryChronicle: PlayerDiscoveryChronicleState;
-  discoveredRegions: string[];
+  achievements: CharacterAchievementsState;
   activeQuestIds: string[];
   completedQuestIds: string[];
   flags: string[];
@@ -1532,6 +2431,7 @@ export interface PlayerState {
 export interface GameState {
   worldVersion: string;
   activeScenario: string;
+  runDifficulty: RunDifficultyState;
   mode: CombatModeState;
   party: PartyRuntimeState;
   activeEncounter: CombatEncounterState | null;
@@ -1548,6 +2448,7 @@ export interface CivilizationTickContext extends TickContextBase<CivilizationSta
 
 export interface PlayerTickContext extends TickContextBase<PlayerState> {
   saveSlotId: string;
+  runDifficulty?: RunDifficultyState;
 }
 
 export interface GameTickContext extends TickContextBase<GameState> {
@@ -1572,6 +2473,7 @@ export interface CivilizationDelta {
 export interface PlayerDelta {
   kind:
     | "attributes"
+    | "body_state"
     | "inventory"
     | "progression"
     | "resources"
@@ -1584,6 +2486,7 @@ export interface PlayerDelta {
     | "spells"
     | "traits"
     | "discovery"
+    | "standing"
     | "reputation"
     | "titles"
     | "combat_profile";
@@ -1627,6 +2530,7 @@ export interface OverrideRule {
 }
 
 export interface SaveSnapshot {
+  accountId: string;
   snapshotVersion: string;
   capturedAtTick: number;
   clock: SimulationClock;

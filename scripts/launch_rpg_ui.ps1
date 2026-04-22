@@ -1,4 +1,4 @@
-param()
+﻿param()
 
 $rootDir = Resolve-Path (Join-Path $PSScriptRoot '..')
 $logDir = Join-Path $rootDir 'logs'
@@ -41,7 +41,7 @@ function Open-UiUrlInDefaultBrowser {
 Add-Content -Path $bootLog -Value "[$(Get-Date -Format s)] Launch requested."
 
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-    Write-Host "npm was not found on PATH. Install Node.js and npm before using Play Cataclysm.cmd."
+    Write-Host "npm was not found on PATH. Install Node.js and npm before using Play Echoes of Legacy.cmd."
     Write-Host "Bootstrap log: $bootLog"
     Add-Content -Path $bootLog -Value "[$(Get-Date -Format s)] Launch failed: npm not found. PATH=$env:PATH"
     exit 1

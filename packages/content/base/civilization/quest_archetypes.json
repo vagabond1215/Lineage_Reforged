@@ -1,4 +1,4 @@
-{
+﻿{
   "sourceReferences": [
     {
       "id": "torn_oc2",
@@ -3934,7 +3934,7 @@
             "minPeople": 1,
             "maxPeople": 1,
             "preferredChecks": [
-              "skill.knowledge.universal",
+              "skill.knowledge.general_lore",
               "attr.WIS"
             ],
             "notes": "Keeps the salvage craft on the right line."
@@ -4071,7 +4071,7 @@
             "checks": [
               {
                 "kind": "skill",
-                "targetId": "skill.knowledge.universal",
+                "targetId": "skill.knowledge.general_lore",
                 "minValue": 10,
                 "weight": 0.3,
                 "optional": false,
@@ -4347,3 +4347,4 @@
     }
   ]
 }
+

@@ -1,312 +1,599 @@
-{
-  "records": [
-    {
-      "id": "backstory.local",
-      "name": "Local",
-      "summary": "Raised in one settlement and already fluent in its rhythms, customs, and obligations.",
-      "description": "You grew up in a place that already knows your face. Local obligations, neighborhood habits, and the practical realities of settlement life were part of your education long before you chose what kind of life to pursue for yourself.",
-      "startingSkills": [
-        { "skillId": "skill.knowledge.settlement_knowledge", "level": 25 },
-        { "skillId": "skill.knowledge.cultural_knowledge", "level": 25 },
-        { "skillId": "skill.knowledge.universal", "level": 25 },
-        { "skillId": "skill.leadership.diplomacy", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 25 }
-      ]
-    },
-    {
-      "id": "backstory.vagabond",
-      "name": "Vagabond",
-      "summary": "Years on the road taught you how to move, read a route, and live light.",
-      "description": "You lived by movement rather than permanence. Roads, campfires, poor weather, and uncertain company taught you what must be carried, what can be found, and what habits keep a traveler alive when plans fail.",
-      "startingSkills": [
-        { "skillId": "skill.survival.navigation", "level": 25 },
-        { "skillId": "skill.survival.endurance", "level": 25 },
-        { "skillId": "skill.resource.foraging", "level": 25 },
-        { "skillId": "skill.combat.defense.evasion", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 },
-        { "trackId": "knowledge_track.flora", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.exile",
-      "name": "Exile",
-      "summary": "You were forced away from home and learned endurance the hard way.",
-      "description": "Exile made survival more important than comfort. You learned how to carry grief without letting it slow your feet, how to keep moving under suspicion, and how to endure long enough for usefulness to matter again.",
-      "startingSkills": [
-        { "skillId": "skill.survival.endurance", "level": 25 },
-        { "skillId": "skill.survival.navigation", "level": 25 },
-        { "skillId": "skill.resource.foraging", "level": 25 },
-        { "skillId": "skill.combat.defense.guard", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 25 }
-      ]
-    },
-    {
-      "id": "backstory.merchants_child",
-      "name": "Merchant's Child",
-      "summary": "Trade, appraisal, and negotiated value were household lessons.",
-      "description": "You were raised around ledgers, bargaining, and the constant movement of goods. Timing, trust, and market knowledge mattered in your home, and you learned to judge usefulness and value long before you held real authority.",
-      "startingSkills": [
-        { "skillId": "skill.settlement.trade", "level": 25 },
-        { "skillId": "skill.leadership.negotiation", "level": 25 },
-        { "skillId": "skill.knowledge.universal", "level": 25 },
-        { "skillId": "skill.resource.identify.minerals", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 25 },
-        { "trackId": "knowledge_track.minerals", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.craftsmans_child",
-      "name": "Craftsman's Child",
-      "summary": "Useful work, tools, and disciplined repetition shaped your early life.",
-      "description": "You grew up where materials were judged by hand and finished work had to justify itself. Practical craft taught you patience, process, and the difference between something merely assembled and something truly made well.",
-      "startingSkills": [
-        { "skillId": "skill.crafting.basic_crafting", "level": 25 },
-        { "skillId": "skill.crafting.material_processing", "level": 25 },
-        { "skillId": "skill.resource.identify.minerals", "level": 25 },
-        { "skillId": "skill.knowledge.universal", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 25 }
-      ]
-    },
-    {
-      "id": "backstory.performer",
-      "name": "Performer",
-      "summary": "Crowds, timing, and public presence were part of your training.",
-      "description": "You learned how to hold attention, guide a room, and turn rhythm or spectacle into livelihood. Performance taught you cultural cues, morale, and how quickly reputation can spread when people remember your work.",
-      "startingSkills": [
-        { "skillId": "skill.magic.school.performance", "level": 25 },
-        { "skillId": "skill.leadership.morale", "level": 25 },
-        { "skillId": "skill.leadership.reputation", "level": 25 },
-        { "skillId": "skill.knowledge.cultural_knowledge", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.minor_noble",
-      "name": "Minor Noble",
-      "summary": "Education, courtesy, and visible standing framed your upbringing.",
-      "description": "You were raised with expectations, etiquette, and the knowledge that names open some doors but also attract scrutiny. Formal culture, hierarchy, and negotiation were part of your life before true responsibility was.",
-      "startingSkills": [
-        { "skillId": "skill.leadership.diplomacy", "level": 25 },
-        { "skillId": "skill.leadership.authority", "level": 25 },
-        { "skillId": "skill.knowledge.cultural_knowledge", "level": 25 },
-        { "skillId": "skill.knowledge.settlement_knowledge", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.carpenters_child",
-      "name": "Carpenter's Child",
-      "summary": "Wood, joinery, and building labor were familiar from a young age.",
-      "description": "Timber, frames, repairs, and the steady logic of construction shaped your early training. You learned how useful work takes shape in stages and how good workmanship begins long before the final surface is seen.",
-      "startingSkills": [
-        { "skillId": "skill.crafting.carpentry", "level": 25 },
-        { "skillId": "skill.resource.woodcutting", "level": 25 },
-        { "skillId": "skill.crafting.basic_crafting", "level": 25 },
-        { "skillId": "skill.settlement.building", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.flora", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.village_hunter",
-      "name": "Village Hunter",
-      "summary": "You learned to track, shoot, and turn a kill into useful supply.",
-      "description": "Hunting taught you patience, clean shots, field dressing, and how much food or trade value can depend on one careful outing. You were trained to notice sign, respect distance, and waste little.",
-      "startingSkills": [
-        { "skillId": "skill.combat.weapon.archery", "level": 25 },
-        { "skillId": "skill.resource.hunting", "level": 25 },
-        { "skillId": "skill.resource.butchering", "level": 25 },
-        { "skillId": "skill.resource.trapping", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.fauna", "level": 25 }
-      ],
-      "startingAbilityIds": [
-        "ability.ranged.quick_shot"
-      ]
-    },
-    {
-      "id": "backstory.miners_kin",
-      "name": "Miner's Kin",
-      "summary": "Stone, ore, and the discipline of extractive work were part of home life.",
-      "description": "You grew up around shaft work, hauling, sorting, and the blunt realities of mineral labor. You learned how to read rock, respect risk, and judge whether a seam or quarry face was worth the effort it demanded.",
-      "startingSkills": [
-        { "skillId": "skill.resource.mining", "level": 25 },
-        { "skillId": "skill.resource.quarrying", "level": 25 },
-        { "skillId": "skill.crafting.material_processing", "level": 25 },
-        { "skillId": "skill.knowledge.minerals", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.minerals", "level": 25 }
-      ]
-    },
-    {
-      "id": "backstory.farmhand",
-      "name": "Farmhand",
-      "summary": "Long days of field work taught you endurance, handling, and seasonal sense.",
-      "description": "Farm labor grounded you in steady effort rather than glamour. You learned planting, hauling, care for animals and tools, and the kind of practical discipline that comes from work repeating every day whether anyone praises it or not.",
-      "startingSkills": [
-        { "skillId": "skill.settlement.agriculture", "level": 25 },
-        { "skillId": "skill.survival.animal_handling", "level": 25 },
-        { "skillId": "skill.resource.gathering", "level": 25 },
-        { "skillId": "skill.survival.endurance", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.flora", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.military_brat",
-      "name": "Military Brat",
-      "summary": "Garrisons, discipline, and formation life shaped your upbringing.",
-      "description": "You were raised around drills, quartermasters, orders, and the visible consequences of disorder. Even without formal rank, you learned battlefield habits, camp discipline, and what kinds of people a military settlement trusts.",
-      "startingSkills": [
-        { "skillId": "skill.combat.melee_combat", "level": 25 },
-        { "skillId": "skill.combat.weapon.sword", "level": 25 },
-        { "skillId": "skill.combat.defense.guard", "level": 25 },
-        { "skillId": "skill.combat.tactics.formation_discipline", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 }
-      ],
-      "startingAbilityIds": [
-        "ability.command.hold_formation"
-      ]
-    },
-    {
-      "id": "backstory.gutter_rat",
-      "name": "Gutter Rat",
-      "summary": "You survived by reading alleys, people, and opportunity before it vanished.",
-      "description": "City margins taught you quick reads, faster feet, and how to spot useful scraps before someone stronger claimed them. You learned settlement survival from the underside rather than from comfortable instruction.",
-      "startingSkills": [
-        { "skillId": "skill.combat.defense.evasion", "level": 25 },
-        { "skillId": "skill.resource.foraging", "level": 25 },
-        { "skillId": "skill.knowledge.settlement_knowledge", "level": 25 },
-        { "skillId": "skill.survival.navigation", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.scouts_ward",
-      "name": "Scout's Ward",
-      "summary": "You were trained by someone who knew routes, sign, and the cost of poor observation.",
-      "description": "A scout's household taught you that looking is not the same as seeing. Routes, spoor, sightlines, weather, and movement were all things to read early and often if you wanted to return alive.",
-      "startingSkills": [
-        { "skillId": "skill.survival.navigation", "level": 25 },
-        { "skillId": "skill.resource.spotting.fauna", "level": 25 },
-        { "skillId": "skill.resource.hunting", "level": 25 },
-        { "skillId": "skill.combat.weapon.archery", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.fauna", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.scholars_apprentice",
-      "name": "Scholar's Apprentice",
-      "summary": "Study, memory, and disciplined learning formed the center of your training.",
-      "description": "You were raised around texts, instruction, copying, and the slow work of making knowledge usable. Scholarly training taught you structure, language, reference habits, and respect for ideas that outlast one generation.",
-      "startingSkills": [
-        { "skillId": "skill.knowledge.universal", "level": 25 },
-        { "skillId": "skill.knowledge.arcane_lore", "level": 25 },
-        { "skillId": "skill.magic.mana_control", "level": 25 },
-        { "skillId": "skill.magic.spellcasting", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 25 }
-      ]
-    },
-    {
-      "id": "backstory.temple_acolyte",
-      "name": "Temple Acolyte",
-      "summary": "Ritual order, service, and healing discipline shaped your youth.",
-      "description": "Temple life taught you stewardship, structured duty, and the calm repetition that supports ritual and care. Service mattered as much as doctrine, and healing or mediation were treated as serious responsibilities rather than abstractions.",
-      "startingSkills": [
-        { "skillId": "skill.magic.school.divine", "level": 25 },
-        { "skillId": "skill.survival.field_medicine", "level": 25 },
-        { "skillId": "skill.leadership.stewardship", "level": 25 },
-        { "skillId": "skill.knowledge.cultural_knowledge", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.hedge_adept",
-      "name": "Hedge Adept",
-      "summary": "You learned practical magic outside grand institutions and formal prestige.",
-      "description": "Your magical training was pieced together through practical instruction, borrowed lessons, and whatever disciplined practice you could secure. It is useful magic first and prestigious magic second, but it is real all the same.",
-      "startingSkills": [
-        { "skillId": "skill.magic.mana_control", "level": 25 },
-        { "skillId": "skill.magic.spellcasting", "level": 25 },
-        { "skillId": "skill.magic.school.utility", "level": 25 },
-        { "skillId": "skill.magic.school.enhancing", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.isekai_outcast",
-      "name": "Isekai Outcast",
-      "summary": "You carry useful instincts but no clean place in the world's ordinary categories.",
-      "description": "You arrived as an outsider in a way few can fully explain. What you know is broad rather than rooted, practical rather than inherited, and often useful in ways that are hard to place inside ordinary local expectations.",
-      "startingSkills": [
-        { "skillId": "skill.knowledge.universal", "level": 25 },
-        { "skillId": "skill.knowledge.settlement_knowledge", "level": 25 },
-        { "skillId": "skill.survival.navigation", "level": 25 },
-        { "skillId": "skill.resource.identify.flora", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 25 },
-        { "trackId": "knowledge_track.flora", "level": 15 }
-      ]
-    },
-    {
-      "id": "backstory.amnesiac",
-      "name": "Amnesiac",
-      "summary": "Your past is broken, but useful habits survived the loss.",
-      "description": "Memory failed you, but not completely. Some instincts, fragments of craft, and practical habits still remain, even if the story that once tied them together is gone. You begin with capability but very little certainty about why it is yours.",
-      "startingSkills": [
-        { "skillId": "skill.survival.endurance", "level": 25 },
-        { "skillId": "skill.survival.navigation", "level": 25 },
-        { "skillId": "skill.knowledge.universal", "level": 20 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 20 }
-      ]
-    },
-    {
-      "id": "backstory.local_hero",
-      "name": "Local Hero",
-      "summary": "You are already known for proving useful when your home needed it most.",
-      "description": "Your settlement remembers that you helped when help was needed. Whether that meant courage, steadiness, or practical competence, you begin with more local trust than most and a stronger sense of what your home expects from you next.",
-      "startingSkills": [
-        { "skillId": "skill.knowledge.settlement_knowledge", "level": 25 },
-        { "skillId": "skill.knowledge.cultural_knowledge", "level": 25 },
-        { "skillId": "skill.combat.melee_combat", "level": 25 },
-        { "skillId": "skill.survival.field_medicine", "level": 25 }
-      ],
-      "startingKnowledge": [
-        { "trackId": "knowledge_track.resources_universal", "level": 25 }
-      ]
-    }
-  ]
+﻿{
+    "records":  [
+                    {
+                        "id":  "backstory.local",
+                        "name":  "Local",
+                        "summary":  "Raised in one settlement and already fluent in its rhythms, customs, and obligations.",
+                        "description":  "You grew up in a place that already knows your face. Local obligations, neighborhood habits, and the practical realities of settlement life were part of your education long before you chose what kind of life to pursue for yourself.",
+                        "attributeAdjustments":  {
+                                                     "WIS":  1,
+                                                     "STR":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.cultural_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.leadership.diplomacy",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.vagabond",
+                        "name":  "Vagabond",
+                        "summary":  "Years on the road taught you how to move, read a route, and live light.",
+                        "description":  "You lived by movement rather than permanence. Roads, campfires, poor weather, and uncertain company taught you what must be carried, what can be found, and what habits keep a traveler alive when plans fail.",
+                        "attributeAdjustments":  {
+                                                     "AGI":  1,
+                                                     "INT":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.survival.navigation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.foraging",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.defense.evasion",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.flora_lore",
+                                                   "level":  20
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.exile",
+                        "name":  "Exile",
+                        "summary":  "You were forced away from home and learned endurance the hard way.",
+                        "description":  "Exile made survival more important than comfort. You learned how to carry grief without letting it slow your feet, how to keep moving under suspicion, and how to endure long enough for usefulness to matter again.",
+                        "attributeAdjustments":  {
+                                                     "VIT":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.navigation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.foraging",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.defense.guard",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.merchants_child",
+                        "name":  "Merchant\u0027s Child",
+                        "summary":  "Trade, appraisal, and negotiated value were household lessons.",
+                        "description":  "You were raised around ledgers, bargaining, and the constant movement of goods. Timing, trust, and market knowledge mattered in your home, and you learned to judge usefulness and value long before you held real authority.",
+                        "attributeAdjustments":  {
+                                                     "CHA":  1,
+                                                     "CON":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.settlement.trade",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.leadership.negotiation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.identify.minerals",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.mineral_lore",
+                                                   "level":  20
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.craftsmans_child",
+                        "name":  "Craftsman\u0027s Child",
+                        "summary":  "Useful work, tools, and disciplined repetition shaped your early life.",
+                        "description":  "You grew up where materials were judged by hand and finished work had to justify itself. Practical craft taught you patience, process, and the difference between something merely assembled and something truly made well.",
+                        "attributeAdjustments":  {
+                                                     "DEX":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.crafting.basic_crafting",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.crafting.material_processing",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.identify.minerals",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.performer",
+                        "name":  "Performer",
+                        "summary":  "Crowds, timing, and public presence were part of your training.",
+                        "description":  "You learned how to hold attention, guide a room, and turn rhythm or spectacle into livelihood. Performance taught you cultural cues, morale, and how quickly reputation can spread when people remember your work.",
+                        "attributeAdjustments":  {
+                                                     "CHA":  1,
+                                                     "WIS":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.magic.school.performance",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.leadership.morale",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.leadership.reputation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.cultural_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.minor_noble",
+                        "name":  "Minor Noble",
+                        "summary":  "Education, courtesy, and visible standing framed your upbringing.",
+                        "description":  "You were raised with expectations, etiquette, and the knowledge that names open some doors but also attract scrutiny. Formal culture, hierarchy, and negotiation were part of your life before true responsibility was.",
+                        "attributeAdjustments":  {
+                                                     "CHA":  1,
+                                                     "STR":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.leadership.diplomacy",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.leadership.authority",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.cultural_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.carpenters_child",
+                        "name":  "Carpenter\u0027s Child",
+                        "summary":  "Wood, joinery, and building labor were familiar from a young age.",
+                        "description":  "Timber, frames, repairs, and the steady logic of construction shaped your early training. You learned how useful work takes shape in stages and how good workmanship begins long before the final surface is seen.",
+                        "attributeAdjustments":  {
+                                                     "DEX":  1,
+                                                     "CON":  1,
+                                                     "CHA":  -2
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.crafting.carpentry",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.woodcutting",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.crafting.basic_crafting",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.settlement.building",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.flora_lore",
+                                                   "level":  20
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.village_hunter",
+                        "name":  "Village Hunter",
+                        "summary":  "You learned to track, shoot, and turn a kill into useful supply.",
+                        "description":  "Hunting taught you patience, clean shots, field dressing, and how much food or trade value can depend on one careful outing. You were trained to notice sign, respect distance, and waste little.",
+                        "attributeAdjustments":  {
+                                                     "DEX":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.combat.weapon.archery",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.hunting",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.butchering",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.trapping",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.fauna_lore",
+                                                   "level":  25
+                                               }
+                                           ],
+                        "startingAbilityIds":  [
+                                                   "ability.ranged.quick_shot"
+                                               ]
+                    },
+                    {
+                        "id":  "backstory.miners_kin",
+                        "name":  "Miner\u0027s Kin",
+                        "summary":  "Stone, ore, and the discipline of extractive work were part of home life.",
+                        "description":  "You grew up around shaft work, hauling, sorting, and the blunt realities of mineral labor. You learned how to read rock, respect risk, and judge whether a seam or quarry face was worth the effort it demanded.",
+                        "attributeAdjustments":  {
+                                                     "CON":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.resource.mining",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.quarrying",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.crafting.material_processing",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.mineral_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.farmhand",
+                        "name":  "Farmhand",
+                        "summary":  "Long days of field work taught you endurance, handling, and seasonal sense.",
+                        "description":  "Farm labor grounded you in steady effort rather than glamour. You learned planting, hauling, care for animals and tools, and the kind of practical discipline that comes from work repeating every day whether anyone praises it or not.",
+                        "attributeAdjustments":  {
+                                                     "VIT":  1,
+                                                     "INT":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.settlement.agriculture",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.animal_handling",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.gathering",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.flora_lore",
+                                                   "level":  20
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.military_brat",
+                        "name":  "Military Brat",
+                        "summary":  "Garrisons, discipline, and formation life shaped your upbringing.",
+                        "description":  "You were raised around drills, quartermasters, orders, and the visible consequences of disorder. Even without formal rank, you learned battlefield habits, camp discipline, and what kinds of people a military settlement trusts.",
+                        "attributeAdjustments":  {
+                                                     "CON":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.combat.melee_combat",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.weapon.sword",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.defense.guard",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.tactics.formation_discipline",
+                                                   "level":  25
+                                               }
+                                           ],
+                        "startingAbilityIds":  [
+                                                   "ability.command.hold_formation"
+                                               ]
+                    },
+                    {
+                        "id":  "backstory.gutter_rat",
+                        "name":  "Gutter Rat",
+                        "summary":  "You survived by reading alleys, people, and opportunity before it vanished.",
+                        "description":  "City margins taught you quick reads, faster feet, and how to spot useful scraps before someone stronger claimed them. You learned settlement survival from the underside rather than from comfortable instruction.",
+                        "attributeAdjustments":  {
+                                                     "AGI":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.combat.defense.evasion",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.foraging",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.navigation",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.scouts_ward",
+                        "name":  "Scout\u0027s Ward",
+                        "summary":  "You were trained by someone who knew routes, sign, and the cost of poor observation.",
+                        "description":  "A scout\u0027s household taught you that looking is not the same as seeing. Routes, spoor, sightlines, weather, and movement were all things to read early and often if you wanted to return alive.",
+                        "attributeAdjustments":  {
+                                                     "WIS":  1,
+                                                     "STR":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.survival.navigation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.spotting.fauna",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.hunting",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.weapon.archery",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.fauna_lore",
+                                                   "level":  20
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.scholars_apprentice",
+                        "name":  "Scholar\u0027s Apprentice",
+                        "summary":  "Study, memory, and disciplined learning formed the center of your training.",
+                        "description":  "You were raised around texts, instruction, copying, and the slow work of making knowledge usable. Scholarly training taught you structure, language, reference habits, and respect for ideas that outlast one generation.",
+                        "attributeAdjustments":  {
+                                                     "INT":  2,
+                                                     "STR":  -1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.arcane_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.magic.mana_control",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.magic.spellcasting",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.temple_acolyte",
+                        "name":  "Temple Acolyte",
+                        "summary":  "Ritual order, service, and healing discipline shaped your youth.",
+                        "description":  "Temple life taught you stewardship, structured duty, and the calm repetition that supports ritual and care. Service mattered as much as doctrine, and healing or mediation were treated as serious responsibilities rather than abstractions.",
+                        "attributeAdjustments":  {
+                                                     "WIS":  1,
+                                                     "SPT":  1,
+                                                     "STR":  -2
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.magic.school.divine",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.field_medicine",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.leadership.stewardship",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.cultural_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.hedge_adept",
+                        "name":  "Hedge Adept",
+                        "summary":  "You learned practical magic outside grand institutions and formal prestige.",
+                        "description":  "Your magical training was pieced together through practical instruction, borrowed lessons, and whatever disciplined practice you could secure. It is useful magic first and prestigious magic second, but it is real all the same.",
+                        "attributeAdjustments":  {
+                                                     "INT":  1,
+                                                     "SPT":  1,
+                                                     "CON":  -2
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.magic.mana_control",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.magic.spellcasting",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.magic.school.utility",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.magic.school.enhancing",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.isekai_outcast",
+                        "name":  "Isekai Outcast",
+                        "summary":  "You carry useful instincts but no clean place in the world\u0027s ordinary categories.",
+                        "description":  "You arrived as an outsider in a way few can fully explain. What you know is broad rather than rooted, practical rather than inherited, and often useful in ways that are hard to place inside ordinary local expectations.",
+                        "attributeAdjustments":  {
+                                                     "INT":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.navigation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.identify.flora",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.flora_lore",
+                                                   "level":  15
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.amnesiac",
+                        "name":  "Amnesiac",
+                        "summary":  "Your past is broken, but useful habits survived the loss.",
+                        "description":  "Memory failed you, but not completely. Some instincts, fragments of craft, and practical habits still remain, even if the story that once tied them together is gone. You begin with capability but very little certainty about why it is yours.",
+                        "attributeAdjustments":  {
+                                                     "VIT":  1,
+                                                     "INT":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.navigation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  20
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.local_hero",
+                        "name":  "Local Hero",
+                        "summary":  "You are already known for proving useful when your home needed it most.",
+                        "description":  "Your settlement remembers that you helped when help was needed. Whether that meant courage, steadiness, or practical competence, you begin with more local trust than most and a stronger sense of what your home expects from you next.",
+                        "attributeAdjustments":  {
+                                                     "CHA":  1,
+                                                     "WIS":  1,
+                                                     "INT":  -2
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.cultural_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.melee_combat",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.field_medicine",
+                                                   "level":  25
+                                               }
+                                           ]
+                    }
+                ]
 }

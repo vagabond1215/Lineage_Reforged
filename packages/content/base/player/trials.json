@@ -1,4 +1,4 @@
-{
+﻿{
   "records": [
     {
       "id": "trial.combat.sword.mastery",
@@ -7,6 +7,10 @@
       "thresholdToPass": 85,
       "progress": 0,
       "maxPotential": 100,
+      "echoRequirement": {
+        "minLevel": 5,
+        "minEchoAdjusted": 4
+      },
       "checkpoints": [
         {
           "id": "checkpoint.opening",
@@ -53,6 +57,10 @@
       "thresholdToPass": 82,
       "progress": 0,
       "maxPotential": 100,
+      "echoRequirement": {
+        "minLevel": 5,
+        "minEchoAdjusted": 4
+      },
       "checkpoints": [
         {
           "id": "checkpoint.heat",
@@ -99,6 +107,10 @@
       "thresholdToPass": 90,
       "progress": 0,
       "maxPotential": 100,
+      "echoRequirement": {
+        "minLevel": 7,
+        "minEchoAdjusted": 9
+      },
       "checkpoints": [
         {
           "id": "checkpoint.balance",
@@ -141,10 +153,14 @@
     {
       "id": "trial.knowledge.flora.mastery",
       "name": "Name the Silent Grove",
-      "associatedSkillId": "skill.knowledge.flora",
+      "associatedSkillId": "skill.knowledge.flora_lore",
       "thresholdToPass": 80,
       "progress": 0,
       "maxPotential": 100,
+      "echoRequirement": {
+        "minLevel": 4,
+        "minEchoAdjusted": 3
+      },
       "checkpoints": [
         {
           "id": "checkpoint.observe",
@@ -165,12 +181,12 @@
       "rewards": [
         {
           "type": "breakthrough_progress",
-          "skillId": "skill.knowledge.flora",
+          "skillId": "skill.knowledge.flora_lore",
           "amount": 35
         },
         {
           "type": "unlock_mastery",
-          "skillId": "skill.knowledge.flora"
+          "skillId": "skill.knowledge.flora_lore"
         }
       ],
       "penalties": [
@@ -186,3 +202,6 @@
     }
   ]
 }
+
+
+

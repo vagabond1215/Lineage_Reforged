@@ -1,8 +1,9 @@
 import type {
+  AccountProfileState,
+  AchievementMetricId,
   ChronicleEventState,
   CodexEntryState,
   PanelRecordState,
-  PlayerAttributeKey,
   PlayerInventoryState,
   PlayerDiscoveryChronicleEntryState,
   PlayerOriginProfileState,
@@ -12,14 +13,40 @@ import type {
   SaveSnapshot
 } from '../../../../packages/shared/types/src/contracts.js';
 import type {
+  ConditionStripViewModel,
   DetailGroup,
   ListItem,
   MapLocation,
   NavItem,
+  NotificationItem,
   OperationItem,
   SidebarItem,
+  StatMeter,
   SummaryMetric
 } from '../types.js';
+import {
+  formatEnergyBandLabel,
+  formatFatigueBandLabel,
+  formatHydrationBandLabel,
+  formatIntoxicationBandLabel,
+  formatProteinBandLabel,
+  getBodyStateDetail,
+  type BodyStatePresentationViewModel
+} from './bodyStatePresentation.js';
+import {
+  compareGeographicKnowledgeEntries,
+  getGeographicKnowledgeSectionLabel,
+  getGeographicKnowledgeTierLabel,
+  isVisibleGeographicKnowledgeLevel
+} from './geographicKnowledgePresentation.js';
+import {
+  CHARACTER_ATTRIBUTE_ORDER,
+  getCharacterAttributeLabel,
+  getCharacterAttributePresentation,
+  getCharacterAttributeTooltipContent
+} from '../game-shell/characterAttributes.js';
+import { getAchievementDefinitions } from '../../../../packages/engines/game-engine/src/achievements.js';
+import { resolveScopedReputation } from '../../../../packages/engines/player-engine/src/index.js';
 
 type WindowDetail = {
   title: string;
@@ -31,6 +58,8 @@ type CharacterViewModel = {
   sections: SidebarItem[];
   overviewMetrics: SummaryMetric[];
   coreStats: SummaryMetric[];
+  readinessCard: BodyStatePresentationViewModel['readinessCard'];
+  recoveryProjection: BodyStatePresentationViewModel['recoveryProjection'];
   activeEffects: string[];
   roleTags: string[];
   overviewDetail: {
@@ -79,13 +108,7 @@ type ChronicleViewModel = {
 
 export type UiViewModel = {
   navItems: NavItem[];
-  notifications: {
-    id: string;
-    title: string;
-    detail: string;
-    time: string;
-    type: 'accent' | 'success' | 'warning' | 'neutral' | 'danger';
-  }[];
+  notifications: NotificationItem[];
   topBar: {
     portraitInitials: string;
     name: string;
@@ -97,13 +120,9 @@ export type UiViewModel = {
     currency: string;
     trackedQuest: string;
     activityTag?: string;
+    conditionStrip: ConditionStripViewModel;
   };
-  topBarMeters: Array<{
-    label: string;
-    current: number;
-    max: number;
-    color: string;
-  }>;
+  topBarMeters: StatMeter[];
   initialPinnedIds: string[];
   character: CharacterViewModel;
   world: WorldViewModel;
@@ -183,7 +202,9 @@ const characterSections: SidebarItem[] = [
   { id: 'inventory', label: 'Inventory', description: 'Wallet, carried items, bag capacity, and overflow' },
   { id: 'equipment', label: 'Equipment', description: 'Equipped gear, durability, and slot usage' },
   { id: 'traits', label: 'Traits', description: 'Passive identity traits and active conditions' },
-  { id: 'reputation', label: 'Reputation', description: 'Tracked standings, scores, and access effects' },
+  { id: 'geographic-knowledge', label: 'Geographic Knowledge', description: 'Known lands, regions, settlements, and place knowledge' },
+  { id: 'standing', label: 'Standing', description: 'Faction and guild standing, scores, and access effects' },
+  { id: 'reputation', label: 'Reputation', description: 'Public fame, notoriety, and cross-scope recognition' },
   { id: 'titles', label: 'Titles', description: 'Unlocked titles, equip state, and milestone effects' },
   { id: 'discoveries', label: 'Discoveries', description: 'Personal chronicle of found flora, fauna, minerals, items, and notes' }
 ];
@@ -215,7 +236,9 @@ const codexSections: SidebarItem[] = [
   { id: 'items', label: 'Items', description: 'Item references, utility roles, and values' },
   { id: 'recipes', label: 'Recipes', description: 'Inputs, outputs, stations, and skill ties' },
   { id: 'factions', label: 'Factions', description: 'Organizations, influence, and service access' },
-  { id: 'notes', label: 'Notes', description: 'Journal notes, field briefs, and discovered clues' }
+  { id: 'notes', label: 'Notes', description: 'Journal notes, field briefs, and discovered clues' },
+  { id: 'deeds', label: 'Deeds', description: 'Per-character accomplishments, hidden until first discovery' },
+  { id: 'chronicles', label: 'Chronicles', description: 'Account-wide milestones, unlocks, and recorded legacy' }
 ];
 
 const questSections: SidebarItem[] = [
@@ -234,7 +257,7 @@ const chronicleSections: SidebarItem[] = [
   { id: 'travel', label: 'Travel', description: 'Route changes, arrivals, and movement setbacks' },
   { id: 'crafting', label: 'Crafting', description: 'Production starts, completions, and refits' },
   { id: 'discovery', label: 'Discovery', description: 'Finds, codex unlocks, and map revelations' },
-  { id: 'reputation', label: 'Reputation', description: 'Standing shifts, access changes, and acclaim' }
+  { id: 'reputation', label: 'Reputation', description: 'Public recognition shifts, acclaim, and infamy' }
 ];
 
 function humanizeId(value: string | null | undefined): string {
@@ -274,8 +297,121 @@ function formatSignedValue(value: number): string {
   return value > 0 ? `+${value}` : value.toString();
 }
 
+function formatReputationAxisLabel(axis: 'fame' | 'notoriety'): string {
+  return axis === 'fame' ? 'Fame' : 'Notoriety';
+}
+
+function formatReputationScopeLabel(scope: 'local' | 'regional' | 'continental' | 'world'): string {
+  switch (scope) {
+    case 'local':
+      return 'Settlement';
+    case 'regional':
+      return 'Regional';
+    case 'continental':
+      return 'Continental';
+    case 'world':
+      return 'World';
+  }
+}
+
+function formatFameRecognitionBandLabel(bandId: string | null): string {
+  return bandId ? humanizeId(bandId) : 'Unrecognized';
+}
+
+function formatNotorietySeriousnessLabel(classId: string): string {
+  return humanizeId(classId);
+}
+
+function formatNotorietyDrivers(entry: {
+  topCategoryId: string | null;
+  highestSeverity: string | null;
+  activeFlags: string[];
+}): string {
+  const drivers = [
+    entry.topCategoryId ? humanizeId(entry.topCategoryId) : null,
+    entry.highestSeverity ? `${humanizeId(entry.highestSeverity)} severity` : null,
+    ...entry.activeFlags.map((flag) => humanizeId(flag))
+  ].filter((value): value is string => Boolean(value));
+
+  return drivers.join(', ') || 'No active drivers';
+}
+
+function flattenResolvedPublicReputation(reputation: ReturnType<typeof resolveScopedReputation>) {
+  return [
+    ...reputation.fame.map((entry) => ({ axis: 'fame' as const, entry })),
+    ...reputation.notoriety.map((entry) => ({ axis: 'notoriety' as const, entry }))
+  ];
+}
+
+function getResolvedPublicReputationCount(reputation: ReturnType<typeof resolveScopedReputation>): number {
+  return reputation.fame.length + reputation.notoriety.length;
+}
+
+function getTopResolvedFameTotal(reputation: ReturnType<typeof resolveScopedReputation>): number {
+  return reputation.fame.reduce((best, entry) => Math.max(best, entry.currentTotal), 0);
+}
+
 function formatResourceGrowth(vector: PlayerResourceGrowthVector): string {
   return `HP ${formatSignedValue(vector.hp)} | MP ${formatSignedValue(vector.mp)} | STA ${formatSignedValue(vector.stamina)}`;
+}
+
+function buildGeographicKnowledgeItems(snapshot: SaveSnapshot): ListItem[] {
+  const visibleEntries = snapshot.playerState.geographicKnowledge
+    .filter((entry) => isVisibleGeographicKnowledgeLevel(entry.level))
+    .sort(compareGeographicKnowledgeEntries);
+
+  const scopes: Array<{ id: string; scope: 'continent' | 'region' | 'settlement'; subtitle: string; summary: string }> = [
+    {
+      id: 'geographic-knowledge.continent',
+      scope: 'continent',
+      subtitle: 'Geographic Knowledge',
+      summary: 'Known lands reflect broad awareness of continents and island systems.'
+    },
+    {
+      id: 'geographic-knowledge.region',
+      scope: 'region',
+      subtitle: 'Geographic Knowledge',
+      summary: 'Known regions reflect practical knowledge of major territories and how they behave.'
+    },
+    {
+      id: 'geographic-knowledge.settlement',
+      scope: 'settlement',
+      subtitle: 'Geographic Knowledge',
+      summary: 'Known settlements reflect practical awareness of towns, roads, and settled life on the ground.'
+    }
+  ];
+
+  return scopes.flatMap(({ id, scope, subtitle, summary }) => {
+    const entries = visibleEntries.filter((entry) => entry.scope === scope);
+    if (entries.length === 0) {
+      return [];
+    }
+
+    const title = getGeographicKnowledgeSectionLabel(scope);
+    const highestTier = getGeographicKnowledgeTierLabel(entries[0]!.level);
+
+    return [
+      {
+        id,
+        title,
+        subtitle,
+        meta: `${entries.length} known`,
+        status: highestTier,
+        tags: ['Geographic Knowledge', title],
+        detailTitle: title,
+        detailSummary: summary,
+        detailGroups: [
+          {
+            title,
+            entries: entries.map((entry) => ({
+              label: humanizeId(entry.geographyId),
+              value: getGeographicKnowledgeTierLabel(entry.level)
+            }))
+          }
+        ]
+      }
+    ];
+  });
 }
 
 function getInventoryStackCount(inventory: PlayerInventoryState): number {
@@ -327,9 +463,9 @@ function formatOriginLabel(originProfile: PlayerOriginProfileState): string {
 function summarizeAttributeAdjustments(
   adjustments: PlayerOriginProfileState['attributeAdjustments']
 ): string {
-  const summary = Object.entries(adjustments)
-    .filter(([, value]) => value !== undefined && value !== 0)
-    .map(([key, value]) => `${key} ${formatSignedValue(value!)}`)
+  const summary = CHARACTER_ATTRIBUTE_ORDER
+    .filter((key) => (adjustments[key] ?? 0) !== 0)
+    .map((key) => `${key} ${formatSignedValue(adjustments[key] ?? 0)}`)
     .join(', ');
 
   return summary || 'None';
@@ -408,6 +544,188 @@ function mapCodexEntry(entry: CodexEntryState): ListItem {
       { label: 'Region Tags', value: entry.regionTags.join(', ') }
     ])
   };
+}
+
+function countAchievementChronicleEntries(snapshot: SaveSnapshot, category: string): number {
+  return snapshot.sessionState.chronicle.filter((entry) => entry.category === category).length;
+}
+
+function sumAchievementHistoricalFame(snapshot: SaveSnapshot): number {
+  return snapshot.playerState.reputation.fame.reduce(
+    (sum, entry) => sum + Math.max(0, Math.trunc(entry.historical)),
+    0
+  );
+}
+
+function buildAchievementMetricView(
+  snapshot: SaveSnapshot,
+  accountProfile: AccountProfileState
+): Record<AchievementMetricId, number> {
+  return {
+    'character.combat.entries': countAchievementChronicleEntries(snapshot, 'combat'),
+    'character.travel.entries': countAchievementChronicleEntries(snapshot, 'travel'),
+    'character.discovery.entries': snapshot.playerState.discoveryChronicle.entries.length,
+    'character.crafting.entries': countAchievementChronicleEntries(snapshot, 'crafting'),
+    'character.trade.entries': countAchievementChronicleEntries(snapshot, 'trade'),
+    'character.quests.completed': snapshot.playerState.completedQuestIds.length,
+    'character.reputation.historical_total': sumAchievementHistoricalFame(snapshot),
+    ...accountProfile.achievements.cumulativeMetrics
+  };
+}
+
+function formatAchievementRarityLabel(rarity: string): string {
+  return humanizeId(rarity);
+}
+
+function formatAchievementStateLabel(params: {
+  unlocked: boolean;
+  revealed: boolean;
+  hiddenByDefault: boolean;
+}): string {
+  if (params.unlocked) {
+    return 'Unlocked';
+  }
+
+  if (params.hiddenByDefault && !params.revealed) {
+    return 'Unknown';
+  }
+
+  return 'In progress';
+}
+
+function formatAchievementRewardLabel(reward: {
+  legacyPoints?: number;
+  unlockId?: string;
+} | undefined): string {
+  if (!reward) {
+    return 'No Legacy reward';
+  }
+
+  const parts = [
+    reward.legacyPoints ? `${reward.legacyPoints} Legacy` : null,
+    reward.unlockId ? humanizeId(reward.unlockId) : null
+  ].filter((value): value is string => Boolean(value));
+
+  return parts.join(' | ') || 'No Legacy reward';
+}
+
+function buildAchievementCodexEntries(
+  snapshot: SaveSnapshot,
+  accountProfile: AccountProfileState
+): ListItem[] {
+  const metricView = buildAchievementMetricView(snapshot, accountProfile);
+  const characterUnlockIds = new Set(
+    snapshot.playerState.achievements.unlocked.map((entry) => entry.achievementId)
+  );
+  const accountUnlockMap = new Map(
+    accountProfile.achievements.unlocked.map((entry) => [entry.achievementId, entry])
+  );
+  const revealedDeedIds = new Set(accountProfile.achievements.revealedCharacterAchievementIds);
+
+  return getAchievementDefinitions().map((definition) => {
+    const unlocked =
+      definition.layer === 'character'
+        ? characterUnlockIds.has(definition.id)
+        : accountUnlockMap.has(definition.id);
+    const revealed =
+      definition.layer === 'character'
+        ? unlocked || revealedDeedIds.has(definition.id)
+        : unlocked || !definition.hiddenByDefault;
+    const hidden = definition.hiddenByDefault && !revealed;
+    const progressValue = Math.min(
+      metricView[definition.metricId] ?? 0,
+      definition.targetValue
+    );
+    const unlockedAt =
+      definition.layer === 'character'
+        ? snapshot.playerState.achievements.unlocked.find((entry) => entry.achievementId === definition.id)
+            ?.unlockedAt ?? null
+        : accountUnlockMap.get(definition.id)?.unlockedAt ?? null;
+    const progressLabel = `${progressValue} / ${definition.targetValue}`;
+
+    return {
+      id: definition.id,
+      category: definition.layer === 'character' ? 'deeds' : 'chronicles',
+      title: hidden ? '???' : definition.title,
+      subtitle: hidden ? 'Unrevealed entry' : definition.description,
+      meta: hidden ? '???' : progressLabel,
+      status: hidden
+        ? 'Hidden'
+        : unlocked
+          ? 'Unlocked'
+          : `${formatAchievementRarityLabel(definition.rarity)} ${definition.layer === 'character' ? 'Deed' : 'Chronicle'}`,
+      tags: hidden
+        ? [definition.layer === 'character' ? 'Deed' : 'Chronicle']
+        : [
+            definition.layer === 'character' ? 'Deed' : 'Chronicle',
+            humanizeId(definition.category),
+            formatAchievementRarityLabel(definition.rarity)
+          ],
+      locked: hidden,
+      detailTitle: hidden ? 'Unknown Deed' : definition.title,
+      detailSummary: hidden
+        ? 'This deed has not yet been revealed to the current ledger.'
+        : definition.description,
+      detailGroups: hidden
+        ? [
+            {
+              title: 'Record',
+              entries: [
+                {
+                  label: definition.layer === 'character' ? 'Deed State' : 'Chronicle State',
+                  value: 'Unknown'
+                },
+                {
+                  label: 'Condition',
+                  value:
+                    definition.layer === 'character'
+                      ? 'Reveal this deed on the account once it is first earned.'
+                      : 'This chronicle remains hidden until it is explicitly revealed.'
+                }
+              ]
+            }
+          ]
+        : [
+            {
+              title: 'Record',
+              entries: [
+                {
+                  label: definition.layer === 'character' ? 'Deed State' : 'Chronicle State',
+                  value: formatAchievementStateLabel({
+                    unlocked,
+                    revealed,
+                    hiddenByDefault: definition.hiddenByDefault
+                  })
+                },
+                { label: 'Category', value: humanizeId(definition.category) },
+                { label: 'Rarity', value: formatAchievementRarityLabel(definition.rarity) }
+              ]
+            },
+            {
+              title: 'Progress',
+              entries: [
+                { label: 'Current', value: progressValue.toString() },
+                { label: 'Target', value: definition.targetValue.toString() },
+                { label: 'Progress', value: progressLabel }
+              ]
+            },
+            ...(definition.layer === 'account'
+              ? [
+                  {
+                    title: 'Legacy Record',
+                    entries: [
+                      { label: 'Reward', value: formatAchievementRewardLabel(definition.reward) },
+                      {
+                        label: 'Unlocked At',
+                        value: unlockedAt ? unlockedAt : 'Not yet recorded'
+                      }
+                    ]
+                  }
+                ]
+              : [])
+          ]
+    };
+  });
 }
 
 function mapQuestEntry(entry: QuestJournalEntryState): ListItem {
@@ -509,42 +827,34 @@ function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]>
   const inventoryStackCount = getInventoryStackCount(playerState.inventory);
   const inventoryItemQuantity = getInventoryItemQuantity(playerState.inventory);
   const inventoryCapacity = getInventoryCapacity(playerState.inventory);
-  const attributeDetails: Record<PlayerAttributeKey, string> = {
-    STR: 'Physical power, carrying, and impact',
-    DEX: 'Precision, tool handling, and ranged control',
-    AGI: 'Movement speed, balance, and evasion',
-    CON: 'Resistance to strain and injury',
-    VIT: 'Endurance, recovery, and hardiness',
-    WIS: 'Judgment, medicine, and perception',
-    INT: 'Planning, analysis, and technical learning',
-    SPT: 'Will, resonance, and magical stability',
-    CHA: 'Influence, command, and negotiation'
-  };
+  const attributes = CHARACTER_ATTRIBUTE_ORDER.map((key) => {
+    const value = playerState.attributes[key];
+    const presentation = getCharacterAttributePresentation(key);
 
-  const attributes = (Object.entries(playerState.attributes) as Array<[PlayerAttributeKey, number]>).map(
-    ([key, value]) => ({
+    return {
       id: `attr.${key.toLowerCase()}`,
-      title: humanizeId(key),
-      subtitle: attributeDetails[key],
+      title: presentation.fullName,
+      subtitle: presentation.compactMeaning,
       meta: `${value} total`,
       status: value >= 16 ? 'Advanced' : value >= 13 ? 'Competent' : 'Developing',
       tags: [key, 'Player Stat', playerState.originProfile.attributeAdjustments[key] ? 'Origin Adjusted' : 'Unmodified'],
-      detailTitle: `${humanizeId(key)} Breakdown`,
-      detailSummary: `${humanizeId(key)} currently sits at ${value} and directly feeds related skill checks and passive thresholds.`,
+      detailTitle: `${presentation.fullName} Breakdown`,
+      detailSummary: `${presentation.fullName} currently sits at ${value}. ${presentation.tooltip.body}`,
       detailGroups: buildDetailGroup('Sources', [
         { label: 'Current Value', value: value.toString() },
         {
           label: 'Origin Adjustment',
           value: formatSignedValue(playerState.originProfile.attributeAdjustments[key] ?? 0)
         },
-        { label: 'Derived Focus', value: attributeDetails[key] },
+        { label: 'Represents', value: presentation.compactMeaning },
+        { label: 'Major Systems', value: presentation.tooltip.footer.replace(/^Major systems:\s*/i, '') },
         {
           label: 'Threshold Band',
           value: value >= 16 ? 'Advanced' : value >= 13 ? 'Competent' : 'Developing'
         }
       ])
-    })
-  );
+    };
+  });
 
   const skills = playerState.skills.map((skill) => ({
     id: skill.id,
@@ -692,20 +1002,67 @@ function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]>
     ])
   }));
 
-  const reputation = playerState.reputation.map((entry) => ({
+  const standing = playerState.standing.map((entry) => ({
     id: entry.id,
     title: entry.label,
-    subtitle: 'Standing',
+    subtitle: 'Faction Standing',
     meta: entry.standingLabel,
     status: `${entry.score} score`,
-    tags: ['Reputation'],
+    tags: ['Standing'],
     detailTitle: entry.label,
-    detailSummary: `${entry.label} currently sits at ${entry.standingLabel} and unlocks access or discounts.`,
+    detailSummary: `${entry.label} currently sits at ${entry.standingLabel} and unlocks access, pricing, or service tiers.`,
     detailGroups: buildDetailGroup('Benefits', [
       { label: 'Standing', value: entry.standingLabel },
       { label: 'Score', value: entry.score.toString() },
-      { label: 'Effects', value: entry.effects.join(', ') }
+      { label: 'Effects', value: entry.effects.join(', ') || 'No authored effects' }
     ])
+  }));
+
+  const geographicKnowledge = buildGeographicKnowledgeItems(snapshot);
+
+  const reputationResolution = resolveScopedReputation(playerState);
+  const reputation = flattenResolvedPublicReputation(reputationResolution).map(({ axis, entry }) => ({
+    id: `${axis}.${entry.scope}.${entry.scopeId}`,
+    title: `${formatReputationScopeLabel(entry.scope)} ${formatReputationAxisLabel(axis)}`,
+    subtitle: entry.scope === 'world' ? 'Wider world memory' : humanizeId(entry.scopeId),
+    meta: `${entry.currentTotal.toFixed(1)} current`,
+    status:
+      axis === 'fame'
+        ? formatFameRecognitionBandLabel(entry.recognitionBandId)
+        : formatNotorietySeriousnessLabel(entry.seriousnessClass),
+    tags: ['Reputation', formatReputationAxisLabel(axis), formatReputationScopeLabel(entry.scope)],
+    detailTitle: `${formatReputationScopeLabel(entry.scope)} ${formatReputationAxisLabel(axis)}`,
+    detailSummary:
+      axis === 'fame'
+        ? `${formatReputationScopeLabel(entry.scope)} fame currently resolves to ${entry.currentTotal.toFixed(1)}, with ${entry.currentEarned.toFixed(1)} earned recognition and ${entry.currentThreshold.toFixed(1)} threshold carryover.`
+        : `${formatReputationScopeLabel(entry.scope)} notoriety currently resolves to ${entry.currentTotal.toFixed(1)}, with ${entry.currentEarned.toFixed(1)} earned recognition and ${entry.currentThreshold.toFixed(1)} threshold carryover.`,
+    detailGroups: buildDetailGroup(
+      axis === 'fame' ? 'Public Fame' : 'Public Notoriety',
+      axis === 'fame'
+        ? [
+            { label: 'Scope', value: formatReputationScopeLabel(entry.scope) },
+            { label: 'Current Earned', value: entry.currentEarned.toFixed(1) },
+            { label: 'Current Threshold', value: entry.currentThreshold.toFixed(1) },
+            { label: 'Current Total', value: entry.currentTotal.toFixed(1) },
+            { label: 'Historical', value: entry.historical.toFixed(1) },
+            { label: 'Top Branch', value: entry.topBranchId ? humanizeId(entry.topBranchId) : 'None' },
+            { label: 'Recognition Band', value: formatFameRecognitionBandLabel(entry.recognitionBandId) },
+            { label: 'Historical Tier', value: humanizeId(entry.historicalTier) }
+          ]
+        : [
+            { label: 'Scope', value: formatReputationScopeLabel(entry.scope) },
+            { label: 'Current Earned', value: entry.currentEarned.toFixed(1) },
+            { label: 'Current Threshold', value: entry.currentThreshold.toFixed(1) },
+            { label: 'Current Total', value: entry.currentTotal.toFixed(1) },
+            { label: 'Historical', value: entry.historical.toFixed(1) },
+            { label: 'Top Category', value: entry.topCategoryId ? humanizeId(entry.topCategoryId) : 'None' },
+            { label: 'Highest Severity', value: entry.highestSeverity ? humanizeId(entry.highestSeverity) : 'None' },
+            { label: 'Active Flags', value: entry.activeFlags.map((flag) => humanizeId(flag)).join(', ') || 'None' },
+            { label: 'Seriousness', value: formatNotorietySeriousnessLabel(entry.seriousnessClass) },
+            { label: 'Primary Drivers', value: formatNotorietyDrivers(entry) },
+            { label: 'Historical Tier', value: humanizeId(entry.historicalTier) }
+          ]
+    )
   }));
 
   const titles = playerState.titles.map((title) => ({
@@ -739,6 +1096,8 @@ function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]>
     inventory,
     equipment,
     traits,
+    geographicKnowledge,
+    standing,
     reputation,
     titles,
     discoveries
@@ -772,7 +1131,7 @@ function createWindowDetail({
       { title: 'Standard Fields', entries: standardFields },
       { title: 'Connected References', entries: connectedRefs },
       { title: 'Missing / Empty References', entries: missingRefs }
-    ]
+    ].filter((group) => group.entries.length > 0)
   };
 }
 
@@ -799,7 +1158,11 @@ function buildCharacterWindowDetails(
       summary:
         'The overview window should expose live identity, origin growth, progression state, carry state, discoveries, and current session context for the player.',
       standardFields: [
-        { label: 'Progression', value: `Level ${snapshot.playerState.progression.level}`, tone: 'success' },
+        {
+          label: 'Progression',
+          value: `Echo Level ${snapshot.playerState.progression.level}`,
+          tone: 'success'
+        },
         {
           label: 'Origin Profile',
           value: originSummary,
@@ -952,24 +1315,60 @@ function buildCharacterWindowDetails(
         { label: 'Source Record Ids', value: 'Needs content refs for origin', tone: 'warning' }
       ]
     }),
-    reputation: createWindowDetail({
-      title: 'Reputation Window Standards',
+    'geographic-knowledge': createWindowDetail({
+      title: 'Geographic Knowledge Standards',
       summary:
-        'Reputation detail should show faction standing, thresholds, unlocks, and any regional or service gating that depends on them.',
+        'Geographic knowledge should show known lands, known regions, and known settlements as place-aware knowledge rather than generic discovery counts.',
       standardFields: [
-        { label: 'Tracked Factions', value: characterLists.reputation.length.toString(), tone: 'success' },
-        { label: 'Current Fields', value: 'Label, score, standing, effects', tone: 'success' },
-        { label: 'Top Standing', value: snapshot.playerState.reputation[0]?.standingLabel ?? 'None', tone: 'accent' }
+        { label: 'Known Lands', value: characterLists.geographicKnowledge.find((item) => item.id === 'geographic-knowledge.continent')?.meta ?? '0 known', tone: 'success' },
+        { label: 'Known Regions', value: characterLists.geographicKnowledge.find((item) => item.id === 'geographic-knowledge.region')?.meta ?? '0 known', tone: 'success' },
+        { label: 'Known Settlements', value: characterLists.geographicKnowledge.find((item) => item.id === 'geographic-knowledge.settlement')?.meta ?? '0 known', tone: 'accent' }
       ],
       connectedRefs: [
-        { label: 'Runtime Source', value: 'playerState.reputation', tone: 'accent' },
-        { label: 'Projection Ref', value: 'character.lists.reputation', tone: 'neutral' },
+        { label: 'Runtime Source', value: 'playerState.geographicKnowledge', tone: 'accent' },
+        { label: 'Projection Ref', value: 'character.lists.geographic-knowledge', tone: 'neutral' },
+        { label: 'Display Rule', value: 'level 0 hidden by default', tone: 'neutral' }
+      ],
+      missingRefs: [
+        { label: 'Residency Flags', value: 'Native, resident, homeland, and exile stay separate from knowledge tiers', tone: 'neutral' },
+        { label: 'Deeper Progression', value: 'Geographic knowledge remains a simple level-based exposure layer in this pass', tone: 'warning' },
+        { label: 'Map Hooks', value: 'Future routefinding and awareness benefits can read these tiers later', tone: 'warning' }
+      ]
+    }),
+    standing: createWindowDetail({
+      title: 'Standing Window Standards',
+      summary:
+        'Standing detail should show faction or guild access standing, score thresholds, and any service unlocks or discounts it controls.',
+      standardFields: [
+        { label: 'Tracked Factions', value: characterLists.standing.length.toString(), tone: 'success' },
+        { label: 'Current Fields', value: 'Label, score, standing, effects', tone: 'success' },
+        { label: 'Top Standing', value: snapshot.playerState.standing[0]?.standingLabel ?? 'None', tone: 'accent' }
+      ],
+      connectedRefs: [
+        { label: 'Runtime Source', value: 'playerState.standing', tone: 'accent' },
+        { label: 'Projection Ref', value: 'character.lists.standing', tone: 'neutral' },
         { label: 'UI Dependents', value: 'titles, quests, market access', tone: 'neutral' }
       ],
       missingRefs: [
         { label: 'Faction Id Links', value: 'Needs canonical faction refs', tone: 'warning' },
         { label: 'Threshold Tables', value: 'Needs standing tier definitions', tone: 'warning' },
-        { label: 'Decay Rules', value: 'Missing long-term reputation drift', tone: 'warning' }
+        { label: 'Decay Rules', value: 'Standing intentionally does not use public-reputation decay rules', tone: 'neutral' }
+      ]
+    }),
+    reputation: createWindowDetail({
+      title: 'Public Reputation Window Standards',
+      summary:
+        'Public reputation detail should separate fame from notoriety and keep earned, current earned, threshold carryover, and historical layers visible by scope.',
+      standardFields: [
+        { label: 'Tracked Scope Rows', value: characterLists.reputation.length.toString(), tone: 'success' },
+        { label: 'Current Fields', value: 'Scope, current earned, threshold, total, historical, summary drivers', tone: 'success' },
+        { label: 'Top Fame', value: getTopResolvedFameTotal(resolveScopedReputation(snapshot.playerState)).toFixed(1), tone: 'accent' }
+      ],
+      connectedRefs: [],
+      missingRefs: [
+        { label: 'Chronicle Hooks', value: 'Historical tiers are internal until codex/chronicle surfaces are added', tone: 'warning' },
+        { label: 'Investigation States', value: 'Hidden attribution and rumor propagation remain deferred', tone: 'warning' },
+        { label: 'Cross-System Reads', value: 'Quest and service gating can expand onto scoped reputation later', tone: 'neutral' }
       ]
     }),
     titles: createWindowDetail({
@@ -1064,7 +1463,11 @@ function buildWorldWindowDetails(
       standardFields: [
         { label: 'Region Records', value: worldLists.region.length.toString(), tone: 'success' },
         { label: 'Current Fields', value: 'Climate, danger, resources', tone: 'success' },
-        { label: 'Discovered Regions', value: snapshot.playerState.discoveredRegions.length.toString(), tone: 'accent' }
+        {
+          label: 'Known Regions',
+          value: snapshot.playerState.geographicKnowledge.filter((entry) => entry.scope === 'region' && entry.level > 0).length.toString(),
+          tone: 'accent'
+        }
       ],
       connectedRefs: [
         { label: 'Runtime Source', value: 'sessionState.worldRecords[region]', tone: 'accent' },
@@ -1084,7 +1487,11 @@ function buildWorldWindowDetails(
       standardFields: [
         { label: 'Settlement Records', value: worldLists.settlement.length.toString(), tone: 'success' },
         { label: 'Current Fields', value: 'Population, supply, services', tone: 'success' },
-        { label: 'Known Settlement Ids', value: snapshot.playerState.location.knownSettlementIds.length.toString(), tone: 'accent' }
+        {
+          label: 'Known Settlements',
+          value: snapshot.playerState.geographicKnowledge.filter((entry) => entry.scope === 'settlement' && entry.level > 0).length.toString(),
+          tone: 'accent'
+        }
       ],
       connectedRefs: [
         { label: 'Runtime Source', value: 'sessionState.worldRecords[settlement]', tone: 'accent' },
@@ -1276,7 +1683,7 @@ function buildActivityWindowDetails(
       ],
       connectedRefs: [
         { label: 'Runtime Source', value: 'sessionState.activityRecords[military]', tone: 'accent' },
-        { label: 'Identity Source', value: 'playerState.titles + reputation', tone: 'neutral' },
+        { label: 'Identity Source', value: 'playerState.titles + standing + reputation', tone: 'neutral' },
         { label: 'Projection Ref', value: 'activity.lists.military', tone: 'neutral' }
       ],
       missingRefs: [
@@ -1351,6 +1758,36 @@ function buildCodexCategoryWindowDetail(
   });
 }
 
+function buildAchievementSectionWindowDetail(
+  sectionLabel: 'Deeds' | 'Chronicles',
+  count: number,
+  unlockedCount: number
+): WindowDetail {
+  return {
+    title: sectionLabel,
+    summary:
+      sectionLabel === 'Deeds'
+        ? 'Deeds track this character’s own accomplishments. Hidden entries stay veiled until the account first uncovers them.'
+        : 'Chronicles track account-wide milestones, Legacy rewards, and enduring marks preserved across lives.',
+    groups: [
+      {
+        title: 'Overview',
+        entries: [
+          { label: 'Entries', value: count.toString() },
+          { label: 'Unlocked', value: unlockedCount.toString() },
+          {
+            label: 'Visibility',
+            value:
+              sectionLabel === 'Deeds'
+                ? 'Hidden by default until first discovery'
+                : 'Mostly visible unless an entry is explicitly hidden'
+          }
+        ]
+      }
+    ]
+  };
+}
+
 function buildQuestSectionWindowDetail(
   sectionLabel: string,
   count: number,
@@ -1397,11 +1834,20 @@ function buildChronicleSectionWindowDetail(
   });
 }
 
-function buildCodexWindowDetails(snapshot: SaveSnapshot): Record<string, WindowDetail> {
+function buildCodexWindowDetails(
+  snapshot: SaveSnapshot,
+  accountProfile: AccountProfileState
+): Record<string, WindowDetail> {
   const counts = codexSections.reduce<Record<string, number>>((accumulator, section) => {
-    accumulator[section.id] = snapshot.sessionState.codexEntries.filter((entry) => entry.category === section.id).length;
+    accumulator[section.id] =
+      section.id === 'deeds' || section.id === 'chronicles'
+        ? 0
+        : snapshot.sessionState.codexEntries.filter((entry) => entry.category === section.id).length;
     return accumulator;
   }, {});
+  const definitions = getAchievementDefinitions();
+  const deedCount = definitions.filter((entry) => entry.layer === 'character').length;
+  const chronicleCount = definitions.filter((entry) => entry.layer === 'account').length;
 
   return {
     flora: buildCodexCategoryWindowDetail('Flora', counts.flora, [
@@ -1438,7 +1884,17 @@ function buildCodexWindowDetails(snapshot: SaveSnapshot): Record<string, WindowD
       { label: 'Source Record Links', value: 'Needs quest / event source refs', tone: 'warning' },
       { label: 'Journal Ownership', value: 'Needs note-author metadata', tone: 'warning' },
       { label: 'Follow-up Hooks', value: 'Needs note-to-objective links', tone: 'warning' }
-    ])
+    ]),
+    deeds: buildAchievementSectionWindowDetail(
+      'Deeds',
+      deedCount,
+      snapshot.playerState.achievements.unlocked.length
+    ),
+    chronicles: buildAchievementSectionWindowDetail(
+      'Chronicles',
+      chronicleCount,
+      accountProfile.achievements.unlocked.length
+    )
   };
 }
 
@@ -1529,18 +1985,30 @@ function buildChronicleWindowDetails(snapshot: SaveSnapshot): Record<string, Win
       { label: 'Source Evidence', value: 'Needs note / sample refs', tone: 'warning' }
     ]),
     reputation: buildChronicleSectionWindowDetail('Reputation', counts.reputation, [
-      { label: 'Standing Delta Links', value: 'Needs faction score refs', tone: 'warning' },
-      { label: 'Threshold Effects', value: 'Needs unlock tier refs', tone: 'warning' },
-      { label: 'Access Change Links', value: 'Needs service / permit refs', tone: 'warning' }
+      { label: 'Reputation Delta Links', value: 'Needs public-reputation source refs', tone: 'warning' },
+      { label: 'Threshold Effects', value: 'Needs cross-scope carryover refs', tone: 'warning' },
+      { label: 'Audience Change Links', value: 'Needs service, authority, or rumor-surface refs', tone: 'warning' }
     ])
   };
 }
 
-export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
+export function createUiViewModel(
+  snapshot: SaveSnapshot,
+  bodyStatePresentation: BodyStatePresentationViewModel,
+  accountProfile: AccountProfileState
+): UiViewModel {
   const trackedQuest =
     snapshot.sessionState.questJournal.find((entry) => entry.id === snapshot.sessionState.trackedQuestId) ??
     snapshot.sessionState.questJournal.find((entry) => entry.tracked);
   const characterLists = buildCharacterLists(snapshot);
+  const resolvedPublicReputation = resolveScopedReputation(snapshot.playerState);
+  const resolvedPublicReputationCount = getResolvedPublicReputationCount(resolvedPublicReputation);
+  const visibleGeographicKnowledge = snapshot.playerState.geographicKnowledge.filter((entry) =>
+    isVisibleGeographicKnowledgeLevel(entry.level)
+  );
+  const knownLandCount = visibleGeographicKnowledge.filter((entry) => entry.scope === 'continent').length;
+  const knownRegionCount = visibleGeographicKnowledge.filter((entry) => entry.scope === 'region').length;
+  const knownSettlementCount = visibleGeographicKnowledge.filter((entry) => entry.scope === 'settlement').length;
   const inventoryStackCount = getInventoryStackCount(snapshot.playerState.inventory);
   const inventoryItemQuantity = getInventoryItemQuantity(snapshot.playerState.inventory);
   const inventoryCapacity = getInventoryCapacity(snapshot.playerState.inventory);
@@ -1584,14 +2052,18 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
     return groups;
   }, {});
 
-  const codexEntries = snapshot.sessionState.codexEntries.map(mapCodexEntry);
+  const achievementCodexEntries = buildAchievementCodexEntries(snapshot, accountProfile);
+  const codexEntries = [
+    ...snapshot.sessionState.codexEntries.map(mapCodexEntry),
+    ...achievementCodexEntries
+  ];
   const questEntries = snapshot.sessionState.questJournal.map(mapQuestEntry);
   const chronicleEntries = snapshot.sessionState.chronicle.map(mapChronicleEntry);
 
   const characterWindowDetails = buildCharacterWindowDetails(snapshot, characterLists);
   const worldWindowDetails = buildWorldWindowDetails(snapshot, worldLists);
   const activityWindowDetails = buildActivityWindowDetails(snapshot, activityLists);
-  const codexWindowDetails = buildCodexWindowDetails(snapshot);
+  const codexWindowDetails = buildCodexWindowDetails(snapshot, accountProfile);
   const questWindowDetails = buildQuestWindowDetails(snapshot);
   const chronicleWindowDetails = buildChronicleWindowDetails(snapshot);
 
@@ -1602,6 +2074,8 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
     inventory: characterLists.inventory.length,
     equipment: characterLists.equipment.length,
     traits: characterLists.traits.length,
+    'geographic-knowledge': characterLists.geographicKnowledge.length,
+    standing: characterLists.standing.length,
     reputation: characterLists.reputation.length,
     titles: characterLists.titles.length,
     discoveries: characterLists.discoveries.length
@@ -1631,7 +2105,9 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
     items: codexEntries.filter((entry) => entry.category === 'items').length,
     recipes: codexEntries.filter((entry) => entry.category === 'recipes').length,
     factions: codexEntries.filter((entry) => entry.category === 'factions').length,
-    notes: codexEntries.filter((entry) => entry.category === 'notes').length
+    notes: codexEntries.filter((entry) => entry.category === 'notes').length,
+    deeds: codexEntries.filter((entry) => entry.category === 'deeds').length,
+    chronicles: codexEntries.filter((entry) => entry.category === 'chronicles').length
   };
   const questCounts = {
     active: questEntries.filter((entry) => entry.category === 'active').length,
@@ -1653,13 +2129,16 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
 
   return {
     navItems,
-    notifications: snapshot.sessionState.notifications.map((item) => ({
-      id: item.id,
-      title: item.title,
-      detail: item.detail,
-      time: item.timeLabel,
-      type: item.tone
-    })),
+    notifications: [
+      ...bodyStatePresentation.ephemeralNotifications,
+      ...snapshot.sessionState.notifications.map((item) => ({
+        id: item.id,
+        title: item.title,
+        detail: item.detail,
+        time: item.timeLabel,
+        type: item.tone
+      }))
+    ],
     topBar: {
       portraitInitials: snapshot.playerState.coreData.playerName
         .split(' ')
@@ -1677,7 +2156,8 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
       timeOfDay: formatTimeOfDay(snapshot),
       currency: formatWallet(snapshot),
       trackedQuest: trackedQuest?.title ?? 'No tracked quest',
-      activityTag: snapshot.sessionState.currentActivity?.label
+      activityTag: snapshot.sessionState.currentActivity?.label,
+      conditionStrip: bodyStatePresentation.conditionStrip
     },
     topBarMeters: [
       {
@@ -1696,7 +2176,8 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
         label: 'Stamina',
         current: snapshot.playerState.resources.stamina.current,
         max: snapshot.playerState.resources.stamina.max,
-        color: '#5fd2a3'
+        color: '#5fd2a3',
+        visualState: bodyStatePresentation.staminaVisualState
       }
     ],
     initialPinnedIds: snapshot.sessionState.pinnedRecordIds,
@@ -1705,15 +2186,15 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
       overviewMetrics: [
         {
           id: 'level',
-          label: 'Level',
+          label: 'Echo Level',
           value: snapshot.playerState.progression.level.toString(),
-          detail: `${snapshot.playerState.resources.xp.current.toLocaleString()} / ${snapshot.playerState.resources.xp.toNextLevel.toLocaleString()} XP`
+          detail: `Echo ${snapshot.playerState.progression.echo.echoAdjusted.toFixed(2)} | Skills ${snapshot.playerState.progression.echo.skillContribution.toFixed(1)} | Stats ${snapshot.playerState.progression.echo.statContribution.toFixed(1)} | Knowledge ${snapshot.playerState.progression.echo.knowledgeContribution.toFixed(1)}`
         },
         {
-          id: 'class-level',
-          label: 'Class Level',
-          value: snapshot.playerState.progression.classLevel.toString(),
-          detail: snapshot.playerState.originProfile.classLabel ?? 'No active class growth profile'
+          id: 'growth-level',
+          label: 'Growth Level',
+          value: snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel.toString(),
+          detail: `Class growth ${snapshot.playerState.progression.legacyGrowth.classLevel} | Unspent ${snapshot.playerState.progression.legacyGrowth.unspentAttributePoints}A / ${snapshot.playerState.progression.legacyGrowth.unspentSkillPoints}S`
         },
         {
           id: 'wallet',
@@ -1734,10 +2215,28 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
           detail: discoverySummary
         },
         {
+          id: 'geographic-knowledge',
+          label: 'Geographic Knowledge',
+          value: visibleGeographicKnowledge.length.toString(),
+          detail: `${knownLandCount} lands | ${knownRegionCount} regions | ${knownSettlementCount} settlements`
+        },
+        {
+          id: 'standing',
+          label: 'Standing',
+          value: snapshot.playerState.standing.length.toString(),
+          detail: 'Tracked faction standings and access tiers'
+        },
+        {
           id: 'reputation',
           label: 'Reputation',
-          value: snapshot.playerState.reputation.length.toString(),
-          detail: 'Tracked faction standings and access tiers'
+          value: resolvedPublicReputationCount.toString(),
+          detail: 'Scoped public fame and notoriety entries'
+        },
+        {
+          id: 'body-state',
+          label: 'Body State',
+          value: bodyStatePresentation.readinessCard.overallCondition,
+          detail: `${bodyStatePresentation.snapshot.labels.energy} | ${bodyStatePresentation.snapshot.labels.hydration} | ${bodyStatePresentation.snapshot.labels.fatigue}`
         }
       ],
       coreStats: [
@@ -1759,10 +2258,60 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
           value: `${snapshot.playerState.resources.stamina.current} / ${snapshot.playerState.resources.stamina.max}`,
           detail: 'Current and maximum endurance'
         },
-        { id: 'str', label: 'Strength', value: snapshot.playerState.attributes.STR.toString(), detail: 'Load, impact, and physical labor' },
-        { id: 'agi', label: 'Agility', value: snapshot.playerState.attributes.AGI.toString(), detail: 'Movement speed, balance, and evasion' },
-        { id: 'spt', label: 'Spirit', value: snapshot.playerState.attributes.SPT.toString(), detail: 'Will, resonance, and magical stability' }
+        {
+          id: 'energy',
+          label: 'Energy',
+          value: formatEnergyBandLabel(snapshot.playerState.bodyState.resolved.energyBand),
+          detail: getBodyStateDetail(bodyStatePresentation.snapshot, 'energy')
+        },
+        {
+          id: 'hydration',
+          label: 'Hydration',
+          value: formatHydrationBandLabel(snapshot.playerState.bodyState.resolved.hydrationBand),
+          detail: getBodyStateDetail(bodyStatePresentation.snapshot, 'hydration')
+        },
+        {
+          id: 'fatigue',
+          label: 'Fatigue',
+          value: formatFatigueBandLabel(snapshot.playerState.bodyState.resolved.fatigueBand),
+          detail: getBodyStateDetail(bodyStatePresentation.snapshot, 'fatigue')
+        },
+        {
+          id: 'protein',
+          label: 'Protein',
+          value: formatProteinBandLabel(snapshot.playerState.bodyState.resolved.proteinBand),
+          detail: getBodyStateDetail(bodyStatePresentation.snapshot, 'protein')
+        },
+        {
+          id: 'intoxication',
+          label: 'Intoxication',
+          value: formatIntoxicationBandLabel(snapshot.playerState.bodyState.resolved.intoxicationBand),
+          detail: getBodyStateDetail(bodyStatePresentation.snapshot, 'intoxication')
+        },
+        {
+          id: 'str',
+          label: getCharacterAttributeLabel('STR'),
+          value: snapshot.playerState.attributes.STR.toString(),
+          detail: getCharacterAttributePresentation('STR').compactMeaning,
+          tooltip: getCharacterAttributeTooltipContent('STR')
+        },
+        {
+          id: 'agi',
+          label: getCharacterAttributeLabel('AGI'),
+          value: snapshot.playerState.attributes.AGI.toString(),
+          detail: getCharacterAttributePresentation('AGI').compactMeaning,
+          tooltip: getCharacterAttributeTooltipContent('AGI')
+        },
+        {
+          id: 'spt',
+          label: getCharacterAttributeLabel('SPT'),
+          value: snapshot.playerState.attributes.SPT.toString(),
+          detail: getCharacterAttributePresentation('SPT').compactMeaning,
+          tooltip: getCharacterAttributeTooltipContent('SPT')
+        }
       ],
+      readinessCard: bodyStatePresentation.readinessCard,
+      recoveryProjection: bodyStatePresentation.recoveryProjection,
       activeEffects: Array.from(
         new Set([
           ...snapshot.playerState.activeEffects,
@@ -1779,7 +2328,7 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
       overviewDetail: {
         title: 'Runtime Bridge',
         summary:
-          'Character overview now reads directly from player progression, origin growth, resource pools, inventory, discoveries, location, currency, reputation, and title state instead of a disconnected mock profile.',
+          'Character overview now reads directly from player progression, origin growth, resource pools, inventory, discoveries, location, currency, standing, public reputation, and title state instead of a disconnected mock profile.',
         groups: [
           {
             title: 'Connected Systems',
@@ -1787,6 +2336,34 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
               { label: 'Player State', value: 'Attributes, resources, skills, traits, inventory, equipment, discoveries' },
               { label: 'Session State', value: 'Tracked quest, pinned records, current activity, notifications' },
               { label: 'Clock', value: `Tick ${snapshot.clock.tick}` }
+            ]
+          },
+          {
+            title: 'Echo Profile',
+            entries: [
+              { label: 'Echo Level', value: snapshot.playerState.progression.level.toString() },
+              { label: 'Echo Adjusted', value: snapshot.playerState.progression.echo.echoAdjusted.toFixed(2) },
+              { label: 'Skill Contribution', value: snapshot.playerState.progression.echo.skillContribution.toFixed(2) },
+              { label: 'Stat Contribution', value: snapshot.playerState.progression.echo.statContribution.toFixed(2) },
+              { label: 'Knowledge Contribution', value: snapshot.playerState.progression.echo.knowledgeContribution.toFixed(2) },
+              {
+                label: 'Diversity Bonus',
+                value: `${snapshot.playerState.progression.echo.diversityBonus.toFixed(2)}x from ${snapshot.playerState.progression.echo.diversityCount} skills`
+              }
+            ]
+          },
+          {
+            title: 'Body State',
+            entries: [
+              { label: 'Energy', value: `${formatEnergyBandLabel(snapshot.playerState.bodyState.resolved.energyBand)} - ${getBodyStateDetail(bodyStatePresentation.snapshot, 'energy')}` },
+              { label: 'Hydration', value: `${formatHydrationBandLabel(snapshot.playerState.bodyState.resolved.hydrationBand)} - ${getBodyStateDetail(bodyStatePresentation.snapshot, 'hydration')}` },
+              { label: 'Fatigue', value: `${formatFatigueBandLabel(snapshot.playerState.bodyState.resolved.fatigueBand)} - ${getBodyStateDetail(bodyStatePresentation.snapshot, 'fatigue')}` },
+              { label: 'Protein', value: `${formatProteinBandLabel(snapshot.playerState.bodyState.resolved.proteinBand)} - ${getBodyStateDetail(bodyStatePresentation.snapshot, 'protein')}` },
+              { label: 'Intoxication', value: `${formatIntoxicationBandLabel(snapshot.playerState.bodyState.resolved.intoxicationBand)} - ${getBodyStateDetail(bodyStatePresentation.snapshot, 'intoxication')}` },
+              {
+                label: 'Current Penalties',
+                value: snapshot.playerState.bodyState.resolved.warnings.join(' | ') || 'No active body-state warnings'
+              }
             ]
           },
           {
@@ -1810,6 +2387,10 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
               {
                 label: 'Resolved Maxima',
                 value: `HP ${snapshot.playerState.resources.hp.max} | MP ${snapshot.playerState.resources.mp.max} | STA ${snapshot.playerState.resources.stamina.max}`
+              },
+              {
+                label: 'Growth Tier',
+                value: `Resource ${snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel} | Class ${snapshot.playerState.progression.legacyGrowth.classLevel}`
               }
             ]
           },
@@ -1819,6 +2400,10 @@ export function createUiViewModel(snapshot: SaveSnapshot): UiViewModel {
               { label: 'Wallet', value: formatWallet(snapshot) },
               { label: 'Inventory Usage', value: `${inventoryStackCount} / ${inventoryCapacity} slots` },
               { label: 'Equipped Slots', value: occupiedEquipmentSlots.toString() },
+              {
+                label: 'Geographic Knowledge',
+                value: `${knownLandCount} lands | ${knownRegionCount} regions | ${knownSettlementCount} settlements`
+              },
               {
                 label: 'Discoveries',
                 value: `${snapshot.playerState.discoveryChronicle.entries.length} entries | ${discoverySummary}`

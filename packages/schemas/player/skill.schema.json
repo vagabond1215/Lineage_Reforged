@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "PlayerSkillRecord",
   "type": "object",
@@ -86,7 +86,8 @@
       "items": { "type": "string" },
       "uniqueItems": true
     },
-    "knowledgeTrackId": { "type": "string" },
+    "knowledgeDomainId": { "type": "string" },
     "milestoneTitleTrackId": { "type": "string" }
   }
 }
+

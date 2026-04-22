@@ -1,1 +1,1 @@
-export * from "./contracts.ts";
+export {};

@@ -5,6 +5,7 @@ import type {
   GameState,
   PartyRuntimeState,
   PlayerCombatProfileState,
+  RunDifficultyState,
   TacticalBias,
   TacticalRoleId
 } from "../../../../shared/types/src/index.js";
@@ -107,10 +108,18 @@ export function createCombatModeState(modeId: CombatModeId = "normal"): CombatMo
   };
 }
 
+export function createDefaultRunDifficultyState(): RunDifficultyState {
+  return {
+    tier: "normal",
+    hardcore: false
+  };
+}
+
 export function createDefaultGameState(modeId: CombatModeId = "normal"): GameState {
   return {
     worldVersion: "0.1.0",
     activeScenario: "bootstrap",
+    runDifficulty: createDefaultRunDifficultyState(),
     mode: createCombatModeState(modeId),
     party: createEmptyPartyRuntimeState(),
     activeEncounter: null,

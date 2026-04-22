@@ -2,11 +2,14 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const BACKSTORY_KNOWLEDGE_TRACK_ALLOWLIST = new Set([
-  "knowledge_track.flora",
-  "knowledge_track.fauna",
-  "knowledge_track.minerals",
-  "knowledge_track.resources_universal"
+const BACKSTORY_STARTING_LORE_ALLOWLIST = new Set([
+  "skill.knowledge.general_lore",
+  "skill.knowledge.flora_lore",
+  "skill.knowledge.fauna_lore",
+  "skill.knowledge.mineral_lore",
+  "skill.knowledge.arcane_lore",
+  "skill.knowledge.cultural_lore",
+  "skill.knowledge.civic_lore"
 ]);
 
 const BACKSTORY_STARTING_ABILITY_ALLOWLIST = new Map([
@@ -16,23 +19,25 @@ const BACKSTORY_STARTING_ABILITY_ALLOWLIST = new Map([
 
 async function loadPlayerJson(relativePath) {
   const raw = await readFile(relativePath, "utf8");
-  return JSON.parse(raw).records;
+  return JSON.parse(raw.replace(/^\uFEFF/, "")).records;
 }
 
-test("backstories stay within canonical starting knowledge and ability rules", async () => {
+test("backstories stay within canonical starting lore and ability rules", async () => {
   const records = await loadPlayerJson("packages/content/base/player/backstories.json");
 
   for (const record of records) {
-    for (const knowledge of record.startingKnowledge ?? []) {
+    const loreSkills = (record.startingSkills ?? []).filter((entry) =>
+      String(entry.skillId).startsWith("skill.knowledge.")
+    );
+
+    for (const loreSkill of loreSkills) {
       assert.ok(
-        BACKSTORY_KNOWLEDGE_TRACK_ALLOWLIST.has(knowledge.trackId),
-        `${record.id} uses non-canonical starting knowledge '${knowledge.trackId}'`
+        BACKSTORY_STARTING_LORE_ALLOWLIST.has(loreSkill.skillId),
+        `${record.id} uses non-canonical starting lore '${loreSkill.skillId}'`
       );
     }
 
-    const allowedAbilityIds =
-      BACKSTORY_STARTING_ABILITY_ALLOWLIST.get(record.id) ?? new Set();
-
+    const allowedAbilityIds = BACKSTORY_STARTING_ABILITY_ALLOWLIST.get(record.id) ?? new Set();
     for (const abilityId of record.startingAbilityIds ?? []) {
       assert.ok(
         allowedAbilityIds.has(abilityId),

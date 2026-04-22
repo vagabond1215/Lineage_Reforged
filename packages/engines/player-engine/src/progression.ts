@@ -1,7 +1,24 @@
+﻿import globalRuleCatalog from "../../../content/base/game/global_rules.json" with { type: "json" };
+import playerAttributeCatalog from "../../../content/base/player/attributes.json" with { type: "json" };
+import skillCatalog from "../../../content/base/player/skills.json" with { type: "json" };
+import { resolveRunDifficultyModifiers } from "./difficulty.js";
 import type {
+  GlobalRuleContentRecord,
+  PlayerAttributeContentRecord,
+  SkillContentRecord
+} from "../../civilization-engine/src/content.js";
+import type {
+  EchoBalanceRuleState,
+  EchoRequirementState,
   ItemUseProfileState,
-  KnowledgeTrackState,
+  KnowledgeDomainState,
+  PlayerAttributeKey,
+  PlayerEchoState,
+  PlayerLegacyGrowthState,
+  PlayerProgression,
+  PlayerState,
   PlayerTrialProgressState,
+  RunDifficultyState,
   SkillProgressionBandId,
   SkillProgressionBandState,
   SpellScalingChannel,
@@ -14,6 +31,27 @@ const BREAKTHROUGH_GATES: Array<{ gate: number; bandId: SkillProgressionBandId }
   { gate: 80, bandId: "skilled" },
   { gate: 100, bandId: "mastery" }
 ];
+
+const ECHO_BALANCE_RULE_ID = "rule.echo_balance";
+
+type LegacyProgressionCompatState = Partial<PlayerProgression> & {
+  classLevel?: number;
+  unspentAttributePoints?: number;
+  unspentSkillPoints?: number;
+  legacyGrowth?: Partial<PlayerLegacyGrowthState>;
+};
+
+type EchoCatalog = {
+  balanceRule: EchoBalanceRuleState;
+  attributeDefaults: Record<PlayerAttributeKey, number>;
+  skillById: Map<string, SkillContentRecord>;
+};
+
+type ContentCatalog<TRecord> = {
+  records: TRecord[];
+};
+
+let echoCatalogCache: EchoCatalog | null = null;
 
 export const SKILL_PROGRESSION_BANDS: SkillProgressionBandState[] = [
   { id: "clumsy", label: "Clumsy", minRank: 1, maxRank: 30, softCapRank: 30, requiresBreakthrough: false },
@@ -41,12 +79,434 @@ export const SPELL_SCALING_CHANNELS_BY_SCHOOL: Record<string, SpellScalingChanne
   ranged: ["power", "accuracy", "manaEfficiency", "statusChance"]
 };
 
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
-function round(value: number): number {
-  return Number(value.toFixed(4));
+function round(value: number, digits = 4): number {
+  return Number(value.toFixed(digits));
+}
+
+function normalizeInteger(value: unknown, fallback: number, minimum = 0): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return fallback;
+  }
+
+  return Math.max(minimum, Math.round(value));
+}
+
+function requireFiniteNumber(value: unknown, fieldPath: string): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} ${fieldPath} must be a finite number`);
+  }
+
+  return value;
+}
+
+function requirePositiveNumber(value: unknown, fieldPath: string): number {
+  const normalized = requireFiniteNumber(value, fieldPath);
+  if (normalized <= 0) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} ${fieldPath} must be greater than zero`);
+  }
+
+  return normalized;
+}
+
+function requireNonNegativeNumber(value: unknown, fieldPath: string): number {
+  const normalized = requireFiniteNumber(value, fieldPath);
+  if (normalized < 0) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} ${fieldPath} must not be negative`);
+  }
+
+  return normalized;
+}
+
+function requireAttributeKeyArray(value: unknown, fieldPath: string): PlayerAttributeKey[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} ${fieldPath} must be an array`);
+  }
+
+  const seen = new Set<PlayerAttributeKey>();
+  const keys = value.map((entry, index) => {
+    if (
+      entry !== "STR" &&
+      entry !== "DEX" &&
+      entry !== "AGI" &&
+      entry !== "CON" &&
+      entry !== "VIT" &&
+      entry !== "WIS" &&
+      entry !== "INT" &&
+      entry !== "SPT" &&
+      entry !== "CHA"
+    ) {
+      throw new Error(`${ECHO_BALANCE_RULE_ID} ${fieldPath}[${index}] must be a valid player attribute key`);
+    }
+
+    if (seen.has(entry)) {
+      throw new Error(`${ECHO_BALANCE_RULE_ID} ${fieldPath}[${index}] must not repeat '${entry}'`);
+    }
+    seen.add(entry);
+
+    return entry;
+  });
+
+  if (keys.length === 0) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} ${fieldPath} must not be empty`);
+  }
+
+  return keys;
+}
+
+function validateEchoBalanceRule(value: unknown): EchoBalanceRuleState {
+  if (!isObject(value)) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} must contain an object value`);
+  }
+
+  const exponents = value.exponents;
+  const weights = value.weights;
+  const normalization = value.normalization;
+  const diversity = value.diversity;
+
+  if (!isObject(exponents) || !isObject(weights) || !isObject(normalization) || !isObject(diversity)) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} is missing one or more required configuration blocks`);
+  }
+
+  const normalizedRule: EchoBalanceRuleState = {
+    version: normalizeInteger(value.version, 1, 1),
+    exponents: {
+      skill: requirePositiveNumber(exponents.skill, "exponents.skill"),
+      stat: requirePositiveNumber(exponents.stat, "exponents.stat"),
+      knowledge: requirePositiveNumber(exponents.knowledge, "exponents.knowledge")
+    },
+    weights: {
+      skills: requirePositiveNumber(weights.skills, "weights.skills"),
+      stats: requirePositiveNumber(weights.stats, "weights.stats"),
+      knowledge: requirePositiveNumber(weights.knowledge, "weights.knowledge")
+    },
+    levelScale: requirePositiveNumber(value.levelScale, "levelScale"),
+    normalization: {
+      skillReferenceRank: requirePositiveNumber(normalization.skillReferenceRank, "normalization.skillReferenceRank"),
+      skillReferenceSlots: requirePositiveNumber(normalization.skillReferenceSlots, "normalization.skillReferenceSlots"),
+      knowledgeSkillReferenceRank: requirePositiveNumber(
+        normalization.knowledgeSkillReferenceRank,
+        "normalization.knowledgeSkillReferenceRank"
+      ),
+      knowledgeSkillReferenceSlots: requirePositiveNumber(
+        normalization.knowledgeSkillReferenceSlots,
+        "normalization.knowledgeSkillReferenceSlots"
+      ),
+      statReferenceDelta: requirePositiveNumber(normalization.statReferenceDelta, "normalization.statReferenceDelta"),
+      trackedAttributeKeys: requireAttributeKeyArray(normalization.trackedAttributeKeys, "normalization.trackedAttributeKeys")
+    },
+    diversity: {
+      thresholdRank: requirePositiveNumber(diversity.thresholdRank, "diversity.thresholdRank"),
+      bonusPerSkill: requireNonNegativeNumber(diversity.bonusPerSkill, "diversity.bonusPerSkill"),
+      maxMultiplier: requirePositiveNumber(diversity.maxMultiplier, "diversity.maxMultiplier")
+    }
+  };
+
+  const weightTotal =
+    normalizedRule.weights.skills +
+    normalizedRule.weights.stats +
+    normalizedRule.weights.knowledge;
+  if (Math.abs(weightTotal - 1) > 0.0001) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} weights must sum to 1`);
+  }
+
+  if (normalizedRule.diversity.maxMultiplier < 1) {
+    throw new Error(`${ECHO_BALANCE_RULE_ID} diversity.maxMultiplier must be at least 1`);
+  }
+
+  return normalizedRule;
+}
+
+function resolveAttributeDefaults(
+  records: PlayerAttributeContentRecord[],
+  trackedAttributeKeys: PlayerAttributeKey[]
+): Record<PlayerAttributeKey, number> {
+  const defaultsByKey = records.reduce<Partial<Record<PlayerAttributeKey, number>>>((result, record) => {
+    result[record.shortCode] = record.default;
+    return result;
+  }, {});
+
+  for (const key of trackedAttributeKeys) {
+    if (typeof defaultsByKey[key] !== "number") {
+      throw new Error(`${ECHO_BALANCE_RULE_ID} references tracked attribute '${key}' without a matching authored default`);
+    }
+  }
+
+  return defaultsByKey as Record<PlayerAttributeKey, number>;
+}
+
+function getGlobalRuleRecords(): GlobalRuleContentRecord<unknown>[] {
+  return (globalRuleCatalog as ContentCatalog<GlobalRuleContentRecord<unknown>>).records;
+}
+
+function getPlayerAttributeRecords(): PlayerAttributeContentRecord[] {
+  return (playerAttributeCatalog as ContentCatalog<PlayerAttributeContentRecord>).records;
+}
+
+function getSkillRecords(): SkillContentRecord[] {
+  return (skillCatalog as ContentCatalog<SkillContentRecord>).records;
+}
+
+function loadEchoCatalog(): EchoCatalog {
+  if (echoCatalogCache) {
+    return echoCatalogCache;
+  }
+
+  const globalRule = getGlobalRuleRecords().find((record) => record.id === ECHO_BALANCE_RULE_ID);
+  if (!globalRule) {
+    throw new Error(`Missing authored global rule '${ECHO_BALANCE_RULE_ID}'`);
+  }
+
+  const balanceRule = validateEchoBalanceRule(globalRule.value);
+  const attributeDefaults = resolveAttributeDefaults(
+    getPlayerAttributeRecords(),
+    balanceRule.normalization.trackedAttributeKeys
+  );
+  const skillById = new Map(getSkillRecords().map((record) => [record.id, record]));
+
+  echoCatalogCache = {
+    balanceRule,
+    attributeDefaults,
+    skillById
+  };
+
+  return echoCatalogCache;
+}
+
+function normalizedEchoUnit(value: number, reference: number, exponent: number): number {
+  if (!Number.isFinite(value) || value <= 0 || reference <= 0) {
+    return 0;
+  }
+
+  return round(Math.pow(Math.min(1, value / reference), exponent));
+}
+
+export function loadEchoBalanceRule(): EchoBalanceRuleState {
+  return loadEchoCatalog().balanceRule;
+}
+
+export function createPlayerLegacyGrowthState(
+  overrides: Partial<PlayerLegacyGrowthState> = {}
+): PlayerLegacyGrowthState {
+  return {
+    resourceGrowthLevel: normalizeInteger(overrides.resourceGrowthLevel, 1, 1),
+    classLevel: normalizeInteger(overrides.classLevel, 0, 0),
+    unspentAttributePoints: normalizeInteger(overrides.unspentAttributePoints, 0, 0),
+    unspentSkillPoints: normalizeInteger(overrides.unspentSkillPoints, 0, 0)
+  };
+}
+
+export function createDefaultPlayerEchoState(rule: EchoBalanceRuleState = loadEchoBalanceRule()): PlayerEchoState {
+  return {
+    balanceRuleId: ECHO_BALANCE_RULE_ID,
+    balanceRuleVersion: rule.version,
+    skillContribution: 0,
+    statContribution: 0,
+    knowledgeContribution: 0,
+    echoBase: 0,
+    diversityCount: 0,
+    diversityBonus: 1,
+    echoAdjusted: 0
+  };
+}
+
+export function createPlayerProgressionState(params: {
+  level?: number;
+  legacyGrowth?: Partial<PlayerLegacyGrowthState>;
+} = {}): PlayerProgression {
+  return {
+    level: normalizeInteger(params.level, 0, 0),
+    echo: createDefaultPlayerEchoState(),
+    legacyGrowth: createPlayerLegacyGrowthState(params.legacyGrowth)
+  };
+}
+
+export function normalizePlayerProgression(progression?: LegacyProgressionCompatState | null): PlayerProgression {
+  const oldLevel = normalizeInteger(progression?.level, 0, 0);
+  const legacyGrowth = createPlayerLegacyGrowthState({
+    resourceGrowthLevel: progression?.legacyGrowth?.resourceGrowthLevel ?? (oldLevel || 1),
+    classLevel: progression?.legacyGrowth?.classLevel ?? progression?.classLevel ?? 0,
+    unspentAttributePoints:
+      progression?.legacyGrowth?.unspentAttributePoints ?? progression?.unspentAttributePoints ?? 0,
+    unspentSkillPoints: progression?.legacyGrowth?.unspentSkillPoints ?? progression?.unspentSkillPoints ?? 0
+  });
+
+  return {
+    level: oldLevel,
+    echo: createDefaultPlayerEchoState(),
+    legacyGrowth
+  };
+}
+
+export function calculatePlayerEcho(
+  playerState: Pick<PlayerState, "attributes" | "skills">
+): PlayerEchoState {
+  const { balanceRule, attributeDefaults, skillById } = loadEchoCatalog();
+
+  let nonKnowledgeSkillUnits = 0;
+  let knowledgeSkillUnits = 0;
+
+  for (const skill of playerState.skills) {
+    const skillRecord = skillById.get(skill.id);
+    const isKnowledgeSkill = skillRecord?.category === "knowledge";
+    const unit = normalizedEchoUnit(
+      skill.rank,
+      isKnowledgeSkill
+        ? balanceRule.normalization.knowledgeSkillReferenceRank
+        : balanceRule.normalization.skillReferenceRank,
+      isKnowledgeSkill ? balanceRule.exponents.knowledge : balanceRule.exponents.skill
+    );
+
+    if (isKnowledgeSkill) {
+      knowledgeSkillUnits += unit;
+      continue;
+    }
+
+    nonKnowledgeSkillUnits += unit;
+  }
+
+  const skillContribution = round(
+    100 *
+      Math.min(
+        1,
+        nonKnowledgeSkillUnits / balanceRule.normalization.skillReferenceSlots
+      )
+  );
+
+  const statUnits = balanceRule.normalization.trackedAttributeKeys.map((attributeKey) =>
+    normalizedEchoUnit(
+      Math.max(0, playerState.attributes[attributeKey] - attributeDefaults[attributeKey]),
+      balanceRule.normalization.statReferenceDelta,
+      balanceRule.exponents.stat
+    )
+  );
+  const statContribution = round(
+    100 *
+      (statUnits.length === 0
+        ? 0
+        : statUnits.reduce((total, entry) => total + entry, 0) / statUnits.length)
+  );
+
+  const knowledgeContribution = round(
+    100 *
+      Math.min(
+        1,
+        knowledgeSkillUnits / balanceRule.normalization.knowledgeSkillReferenceSlots
+      )
+  );
+
+  const echoBase = round(
+    skillContribution * balanceRule.weights.skills +
+      statContribution * balanceRule.weights.stats +
+      knowledgeContribution * balanceRule.weights.knowledge
+  );
+
+  const diversityCount = playerState.skills.filter(
+    (skill) => skill.rank >= balanceRule.diversity.thresholdRank
+  ).length;
+  const diversityBonus = round(
+    Math.min(
+      balanceRule.diversity.maxMultiplier,
+      1 + diversityCount * balanceRule.diversity.bonusPerSkill
+    )
+  );
+  const echoAdjusted = round(echoBase * diversityBonus);
+
+  return {
+    balanceRuleId: ECHO_BALANCE_RULE_ID,
+    balanceRuleVersion: balanceRule.version,
+    skillContribution,
+    statContribution,
+    knowledgeContribution,
+    echoBase,
+    diversityCount,
+    diversityBonus,
+    echoAdjusted
+  };
+}
+
+export function resolvePlayerEchoProgression(
+  playerState: Pick<PlayerState, "attributes" | "skills" | "progression">
+): PlayerProgression {
+  const normalizedProgression = normalizePlayerProgression(playerState.progression);
+  const echo = calculatePlayerEcho(playerState);
+  const level = Math.floor(loadEchoBalanceRule().levelScale * Math.sqrt(Math.max(echo.echoAdjusted, 0)));
+
+  return {
+    level,
+    echo,
+    legacyGrowth: normalizedProgression.legacyGrowth
+  };
+}
+
+export function syncPlayerEchoProgression(
+  playerState: Pick<PlayerState, "attributes" | "skills" | "progression">
+): PlayerProgression {
+  const progression = resolvePlayerEchoProgression(playerState);
+  playerState.progression = progression;
+  return progression;
+}
+
+export function meetsEchoRequirement(
+  progression: PlayerProgression,
+  requirement?: EchoRequirementState | null
+): boolean {
+  if (!requirement) {
+    return true;
+  }
+
+  if (progression.level < requirement.minLevel) {
+    return false;
+  }
+
+  if (
+    requirement.minEchoAdjusted !== undefined &&
+    requirement.minEchoAdjusted !== null &&
+    progression.echo.echoAdjusted < requirement.minEchoAdjusted
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+export function canAttemptTrial(
+  trial: Pick<TrialDefinitionState, "echoRequirement">,
+  progression: PlayerProgression
+): boolean {
+  return meetsEchoRequirement(progression, trial.echoRequirement);
+}
+
+export function resolveGlobalRuleEchoRequirement(ruleId: string): EchoRequirementState | null {
+  const globalRule = getGlobalRuleRecords().find((record) => record.id === ruleId);
+  if (!globalRule || !isObject(globalRule.value)) {
+    return null;
+  }
+
+  const requirement = globalRule.value.echoRequirement;
+  if (!isObject(requirement) || typeof requirement.minLevel !== "number") {
+    return null;
+  }
+
+  return {
+    minLevel: requirement.minLevel,
+    minEchoAdjusted:
+      typeof requirement.minEchoAdjusted === "number" ? requirement.minEchoAdjusted : null
+  };
+}
+
+export function meetsGlobalRuleEchoRequirement(
+  ruleId: string,
+  progression: PlayerProgression
+): boolean {
+  return meetsEchoRequirement(progression, resolveGlobalRuleEchoRequirement(ruleId));
 }
 
 export function resolveSkillBand(rank: number): SkillProgressionBandState {
@@ -95,7 +555,9 @@ export function applyBreakthroughGating(
 export function accumulateBreakthroughProgress(input: {
   currentProgress: number;
   performanceScore: number;
-  difficultyFactor: number;
+  requirementScalar?: number;
+  difficultyFactor?: number;
+  requiredProgress?: number;
   trialBonus?: number;
   eventBonus?: number;
   rngBonus?: number;
@@ -103,20 +565,69 @@ export function accumulateBreakthroughProgress(input: {
   previousProgress: number;
   gain: number;
   progress: number;
+  requiredProgress: number;
   readyToUnlock: boolean;
 } {
-  const previousProgress = clamp(input.currentProgress, 0, 100);
-  const weightedPerformance = Math.max(0, input.performanceScore) * Math.max(0.1, input.difficultyFactor);
+  const requirementScalar = Math.max(0.1, input.requirementScalar ?? input.difficultyFactor ?? 1);
+  const requiredProgress = round(Math.max(1, (input.requiredProgress ?? 100) * requirementScalar));
+  const previousProgress = clamp(input.currentProgress, 0, requiredProgress);
+  const weightedPerformance = Math.max(0, input.performanceScore);
   const bonus = Math.max(0, input.trialBonus ?? 0) + Math.max(0, input.eventBonus ?? 0) + Math.max(0, input.rngBonus ?? 0);
   const gain = round(weightedPerformance + bonus);
-  const progress = round(clamp(previousProgress + gain, 0, 100));
+  const progress = round(clamp(previousProgress + gain, 0, requiredProgress));
 
   return {
     previousProgress,
     gain,
     progress,
-    readyToUnlock: progress >= 100
+    requiredProgress,
+    readyToUnlock: progress >= requiredProgress
   };
+}
+
+function resolveProgressionDifficultyThresholds(
+  base: {
+    requirement: number;
+    meaningfulActionThreshold: number;
+    antiTrivialityThreshold: number;
+    trainingGate: number;
+    retentionPressure: number;
+  },
+  scaling: ReturnType<typeof resolveRunDifficultyModifiers>["skillProgression" | "knowledgeProgression"]
+) {
+  return {
+    requirement: round(base.requirement * scaling.requirementScalar),
+    meaningfulActionThreshold: round(base.meaningfulActionThreshold * scaling.meaningfulActionScalar),
+    antiTrivialityThreshold: round(base.antiTrivialityThreshold * scaling.antiTrivialityScalar),
+    trainingGate: round(base.trainingGate * scaling.trainingGateScalar),
+    retentionPressure: round(base.retentionPressure * scaling.retentionPressureScalar)
+  };
+}
+
+export function resolveSkillProgressionDifficultyThresholds(
+  base: {
+    requirement: number;
+    meaningfulActionThreshold: number;
+    antiTrivialityThreshold: number;
+    trainingGate: number;
+    retentionPressure: number;
+  },
+  runDifficulty?: Partial<RunDifficultyState> | null
+) {
+  return resolveProgressionDifficultyThresholds(base, resolveRunDifficultyModifiers(runDifficulty).skillProgression);
+}
+
+export function resolveKnowledgeProgressionDifficultyThresholds(
+  base: {
+    requirement: number;
+    meaningfulActionThreshold: number;
+    antiTrivialityThreshold: number;
+    trainingGate: number;
+    retentionPressure: number;
+  },
+  runDifficulty?: Partial<RunDifficultyState> | null
+) {
+  return resolveProgressionDifficultyThresholds(base, resolveRunDifficultyModifiers(runDifficulty).knowledgeProgression);
 }
 
 export function evaluateTrialOutcome(
@@ -164,28 +675,28 @@ export function evaluateTrialOutcome(
 }
 
 export function resolveKnowledgeAssistance(input: {
-  track: KnowledgeTrackState;
+  track: KnowledgeDomainState;
   domainKnowledgeRank: number;
-  universalKnowledgeRank: number;
+  generalLoreRank: number;
   spottingRank: number;
 }): {
   weightedScore: number;
   contributions: {
     domainKnowledge: number;
-    universalKnowledge: number;
+    generalLore: number;
     spotting: number;
   };
   autoIdentify: Record<"common" | "uncommon" | "rare" | "obscure", boolean>;
 } {
   const domainKnowledge = clamp(input.domainKnowledgeRank, 0, 125);
-  const universalKnowledge = clamp(input.universalKnowledgeRank, 0, 125);
+  const generalLore = clamp(input.generalLoreRank, 0, 125);
   const spotting = clamp(input.spottingRank, 0, 125);
   const contributions = {
     domainKnowledge: round(domainKnowledge * input.track.supportWeights.domainKnowledge),
-    universalKnowledge: round(universalKnowledge * input.track.supportWeights.universalKnowledge),
+    generalLore: round(generalLore * input.track.supportWeights.generalLore),
     spotting: round(spotting * input.track.supportWeights.spotting)
   };
-  const weightedScore = round(contributions.domainKnowledge + contributions.universalKnowledge + contributions.spotting);
+  const weightedScore = round(contributions.domainKnowledge + contributions.generalLore + contributions.spotting);
 
   return {
     weightedScore,
@@ -248,3 +759,4 @@ export function resolveItemUseProfile(
     null
   );
 }
+

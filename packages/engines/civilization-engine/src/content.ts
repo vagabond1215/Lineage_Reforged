@@ -1,5 +1,18 @@
-import { readFileSync } from "node:fs";
-import type { QuestTemplateCategory } from "../../../shared/types/src/index.js";
+﻿import { readFileSync } from "node:fs";
+import type {
+  BodyStateBalanceRuleState,
+  ConsumableProfileState,
+  EchoBalanceRuleState,
+  EchoRequirementState,
+  FameBranchId,
+  NotorietyCategoryId,
+  NotorietyModifierId,
+  NotorietySeverityId,
+  PlayerAttributeKey,
+  ReputationAwardDefinitionState,
+  ReputationScope,
+  QuestTemplateCategory
+} from "../../../shared/types/src/index.js";
 
 export interface GuildFacilityTierRecord {
   tier: number;
@@ -162,8 +175,9 @@ export interface QuestTemplateRecord {
   minimumTradeSurplusPerTick: number;
   rewardProfile: {
     coinBase: number;
-    reputationBase: number;
+    standingBase: number;
     bonusItemKeys: string[];
+    reputationAwards?: ReputationAwardDefinitionState[];
   };
 }
 
@@ -185,7 +199,14 @@ export interface QuestDefinitionRecord {
   classification: Record<string, unknown>;
   deployment: Record<string, unknown>;
   logistics: Record<string, unknown>;
-  rewards: Record<string, unknown>;
+  rewards: {
+    coinBase: number;
+    coinBonusOnPerfect: number;
+    standingBase: number;
+    itemRewards: string[];
+    unlocks: string[];
+    reputationAwards?: ReputationAwardDefinitionState[];
+  };
   miscNotes: string[];
   actionTree: {
     entryNodeId: string;
@@ -668,7 +689,12 @@ export interface ItemContentRecord {
   stage?: string;
   valueProfile: ItemValueProfileRecord;
   materialDifficultyProfile?: MaterialDifficultyProfileRecord;
+  consumableProfileId?: string;
   useProfiles?: ItemUseProfileRecord[];
+}
+
+export interface ConsumableProfileContentRecord extends ConsumableProfileState {
+  id: string;
 }
 
 export interface MarketPricingProfileRecord {
@@ -844,6 +870,14 @@ export interface ProductionChainRecord {
   };
 }
 
+export interface PlayerAttributeContentRecord {
+  id: string;
+  name: string;
+  shortCode: PlayerAttributeKey;
+  category: string;
+  default: number;
+}
+
 export interface SkillContentRecord {
   id: string;
   name: string;
@@ -866,7 +900,7 @@ export interface SkillContentRecord {
     resolutionHooks: string[];
   };
   itemHookTags: string[];
-  knowledgeTrackId?: string;
+  knowledgeDomainId?: string;
   milestoneTitleTrackId?: string;
 }
 
@@ -934,12 +968,9 @@ export interface PlayerBackstoryContentRecord {
   name: string;
   summary: string;
   description: string;
+  attributeAdjustments?: Partial<Record<PlayerAttributeKey, number>>;
   startingSkills: Array<{
     skillId: string;
-    level: number;
-  }>;
-  startingKnowledge: Array<{
-    trackId: string;
     level: number;
   }>;
   startingAbilityIds?: string[];
@@ -987,14 +1018,14 @@ export interface ProgressionTrackRecord {
   breakthroughSources: Record<string, number>;
 }
 
-export interface KnowledgeTrackRecord {
+export interface KnowledgeDomainRecord {
   id: string;
   name?: string;
   domain?: string;
   knowledgeSkillId: string;
   spottingSkillId?: string;
   identifySkillId?: string;
-  universalSupportSkillId?: string;
+  generalSupportSkillId?: string;
   supportWeights: Record<string, number>;
   identifyDifficulty: Record<string, number>;
   autoIdentifyThresholds: Record<string, number>;
@@ -1025,6 +1056,7 @@ export interface TrialContentRecord {
   id: string;
   name: string;
   associatedSkillId: string;
+  echoRequirement?: EchoRequirementState | null;
   thresholdToPass: number;
   progress: number;
   maxPotential: number;
@@ -1032,6 +1064,14 @@ export interface TrialContentRecord {
   rewards: Array<Record<string, unknown>>;
   penalties: Array<Record<string, unknown>>;
 }
+
+export interface GlobalRuleContentRecord<TValue = unknown> {
+  id: string;
+  value: TValue;
+}
+
+export interface EchoBalanceRuleContentRecord extends GlobalRuleContentRecord<EchoBalanceRuleState> {}
+export interface BodyStateBalanceRuleContentRecord extends GlobalRuleContentRecord<BodyStateBalanceRuleState> {}
 
 export interface TitleContentRecord {
   id: string;
@@ -1133,7 +1173,160 @@ export const DEFAULT_ADVENTURERS_PRESENCE: GuildPresenceRecord = {
   notes: "A standing adventurers desk appears anywhere organized guild business already exists."
 };
 
+const REPUTATION_SCOPES = ["local", "regional", "continental", "world"] as const satisfies ReputationScope[];
+const FAME_BRANCHES_BY_SCOPE = {
+  local: ["civic", "folk", "trade", "martial"],
+  regional: ["heroic", "martial", "political", "commercial"],
+  continental: ["historical", "legendary", "political"],
+  world: ["legendary", "mythic"]
+} as const satisfies Record<ReputationScope, FameBranchId[]>;
+const NOTORIETY_CATEGORIES = ["theft", "fraud", "violent", "murder", "arson", "banditry", "treason"] as const satisfies NotorietyCategoryId[];
+const NOTORIETY_SEVERITIES = ["minor", "standard", "major"] as const satisfies NotorietySeverityId[];
+const NOTORIETY_MODIFIERS = [
+  "mass",
+  "organized",
+  "repeat",
+  "public",
+  "against_nobility",
+  "against_temple",
+  "wartime",
+  "ritual"
+] as const satisfies NotorietyModifierId[];
+
 const contentCache = new Map<string, unknown>();
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function requireStringArray(value: unknown, fieldPath: string): string[] {
+  if (!Array.isArray(value) || value.some((entry) => typeof entry !== "string")) {
+    throw new Error(`${fieldPath} must be a string array`);
+  }
+
+  return value;
+}
+
+function validateOriginSettlementIds(
+  ownerLabel: string,
+  scope: ReputationScope,
+  originSettlementIds: unknown
+): void {
+  if (scope === "world" && originSettlementIds === undefined) {
+    return;
+  }
+
+  const values = requireStringArray(originSettlementIds, `${ownerLabel}.originSettlementIds`);
+  if (scope !== "world" && values.length === 0) {
+    throw new Error(`${ownerLabel}.originSettlementIds must contain at least one settlement id for ${scope} awards`);
+  }
+
+  values.forEach((entry, index) => {
+    if (!/^settlement\.[a-z0-9]+(?:_[a-z0-9]+)*$/.test(entry)) {
+      throw new Error(`${ownerLabel}.originSettlementIds[${index}] must be a canonical settlement id`);
+    }
+  });
+}
+
+function validateCommonReputationAwardFields(ownerLabel: string, award: Record<string, unknown>): ReputationScope {
+  if (typeof award.directEarnedScope !== "string" || !REPUTATION_SCOPES.includes(award.directEarnedScope as ReputationScope)) {
+    throw new Error(`${ownerLabel}.directEarnedScope must be one of ${REPUTATION_SCOPES.join(", ")}`);
+  }
+
+  if (typeof award.baseValue !== "number" || !Number.isFinite(award.baseValue) || award.baseValue < 0) {
+    throw new Error(`${ownerLabel}.baseValue must be a finite non-negative number`);
+  }
+
+  const scope = award.directEarnedScope as ReputationScope;
+  validateOriginSettlementIds(ownerLabel, scope, award.originSettlementIds);
+  return scope;
+}
+
+export function validateAuthoredReputationAwards(
+  ownerLabel: string,
+  awards: ReputationAwardDefinitionState[] | undefined
+): ReputationAwardDefinitionState[] | undefined {
+  if (awards === undefined) {
+    return awards;
+  }
+
+  if (!Array.isArray(awards)) {
+    throw new Error(`${ownerLabel}.reputationAwards must be an array`);
+  }
+
+  awards.forEach((award, index) => {
+    const awardLabel = `${ownerLabel}.reputationAwards[${index}]`;
+    if (!isObject(award)) {
+      throw new Error(`${awardLabel} must be an object`);
+    }
+
+    if (award.axis === "fame") {
+      if (typeof award.branchId !== "string") {
+        throw new Error(`${awardLabel}.branchId must be provided for fame awards`);
+      }
+
+      if ("categoryId" in award || "severity" in award || "modifiers" in award || "allowCredibleLink" in award) {
+        throw new Error(`${awardLabel} must not mix fame and notoriety fields`);
+      }
+
+      const scope = validateCommonReputationAwardFields(awardLabel, award);
+      const allowedBranches = FAME_BRANCHES_BY_SCOPE[scope];
+      if (!allowedBranches.includes(award.branchId as FameBranchId)) {
+        throw new Error(
+          `${awardLabel}.branchId '${award.branchId}' is not valid for ${scope} fame; expected one of ${allowedBranches.join(", ")}`
+        );
+      }
+
+      return;
+    }
+
+    if (award.axis === "notoriety") {
+      if ("branchId" in award) {
+        throw new Error(`${awardLabel} must not use branchId on notoriety awards`);
+      }
+
+      if (typeof award.categoryId !== "string" || !NOTORIETY_CATEGORIES.includes(award.categoryId as NotorietyCategoryId)) {
+        throw new Error(`${awardLabel}.categoryId must be a supported notoriety category`);
+      }
+
+      if (typeof award.severity !== "string" || !NOTORIETY_SEVERITIES.includes(award.severity as NotorietySeverityId)) {
+        throw new Error(`${awardLabel}.severity must be a supported notoriety severity`);
+      }
+
+      if (
+        award.modifiers !== undefined &&
+        (!Array.isArray(award.modifiers) ||
+          award.modifiers.some(
+            (entry) => typeof entry !== "string" || !NOTORIETY_MODIFIERS.includes(entry as NotorietyModifierId)
+          ))
+      ) {
+        throw new Error(`${awardLabel}.modifiers must contain only supported notoriety modifiers`);
+      }
+
+      if (
+        typeof award.exposureRequirement !== "string" ||
+        !["public", "witnessed_or_reported", "evidenced"].includes(award.exposureRequirement)
+      ) {
+        throw new Error(`${awardLabel}.exposureRequirement must be a supported notoriety exposure rule`);
+      }
+
+      if (typeof award.attributionRequired !== "boolean") {
+        throw new Error(`${awardLabel}.attributionRequired must be a boolean`);
+      }
+
+      if (typeof award.allowCredibleLink !== "boolean") {
+        throw new Error(`${awardLabel}.allowCredibleLink must be a boolean`);
+      }
+
+      validateCommonReputationAwardFields(awardLabel, award);
+      return;
+    }
+
+    throw new Error(`${awardLabel}.axis must be 'fame' or 'notoriety'`);
+  });
+
+  return awards;
+}
 
 function loadJsonFile<T>(relativePath: string): T {
   if (contentCache.has(relativePath)) {
@@ -1166,12 +1359,18 @@ export function loadBuildingContent(): BuildingContentRecord[] {
 
 export function loadQuestTemplates(): QuestTemplateRecord[] {
   const parsed = loadJsonFile<{ records: QuestTemplateRecord[] }>("../../../content/base/civilization/quest_templates.json");
+  parsed.records.forEach((record, index) =>
+    validateAuthoredReputationAwards(`quest_templates.records[${index}](${record.id})`, record.rewardProfile.reputationAwards)
+  );
   return parsed.records;
 }
 
 export function loadQuestDefinitions(): QuestDefinitionRecord[] {
   const parsed = loadJsonFile<{ records: QuestDefinitionRecord[] }>(
     "../../../content/base/civilization/quest_definitions.json"
+  );
+  parsed.records.forEach((record, index) =>
+    validateAuthoredReputationAwards(`quest_definitions.records[${index}](${record.id})`, record.rewards.reputationAwards)
   );
   return parsed.records;
 }
@@ -1268,6 +1467,13 @@ export function loadItemContent(): ItemContentRecord[] {
   return parsed.records;
 }
 
+export function loadConsumableProfileContent(): ConsumableProfileContentRecord[] {
+  const parsed = loadJsonFile<{ records: ConsumableProfileContentRecord[] }>(
+    "../../../content/base/items/consumable_profiles.json"
+  );
+  return parsed.records;
+}
+
 export function loadMarketItemValues(): MarketItemValueRecord[] {
   const parsed = loadJsonFile<{ records: MarketItemValueRecord[] }>("../../../content/base/civilization/market_item_values.json");
   return parsed.records;
@@ -1280,6 +1486,11 @@ export function loadProductionChainContent(): ProductionChainRecord[] {
 
 export function loadWorkplaceContent(): WorkplaceContentRecord[] {
   const parsed = loadJsonFile<{ records: WorkplaceContentRecord[] }>("../../../content/base/civilization/workplaces.json");
+  return parsed.records;
+}
+
+export function loadPlayerAttributeContent(): PlayerAttributeContentRecord[] {
+  const parsed = loadJsonFile<{ records: PlayerAttributeContentRecord[] }>("../../../content/base/player/attributes.json");
   return parsed.records;
 }
 
@@ -1326,9 +1537,9 @@ export function loadProgressionTrackContent(): ProgressionTrackRecord[] {
   return parsed.records;
 }
 
-export function loadKnowledgeTrackContent(): KnowledgeTrackRecord[] {
-  const parsed = loadJsonFile<{ records: KnowledgeTrackRecord[] }>(
-    "../../../content/base/player/knowledge_tracks.json"
+export function loadKnowledgeDomainContent(): KnowledgeDomainRecord[] {
+  const parsed = loadJsonFile<{ records: KnowledgeDomainRecord[] }>(
+    "../../../content/base/player/knowledge_domains.json"
   );
   return parsed.records;
 }
@@ -1347,6 +1558,13 @@ export function loadTrialContent(): TrialContentRecord[] {
 
 export function loadTitleContent(): TitleContentRecord[] {
   const parsed = loadJsonFile<{ records: TitleContentRecord[] }>("../../../content/base/player/titles.json");
+  return parsed.records;
+}
+
+export function loadGlobalRuleContent<TValue = unknown>(): GlobalRuleContentRecord<TValue>[] {
+  const parsed = loadJsonFile<{ records: GlobalRuleContentRecord<TValue>[] }>(
+    "../../../content/base/game/global_rules.json"
+  );
   return parsed.records;
 }
 
@@ -1380,3 +1598,4 @@ export function resolveEffectiveGuildPresence(guildPresence: GuildPresenceRecord
 
   return [...guildPresence, DEFAULT_ADVENTURERS_PRESENCE];
 }
+

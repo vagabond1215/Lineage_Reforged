@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConsumableProfileRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "calories", "protein", "carbs", "fat"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^consume\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "calories": {
+      "type": "number",
+      "minimum": 0
+    },
+    "protein": {
+      "type": "number",
+      "minimum": 0
+    },
+    "carbs": {
+      "type": "number",
+      "minimum": 0
+    },
+    "fat": {
+      "type": "number",
+      "minimum": 0
+    },
+    "hydration": {
+      "type": "number",
+      "minimum": 0
+    },
+    "intoxication": {
+      "type": "number",
+      "minimum": 0
+    },
+    "useVerb": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

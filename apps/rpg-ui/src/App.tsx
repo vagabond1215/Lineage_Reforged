@@ -1,4 +1,11 @@
 import { useEffect, useReducer, useState } from 'react';
+import {
+  evaluateAchievementProgress,
+  markRunDeleted
+} from '../../../packages/engines/game-engine/src/achievements.js';
+import {
+  createDefaultAccountProfileState
+} from '../../../packages/engines/game-engine/src/legacy-account.js';
 import { InGameShell } from './game-shell/InGameShell';
 import {
   createDefaultCharacterCreationFormState,
@@ -6,19 +13,42 @@ import {
 } from './game-shell/characterCreationForm';
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen';
-import { MainMenuScreen } from './game-shell/components/MainMenuScreen';
+import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen';
+import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen';
 import { SettingsScreen } from './game-shell/components/SettingsScreen';
 import { createNewGameSnapshot } from './game-shell/newGameSnapshot';
+import {
+  loadAccountProfile,
+  saveAccountProfile
+} from './game-shell/accountProfileManager.js';
+import {
+  MALFORMED_AUTH_NOTICE,
+  bootstrapLauncherAuth,
+  createLocalAccount,
+  deleteLocalAccount,
+  signInLocalAccount,
+  signOutLauncherSession,
+  type LauncherAccountDeletionResult,
+  type LauncherAccountResetResult,
+  type LauncherAuthResult,
+  type LauncherRuntimeSession,
+  resetLocalAccount
+} from './game-shell/launcherAuthManager.js';
+import {
+  archiveActiveRun,
+  purgeBlockedRunSlot,
+  resolveTerminalArchiveReason
+} from './game-shell/runLifecycle.js';
 import {
   buildSaveMetadata,
   createSave,
   deleteSave,
   listSaves,
   loadSave,
-  quickSave,
-  resetAllSaves
+  quickSave
 } from './game-shell/saveManager';
 import {
+  createAccountAccessState,
   createEmptySaveSlotSummaries,
   createInitialGameShellState,
   gameShellReducer,
@@ -33,8 +63,121 @@ import {
 } from './game-shell/state';
 
 type ThemeMode = 'dark' | 'light';
+type ThemePreference = ThemeMode | 'system';
+type HourFormatPreference = '12' | '24';
+
+type LauncherTimeSettings = {
+  timeZone: string;
+  hourFormat: HourFormatPreference;
+};
 
 const THEME_STORAGE_KEY = 'cataclysm-rpg.theme-mode';
+const TIME_SETTINGS_STORAGE_KEY = 'cataclysm-rpg.launcher-time-settings.v1';
+
+function resolveSystemTheme(): ThemeMode {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return 'dark';
+  }
+
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function readInitialThemePreference(): ThemePreference {
+  if (typeof window === 'undefined') {
+    return 'system';
+  }
+
+  try {
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+
+    if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system') {
+      return storedTheme;
+    }
+  } catch {
+    return 'system';
+  }
+
+  return 'system';
+}
+
+function resolveDefaultTimeZone(): string {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  } catch {
+    return 'UTC';
+  }
+}
+
+function readInitialTimeSettings(): LauncherTimeSettings {
+  const fallback: LauncherTimeSettings = {
+    timeZone: resolveDefaultTimeZone(),
+    hourFormat: '12'
+  };
+
+  if (typeof window === 'undefined') {
+    return fallback;
+  }
+
+  try {
+    const raw = window.localStorage.getItem(TIME_SETTINGS_STORAGE_KEY);
+
+    if (!raw) {
+      return fallback;
+    }
+
+    const parsed = JSON.parse(raw) as Partial<LauncherTimeSettings>;
+
+    return {
+      timeZone:
+        typeof parsed.timeZone === 'string' && parsed.timeZone.trim()
+          ? parsed.timeZone
+          : fallback.timeZone,
+      hourFormat: parsed.hourFormat === '24' ? '24' : '12'
+    };
+  } catch {
+    return fallback;
+  }
+}
+
+function isValidTimeZone(timeZone: string): boolean {
+  try {
+    new Intl.DateTimeFormat('en-US', { timeZone }).format(new Date());
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function resolveClockTimeZone(timeZone: string): string {
+  const trimmed = timeZone.trim();
+  return trimmed && isValidTimeZone(trimmed) ? trimmed : resolveDefaultTimeZone();
+}
+
+function formatLauncherClock(
+  now: Date,
+  timeSettings: LauncherTimeSettings
+): string {
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: timeSettings.hourFormat === '12',
+    timeZone: resolveClockTimeZone(timeSettings.timeZone)
+  }).format(now);
+}
+
+function formatLauncherClockTitle(
+  now: Date,
+  timeSettings: LauncherTimeSettings
+): string {
+  const resolvedTimeZone = resolveClockTimeZone(timeSettings.timeZone);
+
+  return new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'full',
+    timeStyle: 'long',
+    hour12: timeSettings.hourFormat === '12',
+    timeZone: resolvedTimeZone
+  }).format(now);
+}
 
 function buildStorageNotice(action: string, error: unknown): GameShellNotice {
   const detail =
@@ -49,17 +192,37 @@ function buildStorageNotice(action: string, error: unknown): GameShellNotice {
   };
 }
 
-function listSlotsWithFallback(action: string): {
+function buildAuthNotice(
+  title: string,
+  detail: string,
+  tone: GameShellNotice['tone'] = 'warning'
+): GameShellNotice {
+  return {
+    tone,
+    title,
+    detail
+  };
+}
+
+function listSignedInSlotsWithFallback(
+  launcherSession: LauncherRuntimeSession,
+  action: string,
+  fallbackAccountProfile: ReturnType<typeof createDefaultAccountProfileState>
+): {
+  accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
   slots: ReturnType<typeof createEmptySaveSlotSummaries>;
   notice: GameShellNotice | null;
 } {
   try {
+    const accountProfile = loadAccountProfile(launcherSession.accountId);
     return {
-      slots: listSaves(),
+      accountProfile,
+      slots: listSaves(accountProfile.accountId),
       notice: null
     };
   } catch (error) {
     return {
+      accountProfile: fallbackAccountProfile,
       slots: createEmptySaveSlotSummaries(),
       notice: buildStorageNotice(action, error)
     };
@@ -67,8 +230,60 @@ function listSlotsWithFallback(action: string): {
 }
 
 function createAppState(_: undefined): GameShellState {
-  const { slots, notice } = listSlotsWithFallback('read');
-  return createInitialGameShellState(slots, notice);
+  try {
+    const bootstrap = bootstrapLauncherAuth();
+
+    if (bootstrap.mode === 'signed_in') {
+      return createInitialGameShellState(
+        bootstrap.session,
+        bootstrap.accountProfile,
+        listSaves(bootstrap.accountProfile.accountId),
+        bootstrap.notice
+          ? buildAuthNotice('Local Sign-In Reset', bootstrap.notice)
+          : null
+      );
+    }
+
+    return createAccountAccessState(
+      bootstrap.mode,
+      bootstrap.accounts,
+      bootstrap.notice ? buildAuthNotice('Local Sign-In Reset', bootstrap.notice) : null
+    );
+  } catch (error) {
+    return createAccountAccessState(
+      'create_first_account',
+      [],
+      buildStorageNotice('read launcher account data', error)
+    );
+  }
+}
+
+function evaluateSnapshotWithAccount(
+  accountProfile: ReturnType<typeof createDefaultAccountProfileState>,
+  snapshot: ReturnType<typeof createNewGameSnapshot>,
+  options: {
+    slotId?: SaveSlotId;
+    touchHistory?: boolean;
+    recordedAt?: string;
+    suppressLegacyRewards?: boolean;
+  } = {}
+): {
+  accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
+  snapshot: ReturnType<typeof createNewGameSnapshot>;
+} {
+  const evaluated = evaluateAchievementProgress(snapshot, accountProfile, options);
+
+  if (!evaluated.changed) {
+    return {
+      accountProfile,
+      snapshot: evaluated.nextSnapshot
+    };
+  }
+
+  return {
+    accountProfile: saveAccountProfile(evaluated.nextAccountProfile),
+    snapshot: evaluated.nextSnapshot
+  };
 }
 
 function formatSaveNoticeTimestamp(savedAt: string | null, savedLabel: string | null): string {
@@ -96,6 +311,44 @@ function formatSaveDestination(slotId: SaveSlotId): string {
   return slotId === 'quick-save' ? 'quicksave' : getSaveSlotLabel(slotId).toLowerCase();
 }
 
+function buildArchivedRunNotice(
+  snapshot: ReturnType<typeof createNewGameSnapshot>,
+  archiveReason: 'retired' | 'dead' | 'hardcore_dead',
+  legacyGranted: number
+): GameShellNotice {
+  const playerName = snapshot.playerState.coreData.playerName;
+  const rewardText =
+    legacyGranted > 0 ? ` Legacy granted: ${legacyGranted}.` : '';
+
+  if (archiveReason === 'retired') {
+    return {
+      tone: 'success',
+      title: 'Character Retired',
+      detail: `${playerName} was entered into the Chronicle as a retired life. All active save slots for this run were freed.${rewardText}`
+    };
+  }
+
+  return {
+    tone: 'warning',
+    title: archiveReason === 'hardcore_dead' ? 'Hardcore Death Recorded' : 'Character Death Recorded',
+    detail: `${playerName}'s run was archived after death and its active save slots were freed.${rewardText}`
+  };
+}
+
+function buildBlockedRunNotice(
+  slotId: SaveSlotId,
+  outcome: 'archived' | 'deleted'
+): GameShellNotice {
+  return {
+    tone: 'warning',
+    title: outcome === 'archived' ? 'Archived Run Cleared' : 'Deleted Run Cleared',
+    detail:
+      outcome === 'archived'
+        ? `${getSaveSlotLabel(slotId)} belonged to a run already archived in the Chronicle and was removed from playable saves.`
+        : `${getSaveSlotLabel(slotId)} belonged to a run already removed from the active ledger and was cleared from playable saves.`
+  };
+}
+
 function buildSaveStatusNotice(slot: Pick<SaveSlotSummary, 'id' | 'playerName' | 'lastSavedAt' | 'lastSavedLabel'>): GameShellNotice {
   const playerName = slot.playerName ?? 'Unknown character';
   const savedAt = formatSaveNoticeTimestamp(slot.lastSavedAt, slot.lastSavedLabel);
@@ -113,18 +366,15 @@ function buildSaveStatusNotice(slot: Pick<SaveSlotSummary, 'id' | 'playerName' |
 
 export default function App() {
   const [state, dispatch] = useReducer(gameShellReducer, undefined, createAppState);
-  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') {
-      return 'dark';
-    }
-
-    try {
-      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-      return storedTheme === 'light' ? 'light' : 'dark';
-    } catch {
-      return 'dark';
-    }
-  });
+  const [themePreference, setThemePreference] = useState<ThemePreference>(readInitialThemePreference);
+  const [systemTheme, setSystemTheme] = useState<ThemeMode>(resolveSystemTheme);
+  const [timeSettings, setTimeSettings] = useState<LauncherTimeSettings>(readInitialTimeSettings);
+  const [clockNow, setClockNow] = useState(() => new Date());
+  const [launcherSection, setLauncherSection] = useState<LauncherSectionId>('characters');
+  const themeMode: ThemeMode =
+    themePreference === 'system' ? systemTheme : themePreference;
+  const clockLabel = formatLauncherClock(clockNow, timeSettings);
+  const clockTitle = formatLauncherClockTitle(clockNow, timeSettings);
 
   useEffect(() => {
     if (typeof document === 'undefined') {
@@ -136,12 +386,56 @@ export default function App() {
 
     if (typeof window !== 'undefined') {
       try {
-        window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+        window.localStorage.setItem(THEME_STORAGE_KEY, themePreference);
       } catch {
         // Theme persistence is optional when browser storage is blocked.
       }
     }
-  }, [themeMode]);
+  }, [themeMode, themePreference]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const syncSystemTheme = () => {
+      setSystemTheme(mediaQuery.matches ? 'light' : 'dark');
+    };
+
+    syncSystemTheme();
+    mediaQuery.addEventListener('change', syncSystemTheme);
+
+    return () => {
+      mediaQuery.removeEventListener('change', syncSystemTheme);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    try {
+      window.localStorage.setItem(TIME_SETTINGS_STORAGE_KEY, JSON.stringify(timeSettings));
+    } catch {
+      // Time preference persistence is optional when browser storage is blocked.
+    }
+  }, [timeSettings]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setClockNow(new Date());
+    }, 1000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -164,30 +458,110 @@ export default function App() {
   }, [state.notice]);
 
   const toggleThemeMode = () => {
-    setThemeMode((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+    setThemePreference((currentTheme) => {
+      const resolvedTheme = currentTheme === 'system' ? resolveSystemTheme() : currentTheme;
+      return resolvedTheme === 'dark' ? 'light' : 'dark';
+    });
+  };
+
+  const updateTimeZone = (timeZone: string) => {
+    setTimeSettings((current) => ({
+      ...current,
+      timeZone
+    }));
+  };
+
+  const updateHourFormat = (hourFormat: HourFormatPreference) => {
+    setTimeSettings((current) => ({
+      ...current,
+      hourFormat
+    }));
   };
 
   const dismissNotice = () => {
     dispatch({ type: 'SET_NOTICE', notice: null });
   };
 
-  const showMainMenu = (notice: GameShellNotice | null = null) => {
-    const next = listSlotsWithFallback('read');
+  const showAccountAccess = (notice: GameShellNotice | null = null) => {
+    try {
+      const bootstrap = bootstrapLauncherAuth();
+      const bootstrapNotice =
+        bootstrap.notice
+          ? buildAuthNotice('Local Sign-In Reset', bootstrap.notice)
+          : null;
+
+      if (bootstrap.mode === 'signed_in') {
+        const next = listSignedInSlotsWithFallback(
+          bootstrap.session,
+          'read launcher account data',
+          bootstrap.accountProfile
+        );
+        dispatch({
+          type: 'SHOW_MAIN_MENU',
+          launcherSession: bootstrap.session,
+          accountProfile: next.notice ? bootstrap.accountProfile : next.accountProfile,
+          slots: next.slots,
+          notice: next.notice ?? notice ?? bootstrapNotice
+        });
+        return;
+      }
+
+      dispatch({
+        type: 'SHOW_ACCOUNT_ACCESS',
+        accessMode: bootstrap.mode,
+        accounts: bootstrap.accounts,
+        notice: notice ?? bootstrapNotice
+      });
+    } catch (error) {
+      dispatch({
+        type: 'SHOW_ACCOUNT_ACCESS',
+        accessMode: 'create_first_account',
+        accounts: [],
+        notice: buildStorageNotice('read launcher account data', error)
+      });
+    }
+  };
+
+  const showSignedInMainMenu = (
+    launcherSession: LauncherRuntimeSession,
+    fallbackAccountProfile: ReturnType<typeof createDefaultAccountProfileState>,
+    notice: GameShellNotice | null = null,
+    targetLauncherSection?: LauncherSectionId
+  ) => {
+    if (targetLauncherSection) {
+      setLauncherSection(targetLauncherSection);
+    }
+
+    const next = listSignedInSlotsWithFallback(
+      launcherSession,
+      'read launcher account data',
+      fallbackAccountProfile
+    );
     dispatch({
       type: 'SHOW_MAIN_MENU',
+      launcherSession,
+      accountProfile: next.notice ? fallbackAccountProfile : next.accountProfile,
       slots: next.slots,
       notice: next.notice ?? notice
     });
   };
 
   const enterGame = (
+    launcherSession: LauncherRuntimeSession,
+    accountProfile: ReturnType<typeof createDefaultAccountProfileState>,
     slotId: SaveSlotId,
     snapshot: ReturnType<typeof createNewGameSnapshot>,
     notice: GameShellNotice | null
   ) => {
-    const next = listSlotsWithFallback('read');
+    const next = listSignedInSlotsWithFallback(
+      launcherSession,
+      'read launcher account data',
+      accountProfile
+    );
     dispatch({
       type: 'ENTER_GAME',
+      launcherSession,
+      accountProfile: next.notice ? accountProfile : next.accountProfile,
       slots: next.slots,
       slotId,
       snapshot,
@@ -195,10 +569,20 @@ export default function App() {
     });
   };
 
-  const openCharacterCreation = (targetSlotId?: ManualSaveSlotId) => {
-    const next = listSlotsWithFallback('read');
+  const openCharacterCreation = (
+    launcherSession: LauncherRuntimeSession,
+    accountProfile: ReturnType<typeof createDefaultAccountProfileState>,
+    targetSlotId?: ManualSaveSlotId
+  ) => {
+    const next = listSignedInSlotsWithFallback(
+      launcherSession,
+      'read launcher account data',
+      accountProfile
+    );
     dispatch({
       type: 'OPEN_CHARACTER_CREATION',
+      launcherSession,
+      accountProfile: next.notice ? accountProfile : next.accountProfile,
       slots: next.slots,
       form: createDefaultCharacterCreationFormState(
         targetSlotId ?? getPreferredSaveSlotId(next.slots)
@@ -207,48 +591,261 @@ export default function App() {
     });
   };
 
-  const openLoadGame = () => {
-    const next = listSlotsWithFallback('read');
+  const openLoadGame = (
+    launcherSession: LauncherRuntimeSession,
+    accountProfile: ReturnType<typeof createDefaultAccountProfileState>
+  ) => {
+    const next = listSignedInSlotsWithFallback(
+      launcherSession,
+      'read launcher account data',
+      accountProfile
+    );
     dispatch({
       type: 'OPEN_LOAD_GAME',
+      launcherSession,
+      accountProfile: next.notice ? accountProfile : next.accountProfile,
       slots: next.slots,
       selectedSlotId: getPreferredLoadSlotId(next.slots),
       notice: next.notice
     });
   };
 
-  const openSettings = () => {
-    const next = listSlotsWithFallback('read');
+  const openSettings = (
+    launcherSession: LauncherRuntimeSession,
+    accountProfile: ReturnType<typeof createDefaultAccountProfileState>
+  ) => {
+    const next = listSignedInSlotsWithFallback(
+      launcherSession,
+      'read launcher account data',
+      accountProfile
+    );
     dispatch({
       type: 'OPEN_SETTINGS',
+      launcherSession,
+      accountProfile: next.notice ? accountProfile : next.accountProfile,
       slots: next.slots,
       notice: next.notice
     });
   };
 
-  const continueLatestGame = () => {
-    const next = listSlotsWithFallback('read');
-    const slotId = getPreferredLoadSlotId(next.slots);
+  const finalizeAuthResult = (
+    result: LauncherAuthResult,
+    successNotice: GameShellNotice,
+    failureTitle: string
+  ): LauncherAuthResult => {
+    if (!result.ok) {
+      if (result.message === MALFORMED_AUTH_NOTICE) {
+        showAccountAccess(buildAuthNotice('Local Sign-In Reset', result.message));
+      } else {
+        dispatch({
+          type: 'SET_NOTICE',
+          notice: buildAuthNotice(failureTitle, result.message)
+        });
+      }
 
-    if (!slotId) {
-      dispatch({
-        type: 'SHOW_MAIN_MENU',
-        slots: next.slots,
-        notice: next.notice ?? {
-          tone: 'warning',
-          title: 'No Save To Continue',
-          detail: 'Continue stays disabled until a real save exists in one of the local slots.'
+      return result;
+    }
+
+    showSignedInMainMenu(result.session, result.accountProfile, successNotice);
+    return result;
+  };
+
+  const handleSignIn = async (options: {
+    accountId: string;
+    password: string;
+    stayLoggedIn: boolean;
+  }): Promise<LauncherAuthResult> => {
+    try {
+      const result = await signInLocalAccount(options);
+      return finalizeAuthResult(result, {
+        tone: 'success',
+        title: 'Signed In',
+        detail: `${result.ok ? result.accountProfile.displayName : 'This account'} is now signed in on this device.`
+      }, 'Could Not Sign In');
+    } catch (error) {
+      const notice = buildStorageNotice('sign in to a local account', error);
+      dispatch({ type: 'SET_NOTICE', notice });
+      return {
+        ok: false,
+        message: notice.detail
+      };
+    }
+  };
+
+  const handleDeleteAccount = async (options: {
+    accountId: string;
+    password: string;
+  }): Promise<LauncherAccountDeletionResult> => {
+    try {
+      const result = await deleteLocalAccount(options);
+
+      if (!result.ok) {
+        if (result.message === MALFORMED_AUTH_NOTICE) {
+          showAccountAccess(buildAuthNotice('Sign-In Reset', result.message));
+        } else {
+          dispatch({
+            type: 'SET_NOTICE',
+            notice: buildAuthNotice('Could Not Delete Account', result.message)
+          });
         }
+
+        return result;
+      }
+
+      showAccountAccess({
+        tone: 'success',
+        title: 'Account Deleted',
+        detail: `${result.displayName} was removed from this device.`
       });
+
+      return result;
+    } catch (error) {
+      const notice = buildStorageNotice('delete a local account', error);
+      dispatch({ type: 'SET_NOTICE', notice });
+      return {
+        ok: false,
+        message: notice.detail
+      };
+    }
+  };
+
+  const handleCreateAccount = async (options: {
+    displayName: string;
+    password: string;
+    confirmPassword: string;
+    stayLoggedIn: boolean;
+  }): Promise<LauncherAuthResult> => {
+    try {
+      const result = await createLocalAccount(options);
+      return finalizeAuthResult(result, {
+        tone: 'success',
+        title: 'Account Created',
+        detail: `${result.ok ? result.accountProfile.displayName : 'The new account'} is ready.`
+      }, 'Could Not Create Account');
+    } catch (error) {
+      const notice = buildStorageNotice('create a local account', error);
+      dispatch({ type: 'SET_NOTICE', notice });
+      return {
+        ok: false,
+        message: notice.detail
+      };
+    }
+  };
+
+  const handleLogout = () => {
+    if (state.screen === 'ACCOUNT_ACCESS') {
       return;
     }
 
     try {
-      const snapshot = loadSave(slotId);
+      signOutLauncherSession();
+      showAccountAccess({
+        tone: 'success',
+        title: 'Signed Out',
+        detail: `${state.accountProfile.displayName} was signed out on this device.`
+      });
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('sign out of the current account', error)
+      });
+    }
+  };
+
+  const resolveRunEntry = (
+    accountProfile: ReturnType<typeof createDefaultAccountProfileState>,
+    slotId: SaveSlotId,
+    snapshot: ReturnType<typeof createNewGameSnapshot>
+  ):
+    | {
+        kind: 'enter';
+        accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
+        snapshot: ReturnType<typeof createNewGameSnapshot>;
+      }
+    | {
+        kind: 'blocked';
+        accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
+        slots: ReturnType<typeof createEmptySaveSlotSummaries>;
+        notice: GameShellNotice;
+      } => {
+    const blocked = purgeBlockedRunSlot({
+      accountId: accountProfile.accountId,
+      accountProfile,
+      characterId: snapshot.playerState.playerId,
+      slotId
+    });
+
+    if (blocked) {
+      return {
+        kind: 'blocked',
+        accountProfile: blocked.accountProfile,
+        slots: blocked.slots,
+        notice: buildBlockedRunNotice(slotId, blocked.outcome)
+      };
+    }
+
+    const prepared = evaluateSnapshotWithAccount(accountProfile, snapshot, {
+      slotId,
+      touchHistory: true
+    });
+    const deathReason = resolveTerminalArchiveReason(prepared.snapshot);
+
+    if (deathReason) {
+      const archived = archiveActiveRun({
+        accountId: prepared.accountProfile.accountId,
+        accountProfile: prepared.accountProfile,
+        snapshot: prepared.snapshot,
+        archiveReason: deathReason,
+        fallbackSlotId: slotId
+      });
+
+      return {
+        kind: 'blocked',
+        accountProfile: archived.accountProfile,
+        slots: archived.slots,
+        notice: buildArchivedRunNotice(
+          archived.snapshot,
+          deathReason,
+          archived.legacyGranted
+        )
+      };
+    }
+
+    return {
+      kind: 'enter',
+      accountProfile: prepared.accountProfile,
+      snapshot: prepared.snapshot
+    };
+  };
+
+  const continueLatestGame = () => {
+    if (state.screen !== 'MAIN_MENU' && state.screen !== 'SETTINGS') {
+      return;
+    }
+
+    const next = listSignedInSlotsWithFallback(
+      state.launcherSession,
+      'read launcher account data',
+      state.accountProfile
+    );
+    const slotId = getPreferredLoadSlotId(next.slots);
+
+    if (!slotId) {
+      openCharacterCreation(
+        state.launcherSession,
+        next.notice ? state.accountProfile : next.accountProfile
+      );
+      return;
+    }
+
+    try {
+      const snapshot = loadSave(next.accountProfile.accountId, slotId);
 
       if (!snapshot) {
         dispatch({
           type: 'SHOW_MAIN_MENU',
+          launcherSession: state.launcherSession,
+          accountProfile: next.notice ? state.accountProfile : next.accountProfile,
           slots: next.slots,
           notice: next.notice ?? {
             tone: 'warning',
@@ -259,11 +856,30 @@ export default function App() {
         return;
       }
 
-      enterGame(slotId, snapshot, {
+      const resolved = resolveRunEntry(next.accountProfile, slotId, snapshot);
+
+      if (resolved.kind === 'blocked') {
+        dispatch({
+          type: 'SHOW_MAIN_MENU',
+          launcherSession: state.launcherSession,
+          accountProfile: resolved.accountProfile,
+          slots: resolved.slots,
+          notice: resolved.notice
+        });
+        return;
+      }
+
+      enterGame(
+        state.launcherSession,
+        resolved.accountProfile,
+        slotId,
+        resolved.snapshot,
+        {
         tone: 'accent',
         title: 'Continuing Campaign',
-        detail: `Continuing ${snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
-      });
+        detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
+        }
+      );
     } catch (error) {
       dispatch({
         type: 'SET_NOTICE',
@@ -309,15 +925,21 @@ export default function App() {
       const snapshot = createNewGameSnapshot({
         ...state.form,
         playerName
+      }, state.accountProfile.accountId);
+      const prepared = evaluateSnapshotWithAccount(state.accountProfile, snapshot, {
+        slotId: state.form.saveSlotId,
+        touchHistory: true,
+        suppressLegacyRewards: true
       });
 
       createSave(
+        state.accountProfile.accountId,
         state.form.saveSlotId,
-        snapshot,
-        buildSaveMetadata(state.form.saveSlotId, snapshot)
+        prepared.snapshot,
+        buildSaveMetadata(state.form.saveSlotId, prepared.snapshot)
       );
 
-      enterGame(state.form.saveSlotId, snapshot, {
+      enterGame(state.launcherSession, prepared.accountProfile, state.form.saveSlotId, prepared.snapshot, {
         tone: 'success',
         title: 'Campaign Started',
         detail: `${playerName} was written to ${selectedSlot?.label ?? state.form.saveSlotId} and entered the world.`
@@ -348,12 +970,18 @@ export default function App() {
     }
 
     try {
-      const snapshot = loadSave(state.selectedSlotId);
+      const snapshot = loadSave(state.accountProfile.accountId, state.selectedSlotId);
 
       if (!snapshot) {
-        const next = listSlotsWithFallback('read');
+        const next = listSignedInSlotsWithFallback(
+          state.launcherSession,
+          'read launcher account data',
+          state.accountProfile
+        );
         dispatch({
           type: 'OPEN_LOAD_GAME',
+          launcherSession: state.launcherSession,
+          accountProfile: next.notice ? state.accountProfile : next.accountProfile,
           slots: next.slots,
           selectedSlotId: getPreferredLoadSlotId(next.slots),
           notice: next.notice ?? {
@@ -365,10 +993,28 @@ export default function App() {
         return;
       }
 
-      enterGame(state.selectedSlotId, snapshot, {
+      const resolved = resolveRunEntry(
+        state.accountProfile,
+        state.selectedSlotId,
+        snapshot
+      );
+
+      if (resolved.kind === 'blocked') {
+        dispatch({
+          type: 'OPEN_LOAD_GAME',
+          launcherSession: state.launcherSession,
+          accountProfile: resolved.accountProfile,
+          slots: resolved.slots,
+          selectedSlotId: getPreferredLoadSlotId(resolved.slots),
+          notice: resolved.notice
+        });
+        return;
+      }
+
+      enterGame(state.launcherSession, resolved.accountProfile, state.selectedSlotId, resolved.snapshot, {
         tone: 'accent',
         title: 'Save Loaded',
-        detail: `Continuing ${snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(state.selectedSlotId)}.`
+        detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(state.selectedSlotId)}.`
       });
     } catch (error) {
       dispatch({
@@ -384,12 +1030,28 @@ export default function App() {
     }
 
     try {
-      deleteSave(slotId);
-      const next = listSlotsWithFallback('read');
+      const snapshot = loadSave(state.accountProfile.accountId, slotId);
+      deleteSave(state.accountProfile.accountId, slotId);
+      if (snapshot) {
+        saveAccountProfile(
+          markRunDeleted(state.accountProfile, {
+            characterId: snapshot.playerState.playerId,
+            slotId,
+            recordedAt: new Date().toISOString()
+          })
+        );
+      }
+      const next = listSignedInSlotsWithFallback(
+        state.launcherSession,
+        'read launcher account data',
+        state.accountProfile
+      );
 
       if (state.screen === 'LOAD_GAME') {
         dispatch({
           type: 'OPEN_LOAD_GAME',
+          launcherSession: state.launcherSession,
+          accountProfile: next.notice ? state.accountProfile : next.accountProfile,
           slots: next.slots,
           selectedSlotId: getPreferredLoadSlotId(next.slots),
           notice: next.notice ?? {
@@ -401,6 +1063,8 @@ export default function App() {
       } else {
         dispatch({
           type: 'SHOW_MAIN_MENU',
+          launcherSession: state.launcherSession,
+          accountProfile: next.notice ? state.accountProfile : next.accountProfile,
           slots: next.slots,
           notice: next.notice ?? {
             tone: 'success',
@@ -418,20 +1082,30 @@ export default function App() {
   };
 
   const handleGameDataSlot = (slotId: ManualSaveSlotId) => {
-    const next = listSlotsWithFallback('read');
+    if (state.screen !== 'MAIN_MENU') {
+      return;
+    }
+
+    const next = listSignedInSlotsWithFallback(
+      state.launcherSession,
+      'read launcher account data',
+      state.accountProfile
+    );
     const selectedSlot = next.slots.find((slot) => slot.id === slotId);
 
     if (!selectedSlot?.hasSave) {
-      openCharacterCreation(slotId);
+      openCharacterCreation(state.launcherSession, next.notice ? state.accountProfile : next.accountProfile, slotId);
       return;
     }
 
     try {
-      const snapshot = loadSave(slotId);
+      const snapshot = loadSave(next.accountProfile.accountId, slotId);
 
       if (!snapshot) {
         dispatch({
           type: 'SHOW_MAIN_MENU',
+          launcherSession: state.launcherSession,
+          accountProfile: next.notice ? state.accountProfile : next.accountProfile,
           slots: next.slots,
           notice: next.notice ?? {
             tone: 'warning',
@@ -442,10 +1116,23 @@ export default function App() {
         return;
       }
 
-      enterGame(slotId, snapshot, {
+      const resolved = resolveRunEntry(next.accountProfile, slotId, snapshot);
+
+      if (resolved.kind === 'blocked') {
+        dispatch({
+          type: 'SHOW_MAIN_MENU',
+          launcherSession: state.launcherSession,
+          accountProfile: resolved.accountProfile,
+          slots: resolved.slots,
+          notice: resolved.notice
+        });
+        return;
+      }
+
+      enterGame(state.launcherSession, resolved.accountProfile, slotId, resolved.snapshot, {
         tone: 'accent',
         title: 'Save Loaded',
-        detail: `Continuing ${snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
+        detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
       });
     } catch (error) {
       dispatch({
@@ -455,19 +1142,53 @@ export default function App() {
     }
   };
 
-  const handleResetSaves = () => {
+  const handleResetAccount = async (options: {
+    accountId: string;
+    password: string;
+  }): Promise<LauncherAccountResetResult> => {
+    if (state.screen !== 'SETTINGS') {
+      return {
+        ok: false,
+        message: 'Account reset is only available from Settings.'
+      };
+    }
+
     try {
-      resetAllSaves();
-      showMainMenu({
-        tone: 'success',
-        title: 'Save Data Reset',
-        detail: 'All manual save slots and the dedicated quick-save slot were cleared from this browser.'
-      });
-    } catch (error) {
+      const result = await resetLocalAccount(options);
+
+      if (!result.ok) {
+        if (result.message === MALFORMED_AUTH_NOTICE) {
+          showAccountAccess(buildAuthNotice('Sign-In Reset', result.message));
+        } else {
+          dispatch({
+            type: 'SET_NOTICE',
+            notice: buildAuthNotice('Could Not Reset Account', result.message)
+          });
+        }
+
+        return result;
+      }
+
       dispatch({
-        type: 'SET_NOTICE',
-        notice: buildStorageNotice('reset local saves', error)
+        type: 'OPEN_SETTINGS',
+        launcherSession: state.launcherSession,
+        accountProfile: result.accountProfile,
+        slots: listSaves(result.accountProfile.accountId),
+        notice: {
+          tone: 'success',
+          title: 'Account Reset',
+          detail: 'Character data, Prestige, achievements, and local saves were reset for this account.'
+        }
       });
+
+      return result;
+    } catch (error) {
+      const notice = buildStorageNotice('reset the local account', error);
+      dispatch({ type: 'SET_NOTICE', notice });
+      return {
+        ok: false,
+        message: notice.detail
+      };
     }
   };
 
@@ -477,15 +1198,26 @@ export default function App() {
     }
 
     try {
+      const prepared = evaluateSnapshotWithAccount(state.accountProfile, state.snapshot, {
+        slotId: state.activeSlotId,
+        touchHistory: true
+      });
       const savedSlot = createSave(
+        prepared.accountProfile.accountId,
         state.activeSlotId,
-        state.snapshot,
-        buildSaveMetadata(state.activeSlotId, state.snapshot)
+        prepared.snapshot,
+        buildSaveMetadata(state.activeSlotId, prepared.snapshot)
       );
 
-      const next = listSlotsWithFallback('read');
+      const next = listSignedInSlotsWithFallback(
+        state.launcherSession,
+        'read launcher account data',
+        prepared.accountProfile
+      );
       dispatch({
         type: 'COMPLETE_IN_GAME_SAVE',
+        launcherSession: state.launcherSession,
+        accountProfile: next.notice ? prepared.accountProfile : next.accountProfile,
         slots: next.slots,
         activeSlotId: state.activeSlotId,
         notice: next.notice ?? buildSaveStatusNotice(savedSlot)
@@ -504,11 +1236,21 @@ export default function App() {
     }
 
     try {
-      const savedSlot = quickSave(state.snapshot);
+      const prepared = evaluateSnapshotWithAccount(state.accountProfile, state.snapshot, {
+        slotId: 'quick-save',
+        touchHistory: true
+      });
+      const savedSlot = quickSave(prepared.accountProfile.accountId, prepared.snapshot);
 
-      const next = listSlotsWithFallback('read');
+      const next = listSignedInSlotsWithFallback(
+        state.launcherSession,
+        'read launcher account data',
+        prepared.accountProfile
+      );
       dispatch({
         type: 'COMPLETE_IN_GAME_SAVE',
+        launcherSession: state.launcherSession,
+        accountProfile: next.notice ? prepared.accountProfile : next.accountProfile,
         slots: next.slots,
         activeSlotId: state.activeSlotId,
         notice: next.notice ?? buildSaveStatusNotice(savedSlot)
@@ -517,6 +1259,49 @@ export default function App() {
       dispatch({
         type: 'SET_NOTICE',
         notice: buildStorageNotice('quick-save the current game', error)
+      });
+    }
+  };
+
+  const handleRetireCharacter = () => {
+    if (state.screen !== 'IN_GAME') {
+      return;
+    }
+
+    if (typeof window !== 'undefined') {
+      const confirmed = window.confirm(
+        `Retire ${state.snapshot.playerState.coreData.playerName}? This will archive the run, free all active save slots for this character, and return to the main menu.`
+      );
+
+      if (!confirmed) {
+        return;
+      }
+    }
+
+    try {
+      const archived = archiveActiveRun({
+        accountId: state.accountProfile.accountId,
+        accountProfile: state.accountProfile,
+        snapshot: state.snapshot,
+        archiveReason: 'retired',
+        fallbackSlotId: state.activeSlotId
+      });
+
+      dispatch({
+        type: 'SHOW_MAIN_MENU',
+        launcherSession: state.launcherSession,
+        accountProfile: archived.accountProfile,
+        slots: archived.slots,
+        notice: buildArchivedRunNotice(
+          archived.snapshot,
+          'retired',
+          archived.legacyGranted
+        )
+      });
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('retire the current character', error)
       });
     }
   };
@@ -536,11 +1321,17 @@ export default function App() {
       }
     }
 
-    const next = listSlotsWithFallback('read');
+    const next = listSignedInSlotsWithFallback(
+      state.launcherSession,
+      'read launcher account data',
+      state.accountProfile
+    );
     const activeSlot = next.slots.find((slot) => slot.id === state.activeSlotId) ?? null;
 
     dispatch({
       type: 'SHOW_MAIN_MENU',
+      launcherSession: state.launcherSession,
+      accountProfile: next.notice ? state.accountProfile : next.accountProfile,
       slots: next.slots,
       notice: next.notice ??
         (state.hasUnsavedChanges
@@ -581,19 +1372,37 @@ export default function App() {
 
   let content = null;
 
-  if (state.screen === 'MAIN_MENU') {
+  if (state.screen === 'ACCOUNT_ACCESS') {
+    content = (
+      <LocalAccountAccessScreen
+        mode={state.accessMode}
+        accounts={state.accounts}
+        notice={state.notice}
+        onDismissNotice={dismissNotice}
+        onSignIn={handleSignIn}
+        onDeleteAccount={handleDeleteAccount}
+        onCreateAccount={handleCreateAccount}
+        themeMode={themeMode}
+        onToggleThemeMode={toggleThemeMode}
+      />
+    );
+  } else if (state.screen === 'MAIN_MENU') {
     content = (
       <MainMenuScreen
+        accountProfile={state.accountProfile}
         slots={state.slots}
         notice={state.notice}
         onDismissNotice={dismissNotice}
         onActivateSlot={handleGameDataSlot}
         onDeleteSlot={handleDeleteSave}
         onContinue={continueLatestGame}
-        onOpenSettings={openSettings}
+        onOpenSettings={() => openSettings(state.launcherSession, state.accountProfile)}
+        activeSection={launcherSection}
+        onActiveSectionChange={setLauncherSection}
+        onLogout={handleLogout}
         onExit={handleExit}
-        themeMode={themeMode}
-        onToggleThemeMode={toggleThemeMode}
+        clockLabel={clockLabel}
+        clockTitle={clockTitle}
       />
     );
   } else if (state.screen === 'CHARACTER_CREATION') {
@@ -604,7 +1413,7 @@ export default function App() {
         notice={state.notice}
         pendingOverwriteSlotId={state.pendingOverwriteSlotId}
         onDismissNotice={dismissNotice}
-        onReturnToMainMenu={() => showMainMenu()}
+        onReturnToMainMenu={() => showSignedInMainMenu(state.launcherSession, state.accountProfile)}
         onChange={(form) => dispatch({ type: 'UPDATE_CHARACTER_CREATION_FORM', form })}
         onCreateGame={() => attemptCreateGame(false)}
         onConfirmOverwrite={() => attemptCreateGame(true)}
@@ -620,7 +1429,7 @@ export default function App() {
         notice={state.notice}
         selectedSlotId={state.selectedSlotId}
         onDismissNotice={dismissNotice}
-        onBack={() => showMainMenu()}
+        onBack={() => showSignedInMainMenu(state.launcherSession, state.accountProfile)}
         onSelectSlot={(slotId) => dispatch({ type: 'SELECT_LOAD_SLOT', slotId })}
         onLoadSelected={loadSelectedGame}
         onDeleteSlot={handleDeleteSave}
@@ -629,18 +1438,34 @@ export default function App() {
   } else if (state.screen === 'SETTINGS') {
     content = (
       <SettingsScreen
+        accountProfile={state.accountProfile}
         slots={state.slots}
         notice={state.notice}
         onDismissNotice={dismissNotice}
-        onBack={() => showMainMenu()}
-        onResetSaves={handleResetSaves}
+        onOpenLauncherSection={(section) =>
+          showSignedInMainMenu(state.launcherSession, state.accountProfile, null, section)
+        }
+        onResetAccount={handleResetAccount}
+        onDeleteAccount={handleDeleteAccount}
+        onContinue={continueLatestGame}
+        onExit={handleExit}
+        onLogout={handleLogout}
         themeMode={themeMode}
-        onToggleThemeMode={toggleThemeMode}
+        themePreference={themePreference}
+        onThemePreferenceChange={setThemePreference}
+        timeZone={timeSettings.timeZone}
+        onTimeZoneChange={updateTimeZone}
+        hourFormat={timeSettings.hourFormat}
+        onHourFormatChange={updateHourFormat}
+        clockLabel={clockLabel}
+        clockTitle={clockTitle}
+        clockNow={clockNow}
       />
     );
   } else {
     content = (
       <InGameShell
+        accountProfile={state.accountProfile}
         snapshot={state.snapshot}
         slots={state.slots}
         activeSlotId={state.activeSlotId}
@@ -648,14 +1473,50 @@ export default function App() {
         notice={state.notice}
         onDismissNotice={dismissNotice}
         onSnapshotChange={(snapshot) => {
-          dispatch({
-            type: 'UPDATE_IN_GAME_SNAPSHOT',
-            slots: state.slots,
-            snapshot
-          });
+          try {
+            const prepared = evaluateSnapshotWithAccount(state.accountProfile, snapshot);
+            const deathReason = resolveTerminalArchiveReason(prepared.snapshot);
+
+            if (deathReason) {
+              const archived = archiveActiveRun({
+                accountId: prepared.accountProfile.accountId,
+                accountProfile: prepared.accountProfile,
+                snapshot: prepared.snapshot,
+                archiveReason: deathReason,
+                fallbackSlotId: state.activeSlotId
+              });
+
+              dispatch({
+                type: 'SHOW_MAIN_MENU',
+                launcherSession: state.launcherSession,
+                accountProfile: archived.accountProfile,
+                slots: archived.slots,
+                notice: buildArchivedRunNotice(
+                  archived.snapshot,
+                  deathReason,
+                  archived.legacyGranted
+                )
+              });
+              return;
+            }
+
+            dispatch({
+              type: 'UPDATE_IN_GAME_SNAPSHOT',
+              launcherSession: state.launcherSession,
+              accountProfile: prepared.accountProfile,
+              slots: state.slots,
+              snapshot: prepared.snapshot
+            });
+          } catch (error) {
+            dispatch({
+              type: 'SET_NOTICE',
+              notice: buildStorageNotice('update the current run', error)
+            });
+          }
         }}
         onSave={handleSaveGame}
         onQuickSave={handleQuickSaveGame}
+        onRetireCharacter={handleRetireCharacter}
         onReturnToMainMenu={handleReturnToMainMenu}
       />
     );

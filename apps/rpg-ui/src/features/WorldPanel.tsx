@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { ActionOutcomePreview } from '../components/body-state/ActionOutcomePreview';
 import { useUiViewModel } from '../runtime/UiViewModelContext';
 import { matchesQuery } from '../utils';
 import { Icon } from '../components/icons';
@@ -13,9 +14,11 @@ import { PanelNotice } from '../game-shell/components/PanelNotice';
 import {
   getCurrentLocationLabel,
   getKnownLocationId,
+  previewTravelToKnownLocation,
   travelToKnownLocation
 } from '../game-shell/gameplayLoop';
 import type { GameShellNotice } from '../game-shell/state';
+import { buildActionOutcomePreview } from '../runtime/bodyStatePresentation';
 
 type WorldPanelProps = {
   accent: string;
@@ -26,7 +29,7 @@ type WorldPanelProps = {
 
 export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: WorldPanelProps) {
   const worldData = useUiViewModel().world;
-  const { snapshot, updateSnapshot } = useGameSession();
+  const { snapshot, updateSnapshot, bodyStatePresentation } = useGameSession();
   const [activeSection, setActiveSection] = useState('world-map');
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({
     'world-map': worldData.lists['world-map']?.[0]?.id ?? '',
@@ -38,6 +41,7 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
   });
   const [zoom, setZoom] = useState(1);
   const [panelNotice, setPanelNotice] = useState<GameShellNotice | null>(null);
+  const [confirmTravel, setConfirmTravel] = useState(false);
 
   const listItems = worldData.lists[activeSection] ?? [];
   const filteredItems = listItems.filter((item) =>
@@ -58,6 +62,30 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
         groups: selectedItem.detailGroups ?? []
       }
     : undefined;
+  const travelPreview = useMemo(
+    () =>
+      selectedWorldLocation
+        ? previewTravelToKnownLocation(snapshot, selectedWorldLocation.id)
+        : null,
+    [selectedWorldLocation, snapshot]
+  );
+  const travelOutcome = useMemo(
+    () =>
+      travelPreview?.available && travelPreview.projectedBodyState
+        ? buildActionOutcomePreview({
+            current: bodyStatePresentation.snapshot,
+            projectedBodyState: travelPreview.projectedBodyState,
+            timeline: travelPreview.timeline,
+            warningStreaks: bodyStatePresentation.warningStreaks,
+            sustainedFlags: bodyStatePresentation.sustainedFlags
+          })
+        : null,
+    [bodyStatePresentation, travelPreview]
+  );
+
+  useEffect(() => {
+    setConfirmTravel(false);
+  }, [selectedWorldLocation?.id, snapshot]);
 
   return (
     <PanelLayout
@@ -148,40 +176,58 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
           </Card>
           {panelNotice && <PanelNotice notice={panelNotice} />}
           <Card title="Travel Actions" accent={accent}>
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="space-y-2 text-sm text-slate-300">
-                <div>
-                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Current Location</span>
-                  <div className="mt-1 text-base text-slate-50">{currentLocationLabel}</div>
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Current Location</span>
+                    <div className="mt-1 text-base text-slate-50">{currentLocationLabel}</div>
+                  </div>
+                  <div>
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Selected Destination</span>
+                    <div className="mt-1 text-base text-slate-50">{selectedWorldLocation?.name ?? 'No location selected'}</div>
+                  </div>
+                  <div className="text-slate-400">
+                    {selectedWorldLocation?.note ?? 'Choose a known location on the map to begin travel.'}
+                  </div>
                 </div>
-                <div>
-                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Selected Destination</span>
-                  <div className="mt-1 text-base text-slate-50">{selectedWorldLocation?.name ?? 'No location selected'}</div>
-                </div>
-                <div className="text-slate-400">
-                  {selectedWorldLocation?.note ?? 'Choose a known location on the map to begin travel.'}
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <GameActionButton
-                  label="Travel To Location"
-                  tone="accent"
-                  disabled={
-                    !selectedWorldLocation ||
-                    !selectedWorldLocation.known ||
-                    selectedWorldLocation.id === currentLocationId
-                  }
-                  onClick={() => {
-                    if (!selectedWorldLocation) {
-                      return;
+                <div className="flex flex-wrap gap-3">
+                  <GameActionButton
+                    label={
+                      travelOutcome?.riskTier === 'risky' && confirmTravel
+                        ? 'Confirm Travel'
+                        : 'Travel To Location'
                     }
+                    tone="accent"
+                    disabled={
+                      !selectedWorldLocation ||
+                      !selectedWorldLocation.known ||
+                      selectedWorldLocation.id === currentLocationId
+                    }
+                    onClick={() => {
+                      if (!selectedWorldLocation) {
+                        return;
+                      }
 
-                    const result = travelToKnownLocation(snapshot, selectedWorldLocation.id);
-                    updateSnapshot(result.snapshot);
-                    setPanelNotice(result.notice);
-                  }}
-                />
+                      if (travelOutcome?.riskTier === 'risky' && !confirmTravel) {
+                        setConfirmTravel(true);
+                        return;
+                      }
+
+                      const result = travelToKnownLocation(snapshot, selectedWorldLocation.id);
+                      updateSnapshot(result.snapshot);
+                      setPanelNotice(result.notice);
+                    }}
+                  />
+                </div>
               </div>
+              {travelOutcome ? (
+                <ActionOutcomePreview title="Travel Outlook" preview={travelOutcome} />
+              ) : (
+                <div className="rounded-[22px] border border-white/8 bg-black/10 p-4 text-sm text-slate-300">
+                  {travelPreview?.reason ?? 'Travel outlook appears here once a destination is valid.'}
+                </div>
+              )}
             </div>
           </Card>
           <SelectionList

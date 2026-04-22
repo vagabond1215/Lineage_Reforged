@@ -1,18 +1,49 @@
 import type {
+  PlayerAttributeKey,
   PlayerAttributeAdjustments,
   PlayerAttributes,
   PlayerCoreData,
+  PlayerLegacyGrowthState,
   PlayerOriginProfileState,
   PlayerProgression,
   PlayerResourceGrowthVector,
   PlayerSexId
 } from "./contracts.js";
 
+export type PlayerFoodTagBiasId =
+  | "protein"
+  | "carbs"
+  | "fat"
+  | "greens"
+  | "fruit"
+  | "grain"
+  | "meat"
+  | "fish"
+  | "fungus"
+  | "dairy"
+  | "alcohol"
+  | "water_rich";
+
+export interface PlayerLineageMetabolicProfileRecord {
+  calorieEfficiency: number;
+  proteinRecoveryEfficiency: number;
+  carbToStaminaEfficiency: number;
+  fatToReserveEfficiency: number;
+  hydrationRetention: number;
+  dehydrationSensitivity: number;
+  intoxicationSensitivity: number;
+  deficiencyPenaltyScale: number;
+  atrophySensitivity: number;
+  foodTagBiases: Partial<Record<PlayerFoodTagBiasId, number>>;
+}
+
 export interface PlayerLineageProfileRecord {
   id: string;
   name: string;
   resourceBaseAdjustments: PlayerResourceGrowthVector;
   resourceGrowthPerLevel: PlayerResourceGrowthVector;
+  metabolicProfile: PlayerLineageMetabolicProfileRecord;
+  attributeGrowthBiases: Partial<Record<PlayerAttributeKey, number>>;
   sexAttributeAdjustments: Record<PlayerSexId, PlayerAttributeAdjustments>;
   notes: string[];
 }
@@ -42,6 +73,21 @@ const NO_ATTRIBUTE_ADJUSTMENTS: Record<PlayerSexId, PlayerAttributeAdjustments> 
   neutral: {}
 };
 
+const DEFAULT_METABOLIC_PROFILE: PlayerLineageMetabolicProfileRecord = {
+  calorieEfficiency: 1,
+  proteinRecoveryEfficiency: 1,
+  carbToStaminaEfficiency: 1,
+  fatToReserveEfficiency: 1,
+  hydrationRetention: 1,
+  dehydrationSensitivity: 1,
+  intoxicationSensitivity: 1,
+  deficiencyPenaltyScale: 1,
+  atrophySensitivity: 1,
+  foodTagBiases: {}
+};
+
+const DEFAULT_ATTRIBUTE_GROWTH_BIASES: Partial<Record<PlayerAttributeKey, number>> = {};
+
 type PlayableLineageSeed = Omit<PlayerLineageProfileRecord, "sexAttributeAdjustments">;
 
 const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
@@ -50,6 +96,14 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Human",
     resourceBaseAdjustments: { hp: 0, mp: 0, stamina: 0 },
     resourceGrowthPerLevel: { hp: 2, mp: 1, stamina: 2 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      foodTagBiases: { grain: 1.04, protein: 1.02, fruit: 1.02 }
+    },
+    attributeGrowthBiases: {
+      CON: 1.02,
+      WIS: 1.02
+    },
     notes: [
       "Human growth stays balanced across physical resilience, reserve, and recovery.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -60,6 +114,18 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Elf",
     resourceBaseAdjustments: { hp: -8, mp: 10, stamina: -4 },
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 1 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      carbToStaminaEfficiency: 1.08,
+      hydrationRetention: 1.08,
+      intoxicationSensitivity: 1.08,
+      foodTagBiases: { fruit: 1.08, greens: 1.08, fish: 1.03, alcohol: 0.94 }
+    },
+    attributeGrowthBiases: {
+      AGI: 1.05,
+      DEX: 1.04,
+      CON: 0.97
+    },
     notes: [
       "Elves favor magical reserve, finesse, and long-horizon control over raw durability.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -70,6 +136,18 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Dark Elf",
     resourceBaseAdjustments: { hp: -4, mp: 8, stamina: 2 },
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 2 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      carbToStaminaEfficiency: 1.04,
+      hydrationRetention: 0.98,
+      intoxicationSensitivity: 1.02,
+      foodTagBiases: { fungus: 1.08, fish: 1.04, greens: 1.02, alcohol: 0.96 }
+    },
+    attributeGrowthBiases: {
+      AGI: 1.03,
+      INT: 1.04,
+      SPT: 1.03
+    },
     notes: [
       "Dark elves balance magical depth with better travel endurance than surface elves.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -80,6 +158,20 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Dwarf",
     resourceBaseAdjustments: { hp: 10, mp: -6, stamina: 8 },
     resourceGrowthPerLevel: { hp: 3, mp: 0, stamina: 2 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      proteinRecoveryEfficiency: 1.08,
+      fatToReserveEfficiency: 1.08,
+      hydrationRetention: 1.05,
+      intoxicationSensitivity: 0.92,
+      deficiencyPenaltyScale: 0.96,
+      foodTagBiases: { meat: 1.08, dairy: 1.08, grain: 1.04, alcohol: 1.06 }
+    },
+    attributeGrowthBiases: {
+      STR: 1.04,
+      CON: 1.06,
+      AGI: 0.96
+    },
     notes: [
       "Dwarven growth favors steady toughness, labor endurance, and grounded momentum.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -90,6 +182,19 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Gnome",
     resourceBaseAdjustments: { hp: -10, mp: 12, stamina: -2 },
     resourceGrowthPerLevel: { hp: 1, mp: 3, stamina: 1 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      calorieEfficiency: 0.98,
+      carbToStaminaEfficiency: 1.04,
+      proteinRecoveryEfficiency: 0.98,
+      intoxicationSensitivity: 1.04,
+      foodTagBiases: { fungus: 1.06, dairy: 1.03, fruit: 1.03 }
+    },
+    attributeGrowthBiases: {
+      DEX: 1.04,
+      INT: 1.05,
+      STR: 0.96
+    },
     notes: [
       "Gnomes favor sharp reserve growth, nimble motion, and inventive problem-solving over raw bodily power.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -100,6 +205,19 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Halfling",
     resourceBaseAdjustments: { hp: -4, mp: 0, stamina: 8 },
     resourceGrowthPerLevel: { hp: 1, mp: 1, stamina: 3 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      calorieEfficiency: 1.03,
+      carbToStaminaEfficiency: 1.08,
+      proteinRecoveryEfficiency: 0.98,
+      intoxicationSensitivity: 1.1,
+      foodTagBiases: { grain: 1.08, fruit: 1.06, dairy: 1.04, alcohol: 0.94 }
+    },
+    attributeGrowthBiases: {
+      AGI: 1.05,
+      VIT: 1.03,
+      STR: 0.97
+    },
     notes: [
       "Halflings favor evasive endurance, steady travel stamina, and quiet resilience rather than direct physical force.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -110,6 +228,19 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Orc",
     resourceBaseAdjustments: { hp: 8, mp: -4, stamina: 6 },
     resourceGrowthPerLevel: { hp: 3, mp: 0, stamina: 2 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      proteinRecoveryEfficiency: 1.06,
+      fatToReserveEfficiency: 1.04,
+      hydrationRetention: 0.96,
+      deficiencyPenaltyScale: 1.04,
+      foodTagBiases: { meat: 1.08, fat: 1.06, grain: 1.02, greens: 0.96 }
+    },
+    attributeGrowthBiases: {
+      STR: 1.06,
+      CON: 1.03,
+      WIS: 0.96
+    },
     notes: [
       "Orc ancestry favors pressure-tolerant physical pools without extreme magical reserves.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -120,6 +251,19 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Goblin",
     resourceBaseAdjustments: { hp: -8, mp: 2, stamina: 10 },
     resourceGrowthPerLevel: { hp: 1, mp: 1, stamina: 3 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      calorieEfficiency: 1.02,
+      carbToStaminaEfficiency: 1.05,
+      hydrationRetention: 0.95,
+      deficiencyPenaltyScale: 1.03,
+      foodTagBiases: { grain: 1.04, fungus: 1.05, fish: 1.03 }
+    },
+    attributeGrowthBiases: {
+      AGI: 1.06,
+      DEX: 1.03,
+      CON: 0.96
+    },
     notes: [
       "Goblin ancestry leans toward motion, agility, and repeated exertion over direct toughness.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -130,6 +274,20 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Troll",
     resourceBaseAdjustments: { hp: 16, mp: -8, stamina: 4 },
     resourceGrowthPerLevel: { hp: 4, mp: 0, stamina: 1 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      calorieEfficiency: 1.04,
+      proteinRecoveryEfficiency: 1.1,
+      hydrationRetention: 0.94,
+      deficiencyPenaltyScale: 1.08,
+      atrophySensitivity: 1.08,
+      foodTagBiases: { meat: 1.1, fish: 1.05, fruit: 0.94 }
+    },
+    attributeGrowthBiases: {
+      STR: 1.08,
+      VIT: 1.05,
+      AGI: 0.94
+    },
     notes: [
       "Troll ancestry drives extreme HP expansion and blunt staying power.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -140,6 +298,18 @@ const LINEAGE_ANCESTRY: Record<string, PlayableLineageSeed> = {
     name: "Merfolk",
     resourceBaseAdjustments: { hp: -2, mp: 4, stamina: 4 },
     resourceGrowthPerLevel: { hp: 1, mp: 2, stamina: 2 },
+    metabolicProfile: {
+      ...DEFAULT_METABOLIC_PROFILE,
+      hydrationRetention: 1.12,
+      dehydrationSensitivity: 0.92,
+      carbToStaminaEfficiency: 1.03,
+      foodTagBiases: { fish: 1.08, water_rich: 1.08, greens: 1.03, alcohol: 0.94 }
+    },
+    attributeGrowthBiases: {
+      AGI: 1.03,
+      WIS: 1.03,
+      CON: 0.98
+    },
     notes: [
       "Merfolk ancestry balances reserve and endurance, especially for aquatic travel and rhythm.",
       "Hair, skin, and eye color remain visual only, while stature and build can tune starting attributes in the creator."
@@ -183,8 +353,25 @@ function scaleResourceVector(
 function createPlayableLineage(seed: PlayableLineageSeed): PlayerLineageProfileRecord {
   return {
     ...seed,
+    attributeGrowthBiases: seed.attributeGrowthBiases ?? DEFAULT_ATTRIBUTE_GROWTH_BIASES,
     sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS
   };
+}
+
+function averageAttributeGrowthBiases(
+  left: Partial<Record<PlayerAttributeKey, number>>,
+  right: Partial<Record<PlayerAttributeKey, number>>
+): Partial<Record<PlayerAttributeKey, number>> {
+  const keys: PlayerAttributeKey[] = ["STR", "DEX", "AGI", "CON", "VIT", "WIS", "INT", "SPT", "CHA"];
+  return keys.reduce<Partial<Record<PlayerAttributeKey, number>>>((result, key) => {
+    const leftValue = left[key] ?? 1;
+    const rightValue = right[key] ?? 1;
+    const averaged = Number(((leftValue + rightValue) / 2).toFixed(3));
+    if (Math.abs(averaged - 1) > 0.0001) {
+      result[key] = averaged;
+    }
+    return result;
+  }, {});
 }
 
 function createHybridLineage(params: {
@@ -217,7 +404,23 @@ function createHybridLineage(params: {
     notes: [
       `${params.name} resource growth is derived from averaged ${left.name} and ${right.name} ancestry, then tuned with only minor hybrid modifiers.`,
       ...params.notes
-    ]
+    ],
+    attributeGrowthBiases: averageAttributeGrowthBiases(left.attributeGrowthBiases, right.attributeGrowthBiases),
+    metabolicProfile: {
+      calorieEfficiency: Number(((left.metabolicProfile.calorieEfficiency + right.metabolicProfile.calorieEfficiency) / 2).toFixed(3)),
+      proteinRecoveryEfficiency: Number(((left.metabolicProfile.proteinRecoveryEfficiency + right.metabolicProfile.proteinRecoveryEfficiency) / 2).toFixed(3)),
+      carbToStaminaEfficiency: Number(((left.metabolicProfile.carbToStaminaEfficiency + right.metabolicProfile.carbToStaminaEfficiency) / 2).toFixed(3)),
+      fatToReserveEfficiency: Number(((left.metabolicProfile.fatToReserveEfficiency + right.metabolicProfile.fatToReserveEfficiency) / 2).toFixed(3)),
+      hydrationRetention: Number(((left.metabolicProfile.hydrationRetention + right.metabolicProfile.hydrationRetention) / 2).toFixed(3)),
+      dehydrationSensitivity: Number(((left.metabolicProfile.dehydrationSensitivity + right.metabolicProfile.dehydrationSensitivity) / 2).toFixed(3)),
+      intoxicationSensitivity: Number(((left.metabolicProfile.intoxicationSensitivity + right.metabolicProfile.intoxicationSensitivity) / 2).toFixed(3)),
+      deficiencyPenaltyScale: Number(((left.metabolicProfile.deficiencyPenaltyScale + right.metabolicProfile.deficiencyPenaltyScale) / 2).toFixed(3)),
+      atrophySensitivity: Number(((left.metabolicProfile.atrophySensitivity + right.metabolicProfile.atrophySensitivity) / 2).toFixed(3)),
+      foodTagBiases: {
+        ...left.metabolicProfile.foodTagBiases,
+        ...right.metabolicProfile.foodTagBiases
+      }
+    }
   });
 }
 
@@ -325,14 +528,39 @@ export function getPlayerClassProfile(classId: string | null): PlayerClassProfil
   return PLAYER_CLASS_PROFILES[classId];
 }
 
+type LegacyGrowthResolverInput =
+  | Pick<PlayerProgression, "legacyGrowth">
+  | {
+      level: number;
+      classLevel: number;
+    };
+
+function resolveLegacyGrowthLevels(input: LegacyGrowthResolverInput): Pick<
+  PlayerLegacyGrowthState,
+  "resourceGrowthLevel" | "classLevel"
+> {
+  if ("legacyGrowth" in input) {
+    return {
+      resourceGrowthLevel: Math.max(input.legacyGrowth.resourceGrowthLevel, 1),
+      classLevel: Math.max(input.legacyGrowth.classLevel, 0)
+    };
+  }
+
+  return {
+    resourceGrowthLevel: Math.max(input.level, 1),
+    classLevel: Math.max(input.classLevel, 0)
+  };
+}
+
 export function resolvePlayerOriginProfile(
   coreData: Pick<PlayerCoreData, "lineageId" | "classId" | "sexId">,
-  progression: Pick<PlayerProgression, "level" | "classLevel">
+  progression: LegacyGrowthResolverInput
 ): PlayerOriginProfileState {
   const lineageProfile = getPlayerLineageProfile(coreData.lineageId);
   const classProfile = getPlayerClassProfile(coreData.classId);
-  const levelGrowthSteps = Math.max(progression.level - 1, 0);
-  const classLevel = Math.max(progression.classLevel, 0);
+  const legacyGrowth = resolveLegacyGrowthLevels(progression);
+  const levelGrowthSteps = Math.max(legacyGrowth.resourceGrowthLevel - 1, 0);
+  const classLevel = legacyGrowth.classLevel;
 
   const lineageBaseAdjustments = lineageProfile?.resourceBaseAdjustments ?? ZERO_RESOURCE_GROWTH;
   const lineageGrowth = lineageProfile?.resourceGrowthPerLevel ?? ZERO_RESOURCE_GROWTH;

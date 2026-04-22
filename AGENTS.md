@@ -2,8 +2,8 @@
 
 ## Codex Run Maintenance
 
-- At the start of substantial Codex work, review [README.md](/Users/vagab/OneDrive/Documents/Cataclysm RPG/README.md) and [docs/future_content_backlog.md](/Users/vagab/OneDrive/Documents/Cataclysm RPG/docs/future_content_backlog.md) before running major commands or editing files.
-- On every Codex run that adds content, changes scope, or explicitly defers work, update [docs/future_content_backlog.md](/Users/vagab/OneDrive/Documents/Cataclysm RPG/docs/future_content_backlog.md).
+- At the start of substantial Codex work, review [README.md](README.md) and [docs/future_content_backlog.md](docs/future_content_backlog.md) before running major commands or editing files.
+- On every Codex run that adds content, changes scope, or explicitly defers work, update [docs/future_content_backlog.md](docs/future_content_backlog.md).
 - Add newly deferred systems, blocked follow-up work, and implementation notes for anything intentionally held off.
 - When a deferred item is started or completed, update or remove its backlog entry in the same run.
 - Keep each backlog entry concrete:

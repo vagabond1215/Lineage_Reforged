@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "PlayerKnowledgeTrackRecord",
+  "title": "PlayerKnowledgeDomainRecord",
   "type": "object",
   "additionalProperties": false,
   "required": ["id", "name", "domain", "knowledgeSkillId", "supportWeights", "identifyDifficulty", "autoIdentifyThresholds"],
@@ -11,7 +11,7 @@
     "knowledgeSkillId": { "type": "string" },
     "spottingSkillId": { "type": "string" },
     "identifySkillId": { "type": "string" },
-    "universalSupportSkillId": { "type": "string" },
+    "generalSupportSkillId": { "type": "string" },
     "supportWeights": { "$ref": "#/$defs/supportWeights" },
     "identifyDifficulty": { "$ref": "#/$defs/thresholdSet" },
     "autoIdentifyThresholds": { "$ref": "#/$defs/thresholdSet" }
@@ -20,10 +20,10 @@
     "supportWeights": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["domainKnowledge", "universalKnowledge", "spotting"],
+      "required": ["domainKnowledge", "generalLore", "spotting"],
       "properties": {
         "domainKnowledge": { "type": "number", "minimum": 0 },
-        "universalKnowledge": { "type": "number", "minimum": 0 },
+        "generalLore": { "type": "number", "minimum": 0 },
         "spotting": { "type": "number", "minimum": 0 }
       }
     },
@@ -40,3 +40,4 @@
     }
   }
 }
+

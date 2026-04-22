@@ -1,4 +1,4 @@
-{
+﻿{
   "records": [
     {
       "id": "trait.lineage.human.adaptable",
@@ -521,7 +521,7 @@
           "mode": "flat",
           "value": 4,
           "scope": "self",
-          "skillId": "skill.knowledge.minerals"
+          "skillId": "skill.knowledge.mineral_lore"
         },
         {
           "channel": "skill.rank_bonus",
@@ -1006,3 +1006,4 @@
     }
   ]
 }
+

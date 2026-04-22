@@ -6,24 +6,67 @@ import { tickCombatFoundation } from "./combat/index.js";
 import {
   createCombatModeState,
   createDefaultGameState,
+  createDefaultRunDifficultyState,
   createDefaultPlayerCombatProfile,
   createEmptyCombatUiState,
   createEmptyPartyRuntimeState
 } from "./combat/state.js";
 export { createEmptySessionState, createSaveSnapshotFromGameContext } from "./save-snapshot.js";
 export {
+  createDefaultAccountAchievementsState,
+  createDefaultAccountHistoryState,
+  createDefaultCharacterAchievementsState
+} from "./account-achievement-state.js";
+export {
+  DEFAULT_ACCOUNT_DISPLAY_NAME,
+  DEFAULT_ACCOUNT_ID,
+  createDefaultAccountLegacyState,
+  createDefaultAccountProfileState,
+  grantLegacy,
+  grantLegacyReward,
+  hasLegacyUnlock,
+  recordLegacyTransaction,
+  spendLegacy
+} from "./legacy-account.js";
+export {
+  archiveRunRecord,
+  evaluateAchievementProgress,
+  getAchievementDefinitionById,
+  getAchievementDefinitions,
+  markRunDeleted,
+  refreshRunHistoryFromSnapshot,
+  upsertActiveRunRecord,
+  validateAchievementDefinitions
+} from "./achievements.js";
+export {
+  DEFAULT_RUN_LEGACY_PAYOUT_RULES,
+  hasRunLegacyPayoutResolved,
+  isRunEligibleForLegacyPayout,
+  resolveRunLegacyPayout
+} from "./run-legacy-payout.js";
+export {
+  getLegacyUnlockDefinitionById,
+  getLegacyUnlockDefinitions,
+  purchaseLegacyUnlock,
+  resolveLegacyUnlockStates,
+  validateLegacyUnlockDefinitions
+} from "./legacy-unlocks.js";
+export {
   createCombatModeState,
   createDefaultGameState,
+  createDefaultRunDifficultyState,
   createDefaultPlayerCombatProfile,
   createEmptyCombatUiState,
   createEmptyPartyRuntimeState
 } from "./combat/state.js";
 
 export function runGameTick(context: GameTickContext): TickResult<GameDelta> {
+  context.state.runDifficulty ??= createDefaultRunDifficultyState();
   context.state.mode ??= createCombatModeState("normal");
   context.state.party ??= createEmptyPartyRuntimeState();
   context.state.activeEncounter ??= null;
   context.state.combatHistory ??= [];
+  context.playerContext.runDifficulty ??= context.state.runDifficulty;
 
   const worldResult = tickWorld(context.worldContext);
   const civilizationResult = tickCivilization(context.civilizationContext);

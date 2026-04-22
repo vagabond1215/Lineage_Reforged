@@ -29,7 +29,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  12,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "trail_meal",
                                                                     "utility_salve"
@@ -65,7 +65,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -101,7 +101,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  10,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -136,7 +136,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  14,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "utility_salve"
                                                                 ]
@@ -171,7 +171,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  20,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "utility_salve"
                                                                 ]
@@ -206,7 +206,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  24,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -242,7 +242,7 @@
                         "minimumTradeSurplusPerTick":  3,
                         "rewardProfile":  {
                                               "coinBase":  14,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -277,7 +277,7 @@
                         "minimumTradeSurplusPerTick":  2,
                         "rewardProfile":  {
                                               "coinBase":  16,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -311,7 +311,7 @@
                         "minimumTradeSurplusPerTick":  2,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -347,7 +347,7 @@
                         "minimumTradeSurplusPerTick":  4,
                         "rewardProfile":  {
                                               "coinBase":  28,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "trail_meal",
                                                                     "utility_salve"
@@ -382,7 +382,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -417,7 +417,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  30,
-                                              "reputationBase":  3,
+                                              "standingBase":  3,
                                               "bonusItemKeys":  [
                                                                     "utility_salve",
                                                                     "trail_meal"
@@ -455,7 +455,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  22,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "record_scroll"
                                                                 ]
@@ -490,7 +490,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  26,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "record_scroll",
                                                                     "trail_meal"
@@ -528,7 +528,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  34,
-                                              "reputationBase":  3,
+                                              "standingBase":  3,
                                               "bonusItemKeys":  [
                                                                     "utility_salve",
                                                                     "trail_meal"
@@ -566,7 +566,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  24,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "utility_salve"
                                                                 ]
@@ -602,7 +602,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  16,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -639,7 +639,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  26,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "trail_meal",
                                                                     "utility_salve"
@@ -676,7 +676,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  12,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -712,7 +712,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf",
                                                                     "utility_salve"
@@ -750,7 +750,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -786,7 +786,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  15,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -822,7 +822,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -858,7 +858,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  16,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -895,7 +895,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  20,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -928,7 +928,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  22,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "utility_salve"
                                                                 ]
@@ -962,7 +962,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  17,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -996,7 +996,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "bread_loaf"
                                                                 ]
@@ -1031,7 +1031,7 @@
                         "minimumTradeSurplusPerTick":  2,
                         "rewardProfile":  {
                                               "coinBase":  30,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "trail_meal",
                                                                     "utility_salve"
@@ -1068,7 +1068,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  28,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "trail_meal",
                                                                     "utility_salve"
@@ -1103,7 +1103,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  26,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "utility_salve"
                                                                 ]
@@ -1138,7 +1138,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  24,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -1174,7 +1174,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  32,
-                                              "reputationBase":  3,
+                                              "standingBase":  3,
                                               "bonusItemKeys":  [
                                                                     "record_scroll",
                                                                     "utility_salve"
@@ -1210,7 +1210,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  22,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "trail_meal"
                                                                 ]
@@ -1246,7 +1246,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  18,
-                                              "reputationBase":  1,
+                                              "standingBase":  1,
                                               "bonusItemKeys":  [
                                                                     "utility_salve"
                                                                 ]
@@ -1283,7 +1283,7 @@
                         "minimumTradeSurplusPerTick":  0,
                         "rewardProfile":  {
                                               "coinBase":  27,
-                                              "reputationBase":  2,
+                                              "standingBase":  2,
                                               "bonusItemKeys":  [
                                                                     "record_scroll",
                                                                     "trail_meal"
@@ -1292,3 +1292,4 @@
                     }
                 ]
 }
+

@@ -1,0 +1,106 @@
+﻿{
+    "records":  [
+                    {
+                        "id":  "knowledge_domain.flora",
+                        "name":  "Herb Lore Domain",
+                        "domain":  "flora_lore",
+                        "knowledgeSkillId":  "skill.knowledge.flora_lore",
+                        "spottingSkillId":  "skill.resource.spotting.flora",
+                        "identifySkillId":  "skill.resource.identify.flora",
+                        "generalSupportSkillId":  "skill.knowledge.general_lore",
+                        "supportWeights":  {
+                                               "domainKnowledge":  1,
+                                               "generalLore":  0.35,
+                                               "spotting":  0.2
+                                           },
+                        "identifyDifficulty":  {
+                                                   "common":  25,
+                                                   "uncommon":  50,
+                                                   "rare":  75,
+                                                   "obscure":  100
+                                               },
+                        "autoIdentifyThresholds":  {
+                                                       "common":  25,
+                                                       "uncommon":  50,
+                                                       "rare":  75,
+                                                       "obscure":  100
+                                                   }
+                    },
+                    {
+                        "id":  "knowledge_domain.fauna",
+                        "name":  "Beast Lore Domain",
+                        "domain":  "fauna_lore",
+                        "knowledgeSkillId":  "skill.knowledge.fauna_lore",
+                        "spottingSkillId":  "skill.resource.spotting.fauna",
+                        "identifySkillId":  "skill.resource.identify.fauna",
+                        "generalSupportSkillId":  "skill.knowledge.general_lore",
+                        "supportWeights":  {
+                                               "domainKnowledge":  1,
+                                               "generalLore":  0.35,
+                                               "spotting":  0.2
+                                           },
+                        "identifyDifficulty":  {
+                                                   "common":  25,
+                                                   "uncommon":  50,
+                                                   "rare":  75,
+                                                   "obscure":  100
+                                               },
+                        "autoIdentifyThresholds":  {
+                                                       "common":  25,
+                                                       "uncommon":  50,
+                                                       "rare":  75,
+                                                       "obscure":  100
+                                                   }
+                    },
+                    {
+                        "id":  "knowledge_domain.minerals",
+                        "name":  "Earth Lore Domain",
+                        "domain":  "mineral_lore",
+                        "knowledgeSkillId":  "skill.knowledge.mineral_lore",
+                        "spottingSkillId":  "skill.resource.spotting.minerals",
+                        "identifySkillId":  "skill.resource.identify.minerals",
+                        "generalSupportSkillId":  "skill.knowledge.general_lore",
+                        "supportWeights":  {
+                                               "domainKnowledge":  1,
+                                               "generalLore":  0.35,
+                                               "spotting":  0.2
+                                           },
+                        "identifyDifficulty":  {
+                                                   "common":  25,
+                                                   "uncommon":  50,
+                                                   "rare":  75,
+                                                   "obscure":  100
+                                               },
+                        "autoIdentifyThresholds":  {
+                                                       "common":  25,
+                                                       "uncommon":  50,
+                                                       "rare":  75,
+                                                       "obscure":  100
+                                                   }
+                    },
+                    {
+                        "id":  "knowledge_domain.general_lore",
+                        "name":  "Common Lore Domain",
+                        "domain":  "general_lore",
+                        "knowledgeSkillId":  "skill.knowledge.general_lore",
+                        "supportWeights":  {
+                                               "domainKnowledge":  1,
+                                               "generalLore":  0,
+                                               "spotting":  0
+                                           },
+                        "identifyDifficulty":  {
+                                                   "common":  25,
+                                                   "uncommon":  50,
+                                                   "rare":  75,
+                                                   "obscure":  100
+                                               },
+                        "autoIdentifyThresholds":  {
+                                                       "common":  25,
+                                                       "uncommon":  50,
+                                                       "rare":  75,
+                                                       "obscure":  100
+                                                   }
+                    }
+                ]
+}
+

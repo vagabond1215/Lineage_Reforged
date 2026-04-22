@@ -949,6 +949,29 @@ function buildPlayerHooks(playerState: PlayerState): CombatantState["hooks"] {
   };
 }
 
+function resolvePlayerThreatRating(playerState: PlayerState): number {
+  const combatSkillRanks = playerState.skills
+    .filter(
+      (skill) => skill.id.startsWith("skill.combat.") || skill.id.startsWith("skill.magic.")
+    )
+    .map((skill) => skill.rank);
+  const dominantSkillRank = combatSkillRanks.length > 0 ? Math.max(...combatSkillRanks) : 0;
+  const coreCombatAttributes =
+    playerState.attributes.STR +
+    playerState.attributes.DEX +
+    playerState.attributes.AGI +
+    playerState.attributes.CON +
+    playerState.attributes.VIT +
+    playerState.attributes.INT +
+    playerState.attributes.SPT;
+  const learnedPressure = playerState.abilities.length * 1.5 + playerState.spells.length * 1.5;
+
+  return Math.max(
+    1,
+    Math.round(dominantSkillRank / 8 + coreCombatAttributes / 24 + learnedPressure)
+  );
+}
+
 function buildPlayerCombatant(playerState: PlayerState, encounterId: string): CombatantState {
   const actorId = `actor.${playerState.playerId}`;
   const preference = deriveActorPreference(playerState, playerState.playerId);
@@ -1000,7 +1023,7 @@ function buildPlayerCombatant(playerState: PlayerState, encounterId: string): Co
         .flatMap((item) => (item?.itemId ? [item.itemId] : []))
     },
     hooks: buildPlayerHooks(playerState),
-    threatRating: Math.max(1, Math.round(playerState.progression.level / 3))
+    threatRating: resolvePlayerThreatRating(playerState)
   };
 }
 

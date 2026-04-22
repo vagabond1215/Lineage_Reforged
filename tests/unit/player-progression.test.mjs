@@ -1,15 +1,44 @@
-import test from "node:test";
+﻿import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
   accumulateBreakthroughProgress,
   applyBreakthroughGating,
+  calculatePlayerEcho,
+  canAttemptTrial,
+  createPlayerProgressionState,
   evaluateTrialOutcome,
+  meetsEchoRequirement,
+  meetsGlobalRuleEchoRequirement,
+  normalizePlayerProgression,
+  resolvePlayerEchoProgression,
+  resolveKnowledgeProgressionDifficultyThresholds,
   resolveItemUseProfile,
   resolveKnowledgeAssistance,
+  resolveSkillProgressionDifficultyThresholds,
   resolveSkillBand,
   validateSpellScalingChannelsForSchool
 } from "../../packages/engines/player-engine/src/progression.ts";
+import { resolveRunDifficultyModifiers } from "../../packages/engines/player-engine/src/difficulty.ts";
+
+function createEchoPlayerFixture(overrides = {}) {
+  return {
+    attributes: {
+      STR: 10,
+      DEX: 10,
+      AGI: 10,
+      CON: 10,
+      VIT: 10,
+      WIS: 10,
+      INT: 10,
+      SPT: 10,
+      CHA: 10,
+      ...(overrides.attributes ?? {})
+    },
+    skills: overrides.skills ?? [],
+    progression: overrides.progression ?? createPlayerProgressionState()
+  };
+}
 
 test("resolveSkillBand returns the authored overlapping bands", () => {
   assert.equal(resolveSkillBand(20).id, "clumsy");
@@ -28,16 +57,57 @@ test("applyBreakthroughGating blocks rank gain above locked gates", () => {
   assert.equal(unlocked.permittedRank, 72);
 });
 
-test("accumulateBreakthroughProgress caps at 100 and reports unlock readiness", () => {
+test("accumulateBreakthroughProgress scales requirement instead of gain under difficulty", () => {
   const result = accumulateBreakthroughProgress({
     currentProgress: 82,
     performanceScore: 10,
-    difficultyFactor: 1.3,
+    requirementScalar: 1.3,
     trialBonus: 6
   });
 
-  assert.equal(result.progress, 100);
-  assert.equal(result.readyToUnlock, true);
+  assert.equal(result.progress, 98);
+  assert.equal(result.requiredProgress, 130);
+  assert.equal(result.readyToUnlock, false);
+});
+
+test("progression difficulty helpers scale requirements and gates without changing gain meaning", () => {
+  const base = {
+    requirement: 100,
+    meaningfulActionThreshold: 10,
+    antiTrivialityThreshold: 5,
+    trainingGate: 8,
+    retentionPressure: 4
+  };
+
+  const easySkill = resolveSkillProgressionDifficultyThresholds(base, { tier: "easy", hardcore: false });
+  const brutalKnowledge = resolveKnowledgeProgressionDifficultyThresholds(base, {
+    tier: "brutal",
+    hardcore: false
+  });
+
+  assert.deepEqual(easySkill, {
+    requirement: 85,
+    meaningfulActionThreshold: 8.5,
+    antiTrivialityThreshold: 4.5,
+    trainingGate: 7.2,
+    retentionPressure: 3.6
+  });
+  assert.deepEqual(brutalKnowledge, {
+    requirement: 130,
+    meaningfulActionThreshold: 12,
+    antiTrivialityThreshold: 6,
+    trainingGate: 9.6,
+    retentionPressure: 4.8
+  });
+});
+
+test("difficulty echo requirement scalar is reserved and throws in development-style access", () => {
+  const modifiers = resolveRunDifficultyModifiers({ tier: "hard", hardcore: false });
+
+  assert.throws(
+    () => modifiers.echo.requirementScalar,
+    /reserved for future use/i
+  );
 });
 
 test("evaluateTrialOutcome advances success and fails when max potential drops below threshold", () => {
@@ -70,16 +140,16 @@ test("evaluateTrialOutcome advances success and fails when max potential drops b
   assert.equal(failure.maxPotential, 60);
 });
 
-test("resolveKnowledgeAssistance weights domain knowledge above universal support and spotting", () => {
+test("resolveKnowledgeAssistance weights domain knowledge above general lore support and spotting", () => {
   const track = {
-    id: "knowledge_track.flora",
-    knowledgeSkillId: "skill.knowledge.flora",
+    id: "knowledge_domain.flora",
+    knowledgeSkillId: "skill.knowledge.flora_lore",
     spottingSkillId: "skill.resource.spotting.flora",
     identifySkillId: "skill.resource.identify.flora",
-    universalSupportSkillId: "skill.knowledge.universal",
+    generalSupportSkillId: "skill.knowledge.general_lore",
     supportWeights: {
       domainKnowledge: 0.7,
-      universalKnowledge: 0.2,
+      generalLore: 0.2,
       spotting: 0.1
     },
     identifyDifficulty: {
@@ -99,12 +169,12 @@ test("resolveKnowledgeAssistance weights domain knowledge above universal suppor
   const result = resolveKnowledgeAssistance({
     track,
     domainKnowledgeRank: 80,
-    universalKnowledgeRank: 30,
+    generalLoreRank: 30,
     spottingRank: 20
   });
 
-  assert.ok(result.contributions.domainKnowledge > result.contributions.universalKnowledge);
-  assert.ok(result.contributions.universalKnowledge > result.contributions.spotting);
+  assert.ok(result.contributions.domainKnowledge > result.contributions.generalLore);
+  assert.ok(result.contributions.generalLore > result.contributions.spotting);
   assert.equal(result.autoIdentify.uncommon, true);
   assert.equal(result.autoIdentify.obscure, false);
 });
@@ -115,7 +185,7 @@ test("resolveItemUseProfile selects the matching action profile", () => {
       {
         actionType: "utility.mining",
         primarySkillId: "skill.resource.mining",
-        supportSkillIds: ["skill.knowledge.minerals"],
+        supportSkillIds: ["skill.knowledge.mineral_lore"],
         requiredSkillRank: 1,
         masteryRank: 90,
         effectChannels: ["yield"]
@@ -159,3 +229,174 @@ test("normalized placeholder spell catalog uses valid scaling channels for every
   assert.equal(berry.itemGenerationHooks?.[0]?.partyLimited, true);
   assert.equal(berry.itemGenerationHooks?.[0]?.dissipatesOnChargeLoss, true);
 });
+
+test("calculatePlayerEcho only counts stats above authored defaults", () => {
+  const baseline = calculatePlayerEcho(createEchoPlayerFixture());
+  const stronger = calculatePlayerEcho(
+    createEchoPlayerFixture({
+      attributes: {
+        STR: 15,
+        AGI: 8
+      }
+    })
+  );
+
+  assert.equal(baseline.statContribution, 0);
+  assert.equal(baseline.echoAdjusted, 0);
+  assert.ok(stronger.statContribution > 0);
+  assert.ok(stronger.echoAdjusted > baseline.echoAdjusted);
+});
+
+test("calculatePlayerEcho uses stable skill references with diminishing returns", () => {
+  const novice = calculatePlayerEcho(
+    createEchoPlayerFixture({
+      skills: [{ id: "skill.combat.weapon.sword", rank: 25, source: "trained" }]
+    })
+  );
+  const veteran = calculatePlayerEcho(
+    createEchoPlayerFixture({
+      skills: [{ id: "skill.combat.weapon.sword", rank: 100, source: "trained" }]
+    })
+  );
+
+  assert.ok(veteran.skillContribution > novice.skillContribution);
+  assert.ok(veteran.skillContribution < novice.skillContribution * 4);
+});
+
+test("calculatePlayerEcho only uses lore skills for knowledge contribution", () => {
+  const knowledgeSkillSpecialist = calculatePlayerEcho(
+    createEchoPlayerFixture({
+      skills: [{ id: "skill.knowledge.flora_lore", rank: 100, source: "trained" }]
+    })
+  );
+  const nonKnowledgeSpecialist = calculatePlayerEcho(
+    createEchoPlayerFixture({
+      skills: [{ id: "skill.resource.spotting.flora", rank: 100, source: "trained" }]
+    })
+  );
+
+  assert.ok(knowledgeSkillSpecialist.knowledgeContribution > 0);
+  assert.equal(nonKnowledgeSpecialist.knowledgeContribution, 0);
+});
+
+test("calculatePlayerEcho caps the diversity bonus at the authored multiplier", () => {
+  const versatile = calculatePlayerEcho(
+    createEchoPlayerFixture({
+      skills: Array.from({ length: 30 }, (_, index) => ({
+        id: `skill.synthetic.${index}`,
+        rank: 25,
+        source: "trained"
+      }))
+    })
+  );
+
+  assert.equal(versatile.diversityCount, 30);
+  assert.equal(versatile.diversityBonus, 1.25);
+});
+
+test("normalizePlayerProgression migrates legacy power scaffolding into legacyGrowth", () => {
+  const normalized = normalizePlayerProgression({
+    level: 7,
+    classLevel: 2,
+    unspentAttributePoints: 3,
+    unspentSkillPoints: 4
+  });
+
+  assert.equal(normalized.level, 7);
+  assert.equal(normalized.legacyGrowth.resourceGrowthLevel, 7);
+  assert.equal(normalized.legacyGrowth.classLevel, 2);
+  assert.equal(normalized.legacyGrowth.unspentAttributePoints, 3);
+  assert.equal(normalized.legacyGrowth.unspentSkillPoints, 4);
+  assert.equal(normalized.echo.echoAdjusted, 0);
+});
+
+test("resolvePlayerEchoProgression and gating honor echo-derived requirements", () => {
+  const playerState = createEchoPlayerFixture({
+    attributes: {
+      STR: 16,
+      DEX: 13,
+      AGI: 12,
+      INT: 14
+    },
+    skills: [
+      { id: "skill.combat.weapon.sword", rank: 65, source: "trained" },
+      { id: "skill.magic.school.elemental", rank: 55, source: "trained" },
+      { id: "skill.knowledge.arcane_lore", rank: 70, source: "trained" },
+      { id: "skill.crafting.blacksmithing", rank: 25, source: "trained" }
+    ],
+    progression: {
+      level: 0,
+      classLevel: 1,
+      unspentAttributePoints: 1,
+      unspentSkillPoints: 2
+    }
+  });
+  const progression = resolvePlayerEchoProgression(playerState);
+  const permissiveRequirement = {
+    minLevel: progression.level,
+    minEchoAdjusted: progression.echo.echoAdjusted
+  };
+  const blockedRequirement = {
+    minLevel: progression.level + 1,
+    minEchoAdjusted: progression.echo.echoAdjusted + 0.5
+  };
+
+  assert.equal(meetsEchoRequirement(progression, permissiveRequirement), true);
+  assert.equal(
+    canAttemptTrial({ echoRequirement: permissiveRequirement }, progression),
+    true
+  );
+  assert.equal(meetsEchoRequirement(progression, blockedRequirement), false);
+  assert.equal(canAttemptTrial({ echoRequirement: blockedRequirement }, progression), false);
+});
+
+test("global-rule echo requirements gate the enchanter profession without using legacy power level", () => {
+  const qualified = resolvePlayerEchoProgression(
+    createEchoPlayerFixture({
+      attributes: {
+        STR: 16,
+        DEX: 15,
+        AGI: 14,
+        CON: 14,
+        VIT: 14,
+        WIS: 15,
+        INT: 17,
+        SPT: 15,
+        CHA: 13
+      },
+      skills: [
+        { id: "skill.magic.school.elemental", rank: 100, source: "trained" },
+        { id: "skill.crafting.blacksmithing", rank: 90, source: "trained" },
+        { id: "skill.crafting.weaving", rank: 80, source: "trained" },
+        { id: "skill.knowledge.arcane_lore", rank: 95, source: "trained" },
+        { id: "skill.knowledge.general_lore", rank: 90, source: "trained" },
+        { id: "skill.leadership.authority", rank: 50, source: "trained" }
+      ],
+      progression: createPlayerProgressionState({
+        legacyGrowth: {
+          resourceGrowthLevel: 1,
+          classLevel: 0
+        }
+      })
+    })
+  );
+  const blocked = {
+    ...qualified,
+    legacyGrowth: {
+      ...qualified.legacyGrowth,
+      resourceGrowthLevel: 99,
+      classLevel: 99
+    },
+    level: 1,
+    echo: {
+      ...qualified.echo,
+      echoAdjusted: 1
+    }
+  };
+
+  assert.equal(meetsGlobalRuleEchoRequirement("rule.enchanter_profession", qualified), true);
+  assert.equal(meetsGlobalRuleEchoRequirement("rule.enchanter_profession", blocked), false);
+});
+
+
+

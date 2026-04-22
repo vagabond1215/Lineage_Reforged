@@ -1,0 +1,157 @@
+{
+  "records": [
+    {
+      "id": "achievement.character.first_blooded",
+      "layer": "character",
+      "category": "combat",
+      "title": "First Blooded",
+      "description": "You came through your first real clash and left a mark of your own.",
+      "metricId": "character.combat.entries",
+      "targetValue": 1
+    },
+    {
+      "id": "achievement.character.road_worn",
+      "layer": "character",
+      "category": "travel",
+      "title": "Road-Worn",
+      "description": "You endured the wear of the road long enough for the journey to become part of your story.",
+      "metricId": "character.travel.entries",
+      "targetValue": 1
+    },
+    {
+      "id": "achievement.character.keen_eye",
+      "layer": "character",
+      "category": "discovery",
+      "title": "Keen Eye",
+      "description": "You noticed what others pass by and added a true finding to your record.",
+      "metricId": "character.discovery.entries",
+      "targetValue": 1
+    },
+    {
+      "id": "achievement.character.worked_hands",
+      "layer": "character",
+      "category": "crafting",
+      "title": "Worked Hands",
+      "description": "You finished honest work with your own hands and made something that held together.",
+      "metricId": "character.crafting.entries",
+      "targetValue": 1
+    },
+    {
+      "id": "achievement.character.closed_deal",
+      "layer": "character",
+      "category": "trade",
+      "title": "Closed Deal",
+      "description": "You struck terms, moved goods, and made the exchange count.",
+      "metricId": "character.trade.entries",
+      "targetValue": 1
+    },
+    {
+      "id": "achievement.character.sworn_task",
+      "layer": "character",
+      "category": "social",
+      "title": "Sworn Task",
+      "description": "You saw a pledged task through to its end and earned the right to be remembered for it.",
+      "metricId": "character.quests.completed",
+      "targetValue": 1
+    },
+    {
+      "id": "achievement.character.name_in_town",
+      "layer": "character",
+      "category": "reputation",
+      "title": "Name in Town",
+      "description": "Word of your deeds traveled far enough that people began to speak of you by name.",
+      "metricId": "character.reputation.historical_total",
+      "targetValue": 10,
+      "rarity": "notable"
+    },
+    {
+      "id": "achievement.account.first_chronicle",
+      "layer": "account",
+      "category": "beginnings",
+      "title": "First Chronicle",
+      "description": "The ledger has opened and the first life has been set down in record.",
+      "metricId": "account.runs.started",
+      "targetValue": 1
+    },
+    {
+      "id": "achievement.account.long_road",
+      "layer": "account",
+      "category": "travel",
+      "title": "Long Road",
+      "description": "Across more than one life, the road has been walked often enough to leave a pattern.",
+      "metricId": "account.travel.entries_total",
+      "targetValue": 3,
+      "reward": {
+        "legacyPoints": 3
+      }
+    },
+    {
+      "id": "achievement.account.finders_ledger",
+      "layer": "account",
+      "category": "discovery",
+      "title": "Finder's Ledger",
+      "description": "The account has gathered enough true findings to form a respectable field record.",
+      "metricId": "account.discovery.entries_total",
+      "targetValue": 5,
+      "reward": {
+        "legacyPoints": 4
+      }
+    },
+    {
+      "id": "achievement.account.market_memory",
+      "layer": "account",
+      "category": "trade",
+      "title": "Market Memory",
+      "description": "Enough bargains have been struck that the ledger now remembers prices better than any stall keeper.",
+      "metricId": "account.trade.entries_total",
+      "targetValue": 3,
+      "reward": {
+        "legacyPoints": 3
+      }
+    },
+    {
+      "id": "achievement.account.makers_mark",
+      "layer": "account",
+      "category": "crafting",
+      "title": "Maker's Mark",
+      "description": "Repeated craft across several hands has left a recognizable mark in the family record.",
+      "metricId": "account.crafting.entries_total",
+      "targetValue": 3,
+      "reward": {
+        "legacyPoints": 3
+      }
+    },
+    {
+      "id": "achievement.account.contract_roll",
+      "layer": "account",
+      "category": "social",
+      "title": "Contract Roll",
+      "description": "Enough sworn work has been completed that the account can point to a reliable record of service.",
+      "metricId": "account.quests.completed_total",
+      "targetValue": 3,
+      "reward": {
+        "legacyPoints": 4
+      }
+    },
+    {
+      "id": "achievement.account.many_banners",
+      "layer": "account",
+      "category": "beginnings",
+      "title": "Many Banners",
+      "description": "Different bloodlines have now entered the ledger, widening what the account can claim to know.",
+      "metricId": "account.starts.lineages",
+      "targetValue": 3,
+      "rarity": "notable"
+    },
+    {
+      "id": "achievement.account.beyond_one_shore",
+      "layer": "account",
+      "category": "beginnings",
+      "title": "Beyond One Shore",
+      "description": "The account is no longer bound to a single continent. Its record now spans a wider world.",
+      "metricId": "account.starts.continents",
+      "targetValue": 2,
+      "rarity": "legendary"
+    }
+  ]
+}

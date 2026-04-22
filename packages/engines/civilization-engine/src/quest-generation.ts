@@ -1,4 +1,4 @@
-import type { CivilizationQuestState, EconomyLedgerSnapshot, QuestOfferState } from "../../../shared/types/src/index.js";
+﻿import type { CivilizationQuestState, EconomyLedgerSnapshot, QuestOfferState } from "../../../shared/types/src/index.js";
 import {
   loadGuildContent,
   loadMonsterContent,
@@ -390,7 +390,8 @@ export function generateQuestOffers(
         category: template.category,
         urgency: Math.max(1, Math.min(5, quantityTotal)),
         rewardCoin: template.rewardProfile.coinBase + quantityTotal * 2,
-        rewardReputation: template.rewardProfile.reputationBase + Math.min(3, quantityTotal),
+        rewardStanding: template.rewardProfile.standingBase + Math.min(3, quantityTotal),
+        reputationAwards: template.rewardProfile.reputationAwards,
         objectives,
         notes
       });
@@ -405,3 +406,4 @@ export function generateQuestOffers(
     warnings
   };
 }
+

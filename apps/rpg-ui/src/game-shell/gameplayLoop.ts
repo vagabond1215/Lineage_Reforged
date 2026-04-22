@@ -1,24 +1,48 @@
-import { deserializeSnapshot, serializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
+﻿import { deserializeSnapshot, serializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
 import { advanceClock } from '../../../../packages/shared/time/src/index.js';
 import {
-  resolvePlayerOriginProfile,
-  resolvePlayerResources,
+  type ActionAttributeLoadProfileState,
+  type ActionMetabolicProfileState,
   type CodexEntryState,
   type ChronicleEventState,
   type CurrentActivityState,
   type InventoryStack,
   type OperationState,
   type PanelRecordState,
-  type PlayerReputationState,
+  type PlayerBodyState,
+  type PlayerStandingState,
   type PlayerSkillState,
   type QuestJournalEntryState,
+  type ReputationAwardDefinitionState,
+  type RecoveryAssessmentState,
+  type RecoveryContextState,
   type SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
+import {
+  applyReputationAward,
+  applyActionAttributeLoad,
+  applyAttributeTensionToActionProfile,
+  advancePlayerBodyState,
+  convertPlayerStatGrowthOnRecovery,
+  grantSettlementGeographicKnowledge,
+  loadBodyStateBalanceRule,
+  resolvePlayerEchoProgression,
+  syncPlayerBodyState,
+  syncPlayerRuntimeState
+} from '../../../../packages/engines/player-engine/src/index.js';
 import type { GameShellNotice } from './state.js';
 
 type GameplayActionResult = {
   snapshot: SaveSnapshot;
   notice: GameShellNotice;
+};
+
+export type GameplayBodyStatePreview = {
+  available: boolean;
+  reason?: string;
+  tickCount: number;
+  projectedBodyState: PlayerBodyState | null;
+  timeline: PlayerBodyState[];
 };
 
 type QuestCommandState = {
@@ -40,6 +64,8 @@ type LocationTemplate = {
   staminaCost: number;
   hpCost: number;
   mpCost: number;
+  metabolicProfile: ActionMetabolicProfileState;
+  attributeLoadProfile: ActionAttributeLoadProfileState | null;
   arrivalActivity: CurrentActivityState;
 };
 
@@ -59,6 +85,102 @@ const RIVET_CRATE_ITEM_ID = 'item.deepiron_rivet_crate';
 const OPERATION_SURVEY_ID = 'operation.quest.ashen_reef_survey';
 const OPERATION_PORTER_ID = 'operation.quest.rivet_shortfall_relief';
 
+const ASHEN_REEF_SURVEY_FAME_AWARD: ReputationAwardDefinitionState = {
+  axis: 'fame',
+  branchId: 'commercial',
+  directEarnedScope: 'regional',
+  baseValue: 6,
+  originSettlementIds: ['settlement.aurelis']
+};
+
+const RIVET_SHORTFALL_RELIEF_FAME_AWARD: ReputationAwardDefinitionState = {
+  axis: 'fame',
+  branchId: 'trade',
+  directEarnedScope: 'local',
+  baseValue: 4,
+  originSettlementIds: ['settlement.aurelis']
+};
+
+const DEFAULT_SHIFT_PROFILE: ActionMetabolicProfileState = {
+  intensity: 'moderate',
+  fatigueGain: 8,
+  energyDemand: 10,
+  hydrationDemand: 8,
+  highIntensityLoad: 1
+};
+
+const DEFAULT_SHIFT_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
+  intensity: 'moderate',
+  sourceTag: 'labor',
+  weights: {
+    STR: 0.5,
+    CON: 0.6,
+    VIT: 0.5,
+    WIS: 0.2
+  },
+  meaningfulInteraction: true
+};
+
+const SURVEY_SHIFT_PROFILE: ActionMetabolicProfileState = {
+  intensity: 'high',
+  fatigueGain: 14,
+  energyDemand: 16,
+  hydrationDemand: 12,
+  highIntensityLoad: 2
+};
+
+const SURVEY_SHIFT_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
+  intensity: 'high',
+  sourceTag: 'survey',
+  weights: {
+    AGI: 0.7,
+    CON: 0.6,
+    VIT: 0.4,
+    WIS: 0.3
+  },
+  meaningfulInteraction: true
+};
+
+const PROCUREMENT_SHIFT_PROFILE: ActionMetabolicProfileState = {
+  intensity: 'moderate',
+  fatigueGain: 9,
+  energyDemand: 11,
+  hydrationDemand: 9,
+  highIntensityLoad: 1
+};
+
+const PROCUREMENT_SHIFT_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
+  intensity: 'moderate',
+  sourceTag: 'procurement_field',
+  weights: {
+    DEX: 0.4,
+    AGI: 0.3,
+    CON: 0.4,
+    WIS: 0.3
+  },
+  meaningfulInteraction: true
+};
+
+const TRAVEL_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
+  intensity: 'moderate',
+  sourceTag: 'travel',
+  weights: {
+    AGI: 0.7,
+    CON: 0.6,
+    VIT: 0.4,
+    WIS: 0.3
+  },
+  meaningfulInteraction: true
+};
+
+const SETTLEMENT_REST_RECOVERY: RecoveryContextState = {
+  sleepUnits: 1,
+  campTier: 'secure_indoor',
+  safetyTier: 'secure',
+  mealSupport: 1,
+  waterSupport: 1
+};
+
 const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
   'location.saltmere': {
     id: 'location.saltmere',
@@ -72,6 +194,14 @@ const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
     staminaCost: 0,
     hpCost: 0,
     mpCost: 0,
+    metabolicProfile: {
+      intensity: 'low',
+      fatigueGain: 0,
+      energyDemand: 0,
+      hydrationDemand: 0,
+      highIntensityLoad: 0
+    },
+    attributeLoadProfile: null,
     arrivalActivity: {
       id: 'activity.arrival.saltmere',
       label: 'Back In Saltmere',
@@ -91,6 +221,14 @@ const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
     staminaCost: 12,
     hpCost: 0,
     mpCost: 0,
+    metabolicProfile: {
+      intensity: 'moderate',
+      fatigueGain: 12,
+      energyDemand: 16,
+      hydrationDemand: 12,
+      highIntensityLoad: 1
+    },
+    attributeLoadProfile: TRAVEL_ATTRIBUTE_PROFILE,
     arrivalActivity: {
       id: 'activity.arrival.westreach',
       label: 'Arriving In Westreach',
@@ -110,6 +248,17 @@ const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
     staminaCost: 18,
     hpCost: 2,
     mpCost: 3,
+    metabolicProfile: {
+      intensity: 'high',
+      fatigueGain: 16,
+      energyDemand: 18,
+      hydrationDemand: 14,
+      highIntensityLoad: 2
+    },
+    attributeLoadProfile: {
+      ...TRAVEL_ATTRIBUTE_PROFILE,
+      intensity: 'high'
+    },
     arrivalActivity: {
       id: 'activity.survey.ashen_reef',
       label: 'Surveying Ashen Reef',
@@ -129,6 +278,14 @@ const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
     staminaCost: 15,
     hpCost: 0,
     mpCost: 0,
+    metabolicProfile: {
+      intensity: 'moderate',
+      fatigueGain: 14,
+      energyDemand: 18,
+      hydrationDemand: 13,
+      highIntensityLoad: 1
+    },
+    attributeLoadProfile: TRAVEL_ATTRIBUTE_PROFILE,
     arrivalActivity: {
       id: 'activity.arrival.crown_bastion',
       label: 'Reporting At Crown Bastion',
@@ -279,16 +436,157 @@ function appendChronicle(snapshot: SaveSnapshot, entry: ChronicleEventState) {
   snapshot.sessionState.chronicle = [entry, ...snapshot.sessionState.chronicle].slice(0, 48);
 }
 
-function advanceSnapshotClock(snapshot: SaveSnapshot, ticks: number) {
-  const nextClock = advanceClock(snapshot.clock, ticks);
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
 
-  snapshot.clock = nextClock;
-  snapshot.capturedAtTick = nextClock.tick;
-  snapshot.playerState.saveMeta.totalPlayTicks += ticks;
+function getSkillRank(snapshot: SaveSnapshot, skillId: string): number {
+  return snapshot.playerState.skills.find((skill) => skill.id === skillId)?.rank ?? 0;
+}
+
+function mitigateActionProfile(
+  snapshot: SaveSnapshot,
+  profile: ActionMetabolicProfileState,
+  sourceTag: string,
+  attributeKeys: Array<'AGI' | 'CON' | 'VIT' | 'DEX' | 'WIS' | 'INT' | 'CHA'>,
+  skillIds: string[]
+): ActionMetabolicProfileState {
+  const attributeAverage =
+    attributeKeys.reduce((total, key) => total + snapshot.playerState.attributes[key], 0) /
+    Math.max(1, attributeKeys.length);
+  const skillAverage =
+    skillIds.reduce((total, skillId) => total + getSkillRank(snapshot, skillId), 0) /
+    Math.max(1, skillIds.length);
+  const attributeBonus = Math.max(0, (attributeAverage - 10) * 0.0125);
+  const skillBonus = Math.max(0, skillAverage * 0.004);
+  const efficiencyMitigation = clamp(attributeBonus + skillBonus, 0, 0.3);
+  const tensionPerformance = applyAttributeTensionToActionProfile(
+    snapshot.playerState.attributes,
+    { sourceTag }
+  );
+  const tensionStrain = 1 / Math.max(0.5, tensionPerformance);
+
+  return {
+    ...profile,
+    fatigueGain: Number((profile.fatigueGain * (1 - efficiencyMitigation) * tensionStrain).toFixed(3)),
+    energyDemand: Number((profile.energyDemand * (1 - efficiencyMitigation * 0.5) * tensionStrain).toFixed(3)),
+    hydrationDemand: Number((profile.hydrationDemand * (1 - efficiencyMitigation * 0.35) * tensionStrain).toFixed(3))
+  };
+}
+
+function advanceSnapshotClock(
+  snapshot: SaveSnapshot,
+  ticks: number,
+  options: {
+    metabolicProfile?: ActionMetabolicProfileState | null;
+    attributeProfile?: ActionAttributeLoadProfileState | null;
+    recoveryContext?: RecoveryContextState | null;
+    convertStatGrowthOnRecovery?: boolean;
+  } = {}
+) {
+  const stepCount = Math.max(0, Math.round(ticks));
+  const runDifficulty = snapshot.gameState.runDifficulty;
+  const recoveryAssessment = buildRecoveryAssessment(snapshot, options.recoveryContext ?? null, stepCount);
+
+  for (let index = 0; index < stepCount; index += 1) {
+    const nextClock = advanceClock(snapshot.clock, 1);
+    snapshot.clock = nextClock;
+    snapshot.capturedAtTick = nextClock.tick;
+    snapshot.playerState.saveMeta.totalPlayTicks += 1;
+    snapshot.playerState.bodyState = advancePlayerBodyState(snapshot.playerState.bodyState, 1, {
+      day: nextClock.day,
+      tick: nextClock.tick,
+      lineageId: snapshot.playerState.coreData.lineageId,
+      runDifficulty,
+      metabolicProfile: options.metabolicProfile ?? null,
+      recoveryContext: options.recoveryContext ?? null,
+      recoveryAssessment
+    });
+    if (options.attributeProfile) {
+      applyActionAttributeLoad(snapshot.playerState, options.attributeProfile, 1, nextClock.day, runDifficulty);
+    }
+    if (
+      options.recoveryContext &&
+      options.convertStatGrowthOnRecovery !== false &&
+      index === stepCount - 1
+    ) {
+      convertPlayerStatGrowthOnRecovery(
+        snapshot.playerState,
+        nextClock.tick,
+        nextClock.day,
+        recoveryAssessment,
+        runDifficulty
+      );
+    }
+    syncPlayerRuntimeState(snapshot.playerState, nextClock.tick, nextClock.day, [], runDifficulty);
+  }
+}
+
+function previewSnapshotClock(
+  snapshot: SaveSnapshot,
+  ticks: number,
+  options: {
+    metabolicProfile?: ActionMetabolicProfileState | null;
+    attributeProfile?: ActionAttributeLoadProfileState | null;
+    recoveryContext?: RecoveryContextState | null;
+  } = {}
+): GameplayBodyStatePreview {
+  const nextSnapshot = cloneSnapshot(snapshot);
+  const timeline: PlayerBodyState[] = [];
+  const stepCount = Math.max(0, Math.round(ticks));
+  const runDifficulty = snapshot.gameState.runDifficulty;
+  const recoveryAssessment = buildRecoveryAssessment(snapshot, options.recoveryContext ?? null, stepCount);
+
+  for (let index = 0; index < stepCount; index += 1) {
+    const nextClock = advanceClock(nextSnapshot.clock, 1);
+    nextSnapshot.clock = nextClock;
+    nextSnapshot.capturedAtTick = nextClock.tick;
+    nextSnapshot.playerState.saveMeta.totalPlayTicks += 1;
+    nextSnapshot.playerState.bodyState = advancePlayerBodyState(nextSnapshot.playerState.bodyState, 1, {
+      day: nextClock.day,
+      tick: nextClock.tick,
+      lineageId: nextSnapshot.playerState.coreData.lineageId,
+      runDifficulty,
+      metabolicProfile: options.metabolicProfile ?? null,
+      recoveryContext: options.recoveryContext ?? null,
+      recoveryAssessment
+    });
+    syncPlayerRuntimeState(nextSnapshot.playerState, nextClock.tick, nextClock.day, [], runDifficulty);
+    timeline.push(nextSnapshot.playerState.bodyState);
+  }
+
+  return {
+    available: true,
+    tickCount: stepCount,
+    projectedBodyState: nextSnapshot.playerState.bodyState,
+    timeline
+  };
 }
 
 function clampResource(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value));
+  return clamp(value, min, max);
+}
+
+function buildRecoveryAssessment(
+  snapshot: SaveSnapshot,
+  recoveryContext: RecoveryContextState | null,
+  durationHours: number
+): RecoveryAssessmentState | null {
+  if (!recoveryContext || durationHours <= 0) {
+    return null;
+  }
+
+  const rule = loadBodyStateBalanceRule();
+  const campMultiplier = rule.recovery.campMultipliers[recoveryContext.campTier] ?? 1;
+  const safetyMultiplier = rule.recovery.safetyMultipliers[recoveryContext.safetyTier] ?? 1;
+
+  return {
+    quality: Number(
+      (campMultiplier * safetyMultiplier * snapshot.playerState.bodyState.resolved.recoveryEffectivenessMultiplier)
+        .toFixed(4)
+    ),
+    durationHours
+  };
 }
 
 function applyResourceDelta(
@@ -357,7 +655,7 @@ function addOrUpdateSkill(
       {
         id: skillId,
         rank: rankDelta,
-        source: 'trained'
+        source: 'trained' as const
       }
     ].sort((left, right) => left.id.localeCompare(right.id));
   }
@@ -367,7 +665,7 @@ function addOrUpdateSkill(
       ? {
           ...entry,
           rank: entry.rank + rankDelta,
-          source: 'trained'
+          source: 'trained' as const
         }
       : entry
   );
@@ -393,20 +691,20 @@ function getStandingLabel(score: number): string {
   return 'Unproven';
 }
 
-function addOrUpdateReputation(
-  reputation: PlayerReputationState[],
+function addOrUpdateStanding(
+  standing: PlayerStandingState[],
   id: string,
   label: string,
   delta: number,
   effects: string[]
-): PlayerReputationState[] {
-  const existing = reputation.find((entry) => entry.id === id);
+): PlayerStandingState[] {
+  const existing = standing.find((entry) => entry.id === id);
 
   if (!existing) {
     const score = Math.max(0, delta);
 
     return [
-      ...reputation,
+      ...standing,
       {
         id,
         label,
@@ -419,7 +717,7 @@ function addOrUpdateReputation(
 
   const score = Math.max(0, existing.score + delta);
 
-  return reputation.map((entry) =>
+  return standing.map((entry) =>
     entry.id === id
       ? {
           ...entry,
@@ -507,64 +805,6 @@ function removeInventoryQuantity(
   }
 
   return remaining === 0;
-}
-
-function applyExperience(snapshot: SaveSnapshot, xpDelta: number) {
-  let nextCurrent = snapshot.playerState.resources.xp.current + xpDelta;
-  let nextTotal = snapshot.playerState.resources.xp.total + xpDelta;
-  let nextThreshold = snapshot.playerState.resources.xp.toNextLevel;
-  let nextLevel = snapshot.playerState.progression.level;
-  let nextClassLevel = snapshot.playerState.progression.classLevel;
-  let nextAttributePoints = snapshot.playerState.progression.unspentAttributePoints;
-  let nextSkillPoints = snapshot.playerState.progression.unspentSkillPoints;
-  let leveledUp = false;
-
-  while (nextCurrent >= nextThreshold) {
-    nextCurrent -= nextThreshold;
-    nextLevel += 1;
-    nextClassLevel += 1;
-    nextAttributePoints += 1;
-    nextSkillPoints += 1;
-    nextThreshold = Math.round(nextThreshold * 1.25);
-    leveledUp = true;
-  }
-
-  snapshot.playerState.progression = {
-    level: nextLevel,
-    classLevel: nextClassLevel,
-    unspentAttributePoints: nextAttributePoints,
-    unspentSkillPoints: nextSkillPoints
-  };
-  snapshot.playerState.resources.xp = {
-    current: nextCurrent,
-    total: nextTotal,
-    toNextLevel: nextThreshold
-  };
-
-  if (!leveledUp) {
-    return;
-  }
-
-  const nextOriginProfile = resolvePlayerOriginProfile(
-    snapshot.playerState.coreData,
-    snapshot.playerState.progression
-  );
-  const resourceResolution = resolvePlayerResources(
-    {
-      playerId: snapshot.playerState.playerId,
-      attributes: snapshot.playerState.attributes,
-      resources: snapshot.playerState.resources,
-      originProfile: nextOriginProfile,
-      equipment: snapshot.playerState.equipment,
-      resourceRuntime: snapshot.playerState.resourceRuntime
-    },
-    [],
-    snapshot.clock.tick
-  );
-
-  snapshot.playerState.originProfile = nextOriginProfile;
-  snapshot.playerState.resources = resourceResolution.resources;
-  snapshot.playerState.resourceRuntime = resourceResolution.resourceRuntime;
 }
 
 function makeChronicleEntry(
@@ -883,6 +1123,13 @@ function syncSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
   nextSnapshot.sessionState.activityRecords = syncActivityRecords(nextSnapshot);
   nextSnapshot.sessionState.codexEntries = syncCodexEntries(nextSnapshot);
   syncQuestIds(nextSnapshot);
+  syncPlayerBodyState(
+    nextSnapshot.playerState,
+    nextSnapshot.clock.tick,
+    nextSnapshot.clock.day,
+    nextSnapshot.gameState.runDifficulty
+  );
+  nextSnapshot.playerState.progression = resolvePlayerEchoProgression(nextSnapshot.playerState);
 
   if (
     nextSnapshot.sessionState.trackedQuestId &&
@@ -1045,6 +1292,43 @@ export function getKnownLocationId(snapshot: SaveSnapshot): string | null {
   return getCurrentLocationId(snapshot);
 }
 
+export function previewTravelToKnownLocation(
+  snapshot: SaveSnapshot,
+  locationId: string
+): GameplayBodyStatePreview {
+  const target = LOCATION_TEMPLATES[locationId];
+
+  if (!target) {
+    return {
+      available: false,
+      reason: 'Unknown destination.',
+      tickCount: 0,
+      projectedBodyState: null,
+      timeline: []
+    };
+  }
+
+  if (locationId === getCurrentLocationId(snapshot)) {
+    return {
+      available: false,
+      reason: 'Already at this destination.',
+      tickCount: 0,
+      projectedBodyState: null,
+      timeline: []
+    };
+  }
+
+  return previewSnapshotClock(snapshot, target.travelTicks, {
+    metabolicProfile: mitigateActionProfile(
+      snapshot,
+      target.metabolicProfile,
+      target.attributeLoadProfile?.sourceTag ?? 'travel',
+      ['AGI', 'CON', 'VIT', 'WIS'],
+      ['skill.knowledge.general_lore']
+    )
+  });
+}
+
 export function acceptQuest(snapshot: SaveSnapshot, questId: string): GameplayActionResult {
   const quest = findQuest(snapshot, questId);
 
@@ -1190,24 +1474,33 @@ export function travelToKnownLocation(
   }
 
   const nextSnapshot = cloneSnapshot(snapshot);
-  advanceSnapshotClock(nextSnapshot, target.travelTicks);
+  const travelProfile = mitigateActionProfile(
+    snapshot,
+    target.metabolicProfile,
+    target.attributeLoadProfile?.sourceTag ?? 'travel',
+    ['AGI', 'CON', 'VIT'],
+    ['skill.knowledge.general_lore']
+  );
+  advanceSnapshotClock(nextSnapshot, target.travelTicks, {
+    metabolicProfile: travelProfile,
+    attributeProfile: target.attributeLoadProfile
+  });
   applyResourceDelta(nextSnapshot, {
     hp: -target.hpCost,
     mp: -target.mpCost,
     stamina: -target.staminaCost
   });
   nextSnapshot.playerState.regionId = target.regionId;
+  nextSnapshot.playerState.geographicKnowledge = grantSettlementGeographicKnowledge(
+    nextSnapshot.playerState.geographicKnowledge,
+    target.settlementId,
+    1
+  );
   nextSnapshot.playerState.location = {
     settlementId: target.settlementId,
     siteLabel: target.siteLabel,
-    worldMapId: target.worldMapId,
-    knownSettlementIds: Array.from(
-      new Set([...nextSnapshot.playerState.location.knownSettlementIds, target.settlementId])
-    )
+    worldMapId: target.worldMapId
   };
-  nextSnapshot.playerState.discoveredRegions = Array.from(
-    new Set([...nextSnapshot.playerState.discoveredRegions, target.regionId])
-  );
   nextSnapshot.sessionState.currentActivity = target.arrivalActivity;
   nextSnapshot.sessionState.knownLocations = nextSnapshot.sessionState.knownLocations.map((entry) =>
     entry.id === locationId ? { ...entry, known: true } : entry
@@ -1275,6 +1568,84 @@ export function travelToKnownLocation(
   };
 }
 
+export function previewAdvanceCurrentActivity(snapshot: SaveSnapshot): GameplayBodyStatePreview {
+  const trackedQuestId = snapshot.sessionState.trackedQuestId;
+
+  if (trackedQuestId === 'quest.ashen_reef_survey' && findQuest(snapshot, trackedQuestId)?.category === 'active') {
+    if (getCurrentLocationId(snapshot) !== 'location.ashen_reef') {
+      return {
+        available: false,
+        reason: 'Travel to Ashen Reef before advancing the survey work.',
+        tickCount: 0,
+        projectedBodyState: null,
+        timeline: []
+      };
+    }
+
+    return previewSnapshotClock(snapshot, 2, {
+      metabolicProfile: mitigateActionProfile(
+        snapshot,
+        SURVEY_SHIFT_PROFILE,
+        'survey',
+        ['AGI', 'WIS', 'INT'],
+        ['skill.knowledge.general_lore', 'skill.resource.identify.flora']
+      )
+    });
+  }
+
+  if (trackedQuestId === 'quest.rivet_shortfall_relief' && findQuest(snapshot, trackedQuestId)?.category === 'active') {
+    if (getCurrentLocationId(snapshot) !== 'location.westreach') {
+      return {
+        available: false,
+        reason: 'Travel to Westreach before securing the rivet shipment.',
+        tickCount: 0,
+        projectedBodyState: null,
+        timeline: []
+      };
+    }
+
+    if (hasRivetCargo(snapshot)) {
+      return {
+        available: false,
+        reason: 'The deepiron crates are already loaded.',
+        tickCount: 0,
+        projectedBodyState: null,
+        timeline: []
+      };
+    }
+
+    return previewSnapshotClock(snapshot, 2, {
+      metabolicProfile: mitigateActionProfile(
+        snapshot,
+        PROCUREMENT_SHIFT_PROFILE,
+        'procurement_field',
+        ['CON', 'CHA', 'INT'],
+        ['skill.knowledge.mineral_lore', 'skill.knowledge.general_lore']
+      )
+    });
+  }
+
+  if (!snapshot.sessionState.currentActivity) {
+    return {
+      available: false,
+      reason: 'Set a current activity before advancing a work shift.',
+      tickCount: 0,
+      projectedBodyState: null,
+      timeline: []
+    };
+  }
+
+  return previewSnapshotClock(snapshot, 2, {
+    metabolicProfile: mitigateActionProfile(
+      snapshot,
+      DEFAULT_SHIFT_PROFILE,
+      'labor',
+      ['CON', 'VIT', 'WIS'],
+      ['skill.knowledge.general_lore']
+    )
+  });
+}
+
 export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionResult {
   const trackedQuestId = snapshot.sessionState.trackedQuestId;
 
@@ -1287,7 +1658,16 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
     }
 
     const nextSnapshot = cloneSnapshot(snapshot);
-    advanceSnapshotClock(nextSnapshot, 2);
+    advanceSnapshotClock(nextSnapshot, 2, {
+      metabolicProfile: mitigateActionProfile(
+        snapshot,
+        SURVEY_SHIFT_PROFILE,
+        'survey',
+        ['AGI', 'WIS', 'INT'],
+        ['skill.knowledge.general_lore', 'skill.resource.identify.flora']
+      ),
+      attributeProfile: SURVEY_SHIFT_ATTRIBUTE_PROFILE
+    });
     applyResourceDelta(nextSnapshot, { stamina: -10, mp: -3 });
 
     const sectorsComplete = getSurveySectorCount(nextSnapshot);
@@ -1299,7 +1679,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
       );
       nextSnapshot.playerState.skills = addOrUpdateSkill(
         nextSnapshot.playerState.skills,
-        'skill.knowledge.universal',
+        'skill.knowledge.general_lore',
         1
       );
       nextSnapshot.sessionState.operations = upsertOperation(
@@ -1398,7 +1778,16 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
     }
 
     const nextSnapshot = cloneSnapshot(snapshot);
-    advanceSnapshotClock(nextSnapshot, 2);
+    advanceSnapshotClock(nextSnapshot, 2, {
+      metabolicProfile: mitigateActionProfile(
+        snapshot,
+        PROCUREMENT_SHIFT_PROFILE,
+        'procurement_field',
+        ['CON', 'CHA', 'INT'],
+        ['skill.knowledge.mineral_lore', 'skill.knowledge.general_lore']
+      ),
+      attributeProfile: PROCUREMENT_SHIFT_ATTRIBUTE_PROFILE
+    });
     applyResourceDelta(nextSnapshot, { stamina: -7 });
     nextSnapshot.sessionState.flags = ensureFlag(
       nextSnapshot.sessionState.flags,
@@ -1459,12 +1848,22 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
   }
 
   const nextSnapshot = cloneSnapshot(snapshot);
-  advanceSnapshotClock(nextSnapshot, 2);
+  const currentActivity = nextSnapshot.sessionState.currentActivity!;
+  advanceSnapshotClock(nextSnapshot, 2, {
+    metabolicProfile: mitigateActionProfile(
+      snapshot,
+      DEFAULT_SHIFT_PROFILE,
+      'labor',
+      ['CON', 'VIT', 'WIS'],
+      ['skill.knowledge.general_lore']
+    ),
+    attributeProfile: DEFAULT_SHIFT_ATTRIBUTE_PROFILE
+  });
   applyResourceDelta(nextSnapshot, { stamina: -6 });
   appendNotification(
     nextSnapshot,
     'Shift advanced',
-    `${nextSnapshot.sessionState.currentActivity.label} moved forward through another work shift.`,
+    `${currentActivity.label} moved forward through another work shift.`,
     'neutral'
   );
   appendChronicle(
@@ -1472,10 +1871,10 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
     makeChronicleEntry(
       nextSnapshot,
       'social',
-      `Shift advanced for ${nextSnapshot.sessionState.currentActivity.label}`,
+      `Shift advanced for ${currentActivity.label}`,
       'Time passed on the current assignment without a major milestone event.',
       'Routine progress',
-      [nextSnapshot.playerState.coreData.playerName, nextSnapshot.sessionState.currentActivity.label],
+      [nextSnapshot.playerState.coreData.playerName, currentActivity.label],
       ['Routine progress'],
       ['Stamina -6', 'Time +2 ticks'],
       ['Activity']
@@ -1484,8 +1883,38 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
 
   return {
     snapshot: syncSnapshot(nextSnapshot),
-    notice: createNotice('neutral', 'Shift Advanced', `${nextSnapshot.sessionState.currentActivity.label} advanced through another work shift.`)
+    notice: createNotice('neutral', 'Shift Advanced', `${currentActivity.label} advanced through another work shift.`)
   };
+}
+
+export function previewRestAtCurrentSettlement(snapshot: SaveSnapshot): GameplayBodyStatePreview {
+  const locationId = getCurrentLocationId(snapshot);
+
+  if (!locationId) {
+    return {
+      available: false,
+      reason: 'A proper rest stop is only available inside a settlement.',
+      tickCount: 0,
+      projectedBodyState: null,
+      timeline: []
+    };
+  }
+
+  const nextSnapshot = cloneSnapshot(snapshot);
+
+  if (!spendCurrency(nextSnapshot, { silver: 4 })) {
+    return {
+      available: false,
+      reason: 'Resting requires 4 silver for board, food, and a secure bunk.',
+      tickCount: 0,
+      projectedBodyState: null,
+      timeline: []
+    };
+  }
+
+  return previewSnapshotClock(snapshot, 4, {
+    recoveryContext: SETTLEMENT_REST_RECOVERY
+  });
 }
 
 export function restAtCurrentSettlement(snapshot: SaveSnapshot): GameplayActionResult {
@@ -1507,7 +1936,9 @@ export function restAtCurrentSettlement(snapshot: SaveSnapshot): GameplayActionR
     };
   }
 
-  advanceSnapshotClock(nextSnapshot, 4);
+  advanceSnapshotClock(nextSnapshot, 4, {
+    recoveryContext: SETTLEMENT_REST_RECOVERY
+  });
   nextSnapshot.playerState.resources.hp.current = nextSnapshot.playerState.resources.hp.max;
   nextSnapshot.playerState.resources.mp.current = nextSnapshot.playerState.resources.mp.max;
   nextSnapshot.playerState.resources.stamina.current = nextSnapshot.playerState.resources.stamina.max;
@@ -1583,14 +2014,25 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
 
   if (questId === 'quest.ashen_reef_survey') {
     addCurrency(nextSnapshot, { gold: 5, silver: 8 });
-    applyExperience(nextSnapshot, 120);
-    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.universal', 1);
-    nextSnapshot.playerState.reputation = addOrUpdateReputation(
-      nextSnapshot.playerState.reputation,
+    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.general_lore', 1);
+    nextSnapshot.playerState.standing = addOrUpdateStanding(
+      nextSnapshot.playerState.standing,
       'rep.harbor_office',
       'Saltmere Harbor Office',
       8,
       ['survey_priority', 'harbor_access']
+    );
+    nextSnapshot.playerState.reputation = applyReputationAward(
+      nextSnapshot.playerState.reputation,
+      ASHEN_REEF_SURVEY_FAME_AWARD,
+      {
+        meaningful: true,
+        exposureSatisfied: true,
+        attributionSatisfied: true,
+        sociallyValued: true,
+        tick: nextSnapshot.clock.tick,
+        sourceId: questId
+      }
     );
     nextSnapshot.sessionState.operations = removeOperation(
       nextSnapshot.sessionState.operations,
@@ -1618,21 +2060,32 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
         '+5g 8s',
         [nextSnapshot.playerState.coreData.playerName, 'Saltmere Harbor Office', 'Ashen Reef'],
         ['Payout secured', 'Harbor standing improved', 'Codex entry unlocked'],
-        ['XP +120', 'Navigation +1', 'Harbor Office +8'],
+        ['Common Lore +1', 'Harbor Office Standing +8', 'Regional Fame +6'],
         ['Contract', 'Discovery', 'Harbor Office']
       )
     );
   } else if (questId === 'quest.rivet_shortfall_relief') {
     removeInventoryQuantity(nextSnapshot.playerState.inventory, RIVET_CRATE_ITEM_KEY, 6);
     addCurrency(nextSnapshot, { gold: 4, silver: 1 });
-    applyExperience(nextSnapshot, 90);
-    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.minerals', 1);
-    nextSnapshot.playerState.reputation = addOrUpdateReputation(
-      nextSnapshot.playerState.reputation,
+    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.mineral_lore', 1);
+    nextSnapshot.playerState.standing = addOrUpdateStanding(
+      nextSnapshot.playerState.standing,
       'rep.guild_consortium',
       'Guild Consortium',
       6,
       ['priority_bids', 'drydock_discount']
+    );
+    nextSnapshot.playerState.reputation = applyReputationAward(
+      nextSnapshot.playerState.reputation,
+      RIVET_SHORTFALL_RELIEF_FAME_AWARD,
+      {
+        meaningful: true,
+        exposureSatisfied: true,
+        attributionSatisfied: true,
+        sociallyValued: true,
+        tick: nextSnapshot.clock.tick,
+        sourceId: questId
+      }
     );
     nextSnapshot.sessionState.operations = removeOperation(
       nextSnapshot.sessionState.operations,
@@ -1664,7 +2117,7 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
         '+4g 1s',
         [nextSnapshot.playerState.coreData.playerName, 'Saltmere Drydock', 'Westreach'],
         ['Drydock shortage eased', 'Payout secured'],
-        ['XP +90', 'Mercantile +1', 'Guild Consortium +6'],
+        ['Earth Lore +1', 'Guild Consortium Standing +6', 'Local Fame +4'],
         ['Contract', 'Trade', 'Drydock']
       )
     );
@@ -1680,3 +2133,4 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
     notice: createNotice('success', 'Quest Turned In', `${quest.title} was completed and rewards were applied.`)
   };
 }
+

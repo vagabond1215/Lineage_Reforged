@@ -1,5 +1,4 @@
 import {
-  resolvePlayerResources,
   type EquipmentSlotId,
   type EquippedItemRef,
   type InventoryBag,
@@ -7,7 +6,24 @@ import {
   type PlayerSkillState,
   type SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
-import type { DetailGroup, ListItem, SidebarItem, TagTone } from '../types.js';
+import {
+  applyConsumableToBodyState,
+  syncPlayerRuntimeState
+} from '../../../../packages/engines/player-engine/src/index.js';
+import itemCatalog from '../../../../packages/content/base/items/items.json';
+import consumableProfileCatalog from '../../../../packages/content/base/items/consumable_profiles.json';
+import type {
+  ConsumableEffectPreviewViewModel,
+  DetailGroup,
+  ListItem,
+  SidebarItem,
+  TagTone
+} from '../types.js';
+import {
+  buildConsumableEffectPreview,
+  buildConsumeFeedback,
+  createBodyStatePresentationSnapshot
+} from '../runtime/bodyStatePresentation.js';
 
 export type CharacterInventoryCategory =
   | 'all'
@@ -47,6 +63,7 @@ export type InventoryEntry = {
   stackIndex: number;
   category: Exclude<CharacterInventoryCategory, 'all'>;
   preferredSlotId: EquipmentSlotId | null;
+  consumePreview: ConsumableEffectPreviewViewModel | null;
   detail: CharacterDetailCardData;
 };
 
@@ -98,6 +115,27 @@ const EQUIPPABLE_ITEM_SLOT_HINTS: Partial<Record<string, EquipmentSlotId>> = {
   field_chart_case: 'slot.accessory.waist',
   waterproof_chart_case: 'slot.accessory.waist'
 };
+
+const ITEM_CONTENT_BY_ID = new Map(
+  (itemCatalog.records as Array<{ id: string; tags?: string[]; consumableProfileId?: string }>).map((record) => [
+    record.id,
+    record
+  ])
+);
+const CONSUMABLE_PROFILE_BY_ID = new Map(
+  (
+    consumableProfileCatalog.records as Array<{
+      id: string;
+      calories: number;
+      protein: number;
+      carbs: number;
+      fat: number;
+      hydration?: number;
+      intoxication?: number;
+      useVerb?: string;
+    }>
+  ).map((record) => [record.id, record])
+);
 
 function humanizeId(value: string | null | undefined): string {
   if (!value) {
@@ -247,6 +285,10 @@ function getItemCategory(itemKey: string): Exclude<CharacterInventoryCategory, '
 
   if (
     itemKey.includes('ration') ||
+    itemKey.includes('meal') ||
+    itemKey.includes('stew') ||
+    itemKey.includes('bread') ||
+    itemKey.includes('ale') ||
     itemKey.includes('bandage') ||
     itemKey.includes('fish') ||
     itemKey.includes('food')
@@ -286,6 +328,11 @@ function getItemCategory(itemKey: string): Exclude<CharacterInventoryCategory, '
 }
 
 function buildInventoryDetail(entry: InventoryEntry, favorite: boolean): CharacterDetailCardData {
+  const itemRecord = ITEM_CONTENT_BY_ID.get(entry.itemId);
+  const consumableProfile = itemRecord?.consumableProfileId
+    ? CONSUMABLE_PROFILE_BY_ID.get(itemRecord.consumableProfileId)
+    : null;
+
   return {
     title: entry.title,
     summary: `${entry.title} is currently stored in ${entry.containerLabel} and can be inspected or prepared for equipment from the live character interface.`,
@@ -310,8 +357,23 @@ function buildInventoryDetail(entry: InventoryEntry, favorite: boolean): Charact
           { label: 'Favorite', value: favorite ? 'Yes' : 'No' },
           {
             label: 'Use Action',
-            value: entry.category === 'consumable' ? 'Reserved for a future item-use hook' : 'Not a consumable',
-            tone: entry.category === 'consumable' ? 'warning' : 'neutral'
+            value:
+              entry.category === 'consumable'
+                ? consumableProfile
+                  ? `${consumableProfile.useVerb ?? 'Consume'} now available`
+                  : 'No authored consume profile yet'
+                : 'Not a consumable',
+            tone:
+              entry.category === 'consumable'
+                ? consumableProfile
+                  ? 'success'
+                  : 'warning'
+                : 'neutral'
+          },
+          {
+            label: 'Consume Fit',
+            value: entry.consumePreview?.contextTag ?? 'No consume preview',
+            tone: entry.consumePreview?.highlighted ? 'success' : 'neutral'
           }
         ]
       }
@@ -462,35 +524,31 @@ function recalculateSnapshot(
   snapshot: SaveSnapshot,
   nextEquipment: SaveSnapshot['playerState']['equipment'],
   nextInventory: SaveSnapshot['playerState']['inventory'],
-  nextFlags: string[]
+  nextFlags: string[],
+  nextBodyState: SaveSnapshot['playerState']['bodyState'] = snapshot.playerState.bodyState
 ): SaveSnapshot {
-  const resolution = resolvePlayerResources(
-    {
-      playerId: snapshot.playerState.playerId,
-      attributes: snapshot.playerState.attributes,
-      resources: snapshot.playerState.resources,
-      originProfile: snapshot.playerState.originProfile,
-      equipment: nextEquipment,
-      resourceRuntime: snapshot.playerState.resourceRuntime
-    },
-    [],
-    snapshot.clock.tick
-  );
-
-  return {
+  const nextSnapshot: SaveSnapshot = {
     ...snapshot,
     playerState: {
       ...snapshot.playerState,
       equipment: nextEquipment,
       inventory: nextInventory,
-      resources: resolution.resources,
-      resourceRuntime: resolution.resourceRuntime
+      bodyState: nextBodyState
     },
     sessionState: {
       ...snapshot.sessionState,
       flags: nextFlags
     }
   };
+
+  syncPlayerRuntimeState(
+    nextSnapshot.playerState,
+    snapshot.clock.tick,
+    snapshot.clock.day,
+    [],
+    snapshot.gameState.runDifficulty
+  );
+  return nextSnapshot;
 }
 
 export function buildCharacterSectionItems(
@@ -500,6 +558,8 @@ export function buildCharacterSectionItems(
     equipment: number;
     inventory: number;
     traits: number;
+    'geographic-knowledge': number;
+    standing: number;
     reputation: number;
     discoveries: number;
   }
@@ -516,7 +576,14 @@ export function buildCharacterSectionItems(
       description: 'Identity traits, modifiers, and active conditions',
       count: counts.traits
     },
-    { id: 'reputation', label: 'Reputation', description: 'Standing and unlocked influence bands', count: counts.reputation },
+    {
+      id: 'geographic-knowledge',
+      label: 'Geographic Knowledge',
+      description: 'Known lands, regions, settlements, and place knowledge',
+      count: counts['geographic-knowledge']
+    },
+    { id: 'standing', label: 'Standing', description: 'Faction and guild access standing', count: counts.standing },
+    { id: 'reputation', label: 'Reputation', description: 'Public fame and notoriety by scope', count: counts.reputation },
     { id: 'discoveries', label: 'Discoveries', description: 'Field finds and codex-linked personal record', count: counts.discoveries }
   ];
 }
@@ -540,6 +607,22 @@ export function buildSkillItems(snapshot: SaveSnapshot): ListItem[] {
   }));
 }
 
+function resolveConsumablePreview(
+  snapshot: SaveSnapshot,
+  itemId: string
+): ConsumableEffectPreviewViewModel | null {
+  const itemRecord = ITEM_CONTENT_BY_ID.get(itemId);
+  const consumableProfile = itemRecord?.consumableProfileId
+    ? CONSUMABLE_PROFILE_BY_ID.get(itemRecord.consumableProfileId)
+    : null;
+
+  if (!itemRecord || !consumableProfile) {
+    return null;
+  }
+
+  return buildConsumableEffectPreview(snapshot, consumableProfile, itemRecord.tags ?? []);
+}
+
 export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] {
   const favorites = snapshot.sessionState.flags;
 
@@ -549,6 +632,7 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
         const category = getItemCategory(stack.itemKey);
         const title = humanizeId(stack.itemKey);
         const preferredSlotId = inferEquipmentSlot(stack.itemKey);
+        const consumePreview = resolveConsumablePreview(snapshot, stack.itemId);
 
         return {
           id: `inventory.${bag.id}.${stack.itemId}.${stackIndex}`,
@@ -563,6 +647,7 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
           stackIndex,
           category,
           preferredSlotId,
+          consumePreview,
           detail: buildInventoryDetail(
             {
               id: `inventory.${bag.id}.${stack.itemId}.${stackIndex}`,
@@ -577,6 +662,7 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
               stackIndex,
               category,
               preferredSlotId,
+              consumePreview,
               detail: {
                 title,
                 summary: '',
@@ -592,6 +678,7 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
       const category = getItemCategory(stack.itemKey);
       const title = humanizeId(stack.itemKey);
       const preferredSlotId = inferEquipmentSlot(stack.itemKey);
+      const consumePreview = resolveConsumablePreview(snapshot, stack.itemId);
 
       return {
         id: `inventory.overflow.${stack.itemId}.${stackIndex}`,
@@ -606,6 +693,7 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
         stackIndex,
         category,
         preferredSlotId,
+        consumePreview,
         detail: buildInventoryDetail(
           {
             id: `inventory.overflow.${stack.itemId}.${stackIndex}`,
@@ -620,6 +708,7 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
             stackIndex,
             category,
             preferredSlotId,
+            consumePreview,
             detail: {
               title,
               summary: '',
@@ -769,12 +858,21 @@ export function getInventoryCategories(entries: InventoryEntry[]): CharacterInve
 export function sortInventoryEntries(
   entries: InventoryEntry[],
   sort: CharacterInventorySort,
-  favoriteItemKeys: Set<string>
+  favoriteItemKeys: Set<string>,
+  visibleCategory: CharacterInventoryCategory
 ): InventoryEntry[] {
   const nextEntries = [...entries];
 
   if (sort === 'default') {
     return nextEntries.sort((left, right) => {
+      if (visibleCategory !== 'all') {
+        const highlightDelta = Number(Boolean(right.consumePreview?.highlighted)) -
+          Number(Boolean(left.consumePreview?.highlighted));
+        if (highlightDelta !== 0) {
+          return highlightDelta;
+        }
+      }
+
       if (left.containerIndex !== right.containerIndex) {
         return left.containerIndex - right.containerIndex;
       }
@@ -1019,6 +1117,115 @@ export function unequipItem(
       tone: 'success',
       title: 'Item Unequipped',
       detail: `${entry.itemTitle} was moved back into inventory from ${entry.slotLabel}.`
+    }
+  };
+}
+
+export function consumeInventoryItem(
+  snapshot: SaveSnapshot,
+  entry: InventoryEntry
+): {
+  snapshot: SaveSnapshot;
+  notice: CharacterPanelNotice;
+} {
+  const beforeSummary = createBodyStatePresentationSnapshot(snapshot);
+  const itemRecord = ITEM_CONTENT_BY_ID.get(entry.itemId);
+
+  if (!itemRecord?.consumableProfileId) {
+    return {
+      snapshot,
+      notice: {
+        tone: 'warning',
+        title: 'No Consume Profile',
+        detail: `${entry.title} does not yet have a supported consume profile.`
+      }
+    };
+  }
+
+  const consumableProfile = CONSUMABLE_PROFILE_BY_ID.get(itemRecord.consumableProfileId);
+
+  if (!consumableProfile) {
+    return {
+      snapshot,
+      notice: {
+        tone: 'warning',
+        title: 'Consume Data Missing',
+        detail: `${entry.title} points at ${itemRecord.consumableProfileId}, but that profile is not authored.`
+      }
+    };
+  }
+
+  const nextInventory = cloneInventory(snapshot);
+
+  if (entry.location === 'overflow') {
+    const stack = nextInventory.overflow[entry.stackIndex];
+
+    if (!stack) {
+      return {
+        snapshot,
+        notice: {
+          tone: 'warning',
+          title: 'Inventory Changed',
+          detail: 'That stack is no longer available.'
+        }
+      };
+    }
+
+    if (stack.quantity > 1) {
+      nextInventory.overflow[entry.stackIndex] = { ...stack, quantity: stack.quantity - 1 };
+    } else {
+      nextInventory.overflow.splice(entry.stackIndex, 1);
+    }
+  } else {
+    const bag = nextInventory.bags.find((candidate) => candidate.id === entry.containerId);
+    const stack = bag?.stacks[entry.stackIndex];
+
+    if (!bag || !stack) {
+      return {
+        snapshot,
+        notice: {
+          tone: 'warning',
+          title: 'Inventory Changed',
+          detail: 'That stack is no longer available.'
+        }
+      };
+    }
+
+    if (stack.quantity > 1) {
+      bag.stacks[entry.stackIndex] = { ...stack, quantity: stack.quantity - 1 };
+    } else {
+      bag.stacks.splice(entry.stackIndex, 1);
+    }
+  }
+
+  const nextBodyState = applyConsumableToBodyState(snapshot.playerState.bodyState, consumableProfile, {
+    itemTags: itemRecord.tags ?? [],
+    lineageId: snapshot.playerState.coreData.lineageId,
+    tick: snapshot.clock.tick,
+    day: snapshot.clock.day,
+    runDifficulty: snapshot.gameState.runDifficulty
+  });
+  const afterSummary = createBodyStatePresentationSnapshot({
+    ...snapshot,
+    playerState: {
+      ...snapshot.playerState,
+      bodyState: nextBodyState
+    }
+  });
+  const feedback = buildConsumeFeedback(entry.title, beforeSummary, afterSummary);
+
+  return {
+    snapshot: recalculateSnapshot(
+      snapshot,
+      snapshot.playerState.equipment,
+      nextInventory,
+      snapshot.sessionState.flags,
+      nextBodyState
+    ),
+    notice: {
+      tone: feedback.tone,
+      title: feedback.title,
+      detail: feedback.detail
     }
   };
 }

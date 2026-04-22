@@ -5,6 +5,12 @@ import {
   createSaveSnapshotFromGameContext,
   runGameTick
 } from "../../../packages/engines/game-engine/src/index.js";
+import {
+  createDefaultPlayerBodyState,
+  createDefaultPlayerStatGrowthState,
+  createPlayerProgressionState,
+  resolvePlayerEchoProgression
+} from "../../../packages/engines/player-engine/src/index.js";
 import { createInitialClock } from "../../../packages/shared/time/src/index.js";
 import {
   applyAttributeAdjustments,
@@ -50,12 +56,14 @@ export function runSingleTick(): void {
     backstoryId: "backstory.local",
     startingBundleId: "starting_bundle.traveler"
   };
-  const playerProgression = {
-    level: 1,
-    classLevel: 0,
-    unspentAttributePoints: 0,
-    unspentSkillPoints: 0
-  };
+  const playerProgression = createPlayerProgressionState({
+    legacyGrowth: {
+      resourceGrowthLevel: 1,
+      classLevel: 0,
+      unspentAttributePoints: 0,
+      unspentSkillPoints: 0
+    }
+  });
   const playerOriginProfile = resolvePlayerOriginProfile(playerCoreData, playerProgression);
   const playerAttributes = applyAttributeAdjustments(
     {
@@ -72,6 +80,11 @@ export function runSingleTick(): void {
     playerOriginProfile.attributeAdjustments
   );
   const playerResourceRuntime = createEmptyPlayerResourceRuntimeState();
+  const playerBodyState = createDefaultPlayerBodyState({
+    tick: clock.tick,
+    day: clock.day,
+    lineageId: playerCoreData.lineageId
+  });
   playerResourceRuntime.modifiers = [
     {
       id: "effect.inn_meal",
@@ -202,6 +215,7 @@ export function runSingleTick(): void {
         regionId: "region.kaelvar",
         coreData: playerCoreData,
         attributes: playerAttributes,
+        statGrowth: createDefaultPlayerStatGrowthState(clock.day),
         resources: {
           hp: {
             current: playerOriginProfile.resolvedResourceMaxima.hp - 8,
@@ -218,6 +232,7 @@ export function runSingleTick(): void {
           xp: { current: 0, total: 0, toNextLevel: 100 }
         },
         resourceRuntime: playerResourceRuntime,
+        bodyState: playerBodyState,
         progression: playerProgression,
         skills: [
           { id: "skill.combat.weapon.sword", rank: 12, source: "trained" },
@@ -291,13 +306,7 @@ export function runSingleTick(): void {
         location: {
           settlementId: "settlement.sunspire_reach",
           siteLabel: "Harbor Quarter",
-          worldMapId: "world_map.first_world",
-          knownSettlementIds: [
-            "settlement.sunspire_reach",
-            "settlement.aurelis",
-            "settlement.vinecross",
-            "settlement.starfall_port"
-          ]
+          worldMapId: "world_map.first_world"
         },
         currency: {
           gold: 24,
@@ -305,7 +314,7 @@ export function runSingleTick(): void {
           copper: 42
         },
         originProfile: playerOriginProfile,
-        reputation: [
+        standing: [
           {
             id: "rep.scribes_guild",
             label: "Scribes Guild",
@@ -314,6 +323,11 @@ export function runSingleTick(): void {
             effects: ["archives_access", "priority_copywork"]
           }
         ],
+        reputation: {
+          fame: [],
+          notoriety: [],
+          notorietyEvents: []
+        },
         titles: [
           {
             id: "title.combat.sword.novice",
@@ -334,7 +348,14 @@ export function runSingleTick(): void {
           entries: [],
           lastUpdatedTick: null
         },
-        discoveredRegions: ["region.kaelvar"],
+        geographicKnowledge: [
+          { scope: "continent", geographyId: "region.kaelvar", level: 1 },
+          { scope: "region", geographyId: "region.silver_valleys", level: 1 },
+          { scope: "settlement", geographyId: "settlement.sunspire_reach", level: 1 },
+          { scope: "settlement", geographyId: "settlement.aurelis", level: 1 },
+          { scope: "settlement", geographyId: "settlement.vinecross", level: 1 },
+          { scope: "settlement", geographyId: "settlement.starfall_port", level: 1 }
+        ],
         activeQuestIds: [],
         completedQuestIds: [],
         flags: [],
@@ -342,12 +363,15 @@ export function runSingleTick(): void {
         saveMeta: {
           totalPlayTicks: 0,
           lastRestAtTick: 0,
-          lastSavedAtTick: 0
+          lastSavedAtTick: 0,
+          lastReputationDecayDay: 1
         }
       }
     },
     sessionState: createEmptySessionState()
   };
+
+  context.playerContext.state.progression = resolvePlayerEchoProgression(context.playerContext.state);
 
   const result = runGameTick(context);
   const snapshot = createSaveSnapshotFromGameContext(context);

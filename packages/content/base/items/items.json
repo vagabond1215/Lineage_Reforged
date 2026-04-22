@@ -1,4 +1,4 @@
-{
+﻿{
   "records": [
     {
       "id": "item.abalone_meat",
@@ -334,6 +334,7 @@
         "beverage.common"
       ],
       "stage": "finished",
+      "consumableProfileId": "consume.ale_cask",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -3960,6 +3961,7 @@
         "food.prepared"
       ],
       "stage": "finished",
+      "consumableProfileId": "consume.bread_loaf",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -4016,6 +4018,7 @@
         "food.prepared"
       ],
       "stage": "finished",
+      "consumableProfileId": "consume.game_stew",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -4690,6 +4693,7 @@
         "food.prepared"
       ],
       "stage": "finished",
+      "consumableProfileId": "consume.inn_hearty_meal",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -4743,6 +4747,7 @@
       "currencyId": "currency.crown_standard",
       "valueUnit": "copper_penny",
       "marketable": true,
+      "consumableProfileId": "consume.ration_bundle",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -4798,6 +4803,7 @@
       "currencyId": "currency.crown_standard",
       "valueUnit": "copper_penny",
       "marketable": true,
+      "consumableProfileId": "consume.trail_meal",
       "valueProfile": {
         "valueMode": "source_derived",
         "materialCostModel": "source_effort",
@@ -8087,6 +8093,7 @@
         "food.prepared"
       ],
       "stage": "finished",
+      "consumableProfileId": "consume.traveler_ration",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -21422,7 +21429,7 @@
           "actionType": "utility.mining",
           "primarySkillId": "skill.resource.mining",
           "supportSkillIds": [
-            "skill.knowledge.minerals"
+            "skill.knowledge.mineral_lore"
           ],
           "requiredSkillRank": 1,
           "masteryRank": 90,
@@ -35776,3 +35783,4 @@
     }
   ]
 }
+

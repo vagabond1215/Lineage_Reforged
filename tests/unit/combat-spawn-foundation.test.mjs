@@ -5,6 +5,12 @@ import {
   createDefaultPlayerCombatProfile
 } from "../../packages/engines/game-engine/src/combat/state.ts";
 import {
+  createDefaultPlayerBodyState,
+  createDefaultPlayerStatGrowthState,
+  createPlayerProgressionState,
+  resolvePlayerEchoProgression
+} from "../../packages/engines/player-engine/src/index.ts";
+import {
   createEncounterFromSpawnCandidate,
   tickCombatFoundation
 } from "../../packages/engines/game-engine/src/combat/index.ts";
@@ -54,12 +60,14 @@ function createPlayerStateFixture() {
     SPT: 9,
     CHA: 10
   };
-  const progression = {
-    level: 4,
-    classLevel: 0,
-    unspentAttributePoints: 0,
-    unspentSkillPoints: 0
-  };
+  const progression = createPlayerProgressionState({
+    legacyGrowth: {
+      resourceGrowthLevel: 4,
+      classLevel: 0,
+      unspentAttributePoints: 0,
+      unspentSkillPoints: 0
+    }
+  });
   const originProfile = resolvePlayerOriginProfile(coreData, progression);
   const equipment = {
     ...EMPTY_EQUIPMENT,
@@ -77,11 +85,12 @@ function createPlayerStateFixture() {
     }
   };
 
-  return {
+  const playerState = {
     playerId: "player.verifier",
     regionId: "region.kaelvar",
     coreData,
     attributes,
+    statGrowth: createDefaultPlayerStatGrowthState(1),
     resources: {
       hp: {
         current: originProfile.resolvedResourceMaxima.hp,
@@ -94,8 +103,18 @@ function createPlayerStateFixture() {
       stamina: {
         current: originProfile.resolvedResourceMaxima.stamina,
         max: originProfile.resolvedResourceMaxima.stamina
+      },
+      xp: {
+        current: 0,
+        total: 0,
+        toNextLevel: 100
       }
     },
+    bodyState: createDefaultPlayerBodyState({
+      tick: 0,
+      day: 1,
+      lineageId: coreData.lineageId
+    }),
     resourceRuntime: createEmptyPlayerResourceRuntimeState(),
     progression,
     skills: [
@@ -137,8 +156,7 @@ function createPlayerStateFixture() {
     location: {
       settlementId: "settlement.aurelis",
       siteLabel: "Harbor Quarter",
-      worldMapId: "world_map.first_world",
-      knownSettlementIds: ["settlement.aurelis", "settlement.stonevein"]
+      worldMapId: "world_map.first_world"
     },
     currency: {
       gold: 5,
@@ -146,13 +164,23 @@ function createPlayerStateFixture() {
       copper: 4
     },
     originProfile,
-    reputation: [],
+    standing: [],
+    reputation: {
+      fame: [],
+      notoriety: [],
+      notorietyEvents: []
+    },
     titles: [],
     discoveryChronicle: {
       entries: [],
       lastUpdatedTick: null
     },
-    discoveredRegions: ["region.kaelvar"],
+    geographicKnowledge: [
+      { scope: "continent", geographyId: "region.kaelvar", level: 1 },
+      { scope: "region", geographyId: "region.verdant_thalos", level: 1 },
+      { scope: "settlement", geographyId: "settlement.aurelis", level: 1 },
+      { scope: "settlement", geographyId: "settlement.stonevein", level: 1 }
+    ],
     activeQuestIds: [],
     completedQuestIds: [],
     flags: [],
@@ -160,9 +188,13 @@ function createPlayerStateFixture() {
     saveMeta: {
       totalPlayTicks: 0,
       lastRestAtTick: 0,
-      lastSavedAtTick: 0
+      lastSavedAtTick: 0,
+      lastReputationDecayDay: 1
     }
   };
+
+  playerState.progression = resolvePlayerEchoProgression(playerState);
+  return playerState;
 }
 
 function createWorldStateFixture() {
@@ -235,6 +267,36 @@ test("createEncounterFromSpawnCandidate builds scaled enemy combatants and binds
     enemy.threatRating,
     monster.combatProfile.threatRating + scaledCandidate.difficultyTier
   );
+});
+
+test("createEncounterFromSpawnCandidate ignores echo level inflation when rating player threat", () => {
+  const { tick, candidate } = resolveFirstSpawnCandidate(createWorldStateFixture());
+  const baselineGameState = createDefaultGameState("normal");
+  const inflatedGameState = createDefaultGameState("normal");
+  const baselinePlayer = createPlayerStateFixture();
+  const inflatedPlayer = structuredClone(baselinePlayer);
+
+  inflatedPlayer.progression = {
+    ...inflatedPlayer.progression,
+    level: 99,
+    echo: {
+      ...inflatedPlayer.progression.echo,
+      echoAdjusted: 999
+    }
+  };
+
+  const baselineEncounter = createEncounterFromSpawnCandidate(baselineGameState, baselinePlayer, candidate, tick);
+  const inflatedEncounter = createEncounterFromSpawnCandidate(inflatedGameState, inflatedPlayer, candidate, tick);
+
+  assert.ok(baselineEncounter);
+  assert.ok(inflatedEncounter);
+
+  const baselineCombatant = baselineEncounter.combatants.find((combatant) => combatant.kind === "player");
+  const inflatedCombatant = inflatedEncounter.combatants.find((combatant) => combatant.kind === "player");
+
+  assert.ok(baselineCombatant);
+  assert.ok(inflatedCombatant);
+  assert.equal(inflatedCombatant.threatRating, baselineCombatant.threatRating);
 });
 
 test("tickCombatFoundation consumes staged manual commands and records the override in combat UI", () => {

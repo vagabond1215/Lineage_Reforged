@@ -2,26 +2,111 @@ import {
   resolvePlayerResources,
   type PlayerDelta,
   type PlayerTickContext,
+  type RunDifficultyState,
   type TickResult
 } from "../../../shared/types/src/index.js";
+import { syncPlayerBodyState } from "./body-state.js";
+import { createRunDifficultyState } from "./difficulty.js";
+import { syncPlayerReputation } from "./reputation.js";
+import { syncPlayerEchoProgression } from "./progression.js";
+import { syncPlayerStatGrowth } from "./stat-growth.js";
 
+export {
+  applyReputationAward,
+  canApplyReputationAward,
+  grantContinentGeographicKnowledge,
+  grantRegionGeographicKnowledge,
+  grantSettlementGeographicKnowledge,
+  loadReputationBalanceRule,
+  normalizePlayerGeographicKnowledge,
+  resolveHistoricalReputationTier,
+  resolveScopedReputation,
+  syncPlayerReputation,
+  upsertGeographicKnowledgeEntry
+} from "./reputation.js";
 export {
   SKILL_PROGRESSION_BANDS,
   SPELL_SCALING_CHANNELS_BY_SCHOOL,
   accumulateBreakthroughProgress,
+  canAttemptTrial,
+  calculatePlayerEcho,
+  createDefaultPlayerEchoState,
+  createPlayerLegacyGrowthState,
+  createPlayerProgressionState,
   applyBreakthroughGating,
   evaluateTrialOutcome,
+  loadEchoBalanceRule,
+  meetsEchoRequirement,
+  meetsGlobalRuleEchoRequirement,
+  normalizePlayerProgression,
+  resolvePlayerEchoProgression,
+  resolveGlobalRuleEchoRequirement,
+  resolveKnowledgeProgressionDifficultyThresholds,
   resolveKnowledgeAssistance,
   resolveItemUseProfile,
   resolveEligibleTitleMilestones,
+  resolveSkillProgressionDifficultyThresholds,
   resolveSkillBand,
+  syncPlayerEchoProgression,
   validateSpellScalingChannelsForSchool
 } from "./progression.js";
+export {
+  advancePlayerBodyState,
+  applyConsumableToBodyState,
+  createDefaultPlayerBodyState,
+  createDefaultResolvedBodyState,
+  loadBodyStateBalanceRule,
+  normalizePlayerBodyState,
+  resolveBodyState,
+  rollBodyStateDay,
+  syncPlayerBodyState
+} from "./body-state.js";
+export {
+  createRunDifficultyState,
+  loadRunDifficultyBalanceRule,
+  normalizeRunDifficultyState,
+  resolvePrestigeRewardMultiplier,
+  resolveRecoveryGate,
+  resolveRunDifficultyModifiers
+} from "./difficulty.js";
+export {
+  applyActionAttributeLoad,
+  applyAttributeTensionToActionProfile,
+  convertPlayerStatGrowthOnRecovery,
+  createDefaultPlayerStatGrowthState,
+  createDefaultResolvedAttributeTensionState,
+  loadStatGrowthBalanceRule,
+  normalizePlayerStatGrowth,
+  resolveAttributeTension,
+  syncPlayerStatGrowth
+} from "./stat-growth.js";
+
+export function syncPlayerRuntimeState(
+  playerState: PlayerTickContext["state"],
+  tick: number,
+  day: number,
+  incomingEvents: PlayerTickContext["incomingEvents"] = [],
+  runDifficulty?: Partial<RunDifficultyState> | null
+) {
+  syncPlayerStatGrowth(playerState, day);
+  syncPlayerEchoProgression(playerState);
+  syncPlayerBodyState(playerState, tick, day, runDifficulty);
+  syncPlayerReputation(playerState, day);
+  const resourceResolution = resolvePlayerResources(playerState, incomingEvents, tick);
+  playerState.resources = resourceResolution.resources;
+  playerState.resourceRuntime = resourceResolution.resourceRuntime;
+  return resourceResolution;
+}
 
 export function tickPlayer(context: PlayerTickContext): TickResult<PlayerDelta> {
-  const resourceResolution = resolvePlayerResources(context.state, context.incomingEvents, context.clock.tick);
-  context.state.resources = resourceResolution.resources;
-  context.state.resourceRuntime = resourceResolution.resourceRuntime;
+  const runDifficulty = createRunDifficultyState(context.runDifficulty);
+  const resourceResolution = syncPlayerRuntimeState(
+    context.state,
+    context.clock.tick,
+    context.clock.day,
+    context.incomingEvents,
+    runDifficulty
+  );
 
   const inventoryStacks = context.state.inventory.bags.flatMap((bag) => bag.stacks);
   const equippedItems = Object.values(context.state.equipment).filter((item) => item !== null);
@@ -33,7 +118,13 @@ export function tickPlayer(context: PlayerTickContext): TickResult<PlayerDelta> 
       saveSlotId: context.saveSlotId,
       tick: context.clock.tick,
       level: context.state.progression.level,
-      classLevel: context.state.progression.classLevel,
+      echoAdjusted: context.state.progression.echo.echoAdjusted,
+      skillContribution: context.state.progression.echo.skillContribution,
+      statContribution: context.state.progression.echo.statContribution,
+      knowledgeContribution: context.state.progression.echo.knowledgeContribution,
+      bodyState: context.state.bodyState,
+      resourceGrowthLevel: context.state.progression.legacyGrowth.resourceGrowthLevel,
+      classLevel: context.state.progression.legacyGrowth.classLevel,
       xp: context.state.resources.xp.current,
       hp: context.state.resources.hp.current,
       hpMax: context.state.resources.hp.max,
@@ -58,8 +149,7 @@ export function tickPlayer(context: PlayerTickContext): TickResult<PlayerDelta> 
       regionId: context.state.regionId,
       settlementId: context.state.location.settlementId,
       siteLabel: context.state.location.siteLabel,
-      worldMapId: context.state.location.worldMapId,
-      knownSettlementIds: context.state.location.knownSettlementIds
+      worldMapId: context.state.location.worldMapId
     }
   };
 
@@ -126,11 +216,11 @@ export function tickPlayer(context: PlayerTickContext): TickResult<PlayerDelta> 
     }
   };
 
-  const reputationDelta: PlayerDelta = {
-    kind: "reputation",
+  const standingDelta: PlayerDelta = {
+    kind: "standing",
     playerId: context.state.playerId,
     payload: {
-      entries: context.state.reputation.map((entry) => ({
+      entries: context.state.standing.map((entry) => ({
         id: entry.id,
         standingLabel: entry.standingLabel,
         score: entry.score
@@ -139,17 +229,33 @@ export function tickPlayer(context: PlayerTickContext): TickResult<PlayerDelta> 
     }
   };
 
+  const reputationDelta: PlayerDelta = {
+    kind: "reputation",
+    playerId: context.state.playerId,
+    payload: context.state.reputation
+  };
+
   return {
     domain: "player",
     appliedTick: context.clock.tick,
     deltas: [
       resourceDelta,
+      {
+        kind: "body_state",
+        playerId: context.state.playerId,
+        payload: {
+          tick: context.clock.tick,
+          day: context.clock.day,
+          bodyState: context.state.bodyState
+        }
+      },
       originDelta,
       locationDelta,
       currencyDelta,
       inventoryDelta,
       equipmentDelta,
       discoveryDelta,
+      standingDelta,
       reputationDelta
     ],
     emittedEvents: [],

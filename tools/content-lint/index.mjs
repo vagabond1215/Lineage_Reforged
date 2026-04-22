@@ -209,6 +209,7 @@ const ITEM_HARDNESS_VALUES = new Set(["soft", "medium", "hard"]);
 const ITEM_REFINEMENT_DIFFICULTIES = new Set(["low", "moderate", "high"]);
 const ITEM_PROCESSING_COST_IMPACTS = new Set(["light", "moderate", "heavy"]);
 const PLAYER_SKILL_CATEGORIES = new Set(["resource", "survival", "combat", "magic", "crafting", "knowledge", "settlement", "leadership"]);
+const PLAYER_ATTRIBUTE_KEYS = new Set(["STR", "DEX", "AGI", "CON", "VIT", "WIS", "INT", "SPT", "CHA"]);
 const PLAYER_PROGRESS_TRACK_TYPES = new Set([
   "resource",
   "survival",
@@ -526,11 +527,11 @@ const checks = [
     validateProgressionTracks: true
   },
   {
-    file: "packages/content/base/player/knowledge_tracks.json",
+    file: "packages/content/base/player/knowledge_domains.json",
     requiredTopLevel: ["records"],
     requireSlug: false,
     forbidGeoQualifierInName: false,
-    validateKnowledgeTracks: true
+    validateKnowledgeDomains: true
   },
   {
     file: "packages/content/base/player/skill_effects.json",
@@ -545,6 +546,20 @@ const checks = [
     requireSlug: false,
     forbidGeoQualifierInName: false,
     validateTrials: true
+  },
+  {
+    file: "packages/content/base/game/global_rules.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateGlobalRules: true
+  },
+  {
+    file: "packages/content/base/items/consumable_profiles.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateConsumableProfiles: true
   },
   {
     file: "packages/content/base/player/titles.json",
@@ -4467,7 +4482,7 @@ function validateQuestTemplates(relativePath, records) {
       throw new Error(`${relativePath} has invalid rewardProfile on record ${recordId}`);
     }
     ensureInteger(relativePath, recordId, "rewardProfile.coinBase", record.rewardProfile.coinBase, 0);
-    ensureInteger(relativePath, recordId, "rewardProfile.reputationBase", record.rewardProfile.reputationBase, 0);
+    ensureInteger(relativePath, recordId, "rewardProfile.standingBase", record.rewardProfile.standingBase, 0);
     ensureStringArray(relativePath, recordId, "rewardProfile.bonusItemKeys", record.rewardProfile.bonusItemKeys, 0);
     for (const itemKey of record.rewardProfile.bonusItemKeys) {
       if (!ITEM_KEY_PATTERN.test(itemKey)) {
@@ -5894,8 +5909,8 @@ function validatePlayerSkills(relativePath, records) {
     ensureStringArray(relativePath, recordId, "combatHooks.spellTags", record.combatHooks.spellTags ?? [], 0);
     ensureStringArray(relativePath, recordId, "combatHooks.resolutionHooks", record.combatHooks.resolutionHooks ?? [], 0);
     ensureStringArray(relativePath, recordId, "itemHookTags", record.itemHookTags ?? [], 0);
-    if (record.knowledgeTrackId !== undefined) {
-      ensureString(relativePath, recordId, "knowledgeTrackId", record.knowledgeTrackId);
+    if (record.knowledgeDomainId !== undefined) {
+      ensureString(relativePath, recordId, "knowledgeDomainId", record.knowledgeDomainId);
     }
     if (record.milestoneTitleTrackId !== undefined) {
       ensureString(relativePath, recordId, "milestoneTitleTrackId", record.milestoneTitleTrackId);
@@ -6018,17 +6033,43 @@ function validatePlayerTraits(relativePath, records) {
   }
 }
 
-const PLAYER_BACKSTORY_KNOWLEDGE_TRACK_ALLOWLIST = new Set([
-  "knowledge_track.flora",
-  "knowledge_track.fauna",
-  "knowledge_track.minerals",
-  "knowledge_track.resources_universal"
-]);
-
 const PLAYER_BACKSTORY_STARTING_ABILITY_ALLOWLIST = new Map([
   ["backstory.village_hunter", new Set(["ability.ranged.quick_shot"])],
   ["backstory.military_brat", new Set(["ability.command.hold_formation"])]
 ]);
+
+const PLAYER_ATTRIBUTE_KEYS = ["STR", "DEX", "AGI", "CON", "VIT", "WIS", "INT", "SPT", "CHA"];
+
+function validatePlayerAttributeAdjustments(relativePath, recordId, field, value) {
+  if (value === undefined || value === null) {
+    return;
+  }
+
+  if (!isObject(value)) {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+
+  const keys = Object.keys(value);
+  if (keys.length > 3) {
+    throw new Error(`${relativePath} ${field} touches more than 3 attributes on record ${recordId}`);
+  }
+
+  let total = 0;
+  for (const key of keys) {
+    if (!PLAYER_ATTRIBUTE_KEYS.includes(key)) {
+      throw new Error(`${relativePath} ${field}.${key} is not a valid player attribute on record ${recordId}`);
+    }
+    ensureInteger(relativePath, recordId, `${field}.${key}`, value[key], -2);
+    if (Math.abs(value[key]) > 2) {
+      throw new Error(`${relativePath} ${field}.${key} must stay within +/-2 on record ${recordId}`);
+    }
+    total += value[key];
+  }
+
+  if (total !== 0) {
+    throw new Error(`${relativePath} ${field} must be zero-sum on record ${recordId}`);
+  }
+}
 
 function validatePlayerBackstories(relativePath, records) {
   const seenIds = new Set();
@@ -6044,19 +6085,12 @@ function validatePlayerBackstories(relativePath, records) {
     ensureString(relativePath, recordId, "name", record.name);
     ensureString(relativePath, recordId, "summary", record.summary);
     ensureString(relativePath, recordId, "description", record.description);
+    validatePlayerAttributeAdjustments(relativePath, recordId, "attributeAdjustments", record.attributeAdjustments);
     if (!Array.isArray(record.startingSkills) || record.startingSkills.length === 0) {
       throw new Error(`${relativePath} has empty startingSkills on record ${recordId}`);
     }
-    if (!Array.isArray(record.startingKnowledge)) {
-      throw new Error(`${relativePath} has invalid startingKnowledge on record ${recordId}`);
-    }
     if (record.startingAbilityIds !== undefined && (!Array.isArray(record.startingAbilityIds) || record.startingAbilityIds.length > 1)) {
       throw new Error(`${relativePath} startingAbilityIds must contain at most one id on record ${recordId}`);
-    }
-    for (const knowledge of record.startingKnowledge ?? []) {
-      if (!PLAYER_BACKSTORY_KNOWLEDGE_TRACK_ALLOWLIST.has(knowledge.trackId)) {
-        throw new Error(`${relativePath} startingKnowledge '${knowledge.trackId}' is not part of the canonical backstory knowledge-track allowlist on record ${recordId}`);
-      }
     }
     const allowedAbilityIds =
       PLAYER_BACKSTORY_STARTING_ABILITY_ALLOWLIST.get(record.id) ?? new Set();
@@ -6140,7 +6174,7 @@ function validateProgressionTracks(relativePath, records) {
   }
 }
 
-function validateKnowledgeTracks(relativePath, records) {
+function validateKnowledgeDomains(relativePath, records) {
   const seenIds = new Set();
 
   for (const record of records) {
@@ -6151,7 +6185,7 @@ function validateKnowledgeTracks(relativePath, records) {
     }
     seenIds.add(record.id);
 
-    for (const field of ["knowledgeSkillId", "spottingSkillId", "identifySkillId", "universalSupportSkillId"]) {
+    for (const field of ["knowledgeSkillId", "spottingSkillId", "identifySkillId", "generalSupportSkillId"]) {
       if (record[field] !== undefined) {
         ensureString(relativePath, recordId, field, record[field]);
       }
@@ -6218,6 +6252,288 @@ function validateTrials(relativePath, records) {
     if (!Array.isArray(record.rewards) || !Array.isArray(record.penalties)) {
       throw new Error(`${relativePath} must define rewards and penalties arrays on record ${recordId}`);
     }
+    if (record.echoRequirement !== undefined && record.echoRequirement !== null) {
+      validateEchoRequirement(relativePath, recordId, "echoRequirement", record.echoRequirement);
+    }
+  }
+}
+
+function validateEchoRequirement(relativePath, recordId, field, value) {
+  if (!isObject(value)) {
+    throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+  }
+
+  ensureInteger(relativePath, recordId, `${field}.minLevel`, value.minLevel, 0);
+
+  if (value.minEchoAdjusted !== undefined && value.minEchoAdjusted !== null) {
+    ensureFiniteNumber(relativePath, recordId, `${field}.minEchoAdjusted`, value.minEchoAdjusted);
+    if (value.minEchoAdjusted < 0) {
+      throw new Error(`${relativePath} has invalid ${field}.minEchoAdjusted on record ${recordId}`);
+    }
+  }
+}
+
+function validateEchoBalanceGlobalRule(relativePath, recordId, value) {
+  if (!isObject(value)) {
+    throw new Error(`${relativePath} has invalid value on record ${recordId}`);
+  }
+
+  ensureInteger(relativePath, recordId, "value.version", value.version, 1);
+  ensureNumber(relativePath, recordId, "value.levelScale", value.levelScale, Number.EPSILON);
+
+  if (!isObject(value.exponents) || !isObject(value.weights) || !isObject(value.normalization) || !isObject(value.knowledgeComposition) || !isObject(value.diversity)) {
+    throw new Error(`${relativePath} has incomplete echo balance blocks on record ${recordId}`);
+  }
+
+  ensureNumber(relativePath, recordId, "value.exponents.skill", value.exponents.skill, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.exponents.stat", value.exponents.stat, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.exponents.knowledge", value.exponents.knowledge, Number.EPSILON);
+
+  ensureNumber(relativePath, recordId, "value.weights.skills", value.weights.skills, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.weights.stats", value.weights.stats, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.weights.knowledge", value.weights.knowledge, Number.EPSILON);
+  ensureApproxEqual(
+    relativePath,
+    recordId,
+    "value.weights",
+    value.weights.skills + value.weights.stats + value.weights.knowledge,
+    1
+  );
+
+  ensureNumber(relativePath, recordId, "value.normalization.skillReferenceRank", value.normalization.skillReferenceRank, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.normalization.skillReferenceSlots", value.normalization.skillReferenceSlots, Number.EPSILON);
+  ensureNumber(
+    relativePath,
+    recordId,
+    "value.normalization.knowledgeSkillReferenceRank",
+    value.normalization.knowledgeSkillReferenceRank,
+    Number.EPSILON
+  );
+  ensureNumber(
+    relativePath,
+    recordId,
+    "value.normalization.knowledgeSkillReferenceSlots",
+    value.normalization.knowledgeSkillReferenceSlots,
+    Number.EPSILON
+  );
+  ensureNumber(
+    relativePath,
+    recordId,
+    "value.normalization.knowledgeDomainReferenceLevel",
+    value.normalization.knowledgeDomainReferenceLevel,
+    Number.EPSILON
+  );
+  ensureNumber(
+    relativePath,
+    recordId,
+    "value.normalization.knowledgeDomainReferenceSlots",
+    value.normalization.knowledgeDomainReferenceSlots,
+    Number.EPSILON
+  );
+  ensureNumber(relativePath, recordId, "value.normalization.statReferenceDelta", value.normalization.statReferenceDelta, Number.EPSILON);
+
+  if (!Array.isArray(value.normalization.trackedAttributeKeys) || value.normalization.trackedAttributeKeys.length === 0) {
+    throw new Error(`${relativePath} has empty value.normalization.trackedAttributeKeys on record ${recordId}`);
+  }
+
+  const seenAttributeKeys = new Set();
+  for (const attributeKey of value.normalization.trackedAttributeKeys) {
+    if (!PLAYER_ATTRIBUTE_KEYS.has(attributeKey)) {
+      throw new Error(`${relativePath} has invalid value.normalization.trackedAttributeKeys entry '${attributeKey}' on record ${recordId}`);
+    }
+    if (seenAttributeKeys.has(attributeKey)) {
+      throw new Error(`${relativePath} has duplicate value.normalization.trackedAttributeKeys entry '${attributeKey}' on record ${recordId}`);
+    }
+    seenAttributeKeys.add(attributeKey);
+  }
+
+  ensureNumber(relativePath, recordId, "value.knowledgeComposition.skillShare", value.knowledgeComposition.skillShare, 0);
+  ensureNumber(relativePath, recordId, "value.knowledgeComposition.trackShare", value.knowledgeComposition.trackShare, 0);
+  ensureApproxEqual(
+    relativePath,
+    recordId,
+    "value.knowledgeComposition",
+    value.knowledgeComposition.skillShare + value.knowledgeComposition.trackShare,
+    1
+  );
+
+  ensureNumber(relativePath, recordId, "value.diversity.thresholdRank", value.diversity.thresholdRank, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.diversity.bonusPerSkill", value.diversity.bonusPerSkill, 0);
+  ensureNumber(relativePath, recordId, "value.diversity.maxMultiplier", value.diversity.maxMultiplier, 1);
+}
+
+function validateBodyStateBalanceGlobalRule(relativePath, recordId, value) {
+  if (!isObject(value)) {
+    throw new Error(`${relativePath} has invalid body-state balance value on record ${recordId}`);
+  }
+
+  if (!isObject(value.targets) || !isObject(value.energy) || !isObject(value.hydration) || !isObject(value.fatigue) || !isObject(value.intoxication) || !isObject(value.starvation) || !isObject(value.recovery)) {
+    throw new Error(`${relativePath} body-state balance is missing one or more required blocks on record ${recordId}`);
+  }
+
+  ensureNumber(relativePath, recordId, "value.targets.dailyCalories", value.targets.dailyCalories, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.targets.dailyHydration", value.targets.dailyHydration, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.targets.proteinBaseline", value.targets.proteinBaseline, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.targets.proteinLoadScale", value.targets.proteinLoadScale, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.energy.quickWeight", value.energy.quickWeight, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.energy.storedWeight", value.energy.storedWeight, Number.EPSILON);
+  ensureApproxEqual(
+    relativePath,
+    recordId,
+    "value.energy.weights",
+    value.energy.quickWeight + value.energy.storedWeight,
+    1
+  );
+  ensureNumber(relativePath, recordId, "value.hydration.passiveLossPerTick", value.hydration.passiveLossPerTick, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.fatigue.carryoverThreshold", value.fatigue.carryoverThreshold, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.intoxication.decayPerTick", value.intoxication.decayPerTick, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.starvation.dailyRecoveryWhenCovered", value.starvation.dailyRecoveryWhenCovered, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.starvation.maxDeficitDays", value.starvation.maxDeficitDays, Number.EPSILON);
+  for (const field of ["none", "basic", "proper", "secure_indoor"]) {
+    ensureNumber(relativePath, recordId, `value.recovery.campMultipliers.${field}`, value.recovery.campMultipliers?.[field], Number.EPSILON);
+  }
+  for (const field of ["unsafe", "exposed", "stable", "secure"]) {
+    ensureNumber(relativePath, recordId, `value.recovery.safetyMultipliers.${field}`, value.recovery.safetyMultipliers?.[field], Number.EPSILON);
+  }
+}
+
+function validateStatGrowthBalanceGlobalRule(relativePath, recordId, value) {
+  if (!isObject(value)) {
+    throw new Error(`${relativePath} has invalid stat growth balance value on record ${recordId}`);
+  }
+
+  ensureInteger(relativePath, recordId, "value.version", value.version, 1);
+
+  for (const field of ["low", "moderate", "high", "extreme"]) {
+    ensureNumber(relativePath, recordId, `value.intensityMultipliers.${field}`, value.intensityMultipliers?.[field], Number.EPSILON);
+  }
+
+  for (const attributeKey of PLAYER_ATTRIBUTE_KEYS) {
+    const threshold = value.thresholds?.[attributeKey];
+    if (!isObject(threshold)) {
+      throw new Error(`${relativePath} is missing value.thresholds.${attributeKey} on record ${recordId}`);
+    }
+    ensureNumber(relativePath, recordId, `value.thresholds.${attributeKey}.loadThreshold`, threshold.loadThreshold, Number.EPSILON);
+    ensureNumber(relativePath, recordId, `value.thresholds.${attributeKey}.progressPerPoint`, threshold.progressPerPoint, Number.EPSILON);
+    ensureNumber(relativePath, recordId, `value.thresholds.${attributeKey}.dailySoftCap`, threshold.dailySoftCap, Number.EPSILON);
+    ensureNumber(relativePath, recordId, `value.thresholds.${attributeKey}.growthScale`, threshold.growthScale, Number.EPSILON);
+    ensureNumber(relativePath, recordId, `value.thresholds.${attributeKey}.growthExponent`, threshold.growthExponent, Number.EPSILON);
+  }
+
+  ensureNumber(relativePath, recordId, "value.saturation.startMultiplier", value.saturation?.startMultiplier, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.saturation.hardCapMultiplier", value.saturation?.hardCapMultiplier, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.saturation.exponent", value.saturation?.exponent, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.recoveryCapacity.base", value.recoveryCapacity?.base, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.recoveryCapacity.constitutionWeight", value.recoveryCapacity?.constitutionWeight, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.recoveryCapacity.vitalityWeight", value.recoveryCapacity?.vitalityWeight, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.recoveryCapacity.wisdomWeight", value.recoveryCapacity?.wisdomWeight, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.recoveryCapacity.spiritWeight", value.recoveryCapacity?.spiritWeight, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.diminishing.trivialCutoff", value.diminishing?.trivialCutoff, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.diminishing.dailyExponent", value.diminishing?.dailyExponent, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.diminishing.varietyBonusPerSource", value.diminishing?.varietyBonusPerSource, 0);
+  ensureNumber(relativePath, recordId, "value.diminishing.maxVarietyBonus", value.diminishing?.maxVarietyBonus, 0);
+  ensureNumber(relativePath, recordId, "value.diminishing.loadDecayWithoutRecovery", value.diminishing?.loadDecayWithoutRecovery, 0);
+  ensureNumber(relativePath, recordId, "value.diminishing.postRecoveryRetention", value.diminishing?.postRecoveryRetention, 0);
+  ensureNumber(relativePath, recordId, "value.rng.minimum", value.rng?.minimum, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.rng.maximum", value.rng?.maximum, Number.EPSILON);
+  if (value.rng.minimum > value.rng.maximum) {
+    throw new Error(`${relativePath} value.rng.minimum must not exceed value.rng.maximum on record ${recordId}`);
+  }
+  ensureNumber(relativePath, recordId, "value.tension.threshold", value.tension?.threshold, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.tension.gapStart", value.tension?.gapStart, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.tension.precisionCap", value.tension?.precisionCap, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.tension.precisionPerGap", value.tension?.precisionPerGap, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.tension.mobilityCap", value.tension?.mobilityCap, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.tension.mobilityPerGap", value.tension?.mobilityPerGap, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.tension.stabilityCap", value.tension?.stabilityCap, Number.EPSILON);
+  ensureNumber(relativePath, recordId, "value.tension.stabilityPerGap", value.tension?.stabilityPerGap, Number.EPSILON);
+}
+
+function validateConsumableProfiles(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate consumable profile id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    ensureNumber(relativePath, recordId, "calories", record.calories, 0);
+    ensureNumber(relativePath, recordId, "protein", record.protein, 0);
+    ensureNumber(relativePath, recordId, "carbs", record.carbs, 0);
+    ensureNumber(relativePath, recordId, "fat", record.fat, 0);
+    if (record.hydration !== undefined) {
+      ensureNumber(relativePath, recordId, "hydration", record.hydration, 0);
+    }
+    if (record.intoxication !== undefined) {
+      ensureNumber(relativePath, recordId, "intoxication", record.intoxication, 0);
+    }
+    if (record.useVerb !== undefined) {
+      ensureString(relativePath, recordId, "useVerb", record.useVerb);
+    }
+  }
+}
+
+function validateGlobalRules(relativePath, records) {
+  const seenIds = new Set();
+  let hasEchoBalanceRule = false;
+  let hasBodyStateBalanceRule = false;
+  let hasStatGrowthBalanceRule = false;
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate global rule id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    if (!("value" in record)) {
+      throw new Error(`${relativePath} is missing value on record ${recordId}`);
+    }
+
+    if (record.id === "rule.echo_balance") {
+      hasEchoBalanceRule = true;
+      validateEchoBalanceGlobalRule(relativePath, recordId, record.value);
+      continue;
+    }
+
+    if (record.id === "rule.body_state_balance") {
+      hasBodyStateBalanceRule = true;
+      validateBodyStateBalanceGlobalRule(relativePath, recordId, record.value);
+      continue;
+    }
+
+    if (record.id === "rule.stat_growth_balance") {
+      hasStatGrowthBalanceRule = true;
+      validateStatGrowthBalanceGlobalRule(relativePath, recordId, record.value);
+      continue;
+    }
+
+    if (record.id === "rule.enchanter_profession") {
+      if (!isObject(record.value)) {
+        throw new Error(`${relativePath} has invalid value on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, "value.professionId", record.value.professionId);
+      validateEchoRequirement(relativePath, recordId, "value.echoRequirement", record.value.echoRequirement);
+      continue;
+    }
+
+    if (isObject(record.value) && record.value.echoRequirement !== undefined && record.value.echoRequirement !== null) {
+      validateEchoRequirement(relativePath, recordId, "value.echoRequirement", record.value.echoRequirement);
+    }
+  }
+
+  if (!hasEchoBalanceRule) {
+    throw new Error(`${relativePath} is missing required global rule 'rule.echo_balance'`);
+  }
+  if (!hasBodyStateBalanceRule) {
+    throw new Error(`${relativePath} is missing required global rule 'rule.body_state_balance'`);
+  }
+  if (!hasStatGrowthBalanceRule) {
+    throw new Error(`${relativePath} is missing required global rule 'rule.stat_growth_balance'`);
   }
 }
 
@@ -6315,8 +6631,14 @@ function validateRecords(relativePath, parsed, check) {
   if (check.validateProgressionTracks) {
     validateProgressionTracks(relativePath, parsed.records);
   }
-  if (check.validateKnowledgeTracks) {
-    validateKnowledgeTracks(relativePath, parsed.records);
+  if (check.validateKnowledgeDomains) {
+    validateKnowledgeDomains(relativePath, parsed.records);
+  }
+  if (check.validateGlobalRules) {
+    validateGlobalRules(relativePath, parsed.records);
+  }
+  if (check.validateConsumableProfiles) {
+    validateConsumableProfiles(relativePath, parsed.records);
   }
   if (check.validateSkillEffects) {
     validateSkillEffects(relativePath, parsed.records);
@@ -8377,7 +8699,7 @@ async function validatePlayerContentAgainstDependencies() {
   const backstoryPath = path.join(ROOT, "packages/content/base/player/backstories.json");
   const startingBundlePath = path.join(ROOT, "packages/content/base/player/starting_bundles.json");
   const progressionTrackPath = path.join(ROOT, "packages/content/base/player/progression_tracks.json");
-  const knowledgeTrackPath = path.join(ROOT, "packages/content/base/player/knowledge_tracks.json");
+  const knowledgeDomainPath = path.join(ROOT, "packages/content/base/player/knowledge_domains.json");
   const skillEffectPath = path.join(ROOT, "packages/content/base/player/skill_effects.json");
   const trialPath = path.join(ROOT, "packages/content/base/player/trials.json");
   const titlePath = path.join(ROOT, "packages/content/base/player/titles.json");
@@ -8391,7 +8713,7 @@ async function validatePlayerContentAgainstDependencies() {
   const backstoriesParsed = JSON.parse(await readFile(backstoryPath, "utf8"));
   const startingBundlesParsed = JSON.parse(await readFile(startingBundlePath, "utf8"));
   const progressionParsed = JSON.parse(await readFile(progressionTrackPath, "utf8"));
-  const knowledgeParsed = JSON.parse(await readFile(knowledgeTrackPath, "utf8"));
+  const knowledgeParsed = JSON.parse(await readFile(knowledgeDomainPath, "utf8"));
   const skillEffectsParsed = JSON.parse(await readFile(skillEffectPath, "utf8"));
   const trialsParsed = JSON.parse(await readFile(trialPath, "utf8"));
   const titlesParsed = JSON.parse(await readFile(titlePath, "utf8"));
@@ -8401,7 +8723,7 @@ async function validatePlayerContentAgainstDependencies() {
   const skillIds = new Set(skillsParsed.records.map((record) => record.id));
   const abilityIds = new Set(abilitiesParsed.records.map((record) => record.id));
   const progressionTrackIds = new Set(progressionParsed.records.map((record) => record.id));
-  const knowledgeTrackIds = new Set(knowledgeParsed.records.map((record) => record.id));
+  const knowledgeDomainIds = new Set(knowledgeParsed.records.map((record) => record.id));
   const skillEffectIds = new Set(skillEffectsParsed.records.map((record) => record.id));
   const trialIds = new Set(trialsParsed.records.map((record) => record.id));
   const itemIds = new Set(itemsParsed.records.map((record) => record.id));
@@ -8423,8 +8745,8 @@ async function validatePlayerContentAgainstDependencies() {
     if (!progressionTrackIds.has(record.progressionTrackId)) {
       throw new Error(`packages/content/base/player/skills.json progressionTrackId '${record.progressionTrackId}' missing progression track on record ${record.id}`);
     }
-    if (record.knowledgeTrackId !== undefined && !knowledgeTrackIds.has(record.knowledgeTrackId)) {
-      throw new Error(`packages/content/base/player/skills.json knowledgeTrackId '${record.knowledgeTrackId}' missing knowledge track on record ${record.id}`);
+    if (record.knowledgeDomainId !== undefined && !knowledgeDomainIds.has(record.knowledgeDomainId)) {
+      throw new Error(`packages/content/base/player/skills.json knowledgeDomainId '${record.knowledgeDomainId}' missing knowledge track on record ${record.id}`);
     }
     for (const skillEffectId of record.combatHooks?.skillEffectIds ?? []) {
       if (!skillEffectIds.has(skillEffectId)) {
@@ -8481,11 +8803,6 @@ async function validatePlayerContentAgainstDependencies() {
         throw new Error(`packages/content/base/player/backstories.json startingSkills '${skill.skillId}' missing skill definition on record ${record.id}`);
       }
     }
-    for (const knowledge of record.startingKnowledge ?? []) {
-      if (!knowledgeTrackIds.has(knowledge.trackId)) {
-        throw new Error(`packages/content/base/player/backstories.json startingKnowledge '${knowledge.trackId}' missing knowledge track on record ${record.id}`);
-      }
-    }
     for (const abilityId of record.startingAbilityIds ?? []) {
       if (!abilityIds.has(abilityId)) {
         throw new Error(`packages/content/base/player/backstories.json startingAbilityIds '${abilityId}' missing ability definition on record ${record.id}`);
@@ -8509,9 +8826,9 @@ async function validatePlayerContentAgainstDependencies() {
   }
 
   for (const record of knowledgeParsed.records) {
-    for (const field of ["knowledgeSkillId", "spottingSkillId", "identifySkillId", "universalSupportSkillId"]) {
+    for (const field of ["knowledgeSkillId", "spottingSkillId", "identifySkillId", "generalSupportSkillId"]) {
       if (record[field] !== undefined && !skillIds.has(record[field])) {
-        throw new Error(`packages/content/base/player/knowledge_tracks.json ${field} '${record[field]}' missing skill definition on record ${record.id}`);
+        throw new Error(`packages/content/base/player/knowledge_domains.json ${field} '${record[field]}' missing skill definition on record ${record.id}`);
       }
     }
   }
@@ -8965,6 +9282,8 @@ main().catch((error) => {
   console.error("content-lint: failed", error.message);
   process.exitCode = 1;
 });
+
+
 
 
 

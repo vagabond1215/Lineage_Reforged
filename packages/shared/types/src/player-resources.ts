@@ -14,6 +14,23 @@ import type {
 
 export const PLAYER_RESOURCE_KEYS: PlayerResourceKey[] = ["hp", "mp", "stamina"];
 
+const RESOURCE_MAX_ATTRIBUTE_BASELINE = 10;
+
+const RESOURCE_MAX_ATTRIBUTE_SCALING = {
+  hp: {
+    attributes: ["CON", "VIT"] as const,
+    perPoint: 4
+  },
+  mp: {
+    attributes: ["INT", "SPT"] as const,
+    perPoint: 4
+  },
+  stamina: {
+    attributes: ["AGI", "CON", "VIT"] as const,
+    perPoint: 3
+  }
+} as const;
+
 const MAX_RESOURCE_HISTORY = 48;
 
 function createEmptyResourceVector(): PlayerResourceGrowthVector {
@@ -56,6 +73,34 @@ function addResourceVectors(
 
 function clampValue(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
+}
+
+function calculateAttributeResourceMaxAdjustments(
+  state: Pick<PlayerState, "attributes">
+): PlayerResourceGrowthVector {
+  return {
+    hp: RESOURCE_MAX_ATTRIBUTE_SCALING.hp.attributes.reduce(
+      (total, attributeKey) =>
+        total +
+        (state.attributes[attributeKey] - RESOURCE_MAX_ATTRIBUTE_BASELINE) *
+          RESOURCE_MAX_ATTRIBUTE_SCALING.hp.perPoint,
+      0
+    ),
+    mp: RESOURCE_MAX_ATTRIBUTE_SCALING.mp.attributes.reduce(
+      (total, attributeKey) =>
+        total +
+        (state.attributes[attributeKey] - RESOURCE_MAX_ATTRIBUTE_BASELINE) *
+          RESOURCE_MAX_ATTRIBUTE_SCALING.mp.perPoint,
+      0
+    ),
+    stamina: RESOURCE_MAX_ATTRIBUTE_SCALING.stamina.attributes.reduce(
+      (total, attributeKey) =>
+        total +
+        (state.attributes[attributeKey] - RESOURCE_MAX_ATTRIBUTE_BASELINE) *
+          RESOURCE_MAX_ATTRIBUTE_SCALING.stamina.perPoint,
+      0
+    )
+  };
 }
 
 function isModifierActive(modifier: PlayerResourceModifierState, tick: number): boolean {
@@ -199,8 +244,10 @@ export function createEmptyPlayerResourceRuntimeState(): PlayerResourceRuntimeSt
 }
 
 export function calculateNaturalResourceRegen(
-  state: Pick<PlayerState, "attributes" | "originProfile">
+  state: Pick<PlayerState, "attributes" | "originProfile" | "bodyState">
 ): PlayerResourceGrowthVector {
+  const staminaRegenMultiplier = state.bodyState.resolved.staminaRegenMultiplier;
+
   return {
     hp: Math.max(
       0,
@@ -228,22 +275,29 @@ export function calculateNaturalResourceRegen(
     ),
     stamina: Math.max(
       0,
-      2 +
-        Math.floor(
-          (
-            state.attributes.AGI +
-            state.attributes.CON +
-            state.attributes.VIT +
-            state.originProfile.lineageResourceGrowthPerLevel.stamina +
-            state.originProfile.classResourceGrowthPerClassLevel.stamina
-          ) / 14
-        )
+      Math.round(
+        (
+          2 +
+          Math.floor(
+            (
+              state.attributes.AGI +
+              state.attributes.CON +
+              state.attributes.VIT +
+              state.originProfile.lineageResourceGrowthPerLevel.stamina +
+              state.originProfile.classResourceGrowthPerClassLevel.stamina
+            ) / 14
+          )
+        ) * staminaRegenMultiplier
+      )
     )
   };
 }
 
 export function resolvePlayerResources(
-  state: Pick<PlayerState, "playerId" | "attributes" | "resources" | "originProfile" | "equipment" | "resourceRuntime">,
+  state: Pick<
+    PlayerState,
+    "playerId" | "attributes" | "resources" | "originProfile" | "equipment" | "resourceRuntime" | "bodyState"
+  >,
   events: ReadonlyArray<GameEventEnvelope>,
   tick: number
 ): {
@@ -312,14 +366,19 @@ export function resolvePlayerResources(
   };
 
   const resolvedMaxima: PlayerResourceGrowthVector = createEmptyResourceVector();
+  const attributeMaxAdjustments = calculateAttributeResourceMaxAdjustments(state);
 
   for (const resource of PLAYER_RESOURCE_KEYS) {
-    const baseMax = state.originProfile.resolvedResourceMaxima[resource];
+    const baseMax =
+      state.originProfile.resolvedResourceMaxima[resource] +
+      attributeMaxAdjustments[resource];
     const flatBonus = maxFlat[resource];
     const percentBonus = maxPercent[resource];
+    const staminaMaxMultiplier =
+      resource === "stamina" ? state.bodyState.resolved.staminaMaxMultiplier : 1;
     resolvedMaxima[resource] = Math.max(
       1,
-      Math.round((baseMax + flatBonus) * (1 + percentBonus / 100))
+      Math.round((baseMax + flatBonus) * (1 + percentBonus / 100) * staminaMaxMultiplier)
     );
     nextResources[resource].max = resolvedMaxima[resource];
   }

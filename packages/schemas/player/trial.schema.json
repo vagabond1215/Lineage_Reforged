@@ -46,6 +46,15 @@
           "type": { "type": "string" }
         }
       }
+    },
+    "echoRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minLevel"],
+      "properties": {
+        "minLevel": { "type": "integer", "minimum": 0 },
+        "minEchoAdjusted": { "type": "number", "minimum": 0 }
+      }
     }
   }
 }

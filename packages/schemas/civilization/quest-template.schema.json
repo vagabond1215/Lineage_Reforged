@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
@@ -116,7 +116,7 @@
             "additionalProperties": false,
             "required": [
               "coinBase",
-              "reputationBase",
+              "standingBase",
               "bonusItemKeys"
             ],
             "properties": {
@@ -124,7 +124,7 @@
                 "type": "integer",
                 "minimum": 0
               },
-              "reputationBase": {
+              "standingBase": {
                 "type": "integer",
                 "minimum": 0
               },
@@ -134,11 +134,199 @@
                   "type": "string",
                   "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
                 }
+              },
+              "reputationAwards": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/reputationAward"
+                }
               }
             }
           }
         }
       }
     }
+  },
+  "$defs": {
+    "reputationAward": {
+      "oneOf": [
+        { "$ref": "#/$defs/fameReputationAward" },
+        { "$ref": "#/$defs/notorietyReputationAward" }
+      ]
+    },
+    "settlementIdArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+      }
+    },
+    "fameReputationAward": {
+      "oneOf": [
+        { "$ref": "#/$defs/localFameReputationAward" },
+        { "$ref": "#/$defs/regionalFameReputationAward" },
+        { "$ref": "#/$defs/continentalFameReputationAward" },
+        { "$ref": "#/$defs/worldFameReputationAward" }
+      ]
+    },
+    "localFameReputationAward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axis", "branchId", "directEarnedScope", "baseValue", "originSettlementIds"],
+      "properties": {
+        "axis": { "const": "fame" },
+        "branchId": { "type": "string", "enum": ["civic", "folk", "trade", "martial"] },
+        "directEarnedScope": { "const": "local" },
+        "baseValue": { "type": "number", "minimum": 0 },
+        "originSettlementIds": { "$ref": "#/$defs/settlementIdArray" }
+      }
+    },
+    "regionalFameReputationAward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axis", "branchId", "directEarnedScope", "baseValue", "originSettlementIds"],
+      "properties": {
+        "axis": { "const": "fame" },
+        "branchId": { "type": "string", "enum": ["heroic", "martial", "political", "commercial"] },
+        "directEarnedScope": { "const": "regional" },
+        "baseValue": { "type": "number", "minimum": 0 },
+        "originSettlementIds": { "$ref": "#/$defs/settlementIdArray" }
+      }
+    },
+    "continentalFameReputationAward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axis", "branchId", "directEarnedScope", "baseValue", "originSettlementIds"],
+      "properties": {
+        "axis": { "const": "fame" },
+        "branchId": { "type": "string", "enum": ["historical", "legendary", "political"] },
+        "directEarnedScope": { "const": "continental" },
+        "baseValue": { "type": "number", "minimum": 0 },
+        "originSettlementIds": { "$ref": "#/$defs/settlementIdArray" }
+      }
+    },
+    "worldFameReputationAward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axis", "branchId", "directEarnedScope", "baseValue"],
+      "properties": {
+        "axis": { "const": "fame" },
+        "branchId": { "type": "string", "enum": ["legendary", "mythic"] },
+        "directEarnedScope": { "const": "world" },
+        "baseValue": { "type": "number", "minimum": 0 },
+        "originSettlementIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "notorietyReputationAward": {
+      "oneOf": [
+        { "$ref": "#/$defs/scopedNotorietyReputationAward" },
+        { "$ref": "#/$defs/worldNotorietyReputationAward" }
+      ]
+    },
+    "scopedNotorietyReputationAward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "axis",
+        "categoryId",
+        "severity",
+        "directEarnedScope",
+        "baseValue",
+        "originSettlementIds",
+        "exposureRequirement",
+        "attributionRequired",
+        "allowCredibleLink"
+      ],
+      "properties": {
+        "axis": { "const": "notoriety" },
+        "categoryId": {
+          "type": "string",
+          "enum": ["theft", "fraud", "violent", "murder", "arson", "banditry", "treason"]
+        },
+        "severity": { "type": "string", "enum": ["minor", "standard", "major"] },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mass",
+              "organized",
+              "repeat",
+              "public",
+              "against_nobility",
+              "against_temple",
+              "wartime",
+              "ritual"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "directEarnedScope": { "type": "string", "enum": ["local", "regional", "continental"] },
+        "baseValue": { "type": "number", "minimum": 0 },
+        "originSettlementIds": { "$ref": "#/$defs/settlementIdArray" },
+        "exposureRequirement": { "type": "string", "enum": ["public", "witnessed_or_reported", "evidenced"] },
+        "attributionRequired": { "type": "boolean" },
+        "allowCredibleLink": { "type": "boolean" }
+      }
+    },
+    "worldNotorietyReputationAward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "axis",
+        "categoryId",
+        "severity",
+        "directEarnedScope",
+        "baseValue",
+        "exposureRequirement",
+        "attributionRequired",
+        "allowCredibleLink"
+      ],
+      "properties": {
+        "axis": { "const": "notoriety" },
+        "categoryId": {
+          "type": "string",
+          "enum": ["theft", "fraud", "violent", "murder", "arson", "banditry", "treason"]
+        },
+        "severity": { "type": "string", "enum": ["minor", "standard", "major"] },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mass",
+              "organized",
+              "repeat",
+              "public",
+              "against_nobility",
+              "against_temple",
+              "wartime",
+              "ritual"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "directEarnedScope": { "const": "world" },
+        "baseValue": { "type": "number", "minimum": 0 },
+        "originSettlementIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "exposureRequirement": { "type": "string", "enum": ["public", "witnessed_or_reported", "evidenced"] },
+        "attributionRequired": { "type": "boolean" },
+        "allowCredibleLink": { "type": "boolean" }
+      }
+    }
   }
 }
+

@@ -3,20 +3,31 @@
   "title": "BackstoryRecord",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "name", "summary", "description", "startingSkills", "startingKnowledge"],
+  "required": ["id", "name", "summary", "description", "startingSkills"],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
     "summary": { "type": "string" },
     "description": { "type": "string" },
+    "attributeAdjustments": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "STR": { "type": "integer" },
+        "DEX": { "type": "integer" },
+        "AGI": { "type": "integer" },
+        "CON": { "type": "integer" },
+        "VIT": { "type": "integer" },
+        "WIS": { "type": "integer" },
+        "INT": { "type": "integer" },
+        "SPT": { "type": "integer" },
+        "CHA": { "type": "integer" }
+      }
+    },
     "startingSkills": {
       "type": "array",
       "items": { "$ref": "#/$defs/skillLevel" },
       "minItems": 1
-    },
-    "startingKnowledge": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/knowledgeLevel" }
     },
     "startingAbilityIds": {
       "type": "array",
@@ -32,15 +43,6 @@
       "required": ["skillId", "level"],
       "properties": {
         "skillId": { "type": "string" },
-        "level": { "type": "integer", "minimum": 1 }
-      }
-    },
-    "knowledgeLevel": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["trackId", "level"],
-      "properties": {
-        "trackId": { "type": "string" },
         "level": { "type": "integer", "minimum": 1 }
       }
     }

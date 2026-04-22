@@ -1,5 +1,11 @@
 import { useState, type ReactNode } from 'react';
-import type { NotificationItem, StatMeter } from '../types';
+import type {
+  ConditionStripViewModel,
+  NotificationItem,
+  ReadinessCardViewModel,
+  StatMeter
+} from '../types';
+import { ConditionStrip } from './body-state/ConditionStrip';
 import { NotificationBell } from './NotificationBell';
 import { Icon } from './icons';
 import { ProgressBar } from './ui/ProgressBar';
@@ -19,6 +25,8 @@ type TopStatusBarProps = {
   trackedQuest: string;
   trackedQuestDetail?: TrackedQuestDetail | null;
   activityTag?: string;
+  conditionStrip: ConditionStripViewModel;
+  readinessCard?: ReadinessCardViewModel;
   meters: StatMeter[];
   notifications: NotificationItem[];
   settingsOpen: boolean;
@@ -35,6 +43,8 @@ export function TopStatusBar({
   trackedQuest,
   trackedQuestDetail,
   activityTag,
+  conditionStrip,
+  readinessCard,
   meters,
   notifications,
   settingsOpen,
@@ -42,11 +52,26 @@ export function TopStatusBar({
   settingsContent
 }: TopStatusBarProps) {
   const [questOpen, setQuestOpen] = useState(false);
+  const [conditionOpen, setConditionOpen] = useState(false);
   const activeQuestLabel = trackedQuest?.trim() ? trackedQuest : 'No active quest';
   const canExpandQuest =
     Boolean(trackedQuestDetail?.summary) ||
     Boolean(trackedQuestDetail?.objectives.length) ||
     Boolean(trackedQuestDetail?.relatedLocations.length);
+  const topBarButtonClass =
+    'border-slate-400/25 bg-[rgba(54,63,75,0.9)] text-slate-100 shadow-[0_10px_24px_rgba(2,6,23,0.22)] transition hover:border-slate-300/32 hover:bg-[rgba(69,80,95,0.96)]';
+  const strongestConditionSeverity =
+    [...conditionStrip.primary, ...conditionStrip.secondary].some((pill) => pill.severity === 'critical')
+      ? 'critical'
+      : [...conditionStrip.primary, ...conditionStrip.secondary].some((pill) => pill.severity === 'warning')
+        ? 'warning'
+        : 'normal';
+  const conditionButtonClass =
+    strongestConditionSeverity === 'critical'
+      ? 'border-rose-300/28 bg-rose-200/12 text-rose-50'
+      : strongestConditionSeverity === 'warning'
+        ? 'border-amber-300/24 bg-amber-200/10 text-amber-50'
+        : 'border-white/10 bg-white/5 text-slate-200';
 
   return (
     <header
@@ -76,6 +101,35 @@ export function TopStatusBar({
                 {activityTag}
               </div>
             )}
+            <div className="mt-2 hidden md:block">
+              <ConditionStrip strip={conditionStrip} />
+            </div>
+            <div className="relative mt-2 md:hidden">
+              <button
+                type="button"
+                onClick={() => setConditionOpen((current) => !current)}
+                className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] transition ${conditionButtonClass}`}
+              >
+                {conditionStrip.expandedByDefault ? 'Condition Alert' : conditionStrip.collapsedLabel}
+              </button>
+              {conditionOpen && (
+                <div className="absolute left-1/2 top-[calc(100%+12px)] z-[120] w-[min(24rem,calc(100vw-2rem))] -translate-x-1/2 rounded-[24px] border border-white/10 bg-slate-950/96 p-4 shadow-2xl backdrop-blur-xl">
+                  <ConditionStrip strip={conditionStrip} />
+                  {readinessCard && readinessCard.recommendedActions.length > 0 && (
+                    <div className="mt-4 rounded-[18px] border border-white/8 bg-white/5 p-3">
+                      <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Recommended Actions</div>
+                      <div className="mt-2 space-y-2">
+                        {readinessCard.recommendedActions.map((action) => (
+                          <div key={action.id} className="text-sm text-slate-200">
+                            {action.label}: <span className="text-slate-400">{action.detail}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-3">
@@ -84,7 +138,7 @@ export function TopStatusBar({
               <button
                 type="button"
                 onClick={onToggleSettings}
-                className="rounded-full border border-white/10 bg-white/5 p-3 text-slate-200 transition hover:bg-white/10"
+                className={`rounded-full border p-3 ${topBarButtonClass}`}
                 aria-label="Open settings"
               >
                 <Icon name="gear" className="h-5 w-5" />
@@ -109,6 +163,7 @@ export function TopStatusBar({
                   value={meter.current}
                   max={meter.max}
                   color={meter.color}
+                  visualState={meter.visualState}
                 />
               ))}
             </div>
@@ -120,7 +175,7 @@ export function TopStatusBar({
               onClick={() => canExpandQuest && setQuestOpen((current) => !current)}
               className={`w-full rounded-[22px] border px-4 py-3 text-left transition ${
                 canExpandQuest
-                  ? 'border-white/10 bg-white/5 text-slate-100 hover:bg-white/10'
+                  ? topBarButtonClass
                   : 'cursor-default border-white/8 bg-black/20 text-slate-400'
               }`}
               aria-expanded={questOpen}

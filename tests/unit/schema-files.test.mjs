@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+﻿import { readFile } from "node:fs/promises";
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -40,7 +40,7 @@ const schemaFiles = [
   "packages/schemas/player/equipment.schema.json",
   "packages/schemas/player/skill.schema.json",
   "packages/schemas/player/progression-track.schema.json",
-  "packages/schemas/player/knowledge-track.schema.json",
+  "packages/schemas/player/knowledge-domain.schema.json",
   "packages/schemas/player/skill-effect.schema.json",
   "packages/schemas/player/title.schema.json",
   "packages/schemas/player/spell.schema.json",
@@ -55,6 +55,7 @@ const schemaFiles = [
   "packages/schemas/game/global-rule.schema.json",
   "packages/schemas/world/encounter-template.schema.json",
   "packages/schemas/items/item.schema.json",
+  "packages/schemas/items/consumable-profile.schema.json",
   "packages/schemas/world/spawn-profile.schema.json"
 ];
 
@@ -67,3 +68,4 @@ for (const schemaFile of schemaFiles) {
     assert.equal(typeof parsed.type, "string");
   });
 }
+

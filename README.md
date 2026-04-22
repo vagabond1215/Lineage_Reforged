@@ -1,6 +1,12 @@
-# Cataclysm RPG Foundation
+# Echoes of Legacy RPG Foundation
 
 TypeScript-first, headless simulation scaffold for a survival / builder / RPG project.
+
+## Codex Workspace
+
+- The active local Codex workspace root is `C:\Codex\EoL`.
+- When recreating or updating the Codex project entry, point it at `C:\Codex\EoL` so file explorer, terminal, and workspace permissions resolve to the moved repository.
+- The previous OneDrive checkout path is not the active workspace source of truth.
 
 ## Project Layout
 
@@ -62,7 +68,7 @@ Example design intent already captured in content:
 
 Use the root launchers for the current playable UI flow:
 
-- Double-click `Play Cataclysm.cmd` to start the RPG UI from the project root and open it in your default browser
+- Double-click `Play Echoes of Legacy.cmd` to start the RPG UI from the project root and open it in your default browser
 
 Launcher logs are written under `logs/`.
 
@@ -73,13 +79,15 @@ Launcher logs are written under `logs/`.
 - `npm run tool:scenario`
 - `npm test`
 
+On Windows PowerShell, use `npm.cmd` in place of `npm` if the PowerShell execution policy blocks the npm shim.
+
 ## Scope Note
 
 This repository is still a foundation phase. Core data models, validation, and a first-pass civilization tick for economy/quest generation are in place, while full fulfillment, stockpile movement, combat, and balancing logic continue to be implemented incrementally.
 
 ## Future Content Backlog
 
-Deferred systems and intentionally held-off content live in [docs/future_content_backlog.md](/Users/vagab/OneDrive/Documents/Cataclysm%20RPG/docs/future_content_backlog.md).
+Deferred systems and intentionally held-off content live in [docs/future_content_backlog.md](docs/future_content_backlog.md).
 
 Intent:
 

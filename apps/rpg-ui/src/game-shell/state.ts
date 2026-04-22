@@ -1,8 +1,21 @@
-import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
+import type {
+  AccountProfileState,
+  SaveSnapshot
+} from '../../../../packages/shared/types/src/index.js';
 import type { TagTone } from '../types.js';
 import type { CharacterCreationFormState } from './characterCreationForm.js';
+import type {
+  LauncherRuntimeSession,
+  LocalAccountPickerEntry
+} from './launcherAuthManager.js';
 
-export type AppScreen = 'MAIN_MENU' | 'CHARACTER_CREATION' | 'LOAD_GAME' | 'SETTINGS' | 'IN_GAME';
+export type AppScreen =
+  | 'ACCOUNT_ACCESS'
+  | 'MAIN_MENU'
+  | 'CHARACTER_CREATION'
+  | 'LOAD_GAME'
+  | 'SETTINGS'
+  | 'IN_GAME';
 type ManualSaveSlotNumber =
   | 1
   | 2
@@ -49,7 +62,7 @@ export type ManualSaveSlotId = `slot-${ManualSaveSlotNumber}`;
 export type QuickSaveSlotId = 'quick-save';
 export type SaveSlotId = ManualSaveSlotId | QuickSaveSlotId;
 export type SaveSlotKind = 'manual' | 'quick';
-export type SaveSlotStatus = 'empty' | 'ready' | 'corrupt';
+export type SaveSlotStatus = 'empty' | 'ready' | 'corrupt' | 'incompatible';
 
 export interface SaveSlotMetadata {
   slotId: SaveSlotId;
@@ -110,31 +123,40 @@ export interface GameShellNotice {
   autoDismissMs?: number | null;
 }
 
-type GameShellBaseState = {
+type SignedInGameShellBaseState = {
+  launcherSession: LauncherRuntimeSession;
+  accountProfile: AccountProfileState;
   slots: SaveSlotSummary[];
   notice: GameShellNotice | null;
 };
 
-export type MainMenuState = GameShellBaseState & {
+export type AccountAccessState = {
+  screen: 'ACCOUNT_ACCESS';
+  accessMode: 'pick_account' | 'create_first_account';
+  accounts: LocalAccountPickerEntry[];
+  notice: GameShellNotice | null;
+};
+
+export type MainMenuState = SignedInGameShellBaseState & {
   screen: 'MAIN_MENU';
 };
 
-export type CharacterCreationState = GameShellBaseState & {
+export type CharacterCreationState = SignedInGameShellBaseState & {
   screen: 'CHARACTER_CREATION';
   form: CharacterCreationFormState;
   pendingOverwriteSlotId: ManualSaveSlotId | null;
 };
 
-export type LoadGameState = GameShellBaseState & {
+export type LoadGameState = SignedInGameShellBaseState & {
   screen: 'LOAD_GAME';
   selectedSlotId: SaveSlotId | null;
 };
 
-export type SettingsState = GameShellBaseState & {
+export type SettingsState = SignedInGameShellBaseState & {
   screen: 'SETTINGS';
 };
 
-export type InGameState = GameShellBaseState & {
+export type InGameState = SignedInGameShellBaseState & {
   screen: 'IN_GAME';
   activeSlotId: SaveSlotId;
   snapshot: SaveSnapshot;
@@ -142,6 +164,7 @@ export type InGameState = GameShellBaseState & {
 };
 
 export type GameShellState =
+  | AccountAccessState
   | MainMenuState
   | CharacterCreationState
   | LoadGameState
@@ -150,12 +173,22 @@ export type GameShellState =
 
 export type GameShellAction =
   | {
+      type: 'SHOW_ACCOUNT_ACCESS';
+      accessMode: 'pick_account' | 'create_first_account';
+      accounts: LocalAccountPickerEntry[];
+      notice: GameShellNotice | null;
+    }
+  | {
       type: 'SHOW_MAIN_MENU';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       notice: GameShellNotice | null;
     }
   | {
       type: 'OPEN_CHARACTER_CREATION';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       form: CharacterCreationFormState;
       notice: GameShellNotice | null;
@@ -170,12 +203,16 @@ export type GameShellAction =
     }
   | {
       type: 'OPEN_LOAD_GAME';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       selectedSlotId: SaveSlotId | null;
       notice: GameShellNotice | null;
     }
   | {
       type: 'OPEN_SETTINGS';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       notice: GameShellNotice | null;
     }
@@ -185,6 +222,8 @@ export type GameShellAction =
     }
   | {
       type: 'ENTER_GAME';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       slotId: SaveSlotId;
       snapshot: SaveSnapshot;
@@ -192,11 +231,15 @@ export type GameShellAction =
     }
   | {
       type: 'UPDATE_IN_GAME_SNAPSHOT';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       snapshot: SaveSnapshot;
     }
   | {
       type: 'COMPLETE_IN_GAME_SAVE';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       activeSlotId: SaveSlotId;
       notice: GameShellNotice | null;
@@ -304,12 +347,29 @@ export function getSaveSlotLabel(slotId: SaveSlotId): string {
 }
 
 export function createInitialGameShellState(
+  launcherSession: LauncherRuntimeSession,
+  accountProfile: AccountProfileState,
   slots: SaveSlotSummary[],
   notice: GameShellNotice | null
 ): MainMenuState {
   return {
     screen: 'MAIN_MENU',
+    launcherSession,
+    accountProfile,
     slots,
+    notice
+  };
+}
+
+export function createAccountAccessState(
+  accessMode: 'pick_account' | 'create_first_account',
+  accounts: LocalAccountPickerEntry[],
+  notice: GameShellNotice | null
+): AccountAccessState {
+  return {
+    screen: 'ACCOUNT_ACCESS',
+    accessMode,
+    accounts,
     notice
   };
 }
@@ -319,15 +379,26 @@ export function gameShellReducer(
   action: GameShellAction
 ): GameShellState {
   switch (action.type) {
+    case 'SHOW_ACCOUNT_ACCESS':
+      return {
+        screen: 'ACCOUNT_ACCESS',
+        accessMode: action.accessMode,
+        accounts: action.accounts,
+        notice: action.notice
+      };
     case 'SHOW_MAIN_MENU':
       return {
         screen: 'MAIN_MENU',
+        launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile,
         slots: action.slots,
         notice: action.notice
       };
     case 'OPEN_CHARACTER_CREATION':
       return {
         screen: 'CHARACTER_CREATION',
+        launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile,
         slots: action.slots,
         notice: action.notice,
         form: action.form,
@@ -358,6 +429,8 @@ export function gameShellReducer(
     case 'OPEN_LOAD_GAME':
       return {
         screen: 'LOAD_GAME',
+        launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile,
         slots: action.slots,
         notice: action.notice,
         selectedSlotId: action.selectedSlotId
@@ -365,6 +438,8 @@ export function gameShellReducer(
     case 'OPEN_SETTINGS':
       return {
         screen: 'SETTINGS',
+        launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile,
         slots: action.slots,
         notice: action.notice
       };
@@ -380,6 +455,8 @@ export function gameShellReducer(
     case 'ENTER_GAME':
       return {
         screen: 'IN_GAME',
+        launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile,
         slots: action.slots,
         notice: action.notice,
         activeSlotId: action.slotId,
@@ -391,12 +468,18 @@ export function gameShellReducer(
         return state;
       }
 
-      if (action.snapshot === state.snapshot && action.slots === state.slots) {
+      if (
+        action.snapshot === state.snapshot &&
+        action.slots === state.slots &&
+        action.accountProfile === state.accountProfile
+      ) {
         return state;
       }
 
       return {
         ...state,
+        launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile,
         slots: action.slots,
         snapshot: action.snapshot,
         hasUnsavedChanges:
@@ -409,6 +492,8 @@ export function gameShellReducer(
 
       return {
         ...state,
+        launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile,
         slots: action.slots,
         notice: action.notice,
         activeSlotId: action.activeSlotId,

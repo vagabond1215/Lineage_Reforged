@@ -23,6 +23,10 @@ function getSlotStatusLabel(slot: SaveSlotSummary): string {
     return 'Corrupt Local Data';
   }
 
+  if (slot.status === 'incompatible') {
+    return 'Incompatible Save Data';
+  }
+
   return 'Empty';
 }
 
@@ -40,13 +44,15 @@ export function LoadGameScreen({
   const selectedSlot = slots.find((slot) => slot.id === selectedSlotId) ?? null;
   const hasAnyLoadableSave = slots.some((slot) => slot.hasSave);
   const canDeleteSelected =
-    selectedSlot?.status === 'corrupt' || selectedSlot?.hasSave === true;
+    selectedSlot?.status === 'corrupt' ||
+    selectedSlot?.status === 'incompatible' ||
+    selectedSlot?.hasSave === true;
 
   return (
     <ScreenFrame
       eyebrow="Load Game"
       title="Open A Local Save"
-      description="Each save record is backed by browser localStorage using the shared snapshot serializer. Manual saves and the dedicated quick-save slot are listed together, and unreadable entries are isolated so one bad record cannot break the whole menu."
+      description="Each save record is backed by browser localStorage using account-scoped snapshot keys. Manual saves and the dedicated quick-save slot are listed together, and unreadable entries are isolated so one bad record cannot break the whole menu."
       accent="var(--color-world)"
       notice={notice}
       onDismissNotice={onDismissNotice}
@@ -107,6 +113,10 @@ export function LoadGameScreen({
                     <div className="mt-3 rounded-[18px] border border-rose-300/20 bg-rose-200/10 px-3 py-3 text-sm text-rose-100">
                       This slot contains malformed or incompatible local data. It cannot be loaded until it is deleted.
                     </div>
+                  ) : slot.status === 'incompatible' ? (
+                    <div className="mt-3 rounded-[18px] border border-amber-300/20 bg-amber-200/10 px-3 py-3 text-sm text-amber-100">
+                      This slot was created before the account-scoped Legacy ledger and current snapshot revision, so it is intentionally marked incompatible.
+                    </div>
                   ) : (
                     <div className="mt-3 text-sm text-slate-500">
                       No snapshot is stored in this slot yet.
@@ -144,6 +154,8 @@ export function LoadGameScreen({
                   <div className="text-sm leading-6 text-rose-100">
                     {selectedSlot.status === 'corrupt'
                       ? `Delete the unreadable data stored in ${selectedSlot.label}?`
+                      : selectedSlot.status === 'incompatible'
+                        ? `Delete the incompatible data stored in ${selectedSlot.label}?`
                       : `Delete ${selectedSlot.playerName} from ${selectedSlot.label}?`}
                   </div>
                   <div className="mt-4 flex flex-wrap gap-3">
@@ -174,7 +186,11 @@ export function LoadGameScreen({
                   className="w-full rounded-[24px] border border-rose-300/20 bg-rose-200/10 px-5 py-4 text-left text-rose-50 transition hover:bg-rose-200/15 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <span className="block text-lg font-semibold">
-                    {selectedSlot?.status === 'corrupt' ? 'Delete Corrupt Entry' : 'Delete Selected Save'}
+                    {selectedSlot?.status === 'corrupt'
+                      ? 'Delete Corrupt Entry'
+                      : selectedSlot?.status === 'incompatible'
+                        ? 'Delete Incompatible Save'
+                        : 'Delete Selected Save'}
                   </span>
                   <span className="mt-1 block text-sm text-rose-100/80">
                     {selectedSlot
@@ -227,9 +243,18 @@ export function LoadGameScreen({
                 the main menu to clear every save slot at once.
               </div>
             </div>
+          ) : selectedSlot?.status === 'incompatible' ? (
+            <div className="space-y-4">
+              <div className="rounded-[20px] border border-amber-300/20 bg-amber-200/10 p-4 text-sm leading-6 text-amber-100">
+                This slot belongs to an older local save format from before the account-scoped Legacy ledger and current structured snapshot revision, and it cannot be loaded by the current build.
+              </div>
+              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4 text-sm leading-6 text-slate-300">
+                Delete the slot from the action card to clear the incompatible localStorage record, or use Reset Save Data from the main menu to clear every save slot at once.
+              </div>
+            </div>
           ) : (
             <div className="rounded-[20px] border border-dashed border-white/10 bg-black/10 p-4 text-sm leading-6 text-slate-400">
-              Select an occupied or corrupt save slot to inspect it here. Empty slots remain available for future
+              Select an occupied, incompatible, or corrupt save slot to inspect it here. Empty slots remain available for future
               campaigns.
             </div>
           )}

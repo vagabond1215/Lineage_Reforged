@@ -1,4 +1,4 @@
-{
+﻿{
   "resourceFormulaBindings": [
     {
       "resourceId": "hp",
@@ -247,7 +247,7 @@
       "skillAffinities": [
         "skill.magic.school.healing",
         "skill.magic.school.enhancing",
-        "skill.knowledge.flora",
+        "skill.knowledge.flora_lore",
         "skill.resource.identify.flora",
         "skill.crafting.cooking"
       ],
@@ -286,7 +286,7 @@
       "skillAffinities": [
         "skill.magic.school.elemental",
         "skill.magic.school.enfeebling",
-        "skill.knowledge.minerals",
+        "skill.knowledge.mineral_lore",
         "skill.resource.identify.minerals",
         "skill.crafting.alchemy"
       ],
@@ -327,7 +327,7 @@
         "skill.magic.school.elemental",
         "skill.magic.school.healing",
         "skill.magic.school.performance",
-        "skill.knowledge.universal"
+        "skill.knowledge.general_lore"
       ],
       "resourceInfluence": {
         "hp": {
@@ -363,7 +363,7 @@
       ],
       "skillAffinities": [
         "skill.magic.school.performance",
-        "skill.knowledge.cultural_knowledge",
+        "skill.knowledge.cultural_lore",
         "skill.leadership.command",
         "skill.leadership.negotiation",
         "skill.settlement.trade"
@@ -389,3 +389,6 @@
     }
   ]
 }
+
+
+

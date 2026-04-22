@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS player_attributes (
+﻿CREATE TABLE IF NOT EXISTS player_attributes (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   short_code TEXT NOT NULL,
@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS player_progression_tracks (
   breakthrough_sources_json TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS player_knowledge_tracks (
+CREATE TABLE IF NOT EXISTS player_knowledge_domains (
   id TEXT PRIMARY KEY,
   knowledge_skill_id TEXT NOT NULL,
   spotting_skill_id TEXT NOT NULL,
   identify_skill_id TEXT NOT NULL,
-  universal_support_skill_id TEXT NOT NULL,
+  general_support_skill_id TEXT NOT NULL,
   support_weights_json TEXT NOT NULL,
   identify_difficulty_json TEXT NOT NULL,
   auto_identify_thresholds_json TEXT NOT NULL
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS player_skills (
   maximum_rank INTEGER NOT NULL,
   governing_attributes_json TEXT NOT NULL,
   progression_track_id TEXT NOT NULL,
-  knowledge_track_id TEXT,
+  knowledge_domain_id TEXT,
   effect_profile_id TEXT,
   description TEXT NOT NULL,
   tags_json TEXT NOT NULL DEFAULT '[]'
@@ -129,3 +129,4 @@ CREATE TABLE IF NOT EXISTS player_resources (
   base_current REAL NOT NULL,
   base_max REAL NOT NULL
 );
+

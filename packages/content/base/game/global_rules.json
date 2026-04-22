@@ -1,4 +1,4 @@
-{
+﻿{
   "records": [
     {
       "id": "rule.tick_order",
@@ -7,6 +7,456 @@
     {
       "id": "rule.default_seed",
       "value": 42
+    },
+    {
+      "id": "rule.echo_balance",
+      "value": {
+        "version": 1,
+        "exponents": { "skill": 0.7, "stat": 0.8, "knowledge": 0.7 },
+        "weights": { "skills": 0.5, "stats": 0.3, "knowledge": 0.2 },
+        "levelScale": 2.5,
+        "normalization": {
+          "skillReferenceRank": 125,
+          "skillReferenceSlots": 24,
+          "knowledgeSkillReferenceRank": 125,
+          "knowledgeSkillReferenceSlots": 6,
+          "statReferenceDelta": 15,
+          "trackedAttributeKeys": ["STR", "DEX", "AGI", "CON", "VIT", "WIS", "INT", "SPT", "CHA"]
+        },
+        "diversity": {
+          "thresholdRank": 25,
+          "bonusPerSkill": 0.01,
+          "maxMultiplier": 1.25
+        }
+      }
+    },
+    {
+      "id": "rule.body_state_balance",
+      "value": {
+        "version": 1,
+        "targets": {
+          "dailyCalories": 100,
+          "dailyHydration": 72,
+          "proteinBaseline": 18,
+          "proteinLoadScale": 4
+        },
+        "energy": {
+          "quickWeight": 0.6,
+          "storedWeight": 0.4,
+          "quickDecayByIntensity": { "low": 1.2, "moderate": 2.4, "high": 4.1, "extreme": 6.4 },
+          "storedDecayByIntensity": { "low": 0.35, "moderate": 0.7, "high": 1.3, "extreme": 2.2 },
+          "quickGainPerCalorie": 0.15,
+          "storedGainPerCalorie": 0.1,
+          "energyBands": {
+            "wellFed": 70,
+            "stable": 45,
+            "lowEnergy": 20
+          },
+          "staminaRegenMultipliers": {
+            "well_fed": 1,
+            "stable": 0.95,
+            "low_energy": 0.8,
+            "drained": 0.6
+          },
+          "fatigueGainMultipliers": {
+            "well_fed": 1,
+            "stable": 1.04,
+            "low_energy": 1.12,
+            "drained": 1.25
+          },
+          "recoveryMultipliers": {
+            "well_fed": 1,
+            "stable": 0.96,
+            "low_energy": 0.82,
+            "drained": 0.65
+          }
+        },
+        "protein": {
+          "smoothing": 0.35,
+          "recoveryMultipliers": {
+            "protein_rich": 1.05,
+            "supported": 1,
+            "thin_diet": 0.85,
+            "deficient": 0.65
+          },
+          "strengthPenaltyByLoad": {
+            "mild": 0.04,
+            "moderate": 0.08,
+            "severe": 0.14
+          }
+        },
+        "hydration": {
+          "passiveLossPerTick": 2.2,
+          "recoveryGainPerTick": 10,
+          "bands": {
+            "optimal": 75,
+            "slightlyDehydrated": 50,
+            "dehydrated": 25
+          },
+          "staminaRegenMultipliers": {
+            "optimal": 1,
+            "slightly_dehydrated": 0.9,
+            "dehydrated": 0.75,
+            "severely_dehydrated": 0.5
+          },
+          "fatigueGainMultipliers": {
+            "optimal": 1,
+            "slightly_dehydrated": 1.1,
+            "dehydrated": 1.25,
+            "severely_dehydrated": 1.5
+          },
+          "actionEfficiencyMultipliers": {
+            "optimal": 1,
+            "slightly_dehydrated": 0.97,
+            "dehydrated": 0.92,
+            "severely_dehydrated": 0.8
+          }
+        },
+        "fatigue": {
+          "passiveRecoveryPerTick": 0.25,
+          "sleepRecoveryPerUnit": 4.5,
+          "carryoverThreshold": 45,
+          "carryoverScale": 0.35,
+          "actionEfficiencyPerPoint": 0.0025,
+          "staminaMaxPerPoint": 0.0035,
+          "staminaDebtMaxPerPoint": 0.0015,
+          "staminaRegenPerPoint": 0.005,
+          "staminaDebtRegenPerPoint": 0.003
+        },
+        "intoxication": {
+          "decayPerTick": 6,
+          "buzzedThreshold": 10,
+          "drunkThreshold": 30,
+          "heavilyIntoxicatedThreshold": 60,
+          "blackoutRiskThreshold": 90,
+          "mediumActionPenalty": 0.08,
+          "mediumHydrationLossMultiplier": 1.15,
+          "highActionPenalty": 0.2,
+          "highStaminaPenalty": 0.15,
+          "highHydrationLossMultiplier": 1.3,
+          "nextDayFatigueDebt": 10
+        },
+        "starvation": {
+          "dailyRecoveryWhenCovered": 0.75,
+          "maxDeficitDays": 7,
+          "stageTwoThreshold": 3,
+          "stageThreeThreshold": 5
+        },
+        "recovery": {
+          "campMultipliers": {
+            "none": 0.55,
+            "basic": 0.8,
+            "proper": 1,
+            "secure_indoor": 1.15
+          },
+          "safetyMultipliers": {
+            "unsafe": 0.85,
+            "exposed": 0.95,
+            "stable": 1,
+            "secure": 1.1
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.stat_growth_balance",
+      "value": {
+        "version": 1,
+        "intensityMultipliers": {
+          "low": 0.35,
+          "moderate": 1,
+          "high": 1.75,
+          "extreme": 2.5
+        },
+        "thresholds": {
+          "STR": { "loadThreshold": 6, "progressPerPoint": 22, "dailySoftCap": 18, "growthScale": 14, "growthExponent": 1.55 },
+          "DEX": { "loadThreshold": 5.5, "progressPerPoint": 20, "dailySoftCap": 16, "growthScale": 13, "growthExponent": 1.65 },
+          "AGI": { "loadThreshold": 5.5, "progressPerPoint": 20, "dailySoftCap": 16, "growthScale": 13, "growthExponent": 1.65 },
+          "CON": { "loadThreshold": 6, "progressPerPoint": 22, "dailySoftCap": 18, "growthScale": 14, "growthExponent": 1.55 },
+          "VIT": { "loadThreshold": 6, "progressPerPoint": 22, "dailySoftCap": 18, "growthScale": 14, "growthExponent": 1.55 },
+          "WIS": { "loadThreshold": 5, "progressPerPoint": 18, "dailySoftCap": 15, "growthScale": 12, "growthExponent": 1.5 },
+          "INT": { "loadThreshold": 5, "progressPerPoint": 18, "dailySoftCap": 15, "growthScale": 12, "growthExponent": 1.5 },
+          "SPT": { "loadThreshold": 5, "progressPerPoint": 18, "dailySoftCap": 15, "growthScale": 12, "growthExponent": 1.5 },
+          "CHA": { "loadThreshold": 4.5, "progressPerPoint": 16, "dailySoftCap": 12, "growthScale": 12, "growthExponent": 1.45 }
+        },
+        "saturation": {
+          "startMultiplier": 4,
+          "hardCapMultiplier": 8,
+          "exponent": 2.2
+        },
+        "recoveryCapacity": {
+          "base": 12,
+          "constitutionWeight": 0.9,
+          "vitalityWeight": 1.1,
+          "wisdomWeight": 0.5,
+          "spiritWeight": 0.5
+        },
+        "recoveryGate": {
+          "minimumQuality": 0.7,
+          "minimumDurationHours": 4
+        },
+        "diminishing": {
+          "trivialCutoff": 0.2,
+          "dailyExponent": 1.75,
+          "varietyBonusPerSource": 0.06,
+          "maxVarietyBonus": 0.12,
+          "loadDecayWithoutRecovery": 0.8,
+          "postRecoveryRetention": 0.9
+        },
+        "rng": {
+          "minimum": 0.95,
+          "maximum": 1.05
+        },
+        "tension": {
+          "threshold": 18,
+          "gapStart": 4,
+          "precisionCap": 0.12,
+          "precisionPerGap": 0.03,
+          "mobilityCap": 0.15,
+          "mobilityPerGap": 0.03,
+          "stabilityCap": 0.12,
+          "stabilityPerGap": 0.03
+        }
+      }
+    },
+    {
+      "id": "rule.reputation_balance",
+      "value": {
+        "version": 1,
+        "localCurrentDirectDecayPerDay": 1,
+        "regionalCurrentDirectDecayPerDay": 0.25,
+        "continentalCurrentDirectDecayPerDay": 0.02,
+        "worldCurrentDirectDecayPerDay": 0.005,
+        "regionalThresholdFloor": 12,
+        "continentalThresholdFloor": 18,
+        "worldThresholdFloor": 24,
+        "regionalCarryoverFactor": 0.2,
+        "continentalCarryoverFactor": 0.15,
+        "worldCarryoverFactor": 0.1,
+        "meaningfulContributionFloor": 5,
+        "fameBranchValidation": {
+          "local": ["civic", "folk", "trade", "martial"],
+          "regional": ["heroic", "martial", "political", "commercial"],
+          "continental": ["historical", "legendary", "political"],
+          "world": ["legendary", "mythic"]
+        },
+        "notorietyCategoryWeights": {
+          "theft": { "value": 1, "persistence": 1, "seriousness": 1 },
+          "fraud": { "value": 1.1, "persistence": 1.05, "seriousness": 1.1 },
+          "violent": { "value": 1.5, "persistence": 1.4, "seriousness": 1.8 },
+          "murder": { "value": 2.2, "persistence": 2.2, "seriousness": 2.5 },
+          "arson": { "value": 1.9, "persistence": 1.8, "seriousness": 2.1 },
+          "banditry": { "value": 1.7, "persistence": 1.6, "seriousness": 1.9 },
+          "treason": { "value": 2.4, "persistence": 2.5, "seriousness": 2.4 }
+        },
+        "notorietySeverityMultipliers": {
+          "minor": { "value": 1, "persistence": 1, "seriousness": 1 },
+          "standard": { "value": 1.5, "persistence": 1.4, "seriousness": 1.5 },
+          "major": { "value": 2.2, "persistence": 2.3, "seriousness": 2.4 }
+        },
+        "notorietyModifierMultipliers": {
+          "mass": { "value": 1.8, "persistence": 1.7, "seriousness": 2.1 },
+          "organized": { "value": 1.25, "persistence": 1.2, "seriousness": 1.25 },
+          "repeat": { "value": 1.15, "persistence": 1.25, "seriousness": 1.2 },
+          "public": { "value": 1.15, "persistence": 1.1, "seriousness": 1.15 }
+        },
+        "simultaneousSeriousCrimePersistenceCap": 0.25,
+        "notorietySeriousnessThresholds": [
+          { "id": "nuisance", "minimumScore": 0, "minimumSeverity": null },
+          { "id": "offender", "minimumScore": 8, "minimumSeverity": "minor" },
+          { "id": "outlaw", "minimumScore": 18, "minimumSeverity": "standard" },
+          { "id": "menace", "minimumScore": 36, "minimumSeverity": "standard", "violentOnly": true },
+          { "id": "infamous", "minimumScore": 64, "minimumSeverity": "major", "violentOnly": true },
+          {
+            "id": "atrocity_marked",
+            "minimumScore": 95,
+            "minimumSeverity": "major",
+            "violentOnly": true,
+            "requiredModifiers": ["mass"],
+            "minimumDirectScope": "continental"
+          }
+        ],
+        "fameRecognitionBandThresholds": [
+          { "id": "known", "minimumCurrentTotal": 4, "minimumHistorical": 0, "directHigherScopeBonus": 0.5 },
+          { "id": "admired", "minimumCurrentTotal": 10, "minimumHistorical": 4, "directHigherScopeBonus": 1 },
+          { "id": "renowned", "minimumCurrentTotal": 20, "minimumHistorical": 10, "directHigherScopeBonus": 1.5 },
+          { "id": "legendary", "minimumCurrentTotal": 40, "minimumHistorical": 25, "directHigherScopeBonus": 2.5 },
+          { "id": "mythic", "minimumCurrentTotal": 70, "minimumHistorical": 50, "directHigherScopeBonus": 4 }
+        ]
+      }
+    },
+    {
+      "id": "rule.run_difficulty_balance",
+      "value": {
+        "version": 1,
+        "tiers": {
+          "easy": {
+            "statGrowth": {
+              "loadThresholdScalar": 0.85,
+              "saturationScalar": 1.1,
+              "recoveryCapacityScalar": 1.1,
+              "minimumRecoveryQualityScalar": 0.85,
+              "minimumRecoveryDurationScalar": 0.85
+            },
+            "skillProgression": {
+              "requirementScalar": 0.85,
+              "meaningfulActionScalar": 0.85,
+              "antiTrivialityScalar": 0.9,
+              "trainingGateScalar": 0.9,
+              "retentionPressureScalar": 0.9
+            },
+            "knowledgeProgression": {
+              "requirementScalar": 0.85,
+              "meaningfulActionScalar": 0.85,
+              "antiTrivialityScalar": 0.9,
+              "trainingGateScalar": 0.9,
+              "retentionPressureScalar": 0.9
+            },
+            "bodyState": {
+              "deficitOnsetScalar": 1.25,
+              "surplusPersistenceScalar": 1.2,
+              "resourceDrainScalar": 0.85,
+              "recoveryEffectivenessScalar": 1.1,
+              "fatigueDebtPersistenceScalar": 0.85,
+              "penaltySeverityScalar": 0.9,
+              "starvationEscalationScalar": 0.85,
+              "dehydrationEscalationScalar": 0.85
+            },
+            "echo": {
+              "requirementScalar": 1
+            },
+            "prestige": {
+              "rewardMultiplier": 0.8
+            }
+          },
+          "normal": {
+            "statGrowth": {
+              "loadThresholdScalar": 1,
+              "saturationScalar": 1,
+              "recoveryCapacityScalar": 1,
+              "minimumRecoveryQualityScalar": 1,
+              "minimumRecoveryDurationScalar": 1
+            },
+            "skillProgression": {
+              "requirementScalar": 1,
+              "meaningfulActionScalar": 1,
+              "antiTrivialityScalar": 1,
+              "trainingGateScalar": 1,
+              "retentionPressureScalar": 1
+            },
+            "knowledgeProgression": {
+              "requirementScalar": 1,
+              "meaningfulActionScalar": 1,
+              "antiTrivialityScalar": 1,
+              "trainingGateScalar": 1,
+              "retentionPressureScalar": 1
+            },
+            "bodyState": {
+              "deficitOnsetScalar": 1,
+              "surplusPersistenceScalar": 1,
+              "resourceDrainScalar": 1,
+              "recoveryEffectivenessScalar": 1,
+              "fatigueDebtPersistenceScalar": 1,
+              "penaltySeverityScalar": 1,
+              "starvationEscalationScalar": 1,
+              "dehydrationEscalationScalar": 1
+            },
+            "echo": {
+              "requirementScalar": 1
+            },
+            "prestige": {
+              "rewardMultiplier": 1
+            }
+          },
+          "hard": {
+            "statGrowth": {
+              "loadThresholdScalar": 1.12,
+              "saturationScalar": 0.95,
+              "recoveryCapacityScalar": 0.92,
+              "minimumRecoveryQualityScalar": 1.08,
+              "minimumRecoveryDurationScalar": 1.1
+            },
+            "skillProgression": {
+              "requirementScalar": 1.15,
+              "meaningfulActionScalar": 1.1,
+              "antiTrivialityScalar": 1.1,
+              "trainingGateScalar": 1.1,
+              "retentionPressureScalar": 1.1
+            },
+            "knowledgeProgression": {
+              "requirementScalar": 1.15,
+              "meaningfulActionScalar": 1.1,
+              "antiTrivialityScalar": 1.1,
+              "trainingGateScalar": 1.1,
+              "retentionPressureScalar": 1.1
+            },
+            "bodyState": {
+              "deficitOnsetScalar": 0.9,
+              "surplusPersistenceScalar": 0.9,
+              "resourceDrainScalar": 1.12,
+              "recoveryEffectivenessScalar": 0.92,
+              "fatigueDebtPersistenceScalar": 1.15,
+              "penaltySeverityScalar": 1.1,
+              "starvationEscalationScalar": 1.15,
+              "dehydrationEscalationScalar": 1.15
+            },
+            "echo": {
+              "requirementScalar": 1
+            },
+            "prestige": {
+              "rewardMultiplier": 1.4
+            }
+          },
+          "brutal": {
+            "statGrowth": {
+              "loadThresholdScalar": 1.28,
+              "saturationScalar": 0.9,
+              "recoveryCapacityScalar": 0.82,
+              "minimumRecoveryQualityScalar": 1.18,
+              "minimumRecoveryDurationScalar": 1.2
+            },
+            "skillProgression": {
+              "requirementScalar": 1.3,
+              "meaningfulActionScalar": 1.2,
+              "antiTrivialityScalar": 1.2,
+              "trainingGateScalar": 1.2,
+              "retentionPressureScalar": 1.2
+            },
+            "knowledgeProgression": {
+              "requirementScalar": 1.3,
+              "meaningfulActionScalar": 1.2,
+              "antiTrivialityScalar": 1.2,
+              "trainingGateScalar": 1.2,
+              "retentionPressureScalar": 1.2
+            },
+            "bodyState": {
+              "deficitOnsetScalar": 0.78,
+              "surplusPersistenceScalar": 0.78,
+              "resourceDrainScalar": 1.28,
+              "recoveryEffectivenessScalar": 0.82,
+              "fatigueDebtPersistenceScalar": 1.3,
+              "penaltySeverityScalar": 1.2,
+              "starvationEscalationScalar": 1.3,
+              "dehydrationEscalationScalar": 1.3
+            },
+            "echo": {
+              "requirementScalar": 1
+            },
+            "prestige": {
+              "rewardMultiplier": 2.1
+            }
+          }
+        },
+        "hardcore": {
+          "recoveryScalar": 0.75,
+          "deficitRecoveryScalar": 0.7,
+          "aftereffectPersistenceScalar": 1.4,
+          "partialRecoveryScalar": 0.5,
+          "removeForgivenessCaps": true,
+          "deathZeroesPrestige": true,
+          "prestigeMultiplier": 2
+        }
+      }
     },
     {
       "id": "rule.elemental_combat_framework",
@@ -97,6 +547,10 @@
       "id": "rule.enchanter_profession",
       "value": {
         "professionId": "profession.enchanter",
+        "echoRequirement": {
+          "minLevel": 9,
+          "minEchoAdjusted": 16
+        },
         "summary": "Affinity-bound artisans who attune vessels, bind stable elemental effects into equipment, and tune arcane accessories for specific roles.",
         "coreRoles": [
           { "id": "vessel_attuner", "focus": "convert unattuned vessels into fixed affinities without destabilizing the lattice" },
@@ -202,3 +656,4 @@
     }
   ]
 }
+

@@ -1,1 +1,1 @@
-export * from "./tactics.ts";
+export {};

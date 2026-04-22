@@ -1,6 +1,6 @@
 # Modular Quest Template System
 
-This document defines a reusable quest-template framework for Cataclysm RPG.
+This document defines a reusable quest-template framework for Echoes of Legacy.
 
 The design goal is to use one branching stage system for:
 

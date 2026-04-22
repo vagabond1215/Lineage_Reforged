@@ -155,4 +155,4 @@ This authored quest-definition model is meant to support scenario-style quests w
 
 The archetype layer is meant to sit below those specific authored contracts, so future quest definitions can point at a standard quest family instead of reauthoring the entire branch grammar every time.
 
-The current action-tree structure is partly inspired by the planning/execution style used by Torn's organized-crime systems, but adapted for Cataclysm RPG's broader quest and contract model.
+The current action-tree structure is partly inspired by the planning/execution style used by Torn's organized-crime systems, but adapted for Echoes of Legacy's broader quest and contract model.

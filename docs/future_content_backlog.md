@@ -12,18 +12,51 @@ This file tracks content and systems that are intentionally deferred.
 
 ## Run Notes
 
+- 2026-04-22: Added the first real centralized Legacy unlock catalog framework with binary, tiered, and incremental definitions, explicit requirement/affordability resolution, metadata-only effects, unknown historical unlock preservation, and a transactional purchase helper kept out of the live launcher panel; active click-to-purchase refresh wiring, final cost/gate balancing, and live heir/inheritance gameplay effects remain deferred to later account-meta and lifecycle ownership.
+- 2026-04-22: Added a centralized run-end Legacy payout resolver and archive-seam persistence for compact payout metadata on newly archived runs only; final economy tuning, old archived-record backfill or cleanup, real Legacy unlock pricing, and repeated weak-run suppression remain deferred to later reward/meta-progression ownership.
+- 2026-04-22: Added helper-only retained retired run state scaffolding with centralized `inheritanceUsesRemaining` defaulting, lifecycle authority classifiers, and inheritance-use consumption signaling while keeping the live player-facing retirement flow as immediate archive; full heir economy, genealogy UX, and archived-to-retired migration remain deferred.
+- 2026-04-22: Tightened the launcher Characters surface to tile only occupied saves, converted the primary action to `Start your Legacy` when no save exists, and mirrored the main-menu top-bar continue/account controls onto Settings; broader Load Game slot-grid cleanup remains deferred with the older pre-game shell migration.
+- 2026-04-19: Consolidated launcher Settings into a linear preferences/account-management layout, moved account reset/delete behind password-verified local auth actions that purge saves plus account Prestige/achievement/history data, and converted the main-menu account name into the top-bar account menu; broader cloud account recovery and external auth remain deferred behind the local auth manager seam.
+- 2026-04-19: Moved launcher settings into the docked shell sidebar, narrowed Settings to actual preferences/storage/account actions, added persisted theme and time-display preferences, and moved logout into Settings; remaining pre-game Load Game and account access shell migration stays deferred as frontend UI cleanup.
+- 2026-04-19: Added a shared docked launcher shell for the main menu/account-meta surface and launcher settings, with shell-owned Game Data / Legacy / Chronicles section state; migrating the remaining Load Game and local account access surfaces off older floating scaffolds remains deferred as frontend UI cleanup.
+- 2026-04-19: Renamed remaining user-facing legacy project/app titles and launcher wordmarks to `Echoes of Legacy` while leaving technical browser-storage identifiers untouched for local-profile compatibility.
+- 2026-04-19: Hardened the account Prestige path by suppressing Legacy reward mutation during character creation, removing Prestige payloads from creation/start-history achievements, excluding deleted runs at the shared history-metric source, and replacing Prestige-cost placeholder unlock labels with neutral pending copy; cleanup or migration for already-contaminated browser-local profiles remains deferred until an account-profile maintenance policy exists.
+- 2026-04-19: Documented the moved Codex workspace root as `C:\Codex\EoL`, replaced stale OneDrive-root links with relative repository links in `README.md` / `AGENTS.md`, and updated launcher references to the current `Play Echoes of Legacy.cmd`; no new gameplay/content work was deferred by the Codex project recreation prep.
+- 2026-04-18: Replaced the main-menu account meta presentation with a compact shared `AccountMetaPanel` using narrow `Legacy` / `Chronicles` sidebar navigation, `Prestige`-labeled Legacy balance summaries, muted placeholder unlock catalog tiles, and account-history-backed Chronicle run tiles; the canonical Legacy unlock catalog, heir-backed Chronicle data, and broader settings-screen reuse remain deferred until those account-meta data owners are ready.
+- 2026-04-18: Tightened the launcher-local account sign-in shell by removing the temporary claim-existing and claimed/unclaimed migration path entirely, filtering the picker down to credential-backed accounts only while cleanly ignoring old authless profiles, renaming the player-facing launcher auth copy from `Ledger` to `Account`, removing the explanatory side notes, and adding password-verified local account deletion from the account-access screen; richer account management, password recovery, and later SSO/OAuth replacement remain deferred behind the existing auth-manager seam.
+- 2026-04-18: Added a launcher-only local account sign-in shell over the existing browser-local account profiles by separating password-verifier/session records into a dedicated auth namespace, bootstrapping the main menu through auto-restore or a local account picker/create flow, and exposing the signed-in account plus logout on the main menu without changing `AccountProfileState`, save ownership, Legacy, achievements, or archived-run history; broader account-management UI, password recovery, and replacing the local password provider with SSO/OAuth remain intentionally deferred behind the new auth-manager seam.
+- 2026-04-17: Added real run-ending lifecycle closure on top of the archived-run history seam by introducing an app-layer archive helper shared by explicit retirement and automatic HP-based death handling, wiring a `Retire Character` in-game control, rejecting archived/deleted stale saves on load while opportunistically clearing the stale slot, freeing all known save slots when a run is archived, and calling a shared Legacy payout hook in `Hook Only` mode so archive records now persist `legacyGranted` without finalizing payout formulas; dedicated run-end reward ownership and formulas remain intentionally deferred, while heir and estate systems continue to wait on that payout pass.
+- 2026-04-17: Added the first dual-layer achievement foundation on top of the account-scoped Legacy backbone by introducing account-wide `Chronicles` plus per-character `Deeds`, a validated authored achievement catalog with optional `common / notable / legendary` rarity, state-derived cumulative metric evaluation with account high-water tracking, one-time Legacy and unlock rewards for account achievements, account-side deed reveal persistence for future characters, launcher `Chronicles` summaries, Codex `Deeds` and `Chronicles` sections, additive account-profile normalization for achievement and history state, and compact archived run-history records keyed by character id so deleted saves no longer erase committed achievements, Legacy history, or Chronicle continuity; full Chronicle browsing, retirement/death gameplay flows that call the archive seam, event-hook-only achievement types, and broader authored catalog/reward tuning remain intentionally deferred.
+- 2026-04-17: Added the first account-scoped Legacy backbone as a separate browser-local profile with persistent `legacyPoints`, `lifetimeLegacyEarned`, unlock records, full transaction history, pure grant/spend/query helpers, account-scoped save keys plus `accountId` snapshot stamping through the `0.5.0` / `v5` save-version bump, a launcher-only `Legacy Ledger` summary on the main menu and settings screens, and a full player-facing rename from `Legacy Growth` to `Growth Tier`; unlock catalogs, payout sources, heir or retirement flows, account switching, and cloud sync remain intentionally deferred to later ownership passes.
+- 2026-04-17: Hardened the structured public-reputation cutover by adding live quest/template `reputationAwards` validation in the civilization content loader, tightening fame branch-to-scope and non-world origin-settlement schema rules, guarding runtime reputation application against invalid fame scope/branch pairs and zero-target non-world awards with loud warnings, trimming player-facing reputation detail leakage of internal ids/runtime plumbing, and extending focused validation, UI projection, and save-roundtrip coverage so authored reputation data now fails fast before entering gameplay while keeping the existing structured fame/notoriety architecture unchanged.
+- 2026-04-17: Replaced the flat public-reputation rows with structured `fame`, aggregate `notoriety`, and selectively persisted serious `notorietyEvents`, finalized the v1 fame branch catalogs and notoriety category/severity/modifier model, enforced aggregate-row identity by `scope + scopeId + categoryId + severity + modifiersSignature`, kept serious event rows authoritative without aggregate duplication, rewired `resolveScopedReputation()` plus the RPG UI reputation panels to the new split fame/notoriety projection, updated quest reputation-award schemas and starter fame hooks to the discriminated union shape, reaffirmed the existing geographic-knowledge behavior without reopening it, and intentionally invalidated older local saves through the `0.4.0` / `v4` save-version bump; focused player-reputation, combat fixture, save-roundtrip, schema, and `apps/rpg-ui` build validation now pass.
+- 2026-04-16: Split general lore capability from geographic place knowledge by renaming knowledge nomenclature onto `Common Lore`, `Herb Lore`, `Beast Lore`, `Earth Lore`, `Arcane Lore`, `Folk Lore`, and `Civic Lore`, replacing legacy familiarity/discovery fields with `geographicKnowledge` seeded at continent/region/settlement scope, renaming the old flat faction `reputation` layer to `standing`, introducing scoped public `reputation` for fame and notoriety with separate `earned`, `currentEarned`, `historical`, and derived threshold-carryover resolution, wiring the first authored public-fame quest hooks plus scope-based decay into the player engine and RPG UI, and intentionally invalidating older local saves through the `0.3.0` / `v3` save-version bump; focused progression/reputation/save/schema tests now pass and `apps/rpg-ui` passes `npx vite build`.
+- 2026-04-11: Replaced the legacy creator `Build + manual attribute allocation` flow with deterministic `Physique + Nature + Focus` profile generation, removed the discrete attribute-allocation step entirely, rewired creator form state/snapshot generation/live preview/summary panel around the shared profile resolver, added visible `Generated Profile Bonuses` output, hard-invalidated older local saves through the `0.2.0` snapshot/storage-version bump, and added exhaustive creator profile tests plus a first balance audit pass over all 350 physique-nature-focus combinations; the current audit showed no immediate blocker severe enough to justify pre-emptive tuning, with the strongest physical spread landing at `Athletic / Graceful / Martial` and the strongest mental spread at `Frail / Insightful / Mystic`.
+- 2026-04-11: Rewrote the creator age and physique rows to use bespoke lore-facing descriptions as the primary copy while keeping raw stat deltas secondary, retained the shared identity-option data as the single source for row text and preview math, fixed the live identity narrative article grammar, and added a compact `Profile Outcome` block in the right-side summary so the same preview-resolved height, age, and physique effects stay visible without reviving the old redundant identity summary panel.
+- 2026-04-11: Unified compact-vs-full attribute presentation around a shared stat metadata source so creator summaries, creator allocation rows, and runtime compact stat blocks now use canonical abbreviations in the requested `STR, DEX, AGI, CON, VIT, INT, WIS, SPT, CHA` order, while hover/focus tooltips provide authored narrative header/body/footer content with clearer INT/WIS/SPT spell-role differentiation; this pass also removed the duplicated runtime attribute-detail map and added a local `apps/rpg-ui/src/game-shell/characterAttributes.js` bridge so focused Node-side creator/presentation tests can import the shared metadata cleanly.
+- 2026-04-11: Fixed the deeper character-creation resource/runtime mismatch by moving HP, MP, and stamina max scaling onto the shared player-resource resolver so creator preview values and actual runtime resource caps now respond to CON/VIT, INT/SPT, and AGI/CON/VIT consistently before and after final allocation, mirrored that formula into the live `packages/shared/types/src/player-resources.js` bridge used by Node/runtime tests, and updated the creator attribute rows to disable build-preserved invalid increases with an explicit inline constraint note instead of silently ignoring the click.
+- 2026-04-11: Fixed a character-creation live-summary drift bug where HP, MP, and stamina jumped when the last discretionary attribute point was spent by removing the fallback preview-only resource scaling in `newGameSnapshot` and reusing the same runtime-resolved resource values before and after allocation completion; deeper Node-native preview regression coverage is still bounded by the already-tracked app-local `.js` bridge limitation, so this pass was validated through the UI build path instead of widening the test harness.
+- 2026-04-11: Removed the redundant character-creation finalize-step save-slot picker so slot ownership now stays with the main-menu launcher flow, kept overwrite confirmation bound to the preselected manual slot instead of re-asking for slot choice inside the creator, and left the broader save/load/new-game/continue/legacy menu consolidation as future launcher UI work rather than widening this pass into a bigger menu rewrite.
+- 2026-04-11: Rebuilt the character-creation identity modifier path around one shared option model so sex, height, age, and build card text now matches the live preview and final stat math exactly, replaced the creator build roster with the approved physical-first set plus alias compatibility for legacy ids, converted build and age selection into full-width single-line rows, and preserved lineage-aware age variance by scaling existing non-human age windows into the new four-band model while keeping exact human bands; `apps/rpg-ui` passes `npx vite build`, focused creator identity-option coverage now passes under `node --experimental-strip-types --test --test-isolation=none`, and deeper Node-native creator-math/unit coverage still remains bounded by the already-tracked app-local `.js` bridge/tooling limitation rather than being widened opportunistically in this pass.
+- 2026-04-10: Investigated a reported RPG UI main-menu load issue and fixed one concrete startup defect by restoring the missing `packages/shared/persistence/src/index.js` bridge expected by the browser save-manager and new-game snapshot path; `apps/rpg-ui` still passes `npx vite build`, the launcher/browser-facing Vite path remains healthy, and broader Node-native `.js` bridge coverage for `apps/rpg-ui/src` imports is intentionally deferred unless app-source modules need to be loaded outside the Vite/browser toolchain.
+- 2026-04-10: Added the first unified per-run difficulty and hardcore framework by persisting `gameState.runDifficulty`, authoring `rule.run_difficulty_balance`, resolving explicit difficulty formulas centrally in player-engine, wiring difficulty into body-state drain/recovery timing and stat-growth conversion gates/saturation/capacity, keeping Echo scoring unchanged under `normal/non-hardcore`, and adding scaffold-only prestige multipliers plus targeted regression coverage; full prestige or legacy payout economy remains deferred to the future reward layer below.
+- 2026-04-10: Upgraded the RPG UI body-state presentation layer without changing runtime formulas or save schema by replacing top-bar body chips with a condition strip, adding UI-session trend and alert tracking, wiring readiness plus recovery projection into the character overview, adding consume previews and state-aware consume feedback, and attaching travel/work/rest action-outcome previews with inline risky-action confirmation; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI/view-model pass.
+- 2026-04-10: Added the first activity-driven character stat-growth foundation with exact 100-point creation math, physiological builds, zero-sum backstory stat overlays, persistent hidden stat-load tracking, recovery-time conversion with saturation/capacity/tension rules, and first-pass travel/work/rest load integration; follow-up coverage for combat, richer social interaction, and spellcasting still remains deferred to the gameplay loop and player-engine layers until the current activity-driven pass is stable.
+- 2026-04-09: Added the first unified player body-state runtime pass with authored `rule.body_state_balance`, consumable nutrition profiles, lineage metabolic preferences, stamina coupling, activity/rest integration, inventory consume actions, and UI body-state readouts; `apps/rpg-ui` now passes `npx vite build`, targeted Node smoke validation passes for body-state advancement/consumption/runtime sync, and `tool:content-lint` still stops only on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-06: Replaced the human lineage secondary card art by moving the new loose root `Human.png` intake into the canonical `apps/rpg-ui/public/character-creator/lineages/lineage-human-selected.png` runtime filename, archived the prior selected human image under `unused assets/lineages/2026-04-06-human-selected-replaced/`, and regenerated `apps/rpg-ui/dist` through `npx vite build`; no new deferred follow-up was introduced by this asset pass.
+- 2026-04-06: Shifted the dark-mode launcher and in-session top-bar buttons from translucent white surfaces to a darker gunmetal/charcoal treatment so they sit cleanly against the deep-blue header bars without brightening the theme; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
 - 2026-04-06: Moved 47 loose root settlement image intake files into canonical `apps/rpg-ui/public/character-creator/settlements/` runtime filenames, normalized the mismatched `Riverthorne` and `SeaBanner` intake names onto the canonical `riverthrone` and `seabanner` settlement slugs, archived unmatched `Mossfen.png` under `unused assets/settlements/2026-04-06-unmatched-intake/`, extended the settlement card-art registry so the new images can be used in the character creator, and regenerated `apps/rpg-ui/dist` through `npx vite build`; remaining settlement-art gaps are narrowed below.
 - 2026-04-04: Widened the occupied save-card text block so the name and summary lines can use the full inner card width below the delete button, shortened the save-card height to better match the contained copy, reduced the character-name size slightly again, and centered `Empty` in unoccupied cards; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
 - 2026-04-04: Nudged the main-menu save-card slot header row downward to align the slot label and save timestamp with the trash button center, then lowered the remaining occupied-card copy while shrinking the character-name and metadata typography slightly for a cleaner compact stack; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
 - 2026-04-04: Tightened the compact launcher save-status banner again so its slate-blue accent state now matches the active game-data page button border, fill opacity, and shadow treatment exactly in light mode; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
 - 2026-04-04: Reworked the launcher save-status notice into a compact single-line banner by removing the unused tone eyebrow, switching the light-theme accent state to a slate-blue panel with light text and standard borders, replacing the safe-return copy with a saved-to-slot or quicksave timestamp message, and auto-dismissing that compact save banner after 15 seconds; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
-- 2026-04-04: Refined the light-mode main-menu game-data ledger by moving the Cataclysm wordmark back to the left, re-centering Continue, returning theme/settings beside Exit, strengthening the visible active page state, darkening the shared notice banner treatment, and compacting occupied save cards into one-line names plus two-line origin/location/funds summaries with inline save timestamps; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
+- 2026-04-04: Refined the light-mode main-menu game-data ledger by moving the Echoes of Legacy wordmark back to the left, re-centering Continue, returning theme/settings beside Exit, strengthening the visible active page state, darkening the shared notice banner treatment, and compacting occupied save cards into one-line names plus two-line origin/location/funds summaries with inline save timestamps; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
 - 2026-04-04: Moved the new root-level Kaelvar and Valtherion settlement art intake into canonical `apps/rpg-ui/public/character-creator/settlements/` filenames, wired settlement card art overrides plus region-style image-backed settlement cards with fallback for uncovered starts, and regenerated `apps/rpg-ui/dist` through `npx vite build`; `npm.cmd run build` still stops on the pre-existing unrelated typecheck failures across `apps/rpg-ui/src/features/*`, `src/runtime/uiViewModel.ts`, `src/game-shell/gameplayLoop.ts`, `packages/shared/time/src/index.ts`, and `packages/shared/types/src/settlement-institutions.ts`.
 - 2026-04-03: Replaced the shared settings icon again with a more conventional centered cog outline after the previous custom gear still read slightly off-center in the launcher UI; `apps/rpg-ui` should be revalidated through the normal Vite build after this UI pass, and no new deferred follow-up was introduced.
 - 2026-04-03: Tightened two remaining light-mode character-creation contrast issues by giving unlocked step-rail circles a darker slate-on-pale-blue treatment and switching the live-summary HP/MP/Stamina labels and values to darker theme-aware tones with a light outline so they stay readable on pale cards; `apps/rpg-ui` should be revalidated through the normal Vite build after this UI pass, and no new deferred follow-up was introduced.
 - 2026-04-03: Refined the light-mode main menu presentation by replacing the save-page selector highlight with a slate-blue active state, rebuilding the main menu header into a docked slate-blue bar with centered Continue access, swapping manual slot labels from Roman numerals to Arabic numbers, simplifying empty-slot cards down to `Slot N` plus `Empty`, and replacing the shared settings glyph with a cleaner standard gear outline; `apps/rpg-ui` should be revalidated through the normal Vite build after this UI pass, and no new deferred follow-up was introduced.
-- 2026-04-03: Hardened the identity-layer cleanup by finishing the creator/snapshot/player-origin semantic rename from `background*` to `backstory*`, removing the dead starter class/background template file, enforcing backstory starting-ability and knowledge-track allowlists in content validation plus snapshot assembly, requiring explicit canonical starting-bundle choice selections with no silent first-option fallback, and moving settlement lawful-start authorization onto a deterministic backstory access registry without changing combat/spawn ownership; focused identity-content and settlement-runtime tests should now cover the stricter rules, `apps/rpg-ui` still needs normal build validation, and `tool:content-lint` is still expected to stop on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
-- 2026-04-03: Replaced the mixed character-creation `background + path/class` model with canonical authored `backstories` and `starting_bundles`, moved settlement-lawful-start gating onto backstory-driven standing, made new characters classless and jobless at creation, added backstory knowledge familiarity to starter state, and removed the remaining creator-facing elemental-destiny wording without changing combat/spawn ownership or spell authoring; targeted schema, settlement-institution, and save-roundtrip tests now pass, `apps/rpg-ui` passes `npx vite build`, and `tool:content-lint` still stops on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-03: Hardened the identity-layer cleanup by finishing the creator/snapshot/player-origin semantic rename from `background*` to `backstory*`, removing the dead starter class/background template file, enforcing backstory starting-ability and knowledge-domain allowlists in content validation plus snapshot assembly, requiring explicit canonical starting-bundle choice selections with no silent first-option fallback, and moving settlement lawful-start authorization onto a deterministic backstory access registry without changing combat/spawn ownership; focused identity-content and settlement-runtime tests should now cover the stricter rules, `apps/rpg-ui` still needs normal build validation, and `tool:content-lint` is still expected to stop on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
+- 2026-04-03: Replaced the mixed character-creation `background + path/class` model with canonical authored `backstories` and `starting_bundles`, moved settlement-lawful-start gating onto backstory-driven standing, made new characters classless and jobless at creation, added backstory geographic knowledge to starter state, and removed the remaining creator-facing elemental-destiny wording without changing combat/spawn ownership or spell authoring; targeted schema, settlement-institution, and save-roundtrip tests now pass, `apps/rpg-ui` passes `npx vite build`, and `tool:content-lint` still stops on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
 - 2026-04-02: Cleaned the character-creation identity layout by moving the large full-identity randomizer above the name/sex controls, removing the extra Randomize Identity and Name/Height/Age/Build section labels, and replacing those headings with tighter separator lines so the identity stack reads cleaner without changing the underlying selection logic; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI pass.
 - 2026-04-02: Expanded the character-creation identity step with lineage-and-sex-aware age ranges, a large full-identity randomizer, a wisdom-oriented replacement for the old Average build, and a single-sentence live-summary identity narrative while wiring the new age band through form validation, preview attribute math, and saved identity profile state; `apps/rpg-ui` passes `npx vite build`, and no new deferred follow-up was introduced by this UI/content pass.
 - 2026-04-02: Simplified the character-creation discretionary attribute step by replacing the redundant `Current <value>` row label with concrete gameplay-facing inline attribute feeds on each stat row and removing the separate lower attribute-description card grid; `apps/rpg-ui` validation should continue through the normal Vite build, and no new deferred follow-up was introduced by this UI pass.
@@ -32,7 +65,7 @@ This file tracks content and systems that are intentionally deferred.
 - 2026-04-02: Tightened character-creation selector parity by removing the extra collapsed continent-card height, rebuilding settlement cards onto the same collapsed card shell used by regions with settlement-derived resource icons and consistent population badges, and expanding every playable lineage's skin, hair, and eye palette by one additional row with broader lore-friendly variation; `apps/rpg-ui` now passes `npx vite build`, and no new deferred follow-up was introduced by this UI/content pass.
 - 2026-04-02: Rebuilt the player identity and progression layer around a hierarchical skill tree, lineage trait packages, canonical milestone titles, a baseline active-ability catalog, a full placeholder spell catalog, structured skill-effect and item-use combat hooks, and content-driven combat action discovery; starter/demo/save/combat fixtures now use the canonical ids, focused player/combat/save/schema tests pass under `node --test --test-isolation=none`, and `tool:content-lint` still stops on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
 - 2026-04-02: Recovered the partial combat/spawn foundation by verifying ownership across `GameState`, `PlayerState`, and `SessionState`, extending monster/combat/spawn schemas and `content-lint` coverage for combat roles, tactics presets, encounter templates, spawn profiles, and monster combat fields, normalizing the remaining canonical app/demo/test fixture ids that still referenced removed player or world records, adding focused combat/spawn unit coverage plus save/schema validation, and completing the missing engine `.js` bridge layer so the top-level `game-engine` entrypoint imports cleanly again; focused validation now passes and `tool:content-lint` still stops only on the pre-existing unrelated `packages/content/base/world/flora.json` record `flora.alder_sapling.harvest.active`.
-- 2026-04-02: Replaced the FFXI-seeded player placeholder catalogs with a canonical foundation pass: skills now use layered system/knowledge/specialization records plus progression tracks, knowledge tracks, skill-effect profiles, reusable trials, spell scaling channels, and item use profiles; dependent quest, crafting, item, schema, shared-type, database, lint, and economy surfaces were retargeted to the new ids, focused source-level tests now pass, and `tool:content-lint` now gets past BOM-prefixed JSON parsing but still stops on a pre-existing invalid `packages/content/base/world/flora.json` record (`flora.alder_sapling.harvest.active`) outside this player/progression scope.
+- 2026-04-02: Replaced the FFXI-seeded player placeholder catalogs with a canonical foundation pass: skills now use layered system/knowledge/specialization records plus progression tracks, knowledge domains, skill-effect profiles, reusable trials, spell scaling channels, and item use profiles; dependent quest, crafting, item, schema, shared-type, database, lint, and economy surfaces were retargeted to the new ids, focused source-level tests now pass, and `tool:content-lint` now gets past BOM-prefixed JSON parsing but still stops on a pre-existing invalid `packages/content/base/world/flora.json` record (`flora.alder_sapling.harvest.active`) outside this player/progression scope.
 - 2026-03-30: Replaced the selected continent and region description-panel faux inner glow with a true seam border, widened the expanded continent description panel slightly so its copy block reads less cramped, and re-anchored the collapsed hover-title gradient overlays to the card edge so their left/top/bottom contours now nest cleanly against the card border; no new deferred follow-up was introduced by this UI pass.
 - 2026-03-30: Added a light-mode-only text shadow treatment to the character-creation live summary resource-bar labels and values so the colored HP, MP, and stamina readouts stay legible against the pale summary card background; no new deferred follow-up was introduced by this UI pass.
 - 2026-03-30: Fixed the character-creation light-mode step rail so active and completed step-number circles now use dark readable numerals on their tinted fills instead of inheriting low-contrast light text; no new deferred follow-up was introduced by this UI pass.
@@ -64,6 +97,73 @@ This file tracks content and systems that are intentionally deferred.
 ## Deferred Systems
 
 ### Player Identity And Progression
+
+#### Creator profile balance retune after broader playtest and progression coverage exist
+
+- Status: deferred
+- Prerequisite: the new deterministic `Physique + Nature + Focus` creator resolver is now implemented and exhaustively smoke-tested, but broader combat, spell, body-state, and progression playtest data is still needed before weights should be retuned with confidence
+- Intended owner: character-creation authored profile content in `apps/rpg-ui/src/game-shell/characterCreationIdentityOptions.ts`, resolver math in `apps/rpg-ui/src/game-shell/characterCreationMath.ts`, and any later balance-review tooling layered on top of creator outcomes
+- Intended implementation:
+  - keep the current approved profile weights untouched until actual playtest evidence shows dominant presets, dead combinations, or undesirable spread clustering in live content
+  - revisit physique baseline shares, nature weight mixes, and focus shifts only after the surrounding progression and combat layers are stable enough to judge downstream value honestly
+  - preserve the deterministic `90 base + 10 generated = 100` rule, largest-remainder tie policy, and no-manual-allocation creator model during any future retune
+
+#### Legacy reward economy tuning after the run-end payout framework is exercised
+
+- Status: deferred
+- Prerequisite: the account-scoped Legacy backbone now exists, and newly archived runs now pass through a centralized eligibility/payout resolver that persists compact payout metadata and explicit resolution markers; final economy numbers, old-record backfill or cleanup, real unlock pricing, and active repeated weak-run suppression still need dedicated reward/meta-progression ownership
+- Intended owner: future reward/meta-progression systems in `packages/engines/game-engine/src/run-legacy-payout.ts`, `apps/rpg-ui` game-shell run resolution, `packages/engines/player-engine/src/difficulty.ts`, and any later prestige or legacy content layer
+- Intended implementation:
+  - keep the current framework values as placeholder tuning until archived-run outcomes provide enough play data to balance real payout pacing
+  - keep cleanup or migration of previously contaminated local profiles separate until account-profile maintenance policy and user-facing recovery rules exist
+  - decide whether old archived records without payout metadata should remain untouched permanently or receive a user-facing maintenance/backfill tool later
+  - turn the repeated weak-run suppression hook into a real account-pattern rule only after enough legitimate run data exists to avoid punishing normal restarts
+  - author a real Legacy unlock catalog with prices, grounded labels, and effect hooks only after payout ownership and spend ownership are explicit
+  - formalize difficulty/challenge modifiers, hardcore death handling, and any legacy-spend sinks only when the dedicated run-conclusion and meta-progression layer has real balancing targets
+
+#### Heir, retirement, and estate-transfer flows after run-conclusion and account Legacy payout ownership exist
+
+- Status: deferred
+- Prerequisite: the account-scoped Legacy backbone now exists, real retirement/death lifecycle flows now archive runs and clear playable save slots, helper-only retained retired records can preserve slot-backed lineage-use scaffolding with `inheritanceUsesRemaining`, and newly archived runs now receive centralized Legacy payout metadata; remaining prerequisite is inheritance and estate ownership that can consume those records safely
+- Intended owner: future meta-progression and run-resolution systems in `apps/rpg-ui` game-shell flow, account-level Legacy reward writers, and any later estate or succession content layer
+- Intended implementation:
+  - keep the current live player flow limited to archival lifecycle closure plus centralized run-end payout metadata without exposing retained retired runs, heir generation, estate transfer, or succession rules prematurely
+  - use the existing archive helper seam plus stored `archiveReason`, `echoLevelReached`, `notableCharacterAchievementIds`, `payoutBreakdown`, and `legacyGranted` fields as the canonical handoff into later inheritance and estate ownership
+  - use helper-only retained retired records and `inheritanceUsesRemaining` as the future lineage-source seam without backfilling existing archived retirements
+  - add heir, estate, or succession logic only after legitimate run-end payout ownership exists and can write into the account Legacy ledger cleanly
+  - keep any eventual heir, estate, or succession rules account-scoped and separate from the active run/player snapshot
+
+### Achievements And Chronicle
+
+#### Full Chronicle browser and archived-run history surfaces after the account history seam has real consumers
+
+- Status: deferred
+- Prerequisite: account-side achievement state and compact archived run-history records now persist, but the current UI only surfaces summary `Chronicles` and Codex entries rather than a dedicated historical browser
+- Intended owner: `apps/rpg-ui` launcher and Codex presentation layers plus future chronicle/history UI systems
+- Intended implementation:
+  - keep the current pass limited to launcher summaries and Codex-facing `Deeds` and `Chronicles` entries instead of widening scope into a full run-history browser
+  - add future browsing for archived runs, notable deeds, account milestones, and record continuity only after there is a clearer user flow for inspecting past runs
+  - preserve the compact account-history storage model as the source for those later browsers instead of reconstructing run history from deleted saves
+
+#### Event-hook-only achievement types after the state-derived milestone pass is stable
+
+- Status: deferred
+- Prerequisite: the v1 achievement system now evaluates only durable state and cumulative high-water marks; more temporal or edge-triggered achievement types would need explicit event ownership first
+- Intended owner: future achievement runtime ownership in `packages/engines/game-engine/src/achievements.ts` plus whichever gameplay systems emit the relevant canonical events
+- Intended implementation:
+  - keep v1 achievements on durable snapshot/account metrics only so the system stays idempotent and reload-safe
+  - add event-hook-only achievements later for cases that cannot be inferred cleanly from stored state, such as mutually exclusive choices, no-death clears, or first-seen one-off world events
+  - require clear canonical event ownership before broadening the achievement model beyond the current state-derived seam
+
+#### Broader authored achievement catalog and reward tuning after the first live Chronicle layer is exercised
+
+- Status: deferred
+- Prerequisite: the first curated achievement catalog, rarity display tier, and Legacy reward seam now exist, but broader milestone coverage, reward pacing, and unlock pricing still need live usage data and a fuller meta-progression layer
+- Intended owner: `packages/content/base/player/achievements.json`, future Legacy unlock catalogs, and later reward/meta-progression tuning passes
+- Intended implementation:
+  - keep the current catalog intentionally small and milestone-oriented rather than filling every subsystem with grind counters or easy farm loops
+  - expand authored `Deeds` and `Chronicles` only after the first live layer shows which milestones are meaningful, visible, and worth recording
+  - tune rarity presentation and account-achievement Legacy or unlock rewards only alongside the broader Legacy payout and spend economy instead of ad hoc in the first achievement pass
 
 #### Broader milestone-title authoring beyond the representative canonical tracks
 
@@ -135,6 +235,56 @@ This file tracks content and systems that are intentionally deferred.
   - continue treating character creation as classless and bundle-driven rather than reviving path ownership through save or UI layers
   - only remove the remaining class-profile scaffolding when the downstream progression and save semantics are ready for that narrower cleanup
 
+#### Echo migration cleanup after the first gating pass
+
+- Status: deferred
+- Prerequisite: the new Echo-derived `progression.level` is now live for trials and the first profession rule, but the save-compatibility window for `resources.xp` and the remaining authority or start-access rule surfaces still need a dedicated follow-up pass
+- Intended owner: `packages/engines/player-engine/src/progression.ts`, `apps/rpg-ui/src/game-shell/saveManager.ts`, `apps/rpg-ui/src/game-shell/gameplayLoop.ts`, `packages/shared/types/src/contracts.ts`, `packages/content/base/game/global_rules.json`, and settlement or start-access rule adapters
+- Intended implementation:
+  - remove the temporary `resources.xp` compatibility layer from active runtime and save semantics once old saves no longer need it
+  - audit remaining displays, telemetry payloads, and content adapters so no gating or presentation path still assumes the old power-linked level or XP loop
+  - extend authored Echo requirements beyond the first `trials.json` gates and `rule.enchanter_profession` into broader authority and lawful start-access surfaces without letting Echo grant direct power
+
+#### Body-state wilderness recovery and environmental pressure after non-settlement camping exists
+
+- Status: deferred
+- Prerequisite: the first body-state pass only wires settlement rest and generic recovery contexts; authored campsite generation, camp-quality ownership, weather exposure, and safety threat modeling need to exist first
+- Intended owner: `apps/rpg-ui/src/game-shell/gameplayLoop.ts`, future camp/environment systems, and `packages/content/base/game/global_rules.json`
+- Intended implementation:
+  - extend the shared recovery-context model from settlement rest into wilderness bedroll, campfire, shelter, and exposed overnight states instead of inventing a second recovery system
+  - let camp quality, safety, and environmental pressure modify fatigue recovery, hydration retention, and nutrient conversion through the existing body-state recovery hooks
+  - keep recovery degradation gradual and recoverable rather than turning bad camps into hard rest lockouts
+
+#### Body-state combat exertion metadata after the next combat pass
+
+- Status: deferred
+- Prerequisite: the first body-state rollout intentionally leaves combat rules and spawn systems unchanged; combat actions need a future pass that can own metabolic intensity metadata cleanly
+- Intended owner: `packages/shared/types/src/combat.ts`, `packages/engines/game-engine/src/combat/index.ts`, and `packages/engines/player-engine/src/body-state.ts`
+- Intended implementation:
+  - add optional combat-action metabolic profiles so sustained fights can feed fatigue, hydration loss, and next-cycle recovery pressure without redesigning combat resolution
+  - keep stamina as the immediate combat resource and layer body-state consequences in through action intensity and aftermath rather than duplicating combat costs
+  - preserve spawn and encounter balance ownership outside the body-state system
+
+#### Broader consumable coverage and secondary body-state hooks after the first authored food pass
+
+- Status: deferred
+- Prerequisite: the initial body-state content only tags and profiles a starter subset of meals, rations, bread, stew, and ale; more item coverage plus trait/spell/weather hooks should wait until the baseline consume loop has real playtest data
+- Intended owner: `packages/content/base/items/items.json`, `packages/content/base/items/consumable_profiles.json`, player-trait or spell effect surfaces, and future environmental systems
+- Intended implementation:
+  - expand consumable profiles and broad food-tag coverage across the rest of the authored item catalog without requiring race-specific item variants
+  - add secondary hooks from traits, spells, weather, and status effects into hydration retention, intoxication handling, and recovery quality only after baseline tuning is stable
+  - keep lineage metabolic preferences as capped efficiency modifiers layered on the shared system instead of growing bespoke per-lineage exceptions
+
+#### Broader stat-growth action-profile coverage after the first activity-driven pass
+
+- Status: deferred
+- Prerequisite: the current creator math, hidden load storage, and first-pass travel/work/rest activity wiring must stabilize first so broader coverage can reuse the same saturation, recovery, and tension rules without immediate rebalance churn
+- Intended owner: `apps/rpg-ui/src/game-shell/gameplayLoop.ts`, `packages/engines/player-engine/src/stat-growth.ts`, and later combat/social/spell action-definition surfaces
+- Intended implementation:
+  - extend `ActionAttributeLoadProfileState` coverage beyond the current travel, shift labor, survey, procurement, and rest-recovery loop into combat actions, richer social/leadership interactions, and controlled spellcasting
+  - keep those systems on the same deterministic load-generation and recovery-conversion pipeline instead of inventing separate progression tracks or XP hooks
+  - tune additional source tags and tension mappings only after the first activity-driven stat-growth pass has playtest data and stable authored thresholds
+
 ### UI Fixture Cleanup
 
 #### RPG UI starter/demo narrative ids
@@ -144,7 +294,7 @@ This file tracks content and systems that are intentionally deferred.
 - Intended owner: `apps/rpg-ui` gameplay-shell starter/demo fixtures, not world simulation content
 - Intended implementation:
   - the combat recovery pass normalized canonical region, settlement, market, route, spell, ability, trait, item, and save-state ids, but the gameplay shell still carries locally scoped quest/location/story ids such as the starter survey loop
-  - replace those local ids and their remaining old-world narrative labels only after the UI’s starter-flow records either become authored content or are explicitly retained as UI-local fixtures with a clean naming pass
+  - replace those local ids and their remaining old-world narrative labels only after the UIâ€™s starter-flow records either become authored content or are explicitly retained as UI-local fixtures with a clean naming pass
   - keep future cleanup isolated to the UI/demo shell so it does not blur ownership with canonical world or combat data
 
 ### Arcane Documents
@@ -505,11 +655,11 @@ This file tracks content and systems that are intentionally deferred.
 #### Modular progression foundation follow-through
 
 - Status: partially deferred
-- Prerequisite: the canonical player foundation now exists across the hierarchical skill tree, lineage trait packages, titles, abilities, spells, progression tracks, knowledge tracks, skill effects, trials, items, schemas, shared contracts, combat hooks, and linting; remaining prerequisites are runtime progression gain consumers, broader class/job ownership, and expanded authored combat/craft/magic content
+- Prerequisite: the canonical player foundation now exists across the hierarchical skill tree, lineage trait packages, titles, abilities, spells, progression tracks, knowledge domains, skill effects, trials, items, schemas, shared contracts, combat hooks, and linting; remaining prerequisites are runtime progression gain consumers, broader class/job ownership, and expanded authored combat/craft/magic content
 - Intended owner: player content databases, player-engine runtime, combat systems, spell systems, craft systems, and later progression tooling
 - Intended implementation:
   - the current foundation now uses a hierarchical skill tree with container categories, rankable branch or leaf skills, canonical progression tracks, and milestone-title metadata instead of the old placeholder flat catalog
-  - `packages/content/base/player/progression_tracks.json`, `knowledge_tracks.json`, `skill_effects.json`, and `trials.json` now own reusable breakthrough, identification, effect-channel, and trial definitions instead of embedding those rules ad hoc inside individual skills or spells
+  - `packages/content/base/player/progression_tracks.json`, `knowledge_domains.json`, `skill_effects.json`, and `trials.json` now own reusable breakthrough, identification, effect-channel, and trial definitions instead of embedding those rules ad hoc inside individual skills or spells
   - `tools/content-lint/index.mjs` now validates player catalogs and their cross-system refs against quests, items, and crafting surfaces instead of leaving player content outside the main validation pass
   - remaining work is to let live actions award skill gain, breakthrough progress, and trial advancement through runtime systems instead of leaving the new models data-only
   - expand the spell, ability, and specialization roster only when each addition has clear structured effects and governing skill ownership; do not reintroduce placeholder tier spam or vague passive filler
@@ -568,11 +718,11 @@ This file tracks content and systems that are intentionally deferred.
 #### Ecology record identification difficulty authoring
 
 - Status: deferred
-- Prerequisite: knowledge tracks and auto-identify thresholds now exist; remaining prerequisite is a deliberate flora/fauna/mineral source audit so identification difficulty and rarity are authored against real ecology records instead of guessed in bulk
+- Prerequisite: knowledge domains and auto-identify thresholds now exist; remaining prerequisite is a deliberate flora/fauna/mineral source audit so identification difficulty and rarity are authored against real ecology records instead of guessed in bulk
 - Intended owner: world ecology content, player knowledge systems, and codex/discovery surfaces
 - Intended implementation:
   - annotate flora, fauna, and mineral records with authored identification difficulty once the ecology pass is ready to normalize those datasets
-  - use domain knowledge first, universal knowledge as weak support, and spotting as a minor assist exactly as the current knowledge-track foundation expects
+  - use domain knowledge first, general lore as weak support, and spotting as a minor assist exactly as the current knowledge-domain foundation expects
   - keep the current player foundation generic until the ecology datasets are clean enough to support stable identify thresholds and discovery outcomes
 
 #### Canonical skill, job, workplace, and employment architecture refactor
@@ -600,6 +750,58 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to replace fixture-authored modifier payloads with canonical equipment, spell, potion, food, rest, and aura effect data from the content/database layer
   - wire combat damage, healing, spellcasting costs, potion use, food consumption, environmental drains, and rest actions to emit `player.resource.change` and modifier-application events instead of hand-seeding pending changes in test/demo state
   - extend the UI beyond the current character-overview summary so the player can inspect the full resource history and source-by-source breakdown in dedicated views
+
+### Public Reputation And Geographic Knowledge
+
+#### Hidden attribution, rumor spread, and investigation states for public notoriety
+
+- Status: deferred
+- Prerequisite: the scoped fame/notoriety foundation now exists with explicit exposure and attribution gates, but there is still no canonical investigation, witness-chain, evidence, or rumor-propagation runtime to assign blame indirectly
+- Intended owner: `packages/engines/player-engine/src/reputation.ts`, future chronicle/codex evidence systems, and any later civic or law-enforcement runtime that resolves discovered crimes
+- Intended implementation:
+  - keep v1 direct notoriety limited to condemned acts that are exposed and attributed or credibly linked
+  - add hidden suspicion, evidence, witness, and rumor states later so unseen or unattributed crimes can surface through investigation without auto-assigning blame immediately
+  - preserve the current fame/notoriety split and do not collapse hidden investigation into direct public reputation until attribution is resolved
+
+#### Historical reputation codex, chronicle, record, and song surfaces
+
+- Status: deferred
+- Prerequisite: the scoped reputation runtime now stores `historical` values, internal `common / historical / epic` tiers, branch-aware fame summaries, and selective serious-notoriety event records, but no codex, chronicle, guild-record, temple-record, criminal-roll, or bardic-memory surface consumes them yet
+- Intended owner: `packages/engines/player-engine/src/reputation.ts`, codex/chronicle UI projection layers in `apps/rpg-ui`, and future authored record or song content systems
+- Intended implementation:
+  - use the existing historical layer as the source for future chronicles, guild ledgers, temple rolls, ballads, and other record-keeping surfaces instead of recomputing legacy significance elsewhere
+  - expose historical tiers as authored hooks for records, wanted notices, criminal rolls, and songs only after those content surfaces exist, while keeping them internal in v1
+  - preserve the distinction between decaying current recognition and non-decaying historical significance when those UI/content surfaces are added
+
+#### Public reputation detail surfaces beyond the compact summary rows
+
+- Status: deferred
+- Prerequisite: the runtime now resolves top fame branches, recognition bands, seriousness classes, highest severity, and active flags by scope, but the normal UI intentionally stays compressed and there is still no dedicated heroic-title, most-wanted, or criminal-sheet surface
+- Intended owner: `apps/rpg-ui` reputation detail panes, `packages/engines/player-engine/src/reputation.ts`, and future chronicle/codex or civic-enforcement presentation layers
+- Intended implementation:
+  - keep the default character-panel reputation list compact in v1, with helper summaries only
+  - add richer future panes for branch-aware fame drivers, serious-crime breakdowns, wanted-poster style notoriety summaries, and event-backed criminal sheets only when those surfaces have clear gameplay consumers
+  - preserve the separation between stored aggregate notoriety rows and persisted serious-event records when those deeper UI surfaces are added, so the UI does not flatten them into one persistence layer
+
+#### Authored public-reputation reward rollout beyond the first explicit quest hooks
+
+- Status: deferred
+- Prerequisite: the schema and runtime hooks now support authored `reputationAwards`, but only the current explicit RPG UI quest turn-ins use the system and the broader quest/event catalog has not been authored against it yet
+- Intended owner: civilization quest content, authored event/story content, and the gameplay/runtime systems that turn those outcomes into public fame or notoriety
+- Intended implementation:
+  - add `reputationAwards` to more quest templates, quest definitions, and explicit story/discovery events only when the underlying act is meaningful, socially visible, and attributable under the new rules
+  - avoid bulk-filling every quest with public reputation until the content has been reviewed for real social scope and exposure requirements
+  - keep passive grind loops, anonymous crimes, and low-signal actions unhooked unless later content explicitly justifies them
+
+#### Geographic knowledge levels beyond binary known or unknown travel knowledge
+
+- Status: deferred
+- Prerequisite: `geographicKnowledge` now exists and seeds continent, region, and settlement knowledge, but current runtime consumers only treat `level > 0` as known and no travel, scouting, or market systems consume deeper place-knowledge tiers yet
+- Intended owner: travel/exploration runtime, settlement and region UI projection, and future codex or map systems that benefit from graded place knowledge
+- Intended implementation:
+  - keep v1 geographic knowledge as a simple known or unknown layer while the rest of travel and discovery runtime catches up
+  - add deeper place-knowledge ranks later for route confidence, scouting bonuses, local-service awareness, and map/codex reveal quality once those systems can consume them deterministically
+  - preserve the separation between geographic knowledge and general lore skills when those higher-level place-knowledge bonuses are introduced
 
 ### Quest Systems
 
@@ -642,13 +844,43 @@ This file tracks content and systems that are intentionally deferred.
 
 ### Frontend UI
 
+#### Complete docked launcher-shell migration for remaining pre-game surfaces
+
+- Status: deferred
+- Prerequisite: the shared launcher shell now exists for the main menu/account-meta surface and settings; remaining prerequisite is a focused UI pass that can touch the load-game and local account access flows without widening account or save semantics
+- Intended owner: `apps/rpg-ui` launcher components
+- Intended implementation:
+  - migrate `LoadGameScreen` and `LocalAccountAccessScreen` away from older floating page scaffolds into the shared docked shell when those surfaces are next revised
+  - preserve existing account authentication, save browsing, and character-creation entry behavior during that migration
+  - keep the shell slot contract generic so future launcher status fields, actions, and account controls can change without hardcoding long-term data assumptions
+
+#### Account switching and per-account save browsing after the local account-profile model stabilizes
+
+- Status: deferred
+- Prerequisite: local account profiles, account-scoped save keys, and a launcher-local password/session shell now exist, but the launcher still lacks broader account management beyond choosing, claiming, creating, or logging out of a ledger
+- Intended owner: `apps/rpg-ui` launcher flow, `apps/rpg-ui/src/game-shell/accountProfileManager.ts`, and any future profile-selection UI layer
+- Intended implementation:
+  - keep the current pass on lightweight local password sign-in, a simple ledger picker, claim-existing, and main-menu logout instead of widening immediately into full account management
+  - add broader launcher account lists, display-name editing, credential-management flows, active-account switching, and richer per-account save browsing only after the local auth/profile boundary proves stable
+  - preserve the account/profile layer as separate browser-local state instead of merging it back into per-run save snapshots
+
+#### Cloud or remote account sync after the local account-profile model stabilizes
+
+- Status: deferred
+- Prerequisite: the local browser-only account profile, account-scoped save format, and launcher-local auth/session seam now exist, but there is no remote identity provider, sync conflict policy, or service ownership yet
+- Intended owner: future account-services, launcher sync flow, and any later desktop or hosted profile infrastructure
+- Intended implementation:
+  - keep the current pass strictly browser-local so the Legacy backbone and local auth shell can stabilize without network, SSO, or conflict-resolution scope
+  - add remote account sync and provider-backed sign-in only after local account semantics, save isolation, ledger behavior, and the auth-manager seam are stable enough to swap intentionally
+  - keep transaction history, unlock state, and per-account save ownership explicit so a later sync layer has clean canonical sources to mirror
+
 #### Live RPG UI data bindings and persistence
 
 - Status: partially deferred
 - Prerequisite: shared player/session snapshot fields and a browser-safe UI projection layer now exist; remaining prerequisite is runtime generation of those session records from actual simulation systems
 - Intended owner: `apps/rpg-ui`, `packages/shared`, and engine/session runtime layers
 - Intended implementation:
-  - a player-facing root launcher now exists as `Play Cataclysm.cmd` so the current UI/browser flow can be entered from the project root without terminal knowledge
+  - a player-facing root launcher now exists as `Play Echoes of Legacy.cmd` so the current UI/browser flow can be entered from the project root without terminal knowledge
   - the React/Tailwind shell now reads from a save/session snapshot bridge instead of the earlier freeform mock-data module, and the in-game shell now owns a typed game-session provider that separates raw active snapshots, derived UI view models, and local navigation state while leaving `demoSnapshot` as development-only seed data
   - shared contracts now carry location, currency, reputation, titles, tracked activity, notifications, codex records, quest journal records, chronicle records, operations, origin profiles, inventory/equipment, and the player discovery chronicle in a session-facing shape the UI can project directly
   - `packages/engines/game-engine/src/save-snapshot.ts` now provides a runtime-side snapshot helper, and `apps/rpg-ui/src/runtime/uiViewModel.ts` projects that snapshot shape into panel data
@@ -709,5 +941,15 @@ This file tracks content and systems that are intentionally deferred.
 - Prerequisite: a root-level player launcher now exists; remaining prerequisites are a stable production build pipeline for `apps/rpg-ui` and a clear ownership decision for running or embedding the simulation/runtime host in desktop builds
 - Intended owner: desktop packaging, `apps/rpg-ui`, and future app-host/runtime integration layers
 - Intended implementation:
-  - keep `Play Cataclysm.cmd` as the current non-technical root entrypoint while the project remains browser-hosted in development, with the root launcher explicitly handing the UI URL to the system default browser once the dev server responds
+  - keep `Play Echoes of Legacy.cmd` as the current non-technical root entrypoint while the project remains browser-hosted in development, with the root launcher explicitly handing the UI URL to the system default browser once the dev server responds
   - package the player UI into a desktop shell once the save flow, launcher behavior, and runtime bridge are stable enough that browser-specific boot assumptions can be removed
+
+#### Broader Node-native `.js` bridge coverage for app-local RPG UI source modules
+
+- Status: deferred
+- Prerequisite: the current launcher and browser-facing Vite flow are healthy, and the only concrete missing shared bridge in the main-menu startup path has been restored; expand this only if `apps/rpg-ui/src` modules must be imported directly by Node-native tooling, test runners, or desktop-host code without Vite mediation
+- Intended owner: `apps/rpg-ui` module-boundary/tooling layer plus any future desktop-host integration
+- Intended implementation:
+  - keep the current fix limited to the missing shared persistence bridge required by the main-menu save path instead of sweeping the entire app source tree into checked-in `.js` bridge coverage without a runtime owner
+  - if Node-native importability of `apps/rpg-ui/src` becomes a real requirement, audit local `*.ts` and `*.tsx` modules that are currently referenced through `.js` specifiers and add a deliberate, consistent bridge policy rather than filling gaps opportunistically
+  - keep that future pass separate from combat, progression, or browser-launch difficulty so it remains a tooling and module-boundary cleanup instead of bleeding into gameplay systems
