@@ -91,6 +91,7 @@ export interface CombatArmorHandlingGrantState {
   itemId: string;
   handlingType: "shield" | "armor" | "hybrid";
   proficiencySkillId: string;
+  proficiencyBand?: string | null;
   hybridSkillIds: string[];
   combatTags: string[];
   resolutionHooks: string[];

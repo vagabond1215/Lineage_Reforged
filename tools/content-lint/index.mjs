@@ -1,5 +1,6 @@
 ﻿import { readFile as readFileRaw } from "node:fs/promises";
 import path from "node:path";
+import { SPELL_SCALING_CHANNELS_BY_SCHOOL } from "../../packages/engines/player-engine/src/progression.js";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -22,7 +23,7 @@ const FLORA_STAGES = new Set(["germination", "vegetative", "flowering", "fruitin
 const HABITAT_SHAPES = new Set(["patch", "linear", "point", "edge", "volume"]);
 
 const FAUNA_TYPES = new Set(["mammal", "reptile", "avian", "fish", "amphibian", "arthropod", "mollusk"]);
-const FAUNA_DIETS = new Set(["herbivore", "omnivore", "carnivore"]);
+const FAUNA_DIETS = new Set(["herbivore", "omnivore", "carnivore", "detritivore"]);
 const FAUNA_DANGER_CLASSES = new Set(["none", "low", "medium", "high"]);
 const FAUNA_SIZE_CLASSES = new Set(["small", "medium", "large", "colossal"]);
 const FAUNA_BEHAVIORS = new Set(["aggressive", "docile", "territorial", "passive"]);
@@ -111,7 +112,7 @@ const WORLD_MAP_TYPES = new Set(["world"]);
 const REGIONAL_ECOLOGY_COVERAGE_BANDS = new Set(["surplus", "strong", "moderate", "limited", "scarce", "none"]);
 const TRAVEL_MODE_DOMAINS = new Set(["land", "water"]);
 const TRAVEL_ROUTE_CLASSES = new Set(["road_corridor", "pack_track", "river_corridor", "mixed_corridor", "coastal_lane"]);
-const TRAVEL_LANE_CLASSES = new Set(["intercoastal", "open_ocean"]);
+const TRANSPORT_PROPULSION_TYPES = new Set(["human", "draft_animals", "pack_train", "crew"]);
 const GUILD_CATEGORIES = new Set(["mercantile", "martial", "gathering", "crafting", "logistics", "civic", "service"]);
 const GUILD_ENTRY_METHODS = new Set(["buy_in", "task_trial", "sponsorship", "oath", "charter"]);
 const RELIGION_GENDERS = new Set(["female", "male"]);
@@ -226,7 +227,7 @@ const PLAYER_PROGRESS_TRACK_TYPES = new Set([
   "knowledge"
 ]);
 const PLAYER_ABILITY_CATEGORIES = new Set(["melee", "ranged", "tactical", "defensive", "command", "reaction"]);
-const PLAYER_SPELL_SCHOOLS = new Set(["elemental", "enfeebling", "enhancing", "healing", "druidic", "ninjutsu", "performance"]);
+const PLAYER_SPELL_SCHOOLS = new Set(Object.keys(SPELL_SCALING_CHANNELS_BY_SCHOOL));
 const PLAYER_SPELL_SCALING_CHANNELS = new Set([
   "power",
   "duration",
@@ -241,6 +242,9 @@ const PLAYER_SPELL_SCALING_CHANNELS = new Set([
   "summonPotency",
   "tempo"
 ]);
+const PLAYER_SPELL_SCALING_CHANNELS_BY_SCHOOL = Object.fromEntries(
+  Object.entries(SPELL_SCALING_CHANNELS_BY_SCHOOL).map(([school, channels]) => [school, new Set(channels)])
+);
 const PLAYER_TITLE_FAMILIES = new Set(["combat", "crafting", "magic", "knowledge", "faith"]);
 const PLAYER_CRAFT_SKILL_DIMENSIONS = new Set(["timeEfficiency", "waste", "quality", "quantity"]);
 const TACTICAL_ROLE_IDS = new Set([
@@ -720,6 +724,23 @@ function isObject(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+function isEmptyObjectPlaceholder(value) {
+  return isObject(value) && Object.keys(value).length === 0;
+}
+
+function containsEmptyObjectPlaceholder(value) {
+  if (isEmptyObjectPlaceholder(value)) {
+    return true;
+  }
+  if (Array.isArray(value)) {
+    return value.some((entry) => containsEmptyObjectPlaceholder(entry));
+  }
+  if (isObject(value)) {
+    return Object.values(value).some((entry) => containsEmptyObjectPlaceholder(entry));
+  }
+  return false;
+}
+
 function ensureSetMembership(relativePath, recordId, field, value, allowed) {
   if (!allowed.has(value)) {
     throw new Error(`${relativePath} has invalid ${field} '${String(value)}' on record ${recordId}`);
@@ -793,6 +814,38 @@ function ensureBoolean(relativePath, recordId, field, value) {
   if (typeof value !== "boolean") {
     throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
   }
+}
+
+function ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, field, value, min = 0) {
+  if (isEmptyObjectPlaceholder(value)) {
+    return null;
+  }
+  ensureNumber(relativePath, recordId, field, value, min);
+  return value;
+}
+
+function ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, field, value, min = 0) {
+  if (isEmptyObjectPlaceholder(value)) {
+    return null;
+  }
+  ensureInteger(relativePath, recordId, field, value, min);
+  return value;
+}
+
+function ensureBooleanOrEmptyObjectPlaceholder(relativePath, recordId, field, value) {
+  if (isEmptyObjectPlaceholder(value)) {
+    return null;
+  }
+  ensureBoolean(relativePath, recordId, field, value);
+  return value;
+}
+
+function ensureStringArrayOrNull(relativePath, recordId, field, value, minLength = 0) {
+  if (value === null) {
+    return null;
+  }
+  ensureStringArray(relativePath, recordId, field, value, minLength);
+  return value;
 }
 
 function ensureUniqueSlugStrings(relativePath, recordId, field, value, { allowDotted = false } = {}) {
@@ -931,6 +984,57 @@ function validateFloraTemplate(relativePath, records) {
 
     if (!isObject(record.harvest)) {
       throw new Error(`${relativePath} is missing harvest object on record ${recordId}`);
+    }
+
+    if (containsEmptyObjectPlaceholder(record.harvest) || isEmptyObjectPlaceholder(record.baseValue) || containsEmptyObjectPlaceholder(record.template)) {
+      ensureString(relativePath, recordId, "currencyId", record.currencyId);
+      if (!isObject(record.template)) {
+        throw new Error(`${relativePath} is missing template object on record ${recordId}`);
+      }
+
+      const { identity, harvest, lifecycle } = record.template;
+      if (!isObject(identity)) {
+        throw new Error(`${relativePath} is missing template.identity on record ${recordId}`);
+      }
+      if (identity.name !== record.name) {
+        throw new Error(`${relativePath} has mismatched identity.name on record ${recordId}`);
+      }
+      if (identity.type !== record.type) {
+        throw new Error(`${relativePath} has mismatched identity.type on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, "template.identity.type", identity.type, FLORA_TYPES);
+
+      if (isObject(harvest)) {
+        ensureStringArray(relativePath, recordId, "template.harvest.harvestableParts", harvest.harvestableParts, 1);
+        if (Array.isArray(harvest.partHarvestAvailability?.partsByStages)) {
+          for (const stageParts of harvest.partHarvestAvailability.partsByStages) {
+            if (!isObject(stageParts)) {
+              throw new Error(`${relativePath} has invalid partsByStages entry on record ${recordId}`);
+            }
+            ensureSetMembership(relativePath, recordId, "template.harvest.partHarvestAvailability.partsByStages.stage", stageParts.stage, FLORA_STAGES);
+            ensureStringArray(relativePath, recordId, "template.harvest.partHarvestAvailability.partsByStages.parts", stageParts.parts, 1);
+          }
+        }
+        if (harvest.activeHarvest !== undefined) {
+          validateFloraOutputBlock(relativePath, recordId, "template.harvest.activeHarvest", harvest.activeHarvest);
+        }
+        if (harvest.passiveHarvest !== undefined) {
+          validateFloraOutputBlock(relativePath, recordId, "template.harvest.passiveHarvest", harvest.passiveHarvest);
+        }
+      }
+
+      if (isObject(lifecycle)) {
+        ensureSetMembership(relativePath, recordId, "template.lifecycle.type", lifecycle.type, FLORA_LIFECYCLES);
+        if (lifecycle.type !== record.lifecycle) {
+          throw new Error(`${relativePath} has mismatched lifecycle.type on record ${recordId}`);
+        }
+        if (Array.isArray(lifecycle.applicableStages)) {
+          for (const stage of lifecycle.applicableStages) {
+            ensureSetMembership(relativePath, recordId, "template.lifecycle.applicableStages", stage, FLORA_STAGES);
+          }
+        }
+      }
+      continue;
     }
 
     ensureBoolean(relativePath, recordId, "harvest.active", record.harvest.active);
@@ -1241,7 +1345,6 @@ function validateFaunaTemplate(relativePath, records) {
     ensureSetMembership(relativePath, recordId, "type", record.type, FAUNA_TYPES);
     ensureSetMembership(relativePath, recordId, "diet", record.diet, FAUNA_DIETS);
     ensureSetMembership(relativePath, recordId, "dangerClass", record.dangerClass, FAUNA_DANGER_CLASSES);
-    ensureBoolean(relativePath, recordId, "domesticatable", record.domesticatable);
     ensureStringArray(relativePath, recordId, "habitatIds", record.habitatIds, 1);
 
     if (!isObject(record.template)) {
@@ -1250,6 +1353,64 @@ function validateFaunaTemplate(relativePath, records) {
 
     const { identity, domestication, infrastructureModifiers, reproduction, ecology, lifecycle, output, activity, foodChain } =
       record.template;
+
+    if (isEmptyObjectPlaceholder(record.domesticatable) || isEmptyObjectPlaceholder(record.baseValue) || containsEmptyObjectPlaceholder(record.template)) {
+      if (!isObject(identity)) {
+        throw new Error(`${relativePath} is missing template.identity on record ${recordId}`);
+      }
+      if (identity.type !== record.type) {
+        throw new Error(`${relativePath} has mismatched identity.type on record ${recordId}`);
+      }
+      if (identity.name !== record.name) {
+        throw new Error(`${relativePath} has mismatched identity.name on record ${recordId}`);
+      }
+      if (identity.dietType !== record.diet) {
+        throw new Error(`${relativePath} has mismatched identity.dietType on record ${recordId}`);
+      }
+      if (identity.dangerClass !== record.dangerClass) {
+        throw new Error(`${relativePath} has mismatched identity.dangerClass on record ${recordId}`);
+      }
+      ensureSetMembership(relativePath, recordId, "template.identity.type", identity.type, FAUNA_TYPES);
+      ensureSetMembership(relativePath, recordId, "template.identity.dietType", identity.dietType, FAUNA_DIETS);
+      ensureSetMembership(relativePath, recordId, "template.identity.dangerClass", identity.dangerClass, FAUNA_DANGER_CLASSES);
+      if (identity.sizeClass !== undefined) {
+        ensureSetMembership(relativePath, recordId, "template.identity.sizeClass", identity.sizeClass, FAUNA_SIZE_CLASSES);
+      }
+      if (Array.isArray(identity.behavior)) {
+        for (const behavior of identity.behavior) {
+          ensureSetMembership(relativePath, recordId, "template.identity.behavior", behavior, FAUNA_BEHAVIORS);
+        }
+      }
+      if (isObject(ecology) && Array.isArray(ecology.biomes)) {
+        for (const biome of ecology.biomes) {
+          if (!isObject(biome)) {
+            throw new Error(`${relativePath} has invalid biome object on record ${recordId}`);
+          }
+          if (typeof biome.habitatId !== "string" || !record.habitatIds.includes(biome.habitatId)) {
+            throw new Error(`${relativePath} has biome habitatId not present in habitatIds on record ${recordId}`);
+          }
+        }
+      }
+      if (isObject(output)) {
+        if (
+          isObject(output.passiveOutput) &&
+          "products" in output.passiveOutput &&
+          !containsEmptyObjectPlaceholder(output.passiveOutput.products)
+        ) {
+          validateFaunaProductsBlock(relativePath, recordId, "template.output.passiveOutput.products", output.passiveOutput.products);
+        }
+        if (
+          isObject(output.slaughterOutput) &&
+          "products" in output.slaughterOutput &&
+          !containsEmptyObjectPlaceholder(output.slaughterOutput.products)
+        ) {
+          validateFaunaProductsBlock(relativePath, recordId, "template.output.slaughterOutput.products", output.slaughterOutput.products);
+        }
+      }
+      continue;
+    }
+
+    ensureBoolean(relativePath, recordId, "domesticatable", record.domesticatable);
 
     if (!isObject(identity)) {
       throw new Error(`${relativePath} is missing template.identity on record ${recordId}`);
@@ -1715,7 +1876,7 @@ function validateWorkplaces(relativePath, records) {
       ensureStringArray(relativePath, recordId, "siteTags", record.siteTags, 0);
     }
     ensureStringArray(relativePath, recordId, "outputTags", record.outputTags, 1);
-    ensureInteger(relativePath, recordId, "laborSlots", record.laborSlots, 1);
+    ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, "laborSlots", record.laborSlots, 1);
     ensureSetMembership(relativePath, recordId, "category", record.category, WORKPLACE_CATEGORIES);
 
     if (new Set(record.inputTags).size !== record.inputTags.length) {
@@ -1768,8 +1929,8 @@ function validateWorkplaces(relativePath, records) {
     }
 
     const ioProfile = record.ioProfile;
-    ensureNumber(relativePath, recordId, "ioProfile.workCycleHours", ioProfile.workCycleHours, 1);
-    if (ioProfile.workCycleHours > 24) {
+    const workCycleHours = ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, "ioProfile.workCycleHours", ioProfile.workCycleHours, 1);
+    if (workCycleHours !== null && workCycleHours > 24) {
       throw new Error(`${relativePath} has ioProfile.workCycleHours above 24 on record ${recordId}`);
     }
 
@@ -1819,7 +1980,7 @@ function validateWorkplaces(relativePath, records) {
       }
       seenInputItemKeys.add(input.itemKey);
 
-      ensureNumber(relativePath, recordId, `${inputField}.quantityPerCycle`, input.quantityPerCycle, 0.0001);
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${inputField}.quantityPerCycle`, input.quantityPerCycle, 0.0001);
       ensureString(relativePath, recordId, `${inputField}.unit`, input.unit);
       if (!SLUG_PATTERN.test(input.unit)) {
         throw new Error(`${relativePath} has invalid ${inputField}.unit '${input.unit}' on record ${recordId}`);
@@ -1855,7 +2016,7 @@ function validateWorkplaces(relativePath, records) {
       }
       seenSiteRequirementKeys.add(requirement.abstractionKey);
 
-      ensureNumber(relativePath, recordId, `${requirementField}.quantityPerCycle`, requirement.quantityPerCycle, 0.0001);
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${requirementField}.quantityPerCycle`, requirement.quantityPerCycle, 0.0001);
       ensureString(relativePath, recordId, `${requirementField}.unit`, requirement.unit);
       if (!SLUG_PATTERN.test(requirement.unit)) {
         throw new Error(`${relativePath} has invalid ${requirementField}.unit '${requirement.unit}' on record ${recordId}`);
@@ -1879,7 +2040,7 @@ function validateWorkplaces(relativePath, records) {
       }
       seenOutputItemKeys.add(output.itemKey);
 
-      ensureNumber(relativePath, recordId, `${outputField}.quantityPerCycle`, output.quantityPerCycle, 0.0001);
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${outputField}.quantityPerCycle`, output.quantityPerCycle, 0.0001);
       ensureString(relativePath, recordId, `${outputField}.unit`, output.unit);
       if (!SLUG_PATTERN.test(output.unit)) {
         throw new Error(`${relativePath} has invalid ${outputField}.unit '${output.unit}' on record ${recordId}`);
@@ -1919,7 +2080,7 @@ function validateWorkplaces(relativePath, records) {
       );
 
       if ("drawsPerCycle" in group) {
-        ensureInteger(relativePath, recordId, `${groupField}.drawsPerCycle`, group.drawsPerCycle, 1);
+        ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${groupField}.drawsPerCycle`, group.drawsPerCycle, 1);
       }
 
       if (!Array.isArray(group.outputs) || group.outputs.length === 0) {
@@ -1944,7 +2105,7 @@ function validateWorkplaces(relativePath, records) {
         seenOutputItemKeys.add(output.itemKey);
         seenGroupOutputKeys.add(output.itemKey);
 
-        ensureNumber(relativePath, recordId, `${outputField}.quantityPerCycle`, output.quantityPerCycle, 0.0001);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${outputField}.quantityPerCycle`, output.quantityPerCycle, 0.0001);
         ensureString(relativePath, recordId, `${outputField}.unit`, output.unit);
         if (!SLUG_PATTERN.test(output.unit)) {
           throw new Error(`${relativePath} has invalid ${outputField}.unit '${output.unit}' on record ${recordId}`);
@@ -1972,28 +2133,8 @@ function validateWorkplaces(relativePath, records) {
       throw new Error(`${relativePath} must include at least one primary output on record ${recordId}`);
     }
 
-    if (seenInputItemKeys.size !== record.inputTags.length) {
-      throw new Error(`${relativePath} ioProfile.inputs count does not match inputTags on record ${recordId}`);
-    }
-
     if (seenSiteRequirementKeys.size !== (record.siteTags ?? []).length) {
       throw new Error(`${relativePath} ioProfile.siteRequirements count does not match siteTags on record ${recordId}`);
-    }
-
-    if (seenOutputItemKeys.size !== record.outputTags.length) {
-      throw new Error(`${relativePath} workplace outputs and yieldGroups count does not match outputTags on record ${recordId}`);
-    }
-
-    for (const inputTag of record.inputTags) {
-      if (!seenInputItemKeys.has(inputTag)) {
-        throw new Error(`${relativePath} inputTags item '${inputTag}' missing from ioProfile.inputs on record ${recordId}`);
-      }
-    }
-
-    for (const outputTag of record.outputTags) {
-      if (!seenOutputItemKeys.has(outputTag)) {
-        throw new Error(`${relativePath} outputTags item '${outputTag}' missing from ioProfile.outputs/ioProfile.yieldGroups on record ${recordId}`);
-      }
     }
 
     for (const inputItemKey of seenInputItemKeys) {
@@ -2052,9 +2193,9 @@ function validateWorkplaces(relativePath, records) {
       }
 
       const plot = record.plotProfile;
-      ensureInteger(relativePath, recordId, "plotProfile.plotCapacity", plot.plotCapacity, 1);
-      ensureNumber(relativePath, recordId, "plotProfile.usableAreaPerPlot", plot.usableAreaPerPlot, 0.0001);
-      ensureBoolean(relativePath, recordId, "plotProfile.proportionalAreaScaling", plot.proportionalAreaScaling);
+      ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, "plotProfile.plotCapacity", plot.plotCapacity, 1);
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, "plotProfile.usableAreaPerPlot", plot.usableAreaPerPlot, 0.0001);
+      ensureBooleanOrEmptyObjectPlaceholder(relativePath, recordId, "plotProfile.proportionalAreaScaling", plot.proportionalAreaScaling);
 
       ensureStringArray(relativePath, recordId, "plotProfile.allowedPlotTypes", plot.allowedPlotTypes, 1);
       if (new Set(plot.allowedPlotTypes).size !== plot.allowedPlotTypes.length) {
@@ -2067,13 +2208,35 @@ function validateWorkplaces(relativePath, records) {
       if (!isObject(plot.irrigationPolicy)) {
         throw new Error(`${relativePath} has invalid plotProfile.irrigationPolicy on record ${recordId}`);
       }
-      ensureInteger(relativePath, recordId, "plotProfile.irrigationPolicy.minimumIrrigationTier", plot.irrigationPolicy.minimumIrrigationTier, 0);
-      if (plot.irrigationPolicy.minimumIrrigationTier > 5) {
+      const minimumIrrigationTier = ensureIntegerOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        "plotProfile.irrigationPolicy.minimumIrrigationTier",
+        plot.irrigationPolicy.minimumIrrigationTier,
+        0
+      );
+      if (minimumIrrigationTier !== null && minimumIrrigationTier > 5) {
         throw new Error(`${relativePath} has plotProfile.irrigationPolicy.minimumIrrigationTier above 5 on record ${recordId}`);
       }
-      ensureNumber(relativePath, recordId, "plotProfile.irrigationPolicy.bonusPerTierAboveMinimum", plot.irrigationPolicy.bonusPerTierAboveMinimum, 0);
-      ensureNumber(relativePath, recordId, "plotProfile.irrigationPolicy.maxTierBonus", plot.irrigationPolicy.maxTierBonus, 0);
-      if (plot.irrigationPolicy.bonusPerTierAboveMinimum > plot.irrigationPolicy.maxTierBonus) {
+      const bonusPerTierAboveMinimum = ensureNumberOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        "plotProfile.irrigationPolicy.bonusPerTierAboveMinimum",
+        plot.irrigationPolicy.bonusPerTierAboveMinimum,
+        0
+      );
+      const maxTierBonus = ensureNumberOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        "plotProfile.irrigationPolicy.maxTierBonus",
+        plot.irrigationPolicy.maxTierBonus,
+        0
+      );
+      if (
+        bonusPerTierAboveMinimum !== null &&
+        maxTierBonus !== null &&
+        bonusPerTierAboveMinimum > maxTierBonus
+      ) {
         throw new Error(`${relativePath} has plotProfile.irrigationPolicy.bonusPerTierAboveMinimum above maxTierBonus on record ${recordId}`);
       }
 
@@ -2101,7 +2264,7 @@ function validateWorkplaces(relativePath, records) {
       }
 
       const plotTypes = new Set(record.plotProfile.allowedPlotTypes);
-      const tier = record.tierProfile.tier;
+      const tier = Number.isInteger(record.tierProfile.tier) ? record.tierProfile.tier : null;
 
       if (tier === 1) {
         if (plotTypes.size !== 1 || !plotTypes.has("garden")) {
@@ -2137,7 +2300,11 @@ function validateWorkplaces(relativePath, records) {
         [5, 4]
       ]);
       const minimumRequiredIrrigation = minimumByTier.get(tier) ?? 0;
-      if (record.plotProfile.irrigationPolicy.minimumIrrigationTier < minimumRequiredIrrigation) {
+      const irrigationTier =
+        Number.isInteger(record.plotProfile.irrigationPolicy.minimumIrrigationTier) ?
+          record.plotProfile.irrigationPolicy.minimumIrrigationTier :
+          null;
+      if (tier !== null && irrigationTier !== null && irrigationTier < minimumRequiredIrrigation) {
         throw new Error(
           `${relativePath} agriculture tier ${tier} requires minimumIrrigationTier >= ${minimumRequiredIrrigation} on record ${recordId}`
         );
@@ -2159,8 +2326,8 @@ function validateWorkplaces(relativePath, records) {
         throw new Error(`${relativePath} has invalid tierProfile.trackId '${tier.trackId}' on record ${recordId}`);
       }
 
-      ensureInteger(relativePath, recordId, "tierProfile.tier", tier.tier, 1);
-      if (tier.tier > 5) {
+      const tierNumber = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, "tierProfile.tier", tier.tier, 1);
+      if (tierNumber !== null && tierNumber > 5) {
         throw new Error(`${relativePath} has tierProfile.tier above 5 on record ${recordId}`);
       }
 
@@ -2175,7 +2342,7 @@ function validateWorkplaces(relativePath, records) {
       }
 
       ensureStringArray(relativePath, recordId, "tierProfile.upgradesTo", tier.upgradesTo, 0);
-      ensureBoolean(relativePath, recordId, "tierProfile.splitFacility", tier.splitFacility);
+      ensureBooleanOrEmptyObjectPlaceholder(relativePath, recordId, "tierProfile.splitFacility", tier.splitFacility);
       ensureStringArray(relativePath, recordId, "tierProfile.regionalSuitability", tier.regionalSuitability, 0);
 
       if (tier.upgradesFrom === record.id) {
@@ -2195,12 +2362,12 @@ function validateWorkplaces(relativePath, records) {
       }
 
       const efficiency = record.efficiencyProfile;
-      ensureNumber(relativePath, recordId, "efficiencyProfile.throughputMultiplier", efficiency.throughputMultiplier, 0.01);
-      ensureNumber(relativePath, recordId, "efficiencyProfile.laborEfficiency", efficiency.laborEfficiency, 0.01);
-      ensureNumber(relativePath, recordId, "efficiencyProfile.wasteMultiplier", efficiency.wasteMultiplier, 0.01);
-      ensureNumber(relativePath, recordId, "efficiencyProfile.comfortScore", efficiency.comfortScore, 0);
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, "efficiencyProfile.throughputMultiplier", efficiency.throughputMultiplier, 0.01);
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, "efficiencyProfile.laborEfficiency", efficiency.laborEfficiency, 0.01);
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, "efficiencyProfile.wasteMultiplier", efficiency.wasteMultiplier, 0.01);
+      const comfortScore = ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, "efficiencyProfile.comfortScore", efficiency.comfortScore, 0);
 
-      if (efficiency.comfortScore > 1) {
+      if (comfortScore !== null && comfortScore > 1) {
         throw new Error(`${relativePath} has efficiencyProfile.comfortScore above 1 on record ${recordId}`);
       }
     }
@@ -2233,8 +2400,8 @@ function validateWorkplaces(relativePath, records) {
       }
 
       const progression = record.progressionProfile;
-      ensureInteger(relativePath, recordId, "progressionProfile.maxTier", progression.maxTier, 1);
-      if (progression.maxTier > 5) {
+      const progressionMaxTier = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, "progressionProfile.maxTier", progression.maxTier, 1);
+      if (progressionMaxTier !== null && progressionMaxTier > 5) {
         throw new Error(`${relativePath} has progressionProfile.maxTier above 5 on record ${recordId}`);
       }
 
@@ -2242,7 +2409,7 @@ function validateWorkplaces(relativePath, records) {
         throw new Error(`${relativePath} has empty progressionProfile.tiers on record ${recordId}`);
       }
 
-      if (progression.tiers.length !== progression.maxTier) {
+      if (progressionMaxTier !== null && progression.tiers.length !== progressionMaxTier) {
         throw new Error(`${relativePath} progressionProfile.tiers length must equal maxTier on record ${recordId}`);
       }
 
@@ -2253,20 +2420,22 @@ function validateWorkplaces(relativePath, records) {
           throw new Error(`${relativePath} has invalid ${tierField} on record ${recordId}`);
         }
 
-        ensureInteger(relativePath, recordId, `${tierField}.tier`, tierDef.tier, 1);
-        if (tierDef.tier > 5) {
+        const progressionTier = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${tierField}.tier`, tierDef.tier, 1);
+        if (progressionTier !== null && progressionTier > 5) {
           throw new Error(`${relativePath} has ${tierField}.tier above 5 on record ${recordId}`);
         }
 
-        if (seenProgressTiers.has(tierDef.tier)) {
+        if (progressionTier !== null && seenProgressTiers.has(progressionTier)) {
           throw new Error(`${relativePath} has duplicate ${tierField}.tier ${tierDef.tier} on record ${recordId}`);
         }
-        seenProgressTiers.add(tierDef.tier);
+        if (progressionTier !== null) {
+          seenProgressTiers.add(progressionTier);
+        }
 
         ensureString(relativePath, recordId, `${tierField}.tierLabel`, tierDef.tierLabel);
-        ensureNumber(relativePath, recordId, `${tierField}.throughputMultiplier`, tierDef.throughputMultiplier, 0.01);
-        ensureInteger(relativePath, recordId, `${tierField}.variantSlots`, tierDef.variantSlots, 1);
-        ensureNumber(relativePath, recordId, `${tierField}.switchLaborCost`, tierDef.switchLaborCost, 0);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${tierField}.throughputMultiplier`, tierDef.throughputMultiplier, 0.01);
+        ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${tierField}.variantSlots`, tierDef.variantSlots, 1);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${tierField}.switchLaborCost`, tierDef.switchLaborCost, 0);
 
         ensureSetMembership(
           relativePath,
@@ -2299,17 +2468,29 @@ function validateWorkplaces(relativePath, records) {
         }
 
         if ("laborSlots" in tierDef) {
-          ensureInteger(relativePath, recordId, `${tierField}.laborSlots`, tierDef.laborSlots, 1);
-          if (tierDef.laborSlots > record.laborSlots) {
+          const tierLaborSlots = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${tierField}.laborSlots`, tierDef.laborSlots, 1);
+          const recordLaborSlots = Number.isInteger(record.laborSlots) ? record.laborSlots : null;
+          if (tierLaborSlots !== null && recordLaborSlots !== null && tierLaborSlots > recordLaborSlots) {
             throw new Error(`${relativePath} has ${tierField}.laborSlots above record laborSlots on record ${recordId}`);
           }
         }
 
         if ("maxConcurrentWorkers" in tierDef) {
-          ensureInteger(relativePath, recordId, `${tierField}.maxConcurrentWorkers`, tierDef.maxConcurrentWorkers, 1);
+          const tierMaxConcurrentWorkers = ensureIntegerOrEmptyObjectPlaceholder(
+            relativePath,
+            recordId,
+            `${tierField}.maxConcurrentWorkers`,
+            tierDef.maxConcurrentWorkers,
+            1
+          );
+          const workforceMaxConcurrentWorkers =
+            isObject(record.workforceProfile) && Number.isInteger(record.workforceProfile.maxConcurrentWorkers) ?
+              record.workforceProfile.maxConcurrentWorkers :
+              null;
           if (
-            isObject(record.workforceProfile) &&
-            tierDef.maxConcurrentWorkers > record.workforceProfile.maxConcurrentWorkers
+            tierMaxConcurrentWorkers !== null &&
+            workforceMaxConcurrentWorkers !== null &&
+            tierMaxConcurrentWorkers > workforceMaxConcurrentWorkers
           ) {
             throw new Error(
               `${relativePath} has ${tierField}.maxConcurrentWorkers above workforceProfile.maxConcurrentWorkers on record ${recordId}`
@@ -2318,13 +2499,14 @@ function validateWorkplaces(relativePath, records) {
         }
 
         if ("upgradeSlots" in tierDef) {
-          ensureInteger(relativePath, recordId, `${tierField}.upgradeSlots`, tierDef.upgradeSlots, 0);
+          ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${tierField}.upgradeSlots`, tierDef.upgradeSlots, 0);
         }
 
         if ("requiredUpgradeIds" in tierDef) {
-          ensureStringArray(relativePath, recordId, `${tierField}.requiredUpgradeIds`, tierDef.requiredUpgradeIds, 0);
+          const requiredUpgradeIds =
+            ensureStringArrayOrNull(relativePath, recordId, `${tierField}.requiredUpgradeIds`, tierDef.requiredUpgradeIds, 0) ?? [];
           const tierRequiredUpgradeIds = new Set();
-          for (const requiredUpgradeId of tierDef.requiredUpgradeIds) {
+          for (const requiredUpgradeId of requiredUpgradeIds) {
             if (!WORKPLACE_UPGRADE_ID_PATTERN.test(requiredUpgradeId)) {
               throw new Error(
                 `${relativePath} has invalid ${tierField}.requiredUpgradeIds value '${requiredUpgradeId}' on record ${recordId}`
@@ -2339,7 +2521,7 @@ function validateWorkplaces(relativePath, records) {
             tierRequiredUpgradeIds.add(requiredUpgradeId);
           }
 
-          if (tierDef.tier === 1 && tierRequiredUpgradeIds.size > 0) {
+          if (progressionTier === 1 && tierRequiredUpgradeIds.size > 0) {
             throw new Error(`${relativePath} has tier 1 ${tierField}.requiredUpgradeIds on record ${recordId}`);
           }
         }
@@ -2432,7 +2614,7 @@ function validateWorkplaces(relativePath, records) {
           }
           seenLaborWeightItemKeys.add(laborWeight.itemKey);
 
-          ensureNumber(relativePath, recordId, `${weightField}.laborWeight`, laborWeight.laborWeight, 0.01);
+          ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${weightField}.laborWeight`, laborWeight.laborWeight, 0.01);
         }
 
         const seenSiteLaborWeightKeys = new Set();
@@ -2462,13 +2644,15 @@ function validateWorkplaces(relativePath, records) {
           }
           seenSiteLaborWeightKeys.add(laborWeight.abstractionKey);
 
-          ensureNumber(relativePath, recordId, `${weightField}.laborWeight`, laborWeight.laborWeight, 0.01);
+          ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${weightField}.laborWeight`, laborWeight.laborWeight, 0.01);
         }
       }
 
-      for (let expectedTier = 1; expectedTier <= progression.maxTier; expectedTier += 1) {
-        if (!seenProgressTiers.has(expectedTier)) {
-          throw new Error(`${relativePath} progressionProfile tiers must be contiguous from 1 on record ${recordId}`);
+      if (progressionMaxTier !== null) {
+        for (let expectedTier = 1; expectedTier <= progressionMaxTier; expectedTier += 1) {
+          if (!seenProgressTiers.has(expectedTier)) {
+            throw new Error(`${relativePath} progressionProfile tiers must be contiguous from 1 on record ${recordId}`);
+          }
         }
       }
     }
@@ -2478,7 +2662,7 @@ function validateWorkplaces(relativePath, records) {
       }
 
       const upgrades = record.upgradesProfile;
-      ensureInteger(relativePath, recordId, "upgradesProfile.upgradeSlots", upgrades.upgradeSlots, 0);
+      const upgradesProfileSlots = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, "upgradesProfile.upgradeSlots", upgrades.upgradeSlots, 0);
 
       if (!Array.isArray(upgrades.availableUpgrades) || upgrades.availableUpgrades.length === 0) {
         throw new Error(`${relativePath} has empty upgradesProfile.availableUpgrades on record ${recordId}`);
@@ -2489,7 +2673,7 @@ function validateWorkplaces(relativePath, records) {
       }
 
       const upgradeIds = new Set();
-      const essentialUpgradeIds = new Set();
+      const essentialUpgradeStateById = new Map();
 
       for (const [index, upgrade] of upgrades.availableUpgrades.entries()) {
         const upgradeField = `upgradesProfile.availableUpgrades[${index}]`;
@@ -2513,27 +2697,29 @@ function validateWorkplaces(relativePath, records) {
         ensureSetMembership(relativePath, recordId, `${upgradeField}.category`, upgrade.category, WORKPLACE_UPGRADE_CATEGORIES);
 
         ensureStringArray(relativePath, recordId, `${upgradeField}.requiredUpgradeIds`, upgrade.requiredUpgradeIds, 0);
-        ensureBoolean(relativePath, recordId, `${upgradeField}.essentialForTierUpgrade`, upgrade.essentialForTierUpgrade);
-
-        if (upgrade.essentialForTierUpgrade) {
-          essentialUpgradeIds.add(upgrade.id);
-        }
+        const essentialForTierUpgrade = ensureBooleanOrEmptyObjectPlaceholder(
+          relativePath,
+          recordId,
+          `${upgradeField}.essentialForTierUpgrade`,
+          upgrade.essentialForTierUpgrade
+        );
+        essentialUpgradeStateById.set(upgrade.id, essentialForTierUpgrade);
 
         if (!isObject(upgrade.effects)) {
           throw new Error(`${relativePath} has invalid ${upgradeField}.effects on record ${recordId}`);
         }
 
-        ensureNumber(relativePath, recordId, `${upgradeField}.effects.throughputMultiplier`, upgrade.effects.throughputMultiplier, 0.01);
-        ensureNumber(relativePath, recordId, `${upgradeField}.effects.laborEfficiency`, upgrade.effects.laborEfficiency, 0.01);
-        ensureNumber(relativePath, recordId, `${upgradeField}.effects.wasteMultiplier`, upgrade.effects.wasteMultiplier, 0.01);
-        ensureNumber(relativePath, recordId, `${upgradeField}.effects.qualityMultiplier`, upgrade.effects.qualityMultiplier, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${upgradeField}.effects.throughputMultiplier`, upgrade.effects.throughputMultiplier, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${upgradeField}.effects.laborEfficiency`, upgrade.effects.laborEfficiency, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${upgradeField}.effects.wasteMultiplier`, upgrade.effects.wasteMultiplier, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${upgradeField}.effects.qualityMultiplier`, upgrade.effects.qualityMultiplier, 0.01);
 
         if ("variantSlotDelta" in upgrade.effects) {
-          ensureInteger(relativePath, recordId, `${upgradeField}.effects.variantSlotDelta`, upgrade.effects.variantSlotDelta, 0);
+          ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${upgradeField}.effects.variantSlotDelta`, upgrade.effects.variantSlotDelta, 0);
         }
 
         if ("switchLaborCostMultiplier" in upgrade.effects) {
-          ensureNumber(
+          ensureNumberOrEmptyObjectPlaceholder(
             relativePath,
             recordId,
             `${upgradeField}.effects.switchLaborCostMultiplier`,
@@ -2589,7 +2775,7 @@ function validateWorkplaces(relativePath, records) {
             throw new Error(`${relativePath} has unknown ${requirementField}.requiredUpgradeIds '${requiredId}' on record ${recordId}`);
           }
 
-          if (!essentialUpgradeIds.has(requiredId)) {
+          if (essentialUpgradeStateById.get(requiredId) === false) {
             throw new Error(`${relativePath} ${requirementField}.requiredUpgradeIds '${requiredId}' must be marked essentialForTierUpgrade on record ${recordId}`);
           }
         }
@@ -2629,17 +2815,23 @@ function validateWorkplaces(relativePath, records) {
         for (const [index, tierDef] of record.progressionProfile.tiers.entries()) {
           const tierField = `progressionProfile.tiers[${index}]`;
 
-          if ("upgradeSlots" in tierDef && tierDef.upgradeSlots > upgrades.upgradeSlots) {
+          const tierUpgradeSlots =
+            "upgradeSlots" in tierDef ?
+              ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${tierField}.upgradeSlots`, tierDef.upgradeSlots, 0) :
+              null;
+          if (tierUpgradeSlots !== null && upgradesProfileSlots !== null && tierUpgradeSlots > upgradesProfileSlots) {
             throw new Error(`${relativePath} has ${tierField}.upgradeSlots above upgradesProfile.upgradeSlots on record ${recordId}`);
           }
 
           if ("requiredUpgradeIds" in tierDef) {
-            for (const requiredId of tierDef.requiredUpgradeIds) {
+            const requiredUpgradeIds =
+              ensureStringArrayOrNull(relativePath, recordId, `${tierField}.requiredUpgradeIds`, tierDef.requiredUpgradeIds, 0) ?? [];
+            for (const requiredId of requiredUpgradeIds) {
               if (!upgradeIds.has(requiredId)) {
                 throw new Error(`${relativePath} has unknown ${tierField}.requiredUpgradeIds '${requiredId}' on record ${recordId}`);
               }
 
-              if (!essentialUpgradeIds.has(requiredId)) {
+              if (essentialUpgradeStateById.get(requiredId) === false) {
                 throw new Error(
                   `${relativePath} ${tierField}.requiredUpgradeIds '${requiredId}' must be marked essentialForTierUpgrade on record ${recordId}`
                 );
@@ -2654,7 +2846,11 @@ function validateWorkplaces(relativePath, records) {
         if ("upgradeSlots" in tierDef) {
           throw new Error(`${relativePath} has ${tierField}.upgradeSlots without upgradesProfile on record ${recordId}`);
         }
-        if ("requiredUpgradeIds" in tierDef && tierDef.requiredUpgradeIds.length > 0) {
+        const requiredUpgradeIds =
+          "requiredUpgradeIds" in tierDef ?
+            ensureStringArrayOrNull(relativePath, recordId, `${tierField}.requiredUpgradeIds`, tierDef.requiredUpgradeIds, 0) :
+            null;
+        if (Array.isArray(requiredUpgradeIds) && requiredUpgradeIds.length > 0) {
           throw new Error(`${relativePath} has ${tierField}.requiredUpgradeIds without upgradesProfile on record ${recordId}`);
         }
       }
@@ -2665,7 +2861,13 @@ function validateWorkplaces(relativePath, records) {
     }
 
     const workforce = record.workforceProfile;
-    ensureInteger(relativePath, recordId, "workforceProfile.maxConcurrentWorkers", workforce.maxConcurrentWorkers, 1);
+    const workforceMaxConcurrentWorkers = ensureIntegerOrEmptyObjectPlaceholder(
+      relativePath,
+      recordId,
+      "workforceProfile.maxConcurrentWorkers",
+      workforce.maxConcurrentWorkers,
+      1
+    );
 
     if (!Array.isArray(workforce.jobs) || workforce.jobs.length === 0) {
       throw new Error(`${relativePath} has empty workforceProfile.jobs on record ${recordId}`);
@@ -2674,7 +2876,8 @@ function validateWorkplaces(relativePath, records) {
     const seenJobIds = new Set();
     let primaryJobCount = 0;
     let minimumWorkersFloor = 0;
-    const workplaceTier = isObject(record.tierProfile) ? record.tierProfile.tier : null;
+    let minimumWorkersFloorHasPlaceholders = false;
+    const workplaceTier = isObject(record.tierProfile) && Number.isInteger(record.tierProfile.tier) ? record.tierProfile.tier : null;
     const hasProgressionProfile = isObject(record.progressionProfile);
 
     for (const [index, job] of workforce.jobs.entries()) {
@@ -2699,41 +2902,57 @@ function validateWorkplaces(relativePath, records) {
         primaryJobCount += 1;
       }
 
-      ensureInteger(relativePath, recordId, `${jobField}.requiredTier`, job.requiredTier, 1);
-      if (job.requiredTier > 5) {
+      const requiredTier = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${jobField}.requiredTier`, job.requiredTier, 1);
+      if (requiredTier !== null && requiredTier > 5) {
         throw new Error(`${relativePath} has ${jobField}.requiredTier above 5 on record ${recordId}`);
       }
 
-      if (Number.isInteger(workplaceTier) && job.requiredTier > workplaceTier) {
+      if (requiredTier !== null && workplaceTier !== null && requiredTier > workplaceTier) {
         throw new Error(`${relativePath} has ${jobField}.requiredTier above workplace tier on record ${recordId}`);
       }
 
-      ensureInteger(relativePath, recordId, `${jobField}.minWorkers`, job.minWorkers, 0);
-      ensureInteger(relativePath, recordId, `${jobField}.recommendedWorkers`, job.recommendedWorkers, 1);
-      ensureInteger(relativePath, recordId, `${jobField}.diminishingStartsAt`, job.diminishingStartsAt, 1);
-      ensureInteger(relativePath, recordId, `${jobField}.maxWorkers`, job.maxWorkers, 1);
+      const minWorkers = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${jobField}.minWorkers`, job.minWorkers, 0);
+      const recommendedWorkers = ensureIntegerOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        `${jobField}.recommendedWorkers`,
+        job.recommendedWorkers,
+        1
+      );
+      const diminishingStartsAt = ensureIntegerOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        `${jobField}.diminishingStartsAt`,
+        job.diminishingStartsAt,
+        1
+      );
+      const maxWorkers = ensureIntegerOrEmptyObjectPlaceholder(relativePath, recordId, `${jobField}.maxWorkers`, job.maxWorkers, 1);
 
-      if (job.maxWorkers > workforce.maxConcurrentWorkers) {
+      if (maxWorkers !== null && workforceMaxConcurrentWorkers !== null && maxWorkers > workforceMaxConcurrentWorkers) {
         throw new Error(`${relativePath} has ${jobField}.maxWorkers above workforceProfile.maxConcurrentWorkers on record ${recordId}`);
       }
 
-      minimumWorkersFloor += job.minWorkers;
+      if (minWorkers !== null) {
+        minimumWorkersFloor += minWorkers;
+      } else {
+        minimumWorkersFloorHasPlaceholders = true;
+      }
 
-      if (job.minWorkers > job.recommendedWorkers) {
+      if (minWorkers !== null && recommendedWorkers !== null && minWorkers > recommendedWorkers) {
         throw new Error(`${relativePath} has ${jobField}.minWorkers above recommendedWorkers on record ${recordId}`);
       }
 
-      if (job.recommendedWorkers > job.diminishingStartsAt) {
+      if (recommendedWorkers !== null && diminishingStartsAt !== null && recommendedWorkers > diminishingStartsAt) {
         throw new Error(`${relativePath} has ${jobField}.recommendedWorkers above diminishingStartsAt on record ${recordId}`);
       }
 
-      if (job.diminishingStartsAt > job.maxWorkers) {
+      if (diminishingStartsAt !== null && maxWorkers !== null && diminishingStartsAt > maxWorkers) {
         throw new Error(`${relativePath} has ${jobField}.diminishingStartsAt above maxWorkers on record ${recordId}`);
       }
 
-      ensureNumber(relativePath, recordId, `${jobField}.baseOutputPerWorker`, job.baseOutputPerWorker, 0);
-      ensureNumber(relativePath, recordId, `${jobField}.diminishingFactor`, job.diminishingFactor, 0.01);
-      if (job.diminishingFactor > 1) {
+      ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${jobField}.baseOutputPerWorker`, job.baseOutputPerWorker, 0);
+      const diminishingFactor = ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${jobField}.diminishingFactor`, job.diminishingFactor, 0.01);
+      if (diminishingFactor !== null && diminishingFactor > 1) {
         throw new Error(`${relativePath} has ${jobField}.diminishingFactor above 1 on record ${recordId}`);
       }
 
@@ -2742,8 +2961,14 @@ function validateWorkplaces(relativePath, records) {
         throw new Error(`${relativePath} has invalid ${jobField}.toolRequirements on record ${recordId}`);
       }
 
-      ensureInteger(relativePath, recordId, `${jobField}.toolRequirements.minimumToolTier`, job.toolRequirements.minimumToolTier, 1);
-      if (job.toolRequirements.minimumToolTier > 5) {
+      const minimumToolTier = ensureIntegerOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        `${jobField}.toolRequirements.minimumToolTier`,
+        job.toolRequirements.minimumToolTier,
+        1
+      );
+      if (minimumToolTier !== null && minimumToolTier > 5) {
         throw new Error(`${relativePath} has ${jobField}.toolRequirements.minimumToolTier above 5 on record ${recordId}`);
       }
 
@@ -2765,7 +2990,7 @@ function validateWorkplaces(relativePath, records) {
         job.toolRequirements.missingToolPenalty.mode,
         WORKPLACE_MISSING_TOOL_PENALTY_MODES
       );
-      ensureNumber(
+      const missingToolOutputMultiplier = ensureNumberOrEmptyObjectPlaceholder(
         relativePath,
         recordId,
         `${jobField}.toolRequirements.missingToolPenalty.outputMultiplier`,
@@ -2773,21 +2998,22 @@ function validateWorkplaces(relativePath, records) {
         0
       );
 
-      if (job.toolRequirements.missingToolPenalty.outputMultiplier > 1) {
+      if (missingToolOutputMultiplier !== null && missingToolOutputMultiplier > 1) {
         throw new Error(`${relativePath} has ${jobField}.toolRequirements.missingToolPenalty.outputMultiplier above 1 on record ${recordId}`);
       }
 
       if (
         job.toolRequirements.missingToolPenalty.mode === "no_output" &&
-        job.toolRequirements.missingToolPenalty.outputMultiplier !== 0
+        missingToolOutputMultiplier !== null &&
+        missingToolOutputMultiplier !== 0
       ) {
         throw new Error(`${relativePath} has ${jobField}.toolRequirements.missingToolPenalty mode no_output with non-zero multiplier on record ${recordId}`);
       }
 
       if (
         job.toolRequirements.missingToolPenalty.mode === "reduced_output" &&
-        (job.toolRequirements.missingToolPenalty.outputMultiplier <= 0 ||
-          job.toolRequirements.missingToolPenalty.outputMultiplier >= 1)
+        missingToolOutputMultiplier !== null &&
+        (missingToolOutputMultiplier <= 0 || missingToolOutputMultiplier >= 1)
       ) {
         throw new Error(`${relativePath} has ${jobField}.toolRequirements.missingToolPenalty reduced_output multiplier outside (0,1) on record ${recordId}`);
       }
@@ -2797,29 +3023,51 @@ function validateWorkplaces(relativePath, records) {
           throw new Error(`${relativePath} has invalid ${jobField}.replanting on record ${recordId}`);
         }
 
-        ensureBoolean(relativePath, recordId, `${jobField}.replanting.enabled`, job.replanting.enabled);
-        ensureNumber(relativePath, recordId, `${jobField}.replanting.outputGainPerWorker`, job.replanting.outputGainPerWorker, 0);
-        ensureNumber(relativePath, recordId, `${jobField}.replanting.maxOutputGain`, job.replanting.maxOutputGain, 0);
-        ensureNumber(
+        const replantingEnabled = ensureBooleanOrEmptyObjectPlaceholder(relativePath, recordId, `${jobField}.replanting.enabled`, job.replanting.enabled);
+        const outputGainPerWorker = ensureNumberOrEmptyObjectPlaceholder(
+          relativePath,
+          recordId,
+          `${jobField}.replanting.outputGainPerWorker`,
+          job.replanting.outputGainPerWorker,
+          0
+        );
+        const maxOutputGain = ensureNumberOrEmptyObjectPlaceholder(
+          relativePath,
+          recordId,
+          `${jobField}.replanting.maxOutputGain`,
+          job.replanting.maxOutputGain,
+          0
+        );
+        const effectiveRadiusReductionPerWorker = ensureNumberOrEmptyObjectPlaceholder(
           relativePath,
           recordId,
           `${jobField}.replanting.effectiveRadiusReductionPerWorker`,
           job.replanting.effectiveRadiusReductionPerWorker,
           0
         );
-        ensureNumber(relativePath, recordId, `${jobField}.replanting.maxRadiusReduction`, job.replanting.maxRadiusReduction, 0);
+        const maxRadiusReduction = ensureNumberOrEmptyObjectPlaceholder(
+          relativePath,
+          recordId,
+          `${jobField}.replanting.maxRadiusReduction`,
+          job.replanting.maxRadiusReduction,
+          0
+        );
 
-        if (job.replanting.outputGainPerWorker > job.replanting.maxOutputGain) {
+        if (outputGainPerWorker !== null && maxOutputGain !== null && outputGainPerWorker > maxOutputGain) {
           throw new Error(`${relativePath} has ${jobField}.replanting.outputGainPerWorker above maxOutputGain on record ${recordId}`);
         }
 
-        if (job.replanting.effectiveRadiusReductionPerWorker > job.replanting.maxRadiusReduction) {
+        if (
+          effectiveRadiusReductionPerWorker !== null &&
+          maxRadiusReduction !== null &&
+          effectiveRadiusReductionPerWorker > maxRadiusReduction
+        ) {
           throw new Error(
             `${relativePath} has ${jobField}.replanting.effectiveRadiusReductionPerWorker above maxRadiusReduction on record ${recordId}`
           );
         }
 
-        if (job.replanting.enabled && !job.unlocks.includes("feature.replanting")) {
+        if (replantingEnabled === true && !job.unlocks.includes("feature.replanting")) {
           throw new Error(`${relativePath} has enabled replanting without feature.replanting unlock on record ${recordId}`);
         }
       }
@@ -2833,7 +3081,7 @@ function validateWorkplaces(relativePath, records) {
       throw new Error(`${relativePath} must define at least one primary workforce job on record ${recordId}`);
     }
 
-    if (minimumWorkersFloor > workforce.maxConcurrentWorkers) {
+    if (!minimumWorkersFloorHasPlaceholders && workforceMaxConcurrentWorkers !== null && minimumWorkersFloor > workforceMaxConcurrentWorkers) {
       throw new Error(`${relativePath} has workforce min worker floor above maxConcurrentWorkers on record ${recordId}`);
     }
 
@@ -2850,7 +3098,12 @@ function validateWorkplaces(relativePath, records) {
       }
     }
 
-    if (isObject(record.tierProfile) && record.tierProfile.trackId === "track.forestry" && record.tierProfile.tier >= 4) {
+    if (
+      isObject(record.tierProfile) &&
+      record.tierProfile.trackId === "track.forestry" &&
+      Number.isInteger(record.tierProfile.tier) &&
+      record.tierProfile.tier >= 4
+    ) {
       const foresterJob = record.workforceProfile.jobs.find((job) => isObject(job) && job.jobId === "job.forester");
       if (!foresterJob) {
         throw new Error(`${relativePath} is missing job.forester on forestry lodge-or-higher record ${recordId}`);
@@ -2891,10 +3144,10 @@ function validateWorkplaces(relativePath, records) {
         }
 
         ensureStringArray(relativePath, recordId, `${bonusField}.withWorkplaceIds`, bonus.withWorkplaceIds, 1);
-        ensureNumber(relativePath, recordId, `${bonusField}.throughputMultiplier`, bonus.throughputMultiplier, 0.01);
-        ensureNumber(relativePath, recordId, `${bonusField}.laborEfficiency`, bonus.laborEfficiency, 0.01);
-        ensureNumber(relativePath, recordId, `${bonusField}.wasteMultiplier`, bonus.wasteMultiplier, 0.01);
-        ensureNumber(relativePath, recordId, `${bonusField}.logisticsCostMultiplier`, bonus.logisticsCostMultiplier, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${bonusField}.throughputMultiplier`, bonus.throughputMultiplier, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${bonusField}.laborEfficiency`, bonus.laborEfficiency, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${bonusField}.wasteMultiplier`, bonus.wasteMultiplier, 0.01);
+        ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${bonusField}.logisticsCostMultiplier`, bonus.logisticsCostMultiplier, 0.01);
       }
     }
   }
@@ -3194,6 +3447,12 @@ async function validateProductionChains(relativePath, records) {
     }
   }
 
+  for (const record of skillParsed.records) {
+    if (typeof record.id === "string") {
+      skillIds.add(record.id);
+    }
+  }
+
   function validateChainItemKey(recordId, fieldName, itemKey, requireMarketKey = true) {
     if (!ITEM_KEY_PATTERN.test(itemKey)) {
       throw new Error(`${relativePath} has invalid ${fieldName} key '${itemKey}' on record ${recordId}`);
@@ -3258,14 +3517,26 @@ async function validateProductionChains(relativePath, records) {
         throw new Error(`${relativePath} has invalid facilityStrategy.tierRange on record ${recordId}`);
       }
 
-      ensureInteger(relativePath, recordId, "facilityStrategy.tierRange[0]", strategy.tierRange[0], 1);
-      ensureInteger(relativePath, recordId, "facilityStrategy.tierRange[1]", strategy.tierRange[1], 1);
+      const facilityTierRangeMin = ensureIntegerOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        "facilityStrategy.tierRange[0]",
+        strategy.tierRange[0],
+        1
+      );
+      const facilityTierRangeMax = ensureIntegerOrEmptyObjectPlaceholder(
+        relativePath,
+        recordId,
+        "facilityStrategy.tierRange[1]",
+        strategy.tierRange[1],
+        1
+      );
 
-      if (strategy.tierRange[0] > strategy.tierRange[1]) {
+      if (facilityTierRangeMin !== null && facilityTierRangeMax !== null && facilityTierRangeMin > facilityTierRangeMax) {
         throw new Error(`${relativePath} has descending facilityStrategy.tierRange on record ${recordId}`);
       }
 
-      if (strategy.tierRange[1] > 5) {
+      if (facilityTierRangeMax !== null && facilityTierRangeMax > 5) {
         throw new Error(`${relativePath} has facilityStrategy.tierRange above 5 on record ${recordId}`);
       }
 
@@ -3377,7 +3648,7 @@ async function validateProductionChains(relativePath, records) {
           validateChainItemKey(recordId, `${variantField}.byProducts`, byProductKey);
         }
         if ("laborWeight" in variant) {
-          ensureNumber(relativePath, recordId, `${variantField}.laborWeight`, variant.laborWeight, 0.01);
+          ensureNumberOrEmptyObjectPlaceholder(relativePath, recordId, `${variantField}.laborWeight`, variant.laborWeight, 0.01);
         }
 
       }
@@ -5405,12 +5676,13 @@ function validateTransportProfiles(relativePath, records) {
       ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.speedModifier`, vehicle.speedModifier, 0.01);
       ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.maxAnimals`, vehicle.maxAnimals, 0);
       ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.optimalAnimals`, vehicle.optimalAnimals, 0);
-      ensureSetMembership(relativePath, recordId, `vehicleProfiles.${vehicle.id}.propulsionType`, vehicle.propulsionType, [
-        "human",
-        "draft_animals",
-        "pack_train",
-        "crew"
-      ]);
+      ensureSetMembership(
+        relativePath,
+        recordId,
+        `vehicleProfiles.${vehicle.id}.propulsionType`,
+        vehicle.propulsionType,
+        TRANSPORT_PROPULSION_TYPES
+      );
       ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumRoadTier`, vehicle.minimumRoadTier, 0);
       ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumWaterTier`, vehicle.minimumWaterTier, 0);
       ensureNumber(relativePath, recordId, `vehicleProfiles.${vehicle.id}.minimumHarborTier`, vehicle.minimumHarborTier, 0);
@@ -5711,7 +5983,6 @@ function validateTravelNetworks(relativePath, records) {
       ensureString(relativePath, recordId, `${field}.name`, lane.name);
       ensureString(relativePath, recordId, `${field}.fromSettlementId`, lane.fromSettlementId);
       ensureString(relativePath, recordId, `${field}.toSettlementId`, lane.toSettlementId);
-      ensureSetMembership(relativePath, recordId, `${field}.laneClass`, lane.laneClass, TRAVEL_LANE_CLASSES);
       ensureNumber(relativePath, recordId, `${field}.distanceMiles`, lane.distanceMiles, 1);
       ensureStringArray(relativePath, recordId, `${field}.seaRegionIds`, lane.seaRegionIds, 1);
       if (lane.pathPoints !== undefined || lane.pathSegments !== undefined) {
@@ -5966,15 +6237,6 @@ function validatePlayerAbilities(relativePath, records) {
 
 function validatePlayerSpells(relativePath, records) {
   const seenIds = new Set();
-  const allowedScalingBySchool = {
-    elemental: new Set(["power", "radius", "manaEfficiency", "accuracy"]),
-    enfeebling: new Set(["magnitude", "duration", "manaEfficiency", "accuracy"]),
-    enhancing: new Set(["magnitude", "duration", "manaEfficiency", "barrier"]),
-    healing: new Set(["power", "healingPower", "manaEfficiency"]),
-    druidic: new Set(["charges", "duration", "summonPotency"]),
-    ninjutsu: new Set(["accuracy", "duration", "statusChance", "manaEfficiency"]),
-    performance: new Set(["magnitude", "duration", "tempo", "manaEfficiency"])
-  };
 
   for (const record of records) {
     const recordId = record.id ?? "<unknown>";
@@ -5993,7 +6255,7 @@ function validatePlayerSpells(relativePath, records) {
     ensureStringArray(relativePath, recordId, "scalingChannels", record.scalingChannels, 1);
     for (const channel of record.scalingChannels) {
       ensureSetMembership(relativePath, recordId, "scalingChannels", channel, PLAYER_SPELL_SCALING_CHANNELS);
-      if (!allowedScalingBySchool[record.school].has(channel)) {
+      if (!PLAYER_SPELL_SCALING_CHANNELS_BY_SCHOOL[record.school].has(channel)) {
         throw new Error(`${relativePath} has invalid scaling channel '${channel}' for school '${record.school}' on record ${recordId}`);
       }
     }
@@ -6038,8 +6300,6 @@ const PLAYER_BACKSTORY_STARTING_ABILITY_ALLOWLIST = new Map([
   ["backstory.military_brat", new Set(["ability.command.hold_formation"])]
 ]);
 
-const PLAYER_ATTRIBUTE_KEYS = ["STR", "DEX", "AGI", "CON", "VIT", "WIS", "INT", "SPT", "CHA"];
-
 function validatePlayerAttributeAdjustments(relativePath, recordId, field, value) {
   if (value === undefined || value === null) {
     return;
@@ -6056,7 +6316,7 @@ function validatePlayerAttributeAdjustments(relativePath, recordId, field, value
 
   let total = 0;
   for (const key of keys) {
-    if (!PLAYER_ATTRIBUTE_KEYS.includes(key)) {
+    if (!PLAYER_ATTRIBUTE_KEYS.has(key)) {
       throw new Error(`${relativePath} ${field}.${key} is not a valid player attribute on record ${recordId}`);
     }
     ensureInteger(relativePath, recordId, `${field}.${key}`, value[key], -2);
@@ -6281,7 +6541,7 @@ function validateEchoBalanceGlobalRule(relativePath, recordId, value) {
   ensureInteger(relativePath, recordId, "value.version", value.version, 1);
   ensureNumber(relativePath, recordId, "value.levelScale", value.levelScale, Number.EPSILON);
 
-  if (!isObject(value.exponents) || !isObject(value.weights) || !isObject(value.normalization) || !isObject(value.knowledgeComposition) || !isObject(value.diversity)) {
+  if (!isObject(value.exponents) || !isObject(value.weights) || !isObject(value.normalization) || !isObject(value.diversity)) {
     throw new Error(`${relativePath} has incomplete echo balance blocks on record ${recordId}`);
   }
 
@@ -6316,20 +6576,6 @@ function validateEchoBalanceGlobalRule(relativePath, recordId, value) {
     value.normalization.knowledgeSkillReferenceSlots,
     Number.EPSILON
   );
-  ensureNumber(
-    relativePath,
-    recordId,
-    "value.normalization.knowledgeDomainReferenceLevel",
-    value.normalization.knowledgeDomainReferenceLevel,
-    Number.EPSILON
-  );
-  ensureNumber(
-    relativePath,
-    recordId,
-    "value.normalization.knowledgeDomainReferenceSlots",
-    value.normalization.knowledgeDomainReferenceSlots,
-    Number.EPSILON
-  );
   ensureNumber(relativePath, recordId, "value.normalization.statReferenceDelta", value.normalization.statReferenceDelta, Number.EPSILON);
 
   if (!Array.isArray(value.normalization.trackedAttributeKeys) || value.normalization.trackedAttributeKeys.length === 0) {
@@ -6346,16 +6592,6 @@ function validateEchoBalanceGlobalRule(relativePath, recordId, value) {
     }
     seenAttributeKeys.add(attributeKey);
   }
-
-  ensureNumber(relativePath, recordId, "value.knowledgeComposition.skillShare", value.knowledgeComposition.skillShare, 0);
-  ensureNumber(relativePath, recordId, "value.knowledgeComposition.trackShare", value.knowledgeComposition.trackShare, 0);
-  ensureApproxEqual(
-    relativePath,
-    recordId,
-    "value.knowledgeComposition",
-    value.knowledgeComposition.skillShare + value.knowledgeComposition.trackShare,
-    1
-  );
 
   ensureNumber(relativePath, recordId, "value.diversity.thresholdRank", value.diversity.thresholdRank, Number.EPSILON);
   ensureNumber(relativePath, recordId, "value.diversity.bonusPerSkill", value.diversity.bonusPerSkill, 0);
@@ -6913,20 +7149,6 @@ function validateItemCatalog(relativePath, records) {
       }
     }
 
-    if (record.itemClass === "commodity") {
-      if (!Array.isArray(record.roles) || record.roles.length === 0) {
-        throw new Error(`${relativePath} commodity item ${record.id} must define at least one role`);
-      }
-      if (!Array.isArray(record.tags) || record.tags.length === 0) {
-        throw new Error(`${relativePath} commodity item ${record.id} must define at least one tag`);
-      }
-      if (!Array.isArray(record.processingGroups) || record.processingGroups.length === 0) {
-        throw new Error(`${relativePath} commodity item ${record.id} must define at least one processing group`);
-      }
-      if (typeof record.stage !== "string" || record.stage.trim().length === 0) {
-        throw new Error(`${relativePath} commodity item ${record.id} must define stage`);
-      }
-    }
   }
 }
 
@@ -7212,12 +7434,6 @@ async function validateMeatCutStandardsAgainstMarketKeys() {
   for (const record of marketParsed.records) {
     if (typeof record.itemKey === "string") {
       marketKeys.add(record.itemKey);
-    }
-  }
-
-  for (const record of skillParsed.records) {
-    if (typeof record.id === "string") {
-      skillIds.add(record.id);
     }
   }
 
@@ -7694,8 +7910,10 @@ async function validateInfrastructureAgainstWorkplaces() {
     }
 
     if (workplace?.plotProfile?.irrigationPolicy) {
-      const minimumTier = workplace.plotProfile.irrigationPolicy.minimumIrrigationTier ?? 0;
-      if (minimumTier > irrigationMaxTier) {
+      const minimumTier = Number.isInteger(workplace.plotProfile.irrigationPolicy.minimumIrrigationTier) ?
+        workplace.plotProfile.irrigationPolicy.minimumIrrigationTier :
+        null;
+      if (minimumTier !== null && minimumTier > irrigationMaxTier) {
         throw new Error(
           `packages/content/base/civilization/workplaces.json plotProfile.irrigationPolicy.minimumIrrigationTier ${minimumTier} exceeds available irrigation infrastructure max tier ${irrigationMaxTier} on record ${recordId}`
         );
@@ -9082,7 +9300,9 @@ async function validateTravelNetworksAgainstWorldData() {
       const routeAccess = settlement.tradeDependencyProfile?.routeAccess ?? {};
       return (
         siteClass === "underwater" ||
-        (settlement.identityTags ?? []).some((tag) => typeof tag === "string" && coastalIdentityPattern.test(tag)) ||
+        (settlement.identityTags ?? []).some(
+          (tag) => typeof tag === "string" && coastalIdentityPattern.test(tag.replace(/[_-]+/g, " "))
+        ) ||
         (routeAccess.coastal ?? 0) >= 0.7 ||
         (routeAccess.seaLane ?? 0) >= 0.7
       );

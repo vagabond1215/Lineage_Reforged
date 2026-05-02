@@ -5,6 +5,7 @@ import type { AccountMetaSectionId } from '../accountMetaPresentation.js';
 import { AccountMetaPanel } from './AccountMetaPanel.js';
 import { AppShell, SidebarNav } from './AppShell.js';
 import {
+  getSaveSlotLabel,
   MANUAL_SAVE_SLOTS_PER_PAGE,
   type GameShellNotice,
   type ManualSaveSlotId,
@@ -25,6 +26,10 @@ type MainMenuScreenProps = {
   onOpenSettings: () => void;
   activeSection: LauncherSectionId;
   onActiveSectionChange: (section: LauncherSectionId) => void;
+  onPurchaseLegacyUnlock: (unlockId: string) => void;
+  onSelectLegacyPreparation: (unlockId: string) => void;
+  onSetLegacyPreparationChoice: (unlockId: string, choiceId: string) => void;
+  onRemoveLegacyPreparation: (unlockId: string) => void;
   onLogout: () => void;
   onExit: () => void;
   clockLabel: string;
@@ -60,6 +65,63 @@ function formatSlotHeaderTimestamp(savedAt: string | null): string {
   }).format(parsed);
 }
 
+function formatSlotNumberLabel(slotId: ManualSaveSlotId): string {
+  return getSaveSlotLabel(slotId).replace(/^Slot\s+/, '');
+}
+
+function formatOrdinalDay(day: number): string {
+  const absoluteDay = Math.trunc(Math.abs(day));
+  const lastTwoDigits = absoluteDay % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return `${day}th`;
+  }
+
+  switch (absoluteDay % 10) {
+    case 1:
+      return `${day}st`;
+    case 2:
+      return `${day}nd`;
+    case 3:
+      return `${day}rd`;
+    default:
+      return `${day}th`;
+  }
+}
+
+function formatInGameDateLabel(inGameDate: string | null): string {
+  if (!inGameDate) {
+    return 'Saved record';
+  }
+
+  const match = inGameDate.match(/^(\d{1,2})\s+(.+),\s*Year\s+(\d+)$/);
+
+  if (!match) {
+    return inGameDate;
+  }
+
+  const [, dayValue, monthLabel, yearValue] = match;
+  const day = Number.parseInt(dayValue ?? '', 10);
+
+  if (Number.isNaN(day)) {
+    return inGameDate;
+  }
+
+  return `${formatOrdinalDay(day)} of ${monthLabel}, Year ${yearValue}`;
+}
+
+function formatCharacterSummaryLine(slot: SaveSlotSummary): string {
+  const levelLabel = `Level ${slot.level ?? '?'}`;
+  const sexLabel = slot.sexLabel ?? 'Unknown';
+  const lineageLabel = slot.lineageLabel ?? 'Wanderer';
+  const roleLabel = slot.backstoryLabel ?? slot.classLabel ?? 'Unrecorded';
+  const locationLabel =
+    slot.currentLocationLabel ?? slot.settlementLabel ?? slot.regionLabel ?? 'Unknown location';
+  const fundsLabel = slot.fundsLabel ?? 'Uncounted';
+
+  return `${levelLabel} ${sexLabel} ${lineageLabel} ${roleLabel} in ${locationLabel} with ${fundsLabel}`;
+}
+
 export function MainMenuScreen({
   accountProfile,
   slots,
@@ -71,6 +133,10 @@ export function MainMenuScreen({
   onOpenSettings,
   activeSection,
   onActiveSectionChange,
+  onPurchaseLegacyUnlock,
+  onSelectLegacyPreparation,
+  onSetLegacyPreparationChoice,
+  onRemoveLegacyPreparation,
   onLogout,
   onExit,
   clockLabel,
@@ -83,8 +149,7 @@ export function MainMenuScreen({
   const manualSlots = useMemo(
     () =>
       slots.filter(
-        (slot): slot is SaveSlotSummary & { id: ManualSaveSlotId } =>
-          slot.kind === 'manual' && slot.hasSave
+        (slot): slot is SaveSlotSummary & { id: ManualSaveSlotId } => slot.kind === 'manual'
       ),
     [slots]
   );
@@ -98,12 +163,12 @@ export function MainMenuScreen({
   );
   const continueLabel = latestSave?.playerName
     ? `Continue ${formatPossessiveName(latestSave.playerName)} Legacy`
-    : 'Start your Legacy';
-  const occupiedPageCount = Math.max(
+    : null;
+  const manualPageCount = Math.max(
     1,
     Math.ceil(manualSlots.length / MANUAL_SAVE_SLOTS_PER_PAGE)
   );
-  const activePage = Math.min(currentPage, occupiedPageCount - 1);
+  const activePage = Math.min(currentPage, manualPageCount - 1);
   const slotPageStart = activePage * MANUAL_SAVE_SLOTS_PER_PAGE;
   const visibleSlots = manualSlots.slice(
     slotPageStart,
@@ -119,17 +184,16 @@ export function MainMenuScreen({
   const activePageButtonClass =
     'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-strong)] text-[color:var(--color-text-strong)] shadow-[0_10px_22px_rgba(15,23,42,0.14)]';
   const deleteButtonClass =
-    'absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-md border border-rose-300/30 bg-rose-200/10 text-rose-100 transition hover:bg-rose-200/20';
+    'flex min-h-[4.5rem] items-center justify-center self-stretch border-l border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] px-2 text-rose-600 transition hover:bg-rose-500/10 dark:text-rose-300 dark:hover:bg-rose-400/12';
   const deleteConfirmPanelClass =
     'w-full max-w-md rounded-lg border border-rose-300/25 bg-[color:var(--color-panel-strong)] p-6 shadow-2xl';
   const deleteConfirmActionClass =
     'rounded-md border border-rose-300/30 bg-rose-200/10 px-4 py-2 text-sm text-rose-100 transition hover:bg-rose-200/20';
 
   const shellSubBar =
-    activeSection === 'characters' && manualSlots.length > MANUAL_SAVE_SLOTS_PER_PAGE ? (
-      <div className="flex h-9 w-full items-center justify-end">
-        <div className="flex items-center gap-2">
-          {Array.from({ length: occupiedPageCount }, (_, pageIndex) => {
+    activeSection === 'characters' ? (
+      <div className="flex h-9 w-full items-center justify-end gap-2">
+          {Array.from({ length: manualPageCount }, (_, pageIndex) => {
             const pageLabelStart = pageIndex * MANUAL_SAVE_SLOTS_PER_PAGE + 1;
             const pageLabelEnd = pageLabelStart + MANUAL_SAVE_SLOTS_PER_PAGE - 1;
             const active = activePage === pageIndex;
@@ -139,7 +203,7 @@ export function MainMenuScreen({
                 key={`page.${pageIndex}`}
                 type="button"
                 onClick={() => setCurrentPage(pageIndex)}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-md border text-sm font-semibold transition ${
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-md border text-base font-semibold transition ${
                   active
                     ? activePageButtonClass
                     : 'border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-surface-strong)]'
@@ -152,7 +216,6 @@ export function MainMenuScreen({
               </button>
             );
           })}
-        </div>
       </div>
     ) : (
       <div className="h-9" aria-hidden="true" />
@@ -166,7 +229,7 @@ export function MainMenuScreen({
             Echoes of Legacy
           </div>
         }
-        centerActions={
+        centerActions={continueLabel ? (
           <button
             type="button"
             onClick={onContinue}
@@ -175,7 +238,7 @@ export function MainMenuScreen({
           >
             <span className="truncate">{continueLabel}</span>
           </button>
-        }
+        ) : null}
         accountControls={
           <div className="relative flex items-center gap-3">
             <button
@@ -272,7 +335,7 @@ export function MainMenuScreen({
         {activeSection === 'characters' ? (
           <section aria-label="Characters" className="space-y-4">
             {visibleSlots.length > 0 && (
-              <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+              <div className="space-y-3">
                 {visibleSlots.map((slot) => (
                   <div
                     key={slot.id}
@@ -285,49 +348,67 @@ export function MainMenuScreen({
                     }}
                     role="button"
                     tabIndex={0}
-                    className="group relative flex h-full min-h-[11rem] flex-col overflow-hidden rounded-lg border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] p-4 text-left transition hover:bg-[color:var(--color-surface-strong)]"
+                    className={`group relative grid min-h-[4.5rem] overflow-hidden rounded-lg border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-left transition ${
+                      slot.hasSave
+                        ? 'grid-cols-[4.25rem_minmax(0,1fr)_4.25rem] hover:bg-[color:var(--color-surface-strong)]'
+                        : 'grid-cols-[4.25rem_minmax(0,1fr)] opacity-45 hover:bg-[color:var(--color-surface-muted)] hover:opacity-70'
+                    }`}
                   >
-                    <button
-                      type="button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setPendingDeleteSlotId(slot.id);
-                      }}
-                      className={deleteButtonClass}
-                      aria-label={`Delete ${slot.playerName ?? 'saved character'}`}
-                      title="Delete save"
-                    >
-                      <Icon name="trash" className="h-4 w-4" />
-                    </button>
-
-                    <div className="flex flex-1 flex-col">
-                      <div className="mt-1 flex items-center justify-end pr-12">
-                        <div className="whitespace-nowrap text-right text-[11px] tracking-[0.16em] text-[color:var(--color-muted-strong)]">
-                          {formatSlotHeaderTimestamp(slot.lastSavedAt)}
-                        </div>
-                      </div>
-                      <div className="mt-5 overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.4vw,1.32rem)] font-semibold leading-tight text-[color:var(--color-text-strong)]">
-                        {slot.playerName}
-                      </div>
-                      <div className="mt-4 space-y-2 text-[13px] leading-5 text-[color:var(--color-text-soft)]">
-                        <div className="truncate">
-                          Level {slot.level ?? '?'} {slot.lineageLabel ?? 'Wanderer'}{' '}
-                          {slot.sexLabel ?? 'Unknown'} from{' '}
-                          {slot.startingSettlementLabel ??
-                            slot.settlementLabel ??
-                            slot.regionLabel ??
-                            'Unknown settlement'}
-                        </div>
-                        <div className="truncate">
-                          {slot.backstoryLabel ?? slot.classLabel ?? 'Unrecorded'} in{' '}
-                          {slot.currentLocationLabel ??
-                            slot.settlementLabel ??
-                            slot.regionLabel ??
-                            'Unknown location'}{' '}
-                          with {slot.fundsLabel ?? 'Uncounted'}
-                        </div>
-                      </div>
+                    <div className="flex min-h-[4.5rem] items-center justify-center self-stretch border-r border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] px-1 text-[2rem] font-semibold tabular-nums text-[color:var(--color-text-secondary)] sm:text-[2.25rem]">
+                      {formatSlotNumberLabel(slot.id)}
                     </div>
+
+                    {slot.hasSave ? (
+                      <>
+                        <div className="grid min-w-0 gap-3 px-4 py-1 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)_minmax(0,1.5fr)]">
+                          <div className="flex min-w-0 items-center">
+                            <div className="truncate text-[2rem] font-light leading-tight tracking-[0.08em] text-[color:var(--color-text-primary)] sm:text-[2.25rem]">
+                              {slot.playerName}
+                            </div>
+                          </div>
+
+                          <div className="flex min-w-0 flex-col items-center justify-center text-center">
+                            <div className="truncate text-[1rem] font-medium text-[color:var(--color-text-muted)]">
+                              {formatSlotHeaderTimestamp(slot.lastSavedAt)}
+                            </div>
+                            <div className="mt-1 truncate text-[1.125rem] font-medium leading-6 text-[color:var(--color-text-secondary)]">
+                              {slot.playtimeLabel ?? '0 ticks played'}
+                            </div>
+                          </div>
+
+                          <div className="flex min-w-0 flex-col justify-center text-[1.125rem] leading-6 text-[color:var(--color-text-secondary)]">
+                            <div className="truncate">
+                              {formatCharacterSummaryLine(slot)}
+                            </div>
+                            <div className="mt-1 truncate text-[1rem] text-[color:var(--color-text-muted)]">
+                              {formatInGameDateLabel(slot.inGameDate)}
+                            </div>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setPendingDeleteSlotId(slot.id);
+                          }}
+                          className={deleteButtonClass}
+                          aria-label={`Delete ${slot.playerName ?? 'saved character'}`}
+                          title="Delete save"
+                        >
+                          <Icon name="trash" className="h-10 w-10" />
+                        </button>
+                      </>
+                    ) : (
+                      <div className="flex min-h-[4.5rem] items-center justify-center px-4 py-1">
+                        <span
+                          className="text-[2rem] font-medium uppercase tracking-[0.15em] text-[color:var(--color-text-muted)] sm:text-[2.25rem]"
+                          style={{ fontFamily: 'var(--font-display)' }}
+                        >
+                          Empty
+                        </span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -337,6 +418,10 @@ export function MainMenuScreen({
           <AccountMetaPanel
             accountProfile={accountProfile}
             activeSection={activeSection}
+            onPurchaseUnlock={onPurchaseLegacyUnlock}
+            onSelectPreparation={onSelectLegacyPreparation}
+            onSetPreparationChoice={onSetLegacyPreparationChoice}
+            onRemovePreparation={onRemoveLegacyPreparation}
             showSectionNav={false}
             frameless
           />

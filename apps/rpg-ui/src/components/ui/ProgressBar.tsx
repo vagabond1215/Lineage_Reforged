@@ -15,26 +15,37 @@ export function ProgressBar({
 }: ProgressBarProps) {
   const safeMax = Math.max(max, 1);
   const percent = Math.max(0, Math.min(100, (value / safeMax) * 100));
-  const wrapperClass =
+  const wrapperClass = visualState === 'warning' ? 'saturate-[0.8]' : '';
+  const wrapperStyle =
     visualState === 'critical'
-      ? 'shadow-[0_0_0_1px_rgba(251,113,133,0.22),0_8px_20px_rgba(244,63,94,0.12)]'
-      : visualState === 'warning'
-        ? 'saturate-[0.72]'
-        : '';
+      ? {
+          boxShadow:
+            '0 0 0 1px color-mix(in srgb, var(--color-action-danger) 36%, transparent), 0 8px 20px color-mix(in srgb, var(--color-action-danger) 14%, transparent)'
+        }
+      : undefined;
 
   return (
-    <div className={`relative min-w-[170px] transition ${wrapperClass}`} aria-label={label}>
-      <div className="h-8 overflow-hidden rounded-full border border-white/10 bg-black/25">
-        <div
-          className="h-full rounded-full transition-[width]"
-          style={{
-            width: `${percent}%`,
-            background: `linear-gradient(90deg, ${color} 0%, color-mix(in srgb, ${color} 62%, white) 100%)`
-          }}
-        />
-      </div>
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-sm font-semibold text-white">
-        {value}/{max}
+    <div
+      className={`min-w-[138px] rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-elevated)] px-2.5 py-1.5 transition ${wrapperClass}`}
+      style={wrapperStyle}
+      aria-label={label}
+    >
+      <div className="flex items-center gap-2">
+        <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-text-secondary)]">
+          {label}
+        </span>
+        <div className="h-2 flex-1 overflow-hidden rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)]">
+          <div
+            className="h-full rounded-full transition-[width]"
+            style={{
+              width: `${percent}%`,
+              background: `linear-gradient(90deg, ${color} 0%, color-mix(in srgb, ${color} 62%, white) 100%)`
+            }}
+          />
+        </div>
+        <span className="shrink-0 text-[10px] font-semibold tabular-nums text-[color:var(--color-text-primary)]">
+          {value}/{max}
+        </span>
       </div>
     </div>
   );

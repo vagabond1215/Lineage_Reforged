@@ -16,7 +16,7 @@ export function ConditionStrip({ strip }: ConditionStripProps) {
 
   if (allStable && !shouldShowExpanded) {
     return (
-      <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">
+      <div className="rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[color:var(--color-text-secondary)]">
         {strip.collapsedLabel}
       </div>
     );
@@ -33,7 +33,7 @@ export function ConditionStrip({ strip }: ConditionStripProps) {
         <button
           type="button"
           onClick={() => setSecondaryExpanded((current) => !current)}
-          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300 transition hover:bg-white/10"
+          className="rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-selected)]"
         >
           {shouldShowSecondary ? 'Hide Secondary' : 'More Condition'}
         </button>

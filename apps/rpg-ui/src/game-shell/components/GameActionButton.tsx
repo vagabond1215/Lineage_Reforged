@@ -13,17 +13,17 @@ export function GameActionButton({
 }: GameActionButtonProps) {
   const toneClass =
     tone === 'accent'
-      ? 'border-amber-300/25 bg-amber-200/10 text-amber-50 hover:bg-amber-200/15'
+      ? 'border-[color:var(--color-action-primary)] bg-[color:var(--color-action-primary)] text-[color:var(--color-action-primary-text)] hover:brightness-[1.04]'
       : tone === 'warning'
-        ? 'border-rose-300/20 bg-rose-200/10 text-rose-50 hover:bg-rose-200/15'
-        : 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10';
+        ? 'border-[color:var(--color-action-warning)] bg-[color:var(--color-action-warning)] text-[color:var(--color-action-warning-text)] hover:brightness-[1.04]'
+        : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] hover:bg-[color:var(--color-surface-selected)]';
 
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-full border px-4 py-2 text-sm transition ${toneClass} disabled:cursor-not-allowed disabled:opacity-50`}
+      className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${toneClass} disabled:cursor-not-allowed disabled:border-[color:var(--color-border-soft)] disabled:bg-[color:var(--color-surface-muted)] disabled:text-[color:var(--color-text-muted)] disabled:opacity-100`}
     >
       {label}
     </button>

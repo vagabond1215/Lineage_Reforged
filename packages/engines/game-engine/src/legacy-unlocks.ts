@@ -5,7 +5,9 @@ import type {
   AccountRunHistoryOutcome,
   AccountRunHistoryRecord,
   LegacyTransactionState,
+  LegacyRenownTier,
   LegacyUnlockCategory,
+  LegacyUnlockClassification,
   LegacyUnlockCostState,
   LegacyUnlockDefinitionState,
   LegacyUnlockEffectKind,
@@ -13,34 +15,55 @@ import type {
   LegacyUnlockKind,
   LegacyUnlockRequirementResolutionState,
   LegacyUnlockRequirementState,
-  LegacyUnlockState
+  LegacyUnlockState,
+  PlayerAttributeKey,
+  PlayerResourceKey
 } from "../../../shared/types/src/index.js";
 import { recordLegacyTransaction } from "./legacy-account.js";
 
 const CATEGORY_ORDER: LegacyUnlockCategory[] = [
-  "Origins",
-  "Titles",
-  "Perks",
-  "Traits",
-  "Account",
+  "Lineage",
+  "Renown",
+  "Fortune",
+  "Craft",
+  "Destiny",
   "Chronicle",
-  "Heir"
+  "Preparations"
 ];
 
 const KNOWN_CATEGORIES = new Set<LegacyUnlockCategory>(CATEGORY_ORDER);
 const KNOWN_KINDS = new Set<LegacyUnlockKind>(["binary", "tiered", "incremental"]);
+const KNOWN_CLASSIFICATIONS = new Set<LegacyUnlockClassification>(["permanent", "preparation"]);
+const KNOWN_RENOWN_TIERS = new Set<LegacyRenownTier>([
+  "settlement",
+  "region",
+  "continent",
+  "universal"
+]);
 const KNOWN_EFFECT_KINDS = new Set<LegacyUnlockEffectKind>([
   "account_flag",
   "profile_title",
   "chronicle_presentation",
   "future_heir_start",
-  "future_inheritance_uses"
+  "future_inheritance_uses",
+  "preparation_capacity",
+  "next_run_preparation",
+  "future_starting_item",
+  "future_attribute_preparation",
+  "future_resource_preparation",
+  "future_lineage_retention",
+  "future_renown",
+  "future_preparation_discount"
 ]);
 
 const FUTURE_REQUIREMENT_TYPES = new Set(["character_skill", "role_rank", "wealth"]);
 
 export type LegacyUnlockAffordability = "affordable" | "unaffordable" | "no_cost";
 export type LegacyUnlockOwnershipState = "locked" | "unlocked" | "maxed";
+export type LegacyUnlockResolvedClassification =
+  | "permanent"
+  | "tiered_permanent"
+  | "preparation";
 
 export type LegacyUnlockRequirementResult = {
   requirement: LegacyUnlockRequirementState;
@@ -53,6 +76,7 @@ export type LegacyUnlockResolvedState = {
   definition: LegacyUnlockDefinitionState | null;
   category: LegacyUnlockCategory;
   kind: LegacyUnlockKind;
+  classification: LegacyUnlockResolvedClassification;
   title: string;
   description: string;
   currentRank: number;
@@ -66,6 +90,11 @@ export type LegacyUnlockResolvedState = {
   affordability: LegacyUnlockAffordability;
   requirementResults: LegacyUnlockRequirementResult[];
   effects: LegacyUnlockEffectState[];
+  renownTier: LegacyRenownTier | null;
+  renownNodeId: string | null;
+  renownParentNodeId: string | null;
+  renownDisplayName: string | null;
+  renownSupportUnlockIds: string[];
   canPurchase: boolean;
   purchaseBlockedReason: string | null;
 };
@@ -90,6 +119,142 @@ export type LegacyUnlockPurchaseSuccess = {
   transaction: LegacyTransactionState;
   unlock: LegacyUnlockState;
 };
+
+export type LegacyPreparationChoiceOption = {
+  id: string;
+  label: string;
+};
+
+export type LegacyPreparationSelectionFailureReason =
+  | "unknown_unlock"
+  | "not_preparation"
+  | "not_owned"
+  | "choice_required"
+  | "invalid_choice"
+  | "selection_unavailable"
+  | "duplicate_selection"
+  | "capacity_full";
+
+export type LegacyPreparationSelectionFailure = {
+  ok: false;
+  profile: AccountProfileState;
+  error: LegacyPreparationSelectionFailureReason;
+};
+
+export type LegacyPreparationSelectionSuccess = {
+  ok: true;
+  profile: AccountProfileState;
+  selectedPreparationUnlockIds: string[];
+  selectedPreparationChoicePayloads: Record<string, string>;
+};
+
+export type LegacyPreparationSelectionResolution = {
+  capacity: number;
+  selectedUnlockIds: string[];
+  selectedChoicePayloads: Record<string, string>;
+  droppedInvalidUnlockIds: string[];
+  droppedExcessUnlockIds: string[];
+  incompleteChoiceUnlockIds: string[];
+  choiceRequiredUnlockIds: string[];
+};
+
+export type LegacyRenownMatchState = {
+  tier: "settlement" | "region" | "continent";
+  nodeId: string;
+  displayName: string;
+  rank: number;
+};
+
+export type LegacyRenownFlavorFlags = {
+  villageName: boolean;
+  bannerRightsRank: number;
+  veteranReputation: boolean;
+};
+
+export type LegacyRenownPresenceState = {
+  settlement: LegacyRenownMatchState | null;
+  region: LegacyRenownMatchState | null;
+  continent: LegacyRenownMatchState | null;
+  universalRank: number;
+  activeTiers: LegacyRenownTier[];
+  primaryTier: LegacyRenownTier | null;
+  flavorFlags: LegacyRenownFlavorFlags;
+};
+
+const CHOICE_REQUIRED_PREPARATION_IDS = new Set([
+  "legacy.unlock.preparation.martial_legacy",
+  "legacy.unlock.preparation.learned_legacy",
+  "legacy.unlock.preparation.noble_legacy",
+  "legacy.unlock.preparation.vital_legacy"
+]);
+
+const MARTIAL_LEGACY_ATTRIBUTE_CHOICES = [
+  "STR",
+  "DEX",
+  "AGI",
+  "CON"
+] as const satisfies readonly PlayerAttributeKey[];
+const LEARNED_LEGACY_ATTRIBUTE_CHOICES = [
+  "INT",
+  "WIS",
+  "SPT"
+] as const satisfies readonly PlayerAttributeKey[];
+const VITAL_LEGACY_RESOURCE_CHOICES = [
+  "hp",
+  "stamina",
+  "mp"
+] as const satisfies readonly PlayerResourceKey[];
+
+const RENOWN_FLAVOR_UNLOCK_IDS = {
+  villageName: "legacy.unlock.renown.village_name",
+  bannerRights: "legacy.unlock.renown.banner_rights",
+  veteranReputation: "legacy.unlock.renown.veteran_reputation"
+} as const;
+
+function formatPreparationResourceChoiceLabel(choiceId: PlayerResourceKey): string {
+  switch (choiceId) {
+    case "hp":
+      return "HP";
+    case "mp":
+      return "MP";
+    case "stamina":
+      return "Stamina";
+  }
+}
+
+export function getLegacyPreparationChoiceOptions(
+  unlockId: string
+): LegacyPreparationChoiceOption[] {
+  switch (unlockId) {
+    case "legacy.unlock.preparation.martial_legacy":
+      return MARTIAL_LEGACY_ATTRIBUTE_CHOICES.map((choiceId) => ({
+        id: choiceId,
+        label: choiceId
+      }));
+    case "legacy.unlock.preparation.learned_legacy":
+      return LEARNED_LEGACY_ATTRIBUTE_CHOICES.map((choiceId) => ({
+        id: choiceId,
+        label: choiceId
+      }));
+    case "legacy.unlock.preparation.vital_legacy":
+      return VITAL_LEGACY_RESOURCE_CHOICES.map((choiceId) => ({
+        id: choiceId,
+        label: formatPreparationResourceChoiceLabel(choiceId)
+      }));
+    default:
+      return [];
+  }
+}
+
+export function getLegacyPreparationChoiceLabel(
+  unlockId: string,
+  choiceId: string
+): string | null {
+  const matched = getLegacyPreparationChoiceOptions(unlockId).find(
+    (option) => option.id === choiceId
+  );
+  return matched?.label ?? null;
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -163,6 +328,12 @@ function validateRequirement(
         throw new Error(`Legacy unlock '${definitionId}' lifetime_legacy requires a positive amount.`);
       }
       break;
+    case "legacy_unlock_rank":
+      assertValidId(requirement.unlockId, `${definitionId}.requirement.unlockId`);
+      if (!isPositiveInteger(requirement.rank)) {
+        throw new Error(`Legacy unlock '${definitionId}' legacy_unlock_rank requires a positive rank.`);
+      }
+      break;
     case "character_skill":
       assertValidId(requirement.skillId, `${definitionId}.requirement.skillId`);
       if (!isPositiveInteger(requirement.rank)) {
@@ -229,6 +400,28 @@ function validateCost(cost: unknown, definitionId: string): LegacyUnlockCostStat
         throw new Error(`Legacy unlock '${definitionId}' progressive threshold jumps are invalid.`);
       }
       break;
+    case "renown_hierarchy":
+      if (
+        !Array.isArray(cost.supportUnlockIds) ||
+        cost.supportUnlockIds.length === 0 ||
+        !cost.supportUnlockIds.every(
+          (supportUnlockId) =>
+            typeof supportUnlockId === "string" && supportUnlockId.trim().length > 0
+        )
+      ) {
+        throw new Error(`Legacy unlock '${definitionId}' renown hierarchy cost requires support unlock ids.`);
+      }
+      if (
+        typeof cost.tierMultiplier !== "number" ||
+        !Number.isFinite(cost.tierMultiplier) ||
+        cost.tierMultiplier <= 0
+      ) {
+        throw new Error(`Legacy unlock '${definitionId}' renown hierarchy cost requires a positive multiplier.`);
+      }
+      if (cost.minimumAmount !== undefined && !isNonNegativeInteger(cost.minimumAmount)) {
+        throw new Error(`Legacy unlock '${definitionId}' renown hierarchy minimum must be non-negative.`);
+      }
+      break;
     default:
       throw new Error(`Legacy unlock '${definitionId}' has unsupported cost type '${cost.type}'.`);
   }
@@ -256,6 +449,55 @@ function validateEffects(
     assertValidId(effect.key, `${definitionId}.effect.key`);
     return effect as unknown as LegacyUnlockEffectState;
   });
+}
+
+function validateRenownNode(
+  renownNode: unknown,
+  definitionId: string
+): NonNullable<LegacyUnlockDefinitionState["renownNode"]> {
+  if (!isRecord(renownNode)) {
+    throw new Error(`Legacy unlock '${definitionId}' has an invalid Renown node.`);
+  }
+
+  if (!KNOWN_RENOWN_TIERS.has(renownNode.tier as LegacyRenownTier)) {
+    throw new Error(`Legacy unlock '${definitionId}' has an invalid Renown tier.`);
+  }
+
+  const nodeId = assertValidId(renownNode.nodeId, `${definitionId}.renownNode.nodeId`);
+  const node: NonNullable<LegacyUnlockDefinitionState["renownNode"]> = {
+    tier: renownNode.tier as LegacyRenownTier,
+    nodeId
+  };
+
+  if (renownNode.parentNodeId !== undefined) {
+    node.parentNodeId = assertValidId(
+      renownNode.parentNodeId,
+      `${definitionId}.renownNode.parentNodeId`
+    );
+  }
+
+  if (renownNode.supportUnlockIds !== undefined) {
+    if (
+      !Array.isArray(renownNode.supportUnlockIds) ||
+      !renownNode.supportUnlockIds.every(
+        (supportUnlockId) =>
+          typeof supportUnlockId === "string" && supportUnlockId.trim().length > 0
+      )
+    ) {
+      throw new Error(`Legacy unlock '${definitionId}' Renown support unlock ids are invalid.`);
+    }
+
+    node.supportUnlockIds = [...renownNode.supportUnlockIds];
+  }
+
+  if (renownNode.displayName !== undefined) {
+    node.displayName = assertValidId(
+      renownNode.displayName,
+      `${definitionId}.renownNode.displayName`
+    );
+  }
+
+  return node;
 }
 
 function normalizeMaxRank(
@@ -288,6 +530,12 @@ function validateDefinition(record: unknown): LegacyUnlockDefinitionState {
   if (!KNOWN_KINDS.has(record.kind as LegacyUnlockKind)) {
     throw new Error(`Legacy unlock '${id}' has invalid kind '${String(record.kind)}'.`);
   }
+  if (
+    record.classification !== undefined &&
+    !KNOWN_CLASSIFICATIONS.has(record.classification as LegacyUnlockClassification)
+  ) {
+    throw new Error(`Legacy unlock '${id}' has invalid classification '${String(record.classification)}'.`);
+  }
 
   const cost = validateCost(record.cost, id);
   const effects = validateEffects(record.effects, id);
@@ -299,6 +547,9 @@ function validateDefinition(record: unknown): LegacyUnlockDefinitionState {
     description: assertValidId(record.description, `${id}.description`),
     cost,
     effects,
+    ...(record.classification !== undefined
+      ? { classification: record.classification as LegacyUnlockClassification }
+      : {}),
     ...(isPositiveInteger(record.maxRank) ? { maxRank: record.maxRank } : {})
   };
 
@@ -331,6 +582,10 @@ function validateDefinition(record: unknown): LegacyUnlockDefinitionState {
 
   if (Array.isArray(record.tags)) {
     definition.tags = record.tags.filter((tag): tag is string => typeof tag === "string");
+  }
+
+  if (record.renownNode !== undefined) {
+    definition.renownNode = validateRenownNode(record.renownNode, id);
   }
 
   return definition;
@@ -376,6 +631,16 @@ export function getLegacyUnlockDefinitions(): LegacyUnlockDefinitionState[] {
           )
         }
       : {}),
+    ...(definition.renownNode
+      ? {
+          renownNode: {
+            ...definition.renownNode,
+            ...(definition.renownNode.supportUnlockIds
+              ? { supportUnlockIds: [...definition.renownNode.supportUnlockIds] }
+              : {})
+          }
+        }
+      : {}),
     ...(definition.tags ? { tags: [...definition.tags] } : {})
   }));
 }
@@ -415,20 +680,17 @@ function getCurrentRank(
   return Math.min(maxRank, Math.max(1, Math.trunc(rawRank)));
 }
 
-function resolveNextCost(
-  cost: LegacyUnlockCostState,
-  nextRank: number | null
-): number | null {
-  if (nextRank === null) {
-    return null;
-  }
-
+function resolveFlatCost(cost: LegacyUnlockCostState, nextRank: number): number | null {
   if (cost.type === "per_rank") {
     return cost.amounts[nextRank - 1] ?? null;
   }
 
   if (cost.type === "fixed") {
     return cost.amount;
+  }
+
+  if (cost.type === "renown_hierarchy") {
+    return null;
   }
 
   let multiplier = 1;
@@ -439,6 +701,94 @@ function resolveNextCost(
   }
 
   return Math.max(0, Math.ceil(cost.baseAmount * cost.growthFactor ** (nextRank - 1) * multiplier));
+}
+
+function resolveDefinitionCostAtRank(
+  definition: LegacyUnlockDefinitionState,
+  rank: number,
+  definitionsById: Map<string, LegacyUnlockDefinitionState>,
+  activePath = new Set<string>()
+): number | null {
+  if (rank <= 0) {
+    return null;
+  }
+
+  if (definition.cost.type !== "renown_hierarchy") {
+    return resolveFlatCost(definition.cost, rank);
+  }
+
+  const pathKey = `${definition.id}:${rank}`;
+  if (activePath.has(pathKey)) {
+    return null;
+  }
+
+  activePath.add(pathKey);
+  let supportInvestment = 0;
+
+  for (const supportUnlockId of definition.cost.supportUnlockIds) {
+    const supportDefinition = definitionsById.get(supportUnlockId);
+    if (!supportDefinition) {
+      activePath.delete(pathKey);
+      return null;
+    }
+
+    const supportCost = resolveDefinitionCumulativeCost(
+      supportDefinition,
+      rank,
+      definitionsById,
+      activePath
+    );
+    if (supportCost === null) {
+      activePath.delete(pathKey);
+      return null;
+    }
+
+    supportInvestment += supportCost;
+  }
+
+  activePath.delete(pathKey);
+  return Math.max(
+    definition.cost.minimumAmount ?? 0,
+    Math.ceil(supportInvestment * definition.cost.tierMultiplier)
+  );
+}
+
+function resolveDefinitionCumulativeCost(
+  definition: LegacyUnlockDefinitionState,
+  rank: number,
+  definitionsById: Map<string, LegacyUnlockDefinitionState>,
+  activePath = new Set<string>()
+): number | null {
+  const cappedRank = Math.min(rank, normalizeMaxRank(definition));
+  let total = 0;
+
+  for (let currentRank = 1; currentRank <= cappedRank; currentRank += 1) {
+    const cost = resolveDefinitionCostAtRank(
+      definition,
+      currentRank,
+      definitionsById,
+      activePath
+    );
+    if (cost === null) {
+      return null;
+    }
+
+    total += cost;
+  }
+
+  return total;
+}
+
+function resolveNextCost(
+  definition: LegacyUnlockDefinitionState,
+  nextRank: number | null,
+  definitionsById: Map<string, LegacyUnlockDefinitionState>
+): number | null {
+  if (nextRank === null) {
+    return null;
+  }
+
+  return resolveDefinitionCostAtRank(definition, nextRank, definitionsById);
 }
 
 function countMatchingRuns(
@@ -463,7 +813,36 @@ function countMatchingRuns(
   }).length;
 }
 
-function formatRequirementLabel(requirement: LegacyUnlockRequirementState): string {
+function formatRomanNumeral(value: number): string {
+  switch (value) {
+    case 1:
+      return "I";
+    case 2:
+      return "II";
+    case 3:
+      return "III";
+    case 4:
+      return "IV";
+    case 5:
+      return "V";
+    default:
+      return String(value);
+  }
+}
+
+function fallbackTitleFromId(value: string): string {
+  const segments = value.split(".");
+  const lastSegment = segments.length > 0 ? (segments[segments.length - 1] ?? value) : value;
+  const words = lastSegment.split(/[_-]+/).filter((word) => word.length > 0);
+  return words.length === 0
+    ? "Legacy"
+    : words.map((word) => `${word[0]?.toUpperCase() ?? ""}${word.slice(1)}`).join(" ");
+}
+
+function formatRequirementLabel(
+  requirement: LegacyUnlockRequirementState,
+  definitionsById?: Map<string, LegacyUnlockDefinitionState>
+): string {
   switch (requirement.type) {
     case "achievement":
       return `Requires Chronicle ${requirement.achievementId}`;
@@ -482,18 +861,24 @@ function formatRequirementLabel(requirement: LegacyUnlockRequirementState): stri
       return `Requires ${requirement.days} survived day${requirement.days === 1 ? "" : "s"}`;
     case "lifetime_legacy":
       return `Requires ${requirement.amount} lifetime Prestige`;
+    case "legacy_unlock_rank": {
+      const requiredDefinition = definitionsById?.get(requirement.unlockId);
+      const title = requiredDefinition?.title ?? fallbackTitleFromId(requirement.unlockId);
+      return `Requires ${title} Tier ${formatRomanNumeral(requirement.rank)}`;
+    }
     case "character_skill":
-      return `Future requirement: ${requirement.skillId} rank ${requirement.rank}`;
+      return `${fallbackTitleFromId(requirement.skillId)} rank ${requirement.rank}`;
     case "role_rank":
-      return `Future requirement: ${requirement.roleId} rank ${requirement.rank}`;
+      return `${fallbackTitleFromId(requirement.roleId)} rank ${requirement.rank}`;
     case "wealth":
-      return `Future requirement: ${requirement.amount} wealth`;
+      return `${requirement.amount} wealth`;
   }
 }
 
 function resolveRequirement(
   profile: AccountProfileState,
-  requirement: LegacyUnlockRequirementState
+  requirement: LegacyUnlockRequirementState,
+  definitionsById: Map<string, LegacyUnlockDefinitionState>
 ): LegacyUnlockRequirementResult {
   let state: LegacyUnlockRequirementResolutionState;
 
@@ -547,6 +932,20 @@ function resolveRequirement(
     case "lifetime_legacy":
       state = profile.legacy.lifetimeLegacyEarned >= requirement.amount ? "eligible" : "unmet";
       break;
+    case "legacy_unlock_rank": {
+      const requiredDefinition = definitionsById.get(requirement.unlockId);
+      if (!requiredDefinition) {
+        state = "unsupported";
+        break;
+      }
+
+      const requiredUnlock = getStoredUnlock(profile, requirement.unlockId);
+      state =
+        getCurrentRank(requiredUnlock, requiredDefinition) >= requirement.rank
+          ? "eligible"
+          : "unmet";
+      break;
+    }
     default:
       state = FUTURE_REQUIREMENT_TYPES.has(requirement.type) ? "unsupported" : "unsupported";
       break;
@@ -555,7 +954,7 @@ function resolveRequirement(
   return {
     requirement,
     state,
-    label: formatRequirementLabel(requirement)
+    label: formatRequirementLabel(requirement, definitionsById)
   };
 }
 
@@ -572,19 +971,75 @@ function getRequirementsForRank(
   return [...baseRequirements, ...rankRequirements];
 }
 
+function resolveClassification(
+  definition: LegacyUnlockDefinitionState
+): LegacyUnlockResolvedClassification {
+  if (definition.classification === "preparation") {
+    return "preparation";
+  }
+
+  return definition.kind === "binary" ? "permanent" : "tiered_permanent";
+}
+
+function resolveRenownSupportRequirement(
+  profile: AccountProfileState,
+  definition: LegacyUnlockDefinitionState,
+  nextRank: number | null,
+  definitionsById: Map<string, LegacyUnlockDefinitionState>
+): LegacyUnlockRequirementResult[] {
+  const supportUnlockIds =
+    definition.renownNode?.supportUnlockIds ??
+    (definition.cost.type === "renown_hierarchy" ? definition.cost.supportUnlockIds : []);
+
+  if (nextRank === null || supportUnlockIds.length === 0) {
+    return [];
+  }
+
+  const hasUnknownSupport = supportUnlockIds.some(
+    (supportUnlockId) => !definitionsById.has(supportUnlockId)
+  );
+  const supportSatisfied =
+    !hasUnknownSupport &&
+    supportUnlockIds.every((supportUnlockId) => {
+      const supportDefinition = definitionsById.get(supportUnlockId);
+      if (!supportDefinition) {
+        return false;
+      }
+
+      const storedUnlock = getStoredUnlock(profile, supportUnlockId);
+      return getCurrentRank(storedUnlock, supportDefinition) >= nextRank;
+    });
+
+  return [
+    {
+      requirement: {
+        type: "legacy_unlock_rank",
+        unlockId: supportUnlockIds[0] ?? definition.id,
+        rank: nextRank
+      },
+      state: hasUnknownSupport ? "unsupported" : supportSatisfied ? "eligible" : "unmet",
+      label: `All supporting Renown must reach Tier ${formatRomanNumeral(nextRank)}`
+    }
+  ];
+}
+
 function resolveDefinitionState(
   profile: AccountProfileState,
-  definition: LegacyUnlockDefinitionState
+  definition: LegacyUnlockDefinitionState,
+  definitionsById: Map<string, LegacyUnlockDefinitionState>
 ): LegacyUnlockResolvedState {
   const storedUnlock = getStoredUnlock(profile, definition.id);
   const maxRank = normalizeMaxRank(definition);
   const currentRank = getCurrentRank(storedUnlock, definition);
   const nextRank = currentRank >= maxRank ? null : currentRank + 1;
-  const requirementResults = getRequirementsForRank(definition, nextRank).map((requirement) =>
-    resolveRequirement(profile, requirement)
-  );
+  const requirementResults = [
+    ...getRequirementsForRank(definition, nextRank).map((requirement) =>
+      resolveRequirement(profile, requirement, definitionsById)
+    ),
+    ...resolveRenownSupportRequirement(profile, definition, nextRank, definitionsById)
+  ];
   const eligible = requirementResults.every((result) => result.state === "eligible");
-  const nextCost = resolveNextCost(definition.cost, nextRank);
+  const nextCost = resolveNextCost(definition, nextRank, definitionsById);
   const affordability: LegacyUnlockAffordability =
     nextCost === null ? "no_cost" : profile.legacy.legacyPoints >= nextCost ? "affordable" : "unaffordable";
   const state: LegacyUnlockOwnershipState =
@@ -598,7 +1053,9 @@ function resolveDefinitionState(
         ? "Requirement not supported yet"
         : !eligible
           ? "Requirements unmet"
-          : affordability !== "affordable"
+          : nextCost === null
+            ? "Prestige cost unavailable"
+            : affordability !== "affordable"
             ? "Insufficient Prestige"
             : null;
 
@@ -607,6 +1064,7 @@ function resolveDefinitionState(
     definition,
     category: definition.category,
     kind: definition.kind,
+    classification: resolveClassification(definition),
     title: definition.title,
     description: definition.description,
     currentRank,
@@ -620,6 +1078,11 @@ function resolveDefinitionState(
     affordability,
     requirementResults,
     effects: definition.effects.map((effect) => ({ ...effect })),
+    renownTier: definition.renownNode?.tier ?? null,
+    renownNodeId: definition.renownNode?.nodeId ?? null,
+    renownParentNodeId: definition.renownNode?.parentNodeId ?? null,
+    renownDisplayName: definition.renownNode?.displayName ?? null,
+    renownSupportUnlockIds: [...(definition.renownNode?.supportUnlockIds ?? [])],
     canPurchase,
     purchaseBlockedReason
   };
@@ -645,8 +1108,9 @@ function resolveUnknownUnlockState(unlock: LegacyUnlockState): LegacyUnlockResol
   return {
     id: unlock.unlockId,
     definition: null,
-    category: "Account",
+    category: "Chronicle",
     kind: "binary",
+    classification: "permanent",
     title: conservativeLabel(unlock.unlockId),
     description: "Historical account unlock preserved from earlier data.",
     currentRank: 1,
@@ -660,6 +1124,11 @@ function resolveUnknownUnlockState(unlock: LegacyUnlockState): LegacyUnlockResol
     affordability: "no_cost",
     requirementResults: [],
     effects: [],
+    renownTier: null,
+    renownNodeId: null,
+    renownParentNodeId: null,
+    renownDisplayName: null,
+    renownSupportUnlockIds: [],
     canPurchase: false,
     purchaseBlockedReason: "Historical unlock"
   };
@@ -669,8 +1138,11 @@ export function resolveLegacyUnlockStates(
   profile: AccountProfileState
 ): LegacyUnlockResolvedState[] {
   const definitions = getLegacyUnlockDefinitions();
+  const definitionsById = new Map(definitions.map((definition) => [definition.id, definition]));
   const definitionIds = new Set(definitions.map((definition) => definition.id));
-  const knownStates = definitions.map((definition) => resolveDefinitionState(profile, definition));
+  const knownStates = definitions.map((definition) =>
+    resolveDefinitionState(profile, definition, definitionsById)
+  );
   const unknownStates = profile.legacy.legacyUnlocks
     .filter((unlock) => !definitionIds.has(unlock.unlockId))
     .map(resolveUnknownUnlockState);
@@ -687,6 +1159,453 @@ export function resolveLegacyUnlockStates(
 
     return left.title.localeCompare(right.title);
   });
+}
+
+function resolveRenownMatch(
+  states: LegacyUnlockResolvedState[],
+  tier: "settlement" | "region" | "continent",
+  nodeId: string | null | undefined
+): LegacyRenownMatchState | null {
+  if (!nodeId) {
+    return null;
+  }
+
+  const match = states.find(
+    (entry) =>
+      entry.isKnown &&
+      entry.currentRank > 0 &&
+      entry.renownTier === tier &&
+      entry.renownNodeId === nodeId
+  );
+
+  if (!match) {
+    return null;
+  }
+
+  return {
+    tier,
+    nodeId,
+    displayName: match.renownDisplayName ?? fallbackTitleFromId(nodeId),
+    rank: match.currentRank
+  };
+}
+
+function resolveRenownFlavorFlags(
+  states: LegacyUnlockResolvedState[]
+): LegacyRenownFlavorFlags {
+  const getRank = (unlockId: string): number =>
+    states.find((entry) => entry.id === unlockId && entry.isKnown)?.currentRank ?? 0;
+
+  return {
+    villageName: getRank(RENOWN_FLAVOR_UNLOCK_IDS.villageName) > 0,
+    bannerRightsRank: getRank(RENOWN_FLAVOR_UNLOCK_IDS.bannerRights),
+    veteranReputation: getRank(RENOWN_FLAVOR_UNLOCK_IDS.veteranReputation) > 0
+  };
+}
+
+export function resolveLegacyRenownPresence(
+  profile: AccountProfileState,
+  geography: {
+    settlementId?: string | null;
+    regionId?: string | null;
+    continentId?: string | null;
+  }
+): LegacyRenownPresenceState {
+  const states = resolveLegacyUnlockStates(profile);
+  const settlement = resolveRenownMatch(states, "settlement", geography.settlementId);
+  const region = resolveRenownMatch(states, "region", geography.regionId);
+  const continent = resolveRenownMatch(states, "continent", geography.continentId);
+  const universalRank = states.reduce((highest, entry) => {
+    if (!entry.isKnown || entry.currentRank <= 0 || entry.renownTier !== "universal") {
+      return highest;
+    }
+
+    return Math.max(highest, entry.currentRank);
+  }, 0);
+  const activeTiers: LegacyRenownTier[] = [];
+
+  if (settlement) {
+    activeTiers.push("settlement");
+  }
+  if (region) {
+    activeTiers.push("region");
+  }
+  if (continent) {
+    activeTiers.push("continent");
+  }
+  if (universalRank > 0) {
+    activeTiers.push("universal");
+  }
+
+  return {
+    settlement,
+    region,
+    continent,
+    universalRank,
+    activeTiers,
+    primaryTier:
+      settlement?.tier ??
+      region?.tier ??
+      continent?.tier ??
+      (universalRank > 0 ? "universal" : null),
+    flavorFlags: resolveRenownFlavorFlags(states)
+  };
+}
+
+export function resolveLegacyPreparationCapacity(profile: AccountProfileState): number {
+  return resolveLegacyUnlockStates(profile).reduce((total, entry) => {
+    if (!entry.isKnown || entry.currentRank <= 0) {
+      return total;
+    }
+
+    return (
+      total +
+      entry.effects.reduce((effectTotal, effect) => {
+        if (effect.type !== "preparation_capacity") {
+          return effectTotal;
+        }
+
+        const rawValue = typeof effect.value === "number" ? effect.value : 1;
+        const value = Math.max(0, Math.trunc(rawValue));
+        return effectTotal + value * entry.currentRank;
+      }, 0)
+    );
+  }, 0);
+}
+
+export function isLegacyPreparationChoiceRequired(unlockId: string): boolean {
+  return CHOICE_REQUIRED_PREPARATION_IDS.has(unlockId);
+}
+
+function getSelectablePreparationState(
+  profile: AccountProfileState,
+  unlockId: string
+): LegacyUnlockResolvedState | null {
+  const entry = resolveLegacyUnlockStates(profile).find((state) => state.id === unlockId);
+
+  if (
+    !entry ||
+    !entry.isKnown ||
+    entry.classification !== "preparation" ||
+    entry.currentRank <= 0
+  ) {
+    return null;
+  }
+
+  return entry;
+}
+
+function withSelectedPreparationState(
+  profile: AccountProfileState,
+  selectedPreparationUnlockIds: string[],
+  selectedPreparationChoicePayloads: Record<string, string>
+): AccountProfileState {
+  return {
+    ...profile,
+    legacy: {
+      ...profile.legacy,
+      selectedPreparationUnlockIds,
+      selectedPreparationChoicePayloads
+    }
+  };
+}
+
+export function resolveLegacyPreparationSelection(
+  profile: AccountProfileState
+): LegacyPreparationSelectionResolution {
+  const capacity = Math.max(0, Math.trunc(resolveLegacyPreparationCapacity(profile)));
+  const rawSelectedIds = Array.isArray(profile.legacy.selectedPreparationUnlockIds)
+    ? profile.legacy.selectedPreparationUnlockIds
+    : [];
+  const rawSelectedChoicePayloads =
+    typeof profile.legacy.selectedPreparationChoicePayloads === "object" &&
+    profile.legacy.selectedPreparationChoicePayloads !== null
+      ? profile.legacy.selectedPreparationChoicePayloads
+      : {};
+  const seen = new Set<string>();
+  const selectedUnlockIds: string[] = [];
+  const selectedChoicePayloads: Record<string, string> = {};
+  const droppedInvalidUnlockIds: string[] = [];
+
+  for (const rawUnlockId of rawSelectedIds) {
+    if (typeof rawUnlockId !== "string") {
+      continue;
+    }
+
+    if (seen.has(rawUnlockId)) {
+      droppedInvalidUnlockIds.push(rawUnlockId);
+      continue;
+    }
+
+    seen.add(rawUnlockId);
+
+    const entry = getSelectablePreparationState(profile, rawUnlockId);
+
+    if (!entry) {
+      droppedInvalidUnlockIds.push(rawUnlockId);
+      continue;
+    }
+
+    if (isLegacyPreparationChoiceRequired(rawUnlockId)) {
+      const rawChoicePayload = rawSelectedChoicePayloads[rawUnlockId];
+
+      if (typeof rawChoicePayload !== "string") {
+        droppedInvalidUnlockIds.push(rawUnlockId);
+        continue;
+      }
+
+      const normalizedChoicePayload = rawChoicePayload.trim();
+      const choiceOptions = getLegacyPreparationChoiceOptions(rawUnlockId);
+
+      if (
+        !normalizedChoicePayload ||
+        choiceOptions.length === 0 ||
+        !choiceOptions.some((option) => option.id === normalizedChoicePayload)
+      ) {
+        droppedInvalidUnlockIds.push(rawUnlockId);
+        continue;
+      }
+
+      selectedChoicePayloads[rawUnlockId] = normalizedChoicePayload;
+    }
+
+    selectedUnlockIds.push(rawUnlockId);
+  }
+
+  const resolvedSelectedUnlockIds = selectedUnlockIds.slice(0, capacity);
+  const droppedExcessUnlockIds = selectedUnlockIds.slice(capacity);
+  const resolvedSelectedChoicePayloads = Object.fromEntries(
+    Object.entries(selectedChoicePayloads).filter(([unlockId]) =>
+      resolvedSelectedUnlockIds.includes(unlockId)
+    )
+  );
+  const choiceRequiredUnlockIds = resolveLegacyUnlockStates(profile)
+    .filter(
+      (entry) =>
+        entry.isKnown &&
+        entry.classification === "preparation" &&
+        entry.currentRank > 0 &&
+        isLegacyPreparationChoiceRequired(entry.id)
+    )
+    .map((entry) => entry.id);
+  const incompleteChoiceUnlockIds = choiceRequiredUnlockIds.filter(
+    (unlockId) =>
+      getLegacyPreparationChoiceOptions(unlockId).length > 0 &&
+      !resolvedSelectedUnlockIds.includes(unlockId)
+  );
+
+  return {
+    capacity,
+    selectedUnlockIds: resolvedSelectedUnlockIds,
+    selectedChoicePayloads: resolvedSelectedChoicePayloads,
+    droppedInvalidUnlockIds,
+    droppedExcessUnlockIds,
+    incompleteChoiceUnlockIds,
+    choiceRequiredUnlockIds
+  };
+}
+
+export function selectLegacyPreparation(
+  profile: AccountProfileState,
+  unlockId: string
+): LegacyPreparationSelectionSuccess | LegacyPreparationSelectionFailure {
+  const entry = resolveLegacyUnlockStates(profile).find((state) => state.id === unlockId);
+
+  if (!entry || !entry.isKnown) {
+    return {
+      ok: false,
+      profile,
+      error: "unknown_unlock"
+    };
+  }
+
+  if (entry.classification !== "preparation") {
+    return {
+      ok: false,
+      profile,
+      error: "not_preparation"
+    };
+  }
+
+  if (entry.currentRank <= 0) {
+    return {
+      ok: false,
+      profile,
+      error: "not_owned"
+    };
+  }
+
+  if (isLegacyPreparationChoiceRequired(entry.id)) {
+    return {
+      ok: false,
+      profile,
+      error: "choice_required"
+    };
+  }
+
+  const resolution = resolveLegacyPreparationSelection(profile);
+
+  if (resolution.selectedUnlockIds.includes(unlockId)) {
+    return {
+      ok: false,
+      profile,
+      error: "duplicate_selection"
+    };
+  }
+
+  if (resolution.selectedUnlockIds.length >= resolution.capacity) {
+    return {
+      ok: false,
+      profile,
+      error: "capacity_full"
+    };
+  }
+
+  const selectedPreparationUnlockIds = [...resolution.selectedUnlockIds, unlockId];
+
+  return {
+    ok: true,
+    profile: withSelectedPreparationState(
+      profile,
+      selectedPreparationUnlockIds,
+      resolution.selectedChoicePayloads
+    ),
+    selectedPreparationUnlockIds,
+    selectedPreparationChoicePayloads: resolution.selectedChoicePayloads
+  };
+}
+
+export function setLegacyPreparationChoice(
+  profile: AccountProfileState,
+  unlockId: string,
+  choiceId: string
+): LegacyPreparationSelectionSuccess | LegacyPreparationSelectionFailure {
+  const entry = resolveLegacyUnlockStates(profile).find((state) => state.id === unlockId);
+
+  if (!entry || !entry.isKnown) {
+    return {
+      ok: false,
+      profile,
+      error: "unknown_unlock"
+    };
+  }
+
+  if (entry.classification !== "preparation") {
+    return {
+      ok: false,
+      profile,
+      error: "not_preparation"
+    };
+  }
+
+  if (entry.currentRank <= 0) {
+    return {
+      ok: false,
+      profile,
+      error: "not_owned"
+    };
+  }
+
+  if (!isLegacyPreparationChoiceRequired(entry.id)) {
+    return {
+      ok: false,
+      profile,
+      error: "invalid_choice"
+    };
+  }
+
+  const choiceOptions = getLegacyPreparationChoiceOptions(entry.id);
+
+  if (choiceOptions.length === 0) {
+    return {
+      ok: false,
+      profile,
+      error: "selection_unavailable"
+    };
+  }
+
+  const normalizedChoiceId = choiceId.trim();
+
+  if (!choiceOptions.some((option) => option.id === normalizedChoiceId)) {
+    return {
+      ok: false,
+      profile,
+      error: "invalid_choice"
+    };
+  }
+
+  const resolution = resolveLegacyPreparationSelection(profile);
+  const isAlreadySelected = resolution.selectedUnlockIds.includes(unlockId);
+
+  if (!isAlreadySelected && resolution.selectedUnlockIds.length >= resolution.capacity) {
+    return {
+      ok: false,
+      profile,
+      error: "capacity_full"
+    };
+  }
+
+  const selectedPreparationUnlockIds = isAlreadySelected
+    ? [...resolution.selectedUnlockIds]
+    : [...resolution.selectedUnlockIds, unlockId];
+  const selectedPreparationChoicePayloads = {
+    ...resolution.selectedChoicePayloads,
+    [unlockId]: normalizedChoiceId
+  };
+
+  return {
+    ok: true,
+    profile: withSelectedPreparationState(
+      profile,
+      selectedPreparationUnlockIds,
+      selectedPreparationChoicePayloads
+    ),
+    selectedPreparationUnlockIds,
+    selectedPreparationChoicePayloads
+  };
+}
+
+export function removeLegacyPreparation(
+  profile: AccountProfileState,
+  unlockId: string
+): LegacyPreparationSelectionSuccess {
+  const resolution = resolveLegacyPreparationSelection(profile);
+  const selectedPreparationUnlockIds = resolution.selectedUnlockIds.filter((id) => id !== unlockId);
+  const selectedPreparationChoicePayloads = Object.fromEntries(
+    Object.entries(resolution.selectedChoicePayloads).filter(
+      ([selectedUnlockId]) => selectedUnlockId !== unlockId
+    )
+  );
+
+  return {
+    ok: true,
+    profile: withSelectedPreparationState(
+      profile,
+      selectedPreparationUnlockIds,
+      selectedPreparationChoicePayloads
+    ),
+    selectedPreparationUnlockIds,
+    selectedPreparationChoicePayloads
+  };
+}
+
+export function clearLegacyPreparationChoice(
+  profile: AccountProfileState,
+  unlockId: string
+): LegacyPreparationSelectionSuccess {
+  return removeLegacyPreparation(profile, unlockId);
+}
+
+export function consumeSelectedLegacyPreparations(profile: AccountProfileState): {
+  profile: AccountProfileState;
+  consumedPreparationUnlockIds: string[];
+} {
+  const resolution = resolveLegacyPreparationSelection(profile);
+
+  return {
+    profile: withSelectedPreparationState(profile, [], {}),
+    consumedPreparationUnlockIds: resolution.selectedUnlockIds
+  };
 }
 
 function buildUnlockState(
@@ -733,7 +1652,9 @@ export function purchaseLegacyUnlock(
     };
   }
 
-  const resolved = resolveDefinitionState(profile, definition);
+  const definitions = getLegacyUnlockDefinitions();
+  const definitionsById = new Map(definitions.map((entry) => [entry.id, entry]));
+  const resolved = resolveDefinitionState(profile, definition, definitionsById);
   if (resolved.nextRank === null) {
     return {
       ok: false,

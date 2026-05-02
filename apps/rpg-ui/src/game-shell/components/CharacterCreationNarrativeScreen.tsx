@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type WheelEvent } from 'react';
 import {
+  type AccountRunHistoryRecord,
   BASE_PLAYER_RESOURCE_MAXIMA,
   type PlayerAttributeKey
 } from '../../../../../packages/shared/types/src/index.js';
@@ -45,6 +46,7 @@ import {
   startingBundleOptions
 } from '../characterCreationCatalog.js';
 import { buildCharacterCreationPreview } from '../newGameSnapshot.js';
+import { resolveRunHistorySourceId } from '../runLifecycle.js';
 import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
 import {
   getContinentCardArt,
@@ -61,6 +63,9 @@ import { NoticeBanner } from './NoticeBanner.js';
 
 type Props = {
   form: CharacterCreationFormState;
+  appliedLegacyPreparationIds?: string[];
+  appliedLegacyPreparationChoices?: Record<string, string>;
+  eligibleHeirSources?: AccountRunHistoryRecord[];
   slots: SaveSlotSummary[];
   notice: GameShellNotice | null;
   pendingOverwriteSlotId: ManualSaveSlotId | null;
@@ -89,15 +94,15 @@ const insetBlockClass =
 const textInputClass =
   'w-full rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] px-4 py-3 text-[color:var(--color-text-strong)] outline-none transition placeholder:text-[color:var(--color-muted)] focus:border-[color:var(--color-border-strong)]';
 
-const identitySectionWidthClass = 'w-full max-w-[26.75rem]';
+const identitySectionWidthClass = 'w-full max-w-[34rem] xl:max-w-[42rem]';
 
 const identityChoiceGridClass = `${identitySectionWidthClass} grid grid-cols-3 gap-3`;
-const identityChoiceListClass = `${identitySectionWidthClass} space-y-2`;
+const identityChoiceListClass = `${identitySectionWidthClass} grid gap-2 xl:grid-cols-2`;
 const identitySectionDividerClass =
   `${identitySectionWidthClass} h-px bg-[color:var(--color-border)]/80`;
 
 const identityPaletteGridClass =
-  `${identitySectionWidthClass} grid grid-cols-9 items-start gap-x-1 gap-y-1.5`;
+  `${identitySectionWidthClass} grid grid-cols-[repeat(auto-fit,minmax(2.5rem,1fr))] gap-2 sm:grid-cols-[repeat(auto-fit,minmax(2.85rem,1fr))]`;
 
 const continentSelectionOverlayBase =
   'absolute inset-y-0 left-0 z-10 flex items-stretch overflow-hidden rounded-l-[24px]';
@@ -171,6 +176,35 @@ function getResourceBarFillPercent(
   return Math.max(0, Math.min(100, (numericValue / (baseline * 2)) * 100));
 }
 
+function formatCompactCount(value: number): string {
+  return new Intl.NumberFormat('en-US').format(Math.max(0, Math.trunc(value)));
+}
+
+function formatSourceLabel(value: string, fallback: string): string {
+  const segment = value.split('.').at(-1) ?? value;
+  const words = segment.split(/[_-]+/).filter(Boolean);
+
+  if (words.length === 0) {
+    return fallback;
+  }
+
+  return words
+    .map((word) => word[0]!.toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function buildHeirSourceOption(record: AccountRunHistoryRecord) {
+  const usesRemaining = Math.max(0, Math.trunc(record.inheritanceUsesRemaining ?? 0));
+
+  return {
+    sourceRunId: resolveRunHistorySourceId(record),
+    name: record.name || 'Unnamed Source',
+    lineageLabel: formatSourceLabel(record.lineageId, 'Unknown Line'),
+    echoPeakLabel: `Echo ${formatCompactCount(record.echoLevelReached)}`,
+    usesRemainingLabel: `${formatCompactCount(usesRemaining)} use${usesRemaining === 1 ? '' : 's'} left`
+  };
+}
+
 function getSelectableCardClass(
   selected: boolean,
   tone: 'lineage' | 'continent' | 'region' | 'settlement' | 'backstory' | 'starting_bundle' | 'slot'
@@ -232,14 +266,14 @@ function getSelectionOverlayGradientClass(
 
 function getDifficultyBadgeClass(tone: 'success' | 'warning' | 'danger'): string {
   if (tone === 'success') {
-    return 'border border-emerald-950/35 ring-1 ring-[color:var(--color-border-strong)] bg-emerald-500 text-white shadow-[0_10px_24px_rgba(16,185,129,0.24)]';
+    return 'border border-[color:var(--color-action-success)] bg-[color:var(--color-action-success)] text-[color:var(--color-action-success-text)] shadow-panel';
   }
 
   if (tone === 'warning') {
-    return 'border border-amber-950/30 ring-1 ring-[color:var(--color-border-strong)] bg-amber-400 text-slate-950 shadow-[0_10px_24px_rgba(245,158,11,0.22)]';
+    return 'border border-[color:var(--color-action-warning)] bg-[color:var(--color-action-warning)] text-[color:var(--color-action-warning-text)] shadow-panel';
   }
 
-  return 'border border-rose-950/35 ring-1 ring-[color:var(--color-border-strong)] bg-rose-500 text-white shadow-[0_10px_24px_rgba(244,63,94,0.24)]';
+  return 'border border-[color:var(--color-action-danger)] bg-[color:var(--color-action-danger)] text-[color:var(--color-action-danger-text)] shadow-panel';
 }
 
 function getOpaqueDifficultyBadgeClass(tone: 'success' | 'warning' | 'danger'): string {
@@ -491,6 +525,9 @@ function renderAttributeTooltip(attributeKey: PlayerAttributeKey) {
 
 export function CharacterCreationNarrativeScreen({
   form,
+  appliedLegacyPreparationIds = [],
+  appliedLegacyPreparationChoices = {},
+  eligibleHeirSources = [],
   slots,
   notice,
   pendingOverwriteSlotId,
@@ -511,64 +548,48 @@ export function CharacterCreationNarrativeScreen({
   const [showValidation, setShowValidation] = useState(false);
   const [summaryVisible, setSummaryVisible] = useState(true);
   const [showAlternateLineageArt, setShowAlternateLineageArt] = useState(false);
-  const preview = buildCharacterCreationPreview(form);
+  const preview = buildCharacterCreationPreview(form, {
+    appliedLegacyPreparationIds,
+    appliedLegacyPreparationChoices
+  });
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
   const selectedLineageArt = getLineageCardArt(form.lineageId);
-  const activeOutlineColor =
-    themeMode === 'dark' ? 'rgba(255,255,255,0.92)' : 'rgba(15,23,42,0.82)';
-  const activeOutlineShadow =
-    themeMode === 'dark'
-      ? '0 0 0 1px rgba(255,255,255,0.22), 0 0 22px rgba(255,255,255,0.16)'
-      : '0 0 0 1px rgba(15,23,42,0.14), 0 0 18px rgba(96,165,250,0.18)';
   const activeOutlineStyle = {
-    borderColor: activeOutlineColor,
-    boxShadow: activeOutlineShadow
+    borderColor: 'var(--color-border-active)',
+    boxShadow: 'var(--shadow-active-outline)'
   };
-  const darkTopBarButtonClass =
-    'border-slate-400/25 bg-[rgba(54,63,75,0.9)] text-slate-100 shadow-[0_10px_24px_rgba(2,6,23,0.22)] hover:border-slate-300/32 hover:bg-[rgba(69,80,95,0.96)]';
   const topButtonClass =
-    themeMode === 'dark'
-      ? `inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${darkTopBarButtonClass}`
-      : 'inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-creator-card-hover)]';
+    'inline-flex h-10 w-10 items-center justify-center rounded-md border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
   const topPillButtonClass =
-    themeMode === 'dark'
-      ? `inline-flex h-11 items-center justify-center rounded-full border px-4 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${darkTopBarButtonClass}`
-      : 'inline-flex h-11 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] px-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-soft)] transition hover:bg-[color:var(--color-creator-card-hover)]';
+    'inline-flex h-10 items-center justify-center rounded-md border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-secondary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
   const imageCardTitleClass = 'text-[color:var(--color-text-strong)]';
   const imageCardBodyClass = 'text-[color:var(--color-text-soft)]';
   const imageCardMetaClass = 'text-[color:var(--color-muted-strong)]';
   const lightSurfaceButtonClass =
-    'bg-[color:var(--color-creator-card)] text-[color:var(--color-text-strong)] hover:bg-[color:var(--color-creator-card-hover)]';
+    'bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] hover:bg-[color:var(--color-surface-selected)]';
+  const summaryToggleActiveClass =
+    'border-[color:var(--color-border-active)] bg-[color:var(--color-action-secondary)] text-[color:var(--color-action-secondary-text)]';
+  const primaryActionButtonClass =
+    'border-[color:var(--color-border-active)] bg-[color:var(--color-action-primary)] text-[color:var(--color-action-primary-text)] hover:brightness-105';
+  const dangerActionButtonClass =
+    'border-[color:var(--color-action-danger)] bg-[color:var(--color-action-danger)] text-[color:var(--color-action-danger-text)] hover:brightness-110';
+  const validationNoticeClass =
+    'rounded-[18px] border border-[color:var(--color-action-danger)] bg-[color:var(--color-surface-panel)] px-4 py-3 text-sm text-[color:var(--color-text-primary)] shadow-panel';
   const collapsedSettlementMetaBadgeClass =
-    themeMode === 'dark'
-      ? 'border-white/12 bg-[rgba(8,12,18,0.68)] text-[color:var(--color-text-strong)]'
-      : 'border-slate-500/20 bg-[rgba(255,255,255,0.78)] text-[color:var(--color-text-strong)] shadow-[0_10px_24px_rgba(15,23,42,0.08)]';
+    'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] shadow-panel';
   const selectedSettlementMetaBadgeClass =
-    themeMode === 'dark'
-      ? 'border-white/12 bg-[rgba(12,18,28,0.84)] text-[color:var(--color-text-strong)]'
-      : 'border-slate-500/25 bg-[rgba(248,250,252,0.94)] text-[color:var(--color-text-strong)] shadow-[0_10px_24px_rgba(15,23,42,0.1)]';
+    'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)] shadow-panel';
   const selectedSettlementArtFadeClass =
     themeMode === 'dark'
       ? 'bg-[linear-gradient(180deg,rgba(8,12,18,0.04)_0%,rgba(8,12,18,0.06)_46%,rgba(8,12,18,0.34)_74%,rgba(8,12,18,0.84)_100%)]'
       : 'bg-[linear-gradient(180deg,rgba(248,250,252,0.02)_0%,rgba(248,250,252,0.04)_46%,rgba(226,232,240,0.26)_74%,rgba(226,232,240,0.76)_100%)]';
   const selectedIdentityControlClass =
-    themeMode === 'dark'
-      ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
-      : 'border-[color:var(--color-border-strong)] bg-[rgba(220,231,246,0.96)] text-[color:var(--color-text-strong)] shadow-[0_14px_30px_rgba(96,165,250,0.14)]';
-  const selectedIdentityMetaClass =
-    themeMode === 'dark'
-      ? 'text-[color:var(--color-text-soft)]'
-      : 'text-[color:var(--color-text-strong)]';
-  const unselectedIdentityMetaClass =
-    themeMode === 'dark'
-      ? 'text-[color:var(--color-text-soft)]'
-      : 'text-[color:var(--color-text-soft)]';
+    'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)] shadow-panel';
+  const selectedIdentityMetaClass = 'text-[color:var(--color-text-primary)]';
+  const unselectedIdentityMetaClass = 'text-[color:var(--color-text-secondary)]';
   const selectedContinentPanelClass = 'bg-[color:var(--color-creator-card-strong)]';
   const selectedRegionPanelSurfaceClass = 'bg-[color:var(--color-creator-card-strong)]';
-  const selectedTextPanelEdgeClass =
-    themeMode === 'dark'
-      ? 'border-r border-white/15'
-      : 'border-r border-slate-600/30';
+  const selectedTextPanelEdgeClass = 'border-r border-[color:var(--color-border-strong)]';
   const lineageRailSurfaceClass = 'bg-[color:var(--color-creator-card-strong)]';
   const collapsedHoverLabelSurfaceClass =
     'pointer-events-none absolute inset-y-0 left-0 z-10 flex items-center overflow-hidden rounded-l-[24px] opacity-0 -translate-x-6 transition duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:translate-x-0 group-focus-within:opacity-100';
@@ -576,12 +597,8 @@ export function CharacterCreationNarrativeScreen({
   const collapsedHoverLabelTextClass =
     'w-full pl-5 pr-6 text-[24px] font-semibold leading-tight text-[color:var(--color-text-strong)]';
   const collapsedLineageHoverLabelSurfaceClass = 'w-[14.5rem] max-w-[calc(100%-7rem)]';
-  const inactiveIdentitySwatchBorderColor =
-    themeMode === 'dark' ? 'rgba(255,255,255,0.28)' : 'rgba(71,85,105,0.28)';
-  const topBarBackground =
-    themeMode === 'dark'
-      ? 'linear-gradient(135deg, rgba(17, 23, 34, 0.84), rgba(8, 12, 19, 0.66)), radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 34%), radial-gradient(circle at bottom right, rgba(212, 173, 85, 0.08), transparent 28%)'
-      : 'linear-gradient(135deg, rgba(248, 251, 255, 0.96), rgba(228, 236, 248, 0.9)), radial-gradient(circle at top left, rgba(96, 165, 250, 0.14), transparent 36%), radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.08), transparent 28%)';
+  const inactiveIdentitySwatchBorderColor = 'var(--color-border-strong)';
+  const topBarBackground = 'var(--color-shell-bar-bg)';
   const continents = getWorldContinentOptions();
   const regions = getWorldRegionOptions(form.continentId);
   const settlements = getWorldSettlementOptions({
@@ -626,6 +643,15 @@ export function CharacterCreationNarrativeScreen({
   const previousMaxUnlockedRef = useRef(maxUnlocked);
   const previousStepId = getPreviousCharacterCreationStepId(currentStepId);
   const selectedSlot = slots.find((slot) => slot.id === form.saveSlotId) ?? null;
+  const heirSourceOptions = useMemo(
+    () => eligibleHeirSources.map(buildHeirSourceOption),
+    [eligibleHeirSources]
+  );
+  const selectedSourceRunId = form.sourceRunId.trim();
+  const selectedHeirSource =
+    heirSourceOptions.find((source) => source.sourceRunId === selectedSourceRunId) ?? null;
+  const firstHeirSource = heirSourceOptions[0] ?? null;
+  const heirStartSelected = selectedSourceRunId.length > 0;
   const needsOverwrite =
     selectedSlot?.kind === 'manual' &&
     selectedSlot.hasSave &&
@@ -636,6 +662,34 @@ export function CharacterCreationNarrativeScreen({
     preview.lineageLabel
   );
   const profileOutcomeRows = preview.generatedProfileMetrics;
+  const showReviewSummaryDetails = currentStepId === 'review' && preview.isResolved;
+  const summaryContextRows = [
+    preview.backstoryLabel
+      ? { id: 'backstory', label: 'Backstory', value: preview.backstoryLabel }
+      : null,
+    preview.startingBundleLabel
+      ? { id: 'bundle', label: 'Bundle', value: preview.startingBundleLabel }
+      : null,
+    [preview.startingSettlement, preview.startingRegion, preview.startingContinent]
+      .filter(Boolean)
+      .join(', ')
+      ? {
+          id: 'start',
+          label: 'Start',
+          value: [preview.startingSettlement, preview.startingRegion, preview.startingContinent]
+            .filter(Boolean)
+            .join(', ')
+        }
+      : null
+  ].filter(
+    (
+      row
+    ): row is {
+      id: string;
+      label: string;
+      value: string;
+    } => Boolean(row)
+  );
 
   useEffect(() => {
     containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
@@ -718,6 +772,55 @@ export function CharacterCreationNarrativeScreen({
     const dependencyLock = getStepDependencyLock(stepId);
     setCurrentStepId(dependencyLock.redirectStep ?? stepId);
     setShowValidation(false);
+  };
+
+  const getStepSegmentClass = ({
+    active,
+    complete,
+    locked,
+    recentlyUnlocked
+  }: {
+    active: boolean;
+    complete: boolean;
+    locked: boolean;
+    recentlyUnlocked: boolean;
+  }): string => {
+    const pulseClass =
+      recentlyUnlocked && !active && !locked
+        ? 'animate-pulse shadow-panel'
+        : '';
+
+    if (active) {
+      return `${pulseClass} border-[color:var(--color-border-active)] bg-[color:var(--color-progress-active)] text-[color:var(--color-text-primary)] shadow-panel`.trim();
+    }
+
+    if (locked) {
+      return `${pulseClass} border-[color:var(--color-border-soft)] bg-[color:var(--color-progress-locked)] text-[color:var(--color-text-muted)]`.trim();
+    }
+
+    if (complete) {
+      return `${pulseClass} border-[color:var(--color-action-success)] bg-[color:var(--color-progress-complete)] text-[color:var(--color-text-primary)] shadow-panel`.trim();
+    }
+
+    return `${pulseClass} border-[color:var(--color-echo-accent)] bg-[color:var(--color-progress-available)] text-[color:var(--color-text-primary)]`.trim();
+  };
+
+  const getStepIndexBadgeClass = ({
+    active,
+    complete
+  }: {
+    active: boolean;
+    complete: boolean;
+  }): string => {
+    if (active) {
+      return 'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)]';
+    }
+
+    if (complete) {
+      return 'border-[color:var(--color-action-success)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)]';
+    }
+
+    return 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] text-[color:var(--color-text-secondary)]';
   };
 
   const choose = (
@@ -877,45 +980,27 @@ export function CharacterCreationNarrativeScreen({
         {parsedValues.map((value) => {
           const tone =
             value.id === 'hp'
-              ? themeMode === 'light'
-                ? {
-                    labelClass: 'text-rose-700',
-                    fill:
-                      'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
-                    shadow: '0 0 18px rgba(248,113,113,0.24)'
-                  }
-                : {
-                    labelClass: 'text-rose-200/85',
-                    fill:
-                      'linear-gradient(90deg, rgba(248,113,113,0.9) 0%, rgba(251,191,191,0.95) 100%)',
-                    shadow: '0 0 18px rgba(248,113,113,0.24)'
-                  }
+              ? {
+                  labelColor: 'var(--color-hp-fill)',
+                  fill:
+                    'linear-gradient(90deg, var(--color-hp-fill) 0%, color-mix(in srgb, var(--color-hp-fill) 34%, white) 100%)',
+                  shadow:
+                    '0 0 18px color-mix(in srgb, var(--color-hp-fill) 24%, transparent)'
+                }
               : value.id === 'mp'
-                ? themeMode === 'light'
                   ? {
-                      labelClass: 'text-sky-700',
+                      labelColor: 'var(--color-mp-fill)',
                       fill:
-                        'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
-                      shadow: '0 0 18px rgba(96,165,250,0.24)'
+                        'linear-gradient(90deg, var(--color-mp-fill) 0%, color-mix(in srgb, var(--color-mp-fill) 34%, white) 100%)',
+                      shadow:
+                        '0 0 18px color-mix(in srgb, var(--color-mp-fill) 24%, transparent)'
                     }
-                  : {
-                      labelClass: 'text-sky-200/85',
+                : {
+                      labelColor: 'var(--color-stamina-fill)',
                       fill:
-                        'linear-gradient(90deg, rgba(96,165,250,0.9) 0%, rgba(191,219,254,0.95) 100%)',
-                      shadow: '0 0 18px rgba(96,165,250,0.24)'
-                    }
-                : themeMode === 'light'
-                  ? {
-                      labelClass: 'text-emerald-700',
-                      fill:
-                        'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
-                      shadow: '0 0 18px rgba(74,222,128,0.24)'
-                    }
-                  : {
-                      labelClass: 'text-emerald-200/85',
-                      fill:
-                        'linear-gradient(90deg, rgba(74,222,128,0.88) 0%, rgba(209,250,229,0.95) 100%)',
-                      shadow: '0 0 18px rgba(74,222,128,0.24)'
+                        'linear-gradient(90deg, var(--color-stamina-fill) 0%, color-mix(in srgb, var(--color-stamina-fill) 34%, white) 100%)',
+                      shadow:
+                        '0 0 18px color-mix(in srgb, var(--color-stamina-fill) 24%, transparent)'
                     };
           const lightModeLabelStyle =
             themeMode === 'light'
@@ -928,13 +1013,13 @@ export function CharacterCreationNarrativeScreen({
           return (
             <div key={value.id}>
               <div
-                className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.labelClass}`}
-                style={lightModeLabelStyle}
+                className="text-[11px] font-semibold uppercase tracking-[0.16em]"
+                style={{ ...lightModeLabelStyle, color: tone.labelColor }}
               >
                 {value.label}: {value.value ?? 'Pending'}
               </div>
-              <div className="relative mt-1.5 h-5 overflow-hidden rounded-[6px] border border-[color:var(--color-border)] bg-black/20">
-                <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-white/12" />
+              <div className="relative mt-1.5 h-5 overflow-hidden rounded-[6px] border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)]">
+                <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-[color:var(--color-border-soft)]" />
                 <div
                   className="h-full rounded-[4px] transition-[width] duration-500"
                   style={{
@@ -995,15 +1080,15 @@ export function CharacterCreationNarrativeScreen({
                 onClick={() =>
                   onChange({ [key]: option.id } as Partial<CharacterCreationFormState>)
                 }
-                className={`h-11 w-11 rounded-full border-[3px] transition ${opacityClass}`}
+                className={`aspect-square w-full max-w-[2.7rem] justify-self-center rounded-full border-[3px] transition sm:max-w-[3rem] ${opacityClass}`}
                 style={{
                   backgroundColor:
                     option.swatch?.background ?? 'var(--color-creator-card)',
                   borderColor: selected
-                    ? activeOutlineColor
+                    ? 'var(--color-border-active)'
                     : option.swatch?.border ?? inactiveIdentitySwatchBorderColor,
                   boxShadow: selected
-                    ? activeOutlineShadow
+                    ? 'var(--shadow-active-outline)'
                     : 'none'
                 }}
                 aria-label={`${title}: ${option.label}`}
@@ -1194,11 +1279,7 @@ export function CharacterCreationNarrativeScreen({
                   <button
                     type="button"
                     onClick={() => advanceSelectionStep('lineage')}
-                    className={`rounded-full border border-[color:var(--color-border-strong)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
-                      themeMode === 'dark'
-                        ? 'bg-[rgba(4,9,17,0.92)] text-[color:var(--color-text-strong)] hover:bg-[rgba(8,16,28,0.98)]'
-                        : lightSurfaceButtonClass
-                    }`}
+                    className={`rounded-full border border-[color:var(--color-border-strong)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${lightSurfaceButtonClass}`}
                   >
                     {getSelectionAdvanceLabel('lineage')}
                   </button>
@@ -1375,7 +1456,7 @@ export function CharacterCreationNarrativeScreen({
                         <div
                           className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
                             form.ageBandId === option.id
-                              ? 'border-white/18 bg-white/10 text-[color:var(--color-accent-contrast)]'
+                              ? selectedIdentityControlClass
                               : 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted-strong)]'
                           }`}
                         >
@@ -1602,7 +1683,7 @@ export function CharacterCreationNarrativeScreen({
             : art?.imageUrl;
           const continentBackgroundPosition = selected
             ? art?.selectedBackgroundPosition ?? 'right bottom'
-            : art?.backgroundPosition ?? 'center center';
+            : art?.backgroundPosition ?? 'center bottom';
 
           return (
             <div
@@ -1713,9 +1794,7 @@ export function CharacterCreationNarrativeScreen({
                   type="button"
                   onClick={() => advanceSelectionStep('continent')}
                   className={`absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
-                    themeMode === 'dark'
-                      ? 'bg-[rgba(8,16,14,0.84)] text-[color:var(--color-text-strong)] hover:bg-[rgba(10,22,18,0.94)]'
-                      : lightSurfaceButtonClass
+                    lightSurfaceButtonClass
                   }`}
                 >
                   {getSelectionAdvanceLabel('continent')}
@@ -1747,9 +1826,9 @@ export function CharacterCreationNarrativeScreen({
         {regions.map((option) => {
           const art = getRegionCardArt(option.id);
           const selected = form.regionId === option.id;
-          const regionBackgroundPosition = art?.backgroundPosition ?? 'center center';
+          const regionBackgroundPosition = art?.backgroundPosition ?? 'center bottom';
           const regionSelectedBackgroundPosition =
-            art?.selectedBackgroundPosition ?? 'right center';
+            art?.selectedBackgroundPosition ?? 'right bottom';
           const selectedRegionPanelClass = art
             ? 'absolute inset-y-0 left-0 z-10 flex items-stretch overflow-hidden rounded-l-[24px]'
             : 'absolute inset-px z-10 flex items-stretch rounded-[23px]';
@@ -1932,9 +2011,7 @@ export function CharacterCreationNarrativeScreen({
                   type="button"
                   onClick={() => advanceSelectionStep('region')}
                   className={`absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
-                    themeMode === 'dark'
-                      ? 'bg-[rgba(7,12,20,0.84)] text-[color:var(--color-text-strong)] hover:bg-[rgba(10,18,28,0.94)]'
-                      : lightSurfaceButtonClass
+                    lightSurfaceButtonClass
                   }`}
                 >
                   {getSelectionAdvanceLabel('region')}
@@ -1966,9 +2043,9 @@ export function CharacterCreationNarrativeScreen({
         {settlements.map((option) => {
           const art = getSettlementCardArt(option.id);
           const selected = form.startingSettlementId === option.id;
-          const settlementBackgroundPosition = art?.backgroundPosition ?? 'center center';
+          const settlementBackgroundPosition = art?.backgroundPosition ?? 'center bottom';
           const settlementSelectedBackgroundPosition =
-            art?.selectedBackgroundPosition ?? 'center center';
+            art?.selectedBackgroundPosition ?? 'right bottom';
           const selectedSettlementPanelClass = art
             ? 'absolute inset-y-0 left-0 z-10 flex items-stretch overflow-hidden rounded-l-[24px]'
             : 'absolute inset-px z-10 overflow-hidden rounded-[23px]';
@@ -2199,9 +2276,7 @@ export function CharacterCreationNarrativeScreen({
                   type="button"
                   onClick={() => advanceSelectionStep('settlement')}
                   className={`absolute bottom-5 right-5 z-20 rounded-full border border-[color:var(--color-border-strong)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
-                    themeMode === 'dark'
-                      ? 'bg-[rgba(16,12,8,0.84)] text-[color:var(--color-text-strong)] hover:bg-[rgba(28,18,10,0.94)]'
-                      : lightSurfaceButtonClass
+                    lightSurfaceButtonClass
                   }`}
                 >
                   {getSelectionAdvanceLabel('settlement')}
@@ -2377,8 +2452,91 @@ export function CharacterCreationNarrativeScreen({
                 <div className="mt-3">{preview.startingAccessDetail}</div>
               </div>
             </div>
+            {heirSourceOptions.length > 0 && (
+              <div className={`${summaryBlockClass} space-y-3`}>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                      Lineage Start
+                    </div>
+                    <div className="mt-1 text-sm text-[color:var(--color-text-soft)]">
+                      {heirStartSelected && selectedHeirSource
+                        ? `Selected source: ${selectedHeirSource.name}`
+                        : 'Fresh Start'}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelection({ sourceRunId: '' })}
+                      className={`rounded-full border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition ${
+                        !heirStartSelected
+                          ? selectedIdentityControlClass
+                          : `border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-soft)] hover:bg-[color:var(--color-creator-card-hover)]`
+                      }`}
+                    >
+                      Fresh Start
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        firstHeirSource &&
+                        setSelection({
+                          sourceRunId: selectedHeirSource?.sourceRunId ?? firstHeirSource.sourceRunId
+                        })
+                      }
+                      className={`rounded-full border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition ${
+                        heirStartSelected
+                          ? selectedIdentityControlClass
+                          : `border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] text-[color:var(--color-text-soft)] hover:bg-[color:var(--color-creator-card-hover)]`
+                      }`}
+                    >
+                      Heir Start
+                    </button>
+                  </div>
+                </div>
+                {heirStartSelected && (
+                  <div className="grid gap-2 md:grid-cols-2">
+                    {heirSourceOptions.map((source) => {
+                      const selected = source.sourceRunId === selectedSourceRunId;
+
+                      return (
+                        <button
+                          key={source.sourceRunId}
+                          type="button"
+                          onClick={() => setSelection({ sourceRunId: source.sourceRunId })}
+                          className={`rounded-[16px] border px-3 py-3 text-left transition ${
+                            selected
+                              ? selectedIdentityControlClass
+                              : `border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] hover:bg-[color:var(--color-creator-card-hover)]`
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <div className="truncate text-sm font-semibold text-[color:var(--color-text-strong)]">
+                                {source.name}
+                              </div>
+                              <div className="mt-1 text-xs text-[color:var(--color-text-soft)]">
+                                {source.lineageLabel}
+                              </div>
+                            </div>
+                            <div className="shrink-0 rounded-full border border-[color:var(--color-border)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[color:var(--color-muted-strong)]">
+                              Source Line
+                            </div>
+                          </div>
+                          <div className="mt-3 flex flex-wrap gap-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[color:var(--color-muted-strong)]">
+                            <span>{source.echoPeakLabel}</span>
+                            <span>{source.usesRemainingLabel}</span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
             {showValidation && !fullValidation.isValid && (
-              <div className="rounded-[20px] border border-rose-300/20 bg-rose-200/10 px-4 py-3 text-sm text-rose-100">
+              <div className={validationNoticeClass}>
                 Complete the remaining selections before beginning the campaign.
               </div>
             )}
@@ -2387,7 +2545,7 @@ export function CharacterCreationNarrativeScreen({
         {needsOverwrite && (
           <Card>
             <div className="space-y-4">
-              <div className="rounded-[20px] border border-rose-300/20 bg-rose-200/10 p-4 text-sm leading-6 text-rose-100">
+              <div className={`${validationNoticeClass} leading-6`}>
                 {selectedSlot?.label} already holds a saved campaign. Confirm only if
                 you intend to replace that data.
               </div>
@@ -2395,14 +2553,14 @@ export function CharacterCreationNarrativeScreen({
                 <button
                   type="button"
                   onClick={onConfirmOverwrite}
-                  className="rounded-full border border-rose-300/35 bg-rose-200/14 px-4 py-2 text-sm text-[color:var(--color-accent-contrast)]"
+                  className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${dangerActionButtonClass}`}
                 >
                   Confirm Overwrite
                 </button>
                 <button
                   type="button"
                   onClick={onCancelOverwrite}
-                  className={`${topButton} w-auto px-4 text-sm`}
+                  className={`${topButtonClass} w-auto px-4 text-sm`}
                 >
                   Keep Existing Save
                 </button>
@@ -2421,7 +2579,7 @@ export function CharacterCreationNarrativeScreen({
               onCreateGame();
             }}
             disabled={needsOverwrite}
-            className="rounded-full border border-amber-300/35 bg-amber-200/14 px-5 py-3 text-sm font-semibold text-[color:var(--color-accent-contrast)] disabled:opacity-50"
+            className={`rounded-full border px-5 py-3 text-sm font-semibold transition disabled:opacity-50 ${primaryActionButtonClass}`}
           >
             Begin Journey
           </button>
@@ -2431,19 +2589,16 @@ export function CharacterCreationNarrativeScreen({
   }
 
   return (
-    <div ref={containerRef} className="h-screen overflow-auto pb-6">
+    <div ref={containerRef} className="h-screen overflow-auto pb-4">
       <div
-        className={`sticky top-0 z-30 border-b border-[color:var(--color-border)] backdrop-blur-2xl ${
-          themeMode === 'dark'
-            ? 'shadow-[0_18px_48px_rgba(0,0,0,0.32)]'
-            : 'shadow-[0_18px_38px_rgba(51,65,85,0.12)]'
-        }`}
+        className="sticky top-0 z-30 border-b border-[color:var(--color-border-soft)] backdrop-blur-2xl"
         style={{
-          background: topBarBackground
+          background: topBarBackground,
+          boxShadow: 'var(--shadow-shell-bar)'
         }}
       >
-        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
-          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid min-h-[3.5rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2 sm:px-6">
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -2476,7 +2631,7 @@ export function CharacterCreationNarrativeScreen({
               >
                 <button
                   type="button"
-                  className="text-lg font-semibold tracking-[0.04em] text-[color:var(--color-text-strong)]"
+                  className="text-base font-semibold tracking-[0.04em] text-[color:var(--color-text-primary)] sm:text-lg"
                 >
                   Forge A New Character
                 </button>
@@ -2487,10 +2642,8 @@ export function CharacterCreationNarrativeScreen({
                 type="button"
                 onClick={() => setSummaryVisible((current) => !current)}
                 aria-pressed={summaryVisible}
-                className={`${topPillButtonClass} min-w-[7.4rem] ${
-                  summaryVisible
-                    ? 'bg-amber-200/14 text-[color:var(--color-accent-contrast)]'
-                    : ''
+                className={`${topPillButtonClass} min-w-[6.75rem] ${
+                  summaryVisible ? summaryToggleActiveClass : ''
                 }`}
                 style={summaryVisible ? activeOutlineStyle : undefined}
               >
@@ -2513,6 +2666,57 @@ export function CharacterCreationNarrativeScreen({
               </button>
             </div>
           </div>
+          <div className="border-t border-[color:var(--color-border-soft)] px-4 py-2 sm:px-6">
+            <div className="overflow-x-auto pb-1">
+              <div className="flex w-max min-w-full items-center gap-2">
+                {CHARACTER_CREATION_STEPS.map((step, index) => {
+                  const dependencyLock = getStepDependencyLock(step.id);
+                  const locked = index > maxUnlocked || dependencyLock.locked;
+                  const active = step.id === currentStepId;
+                  const complete = validations[step.id].isValid;
+                  const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
+
+                  return (
+                    <button
+                      key={step.id}
+                      type="button"
+                      onClick={() => !locked && goToStep(step.id)}
+                      disabled={locked}
+                      aria-current={active ? 'step' : undefined}
+                      title={locked ? `${step.label} locked` : step.label}
+                      className={`inline-flex h-10 items-center rounded-full border text-[10px] font-semibold uppercase tracking-[0.14em] transition disabled:cursor-not-allowed ${
+                        locked
+                          ? 'w-10 shrink-0 justify-center px-0'
+                          : 'min-w-[7.75rem] flex-1 justify-center gap-2 px-3'
+                      } ${getStepSegmentClass({
+                        active,
+                        complete,
+                        locked,
+                        recentlyUnlocked
+                      })}`}
+                      style={active ? activeOutlineStyle : undefined}
+                    >
+                      {locked ? (
+                        <Icon name="lock" className="h-4 w-4" />
+                      ) : (
+                        <>
+                          <span
+                            className={`inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full border px-1 text-[9px] font-semibold ${getStepIndexBadgeClass({
+                              active,
+                              complete
+                            })}`}
+                          >
+                            {index + 1}
+                          </span>
+                          <span className="truncate">{step.label}</span>
+                        </>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       {notice && (
@@ -2524,85 +2728,23 @@ export function CharacterCreationNarrativeScreen({
         <div
           className={`grid flex-1 gap-4 ${
             summaryVisible
-              ? 'xl:grid-cols-[144px_minmax(0,1fr)_204px]'
-              : 'xl:grid-cols-[144px_minmax(0,1fr)]'
+              ? 'xl:grid-cols-[minmax(0,1fr)_220px]'
+              : 'xl:grid-cols-[minmax(0,1fr)]'
           }`}
         >
-          <div className="sticky top-20 flex flex-col items-start gap-1">
-            {CHARACTER_CREATION_STEPS.map((step, index) => {
-              const dependencyLock = getStepDependencyLock(step.id);
-              const disabled = index > maxUnlocked || dependencyLock.locked;
-
-              return (
-                <button
-                  key={step.id}
-                  type="button"
-                  onClick={() => !disabled && goToStep(step.id)}
-                  disabled={disabled}
-                  className="grid w-full grid-cols-[44px_minmax(0,1fr)] items-center gap-3 rounded-[16px] px-0 py-1.5 text-left transition disabled:cursor-not-allowed"
-                >
-                  {(() => {
-                    const locked = disabled;
-                    const active = step.id === currentStepId;
-                    const complete = validations[step.id].isValid;
-                    const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
-                    const circleClass = active
-                      ? themeMode === 'dark'
-                        ? 'bg-amber-200/18 text-[color:var(--color-accent-contrast)]'
-                        : 'bg-[rgba(220,231,246,0.96)] text-[color:var(--color-text-strong)]'
-                      : locked
-                        ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card)] text-[color:var(--color-muted)]'
-                        : complete
-                          ? themeMode === 'dark'
-                            ? 'border-emerald-300/70 bg-emerald-200/16 text-[color:var(--color-accent-contrast)] shadow-[0_0_18px_rgba(74,222,128,0.18)]'
-                            : 'border-emerald-400/70 bg-[rgba(209,250,229,0.96)] text-[color:var(--color-text-strong)] shadow-[0_0_18px_rgba(74,222,128,0.16)]'
-                          : themeMode === 'dark'
-                            ? 'border-sky-300/55 bg-sky-200/12 text-[color:var(--color-accent-contrast)]'
-                            : 'border-sky-400/55 bg-[rgba(219,234,254,0.94)] text-slate-700 shadow-[0_0_18px_rgba(96,165,250,0.14)]';
-                    const labelClass = locked
-                      ? 'text-[color:var(--color-muted)]'
-                      : 'text-[color:var(--color-text-soft)]';
-
-                    return (
-                      <>
-                        <span
-                          className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[4px] text-sm font-semibold transition ${
-                            recentlyUnlocked && !active && !locked
-                              ? 'animate-pulse shadow-[0_0_0_1px_rgba(134,239,172,0.26),0_0_18px_rgba(134,239,172,0.22)]'
-                              : ''
-                          } ${circleClass}`}
-                          style={active ? activeOutlineStyle : undefined}
-                        >
-                          {index + 1}
-                          {locked && (
-                            <span className="absolute -right-1 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] text-[color:var(--color-muted)]">
-                              <Icon name="lock" className="h-3 w-3" />
-                            </span>
-                          )}
-                        </span>
-                        <span className={`text-[11px] uppercase tracking-[0.14em] ${labelClass}`}>
-                          {step.label}
-                        </span>
-                      </>
-                    );
-                  })()}
-                </button>
-              );
-            })}
-          </div>
           <div className="space-y-4">
             {mainContent}
             {showValidation &&
               !currentValidation.isValid &&
               currentStepId !== 'review' && (
-                <div className="text-sm text-rose-300">
+                <div className={validationNoticeClass}>
                   {Object.values(currentValidation.errors)[0] ??
                     'Complete the required choices on this step before moving on.'}
                 </div>
               )}
           </div>
           {summaryVisible && (
-            <div className="space-y-4 xl:sticky xl:top-20">
+            <div className="space-y-4 xl:sticky xl:top-[7.25rem]">
               <Card accent="var(--color-world)">
                 <div className="space-y-4">
                   <div>
@@ -2615,7 +2757,34 @@ export function CharacterCreationNarrativeScreen({
                       </div>
                     </div>
                   </div>
-                  {profileOutcomeRows.length > 0 && (
+                  {summaryContextRows.length > 0 && (
+                    <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                      <div className="space-y-2.5">
+                        {summaryContextRows.map((row) => (
+                          <div key={row.id} className="space-y-0.5">
+                            <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                              {row.label}
+                            </div>
+                            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+                              {row.value}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                    {renderStatList(preview.attributeMetrics, {
+                      compact: true,
+                      frame: false
+                    })}
+                  </div>
+                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                    {renderResourceBars(preview.resourceMetrics, {
+                      frame: false
+                    })}
+                  </div>
+                  {showReviewSummaryDetails && profileOutcomeRows.length > 0 && (
                     <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
                       <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
                         Generated Profile Bonuses
@@ -2634,33 +2803,27 @@ export function CharacterCreationNarrativeScreen({
                       </div>
                     </div>
                   )}
-                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                    {renderStatList(preview.attributeMetrics, {
-                      compact: true,
-                      frame: false
-                    })}
-                  </div>
-                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                    {renderResourceBars(preview.resourceMetrics, {
-                      frame: false
-                    })}
-                  </div>
-                  {preview.isResolved && preview.starterSkills.length > 0 && (
+                  {showReviewSummaryDetails && preview.legacyPreparations.length > 0 && (
+                    <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
+                      {renderLegacyPreparations(preview.legacyPreparations)}
+                    </div>
+                  )}
+                  {showReviewSummaryDetails && preview.starterSkills.length > 0 && (
                     <div>{renderTags('Starting Lore', preview.starterSkills)}</div>
                   )}
-                  {preview.isResolved && preview.starterLore.length > 0 && (
+                  {showReviewSummaryDetails && preview.starterLore.length > 0 && (
                     <div>{renderTags('Lore Emphasis', preview.starterLore)}</div>
                   )}
-                  {preview.isResolved && preview.starterTraits.length > 0 && (
+                  {showReviewSummaryDetails && preview.starterTraits.length > 0 && (
                     <div>{renderTags('Starting Traits', preview.starterTraits)}</div>
                   )}
-                  {preview.isResolved && preview.starterGear.length > 0 && (
+                  {showReviewSummaryDetails && preview.starterGear.length > 0 && (
                     <div>{renderTags('Equipped Gear', preview.starterGear)}</div>
                   )}
-                  {preview.isResolved && preview.walletLabel && (
+                  {showReviewSummaryDetails && preview.walletLabel && (
                     <div>{renderTags('Funds', [preview.walletLabel])}</div>
                   )}
-                  {preview.isResolved && preview.starterPack.length > 0 && (
+                  {showReviewSummaryDetails && preview.starterPack.length > 0 && (
                     <div>{renderTags('Starter Pack', preview.starterPack)}</div>
                   )}
                 </div>
@@ -2686,6 +2849,40 @@ export function CharacterCreationNarrativeScreen({
             >
               {value}
             </span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  function renderLegacyPreparations(
+    preparations: typeof preview.legacyPreparations
+  ) {
+    return (
+      <div>
+        <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+          Legacy Preparations
+        </div>
+        <div className="mt-2 space-y-2">
+          {preparations.map((preparation) => (
+            <div
+              key={preparation.unlockId}
+              className="rounded-[16px] border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] px-3 py-2.5"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
+                  {preparation.title}
+                </div>
+                <div className="shrink-0 rounded-full border border-[color:var(--color-border)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[color:var(--color-muted-strong)]">
+                  {preparation.statusLabel}
+                </div>
+              </div>
+              <div className="mt-1 text-xs leading-5 text-[color:var(--color-text-soft)]">
+                {preparation.bonusLabels.length > 0
+                  ? preparation.bonusLabels.join(', ')
+                  : preparation.detail}
+              </div>
+            </div>
           ))}
         </div>
       </div>

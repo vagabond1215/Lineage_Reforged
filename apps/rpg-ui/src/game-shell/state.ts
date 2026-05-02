@@ -16,47 +16,7 @@ export type AppScreen =
   | 'LOAD_GAME'
   | 'SETTINGS'
   | 'IN_GAME';
-type ManualSaveSlotNumber =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17
-  | 18
-  | 19
-  | 20
-  | 21
-  | 22
-  | 23
-  | 24
-  | 25
-  | 26
-  | 27
-  | 28
-  | 29
-  | 30
-  | 31
-  | 32
-  | 33
-  | 34
-  | 35
-  | 36
-  | 37
-  | 38
-  | 39
-  | 40;
+type ManualSaveSlotNumber = number;
 
 export type ManualSaveSlotId = `slot-${ManualSaveSlotNumber}`;
 export type QuickSaveSlotId = 'quick-save';
@@ -249,8 +209,8 @@ export type GameShellAction =
       notice: GameShellNotice | null;
     };
 
-export const MANUAL_SAVE_SLOT_COUNT = 40;
-export const MANUAL_SAVE_SLOTS_PER_PAGE = 8;
+export const MANUAL_SAVE_SLOT_COUNT = 128;
+export const MANUAL_SAVE_SLOTS_PER_PAGE = 16;
 export const MANUAL_SAVE_PAGE_COUNT =
   MANUAL_SAVE_SLOT_COUNT / MANUAL_SAVE_SLOTS_PER_PAGE;
 

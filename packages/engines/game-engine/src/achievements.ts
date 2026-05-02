@@ -22,6 +22,7 @@ import {
   createDefaultAccountHistoryState,
   createDefaultCharacterAchievementsState
 } from "./account-achievement-state.js";
+import { createDefaultAccountEstateState } from "./account-estate.js";
 import { grantLegacyReward } from "./legacy-account.js";
 
 type AchievementCatalogRecord = {
@@ -257,6 +258,7 @@ function cloneCharacterAchievementsState(
 function cloneAccountProfileState(profile: AccountProfileState): AccountProfileState {
   const accountAchievements = profile.achievements ?? createDefaultAccountAchievementsState();
   const accountHistory = profile.history ?? createDefaultAccountHistoryState();
+  const accountEstate = profile.estate ?? createDefaultAccountEstateState();
 
   return {
     ...profile,
@@ -278,6 +280,13 @@ function cloneAccountProfileState(profile: AccountProfileState): AccountProfileS
         ...record,
         notableCharacterAchievementIds: [...record.notableCharacterAchievementIds],
         saveSlotIds: [...record.saveSlotIds]
+      }))
+    },
+    estate: {
+      deposits: accountEstate.deposits.map((deposit) => ({ ...deposit })),
+      assets: accountEstate.assets.map((asset) => ({
+        ...asset,
+        ...(asset.location ? { location: { ...asset.location } } : {})
       }))
     }
   };
@@ -356,6 +365,25 @@ function selectNotableCharacterAchievementIds(
   );
 }
 
+function createLegacyPayoutBaseline(
+  existingRecord: AccountRunHistoryRecord | null,
+  snapshot: SaveSnapshot
+): AccountRunHistoryRecord["legacyPayoutBaseline"] {
+  if (existingRecord?.legacyPayoutBaseline) {
+    return {
+      echoLevel: Math.max(0, Math.trunc(existingRecord.legacyPayoutBaseline.echoLevel))
+    };
+  }
+
+  if (existingRecord) {
+    return undefined;
+  }
+
+  return {
+    echoLevel: Math.max(0, Math.trunc(snapshot.playerState.progression.level))
+  };
+}
+
 function createOrUpdateRunRecord(
   existingRecord: AccountRunHistoryRecord | null,
   snapshot: SaveSnapshot,
@@ -371,6 +399,14 @@ function createOrUpdateRunRecord(
     ...(existingRecord?.saveSlotIds ?? []),
     ...(slotId ? [slotId] : [])
   ]);
+  const legacyPayoutBaseline = createLegacyPayoutBaseline(existingRecord, snapshot);
+  const sourceRunId =
+    existingRecord?.sourceRunId?.trim() ||
+    (snapshot.playerState.saveMeta.sourceRunId?.trim()
+      ? snapshot.playerState.saveMeta.sourceRunId.trim()
+      : undefined);
+  const crossLineageStart =
+    existingRecord?.crossLineageStart ?? snapshot.playerState.saveMeta.crossLineageStart;
 
   return {
     characterId: snapshot.playerState.playerId,
@@ -390,9 +426,12 @@ function createOrUpdateRunRecord(
     notableCharacterAchievementIds: selectNotableCharacterAchievementIds(
       snapshot.playerState.achievements.unlocked
     ),
+    ...(legacyPayoutBaseline ? { legacyPayoutBaseline } : {}),
     ...(existingRecord?.legacyGranted !== undefined
       ? { legacyGranted: existingRecord.legacyGranted }
       : {}),
+    ...(sourceRunId ? { sourceRunId } : {}),
+    ...(crossLineageStart !== undefined ? { crossLineageStart } : {}),
     saveSlotIds
   };
 }

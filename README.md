@@ -72,6 +72,23 @@ Use the root launchers for the current playable UI flow:
 
 Launcher logs are written under `logs/`.
 
+## Launcher UI
+
+- The `Game Data` surface now uses compact horizontal save rows with visible empty manual slots, shows 16 manual slots per page across eight pages, relies on empty save-row activation instead of a redundant secondary-bar `New Character` action, and organizes occupied rows into clearer name, save-time, summary, and mirrored delete-rail segments.
+
+## Creator UI
+
+- The character creator uses a compact two-bar shell with inline step progress so the active form keeps more viewport space than the older left-rail layout.
+- Expanded generated-profile and starter-detail summary blocks stay on the final review step, while the live summary remains focused on active creation choices.
+- Launcher shell chrome, creator chrome, and shell-adjacent status surfaces now share semantic theme tokens so selected states, actions, progress, and light-mode contrast stay more consistent.
+- The shared game UI font tokens now prefer the Arial Nova family with Arial and Segoe UI fallbacks so launcher, creator, and runtime chrome all render through the same sans-serif stack.
+
+## In-Game UI
+
+- The in-game shell now uses a compact single-band top bar that keeps name, date/time, condition, HP, MP, stamina, notifications, and settings visible without the older stacked quest and wallet rows.
+- Fresh characters now begin at full resolved HP, MP, and stamina so creator preview values match the opening in-game state.
+- Creator continent, region, settlement, and lineage card art now bottom-anchor with width-fit defaults to avoid the recent cropped-image regression.
+
 ## Quick Commands
 
 - `npm run tool:content-lint`

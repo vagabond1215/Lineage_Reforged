@@ -11,6 +11,10 @@ import {
 } from '../../../../packages/engines/game-engine/src/achievements.js';
 import { grantLegacyReward } from '../../../../packages/engines/game-engine/src/legacy-account.js';
 import {
+  depositEstateFromArchivedSnapshot,
+  resolveAccountRunHistorySourceId
+} from '../../../../packages/engines/game-engine/src/account-estate.js';
+import {
   hasRunLegacyPayoutResolved,
   resolveRunLegacyPayout,
   type RunLegacyPayoutResolution
@@ -91,6 +95,68 @@ export function isRunLineageAuthoritative(record: AccountRunHistoryRecord): bool
 
 export function isRunDeleted(record: AccountRunHistoryRecord): boolean {
   return record.outcome === 'deleted';
+}
+
+export function resolveRunHistorySourceId(record: AccountRunHistoryRecord): string {
+  return resolveAccountRunHistorySourceId(record);
+}
+
+function parseRunTimestamp(value: string | undefined): number {
+  if (!value) {
+    return 0;
+  }
+
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function resolveRunRecencyTimestamp(record: AccountRunHistoryRecord): number {
+  return (
+    parseRunTimestamp(record.lastSeenAt) ||
+    parseRunTimestamp(record.endedAt) ||
+    parseRunTimestamp(record.startedAt)
+  );
+}
+
+export function resolveEligibleHeirSources(
+  profile: AccountProfileState
+): AccountRunHistoryRecord[] {
+  return profile.history.runRecords
+    .map((record, index) => ({ record, index }))
+    .filter(({ record }) => isRunLineageAuthoritative(record))
+    .sort((left, right) => {
+      const leftUses = normalizeInheritanceUsesRemaining(
+        left.record.inheritanceUsesRemaining
+      );
+      const rightUses = normalizeInheritanceUsesRemaining(
+        right.record.inheritanceUsesRemaining
+      );
+
+      return (
+        rightUses - leftUses ||
+        (right.record.legacyGranted ?? 0) - (left.record.legacyGranted ?? 0) ||
+        resolveRunRecencyTimestamp(right.record) - resolveRunRecencyTimestamp(left.record) ||
+        left.index - right.index
+      );
+    })
+    .map(({ record }) => record);
+}
+
+export function resolveHeirSourceById(
+  profile: AccountProfileState,
+  sourceRunId: string | null | undefined
+): AccountRunHistoryRecord | null {
+  const normalizedSourceRunId = sourceRunId?.trim();
+
+  if (!normalizedSourceRunId) {
+    return null;
+  }
+
+  return (
+    resolveEligibleHeirSources(profile).find(
+      (record) => resolveRunHistorySourceId(record) === normalizedSourceRunId
+    ) ?? null
+  );
 }
 
 function findRunOutcome(
@@ -455,16 +521,27 @@ export function archiveActiveRun(params: {
       endedAt: recordedAt,
       legacyGranted: payout.legacyGranted
     });
-  const archivedProfile = saveAccountProfile(
-    applyPayoutMetadataToRecord({
+  const archivedWithPayoutMetadata = applyPayoutMetadataToRecord({
       profile: archivedWithoutPayoutMetadata,
       characterId: characterIdAfterEvaluation,
       payout,
       runtimeSummary,
       resolvedAt: recordedAt,
       ...(rewardTransactionId ? { transactionId: rewardTransactionId } : {})
-    })
+    });
+  const archivedRecordForEstate = findRunRecord(
+    archivedWithPayoutMetadata,
+    characterIdAfterEvaluation
   );
+  const archivedWithEstate = archivedRecordForEstate
+    ? depositEstateFromArchivedSnapshot(
+        archivedWithPayoutMetadata,
+        evaluated.nextSnapshot,
+        archivedRecordForEstate,
+        recordedAt
+      )
+    : archivedWithPayoutMetadata;
+  const archivedProfile = saveAccountProfile(archivedWithEstate);
 
   for (const slotId of clearedSlotIds) {
     deleteSave(params.accountId, slotId);

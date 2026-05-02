@@ -3411,6 +3411,14 @@
                                                               "productionType":  "byproduct"
                                                           },
                                                           {
+                                                              "itemKey":  "plate_helm",
+                                                              "quantityPerCycle":  {
+
+                                                                                   },
+                                                              "unit":  "item",
+                                                              "productionType":  "primary"
+                                                          },
+                                                          {
                                                               "itemKey":  "metal_plate",
                                                               "quantityPerCycle":  {
 
@@ -3515,7 +3523,12 @@
                                           "corn_flour",
                                           "sausage_roll",
                                           "bread_dough",
-                                          "pastry_dough"
+                                          "pastry_dough",
+                                          "smoked_meat",
+                                          "smoked_fish",
+                                          "sausage_link",
+                                          "cane_sugar",
+                                          "honeycomb"
                                       ],
                         "outputTags":  [
                                            "bread_loaf",
@@ -3638,43 +3651,43 @@
                                                              "itemKey":  "bread_dough",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "batch",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          },
                                                          {
                                                              "itemKey":  "pastry_dough",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "batch",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          },
                                                          {
                                                              "itemKey":  "smoked_meat",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "unit",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          },
                                                          {
                                                              "itemKey":  "smoked_fish",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "unit",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          },
                                                          {
                                                              "itemKey":  "sausage_link",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "unit",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          },
                                                          {
                                                              "itemKey":  "cane_sugar",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "unit",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          },
                                                          {
                                                              "itemKey":  "honeycomb",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "unit",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          }
                                                      ],
                                           "outputs":  [
@@ -5485,6 +5498,7 @@
                                           "paper_sheet",
                                           "fine_paper",
                                           "parchment_sheet",
+                                          "blank_book",
                                           "linen_thread",
                                           "wax_seal",
                                           "binding_strip",
@@ -5494,7 +5508,8 @@
                                       ],
                         "outputTags":  [
                                            "blank_book",
-                                           "ledger"
+                                           "ledger",
+                                           "cloth_scrap"
                                        ],
                         "laborSlots":  {
 
@@ -15843,7 +15858,7 @@
                                                              "itemKey":  "milk_raw",
                                                              "quantityPerCycle":  1,
                                                              "unit":  "liter",
-                                                             "consumptionType":  "required"
+                                                             "consumptionType":  "consumed"
                                                          }
                                                      ],
                                           "outputs":  [
@@ -17510,6 +17525,7 @@
                                           "marsh_fiber",
                                           "cloth_scrap",
                                           "flax_bundle",
+                                          "paper_sheet",
                                           "ash",
                                           "quicklime",
                                           "wax_seal"
@@ -21459,6 +21475,7 @@
                                           "fine_paper",
                                           "parchment_sheet",
                                           "blank_book",
+                                          "blank_scroll",
                                           "quill_bundle",
                                           "writing_ink",
                                           "red_writing_ink",

@@ -45,6 +45,7 @@ import {
   getCharacterAttributePresentation,
   getCharacterAttributeTooltipContent
 } from '../game-shell/characterAttributes.js';
+import { resolveRenownPresentation } from '../game-shell/renownPresentation.js';
 import { getAchievementDefinitions } from '../../../../packages/engines/game-engine/src/achievements.js';
 import { resolveScopedReputation } from '../../../../packages/engines/player-engine/src/index.js';
 
@@ -81,6 +82,7 @@ type WorldViewModel = {
 type ActivityViewModel = {
   sections: SidebarItem[];
   metrics: SummaryMetric[];
+  renownNote?: string | null;
   lists: Record<string, ListItem[]>;
   operationsQueue: OperationItem[];
   windowDetails: Record<string, WindowDetail>;
@@ -117,9 +119,6 @@ export type UiViewModel = {
     date: string;
     season: string;
     timeOfDay: string;
-    currency: string;
-    trackedQuest: string;
-    activityTag?: string;
     conditionStrip: ConditionStripViewModel;
   };
   topBarMeters: StatMeter[];
@@ -291,6 +290,21 @@ function formatCoin(value: number): string {
 function formatWallet(snapshot: SaveSnapshot): string {
   const { gold, silver, copper } = snapshot.playerState.currency;
   return `${formatCoin(gold)}g ${silver}s ${copper}c`;
+}
+
+function mergeSupplementalNote(primary: string | null | undefined, secondary: string): string {
+  const trimmedPrimary = primary?.trim();
+  const trimmedSecondary = secondary.trim();
+
+  if (!trimmedPrimary) {
+    return trimmedSecondary;
+  }
+
+  if (!trimmedSecondary) {
+    return trimmedPrimary;
+  }
+
+  return `${trimmedPrimary} ${trimmedSecondary}`;
 }
 
 function formatSignedValue(value: number): string {
@@ -1997,9 +2011,6 @@ export function createUiViewModel(
   bodyStatePresentation: BodyStatePresentationViewModel,
   accountProfile: AccountProfileState
 ): UiViewModel {
-  const trackedQuest =
-    snapshot.sessionState.questJournal.find((entry) => entry.id === snapshot.sessionState.trackedQuestId) ??
-    snapshot.sessionState.questJournal.find((entry) => entry.tracked);
   const characterLists = buildCharacterLists(snapshot);
   const resolvedPublicReputation = resolveScopedReputation(snapshot.playerState);
   const resolvedPublicReputationCount = getResolvedPublicReputationCount(resolvedPublicReputation);
@@ -2014,6 +2025,31 @@ export function createUiViewModel(
   const inventoryCapacity = getInventoryCapacity(snapshot.playerState.inventory);
   const occupiedEquipmentSlots = getOccupiedEquipmentSlots(snapshot);
   const discoverySummary = summarizeDiscoveryCategories(snapshot.playerState.discoveryChronicle.entries);
+  const currentRenown = resolveRenownPresentation(accountProfile, {
+    settlementId: snapshot.playerState.location.settlementId,
+    regionId: snapshot.playerState.regionId
+  });
+  const mappedWorldLocations = snapshot.sessionState.knownLocations.map((location) => {
+    const locationRenown = resolveRenownPresentation(accountProfile, {
+      ...(location.settlementId !== undefined ? { settlementId: location.settlementId } : {}),
+      ...(location.regionId !== undefined ? { regionId: location.regionId } : {}),
+      settlementName: location.name,
+      regionName: location.regionLabel
+    });
+
+    return {
+      id: location.id,
+      name: location.name,
+      x: location.x,
+      y: location.y,
+      type: location.type,
+      region: location.regionLabel,
+      ...(location.settlementId !== undefined ? { settlementId: location.settlementId } : {}),
+      ...(location.regionId !== undefined ? { regionId: location.regionId } : {}),
+      note: mergeSupplementalNote(locationRenown.worldNote, location.note),
+      known: location.known
+    };
+  });
   const backstoryLabel = snapshot.playerState.coreData.backstoryId
     ? humanizeId(snapshot.playerState.coreData.backstoryId)
     : null;
@@ -2154,9 +2190,6 @@ export function createUiViewModel(
       date: formatDate(snapshot),
       season: snapshot.clock.season,
       timeOfDay: formatTimeOfDay(snapshot),
-      currency: formatWallet(snapshot),
-      trackedQuest: trackedQuest?.title ?? 'No tracked quest',
-      activityTag: snapshot.sessionState.currentActivity?.label,
       conditionStrip: bodyStatePresentation.conditionStrip
     },
     topBarMeters: [
@@ -2164,19 +2197,19 @@ export function createUiViewModel(
         label: 'HP',
         current: snapshot.playerState.resources.hp.current,
         max: snapshot.playerState.resources.hp.max,
-        color: '#ef6a7a'
+        color: 'var(--color-hp-fill)'
       },
       {
         label: 'MP',
         current: snapshot.playerState.resources.mp.current,
         max: snapshot.playerState.resources.mp.max,
-        color: '#7da8ff'
+        color: 'var(--color-mp-fill)'
       },
       {
         label: 'Stamina',
         current: snapshot.playerState.resources.stamina.current,
         max: snapshot.playerState.resources.stamina.max,
-        color: '#5fd2a3',
+        color: 'var(--color-stamina-fill)',
         visualState: bodyStatePresentation.staminaVisualState
       }
     ],
@@ -2231,6 +2264,12 @@ export function createUiViewModel(
           label: 'Reputation',
           value: resolvedPublicReputationCount.toString(),
           detail: 'Scoped public fame and notoriety entries'
+        },
+        {
+          id: 'renown',
+          label: 'Renown',
+          value: currentRenown.overviewValue,
+          detail: currentRenown.overviewDetail
         },
         {
           id: 'body-state',
@@ -2445,16 +2484,7 @@ export function createUiViewModel(
     },
     world: {
       sections: withSectionCounts(worldSections, worldCounts),
-      locations: snapshot.sessionState.knownLocations.map((location) => ({
-        id: location.id,
-        name: location.name,
-        x: location.x,
-        y: location.y,
-        type: location.type,
-        region: location.regionLabel,
-        note: location.note,
-        known: location.known
-      })),
+      locations: mappedWorldLocations,
       lists: worldLists,
       windowDetails: worldWindowDetails
     },
@@ -2480,6 +2510,7 @@ export function createUiViewModel(
           detail: snapshot.sessionState.currentActivity?.detail ?? 'No active process'
         }
       ],
+      renownNote: currentRenown.activityNote,
       lists: activityLists,
       operationsQueue: snapshot.sessionState.operations.map((operation) => ({
         id: operation.id,

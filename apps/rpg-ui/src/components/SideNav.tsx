@@ -22,8 +22,8 @@ export function SideNav({ items, activeTab, onChange }: SideNavProps) {
                 onClick={() => onChange(item.id)}
                 className={`w-full rounded-[28px] border px-3 py-3 text-left transition ${
                   isActive
-                    ? 'border-white/24 bg-white/10 opacity-100'
-                    : 'border-white/12 bg-white/[0.03] opacity-80 hover:opacity-100'
+                    ? 'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] opacity-100'
+                    : 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] opacity-95 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface-elevated)]'
                 }`}
                 style={
                   isActive
@@ -36,15 +36,19 @@ export function SideNav({ items, activeTab, onChange }: SideNavProps) {
                 <div
                   className={`flex min-h-[86px] flex-col items-center justify-center gap-3 rounded-[22px] border px-3 py-4 text-center transition ${
                     isActive
-                      ? 'border-white/12 bg-black/20 text-slate-50'
-                      : 'border-white/8 bg-black/15 text-slate-300 hover:bg-black/20'
+                      ? 'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)]'
+                      : 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface-selected)]'
                   }`}
-                  style={{
-                    color: isActive ? 'white' : item.accent
-                  }}
                 >
-                  <Icon name={item.icon} className="h-6 w-6" />
-                  <div className="text-sm font-semibold text-current">{item.label}</div>
+                  <span
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-overlay)]"
+                    style={{
+                      color: item.accent
+                    }}
+                  >
+                    <Icon name={item.icon} className="h-5 w-5" />
+                  </span>
+                  <div className="text-sm font-semibold">{item.label}</div>
                 </div>
               </button>
             </Tooltip>

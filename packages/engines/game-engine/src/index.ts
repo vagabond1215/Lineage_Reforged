@@ -18,6 +18,14 @@ export {
   createDefaultCharacterAchievementsState
 } from "./account-achievement-state.js";
 export {
+  createDefaultAccountEstateState,
+  depositEstateFromArchivedSnapshot,
+  resolveAccountRunHistorySourceId,
+  resolveEstateClaimTiers,
+  resolveEstateClaimPreview,
+  resolveEstateClaimPreviews
+} from "./account-estate.js";
+export {
   DEFAULT_ACCOUNT_DISPLAY_NAME,
   DEFAULT_ACCOUNT_ID,
   createDefaultAccountLegacyState,
@@ -42,13 +50,25 @@ export {
   DEFAULT_RUN_LEGACY_PAYOUT_RULES,
   hasRunLegacyPayoutResolved,
   isRunEligibleForLegacyPayout,
+  resolveRunLegacyPayoutEarnedEchoLevel,
   resolveRunLegacyPayout
 } from "./run-legacy-payout.js";
 export {
+  clearLegacyPreparationChoice,
   getLegacyUnlockDefinitionById,
   getLegacyUnlockDefinitions,
+  getLegacyPreparationChoiceLabel,
+  getLegacyPreparationChoiceOptions,
+  consumeSelectedLegacyPreparations,
+  isLegacyPreparationChoiceRequired,
   purchaseLegacyUnlock,
+  removeLegacyPreparation,
+  resolveLegacyPreparationCapacity,
+  resolveLegacyRenownPresence,
+  resolveLegacyPreparationSelection,
   resolveLegacyUnlockStates,
+  setLegacyPreparationChoice,
+  selectLegacyPreparation,
   validateLegacyUnlockDefinitions
 } from "./legacy-unlocks.js";
 export {

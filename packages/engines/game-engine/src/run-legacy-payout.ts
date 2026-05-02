@@ -56,6 +56,20 @@ function nonNegativeInteger(value: number | undefined): number {
   return Number.isFinite(value) ? Math.max(0, Math.trunc(value ?? 0)) : 0;
 }
 
+export function resolveRunLegacyPayoutEarnedEchoLevel(
+  record: AccountRunHistoryRecord
+): number {
+  if (!record.legacyPayoutBaseline) {
+    return 0;
+  }
+
+  return Math.max(
+    0,
+    nonNegativeInteger(record.echoLevelReached) -
+      nonNegativeInteger(record.legacyPayoutBaseline.echoLevel)
+  );
+}
+
 function resolveArchiveReasonModifier(
   record: AccountRunHistoryRecord,
   rules: RunLegacyPayoutRules
@@ -84,10 +98,10 @@ export function isRunEligibleForLegacyPayout(
     return false;
   }
 
-  const echoLevel = nonNegativeInteger(record.echoLevelReached);
+  const earnedEchoLevel = resolveRunLegacyPayoutEarnedEchoLevel(record);
   const notableDeedCount = record.notableCharacterAchievementIds.length;
 
-  return echoLevel >= rules.minimumEchoLevel || notableDeedCount >= rules.minimumNotableDeeds;
+  return earnedEchoLevel >= rules.minimumEchoLevel || notableDeedCount >= rules.minimumNotableDeeds;
 }
 
 function resolvePayoutBreakdown(
@@ -95,18 +109,18 @@ function resolvePayoutBreakdown(
   eligible: boolean,
   rules: RunLegacyPayoutRules
 ): RunLegacyPayoutBreakdownState {
-  const echoLevel = nonNegativeInteger(record.echoLevelReached);
+  const earnedEchoLevel = resolveRunLegacyPayoutEarnedEchoLevel(record);
   const notableDeedCount = record.notableCharacterAchievementIds.length;
   const totalPlayTicks = nonNegativeInteger(record.totalPlayTicks);
   const survivedDays = nonNegativeInteger(record.survivedDays);
-  const progressionDepth = Math.max(0, echoLevel - 1) ** 2 * rules.progressionDepthWeight;
+  const progressionDepth = Math.max(0, earnedEchoLevel) ** 2 * rules.progressionDepthWeight;
   const notableDeeds = notableDeedCount ** 2 * rules.notableDeedWeight;
   const survivalDepth = Math.floor(Math.sqrt(survivedDays)) * rules.survivalDepthWeight;
   const milestoneQuality =
-    (Math.floor(echoLevel / 5) ** 2 + notableDeedCount) * rules.milestoneQualityWeight;
+    (Math.floor(earnedEchoLevel / 5) ** 2 + notableDeedCount) * rules.milestoneQualityWeight;
   const archiveReasonModifier = resolveArchiveReasonModifier(record, rules);
   const shallowRunModifier =
-    echoLevel <= rules.shallowEchoLevel &&
+    earnedEchoLevel <= rules.shallowEchoLevel &&
     notableDeedCount === 0 &&
     totalPlayTicks < rules.shallowTotalPlayTicks
       ? rules.shallowRunModifier

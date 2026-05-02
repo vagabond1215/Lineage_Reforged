@@ -7,9 +7,12 @@ type BodyStatePillProps = {
 };
 
 const severityClasses: Record<NonNullable<BodyStatePillViewModel['severity']>, string> = {
-  normal: 'border-white/10 bg-white/5 text-slate-200',
-  warning: 'border-amber-300/24 bg-amber-200/10 text-amber-50',
-  critical: 'border-rose-300/28 bg-rose-200/12 text-rose-50'
+  normal:
+    'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-text-primary)]',
+  warning:
+    'border-[color:var(--color-action-warning)] bg-[color:color-mix(in_srgb,var(--color-action-warning)_18%,transparent)] text-[color:var(--color-action-warning-text)]',
+  critical:
+    'border-[color:var(--color-action-danger)] bg-[color:color-mix(in_srgb,var(--color-action-danger)_20%,transparent)] text-[color:var(--color-action-danger-text)]'
 };
 
 const emphasisClasses: Record<string, string> = {

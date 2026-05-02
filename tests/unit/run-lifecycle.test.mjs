@@ -5,6 +5,7 @@ import { evaluateAchievementProgress } from "../../packages/engines/game-engine/
 import {
   hasRunLegacyPayoutResolved,
   isRunEligibleForLegacyPayout,
+  resolveRunLegacyPayoutEarnedEchoLevel,
   resolveRunLegacyPayout
 } from "../../packages/engines/game-engine/src/run-legacy-payout.ts";
 import {
@@ -16,6 +17,9 @@ import {
   isRunProgressionAuthoritative,
   purgeBlockedRunSlot,
   retainRetiredRun,
+  resolveEligibleHeirSources,
+  resolveHeirSourceById,
+  resolveRunHistorySourceId,
   resolveTerminalArchiveReason
 } from "../../apps/rpg-ui/src/game-shell/runLifecycle.ts";
 import {
@@ -77,6 +81,19 @@ function createSnapshot(accountId, playerName) {
   snapshot.playerState.coreData.playerName = playerName;
   snapshot.playerState.playerId = `player.${playerName.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`;
   snapshot.playerState.achievements = { unlocked: [] };
+  snapshot.playerState.discoveryChronicle = {
+    ...snapshot.playerState.discoveryChronicle,
+    entries: []
+  };
+  snapshot.playerState.completedQuestIds = [];
+  snapshot.playerState.reputation = {
+    ...snapshot.playerState.reputation,
+    fame: []
+  };
+  snapshot.sessionState = {
+    ...snapshot.sessionState,
+    chronicle: []
+  };
   return snapshot;
 }
 
@@ -108,6 +125,7 @@ function createPayoutRecord(overrides = {}) {
     archiveReason: "retired",
     echoLevelReached: 8,
     notableCharacterAchievementIds: [],
+    legacyPayoutBaseline: { echoLevel: 1 },
     totalPlayTicks: 960,
     survivedDays: 40,
     saveSlotIds: [],
@@ -198,21 +216,39 @@ test("retirement archives the run, clears all playable saves, and records zero L
     assert.equal(typeof record?.legacyPayoutResolvedAt, "string");
     assert.equal(record?.legacyPayoutTransactionId, undefined);
     assert.deepEqual(record?.saveSlotIds, []);
+    assert.equal(archived.accountProfile.estate.deposits.length, 1);
+    assert.equal(
+      archived.accountProfile.estate.deposits[0]?.sourceCharacterId,
+      snapshot.playerState.playerId
+    );
+    assert.ok(
+      archived.accountProfile.estate.assets.some((asset) => asset.assetKind === "currency")
+    );
   }));
 
 test("meaningful archived run grants positive Legacy and persists payout metadata", () =>
   withMockWindow(() => {
     const accountId = "account.local.meaningful_payout";
-    const snapshot = createMeaningfulSnapshot(accountId, "Lyra Morn");
-    createSave(accountId, "slot-1", snapshot, buildSaveMetadata("slot-1", snapshot));
-    const baseline = evaluateAchievementProgress(snapshot, loadAccountProfile(accountId), {
+    const startingSnapshot = createSnapshot(accountId, "Lyra Morn");
+    startingSnapshot.playerState.progression = {
+      ...startingSnapshot.playerState.progression,
+      level: 1
+    };
+    createSave(
+      accountId,
+      "slot-1",
+      startingSnapshot,
+      buildSaveMetadata("slot-1", startingSnapshot)
+    );
+    const baseline = evaluateAchievementProgress(startingSnapshot, loadAccountProfile(accountId), {
       slotId: "slot-1",
       touchHistory: true
     }).nextAccountProfile;
+    const snapshot = createMeaningfulSnapshot(accountId, "Lyra Morn");
 
     const archived = archiveActiveRun({
       accountId,
-      accountProfile: loadAccountProfile(accountId),
+      accountProfile: baseline,
       snapshot,
       archiveReason: "retired",
       fallbackSlotId: "slot-1",
@@ -239,12 +275,30 @@ test("meaningful archived run grants positive Legacy and persists payout metadat
 test("archived run payout uses explicit resolution markers for idempotency", () =>
   withMockWindow(() => {
     const accountId = "account.local.payout_idempotency";
+    const startingSnapshot = createSnapshot(accountId, "Ida Vale");
+    startingSnapshot.playerState.progression = {
+      ...startingSnapshot.playerState.progression,
+      level: 1
+    };
+    createSave(
+      accountId,
+      "slot-1",
+      startingSnapshot,
+      buildSaveMetadata("slot-1", startingSnapshot)
+    );
+    const baselineProfile = evaluateAchievementProgress(
+      startingSnapshot,
+      loadAccountProfile(accountId),
+      {
+        slotId: "slot-1",
+        touchHistory: true
+      }
+    ).nextAccountProfile;
     const snapshot = createMeaningfulSnapshot(accountId, "Ida Vale");
-    createSave(accountId, "slot-1", snapshot, buildSaveMetadata("slot-1", snapshot));
 
     const first = archiveActiveRun({
       accountId,
-      accountProfile: loadAccountProfile(accountId),
+      accountProfile: baselineProfile,
       snapshot,
       archiveReason: "retired",
       fallbackSlotId: "slot-1",
@@ -267,6 +321,8 @@ test("archived run payout uses explicit resolution markers for idempotency", () 
       second.accountProfile.history.runRecords[0]?.legacyPayoutResolvedAt,
       "2026-04-17T13:10:00.000Z"
     );
+    assert.equal(second.accountProfile.estate.deposits.length, 1);
+    assert.equal(second.accountProfile.estate.assets.length, first.accountProfile.estate.assets.length);
 
     const unresolvedPriorGrant = createPayoutRecord({
       legacyGranted: 99
@@ -280,6 +336,82 @@ test("archived run payout uses explicit resolution markers for idempotency", () 
       }),
       false
     );
+  }));
+
+test("run legacy payout scores Echo above the run-start baseline only", () => {
+  const baselineOnlyRecord = createPayoutRecord({
+    echoLevelReached: 8,
+    legacyPayoutBaseline: { echoLevel: 8 },
+    totalPlayTicks: 0,
+    survivedDays: 0
+  });
+  const baselineOnly = resolveRunLegacyPayout(baselineOnlyRecord);
+
+  assert.equal(resolveRunLegacyPayoutEarnedEchoLevel(baselineOnlyRecord), 0);
+  assert.equal(baselineOnly.payoutEligible, false);
+  assert.equal(baselineOnly.legacyGranted, 0);
+  assert.equal(baselineOnly.payoutBreakdown.progressionDepth, 0);
+  assert.equal(baselineOnly.payoutBreakdown.milestoneQuality, 0);
+
+  const progressedRecord = createPayoutRecord({
+    echoLevelReached: 8,
+    legacyPayoutBaseline: { echoLevel: 3 }
+  });
+  const progressed = resolveRunLegacyPayout(progressedRecord);
+
+  assert.equal(resolveRunLegacyPayoutEarnedEchoLevel(progressedRecord), 5);
+  assert.equal(progressed.payoutEligible, true);
+  assert.ok(progressed.legacyGranted > 0);
+  assert.ok(progressed.payoutBreakdown.progressionDepth > 0);
+  assert.ok(progressed.payoutBreakdown.milestoneQuality > 0);
+
+  const missingBaseline = resolveRunLegacyPayout(
+    createPayoutRecord({
+      legacyPayoutBaseline: undefined,
+      notableCharacterAchievementIds: [],
+      totalPlayTicks: 0,
+      survivedDays: 0
+    })
+  );
+
+  assert.equal(missingBaseline.payoutEligible, false);
+  assert.equal(missingBaseline.legacyGranted, 0);
+  assert.equal(missingBaseline.payoutBreakdown.progressionDepth, 0);
+  assert.equal(missingBaseline.payoutBreakdown.milestoneQuality, 0);
+});
+
+test("fresh character with nonzero starting Echo can retire immediately for zero Prestige", () =>
+  withMockWindow(() => {
+    const accountId = "account.local.fresh_echo_retirement";
+    const snapshot = createSnapshot(accountId, "Nia Vale");
+    snapshot.playerState.progression = {
+      ...snapshot.playerState.progression,
+      level: 7
+    };
+    snapshot.playerState.saveMeta = {
+      ...snapshot.playerState.saveMeta,
+      totalPlayTicks: 0
+    };
+    createSave(accountId, "slot-1", snapshot, buildSaveMetadata("slot-1", snapshot));
+
+    const archived = archiveActiveRun({
+      accountId,
+      accountProfile: loadAccountProfile(accountId),
+      snapshot,
+      archiveReason: "retired",
+      fallbackSlotId: "slot-1",
+      recordedAt: "2026-04-17T13:05:00.000Z"
+    });
+    const record = archived.accountProfile.history.runRecords[0];
+
+    assert.equal(archived.legacyGranted, 0);
+    assert.equal(archived.accountProfile.legacy.legacyPoints, 0);
+    assert.equal(record?.legacyPayoutBaseline?.echoLevel, 7);
+    assert.equal(record?.echoLevelReached, 7);
+    assert.equal(record?.payoutEligible, false);
+    assert.equal(record?.payoutBreakdown?.progressionDepth, 0);
+    assert.equal(record?.payoutBreakdown?.milestoneQuality, 0);
+    assert.equal(record?.payoutBreakdown?.finalAmount, 0);
   }));
 
 test("run legacy payout resolves archive reasons and excludes active or deleted records", () => {
@@ -341,6 +473,8 @@ test("retained retired helper keeps slots and defaults inheritance uses to zero"
     assert.equal(record?.archiveReason, "retired");
     assert.equal(record?.inheritanceUsesRemaining, 0);
     assert.deepEqual(record?.saveSlotIds.sort(), ["quick-save", "slot-1"]);
+    assert.deepEqual(retired.accountProfile.estate.deposits, []);
+    assert.deepEqual(retired.accountProfile.estate.assets, []);
   }));
 
 test("run lifecycle authority classifiers separate active retired archived and deleted states", () => {
@@ -403,6 +537,126 @@ test("run lifecycle authority classifiers separate active retired archived and d
   assert.equal(isRunLineageAuthoritative(deleted), false);
   assert.equal(isRunDeleted(deleted), true);
 });
+
+test("eligible heir sources use lineage authority and sort by uses prestige and recency", () => {
+  const olderHighPrestige = createPayoutRecord({
+    characterId: "player.older_high_prestige",
+    name: "Older High Prestige",
+    outcome: "retired",
+    archiveReason: "retired",
+    legacyGranted: 12,
+    inheritanceUsesRemaining: 1,
+    lastSeenAt: "2026-04-17T12:00:00.000Z"
+  });
+  const mostUses = createPayoutRecord({
+    characterId: "player.most_uses",
+    name: "Most Uses",
+    outcome: "retired",
+    archiveReason: "retired",
+    legacyGranted: 1,
+    inheritanceUsesRemaining: 3,
+    lastSeenAt: "2026-04-16T12:00:00.000Z"
+  });
+  const newerSameUses = createPayoutRecord({
+    characterId: "player.newer_same_uses",
+    name: "Newer Same Uses",
+    outcome: "retired",
+    archiveReason: "retired",
+    legacyGranted: 12,
+    inheritanceUsesRemaining: 1,
+    lastSeenAt: "2026-04-18T12:00:00.000Z"
+  });
+  const active = createPayoutRecord({
+    characterId: "player.active_source",
+    outcome: "active",
+    archiveReason: undefined,
+    inheritanceUsesRemaining: 99
+  });
+  const deleted = createPayoutRecord({
+    characterId: "player.deleted_source",
+    outcome: "deleted",
+    archiveReason: undefined,
+    inheritanceUsesRemaining: 99
+  });
+  const ordinaryArchived = createPayoutRecord({
+    characterId: "player.archived_source",
+    outcome: "archived",
+    archiveReason: "retired",
+    inheritanceUsesRemaining: 99
+  });
+  const profile = {
+    history: {
+      runRecords: [
+        olderHighPrestige,
+        active,
+        deleted,
+        ordinaryArchived,
+        mostUses,
+        newerSameUses
+      ]
+    }
+  };
+
+  const sources = resolveEligibleHeirSources(profile);
+  assert.deepEqual(
+    sources.map((record) => record.characterId),
+    ["player.most_uses", "player.newer_same_uses", "player.older_high_prestige"]
+  );
+  assert.equal(
+    resolveHeirSourceById(profile, resolveRunHistorySourceId(newerSameUses))?.characterId,
+    "player.newer_same_uses"
+  );
+  assert.equal(resolveHeirSourceById(profile, resolveRunHistorySourceId(deleted)), null);
+  assert.equal(resolveHeirSourceById(profile, ""), null);
+});
+
+test("active history records store source metadata only when new snapshots provide it", () =>
+  withMockWindow(() => {
+    const accountId = "account.local.source_history";
+    const freshSnapshot = createSnapshot(accountId, "Fresh Vale");
+    const fresh = evaluateAchievementProgress(freshSnapshot, loadAccountProfile(accountId), {
+      slotId: "slot-1",
+      touchHistory: true,
+      recordedAt: "2026-04-18T10:00:00.000Z"
+    });
+    const sourceRecord = createPayoutRecord({
+      characterId: "player.source_line",
+      name: "Source Line",
+      lineageId: "lineage.human",
+      outcome: "retired",
+      archiveReason: "retired",
+      inheritanceUsesRemaining: 2,
+      startedAt: "2026-04-17T10:00:00.000Z",
+      lastSeenAt: "2026-04-17T18:00:00.000Z"
+    });
+    const sourceRunId = resolveRunHistorySourceId(sourceRecord);
+    const linkedSnapshot = createSnapshot(accountId, "Linked Vale");
+    linkedSnapshot.playerState.coreData.lineageId = "lineage.elf";
+    linkedSnapshot.playerState.saveMeta.sourceRunId = sourceRunId;
+    linkedSnapshot.playerState.saveMeta.crossLineageStart = true;
+    const profileWithSource = {
+      ...fresh.nextAccountProfile,
+      history: {
+        runRecords: [sourceRecord]
+      }
+    };
+    const linked = evaluateAchievementProgress(linkedSnapshot, profileWithSource, {
+      slotId: "slot-2",
+      touchHistory: true,
+      recordedAt: "2026-04-18T11:00:00.000Z"
+    });
+    const freshRecord = fresh.nextAccountProfile.history.runRecords.find(
+      (record) => record.characterId === freshSnapshot.playerState.playerId
+    );
+    const linkedRecord = linked.nextAccountProfile.history.runRecords.find(
+      (record) => record.characterId === linkedSnapshot.playerState.playerId
+    );
+
+    assert.equal(freshRecord?.sourceRunId, undefined);
+    assert.equal(freshRecord?.crossLineageStart, undefined);
+    assert.equal(linkedRecord?.sourceRunId, sourceRunId);
+    assert.equal(linkedRecord?.crossLineageStart, true);
+  }));
 
 test("retired inheritance consumption decrements uses and reports auto-archive eligibility", () =>
   withMockWindow(() => {

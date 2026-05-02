@@ -1787,6 +1787,10 @@ export interface PlayerSaveMetadata {
   lastRestAtTick: number;
   lastSavedAtTick: number;
   lastReputationDecayDay?: number | null;
+  appliedLegacyPreparationIds?: string[];
+  appliedLegacyPreparationChoices?: Record<string, string>;
+  sourceRunId?: string;
+  crossLineageStart?: boolean;
 }
 
 export interface PlayerLocationState {
@@ -1913,6 +1917,10 @@ export interface RunLegacyPayoutBreakdownState {
   finalAmount: number;
 }
 
+export interface RunLegacyPayoutBaselineState {
+  echoLevel: number;
+}
+
 export interface AccountRunHistoryRecord {
   characterId: string;
   name: string;
@@ -1927,6 +1935,7 @@ export interface AccountRunHistoryRecord {
   archiveReason?: AccountRunArchiveReason;
   echoLevelReached: number;
   notableCharacterAchievementIds: string[];
+  legacyPayoutBaseline?: RunLegacyPayoutBaselineState;
   legacyGranted?: number;
   inheritanceUsesRemaining?: number;
   totalPlayTicks?: number;
@@ -1935,11 +1944,60 @@ export interface AccountRunHistoryRecord {
   payoutBreakdown?: RunLegacyPayoutBreakdownState;
   legacyPayoutResolvedAt?: string;
   legacyPayoutTransactionId?: string;
+  sourceRunId?: string;
+  crossLineageStart?: boolean;
   saveSlotIds: SaveSlotId[];
 }
 
 export interface AccountHistoryState {
   runRecords: AccountRunHistoryRecord[];
+}
+
+export type AccountEstateAssetKind = "currency" | "item" | "operational";
+export type AccountEstateCurrencyKey = "gold" | "silver" | "copper";
+export type AccountEstateOperationalAssetType =
+  | "business"
+  | "workshop"
+  | "property"
+  | "holding";
+
+export interface EstateAssetLocationState {
+  settlementId?: string;
+  regionId?: string;
+  continentId?: string;
+}
+
+export interface AccountEstateDepositRecord {
+  depositId: string;
+  sourceRunId: string;
+  sourceCharacterId: string;
+  sourceName: string;
+  archiveReason: AccountRunArchiveReason;
+  depositedAt: string;
+}
+
+export interface AccountEstateAssetRecord {
+  estateAssetId: string;
+  sourceRunId: string;
+  depositedAt: string;
+  assetKind: AccountEstateAssetKind;
+  quantityClaimed: number;
+  currencyKey?: AccountEstateCurrencyKey;
+  itemId?: string;
+  itemKey?: string;
+  quantityDeposited?: number;
+  assetId?: string;
+  assetType?: AccountEstateOperationalAssetType;
+  displayName?: string;
+  location?: EstateAssetLocationState;
+  ownershipState?: string;
+  operatingState?: string;
+  storedValueSummary?: string;
+}
+
+export interface AccountEstateState {
+  deposits: AccountEstateDepositRecord[];
+  assets: AccountEstateAssetRecord[];
 }
 
 export interface PlayerTitleState {
@@ -2136,6 +2194,8 @@ export interface KnownLocationState {
   id: string;
   name: string;
   regionLabel: string;
+  settlementId?: string;
+  regionId?: string;
   type: WorldLocationType;
   x: number;
   y: number;
@@ -2228,15 +2288,17 @@ export interface OperationState {
 export type LegacyTransactionKind = "grant" | "spend";
 
 export type LegacyUnlockCategory =
-  | "Origins"
-  | "Titles"
-  | "Perks"
-  | "Traits"
-  | "Account"
+  | "Lineage"
+  | "Renown"
+  | "Fortune"
+  | "Craft"
+  | "Destiny"
   | "Chronicle"
-  | "Heir";
+  | "Preparations";
 
 export type LegacyUnlockKind = "binary" | "tiered" | "incremental";
+export type LegacyUnlockClassification = "permanent" | "preparation";
+export type LegacyRenownTier = "settlement" | "region" | "continent" | "universal";
 
 export type LegacyUnlockRequirementResolutionState =
   | "eligible"
@@ -2266,14 +2328,19 @@ export type LegacyUnlockRequirementState =
       type: "survived_days";
       days: number;
     }
-  | {
-      type: "lifetime_legacy";
-      amount: number;
-    }
-  | {
-      type: "character_skill";
-      skillId: string;
-      rank: number;
+    | {
+        type: "lifetime_legacy";
+        amount: number;
+      }
+    | {
+        type: "legacy_unlock_rank";
+        unlockId: string;
+        rank: number;
+      }
+    | {
+        type: "character_skill";
+        skillId: string;
+        rank: number;
     }
   | {
       type: "role_rank";
@@ -2294,22 +2361,36 @@ export type LegacyUnlockCostState =
       type: "per_rank";
       amounts: number[];
     }
-  | {
-      type: "progressive";
-      baseAmount: number;
-      growthFactor: number;
-      thresholdJumps?: Array<{
-        rank: number;
-        multiplier: number;
-      }>;
-    };
+    | {
+        type: "progressive";
+        baseAmount: number;
+        growthFactor: number;
+        thresholdJumps?: Array<{
+          rank: number;
+          multiplier: number;
+        }>;
+      }
+    | {
+        type: "renown_hierarchy";
+        supportUnlockIds: string[];
+        tierMultiplier: number;
+        minimumAmount?: number;
+      };
 
 export type LegacyUnlockEffectKind =
   | "account_flag"
   | "profile_title"
   | "chronicle_presentation"
   | "future_heir_start"
-  | "future_inheritance_uses";
+  | "future_inheritance_uses"
+  | "preparation_capacity"
+  | "next_run_preparation"
+  | "future_starting_item"
+  | "future_attribute_preparation"
+  | "future_resource_preparation"
+  | "future_lineage_retention"
+  | "future_renown"
+  | "future_preparation_discount";
 
 export interface LegacyUnlockEffectState {
   type: LegacyUnlockEffectKind;
@@ -2317,10 +2398,19 @@ export interface LegacyUnlockEffectState {
   value?: string | number | boolean;
 }
 
+export interface LegacyRenownNodeState {
+  tier: LegacyRenownTier;
+  nodeId: string;
+  parentNodeId?: string;
+  supportUnlockIds?: string[];
+  displayName?: string;
+}
+
 export interface LegacyUnlockDefinitionState {
   id: string;
   category: LegacyUnlockCategory;
   kind: LegacyUnlockKind;
+  classification?: LegacyUnlockClassification;
   title: string;
   description: string;
   maxRank?: number;
@@ -2328,6 +2418,7 @@ export interface LegacyUnlockDefinitionState {
   requirements?: LegacyUnlockRequirementState[];
   rankRequirements?: LegacyUnlockRequirementState[][];
   effects: LegacyUnlockEffectState[];
+  renownNode?: LegacyRenownNodeState;
   tags?: string[];
 }
 
@@ -2355,6 +2446,8 @@ export interface AccountLegacyState {
   lifetimeLegacyEarned: number;
   legacyUnlocks: LegacyUnlockState[];
   legacyTransactions: LegacyTransactionState[];
+  selectedPreparationUnlockIds: string[];
+  selectedPreparationChoicePayloads: Record<string, string>;
 }
 
 export interface AccountProfileState {
@@ -2366,6 +2459,7 @@ export interface AccountProfileState {
   legacy: AccountLegacyState;
   achievements: AccountAchievementsState;
   history: AccountHistoryState;
+  estate: AccountEstateState;
 }
 
 export interface CurrentActivityState {

@@ -5,6 +5,7 @@ import {
   type EquipmentState,
   type GeographicKnowledgeScope,
   type InventoryStack,
+  type PlayerAttributeKey,
   type PlayerAttributes,
   type PlayerCurrencyState,
   type PlayerSkillState,
@@ -53,7 +54,12 @@ import {
   isKnownStartingBundleId
 } from './characterCreationCatalog.js';
 import { resolveCharacterCreationAttributes } from './characterCreationMath.js';
+import {
+  applyLegacyPreparationBonuses,
+  type LegacyPreparationReviewEntry
+} from './legacyPreparationApplication.js';
 import { resolveWorldSelection } from './worldSelectionCatalog.js';
+import { fillCoreResourcesToMax } from './newGameResourceInitialization.js';
 import { demoSnapshot } from '../runtime/demoSnapshot.js';
 
 function createDefaultPlayerCombatProfile() {
@@ -116,10 +122,20 @@ type DerivedCharacterCreationState = {
   currency: PlayerCurrencyState;
   gearLabels: string[];
   starterPackLabels: string[];
+  legacyPreparations: LegacyPreparationReviewEntry[];
+  appliedLegacyPreparationIds: string[];
+  appliedLegacyPreparationChoices: Record<string, string>;
   starterSkillLabels: string[];
   starterTraitLabels: string[];
   starterNotes: string[];
   snapshot: SaveSnapshot;
+};
+
+type CharacterCreationPreviewOptions = {
+  appliedLegacyPreparationIds?: string[];
+  appliedLegacyPreparationChoices?: Record<string, string>;
+  sourceRunId?: string;
+  crossLineageStart?: boolean;
 };
 
 type CharacterCreationPreviewMetric = { id: string; label: string; value: string | null };
@@ -145,6 +161,7 @@ export type CharacterCreationPreview = {
   starterTraits: string[];
   starterGear: string[];
   starterPack: string[];
+  legacyPreparations: LegacyPreparationReviewEntry[];
   walletLabel: string | null;
   starterNotes: string[];
   reviewNarrative: string;
@@ -298,6 +315,7 @@ function resolveWorkingCharacterResources(
     [],
     demoSnapshot.clock.tick
   );
+  fillCoreResourcesToMax(resolution.resources);
   return {
     hp: resolution.resources.hp.current,
     mp: resolution.resources.mp.current,
@@ -367,7 +385,18 @@ function buildSessionState(
     flags: ['campaign.new_game', `character.backstory.${form.backstoryId}`, `character.starting_bundle.${form.startingBundleId}`, `character.start.${settlement.id}`],
     notifications: [{ id: 'note.new_game', title: `${settlement.name} arrival`, detail: `${playerName} begins as ${backstoryLabel} with the ${bundleLabel}.`, timeLabel: 'Just now', tone: 'accent' }],
     currentActivity: { id: `activity.arrival.${settlement.id}`, label: `Arriving in ${settlement.name}`, category: 'Arrival', detail: `${selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')} into ${settlement.name}.` },
-    knownLocations: [{ id: settlement.id, name: settlement.name, regionLabel: selectedWorld.region.label, type: locationType, x: settlement.visualMapRef?.pixelX ?? 0, y: settlement.visualMapRef?.pixelY ?? 0, note: settlement.summary, known: true }],
+    knownLocations: [{
+      id: settlement.id,
+      name: settlement.name,
+      regionLabel: selectedWorld.region.label,
+      settlementId: settlement.id,
+      regionId: selectedWorld.region.id,
+      type: locationType,
+      x: settlement.visualMapRef?.pixelX ?? 0,
+      y: settlement.visualMapRef?.pixelY ?? 0,
+      note: settlement.summary,
+      known: true
+    }],
     worldRecords: [
       { id: selectedWorld.continent.id, sectionId: 'world.continent', title: selectedWorld.continent.label, summary: selectedWorld.continent.description, tags: selectedWorld.continent.biomeMix, detailEntries: [{ label: 'Climate', value: selectedWorld.continent.climate }, { label: 'Difficulty', value: selectedWorld.continent.difficultyLabel }] },
       { id: selectedWorld.region.id, sectionId: 'world.region', title: selectedWorld.region.label, subtitle: selectedWorld.continent.label, summary: selectedWorld.region.description, tags: selectedWorld.region.resourceAvailability, detailEntries: [{ label: 'Terrain', value: selectedWorld.region.terrainAndBiome }, { label: 'Density', value: selectedWorld.region.populationDensity }] },
@@ -449,13 +478,17 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
     starterTraits: [],
     starterGear: Object.values(equipment).flatMap((item) => (item ? [humanizeId(item.itemKey)] : [])),
     starterPack: (inventory.bags[0]?.stacks ?? []).map((item) => `${humanizeId(item.itemKey)} x${item.quantity}`),
+    legacyPreparations: [],
     walletLabel: bundle ? formatWallet(bundle.startingCurrency) : null,
     starterNotes: [backstory?.detailText ?? '', bundle?.description ?? ''].filter(Boolean),
     reviewNarrative: 'A life is still being forged. Choose lineage, identity, homeland, settlement, backstory, and a starting bundle to shape the opening of the journey.'
   };
 }
 
-function deriveCharacterCreationState(form: CompleteCharacterCreationFormState): DerivedCharacterCreationState {
+function deriveCharacterCreationState(
+  form: CompleteCharacterCreationFormState,
+  options: CharacterCreationPreviewOptions = {}
+): DerivedCharacterCreationState {
   const baseSnapshot = cloneSnapshot(demoSnapshot);
   const selectedWorld = resolveWorldSelection({ continentId: form.continentId, regionId: form.regionId, settlementId: form.startingSettlementId, backstoryId: form.backstoryId });
   if (!selectedWorld) throw new Error('Cannot create a new game without a valid world selection.');
@@ -493,7 +526,7 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
     throw new Error(attributeResolution.errors[0]);
   }
 
-  const attributes = attributeResolution.finalAttributes;
+  let attributes = attributeResolution.finalAttributes;
   const canonicalAgeBandId = resolveCanonicalAgeBandId(form.ageBandId);
   const canonicalPhysiqueId = resolveCanonicalPhysiqueId(form.physiqueId);
   const canonicalNatureId = resolveCanonicalNatureId(form.natureId);
@@ -503,8 +536,32 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
     throw new Error("Character identity selections could not be resolved to canonical ids.");
   }
   const equipment = buildStarterEquipment(bundleStacks);
-  const inventory = buildStarterInventory(bundleStacks, equipment);
-  const currency = { ...bundle.startingCurrency };
+  const starterInventory = buildStarterInventory(bundleStacks, equipment);
+  const starterCurrency = { ...bundle.startingCurrency };
+  const legacyPreparationApplication = applyLegacyPreparationBonuses({
+    preparationIds: options.appliedLegacyPreparationIds ?? [],
+    preparationChoices: options.appliedLegacyPreparationChoices ?? {},
+    currency: starterCurrency,
+    equipment,
+    inventory: starterInventory
+  });
+  if (Object.keys(legacyPreparationApplication.attributeAdjustments).length > 0) {
+    const nextAttributes = { ...attributes };
+
+    for (const [attributeKey, amount] of Object.entries(
+      legacyPreparationApplication.attributeAdjustments
+    ) as Array<[PlayerAttributeKey, number]>) {
+      nextAttributes[attributeKey] += amount;
+    }
+
+    attributes = nextAttributes;
+  }
+  const inventory = legacyPreparationApplication.inventory;
+  const currency = legacyPreparationApplication.currency;
+  const resourceRuntime = {
+    ...createEmptyPlayerResourceRuntimeState(),
+    modifiers: legacyPreparationApplication.resourceModifiers
+  };
   const bodyState = createDefaultPlayerBodyState({
     tick: baseSnapshot.clock.tick,
     day: baseSnapshot.clock.day,
@@ -524,11 +581,15 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
       },
       originProfile,
       equipment,
-      resourceRuntime: createEmptyPlayerResourceRuntimeState()
+      resourceRuntime
     },
     [],
     baseSnapshot.clock.tick
   );
+  fillCoreResourcesToMax(resources.resources);
+  for (const resourceId of legacyPreparationApplication.fillResourceIds) {
+    resources.resources[resourceId].current = resources.resources[resourceId].max;
+  }
   const geographicKnowledge = [
     { scope: 'continent' as GeographicKnowledgeScope, geographyId: selectedWorld.continent.id, level: 1 },
     { scope: 'region' as GeographicKnowledgeScope, geographyId: selectedWorld.region.id, level: 1 },
@@ -635,6 +696,9 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
     currency,
     gearLabels,
     starterPackLabels,
+    legacyPreparations: legacyPreparationApplication.reviewEntries,
+    appliedLegacyPreparationIds: legacyPreparationApplication.appliedPreparationIds,
+    appliedLegacyPreparationChoices: legacyPreparationApplication.appliedPreparationChoices,
     starterSkillLabels: backstory.startingSkillLabels,
     starterTraitLabels: traits.map((trait) => humanizeId(trait.id)),
     starterNotes: [...originProfile.notes.slice(0, 2), backstory.detailText, bundle.description, selectedWorld.settlement.landRestriction.currentStanding].filter(Boolean),
@@ -642,10 +706,13 @@ function deriveCharacterCreationState(form: CompleteCharacterCreationFormState):
   };
 }
 
-export function buildCharacterCreationPreview(form: CharacterCreationFormState): CharacterCreationPreview {
+export function buildCharacterCreationPreview(
+  form: CharacterCreationFormState,
+  options: CharacterCreationPreviewOptions = {}
+): CharacterCreationPreview {
   if (!hasCompleteCharacterCreationSelections(form)) return buildPlaceholderPreview(form);
   try {
-    const derived = deriveCharacterCreationState(form);
+    const derived = deriveCharacterCreationState(form, options);
     return {
       isResolved: true,
       characterName: form.playerName.trim(),
@@ -667,6 +734,7 @@ export function buildCharacterCreationPreview(form: CharacterCreationFormState):
       starterTraits: derived.starterTraitLabels,
       starterGear: derived.gearLabels,
       starterPack: derived.starterPackLabels,
+      legacyPreparations: derived.legacyPreparations,
       walletLabel: formatWallet(derived.currency),
       starterNotes: derived.starterNotes,
       reviewNarrative: derived.reviewNarrative
@@ -678,18 +746,40 @@ export function buildCharacterCreationPreview(form: CharacterCreationFormState):
 
 export function createNewGameSnapshot(
   form: CharacterCreationFormState,
-  accountId = DEFAULT_ACCOUNT_ID
+  accountId = DEFAULT_ACCOUNT_ID,
+  options: {
+    appliedLegacyPreparationIds?: string[];
+    appliedLegacyPreparationChoices?: Record<string, string>;
+    sourceRunId?: string;
+    crossLineageStart?: boolean;
+  } = {}
 ): SaveSnapshot {
   const validation = validateCharacterCreationForm(form);
   if (!validation.isValid) throw new Error(Object.values(validation.errors)[0] ?? 'Complete character creation before starting the campaign.');
   if (!hasCompleteCharacterCreationSelections(form)) throw new Error('Complete character creation before starting the campaign.');
-  const snapshot = deriveCharacterCreationState({
+  const derived = deriveCharacterCreationState({
     ...form,
     playerName: form.playerName.trim()
-  }).snapshot;
+  }, options);
+  const snapshot = derived.snapshot;
+  const appliedLegacyPreparationIds = derived.appliedLegacyPreparationIds;
+  const appliedLegacyPreparationChoices = derived.appliedLegacyPreparationChoices;
+  const sourceRunId = options.sourceRunId?.trim();
 
   return {
     ...snapshot,
-    accountId
+    accountId,
+    playerState: {
+      ...snapshot.playerState,
+      saveMeta: {
+        ...snapshot.playerState.saveMeta,
+        ...(appliedLegacyPreparationIds.length > 0 ? { appliedLegacyPreparationIds } : {}),
+        ...(Object.keys(appliedLegacyPreparationChoices).length > 0
+          ? { appliedLegacyPreparationChoices }
+          : {}),
+        ...(sourceRunId ? { sourceRunId } : {}),
+        ...(sourceRunId && options.crossLineageStart ? { crossLineageStart: true } : {})
+      }
+    }
   };
 }

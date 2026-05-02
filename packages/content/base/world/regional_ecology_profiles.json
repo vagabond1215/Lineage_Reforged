@@ -302,7 +302,7 @@
                                                  "biome.grasslands.stormbound_prairie",
                                                  "biome.temperate.deciduous_forest",
                                                  "biome.temperate.mixed_forest",
-                                                 "biome.wetlands.floodplain_marsh"
+                                                 "biome.wetlands.marsh"
                                              ],
                         "supportingBiomeIds":  [
                                                    "biome.marine.marine",
@@ -340,7 +340,9 @@
                                                   "Cattle, horse, and hide production",
                                                   "Vegetable belts and market orchards"
                                               ],
-                        "domesticGaps":  "Needs more metal ore, hardwood, and prestige goods than it produces locally",
+                        "domesticGaps":  [
+                                             "Needs more metal ore, hardwood, and prestige goods than it produces locally"
+                                         ],
                         "likelyTradePartnerRegionIds":  [
                                                             "region.kaelvar",
                                                             "region.serathyl",
@@ -386,7 +388,7 @@
                                                            "climate.dry_year"
                                                        ],
                         "dominantBiomeIds":  [
-                                                 "biome.temperate.seasonal_forest",
+                                                 "biome.tropical.seasonal_forest",
                                                  "biome.grasslands.savanna",
                                                  "biome.tropical.tropical_rainforest",
                                                  "biome.grasslands.alpine_meadow"
@@ -396,18 +398,14 @@
                                                    "biome.shrublands.dry_scrub"
                                                ],
                         "nativeFloraIds":  [
-                                               "flora.cinnamon_tree",
                                                "flora.orange_tree",
                                                "flora.lemon_tree",
-                                               "flora.cassava",
-                                               "flora.tea_shrub",
-                                               "flora.mahogany_tree"
+                                               "flora.tea_shrub"
                                            ],
                         "nativeFaunaIds":  [
                                                "fauna.goat",
                                                "fauna.boar",
                                                "fauna.deer",
-                                               "fauna.parrotfish",
                                                "fauna.oyster",
                                                "fauna.crab"
                                            ],
@@ -470,18 +468,22 @@
                         "regionId":  "region.myridian_chain",
                         "summary":  "The Myridian Chain is rich in marine food and naval access but poor in land area for stable grain, herds, and inland craft materials.",
                         "primaryClimateProfileId":  "climate.mild_winter",
-                        "secondaryClimateProfileIds":  "climate.wet_year",
+                        "secondaryClimateProfileIds":  [
+                                                           "climate.wet_year"
+                                                       ],
                         "dominantBiomeIds":  [
                                                  "biome.temperate.mixed_forest",
                                                  "biome.temperate.temperate_rainforest",
                                                  "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  "biome.shrublands.chaparral",
+                        "supportingBiomeIds":  [
+                                                  "biome.shrublands.chaparral"
+                                              ],
                         "nativeFloraIds":  [
                                                "flora.coconut_palm",
                                                "flora.orange_tree",
                                                "flora.flax",
-                                               "flora.reed"
+                                               "flora.river_reed"
                                            ],
                         "nativeFaunaIds":  [
                                                "fauna.cod",
@@ -501,7 +503,9 @@
                                                   "Pearls, fisheries, and maritime repair services",
                                                   "Reliable relay harbors"
                                               ],
-                        "domesticGaps":  "Grain, metal, and heavy timber are import-biased",
+                        "domesticGaps":  [
+                                             "Grain, metal, and heavy timber are import-biased"
+                                         ],
                         "likelyTradePartnerRegionIds":  [
                                                             "region.valtherion",
                                                             "region.serathyl",
@@ -542,18 +546,21 @@
                         "regionId":  "region.lantern_isles",
                         "summary":  "The Lantern Isles support small warm-island harvests and strong sea access, but remain too fragmented for deep domestic self-sufficiency.",
                         "primaryClimateProfileId":  "climate.long_summer",
-                        "secondaryClimateProfileIds":  "climate.wet_year",
+                        "secondaryClimateProfileIds":  [
+                                                           "climate.wet_year"
+                                                       ],
                         "dominantBiomeIds":  [
                                                  "biome.shrublands.chaparral",
-                                                 "biome.wetlands.mangrove",
+                                                 "biome.wetlands.mangrove_forest",
                                                  "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  "biome.temperate.seasonal_forest",
+                        "supportingBiomeIds":  [
+                                                  "biome.tropical.seasonal_forest"
+                                              ],
                         "nativeFloraIds":  [
                                                "flora.orange_tree",
                                                "flora.lemon_tree",
-                                               "flora.cinnamon_tree",
-                                               "flora.reed"
+                                               "flora.river_reed"
                                            ],
                         "nativeFaunaIds":  [
                                                "fauna.cod",
@@ -570,8 +577,12 @@
                                                 "herbsAndReagents":  "moderate",
                                                 "luxuryGoods":  "strong"
                                             },
-                        "domesticStrengths":  "Fish, citrus, spice gardens, and tropical wood lots",
-                        "domesticGaps":  "Grain and iron remain structural imports",
+                        "domesticStrengths":  [
+                                                  "Fish, citrus, spice gardens, and tropical wood lots"
+                                              ],
+                        "domesticGaps":  [
+                                             "Grain and iron remain structural imports"
+                                         ],
                         "likelyTradePartnerRegionIds":  [
                                                             "region.talmyra",
                                                             "region.myridian_chain",
@@ -617,15 +628,15 @@
                                                            "climate.dry_year"
                                                        ],
                         "dominantBiomeIds":  [
-                                                 "biome.wetlands.mangrove",
+                                                 "biome.wetlands.mangrove_forest",
                                                  "biome.grasslands.savanna",
                                                  "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  "biome.shrublands.dry_scrub",
+                        "supportingBiomeIds":  [
+                                                  "biome.shrublands.dry_scrub"
+                                              ],
                         "nativeFloraIds":  [
-                                               "flora.reed",
-                                               "flora.mangrove_tree",
-                                               "flora.indigo_plant"
+                                               "flora.river_reed"
                                            ],
                         "nativeFaunaIds":  [
                                                "fauna.crab",
@@ -642,8 +653,12 @@
                                                 "herbsAndReagents":  "moderate",
                                                 "luxuryGoods":  "moderate"
                                             },
-                        "domesticStrengths":  "Salt fish, mangrove timber, dyestuffs, and passage services",
-                        "domesticGaps":  "Grain, iron, and cloth are persistent imports",
+                        "domesticStrengths":  [
+                                                  "Salt fish, mangrove timber, dyestuffs, and passage services"
+                                              ],
+                        "domesticGaps":  [
+                                             "Grain, iron, and cloth are persistent imports"
+                                         ],
                         "likelyTradePartnerRegionIds":  [
                                                             "region.talmyra",
                                                             "region.lantern_isles",
@@ -684,19 +699,21 @@
                         "regionId":  "region.dawnreach_isles",
                         "summary":  "The Dawnreach Isles favor cold-water fisheries, whale routes, and hardy island harvests, but remain poor in staple agriculture and broad domestic materials.",
                         "primaryClimateProfileId":  "climate.cold",
-                        "secondaryClimateProfileIds":  "climate.mild_winter",
+                        "secondaryClimateProfileIds":  [
+                                                           "climate.mild_winter"
+                                                       ],
                         "dominantBiomeIds":  [
                                                  "biome.temperate.taiga",
-                                                 "biome.temperate.conifer_forest",
-                                                 "biome.tundra.tundra",
+                                                 "biome.temperate.coniferous_forest",
+                                                 "biome.polar.tundra",
                                                  "biome.marine.marine"
                                              ],
-                        "supportingBiomeIds":  "biome.grasslands.alpine_meadow",
+                        "supportingBiomeIds":  [
+                                                  "biome.grasslands.alpine_meadow"
+                                              ],
                         "nativeFloraIds":  [
-                                               "flora.pine_tree",
-                                               "flora.spruce_tree",
-                                               "flora.birch_tree",
-                                               "flora.reed"
+                                               "flora.birch_sapling",
+                                               "flora.river_reed"
                                            ],
                         "nativeFaunaIds":  [
                                                "fauna.cod",
@@ -712,8 +729,12 @@
                                                 "herbsAndReagents":  "limited",
                                                 "luxuryGoods":  "moderate"
                                             },
-                        "domesticStrengths":  "Cold fisheries, furs, conifer timber, and resin",
-                        "domesticGaps":  "Grain, textiles, and forged metal remain import-heavy",
+                        "domesticStrengths":  [
+                                                  "Cold fisheries, furs, conifer timber, and resin"
+                                              ],
+                        "domesticGaps":  [
+                                             "Grain, textiles, and forged metal remain import-heavy"
+                                         ],
                         "likelyTradePartnerRegionIds":  [
                                                             "region.valtherion",
                                                             "region.myridian_chain",

@@ -6,6 +6,17 @@ import {
 import {
   createDefaultAccountProfileState
 } from '../../../packages/engines/game-engine/src/legacy-account.js';
+import {
+  consumeSelectedLegacyPreparations,
+  getLegacyPreparationChoiceLabel,
+  purchaseLegacyUnlock,
+  removeLegacyPreparation,
+  resolveLegacyPreparationSelection,
+  setLegacyPreparationChoice,
+  selectLegacyPreparation,
+  type LegacyPreparationSelectionFailureReason,
+  type LegacyUnlockPurchaseFailureReason
+} from '../../../packages/engines/game-engine/src/legacy-unlocks.js';
 import { InGameShell } from './game-shell/InGameShell';
 import {
   createDefaultCharacterCreationFormState,
@@ -36,7 +47,10 @@ import {
 } from './game-shell/launcherAuthManager.js';
 import {
   archiveActiveRun,
+  consumeRetiredRunInheritanceUse,
   purgeBlockedRunSlot,
+  resolveEligibleHeirSources,
+  resolveHeirSourceById,
   resolveTerminalArchiveReason
 } from './game-shell/runLifecycle.js';
 import {
@@ -204,6 +218,100 @@ function buildAuthNotice(
   };
 }
 
+function buildLegacyPurchaseFailureNotice(
+  error: LegacyUnlockPurchaseFailureReason
+): GameShellNotice {
+  switch (error) {
+    case 'unknown_unlock':
+      return buildAuthNotice(
+        'Unlock Not Found',
+        'That Legacy unlock is not available in this catalog.'
+      );
+    case 'max_rank':
+      return buildAuthNotice(
+        'Legacy Complete',
+        'That Legacy unlock is already maxed.'
+      );
+    case 'unsupported_requirement':
+      return buildAuthNotice(
+        'Requirement Not Ready',
+        'That Legacy unlock depends on a future account requirement.'
+      );
+    case 'ineligible':
+      return buildAuthNotice(
+        'Requirements Unmet',
+        'Finish the listed Legacy requirement before purchasing.'
+      );
+    case 'insufficient_legacy':
+      return buildAuthNotice(
+        'Not Enough Prestige',
+        'Earn more Prestige before purchasing this Legacy unlock.'
+      );
+    case 'invalid_cost':
+      return buildAuthNotice(
+        'Purchase Unavailable',
+        'That Legacy unlock has an invalid cost definition.'
+      );
+  }
+
+  return buildAuthNotice(
+    'Purchase Unavailable',
+    'That Legacy unlock cannot be purchased right now.'
+  );
+}
+
+function buildLegacyPreparationFailureNotice(
+  error: LegacyPreparationSelectionFailureReason
+): GameShellNotice {
+  switch (error) {
+    case 'unknown_unlock':
+      return buildAuthNotice(
+        'Preparation Not Found',
+        'That Legacy preparation is not available in this catalog.'
+      );
+    case 'not_preparation':
+      return buildAuthNotice(
+        'Preparation Unavailable',
+        'That Legacy unlock cannot be prepared for the next heir.'
+      );
+    case 'not_owned':
+      return buildAuthNotice(
+        'Preparation Locked',
+        'Purchase that preparation before selecting it for the next heir.'
+      );
+    case 'choice_required':
+      return buildAuthNotice(
+        'Choice Required',
+        'That preparation needs a choice selector before it can be prepared.'
+      );
+    case 'invalid_choice':
+      return buildAuthNotice(
+        'Choice Unavailable',
+        'That Legacy preparation choice is not available.'
+      );
+    case 'selection_unavailable':
+      return buildAuthNotice(
+        'Selection Unavailable',
+        'That preparation cannot be finalized from this panel yet.'
+      );
+    case 'duplicate_selection':
+      return buildAuthNotice(
+        'Already Selected',
+        'That preparation is already set aside for the next heir.'
+      );
+    case 'capacity_full':
+      return buildAuthNotice(
+        'Preparation Capacity Full',
+        'Remove a selected preparation or increase Prepared Lineage first.'
+      );
+  }
+
+  return buildAuthNotice(
+    'Preparation Unavailable',
+    'That preparation cannot be selected right now.'
+  );
+}
+
 function listSignedInSlotsWithFallback(
   launcherSession: LauncherRuntimeSession,
   action: string,
@@ -266,6 +374,7 @@ function evaluateSnapshotWithAccount(
     touchHistory?: boolean;
     recordedAt?: string;
     suppressLegacyRewards?: boolean;
+    persistProfile?: boolean;
   } = {}
 ): {
   accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
@@ -276,6 +385,13 @@ function evaluateSnapshotWithAccount(
   if (!evaluated.changed) {
     return {
       accountProfile,
+      snapshot: evaluated.nextSnapshot
+    };
+  }
+
+  if (options.persistProfile === false) {
+    return {
+      accountProfile: evaluated.nextAccountProfile,
       snapshot: evaluated.nextSnapshot
     };
   }
@@ -922,24 +1038,65 @@ export default function App() {
     }
 
     try {
+      const preparationSelection = resolveLegacyPreparationSelection(state.accountProfile);
+      const selectedSourceRunId = state.form.sourceRunId.trim();
+      const selectedHeirSource = selectedSourceRunId
+        ? resolveHeirSourceById(state.accountProfile, selectedSourceRunId)
+        : null;
+
+      if (selectedSourceRunId && !selectedHeirSource) {
+        dispatch({
+          type: 'SET_NOTICE',
+          notice: {
+            tone: 'warning',
+            title: 'Lineage Source Unavailable',
+            detail: 'Choose Fresh Start or select another available source line before beginning the campaign.'
+          }
+        });
+        return;
+      }
+
       const snapshot = createNewGameSnapshot({
         ...state.form,
         playerName
-      }, state.accountProfile.accountId);
+      }, state.accountProfile.accountId, {
+        appliedLegacyPreparationIds: preparationSelection.selectedUnlockIds,
+        appliedLegacyPreparationChoices: preparationSelection.selectedChoicePayloads,
+        ...(selectedHeirSource ? { sourceRunId: selectedSourceRunId } : {}),
+        ...(selectedHeirSource && selectedHeirSource.lineageId !== state.form.lineageId
+          ? { crossLineageStart: true }
+          : {})
+      });
       const prepared = evaluateSnapshotWithAccount(state.accountProfile, snapshot, {
         slotId: state.form.saveSlotId,
         touchHistory: true,
-        suppressLegacyRewards: true
+        suppressLegacyRewards: true,
+        persistProfile: false
       });
 
-      createSave(
+      const savedSlot = createSave(
         state.accountProfile.accountId,
         state.form.saveSlotId,
         prepared.snapshot,
         buildSaveMetadata(state.form.saveSlotId, prepared.snapshot)
       );
+      const accountProfileAfterSave = savedSlot.lastSavedAt
+        ? {
+            ...prepared.accountProfile,
+            lastPlayedAt: savedSlot.lastSavedAt
+          }
+        : prepared.accountProfile;
+      const consumed = consumeSelectedLegacyPreparations(accountProfileAfterSave);
+      const heirSourceConsumed = selectedHeirSource
+        ? consumeRetiredRunInheritanceUse(consumed.profile, {
+            characterId: selectedHeirSource.characterId
+          })
+        : null;
+      const savedProfile = saveAccountProfile(
+        heirSourceConsumed?.accountProfile ?? consumed.profile
+      );
 
-      enterGame(state.launcherSession, prepared.accountProfile, state.form.saveSlotId, prepared.snapshot, {
+      enterGame(state.launcherSession, savedProfile, state.form.saveSlotId, prepared.snapshot, {
         tone: 'success',
         title: 'Campaign Started',
         detail: `${playerName} was written to ${selectedSlot?.label ?? state.form.saveSlotId} and entered the world.`
@@ -1350,6 +1507,203 @@ export default function App() {
     });
   };
 
+  const handlePurchaseLegacyUnlock = (unlockId: string) => {
+    if (state.screen !== 'MAIN_MENU') {
+      return;
+    }
+
+    const purchased = purchaseLegacyUnlock(state.accountProfile, unlockId);
+
+    if (!purchased.ok) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildLegacyPurchaseFailureNotice(purchased.error)
+      });
+      return;
+    }
+
+    let savedProfile: ReturnType<typeof saveAccountProfile>;
+
+    try {
+      savedProfile = saveAccountProfile(purchased.profile);
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('purchase a Legacy unlock', error)
+      });
+      return;
+    }
+
+    let slots = state.slots;
+    let refreshNotice: GameShellNotice | null = null;
+
+    try {
+      slots = listSaves(savedProfile.accountId);
+    } catch (error) {
+      refreshNotice = buildStorageNotice('refresh launcher saves', error);
+    }
+
+    setLauncherSection('legacy');
+    dispatch({
+      type: 'SHOW_MAIN_MENU',
+      launcherSession: state.launcherSession,
+      accountProfile: savedProfile,
+      slots,
+      notice: refreshNotice ?? {
+        tone: 'success',
+        title: 'Legacy Purchased',
+        detail: purchased.transaction.summary
+      }
+    });
+  };
+
+  const handleSelectLegacyPreparation = (unlockId: string) => {
+    if (state.screen !== 'MAIN_MENU') {
+      return;
+    }
+
+    const selected = selectLegacyPreparation(state.accountProfile, unlockId);
+
+    if (!selected.ok) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildLegacyPreparationFailureNotice(selected.error)
+      });
+      return;
+    }
+
+    let savedProfile: ReturnType<typeof saveAccountProfile>;
+
+    try {
+      savedProfile = saveAccountProfile(selected.profile);
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('select a Legacy preparation', error)
+      });
+      return;
+    }
+
+    let slots = state.slots;
+    let refreshNotice: GameShellNotice | null = null;
+
+    try {
+      slots = listSaves(savedProfile.accountId);
+    } catch (error) {
+      refreshNotice = buildStorageNotice('refresh launcher saves', error);
+    }
+
+    setLauncherSection('legacy');
+    dispatch({
+      type: 'SHOW_MAIN_MENU',
+      launcherSession: state.launcherSession,
+      accountProfile: savedProfile,
+      slots,
+      notice: refreshNotice ?? {
+        tone: 'success',
+        title: 'Preparation Selected',
+        detail: 'That preparation is set aside for the next heir.'
+      }
+    });
+  };
+
+  const handleSetLegacyPreparationChoice = (unlockId: string, choiceId: string) => {
+    if (state.screen !== 'MAIN_MENU') {
+      return;
+    }
+
+    const priorSelection = resolveLegacyPreparationSelection(state.accountProfile);
+    const priorChoiceId = priorSelection.selectedChoicePayloads[unlockId] ?? null;
+    const selected = setLegacyPreparationChoice(state.accountProfile, unlockId, choiceId);
+
+    if (!selected.ok) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildLegacyPreparationFailureNotice(selected.error)
+      });
+      return;
+    }
+
+    let savedProfile: ReturnType<typeof saveAccountProfile>;
+
+    try {
+      savedProfile = saveAccountProfile(selected.profile);
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('select a Legacy preparation choice', error)
+      });
+      return;
+    }
+
+    let slots = state.slots;
+    let refreshNotice: GameShellNotice | null = null;
+
+    try {
+      slots = listSaves(savedProfile.accountId);
+    } catch (error) {
+      refreshNotice = buildStorageNotice('refresh launcher saves', error);
+    }
+
+    const choiceLabel =
+      getLegacyPreparationChoiceLabel(unlockId, choiceId) ?? choiceId;
+    const updatedExistingChoice = priorChoiceId !== null && priorChoiceId !== choiceId;
+
+    setLauncherSection('legacy');
+    dispatch({
+      type: 'SHOW_MAIN_MENU',
+      launcherSession: state.launcherSession,
+      accountProfile: savedProfile,
+      slots,
+      notice: refreshNotice ?? {
+        tone: 'success',
+        title: updatedExistingChoice ? 'Preparation Updated' : 'Preparation Selected',
+        detail: `That preparation now favors ${choiceLabel} for the next heir.`
+      }
+    });
+  };
+
+  const handleRemoveLegacyPreparation = (unlockId: string) => {
+    if (state.screen !== 'MAIN_MENU') {
+      return;
+    }
+
+    const removed = removeLegacyPreparation(state.accountProfile, unlockId);
+    let savedProfile: ReturnType<typeof saveAccountProfile>;
+
+    try {
+      savedProfile = saveAccountProfile(removed.profile);
+    } catch (error) {
+      dispatch({
+        type: 'SET_NOTICE',
+        notice: buildStorageNotice('remove a Legacy preparation', error)
+      });
+      return;
+    }
+
+    let slots = state.slots;
+    let refreshNotice: GameShellNotice | null = null;
+
+    try {
+      slots = listSaves(savedProfile.accountId);
+    } catch (error) {
+      refreshNotice = buildStorageNotice('refresh launcher saves', error);
+    }
+
+    setLauncherSection('legacy');
+    dispatch({
+      type: 'SHOW_MAIN_MENU',
+      launcherSession: state.launcherSession,
+      accountProfile: savedProfile,
+      slots,
+      notice: refreshNotice ?? {
+        tone: 'accent',
+        title: 'Preparation Removed',
+        detail: 'That preparation is no longer set aside for the next heir.'
+      }
+    });
+  };
+
   const handleExit = () => {
     dispatch({
       type: 'SET_NOTICE',
@@ -1399,6 +1753,10 @@ export default function App() {
         onOpenSettings={() => openSettings(state.launcherSession, state.accountProfile)}
         activeSection={launcherSection}
         onActiveSectionChange={setLauncherSection}
+        onPurchaseLegacyUnlock={handlePurchaseLegacyUnlock}
+        onSelectLegacyPreparation={handleSelectLegacyPreparation}
+        onSetLegacyPreparationChoice={handleSetLegacyPreparationChoice}
+        onRemoveLegacyPreparation={handleRemoveLegacyPreparation}
         onLogout={handleLogout}
         onExit={handleExit}
         clockLabel={clockLabel}
@@ -1409,6 +1767,13 @@ export default function App() {
     content = (
       <CharacterCreationScreen
         form={state.form}
+        appliedLegacyPreparationIds={
+          resolveLegacyPreparationSelection(state.accountProfile).selectedUnlockIds
+        }
+        appliedLegacyPreparationChoices={
+          resolveLegacyPreparationSelection(state.accountProfile).selectedChoicePayloads
+        }
+        eligibleHeirSources={resolveEligibleHeirSources(state.accountProfile)}
         slots={state.slots}
         notice={state.notice}
         pendingOverwriteSlotId={state.pendingOverwriteSlotId}

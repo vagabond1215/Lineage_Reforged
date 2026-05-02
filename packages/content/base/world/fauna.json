@@ -1,4 +1,4 @@
-﻿{
+{
     "records":  [
                     {
                         "id":  "fauna.ashfox",
@@ -18491,7 +18491,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "bullfrog_egg"
+                                                                                               "ingredients":  ["bullfrog_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -18502,7 +18502,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "bullfrog_meat",
+                                                                                                 "ingredients":  ["bullfrog_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "bullfrog_skin",
                                                                                                                     "bullfrog_bone"
@@ -18715,7 +18715,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "tree_frog_egg"
+                                                                                               "ingredients":  ["tree_frog_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -18726,7 +18726,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "tree_frog_meat",
+                                                                                                 "ingredients":  ["tree_frog_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "tree_frog_skin",
                                                                                                                     "tree_frog_bone"
@@ -18939,7 +18939,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "tiger_salamander_egg"
+                                                                                               "ingredients":  ["tiger_salamander_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -18950,7 +18950,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "tiger_salamander_meat",
+                                                                                                 "ingredients":  ["tiger_salamander_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "tiger_salamander_skin",
                                                                                                                     "tiger_salamander_bone"
@@ -19173,8 +19173,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "monarch_butterfly_meat",
-                                                                                                 "byproducts":  "monarch_butterfly_chitin"
+                                                                                                 "ingredients":  ["monarch_butterfly_meat"],
+                                                                                                 "byproducts":  ["monarch_butterfly_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -19394,8 +19394,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "carpenter_ant_meat",
-                                                                                                 "byproducts":  "carpenter_ant_chitin"
+                                                                                                 "ingredients":  ["carpenter_ant_meat"],
+                                                                                                 "byproducts":  ["carpenter_ant_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -19614,8 +19614,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "white_shrimp_raw",
-                                                                                                 "byproducts":  "white_shrimp_shell"
+                                                                                                 "ingredients":  ["white_shrimp_raw"],
+                                                                                                 "byproducts":  ["white_shrimp_shell"]
                                                                                              }
                                                                             }
                                                     },
@@ -19827,8 +19827,8 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "mallard_egg",
-                                                                                               "materials":  "mallard_feather"
+                                                                                               "ingredients":  ["mallard_egg"],
+                                                                                               "materials":  ["mallard_feather"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -19839,7 +19839,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "mallard_meat",
+                                                                                                 "ingredients":  ["mallard_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "mallard_feather",
                                                                                                                     "mallard_bone"
@@ -20055,8 +20055,8 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "rock_pigeon_egg",
-                                                                                               "materials":  "rock_pigeon_feather"
+                                                                                               "ingredients":  ["rock_pigeon_egg"],
+                                                                                               "materials":  ["rock_pigeon_feather"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -20067,7 +20067,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "rock_pigeon_meat",
+                                                                                                 "ingredients":  ["rock_pigeon_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "rock_pigeon_feather",
                                                                                                                     "rock_pigeon_bone"
@@ -20283,8 +20283,8 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "ring_necked_pheasant_egg",
-                                                                                               "materials":  "ring_necked_pheasant_feather"
+                                                                                               "ingredients":  ["ring_necked_pheasant_egg"],
+                                                                                               "materials":  ["ring_necked_pheasant_feather"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -20295,7 +20295,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "ring_necked_pheasant_meat",
+                                                                                                 "ingredients":  ["ring_necked_pheasant_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "ring_necked_pheasant_feather",
                                                                                                                     "ring_necked_pheasant_bone"
@@ -20511,8 +20511,8 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "northern_bobwhite_egg",
-                                                                                               "materials":  "northern_bobwhite_feather"
+                                                                                               "ingredients":  ["northern_bobwhite_egg"],
+                                                                                               "materials":  ["northern_bobwhite_feather"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -20523,7 +20523,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "northern_bobwhite_meat",
+                                                                                                 "ingredients":  ["northern_bobwhite_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "northern_bobwhite_feather",
                                                                                                                     "northern_bobwhite_bone"
@@ -20739,8 +20739,8 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "downy_woodpecker_egg",
-                                                                                               "materials":  "downy_woodpecker_feather"
+                                                                                               "ingredients":  ["downy_woodpecker_egg"],
+                                                                                               "materials":  ["downy_woodpecker_feather"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -20751,7 +20751,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "downy_woodpecker_meat",
+                                                                                                 "ingredients":  ["downy_woodpecker_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "downy_woodpecker_feather",
                                                                                                                     "downy_woodpecker_bone"
@@ -20968,8 +20968,8 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "bald_eagle_egg",
-                                                                                               "materials":  "bald_eagle_feather"
+                                                                                               "ingredients":  ["bald_eagle_egg"],
+                                                                                               "materials":  ["bald_eagle_feather"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -20980,7 +20980,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "bald_eagle_meat",
+                                                                                                 "ingredients":  ["bald_eagle_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "bald_eagle_feather",
                                                                                                                     "bald_eagle_bone"
@@ -21193,7 +21193,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "black_sea_bass_roe"
+                                                                                               "ingredients":  ["black_sea_bass_roe"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -21204,7 +21204,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "black_sea_bass_meat",
+                                                                                                 "ingredients":  ["black_sea_bass_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "black_sea_bass_scale",
                                                                                                                     "black_sea_bass_bone"
@@ -21419,7 +21419,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "stormshoal_herring_roe"
+                                                                                               "ingredients":  ["stormshoal_herring_roe"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -21430,7 +21430,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "stormshoal_herring_meat",
+                                                                                                 "ingredients":  ["stormshoal_herring_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "stormshoal_herring_scale",
                                                                                                                     "stormshoal_herring_bone"
@@ -21645,7 +21645,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "bluefin_tuna_roe"
+                                                                                               "ingredients":  ["bluefin_tuna_roe"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -21660,7 +21660,7 @@
                                                                                                                      "bluefin_tuna_meat",
                                                                                                                      "bluefin_tuna_oil"
                                                                                                                  ],
-                                                                                                 "byproducts":  "bluefin_tuna_bone"
+                                                                                                 "byproducts":  ["bluefin_tuna_bone"]
                                                                                              }
                                                                             }
                                                     },
@@ -21871,7 +21871,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "moonflat_halibut_roe"
+                                                                                               "ingredients":  ["moonflat_halibut_roe"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -21882,7 +21882,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "moonflat_halibut_meat",
+                                                                                                 "ingredients":  ["moonflat_halibut_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "moonflat_halibut_skin",
                                                                                                                     "moonflat_halibut_bone"
@@ -22105,8 +22105,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "octopus_meat",
-                                                                                                 "byproducts":  "octopus_ink"
+                                                                                                 "ingredients":  ["octopus_meat"],
+                                                                                                 "byproducts":  ["octopus_ink"]
                                                                                              }
                                                                             }
                                                     },
@@ -22324,8 +22324,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "squid_meat",
-                                                                                                 "byproducts":  "squid_ink"
+                                                                                                 "ingredients":  ["squid_meat"],
+                                                                                                 "byproducts":  ["squid_ink"]
                                                                                              }
                                                                             }
                                                     },
@@ -22545,7 +22545,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "raccoon_meat",
+                                                                                                 "ingredients":  ["raccoon_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "raccoon_fur",
                                                                                                                     "raccoon_bone"
@@ -22769,7 +22769,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "squirrel_meat",
+                                                                                                 "ingredients":  ["squirrel_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "squirrel_fur",
                                                                                                                     "squirrel_bone"
@@ -22992,7 +22992,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "rabbit_meat",
+                                                                                                 "ingredients":  ["rabbit_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "rabbit_fur",
                                                                                                                     "rabbit_bone"
@@ -23216,7 +23216,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "mountain_lion_meat",
+                                                                                                 "ingredients":  ["mountain_lion_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "mountain_lion_fur",
                                                                                                                     "mountain_lion_bone"
@@ -23432,7 +23432,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "daily",
                                                                               "products":  {
-                                                                                               "ingredients":  "american_alligator_egg"
+                                                                                               "ingredients":  ["american_alligator_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -23443,7 +23443,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "american_alligator_meat",
+                                                                                                 "ingredients":  ["american_alligator_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "american_alligator_hide",
                                                                                                                     "american_alligator_bone"
@@ -23658,7 +23658,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "daily",
                                                                               "products":  {
-                                                                                               "ingredients":  "box_turtle_egg"
+                                                                                               "ingredients":  ["box_turtle_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -23669,7 +23669,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "box_turtle_meat",
+                                                                                                 "ingredients":  ["box_turtle_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "box_turtle_shell",
                                                                                                                     "box_turtle_bone"
@@ -23884,7 +23884,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "garter_snake_egg"
+                                                                                               "ingredients":  ["garter_snake_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -23895,7 +23895,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "garter_snake_meat",
+                                                                                                 "ingredients":  ["garter_snake_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "garter_snake_scale",
                                                                                                                     "garter_snake_bone"
@@ -24108,7 +24108,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "axolotl_egg"
+                                                                                               "ingredients":  ["axolotl_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -24119,7 +24119,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "axolotl_meat",
+                                                                                                 "ingredients":  ["axolotl_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "axolotl_hide",
                                                                                                                     "axolotl_bone"
@@ -24333,7 +24333,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "glowmire_caecilian_egg"
+                                                                                               "ingredients":  ["glowmire_caecilian_egg"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -24344,7 +24344,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "glowmire_caecilian_meat",
+                                                                                                 "ingredients":  ["glowmire_caecilian_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "glowmire_caecilian_hide",
                                                                                                                     "glowmire_caecilian_bone"
@@ -24567,8 +24567,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "field_cricket_meat",
-                                                                                                 "byproducts":  "field_cricket_chitin"
+                                                                                                 "ingredients":  ["field_cricket_meat"],
+                                                                                                 "byproducts":  ["field_cricket_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -24779,7 +24779,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "firefly_lantern_gland"
+                                                                                               "ingredients":  ["firefly_lantern_gland"]
                                                                                            }
                                                                           },
                                                         "slaughterOutput":  {
@@ -24790,8 +24790,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "firefly_lantern_gland",
-                                                                                                 "byproducts":  "firefly_chitin"
+                                                                                                 "ingredients":  ["firefly_lantern_gland"],
+                                                                                                 "byproducts":  ["firefly_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -25009,8 +25009,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "pill_bug_meat",
-                                                                                                 "byproducts":  "pill_bug_chitin"
+                                                                                                 "ingredients":  ["pill_bug_meat"],
+                                                                                                 "byproducts":  ["pill_bug_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -25233,7 +25233,7 @@
                                                                                                                      "scorpion_meat",
                                                                                                                      "scorpion_venom"
                                                                                                                  ],
-                                                                                                 "byproducts":  "scorpion_chitin"
+                                                                                                 "byproducts":  ["scorpion_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -25452,8 +25452,8 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "tick_meat",
-                                                                                                 "byproducts":  "tick_chitin"
+                                                                                                 "ingredients":  ["tick_meat"],
+                                                                                                 "byproducts":  ["tick_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -25675,7 +25675,7 @@
                                                                                                                      "centipede_meat",
                                                                                                                      "centipede_venom"
                                                                                                                  ],
-                                                                                                 "byproducts":  "centipede_chitin"
+                                                                                                 "byproducts":  ["centipede_chitin"]
                                                                                              }
                                                                             }
                                                     },
@@ -25886,7 +25886,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "peregrine_falcon_egg",
+                                                                                               "ingredients":  ["peregrine_falcon_egg"],
                                                                                                "materials":  [
                                                                                                                  "peregrine_falcon_feather"
                                                                                                              ]
@@ -25900,7 +25900,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "peregrine_falcon_meat",
+                                                                                                 "ingredients":  ["peregrine_falcon_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "peregrine_falcon_feather",
                                                                                                                     "peregrine_falcon_bone"
@@ -26115,7 +26115,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "ostrich_egg",
+                                                                                               "ingredients":  ["ostrich_egg"],
                                                                                                "materials":  [
                                                                                                                  "ostrich_feather"
                                                                                                              ]
@@ -26129,7 +26129,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "ostrich_meat",
+                                                                                                 "ingredients":  ["ostrich_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "ostrich_feather",
                                                                                                                     "ostrich_bone"
@@ -26345,7 +26345,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "roc_egg",
+                                                                                               "ingredients":  ["roc_egg"],
                                                                                                "materials":  [
                                                                                                                  "roc_feather"
                                                                                                              ]
@@ -26359,7 +26359,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "roc_meat",
+                                                                                                 "ingredients":  ["roc_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "roc_feather",
                                                                                                                     "roc_bone"
@@ -26573,7 +26573,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "pelican_egg",
+                                                                                               "ingredients":  ["pelican_egg"],
                                                                                                "materials":  [
                                                                                                                  "pelican_feather"
                                                                                                              ]
@@ -26587,7 +26587,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "pelican_meat",
+                                                                                                 "ingredients":  ["pelican_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "pelican_feather",
                                                                                                                     "pelican_bone"
@@ -26800,7 +26800,7 @@
                                                                               "producerSex":  "female",
                                                                               "producerWindow":  "seasonal",
                                                                               "products":  {
-                                                                                               "ingredients":  "ice_penguin_egg",
+                                                                                               "ingredients":  ["ice_penguin_egg"],
                                                                                                "materials":  [
                                                                                                                  "ice_penguin_feather"
                                                                                                              ]
@@ -26814,7 +26814,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "ice_penguin_meat",
+                                                                                                 "ingredients":  ["ice_penguin_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "ice_penguin_feather",
                                                                                                                     "ice_penguin_bone"
@@ -27037,7 +27037,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "coyote_meat",
+                                                                                                 "ingredients":  ["coyote_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "coyote_fur",
                                                                                                                     "coyote_bone"
@@ -27259,7 +27259,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "chipmunk_meat",
+                                                                                                 "ingredients":  ["chipmunk_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "chipmunk_fur",
                                                                                                                     "chipmunk_bone"
@@ -27482,7 +27482,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "muskrat_meat",
+                                                                                                 "ingredients":  ["muskrat_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "muskrat_fur",
                                                                                                                     "muskrat_bone"
@@ -27705,7 +27705,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "opossum_meat",
+                                                                                                 "ingredients":  ["opossum_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "opossum_fur",
                                                                                                                     "opossum_bone"
@@ -27929,7 +27929,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "porcupine_meat",
+                                                                                                 "ingredients":  ["porcupine_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "porcupine_quill",
                                                                                                                     "porcupine_bone"
@@ -28153,7 +28153,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "skunk_meat",
+                                                                                                 "ingredients":  ["skunk_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "skunk_fur",
                                                                                                                     "skunk_scent_gland"
@@ -28381,7 +28381,7 @@
                                                                                                                      "dolphin_meat",
                                                                                                                      "dolphin_oil"
                                                                                                                  ],
-                                                                                                 "byproducts":  "dolphin_bone"
+                                                                                                 "byproducts":  ["dolphin_bone"]
                                                                                              }
                                                                             }
                                                     },
@@ -28826,7 +28826,7 @@
 
                                                                                                 },
                                                                                 "products":  {
-                                                                                                 "ingredients":  "walrus_meat",
+                                                                                                 "ingredients":  ["walrus_meat"],
                                                                                                  "byproducts":  [
                                                                                                                     "walrus_hide",
                                                                                                                     "walrus_tusk",

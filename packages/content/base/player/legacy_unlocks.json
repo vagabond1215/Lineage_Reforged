@@ -2,10 +2,11 @@
   "records": [
     {
       "id": "legacy.unlock.account.ledger_seal",
-      "category": "Account",
+      "category": "Chronicle",
       "kind": "binary",
-      "title": "Ledger Seal",
-      "description": "Marks the account as carrying an authenticated Legacy record.",
+      "classification": "permanent",
+      "title": "Family Register",
+      "description": "Your household records are kept with care, giving future descendants a clearer place in the family story.",
       "cost": {
         "type": "fixed",
         "amount": 1
@@ -18,57 +19,54 @@
       ],
       "effects": [
         {
-          "type": "account_flag",
-          "key": "legacy.flag.ledger_seal",
+          "type": "chronicle_presentation",
+          "key": "legacy.chronicle.family_register",
           "value": true
         }
       ],
-      "tags": ["account", "cosmetic"]
+      "tags": ["chronicle", "records"]
     },
     {
-      "id": "legacy.unlock.chronicle.bound_index",
+      "id": "legacy.unlock.chronicle.stone_memorials",
       "category": "Chronicle",
       "kind": "binary",
-      "title": "Bound Index",
-      "description": "Adds a prepared account marker for future Chronicle presentation upgrades.",
+      "classification": "permanent",
+      "title": "Stone Memorials",
+      "description": "The fallen are marked in lasting stone, making their lives easier to honor in later Chronicles.",
       "cost": {
         "type": "fixed",
-        "amount": 2
+        "amount": 3
       },
       "requirements": [
         {
           "type": "run_count",
           "count": 1,
-          "outcome": "archived"
+          "outcome": "archived",
+          "archiveReason": "dead"
         }
       ],
       "effects": [
         {
           "type": "chronicle_presentation",
-          "key": "legacy.chronicle.bound_index",
+          "key": "legacy.chronicle.stone_memorials",
           "value": true
         }
       ],
-      "tags": ["chronicle", "presentation"]
+      "tags": ["chronicle", "memorial"]
     },
     {
-      "id": "legacy.unlock.title.wayfarer_mark",
-      "category": "Titles",
+      "id": "legacy.unlock.chronicle.bound_index",
+      "category": "Chronicle",
       "kind": "tiered",
-      "title": "Wayfarer's Mark",
-      "description": "Unlocks account title ranks that can later be surfaced in profile presentation.",
-      "maxRank": 3,
+      "classification": "permanent",
+      "title": "Hall of Names",
+      "description": "The Chronicle becomes easier to search, compare, and revisit as more names are added to the hall.",
+      "maxRank": 2,
       "cost": {
         "type": "per_rank",
-        "amounts": [2, 5, 10]
+        "amounts": [4, 12]
       },
       "rankRequirements": [
-        [
-          {
-            "type": "achievement",
-            "achievementId": "achievement.account.first_chronicle"
-          }
-        ],
         [
           {
             "type": "run_count",
@@ -78,69 +76,85 @@
         ],
         [
           {
-            "type": "echo_peak",
-            "level": 8
-          }
-        ]
-      ],
-      "effects": [
-        {
-          "type": "profile_title",
-          "key": "title.legacy.wayfarer_mark"
-        }
-      ],
-      "tags": ["title", "cosmetic"]
-    },
-    {
-      "id": "legacy.unlock.origins.remembered_path",
-      "category": "Origins",
-      "kind": "tiered",
-      "title": "Remembered Path",
-      "description": "Records origin presentation ranks for future starting-story customization.",
-      "maxRank": 3,
-      "cost": {
-        "type": "per_rank",
-        "amounts": [3, 8, 16]
-      },
-      "rankRequirements": [
-        [
-          {
             "type": "run_count",
-            "count": 1
-          }
-        ],
-        [
-          {
-            "type": "run_count",
-            "count": 2,
+            "count": 3,
             "outcome": "archived"
           }
-        ],
-        [
-          {
-            "type": "survived_days",
-            "days": 10
-          }
         ]
       ],
       "effects": [
         {
-          "type": "account_flag",
-          "key": "legacy.origin.remembered_path",
+          "type": "chronicle_presentation",
+          "key": "legacy.chronicle.hall_of_names",
           "value": true
         }
       ],
-      "tags": ["origin", "presentation"]
+      "tags": ["chronicle", "presentation"]
     },
     {
-      "id": "legacy.unlock.trait.recorded_temperament",
-      "category": "Traits",
+      "id": "legacy.unlock.chronicle.archivists_seal",
+      "category": "Chronicle",
       "kind": "binary",
-      "title": "Recorded Temperament",
-      "description": "Preserves an account-level trait note for later non-power presentation.",
+      "classification": "permanent",
+      "title": "Archivist's Seal",
+      "description": "Archived lives preserve clearer summaries, helping future heirs understand what came before.",
       "cost": {
         "type": "fixed",
-        "amount": 2
+        "amount": 6
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 2,
+          "outcome": "archived"
+        }
+      ],
+      "effects": [
+        {
+          "type": "chronicle_presentation",
+          "key": "legacy.chronicle.archivists_seal",
+          "value": true
+        }
+      ],
+      "tags": ["chronicle", "archive"]
+    },
+    {
+      "id": "legacy.unlock.lineage.heirloom_blade",
+      "category": "Lineage",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Heirloom Blade",
+      "description": "A trusted family weapon is passed forward, so new descendants may begin with modest arms.",
+      "cost": {
+        "type": "fixed",
+        "amount": 3
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_starting_item",
+          "key": "legacy.lineage.heirloom_blade",
+          "value": "modest_arms"
+        }
+      ],
+      "tags": ["lineage", "heirloom"]
+    },
+    {
+      "id": "legacy.unlock.lineage.strong_blood",
+      "category": "Lineage",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Strong Blood",
+      "description": "Your line grows increasingly hardy, giving future descendants improved physical potential.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [4, 10, 22]
       },
       "requirements": [
         {
@@ -150,19 +164,551 @@
       ],
       "effects": [
         {
-          "type": "account_flag",
-          "key": "legacy.trait.recorded_temperament",
+          "type": "future_attribute_preparation",
+          "key": "legacy.lineage.strong_blood",
+          "value": 1
+        }
+      ],
+      "tags": ["lineage", "attribute"]
+    },
+    {
+      "id": "legacy.unlock.lineage.remembered_kin",
+      "category": "Lineage",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Remembered Kin",
+      "description": "Retired bloodlines remain available longer before fading into history.",
+      "cost": {
+        "type": "fixed",
+        "amount": 5
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1,
+          "outcome": "archived",
+          "archiveReason": "retired"
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_lineage_retention",
+          "key": "legacy.lineage.remembered_kin",
           "value": true
         }
       ],
-      "tags": ["trait", "cosmetic"]
+      "tags": ["lineage", "retention"]
+    },
+    {
+      "id": "legacy.unlock.heir.inheritance_thread",
+      "category": "Lineage",
+      "kind": "incremental",
+      "classification": "permanent",
+      "title": "Inheritance Threads",
+      "description": "More of a retired life can be carried forward when the future heir system is ready.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [8, 16, 32]
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1,
+          "outcome": "archived",
+          "archiveReason": "retired"
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_inheritance_uses",
+          "key": "legacy.lineage.inheritance_threads",
+          "value": 1
+        }
+      ],
+      "tags": ["lineage", "heir"]
+    },
+    {
+      "id": "legacy.unlock.lineage.prepared_lineage",
+      "category": "Lineage",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Prepared Lineage",
+      "description": "Your dynasty learns to prepare more gifts for the next life before it begins.",
+      "maxRank": 4,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [4, 10, 22, 46]
+      },
+      "effects": [
+        {
+          "type": "preparation_capacity",
+          "key": "legacy.lineage.preparation_capacity",
+          "value": 1
+        }
+      ],
+      "tags": ["lineage", "preparations"]
+    },
+    {
+      "id": "legacy.unlock.renown.settlement.aurelis",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Aurelis Name",
+      "description": "Aurelis remembers your family, and its people receive future descendants with growing warmth.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 5, 9]
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.settlement.aurelis",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "settlement",
+        "nodeId": "settlement.aurelis",
+        "parentNodeId": "region.verdant_thalos",
+        "displayName": "Aurelis"
+      },
+      "tags": ["renown", "settlement"]
+    },
+    {
+      "id": "legacy.unlock.renown.settlement.vinecross",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Vinecross Name",
+      "description": "Vinecross knows your household, opening humbler doors for later heirs.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 5, 9]
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.settlement.vinecross",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "settlement",
+        "nodeId": "settlement.vinecross",
+        "parentNodeId": "region.verdant_thalos",
+        "displayName": "Vinecross"
+      },
+      "tags": ["renown", "settlement"]
+    },
+    {
+      "id": "legacy.unlock.renown.settlement.oliveford",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Oliveford Name",
+      "description": "Oliveford carries quiet respect for your line, softening the first welcome for descendants.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 5, 9]
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.settlement.oliveford",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "settlement",
+        "nodeId": "settlement.oliveford",
+        "parentNodeId": "region.verdant_thalos",
+        "displayName": "Oliveford"
+      },
+      "tags": ["renown", "settlement"]
+    },
+    {
+      "id": "legacy.unlock.renown.settlement.sunmeadow",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Sunmeadow Name",
+      "description": "Sunmeadow's common rooms and fields carry friendlier rumors of your family.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 5, 9]
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.settlement.sunmeadow",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "settlement",
+        "nodeId": "settlement.sunmeadow",
+        "parentNodeId": "region.verdant_thalos",
+        "displayName": "Sunmeadow"
+      },
+      "tags": ["renown", "settlement"]
+    },
+    {
+      "id": "legacy.unlock.renown.settlement.redcliff_quay",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Redcliff Quay Name",
+      "description": "Redcliff Quay knows your banners and cargo marks, giving later travelers firmer footing.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 5, 9]
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.settlement.redcliff_quay",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "settlement",
+        "nodeId": "settlement.redcliff_quay",
+        "parentNodeId": "region.verdant_thalos",
+        "displayName": "Redcliff Quay"
+      },
+      "tags": ["renown", "settlement"]
+    },
+    {
+      "id": "legacy.unlock.renown.settlement.caskbank_estate",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Caskbank Estate Name",
+      "description": "Caskbank Estate keeps your family name in its ledgers and local talk.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [2, 5, 9]
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.settlement.caskbank_estate",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "settlement",
+        "nodeId": "settlement.caskbank_estate",
+        "parentNodeId": "region.verdant_thalos",
+        "displayName": "Caskbank Estate"
+      },
+      "tags": ["renown", "settlement"]
+    },
+    {
+      "id": "legacy.unlock.renown.region.verdant_thalos",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Verdant Thalos Renown",
+      "description": "Your name spreads beyond single settlements and begins to matter across Verdant Thalos.",
+      "maxRank": 3,
+      "cost": {
+        "type": "renown_hierarchy",
+        "supportUnlockIds": [
+          "legacy.unlock.renown.settlement.aurelis",
+          "legacy.unlock.renown.settlement.vinecross",
+          "legacy.unlock.renown.settlement.oliveford",
+          "legacy.unlock.renown.settlement.sunmeadow",
+          "legacy.unlock.renown.settlement.redcliff_quay",
+          "legacy.unlock.renown.settlement.caskbank_estate"
+        ],
+        "tierMultiplier": 2,
+        "minimumAmount": 12
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.region.verdant_thalos",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "region",
+        "nodeId": "region.verdant_thalos",
+        "parentNodeId": "region.kaelvar",
+        "supportUnlockIds": [
+          "legacy.unlock.renown.settlement.aurelis",
+          "legacy.unlock.renown.settlement.vinecross",
+          "legacy.unlock.renown.settlement.oliveford",
+          "legacy.unlock.renown.settlement.sunmeadow",
+          "legacy.unlock.renown.settlement.redcliff_quay",
+          "legacy.unlock.renown.settlement.caskbank_estate"
+        ],
+        "displayName": "Verdant Thalos"
+      },
+      "tags": ["renown", "region"]
+    },
+    {
+      "id": "legacy.unlock.renown.continent.kaelvar",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Kaelvar Renown",
+      "description": "Across Kaelvar, your line becomes a name worth remembering.",
+      "maxRank": 3,
+      "cost": {
+        "type": "renown_hierarchy",
+        "supportUnlockIds": ["legacy.unlock.renown.region.verdant_thalos"],
+        "tierMultiplier": 3,
+        "minimumAmount": 36
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.continent.kaelvar",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "continent",
+        "nodeId": "region.kaelvar",
+        "supportUnlockIds": ["legacy.unlock.renown.region.verdant_thalos"],
+        "displayName": "Kaelvar"
+      },
+      "tags": ["renown", "continent"]
+    },
+    {
+      "id": "legacy.unlock.renown.universal",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Universal Renown",
+      "description": "Your dynasty becomes known far beyond its first lands, a story carried wherever roads reach.",
+      "maxRank": 3,
+      "cost": {
+        "type": "renown_hierarchy",
+        "supportUnlockIds": ["legacy.unlock.renown.continent.kaelvar"],
+        "tierMultiplier": 4,
+        "minimumAmount": 144
+      },
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "renown.universal",
+          "value": 1
+        }
+      ],
+      "renownNode": {
+        "tier": "universal",
+        "nodeId": "renown.universal",
+        "supportUnlockIds": ["legacy.unlock.renown.continent.kaelvar"],
+        "displayName": "Universal"
+      },
+      "tags": ["renown", "universal"]
+    },
+    {
+      "id": "legacy.unlock.renown.village_name",
+      "category": "Renown",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Village Name",
+      "description": "Your family name is known in humble places, and some settlements receive descendants more warmly.",
+      "cost": {
+        "type": "fixed",
+        "amount": 3
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "legacy.renown.village_name",
+          "value": true
+        }
+      ],
+      "tags": ["renown", "settlement"]
+    },
+    {
+      "id": "legacy.unlock.renown.banner_rights",
+      "category": "Renown",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Banner Rights",
+      "description": "Your descendants may be recognized more readily among lesser nobility.",
+      "maxRank": 2,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [7, 18]
+      },
+      "requirements": [
+        {
+          "type": "echo_peak",
+          "level": 4
+        }
+      ],
+      "effects": [
+        {
+          "type": "profile_title",
+          "key": "legacy.renown.banner_rights",
+          "value": true
+        }
+      ],
+      "tags": ["renown", "title"]
+    },
+    {
+      "id": "legacy.unlock.renown.veteran_reputation",
+      "category": "Renown",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Veteran Reputation",
+      "description": "Survivors of your line are judged with greater seriousness.",
+      "cost": {
+        "type": "fixed",
+        "amount": 9
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1,
+          "outcome": "archived",
+          "archiveReason": "retired"
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_renown",
+          "key": "legacy.renown.veteran_reputation",
+          "value": true
+        }
+      ],
+      "tags": ["renown", "survivor"]
+    },
+    {
+      "id": "legacy.unlock.fortune.hidden_purse",
+      "category": "Fortune",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Hidden Purse",
+      "description": "A small reserve of coin is quietly passed into waiting hands.",
+      "cost": {
+        "type": "fixed",
+        "amount": 3
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 2
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_resource_preparation",
+          "key": "legacy.fortune.hidden_purse",
+          "value": "modest_coin"
+        }
+      ],
+      "tags": ["fortune", "coin"]
+    },
+    {
+      "id": "legacy.unlock.account.trade_charter",
+      "category": "Fortune",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Trade Contacts",
+      "description": "Merchants become more receptive to your lineage once its fortune is proven.",
+      "cost": {
+        "type": "fixed",
+        "amount": 4
+      },
+      "requirements": [
+        {
+          "type": "wealth",
+          "amount": 1000
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.fortune.trade_contacts",
+          "value": true
+        }
+      ],
+      "tags": ["fortune", "future"]
+    },
+    {
+      "id": "legacy.unlock.fortune.storehouse_network",
+      "category": "Fortune",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Storehouse Network",
+      "description": "Prepared inheritances can carry greater material value between lives.",
+      "maxRank": 2,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [6, 15]
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_resource_preparation",
+          "key": "legacy.fortune.storehouse_network",
+          "value": "prepared_goods"
+        }
+      ],
+      "tags": ["fortune", "preparations"]
+    },
+    {
+      "id": "legacy.unlock.fortune.frugal_planning",
+      "category": "Fortune",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Frugal Planning",
+      "description": "Your household learns how to make temporary preparations cost less Prestige.",
+      "maxRank": 2,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [5, 14]
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_preparation_discount",
+          "key": "legacy.fortune.frugal_planning",
+          "value": 1
+        }
+      ],
+      "tags": ["fortune", "preparations"]
     },
     {
       "id": "legacy.unlock.perk.campfire_notes",
-      "category": "Perks",
+      "category": "Craft",
       "kind": "incremental",
-      "title": "Campfire Notes",
-      "description": "Creates repeatable account notes for future quality-of-life presentation.",
+      "classification": "permanent",
+      "title": "Campfire Lessons",
+      "description": "Your family preserves practical methods of survival for those who follow.",
       "maxRank": 5,
       "cost": {
         "type": "per_rank",
@@ -177,64 +723,412 @@
       "effects": [
         {
           "type": "account_flag",
-          "key": "legacy.perk.campfire_notes",
+          "key": "legacy.craft.campfire_lessons",
           "value": true
         }
       ],
-      "tags": ["account", "qol"]
+      "tags": ["craft", "survival"]
     },
     {
-      "id": "legacy.unlock.heir.inheritance_thread",
-      "category": "Heir",
-      "kind": "incremental",
-      "title": "Inheritance Thread",
-      "description": "Tracks future inheritance-use upgrade ranks without activating heir starts yet.",
-      "maxRank": 5,
+      "id": "legacy.unlock.craft.smiths_blood",
+      "category": "Craft",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Smith's Blood",
+      "description": "Martial tools and forged goods are understood more readily by the family.",
       "cost": {
-        "type": "per_rank",
-        "amounts": [8, 13, 21, 34, 55]
+        "type": "fixed",
+        "amount": 5
       },
       "requirements": [
         {
           "type": "run_count",
-          "count": 1,
-          "outcome": "archived",
-          "archiveReason": "retired"
+          "count": 1
         }
       ],
       "effects": [
         {
-          "type": "future_inheritance_uses",
-          "key": "legacy.heir.inheritance_thread",
-          "value": 1
+          "type": "future_starting_item",
+          "key": "legacy.craft.smiths_blood",
+          "value": "forged_goods"
         }
       ],
-      "tags": ["heir", "future"]
+      "tags": ["craft", "forge"]
     },
     {
-      "id": "legacy.unlock.account.trade_charter",
-      "category": "Account",
+      "id": "legacy.unlock.craft.stewards_ledger",
+      "category": "Craft",
+      "kind": "tiered",
+      "classification": "permanent",
+      "title": "Steward's Ledger",
+      "description": "Generational skill in management and finance improves your lineage's future prosperity.",
+      "maxRank": 3,
+      "cost": {
+        "type": "per_rank",
+        "amounts": [4, 9, 20]
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 3
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.craft.stewards_ledger",
+          "value": true
+        }
+      ],
+      "tags": ["craft", "finance"]
+    },
+    {
+      "id": "legacy.unlock.destiny.guiding_star",
+      "category": "Destiny",
       "kind": "binary",
-      "title": "Trade Charter",
-      "description": "A future account charter gated by wealth systems that are not live yet.",
+      "classification": "permanent",
+      "title": "Guiding Star",
+      "description": "Fortune nudges early paths toward uncommon opportunities.",
+      "cost": {
+        "type": "fixed",
+        "amount": 6
+      },
+      "requirements": [
+        {
+          "type": "echo_peak",
+          "level": 3
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.destiny.guiding_star",
+          "value": true
+        }
+      ],
+      "tags": ["destiny", "opportunity"]
+    },
+    {
+      "id": "legacy.unlock.destiny.second_wind",
+      "category": "Destiny",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Second Wind",
+      "description": "Once in a life, fate may spare a grave mistake when that power is ready to awaken.",
+      "cost": {
+        "type": "fixed",
+        "amount": 18
+      },
+      "requirements": [
+        {
+          "type": "survived_days",
+          "days": 10
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.destiny.second_wind",
+          "value": true
+        }
+      ],
+      "tags": ["destiny", "future"]
+    },
+    {
+      "id": "legacy.unlock.destiny.travelers_omen",
+      "category": "Destiny",
+      "kind": "binary",
+      "classification": "permanent",
+      "title": "Traveler's Omen",
+      "description": "The roads ahead are kinder to your next heir.",
+      "cost": {
+        "type": "fixed",
+        "amount": 5
+      },
+      "requirements": [
+        {
+          "type": "run_count",
+          "count": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "next_run_preparation",
+          "key": "legacy.destiny.travelers_omen",
+          "value": "road_favor"
+        }
+      ],
+      "tags": ["destiny", "travel"]
+    },
+    {
+      "id": "legacy.unlock.preparation.storehouse_keys",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Storehouse Keys",
+      "description": "A cache of useful supplies waits for the next heir.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "next_run_preparation",
+          "key": "legacy.preparation.storehouse_keys",
+          "value": "supplies"
+        }
+      ],
+      "tags": ["preparation", "supplies"]
+    },
+    {
+      "id": "legacy.unlock.preparation.merchant_purse",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Merchant Purse",
+      "description": "A hidden reserve of coin passes quietly onward.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "next_run_preparation",
+          "key": "legacy.preparation.merchant_purse",
+          "value": "coin"
+        }
+      ],
+      "tags": ["preparation", "coin"]
+    },
+    {
+      "id": "legacy.unlock.preparation.camp_supplies",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Camp Supplies",
+      "description": "The next life begins provisioned for rough travel.",
+      "cost": {
+        "type": "fixed",
+        "amount": 3
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "next_run_preparation",
+          "key": "legacy.preparation.camp_supplies",
+          "value": "camping"
+        }
+      ],
+      "tags": ["preparation", "travel"]
+    },
+    {
+      "id": "legacy.unlock.preparation.martial_legacy",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Martial Legacy",
+      "description": "Choose a martial preparation for the next heir when preparation selection is ready.",
       "cost": {
         "type": "fixed",
         "amount": 4
       },
       "requirements": [
         {
-          "type": "wealth",
-          "amount": 1000
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 2
         }
       ],
       "effects": [
         {
-          "type": "account_flag",
-          "key": "legacy.account.trade_charter",
-          "value": true
+          "type": "future_attribute_preparation",
+          "key": "legacy.preparation.martial_legacy",
+          "value": 1
         }
       ],
-      "tags": ["account", "future"]
+      "tags": ["preparation", "attribute"]
+    },
+    {
+      "id": "legacy.unlock.preparation.learned_legacy",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Learned Legacy",
+      "description": "Knowledge and study materials await the next line.",
+      "cost": {
+        "type": "fixed",
+        "amount": 4
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 2
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_attribute_preparation",
+          "key": "legacy.preparation.learned_legacy",
+          "value": 1
+        }
+      ],
+      "tags": ["preparation", "attribute"]
+    },
+    {
+      "id": "legacy.unlock.preparation.noble_legacy",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Noble Legacy",
+      "description": "A social start, minor coin, or polished introduction can be prepared for the next heir.",
+      "cost": {
+        "type": "fixed",
+        "amount": 5
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 2
+        }
+      ],
+      "effects": [
+        {
+          "type": "next_run_preparation",
+          "key": "legacy.preparation.noble_legacy",
+          "value": "social_start"
+        }
+      ],
+      "tags": ["preparation", "social"]
+    },
+    {
+      "id": "legacy.unlock.preparation.vital_legacy",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Vital Legacy",
+      "description": "A health, stamina, or spirit reserve can be prepared for the next heir.",
+      "cost": {
+        "type": "fixed",
+        "amount": 5
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 3
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_resource_preparation",
+          "key": "legacy.preparation.vital_legacy",
+          "value": "vital_reserve"
+        }
+      ],
+      "tags": ["preparation", "resource"]
+    },
+    {
+      "id": "legacy.unlock.preparation.awakened_spark",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Awakened Spark",
+      "description": "The next heir begins with heightened spiritual reserves.",
+      "cost": {
+        "type": "fixed",
+        "amount": 6
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 3
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_resource_preparation",
+          "key": "legacy.preparation.awakened_spark",
+          "value": "spirit_reserve"
+        }
+      ],
+      "tags": ["preparation", "resource"]
+    },
+    {
+      "id": "legacy.unlock.preparation.letters_of_passage",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Letters of Passage",
+      "description": "Sealed introductions smooth the first roads ahead.",
+      "cost": {
+        "type": "fixed",
+        "amount": 4
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 2
+        }
+      ],
+      "effects": [
+        {
+          "type": "next_run_preparation",
+          "key": "legacy.preparation.letters_of_passage",
+          "value": "introductions"
+        }
+      ],
+      "tags": ["preparation", "travel"]
+    },
+    {
+      "id": "legacy.unlock.preparation.veteran_escort",
+      "category": "Preparations",
+      "kind": "binary",
+      "classification": "preparation",
+      "title": "Veteran Escort",
+      "description": "An old sword agrees to guide your next beginning.",
+      "cost": {
+        "type": "fixed",
+        "amount": 8
+      },
+      "requirements": [
+        {
+          "type": "legacy_unlock_rank",
+          "unlockId": "legacy.unlock.lineage.prepared_lineage",
+          "rank": 4
+        }
+      ],
+      "effects": [
+        {
+          "type": "next_run_preparation",
+          "key": "legacy.preparation.veteran_escort",
+          "value": "escort"
+        }
+      ],
+      "tags": ["preparation", "escort"]
     }
   ]
 }

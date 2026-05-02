@@ -1709,7 +1709,54 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.melee.primary",
+          "primarySkillId": "skill.combat.weapon.axe",
+          "supportSkillIds": [],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "accuracy",
+            "damage",
+            "armorBreak",
+            "penaltyReduction"
+          ],
+          "handlingType": "weapon",
+          "proficiencySkillId": "skill.combat.weapon.axe",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "weapon.axe",
+            "melee"
+          ],
+          "resolutionHooks": [
+            "weapon.axe",
+            "damage.melee"
+          ],
+          "grantTags": [
+            "weapon.axe"
+          ],
+          "targetProfile": {
+            "disposition": "enemy",
+            "shape": "single_target",
+            "range": "melee",
+            "maxTargets": 1,
+            "requiresAccuracy": true
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.melee.primary",
+            "timing": "instant",
+            "executionTimeTicks": 4,
+            "recoveryTimeTicks": 5,
+            "interruptible": false,
+            "costs": {
+              "stamina": 6
+            }
+          }
+        }
+      ]
     },
     {
       "id": "item.battle_staff",
@@ -1742,8 +1789,7 @@
           "effectChannels": [
             "accuracy",
             "damage",
-            "stagger",
-            "channelStability"
+            "stagger"
           ],
           "handlingType": "hybrid",
           "proficiencySkillId": "skill.combat.weapon.staff",
@@ -1756,7 +1802,8 @@
           ],
           "resolutionHooks": [
             "weapon.staff",
-            "damage.melee"
+            "damage.melee",
+            "status.stagger"
           ],
           "grantTags": [
             "weapon.staff"
@@ -4747,7 +4794,6 @@
       "currencyId": "currency.crown_standard",
       "valueUnit": "copper_penny",
       "marketable": true,
-      "consumableProfileId": "consume.ration_bundle",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -4803,7 +4849,6 @@
       "currencyId": "currency.crown_standard",
       "valueUnit": "copper_penny",
       "marketable": true,
-      "consumableProfileId": "consume.trail_meal",
       "valueProfile": {
         "valueMode": "source_derived",
         "materialCostModel": "source_effort",
@@ -8807,7 +8852,54 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.melee.primary",
+          "primarySkillId": "skill.combat.weapon.dagger",
+          "supportSkillIds": [],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "accuracy",
+            "damage",
+            "critChance",
+            "penaltyReduction"
+          ],
+          "handlingType": "weapon",
+          "proficiencySkillId": "skill.combat.weapon.dagger",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "weapon.dagger",
+            "melee"
+          ],
+          "resolutionHooks": [
+            "weapon.dagger",
+            "damage.melee"
+          ],
+          "grantTags": [
+            "weapon.dagger"
+          ],
+          "targetProfile": {
+            "disposition": "enemy",
+            "shape": "single_target",
+            "range": "melee",
+            "maxTargets": 1,
+            "requiresAccuracy": true
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.melee.primary",
+            "timing": "instant",
+            "executionTimeTicks": 2,
+            "recoveryTimeTicks": 4,
+            "interruptible": false,
+            "costs": {
+              "stamina": 3
+            }
+          }
+        }
+      ]
     },
     {
       "id": "item.dolphin_bone",
@@ -15982,7 +16074,104 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.defense.block",
+          "primarySkillId": "skill.combat.defense.shield_handling",
+          "supportSkillIds": [
+            "skill.combat.armor.medium_shields"
+          ],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "blockChance",
+            "damageMitigation",
+            "staggerResistance"
+          ],
+          "handlingType": "shield",
+          "proficiencySkillId": "skill.combat.armor.medium_shields",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "shield",
+            "defense",
+            "shield.medium"
+          ],
+          "resolutionHooks": [
+            "defense.shield.medium"
+          ],
+          "grantTags": [
+            "shield",
+            "shield.medium"
+          ],
+          "targetProfile": {
+            "disposition": "self",
+            "shape": "self",
+            "range": "self",
+            "maxTargets": 1,
+            "requiresAccuracy": false
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.defense.block",
+            "timing": "instant",
+            "executionTimeTicks": 1,
+            "recoveryTimeTicks": 3,
+            "interruptible": false,
+            "costs": {
+              "stamina": 3
+            }
+          }
+        },
+        {
+          "actionType": "combat.interrupt.shield_bash",
+          "primarySkillId": "skill.combat.defense.shield_handling",
+          "supportSkillIds": [
+            "skill.combat.armor.medium_shields"
+          ],
+          "requiredSkillRank": 20,
+          "masteryRank": 100,
+          "effectChannels": [
+            "damage",
+            "stagger",
+            "threat"
+          ],
+          "handlingType": "shield",
+          "proficiencySkillId": "skill.combat.armor.medium_shields",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "shield",
+            "interrupt",
+            "shield.medium"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "damage.melee"
+          ],
+          "grantTags": [
+            "shield",
+            "shield.medium"
+          ],
+          "targetProfile": {
+            "disposition": "enemy",
+            "shape": "single_target",
+            "range": "melee",
+            "maxTargets": 1,
+            "requiresAccuracy": true
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.interrupt.shield_bash",
+            "timing": "instant",
+            "executionTimeTicks": 2,
+            "recoveryTimeTicks": 7,
+            "interruptible": false,
+            "costs": {
+              "stamina": 9
+            }
+          }
+        }
+      ]
     },
     {
       "id": "item.kobold_bauble",
@@ -16294,7 +16483,50 @@
         "hardness": "medium",
         "refinementDifficulty": "moderate",
         "processingCostImpact": "moderate"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.armor.light",
+          "primarySkillId": "skill.combat.armor.light_armor",
+          "supportSkillIds": [],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "evasion",
+            "damageMitigation",
+            "recoveryWindow"
+          ],
+          "handlingType": "armor",
+          "proficiencySkillId": "skill.combat.armor.light_armor",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "armor.light_armor",
+            "defense"
+          ],
+          "resolutionHooks": [
+            "armor.light_armor"
+          ],
+          "grantTags": [
+            "armor.light_armor"
+          ],
+          "targetProfile": {
+            "disposition": "self",
+            "shape": "self",
+            "range": "self",
+            "maxTargets": 1,
+            "requiresAccuracy": false
+          },
+          "activation": {
+            "type": "passive",
+            "actionType": "combat.armor.light",
+            "timing": "passive",
+            "executionTimeTicks": 0,
+            "recoveryTimeTicks": 0,
+            "interruptible": false,
+            "costs": {}
+          }
+        }
+      ]
     },
     {
       "id": "item.leather_medium_armor",
@@ -21930,7 +22162,51 @@
         "hardness": "medium",
         "refinementDifficulty": "moderate",
         "processingCostImpact": "moderate"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.armor.plate",
+          "primarySkillId": "skill.combat.armor.plate_armor",
+          "supportSkillIds": [],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "mitigation",
+            "damageMitigation",
+            "staggerResistance"
+          ],
+          "handlingType": "armor",
+          "proficiencySkillId": "skill.combat.armor.plate_armor",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "armor.plate_armor",
+            "defense",
+            "armor.plate"
+          ],
+          "resolutionHooks": [
+            "armor.plate_armor"
+          ],
+          "grantTags": [
+            "armor.plate_armor"
+          ],
+          "targetProfile": {
+            "disposition": "self",
+            "shape": "self",
+            "range": "self",
+            "maxTargets": 1,
+            "requiresAccuracy": false
+          },
+          "activation": {
+            "type": "passive",
+            "actionType": "combat.armor.plate",
+            "timing": "passive",
+            "executionTimeTicks": 0,
+            "recoveryTimeTicks": 0,
+            "interruptible": false,
+            "costs": {}
+          }
+        }
+      ]
     },
     {
       "id": "item.plate_greaves",
@@ -24001,7 +24277,51 @@
         "hardness": "medium",
         "refinementDifficulty": "moderate",
         "processingCostImpact": "moderate"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.armor.medium",
+          "primarySkillId": "skill.combat.armor.medium_armor",
+          "supportSkillIds": [],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "damageMitigation",
+            "barrier",
+            "staggerResistance"
+          ],
+          "handlingType": "armor",
+          "proficiencySkillId": "skill.combat.armor.medium_armor",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "armor.medium_armor",
+            "defense",
+            "armor.mail"
+          ],
+          "resolutionHooks": [
+            "armor.medium_armor"
+          ],
+          "grantTags": [
+            "armor.medium_armor"
+          ],
+          "targetProfile": {
+            "disposition": "self",
+            "shape": "self",
+            "range": "self",
+            "maxTargets": 1,
+            "requiresAccuracy": false
+          },
+          "activation": {
+            "type": "passive",
+            "actionType": "combat.armor.medium",
+            "timing": "passive",
+            "executionTimeTicks": 0,
+            "recoveryTimeTicks": 0,
+            "interruptible": false,
+            "costs": {}
+          }
+        }
+      ]
     },
     {
       "id": "item.ring_necked_pheasant_bone",
@@ -30095,7 +30415,104 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.defense.block",
+          "primarySkillId": "skill.combat.defense.shield_handling",
+          "supportSkillIds": [
+            "skill.combat.armor.large_shields"
+          ],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "blockChance",
+            "damageMitigation",
+            "staggerResistance"
+          ],
+          "handlingType": "shield",
+          "proficiencySkillId": "skill.combat.armor.large_shields",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "shield",
+            "defense",
+            "shield.large"
+          ],
+          "resolutionHooks": [
+            "defense.shield.large"
+          ],
+          "grantTags": [
+            "shield",
+            "shield.large"
+          ],
+          "targetProfile": {
+            "disposition": "self",
+            "shape": "self",
+            "range": "self",
+            "maxTargets": 1,
+            "requiresAccuracy": false
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.defense.block",
+            "timing": "instant",
+            "executionTimeTicks": 1,
+            "recoveryTimeTicks": 4,
+            "interruptible": false,
+            "costs": {
+              "stamina": 4
+            }
+          }
+        },
+        {
+          "actionType": "combat.interrupt.shield_bash",
+          "primarySkillId": "skill.combat.defense.shield_handling",
+          "supportSkillIds": [
+            "skill.combat.armor.large_shields"
+          ],
+          "requiredSkillRank": 25,
+          "masteryRank": 100,
+          "effectChannels": [
+            "damage",
+            "stagger",
+            "threat"
+          ],
+          "handlingType": "shield",
+          "proficiencySkillId": "skill.combat.armor.large_shields",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "shield",
+            "interrupt",
+            "shield.large"
+          ],
+          "resolutionHooks": [
+            "interrupt.primary",
+            "damage.melee"
+          ],
+          "grantTags": [
+            "shield",
+            "shield.large"
+          ],
+          "targetProfile": {
+            "disposition": "enemy",
+            "shape": "single_target",
+            "range": "melee",
+            "maxTargets": 1,
+            "requiresAccuracy": true
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.interrupt.shield_bash",
+            "timing": "instant",
+            "executionTimeTicks": 3,
+            "recoveryTimeTicks": 8,
+            "interruptible": false,
+            "costs": {
+              "stamina": 11
+            }
+          }
+        }
+      ]
     },
     {
       "id": "item.tracking_lens",
@@ -31268,7 +31685,57 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.melee.primary",
+          "primarySkillId": "skill.combat.weapon.polearm",
+          "supportSkillIds": [],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "accuracy",
+            "damage",
+            "penetration",
+            "penaltyReduction"
+          ],
+          "handlingType": "weapon",
+          "proficiencySkillId": "skill.combat.weapon.polearm",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "weapon.polearm",
+            "weapon.spear",
+            "melee",
+            "reach"
+          ],
+          "resolutionHooks": [
+            "weapon.polearm",
+            "damage.melee"
+          ],
+          "grantTags": [
+            "weapon.polearm",
+            "weapon.spear"
+          ],
+          "targetProfile": {
+            "disposition": "enemy",
+            "shape": "single_target",
+            "range": "melee",
+            "maxTargets": 1,
+            "requiresAccuracy": true
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.melee.primary",
+            "timing": "instant",
+            "executionTimeTicks": 3,
+            "recoveryTimeTicks": 5,
+            "interruptible": false,
+            "costs": {
+              "stamina": 5
+            }
+          }
+        }
+      ]
     },
     {
       "id": "item.watercress_seed",

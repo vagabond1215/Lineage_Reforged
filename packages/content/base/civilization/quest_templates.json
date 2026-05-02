@@ -51,7 +51,7 @@
                         "targetItemKeys":  [
                                                "cured_meat",
                                                "dried_meat",
-                                               "hides",
+                                               "hide_raw",
                                                "fur"
                                            ],
                         "targetSettlementTags":  [
@@ -734,7 +734,7 @@
                         "targetItemKeys":  [
                                                "cattle",
                                                "horse_stock",
-                                               "hides",
+                                               "hide_raw",
                                                "cured_meat"
                                            ],
                         "targetSettlementTags":  [
@@ -981,9 +981,9 @@
                         "generationSource":  "shortfall",
                         "targetItemKeys":  [
                                                "cloth",
-                                               "finished_cloth",
+                                               "wool_cloth",
                                                "winter_cloth",
-                                               "wool"
+                                               "wool_fleece"
                                            ],
                         "targetSettlementTags":  [
 

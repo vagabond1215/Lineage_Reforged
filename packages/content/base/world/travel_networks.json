@@ -436,11 +436,6 @@
                                                                                  "modeId":  "travel_mode.sea_vessel",
                                                                                  "speedMultiplier":  1,
                                                                                  "variancePercent":  12
-                                                                             },
-                                                                             {
-                                                                                 "modeId":  "travel_mode.bluewater_ship",
-                                                                                 "speedMultiplier":  1,
-                                                                                 "variancePercent":  18
                                                                              }
                                                                          ]
                                                      },
@@ -453,11 +448,6 @@
                                                                                  "modeId":  "travel_mode.sea_vessel",
                                                                                  "speedMultiplier":  0.72,
                                                                                  "variancePercent":  28
-                                                                             },
-                                                                             {
-                                                                                 "modeId":  "travel_mode.bluewater_ship",
-                                                                                 "speedMultiplier":  0.8,
-                                                                                 "variancePercent":  25
                                                                              }
                                                                          ]
                                                      }
@@ -597,11 +587,6 @@
                                                                                  "modeId":  "travel_mode.sea_vessel",
                                                                                  "speedMultiplier":  0.92,
                                                                                  "variancePercent":  10
-                                                                             },
-                                                                             {
-                                                                                 "modeId":  "travel_mode.bluewater_ship",
-                                                                                 "speedMultiplier":  0.9,
-                                                                                 "variancePercent":  12
                                                                              }
                                                                          ]
                                                      },
@@ -619,11 +604,6 @@
                                                                                  "modeId":  "travel_mode.sea_vessel",
                                                                                  "speedMultiplier":  1.05,
                                                                                  "variancePercent":  10
-                                                                             },
-                                                                             {
-                                                                                 "modeId":  "travel_mode.bluewater_ship",
-                                                                                 "speedMultiplier":  1.08,
-                                                                                 "variancePercent":  12
                                                                              }
                                                                          ]
                                                      },
@@ -656,11 +636,6 @@
                                                                                  "modeId":  "travel_mode.sea_vessel",
                                                                                  "speedMultiplier":  0.8,
                                                                                  "variancePercent":  25
-                                                                             },
-                                                                             {
-                                                                                 "modeId":  "travel_mode.bluewater_ship",
-                                                                                 "speedMultiplier":  0.83,
-                                                                                 "variancePercent":  28
                                                                              }
                                                                          ]
                                                      }
@@ -1359,7 +1334,7 @@
                                                                         "reverse":  "toward Brineharbor"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.gilded_sea"
                                                                          ]
                                                     },
                                                     {
@@ -1405,7 +1380,7 @@
                                                                         "reverse":  "toward Starfall Port"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.gilded_sea"
                                                                          ]
                                                     },
                                                     {
@@ -1451,7 +1426,7 @@
                                                                         "reverse":  "toward Aurelis"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.azure_vast"
                                                                          ]
                                                     },
                                                     {
@@ -1497,7 +1472,7 @@
                                                                         "reverse":  "toward Seabanner"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.shattered_gulf"
                                                                          ]
                                                     },
                                                     {
@@ -1543,7 +1518,7 @@
                                                                         "reverse":  "toward Breaksail"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.azure_vast"
                                                                          ]
                                                     },
                                                     {
@@ -1590,7 +1565,8 @@
                                                                         "reverse":  "toward Lantern Key"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.azure_vast",
+                                                                             "region.tempest_expanse"
                                                                          ]
                                                     },
                                                     {
@@ -1637,7 +1613,7 @@
                                                                         "reverse":  "toward Breaksail"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.tempest_expanse"
                                                                          ]
                                                     },
                                                     {
@@ -1684,7 +1660,7 @@
                                                                         "reverse":  "toward Stormfang Haven"
                                                                     },
                                                         "seaRegionIds":  [
-
+                                                                             "region.tempest_expanse"
                                                                          ]
                                                     }
                                                 ]

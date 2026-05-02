@@ -5,6 +5,9 @@ import {
   DEFAULT_ACCOUNT_ID,
   createDefaultAccountProfileState,
   grantLegacy,
+  purchaseLegacyUnlock,
+  setLegacyPreparationChoice,
+  selectLegacyPreparation,
   spendLegacy
 } from "../../packages/engines/game-engine/src/index.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
@@ -189,6 +192,7 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
             archiveReason: "retired",
             echoLevelReached: 4,
             notableCharacterAchievementIds: ["achievement.character.first_blooded"],
+            legacyPayoutBaseline: { echoLevel: 1 },
             legacyGranted: 4,
             totalPlayTicks: 360,
             survivedDays: 15,
@@ -197,6 +201,56 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
             legacyPayoutResolvedAt: "2026-04-17T12:14:00.000Z",
             legacyPayoutTransactionId: spent.profile.legacy.legacyTransactions.at(-1)?.id,
             saveSlotIds: []
+          }
+        ]
+      },
+      estate: {
+        deposits: [
+          {
+            depositId: "estate.deposit.player_arden_voss_20260417120000000",
+            sourceRunId: "player.arden_voss::2026-04-17T12:00:00.000Z",
+            sourceCharacterId: "player.arden_voss",
+            sourceName: "Arden Voss",
+            archiveReason: "retired",
+            depositedAt: "2026-04-17T12:14:00.000Z"
+          }
+        ],
+        assets: [
+          {
+            estateAssetId: "estate.asset.player_arden_voss.currency.gold",
+            sourceRunId: "player.arden_voss::2026-04-17T12:00:00.000Z",
+            depositedAt: "2026-04-17T12:14:00.000Z",
+            assetKind: "currency",
+            quantityClaimed: 0,
+            currencyKey: "gold",
+            quantityDeposited: 7
+          },
+          {
+            estateAssetId: "estate.asset.player_arden_voss.item.abalone_meat",
+            sourceRunId: "player.arden_voss::2026-04-17T12:00:00.000Z",
+            depositedAt: "2026-04-17T12:14:00.000Z",
+            assetKind: "item",
+            quantityClaimed: 0,
+            itemId: "item.abalone_meat",
+            quantityDeposited: 3
+          },
+          {
+            estateAssetId: "estate.asset.player_arden_voss.business.gannet_cutter",
+            sourceRunId: "player.arden_voss::2026-04-17T12:00:00.000Z",
+            depositedAt: "2026-04-17T12:14:00.000Z",
+            assetKind: "operational",
+            quantityClaimed: 0,
+            assetId: "business.gannet_cutter",
+            assetType: "business",
+            displayName: "Gannet Cutter",
+            location: {
+              settlementId: "settlement.aurelis",
+              regionId: "region.aurelia",
+              continentId: "continent.kaelvar"
+            },
+            ownershipState: "recorded",
+            operatingState: "Mothballed",
+            storedValueSummary: "Value 120 silver"
           }
         ]
       }
@@ -214,6 +268,7 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
     assert.equal(loaded.legacy.legacyUnlocks[0].rank, 2);
     assert.equal(loaded.legacy.legacyUnlocks[1].unlockId, "legacy.unlock.historical_rankless");
     assert.equal(loaded.legacy.legacyUnlocks[1].rank, undefined);
+    assert.deepEqual(loaded.legacy.selectedPreparationUnlockIds, []);
     assert.equal(loaded.legacy.legacyTransactions.length, 2);
     assert.deepEqual(loaded.achievements.revealedCharacterAchievementIds, [
       "achievement.character.first_blooded"
@@ -227,6 +282,7 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
     assert.equal(loaded.history.runRecords[0]?.outcome, "archived");
     assert.equal(loaded.history.runRecords[0]?.archiveReason, "retired");
     assert.equal(loaded.history.runRecords[0]?.name, "Arden Voss");
+    assert.deepEqual(loaded.history.runRecords[0]?.legacyPayoutBaseline, { echoLevel: 1 });
     assert.equal(loaded.history.runRecords[0]?.totalPlayTicks, 360);
     assert.equal(loaded.history.runRecords[0]?.survivedDays, 15);
     assert.equal(loaded.history.runRecords[0]?.payoutEligible, true);
@@ -239,6 +295,25 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
     assert.equal(
       loaded.history.runRecords[0]?.legacyPayoutTransactionId,
       spent.profile.legacy.legacyTransactions.at(-1)?.id
+    );
+    assert.equal(loaded.estate.deposits.length, 1);
+    assert.equal(loaded.estate.deposits[0]?.sourceName, "Arden Voss");
+    assert.equal(loaded.estate.assets.length, 3);
+    assert.equal(
+      loaded.estate.assets.find((asset) => asset.assetKind === "item")?.itemKey,
+      undefined
+    );
+    assert.equal(
+      loaded.estate.assets.find((asset) => asset.assetKind === "currency")?.quantityDeposited,
+      7
+    );
+    assert.deepEqual(
+      loaded.estate.assets.find((asset) => asset.assetKind === "operational")?.location,
+      {
+        settlementId: "settlement.aurelis",
+        regionId: "region.aurelia",
+        continentId: "continent.kaelvar"
+      }
     );
   }));
 
@@ -268,6 +343,8 @@ test("account profiles preserve retained retired records without migrating archi
             echoLevelReached: 3,
             notableCharacterAchievementIds: [],
             inheritanceUsesRemaining: 2,
+            sourceRunId: "player.parent::2026-04-16T12:00:00.000Z",
+            crossLineageStart: true,
             saveSlotIds: ["slot-1"]
           },
           {
@@ -296,6 +373,11 @@ test("account profiles preserve retained retired records without migrating archi
     const loaded = loadAccountProfile("account.local.retired_storage");
     assert.equal(loaded.history.runRecords[0]?.outcome, "retired");
     assert.equal(loaded.history.runRecords[0]?.inheritanceUsesRemaining, 2);
+    assert.equal(
+      loaded.history.runRecords[0]?.sourceRunId,
+      "player.parent::2026-04-16T12:00:00.000Z"
+    );
+    assert.equal(loaded.history.runRecords[0]?.crossLineageStart, true);
     assert.deepEqual(loaded.history.runRecords[0]?.saveSlotIds, ["slot-1"]);
     assert.equal(loaded.history.runRecords[1]?.outcome, "archived");
     assert.equal(loaded.history.runRecords[1]?.archiveReason, "retired");
@@ -322,9 +404,119 @@ test("legacy-only account profiles normalize forward with achievements and histo
 
     const loaded = loadAccountProfile("account.local.legacy_only");
     assert.equal(loaded.legacy.legacyPoints, 4);
+    assert.deepEqual(loaded.legacy.selectedPreparationUnlockIds, []);
     assert.deepEqual(loaded.achievements.unlocked, []);
     assert.deepEqual(loaded.achievements.revealedCharacterAchievementIds, []);
     assert.deepEqual(loaded.history.runRecords, []);
+    assert.deepEqual(loaded.estate, { deposits: [], assets: [] });
+  }));
+
+test("account profile roundtrip preserves owned and selected Legacy preparations separately", () =>
+  withMockWindow(() => {
+    let profile = grantLegacy(
+      createDefaultAccountProfileState({
+        accountId: "account.local.preparations",
+        displayName: "Preparation Ledger"
+      }),
+      {
+        amount: 100,
+        summary: "Test grant",
+        sourceType: "test",
+        sourceId: "test.preparations",
+        recordedAt: "2026-04-20T17:00:00.000Z"
+      }
+    ).profile;
+
+    for (const unlockId of [
+      "legacy.unlock.lineage.prepared_lineage",
+      "legacy.unlock.lineage.prepared_lineage",
+      "legacy.unlock.preparation.storehouse_keys",
+      "legacy.unlock.preparation.merchant_purse",
+      "legacy.unlock.preparation.camp_supplies",
+      "legacy.unlock.preparation.martial_legacy"
+    ]) {
+      const purchased = purchaseLegacyUnlock(
+        profile,
+        unlockId,
+        `2026-04-20T17:${profile.legacy.legacyTransactions.length.toString().padStart(2, "0")}:00.000Z`
+      );
+      assert.equal(purchased.ok, true);
+      profile = purchased.profile;
+    }
+
+    profile = {
+      ...profile,
+      legacy: {
+        ...profile.legacy,
+        selectedPreparationUnlockIds: [
+          "legacy.unlock.preparation.storehouse_keys",
+          "legacy.unlock.preparation.martial_legacy",
+          "legacy.unlock.preparation.unknown",
+          "legacy.unlock.preparation.merchant_purse",
+          "legacy.unlock.preparation.camp_supplies"
+        ],
+        selectedPreparationChoicePayloads: {
+          "legacy.unlock.preparation.martial_legacy": "DEX",
+          "legacy.unlock.preparation.unknown": "WIS",
+          "legacy.unlock.preparation.camp_supplies": "hp"
+        }
+      }
+    };
+
+    const chosen = setLegacyPreparationChoice(
+      profile,
+      "legacy.unlock.preparation.martial_legacy",
+      "DEX"
+    );
+    assert.equal(chosen.ok, true);
+    profile = {
+      ...chosen.profile,
+      legacy: {
+        ...chosen.profile.legacy,
+        selectedPreparationUnlockIds: [
+          ...chosen.profile.legacy.selectedPreparationUnlockIds,
+          "legacy.unlock.preparation.unknown",
+          "legacy.unlock.preparation.camp_supplies"
+        ]
+      }
+    };
+
+    saveAccountProfile(profile);
+
+    const loaded = loadAccountProfile("account.local.preparations");
+    assert.deepEqual(loaded.legacy.selectedPreparationUnlockIds, [
+      "legacy.unlock.preparation.storehouse_keys",
+      "legacy.unlock.preparation.martial_legacy"
+    ]);
+    assert.deepEqual(loaded.legacy.selectedPreparationChoicePayloads, {
+      "legacy.unlock.preparation.martial_legacy": "DEX"
+    });
+    assert.equal(
+      loaded.legacy.legacyUnlocks.some(
+        (unlock) => unlock.unlockId === "legacy.unlock.preparation.camp_supplies"
+      ),
+      true
+    );
+
+    const removed = selectLegacyPreparation(
+      {
+        ...loaded,
+        legacy: {
+          ...loaded.legacy,
+          selectedPreparationUnlockIds: [
+            "legacy.unlock.preparation.storehouse_keys"
+          ],
+          selectedPreparationChoicePayloads: {}
+        }
+      },
+      "legacy.unlock.preparation.merchant_purse"
+    );
+    assert.equal(removed.ok, true);
+    assert.deepEqual(removed.profile.legacy.selectedPreparationUnlockIds, [
+      "legacy.unlock.preparation.storehouse_keys",
+      "legacy.unlock.preparation.merchant_purse"
+    ]);
+    assert.deepEqual(removed.profile.legacy.selectedPreparationChoicePayloads, {});
   }));
 
 test("account-scoped saves roundtrip with accountId and remain invisible to other accounts", () =>
@@ -332,12 +524,24 @@ test("account-scoped saves roundtrip with accountId and remain invisible to othe
     const accountA = "account.local.alpha";
     const accountB = "account.local.beta";
     const snapshotA = createSnapshot(accountA, "Arden Voss");
+    snapshotA.playerState.saveMeta.appliedLegacyPreparationIds = [
+      "legacy.unlock.preparation.storehouse_keys"
+    ];
+    snapshotA.playerState.saveMeta.appliedLegacyPreparationChoices = {
+      "legacy.unlock.preparation.martial_legacy": "STR"
+    };
     const snapshotB = createSnapshot(accountB, "Mira Vale");
 
     createSave(accountA, "slot-1", snapshotA, buildSaveMetadata("slot-1", snapshotA));
     createSave(accountB, "slot-1", snapshotB, buildSaveMetadata("slot-1", snapshotB));
 
     assert.equal(loadSave(accountA, "slot-1")?.accountId, accountA);
+    assert.deepEqual(loadSave(accountA, "slot-1")?.playerState.saveMeta.appliedLegacyPreparationIds, [
+      "legacy.unlock.preparation.storehouse_keys"
+    ]);
+    assert.deepEqual(loadSave(accountA, "slot-1")?.playerState.saveMeta.appliedLegacyPreparationChoices, {
+      "legacy.unlock.preparation.martial_legacy": "STR"
+    });
     assert.equal(loadSave(accountB, "slot-1")?.accountId, accountB);
     assert.equal(loadSave(accountA, "slot-2"), null);
 

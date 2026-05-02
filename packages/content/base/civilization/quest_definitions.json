@@ -207,12 +207,12 @@
       },
       "logistics": {
         "requiredTools": [
-          "tool.depth_line",
-          "tool.tide_chart_case"
+          "plumb_line",
+          "route_charts"
         ],
         "recommendedTools": [
-          "tool.signal_lantern",
-          "tool.spare_oars"
+          "lantern",
+          "surveyor_kit"
         ],
         "requiredEquipmentTags": [
           "gear.seafaring"
@@ -624,12 +624,12 @@
       },
       "logistics": {
         "requiredTools": [
-          "tool.brake_wrench",
-          "tool.axle_pin_kit"
+          "pack_harness",
+          "route_charts"
         ],
         "recommendedTools": [
-          "tool.pack_hoist",
-          "tool.spare_harness"
+          "repair_hammer",
+          "field_bandage"
         ],
         "requiredEquipmentTags": [
           "gear.road_ready"
@@ -1026,11 +1026,11 @@
       },
       "logistics": {
         "requiredTools": [
-          "tool.sanctified_chalk",
-          "tool.bone_hook"
+          "chalk",
+          "hook"
         ],
         "recommendedTools": [
-          "tool.grave_lantern"
+          "lantern"
         ],
         "requiredEquipmentTags": [
           "gear.catacomb_ready"
@@ -1093,7 +1093,7 @@
               },
               {
                 "kind": "tool",
-                "targetId": "tool.sanctified_chalk",
+                "targetId": "chalk",
                 "minValue": 1,
                 "weight": 0.15,
                 "optional": false,
@@ -1402,11 +1402,11 @@
       },
       "logistics": {
         "requiredTools": [
-          "tool.false_bottom_purse",
-          "tool.wax_impression_kit"
+          "travel_pouch",
+          "wax_stamp"
         ],
         "recommendedTools": [
-          "tool.market_cloak"
+          "travel_cloak"
         ],
         "requiredEquipmentTags": [
           "gear.city_subtle"
@@ -1759,12 +1759,12 @@
       },
       "logistics": {
         "requiredTools": [
-          "tool.dockside_signal_whistle",
-          "tool.false_manifest_satchel"
+          "lantern",
+          "ledger"
         ],
         "recommendedTools": [
-          "tool.bolt_cutters",
-          "tool.shore_skiff"
+          "rope_hook_kit",
+          "patrol_skiff"
         ],
         "requiredEquipmentTags": [
           "gear.concealable"

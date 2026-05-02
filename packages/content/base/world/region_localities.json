@@ -436,7 +436,7 @@
                         "summary":  "Fortified wells and rare river crossings that make otherwise harsh routes viable.",
                         "habitationScoreModifier":  -7,
                         "resourceCatchment":  {
-                                                  "arableLand":  "minimal",
+                                                  "arableLand":  "scarce",
                                                   "pasture":  "limited",
                                                   "timber":  "none",
                                                   "fishery":  "limited",

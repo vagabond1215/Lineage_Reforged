@@ -1,11 +1,15 @@
 import type {
   AccountAchievementUnlockState,
   AccountAchievementsState,
+  AccountEstateAssetRecord,
+  AccountEstateDepositRecord,
+  AccountEstateState,
   AccountHistoryState,
   AccountLegacyState,
   AccountProfileState,
   AccountRunHistoryRecord,
   AchievementMetricId,
+  RunLegacyPayoutBaselineState,
   LegacyTransactionState,
   LegacyUnlockState,
   RunLegacyPayoutBreakdownState
@@ -15,6 +19,8 @@ import {
   DEFAULT_ACCOUNT_ID,
   createDefaultAccountProfileState
 } from "../../../../packages/engines/game-engine/src/legacy-account.js";
+import { createDefaultAccountEstateState } from "../../../../packages/engines/game-engine/src/account-estate.js";
+import { resolveLegacyPreparationSelection } from "../../../../packages/engines/game-engine/src/legacy-unlocks.js";
 import {
   ACHIEVEMENT_METRIC_IDS,
   createAchievementMetricRecord,
@@ -82,6 +88,12 @@ function isRunLegacyPayoutBreakdownState(
   );
 }
 
+function isRunLegacyPayoutBaselineState(
+  value: unknown
+): value is RunLegacyPayoutBaselineState {
+  return isRecord(value) && isNonNegativeInteger(value.echoLevel);
+}
+
 function isLegacyUnlockState(value: unknown): value is LegacyUnlockState {
   return (
     isRecord(value) &&
@@ -115,7 +127,15 @@ function isAccountLegacyState(value: unknown): value is AccountLegacyState {
     Array.isArray(value.legacyUnlocks) &&
     value.legacyUnlocks.every(isLegacyUnlockState) &&
     Array.isArray(value.legacyTransactions) &&
-    value.legacyTransactions.every(isLegacyTransactionState)
+    value.legacyTransactions.every(isLegacyTransactionState) &&
+    (value.selectedPreparationUnlockIds === undefined ||
+      (Array.isArray(value.selectedPreparationUnlockIds) &&
+        value.selectedPreparationUnlockIds.every((entry) => typeof entry === "string"))) &&
+    (value.selectedPreparationChoicePayloads === undefined ||
+      (isRecord(value.selectedPreparationChoicePayloads) &&
+        Object.values(value.selectedPreparationChoicePayloads).every(
+          (entry) => typeof entry === "string"
+        )))
   );
 }
 
@@ -176,6 +196,8 @@ function isAccountRunHistoryRecord(value: unknown): value is AccountRunHistoryRe
     isNonNegativeInteger(value.echoLevelReached) &&
     Array.isArray(value.notableCharacterAchievementIds) &&
     value.notableCharacterAchievementIds.every((entry) => typeof entry === "string") &&
+    (value.legacyPayoutBaseline === undefined ||
+      isRunLegacyPayoutBaselineState(value.legacyPayoutBaseline)) &&
     (value.legacyGranted === undefined || isNonNegativeInteger(value.legacyGranted)) &&
     (value.inheritanceUsesRemaining === undefined ||
       isNonNegativeInteger(value.inheritanceUsesRemaining)) &&
@@ -188,6 +210,9 @@ function isAccountRunHistoryRecord(value: unknown): value is AccountRunHistoryRe
       value.legacyPayoutResolvedAt === undefined) &&
     (typeof value.legacyPayoutTransactionId === "string" ||
       value.legacyPayoutTransactionId === undefined) &&
+    (typeof value.sourceRunId === "string" || value.sourceRunId === undefined) &&
+    (typeof value.crossLineageStart === "boolean" ||
+      value.crossLineageStart === undefined) &&
     Array.isArray(value.saveSlotIds) &&
     value.saveSlotIds.every((entry) => typeof entry === "string")
   );
@@ -201,6 +226,71 @@ function isAccountHistoryState(value: unknown): value is AccountHistoryState {
   );
 }
 
+function isEstateLocationState(value: unknown): value is NonNullable<AccountEstateAssetRecord["location"]> {
+  return (
+    isRecord(value) &&
+    (typeof value.settlementId === "string" || value.settlementId === undefined) &&
+    (typeof value.regionId === "string" || value.regionId === undefined) &&
+    (typeof value.continentId === "string" || value.continentId === undefined)
+  );
+}
+
+function isAccountEstateDepositRecord(value: unknown): value is AccountEstateDepositRecord {
+  return (
+    isRecord(value) &&
+    typeof value.depositId === "string" &&
+    typeof value.sourceRunId === "string" &&
+    typeof value.sourceCharacterId === "string" &&
+    typeof value.sourceName === "string" &&
+    (value.archiveReason === "retired" ||
+      value.archiveReason === "dead" ||
+      value.archiveReason === "hardcore_dead") &&
+    typeof value.depositedAt === "string"
+  );
+}
+
+function isAccountEstateAssetRecord(value: unknown): value is AccountEstateAssetRecord {
+  return (
+    isRecord(value) &&
+    typeof value.estateAssetId === "string" &&
+    typeof value.sourceRunId === "string" &&
+    typeof value.depositedAt === "string" &&
+    (value.assetKind === "currency" ||
+      value.assetKind === "item" ||
+      value.assetKind === "operational") &&
+    isNonNegativeInteger(value.quantityClaimed) &&
+    (value.currencyKey === "gold" ||
+      value.currencyKey === "silver" ||
+      value.currencyKey === "copper" ||
+      value.currencyKey === undefined) &&
+    (typeof value.itemId === "string" || value.itemId === undefined) &&
+    (typeof value.itemKey === "string" || value.itemKey === undefined) &&
+    (value.quantityDeposited === undefined || isNonNegativeInteger(value.quantityDeposited)) &&
+    (typeof value.assetId === "string" || value.assetId === undefined) &&
+    (value.assetType === "business" ||
+      value.assetType === "workshop" ||
+      value.assetType === "property" ||
+      value.assetType === "holding" ||
+      value.assetType === undefined) &&
+    (typeof value.displayName === "string" || value.displayName === undefined) &&
+    (value.location === undefined || isEstateLocationState(value.location)) &&
+    (typeof value.ownershipState === "string" || value.ownershipState === undefined) &&
+    (typeof value.operatingState === "string" || value.operatingState === undefined) &&
+    (typeof value.storedValueSummary === "string" ||
+      value.storedValueSummary === undefined)
+  );
+}
+
+function isAccountEstateState(value: unknown): value is AccountEstateState {
+  return (
+    isRecord(value) &&
+    Array.isArray(value.deposits) &&
+    value.deposits.every(isAccountEstateDepositRecord) &&
+    Array.isArray(value.assets) &&
+    value.assets.every(isAccountEstateAssetRecord)
+  );
+}
+
 function isAccountProfileState(value: unknown): value is AccountProfileState {
   return (
     isRecord(value) &&
@@ -211,7 +301,8 @@ function isAccountProfileState(value: unknown): value is AccountProfileState {
     (typeof value.lastPlayedAt === "string" || value.lastPlayedAt === undefined) &&
     isAccountLegacyState(value.legacy) &&
     (value.achievements === undefined || isAccountAchievementsState(value.achievements)) &&
-    (value.history === undefined || isAccountHistoryState(value.history))
+    (value.history === undefined || isAccountHistoryState(value.history)) &&
+    (value.estate === undefined || isAccountEstateState(value.estate))
   );
 }
 
@@ -281,6 +372,13 @@ function normalizeHistory(history: AccountHistoryState | undefined): AccountHist
       ...record,
       echoLevelReached: Math.max(0, Math.trunc(record.echoLevelReached)),
       notableCharacterAchievementIds: [...new Set(record.notableCharacterAchievementIds)],
+      ...(record.legacyPayoutBaseline !== undefined
+        ? {
+            legacyPayoutBaseline: {
+              echoLevel: Math.max(0, Math.trunc(record.legacyPayoutBaseline.echoLevel))
+            }
+          }
+        : {}),
       ...(record.legacyGranted !== undefined
         ? { legacyGranted: Math.max(0, Math.trunc(record.legacyGranted)) }
         : {}),
@@ -305,13 +403,79 @@ function normalizeHistory(history: AccountHistoryState | undefined): AccountHist
       ...(record.legacyPayoutTransactionId !== undefined
         ? { legacyPayoutTransactionId: record.legacyPayoutTransactionId }
         : {}),
+      ...(record.sourceRunId !== undefined ? { sourceRunId: record.sourceRunId } : {}),
+      ...(record.crossLineageStart !== undefined
+        ? { crossLineageStart: record.crossLineageStart }
+        : {}),
       saveSlotIds: [...new Set(record.saveSlotIds)]
     }))
   };
 }
 
-function normalizeProfile(profile: AccountProfileState): AccountProfileState {
+function normalizeEstate(estate: AccountEstateState | undefined): AccountEstateState {
+  const defaults = createDefaultAccountEstateState();
+
+  if (!estate) {
+    return defaults;
+  }
+
+  const seenDeposits = new Set<string>();
+  const deposits = estate.deposits.flatMap((deposit) => {
+    if (seenDeposits.has(deposit.depositId)) {
+      return [];
+    }
+
+    seenDeposits.add(deposit.depositId);
+    return [
+      {
+        depositId: deposit.depositId,
+        sourceRunId: deposit.sourceRunId,
+        sourceCharacterId: deposit.sourceCharacterId,
+        sourceName: deposit.sourceName,
+        archiveReason: deposit.archiveReason,
+        depositedAt: deposit.depositedAt
+      }
+    ];
+  });
+  const seenAssets = new Set<string>();
+  const assets = estate.assets.flatMap((asset) => {
+    if (seenAssets.has(asset.estateAssetId)) {
+      return [];
+    }
+
+    seenAssets.add(asset.estateAssetId);
+    return [
+      {
+        estateAssetId: asset.estateAssetId,
+        sourceRunId: asset.sourceRunId,
+        depositedAt: asset.depositedAt,
+        assetKind: asset.assetKind,
+        quantityClaimed: Math.max(0, Math.trunc(asset.quantityClaimed)),
+        ...(asset.currencyKey ? { currencyKey: asset.currencyKey } : {}),
+        ...(asset.itemId ? { itemId: asset.itemId } : {}),
+        ...(asset.itemKey ? { itemKey: asset.itemKey } : {}),
+        ...(asset.quantityDeposited !== undefined
+          ? { quantityDeposited: Math.max(0, Math.trunc(asset.quantityDeposited)) }
+          : {}),
+        ...(asset.assetId ? { assetId: asset.assetId } : {}),
+        ...(asset.assetType ? { assetType: asset.assetType } : {}),
+        ...(asset.displayName ? { displayName: asset.displayName } : {}),
+        ...(asset.location ? { location: { ...asset.location } } : {}),
+        ...(asset.ownershipState ? { ownershipState: asset.ownershipState } : {}),
+        ...(asset.operatingState ? { operatingState: asset.operatingState } : {}),
+        ...(asset.storedValueSummary ? { storedValueSummary: asset.storedValueSummary } : {})
+      }
+    ];
+  });
+
   return {
+    deposits,
+    assets
+  };
+}
+
+function normalizeProfile(profile: AccountProfileState): AccountProfileState {
+  const normalized: AccountProfileState = {
     accountId: sanitizeAccountId(profile.accountId),
     displayName: sanitizeDisplayName(profile.displayName),
     createdAt: profile.createdAt,
@@ -330,10 +494,35 @@ function normalizeProfile(profile: AccountProfileState): AccountProfileState {
         ...entry,
         amount: Math.max(0, Math.trunc(entry.amount)),
         balanceAfter: Math.max(0, Math.trunc(entry.balanceAfter))
-      }))
+      })),
+      selectedPreparationUnlockIds: Array.isArray(profile.legacy.selectedPreparationUnlockIds)
+        ? profile.legacy.selectedPreparationUnlockIds.filter((entry) => typeof entry === "string")
+        : [],
+      selectedPreparationChoicePayloads: isRecord(profile.legacy.selectedPreparationChoicePayloads)
+        ? Object.fromEntries(
+            Object.entries(profile.legacy.selectedPreparationChoicePayloads).filter(
+              ([unlockId, payload]) =>
+                typeof unlockId === "string" &&
+                unlockId.length > 0 &&
+                typeof payload === "string" &&
+                payload.trim().length > 0
+            )
+          )
+        : {}
     },
     achievements: normalizeAchievements(profile.achievements),
-    history: normalizeHistory(profile.history)
+    history: normalizeHistory(profile.history),
+    estate: normalizeEstate(profile.estate)
+  };
+  const selection = resolveLegacyPreparationSelection(normalized);
+
+  return {
+    ...normalized,
+    legacy: {
+      ...normalized.legacy,
+      selectedPreparationUnlockIds: selection.selectedUnlockIds,
+      selectedPreparationChoicePayloads: selection.selectedChoicePayloads
+    }
   };
 }
 

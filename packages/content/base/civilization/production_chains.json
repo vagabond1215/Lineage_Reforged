@@ -12,7 +12,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "alchemy",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -27,7 +27,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -48,7 +48,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -77,7 +77,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "alchemy",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -95,7 +95,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -128,7 +128,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "alchemy",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -165,7 +165,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -187,7 +187,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -217,7 +217,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "alchemy",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -232,7 +232,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -253,7 +253,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -285,7 +285,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "rendering",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -311,7 +311,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -329,7 +329,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -350,7 +350,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -433,7 +433,7 @@
       },
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -453,7 +453,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -486,7 +486,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -512,7 +512,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -535,7 +535,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -565,7 +565,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -594,7 +594,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -677,7 +677,7 @@
       },
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -697,7 +697,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -780,7 +780,7 @@
       },
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -800,7 +800,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -883,7 +883,7 @@
       },
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -903,7 +903,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -932,7 +932,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -950,7 +950,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1072,7 +1072,7 @@
       },
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1109,7 +1109,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1135,7 +1135,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1250,7 +1250,7 @@
       },
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1295,7 +1295,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1418,7 +1418,7 @@
       },
       "recipeProfile": {
         "recipeClass": "brewing",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1455,7 +1455,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1482,7 +1482,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1515,7 +1515,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1552,7 +1552,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1574,7 +1574,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1606,7 +1606,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1647,7 +1647,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1680,7 +1680,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "cooperage",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1706,7 +1706,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1724,7 +1724,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1742,7 +1742,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1763,7 +1763,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1793,7 +1793,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "cooperage",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1808,7 +1808,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1829,7 +1829,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -1860,7 +1860,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "agriculture",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -1890,7 +1890,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1926,7 +1926,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "baking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "flour",
           "honeycomb",
@@ -1955,7 +1955,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -1980,7 +1980,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2037,7 +2037,7 @@
       },
       "recipeProfile": {
         "recipeClass": "baking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "flour",
           "honeycomb",
@@ -2064,7 +2064,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -2090,7 +2090,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2121,7 +2121,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "baking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "flour",
           "honeycomb",
@@ -2149,7 +2149,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -2173,7 +2173,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2290,7 +2290,7 @@
       },
       "recipeProfile": {
         "recipeClass": "preserving",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "cane_sugar",
           "honeycomb",
@@ -2317,7 +2317,7 @@
             "materialDifficultyMode": "input_weighted",
             "usesVariantInputs": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2344,7 +2344,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2377,7 +2377,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "baking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "grain_bundle"
         ],
@@ -2418,7 +2418,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -2445,7 +2445,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -2472,7 +2472,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2597,7 +2597,7 @@
       },
       "recipeProfile": {
         "recipeClass": "butchery",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -2619,7 +2619,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2810,7 +2810,7 @@
       },
       "recipeProfile": {
         "recipeClass": "butchery",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -2833,7 +2833,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2866,7 +2866,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "preserving",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "cane_sugar",
           "honeycomb",
@@ -2893,7 +2893,7 @@
             "materialDifficultyMode": "input_weighted",
             "usesVariantInputs": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2918,7 +2918,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -2949,7 +2949,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "cooking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -2979,7 +2979,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -3088,7 +3088,7 @@
       },
       "recipeProfile": {
         "recipeClass": "milling",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "grain_bundle"
         ],
@@ -3127,7 +3127,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -3157,7 +3157,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "dairy_processing",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "milk_raw"
         ],
@@ -3178,7 +3178,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -3206,7 +3206,7 @@
             "difficultyTier": "easy",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 20,
               "efficiencyRank": 60,
               "qualityRank": 100,
@@ -3234,7 +3234,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -3270,7 +3270,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "cooking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -3288,7 +3288,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -3346,7 +3346,7 @@
       },
       "recipeProfile": {
         "recipeClass": "cooking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -3367,7 +3367,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -3431,7 +3431,7 @@
       },
       "recipeProfile": {
         "recipeClass": "cooking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -3452,7 +3452,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -3544,7 +3544,7 @@
       },
       "recipeProfile": {
         "recipeClass": "cooking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -3565,7 +3565,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -3875,7 +3875,7 @@
       },
       "recipeProfile": {
         "recipeClass": "preserving",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "salt_crystal"
         ],
@@ -3895,7 +3895,7 @@
             "materialDifficultyMode": "input_weighted",
             "usesVariantInputs": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -3920,7 +3920,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4235,7 +4235,7 @@
       },
       "recipeProfile": {
         "recipeClass": "preserving",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "salt_crystal"
         ],
@@ -4255,7 +4255,7 @@
             "materialDifficultyMode": "input_weighted",
             "usesVariantInputs": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4281,7 +4281,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4393,7 +4393,7 @@
       },
       "recipeProfile": {
         "recipeClass": "butchery",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [
           "meat_trimmings"
@@ -4417,7 +4417,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4468,7 +4468,7 @@
       },
       "recipeProfile": {
         "recipeClass": "butchery",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -4488,7 +4488,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4548,7 +4548,7 @@
       },
       "recipeProfile": {
         "recipeClass": "preserving",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [
           "salt_crystal"
         ],
@@ -4568,7 +4568,7 @@
             "materialDifficultyMode": "input_weighted",
             "usesVariantInputs": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4592,7 +4592,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4654,7 +4654,7 @@
       },
       "recipeProfile": {
         "recipeClass": "cooking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -4675,7 +4675,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4767,7 +4767,7 @@
       },
       "recipeProfile": {
         "recipeClass": "cooking",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -4788,7 +4788,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4845,7 +4845,7 @@
       },
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -4879,7 +4879,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -4939,7 +4939,7 @@
       },
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -4977,7 +4977,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5030,7 +5030,7 @@
       },
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5061,7 +5061,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5092,7 +5092,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5122,7 +5122,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5155,7 +5155,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5181,7 +5181,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5204,7 +5204,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5238,7 +5238,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "glassmaking",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5279,7 +5279,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5308,7 +5308,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5326,7 +5326,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5359,7 +5359,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5374,7 +5374,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5392,7 +5392,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5410,7 +5410,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5428,7 +5428,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5449,7 +5449,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5492,7 +5492,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5518,7 +5518,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5536,7 +5536,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5554,7 +5554,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5572,7 +5572,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5594,7 +5594,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5902,7 +5902,7 @@
       },
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -5928,7 +5928,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -5954,7 +5954,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6291,7 +6291,7 @@
       },
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6317,7 +6317,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6335,7 +6335,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6362,7 +6362,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6395,7 +6395,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "leatherworking",
-        "primarySkillId": "skill.craft.leatherworking",
+        "primarySkillId": "skill.crafting.leatherworking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6427,7 +6427,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6459,7 +6459,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "leatherworking",
-        "primarySkillId": "skill.craft.leatherworking",
+        "primarySkillId": "skill.crafting.leatherworking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6490,7 +6490,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6522,7 +6522,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "leatherworking",
-        "primarySkillId": "skill.craft.leatherworking",
+        "primarySkillId": "skill.crafting.leatherworking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6553,7 +6553,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6583,7 +6583,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "leatherworking",
-        "primarySkillId": "skill.craft.leatherworking",
+        "primarySkillId": "skill.crafting.leatherworking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6612,7 +6612,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6648,7 +6648,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6685,7 +6685,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6703,7 +6703,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6721,7 +6721,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6739,7 +6739,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6761,7 +6761,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6817,7 +6817,7 @@
       },
       "recipeProfile": {
         "recipeClass": "woodworking",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6849,7 +6849,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6883,7 +6883,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "woodworking",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -6916,7 +6916,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -6975,7 +6975,7 @@
       },
       "recipeProfile": {
         "recipeClass": "woodworking",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7008,7 +7008,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7038,7 +7038,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "woodworking",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7067,7 +7067,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7098,7 +7098,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7128,7 +7128,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7161,7 +7161,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7203,7 +7203,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7232,7 +7232,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7250,7 +7250,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7280,7 +7280,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7295,7 +7295,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7316,7 +7316,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7368,7 +7368,7 @@
       },
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7399,7 +7399,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7430,7 +7430,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7460,7 +7460,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7491,7 +7491,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7521,7 +7521,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -7551,7 +7551,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7580,7 +7580,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7610,7 +7610,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7639,7 +7639,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7669,7 +7669,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7698,7 +7698,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7741,7 +7741,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7767,7 +7767,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7785,7 +7785,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7803,7 +7803,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7834,7 +7834,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7864,7 +7864,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7893,7 +7893,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7923,7 +7923,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -7952,7 +7952,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -7984,7 +7984,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8010,7 +8010,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8032,7 +8032,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8062,7 +8062,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8091,7 +8091,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8121,7 +8121,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8150,7 +8150,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8180,7 +8180,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8209,7 +8209,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8239,7 +8239,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8268,7 +8268,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8299,7 +8299,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "metalsmithing",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8325,7 +8325,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8346,7 +8346,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -8383,7 +8383,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8420,7 +8420,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8438,7 +8438,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8456,7 +8456,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8474,7 +8474,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8492,7 +8492,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8514,7 +8514,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8551,7 +8551,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.woodworking",
+        "primarySkillId": "skill.crafting.carpentry",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8577,7 +8577,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8595,7 +8595,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8613,7 +8613,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8631,7 +8631,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8649,7 +8649,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8672,7 +8672,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8709,7 +8709,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8735,7 +8735,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8757,7 +8757,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8788,7 +8788,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8818,7 +8818,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8847,7 +8847,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8865,7 +8865,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8899,7 +8899,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -8914,7 +8914,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8932,7 +8932,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8950,7 +8950,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8968,7 +8968,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -8986,7 +8986,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9007,7 +9007,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9036,7 +9036,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9051,7 +9051,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9069,7 +9069,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9089,7 +9089,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9118,7 +9118,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9136,7 +9136,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9165,7 +9165,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9183,7 +9183,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9211,7 +9211,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9226,7 +9226,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9246,7 +9246,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9275,7 +9275,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9293,7 +9293,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9322,7 +9322,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9340,7 +9340,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9370,7 +9370,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9385,7 +9385,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9403,7 +9403,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9421,7 +9421,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9441,7 +9441,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9470,7 +9470,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9485,7 +9485,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9503,7 +9503,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9523,7 +9523,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9551,7 +9551,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9566,7 +9566,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9586,7 +9586,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9615,7 +9615,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9633,7 +9633,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9662,7 +9662,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9680,7 +9680,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9709,7 +9709,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9727,7 +9727,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9756,7 +9756,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9774,7 +9774,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9806,7 +9806,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9821,7 +9821,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9839,7 +9839,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9857,7 +9857,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9875,7 +9875,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9893,7 +9893,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9913,7 +9913,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9942,7 +9942,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -9957,7 +9957,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9975,7 +9975,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -9995,7 +9995,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10024,7 +10024,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10042,7 +10042,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10071,7 +10071,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10089,7 +10089,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10121,7 +10121,7 @@
       "byProducts": [],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10136,7 +10136,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10154,7 +10154,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10172,7 +10172,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10190,7 +10190,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10208,7 +10208,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10228,7 +10228,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10257,7 +10257,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10275,7 +10275,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10304,7 +10304,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10322,7 +10322,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10351,7 +10351,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "binding",
-        "primarySkillId": "skill.craft.alchemy",
+        "primarySkillId": "skill.crafting.alchemy",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10369,7 +10369,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.alchemy",
+              "skillId": "skill.crafting.alchemy",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10400,7 +10400,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.cooking",
+        "primarySkillId": "skill.crafting.cooking",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10430,7 +10430,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.cooking",
+              "skillId": "skill.crafting.cooking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10477,7 +10477,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "tailoring",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10514,7 +10514,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10532,7 +10532,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10550,7 +10550,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10576,7 +10576,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10613,7 +10613,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "tailoring",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10650,7 +10650,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10668,7 +10668,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10686,7 +10686,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10708,7 +10708,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10739,7 +10739,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10779,7 +10779,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10813,7 +10813,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10855,7 +10855,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10886,7 +10886,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10912,7 +10912,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10933,7 +10933,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -10963,7 +10963,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -10992,7 +10992,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -11022,7 +11022,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.textiles",
+        "primarySkillId": "skill.crafting.weaving",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -11051,7 +11051,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -11099,7 +11099,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "assembly",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -11136,7 +11136,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -11154,7 +11154,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -11172,7 +11172,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -11190,7 +11190,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -11217,7 +11217,7 @@
             "difficultyTier": "moderate",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 35,
               "efficiencyRank": 75,
               "qualityRank": 110,
@@ -11259,7 +11259,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "forging",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -11296,7 +11296,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11314,7 +11314,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11332,7 +11332,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11355,7 +11355,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11389,7 +11389,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "forging",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -11415,7 +11415,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11433,7 +11433,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.textiles",
+              "skillId": "skill.crafting.weaving",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11456,7 +11456,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11546,7 +11546,7 @@
       },
       "recipeProfile": {
         "recipeClass": "forging",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -11583,7 +11583,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11601,7 +11601,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11625,7 +11625,7 @@
             "usesVariantPrimaryOutput": true,
             "usesVariantByProducts": true,
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11667,7 +11667,7 @@
       ],
       "recipeProfile": {
         "recipeClass": "forging",
-        "primarySkillId": "skill.craft.smithing",
+        "primarySkillId": "skill.crafting.blacksmithing",
         "externalInputs": [],
         "intermediateItems": [],
         "processingSteps": [
@@ -11704,7 +11704,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11722,7 +11722,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11740,7 +11740,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.woodworking",
+              "skillId": "skill.crafting.carpentry",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11758,7 +11758,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.leatherworking",
+              "skillId": "skill.crafting.leatherworking",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,
@@ -11786,7 +11786,7 @@
             "difficultyTier": "hard",
             "materialDifficultyMode": "input_weighted",
             "skillCheck": {
-              "skillId": "skill.craft.smithing",
+              "skillId": "skill.crafting.blacksmithing",
               "minimumRank": 60,
               "efficiencyRank": 95,
               "qualityRank": 125,

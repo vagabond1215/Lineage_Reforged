@@ -99,6 +99,9 @@ export function ActivityPanel({
     setConfirmAction(null);
   }, [snapshot]);
 
+  const mutedInsetCardClass =
+    'rounded-[22px] border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] p-4';
+
   return (
     <PanelLayout
       leftSidebar={
@@ -115,12 +118,14 @@ export function ActivityPanel({
           <Card title="System Overview" accent={accent}>
             <div className="grid gap-3 md:grid-cols-3">
               {activityData.metrics.map((metric) => (
-                <div key={metric.id} className="rounded-[22px] border border-white/8 bg-black/10 p-4">
-                  <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                <div key={metric.id} className={mutedInsetCardClass}>
+                  <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
                     {metric.label}
                   </div>
-                  <div className="mt-2 text-2xl text-slate-50">{metric.value}</div>
-                  <div className="mt-2 text-sm text-slate-400">{metric.detail}</div>
+                  <div className="mt-2 text-2xl text-[color:var(--color-text-primary)]">{metric.value}</div>
+                  <div className="mt-2 text-sm text-[color:var(--color-text-secondary)]">
+                    {metric.detail}
+                  </div>
                 </div>
               ))}
             </div>
@@ -129,20 +134,32 @@ export function ActivityPanel({
           <Card title="Active Shift Controls" accent={accent}>
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="space-y-2 text-sm text-slate-300">
-                <div>
-                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Current Activity</span>
-                  <div className="mt-1 text-base text-slate-50">
-                    {snapshot.sessionState.currentActivity?.label ?? 'No active process'}
+                <div className="space-y-3 text-sm text-[color:var(--color-text-secondary)]">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+                      Current Activity
+                    </span>
+                    <div className="mt-1 text-base text-[color:var(--color-text-primary)]">
+                      {snapshot.sessionState.currentActivity?.label ?? 'No active process'}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <span className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Current Location</span>
-                  <div className="mt-1 text-base text-slate-50">{currentLocationLabel}</div>
-                </div>
-                <div className="text-slate-400">
-                  {selectedItem?.detailSummary ?? 'Select a job, contract, or operation to set focus before advancing time.'}
-                </div>
+                  <div>
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+                      Current Location
+                    </span>
+                    <div className="mt-1 text-base text-[color:var(--color-text-primary)]">
+                      {currentLocationLabel}
+                    </div>
+                  </div>
+                  {activityData.renownNote && (
+                    <div className="rounded-[18px] border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] px-3 py-2 text-sm text-[color:var(--color-text-secondary)]">
+                      {activityData.renownNote}
+                    </div>
+                  )}
+                  <div className="max-w-2xl text-[color:var(--color-text-secondary)]">
+                    {selectedItem?.detailSummary ??
+                      'Select a job, contract, or operation to set focus before advancing time.'}
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-3">
                   <GameActionButton
@@ -200,15 +217,17 @@ export function ActivityPanel({
                 {advanceOutcome ? (
                   <ActionOutcomePreview title="Advance Shift Outlook" preview={advanceOutcome} />
                 ) : (
-                  <div className="rounded-[22px] border border-white/8 bg-black/10 p-4 text-sm text-slate-300">
-                    {advancePreview.reason ?? 'Advance Shift becomes available once the current work loop can progress.'}
+                  <div className={`${mutedInsetCardClass} text-sm text-[color:var(--color-text-secondary)]`}>
+                    {advancePreview.reason ??
+                      'Advance Shift becomes available once the current work loop can progress.'}
                   </div>
                 )}
                 {restOutcome ? (
                   <ActionOutcomePreview title="Rest Outlook" preview={restOutcome} />
                 ) : (
-                  <div className="rounded-[22px] border border-white/8 bg-black/10 p-4 text-sm text-slate-300">
-                    {restPreview.reason ?? 'Rest becomes available once a secure settlement bunk is available.'}
+                  <div className={`${mutedInsetCardClass} text-sm text-[color:var(--color-text-secondary)]`}>
+                    {restPreview.reason ??
+                      'Rest becomes available once a secure settlement bunk is available.'}
                   </div>
                 )}
               </div>

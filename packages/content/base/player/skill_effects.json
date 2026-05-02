@@ -622,18 +622,20 @@
         },
         {
           "grantType": "passive_bonus",
-          "effectChannel": "tempo",
+          "effectChannel": "stagger",
           "combatTags": [
             "weapon.staff",
             "signature"
           ],
-          "resolutionHooks": [],
+          "resolutionHooks": [
+            "status.stagger"
+          ],
           "scaling": {
             "mode": "per_rank",
             "base": 0.02,
             "perRank": 0.008
           },
-          "actionType": "ability.melee.pommel_strike",
+          "actionType": "ability.melee.crushing_blow",
           "actionTags": [
             "weapon.staff"
           ]

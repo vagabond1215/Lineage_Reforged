@@ -59,9 +59,6 @@ function InGameShellContent({
   const activeSlot = slots.find((slot) => slot.id === activeSlotId) ?? null;
   const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
   const pinnedIds = snapshot.sessionState.pinnedRecordIds;
-  const trackedQuestEntry =
-    snapshot.sessionState.questJournal.find((entry) => entry.id === snapshot.sessionState.trackedQuestId) ??
-    null;
   const activeNav =
     uiViewModel.navItems.find((item) => item.id === activeTab) ??
     uiViewModel.navItems[0]!;
@@ -131,15 +128,6 @@ function InGameShellContent({
             <TopStatusBar
               {...uiViewModel.topBar}
               readinessCard={uiViewModel.character.readinessCard}
-              trackedQuestDetail={
-                trackedQuestEntry
-                  ? {
-                      summary: trackedQuestEntry.summary,
-                      objectives: trackedQuestEntry.objectives,
-                      relatedLocations: trackedQuestEntry.relatedLocations
-                    }
-                  : null
-              }
               meters={uiViewModel.topBarMeters}
               notifications={uiViewModel.notifications}
               settingsOpen={settingsOpen}

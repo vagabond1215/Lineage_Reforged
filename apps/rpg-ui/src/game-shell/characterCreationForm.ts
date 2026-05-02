@@ -62,6 +62,7 @@ export type CharacterCreationField =
   | "continentId"
   | "regionId"
   | "startingSettlementId"
+  | "sourceRunId"
   | "saveSlotId";
 
 export interface CharacterCreationFormState {
@@ -82,6 +83,7 @@ export interface CharacterCreationFormState {
   continentId: string;
   regionId: string;
   startingSettlementId: string;
+  sourceRunId: string;
   saveSlotId: ManualSaveSlotId;
 }
 
@@ -215,6 +217,7 @@ export function createDefaultCharacterCreationFormState(
     continentId: "",
     regionId: "",
     startingSettlementId: "",
+    sourceRunId: "",
     saveSlotId
   };
 }

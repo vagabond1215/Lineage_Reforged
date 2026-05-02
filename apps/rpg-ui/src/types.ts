@@ -218,6 +218,8 @@ export type MapLocation = {
   y: number;
   type: 'settlement' | 'ruin' | 'harbor' | 'fort';
   region: string;
+  settlementId?: string;
+  regionId?: string;
   note: string;
   known: boolean;
 };

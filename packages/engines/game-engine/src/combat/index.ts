@@ -32,8 +32,8 @@ type ActionTemplate = {
   sourceId: string | null;
   itemId?: string | null;
   skillIds: string[];
-  targetShape?: string;
-  maxTargets?: number;
+  targetShape?: string | undefined;
+  maxTargets?: number | undefined;
   weaponSkillId?: string | null;
   defensiveSkillId?: string | null;
   armorSkillId?: string | null;
@@ -71,6 +71,25 @@ type CombatTickResult = {
   deltas: GameDelta[];
   emittedEvents: GameEventEnvelope[];
   warnings: string[];
+};
+
+type CombatActionFamily = "melee" | "ranged" | "magic" | "shield" | "support";
+
+export type CombatDamagePreview = {
+  actionFamily: CombatActionFamily;
+  baseDamage: number;
+  offensiveStat: number;
+  defensiveStat: number;
+  skillBonus: number;
+  itemBandBonus: number;
+  titleBonus: number;
+  specialBonus: number;
+  statusReduction: number;
+  equipmentReduction: number;
+  defensiveSkillReduction: number;
+  totalReduction: number;
+  preReductionAmount: number;
+  amount: number;
 };
 
 let playerCombatContentCache: PlayerCombatContentCache | null = null;
@@ -114,6 +133,45 @@ const ACTION_LIBRARY: Record<string, ActionTemplate> = {
     targetDisposition: "enemy",
     effectChannels: ["damage"],
     resolutionHooks: ["damage.melee"],
+    critTags: [],
+    weaknessTags: [],
+    titleModifierIds: []
+  },
+  "combat.attack.ranged.basic": {
+    actionType: "combat.attack.ranged.basic",
+    sourceType: "basic_attack",
+    sourceId: null,
+    skillIds: [],
+    spellScalingChannels: [],
+    executionTimeTicks: 4,
+    recoveryTimeTicks: 5,
+    interruptible: false,
+    interruptPriority: "normal",
+    resourceCosts: { stamina: 5 },
+    targetDisposition: "enemy",
+    effectChannels: ["damage", "pressure"],
+    resolutionHooks: ["damage.ranged"],
+    critTags: [],
+    weaknessTags: [],
+    titleModifierIds: []
+  },
+  "combat.defense.block": {
+    actionType: "combat.defense.block",
+    sourceType: "item",
+    sourceId: "combat.defense.block",
+    skillIds: ["skill.combat.defense.shield_handling", "skill.combat.armor.small_shields"],
+    defensiveSkillId: "skill.combat.defense.shield_handling",
+    shieldSkillId: "skill.combat.armor.small_shields",
+    spellScalingChannels: [],
+    executionTimeTicks: 1,
+    recoveryTimeTicks: 2,
+    interruptible: false,
+    interruptPriority: "normal",
+    resourceCosts: { stamina: 2 },
+    targetDisposition: "self",
+    effectChannels: ["blockChance", "damageMitigation", "staggerResistance"],
+    resolutionHooks: ["defense.shield.small"],
+    itemHandlingType: "shield",
     critTags: [],
     weaknessTags: [],
     titleModifierIds: []
@@ -286,6 +344,39 @@ function isRangedWeaponSkillId(skillId: string | null | undefined): boolean {
   return skillId === "skill.combat.weapon.archery" || skillId === "skill.combat.weapon.throwing";
 }
 
+function resolveActionTypeFamily(actionType: string): string {
+  switch (actionType) {
+    case "combat.attack.melee.basic":
+    case "combat.melee.primary":
+    case "combat.melee.improvised":
+      return "combat.family.melee";
+    case "combat.attack.ranged.basic":
+    case "combat.ranged.primary":
+      return "combat.family.ranged";
+    case "armor.handling.cloth":
+    case "combat.armor.cloth":
+      return "combat.family.armor.cloth";
+    case "armor.handling.light":
+    case "combat.armor.light":
+      return "combat.family.armor.light";
+    case "armor.handling.medium":
+    case "combat.armor.medium":
+      return "combat.family.armor.medium";
+    case "armor.handling.heavy":
+    case "combat.armor.heavy":
+      return "combat.family.armor.heavy";
+    case "armor.handling.plate":
+    case "combat.armor.plate":
+      return "combat.family.armor.plate";
+    default:
+      return actionType;
+  }
+}
+
+function getAttribute(combatant: CombatantState, attribute: keyof NonNullable<CombatantState["attributes"]>): number {
+  return combatant.attributes[attribute] ?? 10;
+}
+
 function resolveShieldSkillId(skillIds: string[]): string | null {
   return skillIds.find((skillId) => skillId.startsWith("skill.combat.armor.") && skillId.endsWith("_shields")) ?? null;
 }
@@ -391,7 +482,7 @@ function resolveGrantedActionTemplate(actor: CombatantState, actionType: string)
     };
   }
 
-  const itemGrant = actor.hooks.itemUseProfileGrants.find((grant) => grant.actionType === actionType);
+  const itemGrant = actor.hooks.itemUseProfileGrants.find((grant) => matchesGrantActionType(grant.actionType, actionType));
   if (itemGrant) {
     const skillIds = Array.from(
       new Set([
@@ -439,7 +530,7 @@ function resolveGrantedActionTemplate(actor: CombatantState, actionType: string)
 }
 
 function getActionTemplate(actor: CombatantState, actionType: string): ActionTemplate {
-  return resolveGrantedActionTemplate(actor, actionType) ?? ACTION_LIBRARY[actionType] ?? ACTION_LIBRARY["combat.attack.melee.basic"];
+  return resolveGrantedActionTemplate(actor, actionType) ?? ACTION_LIBRARY[actionType] ?? ACTION_LIBRARY["combat.attack.melee.basic"]!;
 }
 
 function resolveSkillEffectValue(scaling: CombatantState["hooks"]["skillEffectGrants"][number]["scaling"], rank: number): number {
@@ -500,6 +591,9 @@ function matchesGrantActionType(grantActionType: string | null, actionType: stri
     return true;
   }
   if (grantActionType === actionType) {
+    return true;
+  }
+  if (resolveActionTypeFamily(grantActionType) === resolveActionTypeFamily(actionType)) {
     return true;
   }
   return grantActionType === "spell.cast" && actionType.startsWith("spell.");
@@ -565,36 +659,312 @@ function resolveMitigationFromStatuses(combatant: CombatantState): number {
   return clamp(mitigation, 0, 0.55);
 }
 
-function resolveActionStatPair(action: CombatActionState, actor: CombatantState): { base: number; offensiveStat: number } {
+function resolveActionFamily(action: CombatActionState): CombatActionFamily {
   const isMagic = action.resolutionHooks.includes("damage.magic") || action.source.spellSchool != null;
   const isRanged = action.resolutionHooks.includes("damage.ranged") || isRangedWeaponSkillId(action.source.weaponSkillId);
   const isShield = action.source.itemHandlingType === "shield" || action.source.shieldSkillId != null;
   if (isMagic) {
-    return {
-      base: 13,
-      offensiveStat: (actor.attributes.INT ?? 10) + Math.max(actor.attributes.SPT ?? 10, actor.attributes.WIS ?? 10)
-    };
+    return "magic";
   }
   if (isRanged) {
-    return {
-      base: 10,
-      offensiveStat: (actor.attributes.DEX ?? 10) + (actor.attributes.AGI ?? 10)
-    };
+    return "ranged";
   }
   if (isShield) {
-    return {
-      base: 8,
-      offensiveStat: (actor.attributes.STR ?? 10) + (actor.attributes.CON ?? 10)
-    };
+    return "shield";
   }
+  if (
+    action.resolutionHooks.includes("damage.melee") ||
+    action.actionType.includes("melee") ||
+    action.targeting.targetDisposition === "enemy"
+  ) {
+    return "melee";
+  }
+  return "support";
+}
+
+function resolveActionStatPair(
+  action: CombatActionState,
+  actor: CombatantState
+): { family: CombatActionFamily; base: number; offensiveStat: number } {
+  const family = resolveActionFamily(action);
+  switch (family) {
+    case "magic":
+      return {
+        family,
+        base: 13,
+        offensiveStat:
+          getAttribute(actor, "INT") +
+          Math.max(getAttribute(actor, "SPT"), getAttribute(actor, "WIS")) +
+          Math.min(getAttribute(actor, "SPT"), getAttribute(actor, "WIS")) * 0.2
+      };
+    case "ranged":
+      return {
+        family,
+        base: 10,
+        offensiveStat: getAttribute(actor, "DEX") + getAttribute(actor, "AGI") + getAttribute(actor, "WIS") * 0.2
+      };
+    case "shield":
+      return {
+        family,
+        base: 8,
+        offensiveStat: getAttribute(actor, "STR") + getAttribute(actor, "CON") + getAttribute(actor, "WIS") * 0.15
+      };
+    case "melee":
+      return {
+        family,
+        base: 9,
+        offensiveStat: getAttribute(actor, "STR") + getAttribute(actor, "DEX") + getAttribute(actor, "AGI") * 0.15
+      };
+    default:
+      return {
+        family,
+        base: 9,
+        offensiveStat: getAttribute(actor, "WIS") + getAttribute(actor, "CHA")
+      };
+  }
+}
+
+function resolveDefensiveStat(action: CombatActionState, target: CombatantState): number {
+  const family = resolveActionFamily(action);
+  if (family === "magic") {
+    return (
+      getAttribute(target, "CON") * 0.55 +
+      getAttribute(target, "VIT") * 0.55 +
+      getAttribute(target, "WIS") * 0.45 +
+      getAttribute(target, "SPT") * 0.35
+    );
+  }
+  if (family === "ranged") {
+    return (
+      getAttribute(target, "CON") +
+      getAttribute(target, "VIT") +
+      getAttribute(target, "AGI") * 0.25 +
+      getAttribute(target, "WIS") * 0.15
+    );
+  }
+  return (
+    getAttribute(target, "CON") +
+    getAttribute(target, "VIT") +
+    getAttribute(target, "AGI") * 0.18 +
+    getAttribute(target, "WIS") * 0.12
+  );
+}
+
+function getArmorHandlingActionTypes(grant: CombatantState["hooks"]["armorHandlingGrants"][number]): string[] {
+  const tags = new Set([...grant.combatTags, ...grant.resolutionHooks]);
+  if (tags.has("armor.cloth_armor")) {
+    return ["armor.handling.cloth", "combat.armor.cloth"];
+  }
+  if (tags.has("armor.light_armor")) {
+    return ["armor.handling.light", "combat.armor.light"];
+  }
+  if (tags.has("armor.medium_armor")) {
+    return ["armor.handling.medium", "combat.armor.medium"];
+  }
+  if (tags.has("armor.heavy_armor")) {
+    return ["armor.handling.heavy", "combat.armor.heavy"];
+  }
+  if (tags.has("armor.plate_armor")) {
+    return ["armor.handling.plate", "combat.armor.plate"];
+  }
+  if (grant.handlingType === "shield") {
+    return ["combat.defense.block", "combat.interrupt.shield_bash"];
+  }
+  return [];
+}
+
+function getHandlingBaseReduction(grant: CombatantState["hooks"]["armorHandlingGrants"][number]): number {
+  const tags = new Set([...grant.combatTags, ...grant.resolutionHooks]);
+  if (grant.handlingType === "shield") {
+    if (tags.has("shield.large") || tags.has("armor.large_shields")) {
+      return 0.055;
+    }
+    if (tags.has("shield.medium") || tags.has("armor.medium_shields")) {
+      return 0.04;
+    }
+    return 0.025;
+  }
+  if (tags.has("armor.plate_armor")) {
+    return 0.06;
+  }
+  if (tags.has("armor.heavy_armor")) {
+    return 0.05;
+  }
+  if (tags.has("armor.medium_armor")) {
+    return 0.035;
+  }
+  if (tags.has("armor.light_armor")) {
+    return 0.02;
+  }
+  if (tags.has("armor.cloth_armor")) {
+    return 0.0125;
+  }
+  return 0;
+}
+
+function resolveBandReductionBonus(proficiencyBand: string | null | undefined): number {
+  switch (proficiencyBand) {
+    case "clumsy":
+      return -0.005;
+    case "proficient":
+      return 0.005;
+    case "skilled":
+      return 0.01;
+    case "mastery":
+      return 0.015;
+    default:
+      return 0;
+  }
+}
+
+function matchesAnyActionType(grantActionType: string | null, actionTypes: string[]): boolean {
+  return actionTypes.length === 0 || actionTypes.some((actionType) => matchesGrantActionType(grantActionType, actionType));
+}
+
+function matchesAnyGrantTag(grantTags: string[], handlingTags: Set<string>): boolean {
+  return grantTags.length === 0 || grantTags.some((tag) => handlingTags.has(tag));
+}
+
+function addShieldHandlingAliases(tags: Set<string>): Set<string> {
+  if (tags.has("shield.small")) {
+    tags.add("armor.small_shields");
+  }
+  if (tags.has("shield.medium")) {
+    tags.add("armor.medium_shields");
+  }
+  if (tags.has("shield.large")) {
+    tags.add("armor.large_shields");
+  }
+  if (tags.has("shield")) {
+    tags.add("defense.shield_handling");
+  }
+  return tags;
+}
+
+function resolveHandlingSkillReduction(
+  combatant: CombatantState,
+  handlingGrant: CombatantState["hooks"]["armorHandlingGrants"][number],
+  incomingHooks: string[]
+): number {
+  const actionTypes = getArmorHandlingActionTypes(handlingGrant);
+  const handlingTags = addShieldHandlingAliases(new Set([...handlingGrant.combatTags, ...handlingGrant.resolutionHooks]));
+  const incomingHookSet = new Set(incomingHooks);
+  const defensiveChannels = new Set(["blockChance", "damageMitigation", "mitigation", "barrier", "evasion"]);
+  const total = combatant.hooks.skillEffectGrants.reduce((sum, grant) => {
+    if (!defensiveChannels.has(grant.effectChannel)) {
+      return sum;
+    }
+    if (!matchesAnyActionType(grant.actionType, actionTypes)) {
+      return sum;
+    }
+    if (!matchesAnyGrantTag(grant.actionTags, handlingTags) && !matchesAnyGrantTag(grant.combatTags, handlingTags)) {
+      return sum;
+    }
+    if (
+      grant.resolutionHooks.length > 0 &&
+      incomingHookSet.size > 0 &&
+      !grant.resolutionHooks.some((hook) => incomingHookSet.has(hook))
+    ) {
+      return sum;
+    }
+    return sum + grant.resolvedValue;
+  }, 0);
+  return total * 0.08;
+}
+
+function resolveEquipmentReduction(target: CombatantState, incomingHooks: string[]): number {
+  const reduction = target.hooks.armorHandlingGrants.reduce((total, grant) => {
+    const baseReduction = getHandlingBaseReduction(grant);
+    const bandReduction = resolveBandReductionBonus(grant.proficiencyBand);
+    const skillReduction = resolveHandlingSkillReduction(target, grant, incomingHooks);
+    return total + Math.max(0, baseReduction + bandReduction + skillReduction);
+  }, 0);
+  return clamp(reduction, 0, 0.35);
+}
+
+function resolveDefensiveSkillReduction(target: CombatantState, incomingHooks: string[]): number {
+  const incomingHookSet = new Set(incomingHooks);
+  const defensiveChannels = new Set(["damageMitigation", "mitigation", "barrier", "evasion", "tempo", "blockChance"]);
+  const passiveDefenseTags = new Set(["defense.evasion", "defense.parrying", "defense.guard"]);
+  const total = target.hooks.skillEffectGrants.reduce((sum, grant) => {
+    if (!defensiveChannels.has(grant.effectChannel)) {
+      return sum;
+    }
+    const tags = [...grant.actionTags, ...grant.combatTags];
+    if (!tags.some((tag) => passiveDefenseTags.has(tag))) {
+      return sum;
+    }
+    if (
+      grant.resolutionHooks.length > 0 &&
+      incomingHookSet.size > 0 &&
+      !grant.resolutionHooks.some((hook) => incomingHookSet.has(hook))
+    ) {
+      return sum;
+    }
+    return sum + grant.resolvedValue;
+  }, 0);
+  return clamp(total * 0.035, 0, 0.12);
+}
+
+export function resolveCombatDamagePreview(
+  action: CombatActionState,
+  actor: CombatantState,
+  target: CombatantState
+): CombatDamagePreview {
+  const { family, base, offensiveStat } = resolveActionStatPair(action, actor);
+  const skillBonus =
+    sumSkillEffectGrantValues(
+      actor,
+      action,
+      ["damage", "power", "pressure", "armorBreak", "penetration", "critChance", "guardPressure"],
+      action.resolutionHooks
+    ) * 10;
+  const itemBandBonus = resolveItemBandBonus(action.source.itemProficiencyBand);
+  const titleBonus = action.source.titleModifierIds.length * 0.6;
+  const specialBonus =
+    action.source.weaknessTags.length * 0.5 +
+    action.source.critTags.length * 0.75 +
+    (action.resolutionHooks.includes("execute.helpless") ? (target.incapacitated ? 8 : -3) : 0);
+  const defensiveStat = resolveDefensiveStat(action, target);
+  const statusReduction = resolveMitigationFromStatuses(target);
+  const equipmentReduction = resolveEquipmentReduction(target, action.resolutionHooks);
+  const defensiveSkillReduction = resolveDefensiveSkillReduction(target, action.resolutionHooks);
+  const totalReduction = clamp(statusReduction + equipmentReduction + defensiveSkillReduction, 0, 0.55);
+  const preReductionAmount = Math.max(
+    1,
+    base +
+      offensiveStat * 0.18 +
+      (actor.threatRating ?? 1) * 0.75 +
+      skillBonus +
+      itemBandBonus +
+      titleBonus +
+      specialBonus -
+      defensiveStat * 0.1
+  );
   return {
-    base: 9,
-    offensiveStat: (actor.attributes.STR ?? 10) + (actor.attributes.DEX ?? 10)
+    actionFamily: family,
+    baseDamage: base,
+    offensiveStat: roundTo(offensiveStat),
+    defensiveStat: roundTo(defensiveStat),
+    skillBonus: roundTo(skillBonus),
+    itemBandBonus: roundTo(itemBandBonus),
+    titleBonus: roundTo(titleBonus),
+    specialBonus: roundTo(specialBonus),
+    statusReduction: roundTo(statusReduction),
+    equipmentReduction: roundTo(equipmentReduction),
+    defensiveSkillReduction: roundTo(defensiveSkillReduction),
+    totalReduction: roundTo(totalReduction),
+    preReductionAmount: roundTo(preReductionAmount),
+    amount: Math.max(1, Math.round(preReductionAmount * (1 - totalReduction)))
   };
 }
 
+function resolveDamageAmount(action: CombatActionState, actor: CombatantState, target: CombatantState): number {
+  return resolveCombatDamagePreview(action, actor, target).amount;
+}
+
 function resolveHealingAmount(action: CombatActionState, actor: CombatantState, target: CombatantState): number {
-  const healingStat = (actor.attributes.WIS ?? 10) + (actor.attributes.SPT ?? 10);
+  const healingStat = getAttribute(actor, "WIS") + getAttribute(actor, "SPT") + getAttribute(actor, "INT") * 0.1;
   const healingBonus =
     sumSkillEffectGrantValues(actor, action, ["healingPower", "power", "magnitude"], ["heal.hp"]) * 10 +
     action.source.titleModifierIds.length * 0.75;
@@ -636,6 +1006,27 @@ function buildStatusEffectFromHook(
     "buff.protect": { label: "Protect", duration: 16, tags: ["buff", "defense", "ward"], sourceType: "spell", defaultMagnitude: 0.12 },
     "buff.ward": { label: "Ward", duration: 16, tags: ["buff", "defense", "ward"], sourceType: "spell", defaultMagnitude: 0.12 },
     "buff.anthem": { label: "Battle Anthem", duration: 18, tags: ["buff", "support", "tempo"], sourceType: "spell", defaultMagnitude: 0.1 },
+    "defense.shield.small": {
+      label: "Shield Block",
+      duration: 6,
+      tags: ["buff", "defense", "shield", "block"],
+      sourceType: "item",
+      defaultMagnitude: 0.08
+    },
+    "defense.shield.medium": {
+      label: "Shield Block",
+      duration: 7,
+      tags: ["buff", "defense", "shield", "block"],
+      sourceType: "item",
+      defaultMagnitude: 0.1
+    },
+    "defense.shield.large": {
+      label: "Shield Block",
+      duration: 8,
+      tags: ["buff", "defense", "shield", "block"],
+      sourceType: "item",
+      defaultMagnitude: 0.12
+    },
     "stance.defensive": { label: "Defensive Stance", duration: 14, tags: ["buff", "defense", "stance"], sourceType: "ability", defaultMagnitude: 0.12 },
     "stance.brace": { label: "Brace", duration: 10, tags: ["buff", "stance", "counter"], sourceType: "ability", defaultMagnitude: 0.08 },
     "command.pressure": { label: "Press the Attack", duration: 12, tags: ["buff", "command", "offense"], sourceType: "ability", defaultMagnitude: 0.1 },
@@ -830,15 +1221,16 @@ function buildPlayerHooks(playerState: PlayerState): CombatantState["hooks"] {
         ...profile,
         proficiencyBand
       });
+      const handlingType = profile.handlingType;
       if (
-        profile.handlingType &&
-        profile.proficiencySkillId &&
-        ["shield", "armor", "hybrid"].includes(profile.handlingType)
+        (handlingType === "shield" || handlingType === "armor" || handlingType === "hybrid") &&
+        profile.proficiencySkillId
       ) {
         armorHandlingGrants.push({
           itemId,
-          handlingType: profile.handlingType,
+          handlingType,
           proficiencySkillId: profile.proficiencySkillId,
+          proficiencyBand,
           hybridSkillIds: profile.hybridSkillIds ?? [],
           combatTags: profile.combatTags ?? [],
           resolutionHooks: profile.resolutionHooks ?? []
@@ -853,28 +1245,35 @@ function buildPlayerHooks(playerState: PlayerState): CombatantState["hooks"] {
       if (!record) {
         return null;
       }
-      return {
+      const grant: CombatantState["hooks"]["spellActionGrants"][number] = {
         spellId: record.id,
         actionType: record.castProfile.actionType,
         governingSkillId: record.governingSkillId,
         school: record.school,
-        tradition: record.tradition,
-        discipline: record.discipline,
-        element: record.element,
         effectTags: record.effectTags,
-        scalingChannels: record.scalingChannels,
+        scalingChannels: record.scalingChannels as CombatantState["hooks"]["spellActionGrants"][number]["scalingChannels"],
         targetProfile: record.targetProfile,
         activation: record.castProfile,
         resolutionHooks: record.resolutionHooks,
         itemGenerationHooks: record.itemGenerationHooks ?? []
       };
+      if (record.tradition !== undefined) {
+        grant.tradition = record.tradition;
+      }
+      if (record.discipline !== undefined) {
+        grant.discipline = record.discipline;
+      }
+      if (record.element !== undefined) {
+        grant.element = record.element;
+      }
+      return grant;
     })
     .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
 
   const abilityActionGrants = playerState.abilities
     .map((abilityEntry) => {
       const record = content.abilityById.get(abilityEntry.id);
-      if (!record) {
+      if (!record || !record.activation) {
         return null;
       }
       const targetConditions = (record.requirements.targetConditionsAny ?? []).map((condition) =>
@@ -891,7 +1290,7 @@ function buildPlayerHooks(playerState: PlayerState): CombatantState["hooks"] {
       return {
         abilityId: record.id,
         actionType: record.activation.actionType,
-        category: record.category,
+        category: record.category as CombatantState["hooks"]["abilityActionGrants"][number]["category"],
         governingSkillIds: record.governingSkillIds,
         targetProfile: record.targetProfile,
         activation: record.activation,
@@ -963,12 +1362,14 @@ function resolvePlayerThreatRating(playerState: PlayerState): number {
     playerState.attributes.CON +
     playerState.attributes.VIT +
     playerState.attributes.INT +
-    playerState.attributes.SPT;
+    playerState.attributes.WIS +
+    playerState.attributes.SPT +
+    playerState.attributes.CHA;
   const learnedPressure = playerState.abilities.length * 1.5 + playerState.spells.length * 1.5;
 
   return Math.max(
     1,
-    Math.round(dominantSkillRank / 8 + coreCombatAttributes / 24 + learnedPressure)
+    Math.round(dominantSkillRank / 8 + coreCombatAttributes / 30 + learnedPressure)
   );
 }
 
@@ -1052,6 +1453,7 @@ function buildMonsterCombatant(
     monster.combatProfile.baseAccuracy + monster.difficultyScalingHooks.accuracyPerTier * difficultyTier;
   const defense =
     monster.combatProfile.baseDefense + monster.difficultyScalingHooks.defensePerTier * difficultyTier;
+  const evasion = monster.combatProfile.baseEvasion;
   const actionTimeMultiplier = clamp(
     1 - monster.difficultyScalingHooks.actionTimeMultiplierPerTier * difficultyTier,
     0.55,
@@ -1076,9 +1478,10 @@ function buildMonsterCombatant(
     },
     attributes: {
       DEX: accuracy,
-      AGI: monster.combatProfile.baseAttackSpeed,
+      AGI: Math.round((monster.combatProfile.baseAttackSpeed * 2 + evasion) / 3),
       CON: defense,
-      VIT: monster.combatProfile.baseRecoverySpeed
+      VIT: monster.combatProfile.baseRecoverySpeed,
+      WIS: evasion
     },
     resources: {
       hp: { current: hpMax, max: hpMax },
@@ -1521,7 +1924,11 @@ function chooseAiTargetIds(encounter: CombatEncounterState, actor: CombatantStat
 
   const targetLimit = Math.max(1, template.maxTargets ?? 1);
   const shouldMultiTarget = targetLimit > 1 && ["party", "line", "arc"].includes(template.targetShape ?? "");
-  return shouldMultiTarget ? rankedTargets.slice(0, targetLimit).map((target) => target.id) : [rankedTargets[0].id];
+  const primaryTarget = rankedTargets[0];
+  if (!primaryTarget) {
+    return [];
+  }
+  return shouldMultiTarget ? rankedTargets.slice(0, targetLimit).map((target) => target.id) : [primaryTarget.id];
 }
 
 function queueAction(encounter: CombatEncounterState, action: CombatActionState): void {
@@ -1548,40 +1955,6 @@ function applyCosts(combatant: CombatantState, action: CombatActionState): void 
     combatant.resources.stamina.current - (action.resourceCosts.stamina ?? 0),
     0,
     combatant.resources.stamina.max
-  );
-}
-
-function resolveDamageAmount(action: CombatActionState, actor: CombatantState, target: CombatantState): number {
-  const { base, offensiveStat } = resolveActionStatPair(action, actor);
-  const passiveDamageBonus =
-    sumSkillEffectGrantValues(
-      actor,
-      action,
-      ["damage", "power", "pressure", "armorBreak", "penetration", "critChance", "guardPressure"],
-      action.resolutionHooks
-    ) * 10;
-  const itemBandBonus = resolveItemBandBonus(action.source.itemProficiencyBand);
-  const titleBonus = action.source.titleModifierIds.length * 0.6;
-  const weaknessBonus = action.source.weaknessTags.length * 0.5;
-  const critBonus = action.source.critTags.length * 0.75;
-  const executeBonus = action.resolutionHooks.includes("execute.helpless") ? (target.incapacitated ? 8 : -3) : 0;
-  const defensiveStat = (target.attributes.CON ?? 10) + (target.attributes.VIT ?? 10);
-  const mitigationPenalty = resolveMitigationFromStatuses(target) * 12;
-  return Math.max(
-    1,
-    Math.round(
-      base +
-        offensiveStat * 0.18 +
-        (actor.threatRating ?? 1) * 0.75 +
-        passiveDamageBonus +
-        itemBandBonus +
-        titleBonus +
-        weaknessBonus +
-        critBonus +
-        executeBonus -
-        defensiveStat * 0.1 -
-        mitigationPenalty
-    )
   );
 }
 
@@ -1624,7 +1997,7 @@ function resolveAction(encounter: CombatEncounterState, action: CombatActionStat
   const targets = resolveActionTargets(encounter, action);
   const primaryTarget = targets[0] ?? null;
   const statusMagnitude =
-    sumSkillEffectGrantValues(actor, action, ["magnitude", "barrier", "tempo", "duration", "statusChance"], action.resolutionHooks) * 0.5;
+    sumSkillEffectGrantValues(actor, action, ["magnitude", "barrier", "tempo", "duration", "statusChance", "stagger"], action.resolutionHooks) * 0.5;
 
   if (action.resolutionHooks.includes("interrupt.primary") && primaryTarget) {
     interruptTarget(encounter, primaryTarget);

@@ -1,7 +1,7 @@
 {
     "records":  [
                     {
-                        "id":  "world_hex_edge.verdant_thalos_coastal_bays__verdant_thalos_inland_estates",
+                        "id":  "world_hex_edge.verdant_thalos_coastal_bays_verdant_thalos_inland_estates",
                         "fromHexId":  "world_hex.verdant_thalos_coastal_bays",
                         "toHexId":  "world_hex.verdant_thalos_inland_estates",
                         "edgeType":  "ferry",
@@ -22,7 +22,7 @@
                         "corridorName":  "Verdant Coastal Bays - Verdant Inland Estates local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.auric_marches_ore_ridges__auric_marches_caravan_marches",
+                        "id":  "world_hex_edge.auric_marches_ore_ridges_auric_marches_caravan_marches",
                         "fromHexId":  "world_hex.auric_marches_ore_ridges",
                         "toHexId":  "world_hex.auric_marches_caravan_marches",
                         "edgeType":  "pass",
@@ -42,7 +42,7 @@
                         "corridorName":  "Ore Ridge Uplands - Caravan Marches local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.shattercap_deep_harbors__shattercap_beacon_cliffs",
+                        "id":  "world_hex_edge.shattercap_deep_harbors_shattercap_beacon_cliffs",
                         "fromHexId":  "world_hex.shattercap_deep_harbors",
                         "toHexId":  "world_hex.shattercap_beacon_cliffs",
                         "edgeType":  "ferry",
@@ -63,7 +63,7 @@
                         "corridorName":  "Shattercap Deep Harbors - Shattercap Beacon Cliffs local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.crownlands_forest_vales__crownlands_headwater_passes",
+                        "id":  "world_hex_edge.crownlands_forest_vales_crownlands_headwater_passes",
                         "fromHexId":  "world_hex.crownlands_forest_vales",
                         "toHexId":  "world_hex.crownlands_headwater_passes",
                         "edgeType":  "river",
@@ -85,7 +85,7 @@
                         "corridorName":  "Crownlands Forest Vales - Crownlands Headwater Passes local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.embersteppe_herd_plains__embersteppe_stepwell_corridors",
+                        "id":  "world_hex_edge.embersteppe_herd_plains_embersteppe_stepwell_corridors",
                         "fromHexId":  "world_hex.embersteppe_herd_plains",
                         "toHexId":  "world_hex.embersteppe_stepwell_corridors",
                         "edgeType":  "road",
@@ -106,7 +106,7 @@
                         "corridorName":  "Embersteppe Herd Plains - Embersteppe Stepwell Corridors local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.sapphire_rivers_royal_floodplain__sapphire_rivers_bridge_corridors",
+                        "id":  "world_hex_edge.sapphire_rivers_royal_floodplain_sapphire_rivers_bridge_corridors",
                         "fromHexId":  "world_hex.sapphire_rivers_royal_floodplain",
                         "toHexId":  "world_hex.sapphire_rivers_bridge_corridors",
                         "edgeType":  "river",
@@ -128,7 +128,7 @@
                         "corridorName":  "Royal Floodplain - Bridge Corridors local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.jade_expanse_granary_core__jade_expanse_orchard_steppe",
+                        "id":  "world_hex_edge.jade_expanse_granary_core_jade_expanse_orchard_steppe",
                         "fromHexId":  "world_hex.jade_expanse_granary_core",
                         "toHexId":  "world_hex.jade_expanse_orchard_steppe",
                         "edgeType":  "road",
@@ -149,7 +149,7 @@
                         "corridorName":  "Granary Core - Orchard Steppe local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.windward_spine_mountain_holds__windward_spine_alpine_passes",
+                        "id":  "world_hex_edge.windward_spine_mountain_holds_windward_spine_alpine_passes",
                         "fromHexId":  "world_hex.windward_spine_mountain_holds",
                         "toHexId":  "world_hex.windward_spine_alpine_passes",
                         "edgeType":  "pass",
@@ -169,7 +169,7 @@
                         "corridorName":  "Mountain Holds - Alpine Passes local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.green_reach_heartwood__green_reach_timber_edges",
+                        "id":  "world_hex_edge.green_reach_heartwood_green_reach_timber_edges",
                         "fromHexId":  "world_hex.green_reach_heartwood",
                         "toHexId":  "world_hex.green_reach_timber_edges",
                         "edgeType":  "trail",
@@ -189,7 +189,7 @@
                         "corridorName":  "Green Reach Heartwood - Green Reach Timber Edges local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.sailors_verge_grand_harbors__sailors_verge_citrus_trade_belt",
+                        "id":  "world_hex_edge.sailors_verge_grand_harbors_sailors_verge_citrus_trade_belt",
                         "fromHexId":  "world_hex.sailors_verge_grand_harbors",
                         "toHexId":  "world_hex.sailors_verge_citrus_trade_belt",
                         "edgeType":  "ferry",
@@ -210,7 +210,7 @@
                         "corridorName":  "Grand Harbors - Citrus Trade Belt local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.heart_basin_river_capitals__heart_basin_market_mills",
+                        "id":  "world_hex_edge.heart_basin_river_capitals_heart_basin_market_mills",
                         "fromHexId":  "world_hex.heart_basin_river_capitals",
                         "toHexId":  "world_hex.heart_basin_market_mills",
                         "edgeType":  "river",
@@ -232,7 +232,7 @@
                         "corridorName":  "River Capital Belt - Market Mills local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.emerald_mantle_pasture_uplands__emerald_mantle_orchard_meadows",
+                        "id":  "world_hex_edge.emerald_mantle_pasture_uplands_emerald_mantle_orchard_meadows",
                         "fromHexId":  "world_hex.emerald_mantle_pasture_uplands",
                         "toHexId":  "world_hex.emerald_mantle_orchard_meadows",
                         "edgeType":  "road",
@@ -253,7 +253,7 @@
                         "corridorName":  "Pasture Uplands - Orchard Meadows local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.stormcap_coast_storm_harbors__stormcap_coast_watch_citadels",
+                        "id":  "world_hex_edge.stormcap_coast_storm_harbors_stormcap_coast_watch_citadels",
                         "fromHexId":  "world_hex.stormcap_coast_storm_harbors",
                         "toHexId":  "world_hex.stormcap_coast_watch_citadels",
                         "edgeType":  "ferry",
@@ -274,7 +274,7 @@
                         "corridorName":  "Storm Harbors - Watch Citadels local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.silver_valleys_sunspire_vales__silver_valleys_ford_corridors",
+                        "id":  "world_hex_edge.silver_valleys_sunspire_vales_silver_valleys_ford_corridors",
                         "fromHexId":  "world_hex.silver_valleys_sunspire_vales",
                         "toHexId":  "world_hex.silver_valleys_ford_corridors",
                         "edgeType":  "river",
@@ -296,7 +296,7 @@
                         "corridorName":  "Sunspire Vales - Ford Corridors local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.silver_valleys_sunspire_vales__silver_valleys_warrens_below",
+                        "id":  "world_hex_edge.silver_valleys_sunspire_vales_silver_valleys_warrens_below",
                         "fromHexId":  "world_hex.silver_valleys_sunspire_vales",
                         "toHexId":  "world_hex.silver_valleys_warrens_below",
                         "edgeType":  "river",
@@ -318,7 +318,7 @@
                         "corridorName":  "Sunspire Vales - Warrens Below local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.silver_valleys_ford_corridors__silver_valleys_warrens_below",
+                        "id":  "world_hex_edge.silver_valleys_ford_corridors_silver_valleys_warrens_below",
                         "fromHexId":  "world_hex.silver_valleys_ford_corridors",
                         "toHexId":  "world_hex.silver_valleys_warrens_below",
                         "edgeType":  "river",
@@ -340,7 +340,7 @@
                         "corridorName":  "Ford Corridors - Warrens Below local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.thorn_peninsula_spice_markets__thorn_peninsula_salt_anchorage",
+                        "id":  "world_hex_edge.thorn_peninsula_spice_markets_thorn_peninsula_salt_anchorage",
                         "fromHexId":  "world_hex.thorn_peninsula_spice_markets",
                         "toHexId":  "world_hex.thorn_peninsula_salt_anchorage",
                         "edgeType":  "ferry",
@@ -361,7 +361,7 @@
                         "corridorName":  "Spice Markets - Salt Anchorage Coast local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.thorn_peninsula_spice_markets__thorn_peninsula_watch_forts",
+                        "id":  "world_hex_edge.thorn_peninsula_spice_markets_thorn_peninsula_watch_forts",
                         "fromHexId":  "world_hex.thorn_peninsula_spice_markets",
                         "toHexId":  "world_hex.thorn_peninsula_watch_forts",
                         "edgeType":  "road",
@@ -382,7 +382,7 @@
                         "corridorName":  "Spice Markets - Thorn Forts local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.thorn_peninsula_salt_anchorage__thorn_peninsula_watch_forts",
+                        "id":  "world_hex_edge.thorn_peninsula_salt_anchorage_thorn_peninsula_watch_forts",
                         "fromHexId":  "world_hex.thorn_peninsula_salt_anchorage",
                         "toHexId":  "world_hex.thorn_peninsula_watch_forts",
                         "edgeType":  "ferry",
@@ -403,7 +403,7 @@
                         "corridorName":  "Salt Anchorage Coast - Thorn Forts local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.watcher_coast_gate_citadels__watcher_coast_obsidian_steps",
+                        "id":  "world_hex_edge.watcher_coast_gate_citadels_watcher_coast_obsidian_steps",
                         "fromHexId":  "world_hex.watcher_coast_gate_citadels",
                         "toHexId":  "world_hex.watcher_coast_obsidian_steps",
                         "edgeType":  "pass",
@@ -423,7 +423,7 @@
                         "corridorName":  "Gate Citadels - Obsidian Steps local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.watcher_coast_gate_citadels__watcher_coast_mistfen_edges",
+                        "id":  "world_hex_edge.watcher_coast_gate_citadels_watcher_coast_mistfen_edges",
                         "fromHexId":  "world_hex.watcher_coast_gate_citadels",
                         "toHexId":  "world_hex.watcher_coast_mistfen_edges",
                         "edgeType":  "ferry",
@@ -444,7 +444,7 @@
                         "corridorName":  "Gate Citadels - Mistfen Edges local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.watcher_coast_obsidian_steps__watcher_coast_mistfen_edges",
+                        "id":  "world_hex_edge.watcher_coast_obsidian_steps_watcher_coast_mistfen_edges",
                         "fromHexId":  "world_hex.watcher_coast_obsidian_steps",
                         "toHexId":  "world_hex.watcher_coast_mistfen_edges",
                         "edgeType":  "ferry",
@@ -465,7 +465,7 @@
                         "corridorName":  "Obsidian Steps - Mistfen Edges local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.myridian_ports__myridian_pearl_shoals",
+                        "id":  "world_hex_edge.myridian_ports_myridian_pearl_shoals",
                         "fromHexId":  "world_hex.myridian_ports",
                         "toHexId":  "world_hex.myridian_pearl_shoals",
                         "edgeType":  "road",
@@ -486,7 +486,7 @@
                         "corridorName":  "Starfall Ports - Pearl Shoals local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.myridian_ports__myridian_beacon_bastions",
+                        "id":  "world_hex_edge.myridian_ports_myridian_beacon_bastions",
                         "fromHexId":  "world_hex.myridian_ports",
                         "toHexId":  "world_hex.myridian_beacon_bastions",
                         "edgeType":  "road",
@@ -507,7 +507,7 @@
                         "corridorName":  "Starfall Ports - Beacon Bastions local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.myridian_pearl_shoals__myridian_beacon_bastions",
+                        "id":  "world_hex_edge.myridian_pearl_shoals_myridian_beacon_bastions",
                         "fromHexId":  "world_hex.myridian_pearl_shoals",
                         "toHexId":  "world_hex.myridian_beacon_bastions",
                         "edgeType":  "road",
@@ -528,7 +528,7 @@
                         "corridorName":  "Pearl Shoals - Beacon Bastions local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.lantern_harbors__lantern_reef_depths",
+                        "id":  "world_hex_edge.lantern_harbors_lantern_reef_depths",
                         "fromHexId":  "world_hex.lantern_harbors",
                         "toHexId":  "world_hex.lantern_reef_depths",
                         "edgeType":  "ferry",
@@ -549,7 +549,7 @@
                         "corridorName":  "Lantern Harbors - Lantern Reef Depths local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.lantern_harbors__lantern_shrine_gardens",
+                        "id":  "world_hex_edge.lantern_harbors_lantern_shrine_gardens",
                         "fromHexId":  "world_hex.lantern_harbors",
                         "toHexId":  "world_hex.lantern_shrine_gardens",
                         "edgeType":  "ferry",
@@ -570,7 +570,7 @@
                         "corridorName":  "Lantern Harbors - Shrine Gardens local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.lantern_reef_depths__lantern_shrine_gardens",
+                        "id":  "world_hex_edge.lantern_reef_depths_lantern_shrine_gardens",
                         "fromHexId":  "world_hex.lantern_reef_depths",
                         "toHexId":  "world_hex.lantern_shrine_gardens",
                         "edgeType":  "ferry",
@@ -591,7 +591,7 @@
                         "corridorName":  "Lantern Reef Depths - Shrine Gardens local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.serpents_storm_havens__serpents_reef_anchorages",
+                        "id":  "world_hex_edge.serpents_storm_havens_serpents_reef_anchorages",
                         "fromHexId":  "world_hex.serpents_storm_havens",
                         "toHexId":  "world_hex.serpents_reef_anchorages",
                         "edgeType":  "ferry",
@@ -612,7 +612,7 @@
                         "corridorName":  "Storm Havens - Reef Anchorages local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.serpents_storm_havens__serpents_watch_musters",
+                        "id":  "world_hex_edge.serpents_storm_havens_serpents_watch_musters",
                         "fromHexId":  "world_hex.serpents_storm_havens",
                         "toHexId":  "world_hex.serpents_watch_musters",
                         "edgeType":  "road",
@@ -633,7 +633,7 @@
                         "corridorName":  "Storm Havens - Watch Musters local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.serpents_reef_anchorages__serpents_watch_musters",
+                        "id":  "world_hex_edge.serpents_reef_anchorages_serpents_watch_musters",
                         "fromHexId":  "world_hex.serpents_reef_anchorages",
                         "toHexId":  "world_hex.serpents_watch_musters",
                         "edgeType":  "ferry",
@@ -654,7 +654,7 @@
                         "corridorName":  "Reef Anchorages - Watch Musters local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.dawnreach_aurora_harbors__dawnreach_nacre_depths",
+                        "id":  "world_hex_edge.dawnreach_aurora_harbors_dawnreach_nacre_depths",
                         "fromHexId":  "world_hex.dawnreach_aurora_harbors",
                         "toHexId":  "world_hex.dawnreach_nacre_depths",
                         "edgeType":  "ferry",
@@ -675,7 +675,7 @@
                         "corridorName":  "Aurora Harbors - Nacre Depths local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.dawnreach_aurora_harbors__dawnreach_whalebone_watches",
+                        "id":  "world_hex_edge.dawnreach_aurora_harbors_dawnreach_whalebone_watches",
                         "fromHexId":  "world_hex.dawnreach_aurora_harbors",
                         "toHexId":  "world_hex.dawnreach_whalebone_watches",
                         "edgeType":  "ferry",
@@ -696,7 +696,7 @@
                         "corridorName":  "Aurora Harbors - Whalebone Watches local corridor"
                     },
                     {
-                        "id":  "world_hex_edge.dawnreach_nacre_depths__dawnreach_whalebone_watches",
+                        "id":  "world_hex_edge.dawnreach_nacre_depths_dawnreach_whalebone_watches",
                         "fromHexId":  "world_hex.dawnreach_nacre_depths",
                         "toHexId":  "world_hex.dawnreach_whalebone_watches",
                         "edgeType":  "ferry",

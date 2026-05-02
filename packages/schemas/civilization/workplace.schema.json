@@ -1,1082 +1,1143 @@
-﻿{
-    "$schema":  "https://json-schema.org/draft/2020-12/schema",
-    "title":  "WorkplaceRecord",
-    "type":  "object",
-    "additionalProperties":  false,
-    "required":  [
-                     "id",
-                     "name",
-                     "category",
-                     "inputTags",
-                     "outputTags",
-                     "laborSlots",
-                     "ioProfile",
-                     "workforceProfile"
-                 ],
-    "properties":  {
-                       "id":  {
-                                  "type":  "string"
-                              },
-                       "name":  {
-                                    "type":  "string"
-                                },
-                       "category":  {
-                                        "type":  "string",
-                                        "enum":  [
-                                                     "extraction",
-                                                     "processing",
-                                                     "manufacturing",
-                                                     "distribution"
-                                                 ]
-                                    },
-                       "inputTags":  {
-                                         "type":  "array",
-                                         "items":  {
-                                                       "type":  "string",
-                                                       "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
-                                                   }
-                                     },
-                       "siteTags":  {
-                                        "type":  "array",
-                                        "items":  {
-                                                      "type":  "string"
-                                                  }
-                                    },
-                       "outputTags":  {
-                                          "type":  "array",
-                                          "items":  {
-                                                        "type":  "string",
-                                                        "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
-                                                    }
-                                      },
-                       "laborSlots":  {
-                                          "type":  "integer",
-                                          "minimum":  1
-                                      },
-                       "tierProfile":  {
-                                           "type":  "object",
-                                           "additionalProperties":  false,
-                                           "required":  [
-                                                            "trackId",
-                                                            "tier",
-                                                            "tierLabel",
-                                                            "facilityForm",
-                                                            "upgradesFrom",
-                                                            "upgradesTo",
-                                                            "techLevel",
-                                                            "ownershipModel",
-                                                            "wealthBand",
-                                                            "splitFacility",
-                                                            "regionalSuitability"
-                                                        ],
-                                           "properties":  {
-                                                              "trackId":  {
-                                                                              "type":  "string",
-                                                                              "pattern":  "^track\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                          },
-                                                              "tier":  {
-                                                                           "type":  "integer",
-                                                                           "minimum":  1,
-                                                                           "maximum":  5
-                                                                       },
-                                                              "tierLabel":  {
-                                                                                "type":  "string"
-                                                                            },
-                                                              "facilityForm":  {
-                                                                                   "type":  "string",
-                                                                                   "enum":  [
-                                                                                                "camp",
-                                                                                                "hut",
-                                                                                                "cabin",
-                                                                                                "lodge",
-                                                                                                "hall",
-                                                                                                "guildhouse",
-                                                                                                "workshop",
-                                                                                                "estate",
-                                                                                                "compound",
-                                                                                                "outpost"
-                                                                                            ]
-                                                                               },
-                                                              "upgradesFrom":  {
-                                                                                   "type":  [
-                                                                                                "string",
-                                                                                                "null"
-                                                                                            ]
-                                                                               },
-                                                              "upgradesTo":  {
-                                                                                 "type":  "array",
-                                                                                 "items":  {
-                                                                                               "type":  "string"
-                                                                                           }
-                                                                             },
-                                                              "techLevel":  {
-                                                                                "type":  "string",
-                                                                                "enum":  [
-                                                                                             "primitive",
-                                                                                             "basic",
-                                                                                             "improved",
-                                                                                             "advanced",
-                                                                                             "masterwork"
-                                                                                         ]
-                                                                            },
-                                                              "ownershipModel":  {
-                                                                                     "type":  "string",
-                                                                                     "enum":  [
-                                                                                                  "subsistence",
-                                                                                                  "independent",
-                                                                                                  "guild",
-                                                                                                  "estate",
-                                                                                                  "civic"
-                                                                                              ]
-                                                                                 },
-                                                              "wealthBand":  {
-                                                                                 "type":  "string",
-                                                                                 "enum":  [
-                                                                                              "low_income",
-                                                                                              "mid_income",
-                                                                                              "high_income"
-                                                                                          ]
-                                                                             },
-                                                              "splitFacility":  {
-                                                                                    "type":  "boolean"
-                                                                                },
-                                                              "regionalSuitability":  {
-                                                                                          "type":  "array",
-                                                                                          "items":  {
-                                                                                                        "type":  "string"
-                                                                                                    }
-                                                                                      }
-                                                          }
-                                       },
-                       "efficiencyProfile":  {
-                                                 "type":  "object",
-                                                 "additionalProperties":  false,
-                                                 "required":  [
-                                                                  "throughputMultiplier",
-                                                                  "laborEfficiency",
-                                                                  "wasteMultiplier",
-                                                                  "comfortScore"
-                                                              ],
-                                                 "properties":  {
-                                                                    "throughputMultiplier":  {
-                                                                                                 "type":  "number",
-                                                                                                 "minimum":  0.01
-                                                                                             },
-                                                                    "laborEfficiency":  {
-                                                                                            "type":  "number",
-                                                                                            "minimum":  0.01
-                                                                                        },
-                                                                    "wasteMultiplier":  {
-                                                                                            "type":  "number",
-                                                                                            "minimum":  0.01
-                                                                                        },
-                                                                    "comfortScore":  {
-                                                                                         "type":  "number",
-                                                                                         "minimum":  0,
-                                                                                         "maximum":  1
-                                                                                     }
-                                                                }
-                                             },
-                       "marketProfile":  {
-                                             "type":  "object",
-                                             "additionalProperties":  false,
-                                             "required":  [
-                                                              "businessScale",
-                                                              "consumerScope",
-                                                              "supplyAccess",
-                                                              "riskTolerance",
-                                                              "districtTags"
-                                                          ],
-                                             "properties":  {
-                                                                "businessScale":  {
-                                                                                      "type":  "string",
-                                                                                      "enum":  [
-                                                                                                   "micro",
-                                                                                                   "small",
-                                                                                                   "medium",
-                                                                                                   "large",
-                                                                                                   "estate"
-                                                                                               ]
-                                                                                  },
-                                                                "consumerScope":  {
-                                                                                      "type":  "string",
-                                                                                      "enum":  [
-                                                                                                   "self_use",
-                                                                                                   "local",
-                                                                                                   "district",
-                                                                                                   "regional",
-                                                                                                   "export"
-                                                                                               ]
-                                                                                  },
-                                                                "supplyAccess":  {
-                                                                                     "type":  "string",
-                                                                                     "enum":  [
-                                                                                                  "scarce",
-                                                                                                  "constrained",
-                                                                                                  "balanced",
-                                                                                                  "surplus"
-                                                                                              ]
-                                                                                 },
-                                                                "riskTolerance":  {
-                                                                                      "type":  "string",
-                                                                                      "enum":  [
-                                                                                                   "safe",
-                                                                                                   "frontier",
-                                                                                                   "dangerous"
-                                                                                               ]
-                                                                                  },
-                                                                "districtTags":  {
-                                                                                     "type":  "array",
-                                                                                     "minItems":  1,
-                                                                                     "items":  {
-                                                                                                   "type":  "string"
-                                                                                               }
-                                                                                 }
-                                                            }
-                                         },
-                       "upgradesProfile":  {
-                                               "type":  "object",
-                                               "additionalProperties":  false,
-                                               "required":  [
-                                                                "upgradeSlots",
-                                                                "availableUpgrades",
-                                                                "tierUpgradeRequirements"
-                                                            ],
-                                               "properties":  {
-                                                                  "upgradeSlots":  {
-                                                                                       "type":  "integer",
-                                                                                       "minimum":  0
-                                                                                   },
-                                                                  "availableUpgrades":  {
-                                                                                            "type":  "array",
-                                                                                            "minItems":  1,
-                                                                                            "items":  {
-                                                                                                          "type":  "object",
-                                                                                                          "additionalProperties":  false,
-                                                                                                          "required":  [
-                                                                                                                           "id",
-                                                                                                                           "name",
-                                                                                                                           "description",
-                                                                                                                           "category",
-                                                                                                                           "requiredUpgradeIds",
-                                                                                                                           "essentialForTierUpgrade",
-                                                                                                                           "effects"
-                                                                                                                       ],
-                                                                                                          "properties":  {
-                                                                                                                             "id":  {
-                                                                                                                                        "type":  "string",
-                                                                                                                                        "pattern":  "^upgrade\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                    },
-                                                                                                                             "name":  {
-                                                                                                                                          "type":  "string"
-                                                                                                                                      },
-                                                                                                                             "description":  {
-                                                                                                                                                 "type":  "string"
-                                                                                                                                             },
-                                                                                                                             "category":  {
-                                                                                                                                              "type":  "string",
-                                                                                                                                              "enum":  [
-                                                                                                                                                           "tooling",
-                                                                                                                                                           "infrastructure",
-                                                                                                                                                           "logistics",
-                                                                                                                                                           "safety",
-                                                                                                                                                           "storage",
-                                                                                                                                                           "quality",
-                                                                                                                                                           "operations",
-                                                                                                                                                           "comfort"
-                                                                                                                                                       ]
-                                                                                                                                          },
-                                                                                                                             "requiredUpgradeIds":  {
-                                                                                                                                                        "type":  "array",
-                                                                                                                                                        "items":  {
-                                                                                                                                                                      "type":  "string"
-                                                                                                                                                                  }
-                                                                                                                                                    },
-                                                                                                                             "essentialForTierUpgrade":  {
-                                                                                                                                                             "type":  "boolean"
-                                                                                                                                                         },
-                                                                                                                             "effects":  {
-                                                                                                                                             "type":  "object",
-                                                                                                                                             "additionalProperties":  false,
-                                                                                                                                             "required":  [
-                                                                                                                                                              "throughputMultiplier",
-                                                                                                                                                              "laborEfficiency",
-                                                                                                                                                              "wasteMultiplier",
-                                                                                                                                                              "qualityMultiplier"
-                                                                                                                                                          ],
-                                                                                                                                             "properties":  {
-                                                                                                                                                                "throughputMultiplier":  {
-                                                                                                                                                                                             "type":  "number",
-                                                                                                                                                                                             "minimum":  0.01
-                                                                                                                                                                                         },
-                                                                                                                                                                "laborEfficiency":  {
-                                                                                                                                                                                        "type":  "number",
-                                                                                                                                                                                        "minimum":  0.01
-                                                                                                                                                                                    },
-                                                                                                                                                                "wasteMultiplier":  {
-                                                                                                                                                                                        "type":  "number",
-                                                                                                                                                                                        "minimum":  0.01
-                                                                                                                                                                                    },
-                                                                                                                                                                "qualityMultiplier":  {
-                                                                                                                                                                                          "type":  "number",
-                                                                                                                                                                                          "minimum":  0.01
-                                                                                                                                                                                      },
-                                                                                                                                                                "variantSlotDelta":  {
-                                                                                                                                                                                         "type":  "integer",
-                                                                                                                                                                                         "minimum":  0
-                                                                                                                                                                                     },
-                                                                                                                                                                "switchLaborCostMultiplier":  {
-                                                                                                                                                                                                  "type":  "number",
-                                                                                                                                                                                                  "minimum":  0.01
-                                                                                                                                                                                              },
-                                                                                                                                                                "variantUnlocks":  {
-                                                                                                                                                                                       "type":  "array",
-                                                                                                                                                                                       "items":  {
-                                                                                                                                                                                                     "type":  "string",
-                                                                                                                                                                                                     "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                                                                 }
-                                                                                                                                                                                   }
-                                                                                                                                                            }
-                                                                                                                                         }
-                                                                                                                         }
-                                                                                                      }
-                                                                                        },
-                                                                  "tierUpgradeRequirements":  {
-                                                                                                  "type":  "array",
-                                                                                                  "items":  {
-                                                                                                                "type":  "object",
-                                                                                                                "additionalProperties":  false,
-                                                                                                                "required":  [
-                                                                                                                                 "targetWorkplaceId",
-                                                                                                                                 "requiredUpgradeIds"
-                                                                                                                             ],
-                                                                                                                "properties":  {
-                                                                                                                                   "targetWorkplaceId":  {
-                                                                                                                                                             "type":  "string"
-                                                                                                                                                         },
-                                                                                                                                   "requiredUpgradeIds":  {
-                                                                                                                                                              "type":  "array",
-                                                                                                                                                              "minItems":  1,
-                                                                                                                                                              "items":  {
-                                                                                                                                                                            "type":  "string"
-                                                                                                                                                                        }
-                                                                                                                                                          },
-                                                                                                                                   "notes":  {
-                                                                                                                                                 "type":  "string"
-                                                                                                                                             }
-                                                                                                                               }
-                                                                                                            }
-                                                                                              }
-                                                              }
-                                           },
-                       "workforceProfile":  {
-                                                "type":  "object",
-                                                "additionalProperties":  false,
-                                                "required":  [
-                                                                 "maxConcurrentWorkers",
-                                                                 "jobs"
-                                                             ],
-                                                "properties":  {
-                                                                   "maxConcurrentWorkers":  {
-                                                                                                "type":  "integer",
-                                                                                                "minimum":  1
-                                                                                            },
-                                                                   "jobs":  {
-                                                                                "type":  "array",
-                                                                                "minItems":  1,
-                                                                                "items":  {
-                                                                                              "type":  "object",
-                                                                                              "additionalProperties":  false,
-                                                                                              "required":  [
-                                                                                                               "jobId",
-                                                                                                               "role",
-                                                                                                               "requiredTier",
-                                                                                                               "minWorkers",
-                                                                                                               "recommendedWorkers",
-                                                                                                               "diminishingStartsAt",
-                                                                                                               "maxWorkers",
-                                                                                                               "baseOutputPerWorker",
-                                                                                                               "diminishingFactor",
-                                                                                                               "unlocks",
-                                                                                                               "toolRequirements"
-                                                                                                           ],
-                                                                                              "properties":  {
-                                                                                                                 "jobId":  {
-                                                                                                                               "type":  "string",
-                                                                                                                               "pattern":  "^job\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                           },
-                                                                                                                 "role":  {
-                                                                                                                              "type":  "string",
-                                                                                                                              "enum":  [
-                                                                                                                                           "primary",
-                                                                                                                                           "support",
-                                                                                                                                           "specialist",
-                                                                                                                                           "management"
-                                                                                                                                       ]
-                                                                                                                          },
-                                                                                                                 "requiredTier":  {
-                                                                                                                                      "type":  "integer",
-                                                                                                                                      "minimum":  1,
-                                                                                                                                      "maximum":  5
-                                                                                                                                  },
-                                                                                                                 "minWorkers":  {
-                                                                                                                                    "type":  "integer",
-                                                                                                                                    "minimum":  0
-                                                                                                                                },
-                                                                                                                 "recommendedWorkers":  {
-                                                                                                                                            "type":  "integer",
-                                                                                                                                            "minimum":  1
-                                                                                                                                        },
-                                                                                                                 "diminishingStartsAt":  {
-                                                                                                                                             "type":  "integer",
-                                                                                                                                             "minimum":  1
-                                                                                                                                         },
-                                                                                                                 "maxWorkers":  {
-                                                                                                                                    "type":  "integer",
-                                                                                                                                    "minimum":  1
-                                                                                                                                },
-                                                                                                                 "baseOutputPerWorker":  {
-                                                                                                                                             "type":  "number",
-                                                                                                                                             "minimum":  0
-                                                                                                                                         },
-                                                                                                                 "diminishingFactor":  {
-                                                                                                                                           "type":  "number",
-                                                                                                                                           "minimum":  0.01,
-                                                                                                                                           "maximum":  1
-                                                                                                                                       },
-                                                                                                                 "unlocks":  {
-                                                                                                                                 "type":  "array",
-                                                                                                                                 "items":  {
-                                                                                                                                               "type":  "string"
-                                                                                                                                           }
-                                                                                                                             },
-                                                                                                                 "replanting":  {
-                                                                                                                                    "type":  "object",
-                                                                                                                                    "additionalProperties":  false,
-                                                                                                                                    "required":  [
-                                                                                                                                                     "enabled",
-                                                                                                                                                     "outputGainPerWorker",
-                                                                                                                                                     "maxOutputGain",
-                                                                                                                                                     "effectiveRadiusReductionPerWorker",
-                                                                                                                                                     "maxRadiusReduction"
-                                                                                                                                                 ],
-                                                                                                                                    "properties":  {
-                                                                                                                                                       "enabled":  {
-                                                                                                                                                                       "type":  "boolean"
-                                                                                                                                                                   },
-                                                                                                                                                       "outputGainPerWorker":  {
-                                                                                                                                                                                   "type":  "number",
-                                                                                                                                                                                   "minimum":  0
-                                                                                                                                                                               },
-                                                                                                                                                       "maxOutputGain":  {
-                                                                                                                                                                             "type":  "number",
-                                                                                                                                                                             "minimum":  0
-                                                                                                                                                                         },
-                                                                                                                                                       "effectiveRadiusReductionPerWorker":  {
-                                                                                                                                                                                                 "type":  "number",
-                                                                                                                                                                                                 "minimum":  0
-                                                                                                                                                                                             },
-                                                                                                                                                       "maxRadiusReduction":  {
-                                                                                                                                                                                  "type":  "number",
-                                                                                                                                                                                  "minimum":  0
-                                                                                                                                                                              }
-                                                                                                                                                   }
-                                                                                                                                },
-                                                                                                                 "toolRequirements":  {
-                                                                                                                                          "type":  "object",
-                                                                                                                                          "additionalProperties":  false,
-                                                                                                                                          "required":  [
-                                                                                                                                                           "minimumToolTier",
-                                                                                                                                                           "requiredToolTags",
-                                                                                                                                                           "missingToolPenalty"
-                                                                                                                                                       ],
-                                                                                                                                          "properties":  {
-                                                                                                                                                             "minimumToolTier":  {
-                                                                                                                                                                                     "type":  "integer",
-                                                                                                                                                                                     "minimum":  1,
-                                                                                                                                                                                     "maximum":  5
-                                                                                                                                                                                 },
-                                                                                                                                                             "requiredToolTags":  {
-                                                                                                                                                                                      "type":  "array",
-                                                                                                                                                                                      "minItems":  1,
-                                                                                                                                                                                      "items":  {
-                                                                                                                                                                                                    "type":  "string",
-                                                                                                                                                                                                    "pattern":  "^tool\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                                                                }
-                                                                                                                                                                                  },
-                                                                                                                                                             "missingToolPenalty":  {
-                                                                                                                                                                                        "type":  "object",
-                                                                                                                                                                                        "additionalProperties":  false,
-                                                                                                                                                                                        "required":  [
-                                                                                                                                                                                                         "mode",
-                                                                                                                                                                                                         "outputMultiplier"
-                                                                                                                                                                                                     ],
-                                                                                                                                                                                        "properties":  {
-                                                                                                                                                                                                           "mode":  {
-                                                                                                                                                                                                                        "type":  "string",
-                                                                                                                                                                                                                        "enum":  [
-                                                                                                                                                                                                                                     "reduced_output",
-                                                                                                                                                                                                                                     "no_output"
-                                                                                                                                                                                                                                 ]
-                                                                                                                                                                                                                    },
-                                                                                                                                                                                                           "outputMultiplier":  {
-                                                                                                                                                                                                                                    "type":  "number",
-                                                                                                                                                                                                                                    "minimum":  0,
-                                                                                                                                                                                                                                    "maximum":  1
-                                                                                                                                                                                                                                }
-                                                                                                                                                                                                       }
-                                                                                                                                                                                    }
-                                                                                                                                                         }
-                                                                                                                                      }
-                                                                                                             }
-                                                                                          }
-                                                                            }
-                                                               }
-                                            },
-                       "integrationProfile":  {
-                                                  "type":  "object",
-                                                  "additionalProperties":  false,
-                                                  "required":  [
-                                                                   "role",
-                                                                   "comboGroupIds",
-                                                                   "comboBonuses"
-                                                               ],
-                                                  "properties":  {
-                                                                     "role":  {
-                                                                                  "type":  "string",
-                                                                                  "enum":  [
-                                                                                               "gathering",
-                                                                                               "primary_processing",
-                                                                                               "secondary_processing",
-                                                                                               "aging",
-                                                                                               "distillation",
-                                                                                               "bottling",
-                                                                                               "distribution",
-                                                                                               "integrated"
-                                                                                           ]
-                                                                              },
-                                                                     "comboGroupIds":  {
-                                                                                           "type":  "array",
-                                                                                           "items":  {
-                                                                                                         "type":  "string",
-                                                                                                         "pattern":  "^combo\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
-                                                                                                     }
-                                                                                       },
-                                                                     "comboBonuses":  {
-                                                                                          "type":  "array",
-                                                                                          "items":  {
-                                                                                                        "type":  "object",
-                                                                                                        "additionalProperties":  false,
-                                                                                                        "required":  [
-                                                                                                                         "withWorkplaceIds",
-                                                                                                                         "throughputMultiplier",
-                                                                                                                         "laborEfficiency",
-                                                                                                                         "wasteMultiplier",
-                                                                                                                         "logisticsCostMultiplier"
-                                                                                                                     ],
-                                                                                                        "properties":  {
-                                                                                                                           "withWorkplaceIds":  {
-                                                                                                                                                    "type":  "array",
-                                                                                                                                                    "minItems":  1,
-                                                                                                                                                    "items":  {
-                                                                                                                                                                  "type":  "string"
-                                                                                                                                                              }
-                                                                                                                                                },
-                                                                                                                           "throughputMultiplier":  {
-                                                                                                                                                        "type":  "number",
-                                                                                                                                                        "minimum":  0.01
-                                                                                                                                                    },
-                                                                                                                           "laborEfficiency":  {
-                                                                                                                                                   "type":  "number",
-                                                                                                                                                   "minimum":  0.01
-                                                                                                                                               },
-                                                                                                                           "wasteMultiplier":  {
-                                                                                                                                                   "type":  "number",
-                                                                                                                                                   "minimum":  0.01
-                                                                                                                                               },
-                                                                                                                           "logisticsCostMultiplier":  {
-                                                                                                                                                           "type":  "number",
-                                                                                                                                                           "minimum":  0.01
-                                                                                                                                                       }
-                                                                                                                       }
-                                                                                                    }
-                                                                                      }
-                                                                 }
-                                              },
-                       "ioProfile":  {
-                                         "type":  "object",
-                                         "additionalProperties":  false,
-                                         "required":  [
-                                                          "workCycleHours",
-                                                          "inputs",
-                                                          "outputs"
-                                                      ],
-                                         "properties":  {
-                                                            "workCycleHours":  {
-                                                                                   "type":  "number",
-                                                                                   "minimum":  1,
-                                                                                   "maximum":  24
-                                                                               },
-                                                            "inputs":  {
-                                                                           "type":  "array",
-                                                                           "minItems":  0,
-                                                                           "items":  {
-                                                                                         "type":  "object",
-                                                                                         "additionalProperties":  false,
-                                                                                         "required":  [
-                                                                                                          "itemKey",
-                                                                                                          "quantityPerCycle",
-                                                                                                          "unit",
-                                                                                                          "consumptionType"
-                                                                                                      ],
-                                                                                         "properties":  {
-                                                                                                            "itemKey":  {
-                                                                                                                            "type":  "string",
-                                                                                                                            "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
-                                                                                                                        },
-                                                                                                            "quantityPerCycle":  {
-                                                                                                                                     "type":  "number",
-                                                                                                                                     "minimum":  0.0001
-                                                                                                                                 },
-                                                                                                            "unit":  {
-                                                                                                                         "type":  "string",
-                                                                                                                         "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                     },
-                                                                                                            "consumptionType":  {
-                                                                                                                                    "type":  "string",
-                                                                                                                                    "enum":  [
-                                                                                                                                                 "consumed"
-                                                                                                                                             ]
-                                                                                                                                }
-                                                                                                        }
-                                                                                     }
-                                                                       },
-                                                            "siteRequirements":  {
-                                                                                     "type":  "array",
-                                                                                     "minItems":  0,
-                                                                                     "items":  {
-                                                                                                   "type":  "object",
-                                                                                                   "additionalProperties":  false,
-                                                                                                   "required":  [
-                                                                                                                    "abstractionKey",
-                                                                                                                    "quantityPerCycle",
-                                                                                                                    "unit"
-                                                                                                                ],
-                                                                                                   "properties":  {
-                                                                                                                      "abstractionKey":  {
-                                                                                                                                             "type":  "string",
-                                                                                                                                             "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                         },
-                                                                                                                      "quantityPerCycle":  {
-                                                                                                                                               "type":  "number",
-                                                                                                                                               "minimum":  0.0001
-                                                                                                                                           },
-                                                                                                                      "unit":  {
-                                                                                                                                   "type":  "string",
-                                                                                                                                   "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                               }
-                                                                                                                  }
-                                                                                               }
-                                                                                 },
-                                                            "outputs":  {
-                                                                            "type":  "array",
-                                                                            "minItems":  0,
-                                                                            "items":  {
-                                                                                          "type":  "object",
-                                                                                          "additionalProperties":  false,
-                                                                                          "required":  [
-                                                                                                           "itemKey",
-                                                                                                           "quantityPerCycle",
-                                                                                                           "unit",
-                                                                                                           "productionType"
-                                                                                                       ],
-                                                                                          "properties":  {
-                                                                                                            "itemKey":  {
-                                                                                                                            "type":  "string",
-                                                                                                                            "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
-                                                                                                                        },
-                                                                                                             "quantityPerCycle":  {
-                                                                                                                                      "type":  "number",
-                                                                                                                                      "minimum":  0.0001
-                                                                                                                                  },
-                                                                                                             "unit":  {
-                                                                                                                          "type":  "string",
-                                                                                                                          "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                      },
-                                                                                                             "productionType":  {
-                                                                                                                                    "type":  "string",
-                                                                                                                                    "enum":  [
-                                                                                                                                                 "primary",
-                                                                                                                                                 "byproduct"
-                                                                                                                                             ]
-                                                                                                                                }
-                                                                                                         }
-                                                                                      }
-                                                                        },
-                                                            "yieldGroups":  {
-                                                                                "type":  "array",
-                                                                                "minItems":  0,
-                                                                                "items":  {
-                                                                                              "type":  "object",
-                                                                                              "additionalProperties":  false,
-                                                                                              "required":  [
-                                                                                                               "groupId",
-                                                                                                               "selectionMode",
-                                                                                                               "outputs"
-                                                                                                           ],
-                                                                                              "properties":  {
-                                                                                                                 "groupId":  {
-                                                                                                                                 "type":  "string",
-                                                                                                                                 "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                             },
-                                                                                                                 "selectionMode":  {
-                                                                                                                                      "type":  "string",
-                                                                                                                                      "enum":  [
-                                                                                                                                                   "weighted_pool",
-                                                                                                                                                   "deterministic_bundle"
-                                                                                                                                               ]
-                                                                                                                                  },
-                                                                                                                 "drawsPerCycle":  {
-                                                                                                                                       "type":  "integer",
-                                                                                                                                       "minimum":  1
-                                                                                                                                   },
-                                                                                                                 "outputs":  {
-                                                                                                                                 "type":  "array",
-                                                                                                                                 "minItems":  1,
-                                                                                                                                 "items":  {
-                                                                                                                                               "type":  "object",
-                                                                                                                                               "additionalProperties":  false,
-                                                                                                                                               "required":  [
-                                                                                                                                                                "itemKey",
-                                                                                                                                                                "quantityPerCycle",
-                                                                                                                                                                "unit",
-                                                                                                                                                                "productionType"
-                                                                                                                                                            ],
-                                                                                                                                               "properties":  {
-                                                                                                                                                                  "itemKey":  {
-                                                                                                                                                                                  "type":  "string",
-                                                                                                                                                                                  "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
-                                                                                                                                                                              },
-                                                                                                                                                                  "quantityPerCycle":  {
-                                                                                                                                                                                           "type":  "number",
-                                                                                                                                                                                           "minimum":  0.0001
-                                                                                                                                                                                       },
-                                                                                                                                                                  "unit":  {
-                                                                                                                                                                               "type":  "string",
-                                                                                                                                                                               "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                                           },
-                                                                                                                                                                  "productionType":  {
-                                                                                                                                                                                         "type":  "string",
-                                                                                                                                                                                         "enum":  [
-                                                                                                                                                                                                      "primary",
-                                                                                                                                                                                                      "byproduct"
-                                                                                                                                                                                                  ]
-                                                                                                                                                                                     },
-                                                                                                                                                                  "weight":  {
-                                                                                                                                                                                 "type":  "number",
-                                                                                                                                                                                 "minimum":  0.0001
-                                                                                                                                                                             }
-                                                                                                                                                              }
-                                                                                                                                           }
-                                                                                                                             }
-                                                                                                             }
-                                                                                          }
-                                                                        }
-                                                        }
-                                     },
-                       "plotProfile":  {
-                                           "type":  "object",
-                                           "additionalProperties":  false,
-                                           "required":  [
-                                                            "plotCapacity",
-                                                            "usableAreaPerPlot",
-                                                            "proportionalAreaScaling",
-                                                            "allowedPlotTypes",
-                                                            "irrigationPolicy",
-                                                            "specialtyUpgrades",
-                                                            "terrainCompatibility"
-                                                        ],
-                                           "properties":  {
-                                                              "plotCapacity":  {
-                                                                                   "type":  "integer",
-                                                                                   "minimum":  1
-                                                                               },
-                                                              "usableAreaPerPlot":  {
-                                                                                        "type":  "number",
-                                                                                        "minimum":  0.0001
-                                                                                    },
-                                                              "proportionalAreaScaling":  {
-                                                                                              "type":  "boolean"
-                                                                                          },
-                                                              "allowedPlotTypes":  {
-                                                                                       "type":  "array",
-                                                                                       "minItems":  1,
-                                                                                       "items":  {
-                                                                                                     "type":  "string",
-                                                                                                     "enum":  [
-                                                                                                                  "garden",
-                                                                                                                  "farmland",
-                                                                                                                  "raised_bed",
-                                                                                                                  "orchard",
-                                                                                                                  "terraced_farm",
-                                                                                                                  "terraced_orchard",
-                                                                                                                  "greenhouse"
-                                                                                                              ]
-                                                                                                 }
-                                                                                   },
-                                                              "irrigationPolicy":  {
-                                                                                       "type":  "object",
-                                                                                       "additionalProperties":  false,
-                                                                                       "required":  [
-                                                                                                        "minimumIrrigationTier",
-                                                                                                        "bonusPerTierAboveMinimum",
-                                                                                                        "maxTierBonus"
-                                                                                                    ],
-                                                                                       "properties":  {
-                                                                                                          "minimumIrrigationTier":  {
-                                                                                                                                        "type":  "integer",
-                                                                                                                                        "minimum":  0,
-                                                                                                                                        "maximum":  5
-                                                                                                                                    },
-                                                                                                          "bonusPerTierAboveMinimum":  {
-                                                                                                                                           "type":  "number",
-                                                                                                                                           "minimum":  0
-                                                                                                                                       },
-                                                                                                          "maxTierBonus":  {
-                                                                                                                               "type":  "number",
-                                                                                                                               "minimum":  0
-                                                                                                                           }
-                                                                                                      }
-                                                                                   },
-                                                              "specialtyUpgrades":  {
-                                                                                        "type":  "array",
-                                                                                        "items":  {
-                                                                                                      "type":  "string",
-                                                                                                      "enum":  [
-                                                                                                                   "terracing",
-                                                                                                                   "greenhouse",
-                                                                                                                   "raised_beds",
-                                                                                                                   "built_in_irrigation"
-                                                                                                               ]
-                                                                                                  }
-                                                                                    },
-                                                              "terrainCompatibility":  {
-                                                                                           "type":  "array",
-                                                                                           "minItems":  1,
-                                                                                           "items":  {
-                                                                                                         "type":  "string",
-                                                                                                         "enum":  [
-                                                                                                                      "flat",
-                                                                                                                      "rolling",
-                                                                                                                      "hillside",
-                                                                                                                      "mountain",
-                                                                                                                      "wetland"
-                                                                                                                  ]
-                                                                                                     }
-                                                                                       }
-                                                          }
-                                       },
-                       "progressionProfile":  {
-                                                  "type":  "object",
-                                                  "additionalProperties":  false,
-                                                  "required":  [
-                                                                   "maxTier",
-                                                                   "tiers"
-                                                               ],
-                                                  "properties":  {
-                                                                     "maxTier":  {
-                                                                                     "type":  "integer",
-                                                                                     "minimum":  1,
-                                                                                     "maximum":  5
-                                                                                 },
-                                                                     "tiers":  {
-                                                                                   "type":  "array",
-                                                                                   "minItems":  1,
-                                                                                   "items":  {
-                                                                                                 "type":  "object",
-                                                                                                 "additionalProperties":  false,
-                                                                                                 "required":  [
-                                                                                                                  "tier",
-                                                                                                                  "tierLabel",
-                                                                                                                  "throughputMultiplier",
-                                                                                                                  "variantSlots",
-                                                                                                                  "switchLaborCost",
-                                                                                                                  "variantUnlocks",
-                                                                                                                  "inputLaborWeights",
-                                                                                                                  "powerMode"
-                                                                                                              ],
-                                                                                                 "properties":  {
-                                                                                                                    "tier":  {
-                                                                                                                                 "type":  "integer",
-                                                                                                                                 "minimum":  1,
-                                                                                                                                 "maximum":  5
-                                                                                                                             },
-                                                                                                                    "tierLabel":  {
-                                                                                                                                      "type":  "string"
-                                                                                                                                  },
-                                                                                                                    "throughputMultiplier":  {
-                                                                                                                                                 "type":  "number",
-                                                                                                                                                 "minimum":  0.01
-                                                                                                                                             },
-                                                                                                                    "variantSlots":  {
-                                                                                                                                         "type":  "integer",
-                                                                                                                                         "minimum":  1
-                                                                                                                                     },
-                                                                                                                    "switchLaborCost":  {
-                                                                                                                                            "type":  "number",
-                                                                                                                                            "minimum":  0
-                                                                                                                                        },
-                                                                                                                    "variantUnlocks":  {
-                                                                                                                                           "type":  "array",
-                                                                                                                                           "items":  {
-                                                                                                                                                         "type":  "string",
-                                                                                                                                                         "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                     }
-                                                                                                                                       },
-                                                                                                                    "inputLaborWeights":  {
-                                                                                                                                              "type":  "array",
-                                                                                                                                              "minItems":  0,
-                                                                                                                                              "items":  {
-                                                                                                                                                            "type":  "object",
-                                                                                                                                                            "additionalProperties":  false,
-                                                                                                                                                            "required":  [
-                                                                                                                                                                             "itemKey",
-                                                                                                                                                                             "laborWeight"
-                                                                                                                                                                         ],
-                                                                                                                                                            "properties":  {
-                                                                                                                                                                              "itemKey":  {
-                                                                                                                                                                                              "type":  "string",
-                                                                                                                                                                                               "pattern":  "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
-                                                                                                                                                                                          },
-                                                                                                                                                                           "laborWeight":  {
-                                                                                                                                                                                                   "type":  "number",
-                                                                                                                                                                                                   "minimum":  0.01
-                                                                                                                                                                                               }
-                                                                                                                                                                           }
-                                                                                                                                                        }
-                                                                                                                                          },
-                                                                                                                    "siteLaborWeights":  {
-                                                                                                                                             "type":  "array",
-                                                                                                                                             "minItems":  0,
-                                                                                                                                             "items":  {
-                                                                                                                                                           "type":  "object",
-                                                                                                                                                           "additionalProperties":  false,
-                                                                                                                                                           "required":  [
-                                                                                                                                                                            "abstractionKey",
-                                                                                                                                                                            "laborWeight"
-                                                                                                                                                                        ],
-                                                                                                                                                           "properties":  {
-                                                                                                                                                                              "abstractionKey":  {
-                                                                                                                                                                                                     "type":  "string",
-                                                                                                                                                                                                     "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                                                                 },
-                                                                                                                                                                              "laborWeight":  {
-                                                                                                                                                                                                  "type":  "number",
-                                                                                                                                                                                                  "minimum":  0.01
-                                                                                                                                                                                              }
-                                                                                                                                                                          }
-                                                                                                                                                       }
-                                                                                                                                         },
-                                                                                                                    "powerMode":  {
-                                                                                                                                      "type":  "string",
-                                                                                                                                      "enum":  [
-                                                                                                                                                   "manual",
-                                                                                                                                                   "animal",
-                                                                                                                                                   "water",
-                                                                                                                                                   "wind",
-                                                                                                                                                   "steam",
-                                                                                                                                                   "hybrid"
-                                                                                                                                               ]
-                                                                                                                                  },
-                                                                                                                    "facilityForm":  {
-                                                                                                                                         "type":  "string",
-                                                                                                                                         "enum":  [
-                                                                                                                                                      "camp",
-                                                                                                                                                      "hut",
-                                                                                                                                                      "cabin",
-                                                                                                                                                      "lodge",
-                                                                                                                                                      "hall",
-                                                                                                                                                      "guildhouse",
-                                                                                                                                                      "workshop",
-                                                                                                                                                      "estate",
-                                                                                                                                                      "compound",
-                                                                                                                                                      "outpost"
-                                                                                                                                                  ]
-                                                                                                                                     },
-                                                                                                                    "ownershipModel":  {
-                                                                                                                                           "type":  "string",
-                                                                                                                                           "enum":  [
-                                                                                                                                                        "subsistence",
-                                                                                                                                                        "independent",
-                                                                                                                                                        "guild",
-                                                                                                                                                        "estate",
-                                                                                                                                                        "civic"
-                                                                                                                                                    ]
-                                                                                                                                       },
-                                                                                                                    "techLevel":  {
-                                                                                                                                      "type":  "string",
-                                                                                                                                      "enum":  [
-                                                                                                                                                   "primitive",
-                                                                                                                                                   "basic",
-                                                                                                                                                   "improved",
-                                                                                                                                                   "advanced",
-                                                                                                                                                   "masterwork"
-                                                                                                                                               ]
-                                                                                                                                  },
-                                                                                                                    "wealthBand":  {
-                                                                                                                                       "type":  "string",
-                                                                                                                                       "enum":  [
-                                                                                                                                                    "low_income",
-                                                                                                                                                    "mid_income",
-                                                                                                                                                    "high_income"
-                                                                                                                                                ]
-                                                                                                                                   },
-                                                                                                                    "laborSlots":  {
-                                                                                                                                       "type":  "integer",
-                                                                                                                                       "minimum":  1
-                                                                                                                                   },
-                                                                                                                    "maxConcurrentWorkers":  {
-                                                                                                                                                 "type":  "integer",
-                                                                                                                                                 "minimum":  1
-                                                                                                                                             },
-                                                                                                                    "upgradeSlots":  {
-                                                                                                                                         "type":  "integer",
-                                                                                                                                         "minimum":  0
-                                                                                                                                     },
-                                                                                                                    "requiredUpgradeIds":  {
-                                                                                                                                               "type":  "array",
-                                                                                                                                               "items":  {
-                                                                                                                                                             "type":  "string",
-                                                                                                                                                             "pattern":  "^upgrade\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                         }
-                                                                                                                                           },
-                                                                                                                    "advancementNotes":  {
-                                                                                                                                             "type":  "string"
-                                                                                                                                         },
-                                                                                                                    "jobUnlocks":  {
-                                                                                                                                       "type":  "array",
-                                                                                                                                       "items":  {
-                                                                                                                                                     "type":  "string",
-                                                                                                                                                     "pattern":  "^job\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                 }
-                                                                                                                                   },
-                                                                                                                    "outputUnlocks":  {
-                                                                                                                                          "type":  "array",
-                                                                                                                                          "items":  {
-                                                                                                                                                        "type":  "string",
-                                                                                                                                                        "pattern":  "^[a-z0-9]+(?:_[a-z0-9]+)*$"
-                                                                                                                                                    }
-                                                                                                                                      },
-                                                                                                                    "districtTags":  {
-                                                                                                                                         "type":  "array",
-                                                                                                                                         "items":  {
-                                                                                                                                                       "type":  "string"
-                                                                                                                                                   }
-                                                                                                                                  }
-                                                                                                                }
-                                                                                             }
-                                                                               }
-                                                                 }
-                                              }
-                   }
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WorkplaceRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "emptyObjectPlaceholder": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 0
+    },
+    "booleanOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "integerMinZeroOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "integerMinOneOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "integerZeroToFiveOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "integerOneToFiveOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "nonNegativeNumberOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "smallPositiveNumberOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0.01
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "quantityNumberOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0.0001
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "unitIntervalOrPlaceholder": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        {
+          "$ref": "#/$defs/emptyObjectPlaceholder"
+        }
+      ]
+    },
+    "workplaceUpgradeIdArrayOrNull": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string",
+        "pattern": "^upgrade\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "category",
+    "inputTags",
+    "outputTags",
+    "laborSlots",
+    "ioProfile",
+    "workforceProfile"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "extraction",
+        "processing",
+        "manufacturing",
+        "distribution"
+      ]
+    },
+    "inputTags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+      }
+    },
+    "siteTags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputTags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+      }
+    },
+    "laborSlots": {
+      "$ref": "#/$defs/integerMinOneOrPlaceholder"
+    },
+    "tierProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trackId",
+        "tier",
+        "tierLabel",
+        "facilityForm",
+        "upgradesFrom",
+        "upgradesTo",
+        "techLevel",
+        "ownershipModel",
+        "wealthBand",
+        "splitFacility",
+        "regionalSuitability"
+      ],
+      "properties": {
+        "trackId": {
+          "type": "string",
+          "pattern": "^track\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "tier": {
+          "$ref": "#/$defs/integerOneToFiveOrPlaceholder"
+        },
+        "tierLabel": {
+          "type": "string"
+        },
+        "facilityForm": {
+          "type": "string",
+          "enum": [
+            "camp",
+            "hut",
+            "cabin",
+            "lodge",
+            "hall",
+            "guildhouse",
+            "workshop",
+            "estate",
+            "compound",
+            "outpost"
+          ]
+        },
+        "upgradesFrom": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "upgradesTo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "techLevel": {
+          "type": "string",
+          "enum": [
+            "primitive",
+            "basic",
+            "improved",
+            "advanced",
+            "masterwork"
+          ]
+        },
+        "ownershipModel": {
+          "type": "string",
+          "enum": [
+            "subsistence",
+            "independent",
+            "guild",
+            "estate",
+            "civic"
+          ]
+        },
+        "wealthBand": {
+          "type": "string",
+          "enum": [
+            "low_income",
+            "mid_income",
+            "high_income"
+          ]
+        },
+        "splitFacility": {
+          "$ref": "#/$defs/booleanOrPlaceholder"
+        },
+        "regionalSuitability": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "efficiencyProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "throughputMultiplier",
+        "laborEfficiency",
+        "wasteMultiplier",
+        "comfortScore"
+      ],
+      "properties": {
+        "throughputMultiplier": {
+          "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+        },
+        "laborEfficiency": {
+          "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+        },
+        "wasteMultiplier": {
+          "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+        },
+        "comfortScore": {
+          "$ref": "#/$defs/unitIntervalOrPlaceholder"
+        }
+      }
+    },
+    "marketProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "businessScale",
+        "consumerScope",
+        "supplyAccess",
+        "riskTolerance",
+        "districtTags"
+      ],
+      "properties": {
+        "businessScale": {
+          "type": "string",
+          "enum": [
+            "micro",
+            "small",
+            "medium",
+            "large",
+            "estate"
+          ]
+        },
+        "consumerScope": {
+          "type": "string",
+          "enum": [
+            "self_use",
+            "local",
+            "district",
+            "regional",
+            "export"
+          ]
+        },
+        "supplyAccess": {
+          "type": "string",
+          "enum": [
+            "scarce",
+            "constrained",
+            "balanced",
+            "surplus"
+          ]
+        },
+        "riskTolerance": {
+          "type": "string",
+          "enum": [
+            "safe",
+            "frontier",
+            "dangerous"
+          ]
+        },
+        "districtTags": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "upgradesProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "upgradeSlots",
+        "availableUpgrades",
+        "tierUpgradeRequirements"
+      ],
+      "properties": {
+        "upgradeSlots": {
+          "$ref": "#/$defs/integerMinZeroOrPlaceholder"
+        },
+        "availableUpgrades": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "name",
+              "description",
+              "category",
+              "requiredUpgradeIds",
+              "essentialForTierUpgrade",
+              "effects"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^upgrade\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "tooling",
+                  "infrastructure",
+                  "logistics",
+                  "safety",
+                  "storage",
+                  "quality",
+                  "operations",
+                  "comfort"
+                ]
+              },
+              "requiredUpgradeIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "essentialForTierUpgrade": {
+                "$ref": "#/$defs/booleanOrPlaceholder"
+              },
+              "effects": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "throughputMultiplier",
+                  "laborEfficiency",
+                  "wasteMultiplier",
+                  "qualityMultiplier"
+                ],
+                "properties": {
+                  "throughputMultiplier": {
+                    "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+                  },
+                  "laborEfficiency": {
+                    "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+                  },
+                  "wasteMultiplier": {
+                    "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+                  },
+                  "qualityMultiplier": {
+                    "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+                  },
+                  "variantSlotDelta": {
+                    "$ref": "#/$defs/integerMinZeroOrPlaceholder"
+                  },
+                  "switchLaborCostMultiplier": {
+                    "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+                  },
+                  "variantUnlocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tierUpgradeRequirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "targetWorkplaceId",
+              "requiredUpgradeIds"
+            ],
+            "properties": {
+              "targetWorkplaceId": {
+                "type": "string"
+              },
+              "requiredUpgradeIds": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "workforceProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxConcurrentWorkers",
+        "jobs"
+      ],
+      "properties": {
+        "maxConcurrentWorkers": {
+          "$ref": "#/$defs/integerMinOneOrPlaceholder"
+        },
+        "jobs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "jobId",
+              "role",
+              "requiredTier",
+              "minWorkers",
+              "recommendedWorkers",
+              "diminishingStartsAt",
+              "maxWorkers",
+              "baseOutputPerWorker",
+              "diminishingFactor",
+              "unlocks",
+              "toolRequirements"
+            ],
+            "properties": {
+              "jobId": {
+                "type": "string",
+                "pattern": "^job\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "primary",
+                  "support",
+                  "specialist",
+                  "management"
+                ]
+              },
+              "requiredTier": {
+                "$ref": "#/$defs/integerOneToFiveOrPlaceholder"
+              },
+              "minWorkers": {
+                "$ref": "#/$defs/integerMinZeroOrPlaceholder"
+              },
+              "recommendedWorkers": {
+                "$ref": "#/$defs/integerMinOneOrPlaceholder"
+              },
+              "diminishingStartsAt": {
+                "$ref": "#/$defs/integerMinOneOrPlaceholder"
+              },
+              "maxWorkers": {
+                "$ref": "#/$defs/integerMinOneOrPlaceholder"
+              },
+              "baseOutputPerWorker": {
+                "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+              },
+              "diminishingFactor": {
+                "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+              },
+              "unlocks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "replanting": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "enabled",
+                  "outputGainPerWorker",
+                  "maxOutputGain",
+                  "effectiveRadiusReductionPerWorker",
+                  "maxRadiusReduction"
+                ],
+                "properties": {
+                  "enabled": {
+                    "$ref": "#/$defs/booleanOrPlaceholder"
+                  },
+                  "outputGainPerWorker": {
+                    "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+                  },
+                  "maxOutputGain": {
+                    "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+                  },
+                  "effectiveRadiusReductionPerWorker": {
+                    "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+                  },
+                  "maxRadiusReduction": {
+                    "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+                  }
+                }
+              },
+              "toolRequirements": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "minimumToolTier",
+                  "requiredToolTags",
+                  "missingToolPenalty"
+                ],
+                "properties": {
+                  "minimumToolTier": {
+                    "$ref": "#/$defs/integerOneToFiveOrPlaceholder"
+                  },
+                  "requiredToolTags": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^tool\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    }
+                  },
+                  "missingToolPenalty": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "mode",
+                      "outputMultiplier"
+                    ],
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "reduced_output",
+                          "no_output"
+                        ]
+                      },
+                      "outputMultiplier": {
+                        "$ref": "#/$defs/unitIntervalOrPlaceholder"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "integrationProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "comboGroupIds",
+        "comboBonuses"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "gathering",
+            "primary_processing",
+            "secondary_processing",
+            "aging",
+            "distillation",
+            "bottling",
+            "distribution",
+            "integrated"
+          ]
+        },
+        "comboGroupIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^combo\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+          }
+        },
+        "comboBonuses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "withWorkplaceIds",
+              "throughputMultiplier",
+              "laborEfficiency",
+              "wasteMultiplier",
+              "logisticsCostMultiplier"
+            ],
+            "properties": {
+              "withWorkplaceIds": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "throughputMultiplier": {
+                "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+              },
+              "laborEfficiency": {
+                "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+              },
+              "wasteMultiplier": {
+                "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+              },
+              "logisticsCostMultiplier": {
+                "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ioProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workCycleHours",
+        "inputs",
+        "outputs"
+      ],
+      "properties": {
+        "workCycleHours": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 24
+            },
+            {
+              "$ref": "#/$defs/emptyObjectPlaceholder"
+            }
+          ]
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "itemKey",
+              "quantityPerCycle",
+              "unit",
+              "consumptionType"
+            ],
+            "properties": {
+              "itemKey": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+              },
+              "quantityPerCycle": {
+                "$ref": "#/$defs/quantityNumberOrPlaceholder"
+              },
+              "unit": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "consumptionType": {
+                "type": "string",
+                "enum": [
+                  "consumed"
+                ]
+              }
+            }
+          }
+        },
+        "siteRequirements": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "abstractionKey",
+              "quantityPerCycle",
+              "unit"
+            ],
+            "properties": {
+              "abstractionKey": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "quantityPerCycle": {
+                "$ref": "#/$defs/quantityNumberOrPlaceholder"
+              },
+              "unit": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              }
+            }
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "itemKey",
+              "quantityPerCycle",
+              "unit",
+              "productionType"
+            ],
+            "properties": {
+              "itemKey": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+              },
+              "quantityPerCycle": {
+                "$ref": "#/$defs/quantityNumberOrPlaceholder"
+              },
+              "unit": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "productionType": {
+                "type": "string",
+                "enum": [
+                  "primary",
+                  "byproduct"
+                ]
+              }
+            }
+          }
+        },
+        "yieldGroups": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "groupId",
+              "selectionMode",
+              "outputs"
+            ],
+            "properties": {
+              "groupId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+              },
+              "selectionMode": {
+                "type": "string",
+                "enum": [
+                  "weighted_pool",
+                  "deterministic_bundle"
+                ]
+              },
+              "drawsPerCycle": {
+                "$ref": "#/$defs/integerMinOneOrPlaceholder"
+              },
+              "outputs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "itemKey",
+                    "quantityPerCycle",
+                    "unit",
+                    "productionType"
+                  ],
+                  "properties": {
+                    "itemKey": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                    },
+                    "quantityPerCycle": {
+                      "$ref": "#/$defs/quantityNumberOrPlaceholder"
+                    },
+                    "unit": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    },
+                    "productionType": {
+                      "type": "string",
+                      "enum": [
+                        "primary",
+                        "byproduct"
+                      ]
+                    },
+                    "weight": {
+                      "type": "number",
+                      "minimum": 0.0001
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "plotProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plotCapacity",
+        "usableAreaPerPlot",
+        "proportionalAreaScaling",
+        "allowedPlotTypes",
+        "irrigationPolicy",
+        "specialtyUpgrades",
+        "terrainCompatibility"
+      ],
+      "properties": {
+        "plotCapacity": {
+          "$ref": "#/$defs/integerMinOneOrPlaceholder"
+        },
+        "usableAreaPerPlot": {
+          "$ref": "#/$defs/quantityNumberOrPlaceholder"
+        },
+        "proportionalAreaScaling": {
+          "$ref": "#/$defs/booleanOrPlaceholder"
+        },
+        "allowedPlotTypes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "garden",
+              "farmland",
+              "raised_bed",
+              "orchard",
+              "terraced_farm",
+              "terraced_orchard",
+              "greenhouse"
+            ]
+          }
+        },
+        "irrigationPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "minimumIrrigationTier",
+            "bonusPerTierAboveMinimum",
+            "maxTierBonus"
+          ],
+          "properties": {
+            "minimumIrrigationTier": {
+              "$ref": "#/$defs/integerZeroToFiveOrPlaceholder"
+            },
+            "bonusPerTierAboveMinimum": {
+              "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+            },
+            "maxTierBonus": {
+              "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+            }
+          }
+        },
+        "specialtyUpgrades": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "terracing",
+              "greenhouse",
+              "raised_beds",
+              "built_in_irrigation"
+            ]
+          }
+        },
+        "terrainCompatibility": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "flat",
+              "rolling",
+              "hillside",
+              "mountain",
+              "wetland"
+            ]
+          }
+        }
+      }
+    },
+    "progressionProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxTier",
+        "tiers"
+      ],
+      "properties": {
+        "maxTier": {
+          "$ref": "#/$defs/integerOneToFiveOrPlaceholder"
+        },
+        "tiers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "tier",
+              "tierLabel",
+              "throughputMultiplier",
+              "variantSlots",
+              "switchLaborCost",
+              "variantUnlocks",
+              "inputLaborWeights",
+              "powerMode"
+            ],
+            "properties": {
+              "tier": {
+                "$ref": "#/$defs/integerOneToFiveOrPlaceholder"
+              },
+              "tierLabel": {
+                "type": "string"
+              },
+              "throughputMultiplier": {
+                "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+              },
+              "variantSlots": {
+                "$ref": "#/$defs/integerMinOneOrPlaceholder"
+              },
+              "switchLaborCost": {
+                "$ref": "#/$defs/nonNegativeNumberOrPlaceholder"
+              },
+              "variantUnlocks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "inputLaborWeights": {
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "itemKey",
+                    "laborWeight"
+                  ],
+                  "properties": {
+                    "itemKey": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+                    },
+                    "laborWeight": {
+                      "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+                    }
+                  }
+                }
+              },
+              "siteLaborWeights": {
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "abstractionKey",
+                    "laborWeight"
+                  ],
+                  "properties": {
+                    "abstractionKey": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                    },
+                    "laborWeight": {
+                      "$ref": "#/$defs/smallPositiveNumberOrPlaceholder"
+                    }
+                  }
+                }
+              },
+              "powerMode": {
+                "type": "string",
+                "enum": [
+                  "manual",
+                  "animal",
+                  "water",
+                  "wind",
+                  "steam",
+                  "hybrid"
+                ]
+              },
+              "facilityForm": {
+                "type": "string",
+                "enum": [
+                  "camp",
+                  "hut",
+                  "cabin",
+                  "lodge",
+                  "hall",
+                  "guildhouse",
+                  "workshop",
+                  "estate",
+                  "compound",
+                  "outpost"
+                ]
+              },
+              "ownershipModel": {
+                "type": "string",
+                "enum": [
+                  "subsistence",
+                  "independent",
+                  "guild",
+                  "estate",
+                  "civic"
+                ]
+              },
+              "techLevel": {
+                "type": "string",
+                "enum": [
+                  "primitive",
+                  "basic",
+                  "improved",
+                  "advanced",
+                  "masterwork"
+                ]
+              },
+              "wealthBand": {
+                "type": "string",
+                "enum": [
+                  "low_income",
+                  "mid_income",
+                  "high_income"
+                ]
+              },
+              "laborSlots": {
+                "$ref": "#/$defs/integerMinOneOrPlaceholder"
+              },
+              "maxConcurrentWorkers": {
+                "$ref": "#/$defs/integerMinOneOrPlaceholder"
+              },
+              "upgradeSlots": {
+                "$ref": "#/$defs/integerMinZeroOrPlaceholder"
+              },
+              "requiredUpgradeIds": {
+                "$ref": "#/$defs/workplaceUpgradeIdArrayOrNull"
+              },
+              "advancementNotes": {
+                "type": "string"
+              },
+              "jobUnlocks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^job\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "outputUnlocks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              },
+              "districtTags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

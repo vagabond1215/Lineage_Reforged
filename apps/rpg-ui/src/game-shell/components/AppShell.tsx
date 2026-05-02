@@ -38,19 +38,19 @@ export function TopBar({
   priorityStatus
 }: TopBarProps) {
   return (
-    <header className="relative z-30 shrink-0 border-b border-[color:var(--color-border)] bg-[color:var(--color-panel-strong)] backdrop-blur-xl">
+    <header className="relative z-30 shrink-0 border-b border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-elevated)] backdrop-blur-xl">
       <div className="grid min-h-[4.5rem] grid-cols-1 gap-3 px-4 py-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:px-6">
         <div className="flex min-w-0 items-center gap-4 lg:col-start-1">
           {brand && <div className="shrink-0">{brand}</div>}
           {(title || subtitle) && (
             <div className="min-w-0">
               {title && (
-                <div className="truncate text-base font-semibold text-[color:var(--color-text-strong)]">
+                <div className="truncate text-base font-semibold text-[color:var(--color-text-primary)]">
                   {title}
                 </div>
               )}
               {subtitle && (
-                <div className="mt-0.5 line-clamp-2 text-xs leading-5 text-[color:var(--color-text-soft)]">
+                <div className="mt-0.5 line-clamp-2 text-xs leading-5 text-[color:var(--color-text-secondary)]">
                   {subtitle}
                 </div>
               )}
@@ -78,7 +78,7 @@ export function TopBar({
 
 export function ShellSubBar({ children }: { children: ReactNode }) {
   return (
-    <div className="relative z-10 shrink-0 border-b border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-2 backdrop-blur-xl lg:px-6">
+    <div className="relative z-10 shrink-0 border-b border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] px-4 py-2 backdrop-blur-xl lg:px-6">
       {children}
     </div>
   );
@@ -108,7 +108,7 @@ export function SidebarNav({
   return (
     <nav
       aria-label={label}
-      className="flex gap-2 overflow-x-auto p-3 md:flex-col md:overflow-visible"
+      className="flex gap-3 overflow-x-auto p-4 md:flex-col md:gap-0 md:overflow-visible md:p-0"
     >
       {items.map((item) => (
         <button
@@ -117,14 +117,16 @@ export function SidebarNav({
           onClick={item.onSelect}
           disabled={item.disabled}
           aria-current={item.active ? 'page' : undefined}
-          className={`min-w-[10rem] rounded-lg border px-4 py-4 text-left transition md:min-w-0 ${
+          className={`launcher-sidebar-button min-w-[10rem] rounded-lg border px-4 py-4 text-left transition md:min-h-[4.25rem] md:min-w-0 md:w-full md:rounded-none md:border-x-0 md:border-t-0 md:first:border-t md:px-5 md:py-3 ${
             item.active
-              ? 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-strong)] text-[color:var(--color-text-strong)] shadow-[0_10px_22px_rgba(15,23,42,0.14)]'
-              : 'border-[color:var(--color-border)] bg-transparent text-[color:var(--color-text-soft)] hover:bg-[color:var(--color-surface-soft)]'
+              ? 'is-active border-[color:var(--color-border-soft)] text-[color:var(--color-text-primary)]'
+              : 'border-[color:var(--color-border-soft)] text-[color:var(--color-text-secondary)]'
           } disabled:cursor-default disabled:opacity-60`}
         >
           <span className="flex items-center justify-between gap-3">
-            <span className="truncate text-xl font-semibold">{item.label}</span>
+            <span className="truncate text-[1.75rem] font-light leading-tight tracking-[0.08em]">
+              {item.label}
+            </span>
             {item.badge}
           </span>
         </button>
@@ -148,7 +150,7 @@ export function AppShell({
   children
 }: AppShellProps) {
   return (
-    <div className="flex h-screen min-h-0 flex-col overflow-hidden text-[color:var(--color-text)]">
+    <div className="flex h-screen min-h-0 flex-col overflow-hidden text-[color:var(--color-text-primary)]">
       <TopBar
         brand={brand}
         title={title}
@@ -161,7 +163,7 @@ export function AppShell({
       {subBar && <ShellSubBar>{subBar}</ShellSubBar>}
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
         {sidebar && (
-          <aside className="shrink-0 border-b border-[color:var(--color-border)] bg-[color:var(--color-panel)] backdrop-blur-xl md:w-64 md:border-b-0 md:border-r">
+          <aside className="shrink-0 border-b border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] backdrop-blur-xl md:w-64 md:border-b-0 md:border-r">
             {sidebar}
           </aside>
         )}

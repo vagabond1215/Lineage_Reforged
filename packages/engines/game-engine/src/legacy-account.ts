@@ -9,6 +9,7 @@ import {
   createDefaultAccountAchievementsState,
   createDefaultAccountHistoryState
 } from "./account-achievement-state.js";
+import { createDefaultAccountEstateState } from "./account-estate.js";
 
 export const DEFAULT_ACCOUNT_ID = "account.local.default";
 export const DEFAULT_ACCOUNT_DISPLAY_NAME = "Wayfarer Ledger";
@@ -90,7 +91,9 @@ export function createDefaultAccountLegacyState(): AccountLegacyState {
     legacyPoints: 0,
     lifetimeLegacyEarned: 0,
     legacyUnlocks: [],
-    legacyTransactions: []
+    legacyTransactions: [],
+    selectedPreparationUnlockIds: [],
+    selectedPreparationChoicePayloads: {}
   };
 }
 
@@ -112,7 +115,8 @@ export function createDefaultAccountProfileState(params: {
     ...(params.lastPlayedAt ? { lastPlayedAt: params.lastPlayedAt } : {}),
     legacy: params.legacy ?? createDefaultAccountLegacyState(),
     achievements: createDefaultAccountAchievementsState(),
-    history: createDefaultAccountHistoryState()
+    history: createDefaultAccountHistoryState(),
+    estate: createDefaultAccountEstateState()
   };
 }
 

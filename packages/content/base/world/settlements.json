@@ -96,7 +96,7 @@
                         "racialMix":  [
                                           {
                                               "race":  "humans",
-                                              "percentage":  76
+                                              "percentage":  77
                                           },
                                           {
                                               "race":  "halflings",
@@ -15471,14 +15471,12 @@
                         "macroRegionId":  "region.lantern_isles",
                         "regionId":  "region.glasswake_quay",
                         "localityBandId":  "region_locality.lantern_shrine_gardens",
-                        "settlementType":  "monastery",
+                        "settlementType":  "village",
                         "siteClass":  "surface",
                         "terrainContext":  "shrine_garden",
                         "populationBand":  "small",
                         "populationTotal":  540,
                         "administrativeRole":  "local",
-                        "parentSettlementId":  "settlement.lantern_key",
-                        "dependencyRole":  "monastic_estate",
                         "summary":  "A sea-facing shrine community that copies ledgers, dries herbs, and tends travelers taken in from the mid-ocean routes.",
                         "siteContext":  "Whitewashed halls overlook a quiet cove where herb terraces step down toward a tiny chapel pier.",
                         "identityTags":  [
@@ -15672,7 +15670,7 @@
                         "populationBand":  "tiny",
                         "populationTotal":  430,
                         "administrativeRole":  "local",
-                        "parentSettlementId":  "settlement.pearlwake",
+                        "parentSettlementId":  "settlement.harbormast_quay",
                         "dependencyRole":  "ferry_crossing",
                         "summary":  "A brisk island ferry landing where pearl boats, fishers, and short-range cargo craft hand off goods through rougher water.",
                         "siteContext":  "Breakwaters of piled shell stone shield a crowded floating dock and net yard.",
@@ -16208,14 +16206,12 @@
                         "macroRegionId":  "region.serpents_wake",
                         "regionId":  "region.stormhook_reach",
                         "localityBandId":  "region_locality.serpents_watch_musters",
-                        "settlementType":  "waystation",
+                        "settlementType":  "outpost",
                         "siteClass":  "surface",
                         "terrainContext":  "watch_waystation",
                         "populationBand":  "tiny",
                         "populationTotal":  260,
                         "administrativeRole":  "none",
-                        "parentSettlementId":  "settlement.stormfang_haven",
-                        "dependencyRole":  "watch_post",
                         "summary":  "A hard little watch station where paid scouts and escorts look south for pirate sails and weather breaks.",
                         "siteContext":  "Stone hooks anchor signal chains above a rough yard used by riders, lookouts, and hired guards.",
                         "identityTags":  [
