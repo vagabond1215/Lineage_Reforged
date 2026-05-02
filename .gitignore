@@ -1,0 +1,4 @@
+# Generated and vendor artifacts
+apps/rpg-ui/node_modules/
+apps/rpg-ui/dist/
+packages/db/build/
