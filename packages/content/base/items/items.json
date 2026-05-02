@@ -4361,7 +4361,8 @@
           ],
           "resolutionHooks": [
             "interrupt.primary",
-            "damage.melee"
+            "damage.melee",
+            "status.stagger"
           ],
           "grantTags": [
             "shield",
@@ -16146,7 +16147,8 @@
           ],
           "resolutionHooks": [
             "interrupt.primary",
-            "damage.melee"
+            "damage.melee",
+            "status.stagger"
           ],
           "grantTags": [
             "shield",
@@ -30487,7 +30489,8 @@
           ],
           "resolutionHooks": [
             "interrupt.primary",
-            "damage.melee"
+            "damage.melee",
+            "status.stagger"
           ],
           "grantTags": [
             "shield",
