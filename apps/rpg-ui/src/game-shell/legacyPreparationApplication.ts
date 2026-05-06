@@ -52,6 +52,16 @@ const PREPARATION_TITLES: Record<string, string> = {
   'legacy.unlock.preparation.veteran_escort': 'Veteran Escort'
 };
 
+const EXECUTABLE_PREPARATION_EFFECT_IDS = new Set([
+  'legacy.unlock.preparation.storehouse_keys',
+  'legacy.unlock.preparation.merchant_purse',
+  'legacy.unlock.preparation.camp_supplies',
+  'legacy.unlock.preparation.martial_legacy',
+  'legacy.unlock.preparation.learned_legacy',
+  'legacy.unlock.preparation.vital_legacy',
+  'legacy.unlock.preparation.awakened_spark'
+]);
+
 const TRAVELER_RATION: InventoryStack = {
   itemId: 'item.traveler_ration',
   itemKey: 'traveler_ration',
@@ -112,6 +122,10 @@ function normalizePreparationChoices(
   }
 
   return normalized;
+}
+
+export function isExecutableLegacyPreparationEffectId(unlockId: string): boolean {
+  return EXECUTABLE_PREPARATION_EFFECT_IDS.has(unlockId);
 }
 
 function isAttributePreparationChoice(
@@ -255,6 +269,16 @@ export function applyLegacyPreparationBonuses(
 
   for (const unlockId of appliedPreparationIds) {
     const selectedChoiceId = appliedPreparationChoices[unlockId];
+
+    if (!isExecutableLegacyPreparationEffectId(unlockId)) {
+      addReviewEntry({
+        reviewEntries,
+        unlockId,
+        status: 'inert',
+        detail: 'Recorded for this run; no simple creation bonus is active yet.'
+      });
+      continue;
+    }
 
     if (unlockId === 'legacy.unlock.preparation.merchant_purse') {
       currency = { ...currency, silver: currency.silver + 2 };

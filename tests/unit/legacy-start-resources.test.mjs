@@ -23,6 +23,7 @@ const STARTING_HP = "legacy.unlock.account.starting_hp";
 const STARTING_STAMINA = "legacy.unlock.account.starting_stamina";
 const STARTING_COIN = "legacy.unlock.account.starting_coin";
 const MERCHANT_PURSE = "legacy.unlock.preparation.merchant_purse";
+const VITAL_LEGACY = "legacy.unlock.preparation.vital_legacy";
 
 function grantProfile(amount = 1000) {
   const granted = grantLegacy(createDefaultAccountProfileState(), {
@@ -97,6 +98,13 @@ test("createNewGameSnapshot applies owned account HP and stamina as source-label
   const snapshot = createNewGameSnapshot(form, profile.accountId, {
     accountProfile: profile
   });
+  const stackedSnapshot = createNewGameSnapshot(form, profile.accountId, {
+    accountProfile: profile,
+    appliedLegacyPreparationIds: [VITAL_LEGACY],
+    appliedLegacyPreparationChoices: {
+      [VITAL_LEGACY]: "hp"
+    }
+  });
   const preview = buildCharacterCreationPreview(form, {
     accountProfile: profile
   });
@@ -116,6 +124,14 @@ test("createNewGameSnapshot applies owned account HP and stamina as source-label
     getMetricValue(preview, "stamina"),
     String(snapshot.playerState.resources.stamina.max)
   );
+  assert.equal(
+    stackedSnapshot.playerState.resources.hp.max,
+    baseline.playerState.resources.hp.max + 8
+  );
+  assert.equal(
+    stackedSnapshot.playerState.resources.hp.current,
+    stackedSnapshot.playerState.resources.hp.max
+  );
 
   const hpModifier = snapshot.playerState.resourceRuntime.modifiers.find(
     (modifier) => modifier.sourceId === STARTING_HP
@@ -128,6 +144,10 @@ test("createNewGameSnapshot applies owned account HP and stamina as source-label
   assert.deepEqual(hpModifier?.maxFlat, { hp: 3 });
   assert.equal(staminaModifier?.label, "Starting Stamina");
   assert.deepEqual(staminaModifier?.maxFlat, { stamina: 2 });
+  assert.deepEqual(
+    stackedSnapshot.playerState.resourceRuntime.modifiers.map((modifier) => modifier.sourceId),
+    [STARTING_HP, STARTING_STAMINA, VITAL_LEGACY]
+  );
   assert.equal(snapshot.playerState.flags.includes(`player.legacy_start.${STARTING_HP}`), true);
   assert.equal(
     snapshot.playerState.flags.includes(`player.legacy_start.${STARTING_STAMINA}`),

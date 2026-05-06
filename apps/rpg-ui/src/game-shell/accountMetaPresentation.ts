@@ -30,6 +30,7 @@ export type LegacyUnlockEntryViewModel = {
   type: string;
   unlockClassification: "permanent" | "tiered_permanent" | "preparation";
   costLabel: string;
+  detailLabels: string[];
   statusTagLabel: string | null;
   requiresLabel: string | null;
   purchaseButtonLabel: string;
@@ -61,6 +62,7 @@ export type LegacyMetaViewModel = {
   currentPrestigeLabel: string;
   lifetimePrestigeLabel: string;
   preparationCapacityLabel: string;
+  characterStartNoteLabel: string;
   unlockTypeTabs: string[];
   unlockEntries: LegacyUnlockEntryViewModel[];
 };
@@ -356,6 +358,43 @@ function buildPurchaseButtonLabel(
   return `Purchase Rank ${formatCount(entry.nextRank)}`;
 }
 
+function buildLegacyDetailLabels(
+  entry: ReturnType<typeof resolveLegacyUnlockStates>[number],
+  isSelectedPreparation: boolean
+): string[] {
+  const labels: string[] = [];
+
+  if (entry.isKnown && entry.maxRank > 1) {
+    labels.push(`Rank ${formatCount(entry.currentRank)} / ${formatCount(entry.maxRank)}`);
+  }
+
+  if (entry.classification === "preparation") {
+    labels.push(isSelectedPreparation ? "Selected preparation" : "Preparation option");
+
+    if (isSelectedPreparation) {
+      labels.push("Applies to next character");
+    } else if (entry.currentRank > 0) {
+      labels.push("Select for next character");
+    }
+
+    return labels;
+  }
+
+  if (
+    entry.classification === "permanent" ||
+    entry.classification === "tiered_permanent" ||
+    entry.definition?.purchaseMode === "permanent"
+  ) {
+    labels.push("Permanent account upgrade");
+  }
+
+  if (entry.definition?.scope === "character_start") {
+    labels.push("Applies to new characters");
+  }
+
+  return labels;
+}
+
 function resolveRenownDepth(tier: LegacyRenownTier | null): number {
   switch (tier) {
     case "settlement":
@@ -455,6 +494,7 @@ function buildLegacyEntries(profile: AccountProfileState): LegacyUnlockEntryView
       type: entry.category,
       unlockClassification: entry.classification,
       costLabel: buildCostLabel(entry),
+      detailLabels: buildLegacyDetailLabels(entry, isSelectedPreparation),
       statusTagLabel: isSelectedPreparation ? "Selected" : buildStatusTagLabel(entry),
       requiresLabel,
       purchaseButtonLabel: buildPurchaseButtonLabel(entry),
@@ -777,6 +817,8 @@ export function buildAccountMetaViewModel(profile: AccountProfileState): Account
       currentPrestigeLabel: formatCount(profile.legacy.legacyPoints),
       lifetimePrestigeLabel: formatCount(profile.legacy.lifetimeLegacyEarned),
       preparationCapacityLabel: `${formatCount(preparationSelection.selectedUnlockIds.length)} / ${formatCount(preparationSelection.capacity)} selected`,
+      characterStartNoteLabel:
+        "Character-start Legacy upgrades apply when the next character is created.",
       unlockTypeTabs: ["All", ...unlockTypes],
       unlockEntries
     },

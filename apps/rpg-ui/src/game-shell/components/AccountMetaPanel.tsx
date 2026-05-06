@@ -105,6 +105,19 @@ function LegacyUnlockCard({
         {entry.description}
       </div>
 
+      {entry.detailLabels.length > 0 ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {entry.detailLabels.map((label) => (
+            <span
+              key={`${entry.id}.${label}`}
+              className={subduedChipClass}
+            >
+              {label}
+            </span>
+          ))}
+        </div>
+      ) : null}
+
       {entry.preparationChoiceOptions.length > 0 ? (
         <div className="mt-4 flex flex-wrap gap-2">
           {entry.preparationChoiceOptions.map((option) => (
@@ -445,6 +458,10 @@ export function AccountMetaPanel({
       </div>
 
       <div className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] p-4">
+        <div className="mb-3 rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] px-3 py-2 text-xs text-[color:var(--color-text-soft)]">
+          {meta.legacy.characterStartNoteLabel}
+        </div>
+
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-2">
             {meta.legacy.unlockTypeTabs.map((tab) => {

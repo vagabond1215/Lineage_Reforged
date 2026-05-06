@@ -301,6 +301,64 @@ test("account meta view model exposes real unlock catalog state and chronicle su
   assert.equal(meta.chronicles.tiles[0].title, "Aren Vale");
 });
 
+test("account meta labels live start-resource upgrades as new-character permanent upgrades", () => {
+  let profile = grantLegacy(createDefaultAccountProfileState(), {
+    amount: 100,
+    summary: "Test grant",
+    sourceType: "test",
+    sourceId: "test.start_resource_visibility",
+    recordedAt: "2026-04-20T12:00:00.000Z"
+  }).profile;
+
+  for (const unlockId of [
+    "legacy.unlock.account.starting_hp",
+    "legacy.unlock.account.starting_stamina",
+    "legacy.unlock.account.starting_coin"
+  ]) {
+    const purchased = purchaseLegacyUnlock(
+      profile,
+      unlockId,
+      `2026-04-20T12:${profile.legacy.legacyTransactions.length.toString().padStart(2, "0")}:00.000Z`
+    );
+    assert.equal(purchased.ok, true);
+    profile = purchased.profile;
+  }
+
+  const meta = buildAccountMetaViewModel(profile);
+  const hp = meta.legacy.unlockEntries.find(
+    (entry) => entry.id === "legacy.unlock.account.starting_hp"
+  );
+  const stamina = meta.legacy.unlockEntries.find(
+    (entry) => entry.id === "legacy.unlock.account.starting_stamina"
+  );
+  const coin = meta.legacy.unlockEntries.find(
+    (entry) => entry.id === "legacy.unlock.account.starting_coin"
+  );
+  const serializedEntries = JSON.stringify(meta.legacy.unlockEntries);
+
+  assert.equal(
+    meta.legacy.characterStartNoteLabel,
+    "Character-start Legacy upgrades apply when the next character is created."
+  );
+  assert.deepEqual(hp?.detailLabels, [
+    "Rank 1 / 30",
+    "Permanent account upgrade",
+    "Applies to new characters"
+  ]);
+  assert.deepEqual(stamina?.detailLabels, [
+    "Rank 1 / 30",
+    "Permanent account upgrade",
+    "Applies to new characters"
+  ]);
+  assert.deepEqual(coin?.detailLabels, [
+    "Rank 1 / 20",
+    "Permanent account upgrade",
+    "Applies to new characters"
+  ]);
+  assert.equal(serializedEntries.includes("docs/design/legacy-upgrade-catalog-draft"), false);
+  assert.equal(serializedEntries.includes("draft.legacy"), false);
+});
+
 test("empty account meta chronicles do not fabricate placeholder records", () => {
   const meta = buildAccountMetaViewModel(createDefaultAccountProfileState());
 
@@ -652,8 +710,16 @@ test("account meta view model exposes preparation capacity and selection state",
 
   assert.equal(meta.legacy.preparationCapacityLabel, "1 / 2 selected");
   assert.equal(storehouse?.statusTagLabel, "Selected");
+  assert.deepEqual(storehouse?.detailLabels, [
+    "Selected preparation",
+    "Applies to next character"
+  ]);
   assert.equal(storehouse?.canRemovePreparation, true);
   assert.equal(storehouse?.canSelectPreparation, false);
+  assert.deepEqual(merchant?.detailLabels, [
+    "Preparation option",
+    "Select for next character"
+  ]);
   assert.equal(merchant?.canSelectPreparation, true);
   assert.equal(merchant?.canRemovePreparation, false);
   assert.equal(martial?.requiresLabel, "Choose one");
@@ -777,11 +843,12 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(appShellSource, /relative z-30/);
   assert.match(appShellSource, /relative z-10/);
   assert.match(appShellSource, /var\(--color-surface-elevated\)/);
-  assert.match(appShellSource, /0_0_22px_rgba\(212,173,85,0\.18\),0_0_34px_rgba\(96,165,250,0\.08\)/);
   assert.match(appShellSource, /gap-3 overflow-x-auto p-4 md:flex-col md:gap-0 md:overflow-visible md:p-0/);
+  assert.match(appShellSource, /aria-current=\{item\.active \? 'page' : undefined\}/);
+  assert.match(appShellSource, /launcher-sidebar-button min-w-\[10rem\] rounded-lg border px-4 py-4 text-left transition/);
   assert.match(appShellSource, /md:min-h-\[4\.25rem\] md:min-w-0 md:w-full md:rounded-none md:border-x-0 md:border-t-0 md:first:border-t md:px-5 md:py-3/);
-  assert.match(appShellSource, /shadow-\[inset_0_1px_0_rgba\(255,255,255,0\.12\),inset_0_-1px_0_rgba\(0,0,0,0\.28\),0_0_22px_rgba\(212,173,85,0\.18\),0_0_34px_rgba\(96,165,250,0\.08\)\]/);
-  assert.match(appShellSource, /shadow-\[inset_0_1px_0_rgba\(255,255,255,0\.06\),inset_0_-1px_0_rgba\(0,0,0,0\.18\)\]/);
+  assert.match(appShellSource, /\? 'is-active border-\[color:var\(--color-border-soft\)\] text-\[color:var\(--color-text-primary\)\]'/);
+  assert.match(appShellSource, /: 'border-\[color:var\(--color-border-soft\)\] text-\[color:var\(--color-text-secondary\)\]'/);
   assert.match(appShellSource, /truncate text-\[1\.75rem\] font-light leading-tight tracking-\[0\.08em\]/);
   assert.match(indexCssSource, /--font-display: "Arial Nova", Arial, "Segoe UI", sans-serif/);
   assert.match(indexCssSource, /--font-body: "Arial Nova", Arial, "Segoe UI", sans-serif/);
