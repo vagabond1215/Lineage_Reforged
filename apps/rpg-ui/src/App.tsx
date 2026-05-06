@@ -1062,6 +1062,7 @@ export default function App() {
       }, state.accountProfile.accountId, {
         appliedLegacyPreparationIds: preparationSelection.selectedUnlockIds,
         appliedLegacyPreparationChoices: preparationSelection.selectedChoicePayloads,
+        accountProfile: state.accountProfile,
         ...(selectedHeirSource ? { sourceRunId: selectedSourceRunId } : {}),
         ...(selectedHeirSource && selectedHeirSource.lineageId !== state.form.lineageId
           ? { crossLineageStart: true }
@@ -1767,6 +1768,7 @@ export default function App() {
     content = (
       <CharacterCreationScreen
         form={state.form}
+        accountProfile={state.accountProfile}
         appliedLegacyPreparationIds={
           resolveLegacyPreparationSelection(state.accountProfile).selectedUnlockIds
         }

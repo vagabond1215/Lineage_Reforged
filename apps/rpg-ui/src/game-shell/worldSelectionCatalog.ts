@@ -20,13 +20,13 @@ import {
   deriveSettlementStartAccess
 } from "../../../../packages/shared/types/src/index.js";
 import type { IconName } from "../types.js";
-import guildsCatalog from "../../../../packages/content/base/civilization/guilds.json";
-import crystalCatalogData from "../../../../packages/content/base/world/crystal_catalog.json";
-import magicInfrastructureCatalog from "../../../../packages/content/base/world/magic_infrastructure.json";
-import regionLocalitiesCatalog from "../../../../packages/content/base/world/region_localities.json";
-import regionsCatalog from "../../../../packages/content/base/world/regions.json";
-import religionsCatalog from "../../../../packages/content/base/world/religions.json";
-import settlementsCatalog from "../../../../packages/content/base/world/settlements.json";
+import guildsCatalog from "../../../../packages/content/base/civilization/guilds.json" with { type: "json" };
+import crystalCatalogData from "../../../../packages/content/base/world/crystal_catalog.json" with { type: "json" };
+import magicInfrastructureCatalog from "../../../../packages/content/base/world/magic_infrastructure.json" with { type: "json" };
+import regionLocalitiesCatalog from "../../../../packages/content/base/world/region_localities.json" with { type: "json" };
+import regionsCatalog from "../../../../packages/content/base/world/regions.json" with { type: "json" };
+import religionsCatalog from "../../../../packages/content/base/world/religions.json" with { type: "json" };
+import settlementsCatalog from "../../../../packages/content/base/world/settlements.json" with { type: "json" };
 
 type RegionRecord = InstitutionRegionRecord & {
   summary?: string;

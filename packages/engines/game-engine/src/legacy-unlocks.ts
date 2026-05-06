@@ -22,6 +22,9 @@ import type {
   LegacyUnlockScope,
   LegacyUnlockState,
   PlayerAttributeKey,
+  PlayerCurrencyState,
+  PlayerPartialResourceVector,
+  PlayerResourceModifierState,
   PlayerResourceKey
 } from "../../../shared/types/src/index.js";
 import { recordLegacyTransaction } from "./legacy-account.js";
@@ -249,6 +252,33 @@ const RENOWN_FLAVOR_UNLOCK_IDS = {
   bannerRights: "legacy.unlock.renown.banner_rights",
   veteranReputation: "legacy.unlock.renown.veteran_reputation"
 } as const;
+
+const LEGACY_CHARACTER_START_BONUS_UNLOCKS = [
+  {
+    unlockId: "legacy.unlock.account.starting_hp",
+    label: "Starting HP",
+    resourceKey: "hp"
+  },
+  {
+    unlockId: "legacy.unlock.account.starting_stamina",
+    label: "Starting Stamina",
+    resourceKey: "stamina"
+  },
+  {
+    unlockId: "legacy.unlock.account.starting_coin",
+    label: "Starting Coin",
+    currencyKey: "silver"
+  }
+] as const;
+
+export type LegacyCharacterStartBonusResolution = {
+  appliedUnlockIds: string[];
+  resourceMaxFlat: PlayerPartialResourceVector;
+  resourceModifiers: PlayerResourceModifierState[];
+  fillResourceIds: PlayerResourceKey[];
+  currencyDelta: PlayerCurrencyState;
+  sourceLabels: string[];
+};
 
 function formatPreparationResourceChoiceLabel(choiceId: PlayerResourceKey): string {
   switch (choiceId) {
@@ -1436,6 +1466,89 @@ export function resolveLegacyPreparationCapacity(profile: AccountProfileState): 
       }, 0)
     );
   }, 0);
+}
+
+function createEmptyLegacyCharacterStartBonusResolution(): LegacyCharacterStartBonusResolution {
+  return {
+    appliedUnlockIds: [],
+    resourceMaxFlat: {},
+    resourceModifiers: [],
+    fillResourceIds: [],
+    currencyDelta: { gold: 0, silver: 0, copper: 0 },
+    sourceLabels: []
+  };
+}
+
+function isLiveAccountCharacterStartDefinition(
+  definition: LegacyUnlockDefinitionState
+): boolean {
+  return (
+    definition.classification === "permanent" &&
+    definition.purchaseMode === "permanent" &&
+    definition.currency === "account_legacy" &&
+    definition.scope === "character_start" &&
+    definition.duration === "permanent" &&
+    definition.implementationPriority === "live"
+  );
+}
+
+export function resolveLegacyCharacterStartBonuses(
+  profile?: AccountProfileState | null
+): LegacyCharacterStartBonusResolution {
+  const resolution = createEmptyLegacyCharacterStartBonusResolution();
+
+  if (!profile) {
+    return resolution;
+  }
+
+  for (const bonus of LEGACY_CHARACTER_START_BONUS_UNLOCKS) {
+    const definition = getLegacyUnlockDefinitionById(bonus.unlockId);
+
+    if (!definition || !isLiveAccountCharacterStartDefinition(definition)) {
+      continue;
+    }
+
+    const rank = getCurrentRank(getStoredUnlock(profile, bonus.unlockId), definition);
+
+    if (rank <= 0) {
+      continue;
+    }
+
+    resolution.appliedUnlockIds.push(bonus.unlockId);
+    resolution.sourceLabels.push(
+      "resourceKey" in bonus
+        ? `${bonus.label} +${rank}`
+        : `${bonus.label} +${rank} silver`
+    );
+
+    if ("resourceKey" in bonus) {
+      const maxFlat: PlayerPartialResourceVector = {
+        [bonus.resourceKey]: rank
+      };
+
+      resolution.resourceMaxFlat[bonus.resourceKey] =
+        (resolution.resourceMaxFlat[bonus.resourceKey] ?? 0) + rank;
+      resolution.resourceModifiers.push({
+        id: `legacy.account.${bonus.resourceKey}`,
+        label: bonus.label,
+        sourceType: "system",
+        sourceId: bonus.unlockId,
+        maxFlat,
+        maxPercent: {},
+        tickDeltaFlat: {},
+        notes: ["Permanent account Legacy applied at character creation."]
+      });
+      resolution.fillResourceIds.push(bonus.resourceKey);
+      continue;
+    }
+
+    resolution.currencyDelta = {
+      ...resolution.currencyDelta,
+      [bonus.currencyKey]: resolution.currencyDelta[bonus.currencyKey] + rank
+    };
+  }
+
+  return resolution;
 }
 
 export function isLegacyPreparationChoiceRequired(unlockId: string): boolean {

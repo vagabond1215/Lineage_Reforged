@@ -7,6 +7,7 @@ import {
   grantLegacy,
   removeLegacyPreparation,
   purchaseLegacyUnlock,
+  resolveLegacyCharacterStartBonuses,
   resolveLegacyPreparationCapacity,
   resolveLegacyPreparationSelection,
   resolveLegacyRenownPresence,
@@ -15,6 +16,10 @@ import {
   selectLegacyPreparation,
   validateLegacyUnlockDefinitions
 } from "../../packages/engines/game-engine/src/index.ts";
+
+const STARTING_HP = "legacy.unlock.account.starting_hp";
+const STARTING_STAMINA = "legacy.unlock.account.starting_stamina";
+const STARTING_COIN = "legacy.unlock.account.starting_coin";
 
 function createArchivedRun(overrides = {}) {
   return {
@@ -206,6 +211,128 @@ test("legacy unlock catalog metadata validates strictly when present", () => {
       pattern
     );
   }
+});
+
+test("live account start-resource unlocks declare conservative character-start metadata", () => {
+  const definitions = getLegacyUnlockDefinitions();
+  const byId = new Map(definitions.map((definition) => [definition.id, definition]));
+
+  for (const [unlockId, maxRank, breakthroughRanks, category] of [
+    [STARTING_HP, 30, [10, 20, 30], "Lineage"],
+    [STARTING_STAMINA, 30, [10, 20, 30], "Lineage"],
+    [STARTING_COIN, 20, [5, 10, 20], "Fortune"]
+  ]) {
+    const definition = byId.get(unlockId);
+
+    assert.ok(definition, `${unlockId} is present`);
+    assert.equal(definition.category, category);
+    assert.equal(definition.kind, "incremental");
+    assert.equal(definition.classification, "permanent");
+    assert.equal(definition.purchaseMode, "permanent");
+    assert.equal(definition.currency, "account_legacy");
+    assert.equal(definition.scope, "character_start");
+    assert.equal(definition.duration, "permanent");
+    assert.equal(definition.implementationPriority, "live");
+    assert.equal(definition.maxRank, maxRank);
+    assert.deepEqual(definition.breakthroughRanks, breakthroughRanks);
+    assert.equal(definition.cost.type, "progressive");
+    assert.equal(
+      definition.effects.every((effect) => effect.type === "future_resource_preparation"),
+      true
+    );
+  }
+});
+
+test("account start-resource resolver only applies the explicit live whitelist", () => {
+  let profile = grantProfile(200);
+  profile = purchaseUnlockIds(profile, [
+    STARTING_HP,
+    STARTING_HP,
+    STARTING_HP,
+    STARTING_STAMINA,
+    STARTING_STAMINA,
+    STARTING_COIN,
+    STARTING_COIN,
+    STARTING_COIN,
+    "legacy.unlock.account.ledger_seal"
+  ]);
+
+  const resolution = resolveLegacyCharacterStartBonuses(profile);
+
+  assert.deepEqual(resolution.appliedUnlockIds, [
+    STARTING_HP,
+    STARTING_STAMINA,
+    STARTING_COIN
+  ]);
+  assert.deepEqual(resolution.resourceMaxFlat, { hp: 3, stamina: 2 });
+  assert.deepEqual(resolution.fillResourceIds, ["hp", "stamina"]);
+  assert.deepEqual(resolution.currencyDelta, { gold: 0, silver: 3, copper: 0 });
+  assert.deepEqual(
+    resolution.resourceModifiers.map((modifier) => ({
+      sourceId: modifier.sourceId,
+      maxFlat: modifier.maxFlat
+    })),
+    [
+      { sourceId: STARTING_HP, maxFlat: { hp: 3 } },
+      { sourceId: STARTING_STAMINA, maxFlat: { stamina: 2 } }
+    ]
+  );
+  assert.equal(
+    resolveLegacyCharacterStartBonuses(createDefaultAccountProfileState()).appliedUnlockIds.length,
+    0
+  );
+  assert.equal(
+    resolveLegacyCharacterStartBonuses({
+      ...createDefaultAccountProfileState(),
+      legacy: {
+        ...createDefaultAccountProfileState().legacy,
+        legacyUnlocks: [
+          {
+            unlockId: "legacy.unlock.family.future_resource",
+            unlockedAt: "2026-04-20T12:00:00.000Z",
+            sourceTransactionId: "legacy.transaction.test.family"
+          },
+          {
+            unlockId: "legacy.unlock.magic.future_resource",
+            unlockedAt: "2026-04-20T12:01:00.000Z",
+            sourceTransactionId: "legacy.transaction.test.magic"
+          }
+        ]
+      }
+    }).appliedUnlockIds.length,
+    0
+  );
+});
+
+test("starting coin purchases spend account Legacy and stop at max rank", () => {
+  let profile = grantProfile(10000);
+
+  for (let rank = 1; rank <= 20; rank += 1) {
+    const purchased = purchaseLegacyUnlock(
+      profile,
+      STARTING_COIN,
+      `2026-04-20T19:${rank.toString().padStart(2, "0")}:00.000Z`
+    );
+
+    assert.equal(purchased.ok, true);
+    assert.equal(purchased.unlock.rank, rank);
+    profile = purchased.profile;
+  }
+
+  const maxed = resolveLegacyUnlockStates(profile).find((entry) => entry.id === STARTING_COIN);
+  assert.equal(maxed?.state, "maxed");
+  assert.equal(maxed?.currentRank, 20);
+  assert.equal(maxed?.canPurchase, false);
+
+  const originalMaxed = structuredClone(profile);
+  const repurchase = purchaseLegacyUnlock(
+    profile,
+    STARTING_COIN,
+    "2026-04-20T19:30:00.000Z"
+  );
+  assert.equal(repurchase.ok, false);
+  assert.equal(repurchase.error, "max_rank");
+  assert.deepEqual(repurchase.profile, originalMaxed);
 });
 
 test("permanent, tiered, and temporary unlock states resolve with preparation capacity", () => {

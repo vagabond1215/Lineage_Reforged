@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type WheelEvent } from 'react';
 import {
+  type AccountProfileState,
   type AccountRunHistoryRecord,
   BASE_PLAYER_RESOURCE_MAXIMA,
   type PlayerAttributeKey
@@ -63,6 +64,7 @@ import { NoticeBanner } from './NoticeBanner.js';
 
 type Props = {
   form: CharacterCreationFormState;
+  accountProfile?: AccountProfileState | null;
   appliedLegacyPreparationIds?: string[];
   appliedLegacyPreparationChoices?: Record<string, string>;
   eligibleHeirSources?: AccountRunHistoryRecord[];
@@ -525,6 +527,7 @@ function renderAttributeTooltip(attributeKey: PlayerAttributeKey) {
 
 export function CharacterCreationNarrativeScreen({
   form,
+  accountProfile = null,
   appliedLegacyPreparationIds = [],
   appliedLegacyPreparationChoices = {},
   eligibleHeirSources = [],
@@ -550,7 +553,8 @@ export function CharacterCreationNarrativeScreen({
   const [showAlternateLineageArt, setShowAlternateLineageArt] = useState(false);
   const preview = buildCharacterCreationPreview(form, {
     appliedLegacyPreparationIds,
-    appliedLegacyPreparationChoices
+    appliedLegacyPreparationChoices,
+    accountProfile
   });
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
   const selectedLineageArt = getLineageCardArt(form.lineageId);

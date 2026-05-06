@@ -250,6 +250,84 @@
       "tags": ["lineage", "preparations"]
     },
     {
+      "id": "legacy.unlock.account.starting_hp",
+      "category": "Lineage",
+      "kind": "incremental",
+      "classification": "permanent",
+      "title": "Starting HP",
+      "description": "Your account Legacy gives each new character a modest permanent health reserve at character creation.",
+      "track": "account.starting_hp",
+      "purchaseMode": "permanent",
+      "currency": "account_legacy",
+      "scope": "character_start",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "maxRank": 30,
+      "breakthroughRanks": [10, 20, 30],
+      "cost": {
+        "type": "progressive",
+        "baseAmount": 2,
+        "growthFactor": 1.07,
+        "thresholdJumps": [
+          { "rank": 11, "multiplier": 1.35 },
+          { "rank": 21, "multiplier": 1.35 }
+        ]
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_resource_preparation",
+          "key": "legacy.account.starting_hp",
+          "value": 1
+        }
+      ],
+      "tags": ["lineage", "account", "resource", "hp"]
+    },
+    {
+      "id": "legacy.unlock.account.starting_stamina",
+      "category": "Lineage",
+      "kind": "incremental",
+      "classification": "permanent",
+      "title": "Starting Stamina",
+      "description": "Your account Legacy gives each new character a modest permanent stamina reserve at character creation.",
+      "track": "account.starting_stamina",
+      "purchaseMode": "permanent",
+      "currency": "account_legacy",
+      "scope": "character_start",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "maxRank": 30,
+      "breakthroughRanks": [10, 20, 30],
+      "cost": {
+        "type": "progressive",
+        "baseAmount": 2,
+        "growthFactor": 1.07,
+        "thresholdJumps": [
+          { "rank": 11, "multiplier": 1.35 },
+          { "rank": 21, "multiplier": 1.35 }
+        ]
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_resource_preparation",
+          "key": "legacy.account.starting_stamina",
+          "value": 1
+        }
+      ],
+      "tags": ["lineage", "account", "resource", "stamina"]
+    },
+    {
       "id": "legacy.unlock.renown.settlement.aurelis",
       "category": "Renown",
       "kind": "tiered",
@@ -619,6 +697,45 @@
         }
       ],
       "tags": ["fortune", "coin"]
+    },
+    {
+      "id": "legacy.unlock.account.starting_coin",
+      "category": "Fortune",
+      "kind": "incremental",
+      "classification": "permanent",
+      "title": "Starting Coin",
+      "description": "Your account Legacy places a small additional coin reserve in each new character's starting purse.",
+      "track": "account.starting_coin",
+      "purchaseMode": "permanent",
+      "currency": "account_legacy",
+      "scope": "character_start",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "maxRank": 20,
+      "breakthroughRanks": [5, 10, 20],
+      "cost": {
+        "type": "progressive",
+        "baseAmount": 1,
+        "growthFactor": 1.08,
+        "thresholdJumps": [
+          { "rank": 8, "multiplier": 1.5 },
+          { "rank": 15, "multiplier": 1.5 }
+        ]
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "future_resource_preparation",
+          "key": "legacy.account.starting_coin",
+          "value": 1
+        }
+      ],
+      "tags": ["fortune", "account", "coin"]
     },
     {
       "id": "legacy.unlock.account.trade_charter",

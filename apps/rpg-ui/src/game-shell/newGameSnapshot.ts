@@ -1,4 +1,5 @@
 import {
+  type AccountProfileState,
   createEmptyPlayerResourceRuntimeState,
   resolvePlayerOriginProfile,
   resolvePlayerResources,
@@ -25,6 +26,9 @@ import {
 import {
   DEFAULT_ACCOUNT_ID
 } from '../../../../packages/engines/game-engine/src/legacy-account.js';
+import {
+  resolveLegacyCharacterStartBonuses
+} from '../../../../packages/engines/game-engine/src/legacy-unlocks.js';
 import { deserializeSnapshot, serializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
 import {
   hasCompleteCharacterCreationSelections,
@@ -134,6 +138,7 @@ type DerivedCharacterCreationState = {
 type CharacterCreationPreviewOptions = {
   appliedLegacyPreparationIds?: string[];
   appliedLegacyPreparationChoices?: Record<string, string>;
+  accountProfile?: AccountProfileState | null;
   sourceRunId?: string;
   crossLineageStart?: boolean;
 };
@@ -424,10 +429,14 @@ function buildReviewNarrative(params: {
   return `${params.characterName}. Your backstory is ${params.backstoryLabel}, and you arrive at ${params.settlementLabel} in ${params.regionLabel} with the ${params.bundleLabel}. ${params.settlementLabel} is known for ${opportunity}. You carry ${carried}, and ${params.walletLabel} must cover the first hard days.`;
 }
 
-function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCreationPreview {
+function buildPlaceholderPreview(
+  form: CharacterCreationFormState,
+  options: CharacterCreationPreviewOptions = {}
+): CharacterCreationPreview {
   const attributes = resolveWorkingCharacterAttributes(form);
   const backstory = isKnownBackstoryId(form.backstoryId) ? getBackstoryTemplate(form.backstoryId) : null;
   const bundle = isKnownStartingBundleId(form.startingBundleId) ? getStartingBundleTemplate(form.startingBundleId) : null;
+  const legacyStartBonuses = resolveLegacyCharacterStartBonuses(options.accountProfile);
   const bundleStacks =
     bundle && form.startingBundleId.trim().length > 0
       ? (() => {
@@ -446,6 +455,21 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
   const resources = (() => {
     try { return resolveWorkingCharacterResources(form, attributes, equipment); } catch { return { hp: null, mp: null, stamina: null }; }
   })();
+  const previewResources = {
+    hp: resources.hp === null ? null : resources.hp + (legacyStartBonuses.resourceMaxFlat.hp ?? 0),
+    mp: resources.mp,
+    stamina:
+      resources.stamina === null
+        ? null
+        : resources.stamina + (legacyStartBonuses.resourceMaxFlat.stamina ?? 0)
+  };
+  const wallet = bundle
+    ? {
+        gold: bundle.startingCurrency.gold + legacyStartBonuses.currencyDelta.gold,
+        silver: bundle.startingCurrency.silver + legacyStartBonuses.currencyDelta.silver,
+        copper: bundle.startingCurrency.copper + legacyStartBonuses.currencyDelta.copper
+      }
+    : null;
   return {
     isResolved: false,
     characterName: form.playerName.trim(),
@@ -471,7 +495,7 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
         backstoryId: form.backstoryId
       }).generatedProfilePoints
     ),
-    resourceMetrics: [toMetric('hp', 'HP', resources.hp), toMetric('mp', 'MP', resources.mp), toMetric('stamina', 'Stamina', resources.stamina)],
+    resourceMetrics: [toMetric('hp', 'HP', previewResources.hp), toMetric('mp', 'MP', previewResources.mp), toMetric('stamina', 'Stamina', previewResources.stamina)],
     attributeMetrics: buildAttributeMetrics(attributes),
     starterSkills: backstory?.startingSkillLabels ?? [],
     starterLore: backstory ? resolveLoreSkillLabels(backstory.startingSkills) : [],
@@ -479,8 +503,8 @@ function buildPlaceholderPreview(form: CharacterCreationFormState): CharacterCre
     starterGear: Object.values(equipment).flatMap((item) => (item ? [humanizeId(item.itemKey)] : [])),
     starterPack: (inventory.bags[0]?.stacks ?? []).map((item) => `${humanizeId(item.itemKey)} x${item.quantity}`),
     legacyPreparations: [],
-    walletLabel: bundle ? formatWallet(bundle.startingCurrency) : null,
-    starterNotes: [backstory?.detailText ?? '', bundle?.description ?? ''].filter(Boolean),
+    walletLabel: wallet ? formatWallet(wallet) : null,
+    starterNotes: [backstory?.detailText ?? '', bundle?.description ?? '', ...legacyStartBonuses.sourceLabels].filter(Boolean),
     reviewNarrative: 'A life is still being forged. Choose lineage, identity, homeland, settlement, backstory, and a starting bundle to shape the opening of the journey.'
   };
 }
@@ -537,7 +561,12 @@ function deriveCharacterCreationState(
   }
   const equipment = buildStarterEquipment(bundleStacks);
   const starterInventory = buildStarterInventory(bundleStacks, equipment);
-  const starterCurrency = { ...bundle.startingCurrency };
+  const legacyStartBonuses = resolveLegacyCharacterStartBonuses(options.accountProfile);
+  const starterCurrency = {
+    gold: bundle.startingCurrency.gold + legacyStartBonuses.currencyDelta.gold,
+    silver: bundle.startingCurrency.silver + legacyStartBonuses.currencyDelta.silver,
+    copper: bundle.startingCurrency.copper + legacyStartBonuses.currencyDelta.copper
+  };
   const legacyPreparationApplication = applyLegacyPreparationBonuses({
     preparationIds: options.appliedLegacyPreparationIds ?? [],
     preparationChoices: options.appliedLegacyPreparationChoices ?? {},
@@ -560,7 +589,10 @@ function deriveCharacterCreationState(
   const currency = legacyPreparationApplication.currency;
   const resourceRuntime = {
     ...createEmptyPlayerResourceRuntimeState(),
-    modifiers: legacyPreparationApplication.resourceModifiers
+    modifiers: [
+      ...legacyStartBonuses.resourceModifiers,
+      ...legacyPreparationApplication.resourceModifiers
+    ]
   };
   const bodyState = createDefaultPlayerBodyState({
     tick: baseSnapshot.clock.tick,
@@ -587,7 +619,10 @@ function deriveCharacterCreationState(
     baseSnapshot.clock.tick
   );
   fillCoreResourcesToMax(resources.resources);
-  for (const resourceId of legacyPreparationApplication.fillResourceIds) {
+  for (const resourceId of [
+    ...legacyStartBonuses.fillResourceIds,
+    ...legacyPreparationApplication.fillResourceIds
+  ]) {
     resources.resources[resourceId].current = resources.resources[resourceId].max;
   }
   const geographicKnowledge = [
@@ -657,7 +692,7 @@ function deriveCharacterCreationState(
       achievements: createDefaultCharacterAchievementsState(),
       activeQuestIds,
       completedQuestIds,
-      flags: ['player.new_game', `player.backstory.${backstory.id}`, `player.starting_bundle.${bundle.id}`, `player.start.${selectedWorld.settlement.id}`, `player.start_authority.${selectedWorld.settlement.landAuthorityType}`, `player.start_mode.${selectedWorld.settlement.access.spawnMode}`],
+      flags: ['player.new_game', `player.backstory.${backstory.id}`, `player.starting_bundle.${bundle.id}`, `player.start.${selectedWorld.settlement.id}`, `player.start_authority.${selectedWorld.settlement.landAuthorityType}`, `player.start_mode.${selectedWorld.settlement.access.spawnMode}`, ...legacyStartBonuses.appliedUnlockIds.map((unlockId) => `player.legacy_start.${unlockId}`)],
       combatProfile: createDefaultPlayerCombatProfile(),
       saveMeta: {
         totalPlayTicks: 0,
@@ -701,7 +736,7 @@ function deriveCharacterCreationState(
     appliedLegacyPreparationChoices: legacyPreparationApplication.appliedPreparationChoices,
     starterSkillLabels: backstory.startingSkillLabels,
     starterTraitLabels: traits.map((trait) => humanizeId(trait.id)),
-    starterNotes: [...originProfile.notes.slice(0, 2), backstory.detailText, bundle.description, selectedWorld.settlement.landRestriction.currentStanding].filter(Boolean),
+    starterNotes: [...originProfile.notes.slice(0, 2), backstory.detailText, bundle.description, selectedWorld.settlement.landRestriction.currentStanding, ...legacyStartBonuses.sourceLabels].filter(Boolean),
     snapshot
   };
 }
@@ -710,7 +745,7 @@ export function buildCharacterCreationPreview(
   form: CharacterCreationFormState,
   options: CharacterCreationPreviewOptions = {}
 ): CharacterCreationPreview {
-  if (!hasCompleteCharacterCreationSelections(form)) return buildPlaceholderPreview(form);
+  if (!hasCompleteCharacterCreationSelections(form)) return buildPlaceholderPreview(form, options);
   try {
     const derived = deriveCharacterCreationState(form, options);
     return {
@@ -740,7 +775,7 @@ export function buildCharacterCreationPreview(
       reviewNarrative: derived.reviewNarrative
     };
   } catch {
-    return buildPlaceholderPreview(form);
+    return buildPlaceholderPreview(form, options);
   }
 }
 
@@ -750,6 +785,7 @@ export function createNewGameSnapshot(
   options: {
     appliedLegacyPreparationIds?: string[];
     appliedLegacyPreparationChoices?: Record<string, string>;
+    accountProfile?: AccountProfileState | null;
     sourceRunId?: string;
     crossLineageStart?: boolean;
   } = {}

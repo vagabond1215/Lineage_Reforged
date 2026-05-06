@@ -63,6 +63,7 @@ export {
   isLegacyPreparationChoiceRequired,
   purchaseLegacyUnlock,
   removeLegacyPreparation,
+  resolveLegacyCharacterStartBonuses,
   resolveLegacyPreparationCapacity,
   resolveLegacyRenownPresence,
   resolveLegacyPreparationSelection,
