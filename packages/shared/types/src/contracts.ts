@@ -2298,6 +2298,28 @@ export type LegacyUnlockCategory =
 
 export type LegacyUnlockKind = "binary" | "tiered" | "incremental";
 export type LegacyUnlockClassification = "permanent" | "preparation";
+export type LegacyUnlockPurchaseMode = "permanent" | "unlock_only" | "preparation";
+export type LegacyUnlockCurrency =
+  | "account_legacy"
+  | "family_prestige"
+  | "regional_renown"
+  | "knowledge_marks"
+  | "chronicle_milestones"
+  | "skill_marks";
+export type LegacyUnlockScope =
+  | "account"
+  | "family"
+  | "region"
+  | "character_start"
+  | "next_run"
+  | "heir_only"
+  | "catalog_only";
+export type LegacyUnlockDuration =
+  | "permanent"
+  | "next_character"
+  | "current_run"
+  | "limited_days";
+export type LegacyUnlockImplementationPriority = "live" | "catalog_only" | "backlog";
 export type LegacyRenownTier = "settlement" | "region" | "continent" | "universal";
 
 export type LegacyUnlockRequirementResolutionState =
@@ -2411,9 +2433,18 @@ export interface LegacyUnlockDefinitionState {
   category: LegacyUnlockCategory;
   kind: LegacyUnlockKind;
   classification?: LegacyUnlockClassification;
+  track?: string;
+  purchaseMode?: LegacyUnlockPurchaseMode;
+  currency?: LegacyUnlockCurrency;
+  scope?: LegacyUnlockScope;
+  duration?: LegacyUnlockDuration;
   title: string;
   description: string;
   maxRank?: number;
+  breakthroughRanks?: number[];
+  breakthroughEffect?: LegacyUnlockEffectState[];
+  repeatable?: boolean;
+  implementationPriority?: LegacyUnlockImplementationPriority;
   cost: LegacyUnlockCostState;
   requirements?: LegacyUnlockRequirementState[];
   rankRequirements?: LegacyUnlockRequirementState[][];

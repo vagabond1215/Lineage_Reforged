@@ -132,6 +132,82 @@ test("legacy unlock definitions load binary, tiered, incremental, and metadata-o
   );
 });
 
+test("legacy unlock catalog metadata validates strictly when present", () => {
+  const [baseDefinition] = getLegacyUnlockDefinitions();
+  assert.ok(baseDefinition);
+
+  const metadataDefinition = structuredClone(baseDefinition);
+  metadataDefinition.id = "legacy.unlock.test.catalog_metadata";
+  metadataDefinition.kind = "tiered";
+  metadataDefinition.maxRank = 3;
+  metadataDefinition.cost = {
+    type: "per_rank",
+    amounts: [1, 2, 3]
+  };
+  metadataDefinition.track = "lineage.attributes";
+  metadataDefinition.purchaseMode = "unlock_only";
+  metadataDefinition.currency = "family_prestige";
+  metadataDefinition.scope = "family";
+  metadataDefinition.duration = "next_character";
+  metadataDefinition.breakthroughRanks = [2, 3];
+  metadataDefinition.breakthroughEffect = [
+    {
+      type: "account_flag",
+      key: "legacy.test.breakthrough",
+      value: true
+    }
+  ];
+  metadataDefinition.repeatable = false;
+  metadataDefinition.implementationPriority = "catalog_only";
+
+  const [validated] = validateLegacyUnlockDefinitions(
+    [metadataDefinition],
+    "test-valid-metadata"
+  );
+  assert.equal(validated.track, "lineage.attributes");
+  assert.equal(validated.purchaseMode, "unlock_only");
+  assert.equal(validated.currency, "family_prestige");
+  assert.equal(validated.scope, "family");
+  assert.equal(validated.duration, "next_character");
+  assert.deepEqual(validated.breakthroughRanks, [2, 3]);
+  assert.deepEqual(validated.breakthroughEffect, metadataDefinition.breakthroughEffect);
+  assert.equal(validated.repeatable, false);
+  assert.equal(validated.implementationPriority, "catalog_only");
+
+  for (const [field, value] of [
+    ["purchaseMode", "buy_now"],
+    ["currency", "gold"],
+    ["scope", "guild"],
+    ["duration", "next_week"],
+    ["implementationPriority", "hidden"]
+  ]) {
+    const invalid = structuredClone(metadataDefinition);
+    invalid[field] = value;
+    assert.throws(
+      () => validateLegacyUnlockDefinitions([invalid], `test-invalid-${field}`),
+      new RegExp(`invalid ${field}`)
+    );
+  }
+
+  for (const [override, pattern] of [
+    [{ track: "Lineage Attributes" }, /invalid track/],
+    [{ breakthroughRanks: [2, 2] }, /unique and sorted/],
+    [{ breakthroughRanks: [2, 4] }, /cannot exceed maxRank/],
+    [
+      { breakthroughEffect: [{ type: "stat_bonus", key: "legacy.test.breakthrough" }] },
+      /non-metadata effect/
+    ],
+    [{ repeatable: "yes" }, /invalid repeatable/]
+  ]) {
+    const invalid = structuredClone(metadataDefinition);
+    Object.assign(invalid, override);
+    assert.throws(
+      () => validateLegacyUnlockDefinitions([invalid], "test-invalid-metadata"),
+      pattern
+    );
+  }
+});
+
 test("permanent, tiered, and temporary unlock states resolve with preparation capacity", () => {
   let profile = grantProfile(100);
 

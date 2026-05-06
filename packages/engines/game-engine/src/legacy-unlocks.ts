@@ -10,11 +10,16 @@ import type {
   LegacyUnlockClassification,
   LegacyUnlockCostState,
   LegacyUnlockDefinitionState,
+  LegacyUnlockDuration,
   LegacyUnlockEffectKind,
   LegacyUnlockEffectState,
+  LegacyUnlockCurrency,
+  LegacyUnlockImplementationPriority,
   LegacyUnlockKind,
+  LegacyUnlockPurchaseMode,
   LegacyUnlockRequirementResolutionState,
   LegacyUnlockRequirementState,
+  LegacyUnlockScope,
   LegacyUnlockState,
   PlayerAttributeKey,
   PlayerResourceKey
@@ -34,12 +39,46 @@ const CATEGORY_ORDER: LegacyUnlockCategory[] = [
 const KNOWN_CATEGORIES = new Set<LegacyUnlockCategory>(CATEGORY_ORDER);
 const KNOWN_KINDS = new Set<LegacyUnlockKind>(["binary", "tiered", "incremental"]);
 const KNOWN_CLASSIFICATIONS = new Set<LegacyUnlockClassification>(["permanent", "preparation"]);
+const KNOWN_PURCHASE_MODES = new Set<LegacyUnlockPurchaseMode>([
+  "permanent",
+  "unlock_only",
+  "preparation"
+]);
+const KNOWN_LEGACY_CURRENCIES = new Set<LegacyUnlockCurrency>([
+  "account_legacy",
+  "family_prestige",
+  "regional_renown",
+  "knowledge_marks",
+  "chronicle_milestones",
+  "skill_marks"
+]);
+const KNOWN_LEGACY_SCOPES = new Set<LegacyUnlockScope>([
+  "account",
+  "family",
+  "region",
+  "character_start",
+  "next_run",
+  "heir_only",
+  "catalog_only"
+]);
+const KNOWN_LEGACY_DURATIONS = new Set<LegacyUnlockDuration>([
+  "permanent",
+  "next_character",
+  "current_run",
+  "limited_days"
+]);
+const KNOWN_IMPLEMENTATION_PRIORITIES = new Set<LegacyUnlockImplementationPriority>([
+  "live",
+  "catalog_only",
+  "backlog"
+]);
 const KNOWN_RENOWN_TIERS = new Set<LegacyRenownTier>([
   "settlement",
   "region",
   "continent",
   "universal"
 ]);
+const LEGACY_METADATA_IDENTIFIER_PATTERN = /^[a-z0-9]+(?:[._][a-z0-9]+)*$/;
 const KNOWN_EFFECT_KINDS = new Set<LegacyUnlockEffectKind>([
   "account_flag",
   "profile_title",
@@ -276,6 +315,53 @@ function assertValidId(value: unknown, label: string): string {
   return value;
 }
 
+function validateMetadataIdentifier(value: unknown, definitionId: string, field: string): string {
+  const identifier = assertValidId(value, `${definitionId}.${field}`);
+  if (!LEGACY_METADATA_IDENTIFIER_PATTERN.test(identifier)) {
+    throw new Error(`Legacy unlock '${definitionId}' has invalid ${field} '${identifier}'.`);
+  }
+
+  return identifier;
+}
+
+function validateOptionalEnum<T extends string>(
+  value: unknown,
+  definitionId: string,
+  field: string,
+  allowed: ReadonlySet<T>
+): T {
+  if (typeof value !== "string" || !allowed.has(value as T)) {
+    throw new Error(`Legacy unlock '${definitionId}' has invalid ${field} '${String(value)}'.`);
+  }
+
+  return value as T;
+}
+
+function validateBreakthroughRanks(
+  ranks: unknown,
+  definitionId: string,
+  maxRank: number
+): number[] {
+  if (!Array.isArray(ranks)) {
+    throw new Error(`Legacy unlock '${definitionId}' breakthroughRanks must be an array.`);
+  }
+
+  let previousRank = 0;
+  return ranks.map((rank) => {
+    if (!isPositiveInteger(rank)) {
+      throw new Error(`Legacy unlock '${definitionId}' breakthroughRanks must contain positive integers.`);
+    }
+    if (rank <= previousRank) {
+      throw new Error(`Legacy unlock '${definitionId}' breakthroughRanks must be unique and sorted.`);
+    }
+    if (rank > maxRank) {
+      throw new Error(`Legacy unlock '${definitionId}' breakthroughRanks cannot exceed maxRank.`);
+    }
+    previousRank = rank;
+    return rank;
+  });
+}
+
 function validateRequirement(
   requirement: unknown,
   definitionId: string
@@ -431,22 +517,35 @@ function validateCost(cost: unknown, definitionId: string): LegacyUnlockCostStat
 
 function validateEffects(
   effects: unknown,
-  definitionId: string
+  definitionId: string,
+  field = "effects",
+  requireNonEmpty = true
 ): LegacyUnlockEffectState[] {
-  if (!Array.isArray(effects) || effects.length === 0) {
+  if (!Array.isArray(effects)) {
+    throw new Error(`Legacy unlock '${definitionId}' has invalid ${field}.`);
+  }
+  if (requireNonEmpty && effects.length === 0) {
     throw new Error(`Legacy unlock '${definitionId}' must define at least one metadata effect.`);
   }
 
   return effects.map((effect) => {
     if (!isRecord(effect) || typeof effect.type !== "string") {
-      throw new Error(`Legacy unlock '${definitionId}' has an invalid effect.`);
+      throw new Error(`Legacy unlock '${definitionId}' has an invalid ${field} entry.`);
     }
 
     if (!KNOWN_EFFECT_KINDS.has(effect.type as LegacyUnlockEffectKind)) {
       throw new Error(`Legacy unlock '${definitionId}' uses non-metadata effect '${effect.type}'.`);
     }
 
-    assertValidId(effect.key, `${definitionId}.effect.key`);
+    assertValidId(effect.key, `${definitionId}.${field}.key`);
+    if (
+      effect.value !== undefined &&
+      typeof effect.value !== "string" &&
+      typeof effect.value !== "number" &&
+      typeof effect.value !== "boolean"
+    ) {
+      throw new Error(`Legacy unlock '${definitionId}' has invalid ${field} value.`);
+    }
     return effect as unknown as LegacyUnlockEffectState;
   });
 }
@@ -564,6 +663,66 @@ function validateDefinition(record: unknown): LegacyUnlockDefinitionState {
     throw new Error(`Legacy unlock '${id}' lacks explicit per-rank costs through maxRank.`);
   }
 
+  if (record.track !== undefined) {
+    definition.track = validateMetadataIdentifier(record.track, id, "track");
+  }
+  if (record.purchaseMode !== undefined) {
+    definition.purchaseMode = validateOptionalEnum(
+      record.purchaseMode,
+      id,
+      "purchaseMode",
+      KNOWN_PURCHASE_MODES
+    );
+  }
+  if (record.currency !== undefined) {
+    definition.currency = validateOptionalEnum(
+      record.currency,
+      id,
+      "currency",
+      KNOWN_LEGACY_CURRENCIES
+    );
+  }
+  if (record.scope !== undefined) {
+    definition.scope = validateOptionalEnum(record.scope, id, "scope", KNOWN_LEGACY_SCOPES);
+  }
+  if (record.duration !== undefined) {
+    definition.duration = validateOptionalEnum(
+      record.duration,
+      id,
+      "duration",
+      KNOWN_LEGACY_DURATIONS
+    );
+  }
+  if (record.breakthroughRanks !== undefined) {
+    definition.breakthroughRanks = validateBreakthroughRanks(
+      record.breakthroughRanks,
+      id,
+      maxRank
+    );
+  }
+  if (record.breakthroughEffect !== undefined) {
+    definition.breakthroughEffect = validateEffects(
+      record.breakthroughEffect,
+      id,
+      "breakthroughEffect",
+      false
+    );
+  }
+  if (record.repeatable !== undefined) {
+    if (typeof record.repeatable !== "boolean") {
+      throw new Error(`Legacy unlock '${id}' has invalid repeatable value.`);
+    }
+    definition.repeatable = record.repeatable;
+  }
+  if (record.implementationPriority !== undefined) {
+    definition.implementationPriority = validateOptionalEnum(
+      record.implementationPriority,
+      id,
+      "implementationPriority",
+      KNOWN_IMPLEMENTATION_PRIORITIES
+    );
+  }
+
   if (Array.isArray(record.requirements)) {
     definition.requirements = record.requirements.map((requirement) =>
       validateRequirement(requirement, id)
@@ -640,6 +799,12 @@ export function getLegacyUnlockDefinitions(): LegacyUnlockDefinitionState[] {
               : {})
           }
         }
+      : {}),
+    ...(definition.breakthroughRanks
+      ? { breakthroughRanks: [...definition.breakthroughRanks] }
+      : {}),
+    ...(definition.breakthroughEffect
+      ? { breakthroughEffect: definition.breakthroughEffect.map((effect) => ({ ...effect })) }
       : {}),
     ...(definition.tags ? { tags: [...definition.tags] } : {})
   }));

@@ -247,6 +247,47 @@ const PLAYER_SPELL_SCALING_CHANNELS_BY_SCHOOL = Object.fromEntries(
 );
 const PLAYER_TITLE_FAMILIES = new Set(["combat", "crafting", "magic", "knowledge", "faith"]);
 const PLAYER_CRAFT_SKILL_DIMENSIONS = new Set(["timeEfficiency", "waste", "quality", "quantity"]);
+const LEGACY_UNLOCK_METADATA_IDENTIFIER_PATTERN = /^[a-z0-9]+(?:[._][a-z0-9]+)*$/;
+const LEGACY_UNLOCK_PURCHASE_MODES = new Set(["permanent", "unlock_only", "preparation"]);
+const LEGACY_UNLOCK_CURRENCIES = new Set([
+  "account_legacy",
+  "family_prestige",
+  "regional_renown",
+  "knowledge_marks",
+  "chronicle_milestones",
+  "skill_marks"
+]);
+const LEGACY_UNLOCK_SCOPES = new Set([
+  "account",
+  "family",
+  "region",
+  "character_start",
+  "next_run",
+  "heir_only",
+  "catalog_only"
+]);
+const LEGACY_UNLOCK_DURATIONS = new Set([
+  "permanent",
+  "next_character",
+  "current_run",
+  "limited_days"
+]);
+const LEGACY_UNLOCK_IMPLEMENTATION_PRIORITIES = new Set(["live", "catalog_only", "backlog"]);
+const LEGACY_UNLOCK_EFFECT_KINDS = new Set([
+  "account_flag",
+  "profile_title",
+  "chronicle_presentation",
+  "future_heir_start",
+  "future_inheritance_uses",
+  "preparation_capacity",
+  "next_run_preparation",
+  "future_starting_item",
+  "future_attribute_preparation",
+  "future_resource_preparation",
+  "future_lineage_retention",
+  "future_renown",
+  "future_preparation_discount"
+]);
 const TACTICAL_ROLE_IDS = new Set([
   "frontliner",
   "disruptor",
@@ -571,6 +612,13 @@ const checks = [
     requireSlug: false,
     forbidGeoQualifierInName: false,
     validateTitles: true
+  },
+  {
+    file: "packages/content/base/player/legacy_unlocks.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false,
+    validateLegacyUnlockCatalog: true
   },
   {
     file: "packages/content/base/game/combat_roles.json",
@@ -6800,6 +6848,133 @@ function validateTitles(relativePath, records) {
   }
 }
 
+function ensureOptionalLegacyUnlockEnum(relativePath, recordId, field, value, allowed) {
+  if (value !== undefined) {
+    ensureSetMembership(relativePath, recordId, field, value, allowed);
+  }
+}
+
+function validateLegacyUnlockEffectArray(relativePath, recordId, field, value) {
+  if (!Array.isArray(value)) {
+    throw new Error(`${relativePath} has non-array ${field} on record ${recordId}`);
+  }
+
+  for (const effect of value) {
+    if (!isObject(effect)) {
+      throw new Error(`${relativePath} has invalid ${field} entry on record ${recordId}`);
+    }
+
+    ensureSetMembership(relativePath, recordId, `${field}.type`, effect.type, LEGACY_UNLOCK_EFFECT_KINDS);
+    ensureString(relativePath, recordId, `${field}.key`, effect.key);
+    if (
+      effect.value !== undefined &&
+      typeof effect.value !== "string" &&
+      typeof effect.value !== "number" &&
+      typeof effect.value !== "boolean"
+    ) {
+      throw new Error(`${relativePath} has invalid ${field}.value on record ${recordId}`);
+    }
+  }
+}
+
+function validateLegacyUnlockBreakthroughRanks(relativePath, recordId, record) {
+  if (!Array.isArray(record.breakthroughRanks)) {
+    throw new Error(`${relativePath} has non-array breakthroughRanks on record ${recordId}`);
+  }
+
+  if (
+    record.maxRank !== undefined &&
+    (!Number.isInteger(record.maxRank) || record.maxRank <= 0)
+  ) {
+    throw new Error(`${relativePath} has invalid maxRank for breakthroughRanks on record ${recordId}`);
+  }
+
+  let previousRank = 0;
+  for (const rank of record.breakthroughRanks) {
+    if (!Number.isInteger(rank) || rank <= 0) {
+      throw new Error(`${relativePath} has invalid breakthroughRanks entry on record ${recordId}`);
+    }
+    if (rank <= previousRank) {
+      throw new Error(`${relativePath} has duplicate or unsorted breakthroughRanks on record ${recordId}`);
+    }
+    if (record.maxRank !== undefined && rank > record.maxRank) {
+      throw new Error(`${relativePath} has breakthroughRanks entry above maxRank on record ${recordId}`);
+    }
+    previousRank = rank;
+  }
+}
+
+function validateLegacyUnlockCatalog(relativePath, records) {
+  const seenIds = new Set();
+
+  for (const record of records) {
+    const recordId = record.id ?? "<unknown>";
+    ensureString(relativePath, recordId, "id", record.id);
+    if (seenIds.has(record.id)) {
+      throw new Error(`${relativePath} has duplicate legacy unlock id '${record.id}'`);
+    }
+    seenIds.add(record.id);
+
+    if (record.track !== undefined) {
+      ensureString(relativePath, recordId, "track", record.track);
+      if (!LEGACY_UNLOCK_METADATA_IDENTIFIER_PATTERN.test(record.track)) {
+        throw new Error(`${relativePath} has invalid track '${record.track}' on record ${recordId}`);
+      }
+    }
+
+    ensureOptionalLegacyUnlockEnum(
+      relativePath,
+      recordId,
+      "purchaseMode",
+      record.purchaseMode,
+      LEGACY_UNLOCK_PURCHASE_MODES
+    );
+    ensureOptionalLegacyUnlockEnum(
+      relativePath,
+      recordId,
+      "currency",
+      record.currency,
+      LEGACY_UNLOCK_CURRENCIES
+    );
+    ensureOptionalLegacyUnlockEnum(
+      relativePath,
+      recordId,
+      "scope",
+      record.scope,
+      LEGACY_UNLOCK_SCOPES
+    );
+    ensureOptionalLegacyUnlockEnum(
+      relativePath,
+      recordId,
+      "duration",
+      record.duration,
+      LEGACY_UNLOCK_DURATIONS
+    );
+    ensureOptionalLegacyUnlockEnum(
+      relativePath,
+      recordId,
+      "implementationPriority",
+      record.implementationPriority,
+      LEGACY_UNLOCK_IMPLEMENTATION_PRIORITIES
+    );
+
+    if (record.breakthroughRanks !== undefined) {
+      validateLegacyUnlockBreakthroughRanks(relativePath, recordId, record);
+    }
+    if (record.breakthroughEffect !== undefined) {
+      validateLegacyUnlockEffectArray(
+        relativePath,
+        recordId,
+        "breakthroughEffect",
+        record.breakthroughEffect
+      );
+    }
+    if (record.repeatable !== undefined) {
+      ensureBoolean(relativePath, recordId, "repeatable", record.repeatable);
+    }
+  }
+}
+
 function validateRecords(relativePath, parsed, check) {
   if (!Array.isArray(parsed.records)) {
     throw new Error(`${relativePath} has non-array records`);
@@ -6884,6 +7059,9 @@ function validateRecords(relativePath, parsed, check) {
   }
   if (check.validateTitles) {
     validateTitles(relativePath, parsed.records);
+  }
+  if (check.validateLegacyUnlockCatalog) {
+    validateLegacyUnlockCatalog(relativePath, parsed.records);
   }
   if (check.validateCombatRoles) {
     validateCombatRoles(relativePath, parsed.records);
