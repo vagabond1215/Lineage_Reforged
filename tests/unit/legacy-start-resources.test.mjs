@@ -8,6 +8,7 @@ import {
 import {
   createDefaultPlayerStatGrowthState
 } from "../../packages/engines/player-engine/src/index.ts";
+import { createInitialClock } from "../../packages/shared/time/src/index.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
 import {
   createDefaultCharacterCreationFormState,
@@ -144,6 +145,64 @@ test("createNewGameSnapshot initializes fresh stat growth instead of inheriting 
   assert.equal(snapshot.playerState.statGrowth.load.AGI, 0);
   assert.equal(snapshot.playerState.statGrowth.load.CON, 0);
   assert.equal(snapshot.playerState.statGrowth.load.WIS, 0);
+});
+
+test("createNewGameSnapshot initializes fresh world, civilization, timing, and optional player state", () => {
+  const form = createCompleteCharacterForm("backstory.local_hero");
+  const profile = createDefaultAccountProfileState();
+  const expectedClock = createInitialClock();
+  const snapshot = createNewGameSnapshot(form, profile.accountId, {
+    accountProfile: profile
+  });
+
+  assert.deepEqual(snapshot.clock, expectedClock);
+  assert.equal(snapshot.capturedAtTick, snapshot.clock.tick);
+  assert.notEqual(snapshot.capturedAtTick, demoSnapshot.capturedAtTick);
+  assert.equal(snapshot.playerState.saveMeta.lastRestAtTick, expectedClock.tick);
+  assert.equal(snapshot.playerState.saveMeta.lastSavedAtTick, expectedClock.tick);
+  assert.equal(snapshot.playerState.saveMeta.lastReputationDecayDay, expectedClock.day);
+
+  assert.deepEqual(snapshot.worldState.weatherState, {});
+  assert.deepEqual(snapshot.worldState.activeRegions, [snapshot.playerState.regionId]);
+  assert.equal(snapshot.worldState.encounterContext, undefined);
+  assert.equal(snapshot.worldState.pendingSpawnCandidates, undefined);
+
+  assert.notDeepEqual(snapshot.civilizationState, demoSnapshot.civilizationState);
+  assert.deepEqual(snapshot.civilizationState.settlements, []);
+  assert.deepEqual(snapshot.civilizationState.markets, []);
+  assert.deepEqual(snapshot.civilizationState.economy.nodes, []);
+  assert.deepEqual(snapshot.civilizationState.economy.lastSnapshots, []);
+  assert.deepEqual(snapshot.civilizationState.economy.lastLevelTotals, []);
+  assert.deepEqual(snapshot.civilizationState.economy.marketStates, []);
+  assert.equal(snapshot.civilizationState.economy.lastComputedTick, expectedClock.tick);
+  assert.deepEqual(snapshot.civilizationState.transport.caravans, []);
+  assert.deepEqual(snapshot.civilizationState.transport.stockAdjustments, []);
+  assert.deepEqual(snapshot.civilizationState.transport.assetReservations, []);
+  assert.deepEqual(snapshot.civilizationState.transport.lastEvaluatedOpportunities, []);
+  assert.equal(snapshot.civilizationState.transport.nextCaravanOrdinal, 1);
+  assert.equal(snapshot.civilizationState.transport.lastProcessedTick, expectedClock.tick);
+  assert.deepEqual(snapshot.civilizationState.quests.activeOffers, []);
+  assert.equal(snapshot.civilizationState.quests.lastGeneratedTick, expectedClock.tick);
+
+  assert.deepEqual(snapshot.playerState.activeTrials, []);
+  assert.deepEqual(snapshot.playerState.discoveryChronicle, {
+    entries: [],
+    lastUpdatedTick: null
+  });
+  assert.deepEqual(snapshot.playerState.standing, []);
+  assert.deepEqual(snapshot.playerState.reputation, {
+    fame: [],
+    notoriety: [],
+    notorietyEvents: []
+  });
+  assert.deepEqual(snapshot.playerState.titles, []);
+  assert.deepEqual(snapshot.playerState.activeEffects, []);
+  assert.equal(
+    snapshot.sessionState.chronicle.some((entry) =>
+      demoSnapshot.sessionState.chronicle.some((demoEntry) => demoEntry.id === entry.id)
+    ),
+    false
+  );
 });
 
 test("account start resources and selected preparations do not change starter skills", () => {

@@ -10,6 +10,7 @@ import {
   selectLegacyPreparation,
   spendLegacy
 } from "../../packages/engines/game-engine/src/index.ts";
+import { createInitialClock } from "../../packages/shared/time/src/index.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
 import {
   createDefaultCharacterCreationFormState,
@@ -644,8 +645,21 @@ test("Legacy-created new game snapshots roundtrip start resources and modifiers"
     createSave(accountId, "slot-1", snapshot, buildSaveMetadata("slot-1", snapshot));
 
     const loaded = loadSave(accountId, "slot-1");
+    const expectedClock = createInitialClock();
     assert.ok(loaded);
     assert.equal(loaded.accountId, accountId);
+    assert.deepEqual(loaded.clock, expectedClock);
+    assert.equal(loaded.capturedAtTick, expectedClock.tick);
+    assert.equal(loaded.playerState.saveMeta.lastRestAtTick, expectedClock.tick);
+    assert.equal(loaded.playerState.saveMeta.lastSavedAtTick, expectedClock.tick);
+    assert.equal(loaded.playerState.saveMeta.lastReputationDecayDay, expectedClock.day);
+    assert.deepEqual(loaded.worldState.weatherState, {});
+    assert.deepEqual(loaded.worldState.activeRegions, [loaded.playerState.regionId]);
+    assert.deepEqual(loaded.civilizationState.settlements, []);
+    assert.deepEqual(loaded.civilizationState.markets, []);
+    assert.equal(loaded.civilizationState.economy.lastComputedTick, expectedClock.tick);
+    assert.equal(loaded.civilizationState.transport.lastProcessedTick, expectedClock.tick);
+    assert.equal(loaded.civilizationState.quests.lastGeneratedTick, expectedClock.tick);
     assert.equal(loaded.playerState.resources.hp.max, baseline.playerState.resources.hp.max + 8);
     assert.equal(loaded.playerState.resources.hp.current, loaded.playerState.resources.hp.max);
     assert.equal(

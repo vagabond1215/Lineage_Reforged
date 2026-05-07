@@ -1,5 +1,6 @@
 import {
   type AccountProfileState,
+  type CivilizationState,
   createEmptyPlayerResourceRuntimeState,
   resolvePlayerOriginProfile,
   resolvePlayerResources,
@@ -12,6 +13,8 @@ import {
   type PlayerSkillState,
   type PlayerTraitState,
   type SaveSnapshot,
+  type SimulationClock,
+  type WorldState,
   type WorldLocationType
 } from '../../../../packages/shared/types/src/index.js';
 import {
@@ -30,7 +33,7 @@ import {
 import {
   resolveLegacyCharacterStartBonuses
 } from '../../../../packages/engines/game-engine/src/legacy-unlocks.js';
-import { deserializeSnapshot, serializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
+import { createInitialClock } from '../../../../packages/shared/time/src/index.js';
 import {
   hasCompleteCharacterCreationSelections,
   validateCharacterCreationForm,
@@ -65,10 +68,15 @@ import {
 } from './legacyPreparationApplication.js';
 import { resolveWorldSelection } from './worldSelectionCatalog.js';
 import { fillCoreResourcesToMax } from './newGameResourceInitialization.js';
-import { demoSnapshot } from '../runtime/demoSnapshot.js';
+
+const CURRENT_SNAPSHOT_VERSION = '0.6.0';
 
 function createDefaultPlayerCombatProfile() {
   return { preferredMode: 'normal' as const, memberPreferences: [] };
+}
+
+function createDefaultNewGameClock(): SimulationClock {
+  return createInitialClock();
 }
 
 function createDefaultGameState() {
@@ -80,6 +88,39 @@ function createDefaultGameState() {
     party: { leaderCombatantId: null, members: [] },
     activeEncounter: null,
     combatHistory: []
+  };
+}
+
+function createDefaultNewGameWorldState(regionId: string): WorldState {
+  return {
+    activeRegions: [regionId],
+    weatherState: {}
+  };
+}
+
+function createDefaultNewGameCivilizationState(tick: number): CivilizationState {
+  return {
+    settlements: [],
+    markets: [],
+    economy: {
+      nodes: [],
+      lastSnapshots: [],
+      lastLevelTotals: [],
+      marketStates: [],
+      lastComputedTick: tick
+    },
+    transport: {
+      caravans: [],
+      stockAdjustments: [],
+      nextCaravanOrdinal: 1,
+      assetReservations: [],
+      lastEvaluatedOpportunities: [],
+      lastProcessedTick: tick
+    },
+    quests: {
+      activeOffers: [],
+      lastGeneratedTick: tick
+    }
   };
 }
 
@@ -206,10 +247,6 @@ const LINEAGE_TRAIT_IDS: Record<string, string[]> = {
   'lineage.half_merfolk': ['trait.lineage.half_merfolk.water_adapted', 'trait.lineage.half_merfolk.tidal_sense', 'trait.lineage.half_merfolk.breath_discipline']
 };
 
-function cloneSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
-  return deserializeSnapshot(serializeSnapshot(snapshot));
-}
-
 function humanizeId(value: string | null | undefined): string {
   if (!value) return 'Unknown';
   const tail = value.split('.').pop() ?? value;
@@ -295,6 +332,7 @@ function resolveWorkingCharacterResources(
 ) {
   const lineageId = form.lineageId.trim() || 'lineage.human';
   const sexId = form.sexId === 'female' ? 'female' : 'male';
+  const clock = createDefaultNewGameClock();
   const originProfile = resolvePlayerOriginProfile(
     { lineageId, classId: null, sexId },
     createPlayerProgressionState({ legacyGrowth: { resourceGrowthLevel: 1, classLevel: 0 } })
@@ -304,8 +342,8 @@ function resolveWorkingCharacterResources(
       playerId: 'player.preview',
       attributes,
       bodyState: createDefaultPlayerBodyState({
-        tick: demoSnapshot.clock.tick,
-        day: demoSnapshot.clock.day,
+        tick: clock.tick,
+        day: clock.day,
         lineageId
       }),
       resources: {
@@ -319,7 +357,7 @@ function resolveWorkingCharacterResources(
       resourceRuntime: createEmptyPlayerResourceRuntimeState()
     },
     [],
-    demoSnapshot.clock.tick
+    clock.tick
   );
   fillCoreResourcesToMax(resolution.resources);
   return {
@@ -514,11 +552,12 @@ function deriveCharacterCreationState(
   form: CompleteCharacterCreationFormState,
   options: CharacterCreationPreviewOptions = {}
 ): DerivedCharacterCreationState {
-  const baseSnapshot = cloneSnapshot(demoSnapshot);
   const selectedWorld = resolveWorldSelection({ continentId: form.continentId, regionId: form.regionId, settlementId: form.startingSettlementId, backstoryId: form.backstoryId });
   if (!selectedWorld) throw new Error('Cannot create a new game without a valid world selection.');
   if (selectedWorld.settlement.access.accessStatus !== 'allowed') throw new Error(selectedWorld.settlement.access.notes[0] ?? 'Selected settlement start is restricted.');
 
+  const clock = createDefaultNewGameClock();
+  const gameState = createDefaultGameState();
   const backstory = getBackstoryTemplate(form.backstoryId, selectedWorld);
   const bundle = getStartingBundleTemplate(form.startingBundleId);
   const bundleStacks = getStartingBundleSelectedStacks(
@@ -596,10 +635,10 @@ function deriveCharacterCreationState(
     ]
   };
   const bodyState = createDefaultPlayerBodyState({
-    tick: baseSnapshot.clock.tick,
-    day: baseSnapshot.clock.day,
+    tick: clock.tick,
+    day: clock.day,
     lineageId: form.lineageId,
-    runDifficulty: baseSnapshot.gameState.runDifficulty
+    runDifficulty: gameState.runDifficulty
   });
   const resources = resolvePlayerResources(
     {
@@ -617,7 +656,7 @@ function deriveCharacterCreationState(
       resourceRuntime
     },
     [],
-    baseSnapshot.clock.tick
+    clock.tick
   );
   fillCoreResourcesToMax(resources.resources);
   for (const resourceId of [
@@ -636,10 +675,12 @@ function deriveCharacterCreationState(
   const activeQuestIds = sessionState.questJournal.filter((entry) => entry.category === 'active' || entry.category === 'contracts').map((entry) => entry.id);
   const completedQuestIds = sessionState.questJournal.filter((entry) => entry.category === 'completed').map((entry) => entry.id);
   const snapshot: SaveSnapshot = {
-    ...baseSnapshot,
-    gameState: createDefaultGameState(),
+    accountId: DEFAULT_ACCOUNT_ID,
+    snapshotVersion: CURRENT_SNAPSHOT_VERSION,
+    capturedAtTick: clock.tick,
+    clock,
+    gameState,
     playerState: {
-      ...baseSnapshot.playerState,
       playerId,
       regionId: selectedWorld.region.id,
       coreData: {
@@ -663,7 +704,7 @@ function deriveCharacterCreationState(
         }
       },
       attributes,
-      statGrowth: createDefaultPlayerStatGrowthState(baseSnapshot.clock.day),
+      statGrowth: createDefaultPlayerStatGrowthState(clock.day),
       bodyState,
       resources: resources.resources,
       resourceRuntime: resources.resourceRuntime,
@@ -672,6 +713,7 @@ function deriveCharacterCreationState(
       spells: [],
       abilities: getStartingAbilityStates(form.backstoryId),
       traits,
+      activeTrials: [],
       equipment,
       inventory,
       activeEffects: [],
@@ -698,12 +740,13 @@ function deriveCharacterCreationState(
       combatProfile: createDefaultPlayerCombatProfile(),
       saveMeta: {
         totalPlayTicks: 0,
-        lastRestAtTick: baseSnapshot.clock.tick,
-        lastSavedAtTick: baseSnapshot.clock.tick,
-        lastReputationDecayDay: baseSnapshot.clock.day
+        lastRestAtTick: clock.tick,
+        lastSavedAtTick: clock.tick,
+        lastReputationDecayDay: clock.day
       }
     },
-    worldState: { ...baseSnapshot.worldState, activeRegions: Array.from(new Set([selectedWorld.region.id, ...baseSnapshot.worldState.activeRegions])) },
+    worldState: createDefaultNewGameWorldState(selectedWorld.region.id),
+    civilizationState: createDefaultNewGameCivilizationState(clock.tick),
     sessionState
   };
   syncPlayerRuntimeState(
