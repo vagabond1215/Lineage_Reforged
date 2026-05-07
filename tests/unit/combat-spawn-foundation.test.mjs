@@ -384,6 +384,28 @@ test("ranged enemy packages resolve to ranged damage instead of the melee fallba
   assert.ok(preview.amount > 0);
 });
 
+test("unknown manual combat actions currently fall back to basic melee", () => {
+  const { encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+
+  const action = queueActionFixture(
+    encounter,
+    player,
+    "combat.future.unmapped",
+    [enemy.id],
+    "ability",
+    "ability.future.unmapped"
+  );
+  const preview = resolveCombatDamagePreview(action, player, enemy);
+
+  assert.equal(action.actionType, "combat.attack.melee.basic");
+  assert.deepEqual(action.resolutionHooks, ["damage.melee"]);
+  assert.deepEqual(action.resourceCosts, { stamina: 4 });
+  assert.equal(preview.actionFamily, "melee");
+  assert.ok(preview.amount > 0);
+});
+
 test("item-profile weapon actions receive basic weapon skill effects through action aliases", () => {
   const { encounter } = createEncounterFixture(
     createPlayerStateFixture({

@@ -6,6 +6,10 @@ import {
   purchaseLegacyUnlock
 } from "../../packages/engines/game-engine/src/index.ts";
 import {
+  createDefaultPlayerStatGrowthState
+} from "../../packages/engines/player-engine/src/index.ts";
+import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
+import {
   createDefaultCharacterCreationFormState,
   validateCharacterCreationForm
 } from "../../apps/rpg-ui/src/game-shell/characterCreationForm.ts";
@@ -86,6 +90,10 @@ function getMetricValue(preview, id) {
   return preview.resourceMetrics.find((metric) => metric.id === id)?.value ?? null;
 }
 
+function formatWallet(currency) {
+  return `${currency.gold}g ${currency.silver}s ${currency.copper}c`;
+}
+
 function skillSignature(skills) {
   return skills
     .map((skill) => ({ id: skill.id, rank: skill.rank, source: skill.source }))
@@ -115,6 +123,27 @@ test("createNewGameSnapshot preserves current backstory starter skills exactly",
       backstory.id
     );
   }
+});
+
+test("createNewGameSnapshot initializes fresh stat growth instead of inheriting demo data", () => {
+  const form = createCompleteCharacterForm("backstory.local_hero");
+  const profile = createDefaultAccountProfileState();
+  const snapshot = createNewGameSnapshot(form, profile.accountId, {
+    accountProfile: profile
+  });
+
+  assert.notDeepEqual(snapshot.playerState.statGrowth, demoSnapshot.playerState.statGrowth);
+  assert.deepEqual(
+    snapshot.playerState.statGrowth,
+    createDefaultPlayerStatGrowthState(snapshot.clock.day)
+  );
+  assert.equal(snapshot.playerState.coreData.playerName, form.playerName);
+  assert.equal(snapshot.playerState.coreData.backstoryId, form.backstoryId);
+  assert.equal(snapshot.playerState.coreData.startingBundleId, form.startingBundleId);
+  assert.deepEqual(snapshotSkillSignature(snapshot), expectedBackstorySkillSignature(form.backstoryId));
+  assert.equal(snapshot.playerState.statGrowth.load.AGI, 0);
+  assert.equal(snapshot.playerState.statGrowth.load.CON, 0);
+  assert.equal(snapshot.playerState.statGrowth.load.WIS, 0);
 });
 
 test("account start resources and selected preparations do not change starter skills", () => {
@@ -255,4 +284,34 @@ test("starting coin stacks on the bundle purse before selected preparation curre
     withLegacyCoin.playerState.flags.includes(`player.legacy_start.${STARTING_COIN}`),
     true
   );
+});
+
+test("character creation preview matches created snapshot for Legacy start resources and preparations", () => {
+  const form = createCompleteCharacterForm();
+  let profile = grantProfile();
+  profile = purchaseRanks(profile, STARTING_HP, 3);
+  profile = purchaseRanks(profile, STARTING_STAMINA, 2, 10);
+  profile = purchaseRanks(profile, STARTING_COIN, 4, 20);
+  const options = {
+    accountProfile: profile,
+    appliedLegacyPreparationIds: [MERCHANT_PURSE, VITAL_LEGACY],
+    appliedLegacyPreparationChoices: {
+      [VITAL_LEGACY]: "hp"
+    }
+  };
+  const preview = buildCharacterCreationPreview(form, options);
+  const snapshot = createNewGameSnapshot(form, profile.accountId, options);
+
+  assert.equal(preview.isResolved, true);
+  assert.equal(getMetricValue(preview, "hp"), String(snapshot.playerState.resources.hp.current));
+  assert.equal(
+    getMetricValue(preview, "stamina"),
+    String(snapshot.playerState.resources.stamina.current)
+  );
+  assert.equal(preview.walletLabel, formatWallet(snapshot.playerState.currency));
+  assert.deepEqual(
+    preview.starterSkills,
+    getBackstoryTemplate(form.backstoryId).startingSkillLabels
+  );
+  assert.deepEqual(snapshotSkillSignature(snapshot), expectedBackstorySkillSignature(form.backstoryId));
 });

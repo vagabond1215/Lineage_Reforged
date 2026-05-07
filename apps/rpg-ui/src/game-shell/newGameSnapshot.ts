@@ -16,6 +16,7 @@ import {
 } from '../../../../packages/shared/types/src/index.js';
 import {
   createDefaultPlayerBodyState,
+  createDefaultPlayerStatGrowthState,
   createRunDifficultyState,
   createPlayerProgressionState,
   syncPlayerRuntimeState
@@ -662,6 +663,7 @@ function deriveCharacterCreationState(
         }
       },
       attributes,
+      statGrowth: createDefaultPlayerStatGrowthState(baseSnapshot.clock.day),
       bodyState,
       resources: resources.resources,
       resourceRuntime: resources.resourceRuntime,

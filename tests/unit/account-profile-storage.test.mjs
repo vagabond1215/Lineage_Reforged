@@ -12,6 +12,18 @@ import {
 } from "../../packages/engines/game-engine/src/index.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
 import {
+  createDefaultCharacterCreationFormState,
+  validateCharacterCreationForm
+} from "../../apps/rpg-ui/src/game-shell/characterCreationForm.ts";
+import {
+  createDefaultStartingBundleChoiceSelections,
+  getLineageIdentityCatalog
+} from "../../apps/rpg-ui/src/game-shell/characterCreationCatalog.ts";
+import {
+  createNewGameSnapshot
+} from "../../apps/rpg-ui/src/game-shell/newGameSnapshot.ts";
+import { getDefaultWorldSelection } from "../../apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts";
+import {
   loadAccountProfile,
   loadActiveAccountProfile,
   resolveActiveAccountId,
@@ -25,6 +37,12 @@ import {
   loadSave,
   resetAllSaves
 } from "../../apps/rpg-ui/src/game-shell/saveManager.ts";
+
+const STARTING_HP = "legacy.unlock.account.starting_hp";
+const STARTING_STAMINA = "legacy.unlock.account.starting_stamina";
+const STARTING_COIN = "legacy.unlock.account.starting_coin";
+const MERCHANT_PURSE = "legacy.unlock.preparation.merchant_purse";
+const VITAL_LEGACY = "legacy.unlock.preparation.vital_legacy";
 
 function createMockStorage() {
   const values = new Map();
@@ -78,6 +96,47 @@ function createSnapshot(accountId, playerName) {
   snapshot.playerState.coreData.playerName = playerName;
   snapshot.playerState.playerId = `player.${playerName.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`;
   return snapshot;
+}
+
+function createCompleteCharacterForm(backstoryId = "backstory.local_hero") {
+  const identity = getLineageIdentityCatalog("lineage.human");
+  assert.ok(identity);
+  const startingBundleId = "starting_bundle.traveler";
+  const world = getDefaultWorldSelection(backstoryId);
+  const form = {
+    ...createDefaultCharacterCreationFormState("slot-1"),
+    playerName: "Storage Legacy Runner",
+    hairColorId: identity.hairColorOptions[0]?.id ?? "",
+    eyeColorId: identity.eyeColorOptions[0]?.id ?? "",
+    skinToneId: identity.skinToneOptions[0]?.id ?? "",
+    startingBundleId,
+    startingBundleChoiceSelections: createDefaultStartingBundleChoiceSelections(startingBundleId),
+    backstoryId,
+    continentId: world.continentId,
+    regionId: world.regionId,
+    startingSettlementId: world.settlementId
+  };
+  const validation = validateCharacterCreationForm(form);
+
+  assert.deepEqual(validation.errors, {});
+  return form;
+}
+
+function purchaseRanks(profile, unlockId, ranks, startMinute = 0) {
+  let nextProfile = profile;
+
+  for (let rank = 1; rank <= ranks; rank += 1) {
+    const purchased = purchaseLegacyUnlock(
+      nextProfile,
+      unlockId,
+      `2026-04-20T21:${(startMinute + rank).toString().padStart(2, "0")}:00.000Z`
+    );
+
+    assert.equal(purchased.ok, true);
+    nextProfile = purchased.profile;
+  }
+
+  return nextProfile;
 }
 
 test("default account profile auto-creates and active account id persists separately from saves", () =>
@@ -553,6 +612,78 @@ test("account-scoped saves roundtrip with accountId and remain invisible to othe
 
     const updatedProfile = loadAccountProfile(accountA);
     assert.equal(typeof updatedProfile.lastPlayedAt, "string");
+  }));
+
+test("Legacy-created new game snapshots roundtrip start resources and modifiers", () =>
+  withMockWindow(() => {
+    const accountId = "account.local.legacy_start_roundtrip";
+    const form = createCompleteCharacterForm();
+    const emptyProfile = createDefaultAccountProfileState({ accountId });
+    const baseline = createNewGameSnapshot(form, accountId, {
+      accountProfile: emptyProfile
+    });
+    let profile = grantLegacy(emptyProfile, {
+      amount: 1000,
+      summary: "Test grant",
+      sourceType: "test",
+      sourceId: "test.grant",
+      recordedAt: "2026-04-20T21:00:00.000Z"
+    }).profile;
+    profile = purchaseRanks(profile, STARTING_HP, 3);
+    profile = purchaseRanks(profile, STARTING_STAMINA, 2, 10);
+    profile = purchaseRanks(profile, STARTING_COIN, 4, 20);
+    saveAccountProfile(profile);
+
+    const snapshot = createNewGameSnapshot(form, accountId, {
+      accountProfile: profile,
+      appliedLegacyPreparationIds: [MERCHANT_PURSE, VITAL_LEGACY],
+      appliedLegacyPreparationChoices: {
+        [VITAL_LEGACY]: "hp"
+      }
+    });
+    createSave(accountId, "slot-1", snapshot, buildSaveMetadata("slot-1", snapshot));
+
+    const loaded = loadSave(accountId, "slot-1");
+    assert.ok(loaded);
+    assert.equal(loaded.accountId, accountId);
+    assert.equal(loaded.playerState.resources.hp.max, baseline.playerState.resources.hp.max + 8);
+    assert.equal(loaded.playerState.resources.hp.current, loaded.playerState.resources.hp.max);
+    assert.equal(
+      loaded.playerState.resources.stamina.max,
+      baseline.playerState.resources.stamina.max + 2
+    );
+    assert.equal(
+      loaded.playerState.resources.stamina.current,
+      loaded.playerState.resources.stamina.max
+    );
+    assert.equal(loaded.playerState.currency.silver, baseline.playerState.currency.silver + 6);
+    assert.deepEqual(
+      loaded.playerState.resourceRuntime.modifiers.map((modifier) => modifier.sourceId),
+      [STARTING_HP, STARTING_STAMINA, VITAL_LEGACY]
+    );
+
+    const hpModifier = loaded.playerState.resourceRuntime.modifiers.find(
+      (modifier) => modifier.sourceId === STARTING_HP
+    );
+    const staminaModifier = loaded.playerState.resourceRuntime.modifiers.find(
+      (modifier) => modifier.sourceId === STARTING_STAMINA
+    );
+    const preparationModifier = loaded.playerState.resourceRuntime.modifiers.find(
+      (modifier) => modifier.sourceId === VITAL_LEGACY
+    );
+    assert.equal(hpModifier?.label, "Starting HP");
+    assert.deepEqual(hpModifier?.maxFlat, { hp: 3 });
+    assert.equal(staminaModifier?.label, "Starting Stamina");
+    assert.deepEqual(staminaModifier?.maxFlat, { stamina: 2 });
+    assert.equal(preparationModifier?.label, "Vital Legacy");
+    assert.deepEqual(preparationModifier?.maxFlat, { hp: 5 });
+    assert.deepEqual(loaded.playerState.saveMeta.appliedLegacyPreparationIds, [
+      MERCHANT_PURSE,
+      VITAL_LEGACY
+    ]);
+    assert.deepEqual(loaded.playerState.saveMeta.appliedLegacyPreparationChoices, {
+      [VITAL_LEGACY]: "hp"
+    });
   }));
 
 test("resetAllSaves clears only the targeted account saves and leaves the ledger intact", () =>

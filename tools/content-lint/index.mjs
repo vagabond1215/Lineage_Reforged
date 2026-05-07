@@ -1,6 +1,11 @@
 ﻿import { readFile as readFileRaw } from "node:fs/promises";
 import path from "node:path";
 import { SPELL_SCALING_CHANNELS_BY_SCHOOL } from "../../packages/engines/player-engine/src/progression.js";
+import {
+  assertSupportedCombatEffectChannels,
+  assertSupportedCombatResolutionHooks,
+  isUtilityOnlyItemUseProfile
+} from "./combat-hook-support.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -6281,8 +6286,16 @@ function validatePlayerAbilities(relativePath, records) {
     ensureStringArray(relativePath, recordId, "governingSkillIds", record.governingSkillIds ?? [], 1);
     ensureStringArray(relativePath, recordId, "governingAttributeIds", record.governingAttributeIds ?? [], 0);
     ensureStringArray(relativePath, recordId, "effectChannels", record.effectChannels ?? [], 1);
+    assertSupportedCombatEffectChannels({
+      channels: record.effectChannels ?? [],
+      source: `${relativePath} effectChannels on record ${recordId}`
+    });
     ensureStringArray(relativePath, recordId, "combatTags", record.combatTags ?? [], 1);
     ensureStringArray(relativePath, recordId, "resolutionHooks", record.resolutionHooks ?? [], 1);
+    assertSupportedCombatResolutionHooks({
+      hooks: record.resolutionHooks ?? [],
+      source: `${relativePath} resolutionHooks on record ${recordId}`
+    });
   }
 }
 
@@ -6556,6 +6569,15 @@ function validateSkillEffects(relativePath, records) {
         ensureString(relativePath, recordId, `channels[${index}].actionType`, channel.actionType);
       }
       ensureString(relativePath, recordId, `channels[${index}].effectChannel`, channel.effectChannel);
+      assertSupportedCombatEffectChannels({
+        channels: [channel.effectChannel],
+        source: `${relativePath} channels[${index}].effectChannel on record ${recordId}`
+      });
+      ensureStringArray(relativePath, recordId, `channels[${index}].resolutionHooks`, channel.resolutionHooks ?? [], 0);
+      assertSupportedCombatResolutionHooks({
+        hooks: channel.resolutionHooks ?? [],
+        source: `${relativePath} channels[${index}].resolutionHooks on record ${recordId}`
+      });
       if (!isObject(channel.scaling)) {
         throw new Error(`${relativePath} has invalid channels[${index}].scaling on record ${recordId}`);
       }
@@ -7333,6 +7355,11 @@ function validateItemCatalog(relativePath, records) {
           throw new Error(`${relativePath} has ${field}.masteryRank above 125 on record ${record.id}`);
         }
         ensureStringArray(relativePath, record.id, `${field}.effectChannels`, profile.effectChannels, 1);
+        assertSupportedCombatEffectChannels({
+          channels: profile.effectChannels,
+          source: `${relativePath} ${field}.effectChannels on record ${record.id}`,
+          allowUtilityOnlyItemChannels: isUtilityOnlyItemUseProfile(profile)
+        });
         if (profile.handlingType !== undefined) {
           ensureSetMembership(
             relativePath,
@@ -7348,6 +7375,10 @@ function validateItemCatalog(relativePath, records) {
         ensureStringArray(relativePath, record.id, `${field}.hybridSkillIds`, profile.hybridSkillIds ?? [], 0);
         ensureStringArray(relativePath, record.id, `${field}.combatTags`, profile.combatTags ?? [], 0);
         ensureStringArray(relativePath, record.id, `${field}.resolutionHooks`, profile.resolutionHooks ?? [], 0);
+        assertSupportedCombatResolutionHooks({
+          hooks: profile.resolutionHooks ?? [],
+          source: `${relativePath} ${field}.resolutionHooks on record ${record.id}`
+        });
         ensureStringArray(relativePath, record.id, `${field}.grantTags`, profile.grantTags ?? [], 0);
       }
     }
