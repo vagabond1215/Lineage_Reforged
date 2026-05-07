@@ -211,6 +211,9 @@ const ITEM_REFINEMENT_DIFFICULTIES = new Set(["low", "moderate", "high"]);
 const ITEM_PROCESSING_COST_IMPACTS = new Set(["light", "moderate", "heavy"]);
 const PLAYER_SKILL_CATEGORIES = new Set(["resource", "survival", "combat", "magic", "crafting", "knowledge", "settlement", "leadership"]);
 const PLAYER_ATTRIBUTE_KEYS = new Set(["STR", "DEX", "AGI", "CON", "VIT", "WIS", "INT", "SPT", "CHA"]);
+const PLAYER_STARTER_SKILL_DEFAULT_CAP = 25;
+const PLAYER_STARTER_SKILL_ABSOLUTE_CAP = 30;
+const PLAYER_BACKSTORY_MAX_STARTING_SKILL_COUNT = 5;
 const PLAYER_PROGRESS_TRACK_TYPES = new Set([
   "resource",
   "survival",
@@ -6396,6 +6399,28 @@ function validatePlayerBackstories(relativePath, records) {
     validatePlayerAttributeAdjustments(relativePath, recordId, "attributeAdjustments", record.attributeAdjustments);
     if (!Array.isArray(record.startingSkills) || record.startingSkills.length === 0) {
       throw new Error(`${relativePath} has empty startingSkills on record ${recordId}`);
+    }
+    if (record.startingSkills.length > PLAYER_BACKSTORY_MAX_STARTING_SKILL_COUNT) {
+      throw new Error(`${relativePath} has too many startingSkills on record ${recordId}`);
+    }
+    const seenStartingSkillIds = new Set();
+    for (const [index, startingSkill] of record.startingSkills.entries()) {
+      const field = `startingSkills[${index}]`;
+      if (!isObject(startingSkill)) {
+        throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+      }
+      ensureString(relativePath, recordId, `${field}.skillId`, startingSkill.skillId);
+      if (seenStartingSkillIds.has(startingSkill.skillId)) {
+        throw new Error(`${relativePath} has duplicate starting skill '${startingSkill.skillId}' on record ${recordId}`);
+      }
+      seenStartingSkillIds.add(startingSkill.skillId);
+      ensureInteger(relativePath, recordId, `${field}.level`, startingSkill.level, 1);
+      if (startingSkill.level >= PLAYER_STARTER_SKILL_ABSOLUTE_CAP) {
+        throw new Error(`${relativePath} ${field}.level must stay below first breakthrough rank ${PLAYER_STARTER_SKILL_ABSOLUTE_CAP} on record ${recordId}`);
+      }
+      if (startingSkill.level > PLAYER_STARTER_SKILL_DEFAULT_CAP) {
+        throw new Error(`${relativePath} ${field}.level must be <= ${PLAYER_STARTER_SKILL_DEFAULT_CAP} on record ${recordId}`);
+      }
     }
     if (record.startingAbilityIds !== undefined && (!Array.isArray(record.startingAbilityIds) || record.startingAbilityIds.length > 1)) {
       throw new Error(`${relativePath} startingAbilityIds must contain at most one id on record ${recordId}`);

@@ -11,6 +11,8 @@ import {
 } from "../../apps/rpg-ui/src/game-shell/characterCreationForm.ts";
 import {
   createDefaultStartingBundleChoiceSelections,
+  getBackstoryOptionsForSelection,
+  getBackstoryTemplate,
   getLineageIdentityCatalog
 } from "../../apps/rpg-ui/src/game-shell/characterCreationCatalog.ts";
 import {
@@ -56,10 +58,9 @@ function purchaseRanks(profile, unlockId, ranks, startMinute = 0) {
   return nextProfile;
 }
 
-function createCompleteCharacterForm() {
+function createCompleteCharacterForm(backstoryId = "backstory.local_hero") {
   const identity = getLineageIdentityCatalog("lineage.human");
   assert.ok(identity);
-  const backstoryId = "backstory.local_hero";
   const startingBundleId = "starting_bundle.traveler";
   const world = getDefaultWorldSelection(backstoryId);
   const form = {
@@ -84,6 +85,66 @@ function createCompleteCharacterForm() {
 function getMetricValue(preview, id) {
   return preview.resourceMetrics.find((metric) => metric.id === id)?.value ?? null;
 }
+
+function skillSignature(skills) {
+  return skills
+    .map((skill) => ({ id: skill.id, rank: skill.rank, source: skill.source }))
+    .sort((left, right) => left.id.localeCompare(right.id));
+}
+
+function expectedBackstorySkillSignature(backstoryId) {
+  return skillSignature(getBackstoryTemplate(backstoryId).startingSkills);
+}
+
+function snapshotSkillSignature(snapshot) {
+  return skillSignature(snapshot.playerState.skills);
+}
+
+test("createNewGameSnapshot preserves current backstory starter skills exactly", () => {
+  const profile = createDefaultAccountProfileState();
+
+  for (const backstory of getBackstoryOptionsForSelection("lineage.human")) {
+    const form = createCompleteCharacterForm(backstory.id);
+    const snapshot = createNewGameSnapshot(form, profile.accountId, {
+      accountProfile: profile
+    });
+
+    assert.deepEqual(
+      snapshotSkillSignature(snapshot),
+      expectedBackstorySkillSignature(backstory.id),
+      backstory.id
+    );
+  }
+});
+
+test("account start resources and selected preparations do not change starter skills", () => {
+  const form = createCompleteCharacterForm();
+  const emptyProfile = createDefaultAccountProfileState();
+  const baseline = createNewGameSnapshot(form, emptyProfile.accountId, {
+    accountProfile: emptyProfile
+  });
+  let profile = grantProfile();
+  profile = purchaseRanks(profile, STARTING_HP, 2);
+  profile = purchaseRanks(profile, STARTING_STAMINA, 2, 10);
+  profile = purchaseRanks(profile, STARTING_COIN, 2, 20);
+
+  const withLegacyAndPreparation = createNewGameSnapshot(form, profile.accountId, {
+    accountProfile: profile,
+    appliedLegacyPreparationIds: [MERCHANT_PURSE, VITAL_LEGACY],
+    appliedLegacyPreparationChoices: {
+      [VITAL_LEGACY]: "stamina"
+    }
+  });
+
+  assert.deepEqual(
+    snapshotSkillSignature(withLegacyAndPreparation),
+    snapshotSkillSignature(baseline)
+  );
+  assert.deepEqual(
+    snapshotSkillSignature(withLegacyAndPreparation),
+    expectedBackstorySkillSignature(form.backstoryId)
+  );
+});
 
 test("createNewGameSnapshot applies owned account HP and stamina as source-labeled modifiers", () => {
   const form = createCompleteCharacterForm();
