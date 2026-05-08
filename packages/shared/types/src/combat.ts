@@ -291,6 +291,11 @@ export interface CombatEncounterOutcomeState {
   reason: string;
 }
 
+export interface CombatSkillGainAttemptState {
+  attemptedActionIds: string[];
+  attemptedCapKeys: string[];
+}
+
 export interface CombatEncounterState {
   encounterId: string;
   encounterTemplateId?: string | null;
@@ -313,6 +318,7 @@ export interface CombatEncounterState {
   paused: boolean;
   targeting: CombatTargetingState;
   manualOverrides: ManualCombatOverrideState[];
+  skillGainAttemptState?: CombatSkillGainAttemptState;
   outcome: CombatEncounterOutcomeState | null;
 }
 

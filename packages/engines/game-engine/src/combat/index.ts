@@ -23,7 +23,11 @@ import {
   loadTitleContent
 } from "../../../civilization-engine/src/content.ts";
 import { loadCombatFoundationContent } from "./content.js";
-import { resolveSkillBand } from "../../../player-engine/src/progression.ts";
+import {
+  resolvePlayerEchoProgression,
+  resolveSkillBand,
+  resolveSkillRankGainPolicy
+} from "../../../player-engine/src/progression.ts";
 import { loadSpawnFoundationContent } from "../../../world-engine/src/spawn/content.js";
 
 type ActionTemplate = {
@@ -73,6 +77,11 @@ type CombatTickResult = {
   warnings: string[];
 };
 
+type NewlyResolvedCombatAction = {
+  action: CombatActionState;
+  hadValidEnemyTargetAtResolutionStart: boolean;
+};
+
 export type CombatSkillGainCandidateReason =
   | "weapon_attack"
   | "shield_bash"
@@ -102,6 +111,10 @@ export type CombatSkillGainAttempt = {
 export type CombatSkillGainSourceLimitOptions = {
   attemptedActionIds?: Iterable<string>;
   attemptedCapKeys?: Iterable<string>;
+};
+
+export type CombatSkillGainCandidateOptions = {
+  validEnemyTargetAtResolutionStart?: boolean;
 };
 
 type CombatActionFamily = "melee" | "ranged" | "magic" | "shield" | "support";
@@ -457,7 +470,8 @@ function hasValidEnemyTarget(encounter: CombatEncounterState, action: CombatActi
 
 export function deriveCombatSkillGainCandidates(
   encounter: CombatEncounterState,
-  action: CombatActionState
+  action: CombatActionState,
+  options: CombatSkillGainCandidateOptions = {}
 ): CombatSkillGainCandidate[] {
   if (!["recovering", "resolved"].includes(action.lifecycle)) {
     return [];
@@ -474,7 +488,9 @@ export function deriveCombatSkillGainCandidates(
 
   const hasDamageHook =
     action.resolutionHooks.includes("damage.melee") || action.resolutionHooks.includes("damage.ranged");
-  if (!hasDamageHook || !hasValidEnemyTarget(encounter, action)) {
+  const hasEligibleTarget =
+    options.validEnemyTargetAtResolutionStart ?? hasValidEnemyTarget(encounter, action);
+  if (!hasDamageHook || !hasEligibleTarget) {
     return [];
   }
 
@@ -546,6 +562,148 @@ export function resolveCombatSkillGainAttempts(
       capKey
     };
   });
+}
+
+function createEmptyCombatSkillGainAttemptState() {
+  return {
+    attemptedActionIds: [],
+    attemptedCapKeys: []
+  };
+}
+
+function ensureCombatSkillGainAttemptState(encounter: CombatEncounterState) {
+  encounter.skillGainAttemptState ??= createEmptyCombatSkillGainAttemptState();
+  encounter.skillGainAttemptState.attemptedActionIds ??= [];
+  encounter.skillGainAttemptState.attemptedCapKeys ??= [];
+  return encounter.skillGainAttemptState;
+}
+
+function addUniqueValue(values: string[], value: string): string[] {
+  return values.includes(value) ? values : [...values, value];
+}
+
+function recordCombatSkillGainAttempts(
+  encounter: CombatEncounterState,
+  attempts: CombatSkillGainAttempt[]
+): void {
+  const attemptState = ensureCombatSkillGainAttemptState(encounter);
+  for (const attempt of attempts) {
+    if (attempt.blockedReason === "action_already_attempted") {
+      continue;
+    }
+
+    attemptState.attemptedActionIds = addUniqueValue(
+      attemptState.attemptedActionIds,
+      attempt.candidate.resolvedActionId
+    );
+    attemptState.attemptedCapKeys = addUniqueValue(attemptState.attemptedCapKeys, attempt.capKey);
+  }
+}
+
+function isPlayerOwnedCombatAction(
+  encounter: CombatEncounterState,
+  playerState: PlayerState,
+  action: CombatActionState
+): boolean {
+  const actor = findCombatant(encounter, action.actorCombatantId);
+  return actor?.kind === "player" && actor.sourceRefs.playerId === playerState.playerId;
+}
+
+function getSkillLabel(skillId: string): string {
+  const skillName = loadPlayerCombatContent().skillById.get(skillId)?.name;
+  if (skillName) {
+    return skillName;
+  }
+
+  const fallback = skillId.split(".").at(-1)?.replace(/_/g, " ") ?? skillId;
+  return fallback.replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function applyCombatSkillGainAttempt(
+  encounter: CombatEncounterState,
+  playerState: PlayerState,
+  attempt: CombatSkillGainAttempt
+): string | null {
+  if (!attempt.allowed) {
+    return null;
+  }
+
+  const existingSkill = playerState.skills.find((entry) => entry.id === attempt.candidate.skillId);
+  const policy = resolveSkillRankGainPolicy({
+    skillId: attempt.candidate.skillId,
+    currentSkill: existingSkill ?? null,
+    rankDelta: attempt.candidate.rankDelta,
+    sourceLabel: attempt.candidate.sourceLabel,
+    sourceType: attempt.candidate.sourceType
+  });
+  const skillLabel = getSkillLabel(attempt.candidate.skillId);
+
+  if (policy.appliedDelta <= 0) {
+    return policy.blockedGate !== null ? `${skillLabel} progress requires a breakthrough` : null;
+  }
+
+  if (existingSkill) {
+    playerState.skills = playerState.skills.map((entry) =>
+      entry.id === attempt.candidate.skillId
+        ? {
+            ...entry,
+            rank: policy.appliedRank,
+            source: "trained" as const
+          }
+        : entry
+    );
+  } else {
+    playerState.skills = [
+      ...playerState.skills,
+      {
+        id: attempt.candidate.skillId,
+        rank: policy.appliedRank,
+        source: "trained" as const
+      }
+    ].sort((left, right) => left.id.localeCompare(right.id));
+  }
+
+  const actor = findCombatant(encounter, attempt.candidate.actorCombatantId);
+  if (actor?.kind === "player") {
+    actor.hooks.skillIds = addUniqueValue(actor.hooks.skillIds, attempt.candidate.skillId).sort();
+  }
+  playerState.progression = resolvePlayerEchoProgression(playerState);
+
+  return `${skillLabel} +${policy.appliedDelta}`;
+}
+
+function applyCombatSkillGainsForResolvedActions(
+  encounter: CombatEncounterState,
+  playerState: PlayerState,
+  newlyResolvedActions: NewlyResolvedCombatAction[]
+): string[] {
+  if (newlyResolvedActions.length === 0) {
+    return [];
+  }
+
+  const attemptState = ensureCombatSkillGainAttemptState(encounter);
+  const candidates = newlyResolvedActions.flatMap((entry) => {
+    if (!isPlayerOwnedCombatAction(encounter, playerState, entry.action)) {
+      return [];
+    }
+
+    return deriveCombatSkillGainCandidates(encounter, entry.action, {
+      validEnemyTargetAtResolutionStart: entry.hadValidEnemyTargetAtResolutionStart
+    });
+  });
+  if (candidates.length === 0) {
+    return [];
+  }
+
+  const attempts = resolveCombatSkillGainAttempts(candidates, {
+    attemptedActionIds: attemptState.attemptedActionIds,
+    attemptedCapKeys: attemptState.attemptedCapKeys
+  });
+  recordCombatSkillGainAttempts(encounter, attempts);
+
+  return attempts
+    .map((attempt) => applyCombatSkillGainAttempt(encounter, playerState, attempt))
+    .filter((message): message is string => Boolean(message));
 }
 
 function resolveSkillIdentity(skillIds: string[]) {
@@ -1766,6 +1924,7 @@ export function createEncounterFromSpawnCandidate(
       deprioritizedTargetIds: []
     },
     manualOverrides: [],
+    skillGainAttemptState: createEmptyCombatSkillGainAttemptState(),
     outcome: null
   };
 }
@@ -2262,7 +2421,8 @@ function queueAiActions(encounter: CombatEncounterState): void {
   }
 }
 
-function resolveFinishedActions(encounter: CombatEncounterState): void {
+function resolveFinishedActions(encounter: CombatEncounterState): NewlyResolvedCombatAction[] {
+  const resolvedActions: NewlyResolvedCombatAction[] = [];
   for (const action of encounter.actions) {
     if (!["executing", "channeling"].includes(action.lifecycle)) {
       continue;
@@ -2270,8 +2430,16 @@ function resolveFinishedActions(encounter: CombatEncounterState): void {
     if ((action.resolvesAtTick ?? Number.MAX_SAFE_INTEGER) > encounter.currentTimeTick) {
       continue;
     }
+    const hadValidEnemyTargetAtResolutionStart = hasValidEnemyTarget(encounter, action);
     resolveAction(encounter, action);
+    if (action.lifecycle === "recovering") {
+      resolvedActions.push({
+        action,
+        hadValidEnemyTargetAtResolutionStart
+      });
+    }
   }
+  return resolvedActions;
 }
 
 function finalizeRecoveries(encounter: CombatEncounterState): void {
@@ -2486,7 +2654,8 @@ export function tickCombatFoundation(
 
   queueAiActions(encounter);
   startReadyActions(encounter);
-  resolveFinishedActions(encounter);
+  const newlyResolvedActions = resolveFinishedActions(encounter);
+  const skillGainMessages = applyCombatSkillGainsForResolvedActions(encounter, playerState, newlyResolvedActions);
   finalizeRecoveries(encounter);
   expireStatusEffects(encounter);
   evaluateEncounterOutcome(encounter);
@@ -2501,6 +2670,7 @@ export function tickCombatFoundation(
       executingActions: encounter.actions.filter((entry) =>
         ["executing", "channeling", "recovering"].includes(entry.lifecycle)
       ).length,
+      ...(skillGainMessages.length > 0 ? { skillGainMessages } : {}),
       defeatedEnemies: encounter.enemyCombatantIds.filter((combatantId) => {
         const combatant = findCombatant(encounter, combatantId);
         return combatant?.defeated;

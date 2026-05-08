@@ -299,6 +299,51 @@ function queueActionFixture(encounter, actor, actionType, targetIds, sourceType 
   return action;
 }
 
+function suppressEnemyAi(encounter) {
+  for (const combatant of encounter.combatants) {
+    if (combatant.kind === "enemy") {
+      combatant.controlMode = "manual";
+    }
+  }
+}
+
+function resolveQueuedAction(gameState, playerState, encounter, action) {
+  gameState.activeEncounter = encounter;
+  suppressEnemyAi(encounter);
+
+  tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick);
+  if (action.lifecycle === "queued") {
+    tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick + 1);
+  }
+  assert.ok(["executing", "channeling", "cancelled"].includes(action.lifecycle));
+  if (action.lifecycle === "cancelled") {
+    return {
+      deltas: [],
+      emittedEvents: [],
+      warnings: []
+    };
+  }
+
+  assert.equal(typeof action.resolvesAtTick, "number");
+  return tickCombatFoundation(gameState, playerState, [], action.resolvesAtTick);
+}
+
+function finishActionRecovery(gameState, playerState, encounter, action) {
+  if (action.lifecycle !== "recovering") {
+    return;
+  }
+  assert.equal(typeof action.recoveryEndsAtTick, "number");
+  tickCombatFoundation(gameState, playerState, [], action.recoveryEndsAtTick);
+}
+
+function getSkillRank(playerState, skillId) {
+  return playerState.skills.find((skill) => skill.id === skillId)?.rank ?? 0;
+}
+
+function getSkillGainMessages(result) {
+  return result.deltas.flatMap((delta) => delta.payload.skillGainMessages ?? []);
+}
+
 test("resolveSpawnCandidates emits encounter candidates for matching region, habitat, and hazard", () => {
   const { tick, candidate } = resolveFirstSpawnCandidate(createWorldStateFixture());
 
@@ -625,6 +670,242 @@ test("passive combat skill gain source limits count blocked attempts against enc
   });
   assert.equal(priorCapAttempts[0].allowed, false);
   assert.equal(priorCapAttempts[0].blockedReason, "encounter_skill_cap_reached");
+});
+
+test("capped combat weapon skill gains apply once per skill per encounter", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  enemy.resources.hp.current = 999;
+  enemy.resources.hp.max = 999;
+
+  const firstAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  const firstResult = resolveQueuedAction(gameState, playerState, encounter, firstAction);
+
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 19);
+  assert.deepEqual(getSkillGainMessages(firstResult), ["Sword +1"]);
+  assert.deepEqual(encounter.skillGainAttemptState, {
+    attemptedActionIds: [firstAction.id],
+    attemptedCapKeys: ["combat_action:weapon_attack:skill.combat.weapon.sword"]
+  });
+  assert.equal(player.hooks.skillIds.includes("skill.combat.weapon.sword"), true);
+
+  finishActionRecovery(gameState, playerState, encounter, firstAction);
+  const secondAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  const secondResult = resolveQueuedAction(gameState, playerState, encounter, secondAction);
+
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 19);
+  assert.deepEqual(getSkillGainMessages(secondResult), []);
+  assert.deepEqual(encounter.skillGainAttemptState?.attemptedActionIds, [firstAction.id, secondAction.id]);
+  assert.deepEqual(encounter.skillGainAttemptState?.attemptedCapKeys, [
+    "combat_action:weapon_attack:skill.combat.weapon.sword"
+  ]);
+});
+
+test("combat weapon skill gains clamp at breakthrough gates and blocked attempts consume the cap", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture(
+    createPlayerStateFixture({
+      extraSkills: [{ id: "skill.combat.weapon.sword", rank: 30, source: "trained" }]
+    })
+  );
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  enemy.resources.hp.current = 999;
+  enemy.resources.hp.max = 999;
+
+  const blockedAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  const blockedResult = resolveQueuedAction(gameState, playerState, encounter, blockedAction);
+
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 30);
+  assert.deepEqual(getSkillGainMessages(blockedResult), ["Sword progress requires a breakthrough"]);
+  assert.deepEqual(encounter.skillGainAttemptState, {
+    attemptedActionIds: [blockedAction.id],
+    attemptedCapKeys: ["combat_action:weapon_attack:skill.combat.weapon.sword"]
+  });
+
+  finishActionRecovery(gameState, playerState, encounter, blockedAction);
+  const cappedAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  const cappedResult = resolveQueuedAction(gameState, playerState, encounter, cappedAction);
+
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 30);
+  assert.deepEqual(getSkillGainMessages(cappedResult), []);
+  assert.deepEqual(encounter.skillGainAttemptState?.attemptedActionIds, [blockedAction.id, cappedAction.id]);
+  assert.deepEqual(encounter.skillGainAttemptState?.attemptedCapKeys, [
+    "combat_action:weapon_attack:skill.combat.weapon.sword"
+  ]);
+});
+
+test("combat weapon skill gains can reach but not cross the first locked gate", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture(
+    createPlayerStateFixture({
+      extraSkills: [{ id: "skill.combat.weapon.sword", rank: 29, source: "trained" }]
+    })
+  );
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  enemy.resources.hp.current = 999;
+  enemy.resources.hp.max = 999;
+
+  const action = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  const result = resolveQueuedAction(gameState, playerState, encounter, action);
+
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 30);
+  assert.deepEqual(getSkillGainMessages(result), ["Sword +1"]);
+});
+
+test("combat weapon skill gains use pre-resolution target eligibility for killing blows", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  enemy.resources.hp.current = 1;
+
+  const action = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  const result = resolveQueuedAction(gameState, playerState, encounter, action);
+
+  assert.equal(enemy.defeated, true);
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 19);
+  assert.deepEqual(getSkillGainMessages(result), ["Sword +1"]);
+});
+
+test("combat skill gain ignores fallback, invalid target, cancelled, defensive, and npc actions", () => {
+  const invalidCases = [
+    {
+      label: "unknown fallback",
+      configure({ encounter, player, enemy }) {
+        return queueActionFixture(
+          encounter,
+          player,
+          "combat.future.unmapped",
+          [enemy.id],
+          "ability",
+          "ability.future.unmapped"
+        );
+      }
+    },
+    {
+      label: "no target",
+      configure({ encounter, player }) {
+        return queueActionFixture(encounter, player, "combat.melee.primary", []);
+      }
+    },
+    {
+      label: "self target",
+      configure({ encounter, player }) {
+        return queueActionFixture(encounter, player, "combat.melee.primary", [player.id]);
+      }
+    },
+    {
+      label: "defeated target before resolution",
+      configure({ encounter, player, enemy }) {
+        const action = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+        enemy.defeated = true;
+        return action;
+      }
+    },
+    {
+      label: "shield block",
+      configure({ encounter, player }) {
+        return queueActionFixture(encounter, player, "combat.defense.block", [player.id]);
+      }
+    },
+    {
+      label: "shield bash",
+      configure({ encounter, player, enemy }) {
+        return queueActionFixture(encounter, player, "combat.interrupt.shield_bash", [enemy.id]);
+      }
+    }
+  ];
+
+  for (const invalidCase of invalidCases) {
+    const { gameState, playerState, encounter } = createEncounterFixture();
+    const player = findPlayerCombatant(encounter);
+    const enemy = findEnemyCombatant(encounter);
+    enemy.resources.hp.current = 999;
+    enemy.resources.hp.max = 999;
+    const initialSkills = structuredClone(playerState.skills);
+    const action = invalidCase.configure({ encounter, player, enemy });
+    const result = resolveQueuedAction(gameState, playerState, encounter, action);
+
+    assert.deepEqual(playerState.skills, initialSkills, `${invalidCase.label} should not mutate skills`);
+    assert.deepEqual(getSkillGainMessages(result), [], `${invalidCase.label} should not report skill gain`);
+  }
+
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  player.resources.stamina.current = 0;
+  const missingResourceAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  const missingResourceResult = resolveQueuedAction(gameState, playerState, encounter, missingResourceAction);
+  assert.equal(missingResourceAction.lifecycle, "cancelled");
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 18);
+  assert.deepEqual(getSkillGainMessages(missingResourceResult), []);
+
+  const armorFixture = createEncounterFixture(
+    createPlayerStateFixture({
+      equipmentOverrides: {
+        "slot.armor.chest": {
+          itemId: "item.leather_light_armor",
+          itemKey: "leather_light_armor",
+          quantity: 1,
+          durability: 0.88
+        }
+      }
+    })
+  );
+  const armoredPlayer = findPlayerCombatant(armorFixture.encounter);
+  const armorSkills = structuredClone(armorFixture.playerState.skills);
+  const armorAction = queueActionFixture(armorFixture.encounter, armoredPlayer, "combat.armor.light", [armoredPlayer.id]);
+  const armorResult = resolveQueuedAction(
+    armorFixture.gameState,
+    armorFixture.playerState,
+    armorFixture.encounter,
+    armorAction
+  );
+  assert.deepEqual(armorFixture.playerState.skills, armorSkills);
+  assert.deepEqual(getSkillGainMessages(armorResult), []);
+
+  const npcFixture = createEncounterFixture();
+  const npcPlayerSkills = structuredClone(npcFixture.playerState.skills);
+  const npcPlayer = findPlayerCombatant(npcFixture.encounter);
+  const npcEnemy = findEnemyCombatant(npcFixture.encounter);
+  const npcAction = queueActionFixture(npcFixture.encounter, npcEnemy, "combat.attack.melee.basic", [npcPlayer.id]);
+  npcAction.actionType = "combat.melee.primary";
+  npcAction.source.weaponSkillId = "skill.combat.weapon.sword";
+  npcAction.source.itemHandlingType = "weapon";
+  npcAction.resolutionHooks = ["damage.melee"];
+  const npcResult = resolveQueuedAction(npcFixture.gameState, npcFixture.playerState, npcFixture.encounter, npcAction);
+  assert.deepEqual(npcFixture.playerState.skills, npcPlayerSkills);
+  assert.deepEqual(getSkillGainMessages(npcResult), []);
+});
+
+test("serialized active encounters preserve combat skill gain caps", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  enemy.resources.hp.current = 999;
+  enemy.resources.hp.max = 999;
+
+  const firstAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  resolveQueuedAction(gameState, playerState, encounter, firstAction);
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 19);
+
+  gameState.activeEncounter = JSON.parse(JSON.stringify(gameState.activeEncounter));
+  const restoredEncounter = gameState.activeEncounter;
+  assert.ok(restoredEncounter, "expected active encounter after roundtrip");
+  const restoredFirstAction = restoredEncounter.actions.find((entry) => entry.id === firstAction.id);
+  assert.ok(restoredFirstAction, "expected first action after roundtrip");
+  finishActionRecovery(gameState, playerState, restoredEncounter, restoredFirstAction);
+
+  const restoredPlayer = findPlayerCombatant(restoredEncounter);
+  const restoredEnemy = findEnemyCombatant(restoredEncounter);
+  const secondAction = queueActionFixture(restoredEncounter, restoredPlayer, "combat.melee.primary", [restoredEnemy.id]);
+  const secondResult = resolveQueuedAction(gameState, playerState, restoredEncounter, secondAction);
+
+  assert.equal(getSkillRank(playerState, "skill.combat.weapon.sword"), 19);
+  assert.deepEqual(getSkillGainMessages(secondResult), []);
+  assert.deepEqual(restoredEncounter.skillGainAttemptState?.attemptedCapKeys, [
+    "combat_action:weapon_attack:skill.combat.weapon.sword"
+  ]);
 });
 
 test("passive combat skill candidates ignore unresolved, fallback, defensive, and cancelled actions", () => {
