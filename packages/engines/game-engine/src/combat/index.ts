@@ -73,6 +73,25 @@ type CombatTickResult = {
   warnings: string[];
 };
 
+export type CombatSkillGainCandidateReason =
+  | "weapon_attack"
+  | "shield_bash"
+  | "shield_block"
+  | "armor_mitigation";
+
+export type CombatSkillGainCandidate = {
+  resolvedActionId: string;
+  resolvedActionType: string;
+  actorCombatantId: string;
+  skillId: string;
+  sourceType: "combat_action";
+  sourceLabel: string;
+  rankDelta: number;
+  reason: CombatSkillGainCandidateReason;
+  eligible: boolean;
+  blockedReason: string | null;
+};
+
 type CombatActionFamily = "melee" | "ranged" | "magic" | "shield" | "support";
 
 export type CombatDamagePreview = {
@@ -410,6 +429,57 @@ function canPayCosts(combatant: CombatantState, action: CombatActionState): bool
     combatant.resources.mp.current >= (action.resourceCosts.mp ?? 0) &&
     combatant.resources.stamina.current >= (action.resourceCosts.stamina ?? 0)
   );
+}
+
+function hasValidEnemyTarget(encounter: CombatEncounterState, action: CombatActionState): boolean {
+  const actor = findCombatant(encounter, action.actorCombatantId);
+  if (!actor) {
+    return false;
+  }
+
+  return action.targeting.targetIds.some((targetId) => {
+    const target = findCombatant(encounter, targetId);
+    return target !== null && target.teamId !== actor.teamId && !target.defeated && !target.incapacitated;
+  });
+}
+
+export function deriveCombatSkillGainCandidates(
+  encounter: CombatEncounterState,
+  action: CombatActionState
+): CombatSkillGainCandidate[] {
+  if (!["recovering", "resolved"].includes(action.lifecycle)) {
+    return [];
+  }
+
+  if (!["combat.melee.primary", "combat.ranged.primary"].includes(action.actionType)) {
+    return [];
+  }
+
+  const weaponSkillId = action.source.weaponSkillId;
+  if (!weaponSkillId || action.source.itemHandlingType !== "weapon") {
+    return [];
+  }
+
+  const hasDamageHook =
+    action.resolutionHooks.includes("damage.melee") || action.resolutionHooks.includes("damage.ranged");
+  if (!hasDamageHook || !hasValidEnemyTarget(encounter, action)) {
+    return [];
+  }
+
+  return [
+    {
+      resolvedActionId: action.id,
+      resolvedActionType: action.actionType,
+      actorCombatantId: action.actorCombatantId,
+      skillId: weaponSkillId,
+      sourceType: "combat_action",
+      sourceLabel: "combat.skill_gain.weapon_attack",
+      rankDelta: 1,
+      reason: "weapon_attack",
+      eligible: true,
+      blockedReason: null
+    }
+  ];
 }
 
 function resolveSkillIdentity(skillIds: string[]) {

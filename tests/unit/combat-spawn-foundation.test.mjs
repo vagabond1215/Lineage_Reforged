@@ -12,6 +12,7 @@ import {
 } from "../../packages/engines/player-engine/src/index.ts";
 import {
   createEncounterFromSpawnCandidate,
+  deriveCombatSkillGainCandidates,
   queueManualCombatCommand,
   resolveCombatDamagePreview,
   tickCombatFoundation
@@ -428,6 +429,155 @@ test("item-profile weapon actions receive basic weapon skill effects through act
   assert.equal(action.source.itemId, "item.arming_sword");
   assert.equal(action.source.weaponSkillId, "skill.combat.weapon.sword");
   assert.ok(preview.skillBonus > 0, "sword damage grants should apply to combat.melee.primary via aliases");
+});
+
+test("passive combat skill candidates map resolved weapon profile attacks only", () => {
+  const { encounter, playerState } = createEncounterFixture(
+    createPlayerStateFixture({
+      extraSkills: [{ id: "skill.combat.weapon.sword", rank: 60, source: "trained" }]
+    })
+  );
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  const skillsBefore = structuredClone(player.hooks.skillIds);
+  const playerSkillsBefore = structuredClone(playerState.skills);
+
+  const swordAction = queueActionFixture(
+    encounter,
+    player,
+    "combat.melee.primary",
+    [enemy.id],
+    "ability",
+    "ability.future.manual_source"
+  );
+  swordAction.lifecycle = "recovering";
+  const swordCandidates = deriveCombatSkillGainCandidates(encounter, swordAction);
+
+  assert.deepEqual(swordCandidates, [
+    {
+      resolvedActionId: swordAction.id,
+      resolvedActionType: "combat.melee.primary",
+      actorCombatantId: player.id,
+      skillId: "skill.combat.weapon.sword",
+      sourceType: "combat_action",
+      sourceLabel: "combat.skill_gain.weapon_attack",
+      rankDelta: 1,
+      reason: "weapon_attack",
+      eligible: true,
+      blockedReason: null
+    }
+  ]);
+  assert.deepEqual(player.hooks.skillIds, skillsBefore, "candidate mapping must not mutate combatant skill hooks");
+  assert.deepEqual(playerState.skills, playerSkillsBefore, "candidate mapping must not mutate player skill state");
+});
+
+test("passive combat skill candidates map resolved ranged weapon profile attacks", () => {
+  const { encounter } = createEncounterFixture(
+    createPlayerStateFixture({
+      equipmentOverrides: {
+        "slot.weapon.right": {
+          itemId: "item.composite_bow",
+          itemKey: "composite_bow",
+          quantity: 1,
+          durability: 0.92
+        }
+      },
+      extraSkills: [{ id: "skill.combat.weapon.archery", rank: 22, source: "trained" }]
+    })
+  );
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+
+  const action = queueActionFixture(encounter, player, "combat.ranged.primary", [enemy.id]);
+  action.lifecycle = "resolved";
+  const candidates = deriveCombatSkillGainCandidates(encounter, action);
+
+  assert.equal(action.actionType, "combat.ranged.primary");
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].resolvedActionType, "combat.ranged.primary");
+  assert.equal(candidates[0].skillId, "skill.combat.weapon.archery");
+  assert.equal(candidates[0].reason, "weapon_attack");
+});
+
+test("passive combat skill candidates ignore unresolved, fallback, defensive, and cancelled actions", () => {
+  const { encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+
+  const queuedSwordAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, queuedSwordAction), []);
+
+  const unknownAction = queueActionFixture(
+    encounter,
+    player,
+    "combat.future.unmapped",
+    [enemy.id],
+    "ability",
+    "ability.future.unmapped"
+  );
+  unknownAction.lifecycle = "recovering";
+  assert.equal(unknownAction.actionType, "combat.attack.melee.basic");
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, unknownAction), []);
+
+  const cancelledAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  cancelledAction.lifecycle = "cancelled";
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, cancelledAction), []);
+
+  const shieldBlock = queueActionFixture(encounter, player, "combat.defense.block", [player.id]);
+  shieldBlock.lifecycle = "recovering";
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, shieldBlock), []);
+
+  const shieldBash = queueActionFixture(encounter, player, "combat.interrupt.shield_bash", [enemy.id]);
+  shieldBash.lifecycle = "recovering";
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, shieldBash), []);
+
+  const { encounter: armorEncounter } = createEncounterFixture(
+    createPlayerStateFixture({
+      equipmentOverrides: {
+        "slot.armor.chest": {
+          itemId: "item.leather_light_armor",
+          itemKey: "leather_light_armor",
+          quantity: 1,
+          durability: 0.88
+        }
+      }
+    })
+  );
+  const armoredPlayer = findPlayerCombatant(armorEncounter);
+  const armorAction = queueActionFixture(armorEncounter, armoredPlayer, "combat.armor.light", [armoredPlayer.id]);
+  armorAction.lifecycle = "recovering";
+  assert.equal(armorAction.source.armorSkillId, "skill.combat.armor.light_armor");
+  assert.deepEqual(deriveCombatSkillGainCandidates(armorEncounter, armorAction), []);
+});
+
+test("passive combat skill candidates ignore missing-resource cancellations", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  gameState.activeEncounter = encounter;
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+
+  player.resources.stamina.current = 0;
+  const action = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+
+  tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick);
+
+  assert.equal(action.lifecycle, "cancelled");
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, action), []);
+});
+
+test("passive combat skill candidates require a valid enemy target", () => {
+  const { encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+
+  const selfTargetedAction = queueActionFixture(encounter, player, "combat.melee.primary", [player.id]);
+  selfTargetedAction.lifecycle = "recovering";
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, selfTargetedAction), []);
+
+  const defeatedTargetAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  defeatedTargetAction.lifecycle = "recovering";
+  enemy.defeated = true;
+  assert.deepEqual(deriveCombatSkillGainCandidates(encounter, defeatedTargetAction), []);
 });
 
 test("armor profiles and defensive skills contribute deterministic damage reduction", () => {
