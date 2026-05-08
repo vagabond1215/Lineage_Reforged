@@ -15,6 +15,7 @@ import {
   deriveCombatSkillGainCandidates,
   queueManualCombatCommand,
   resolveCombatDamagePreview,
+  resolveCombatSkillGainAttempts,
   tickCombatFoundation
 } from "../../packages/engines/game-engine/src/combat/index.ts";
 import { createEmptySessionState } from "../../packages/engines/game-engine/src/save-snapshot.ts";
@@ -499,6 +500,133 @@ test("passive combat skill candidates map resolved ranged weapon profile attacks
   assert.equal(candidates[0].reason, "weapon_attack");
 });
 
+test("passive combat skill gain source limits cap action and skill attempts", () => {
+  const { encounter, playerState } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+
+  const action = queueActionFixture(
+    encounter,
+    player,
+    "combat.melee.primary",
+    [enemy.id],
+    "ability",
+    "ability.future.manual_source"
+  );
+  action.lifecycle = "recovering";
+  const [swordCandidate] = deriveCombatSkillGainCandidates(encounter, action);
+  assert.ok(swordCandidate, "expected sword candidate");
+  const combatantsBefore = structuredClone(encounter.combatants);
+  const playerSkillsBefore = structuredClone(playerState.skills);
+
+  const repeatedSwordCandidate = {
+    ...swordCandidate,
+    resolvedActionId: "combat.action.repeated_sword"
+  };
+  const archeryCandidate = {
+    ...swordCandidate,
+    resolvedActionId: "combat.action.archery",
+    resolvedActionType: "combat.ranged.primary",
+    skillId: "skill.combat.weapon.archery"
+  };
+
+  const attempts = resolveCombatSkillGainAttempts([
+    swordCandidate,
+    swordCandidate,
+    repeatedSwordCandidate,
+    archeryCandidate
+  ]);
+
+  assert.deepEqual(
+    attempts.map((attempt) => ({
+      allowed: attempt.allowed,
+      blockedReason: attempt.blockedReason,
+      capKey: attempt.capKey
+    })),
+    [
+      {
+        allowed: true,
+        blockedReason: null,
+        capKey: "combat_action:weapon_attack:skill.combat.weapon.sword"
+      },
+      {
+        allowed: false,
+        blockedReason: "action_already_attempted",
+        capKey: "combat_action:weapon_attack:skill.combat.weapon.sword"
+      },
+      {
+        allowed: false,
+        blockedReason: "encounter_skill_cap_reached",
+        capKey: "combat_action:weapon_attack:skill.combat.weapon.sword"
+      },
+      {
+        allowed: true,
+        blockedReason: null,
+        capKey: "combat_action:weapon_attack:skill.combat.weapon.archery"
+      }
+    ]
+  );
+  assert.equal(attempts[0].capKey.includes("ability.future.manual_source"), false);
+  assert.equal(attempts[0].capKey.includes("combat.future.unmapped"), false);
+  assert.deepEqual(encounter.combatants, combatantsBefore, "source-limit helper must not mutate combatants");
+  assert.deepEqual(playerState.skills, playerSkillsBefore, "source-limit helper must not mutate player skills");
+});
+
+test("passive combat skill gain source limits count blocked attempts against encounter caps", () => {
+  const { encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+
+  const action = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
+  action.lifecycle = "recovering";
+  const [candidate] = deriveCombatSkillGainCandidates(encounter, action);
+  assert.ok(candidate, "expected sword candidate");
+
+  const blockedCandidate = {
+    ...candidate,
+    eligible: false,
+    blockedReason: "breakthrough_gate_locked"
+  };
+  const repeatedCandidate = {
+    ...candidate,
+    resolvedActionId: "combat.action.after_blocked_attempt"
+  };
+
+  const attempts = resolveCombatSkillGainAttempts([blockedCandidate, repeatedCandidate]);
+
+  assert.deepEqual(
+    attempts.map((attempt) => ({
+      allowed: attempt.allowed,
+      blockedReason: attempt.blockedReason,
+      capKey: attempt.capKey
+    })),
+    [
+      {
+        allowed: false,
+        blockedReason: "breakthrough_gate_locked",
+        capKey: "combat_action:weapon_attack:skill.combat.weapon.sword"
+      },
+      {
+        allowed: false,
+        blockedReason: "encounter_skill_cap_reached",
+        capKey: "combat_action:weapon_attack:skill.combat.weapon.sword"
+      }
+    ]
+  );
+
+  const priorActionAttempts = resolveCombatSkillGainAttempts([candidate], {
+    attemptedActionIds: [candidate.resolvedActionId]
+  });
+  assert.equal(priorActionAttempts[0].allowed, false);
+  assert.equal(priorActionAttempts[0].blockedReason, "action_already_attempted");
+
+  const priorCapAttempts = resolveCombatSkillGainAttempts([repeatedCandidate], {
+    attemptedCapKeys: ["combat_action:weapon_attack:skill.combat.weapon.sword"]
+  });
+  assert.equal(priorCapAttempts[0].allowed, false);
+  assert.equal(priorCapAttempts[0].blockedReason, "encounter_skill_cap_reached");
+});
+
 test("passive combat skill candidates ignore unresolved, fallback, defensive, and cancelled actions", () => {
   const { encounter } = createEncounterFixture();
   const player = findPlayerCombatant(encounter);
@@ -518,6 +646,7 @@ test("passive combat skill candidates ignore unresolved, fallback, defensive, an
   unknownAction.lifecycle = "recovering";
   assert.equal(unknownAction.actionType, "combat.attack.melee.basic");
   assert.deepEqual(deriveCombatSkillGainCandidates(encounter, unknownAction), []);
+  assert.deepEqual(resolveCombatSkillGainAttempts(deriveCombatSkillGainCandidates(encounter, unknownAction)), []);
 
   const cancelledAction = queueActionFixture(encounter, player, "combat.melee.primary", [enemy.id]);
   cancelledAction.lifecycle = "cancelled";

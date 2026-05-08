@@ -92,6 +92,18 @@ export type CombatSkillGainCandidate = {
   blockedReason: string | null;
 };
 
+export type CombatSkillGainAttempt = {
+  candidate: CombatSkillGainCandidate;
+  allowed: boolean;
+  blockedReason: string | null;
+  capKey: string;
+};
+
+export type CombatSkillGainSourceLimitOptions = {
+  attemptedActionIds?: Iterable<string>;
+  attemptedCapKeys?: Iterable<string>;
+};
+
 type CombatActionFamily = "melee" | "ranged" | "magic" | "shield" | "support";
 
 export type CombatDamagePreview = {
@@ -480,6 +492,60 @@ export function deriveCombatSkillGainCandidates(
       blockedReason: null
     }
   ];
+}
+
+function resolveCombatSkillGainCapKey(candidate: CombatSkillGainCandidate): string {
+  return `${candidate.sourceType}:${candidate.reason}:${candidate.skillId}`;
+}
+
+export function resolveCombatSkillGainAttempts(
+  candidates: CombatSkillGainCandidate[],
+  options: CombatSkillGainSourceLimitOptions = {}
+): CombatSkillGainAttempt[] {
+  const attemptedActionIds = new Set(options.attemptedActionIds ?? []);
+  const attemptedCapKeys = new Set(options.attemptedCapKeys ?? []);
+
+  return candidates.map((candidate) => {
+    const capKey = resolveCombatSkillGainCapKey(candidate);
+
+    if (attemptedActionIds.has(candidate.resolvedActionId)) {
+      return {
+        candidate,
+        allowed: false,
+        blockedReason: "action_already_attempted",
+        capKey
+      };
+    }
+
+    if (attemptedCapKeys.has(capKey)) {
+      attemptedActionIds.add(candidate.resolvedActionId);
+      return {
+        candidate,
+        allowed: false,
+        blockedReason: "encounter_skill_cap_reached",
+        capKey
+      };
+    }
+
+    attemptedActionIds.add(candidate.resolvedActionId);
+    attemptedCapKeys.add(capKey);
+
+    if (!candidate.eligible) {
+      return {
+        candidate,
+        allowed: false,
+        blockedReason: candidate.blockedReason ?? "candidate_blocked",
+        capKey
+      };
+    }
+
+    return {
+      candidate,
+      allowed: true,
+      blockedReason: null,
+      capKey
+    };
+  });
 }
 
 function resolveSkillIdentity(skillIds: string[]) {
