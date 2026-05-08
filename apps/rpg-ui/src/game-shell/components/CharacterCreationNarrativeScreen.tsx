@@ -2818,6 +2818,9 @@ export function CharacterCreationNarrativeScreen({
                   {showReviewSummaryDetails && preview.starterLore.length > 0 && (
                     <div>{renderTags('Lore Emphasis', preview.starterLore)}</div>
                   )}
+                  {showReviewSummaryDetails && preview.starterSkillPolicyLabels.length > 0 && (
+                    <div>{renderTags('Starter Limits', preview.starterSkillPolicyLabels)}</div>
+                  )}
                   {showReviewSummaryDetails && preview.starterTraits.length > 0 && (
                     <div>{renderTags('Starting Traits', preview.starterTraits)}</div>
                   )}

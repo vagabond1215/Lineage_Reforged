@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import {
   createDefaultAccountProfileState,
   grantLegacy,
-  purchaseLegacyUnlock
+  purchaseLegacyUnlock,
+  resolveLegacyStarterSkillPolicy
 } from "../../packages/engines/game-engine/src/index.ts";
 import {
   createDefaultPlayerStatGrowthState
@@ -234,6 +235,44 @@ test("account start resources and selected preparations do not change starter sk
   );
 });
 
+test("character creation preview exposes passive starter skill policy", () => {
+  const form = createCompleteCharacterForm();
+  let profile = grantProfile();
+  profile = purchaseRanks(profile, STARTING_HP, 1);
+  profile = purchaseRanks(profile, STARTING_STAMINA, 1, 10);
+  profile = purchaseRanks(profile, STARTING_COIN, 1, 20);
+  const preview = buildCharacterCreationPreview(form, {
+    accountProfile: profile,
+    appliedLegacyPreparationIds: [MERCHANT_PURSE, VITAL_LEGACY],
+    appliedLegacyPreparationChoices: {
+      [VITAL_LEGACY]: "stamina"
+    }
+  });
+  const snapshot = createNewGameSnapshot(form, profile.accountId, {
+    accountProfile: profile,
+    appliedLegacyPreparationIds: [MERCHANT_PURSE, VITAL_LEGACY],
+    appliedLegacyPreparationChoices: {
+      [VITAL_LEGACY]: "stamina"
+    }
+  });
+  const policy = resolveLegacyStarterSkillPolicy(profile);
+
+  assert.equal(preview.isResolved, true);
+  assert.equal(policy.starterSkillCap < 30, true);
+  assert.equal(policy.absoluteStarterSkillCap, 29);
+  assert.equal(policy.directSkillRankGrantsAllowed, false);
+  assert.deepEqual(preview.starterSkillPolicyLabels, [
+    "Starter skills capped below breakthrough",
+    `Max starter skills: ${policy.maxStarterSkillCount}`,
+    "Direct skill grants unavailable"
+  ]);
+  assert.deepEqual(
+    preview.starterSkills,
+    getBackstoryTemplate(form.backstoryId).startingSkillLabels
+  );
+  assert.deepEqual(snapshotSkillSignature(snapshot), expectedBackstorySkillSignature(form.backstoryId));
+});
+
 test("createNewGameSnapshot applies owned account HP and stamina as source-labeled modifiers", () => {
   const form = createCompleteCharacterForm();
   const emptyProfile = createDefaultAccountProfileState();
@@ -360,6 +399,7 @@ test("character creation preview matches created snapshot for Legacy start resou
   };
   const preview = buildCharacterCreationPreview(form, options);
   const snapshot = createNewGameSnapshot(form, profile.accountId, options);
+  const policy = resolveLegacyStarterSkillPolicy(profile);
 
   assert.equal(preview.isResolved, true);
   assert.equal(getMetricValue(preview, "hp"), String(snapshot.playerState.resources.hp.current));
@@ -372,5 +412,10 @@ test("character creation preview matches created snapshot for Legacy start resou
     preview.starterSkills,
     getBackstoryTemplate(form.backstoryId).startingSkillLabels
   );
+  assert.deepEqual(preview.starterSkillPolicyLabels, [
+    "Starter skills capped below breakthrough",
+    `Max starter skills: ${policy.maxStarterSkillCount}`,
+    "Direct skill grants unavailable"
+  ]);
   assert.deepEqual(snapshotSkillSignature(snapshot), expectedBackstorySkillSignature(form.backstoryId));
 });

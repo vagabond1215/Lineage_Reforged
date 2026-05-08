@@ -280,6 +280,15 @@ export type LegacyCharacterStartBonusResolution = {
   sourceLabels: string[];
 };
 
+export type LegacyStarterSkillPolicyResolution = {
+  starterSkillCap: number;
+  absoluteStarterSkillCap: number;
+  maxStarterSkillCount: number;
+  directSkillRankGrantsAllowed: false;
+  unlockedStarterSkillLaneIds: string[];
+  unlockedStarterSkillOptionIds: string[];
+};
+
 function formatPreparationResourceChoiceLabel(choiceId: PlayerResourceKey): string {
   switch (choiceId) {
     case "hp":
@@ -1476,6 +1485,19 @@ function createEmptyLegacyCharacterStartBonusResolution(): LegacyCharacterStartB
     fillResourceIds: [],
     currencyDelta: { gold: 0, silver: 0, copper: 0 },
     sourceLabels: []
+  };
+}
+
+export function resolveLegacyStarterSkillPolicy(
+  _profile?: AccountProfileState | null
+): LegacyStarterSkillPolicyResolution {
+  return {
+    starterSkillCap: 25,
+    absoluteStarterSkillCap: 29,
+    maxStarterSkillCount: 5,
+    directSkillRankGrantsAllowed: false,
+    unlockedStarterSkillLaneIds: [],
+    unlockedStarterSkillOptionIds: []
   };
 }
 

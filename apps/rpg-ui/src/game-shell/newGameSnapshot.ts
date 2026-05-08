@@ -31,7 +31,9 @@ import {
   DEFAULT_ACCOUNT_ID
 } from '../../../../packages/engines/game-engine/src/legacy-account.js';
 import {
-  resolveLegacyCharacterStartBonuses
+  resolveLegacyCharacterStartBonuses,
+  resolveLegacyStarterSkillPolicy,
+  type LegacyStarterSkillPolicyResolution
 } from '../../../../packages/engines/game-engine/src/legacy-unlocks.js';
 import { createInitialClock } from '../../../../packages/shared/time/src/index.js';
 import {
@@ -171,6 +173,7 @@ type DerivedCharacterCreationState = {
   legacyPreparations: LegacyPreparationReviewEntry[];
   appliedLegacyPreparationIds: string[];
   appliedLegacyPreparationChoices: Record<string, string>;
+  starterSkillPolicyLabels: string[];
   starterSkillLabels: string[];
   starterTraitLabels: string[];
   starterNotes: string[];
@@ -208,6 +211,7 @@ export type CharacterCreationPreview = {
   starterTraits: string[];
   starterGear: string[];
   starterPack: string[];
+  starterSkillPolicyLabels: string[];
   legacyPreparations: LegacyPreparationReviewEntry[];
   walletLabel: string | null;
   starterNotes: string[];
@@ -263,6 +267,18 @@ function formatList(values: string[], fallback: string): string {
   if (filtered.length === 1) return filtered[0]!;
   if (filtered.length === 2) return `${filtered[0]} and ${filtered[1]}`;
   return `${filtered.slice(0, -1).join(', ')}, and ${filtered[filtered.length - 1]}`;
+}
+
+function buildStarterSkillPolicyLabels(
+  policy: LegacyStarterSkillPolicyResolution
+): string[] {
+  return [
+    policy.absoluteStarterSkillCap < 30
+      ? 'Starter skills capped below breakthrough'
+      : 'Starter skill cap policy active',
+    `Max starter skills: ${policy.maxStarterSkillCount}`,
+    'Direct skill grants unavailable'
+  ];
 }
 
 function toMetric(id: string, label: string, value: number | string | null): CharacterCreationPreviewMetric {
@@ -476,6 +492,9 @@ function buildPlaceholderPreview(
   const backstory = isKnownBackstoryId(form.backstoryId) ? getBackstoryTemplate(form.backstoryId) : null;
   const bundle = isKnownStartingBundleId(form.startingBundleId) ? getStartingBundleTemplate(form.startingBundleId) : null;
   const legacyStartBonuses = resolveLegacyCharacterStartBonuses(options.accountProfile);
+  const starterSkillPolicyLabels = buildStarterSkillPolicyLabels(
+    resolveLegacyStarterSkillPolicy(options.accountProfile)
+  );
   const bundleStacks =
     bundle && form.startingBundleId.trim().length > 0
       ? (() => {
@@ -541,6 +560,7 @@ function buildPlaceholderPreview(
     starterTraits: [],
     starterGear: Object.values(equipment).flatMap((item) => (item ? [humanizeId(item.itemKey)] : [])),
     starterPack: (inventory.bags[0]?.stacks ?? []).map((item) => `${humanizeId(item.itemKey)} x${item.quantity}`),
+    starterSkillPolicyLabels,
     legacyPreparations: [],
     walletLabel: wallet ? formatWallet(wallet) : null,
     starterNotes: [backstory?.detailText ?? '', bundle?.description ?? '', ...legacyStartBonuses.sourceLabels].filter(Boolean),
@@ -602,6 +622,9 @@ function deriveCharacterCreationState(
   const equipment = buildStarterEquipment(bundleStacks);
   const starterInventory = buildStarterInventory(bundleStacks, equipment);
   const legacyStartBonuses = resolveLegacyCharacterStartBonuses(options.accountProfile);
+  const starterSkillPolicyLabels = buildStarterSkillPolicyLabels(
+    resolveLegacyStarterSkillPolicy(options.accountProfile)
+  );
   const starterCurrency = {
     gold: bundle.startingCurrency.gold + legacyStartBonuses.currencyDelta.gold,
     silver: bundle.startingCurrency.silver + legacyStartBonuses.currencyDelta.silver,
@@ -779,6 +802,7 @@ function deriveCharacterCreationState(
     legacyPreparations: legacyPreparationApplication.reviewEntries,
     appliedLegacyPreparationIds: legacyPreparationApplication.appliedPreparationIds,
     appliedLegacyPreparationChoices: legacyPreparationApplication.appliedPreparationChoices,
+    starterSkillPolicyLabels,
     starterSkillLabels: backstory.startingSkillLabels,
     starterTraitLabels: traits.map((trait) => humanizeId(trait.id)),
     starterNotes: [...originProfile.notes.slice(0, 2), backstory.detailText, bundle.description, selectedWorld.settlement.landRestriction.currentStanding, ...legacyStartBonuses.sourceLabels].filter(Boolean),
@@ -814,6 +838,7 @@ export function buildCharacterCreationPreview(
       starterTraits: derived.starterTraitLabels,
       starterGear: derived.gearLabels,
       starterPack: derived.starterPackLabels,
+      starterSkillPolicyLabels: derived.starterSkillPolicyLabels,
       legacyPreparations: derived.legacyPreparations,
       walletLabel: formatWallet(derived.currency),
       starterNotes: derived.starterNotes,

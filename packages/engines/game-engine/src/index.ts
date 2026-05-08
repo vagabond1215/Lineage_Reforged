@@ -64,6 +64,7 @@ export {
   purchaseLegacyUnlock,
   removeLegacyPreparation,
   resolveLegacyCharacterStartBonuses,
+  resolveLegacyStarterSkillPolicy,
   resolveLegacyPreparationCapacity,
   resolveLegacyRenownPresence,
   resolveLegacyPreparationSelection,

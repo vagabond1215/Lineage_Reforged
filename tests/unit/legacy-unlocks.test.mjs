@@ -10,6 +10,7 @@ import {
   resolveLegacyCharacterStartBonuses,
   resolveLegacyPreparationCapacity,
   resolveLegacyPreparationSelection,
+  resolveLegacyStarterSkillPolicy,
   resolveLegacyRenownPresence,
   resolveLegacyUnlockStates,
   setLegacyPreparationChoice,
@@ -302,6 +303,67 @@ test("account start-resource resolver only applies the explicit live whitelist",
     }).appliedUnlockIds.length,
     0
   );
+});
+
+test("starter skill Legacy policy seam is passive and ignores future unlock ids", () => {
+  const baseline = resolveLegacyStarterSkillPolicy(createDefaultAccountProfileState());
+
+  assert.deepEqual(baseline, {
+    starterSkillCap: 25,
+    absoluteStarterSkillCap: 29,
+    maxStarterSkillCount: 5,
+    directSkillRankGrantsAllowed: false,
+    unlockedStarterSkillLaneIds: [],
+    unlockedStarterSkillOptionIds: []
+  });
+  assert.ok(baseline.starterSkillCap < 30);
+  assert.equal(baseline.absoluteStarterSkillCap, 29);
+  assert.equal(baseline.directSkillRankGrantsAllowed, false);
+
+  const futureProfile = {
+    ...createDefaultAccountProfileState(),
+    legacy: {
+      ...createDefaultAccountProfileState().legacy,
+      legacyUnlocks: [
+        {
+          unlockId: "draft.legacy.account.starting_skill_cap",
+          unlockedAt: "2026-05-08T12:00:00.000Z",
+          sourceTransactionId: "legacy.transaction.test.catalog"
+        },
+        {
+          unlockId: "draft.legacy.skill.sword_familiarity",
+          unlockedAt: "2026-05-08T12:01:00.000Z",
+          sourceTransactionId: "legacy.transaction.test.skill",
+          rank: 20
+        },
+        {
+          unlockId: "legacy.unlock.family.future_starter_skill_lane",
+          unlockedAt: "2026-05-08T12:02:00.000Z",
+          sourceTransactionId: "legacy.transaction.test.family"
+        },
+        {
+          unlockId: "legacy.unlock.region.future_starter_skill_lane",
+          unlockedAt: "2026-05-08T12:03:00.000Z",
+          sourceTransactionId: "legacy.transaction.test.region"
+        },
+        {
+          unlockId: "legacy.unlock.heir.future_starter_skill_lane",
+          unlockedAt: "2026-05-08T12:04:00.000Z",
+          sourceTransactionId: "legacy.transaction.test.heir"
+        },
+        {
+          unlockId: "legacy.unlock.magic.future_starter_skill_lane",
+          unlockedAt: "2026-05-08T12:05:00.000Z",
+          sourceTransactionId: "legacy.transaction.test.magic"
+        }
+      ]
+    }
+  };
+  const profileBefore = structuredClone(futureProfile);
+
+  assert.deepEqual(resolveLegacyStarterSkillPolicy(futureProfile), baseline);
+  assert.deepEqual(futureProfile, profileBefore);
+  assert.deepEqual(resolveLegacyStarterSkillPolicy(null), baseline);
 });
 
 test("starting coin purchases spend account Legacy and stop at max rank", () => {
