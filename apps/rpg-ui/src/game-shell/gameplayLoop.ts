@@ -38,6 +38,13 @@ type GameplayActionResult = {
   notice: GameShellNotice;
 };
 
+type SkillGainApplicationResult = {
+  skills: PlayerSkillState[];
+  appliedDelta: number;
+  blockedGate: number | null;
+  requiredBand: string | null;
+};
+
 export type GameplayBodyStatePreview = {
   available: boolean;
   reason?: string;
@@ -648,7 +655,7 @@ function addOrUpdateSkill(
   skillId: string,
   rankDelta: number,
   sourceLabel = 'Noncombat skill gain'
-): PlayerSkillState[] {
+): SkillGainApplicationResult {
   const existing = skills.find((entry) => entry.id === skillId);
   const policy = resolveSkillRankGainPolicy({
     skillId,
@@ -659,29 +666,56 @@ function addOrUpdateSkill(
   });
 
   if (policy.appliedDelta <= 0) {
-    return skills;
+    return {
+      skills,
+      appliedDelta: 0,
+      blockedGate: policy.blockedGate,
+      requiredBand: policy.requiredBand
+    };
   }
 
   if (!existing) {
-    return [
-      ...skills,
-      {
-        id: skillId,
-        rank: policy.appliedRank,
-        source: 'trained' as const
-      }
-    ].sort((left, right) => left.id.localeCompare(right.id));
-  }
-
-  return skills.map((entry) =>
-    entry.id === skillId
-      ? {
-          ...entry,
+    return {
+      skills: [
+        ...skills,
+        {
+          id: skillId,
           rank: policy.appliedRank,
           source: 'trained' as const
         }
-      : entry
-  );
+      ].sort((left, right) => left.id.localeCompare(right.id)),
+      appliedDelta: policy.appliedDelta,
+      blockedGate: policy.blockedGate,
+      requiredBand: policy.requiredBand
+    };
+  }
+
+  return {
+    skills: skills.map((entry) =>
+      entry.id === skillId
+        ? {
+            ...entry,
+            rank: policy.appliedRank,
+            source: 'trained' as const
+          }
+        : entry
+    ),
+    appliedDelta: policy.appliedDelta,
+    blockedGate: policy.blockedGate,
+    requiredBand: policy.requiredBand
+  };
+}
+
+function formatSkillGainEffect(result: SkillGainApplicationResult, label: string): string {
+  if (result.appliedDelta > 0) {
+    return `${label} +${result.appliedDelta}`;
+  }
+
+  if (result.blockedGate !== null) {
+    return `${label} progress requires a breakthrough`;
+  }
+
+  return `${label} unchanged`;
 }
 
 function getStandingLabel(score: number): string {
@@ -1690,12 +1724,13 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
         nextSnapshot.sessionState.flags,
         `${FLAG_SURVEY_SECTOR_PREFIX}${sectorsComplete + 1}`
       );
-      nextSnapshot.playerState.skills = addOrUpdateSkill(
+      const skillGain = addOrUpdateSkill(
         nextSnapshot.playerState.skills,
         'skill.knowledge.general_lore',
         1,
         'Ashen Reef survey sector'
       );
+      nextSnapshot.playerState.skills = skillGain.skills;
       nextSnapshot.sessionState.operations = upsertOperation(
         nextSnapshot.sessionState.operations,
         buildSurveyOperation(nextSnapshot)
@@ -1716,7 +1751,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
           `Sector ${sectorsComplete + 1} / 3`,
           [nextSnapshot.playerState.coreData.playerName, 'Ashen Reef'],
           ['Survey packet expanded'],
-          ['Navigation +1', 'Stamina -10', 'MP -3'],
+          [formatSkillGainEffect(skillGain, 'Navigation'), 'Stamina -10', 'MP -3'],
           ['Exploration', 'Survey']
         )
       );
@@ -1732,12 +1767,13 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
         nextSnapshot.sessionState.flags,
         FLAG_SURVEY_RUINS_CONFIRMED
       );
-      nextSnapshot.playerState.skills = addOrUpdateSkill(
+      const skillGain = addOrUpdateSkill(
         nextSnapshot.playerState.skills,
         'skill.resource.identify.flora',
         1,
         'Ashen Reef survey discovery'
       );
+      nextSnapshot.playerState.skills = skillGain.skills;
       addDiscoveryEntry(nextSnapshot);
       nextSnapshot.sessionState.operations = upsertOperation(
         nextSnapshot.sessionState.operations,
@@ -1765,7 +1801,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
           'Packet complete',
           [nextSnapshot.playerState.coreData.playerName, 'Ashen Reef', 'Stormglass Bloom'],
           ['Chart packet finalized', 'New discovery recorded'],
-          ['Survival +1', 'Stamina -10', 'MP -3'],
+          [formatSkillGainEffect(skillGain, 'Survival'), 'Stamina -10', 'MP -3'],
           ['Exploration', 'Discovery', 'Survey']
         )
       );
@@ -1813,12 +1849,13 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
       itemKey: RIVET_CRATE_ITEM_KEY,
       quantity: 6
     });
-    nextSnapshot.playerState.skills = addOrUpdateSkill(
+    const skillGain = addOrUpdateSkill(
       nextSnapshot.playerState.skills,
       'skill.resource.identify.minerals',
       1,
       'Rivet cargo procurement'
     );
+    nextSnapshot.playerState.skills = skillGain.skills;
     nextSnapshot.sessionState.operations = upsertOperation(
       nextSnapshot.sessionState.operations,
       buildPorterOperation(nextSnapshot)
@@ -1845,7 +1882,7 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
         'Cargo loaded',
         [nextSnapshot.playerState.coreData.playerName, 'Westreach', 'Saltmere Drydock'],
         ['Cargo secured', 'Return leg prepared'],
-        ['Mercantile +1', 'Stamina -7'],
+        [formatSkillGainEffect(skillGain, 'Mercantile'), 'Stamina -7'],
         ['Trade', 'Contract']
       )
     );
@@ -2030,12 +2067,13 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
 
   if (questId === 'quest.ashen_reef_survey') {
     addCurrency(nextSnapshot, { gold: 5, silver: 8 });
-    nextSnapshot.playerState.skills = addOrUpdateSkill(
+    const skillGain = addOrUpdateSkill(
       nextSnapshot.playerState.skills,
       'skill.knowledge.general_lore',
       1,
       'Ashen Reef survey turn-in'
     );
+    nextSnapshot.playerState.skills = skillGain.skills;
     nextSnapshot.playerState.standing = addOrUpdateStanding(
       nextSnapshot.playerState.standing,
       'rep.harbor_office',
@@ -2081,19 +2119,20 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
         '+5g 8s',
         [nextSnapshot.playerState.coreData.playerName, 'Saltmere Harbor Office', 'Ashen Reef'],
         ['Payout secured', 'Harbor standing improved', 'Codex entry unlocked'],
-        ['Common Lore +1', 'Harbor Office Standing +8', 'Regional Fame +6'],
+        [formatSkillGainEffect(skillGain, 'Common Lore'), 'Harbor Office Standing +8', 'Regional Fame +6'],
         ['Contract', 'Discovery', 'Harbor Office']
       )
     );
   } else if (questId === 'quest.rivet_shortfall_relief') {
     removeInventoryQuantity(nextSnapshot.playerState.inventory, RIVET_CRATE_ITEM_KEY, 6);
     addCurrency(nextSnapshot, { gold: 4, silver: 1 });
-    nextSnapshot.playerState.skills = addOrUpdateSkill(
+    const skillGain = addOrUpdateSkill(
       nextSnapshot.playerState.skills,
       'skill.knowledge.mineral_lore',
       1,
       'Rivet shortfall turn-in'
     );
+    nextSnapshot.playerState.skills = skillGain.skills;
     nextSnapshot.playerState.standing = addOrUpdateStanding(
       nextSnapshot.playerState.standing,
       'rep.guild_consortium',
@@ -2143,7 +2182,7 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
         '+4g 1s',
         [nextSnapshot.playerState.coreData.playerName, 'Saltmere Drydock', 'Westreach'],
         ['Drydock shortage eased', 'Payout secured'],
-        ['Earth Lore +1', 'Guild Consortium Standing +6', 'Local Fame +4'],
+        [formatSkillGainEffect(skillGain, 'Earth Lore'), 'Guild Consortium Standing +6', 'Local Fame +4'],
         ['Contract', 'Trade', 'Drydock']
       )
     );

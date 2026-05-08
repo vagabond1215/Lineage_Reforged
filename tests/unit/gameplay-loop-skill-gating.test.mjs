@@ -77,6 +77,10 @@ function skillRank(snapshot, skillId) {
   return getSkill(snapshot, skillId)?.rank ?? 0;
 }
 
+function latestChronicle(snapshot) {
+  return snapshot.sessionState.chronicle[0] ?? null;
+}
+
 function otherSkillSignature(snapshot, excludedSkillId) {
   return snapshot.playerState.skills
     .filter((skill) => skill.id !== excludedSkillId)
@@ -114,12 +118,37 @@ function createSurveyTurnInSnapshot(skillRankValue, progression = undefined) {
   return snapshot;
 }
 
+function createSurveyDiscoverySnapshot(skillRankValue, progression = undefined) {
+  const snapshot = cloneDemoSnapshot();
+  clearQuestProgressFlags(snapshot);
+  activateQuest(snapshot, SURVEY_QUEST_ID);
+  moveToAshenReef(snapshot);
+  snapshot.sessionState.flags = [
+    ...snapshot.sessionState.flags,
+    `${SURVEY_SECTOR_FLAG_PREFIX}1`,
+    `${SURVEY_SECTOR_FLAG_PREFIX}2`,
+    `${SURVEY_SECTOR_FLAG_PREFIX}3`
+  ];
+  setSkill(snapshot, "skill.resource.identify.flora", skillRankValue, progression);
+  return snapshot;
+}
+
 function createRivetActivitySnapshot(skillRankValue, progression = undefined) {
   const snapshot = cloneDemoSnapshot();
   clearQuestProgressFlags(snapshot);
   activateQuest(snapshot, RIVET_QUEST_ID);
   moveToWestreach(snapshot);
   setSkill(snapshot, "skill.resource.identify.minerals", skillRankValue, progression);
+  return snapshot;
+}
+
+function createRivetTurnInSnapshot(skillRankValue, progression = undefined) {
+  const snapshot = cloneDemoSnapshot();
+  clearQuestProgressFlags(snapshot);
+  activateQuest(snapshot, RIVET_QUEST_ID);
+  moveToSaltmere(snapshot);
+  snapshot.sessionState.flags = [...snapshot.sessionState.flags, RIVET_CARGO_FLAG];
+  setSkill(snapshot, "skill.knowledge.mineral_lore", skillRankValue, progression);
   return snapshot;
 }
 
@@ -131,6 +160,7 @@ test("noncombat activity skill gains below rank 30 still apply without touching 
 
   assert.equal(result.notice.tone, "success");
   assert.equal(skillRank(result.snapshot, "skill.knowledge.general_lore"), 21);
+  assert.deepEqual(latestChronicle(result.snapshot)?.statChanges, ["Navigation +1", "Stamina -10", "MP -3"]);
   assert.deepEqual(otherSkillSignature(result.snapshot, "skill.knowledge.general_lore"), unrelatedBefore);
 });
 
@@ -139,10 +169,17 @@ test("noncombat repeated gains clamp at rank 30 without familiar unlocked", () =
 
   const firstGain = advanceCurrentActivity(snapshot);
   assert.equal(skillRank(firstGain.snapshot, "skill.knowledge.general_lore"), 30);
+  assert.deepEqual(latestChronicle(firstGain.snapshot)?.statChanges, ["Navigation +1", "Stamina -10", "MP -3"]);
 
   const secondGain = advanceCurrentActivity(firstGain.snapshot);
   assert.equal(secondGain.notice.tone, "success");
   assert.equal(skillRank(secondGain.snapshot, "skill.knowledge.general_lore"), 30);
+  assert.deepEqual(latestChronicle(secondGain.snapshot)?.statChanges, [
+    "Navigation progress requires a breakthrough",
+    "Stamina -10",
+    "MP -3"
+  ]);
+  assert.equal(latestChronicle(secondGain.snapshot)?.statChanges.includes("Navigation +1"), false);
 });
 
 test("noncombat skill gains honor unlocked and locked breakthrough bands", () => {
@@ -156,6 +193,10 @@ test("noncombat skill gains honor unlocked and locked breakthrough bands", () =>
 
   const proficientLocked = advanceCurrentActivity(createSurveyActivitySnapshot(55, familiarProgression));
   assert.equal(skillRank(proficientLocked.snapshot, "skill.knowledge.general_lore"), 55);
+  assert.equal(
+    latestChronicle(proficientLocked.snapshot)?.statChanges.includes("Navigation progress requires a breakthrough"),
+    true
+  );
 
   const skilledLocked = advanceCurrentActivity(
     createSurveyActivitySnapshot(80, {
@@ -186,12 +227,45 @@ test("quest turn-in and procurement skill gains use the same noncombat gate poli
   const surveyTurnIn = turnInQuest(createSurveyTurnInSnapshot(29), SURVEY_QUEST_ID);
   assert.equal(surveyTurnIn.notice.tone, "success");
   assert.equal(skillRank(surveyTurnIn.snapshot, "skill.knowledge.general_lore"), 30);
+  assert.deepEqual(latestChronicle(surveyTurnIn.snapshot)?.statChanges, [
+    "Common Lore +1",
+    "Harbor Office Standing +8",
+    "Regional Fame +6"
+  ]);
 
   const blockedSurveyTurnIn = turnInQuest(createSurveyTurnInSnapshot(30), SURVEY_QUEST_ID);
   assert.equal(blockedSurveyTurnIn.notice.tone, "success");
   assert.equal(skillRank(blockedSurveyTurnIn.snapshot, "skill.knowledge.general_lore"), 30);
+  assert.deepEqual(latestChronicle(blockedSurveyTurnIn.snapshot)?.statChanges, [
+    "Common Lore progress requires a breakthrough",
+    "Harbor Office Standing +8",
+    "Regional Fame +6"
+  ]);
 
   const rivetProcurement = advanceCurrentActivity(createRivetActivitySnapshot(29));
   assert.equal(rivetProcurement.notice.tone, "success");
   assert.equal(skillRank(rivetProcurement.snapshot, "skill.resource.identify.minerals"), 30);
+  assert.deepEqual(latestChronicle(rivetProcurement.snapshot)?.statChanges, ["Mercantile +1", "Stamina -7"]);
+});
+
+test("survey discovery and rivet turn-in messages reflect blocked skill gates", () => {
+  const blockedSurveyDiscovery = advanceCurrentActivity(createSurveyDiscoverySnapshot(30));
+  assert.equal(blockedSurveyDiscovery.notice.tone, "accent");
+  assert.equal(skillRank(blockedSurveyDiscovery.snapshot, "skill.resource.identify.flora"), 30);
+  assert.deepEqual(latestChronicle(blockedSurveyDiscovery.snapshot)?.statChanges, [
+    "Survival progress requires a breakthrough",
+    "Stamina -10",
+    "MP -3"
+  ]);
+  assert.equal(latestChronicle(blockedSurveyDiscovery.snapshot)?.statChanges.includes("Survival +1"), false);
+
+  const blockedRivetTurnIn = turnInQuest(createRivetTurnInSnapshot(30), RIVET_QUEST_ID);
+  assert.equal(blockedRivetTurnIn.notice.tone, "success");
+  assert.equal(skillRank(blockedRivetTurnIn.snapshot, "skill.knowledge.mineral_lore"), 30);
+  assert.deepEqual(latestChronicle(blockedRivetTurnIn.snapshot)?.statChanges, [
+    "Earth Lore progress requires a breakthrough",
+    "Guild Consortium Standing +6",
+    "Local Fame +4"
+  ]);
+  assert.equal(latestChronicle(blockedRivetTurnIn.snapshot)?.statChanges.includes("Earth Lore +1"), false);
 });
