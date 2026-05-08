@@ -17,6 +17,7 @@ import type {
   PlayerLegacyGrowthState,
   PlayerProgression,
   PlayerState,
+  PlayerSkillState,
   PlayerTrialProgressState,
   RunDifficultyState,
   SkillProgressionBandId,
@@ -32,6 +33,7 @@ const BREAKTHROUGH_GATES: Array<{ gate: number; bandId: SkillProgressionBandId }
   { gate: 100, bandId: "mastery" }
 ];
 
+const DEFAULT_SKILL_MAXIMUM_RANK = 125;
 const ECHO_BALANCE_RULE_ID = "rule.echo_balance";
 
 type LegacyProgressionCompatState = Partial<PlayerProgression> & {
@@ -50,6 +52,32 @@ type EchoCatalog = {
 type ContentCatalog<TRecord> = {
   records: TRecord[];
 };
+
+export interface SkillRankGainPolicyInput {
+  skillId: string;
+  currentSkill?: Pick<PlayerSkillState, "id" | "rank" | "progression"> | null;
+  currentRank?: number | null;
+  rankDelta?: number | null;
+  requestedRank?: number | null;
+  unlockedBandIds?: SkillProgressionBandId[] | null;
+  sourceLabel?: string | null;
+  sourceType?: string | null;
+}
+
+export interface SkillRankGainPolicyResult {
+  skillId: string;
+  previousRank: number;
+  requestedRank: number;
+  appliedRank: number;
+  appliedDelta: number;
+  blockedGate: number | null;
+  requiredBand: SkillProgressionBandId | null;
+  maximumRank: number;
+  previousBand: SkillProgressionBandId;
+  appliedBand: SkillProgressionBandId;
+  sourceLabel: string | null;
+  sourceType: string | null;
+}
 
 let echoCatalogCache: EchoCatalog | null = null;
 
@@ -549,6 +577,98 @@ export function applyBreakthroughGating(
     blocked: false,
     blockedByGate: null,
     requiredBandId: null
+  };
+}
+
+function resolveSkillMaximumRank(skillId: string): number {
+  const authoredMaximum = loadEchoCatalog().skillById.get(skillId)?.leveling.maximumRank;
+  return clamp(normalizeInteger(authoredMaximum, DEFAULT_SKILL_MAXIMUM_RANK, 1), 1, DEFAULT_SKILL_MAXIMUM_RANK);
+}
+
+function normalizeSkillRank(value: unknown, fallback: number, maximumRank: number): number {
+  return clamp(normalizeInteger(value, fallback, 0), 0, maximumRank);
+}
+
+function normalizeRequestedSkillRank(input: SkillRankGainPolicyInput, previousRank: number): number {
+  if (typeof input.requestedRank === "number" && Number.isFinite(input.requestedRank)) {
+    return Math.max(0, Math.round(input.requestedRank));
+  }
+
+  if (typeof input.rankDelta !== "number" || !Number.isFinite(input.rankDelta) || input.rankDelta <= 0) {
+    return previousRank;
+  }
+
+  return Math.max(0, previousRank + Math.round(input.rankDelta));
+}
+
+function normalizeUnlockedSkillBands(value: SkillProgressionBandId[] | null | undefined): SkillProgressionBandId[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  const validBandIds = new Set(BREAKTHROUGH_GATES.map((gate) => gate.bandId));
+  const normalized: SkillProgressionBandId[] = [];
+  for (const bandId of value) {
+    if (!validBandIds.has(bandId) || normalized.includes(bandId)) {
+      continue;
+    }
+
+    normalized.push(bandId);
+  }
+
+  return normalized;
+}
+
+function normalizeOptionalText(value: string | null | undefined): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+export function resolveSkillRankGainPolicy(input: SkillRankGainPolicyInput): SkillRankGainPolicyResult {
+  const maximumRank = resolveSkillMaximumRank(input.skillId);
+  const matchingSkill = input.currentSkill?.id === input.skillId ? input.currentSkill : null;
+  const previousRank = normalizeSkillRank(input.currentRank ?? matchingSkill?.rank, 0, maximumRank);
+  const requestedRank = normalizeRequestedSkillRank(input, previousRank);
+  const unlockedBandIds = normalizeUnlockedSkillBands(input.unlockedBandIds ?? matchingSkill?.progression?.unlockedBandIds);
+
+  if (requestedRank <= previousRank) {
+    return {
+      skillId: input.skillId,
+      previousRank,
+      requestedRank,
+      appliedRank: previousRank,
+      appliedDelta: 0,
+      blockedGate: null,
+      requiredBand: null,
+      maximumRank,
+      previousBand: resolveSkillBand(previousRank).id,
+      appliedBand: resolveSkillBand(previousRank).id,
+      sourceLabel: normalizeOptionalText(input.sourceLabel),
+      sourceType: normalizeOptionalText(input.sourceType)
+    };
+  }
+
+  const rankForGating = Math.min(requestedRank, maximumRank);
+  const gated = applyBreakthroughGating(rankForGating, unlockedBandIds);
+  const appliedRank = clamp(Math.max(previousRank, gated.permittedRank), 0, maximumRank);
+
+  return {
+    skillId: input.skillId,
+    previousRank,
+    requestedRank,
+    appliedRank,
+    appliedDelta: appliedRank - previousRank,
+    blockedGate: gated.blockedByGate,
+    requiredBand: gated.requiredBandId,
+    maximumRank,
+    previousBand: resolveSkillBand(previousRank).id,
+    appliedBand: resolveSkillBand(appliedRank).id,
+    sourceLabel: normalizeOptionalText(input.sourceLabel),
+    sourceType: normalizeOptionalText(input.sourceType)
   };
 }
 

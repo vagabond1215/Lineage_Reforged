@@ -8,6 +8,7 @@ const BREAKTHROUGH_GATES = [
     { gate: 80, bandId: "skilled" },
     { gate: 100, bandId: "mastery" }
 ];
+const DEFAULT_SKILL_MAXIMUM_RANK = 125;
 const ECHO_BALANCE_RULE_ID = "rule.echo_balance";
 let echoCatalogCache = null;
 export const SKILL_PROGRESSION_BANDS = [
@@ -354,6 +355,83 @@ export function applyBreakthroughGating(requestedRank, unlockedBandIds = []) {
         blocked: false,
         blockedByGate: null,
         requiredBandId: null
+    };
+}
+function resolveSkillMaximumRank(skillId) {
+    const authoredMaximum = loadEchoCatalog().skillById.get(skillId)?.leveling.maximumRank;
+    return clamp(normalizeInteger(authoredMaximum, DEFAULT_SKILL_MAXIMUM_RANK, 1), 1, DEFAULT_SKILL_MAXIMUM_RANK);
+}
+function normalizeSkillRank(value, fallback, maximumRank) {
+    return clamp(normalizeInteger(value, fallback, 0), 0, maximumRank);
+}
+function normalizeRequestedSkillRank(input, previousRank) {
+    if (typeof input.requestedRank === "number" && Number.isFinite(input.requestedRank)) {
+        return Math.max(0, Math.round(input.requestedRank));
+    }
+    if (typeof input.rankDelta !== "number" || !Number.isFinite(input.rankDelta) || input.rankDelta <= 0) {
+        return previousRank;
+    }
+    return Math.max(0, previousRank + Math.round(input.rankDelta));
+}
+function normalizeUnlockedSkillBands(value) {
+    if (!Array.isArray(value)) {
+        return [];
+    }
+    const validBandIds = new Set(BREAKTHROUGH_GATES.map((gate) => gate.bandId));
+    const normalized = [];
+    for (const bandId of value) {
+        if (!validBandIds.has(bandId) || normalized.includes(bandId)) {
+            continue;
+        }
+        normalized.push(bandId);
+    }
+    return normalized;
+}
+function normalizeOptionalText(value) {
+    if (typeof value !== "string") {
+        return null;
+    }
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : null;
+}
+export function resolveSkillRankGainPolicy(input) {
+    const maximumRank = resolveSkillMaximumRank(input.skillId);
+    const matchingSkill = input.currentSkill?.id === input.skillId ? input.currentSkill : null;
+    const previousRank = normalizeSkillRank(input.currentRank ?? matchingSkill?.rank, 0, maximumRank);
+    const requestedRank = normalizeRequestedSkillRank(input, previousRank);
+    const unlockedBandIds = normalizeUnlockedSkillBands(input.unlockedBandIds ?? matchingSkill?.progression?.unlockedBandIds);
+    if (requestedRank <= previousRank) {
+        return {
+            skillId: input.skillId,
+            previousRank,
+            requestedRank,
+            appliedRank: previousRank,
+            appliedDelta: 0,
+            blockedGate: null,
+            requiredBand: null,
+            maximumRank,
+            previousBand: resolveSkillBand(previousRank).id,
+            appliedBand: resolveSkillBand(previousRank).id,
+            sourceLabel: normalizeOptionalText(input.sourceLabel),
+            sourceType: normalizeOptionalText(input.sourceType)
+        };
+    }
+    const rankForGating = Math.min(requestedRank, maximumRank);
+    const gated = applyBreakthroughGating(rankForGating, unlockedBandIds);
+    const appliedRank = clamp(Math.max(previousRank, gated.permittedRank), 0, maximumRank);
+    return {
+        skillId: input.skillId,
+        previousRank,
+        requestedRank,
+        appliedRank,
+        appliedDelta: appliedRank - previousRank,
+        blockedGate: gated.blockedByGate,
+        requiredBand: gated.requiredBandId,
+        maximumRank,
+        previousBand: resolveSkillBand(previousRank).id,
+        appliedBand: resolveSkillBand(appliedRank).id,
+        sourceLabel: normalizeOptionalText(input.sourceLabel),
+        sourceType: normalizeOptionalText(input.sourceType)
     };
 }
 export function accumulateBreakthroughProgress(input) {

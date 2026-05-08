@@ -15,6 +15,7 @@ import {
   resolveKnowledgeProgressionDifficultyThresholds,
   resolveItemUseProfile,
   resolveKnowledgeAssistance,
+  resolveSkillRankGainPolicy,
   resolveSkillProgressionDifficultyThresholds,
   resolveSkillBand,
   validateSpellScalingChannelsForSchool
@@ -55,6 +56,155 @@ test("applyBreakthroughGating blocks rank gain above locked gates", () => {
   const unlocked = applyBreakthroughGating(72, ["familiar", "proficient"]);
   assert.equal(unlocked.blocked, false);
   assert.equal(unlocked.permittedRank, 72);
+});
+
+test("resolveSkillRankGainPolicy applies gains below the first breakthrough gate", () => {
+  const result = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 10,
+    rankDelta: 5,
+    sourceLabel: "training yard",
+    sourceType: "test"
+  });
+
+  assert.deepEqual(
+    {
+      previousRank: result.previousRank,
+      requestedRank: result.requestedRank,
+      appliedRank: result.appliedRank,
+      appliedDelta: result.appliedDelta,
+      blockedGate: result.blockedGate,
+      requiredBand: result.requiredBand,
+      maximumRank: result.maximumRank,
+      previousBand: result.previousBand,
+      appliedBand: result.appliedBand,
+      sourceLabel: result.sourceLabel,
+      sourceType: result.sourceType
+    },
+    {
+      previousRank: 10,
+      requestedRank: 15,
+      appliedRank: 15,
+      appliedDelta: 5,
+      blockedGate: null,
+      requiredBand: null,
+      maximumRank: 125,
+      previousBand: "clumsy",
+      appliedBand: "clumsy",
+      sourceLabel: "training yard",
+      sourceType: "test"
+    }
+  );
+});
+
+test("resolveSkillRankGainPolicy clamps rank gains at locked breakthrough gates", () => {
+  const firstGate = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 29,
+    rankDelta: 10
+  });
+  assert.equal(firstGate.requestedRank, 39);
+  assert.equal(firstGate.appliedRank, 30);
+  assert.equal(firstGate.appliedDelta, 1);
+  assert.equal(firstGate.blockedGate, 30);
+  assert.equal(firstGate.requiredBand, "familiar");
+
+  const secondGate = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 50,
+    requestedRank: 72,
+    unlockedBandIds: ["familiar"]
+  });
+  assert.equal(secondGate.appliedRank, 55);
+  assert.equal(secondGate.blockedGate, 55);
+  assert.equal(secondGate.requiredBand, "proficient");
+
+  const thirdGate = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 75,
+    requestedRank: 88,
+    unlockedBandIds: ["familiar", "proficient"]
+  });
+  assert.equal(thirdGate.appliedRank, 80);
+  assert.equal(thirdGate.blockedGate, 80);
+  assert.equal(thirdGate.requiredBand, "skilled");
+
+  const fourthGate = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 95,
+    requestedRank: 110,
+    unlockedBandIds: ["familiar", "proficient", "skilled"]
+  });
+  assert.equal(fourthGate.appliedRank, 100);
+  assert.equal(fourthGate.blockedGate, 100);
+  assert.equal(fourthGate.requiredBand, "mastery");
+});
+
+test("resolveSkillRankGainPolicy allows growth through unlocked bands only", () => {
+  const result = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentSkill: {
+      id: "skill.combat.weapon.sword",
+      rank: 29,
+      progression: {
+        unlockedBandIds: ["familiar"],
+        breakthroughProgress: 0
+      }
+    },
+    rankDelta: 10
+  });
+
+  assert.equal(result.requestedRank, 39);
+  assert.equal(result.appliedRank, 39);
+  assert.equal(result.appliedDelta, 10);
+  assert.equal(result.blockedGate, null);
+  assert.equal(result.requiredBand, null);
+  assert.equal(result.appliedBand, "familiar");
+});
+
+test("resolveSkillRankGainPolicy clamps at authored maximum rank", () => {
+  const result = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 124,
+    rankDelta: 10,
+    unlockedBandIds: ["familiar", "proficient", "skilled", "mastery"]
+  });
+
+  assert.equal(result.requestedRank, 134);
+  assert.equal(result.maximumRank, 125);
+  assert.equal(result.appliedRank, 125);
+  assert.equal(result.appliedDelta, 1);
+  assert.equal(result.blockedGate, null);
+  assert.equal(result.requiredBand, null);
+});
+
+test("resolveSkillRankGainPolicy treats invalid or non-increasing requests as no-ops", () => {
+  const zeroDelta = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 12,
+    rankDelta: 0
+  });
+  assert.equal(zeroDelta.requestedRank, 12);
+  assert.equal(zeroDelta.appliedRank, 12);
+  assert.equal(zeroDelta.appliedDelta, 0);
+
+  const invalidDelta = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 12,
+    rankDelta: Number.NaN
+  });
+  assert.equal(invalidDelta.requestedRank, 12);
+  assert.equal(invalidDelta.appliedRank, 12);
+  assert.equal(invalidDelta.appliedDelta, 0);
+
+  const lowerTarget = resolveSkillRankGainPolicy({
+    skillId: "skill.combat.weapon.sword",
+    currentRank: 12,
+    requestedRank: 5
+  });
+  assert.equal(lowerTarget.requestedRank, 5);
+  assert.equal(lowerTarget.appliedRank, 12);
+  assert.equal(lowerTarget.appliedDelta, 0);
 });
 
 test("accumulateBreakthroughProgress scales requirement instead of gain under difficulty", () => {

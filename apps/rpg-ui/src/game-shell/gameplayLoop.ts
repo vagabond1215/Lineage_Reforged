@@ -27,6 +27,7 @@ import {
   grantSettlementGeographicKnowledge,
   loadBodyStateBalanceRule,
   resolvePlayerEchoProgression,
+  resolveSkillRankGainPolicy,
   syncPlayerBodyState,
   syncPlayerRuntimeState
 } from '../../../../packages/engines/player-engine/src/index.js';
@@ -645,16 +646,28 @@ function spendCurrency(
 function addOrUpdateSkill(
   skills: PlayerSkillState[],
   skillId: string,
-  rankDelta: number
+  rankDelta: number,
+  sourceLabel = 'Noncombat skill gain'
 ): PlayerSkillState[] {
   const existing = skills.find((entry) => entry.id === skillId);
+  const policy = resolveSkillRankGainPolicy({
+    skillId,
+    currentSkill: existing ?? null,
+    rankDelta,
+    sourceLabel,
+    sourceType: 'noncombat'
+  });
+
+  if (policy.appliedDelta <= 0) {
+    return skills;
+  }
 
   if (!existing) {
     return [
       ...skills,
       {
         id: skillId,
-        rank: rankDelta,
+        rank: policy.appliedRank,
         source: 'trained' as const
       }
     ].sort((left, right) => left.id.localeCompare(right.id));
@@ -664,7 +677,7 @@ function addOrUpdateSkill(
     entry.id === skillId
       ? {
           ...entry,
-          rank: entry.rank + rankDelta,
+          rank: policy.appliedRank,
           source: 'trained' as const
         }
       : entry
@@ -1680,7 +1693,8 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
       nextSnapshot.playerState.skills = addOrUpdateSkill(
         nextSnapshot.playerState.skills,
         'skill.knowledge.general_lore',
-        1
+        1,
+        'Ashen Reef survey sector'
       );
       nextSnapshot.sessionState.operations = upsertOperation(
         nextSnapshot.sessionState.operations,
@@ -1721,7 +1735,8 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
       nextSnapshot.playerState.skills = addOrUpdateSkill(
         nextSnapshot.playerState.skills,
         'skill.resource.identify.flora',
-        1
+        1,
+        'Ashen Reef survey discovery'
       );
       addDiscoveryEntry(nextSnapshot);
       nextSnapshot.sessionState.operations = upsertOperation(
@@ -1801,7 +1816,8 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
     nextSnapshot.playerState.skills = addOrUpdateSkill(
       nextSnapshot.playerState.skills,
       'skill.resource.identify.minerals',
-      1
+      1,
+      'Rivet cargo procurement'
     );
     nextSnapshot.sessionState.operations = upsertOperation(
       nextSnapshot.sessionState.operations,
@@ -2014,7 +2030,12 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
 
   if (questId === 'quest.ashen_reef_survey') {
     addCurrency(nextSnapshot, { gold: 5, silver: 8 });
-    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.general_lore', 1);
+    nextSnapshot.playerState.skills = addOrUpdateSkill(
+      nextSnapshot.playerState.skills,
+      'skill.knowledge.general_lore',
+      1,
+      'Ashen Reef survey turn-in'
+    );
     nextSnapshot.playerState.standing = addOrUpdateStanding(
       nextSnapshot.playerState.standing,
       'rep.harbor_office',
@@ -2067,7 +2088,12 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
   } else if (questId === 'quest.rivet_shortfall_relief') {
     removeInventoryQuantity(nextSnapshot.playerState.inventory, RIVET_CRATE_ITEM_KEY, 6);
     addCurrency(nextSnapshot, { gold: 4, silver: 1 });
-    nextSnapshot.playerState.skills = addOrUpdateSkill(nextSnapshot.playerState.skills, 'skill.knowledge.mineral_lore', 1);
+    nextSnapshot.playerState.skills = addOrUpdateSkill(
+      nextSnapshot.playerState.skills,
+      'skill.knowledge.mineral_lore',
+      1,
+      'Rivet shortfall turn-in'
+    );
     nextSnapshot.playerState.standing = addOrUpdateStanding(
       nextSnapshot.playerState.standing,
       'rep.guild_consortium',

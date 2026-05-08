@@ -45,6 +45,7 @@ export {
   resolveKnowledgeAssistance,
   resolveItemUseProfile,
   resolveEligibleTitleMilestones,
+  resolveSkillRankGainPolicy,
   resolveSkillProgressionDifficultyThresholds,
   resolveSkillBand,
   syncPlayerEchoProgression,
