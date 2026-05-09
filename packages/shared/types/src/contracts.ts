@@ -1568,6 +1568,8 @@ export type CatalystFamilyId =
   | "flower"
   | "living_plant";
 
+export type SpellCompatibilityStatus = "ready" | "partial" | "deferred" | "placeholder";
+
 export type ConduitRole = "primary" | "secondary" | "defensive" | "imbued_projectile" | "catalyst_support";
 
 export interface SpellCompatibilityTagRequirementsState {

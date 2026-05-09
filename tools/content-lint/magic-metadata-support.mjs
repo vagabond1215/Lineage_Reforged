@@ -1,3 +1,8 @@
+import {
+  classifySpellItemGenerationHookId,
+  classifySpellResolutionHook
+} from "./spell-hook-support.mjs";
+
 export const CASTING_CONDUIT_TAGS = Object.freeze([
   "magic.elemental",
   "magic.divine",
@@ -69,6 +74,13 @@ export const CATALYST_FAMILIES = Object.freeze([
   "living_plant"
 ]);
 
+export const SPELL_COMPATIBILITY_STATUSES = Object.freeze([
+  "ready",
+  "partial",
+  "deferred",
+  "placeholder"
+]);
+
 export const CONDUIT_ROLES = Object.freeze([
   "primary",
   "secondary",
@@ -80,6 +92,7 @@ export const CONDUIT_ROLES = Object.freeze([
 const CASTING_CONDUIT_TAG_SET = new Set(CASTING_CONDUIT_TAGS);
 const CATALYST_TIER_SET = new Set(CATALYST_TIERS);
 const CATALYST_FAMILY_SET = new Set(CATALYST_FAMILIES);
+const SPELL_COMPATIBILITY_STATUS_SET = new Set(SPELL_COMPATIBILITY_STATUSES);
 const CONDUIT_ROLE_SET = new Set(CONDUIT_ROLES);
 const METADATA_IDENTIFIER_PATTERN = /^[a-z0-9]+(?:[._][a-z0-9]+)*$/;
 const SPELL_COMPATIBILITY_PROFILE_FIELDS = new Set([
@@ -403,6 +416,16 @@ export function validateCatalystFamily(family, source) {
   return [];
 }
 
+export function validateSpellCompatibilityStatus(status, source) {
+  if (typeof status !== "string" || status.trim().length === 0) {
+    return [`${source} must be a non-empty compatibilityStatus`];
+  }
+  if (!SPELL_COMPATIBILITY_STATUS_SET.has(status)) {
+    return [`${source} uses unknown compatibilityStatus '${status}'`];
+  }
+  return [];
+}
+
 function validateCastingTagArray(value, source, minLength = 1) {
   const errors = validateStringArray(value, source, { minLength });
   if (errors.length > 0) {
@@ -616,6 +639,60 @@ export function validateSpellCompatibilityProfile({ profile, source }) {
   return errors;
 }
 
+function collectNonReadySpellHooks(record) {
+  const hooks = [];
+  for (const hook of record.resolutionHooks ?? []) {
+    const hookType = classifySpellResolutionHook(hook);
+    if (hookType !== "runtime" && hookType !== "classifier") {
+      hooks.push(`resolutionHooks '${hook}'`);
+    }
+  }
+  for (const hook of record.itemGenerationHooks ?? []) {
+    const hookId = hook?.generatedItemId;
+    const hookType = classifySpellItemGenerationHookId(hookId);
+    if (hookType !== "runtime" && hookType !== "classifier") {
+      hooks.push(`itemGenerationHooks '${String(hookId)}'`);
+    }
+  }
+  return hooks;
+}
+
+export function validateSpellMagicMetadata({ record, source }) {
+  const errors = [];
+  if (!isObject(record)) {
+    return [`${source} must be an object`];
+  }
+
+  if (record.compatibilityStatus === undefined) {
+    errors.push(`${source} must define compatibilityStatus`);
+  } else {
+    errors.push(...validateSpellCompatibilityStatus(record.compatibilityStatus, `${source}.compatibilityStatus`));
+  }
+
+  if (record.compatibilityProfile !== undefined) {
+    errors.push(
+      ...validateSpellCompatibilityProfile({
+        profile: record.compatibilityProfile,
+        source: `${source}.compatibilityProfile`
+      })
+    );
+  }
+
+  if (record.compatibilityStatus === "ready") {
+    if (record.compatibilityProfile === undefined) {
+      errors.push(`${source} with compatibilityStatus 'ready' must define compatibilityProfile`);
+    }
+    const nonReadyHooks = collectNonReadySpellHooks(record);
+    if (nonReadyHooks.length > 0) {
+      errors.push(
+        `${source} with compatibilityStatus 'ready' must not depend on deferred or unknown spell hooks: ${nonReadyHooks.join(", ")}`
+      );
+    }
+  }
+
+  return errors;
+}
+
 export function validateItemConduitProfile({ record, profile, source }) {
   const errors = [];
   if (!isObject(profile)) {
@@ -695,6 +772,13 @@ export function validateItemMagicMetadata({ record, source }) {
 
 export function assertValidSpellCompatibilityProfile(input) {
   const errors = validateSpellCompatibilityProfile(input);
+  if (errors.length > 0) {
+    throw new Error(errors.join("; "));
+  }
+}
+
+export function assertValidSpellMagicMetadata(input) {
+  const errors = validateSpellMagicMetadata(input);
   if (errors.length > 0) {
     throw new Error(errors.join("; "));
   }

@@ -8,7 +8,7 @@ import {
 } from "./combat-hook-support.mjs";
 import {
   assertValidItemMagicMetadata,
-  assertValidSpellCompatibilityProfile
+  assertValidSpellMagicMetadata
 } from "./magic-metadata-support.mjs";
 import {
   assertKnownSpellItemGenerationHooks,
@@ -6337,12 +6337,10 @@ function validatePlayerSpells(relativePath, records) {
     if (!isObject(record.castProfile)) {
       throw new Error(`${relativePath} has invalid castProfile on record ${recordId}`);
     }
-    if (record.compatibilityProfile !== undefined) {
-      assertValidSpellCompatibilityProfile({
-        profile: record.compatibilityProfile,
-        source: `${relativePath} compatibilityProfile on record ${recordId}`
-      });
-    }
+    assertValidSpellMagicMetadata({
+      record,
+      source: `${relativePath} record ${recordId}`
+    });
     ensureStringArray(relativePath, recordId, "resolutionHooks", record.resolutionHooks ?? [], 1);
     assertKnownSpellResolutionHooks({
       hooks: record.resolutionHooks ?? [],
