@@ -432,8 +432,7 @@
         ],
         "freecastAllowed": true,
         "catalystFamilies": [
-          "water",
-          "clean_water"
+          "water"
         ],
         "notes": "Metadata-only healing compatibility for future conduit previews."
       },
@@ -2408,10 +2407,6 @@
           "cast.slow"
         ],
         "freecastAllowed": false,
-        "catalystFamilies": [
-          "voice",
-          "instrument"
-        ],
         "notes": "Metadata-only performance compatibility; no instrument or freecast runtime gate is active."
       },
       "resolutionHooks": [

@@ -1546,6 +1546,28 @@ export type CatalystTierId =
   | "catalyst.large"
   | "catalyst.bulk";
 
+export type CatalystFamilyId =
+  | "arcane"
+  | "elemental"
+  | "fire"
+  | "water"
+  | "air"
+  | "earth"
+  | "ice"
+  | "light"
+  | "lightning"
+  | "shadow"
+  | "divine"
+  | "sanctified"
+  | "fuel"
+  | "heat"
+  | "binding"
+  | "botanical"
+  | "herb"
+  | "seed"
+  | "flower"
+  | "living_plant";
+
 export type ConduitRole = "primary" | "secondary" | "defensive" | "imbued_projectile" | "catalyst_support";
 
 export interface SpellCompatibilityTagRequirementsState {
@@ -1558,7 +1580,7 @@ export interface SpellCompatibilityProfileState {
   preferredTags?: CastingConduitTag[];
   discouragedTags?: CastingConduitTag[];
   freecastAllowed?: boolean;
-  catalystFamilies?: string[];
+  catalystFamilies?: CatalystFamilyId[];
   catalystTiers?: CatalystTierId[];
   notes?: string;
 }
@@ -1571,7 +1593,7 @@ export interface ConduitProfileState {
 
 export interface CatalystProfileState {
   tier: CatalystTierId;
-  families?: string[];
+  families?: CatalystFamilyId[];
   notes?: string;
 }
 

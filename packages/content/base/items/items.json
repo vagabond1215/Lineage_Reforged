@@ -8895,10 +8895,11 @@
           "range.touch",
           "range.short",
           "delivery.touch",
+          "cast.fast",
           "cast.precise",
           "cast.risky",
           "power.low",
-          "control.hard"
+          "control.moderate"
         ],
         "notes": "Metadata-only focus-knife profile for later binding/enfeebling compatibility."
       },
@@ -31459,7 +31460,6 @@
         "tier": "catalyst.trace",
         "families": [
           "shadow",
-          "void",
           "arcane"
         ],
         "notes": "Metadata-only catalyst tier vocabulary; no shadow/void catalyst runtime effects are active."
@@ -35448,8 +35448,7 @@
         "tier": "catalyst.small",
         "families": [
           "elemental",
-          "arcane",
-          "attunable"
+          "arcane"
         ],
         "notes": "Metadata-only catalyst tier vocabulary; no catalyst runtime effects are active."
       }
