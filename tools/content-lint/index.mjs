@@ -6,6 +6,10 @@ import {
   assertSupportedCombatResolutionHooks,
   isUtilityOnlyItemUseProfile
 } from "./combat-hook-support.mjs";
+import {
+  assertKnownSpellItemGenerationHooks,
+  assertKnownSpellResolutionHooks
+} from "./spell-hook-support.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -6330,6 +6334,31 @@ function validatePlayerSpells(relativePath, records) {
       throw new Error(`${relativePath} has invalid castProfile on record ${recordId}`);
     }
     ensureStringArray(relativePath, recordId, "resolutionHooks", record.resolutionHooks ?? [], 1);
+    assertKnownSpellResolutionHooks({
+      hooks: record.resolutionHooks ?? [],
+      source: `${relativePath} resolutionHooks on record ${recordId}`
+    });
+    if (record.itemGenerationHooks !== undefined) {
+      if (!Array.isArray(record.itemGenerationHooks)) {
+        throw new Error(`${relativePath} has invalid itemGenerationHooks on record ${recordId}`);
+      }
+      for (const [index, hook] of record.itemGenerationHooks.entries()) {
+        const field = `itemGenerationHooks[${index}]`;
+        if (!isObject(hook)) {
+          throw new Error(`${relativePath} has invalid ${field} on record ${recordId}`);
+        }
+        ensureString(relativePath, recordId, `${field}.generatedItemId`, hook.generatedItemId);
+        ensureString(relativePath, recordId, `${field}.generatedItemName`, hook.generatedItemName);
+        ensureInteger(relativePath, recordId, `${field}.charges`, hook.charges, 1);
+        ensureBoolean(relativePath, recordId, `${field}.partyLimited`, hook.partyLimited);
+        ensureBoolean(relativePath, recordId, `${field}.dissipatesOnChargeLoss`, hook.dissipatesOnChargeLoss);
+        ensureStringArray(relativePath, recordId, `${field}.combatTags`, hook.combatTags ?? [], 0);
+      }
+      assertKnownSpellItemGenerationHooks({
+        hooks: record.itemGenerationHooks,
+        source: `${relativePath} itemGenerationHooks on record ${recordId}`
+      });
+    }
   }
 }
 
