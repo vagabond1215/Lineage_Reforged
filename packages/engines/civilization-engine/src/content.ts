@@ -1,6 +1,8 @@
 ﻿import { readFileSync } from "node:fs";
 import type {
   BodyStateBalanceRuleState,
+  CatalystProfileState,
+  ConduitProfileState,
   ConsumableProfileState,
   EchoBalanceRuleState,
   EchoRequirementState,
@@ -11,7 +13,8 @@ import type {
   PlayerAttributeKey,
   ReputationAwardDefinitionState,
   ReputationScope,
-  QuestTemplateCategory
+  QuestTemplateCategory,
+  SpellCompatibilityProfileState
 } from "../../../shared/types/src/index.js";
 
 export interface GuildFacilityTierRecord {
@@ -690,6 +693,8 @@ export interface ItemContentRecord {
   valueProfile: ItemValueProfileRecord;
   materialDifficultyProfile?: MaterialDifficultyProfileRecord;
   consumableProfileId?: string;
+  conduitProfile?: ConduitProfileState;
+  catalystProfile?: CatalystProfileState;
   useProfiles?: ItemUseProfileRecord[];
 }
 
@@ -938,6 +943,7 @@ export interface PlayerSpellContentRecord {
   scalingChannels: string[];
   targetProfile: NonNullable<ItemUseProfileRecord["targetProfile"]>;
   castProfile: NonNullable<ItemUseProfileRecord["activation"]>;
+  compatibilityProfile?: SpellCompatibilityProfileState;
   resolutionHooks: string[];
   itemGenerationHooks?: Array<{
     generatedItemId: string;

@@ -7,6 +7,10 @@ import {
   isUtilityOnlyItemUseProfile
 } from "./combat-hook-support.mjs";
 import {
+  assertValidItemMagicMetadata,
+  assertValidSpellCompatibilityProfile
+} from "./magic-metadata-support.mjs";
+import {
   assertKnownSpellItemGenerationHooks,
   assertKnownSpellResolutionHooks
 } from "./spell-hook-support.mjs";
@@ -6333,6 +6337,12 @@ function validatePlayerSpells(relativePath, records) {
     if (!isObject(record.castProfile)) {
       throw new Error(`${relativePath} has invalid castProfile on record ${recordId}`);
     }
+    if (record.compatibilityProfile !== undefined) {
+      assertValidSpellCompatibilityProfile({
+        profile: record.compatibilityProfile,
+        source: `${relativePath} compatibilityProfile on record ${recordId}`
+      });
+    }
     ensureStringArray(relativePath, recordId, "resolutionHooks", record.resolutionHooks ?? [], 1);
     assertKnownSpellResolutionHooks({
       hooks: record.resolutionHooks ?? [],
@@ -7365,6 +7375,11 @@ function validateItemCatalog(relativePath, records) {
         throw new Error(`${relativePath} spoilageProfileId requires consumable or ingredient role on record ${record.id}`);
       }
     }
+
+    assertValidItemMagicMetadata({
+      record,
+      source: `${relativePath} record ${record.id}`
+    });
 
     if (record.useProfiles !== undefined) {
       if (!Array.isArray(record.useProfiles) || record.useProfiles.length === 0) {

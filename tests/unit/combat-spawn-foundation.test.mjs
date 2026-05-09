@@ -1549,4 +1549,6 @@ test("tickCombatFoundation maps learned spell metadata into queued combat action
   assert.equal(spellAction.source.skillIds.includes("skill.magic.school.elemental"), true);
   assert.equal(spellAction.source.spellScalingChannels.includes("power"), true);
   assert.equal(spellAction.source.effectChannels.includes("elemental"), true);
+  assert.equal("compatibilityProfile" in spellAction.source, false);
+  assert.equal("conduitProfile" in spellAction.source, false);
 });

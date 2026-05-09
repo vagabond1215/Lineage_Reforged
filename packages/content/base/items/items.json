@@ -1777,6 +1777,28 @@
         "difficultyTier": "hard",
         "demandBand": "specialty"
       },
+      "conduitProfile": {
+        "conduitRole": "primary",
+        "castingTags": [
+          "magic.elemental",
+          "magic.healing",
+          "magic.enfeebling",
+          "magic.enhancing",
+          "magic.utility",
+          "range.medium",
+          "range.long",
+          "delivery.projectile",
+          "delivery.area",
+          "delivery.ally",
+          "delivery.ward",
+          "cast.stable",
+          "cast.slow",
+          "power.medium",
+          "power.high",
+          "control.moderate"
+        ],
+        "notes": "Metadata-only staff profile: stable longer-range casting with stronger catalyst scaling later."
+      },
       "useProfiles": [
         {
           "actionType": "combat.melee.primary",
@@ -7354,6 +7376,17 @@
         "difficultyTier": "hard",
         "demandBand": "specialty"
       },
+      "conduitProfile": {
+        "conduitRole": "imbued_projectile",
+        "castingTags": [
+          "range.long",
+          "delivery.projectile",
+          "cast.precise",
+          "power.medium",
+          "control.moderate"
+        ],
+        "notes": "Metadata-only projectile delivery lane; this is not a full general spellcasting conduit."
+      },
       "useProfiles": [
         {
           "actionType": "combat.ranged.primary",
@@ -8853,6 +8886,21 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
+      },
+      "conduitProfile": {
+        "conduitRole": "secondary",
+        "castingTags": [
+          "magic.dark",
+          "magic.enfeebling",
+          "range.touch",
+          "range.short",
+          "delivery.touch",
+          "cast.precise",
+          "cast.risky",
+          "power.low",
+          "control.hard"
+        ],
+        "notes": "Metadata-only focus-knife profile for later binding/enfeebling compatibility."
       },
       "useProfiles": [
         {
@@ -14512,6 +14560,21 @@
         "processingIntensity": "precision",
         "difficultyTier": "moderate",
         "demandBand": "specialty"
+      },
+      "conduitProfile": {
+        "conduitRole": "catalyst_support",
+        "castingTags": [
+          "magic.druidic",
+          "magic.healing",
+          "range.touch",
+          "range.short",
+          "delivery.self",
+          "delivery.ally",
+          "cast.stable",
+          "power.low",
+          "control.easy"
+        ],
+        "notes": "Metadata-only pouch support for botanical catalysts; no catalyst runtime behavior is active."
       }
     },
     {
@@ -16075,6 +16138,19 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
+      },
+      "conduitProfile": {
+        "conduitRole": "defensive",
+        "castingTags": [
+          "magic.warding",
+          "range.aura",
+          "delivery.self",
+          "delivery.ward",
+          "cast.stable",
+          "power.medium",
+          "control.easy"
+        ],
+        "notes": "Metadata-only warding profile for future defensive spell compatibility previews."
       },
       "useProfiles": [
         {
@@ -31378,6 +31454,15 @@
         "processingIntensity": "minimal",
         "difficultyTier": "easy",
         "demandBand": "common"
+      },
+      "catalystProfile": {
+        "tier": "catalyst.trace",
+        "families": [
+          "shadow",
+          "void",
+          "arcane"
+        ],
+        "notes": "Metadata-only catalyst tier vocabulary; no shadow/void catalyst runtime effects are active."
       }
     },
     {
@@ -35172,6 +35257,21 @@
         "hardness": "medium",
         "refinementDifficulty": "high",
         "processingCostImpact": "heavy"
+      },
+      "conduitProfile": {
+        "conduitRole": "secondary",
+        "castingTags": [
+          "magic.utility",
+          "magic.enhancing",
+          "range.touch",
+          "range.short",
+          "delivery.self",
+          "cast.precise",
+          "cast.stable",
+          "power.low",
+          "control.easy"
+        ],
+        "notes": "Metadata-only offhand focus profile; no equipment or spell filtering behavior reads this."
       }
     },
     {
@@ -35214,6 +35314,23 @@
         "hardness": "hard",
         "refinementDifficulty": "high",
         "processingCostImpact": "heavy"
+      },
+      "conduitProfile": {
+        "conduitRole": "secondary",
+        "castingTags": [
+          "magic.divine",
+          "magic.healing",
+          "magic.warding",
+          "range.touch",
+          "range.short",
+          "delivery.self",
+          "delivery.ally",
+          "delivery.ward",
+          "cast.stable",
+          "power.low",
+          "control.easy"
+        ],
+        "notes": "Metadata-only relic/charm profile; divine support is not wired into runtime."
       }
     },
     {
@@ -35326,6 +35443,15 @@
         "processingIntensity": "minimal",
         "difficultyTier": "hard",
         "demandBand": "luxury"
+      },
+      "catalystProfile": {
+        "tier": "catalyst.small",
+        "families": [
+          "elemental",
+          "arcane",
+          "attunable"
+        ],
+        "notes": "Metadata-only catalyst tier vocabulary; no catalyst runtime effects are active."
       }
     },
     {
@@ -35990,6 +36116,15 @@
         "processingIntensity": "minimal",
         "difficultyTier": "hard",
         "demandBand": "luxury"
+      },
+      "catalystProfile": {
+        "tier": "catalyst.small",
+        "families": [
+          "fire",
+          "elemental",
+          "arcane"
+        ],
+        "notes": "Metadata-only fire catalyst profile; no cost, potency, or area modifiers are active."
       }
     },
     {

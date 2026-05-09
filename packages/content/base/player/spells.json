@@ -42,6 +42,35 @@
         },
         "actionType": "spell.fire.elemental.firebolt"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "fire",
+          "fuel",
+          "heat"
+        ],
+        "notes": "Metadata-only conduit compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "damage.magic",
         "school.elemental",
@@ -382,6 +411,31 @@
           "stamina": 1
         },
         "actionType": "spell.water.healing.mend"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.healing"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "cast.stable",
+          "control.easy"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "water",
+          "clean_water"
+        ],
+        "notes": "Metadata-only healing compatibility for future conduit previews."
       },
       "resolutionHooks": [
         "heal.hp",
@@ -1353,6 +1407,31 @@
         },
         "actionType": "spell.light.healing.restore"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.healing"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "magic.divine",
+          "delivery.ally",
+          "cast.stable"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "light",
+          "sanctified"
+        ],
+        "notes": "Metadata-only compatibility; divine preference is descriptive until a later runtime slice."
+      },
       "resolutionHooks": [
         "heal.hp",
         "school.healing",
@@ -1450,6 +1529,34 @@
           "stamina": 1
         },
         "actionType": "spell.shadow.enfeebling.curse"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.enfeebling"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "magic.dark",
+          "cast.precise",
+          "control.hard"
+        ],
+        "discouragedTags": [
+          "cast.risky"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "shadow",
+          "binding"
+        ],
+        "notes": "Metadata-only curse compatibility; risk/backlash remains deferred."
       },
       "resolutionHooks": [
         "debuff.curse",
@@ -1785,6 +1892,32 @@
         },
         "actionType": "spell.druidic.healing.berry"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.druidic",
+            "magic.healing"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.self",
+          "cast.stable",
+          "power.low"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "herb",
+          "seed",
+          "living_plant"
+        ],
+        "notes": "Metadata-only druidic compatibility; generated berry behavior stays governed by existing hooks."
+      },
       "resolutionHooks": [
         "support.berry",
         "school.healing",
@@ -1847,6 +1980,33 @@
           "stamina": 1
         },
         "actionType": "spell.druidic.healing.bloom"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.druidic",
+            "magic.healing"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.aura"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.area",
+          "delivery.ally",
+          "cast.stable"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "herb",
+          "flower",
+          "living_plant"
+        ],
+        "notes": "Metadata-only area healing compatibility for future conduit/catalyst previews."
       },
       "resolutionHooks": [
         "heal.hp",
@@ -2225,6 +2385,34 @@
           "stamina": 1
         },
         "actionType": "spell.performance.enhancing.war_song"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.performance",
+            "magic.enhancing"
+          ],
+          "any": [
+            [
+              "range.aura",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "delivery.area",
+          "cast.rhythmic"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": false,
+        "catalystFamilies": [
+          "voice",
+          "instrument"
+        ],
+        "notes": "Metadata-only performance compatibility; no instrument or freecast runtime gate is active."
       },
       "resolutionHooks": [
         "buff.war_song",

@@ -1500,6 +1500,81 @@ export type SpellScalingChannel =
   | "summonPotency"
   | "tempo";
 
+export type CastingConduitTag =
+  | "magic.elemental"
+  | "magic.divine"
+  | "magic.healing"
+  | "magic.enfeebling"
+  | "magic.enhancing"
+  | "magic.control"
+  | "magic.druidic"
+  | "magic.performance"
+  | "magic.dark"
+  | "magic.utility"
+  | "magic.warding"
+  | "range.touch"
+  | "range.short"
+  | "range.medium"
+  | "range.long"
+  | "range.aura"
+  | "delivery.projectile"
+  | "delivery.touch"
+  | "delivery.area"
+  | "delivery.beam"
+  | "delivery.self"
+  | "delivery.ally"
+  | "delivery.ward"
+  | "cast.fast"
+  | "cast.stable"
+  | "cast.precise"
+  | "cast.risky"
+  | "cast.slow"
+  | "cast.ritual"
+  | "cast.rhythmic"
+  | "power.low"
+  | "power.medium"
+  | "power.high"
+  | "control.easy"
+  | "control.moderate"
+  | "control.hard";
+
+export type CatalystTierId =
+  | "catalyst.none"
+  | "catalyst.trace"
+  | "catalyst.small"
+  | "catalyst.medium"
+  | "catalyst.large"
+  | "catalyst.bulk";
+
+export type ConduitRole = "primary" | "secondary" | "defensive" | "imbued_projectile" | "catalyst_support";
+
+export interface SpellCompatibilityTagRequirementsState {
+  all?: CastingConduitTag[];
+  any?: CastingConduitTag[][];
+}
+
+export interface SpellCompatibilityProfileState {
+  requiredTags: SpellCompatibilityTagRequirementsState;
+  preferredTags?: CastingConduitTag[];
+  discouragedTags?: CastingConduitTag[];
+  freecastAllowed?: boolean;
+  catalystFamilies?: string[];
+  catalystTiers?: CatalystTierId[];
+  notes?: string;
+}
+
+export interface ConduitProfileState {
+  conduitRole?: ConduitRole;
+  castingTags: CastingConduitTag[];
+  notes?: string;
+}
+
+export interface CatalystProfileState {
+  tier: CatalystTierId;
+  families?: string[];
+  notes?: string;
+}
+
 export interface SkillProgressionBandState {
   id: SkillProgressionBandId;
   label: string;
