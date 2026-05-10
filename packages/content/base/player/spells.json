@@ -3,6 +3,7 @@
     {
       "id": "spell.fire.elemental.firebolt",
       "compatibilityStatus": "ready",
+      "primaryFamily": "fire",
       "name": "Firebolt",
       "school": "elemental",
       "tradition": "arcane",
@@ -82,6 +83,7 @@
     {
       "id": "spell.fire.enfeebling.burn",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "fire",
       "name": "Burn",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -133,6 +135,7 @@
     {
       "id": "spell.fire.enhancing.ember_spikes",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "fire",
       "name": "Ember Spikes",
       "school": "enhancing",
       "tradition": "arcane",
@@ -183,6 +186,7 @@
     {
       "id": "spell.fire.healing.warmth",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "fire",
       "name": "Warmth",
       "school": "healing",
       "tradition": "arcane",
@@ -233,6 +237,7 @@
     {
       "id": "spell.water.elemental.waterjet",
       "compatibilityStatus": "partial",
+      "primaryFamily": "water",
       "name": "Waterjet",
       "school": "elemental",
       "tradition": "arcane",
@@ -283,6 +288,7 @@
     {
       "id": "spell.water.enfeebling.drench",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "water",
       "name": "Drench",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -333,6 +339,7 @@
     {
       "id": "spell.water.enhancing.waterbreath",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "water",
       "name": "Waterbreath",
       "school": "enhancing",
       "tradition": "arcane",
@@ -382,6 +389,7 @@
     {
       "id": "spell.water.healing.mend",
       "compatibilityStatus": "ready",
+      "primaryFamily": "water",
       "name": "Mend",
       "school": "healing",
       "tradition": "arcane",
@@ -454,6 +462,7 @@
     {
       "id": "spell.air.elemental.windblade",
       "compatibilityStatus": "partial",
+      "primaryFamily": "air",
       "name": "Windblade",
       "school": "elemental",
       "tradition": "arcane",
@@ -504,6 +513,7 @@
     {
       "id": "spell.air.enfeebling.gust",
       "compatibilityStatus": "partial",
+      "primaryFamily": "air",
       "name": "Gust",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -554,6 +564,7 @@
     {
       "id": "spell.air.enhancing.haste",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "air",
       "name": "Haste",
       "school": "enhancing",
       "tradition": "arcane",
@@ -603,6 +614,7 @@
     {
       "id": "spell.air.healing.breath",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "air",
       "name": "Breath",
       "school": "healing",
       "tradition": "arcane",
@@ -652,6 +664,7 @@
     {
       "id": "spell.earth.elemental.stone_spike",
       "compatibilityStatus": "partial",
+      "primaryFamily": "earth",
       "name": "Stone Spike",
       "school": "elemental",
       "tradition": "arcane",
@@ -702,6 +715,7 @@
     {
       "id": "spell.earth.enfeebling.quicksand",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "earth",
       "name": "Quicksand",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -752,6 +766,7 @@
     {
       "id": "spell.earth.enhancing.stone_skin",
       "compatibilityStatus": "partial",
+      "primaryFamily": "earth",
       "name": "Stone Skin",
       "school": "enhancing",
       "tradition": "arcane",
@@ -801,6 +816,7 @@
     {
       "id": "spell.earth.healing.renew",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "earth",
       "name": "Renew",
       "school": "healing",
       "tradition": "arcane",
@@ -851,6 +867,7 @@
     {
       "id": "spell.lightning.elemental.spark",
       "compatibilityStatus": "partial",
+      "primaryFamily": "lightning",
       "name": "Spark",
       "school": "elemental",
       "tradition": "arcane",
@@ -901,6 +918,7 @@
     {
       "id": "spell.lightning.enfeebling.shock",
       "compatibilityStatus": "partial",
+      "primaryFamily": "lightning",
       "name": "Shock",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -951,6 +969,7 @@
     {
       "id": "spell.lightning.enhancing.charge",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "lightning",
       "name": "Charge",
       "school": "enhancing",
       "tradition": "arcane",
@@ -1000,6 +1019,7 @@
     {
       "id": "spell.lightning.healing.surge",
       "compatibilityStatus": "partial",
+      "primaryFamily": "lightning",
       "name": "Surge",
       "school": "healing",
       "tradition": "arcane",
@@ -1048,6 +1068,7 @@
     {
       "id": "spell.ice.elemental.ice_shard",
       "compatibilityStatus": "partial",
+      "primaryFamily": "ice",
       "name": "Ice Shard",
       "school": "elemental",
       "tradition": "arcane",
@@ -1098,6 +1119,7 @@
     {
       "id": "spell.ice.enfeebling.freeze",
       "compatibilityStatus": "partial",
+      "primaryFamily": "ice",
       "name": "Freeze",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -1148,6 +1170,7 @@
     {
       "id": "spell.ice.enhancing.frostguard",
       "compatibilityStatus": "partial",
+      "primaryFamily": "ice",
       "name": "Frostguard",
       "school": "enhancing",
       "tradition": "arcane",
@@ -1197,6 +1220,7 @@
     {
       "id": "spell.ice.healing.preserve",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "ice",
       "name": "Preserve",
       "school": "healing",
       "tradition": "arcane",
@@ -1247,6 +1271,7 @@
     {
       "id": "spell.light.elemental.radiance",
       "compatibilityStatus": "partial",
+      "primaryFamily": "divine_light",
       "name": "Radiance",
       "school": "elemental",
       "tradition": "arcane",
@@ -1297,6 +1322,7 @@
     {
       "id": "spell.light.enfeebling.blind",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "divine_light",
       "name": "Blind",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -1347,6 +1373,7 @@
     {
       "id": "spell.light.enhancing.bless",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "divine_light",
       "name": "Bless",
       "school": "enhancing",
       "tradition": "arcane",
@@ -1396,6 +1423,7 @@
     {
       "id": "spell.light.healing.restore",
       "compatibilityStatus": "ready",
+      "primaryFamily": "divine_light",
       "name": "Restore",
       "school": "healing",
       "tradition": "arcane",
@@ -1469,6 +1497,7 @@
     {
       "id": "spell.shadow.elemental.void_bolt",
       "compatibilityStatus": "partial",
+      "primaryFamily": "dark_shadow_void",
       "name": "Void Bolt",
       "school": "elemental",
       "tradition": "arcane",
@@ -1519,6 +1548,7 @@
     {
       "id": "spell.shadow.enfeebling.curse",
       "compatibilityStatus": "partial",
+      "primaryFamily": "dark_shadow_void",
       "name": "Curse",
       "school": "enfeebling",
       "tradition": "arcane",
@@ -1597,6 +1627,7 @@
     {
       "id": "spell.shadow.enhancing.veil",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "dark_shadow_void",
       "name": "Veil",
       "school": "enhancing",
       "tradition": "arcane",
@@ -1647,6 +1678,7 @@
     {
       "id": "spell.shadow.healing.drain",
       "compatibilityStatus": "partial",
+      "primaryFamily": "dark_shadow_void",
       "name": "Drain",
       "school": "healing",
       "tradition": "arcane",
@@ -1696,6 +1728,7 @@
     {
       "id": "spell.druidic.control.root",
       "compatibilityStatus": "partial",
+      "primaryFamily": "earth",
       "name": "Root",
       "school": "control",
       "governingSkillId": "skill.magic.school.druidic",
@@ -1745,6 +1778,7 @@
     {
       "id": "spell.druidic.control.vinebind",
       "compatibilityStatus": "partial",
+      "primaryFamily": "earth",
       "name": "Vinebind",
       "school": "control",
       "governingSkillId": "skill.magic.school.druidic",
@@ -1794,6 +1828,7 @@
     {
       "id": "spell.druidic.utility.speak_plant",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "earth",
       "name": "Speak Plant",
       "school": "utility",
       "governingSkillId": "skill.magic.school.druidic",
@@ -1842,6 +1877,7 @@
     {
       "id": "spell.druidic.utility.speak_beast",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "water",
       "name": "Speak Beast",
       "school": "utility",
       "governingSkillId": "skill.magic.school.druidic",
@@ -1890,6 +1926,7 @@
     {
       "id": "spell.druidic.healing.berry",
       "compatibilityStatus": "partial",
+      "primaryFamily": "earth",
       "name": "Berry",
       "school": "healing",
       "governingSkillId": "skill.magic.school.druidic",
@@ -1980,6 +2017,7 @@
     {
       "id": "spell.druidic.healing.bloom",
       "compatibilityStatus": "partial",
+      "primaryFamily": "water",
       "name": "Bloom",
       "school": "healing",
       "governingSkillId": "skill.magic.school.druidic",
@@ -2057,6 +2095,7 @@
     {
       "id": "spell.druidic.enhancing.thornskin",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "earth",
       "name": "Thornskin",
       "school": "enhancing",
       "governingSkillId": "skill.magic.school.druidic",
@@ -2105,6 +2144,7 @@
     {
       "id": "spell.ninjutsu.utility.shadowstep",
       "compatibilityStatus": "partial",
+      "primaryFamily": "dark_shadow_void",
       "name": "Shadowstep",
       "school": "utility",
       "governingSkillId": "skill.magic.school.ninjutsu",
@@ -2153,6 +2193,7 @@
     {
       "id": "spell.ninjutsu.ranged.shuriken",
       "compatibilityStatus": "partial",
+      "primaryFamily": "air",
       "name": "Shuriken",
       "school": "ranged",
       "governingSkillId": "skill.magic.school.ninjutsu",
@@ -2201,6 +2242,7 @@
     {
       "id": "spell.ninjutsu.enfeebling.blind_powder",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "dark_shadow_void",
       "name": "Blind Powder",
       "school": "enfeebling",
       "governingSkillId": "skill.magic.school.ninjutsu",
@@ -2250,6 +2292,7 @@
     {
       "id": "spell.ninjutsu.utility.smoke",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "dark_shadow_void",
       "name": "Smoke",
       "school": "utility",
       "governingSkillId": "skill.magic.school.ninjutsu",
@@ -2298,6 +2341,7 @@
     {
       "id": "spell.ninjutsu.enhancing.haze",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "dark_shadow_void",
       "name": "Haze",
       "school": "enhancing",
       "governingSkillId": "skill.magic.school.ninjutsu",
@@ -2346,6 +2390,7 @@
     {
       "id": "spell.ninjutsu.utility.mirror",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "dark_shadow_void",
       "name": "Mirror",
       "school": "utility",
       "governingSkillId": "skill.magic.school.ninjutsu",
@@ -2394,6 +2439,7 @@
     {
       "id": "spell.performance.enhancing.war_song",
       "compatibilityStatus": "partial",
+      "primaryFamily": "lightning",
       "name": "War Song",
       "school": "enhancing",
       "governingSkillId": "skill.magic.school.performance",
@@ -2466,6 +2512,7 @@
     {
       "id": "spell.performance.enhancing.battle_rhythm",
       "compatibilityStatus": "partial",
+      "primaryFamily": "lightning",
       "name": "Battle Rhythm",
       "school": "enhancing",
       "governingSkillId": "skill.magic.school.performance",
@@ -2514,6 +2561,7 @@
     {
       "id": "spell.performance.enhancing.guard_song",
       "compatibilityStatus": "partial",
+      "primaryFamily": "earth",
       "name": "Guard Song",
       "school": "enhancing",
       "governingSkillId": "skill.magic.school.performance",
@@ -2562,6 +2610,7 @@
     {
       "id": "spell.performance.enhancing.stone_dance",
       "compatibilityStatus": "partial",
+      "primaryFamily": "earth",
       "name": "Stone Dance",
       "school": "enhancing",
       "governingSkillId": "skill.magic.school.performance",
@@ -2610,6 +2659,7 @@
     {
       "id": "spell.performance.healing.regen_song",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "divine_light",
       "name": "Regen Song",
       "school": "healing",
       "governingSkillId": "skill.magic.school.performance",
@@ -2659,6 +2709,7 @@
     {
       "id": "spell.performance.healing.mana_song",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "lightning",
       "name": "Mana Song",
       "school": "healing",
       "governingSkillId": "skill.magic.school.performance",
@@ -2707,6 +2758,7 @@
     {
       "id": "spell.performance.utility.march",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "air",
       "name": "March",
       "school": "utility",
       "governingSkillId": "skill.magic.school.performance",
@@ -2754,6 +2806,7 @@
     {
       "id": "spell.performance.enhancing.grace",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "divine_light",
       "name": "Grace",
       "school": "enhancing",
       "governingSkillId": "skill.magic.school.performance",
@@ -2802,6 +2855,7 @@
     {
       "id": "spell.performance.enfeebling.dirge",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "dark_shadow_void",
       "name": "Dirge",
       "school": "enfeebling",
       "governingSkillId": "skill.magic.school.performance",
@@ -2851,6 +2905,7 @@
     {
       "id": "spell.performance.enfeebling.discord",
       "compatibilityStatus": "deferred",
+      "primaryFamily": "dark_shadow_void",
       "name": "Discord",
       "school": "enfeebling",
       "governingSkillId": "skill.magic.school.performance",

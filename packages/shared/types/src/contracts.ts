@@ -1568,6 +1568,16 @@ export type CatalystFamilyId =
   | "flower"
   | "living_plant";
 
+export type SpellPrimaryFamilyId =
+  | "fire"
+  | "water"
+  | "air"
+  | "earth"
+  | "ice"
+  | "lightning"
+  | "divine_light"
+  | "dark_shadow_void";
+
 export type SpellCompatibilityStatus = "ready" | "partial" | "deferred" | "placeholder";
 
 export type ConduitRole = "primary" | "secondary" | "defensive" | "imbued_projectile" | "catalyst_support";
@@ -1800,6 +1810,7 @@ export type LearnedPowerSource = "learned" | "taught";
 export interface PlayerSpellState {
   id: string;
   school: string;
+  primaryFamily?: SpellPrimaryFamilyId;
   tradition?: string;
   discipline?: string;
   element?: string;

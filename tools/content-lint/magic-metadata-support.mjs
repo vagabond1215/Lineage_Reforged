@@ -81,6 +81,17 @@ export const SPELL_COMPATIBILITY_STATUSES = Object.freeze([
   "placeholder"
 ]);
 
+export const SPELL_PRIMARY_FAMILIES = Object.freeze([
+  "fire",
+  "water",
+  "air",
+  "earth",
+  "ice",
+  "lightning",
+  "divine_light",
+  "dark_shadow_void"
+]);
+
 export const CONDUIT_ROLES = Object.freeze([
   "primary",
   "secondary",
@@ -93,6 +104,7 @@ const CASTING_CONDUIT_TAG_SET = new Set(CASTING_CONDUIT_TAGS);
 const CATALYST_TIER_SET = new Set(CATALYST_TIERS);
 const CATALYST_FAMILY_SET = new Set(CATALYST_FAMILIES);
 const SPELL_COMPATIBILITY_STATUS_SET = new Set(SPELL_COMPATIBILITY_STATUSES);
+const SPELL_PRIMARY_FAMILY_SET = new Set(SPELL_PRIMARY_FAMILIES);
 const CONDUIT_ROLE_SET = new Set(CONDUIT_ROLES);
 const METADATA_IDENTIFIER_PATTERN = /^[a-z0-9]+(?:[._][a-z0-9]+)*$/;
 const SPELL_COMPATIBILITY_PROFILE_FIELDS = new Set([
@@ -106,6 +118,19 @@ const SPELL_COMPATIBILITY_PROFILE_FIELDS = new Set([
 ]);
 const CONDUIT_PROFILE_FIELDS = new Set(["conduitRole", "castingTags", "notes"]);
 const CATALYST_PROFILE_FIELDS = new Set(["tier", "families", "notes"]);
+const SPELL_ELEMENT_PRIMARY_FAMILY = Object.freeze({
+  fire: "fire",
+  water: "water",
+  air: "air",
+  earth: "earth",
+  ice: "ice",
+  lightning: "lightning",
+  light: "divine_light",
+  divine: "divine_light",
+  shadow: "dark_shadow_void",
+  dark: "dark_shadow_void",
+  void: "dark_shadow_void"
+});
 
 const DAGGER_CONDUIT_TAGS = new Set([
   "magic.elemental",
@@ -426,6 +451,16 @@ export function validateSpellCompatibilityStatus(status, source) {
   return [];
 }
 
+export function validateSpellPrimaryFamily(primaryFamily, source) {
+  if (typeof primaryFamily !== "string" || primaryFamily.trim().length === 0) {
+    return [`${source} must be a non-empty primaryFamily`];
+  }
+  if (!SPELL_PRIMARY_FAMILY_SET.has(primaryFamily)) {
+    return [`${source} uses unknown primaryFamily '${primaryFamily}'`];
+  }
+  return [];
+}
+
 function validateCastingTagArray(value, source, minLength = 1) {
   const errors = validateStringArray(value, source, { minLength });
   if (errors.length > 0) {
@@ -661,6 +696,19 @@ export function validateSpellMagicMetadata({ record, source }) {
   const errors = [];
   if (!isObject(record)) {
     return [`${source} must be an object`];
+  }
+
+  if (record.primaryFamily === undefined) {
+    errors.push(`${source} must define primaryFamily`);
+  } else {
+    errors.push(...validateSpellPrimaryFamily(record.primaryFamily, `${source}.primaryFamily`));
+  }
+
+  const expectedPrimaryFamily = SPELL_ELEMENT_PRIMARY_FAMILY[record.element];
+  if (expectedPrimaryFamily !== undefined && record.primaryFamily !== expectedPrimaryFamily) {
+    errors.push(
+      `${source}.primaryFamily '${String(record.primaryFamily)}' must match element '${record.element}' as '${expectedPrimaryFamily}'`
+    );
   }
 
   if (record.compatibilityStatus === undefined) {

@@ -36,6 +36,7 @@ test("valid spell compatibility statuses pass", () => {
       validateSpellMagicMetadata({
         record: {
           id: `spell.fixture.${status}`,
+          primaryFamily: "fire",
           compatibilityStatus: status,
           compatibilityProfile: status === "ready" ? validCompatibilityProfile() : undefined,
           resolutionHooks: ["damage.magic", "school.elemental"]
@@ -52,6 +53,7 @@ test("unknown spell compatibility statuses fail", () => {
     validateSpellMagicMetadata({
       record: {
         id: "spell.fixture.unknown_status",
+        primaryFamily: "fire",
         compatibilityStatus: "future_ready",
         resolutionHooks: ["damage.magic"]
       },
@@ -66,6 +68,7 @@ test("ready spells require compatibilityProfile", () => {
     validateSpellMagicMetadata({
       record: {
         id: "spell.fixture.ready_missing_profile",
+        primaryFamily: "fire",
         compatibilityStatus: "ready",
         resolutionHooks: ["damage.magic", "school.elemental"]
       },
@@ -80,6 +83,7 @@ test("ready spells reject deferred spell hooks", () => {
     validateSpellMagicMetadata({
       record: {
         id: "spell.fixture.ready_deferred_hook",
+        primaryFamily: "fire",
         compatibilityStatus: "ready",
         compatibilityProfile: validCompatibilityProfile(),
         resolutionHooks: ["buff.bless", "school.enhancing"]
@@ -96,6 +100,7 @@ test("partial, deferred, and placeholder spells may omit compatibilityProfile", 
       validateSpellMagicMetadata({
         record: {
           id: `spell.fixture.${status}_without_profile`,
+          primaryFamily: "fire",
           compatibilityStatus: status,
           resolutionHooks: ["buff.bless", "school.enhancing"]
         },
