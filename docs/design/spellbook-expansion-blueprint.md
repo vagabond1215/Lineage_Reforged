@@ -16,6 +16,7 @@ Current catalog baseline from `packages/content/base/player/spells.json`:
 - 25 `partial`
 - 27 `deferred`
 - 7 spells with `compatibilityProfile`
+- 55 spells with top-level `primaryFamily` metadata
 
 This blueprint does not change runtime behavior. It does not edit `spells.json`, add spells, remove spells, rename spell ids, change costs, add schema fields, or activate magic acquisition, catalyst effects, affinities, skill gain, Legacy, account, preparation, payout, or UI behavior.
 
