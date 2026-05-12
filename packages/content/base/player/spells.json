@@ -236,7 +236,7 @@
     },
     {
       "id": "spell.water.elemental.waterjet",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "water",
       "name": "Waterjet",
       "school": "elemental",
@@ -277,6 +277,33 @@
           "stamina": 1
         },
         "actionType": "spell.water.elemental.waterjet"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "water"
+        ],
+        "notes": "Metadata-only water projectile compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "damage.magic",
@@ -461,7 +488,7 @@
     },
     {
       "id": "spell.air.elemental.windblade",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "air",
       "name": "Windblade",
       "school": "elemental",
@@ -503,6 +530,33 @@
         },
         "actionType": "spell.air.elemental.windblade"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "air"
+        ],
+        "notes": "Metadata-only air projectile compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "damage.magic",
         "school.elemental",
@@ -512,7 +566,7 @@
     },
     {
       "id": "spell.air.enfeebling.gust",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "air",
       "name": "Gust",
       "school": "enfeebling",
@@ -553,6 +607,33 @@
           "stamina": 1
         },
         "actionType": "spell.air.enfeebling.gust"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.enfeebling",
+            "magic.control"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "control.moderate"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "air"
+        ],
+        "notes": "Metadata-only stagger compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "status.stagger",
@@ -663,7 +744,7 @@
     },
     {
       "id": "spell.earth.elemental.stone_spike",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "earth",
       "name": "Stone Spike",
       "school": "elemental",
@@ -704,6 +785,33 @@
           "stamina": 1
         },
         "actionType": "spell.earth.elemental.stone_spike"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "earth"
+        ],
+        "notes": "Metadata-only earth projectile compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "damage.magic",
@@ -765,7 +873,7 @@
     },
     {
       "id": "spell.earth.enhancing.stone_skin",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "earth",
       "name": "Stone Skin",
       "school": "enhancing",
@@ -805,6 +913,32 @@
           "stamina": 1
         },
         "actionType": "spell.earth.enhancing.stone_skin"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.enhancing",
+            "magic.warding"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "delivery.ward",
+          "cast.stable",
+          "control.easy"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "earth"
+        ],
+        "notes": "Metadata-only protection compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "buff.protect",
@@ -866,7 +1000,7 @@
     },
     {
       "id": "spell.lightning.elemental.spark",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "lightning",
       "name": "Spark",
       "school": "elemental",
@@ -908,6 +1042,33 @@
         },
         "actionType": "spell.lightning.elemental.spark"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "lightning"
+        ],
+        "notes": "Metadata-only lightning projectile compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "damage.magic",
         "school.elemental",
@@ -917,7 +1078,7 @@
     },
     {
       "id": "spell.lightning.enfeebling.shock",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "lightning",
       "name": "Shock",
       "school": "enfeebling",
@@ -958,6 +1119,33 @@
           "stamina": 1
         },
         "actionType": "spell.lightning.enfeebling.shock"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.enfeebling",
+            "magic.control"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "lightning"
+        ],
+        "notes": "Metadata-only interrupt compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "interrupt.primary",
@@ -1067,7 +1255,7 @@
     },
     {
       "id": "spell.ice.elemental.ice_shard",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "ice",
       "name": "Ice Shard",
       "school": "elemental",
@@ -1109,6 +1297,33 @@
         },
         "actionType": "spell.ice.elemental.ice_shard"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "ice"
+        ],
+        "notes": "Metadata-only ice projectile compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "damage.magic",
         "school.elemental",
@@ -1118,7 +1333,7 @@
     },
     {
       "id": "spell.ice.enfeebling.freeze",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "ice",
       "name": "Freeze",
       "school": "enfeebling",
@@ -1160,6 +1375,30 @@
         },
         "actionType": "spell.ice.enfeebling.freeze"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.enfeebling",
+            "magic.control"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.stable",
+          "control.moderate"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "ice"
+        ],
+        "notes": "Metadata-only bind compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "status.bind",
         "school.enfeebling",
@@ -1169,7 +1408,7 @@
     },
     {
       "id": "spell.ice.enhancing.frostguard",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "ice",
       "name": "Frostguard",
       "school": "enhancing",
@@ -1209,6 +1448,32 @@
           "stamina": 1
         },
         "actionType": "spell.ice.enhancing.frostguard"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.enhancing",
+            "magic.warding"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "delivery.ward",
+          "cast.stable",
+          "control.easy"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "ice"
+        ],
+        "notes": "Metadata-only ward compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "buff.ward",
@@ -1270,7 +1535,7 @@
     },
     {
       "id": "spell.light.elemental.radiance",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "divine_light",
       "name": "Radiance",
       "school": "elemental",
@@ -1311,6 +1576,35 @@
           "stamina": 1
         },
         "actionType": "spell.light.elemental.radiance"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "magic.divine",
+          "delivery.projectile",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "light",
+          "divine",
+          "sanctified"
+        ],
+        "notes": "Metadata-only light-aligned projectile compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "damage.magic",
@@ -1727,7 +2021,7 @@
     },
     {
       "id": "spell.druidic.control.root",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "earth",
       "name": "Root",
       "school": "control",
@@ -1766,6 +2060,32 @@
           "stamina": 1
         },
         "actionType": "spell.druidic.control.root"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.druidic",
+            "magic.control"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.stable",
+          "control.moderate"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "botanical",
+          "seed",
+          "living_plant"
+        ],
+        "notes": "Metadata-only druidic bind compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "status.bind",

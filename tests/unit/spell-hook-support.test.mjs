@@ -12,6 +12,21 @@ import {
   validateSpellResolutionHooks
 } from "../../tools/content-lint/spell-hook-support.mjs";
 
+const ALPHA_PROMOTED_SPELL_IDS = Object.freeze([
+  "spell.water.elemental.waterjet",
+  "spell.air.elemental.windblade",
+  "spell.earth.elemental.stone_spike",
+  "spell.ice.elemental.ice_shard",
+  "spell.light.elemental.radiance",
+  "spell.lightning.elemental.spark",
+  "spell.air.enfeebling.gust",
+  "spell.lightning.enfeebling.shock",
+  "spell.ice.enfeebling.freeze",
+  "spell.druidic.control.root",
+  "spell.earth.enhancing.stone_skin",
+  "spell.ice.enhancing.frostguard"
+]);
+
 async function loadContentRecords(relativePath) {
   const raw = await readFile(relativePath, "utf8");
   return JSON.parse(raw.replace(/^\uFEFF/, "")).records;
@@ -51,6 +66,20 @@ test("current authored spells use known classified resolution hooks", async () =
       [],
       record.id
     );
+  }
+});
+
+test("Alpha promoted spells use only runtime or classifier resolution hooks", async () => {
+  const records = await loadContentRecords("packages/content/base/player/spells.json");
+  const recordsById = new Map(records.map((record) => [record.id, record]));
+
+  for (const id of ALPHA_PROMOTED_SPELL_IDS) {
+    const record = recordsById.get(id);
+    assert.ok(record, `${id} exists`);
+    assert.equal(record.compatibilityStatus, "ready", id);
+    for (const hook of record.resolutionHooks ?? []) {
+      assert.ok(["runtime", "classifier"].includes(classifySpellResolutionHook(hook)), `${id} uses supported hook ${hook}`);
+    }
   }
 });
 

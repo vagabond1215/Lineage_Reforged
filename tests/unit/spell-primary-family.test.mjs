@@ -25,6 +25,23 @@ function minimalSpell(overrides = {}) {
   };
 }
 
+const ALPHA_PRIMARY_FAMILY_EXPECTATIONS = Object.freeze(
+  new Map([
+    ["spell.water.elemental.waterjet", "water"],
+    ["spell.air.elemental.windblade", "air"],
+    ["spell.earth.elemental.stone_spike", "earth"],
+    ["spell.ice.elemental.ice_shard", "ice"],
+    ["spell.light.elemental.radiance", "divine_light"],
+    ["spell.lightning.elemental.spark", "lightning"],
+    ["spell.air.enfeebling.gust", "air"],
+    ["spell.lightning.enfeebling.shock", "lightning"],
+    ["spell.ice.enfeebling.freeze", "ice"],
+    ["spell.druidic.control.root", "earth"],
+    ["spell.earth.enhancing.stone_skin", "earth"],
+    ["spell.ice.enhancing.frostguard", "ice"]
+  ])
+);
+
 test("spell primary family vocabulary is explicit", () => {
   assert.deepEqual(SPELL_PRIMARY_FAMILIES, [
     "fire",
@@ -104,6 +121,19 @@ test("primaryFamily inside compatibilityProfile does not satisfy top-level requi
 
   assert.match(errors, /must define primaryFamily/);
   assert.match(errors, /unsupported metadata field 'primaryFamily'/);
+});
+
+test("Alpha compatibility profile batch keeps top-level primaryFamily mappings", async () => {
+  const records = await loadContentRecords("packages/content/base/player/spells.json");
+  const recordsById = new Map(records.map((record) => [record.id, record]));
+
+  for (const [id, primaryFamily] of ALPHA_PRIMARY_FAMILY_EXPECTATIONS) {
+    const record = recordsById.get(id);
+    assert.ok(record, `${id} exists`);
+    assert.equal(record.primaryFamily, primaryFamily);
+    assert.ok(record.compatibilityProfile, `${id} has compatibilityProfile`);
+    assert.equal("primaryFamily" in record.compatibilityProfile, false, `${id} has no nested primaryFamily`);
+  }
 });
 
 test("element to primaryFamily consistency is enforced where explicit element exists", () => {

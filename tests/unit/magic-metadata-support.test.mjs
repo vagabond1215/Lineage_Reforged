@@ -114,6 +114,21 @@ test("valid spell compatibility tags pass", () => {
   );
 });
 
+test("spell compatibility profiles reject primaryFamily as nested metadata", () => {
+  assert.match(
+    validateSpellCompatibilityProfile({
+      profile: {
+        primaryFamily: "fire",
+        requiredTags: {
+          all: ["magic.elemental"]
+        }
+      },
+      source: "fixture.spell.compatibilityProfile"
+    }).join("\n"),
+    /unsupported metadata field 'primaryFamily'/
+  );
+});
+
 test("valid item conduit tags pass on supported item families", () => {
   assertNoValidationErrors(
     validateItemMagicMetadata({

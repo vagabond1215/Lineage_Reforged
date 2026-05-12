@@ -12,10 +12,10 @@ This document adapts the approved spellbook expansion research into the reposito
 Current catalog baseline from `packages/content/base/player/spells.json`:
 
 - 55 authored spells
-- 3 `ready`
-- 25 `partial`
+- 15 `ready`
+- 13 `partial`
 - 27 `deferred`
-- 7 spells with `compatibilityProfile`
+- 19 spells with `compatibilityProfile`
 - 55 spells with top-level `primaryFamily` metadata
 
 This blueprint does not change runtime behavior. It does not edit `spells.json`, add spells, remove spells, rename spell ids, change costs, add schema fields, or activate magic acquisition, catalyst effects, affinities, skill gain, Legacy, account, preparation, payout, or UI behavior.
@@ -54,27 +54,27 @@ This table maps the live catalog into the corrected taxonomy. It is a design pro
 | `spell.fire.enfeebling.burn` Burn | deferred | fire | enfeebling, control | arcane | short/medium projectile | Rename/refine later; defer DoT behavior. |
 | `spell.fire.enhancing.ember_spikes` Ember Spikes | deferred | fire | warding, enhancing | arcane | self/aura reactive ward | Strong name; defer reactive damage behavior. |
 | `spell.fire.healing.warmth` Warmth | deferred | fire | healing, utility | arcane | self/ally aura | Rename/refine later; keep as anti-cold support concept. |
-| `spell.water.elemental.waterjet` Waterjet | partial | water | none | arcane | short/medium/long projectile | Promote/profile candidate. |
+| `spell.water.elemental.waterjet` Waterjet | ready | water | none | arcane | short/medium/long projectile | Profiled Alpha ready spell. |
 | `spell.water.enfeebling.drench` Drench | deferred | water | enfeebling, control | arcane | short/medium area/projectile | Rename later; defer soaked semantics. |
 | `spell.water.enhancing.waterbreath` Waterbreath | deferred | water | enhancing, utility | arcane | self/ally utility | Keep deferred until environmental utility exists. |
 | `spell.water.healing.mend` Mend | ready | water | healing | arcane | touch/short/medium ally | Keep as baseline water restoration. |
-| `spell.air.elemental.windblade` Windblade | partial | air | none | arcane | short/medium projectile | Promote/profile candidate. |
-| `spell.air.enfeebling.gust` Gust | partial | air | control | arcane | short/medium cone | Promote/profile candidate. |
+| `spell.air.elemental.windblade` Windblade | ready | air | none | arcane | short/medium projectile | Profiled Alpha ready spell. |
+| `spell.air.enfeebling.gust` Gust | ready | air | control | arcane | short/medium cone | Profiled Alpha ready spell. |
 | `spell.air.enhancing.haste` Haste | deferred | air | enhancing | arcane | ally short/medium | Defer until tempo semantics are stable. |
 | `spell.air.healing.breath` Breath | deferred | air | healing, utility | arcane | self/ally | Rename/refine later around breath/endurance. |
-| `spell.earth.elemental.stone_spike` Stone Spike | partial | earth | none | arcane | short/medium/long projectile | Promote/profile candidate. |
+| `spell.earth.elemental.stone_spike` Stone Spike | ready | earth | none | arcane | short/medium/long projectile | Profiled Alpha ready spell. |
 | `spell.earth.enfeebling.quicksand` Quicksand | deferred | earth | control | arcane | medium area | Keep concept; defer terrain/control runtime. |
-| `spell.earth.enhancing.stone_skin` Stone Skin | partial | earth | warding | arcane | self/ally ward | Promote/profile candidate. |
+| `spell.earth.enhancing.stone_skin` Stone Skin | ready | earth | warding | arcane | self/ally ward | Profiled Alpha ready spell. |
 | `spell.earth.healing.renew` Renew | deferred | earth | healing, druidic | arcane | self/ally | Rename/refine later as natural renewal. |
-| `spell.lightning.elemental.spark` Spark | partial | lightning | none | arcane | short/medium/long projectile | Rename/refine later; promote/profile candidate. |
-| `spell.lightning.enfeebling.shock` Shock | partial | lightning | control | arcane | short/medium projectile | Promote/profile interrupt identity. |
+| `spell.lightning.elemental.spark` Spark | ready | lightning | none | arcane | short/medium/long projectile | Rename/refine later; profiled Alpha ready spell. |
+| `spell.lightning.enfeebling.shock` Shock | ready | lightning | control | arcane | short/medium projectile | Profiled Alpha interrupt identity. |
 | `spell.lightning.enhancing.charge` Charge | deferred | lightning | enhancing | arcane | self/ally imbue | Redesign later as imbue or overcharge. |
 | `spell.lightning.healing.surge` Surge | partial | lightning | healing, enhancing | arcane | touch/short ally | Promote/profile sharp stimulant heal. |
-| `spell.ice.elemental.ice_shard` Ice Shard | partial | ice | none | arcane | short/medium/long projectile | Promote/profile candidate. |
-| `spell.ice.enfeebling.freeze` Freeze | partial | ice | control | arcane | short/medium projectile | Promote/profile bind/slow candidate. |
-| `spell.ice.enhancing.frostguard` Frostguard | partial | ice | warding | arcane | self/ally ward | Promote/profile defensive ice anchor. |
+| `spell.ice.elemental.ice_shard` Ice Shard | ready | ice | none | arcane | short/medium/long projectile | Profiled Alpha ready spell. |
+| `spell.ice.enfeebling.freeze` Freeze | ready | ice | control | arcane | short/medium projectile | Profiled Alpha bind/slow candidate. |
+| `spell.ice.enhancing.frostguard` Frostguard | ready | ice | warding | arcane | self/ally ward | Profiled Alpha defensive ice anchor. |
 | `spell.ice.healing.preserve` Preserve | deferred | ice | healing, utility | arcane | self/ally | Rename/refine toward preservation fantasy. |
-| `spell.light.elemental.radiance` Radiance | partial | divine/light | none | arcane/divine | short/medium/long projectile | Keep as offensive light anchor. |
+| `spell.light.elemental.radiance` Radiance | ready | divine/light | none | arcane/divine | short/medium/long projectile | Profiled Alpha offensive light anchor. |
 | `spell.light.enfeebling.blind` Blind | deferred | divine/light | enfeebling, control | arcane/divine | short/medium/long projectile | Rename later; keep glare identity. |
 | `spell.light.enhancing.bless` Bless | deferred | divine/light | enhancing | arcane/divine | ally/aura | Rename later; broad boon is too generic at scale. |
 | `spell.light.healing.restore` Restore | ready | divine/light | healing | arcane/divine | touch/short/medium ally | Keep as direct restoration anchor. |
@@ -82,7 +82,7 @@ This table maps the live catalog into the corrected taxonomy. It is a design pro
 | `spell.shadow.enfeebling.curse` Curse | partial | dark/shadow/void | enfeebling | arcane/dark | short/medium projectile | Keep concept; dark status semantics remain deferred. |
 | `spell.shadow.enhancing.veil` Veil | deferred | dark/shadow/void | warding, utility | arcane/dark | self/aura | Keep as concealment/defense shroud. |
 | `spell.shadow.healing.drain` Drain | partial | dark/shadow/void | enfeebling, healing | arcane/dark | short/medium projectile | Promote/profile sustain-through-damage seed. |
-| `spell.druidic.control.root` Root | partial | earth | control, druidic | druidic | short/medium bind | Promote/profile deterministic bind. |
+| `spell.druidic.control.root` Root | ready | earth | control, druidic | druidic | short/medium bind | Profiled Alpha deterministic bind. |
 | `spell.druidic.control.vinebind` Vinebind | partial | earth | control, druidic | druidic | medium area bind | Promote/profile area bind. |
 | `spell.druidic.utility.speak_plant` Speak Plant | deferred | earth | utility, druidic | druidic | ritual/self | Keep ritual utility deferred. |
 | `spell.druidic.utility.speak_beast` Speak Beast | deferred | water | utility, druidic | druidic | ritual/self | Water is the cleaner animal-empathy fit; keep deferred. |
@@ -152,21 +152,21 @@ The first tranche is the near-term design candidate set only. It does not author
 
 | Spell | Family | Why it belongs | Readiness | Notes |
 |---|---|---|---|---|
-| Waterjet | water | Clean deterministic ranged pressure | P | Promote/profile current spell |
-| Windblade | air | Baseline air offense | P | Promote/profile current spell |
-| Gust | air | Early control and evasion-tank seed | P | Promote/profile current spell |
-| Stone Spike | earth | Baseline earth offense | P | Promote/profile current spell |
-| Stone Skin | earth | Core warding seed | P | Promote/profile current spell |
-| Spark | lightning | Baseline lightning offense | P | Promote/profile current spell |
-| Shock | lightning | Early interrupt identity | P | Promote/profile current spell |
+| Waterjet | water | Clean deterministic ranged pressure | R | Profiled current spell |
+| Windblade | air | Baseline air offense | R | Profiled current spell |
+| Gust | air | Early control and evasion-tank seed | R | Profiled current spell |
+| Stone Spike | earth | Baseline earth offense | R | Profiled current spell |
+| Stone Skin | earth | Core warding seed | R | Profiled current spell |
+| Spark | lightning | Baseline lightning offense | R | Profiled current spell |
+| Shock | lightning | Early interrupt identity | R | Profiled current spell |
 | Surge | lightning | Non-divine sharp heal identity | P | Promote/profile current spell |
-| Ice Shard | ice | Baseline ice offense | P | Promote/profile current spell |
-| Freeze | ice | Classic bind/slow seed | P | Promote/profile current spell |
-| Frostguard | ice | Defensive ice anchor | P | Promote/profile current spell |
-| Radiance | divine/light | Offensive light anchor | P | Promote/profile current spell |
+| Ice Shard | ice | Baseline ice offense | R | Profiled current spell |
+| Freeze | ice | Classic bind/slow seed | R | Profiled current spell |
+| Frostguard | ice | Defensive ice anchor | R | Profiled current spell |
+| Radiance | divine/light | Offensive light anchor | R | Profiled current spell |
 | Void Bolt | dark/shadow/void | Offensive dark anchor | P | Promote/profile current spell |
 | Drain | dark/shadow/void | Sustain-through-damage seed | P | Promote/profile current spell |
-| Root | earth | Deterministic bind reference | P | Promote/profile current spell |
+| Root | earth | Deterministic bind reference | R | Profiled current spell |
 | Vinebind | earth | Area bind reference | P | Promote/profile current spell |
 | Shadowstep | dark/shadow/void | Evasion-tank and magic-melee mobility | P | Promote/profile current spell |
 | Shuriken | air | Physical-ranged support lane | P | Promote/profile current spell |
