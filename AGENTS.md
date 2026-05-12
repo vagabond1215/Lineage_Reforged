@@ -13,6 +13,16 @@
 - Use `Version X.Y.Z - Short Name` for Codex workflow labels. Do not use old `Step N` labels for new work.
 - Each Codex prompt should include a version label when it is part of the ongoing workflow.
 - Internal workflow versions are development maturity markers, not public game release versions.
+- Platform/tool recommendations belong outside and before copy-paste prompt bodies, not inside the prompt itself.
+- Accepted platform/tool labels:
+  - ChatGPT via GitHub Connector
+  - ChatGPT Deep Research
+  - ChatGPT Agent Mode
+  - Codex 5.5 Plan Mode
+  - Codex 5.5 Local
+  - Codex 5.5 Cloud, only when justified by larger multi-file work
+- Prefer ChatGPT via GitHub Connector for small repo-aware docs, handoff, audit, or tiny GitHub file edits when quality will not be sacrificed.
+- Use Codex for local validation, multi-file code/content changes, commands, tests, or edits that need the local working tree.
 - Each detailed Codex output written to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) must state:
   - source version/run
   - date
@@ -22,6 +32,14 @@
   - suggested commit message
   - risks/follow-up notes
   - next recommended version/run
+
+## Prompt Packaging
+
+- Copy-paste prompts should not include the platform/tool label inside the prompt body.
+- State the platform/tool label outside and before the copy-paste prompt.
+- Do not include phrases like "I have included necessary files" unless the user must manually attach, move, upload, or provide files for that run.
+- Tell the user explicitly when they should include files, move files, upload files, pull/sync/push, or otherwise change files manually before running a prompt.
+- If no manual file action is needed, omit file-inclusion language entirely.
 
 ## Development Discipline
 
