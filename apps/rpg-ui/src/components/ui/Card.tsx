@@ -27,7 +27,7 @@ export function Card({
 
   return (
     <section
-      className={`rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-4 shadow-panel backdrop-blur-xl ${className}`}
+      className={`rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-4 shadow-panel ${className}`}
       style={{ ...accentStyle, ...style }}
     >
       {(title || eyebrow || actions) && (

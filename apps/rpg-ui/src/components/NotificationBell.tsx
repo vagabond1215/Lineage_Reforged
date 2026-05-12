@@ -10,7 +10,7 @@ type NotificationBellProps = {
 export function NotificationBell({ items }: NotificationBellProps) {
   const [open, setOpen] = useState(false);
   const topBarButtonClass =
-    'rounded-full border border-slate-400/25 bg-[rgba(54,63,75,0.9)] p-3 text-slate-100 shadow-[0_10px_24px_rgba(2,6,23,0.22)] transition hover:border-slate-300/32 hover:bg-[rgba(69,80,95,0.96)]';
+    'rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] p-3 text-[color:var(--color-text-primary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
 
   return (
     <div className="relative z-[110]">
@@ -21,32 +21,39 @@ export function NotificationBell({ items }: NotificationBellProps) {
         aria-label="Open notifications"
       >
         <Icon name="bell" className="h-5 w-5" />
-        <span className="absolute -right-1 -top-1 rounded-full bg-amber-300 px-1.5 py-0.5 text-[10px] font-semibold text-slate-950">
+        <span className="absolute -right-1 -top-1 rounded-full bg-[color:var(--color-action-primary)] px-1.5 py-0.5 text-[10px] font-semibold text-[color:var(--color-action-primary-text)]">
           {items.length}
         </span>
       </button>
       {open && (
-        <div className="absolute right-0 top-[calc(100%+12px)] z-[120] w-80 max-w-[calc(100vw-2rem)] rounded-[24px] border border-white/10 bg-slate-950/96 p-4 shadow-2xl backdrop-blur-xl">
+        <div className="absolute right-0 top-[calc(100%+12px)] z-[120] w-80 max-w-[calc(100vw-2rem)] rounded-[24px] border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-overlay)] p-4 shadow-2xl">
           <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-base text-slate-50">Notifications</h3>
+            <h3 className="text-base text-[color:var(--color-text-primary)]">Notifications</h3>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="text-sm text-slate-400 transition hover:text-slate-200"
+              className="text-sm text-[color:var(--color-text-secondary)] transition hover:text-[color:var(--color-text-primary)]"
             >
               Close
             </button>
           </div>
           <div className="max-h-[65vh] space-y-3 overflow-y-auto pr-1">
             {items.map((item) => (
-              <article key={item.id} className="rounded-[20px] border border-white/8 bg-black/20 p-3">
+              <article
+                key={item.id}
+                className="rounded-[20px] border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] p-3"
+              >
                 <div className="flex items-center justify-between gap-3">
-                  <h4 className="text-sm font-semibold text-slate-100">{item.title}</h4>
+                  <h4 className="text-sm font-semibold text-[color:var(--color-text-primary)]">
+                    {item.title}
+                  </h4>
                   <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses(item.type)}`}>
                     {item.time}
                   </span>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{item.detail}</p>
+                <p className="mt-2 text-sm leading-6 text-[color:var(--color-text-secondary)]">
+                  {item.detail}
+                </p>
               </article>
             ))}
           </div>

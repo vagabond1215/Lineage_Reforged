@@ -58,7 +58,7 @@ export function NoticeBanner({ notice, onDismiss }: NoticeBannerProps) {
 
   return (
     <div
-      className={`rounded-[24px] border ${shadowClass} backdrop-blur-xl ${
+      className={`rounded-[24px] border ${shadowClass} ${
         compact ? 'px-4 py-2.5' : 'px-4 py-3'
       } ${compact ? palette.compact : palette.standard}`}
     >

@@ -12,6 +12,7 @@ import {
   type SaveSlotSummary
 } from '../state.js';
 import { NoticeBanner } from './NoticeBanner.js';
+import { ShellBrandLogo } from './ShellBrandLogo.js';
 
 export type LauncherSectionId = 'characters' | AccountMetaSectionId;
 
@@ -225,9 +226,7 @@ export function MainMenuScreen({
     <>
       <AppShell
         brand={
-          <div className="truncate text-2xl font-semibold tracking-[0.04em] text-[color:var(--color-text-strong)] sm:text-3xl">
-            Echoes of Legacy
-          </div>
+          <ShellBrandLogo />
         }
         centerActions={continueLabel ? (
           <button

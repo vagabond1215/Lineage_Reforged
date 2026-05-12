@@ -611,7 +611,7 @@ export function AccountMetaPanel({
       className={
         frameless
           ? "min-w-0"
-          : "rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-4 shadow-panel backdrop-blur-xl"
+          : "rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-4 shadow-panel"
       }
     >
       {showSectionNav ? (

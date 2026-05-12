@@ -180,7 +180,7 @@ export function LocalAccountAccessScreen({
     <div className="h-screen overflow-auto p-4 sm:p-6">
       <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4">
         <div className="sticky top-0 z-30">
-          <div className="rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-3 shadow-panel backdrop-blur-xl">
+          <div className="rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-3 shadow-panel">
             <div className="relative flex min-h-[3.75rem] items-center justify-between gap-3">
               <div className="z-10 flex min-w-[10rem] items-center">
                 {mode === "pick_account" ? (

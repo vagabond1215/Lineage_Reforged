@@ -41,7 +41,7 @@ export function TopStatusBar({
   const topBarButtonClass =
     'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
   const overlayPanelClass =
-    'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-overlay)] shadow-2xl backdrop-blur-xl';
+    'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-overlay)] shadow-2xl';
   const strongestConditionSeverity =
     [...conditionStrip.primary, ...conditionStrip.secondary].some((pill) => pill.severity === 'critical')
       ? 'critical'
@@ -57,7 +57,7 @@ export function TopStatusBar({
 
   return (
     <header
-      className="sticky top-0 z-[80] border-b border-[color:var(--color-border-soft)] backdrop-blur-2xl"
+      className="sticky top-0 z-[80] border-b border-[color:var(--color-border-soft)]"
       style={{
         background: 'var(--color-shell-bar-bg)',
         boxShadow: 'var(--shadow-shell-bar)'
