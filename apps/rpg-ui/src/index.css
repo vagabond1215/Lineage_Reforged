@@ -900,7 +900,7 @@ select {
 @media (min-width: 768px) {
   .launcher-sidebar-nav {
     gap: 0;
-    padding: 0.875rem 0 0;
+    padding: 2.5rem 0 0;
   }
 
   .launcher-sidebar-button.has-art {

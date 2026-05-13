@@ -63,7 +63,7 @@ export function TopBar({
       className="launcher-shell-bar relative z-30 shrink-0 border-b"
       style={{ background: 'var(--color-shell-chrome-top-bg)' }}
     >
-      <div className="grid min-h-[4.5rem] grid-cols-1 gap-3 px-4 py-3 md:min-h-[5rem] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:px-6">
+      <div className="grid min-h-[4.5rem] grid-cols-1 gap-3 px-4 py-3 md:min-h-[4.75rem] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:px-6">
         {hasLeadingContent ? (
           <div className="flex min-w-0 items-center gap-4 lg:col-start-1">
             {brand && <div className="shrink-0">{brand}</div>}
