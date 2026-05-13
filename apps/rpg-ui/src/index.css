@@ -101,17 +101,20 @@
   --color-tone-neutral-border: #4b4234;
   --color-tone-neutral-text: var(--theme-aged-silver);
   --launcher-dark-texture: url('/launcher/dark-background.png');
+  --launcher-top-texture: url('/launcher/dark-background-horizontal-mid.png');
+  --launcher-subbar-texture: url('/launcher/dark-background-horizontal-bottom-slim.png');
+  --launcher-side-texture: url('/launcher/dark-background-vertical-mid.png');
   --color-shell-bar-bg:
     linear-gradient(180deg, #191713 0%, #12110f 100%);
   --color-shell-chrome-top-bg:
-    var(--launcher-dark-texture) center / cover repeat,
-    linear-gradient(180deg, #3f372e 0%, #29231d 48%, #171411 100%);
+    var(--launcher-top-texture) top right / auto repeat-x,
+    #17120e;
   --color-shell-chrome-subbar-bg:
-    var(--launcher-dark-texture) center / cover repeat,
-    linear-gradient(180deg, #26211c 0%, #15120f 58%, #090807 100%);
+    var(--launcher-subbar-texture) top right / auto repeat-x,
+    #070605;
   --color-shell-chrome-side-bg:
-    var(--launcher-dark-texture) center / cover repeat,
-    linear-gradient(90deg, #211c17 0%, #342d25 42%, #181512 100%);
+    var(--launcher-side-texture) top right / auto no-repeat,
+    #11100d;
   --color-shell-chrome-border: var(--theme-old-iron-edge);
   --shadow-shell-bar:
     inset 0 1px 0 rgba(232, 221, 198, 0.035),
@@ -405,31 +408,40 @@ body {
 .launcher-side-rail {
   border-color: transparent;
   background: var(--color-shell-chrome-top-bg);
-  background-blend-mode: overlay, normal;
+  background-blend-mode: normal;
   box-shadow: var(--shadow-shell-bar);
 }
 
 .launcher-subbar {
   background: var(--color-shell-chrome-subbar-bg);
-  background-blend-mode: multiply, normal;
+  background-blend-mode: normal;
   box-shadow:
-    inset 0 16px 24px rgba(0, 0, 0, 0.44),
-    inset 0 -10px 16px rgba(0, 0, 0, 0.26),
-    0 -8px 18px rgba(0, 0, 0, 0.2);
+    inset 0 10px 14px rgba(0, 0, 0, 0.42),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.22),
+    0 -7px 14px rgba(0, 0, 0, 0.18);
 }
 
 .launcher-side-rail {
+  position: relative;
   background: var(--color-shell-chrome-side-bg);
-  background-blend-mode: overlay, normal;
+  background-blend-mode: normal;
   box-shadow:
-    inset 0 18px 26px rgba(0, 0, 0, 0.16),
-    inset -16px 0 26px rgba(0, 0, 0, 0.18),
-    8px 0 20px rgba(0, 0, 0, 0.08);
+    inset -7px 0 10px rgba(0, 0, 0, 0.22),
+    4px 0 9px rgba(0, 0, 0, 0.08);
+}
+
+.launcher-side-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 8px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.28));
 }
 
 .launcher-logo-well {
   background: var(--color-shell-chrome-top-bg);
-  background-blend-mode: overlay, normal;
+  background-blend-mode: normal;
 }
 
 .launcher-control {
@@ -808,8 +820,8 @@ select {
 }
 
 .launcher-sidebar-button.has-art {
-  width: 9rem;
-  max-width: 10.5rem;
+  width: 11.25rem;
+  max-width: 13.125rem;
   min-height: auto;
   margin-inline: auto;
   padding: 0;
@@ -892,7 +904,7 @@ select {
   }
 
   .launcher-sidebar-button.has-art {
-    width: 75%;
+    width: 93.75%;
     max-width: none;
     min-width: 0;
   }
