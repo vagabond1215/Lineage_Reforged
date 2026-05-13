@@ -11,6 +11,7 @@ import {
   type ManualSaveSlotId,
   type SaveSlotSummary
 } from '../state.js';
+import { LauncherSpriteClock } from './LauncherSpriteClock.js';
 import { NoticeBanner } from './NoticeBanner.js';
 import { ShellBrandLogo } from './ShellBrandLogo.js';
 
@@ -250,12 +251,7 @@ export function MainMenuScreen({
             >
               <span className="truncate">{accountProfile.displayName}</span>
             </button>
-            <div
-              className="inline-flex h-10 items-center px-1 text-sm font-medium tabular-nums text-[color:var(--color-text-strong)]"
-              title={clockTitle}
-            >
-              {clockLabel}
-            </div>
+            <LauncherSpriteClock clockLabel={clockLabel} clockTitle={clockTitle} />
             {accountMenuOpen && (
               <div
                 className="launcher-menu absolute right-0 top-12 z-50 w-48 p-2"

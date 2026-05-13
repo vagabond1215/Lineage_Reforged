@@ -476,6 +476,37 @@ body {
     0 0 10px rgba(181, 122, 72, 0.08);
 }
 
+.launcher-sprite-clock {
+  display: inline-flex;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-strong);
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 238, 188, 0.08))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.62));
+}
+
+.launcher-sprite-clock-glyphs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.0625rem;
+}
+
+.launcher-sprite-clock-glyph {
+  display: block;
+  flex: 0 0 auto;
+  background-repeat: no-repeat;
+}
+
+.launcher-sprite-clock-fallback {
+  padding-inline: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
 .launcher-menu {
   border-radius: 0.5rem;
   border: 1px solid var(--color-border-soft);

@@ -1,49 +1,67 @@
 # Current Codex Output
 
-Source version/run: Launcher Inactive Character Asset Replacement
+Source version/run: Launcher Sidebar Button Asset Replacement
 Date: 2026-05-13
-Branch/status assumption: `master`; worktree already had modified launcher spacing files, this output doc, and a modified `unused assets/Inactive_Character.png` at run start.
+Branch/status assumption: `master`; worktree already contained the prior launcher sprite-clock changes, untracked clock assets, and user-updated `unused assets/` button source files at run start.
 
 ## Result
 
-Replaced the current launcher inactive Character button image used by the UI with the updated asset from `unused assets/Inactive_Character.png`.
+Replaced the eight launcher sidebar button runtime assets with the updated background-removed files from `unused assets/`.
 
-The UI is wired to `/launcher/character-inactive-soft.png`, so only `apps/rpg-ui/public/launcher/character-inactive-soft.png` was overwritten. The older raw `character-inactive.png` asset was left unchanged.
+The UI already references the `*-soft.png` files under `apps/rpg-ui/public/launcher/`, so no component wiring or behavior changed. All copied assets retained the required `700x200` dimensions.
 
 ## Files Changed
 
-- `apps/rpg-ui/public/launcher/character-inactive-soft.png`
+- `apps/rpg-ui/public/launcher/character-active-soft.png`
+- `apps/rpg-ui/public/launcher/character-inactive-soft.png` verified/replaced, no net diff from current source state
+- `apps/rpg-ui/public/launcher/legacy-active-soft.png`
+- `apps/rpg-ui/public/launcher/legacy-inactive-soft.png`
+- `apps/rpg-ui/public/launcher/chronicles-active-soft.png`
+- `apps/rpg-ui/public/launcher/chronicles-inactive-soft.png`
+- `apps/rpg-ui/public/launcher/settings-active-soft.png`
+- `apps/rpg-ui/public/launcher/settings-inactive-soft.png`
 - `docs/dev/current-codex-output.md`
 
-Existing dirty files preserved from earlier work:
+Existing dirty files from prior/user work were preserved:
 
-- `apps/rpg-ui/src/game-shell/components/AppShell.tsx`
+- `apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx`
+- `apps/rpg-ui/src/game-shell/components/SettingsScreen.tsx`
+- `apps/rpg-ui/src/game-shell/components/LauncherSpriteClock.tsx`
 - `apps/rpg-ui/src/index.css`
-- `unused assets/Inactive_Character.png`
+- `apps/rpg-ui/public/clock/`
+- `unused assets/Active_Character.png`
+- `unused assets/Active_Chronicles.png`
+- `unused assets/Active_Settings.png`
+- `unused assets/Active_legacy.png`
+- `unused assets/Inactive_Chronicles.png`
+- `unused assets/Inactive_Legacy.png`
+- `unused assets/Inactive_Settings.png`
+- `unused assets/number_tile_dark.png`
 
 ## Checks Run
 
-- `git status --short`: run before edits; showed modified launcher spacing files, modified output doc, and modified `unused assets/Inactive_Character.png`.
-- Asset inspection: source and destination are both `700x200`.
-- Hash verification: source and destination SHA-256 both `aed670c6ef644e408f7128315466b95c2350daac8f2c079a7aac619c78234b1d`.
+- `git status --short`: run before edits; showed prior sprite-clock/UI changes plus user-updated unused button assets.
+- Asset dimension inspection: all eight unused source images and all eight public launcher destinations are `700x200`.
+- Hash verification after copy: all eight public launcher destinations match their corresponding `unused assets/` source files byte-for-byte.
 - `npm.cmd run tool:content-lint`: passed.
 - `git diff --check`: passed with CRLF normalization warnings only.
 
 ## Behavior / Runtime Confirmation
 
-Runtime behavior did not change. Save/account state, content JSON, schemas, combat, magic, Legacy, progression logic, character creator logic, save-slot behavior, launcher routing, and button state logic were untouched.
+Runtime behavior did not change. Save/account state, content JSON, schemas, combat, magic, Legacy, progression, character creator logic, save-slot behavior, launcher routing, clock logic, and sidebar button interaction wiring were untouched.
 
-This was limited to replacing the inactive Character launcher button image asset currently referenced by the UI.
+This was limited to replacing the launcher sidebar button image assets already referenced by `AppShell`.
 
 ## Risks / Follow-Up
 
 - No browser visual QA was run; validation was asset dimension/hash plus lint/diff checks.
-- The source `unused assets/Inactive_Character.png` remains modified in the worktree because it was already the updated user-provided source asset.
+- The `unused assets/` source images remain modified because they are the user-provided updated source assets.
+- Existing sprite-clock changes from the prior run remain in the worktree and were not modified by this asset replacement.
 
 ## Next Recommended Version
 
-Version 0.5.29 - Launcher Browser Visual QA
+Version 0.5.31 - Launcher Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): update inactive character launcher asset
+style(ui): replace launcher sidebar button assets
