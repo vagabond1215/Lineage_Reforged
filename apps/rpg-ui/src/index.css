@@ -105,13 +105,13 @@
     linear-gradient(180deg, #191713 0%, #12110f 100%);
   --color-shell-chrome-top-bg:
     var(--launcher-dark-texture) center / cover repeat,
-    linear-gradient(180deg, #1b1813 0%, #12100d 42%, #090807 100%);
+    linear-gradient(180deg, #3f372e 0%, #29231d 48%, #171411 100%);
   --color-shell-chrome-subbar-bg:
     var(--launcher-dark-texture) center / cover repeat,
-    linear-gradient(180deg, #080706 0%, #030303 100%);
+    linear-gradient(180deg, #26211c 0%, #15120f 58%, #090807 100%);
   --color-shell-chrome-side-bg:
     var(--launcher-dark-texture) center / cover repeat,
-    linear-gradient(90deg, #0a0907 0%, #15120e 42%, #080706 100%);
+    linear-gradient(90deg, #211c17 0%, #342d25 42%, #181512 100%);
   --color-shell-chrome-border: var(--theme-old-iron-edge);
   --shadow-shell-bar:
     inset 0 1px 0 rgba(232, 221, 198, 0.035),
@@ -405,29 +405,31 @@ body {
 .launcher-side-rail {
   border-color: transparent;
   background: var(--color-shell-chrome-top-bg);
-  background-blend-mode: soft-light, normal;
+  background-blend-mode: overlay, normal;
   box-shadow: var(--shadow-shell-bar);
 }
 
 .launcher-subbar {
   background: var(--color-shell-chrome-subbar-bg);
+  background-blend-mode: multiply, normal;
   box-shadow:
-    inset 0 14px 22px rgba(0, 0, 0, 0.32),
-    inset 0 -14px 22px rgba(0, 0, 0, 0.28);
+    inset 0 16px 24px rgba(0, 0, 0, 0.44),
+    inset 0 -10px 16px rgba(0, 0, 0, 0.26),
+    0 -8px 18px rgba(0, 0, 0, 0.2);
 }
 
 .launcher-side-rail {
   background: var(--color-shell-chrome-side-bg);
-  background-blend-mode: soft-light, normal;
+  background-blend-mode: overlay, normal;
   box-shadow:
-    inset 0 18px 28px rgba(0, 0, 0, 0.18),
-    inset -18px 0 30px rgba(0, 0, 0, 0.24),
-    10px 0 24px rgba(0, 0, 0, 0.1);
+    inset 0 18px 26px rgba(0, 0, 0, 0.16),
+    inset -16px 0 26px rgba(0, 0, 0, 0.18),
+    8px 0 20px rgba(0, 0, 0, 0.08);
 }
 
 .launcher-logo-well {
   background: var(--color-shell-chrome-top-bg);
-  background-blend-mode: soft-light, normal;
+  background-blend-mode: overlay, normal;
 }
 
 .launcher-control {
