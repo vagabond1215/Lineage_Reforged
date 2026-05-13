@@ -10,40 +10,39 @@ const toneClasses: Record<
   { standard: string; compact: string; dismiss: string; text: string; shadow?: string }
 > = {
   accent: {
-    standard: 'border-slate-400/55 bg-slate-600/88',
-    compact: 'border-slate-700/70 bg-slate-600/95',
+    standard: 'border-[color:var(--color-tone-accent-border)] bg-[color:var(--color-tone-accent-bg)]',
+    compact: 'border-[color:var(--color-tone-accent-border)] bg-[color:var(--color-tone-accent-bg)]',
     dismiss:
-      'border-slate-300/40 bg-slate-500/22 text-slate-100 hover:bg-slate-400/28',
-    text: 'text-slate-100',
-    shadow: 'shadow-[0_12px_24px_rgba(71,85,105,0.3)]'
+      'border-[color:var(--color-tone-accent-border)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-tone-accent-text)] hover:bg-[color:var(--color-surface-selected)]',
+    text: 'text-[color:var(--color-tone-accent-text)]'
   },
   success: {
-    standard: 'border-emerald-400/45 bg-emerald-200/24',
-    compact: 'border-emerald-500/45 bg-emerald-700/78',
+    standard: 'border-[color:var(--color-tone-success-border)] bg-[color:var(--color-tone-success-bg)]',
+    compact: 'border-[color:var(--color-tone-success-border)] bg-[color:var(--color-tone-success-bg)]',
     dismiss:
-      'border-emerald-300/35 bg-emerald-500/20 text-emerald-50 hover:bg-emerald-400/28',
-    text: 'text-emerald-50'
+      'border-[color:var(--color-tone-success-border)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-tone-success-text)] hover:bg-[color:var(--color-surface-selected)]',
+    text: 'text-[color:var(--color-tone-success-text)]'
   },
   warning: {
-    standard: 'border-orange-400/45 bg-orange-200/28',
-    compact: 'border-orange-500/45 bg-orange-700/78',
+    standard: 'border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)]',
+    compact: 'border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)]',
     dismiss:
-      'border-orange-300/35 bg-orange-500/20 text-orange-50 hover:bg-orange-400/28',
-    text: 'text-orange-50'
+      'border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-tone-warning-text)] hover:bg-[color:var(--color-surface-selected)]',
+    text: 'text-[color:var(--color-tone-warning-text)]'
   },
   neutral: {
-    standard: 'border-slate-400/38 bg-slate-200/22',
-    compact: 'border-slate-500/45 bg-slate-700/80',
+    standard: 'border-[color:var(--color-tone-neutral-border)] bg-[color:var(--color-tone-neutral-bg)]',
+    compact: 'border-[color:var(--color-tone-neutral-border)] bg-[color:var(--color-tone-neutral-bg)]',
     dismiss:
-      'border-slate-300/35 bg-slate-500/20 text-slate-100 hover:bg-slate-400/28',
-    text: 'text-slate-100'
+      'border-[color:var(--color-tone-neutral-border)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-tone-neutral-text)] hover:bg-[color:var(--color-surface-selected)]',
+    text: 'text-[color:var(--color-tone-neutral-text)]'
   },
   danger: {
-    standard: 'border-rose-400/45 bg-rose-200/24',
-    compact: 'border-rose-500/45 bg-rose-700/78',
+    standard: 'border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)]',
+    compact: 'border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)]',
     dismiss:
-      'border-rose-300/35 bg-rose-500/20 text-rose-50 hover:bg-rose-400/28',
-    text: 'text-rose-50'
+      'border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-tone-danger-text)] hover:bg-[color:var(--color-surface-selected)]',
+    text: 'text-[color:var(--color-tone-danger-text)]'
   }
 };
 
@@ -58,7 +57,7 @@ export function NoticeBanner({ notice, onDismiss }: NoticeBannerProps) {
 
   return (
     <div
-      className={`rounded-[24px] border ${shadowClass} ${
+      className={`rounded-lg border ${shadowClass} ${
         compact ? 'px-4 py-2.5' : 'px-4 py-3'
       } ${compact ? palette.compact : palette.standard}`}
     >

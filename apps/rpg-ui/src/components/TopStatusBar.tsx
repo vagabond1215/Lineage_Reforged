@@ -39,9 +39,9 @@ export function TopStatusBar({
 }: TopStatusBarProps) {
   const [conditionOpen, setConditionOpen] = useState(false);
   const topBarButtonClass =
-    'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
+    'forged-icon-button text-[color:var(--color-text-primary)]';
   const overlayPanelClass =
-    'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-overlay)] shadow-2xl';
+    'forged-overlay bg-[color:var(--color-surface-overlay)]';
   const strongestConditionSeverity =
     [...conditionStrip.primary, ...conditionStrip.secondary].some((pill) => pill.severity === 'critical')
       ? 'critical'
@@ -88,7 +88,7 @@ export function TopStatusBar({
                 </button>
                 {conditionOpen && (
                   <div
-                    className={`absolute left-1/2 top-[calc(100%+10px)] z-[120] w-[min(24rem,calc(100vw-2rem))] -translate-x-1/2 rounded-[24px] border p-4 ${overlayPanelClass}`}
+                    className={`absolute left-1/2 top-[calc(100%+10px)] z-[120] w-[min(24rem,calc(100vw-2rem))] -translate-x-1/2 p-4 ${overlayPanelClass}`}
                   >
                     <ConditionStrip strip={conditionStrip} />
                     {readinessCard && readinessCard.recommendedActions.length > 0 && (
@@ -133,14 +133,14 @@ export function TopStatusBar({
               <button
                 type="button"
                 onClick={onToggleSettings}
-                className={`rounded-full border p-2.5 ${topBarButtonClass}`}
+                className={`p-2.5 ${topBarButtonClass}`}
                 aria-label="Open settings"
               >
                 <Icon name="gear" className="h-5 w-5" />
               </button>
               {settingsOpen && (
                 <div
-                  className={`absolute right-0 top-[calc(100%+12px)] z-[120] w-[min(36rem,calc(100vw-2rem))] rounded-[28px] border p-4 ${overlayPanelClass}`}
+                  className={`absolute right-0 top-[calc(100%+12px)] z-[120] w-[min(36rem,calc(100vw-2rem))] p-4 ${overlayPanelClass}`}
                 >
                   {settingsContent}
                 </div>

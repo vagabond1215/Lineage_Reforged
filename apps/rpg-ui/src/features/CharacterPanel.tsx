@@ -524,7 +524,7 @@ export function CharacterPanel({
                   <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">{entry.category}</span>
                   {entry.preferredSlotId && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('accent')}`}>Equipable</span>}
                   {entry.consumePreview?.highlightLabel && (
-                    <span className="rounded-full border border-emerald-300/20 bg-emerald-200/10 px-2 py-1 text-[11px] text-emerald-50">
+                    <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('success')}`}>
                       {entry.consumePreview.highlightLabel}
                     </span>
                   )}

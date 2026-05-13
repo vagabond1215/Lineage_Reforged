@@ -9,9 +9,9 @@ export function TrendIndicator({ trend }: TrendIndicatorProps) {
   const glyph = trend === 'improving' ? '↑' : trend === 'worsening' ? '↓' : '•';
   const toneClass =
     trend === 'improving'
-      ? 'text-emerald-200'
+      ? 'text-[color:var(--color-tone-success-text)]'
       : trend === 'worsening'
-        ? 'text-rose-200'
+        ? 'text-[color:var(--color-tone-danger-text)]'
         : 'text-slate-400';
 
   return (

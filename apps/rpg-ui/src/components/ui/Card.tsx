@@ -21,17 +21,25 @@ export function Card({
 }: CardProps) {
   const accentStyle: CSSProperties | undefined = accent
     ? {
-        boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${accent} 30%, transparent), 0 24px 60px rgba(0, 0, 0, 0.34)`
+        '--forged-accent': accent
+      } as CSSProperties
+    : undefined;
+
+  const mergedStyle: CSSProperties | undefined =
+    accentStyle || style
+      ? {
+          ...accentStyle,
+          ...style
       }
     : undefined;
 
   return (
     <section
-      className={`rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-4 shadow-panel ${className}`}
-      style={{ ...accentStyle, ...style }}
+      className={`forged-card p-4 ${className}`}
+      style={mergedStyle}
     >
       {(title || eyebrow || actions) && (
-        <header className="mb-4 flex items-start justify-between gap-3">
+        <header className="forged-card-header mb-4 flex items-start justify-between gap-3">
           <div>
             {eyebrow && (
               <p className="mb-1 text-[10px] uppercase tracking-[0.28em] text-[color:var(--color-muted-strong)]">

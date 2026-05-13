@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { SidebarItem } from '../../types';
 import { Card } from './Card';
 import { Tooltip } from './Tooltip';
@@ -22,16 +23,15 @@ export function SidebarMenu({ title, items, activeId, onChange, accent }: Sideba
               <button
                 type="button"
                 onClick={() => onChange(item.id)}
-                className={`w-full rounded-[18px] border px-4 py-2.5 text-left transition ${
-                  isActive
-                    ? 'border-white/20 bg-white/10'
-                    : 'border-white/8 bg-black/10 hover:border-white/15 hover:bg-white/5'
+                className={`forged-list-item w-full px-4 py-2.5 text-left transition ${
+                  isActive ? 'is-active' : ''
                 }`}
+                style={{ '--forged-accent': accent } as CSSProperties}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <div className="text-sm font-semibold text-slate-100">{item.label}</div>
+                  <div className="text-sm font-semibold text-[color:var(--color-text-primary)]">{item.label}</div>
                   {typeof item.count === 'number' && (
-                    <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">
+                    <span className="forged-chip px-2 py-1 text-[11px]">
                       {item.count}
                     </span>
                   )}

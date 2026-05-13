@@ -15,10 +15,10 @@ export function FavoriteButton({ active, onToggle }: FavoriteButtonProps) {
           event.stopPropagation();
           onToggle();
         }}
-        className={`rounded-full border p-2 transition ${
+        className={`forged-icon-button p-2 transition ${
           active
-            ? 'border-amber-300/30 bg-amber-300/14 text-amber-200'
-            : 'border-white/10 bg-white/5 text-slate-400 hover:text-slate-200'
+            ? 'forged-tone-accent'
+            : 'text-[color:var(--color-text-muted)] hover:text-[color:var(--color-text-secondary)]'
         }`}
         aria-label={active ? 'Remove pin' : 'Pin item'}
       >

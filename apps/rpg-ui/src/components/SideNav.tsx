@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Icon } from './icons';
 import { Tooltip } from './ui/Tooltip';
 import type { NavItem, TabId } from '../types';
@@ -20,28 +21,28 @@ export function SideNav({ items, activeTab, onChange }: SideNavProps) {
               <button
                 type="button"
                 onClick={() => onChange(item.id)}
-                className={`w-full rounded-[28px] border px-3 py-3 text-left transition ${
+                className={`forged-list-item w-full px-2.5 py-2.5 text-left transition ${
                   isActive
-                    ? 'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] opacity-100'
-                    : 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] opacity-95 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface-elevated)]'
+                    ? 'is-active opacity-100'
+                    : 'opacity-95'
                 }`}
                 style={
                   isActive
                     ? {
-                        boxShadow: `0 0 24px color-mix(in srgb, ${item.accent} 26%, transparent), inset 0 0 0 1px color-mix(in srgb, ${item.accent} 30%, transparent)`
-                      }
+                        '--forged-accent': item.accent
+                      } as CSSProperties
                     : undefined
                 }
               >
                 <div
-                  className={`flex min-h-[86px] flex-col items-center justify-center gap-3 rounded-[22px] border px-3 py-4 text-center transition ${
+                  className={`flex min-h-[86px] flex-col items-center justify-center gap-3 rounded-md border px-3 py-4 text-center transition ${
                     isActive
                       ? 'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)]'
-                      : 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface-selected)]'
+                      : 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-text-secondary)]'
                   }`}
                 >
                   <span
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-overlay)]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-overlay)]"
                     style={{
                       color: item.accent
                     }}

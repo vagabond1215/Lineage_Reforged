@@ -26,7 +26,7 @@ export function ProgressBar({
 
   return (
     <div
-      className={`min-w-[138px] rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-elevated)] px-2.5 py-1.5 transition ${wrapperClass}`}
+      className={`forged-meter min-w-[138px] px-2.5 py-1.5 transition ${wrapperClass}`}
       style={wrapperStyle}
       aria-label={label}
     >
@@ -34,9 +34,9 @@ export function ProgressBar({
         <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-text-secondary)]">
           {label}
         </span>
-        <div className="h-2 flex-1 overflow-hidden rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)]">
+        <div className="h-2 flex-1 overflow-hidden rounded-sm border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)]">
           <div
-            className="h-full rounded-full transition-[width]"
+            className="h-full rounded-sm transition-[width]"
             style={{
               width: `${percent}%`,
               background: `linear-gradient(90deg, ${color} 0%, color-mix(in srgb, ${color} 62%, white) 100%)`

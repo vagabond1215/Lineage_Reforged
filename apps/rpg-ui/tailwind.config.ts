@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       boxShadow: {
-        panel: '0 22px 60px rgba(0, 0, 0, 0.35)',
-        inset: 'inset 0 1px 0 rgba(255, 255, 255, 0.05)'
+        panel: '0 16px 34px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(232, 221, 198, 0.035)',
+        inset: 'inset 0 1px 0 rgba(232, 221, 198, 0.04)'
       },
       backgroundImage: {
         mesh:

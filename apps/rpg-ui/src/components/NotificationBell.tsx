@@ -10,7 +10,7 @@ type NotificationBellProps = {
 export function NotificationBell({ items }: NotificationBellProps) {
   const [open, setOpen] = useState(false);
   const topBarButtonClass =
-    'rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] p-3 text-[color:var(--color-text-primary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
+    'forged-icon-button p-3 text-[color:var(--color-text-primary)]';
 
   return (
     <div className="relative z-[110]">
@@ -26,7 +26,7 @@ export function NotificationBell({ items }: NotificationBellProps) {
         </span>
       </button>
       {open && (
-        <div className="absolute right-0 top-[calc(100%+12px)] z-[120] w-80 max-w-[calc(100vw-2rem)] rounded-[24px] border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-overlay)] p-4 shadow-2xl">
+        <div className="forged-overlay absolute right-0 top-[calc(100%+12px)] z-[120] w-80 max-w-[calc(100vw-2rem)] p-4">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="text-base text-[color:var(--color-text-primary)]">Notifications</h3>
             <button
@@ -41,7 +41,7 @@ export function NotificationBell({ items }: NotificationBellProps) {
             {items.map((item) => (
               <article
                 key={item.id}
-                className="rounded-[20px] border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] p-3"
+                className="forged-subpanel p-3"
               >
                 <div className="flex items-center justify-between gap-3">
                   <h4 className="text-sm font-semibold text-[color:var(--color-text-primary)]">

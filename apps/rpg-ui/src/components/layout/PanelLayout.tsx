@@ -26,7 +26,7 @@ export function PanelLayout({ leftSidebar, mainContent, detailPanel }: PanelLayo
       <button
         type="button"
         onClick={() => setDetailOpen((current) => !current)}
-        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] p-2.5 text-[color:var(--color-text-primary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]"
+        className="forged-icon-button absolute right-0 top-1/2 z-10 -translate-y-1/2 p-2.5"
         aria-label={detailOpen ? 'Hide information pane' : 'Show information pane'}
       >
         <Icon name="info" className="h-5 w-5" />

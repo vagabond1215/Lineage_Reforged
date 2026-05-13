@@ -109,29 +109,29 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                 <button
                   type="button"
                   onClick={() => setZoom((current) => Math.max(0.8, current - 0.1))}
-                  className="rounded-xl border border-white/10 bg-white/5 p-2 text-slate-300"
+                  className="forged-icon-button p-2 text-[color:var(--color-text-secondary)]"
                 >
                   <Icon name="minus" className="h-4 w-4" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setZoom((current) => Math.min(1.6, current + 0.1))}
-                  className="rounded-xl border border-white/10 bg-white/5 p-2 text-slate-300"
+                  className="forged-icon-button p-2 text-[color:var(--color-text-secondary)]"
                 >
                   <Icon name="plus" className="h-4 w-4" />
                 </button>
               </div>
             }
           >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br from-cyan-600/10 via-slate-900 to-emerald-500/10">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)]">
               <div className="soft-grid absolute inset-0 opacity-50" />
               <div
                 className="absolute inset-0 origin-center transition-transform"
                 style={{ transform: `scale(${zoom})` }}
               >
-                <div className="absolute left-[10%] top-[16%] h-[24%] w-[32%] rounded-[40%] bg-emerald-500/8 blur-xl" />
-                <div className="absolute left-[38%] top-[26%] h-[28%] w-[42%] rounded-[42%] bg-sky-400/7 blur-2xl" />
-                <div className="absolute left-[62%] top-[52%] h-[20%] w-[18%] rounded-full border border-dashed border-cyan-300/20" />
+                <div className="absolute left-[10%] top-[16%] h-[24%] w-[32%] rounded-[40%] bg-[color:var(--theme-muted-noble-gold)] opacity-[0.08] blur-xl" />
+                <div className="absolute left-[38%] top-[26%] h-[28%] w-[42%] rounded-[42%] bg-[color:var(--theme-deep-crimson)] opacity-[0.1] blur-2xl" />
+                <div className="absolute left-[62%] top-[52%] h-[20%] w-[18%] rounded-full border border-dashed border-[color:var(--color-border-active)] opacity-25" />
 
                 {worldData.locations.map((location) => (
                   <button
@@ -149,13 +149,13 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                     <span
                       className={`flex h-8 w-8 items-center justify-center rounded-full border ${
                         selectedIds['world-map'] === location.id
-                          ? 'border-cyan-200/40 bg-cyan-300/20 text-cyan-100'
-                          : 'border-white/10 bg-slate-950/80 text-slate-300'
+                          ? 'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)]'
+                          : 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-overlay)] text-[color:var(--color-text-secondary)]'
                       }`}
                     >
                       <Icon name="mapPin" className="h-4 w-4" />
                     </span>
-                    <span className="mt-2 block rounded-full border border-white/10 bg-slate-950/90 px-2 py-1 text-[11px] text-slate-200">
+                    <span className="mt-2 block rounded-full border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-overlay)] px-2 py-1 text-[11px] text-[color:var(--color-text-secondary)]">
                       {location.name}
                     </span>
                   </button>
@@ -168,7 +168,7 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                 'Player marker and known locations',
                 'Expandable route, travel, and market overlays'
               ].map((detail) => (
-                <div key={detail} className="rounded-[18px] border border-white/8 bg-black/10 px-4 py-3 text-sm text-slate-300">
+                <div key={detail} className="forged-subpanel px-4 py-3 text-sm text-[color:var(--color-text-secondary)]">
                   {detail}
                 </div>
               ))}
@@ -224,7 +224,7 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
               {travelOutcome ? (
                 <ActionOutcomePreview title="Travel Outlook" preview={travelOutcome} />
               ) : (
-                <div className="rounded-[22px] border border-white/8 bg-black/10 p-4 text-sm text-slate-300">
+                <div className="forged-subpanel p-4 text-sm text-[color:var(--color-text-secondary)]">
                   {travelPreview?.reason ?? 'Travel outlook appears here once a destination is valid.'}
                 </div>
               )}

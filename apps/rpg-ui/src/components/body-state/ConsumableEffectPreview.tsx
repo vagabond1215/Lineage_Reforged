@@ -6,15 +6,15 @@ type ConsumableEffectPreviewProps = {
 
 export function ConsumableEffectPreview({ preview }: ConsumableEffectPreviewProps) {
   return (
-    <div className="rounded-[22px] border border-white/8 bg-black/10 p-4">
+    <div className="forged-subpanel p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Consumable Preview</div>
         <div className="flex flex-wrap gap-2">
-          <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-200">
+          <span className="forged-chip px-2 py-1 text-[11px]">
             {preview.contextTag}
           </span>
           {preview.highlightLabel && (
-            <span className="rounded-full border border-emerald-300/20 bg-emerald-200/10 px-2 py-1 text-[11px] text-emerald-50">
+            <span className="rounded-full border border-[color:var(--color-tone-success-border)] bg-[color:var(--color-tone-success-bg)] px-2 py-1 text-[11px] text-[color:var(--color-tone-success-text)]">
               {preview.highlightLabel}
             </span>
           )}
@@ -42,10 +42,10 @@ export function ConsumableEffectPreview({ preview }: ConsumableEffectPreviewProp
             </div>
           </div>
         </div>
-        <div className="hidden w-px bg-white/8 lg:block" />
+        <div className="hidden w-px bg-[color:var(--color-border-soft)] lg:block" />
         <div className="space-y-3">
           <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Delayed Effect</div>
-          <div className="rounded-[18px] border border-white/8 bg-white/5 px-3 py-3 text-sm text-slate-200">
+          <div className="forged-list-item px-3 py-3 text-sm text-slate-200">
             {preview.delayedRecovery}
           </div>
         </div>

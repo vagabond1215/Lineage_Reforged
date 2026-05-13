@@ -13,20 +13,20 @@ export function OperationsQueue({ items, accent }: OperationsQueueProps) {
         {items.map((item) => (
           <article
             key={item.id}
-            className="rounded-[22px] border border-white/8 bg-black/10 p-4"
+            className="forged-subpanel p-4"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h4 className="text-sm font-semibold text-slate-100">{item.title}</h4>
                 <p className="mt-1 text-sm text-slate-400">{item.stage}</p>
               </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] uppercase tracking-[0.18em] text-slate-300">
+              <span className="forged-chip px-2 py-1 text-[11px] uppercase tracking-[0.18em]">
                 {item.priority}
               </span>
             </div>
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/8">
+            <div className="mt-4 h-2 overflow-hidden rounded-sm bg-[color:var(--color-surface-elevated)]">
               <div
-                className="h-full rounded-full"
+                className="h-full rounded-sm"
                 style={{
                   width: `${item.progress}%`,
                   background: `linear-gradient(90deg, ${accent} 0%, color-mix(in srgb, ${accent} 60%, white) 100%)`
