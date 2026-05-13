@@ -2,3 +2,8 @@
 apps/rpg-ui/node_modules/
 apps/rpg-ui/dist/
 packages/db/build/
+
+# Logs and local runtime output
+*.log
+logs/
+scripts/logs/

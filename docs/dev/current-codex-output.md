@@ -1,26 +1,14 @@
 # Current Codex Output
 
-Source version/run: v0.5.6 - Tracked Log Hygiene Audit
+Source version/run: v0.5.7 - Tracked Log Cleanup Implementation
 Date: 2026-05-13
-Branch/status assumption: `master`; worktree was clean before the audit and remained clean after read-only audit commands.
+Branch/status assumption: `master`; worktree was clean before cleanup.
 
 ## Result
 
-Cleanup is needed in a follow-up implementation run. Git still tracks 9 log/runtime-output files, and `.gitignore` currently has no log/temp ignore coverage.
+Added log/runtime-output ignore coverage and removed the 9 safe runtime log files from Git tracking only. Local log files were not intentionally deleted from disk.
 
-## Current .gitignore Log/Temp Coverage
-
-Current relevant entries only cover generated/vendor output:
-
-- `apps/rpg-ui/node_modules/`
-- `apps/rpg-ui/dist/`
-- `packages/db/build/`
-
-No current `.gitignore` entries cover `*.log`, `logs/`, `scripts/logs/`, `tmp*`, `temp*`, or similar local runtime/scratch output.
-
-## Tracked Log/Temp Candidates
-
-Safe log/runtime-output cleanup candidates:
+Log files removed from tracking:
 
 - `apps/rpg-ui/codex-character-dev.err.log`
 - `apps/rpg-ui/codex-character-dev.out.log`
@@ -32,71 +20,50 @@ Safe log/runtime-output cleanup candidates:
 - `logs/rpg-ui.dev-server.log`
 - `scripts/logs/content_story_browser.log`
 
-Preserve `*log*` false positives that are source, docs, assets, or authored content:
-
-- catalog/source files such as `characterCreationCatalog.*`, `worldSelectionCatalog.*`, `crystal_catalog.json`, and schema/content catalog files
-- `apps/rpg-ui/public/branding/lineage-reforged-logo-dark.png`
-- `docs/future_content_backlog.md`
-- `story/continuity/canon_log.md`
-
-Ambiguous temp-like tracked files needing explicit approval before cleanup:
+Preserved:
 
 - `.tmp_debug.ps1`
 - `temp_goods.txt`
 - `tmp_update_guilds_and_settlements.ps1`
 - `scripts/tmp_migrate_flora.ps1`
-
-## Recommended Follow-Up
-
-Next implementation should add log ignore coverage and remove only the 9 safe log/runtime-output files from Git tracking with `--cached`.
-
-Recommended `.gitignore` additions:
-
-```gitignore
-# Logs and local runtime output
-*.log
-logs/
-scripts/logs/
-```
-
-Recommended cleanup command:
-
-```powershell
-git rm --cached -- apps/rpg-ui/codex-character-dev.err.log apps/rpg-ui/codex-character-dev.out.log apps/rpg-ui/codex-vite-dev.err.log apps/rpg-ui/codex-vite-dev.out.log apps/rpg-ui/codex-vite-dev2.err.log apps/rpg-ui/codex-vite-dev2.out.log logs/rpg-ui.bootstrap.log logs/rpg-ui.dev-server.log scripts/logs/content_story_browser.log
-```
-
-Do not remove or ignore temp-like scripts/text files until a separate approval confirms they are disposable.
+- `*log*` false positives such as catalog/source files, authored content, docs, branding assets, and `story/continuity/canon_log.md`
 
 ## Files Changed
 
+- `.gitignore`
 - `docs/dev/current-codex-output.md`
+
+Index-only removals:
+
+- 9 safe runtime log files listed above
 
 ## Checks Run
 
-- `git status --short`: clean before audit
-- `Get-Content .gitignore`
-- `git ls-files "*log*"`
-- `git ls-files "logs/**"`
-- `git ls-files "scripts/logs/**"`
-- `git ls-files "*.tmp" "*.temp" "*.cache" "*.bak" "*.old"`
-- Additional tracked temp/log pattern scans for `tmp`, `temp`, and `.log`
-- `git status --short`: clean after read-only audit commands
+- `git status --short`: clean before edits
+- Reviewed `.gitignore`, `README.md`, and relevant backlog generated/runtime-output references
+- `git rm --cached -- ...`: first sandboxed attempt failed creating `.git/index.lock`; approved rerun succeeded
+- `git ls-files "*.log"`: no tracked log files
+- `git ls-files "logs/**"`: no tracked files
+- `git ls-files "scripts/logs/**"`: no tracked files
+- `git ls-files ".tmp_debug.ps1" "temp_goods.txt" "tmp_update_guilds_and_settlements.ps1" "scripts/tmp_migrate_flora.ps1"`: all four remain tracked
+- `Test-Path` for the 9 local log files: all still present
+- `npm.cmd run tool:content-lint`: passed
 - `git diff --check`: passed
 
 ## Behavior / Runtime Confirmation
 
-Audit/output-only change. No source code, `.gitignore`, package names, package-lock files, README, CHANGELOG, backlog, content JSON, generated/vendor files, logs, runtime behavior, UI behavior, save/account schema, or gameplay systems changed.
+Repository hygiene/index-only cleanup plus ignore rules and this output file. No source code, tests, package names, package-lock files, content JSON, generated/vendor artifacts, temp-like tracked files, runtime behavior, UI behavior, save/account schema, or gameplay systems changed.
 
 ## Risks / Follow-Up
 
-- A later cleanup must use `git rm --cached`, not a filesystem delete, to preserve local log files if they are still useful.
-- Broad `*.log` ignore coverage is appropriate for local runtime logs but should not be confused with authored docs that contain `log` in the filename.
-- Temp-like tracked scripts/text may be obsolete scratch artifacts, but they should be handled only after explicit approval.
+- Committing this will stop tracking runtime logs and ignore future `.log`, `logs/`, and `scripts/logs/` output.
+- Local log files still exist on disk but are now ignored.
+- Temp-like tracked files remain and should be audited separately before any cleanup.
 
 ## Next Recommended Version
 
-Version 0.5.7 - Tracked Log Cleanup Implementation
+Version 0.5.8 - Temporary Script/File Hygiene Audit
 
 ## Suggested Commit Message
 
-docs(repo): record tracked log hygiene audit
+chore(repo): stop tracking runtime logs
