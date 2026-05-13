@@ -29,11 +29,18 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
     recipes: codexData.entries.find((item) => item.category === 'recipes')?.id ?? '',
     factions: codexData.entries.find((item) => item.category === 'factions')?.id ?? '',
     notes: codexData.entries.find((item) => item.category === 'notes')?.id ?? '',
+    spells: codexData.entries.find((item) => item.category === 'spells')?.id ?? '',
     deeds: codexData.entries.find((item) => item.category === 'deeds')?.id ?? '',
     chronicles: codexData.entries.find((item) => item.category === 'chronicles')?.id ?? ''
   });
 
   const combinedQuery = `${searchQuery} ${localSearch}`.trim();
+  const regionScopedSection = !['deeds', 'chronicles', 'spells'].includes(activeSection);
+  const activeSectionLabel = codexData.sections.find((section) => section.id === activeSection)?.label ?? 'Codex';
+  const searchPlaceholder =
+    activeSection === 'spells'
+      ? 'Search entries, compatibility, tags, or hooks'
+      : 'Search entries, habitats, uses, or regions';
   const filteredItems = codexData.entries.filter((item) => {
     if (item.category !== activeSection) {
       return false;
@@ -42,8 +49,6 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
     if (showDiscoveredOnly && item.locked) {
       return false;
     }
-
-    const regionScopedSection = !['deeds', 'chronicles'].includes(activeSection);
 
     if (regionScopedSection && regionFilter !== 'All Regions' && !item.tags?.includes(regionFilter)) {
       return false;
@@ -81,39 +86,43 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
               <SearchInput
                 value={localSearch}
                 onChange={setLocalSearch}
-                placeholder="Search entries, habitats, uses, or regions"
+                placeholder={searchPlaceholder}
               />
               <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => setShowDiscoveredOnly((current) => !current)}
-                  className={`rounded-full border px-3 py-2 text-sm ${
-                    showDiscoveredOnly
-                      ? 'border-white/20 bg-white/10 text-slate-100'
-                      : 'border-white/10 bg-white/5 text-slate-300'
-                  }`}
-                >
-                  {showDiscoveredOnly ? 'Showing discovered only' : 'Include unknown entries'}
-                </button>
-                {codexData.regionFilters.map((filter) => (
+                {activeSection !== 'spells' ? (
                   <button
-                    key={filter}
                     type="button"
-                    onClick={() => setRegionFilter(filter)}
+                    onClick={() => setShowDiscoveredOnly((current) => !current)}
                     className={`rounded-full border px-3 py-2 text-sm ${
-                      regionFilter === filter
+                      showDiscoveredOnly
                         ? 'border-white/20 bg-white/10 text-slate-100'
                         : 'border-white/10 bg-white/5 text-slate-300'
                     }`}
                   >
-                    {filter}
+                    {showDiscoveredOnly ? 'Showing discovered only' : 'Include unknown entries'}
                   </button>
-                ))}
+                ) : null}
+                {regionScopedSection
+                  ? codexData.regionFilters.map((filter) => (
+                      <button
+                        key={filter}
+                        type="button"
+                        onClick={() => setRegionFilter(filter)}
+                        className={`rounded-full border px-3 py-2 text-sm ${
+                          regionFilter === filter
+                            ? 'border-white/20 bg-white/10 text-slate-100'
+                            : 'border-white/10 bg-white/5 text-slate-300'
+                        }`}
+                      >
+                        {filter}
+                      </button>
+                    ))
+                  : null}
               </div>
             </div>
           </Card>
           <SelectionList
-            title={codexData.sections.find((section) => section.id === activeSection)?.label ?? 'Codex'}
+            title={activeSectionLabel}
             items={filteredItems}
             selectedId={selectedItem?.id}
             onSelect={(id) =>

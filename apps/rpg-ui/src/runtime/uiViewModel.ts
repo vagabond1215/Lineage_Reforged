@@ -48,6 +48,11 @@ import {
 import { resolveRenownPresentation } from '../game-shell/renownPresentation.js';
 import { getAchievementDefinitions } from '../../../../packages/engines/game-engine/src/achievements.js';
 import { resolveScopedReputation } from '../../../../packages/engines/player-engine/src/index.js';
+import {
+  ARCANE_COMPENDIUM_CATEGORY,
+  ARCANE_COMPENDIUM_LABEL,
+  getArcaneCompendiumEntries
+} from './spellCompatibilityPresentation.js';
 
 type WindowDetail = {
   title: string;
@@ -236,6 +241,11 @@ const codexSections: SidebarItem[] = [
   { id: 'recipes', label: 'Recipes', description: 'Inputs, outputs, stations, and skill ties' },
   { id: 'factions', label: 'Factions', description: 'Organizations, influence, and service access' },
   { id: 'notes', label: 'Notes', description: 'Journal notes, field briefs, and discovered clues' },
+  {
+    id: ARCANE_COMPENDIUM_CATEGORY,
+    label: ARCANE_COMPENDIUM_LABEL,
+    description: 'Read-only spell compatibility references and runtime-blocked warnings'
+  },
   { id: 'deeds', label: 'Deeds', description: 'Per-character accomplishments, hidden until first discovery' },
   { id: 'chronicles', label: 'Chronicles', description: 'Account-wide milestones, unlocks, and recorded legacy' }
 ];
@@ -1850,13 +1860,16 @@ function buildChronicleSectionWindowDetail(
 
 function buildCodexWindowDetails(
   snapshot: SaveSnapshot,
-  accountProfile: AccountProfileState
+  accountProfile: AccountProfileState,
+  arcaneCompendiumCount: number
 ): Record<string, WindowDetail> {
   const counts = codexSections.reduce<Record<string, number>>((accumulator, section) => {
     accumulator[section.id] =
-      section.id === 'deeds' || section.id === 'chronicles'
-        ? 0
-        : snapshot.sessionState.codexEntries.filter((entry) => entry.category === section.id).length;
+      section.id === ARCANE_COMPENDIUM_CATEGORY
+        ? arcaneCompendiumCount
+        : section.id === 'deeds' || section.id === 'chronicles'
+          ? 0
+          : snapshot.sessionState.codexEntries.filter((entry) => entry.category === section.id).length;
     return accumulator;
   }, {});
   const definitions = getAchievementDefinitions();
@@ -1899,6 +1912,26 @@ function buildCodexWindowDetails(
       { label: 'Journal Ownership', value: 'Needs note-author metadata', tone: 'warning' },
       { label: 'Follow-up Hooks', value: 'Needs note-to-objective links', tone: 'warning' }
     ]),
+    [ARCANE_COMPENDIUM_CATEGORY]: createWindowDetail({
+      title: ARCANE_COMPENDIUM_LABEL,
+      summary:
+        'Static read-only magic compatibility references sourced from authored spell metadata. This window does not connect to player spell state, command buttons, source paths, catalyst execution, or Magic Legacy power.',
+      standardFields: [
+        { label: 'Reference Entries', value: arcaneCompendiumCount.toString(), tone: 'accent' },
+        { label: 'Display Scope', value: 'Compatibility metadata, tags, catalysts, hooks, and warnings', tone: 'neutral' },
+        { label: 'Runtime blocked', value: 'No effect formulas or command routing are exposed here', tone: 'danger' }
+      ],
+      connectedRefs: [
+        { label: 'Content Source', value: 'packages/content/base/player/spells.json', tone: 'accent' },
+        { label: 'Projection Ref', value: 'UiViewModel.codex.entries[category=spells]', tone: 'neutral' },
+        { label: 'UI Consumer', value: 'Codex panel reference list and detail stack', tone: 'neutral' }
+      ],
+      missingRefs: [
+        { label: 'Source Paths', value: 'No trainer, book, scroll, reward, or account path is connected', tone: 'warning' },
+        { label: 'Runtime', value: 'No command, damage, healing, status, catalyst, or inventory execution is connected', tone: 'danger' },
+        { label: 'Save Schema', value: 'No spell ownership or loadout state is stored', tone: 'warning' }
+      ]
+    }),
     deeds: buildAchievementSectionWindowDetail(
       'Deeds',
       deedCount,
@@ -2089,9 +2122,11 @@ export function createUiViewModel(
   }, {});
 
   const achievementCodexEntries = buildAchievementCodexEntries(snapshot, accountProfile);
+  const arcaneCompendiumEntries = getArcaneCompendiumEntries();
   const codexEntries = [
     ...snapshot.sessionState.codexEntries.map(mapCodexEntry),
-    ...achievementCodexEntries
+    ...achievementCodexEntries,
+    ...arcaneCompendiumEntries
   ];
   const questEntries = snapshot.sessionState.questJournal.map(mapQuestEntry);
   const chronicleEntries = snapshot.sessionState.chronicle.map(mapChronicleEntry);
@@ -2099,7 +2134,7 @@ export function createUiViewModel(
   const characterWindowDetails = buildCharacterWindowDetails(snapshot, characterLists);
   const worldWindowDetails = buildWorldWindowDetails(snapshot, worldLists);
   const activityWindowDetails = buildActivityWindowDetails(snapshot, activityLists);
-  const codexWindowDetails = buildCodexWindowDetails(snapshot, accountProfile);
+  const codexWindowDetails = buildCodexWindowDetails(snapshot, accountProfile, arcaneCompendiumEntries.length);
   const questWindowDetails = buildQuestWindowDetails(snapshot);
   const chronicleWindowDetails = buildChronicleWindowDetails(snapshot);
 
@@ -2142,6 +2177,7 @@ export function createUiViewModel(
     recipes: codexEntries.filter((entry) => entry.category === 'recipes').length,
     factions: codexEntries.filter((entry) => entry.category === 'factions').length,
     notes: codexEntries.filter((entry) => entry.category === 'notes').length,
+    [ARCANE_COMPENDIUM_CATEGORY]: arcaneCompendiumEntries.length,
     deeds: codexEntries.filter((entry) => entry.category === 'deeds').length,
     chronicles: codexEntries.filter((entry) => entry.category === 'chronicles').length
   };
