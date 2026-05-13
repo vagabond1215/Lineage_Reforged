@@ -60,7 +60,7 @@ export function LoadGameScreen({
         <button
           type="button"
           onClick={onBack}
-          className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10"
+          className="launcher-control px-4 py-2 text-sm"
         >
           Back
         </button>
@@ -77,10 +77,10 @@ export function LoadGameScreen({
                     setPendingDeleteSlotId(null);
                     onSelectSlot(slot.id);
                   }}
-                  className={`w-full rounded-[24px] border p-4 text-left transition ${
+                  className={`launcher-save-row w-full p-4 text-left transition ${
                     slot.id === selectedSlotId
-                      ? 'border-white/20 bg-white/10'
-                      : 'border-white/10 bg-white/5 hover:bg-white/10'
+                      ? 'is-active'
+                      : ''
                   }`}
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
@@ -90,7 +90,7 @@ export function LoadGameScreen({
                         {getSlotStatusLabel(slot)}
                       </div>
                     </div>
-                    <div className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-slate-400">
+                    <div className="forged-chip px-3 py-1 text-xs">
                       {slot.kind === 'quick' ? 'Quick' : slot.snapshotVersion ?? 'Manual'}
                     </div>
                   </div>
@@ -110,11 +110,11 @@ export function LoadGameScreen({
                       <div>Tick {slot.capturedAtTick}</div>
                     </div>
                   ) : slot.status === 'corrupt' ? (
-                    <div className="mt-3 rounded-[18px] border border-rose-300/20 bg-rose-200/10 px-3 py-3 text-sm text-rose-100">
+                    <div className="mt-3 rounded-lg border border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] px-3 py-3 text-sm text-[color:var(--color-tone-danger-text)]">
                       This slot contains malformed or incompatible local data. It cannot be loaded until it is deleted.
                     </div>
                   ) : slot.status === 'incompatible' ? (
-                    <div className="mt-3 rounded-[18px] border border-amber-300/20 bg-amber-200/10 px-3 py-3 text-sm text-amber-100">
+                    <div className="mt-3 rounded-lg border border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)] px-3 py-3 text-sm text-[color:var(--color-tone-warning-text)]">
                       This slot was created before the account-scoped Legacy ledger and current snapshot revision, so it is intentionally marked incompatible.
                     </div>
                   ) : (
@@ -130,7 +130,7 @@ export function LoadGameScreen({
           <Card title="Load Actions" accent="var(--color-character)">
             <div className="space-y-4">
               {!hasAnyLoadableSave && (
-                <div className="rounded-[22px] border border-white/10 bg-black/10 p-4 text-sm text-slate-400">
+                <div className="forged-subpanel p-4 text-sm text-slate-400">
                   No loadable local saves were found. Start a new game or create a quick save from an active campaign.
                 </div>
               )}
@@ -139,10 +139,10 @@ export function LoadGameScreen({
                 type="button"
                 onClick={onLoadSelected}
                 disabled={!selectedSlot?.hasSave}
-                className="w-full rounded-[24px] border border-amber-300/25 bg-amber-200/10 px-5 py-4 text-left text-amber-50 transition hover:bg-amber-200/15 disabled:cursor-not-allowed disabled:opacity-50"
+                className="launcher-control forged-tone-accent w-full px-5 py-4 text-left disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <span className="block text-lg font-semibold">Load Selected Save</span>
-                <span className="mt-1 block text-sm text-amber-100/80">
+                <span className="mt-1 block text-sm text-[color:var(--color-text-secondary)]">
                   {selectedSlot?.hasSave
                     ? `Continue ${selectedSlot.playerName} from ${selectedSlot.label}.`
                     : 'Choose an occupied slot to continue.'}
@@ -150,8 +150,8 @@ export function LoadGameScreen({
               </button>
 
               {canDeleteSelected && selectedSlot && pendingDeleteSlotId === selectedSlot.id ? (
-                <div className="rounded-[22px] border border-rose-300/20 bg-rose-200/10 p-4">
-                  <div className="text-sm leading-6 text-rose-100">
+                <div className="forged-subpanel border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] p-4">
+                  <div className="text-sm leading-6 text-[color:var(--color-tone-danger-text)]">
                     {selectedSlot.status === 'corrupt'
                       ? `Delete the unreadable data stored in ${selectedSlot.label}?`
                       : selectedSlot.status === 'incompatible'
@@ -165,14 +165,14 @@ export function LoadGameScreen({
                         setPendingDeleteSlotId(null);
                         onDeleteSlot(selectedSlot.id);
                       }}
-                      className="rounded-full border border-rose-300/25 bg-rose-200/10 px-4 py-2 text-sm text-rose-50 transition hover:bg-rose-200/15"
+                      className="launcher-control forged-tone-danger px-4 py-2 text-sm"
                     >
                       Confirm Delete
                     </button>
                     <button
                       type="button"
                       onClick={() => setPendingDeleteSlotId(null)}
-                      className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10"
+                      className="launcher-control px-4 py-2 text-sm"
                     >
                       Keep Save
                     </button>
@@ -183,7 +183,7 @@ export function LoadGameScreen({
                   type="button"
                   onClick={() => selectedSlot && setPendingDeleteSlotId(selectedSlot.id)}
                   disabled={!canDeleteSelected}
-                  className="w-full rounded-[24px] border border-rose-300/20 bg-rose-200/10 px-5 py-4 text-left text-rose-50 transition hover:bg-rose-200/15 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="launcher-control forged-tone-danger w-full px-5 py-4 text-left disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <span className="block text-lg font-semibold">
                     {selectedSlot?.status === 'corrupt'
@@ -192,7 +192,7 @@ export function LoadGameScreen({
                         ? 'Delete Incompatible Save'
                         : 'Delete Selected Save'}
                   </span>
-                  <span className="mt-1 block text-sm text-rose-100/80">
+                  <span className="mt-1 block text-sm text-[color:var(--color-text-secondary)]">
                     {selectedSlot
                       ? `Remove the local data stored in ${selectedSlot.label}.`
                       : 'Select a save slot to remove it.'}
@@ -212,7 +212,7 @@ export function LoadGameScreen({
                 <div className="mt-2 text-xl text-slate-50">{selectedSlot.playerName}</div>
               </div>
 
-              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4 text-sm text-slate-300">
+              <div className="forged-subpanel p-4 text-sm text-slate-300">
                 <div>Slot: {selectedSlot.label}</div>
                 <div className="mt-1">Type: {selectedSlot.kind === 'quick' ? 'Quick Save' : 'Manual Save'}</div>
                 <div className="mt-1">Lineage: {selectedSlot.lineageLabel}</div>
@@ -227,33 +227,33 @@ export function LoadGameScreen({
                 <div className="mt-1">Saved: {selectedSlot.lastSavedLabel}</div>
               </div>
 
-              <div className="rounded-[20px] border border-white/10 bg-white/5 p-4 text-sm leading-6 text-slate-300">
+              <div className="forged-subpanel p-4 text-sm leading-6 text-slate-300">
                 Loading restores the shared snapshot directly into the existing in-game panel shell. Manual saves,
                 quick saves, and safe deletion all use the same browser-local storage namespace.
               </div>
             </div>
           ) : selectedSlot?.status === 'corrupt' ? (
             <div className="space-y-4">
-              <div className="rounded-[20px] border border-rose-300/20 bg-rose-200/10 p-4 text-sm leading-6 text-rose-100">
+              <div className="forged-subpanel border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] p-4 text-sm leading-6 text-[color:var(--color-tone-danger-text)]">
                 This slot contains malformed local data. It is intentionally isolated from the rest of the menu so one
                 bad record cannot block loading other saves.
               </div>
-              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4 text-sm leading-6 text-slate-300">
+              <div className="forged-subpanel p-4 text-sm leading-6 text-slate-300">
                 Delete the slot from the action card to clear the bad localStorage record, or use Reset Save Data from
                 the main menu to clear every save slot at once.
               </div>
             </div>
           ) : selectedSlot?.status === 'incompatible' ? (
             <div className="space-y-4">
-              <div className="rounded-[20px] border border-amber-300/20 bg-amber-200/10 p-4 text-sm leading-6 text-amber-100">
+              <div className="forged-subpanel border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)] p-4 text-sm leading-6 text-[color:var(--color-tone-warning-text)]">
                 This slot belongs to an older local save format from before the account-scoped Legacy ledger and current structured snapshot revision, and it cannot be loaded by the current build.
               </div>
-              <div className="rounded-[20px] border border-white/10 bg-black/10 p-4 text-sm leading-6 text-slate-300">
+              <div className="forged-subpanel p-4 text-sm leading-6 text-slate-300">
                 Delete the slot from the action card to clear the incompatible localStorage record, or use Reset Save Data from the main menu to clear every save slot at once.
               </div>
             </div>
           ) : (
-            <div className="rounded-[20px] border border-dashed border-white/10 bg-black/10 p-4 text-sm leading-6 text-slate-400">
+            <div className="forged-subpanel border-dashed p-4 text-sm leading-6 text-slate-400">
               Select an occupied, incompatible, or corrupt save slot to inspect it here. Empty slots remain available for future
               campaigns.
             </div>

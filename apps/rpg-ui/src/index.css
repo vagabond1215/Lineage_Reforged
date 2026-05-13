@@ -44,10 +44,10 @@
   --color-text-soft: var(--theme-aged-silver);
   --color-muted-strong: var(--theme-ash-bronze);
   --color-accent-contrast: var(--theme-parchment-ivory);
-  --color-creator-card: var(--theme-smoked-steel);
-  --color-creator-card-strong: var(--theme-forged-black);
-  --color-creator-card-hover: var(--theme-warm-iron);
-  --color-creator-card-shadow: rgba(0, 0, 0, 0.28);
+  --color-creator-card: #1b1814;
+  --color-creator-card-strong: #15130f;
+  --color-creator-card-hover: #262019;
+  --color-creator-card-shadow: rgba(0, 0, 0, 0.32);
   --color-tooltip-bg: var(--theme-smoked-steel);
   --color-tooltip-border: var(--theme-old-iron-edge);
   --color-tooltip-text: var(--theme-parchment-ivory);
@@ -392,6 +392,199 @@ body {
     0 20px 42px rgba(0, 0, 0, 0.42);
 }
 
+.launcher-shell-bar,
+.launcher-logo-well,
+.launcher-subbar,
+.launcher-side-rail {
+  border-color: color-mix(in srgb, var(--color-shell-chrome-border) 72%, transparent);
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.025), transparent 34%),
+    var(--color-shell-chrome-top-bg);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.035),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.42);
+}
+
+.launcher-subbar {
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.018), transparent 32%),
+    var(--color-shell-chrome-subbar-bg);
+}
+
+.launcher-side-rail {
+  background:
+    linear-gradient(90deg, rgba(232, 221, 198, 0.018), transparent 30%),
+    var(--color-shell-chrome-side-bg);
+}
+
+.launcher-logo-well {
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.04),
+    inset -1px 0 0 rgba(0, 0, 0, 0.34),
+    0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.launcher-control {
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--forged-control-border, var(--color-border-soft));
+  background: var(--forged-control-bg, var(--color-surface-muted));
+  color: var(--forged-control-text, var(--color-text-primary));
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.035),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.34);
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.launcher-control:hover,
+.launcher-control:focus-visible,
+.launcher-control.is-active {
+  border-color: var(--forged-control-hover-border, var(--color-border-active));
+  background: var(--forged-control-hover-bg, var(--color-surface-selected));
+  color: var(--forged-control-text, var(--color-text-primary));
+}
+
+.launcher-control.is-active {
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.38),
+    0 0 10px rgba(181, 122, 72, 0.08);
+}
+
+.launcher-menu {
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border-soft);
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.03), transparent 22%),
+    var(--color-surface-overlay);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.045),
+    0 18px 38px rgba(0, 0, 0, 0.38);
+}
+
+.launcher-save-row {
+  position: relative;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--color-border-soft) 76%, transparent);
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.025), transparent 30%),
+    var(--color-surface-muted);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.035),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.34);
+}
+
+.launcher-save-row:hover,
+.launcher-save-row:focus-visible {
+  border-color: var(--color-border-active);
+  background:
+    linear-gradient(90deg, rgba(189, 166, 111, 0.08), transparent 52%),
+    var(--color-surface-strong);
+  outline: none;
+}
+
+.launcher-save-row.is-active {
+  border-color: var(--color-border-active);
+  background:
+    linear-gradient(90deg, rgba(189, 166, 111, 0.1), transparent 58%),
+    var(--color-surface-selected);
+  box-shadow:
+    inset 3px 0 0 rgba(189, 166, 111, 0.58),
+    inset 0 1px 0 rgba(232, 221, 198, 0.045),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.36);
+}
+
+.launcher-save-row.is-empty {
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.016), transparent 26%),
+    var(--color-surface-overlay);
+}
+
+.launcher-save-index,
+.launcher-delete-rail {
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.025), transparent 28%),
+    var(--color-surface-overlay);
+}
+
+.launcher-save-index {
+  border-right: 1px solid var(--color-border-soft);
+}
+
+.launcher-delete-rail {
+  border-left: 1px solid var(--color-border-soft);
+  color: var(--color-tone-danger-text);
+}
+
+.launcher-delete-rail:hover,
+.launcher-delete-rail:focus-visible {
+  border-color: var(--color-tone-danger-border);
+  background: var(--color-tone-danger-bg);
+}
+
+.creator-forged-card,
+.creator-forged-subpanel,
+.creator-forged-input {
+  border-color: var(--color-border-soft);
+}
+
+.creator-forged-card {
+  border-radius: 0.75rem;
+  border-width: 1px;
+  border-style: solid;
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.025), transparent 24%),
+    var(--color-creator-card);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.045),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.38),
+    0 14px 30px var(--color-creator-card-shadow);
+}
+
+.creator-forged-card:hover,
+.creator-forged-card:focus-within {
+  border-color: var(--color-border-strong);
+}
+
+.creator-forged-card.is-selected {
+  border-color: var(--color-border-active);
+  background:
+    linear-gradient(90deg, rgba(189, 166, 111, 0.08), transparent 54%),
+    var(--color-creator-card-strong);
+  box-shadow:
+    inset 3px 0 0 rgba(189, 166, 111, 0.58),
+    inset 0 1px 0 rgba(232, 221, 198, 0.05),
+    0 16px 32px rgba(0, 0, 0, 0.26);
+}
+
+.creator-forged-subpanel {
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  background: var(--color-creator-card-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.035),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.34);
+}
+
+.creator-forged-input {
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  background: var(--color-creator-card-strong);
+  box-shadow: inset 0 1px 0 rgba(232, 221, 198, 0.03);
+}
+
+.creator-forged-input:focus,
+.creator-forged-input:focus-within {
+  border-color: var(--color-border-active);
+}
+
 :root:not([data-theme='light']) .bg-white\/5,
 :root:not([data-theme='light']) .bg-white\/6,
 :root:not([data-theme='light']) .bg-white\/8 {
@@ -472,8 +665,10 @@ select {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: var(--theme-forged-black);
-  box-shadow: inset 0 0 0 1px var(--theme-old-iron-edge);
+  background: var(--color-surface-overlay);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.025),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32);
   transition:
     background 120ms ease,
     box-shadow 120ms ease,
@@ -493,7 +688,7 @@ select {
 .launcher-sidebar-button::before {
   inset: 0;
   z-index: -2;
-  background: linear-gradient(90deg, transparent, rgba(212, 168, 110, 0.12), transparent);
+  background: linear-gradient(90deg, rgba(189, 166, 111, 0.12), transparent 58%);
   opacity: 0;
 }
 
@@ -507,11 +702,11 @@ select {
 .launcher-sidebar-button:hover,
 .launcher-sidebar-button:focus-visible {
   color: var(--color-text-primary);
-  background: var(--theme-warm-iron);
+  background: var(--color-surface-selected);
   box-shadow:
-    inset 0 0 0 1px var(--theme-muted-noble-gold),
-    0 0 0 1px rgba(219, 202, 171, 0.08),
-    0 0 10px rgba(212, 168, 110, 0.08);
+    inset 3px 0 0 rgba(189, 166, 111, 0.52),
+    inset 0 1px 0 rgba(232, 221, 198, 0.04),
+    0 0 8px rgba(181, 122, 72, 0.06);
 }
 
 .launcher-sidebar-button:hover::before,
@@ -531,10 +726,10 @@ select {
 
 .launcher-sidebar-button:active {
   color: var(--color-text-primary);
-  background: linear-gradient(180deg, #362c22, var(--theme-warm-iron));
+  background: var(--color-surface-selected);
   box-shadow:
-    inset 0 0 0 1px var(--theme-reforged-gold),
-    0 0 12px rgba(212, 168, 110, 0.12);
+    inset 3px 0 0 var(--theme-reforged-gold),
+    inset 0 1px 0 rgba(232, 221, 198, 0.05);
 }
 
 .launcher-sidebar-button:active::before,
@@ -544,11 +739,11 @@ select {
 
 .launcher-sidebar-button.is-active {
   color: var(--color-text-primary);
-  background: linear-gradient(180deg, #33291f, var(--theme-warm-iron));
+  background: var(--color-surface-selected);
   box-shadow:
-    inset 0 0 0 1px var(--theme-muted-noble-gold),
-    inset 0 0 0 2px rgba(219, 202, 171, 0.08),
-    0 0 8px rgba(212, 168, 110, 0.08);
+    inset 3px 0 0 var(--theme-muted-noble-gold),
+    inset 0 1px 0 rgba(232, 221, 198, 0.05),
+    0 0 8px rgba(181, 122, 72, 0.08);
 }
 
 .launcher-sidebar-button.is-active::before {

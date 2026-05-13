@@ -41,7 +41,7 @@ export function TopBar({
 
   return (
     <header
-      className="relative z-30 shrink-0 border-b border-[color:var(--color-shell-chrome-border)] bg-[color:var(--color-surface-elevated)]"
+      className="launcher-shell-bar relative z-30 shrink-0 border-b"
       style={{ background: 'var(--color-shell-chrome-top-bg)' }}
     >
       <div className="grid min-h-[4.5rem] grid-cols-1 gap-3 px-4 py-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:px-6">
@@ -96,7 +96,7 @@ function ShellLogoArea({
     <div
       className={`relative overflow-hidden border-b border-r border-[color:var(--color-shell-chrome-border)] bg-[color:var(--color-surface-elevated)] ${
         extendThroughSubBar ? 'row-span-2' : ''
-      }`}
+      } launcher-logo-well`}
       style={{
         background: 'var(--color-shell-chrome-top-bg)',
         boxShadow: 'var(--shadow-shell-bar)'
@@ -112,7 +112,7 @@ function ShellLogoArea({
 export function ShellSubBar({ children }: { children: ReactNode }) {
   return (
     <div
-      className="relative z-10 shrink-0 border-b border-[color:var(--color-shell-chrome-border)] bg-[color:var(--color-surface-panel)] px-4 py-2 lg:px-6"
+      className="launcher-subbar relative z-10 shrink-0 border-b px-4 py-2 lg:px-6"
       style={{ background: 'var(--color-shell-chrome-subbar-bg)' }}
     >
       {children}
@@ -234,7 +234,7 @@ export function AppShell({
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
         {sidebar && (
           <aside
-            className="shrink-0 border-b border-[color:var(--color-shell-chrome-border)] bg-[color:var(--color-surface-panel)] md:w-[18.48rem] md:border-b-0 md:border-r"
+            className="launcher-side-rail shrink-0 border-b md:w-[18.48rem] md:border-b-0 md:border-r"
             style={{ background: 'var(--color-shell-chrome-side-bg)' }}
           >
             {sidebar}

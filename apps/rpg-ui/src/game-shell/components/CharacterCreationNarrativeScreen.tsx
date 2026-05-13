@@ -82,19 +82,19 @@ type Props = {
 };
 
 const creatorCardBase =
-  'rounded-[24px] border bg-[color:var(--color-creator-card)] shadow-[0_18px_42px_var(--color-creator-card-shadow)] backdrop-blur-sm transition';
+  'creator-forged-card transition';
 
 const creatorCardUnselected =
-  'border-[color:var(--color-border)] hover:bg-[color:var(--color-creator-card-hover)]';
+  'hover:bg-[color:var(--color-creator-card-hover)]';
 
 const summaryBlockClass =
-  'rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] p-4';
+  'creator-forged-subpanel p-4';
 
 const insetBlockClass =
-  'rounded-[18px] border border-[color:var(--color-border)] bg-[color:var(--color-creator-card-strong)]';
+  'creator-forged-subpanel';
 
 const textInputClass =
-  'w-full rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-creator-card)] px-4 py-3 text-[color:var(--color-text-strong)] outline-none transition placeholder:text-[color:var(--color-muted)] focus:border-[color:var(--color-border-strong)]';
+  'creator-forged-input w-full px-4 py-3 text-[color:var(--color-text-strong)] outline-none transition placeholder:text-[color:var(--color-muted)]';
 
 const identitySectionWidthClass = 'w-full max-w-[34rem] xl:max-w-[42rem]';
 
@@ -217,17 +217,17 @@ function getSelectableCardClass(
 
   switch (tone) {
     case 'lineage':
-      return `${creatorCardBase} border-cyan-400/55 bg-[color:var(--color-creator-card-strong)]`;
+      return `${creatorCardBase} is-selected`;
     case 'continent':
     case 'region':
     case 'settlement':
-      return `${creatorCardBase} border-emerald-400/50 bg-[color:var(--color-creator-card-strong)]`;
+      return `${creatorCardBase} is-selected`;
     case 'backstory':
-      return `${creatorCardBase} border-stone-400/45 bg-[color:var(--color-creator-card-strong)]`;
+      return `${creatorCardBase} is-selected`;
     case 'starting_bundle':
-      return `${creatorCardBase} border-orange-400/50 bg-[color:var(--color-creator-card-strong)]`;
+      return `${creatorCardBase} is-selected`;
     case 'slot':
-      return `${creatorCardBase} border-[color:var(--color-border-strong)] bg-[color:var(--color-creator-card-strong)]`;
+      return `${creatorCardBase} is-selected`;
     default:
       return `${creatorCardBase} ${creatorCardUnselected}`;
   }
@@ -290,51 +290,51 @@ function getRegionResourceTone(resourceTone: string | undefined): {
     case 'timber':
     case 'tree':
       return {
-        wrapper: 'border-emerald-300/25 bg-emerald-400/12',
-        icon: 'text-emerald-100'
+        wrapper: 'border-[color:var(--color-tone-success-border)] bg-[color:var(--color-tone-success-bg)]',
+        icon: 'text-[color:var(--color-tone-success-text)]'
       };
     case 'fieldCrops':
     case 'grain':
       return {
-        wrapper: 'border-amber-300/25 bg-amber-400/12',
-        icon: 'text-amber-100'
+        wrapper: 'border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)]',
+        icon: 'text-[color:var(--color-tone-warning-text)]'
       };
     case 'orchards':
     case 'fruit':
       return {
-        wrapper: 'border-orange-300/25 bg-orange-400/12',
-        icon: 'text-orange-100'
+        wrapper: 'border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)]',
+        icon: 'text-[color:var(--color-tone-warning-text)]'
       };
     case 'gardenProduce':
     case 'vegetable':
       return {
-        wrapper: 'border-lime-300/25 bg-lime-400/12',
-        icon: 'text-lime-100'
+        wrapper: 'border-[color:var(--color-tone-success-border)] bg-[color:var(--color-tone-success-bg)]',
+        icon: 'text-[color:var(--color-tone-success-text)]'
       };
     case 'fishAndGame':
     case 'animal':
       return {
-        wrapper: 'border-sky-300/25 bg-sky-400/12',
-        icon: 'text-sky-100'
+        wrapper: 'border-[color:var(--color-tone-neutral-border)] bg-[color:var(--color-tone-neutral-bg)]',
+        icon: 'text-[color:var(--color-tone-neutral-text)]'
       };
     case 'livestock':
       return {
-        wrapper: 'border-cyan-300/25 bg-cyan-400/12',
-        icon: 'text-cyan-100'
+        wrapper: 'border-[color:var(--color-tone-neutral-border)] bg-[color:var(--color-tone-neutral-bg)]',
+        icon: 'text-[color:var(--color-tone-neutral-text)]'
       };
     case 'ore':
       return {
-        wrapper: 'border-stone-300/25 bg-stone-300/12',
-        icon: 'text-stone-100'
+        wrapper: 'border-[color:var(--color-tone-neutral-border)] bg-[color:var(--color-tone-neutral-bg)]',
+        icon: 'text-[color:var(--color-tone-neutral-text)]'
       };
     case 'stone':
       return {
-        wrapper: 'border-slate-300/25 bg-slate-400/12',
-        icon: 'text-slate-100'
+        wrapper: 'border-[color:var(--color-tone-neutral-border)] bg-[color:var(--color-tone-neutral-bg)]',
+        icon: 'text-[color:var(--color-tone-neutral-text)]'
       };
     default:
       return {
-        wrapper: 'border-[color:var(--color-border)] bg-[color:var(--color-creator-card)]',
+        wrapper: 'border-[color:var(--color-border-soft)] bg-[color:var(--color-creator-card)]',
         icon: 'text-[color:var(--color-text-strong)]'
       };
   }
@@ -563,32 +563,32 @@ export function CharacterCreationNarrativeScreen({
     boxShadow: 'var(--shadow-active-outline)'
   };
   const topButtonClass =
-    'inline-flex h-10 w-10 items-center justify-center rounded-md border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
+    'launcher-control inline-flex h-10 w-10 items-center justify-center';
   const topPillButtonClass =
-    'inline-flex h-10 items-center justify-center rounded-md border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-elevated)] px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-secondary)] shadow-panel transition hover:bg-[color:var(--color-surface-selected)]';
+    'launcher-control inline-flex h-10 items-center justify-center px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-secondary)]';
   const imageCardTitleClass = 'text-[color:var(--color-text-strong)]';
   const imageCardBodyClass = 'text-[color:var(--color-text-soft)]';
   const imageCardMetaClass = 'text-[color:var(--color-muted-strong)]';
   const lightSurfaceButtonClass =
     'bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] hover:bg-[color:var(--color-surface-selected)]';
   const summaryToggleActiveClass =
-    'border-[color:var(--color-border-active)] bg-[color:var(--color-action-secondary)] text-[color:var(--color-action-secondary-text)]';
+    'forged-tone-accent';
   const primaryActionButtonClass =
-    'border-[color:var(--color-border-active)] bg-[color:var(--color-action-primary)] text-[color:var(--color-action-primary-text)] hover:brightness-105';
+    'forged-tone-accent';
   const dangerActionButtonClass =
-    'border-[color:var(--color-action-danger)] bg-[color:var(--color-action-danger)] text-[color:var(--color-action-danger-text)] hover:brightness-110';
+    'forged-tone-danger';
   const validationNoticeClass =
-    'rounded-[18px] border border-[color:var(--color-action-danger)] bg-[color:var(--color-surface-panel)] px-4 py-3 text-sm text-[color:var(--color-text-primary)] shadow-panel';
+    'forged-subpanel border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] px-4 py-3 text-sm text-[color:var(--color-tone-danger-text)]';
   const collapsedSettlementMetaBadgeClass =
-    'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] shadow-panel';
+    'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)]';
   const selectedSettlementMetaBadgeClass =
-    'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)] shadow-panel';
+    'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)]';
   const selectedSettlementArtFadeClass =
     themeMode === 'dark'
       ? 'bg-[linear-gradient(180deg,rgba(8,12,18,0.04)_0%,rgba(8,12,18,0.06)_46%,rgba(8,12,18,0.34)_74%,rgba(8,12,18,0.84)_100%)]'
       : 'bg-[linear-gradient(180deg,rgba(248,250,252,0.02)_0%,rgba(248,250,252,0.04)_46%,rgba(226,232,240,0.26)_74%,rgba(226,232,240,0.76)_100%)]';
   const selectedIdentityControlClass =
-    'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)] shadow-panel';
+    'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)]';
   const selectedIdentityMetaClass = 'text-[color:var(--color-text-primary)]';
   const unselectedIdentityMetaClass = 'text-[color:var(--color-text-secondary)]';
   const selectedContinentPanelClass = 'bg-[color:var(--color-creator-card-strong)]';
@@ -795,7 +795,7 @@ export function CharacterCreationNarrativeScreen({
         : '';
 
     if (active) {
-      return `${pulseClass} border-[color:var(--color-border-active)] bg-[color:var(--color-progress-active)] text-[color:var(--color-text-primary)] shadow-panel`.trim();
+      return `${pulseClass} border-[color:var(--color-action-primary)] bg-[color:var(--color-progress-active)] text-[color:var(--color-text-primary)] shadow-panel`.trim();
     }
 
     if (locked) {
@@ -2229,7 +2229,7 @@ export function CharacterCreationNarrativeScreen({
                       </div>
                     )}
                     <span
-                      className={`absolute right-4 top-4 z-20 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] backdrop-blur-sm ${collapsedSettlementMetaBadgeClass}`}
+                      className={`absolute right-4 top-4 z-20 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.16em] ${collapsedSettlementMetaBadgeClass}`}
                     >
                       Pop {option.populationSize}
                     </span>
@@ -2595,7 +2595,7 @@ export function CharacterCreationNarrativeScreen({
   return (
     <div ref={containerRef} className="h-screen overflow-auto pb-4">
       <div
-        className="sticky top-0 z-30 border-b border-[color:var(--color-border-soft)] backdrop-blur-2xl"
+        className="launcher-shell-bar sticky top-0 z-30 border-b"
         style={{
           background: topBarBackground,
           boxShadow: 'var(--shadow-shell-bar)'

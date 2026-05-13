@@ -30,23 +30,23 @@ const SECTION_ITEMS: Array<{ id: AccountMetaSectionId; label: string }> = [
 const LEGACY_STATE_FILTERS: LegacyUnlockStateFilter[] = ["All", "Locked", "Unlocked"];
 
 const badgeBaseClass =
-  "rounded-md border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em]";
-const mutedBadgeClass = `${badgeBaseClass} border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] text-[color:var(--color-text-muted)]`;
-const echoBadgeClass = `${badgeBaseClass} border-[color:var(--color-echo-accent)] bg-[color:var(--color-surface-panel)] text-[color:var(--color-echo-accent)]`;
-const prestigeBadgeClass = `${badgeBaseClass} border-[color:var(--color-prestige-accent)] bg-[color:var(--color-surface-panel)] text-[color:var(--color-prestige-accent)]`;
+  "rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em]";
+const mutedBadgeClass = `${badgeBaseClass} forged-chip`;
+const echoBadgeClass = `${badgeBaseClass} border-[color:var(--color-echo-accent)] bg-[color:var(--color-tone-accent-bg)] text-[color:var(--color-echo-accent)]`;
+const prestigeBadgeClass = `${badgeBaseClass} border-[color:var(--color-prestige-accent)] bg-[color:var(--color-tone-accent-bg)] text-[color:var(--color-prestige-accent)]`;
 const softChipClass =
-  "rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] px-2.5 py-1 text-xs text-[color:var(--color-text-primary)]";
+  "forged-chip px-2.5 py-1 text-xs text-[color:var(--color-text-primary)]";
 const subduedChipClass =
-  "rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] px-2.5 py-1 text-xs text-[color:var(--color-text-secondary)]";
+  "forged-chip px-2.5 py-1 text-xs";
 const secondaryActionButtonClass =
-  "inline-flex min-h-9 items-center justify-center rounded-md border border-[color:var(--color-border-strong)] bg-[color:var(--color-action-secondary)] px-3 py-1 text-xs font-semibold text-[color:var(--color-action-secondary-text)] transition hover:bg-[color:var(--color-surface-selected)]";
+  "launcher-control inline-flex min-h-9 items-center justify-center px-3 py-1 text-xs font-semibold";
 const primaryActionButtonClass =
-  "inline-flex min-h-9 items-center justify-center rounded-md border border-[color:var(--color-border-active)] bg-[color:var(--color-action-primary)] px-3 py-1 text-xs font-semibold text-[color:var(--color-action-primary-text)] transition hover:brightness-105";
+  "launcher-control forged-tone-accent inline-flex min-h-9 items-center justify-center px-3 py-1 text-xs font-semibold";
 
 function buildToggleClass(active: boolean): string {
   return active
-    ? "border-[color:var(--color-border-active)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)] shadow-panel"
-    : "border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface-muted)]";
+    ? "launcher-control is-active"
+    : "launcher-control text-[color:var(--color-text-secondary)]";
 }
 
 function buildRenownDepthClass(depth: number): string {
@@ -77,10 +77,10 @@ function LegacyUnlockCard({
 }) {
   return (
     <div
-      className={`rounded-lg border px-4 py-4 ${
+      className={`creator-forged-card px-4 py-4 ${
         entry.isPlaceholder
-          ? "border-dashed border-[color:var(--color-border)] bg-[color:var(--color-panel)] opacity-70"
-          : "border-[color:var(--color-border)] bg-[color:var(--color-panel)]"
+          ? "border-dashed opacity-70"
+          : ""
       } ${entry.renownTier ? buildRenownDepthClass(entry.renownDepth) : ""}`}
     >
       <div className="flex items-start justify-between gap-3">
@@ -128,11 +128,11 @@ function LegacyUnlockCard({
               onClick={() => onSetPreparationChoice?.(entry.id, option.id)}
               className={`inline-flex min-h-9 items-center justify-center rounded-md border px-3 py-1 text-xs font-semibold transition ${
                 option.isSelected
-                  ? "border-[color:var(--color-border-active)] bg-[color:var(--color-action-primary)] text-[color:var(--color-action-primary-text)]"
-                  : "border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-text-primary)] hover:bg-[color:var(--color-surface-selected)]"
+                  ? "launcher-control forged-tone-accent"
+                  : "launcher-control"
               } ${
                 option.disabled && !option.isSelected
-                  ? "cursor-not-allowed opacity-45 hover:bg-[color:var(--color-surface-muted)]"
+                  ? "cursor-not-allowed opacity-45"
                   : ""
               }`}
               aria-pressed={option.isSelected}
@@ -190,10 +190,10 @@ function ChronicleTileCard({ tile }: { tile: ChronicleTileViewModel }) {
 
   return (
     <div
-      className={`rounded-lg border px-4 py-4 ${
+      className={`creator-forged-card px-4 py-4 ${
         tile.isDeleted
-          ? "border-dashed border-[color:var(--color-border)] bg-[color:var(--color-panel)] opacity-85"
-          : "border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)]"
+          ? "border-dashed opacity-85"
+          : ""
       }`}
     >
       <div className="flex items-start justify-between gap-3">
@@ -265,7 +265,7 @@ function ChronicleTileCard({ tile }: { tile: ChronicleTileViewModel }) {
 
 function EstatePreviewPanel({ estate }: { estate: ChronicleEstateViewModel }) {
   return (
-    <div className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] p-4">
+    <div className="forged-card p-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
@@ -284,7 +284,7 @@ function EstatePreviewPanel({ estate }: { estate: ChronicleEstateViewModel }) {
         {estate.summaryStats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-2"
+            className="forged-subpanel px-3 py-2"
           >
             <div className="text-[10px] uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
               {stat.label}
@@ -300,7 +300,7 @@ function EstatePreviewPanel({ estate }: { estate: ChronicleEstateViewModel }) {
         {estate.claimTiers.map((tier) => (
           <div
             key={tier.id}
-            className="rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-2 text-xs text-[color:var(--color-text-soft)]"
+            className="forged-subpanel px-3 py-2 text-xs text-[color:var(--color-text-soft)]"
           >
             <span className="font-semibold text-[color:var(--color-text-strong)]">
               {tier.label}
@@ -314,7 +314,7 @@ function EstatePreviewPanel({ estate }: { estate: ChronicleEstateViewModel }) {
       </div>
 
       {estate.emptyLabel ? (
-        <div className="mt-3 rounded-md border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-3 text-sm text-[color:var(--color-text-soft)]">
+        <div className="forged-subpanel mt-3 border-dashed px-3 py-3 text-sm text-[color:var(--color-text-soft)]">
           {estate.emptyLabel}
         </div>
       ) : estate.previewRows.length > 0 ? (
@@ -322,7 +322,7 @@ function EstatePreviewPanel({ estate }: { estate: ChronicleEstateViewModel }) {
           {estate.previewRows.map((row) => (
             <div
               key={row.id}
-              className="rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-3"
+              className="forged-subpanel px-3 py-3"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -439,7 +439,7 @@ export function AccountMetaPanel({
   const legacyContent = (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-4">
+        <div className="forged-subpanel px-4 py-4">
           <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
             Current Prestige
           </div>
@@ -447,7 +447,7 @@ export function AccountMetaPanel({
             {meta.legacy.currentPrestigeLabel}
           </div>
         </div>
-        <div className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-4 py-4">
+        <div className="forged-subpanel px-4 py-4">
           <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
             Lifetime Prestige
           </div>
@@ -457,8 +457,8 @@ export function AccountMetaPanel({
         </div>
       </div>
 
-      <div className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] p-4">
-        <div className="mb-3 rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] px-3 py-2 text-xs text-[color:var(--color-text-soft)]">
+      <div className="forged-card p-4">
+        <div className="forged-subpanel mb-3 px-3 py-2 text-xs text-[color:var(--color-text-soft)]">
           {meta.legacy.characterStartNoteLabel}
         </div>
 
@@ -472,7 +472,7 @@ export function AccountMetaPanel({
                   key={tab}
                   type="button"
                   onClick={() => setSelectedLegacyType(tab)}
-                  className={`rounded-md border px-3 py-1.5 text-xs font-medium transition ${buildToggleClass(active)}`}
+                  className={`px-3 py-1.5 text-xs font-medium ${buildToggleClass(active)}`}
                 >
                   {tab}
                 </button>
@@ -481,7 +481,7 @@ export function AccountMetaPanel({
           </div>
 
           {selectedLegacyType === "Preparations" ? (
-            <div className="rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-panel)] px-3 py-1.5 text-xs font-semibold text-[color:var(--color-text-primary)]">
+            <div className="forged-chip px-3 py-1.5 text-xs font-semibold text-[color:var(--color-text-primary)]">
               {meta.legacy.preparationCapacityLabel}
             </div>
           ) : null}
@@ -495,7 +495,7 @@ export function AccountMetaPanel({
                   key={filter}
                   type="button"
                   onClick={() => setSelectedLegacyState(filter)}
-                  className={`rounded-md border px-3 py-1.5 text-xs font-medium transition ${buildToggleClass(active)}`}
+                  className={`px-3 py-1.5 text-xs font-medium ${buildToggleClass(active)}`}
                 >
                   {filter}
                 </button>
@@ -505,7 +505,7 @@ export function AccountMetaPanel({
         </div>
 
         {filteredLegacyEntries.length === 0 ? (
-          <div className="mt-4 rounded-lg border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-5 text-sm text-[color:var(--color-text-soft)]">
+          <div className="forged-subpanel mt-4 border-dashed px-4 py-5 text-sm text-[color:var(--color-text-soft)]">
             No unlocks match this filter yet.
           </div>
         ) : (
@@ -528,7 +528,7 @@ export function AccountMetaPanel({
             {legacyEntryGroups.renownEntries.length > 0 ? (
               <details
                 open
-                className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] p-3"
+                className="forged-subpanel p-3"
               >
                 <summary className="cursor-pointer select-none px-1 py-1 text-sm font-semibold text-[color:var(--color-text-strong)]">
                   Geographic Renown
@@ -559,7 +559,7 @@ export function AccountMetaPanel({
         {meta.chronicles.summaryStats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-strong)] px-3 py-3"
+            className="forged-subpanel px-3 py-3"
           >
             <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
               {stat.label}
@@ -582,7 +582,7 @@ export function AccountMetaPanel({
               key={filter.id}
               type="button"
               onClick={() => setSelectedChronicleFilter(filter.id)}
-              className={`rounded-md border px-3 py-1.5 text-xs font-medium transition ${buildToggleClass(active)}`}
+              className={`px-3 py-1.5 text-xs font-medium ${buildToggleClass(active)}`}
             >
               {filter.label}
             </button>
@@ -591,7 +591,7 @@ export function AccountMetaPanel({
       </div>
 
       {filteredChronicleTiles.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-5 text-sm text-[color:var(--color-text-soft)]">
+        <div className="forged-subpanel border-dashed px-4 py-5 text-sm text-[color:var(--color-text-soft)]">
           {selectedChronicleFilterView?.emptyLabel ?? "No Chronicle records yet."}
         </div>
       ) : (
@@ -611,12 +611,12 @@ export function AccountMetaPanel({
       className={
         frameless
           ? "min-w-0"
-          : "rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-4 shadow-panel"
+          : "forged-card p-4"
       }
     >
       {showSectionNav ? (
         <div className="grid gap-4 md:grid-cols-[7rem_minmax(0,1fr)]">
-          <aside className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] p-2">
+          <aside className="forged-subpanel p-2">
             <nav className="flex gap-2 md:flex-col">
               {SECTION_ITEMS.map((item) => {
                 const active = resolvedActiveSection === item.id;
@@ -626,7 +626,7 @@ export function AccountMetaPanel({
                     key={item.id}
                     type="button"
                     onClick={() => setResolvedActiveSection(item.id)}
-                    className={`w-full rounded-md border px-3 py-3 text-sm font-semibold transition ${buildToggleClass(active)}`}
+                    className={`w-full px-3 py-3 text-sm font-semibold ${buildToggleClass(active)}`}
                   >
                     {item.label}
                   </button>

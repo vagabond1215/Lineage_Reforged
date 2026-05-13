@@ -341,22 +341,22 @@ export function SettingsScreen({
     [clockMinuteKey, hourFormat, timeZone]
   );
   const activeOptionClass =
-    'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-strong)] text-[color:var(--color-text-strong)] shadow-[0_10px_22px_rgba(15,23,42,0.14)]';
+    'launcher-control is-active';
   const inactiveOptionClass =
-    'border-[color:var(--color-border)] bg-[color:var(--color-panel)] text-[color:var(--color-text-soft)] hover:bg-[color:var(--color-surface-soft)]';
+    'launcher-control text-[color:var(--color-text-secondary)]';
   const neutralButtonClass =
-    'rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-2 text-sm font-semibold text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-soft)]';
+    'launcher-control px-3 py-2 text-sm font-semibold';
   const topButtonClass =
-    'inline-flex h-10 items-center justify-center rounded-md border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-soft)] text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]';
+    'launcher-control inline-flex h-10 items-center justify-center';
   const accountMenuButtonClass =
-    'w-full rounded-md px-3 py-2 text-left text-sm font-medium text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-soft)]';
+    'w-full rounded-md px-3 py-2 text-left text-sm font-medium text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-selected)]';
   const cautionButtonClass =
     themeMode === 'dark'
-      ? 'rounded-md border border-amber-300/30 bg-amber-200/10 px-3 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-200/20'
+      ? 'launcher-control forged-tone-warning px-3 py-2 text-sm font-semibold'
       : 'rounded-md border border-amber-500/45 bg-amber-100/90 px-3 py-2 text-sm font-semibold text-amber-800 transition hover:bg-amber-200/95';
   const dangerButtonClass =
     themeMode === 'dark'
-      ? 'rounded-md border border-rose-300/30 bg-rose-200/10 px-3 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-200/20'
+      ? 'launcher-control forged-tone-danger px-3 py-2 text-sm font-semibold'
       : 'rounded-md border border-rose-500/45 bg-rose-100/90 px-3 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-200/95';
   const selectColorStyle = {
     colorScheme: themeMode,
@@ -430,7 +430,7 @@ export function SettingsScreen({
           <button
             type="button"
             onClick={() => setAccountMenuOpen((open) => !open)}
-            className="inline-flex h-10 max-w-[14rem] items-center justify-center truncate rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-3 text-sm font-medium text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-strong)]"
+            className="launcher-control inline-flex h-10 max-w-[14rem] items-center justify-center truncate px-3 text-sm font-medium"
             aria-haspopup="menu"
             aria-expanded={accountMenuOpen}
             title={accountProfile.displayName}
@@ -445,7 +445,7 @@ export function SettingsScreen({
           </div>
           {accountMenuOpen && (
             <div
-              className="absolute right-0 top-12 z-50 w-48 rounded-lg border border-[color:var(--color-border-strong)] bg-[color:var(--color-panel-strong)] p-2 shadow-2xl"
+              className="launcher-menu absolute right-0 top-12 z-50 w-48 p-2"
               role="menu"
             >
               <button
@@ -512,8 +512,8 @@ export function SettingsScreen({
       subBar={<div className="h-9" aria-hidden="true" />}
       notice={notice ? <NoticeBanner notice={notice} onDismiss={onDismissNotice} /> : null}
     >
-      <div className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-panel)]">
-        <div className="flex flex-col gap-3 border-b border-[color:var(--color-border)] px-4 py-4 lg:flex-row lg:items-center">
+      <div className="forged-card">
+        <div className="flex flex-col gap-3 border-b border-[color:var(--color-border-soft)] px-4 py-4 lg:flex-row lg:items-center">
           <div className="w-32 shrink-0 text-sm font-semibold text-[color:var(--color-text-strong)]">
             Timezone:
           </div>
@@ -522,7 +522,7 @@ export function SettingsScreen({
               <select
                 value={timeZone}
                 onChange={(event) => onTimeZoneChange(event.target.value)}
-                className="w-full rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-3 py-2 text-sm text-[color:var(--color-text-strong)] outline-none transition focus:border-[color:var(--color-border-strong)]"
+                className="creator-forged-input w-full px-3 py-2 text-sm text-[color:var(--color-text-strong)] outline-none transition"
                 style={selectColorStyle}
               >
                 {timeZoneOptions.map((option) => (
@@ -542,7 +542,7 @@ export function SettingsScreen({
                     type="button"
                     onClick={() => onHourFormatChange(option)}
                     aria-pressed={active}
-                    className={`rounded-md border px-3 py-2 text-sm font-semibold transition ${
+                    className={`px-3 py-2 text-sm font-semibold ${
                       active ? activeOptionClass : inactiveOptionClass
                     }`}
                   >
@@ -554,7 +554,7 @@ export function SettingsScreen({
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 border-b border-[color:var(--color-border)] px-4 py-4 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3 border-b border-[color:var(--color-border-soft)] px-4 py-4 sm:flex-row sm:items-center">
           <div className="w-32 shrink-0 text-sm font-semibold text-[color:var(--color-text-strong)]">
             Appearance:
           </div>
@@ -568,7 +568,7 @@ export function SettingsScreen({
                   type="button"
                   onClick={() => onThemePreferenceChange(option)}
                   aria-pressed={active}
-                  className={`rounded-md border px-3 py-2 text-sm font-semibold transition ${
+                  className={`px-3 py-2 text-sm font-semibold ${
                     active ? activeOptionClass : inactiveOptionClass
                   }`}
                 >
@@ -614,7 +614,7 @@ export function SettingsScreen({
           </div>
 
           {activeActionCopy && (
-            <div className="rounded-lg border border-rose-300/30 bg-rose-200/10 p-4">
+            <div className="forged-subpanel border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] p-4">
               <div className="text-sm font-semibold text-rose-700 dark:text-rose-100">
                 {activeActionCopy.title}
               </div>
@@ -626,7 +626,7 @@ export function SettingsScreen({
                   type="password"
                   value={accountPassword}
                   onChange={(event) => setAccountPassword(event.target.value)}
-                  className="min-w-0 flex-1 rounded-md border border-rose-300/40 bg-[color:var(--color-panel)] px-3 py-2 text-sm text-[color:var(--color-text-strong)] outline-none transition focus:border-rose-300"
+                  className="creator-forged-input min-w-0 flex-1 px-3 py-2 text-sm text-[color:var(--color-text-strong)] outline-none transition"
                   placeholder="Account password"
                 />
                 <button
