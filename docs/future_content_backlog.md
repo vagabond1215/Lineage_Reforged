@@ -1000,7 +1000,7 @@ This file tracks content and systems that are intentionally deferred.
 - Prerequisite: shared player/session snapshot fields and a browser-safe UI projection layer now exist; remaining prerequisite is runtime generation of those session records from actual simulation systems
 - Intended owner: `apps/rpg-ui`, `packages/shared`, and engine/session runtime layers
 - Intended implementation:
-  - a player-facing root launcher now exists as `Play Echoes of Legacy.cmd` so the current UI/browser flow can be entered from the project root without terminal knowledge
+  - a player-facing root launcher now exists as `Play Lineage Reforged.cmd` so the current UI/browser flow can be entered from the project root without terminal knowledge
   - the React/Tailwind shell now reads from a save/session snapshot bridge instead of the earlier freeform mock-data module, and the in-game shell now owns a typed game-session provider that separates raw active snapshots, derived UI view models, and local navigation state while leaving `demoSnapshot` as development-only seed data
   - shared contracts now carry location, currency, reputation, titles, tracked activity, notifications, codex records, quest journal records, chronicle records, operations, origin profiles, inventory/equipment, and the player discovery chronicle in a session-facing shape the UI can project directly
   - `packages/engines/game-engine/src/save-snapshot.ts` now provides a runtime-side snapshot helper, and `apps/rpg-ui/src/runtime/uiViewModel.ts` projects that snapshot shape into panel data
@@ -1062,7 +1062,7 @@ This file tracks content and systems that are intentionally deferred.
 - Prerequisite: a root-level player launcher now exists; remaining prerequisites are a stable production build pipeline for `apps/rpg-ui` and a clear ownership decision for running or embedding the simulation/runtime host in desktop builds
 - Intended owner: desktop packaging, `apps/rpg-ui`, and future app-host/runtime integration layers
 - Intended implementation:
-  - keep `Play Echoes of Legacy.cmd` as the current non-technical root entrypoint while the project remains browser-hosted in development, with the root launcher explicitly handing the UI URL to the system default browser once the dev server responds
+  - keep `Play Lineage Reforged.cmd` as the current non-technical root entrypoint while the project remains browser-hosted in development, with the root launcher explicitly handing the UI URL to the system default browser once the dev server responds
   - package the player UI into a desktop shell once the save flow, launcher behavior, and runtime bridge are stable enough that browser-specific boot assumptions can be removed
 
 #### Broader Node-native `.js` bridge coverage for app-local RPG UI source modules

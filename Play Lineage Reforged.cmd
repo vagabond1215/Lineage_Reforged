@@ -5,7 +5,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT_DIR%scripts\launch_rp
 set "EXIT_CODE=%errorlevel%"
 if not "%EXIT_CODE%"=="0" (
     echo.
-    echo Echoes of Legacy failed. See "%ROOT_DIR%logs\rpg-ui.bootstrap.log" for details.
+    echo Lineage: Reforged failed. See "%ROOT_DIR%logs\rpg-ui.bootstrap.log" for details.
     pause
 )
 exit /b %EXIT_CODE%

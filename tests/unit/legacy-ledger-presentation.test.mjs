@@ -778,6 +778,10 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
     new URL("../../apps/rpg-ui/src/game-shell/components/AppShell.tsx", import.meta.url),
     "utf8"
   );
+  const shellBrandLogoSource = readFileSync(
+    new URL("../../apps/rpg-ui/src/game-shell/components/ShellBrandLogo.tsx", import.meta.url),
+    "utf8"
+  );
   const mainMenuSource = readFileSync(
     new URL("../../apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx", import.meta.url),
     "utf8"
@@ -846,7 +850,7 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(appShellSource, /gap-3 overflow-x-auto p-4 md:flex-col md:gap-0 md:overflow-visible md:p-0/);
   assert.match(appShellSource, /aria-current=\{item\.active \? 'page' : undefined\}/);
   assert.match(appShellSource, /launcher-sidebar-button min-w-\[10rem\] rounded-lg border px-4 py-4 text-left transition/);
-  assert.match(appShellSource, /md:min-h-\[4\.25rem\] md:min-w-0 md:w-full md:rounded-none md:border-x-0 md:border-t-0 md:first:border-t md:px-5 md:py-3/);
+  assert.match(appShellSource, /md:min-h-\[2\.125rem\] md:min-w-0 md:w-full md:rounded-none md:border-x-0 md:border-t-0 md:first:border-t md:px-4 md:py-1\.5/);
   assert.match(appShellSource, /\? 'is-active border-\[color:var\(--color-border-soft\)\] text-\[color:var\(--color-text-primary\)\]'/);
   assert.match(appShellSource, /: 'border-\[color:var\(--color-border-soft\)\] text-\[color:var\(--color-text-secondary\)\]'/);
   assert.match(appShellSource, /truncate text-\[1\.75rem\] font-light leading-tight tracking-\[0\.08em\]/);
@@ -974,8 +978,9 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.doesNotMatch(settingsSource, /Save Reset/);
   assert.doesNotMatch(settingsSource, /Reset Save Data/);
   assert.doesNotMatch(settingsSource, /<Card/);
-  assert.match(mainMenuSource, /Echoes of Legacy/);
-  assert.match(settingsSource, /Echoes of Legacy/);
+  assert.match(mainMenuSource, /<ShellBrandLogo \/>/);
+  assert.match(settingsSource, /<ShellBrandLogo \/>/);
+  assert.match(shellBrandLogoSource, /alt="Lineage: Reforged"/);
   assert.match(indexCssSource, /--color-surface-base:/);
   assert.match(indexCssSource, /--color-action-primary:/);
   assert.match(indexCssSource, /--color-progress-active:/);
@@ -986,7 +991,7 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.doesNotMatch(mainMenuSource, /Campaign slots, account records, and launcher controls/);
   assert.doesNotMatch(mainMenuSource, legacyBrandPattern);
   assert.doesNotMatch(settingsSource, legacyBrandPattern);
-  assert.match(indexHtmlSource, /Echoes of Legacy RPG UI/);
+  assert.match(indexHtmlSource, /Lineage: Reforged RPG UI/);
   assert.doesNotMatch(indexHtmlSource, legacyBrandPattern);
   assert.match(accountMetaSource, /activeSection\?: AccountMetaSectionId/);
   assert.match(accountMetaSource, /showSectionNav\?: boolean/);

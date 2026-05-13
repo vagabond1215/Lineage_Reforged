@@ -22,7 +22,7 @@ All notable changes to this project will be documented here.
 ### Notes
 
 * Content validation system stabilized
-* Preparing for project rename to "Lineage: Reforged"
+* Visible branding aligned with "Lineage: Reforged"
 
 ---
 

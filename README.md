@@ -1,4 +1,4 @@
-# Echoes of Legacy RPG Foundation
+# Lineage: Reforged RPG Foundation
 
 TypeScript-first, headless simulation scaffold for a survival / builder / RPG project.
 
@@ -68,7 +68,7 @@ Example design intent already captured in content:
 
 Use the root launchers for the current playable UI flow:
 
-- Double-click `Play Echoes of Legacy.cmd` to start the RPG UI from the project root and open it in your default browser
+- Double-click `Play Lineage Reforged.cmd` to start the RPG UI from the project root and open it in your default browser
 
 Launcher logs are written under `logs/`.
 
