@@ -36,6 +36,8 @@
   - Codex 5.5 Plan Mode
   - Codex 5.5 Local
   - Codex 5.5 Cloud, only when justified by larger multi-file work
+- Codex Plan Mode is non-mutating: do not write files, update [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md), stage changes, untrack files, clean up artifacts, or otherwise implement work while still in Plan Mode.
+- If an implementation or cleanup request arrives while still in Codex Plan Mode, return a decision-complete proposed plan instead of editing files.
 - Prefer ChatGPT via GitHub Connector for small repo-aware docs, handoff, audit, or tiny GitHub file edits when quality will not be sacrificed.
 - Use Codex for local validation, multi-file code/content changes, commands, tests, or edits that need the local working tree.
 - Each detailed Codex output written to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) must state:

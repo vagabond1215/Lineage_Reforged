@@ -1,12 +1,12 @@
 # Current Codex Output
 
-Source version/run: v0.5.10 - Internal Version Roadmap Policy Update
+Source version/run: v0.5.12 - Plan Mode Rule Update
 Date: 2026-05-13
 Branch/status assumption: `master`; worktree was clean before docs edits.
 
 ## Result
 
-Updated the repository workflow guidance so internal version labels are treated as maturity markers with multi-digit patch numbers, not prompt-count rollovers. `v0.5.x` can continue through `v0.5.10` and beyond until the project actually enters the next maturity band.
+Clarified that Codex Plan Mode is planning-only and non-mutating. Implementation or cleanup requests made while still in Plan Mode should produce a proposed plan, not file edits, output-file updates, staged changes, artifact cleanup, or Git index changes.
 
 ## Files Changed
 
@@ -20,18 +20,17 @@ Updated the repository workflow guidance so internal version labels are treated 
 
 ## Behavior / Runtime Confirmation
 
-Docs-only policy update. No README, CHANGELOG, backlog, source code, tests, schemas, package files, content JSON, runtime behavior, UI behavior, save/account schema, generated/vendor artifacts, logs, or historical Step references changed.
+Docs-only workflow policy update. No README, CHANGELOG, backlog, source code, tests, schemas, package files, content JSON, runtime behavior, UI behavior, save/account schema, generated/vendor artifacts, logs, or historical Step references changed.
 
 ## Risks / Follow-Up
 
-- Version bands are maturity guidance, not delivery promises.
-- Continue using `v0.5.x` for foundation stabilization until runtime ownership work justifies `v0.6.x`.
-- Historical Step references remain intentionally untouched.
+- Plan Mode remains appropriate for audits and decision-complete planning, but implementation should switch to Codex Local or another execution-capable context.
+- The project should stay in the `v0.5.x` stabilization band for the next feature-adjacent audits.
 
 ## Next Recommended Version
 
-Version 0.5.11 - Workflow Baseline Review
+Version 0.5.13 - Remaining Partial Spell Readiness Audit
 
 ## Suggested Commit Message
 
-docs(repo): define internal version roadmap
+docs(repo): clarify Plan Mode workflow
