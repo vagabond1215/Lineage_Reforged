@@ -1,50 +1,58 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.22 - Launcher And Creator Dark Theme Parity
+Source version/run: Version 0.5.23 - Launcher Button Asset Integration
 Date: 2026-05-13
 Branch/status assumption: `master`; worktree was clean at run start before implementation.
 
 ## Result
 
-Applied the forged premium dark theme language to the launcher/main menu/save-slot flow, settings shell surfaces, account meta panel, load-game slot flow, and character creator surfaces.
+Integrated the manually cropped launcher button assets and dark texture asset into the RPG UI launcher shell.
 
-The pass stayed scoped to dark-mode visual styling. It did not change layouts, navigation placement, logo placement, interactions, runtime state, save/account data, content JSON, schemas, combat, magic, Legacy logic, or progression logic.
+The launcher sidebar now renders image-backed Character, Legacy, Chronicles, and Settings buttons while preserving the existing section ids, click handlers, disabled behavior, `aria-label`, and `aria-current` behavior. Normal state uses the inactive asset; active, hover, and keyboard focus-visible states use the active asset. The 700x200 button ratio is preserved with a 7:2 aspect-ratio wrapper and `object-fit: contain`.
+
+The top launcher menu bar now uses the copied dark texture asset through the shell chrome token, and the sub bar uses the same texture with a darker overlay. The existing top-left Lineage: Reforged logo asset and sizing were not changed.
 
 ## Files Changed
 
-- `apps/rpg-ui/src/index.css`
 - `apps/rpg-ui/src/game-shell/components/AppShell.tsx`
-- `apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx`
-- `apps/rpg-ui/src/game-shell/components/LoadGameScreen.tsx`
-- `apps/rpg-ui/src/game-shell/components/SettingsScreen.tsx`
-- `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`
-- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
+- `apps/rpg-ui/src/index.css`
+- `apps/rpg-ui/public/launcher/character-inactive.png`
+- `apps/rpg-ui/public/launcher/character-active.png`
+- `apps/rpg-ui/public/launcher/legacy-inactive.png`
+- `apps/rpg-ui/public/launcher/legacy-active.png`
+- `apps/rpg-ui/public/launcher/chronicles-inactive.png`
+- `apps/rpg-ui/public/launcher/chronicles-active.png`
+- `apps/rpg-ui/public/launcher/settings-inactive.png`
+- `apps/rpg-ui/public/launcher/settings-active.png`
+- `apps/rpg-ui/public/launcher/dark-background.png`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
 
-- `git status --short`: clean at run start; final status shows only the intended modified files.
+- `git status --short`: clean at run start; final status shows only the intended modified/new files.
+- Asset inspection: confirmed the eight source button assets are 700x200 and the copied background asset is 1254x1254.
 - `npm.cmd run tool:content-lint`: passed.
 - `node --test tests\unit\*presentation*.mjs`: passed.
+- `node -e "...typescript.transpileModule(...AppShell.tsx...)"`: passed (`AppShell TSX syntax: ok`).
 - `git diff --check`: passed.
+- `npx.cmd tsc --noEmit -p apps/rpg-ui/tsconfig.json`: failed before checking code because `npx` attempted a registry request and hit `UNABLE_TO_VERIFY_LEAF_SIGNATURE`.
+- `.\apps\rpg-ui\node_modules\.bin\tsc.cmd --noEmit -p apps/rpg-ui/tsconfig.json`: ran locally but failed on existing unrelated repo-wide type errors outside the touched launcher files; the earlier `AppShell.tsx` syntax issue was fixed and the narrow TSX syntax check passes.
 
 ## Behavior / Runtime Confirmation
 
-Runtime, JSON, schema, save/account, combat, magic, Legacy, and progression behavior did not change.
+Runtime behavior did not change. Save/account state, content JSON, schemas, combat, magic, Legacy, progression logic, and character creator logic were untouched.
 
-Dark-mode launcher and creator surfaces now use opaque or near-opaque forged-metal, smoked-iron, and dark-parchment treatments. Heavy save-slot boxes were softened into slimmer row cards with engraved separators, muted gold active states, quieter empty-slot labels, and less harsh delete affordances. Sidebar, account/time controls, menus, load-game details, settings panels, account meta sections, creator cards, inputs, subpanels, and selection states now share the same token-backed dark surface language.
-
-Light mode was not intentionally redesigned.
+The launcher button integration is presentation-only and uses served assets from `apps/rpg-ui/public/launcher/`, not the root `unused assets` folder.
 
 ## Risks / Follow-Up
 
-- No browser visual QA was run in this pass; validation was lint/tests/diff-only.
-- The local account access/login screen was left untouched because this run targeted the specified launcher/main-menu/save-slot, settings, account meta, load-game, and character creator surfaces.
+- No browser visual QA was run in this pass; validation was lint/tests/syntax/diff-only.
+- The repo-wide app TypeScript check remains blocked by pre-existing unrelated type errors, so the narrow `AppShell.tsx` syntax check was used to validate the touched TSX render path.
 
 ## Next Recommended Version
 
-Version 0.5.23 - Launcher And Creator Browser Visual QA
+Version 0.5.24 - Launcher Asset Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): align launcher and creator dark theme
+style(ui): integrate launcher button assets

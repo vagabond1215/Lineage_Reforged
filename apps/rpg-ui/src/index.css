@@ -100,10 +100,17 @@
   --color-tone-neutral-bg: #1b1915;
   --color-tone-neutral-border: #4b4234;
   --color-tone-neutral-text: var(--theme-aged-silver);
+  --launcher-dark-texture: url('/launcher/dark-background.png');
   --color-shell-bar-bg:
     linear-gradient(180deg, #191713 0%, #12110f 100%);
-  --color-shell-chrome-top-bg: var(--theme-forged-black);
-  --color-shell-chrome-subbar-bg: var(--theme-forged-black);
+  --color-shell-chrome-top-bg:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.08), rgba(20, 19, 17, 0.72) 38%, rgba(8, 8, 7, 0.86) 100%),
+    var(--launcher-dark-texture) center / cover repeat,
+    var(--theme-forged-black);
+  --color-shell-chrome-subbar-bg:
+    linear-gradient(180deg, rgba(12, 11, 10, 0.78), rgba(5, 5, 5, 0.9)),
+    var(--launcher-dark-texture) center / cover repeat,
+    var(--theme-charcoal-iron);
   --color-shell-chrome-side-bg: var(--theme-forged-black);
   --color-shell-chrome-border: var(--theme-old-iron-edge);
   --shadow-shell-bar:
@@ -793,6 +800,83 @@ select {
     inset 14px 0 36px rgba(255, 255, 255, 0.52),
     inset -14px 0 36px rgba(226, 238, 248, 0.38),
     inset 0 0 42px rgba(189, 207, 224, 0.16);
+}
+
+.launcher-sidebar-button.has-art {
+  width: 12rem;
+  max-width: 14rem;
+  min-height: auto;
+  padding: 0.125rem;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.launcher-sidebar-button.has-art::before,
+.launcher-sidebar-button.has-art::after {
+  display: none;
+}
+
+.launcher-sidebar-button.has-art:hover,
+.launcher-sidebar-button.has-art:focus-visible,
+.launcher-sidebar-button.has-art:active,
+.launcher-sidebar-button.has-art.is-active {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.launcher-sidebar-button.has-art:focus-visible {
+  outline: 1px solid var(--theme-muted-noble-gold);
+  outline-offset: 1px;
+}
+
+.launcher-sidebar-button.has-art:disabled {
+  filter: grayscale(0.35);
+}
+
+.launcher-sidebar-button-art {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 7 / 2;
+}
+
+.launcher-sidebar-button-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition:
+    opacity 120ms ease,
+    filter 120ms ease;
+}
+
+.launcher-sidebar-button-image-active {
+  opacity: 0;
+}
+
+.launcher-sidebar-button.has-art:not(:disabled):hover .launcher-sidebar-button-image-inactive,
+.launcher-sidebar-button.has-art:not(:disabled):focus-visible .launcher-sidebar-button-image-inactive,
+.launcher-sidebar-button.has-art.is-active .launcher-sidebar-button-image-inactive {
+  opacity: 0;
+}
+
+.launcher-sidebar-button.has-art:not(:disabled):hover .launcher-sidebar-button-image-active,
+.launcher-sidebar-button.has-art:not(:disabled):focus-visible .launcher-sidebar-button-image-active,
+.launcher-sidebar-button.has-art.is-active .launcher-sidebar-button-image-active {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .launcher-sidebar-button.has-art {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    padding: 0.125rem 0.375rem;
+  }
 }
 
 .panel-scroll {

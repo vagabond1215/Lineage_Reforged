@@ -28,6 +28,25 @@ export type SidebarNavItem = {
   onSelect?: () => void;
 };
 
+const launcherSidebarAssets: Record<string, { inactive: string; active: string }> = {
+  characters: {
+    inactive: '/launcher/character-inactive.png',
+    active: '/launcher/character-active.png'
+  },
+  legacy: {
+    inactive: '/launcher/legacy-inactive.png',
+    active: '/launcher/legacy-active.png'
+  },
+  chronicles: {
+    inactive: '/launcher/chronicles-inactive.png',
+    active: '/launcher/chronicles-active.png'
+  },
+  settings: {
+    inactive: '/launcher/settings-inactive.png',
+    active: '/launcher/settings-active.png'
+  }
+};
+
 export function TopBar({
   brand,
   title,
@@ -146,27 +165,59 @@ export function SidebarNav({
       aria-label={label}
       className="flex gap-3 overflow-x-auto p-4 md:flex-col md:gap-0 md:overflow-visible md:p-0"
     >
-      {items.map((item) => (
-        <button
-          key={item.id}
-          type="button"
-          onClick={item.onSelect}
-          disabled={item.disabled}
-          aria-current={item.active ? 'page' : undefined}
-          className={`launcher-sidebar-button min-w-[10rem] rounded-lg border px-4 py-4 text-left transition md:min-h-[2.125rem] md:min-w-0 md:w-full md:rounded-none md:border-x-0 md:border-t-0 md:first:border-t md:px-4 md:py-1.5 ${
-            item.active
-              ? 'is-active border-[color:var(--color-border-soft)] text-[color:var(--color-text-primary)]'
-              : 'border-[color:var(--color-border-soft)] text-[color:var(--color-text-secondary)]'
-          } disabled:cursor-default disabled:opacity-60`}
-        >
-          <span className="flex items-center justify-between gap-3">
-            <span className="truncate text-[1.75rem] font-light leading-tight tracking-[0.08em] md:text-[0.875rem]">
-              {item.label}
-            </span>
-            {item.badge}
-          </span>
-        </button>
-      ))}
+      {items.map((item) => {
+        const assets = launcherSidebarAssets[item.id];
+
+        return (
+          <button
+            key={item.id}
+            type="button"
+            onClick={item.onSelect}
+            disabled={item.disabled}
+            aria-label={item.label}
+            aria-current={item.active ? 'page' : undefined}
+            className={`launcher-sidebar-button min-w-[10rem] rounded-lg border px-4 py-4 text-left transition md:min-h-[2.125rem] md:min-w-0 md:w-full md:rounded-none md:border-x-0 md:border-t-0 md:first:border-t md:px-4 md:py-1.5 ${
+              assets ? 'has-art' : ''
+            } ${
+              item.active
+                ? 'is-active border-[color:var(--color-border-soft)] text-[color:var(--color-text-primary)]'
+                : 'border-[color:var(--color-border-soft)] text-[color:var(--color-text-secondary)]'
+            } disabled:cursor-default disabled:opacity-60`}
+          >
+            {assets ? (
+              <>
+                <span className="launcher-sidebar-button-art" aria-hidden="true">
+                  <img
+                    src={assets.inactive}
+                    alt=""
+                    draggable={false}
+                    className="launcher-sidebar-button-image launcher-sidebar-button-image-inactive"
+                  />
+                  <img
+                    src={assets.active}
+                    alt=""
+                    draggable={false}
+                    className="launcher-sidebar-button-image launcher-sidebar-button-image-active"
+                  />
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="sr-only truncate text-[1.75rem] font-light leading-tight tracking-[0.08em] md:text-[0.875rem]"
+                >
+                  {item.label}
+                </span>
+              </>
+            ) : (
+              <span className="flex items-center justify-between gap-3">
+                <span className="truncate text-[1.75rem] font-light leading-tight tracking-[0.08em] md:text-[0.875rem]">
+                  {item.label}
+                </span>
+                {item.badge}
+              </span>
+            )}
+          </button>
+        );
+      })}
     </nav>
   );
 }
