@@ -30,20 +30,20 @@ export type SidebarNavItem = {
 
 const launcherSidebarAssets: Record<string, { inactive: string; active: string }> = {
   characters: {
-    inactive: '/launcher/character-inactive.png',
-    active: '/launcher/character-active.png'
+    inactive: '/launcher/character-inactive-soft.png',
+    active: '/launcher/character-active-soft.png'
   },
   legacy: {
-    inactive: '/launcher/legacy-inactive.png',
-    active: '/launcher/legacy-active.png'
+    inactive: '/launcher/legacy-inactive-soft.png',
+    active: '/launcher/legacy-active-soft.png'
   },
   chronicles: {
-    inactive: '/launcher/chronicles-inactive.png',
-    active: '/launcher/chronicles-active.png'
+    inactive: '/launcher/chronicles-inactive-soft.png',
+    active: '/launcher/chronicles-active-soft.png'
   },
   settings: {
-    inactive: '/launcher/settings-inactive.png',
-    active: '/launcher/settings-active.png'
+    inactive: '/launcher/settings-inactive-soft.png',
+    active: '/launcher/settings-active-soft.png'
   }
 };
 
