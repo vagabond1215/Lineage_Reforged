@@ -7,3 +7,14 @@ packages/db/build/
 *.log
 logs/
 scripts/logs/
+
+# Local temp and scratch files
+.tmp*
+/tmp_*
+/temp_*
+scripts/tmp_*.ps1
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
