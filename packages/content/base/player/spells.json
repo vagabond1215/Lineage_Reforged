@@ -1206,7 +1206,7 @@
     },
     {
       "id": "spell.lightning.healing.surge",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "lightning",
       "name": "Surge",
       "school": "healing",
@@ -1245,6 +1245,30 @@
           "stamina": 1
         },
         "actionType": "spell.lightning.healing.surge"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.healing"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "cast.fast",
+          "power.medium"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "lightning"
+        ],
+        "notes": "Metadata-only fast healing compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "heal.hp",
@@ -1790,7 +1814,7 @@
     },
     {
       "id": "spell.shadow.elemental.void_bolt",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "dark_shadow_void",
       "name": "Void Bolt",
       "school": "elemental",
@@ -1831,6 +1855,33 @@
           "stamina": 1
         },
         "actionType": "spell.shadow.elemental.void_bolt"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.elemental"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "magic.dark",
+          "delivery.projectile",
+          "cast.precise"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "shadow"
+        ],
+        "notes": "Metadata-only dark projectile compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "damage.magic",
@@ -2011,6 +2062,34 @@
         },
         "actionType": "spell.shadow.healing.drain"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.healing",
+            "magic.dark"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.precise",
+          "control.hard"
+        ],
+        "discouragedTags": [
+          "cast.risky"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "shadow"
+        ],
+        "notes": "Metadata-only shadow sustain compatibility; true damage-to-heal coupling remains deferred."
+      },
       "resolutionHooks": [
         "heal.hp",
         "damage.magic",
@@ -2097,7 +2176,7 @@
     },
     {
       "id": "spell.druidic.control.vinebind",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "earth",
       "name": "Vinebind",
       "school": "control",
@@ -2136,6 +2215,32 @@
           "stamina": 1
         },
         "actionType": "spell.druidic.control.vinebind"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.druidic",
+            "magic.control"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.stable",
+          "control.moderate"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "botanical",
+          "seed",
+          "living_plant"
+        ],
+        "notes": "Metadata-only druidic bind compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "status.bind",
@@ -2463,7 +2568,7 @@
     },
     {
       "id": "spell.ninjutsu.utility.shadowstep",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "dark_shadow_void",
       "name": "Shadowstep",
       "school": "utility",
@@ -2502,6 +2607,30 @@
         },
         "actionType": "spell.ninjutsu.utility.shadowstep"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.utility",
+            "magic.dark"
+          ],
+          "any": [
+            [
+              "range.touch",
+              "range.short"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.self",
+          "cast.fast",
+          "control.moderate"
+        ],
+        "freecastAllowed": true,
+        "catalystFamilies": [
+          "shadow"
+        ],
+        "notes": "Metadata-only shadow mobility compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "mobility.shadow_step",
         "school.utility",
@@ -2512,7 +2641,7 @@
     },
     {
       "id": "spell.ninjutsu.ranged.shuriken",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "air",
       "name": "Shuriken",
       "school": "ranged",
@@ -2550,6 +2679,30 @@
           "stamina": 3
         },
         "actionType": "spell.ninjutsu.ranged.shuriken"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.utility"
+          ],
+          "any": [
+            [
+              "range.short",
+              "range.medium",
+              "range.long"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.projectile",
+          "cast.fast",
+          "power.low"
+        ],
+        "freecastAllowed": false,
+        "catalystFamilies": [
+          "air"
+        ],
+        "notes": "Metadata-only ninjutsu projectile compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "damage.ranged",
@@ -2831,7 +2984,7 @@
     },
     {
       "id": "spell.performance.enhancing.battle_rhythm",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "lightning",
       "name": "Battle Rhythm",
       "school": "enhancing",
@@ -2870,6 +3023,30 @@
         },
         "actionType": "spell.performance.enhancing.battle_rhythm"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.performance",
+            "magic.enhancing"
+          ],
+          "any": [
+            [
+              "range.aura",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "delivery.area",
+          "cast.rhythmic"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": false,
+        "notes": "Metadata-only performance anthem compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "buff.anthem",
         "school.enhancing",
@@ -2880,7 +3057,7 @@
     },
     {
       "id": "spell.performance.enhancing.guard_song",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "earth",
       "name": "Guard Song",
       "school": "enhancing",
@@ -2919,6 +3096,32 @@
         },
         "actionType": "spell.performance.enhancing.guard_song"
       },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.performance",
+            "magic.enhancing",
+            "magic.warding"
+          ],
+          "any": [
+            [
+              "range.aura",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "delivery.area",
+          "delivery.ward",
+          "cast.rhythmic"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": false,
+        "notes": "Metadata-only performance protection compatibility; does not change current spell execution."
+      },
       "resolutionHooks": [
         "buff.protect",
         "school.enhancing",
@@ -2929,7 +3132,7 @@
     },
     {
       "id": "spell.performance.enhancing.stone_dance",
-      "compatibilityStatus": "partial",
+      "compatibilityStatus": "ready",
       "primaryFamily": "earth",
       "name": "Stone Dance",
       "school": "enhancing",
@@ -2967,6 +3170,32 @@
           "stamina": 1
         },
         "actionType": "spell.performance.enhancing.stone_dance"
+      },
+      "compatibilityProfile": {
+        "requiredTags": {
+          "all": [
+            "magic.performance",
+            "magic.enhancing",
+            "magic.warding"
+          ],
+          "any": [
+            [
+              "range.aura",
+              "range.medium"
+            ]
+          ]
+        },
+        "preferredTags": [
+          "delivery.ally",
+          "delivery.area",
+          "delivery.ward",
+          "cast.rhythmic"
+        ],
+        "discouragedTags": [
+          "cast.slow"
+        ],
+        "freecastAllowed": false,
+        "notes": "Metadata-only performance ward compatibility; does not change current spell execution."
       },
       "resolutionHooks": [
         "buff.ward",

@@ -21,6 +21,17 @@ const ALPHA_PROFILE_BATCH_IDS = Object.freeze([
   "spell.ice.enhancing.frostguard"
 ]);
 
+const BETA_PROFILE_BATCH_IDS = Object.freeze([
+  "spell.lightning.healing.surge",
+  "spell.shadow.elemental.void_bolt",
+  "spell.druidic.control.vinebind",
+  "spell.ninjutsu.utility.shadowstep",
+  "spell.ninjutsu.ranged.shuriken",
+  "spell.performance.enhancing.battle_rhythm",
+  "spell.performance.enhancing.guard_song",
+  "spell.performance.enhancing.stone_dance"
+]);
+
 async function loadContentRecords(relativePath) {
   const raw = await readFile(relativePath, "utf8");
   return JSON.parse(raw.replace(/^\uFEFF/, "")).records;
@@ -145,11 +156,11 @@ test("current authored spells all declare valid compatibilityStatus", async () =
   }
 
   assert.equal(records.length, 55);
-  assert.equal(counts.get("ready"), 15);
-  assert.equal(counts.get("partial"), 13);
+  assert.equal(counts.get("ready"), 23);
+  assert.equal(counts.get("partial"), 5);
   assert.equal(counts.get("deferred"), 27);
   assert.equal(counts.get("placeholder") ?? 0, 0);
-  assert.equal(profileCount, 19);
+  assert.equal(profileCount, 28);
 });
 
 test("Alpha compatibility batch spells are ready and profiled", async () => {
@@ -172,6 +183,26 @@ test("Alpha compatibility batch spells are ready and profiled", async () => {
   }
 });
 
+test("Beta compatibility batch spells are ready and profiled", async () => {
+  const records = await loadContentRecords("packages/content/base/player/spells.json");
+  const recordsById = new Map(records.map((record) => [record.id, record]));
+
+  for (const id of BETA_PROFILE_BATCH_IDS) {
+    const record = recordsById.get(id);
+    assert.ok(record, `${id} exists`);
+    assert.equal(record.compatibilityStatus, "ready", id);
+    assert.ok(record.compatibilityProfile, `${id} has compatibilityProfile`);
+    assert.equal("primaryFamily" in record.compatibilityProfile, false, `${id} keeps primaryFamily top-level only`);
+    assertNoValidationErrors(
+      validateSpellMagicMetadata({
+        record,
+        source: id
+      }),
+      id
+    );
+  }
+});
+
 test("ready spells have compatibilityProfile metadata", async () => {
   const records = await loadContentRecords("packages/content/base/player/spells.json");
   for (const record of records.filter((entry) => entry.compatibilityStatus === "ready")) {
@@ -179,7 +210,7 @@ test("ready spells have compatibilityProfile metadata", async () => {
   }
 });
 
-test("deferred spells remain deferred and non-Alpha partial spells may remain unprofiled", async () => {
+test("deferred and blocked partial spells keep intended statuses", async () => {
   const records = await loadContentRecords("packages/content/base/player/spells.json");
   const recordsById = new Map(records.map((record) => [record.id, record]));
 
@@ -193,12 +224,14 @@ test("deferred spells remain deferred and non-Alpha partial spells may remain un
   }
 
   for (const id of [
-    "spell.lightning.healing.surge",
-    "spell.ninjutsu.ranged.shuriken",
-    "spell.performance.enhancing.battle_rhythm"
+    "spell.shadow.enfeebling.curse",
+    "spell.shadow.healing.drain",
+    "spell.druidic.healing.berry",
+    "spell.druidic.healing.bloom",
+    "spell.performance.enhancing.war_song"
   ]) {
     const record = recordsById.get(id);
     assert.equal(record?.compatibilityStatus, "partial", id);
-    assert.equal(record?.compatibilityProfile, undefined, `${id} remains unprofiled`);
+    assert.ok(record?.compatibilityProfile, `${id} remains profiled but partial`);
   }
 });

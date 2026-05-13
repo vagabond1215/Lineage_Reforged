@@ -1,36 +1,45 @@
 # Current Codex Output
 
-Source version/run: v0.5.12 - Plan Mode Rule Update
+Source version/run: v0.5.14 - Beta Spell Compatibility Profile Batch
 Date: 2026-05-13
-Branch/status assumption: `master`; worktree was clean before docs edits.
+Branch/status assumption: `master`; worktree was clean before edits and the live spell baseline matched the expected counts and partial list.
 
 ## Result
 
-Clarified that Codex Plan Mode is planning-only and non-mutating. Implementation or cleanup requests made while still in Plan Mode should produce a proposed plan, not file edits, output-file updates, staged changes, artifact cleanup, or Git index changes.
+Added the Beta metadata-only spell compatibility batch. Surge, Void Bolt, Vinebind, Shadowstep, Shuriken, Battle Rhythm, Guard Song, and Stone Dance are now `ready` with compatibility profiles. Drain now has a compatibility profile but remains `partial` because true damage-to-heal coupling is still runtime-deferred.
+
+The authored spell catalog now has 55 spells: 23 ready, 5 partial, 27 deferred, 0 placeholder, 28 compatibility profiles, and 55 top-level `primaryFamily` values.
 
 ## Files Changed
 
-- `AGENTS.md`
+- `packages/content/base/player/spells.json`
+- `tests/unit/spell-compatibility-status.test.mjs`
+- `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
 
 - `git status --short`: clean before edits
+- Live baseline verification from `spells.json`: matched expected 55 total, 15 ready, 13 partial, 27 deferred, 19 profiles, 55 primary families
+- Post-edit count verification from `spells.json`: 55 total, 23 ready, 5 partial, 27 deferred, 28 profiles, 55 primary families
+- `npm.cmd run tool:content-lint`: passed
+- `node --test tests\unit\spell-compatibility-status.test.mjs tests\unit\spell-primary-family.test.mjs`: passed, 19 tests
 - `git diff --check`: passed
 
 ## Behavior / Runtime Confirmation
 
-Docs-only workflow policy update. No README, CHANGELOG, backlog, source code, tests, schemas, package files, content JSON, runtime behavior, UI behavior, save/account schema, generated/vendor artifacts, logs, or historical Step references changed.
+Metadata, validation tests, and backlog documentation only. No spell IDs, display names, target shapes, hooks, costs, runtime behavior, acquisition, catalyst effects, affinity/resistance behavior, magic skill gain, spellbook UI, Magic Legacy, save/account schema, package files, or validator vocabulary changed.
 
 ## Risks / Follow-Up
 
-- Plan Mode remains appropriate for audits and decision-complete planning, but implementation should switch to Codex Local or another execution-capable context.
-- The project should stay in the `v0.5.x` stabilization band for the next feature-adjacent audits.
+- Drain remains partial until lifesteal coupling is owned by runtime behavior.
+- Curse, Berry, Bloom, and War Song remain partial because deferred debuff, generated-item, regeneration, and performance-song hooks are not implemented.
+- Ready status remains a metadata/profile readiness signal, not permission for runtime magic expansion.
 
 ## Next Recommended Version
 
-Version 0.5.13 - Remaining Partial Spell Readiness Audit
+Version 0.5.15 - Magic Readiness Audit After Beta Profile Batch
 
 ## Suggested Commit Message
 
-docs(repo): clarify Plan Mode workflow
+content(magic): add beta spell compatibility profiles
