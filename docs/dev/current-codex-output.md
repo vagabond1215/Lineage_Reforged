@@ -1,67 +1,52 @@
 # Current Codex Output
 
-Source version/run: Launcher Sidebar Button Asset Replacement
+Source version/run: Launcher Active Button CSS Shadow Removal
 Date: 2026-05-13
-Branch/status assumption: `master`; worktree already contained the prior launcher sprite-clock changes, untracked clock assets, and user-updated `unused assets/` button source files at run start.
+Branch/status assumption: `master`; worktree already had the launcher clock-spacing CSS change and this output doc modified at run start. Untracked user intake copies were preserved.
 
 ## Result
 
-Replaced the eight launcher sidebar button runtime assets with the updated background-removed files from `unused assets/`.
+Removed the only CSS filter/drop-shadow path attached to active launcher sidebar button images.
 
-The UI already references the `*-soft.png` files under `apps/rpg-ui/public/launcher/`, so no component wiring or behavior changed. All copied assets retained the required `700x200` dimensions.
+The dev-tools observation pointed to `.launcher-sidebar-button-image-active`. CSS inspection showed the art-button wrapper is already transparent, pseudo-elements are disabled for `.has-art`, and the active image only had one extra visual treatment: a focus-visible `brightness(...) drop-shadow(...)` filter. That rule is now removed, and the image transition now animates opacity only.
+
+Kept the fixed `12rem` launcher sprite-clock slot from the previous spacing change so the account/player menu button no longer shifts when the clock changes between 3-digit and 4-digit visible times.
 
 ## Files Changed
 
-- `apps/rpg-ui/public/launcher/character-active-soft.png`
-- `apps/rpg-ui/public/launcher/character-inactive-soft.png` verified/replaced, no net diff from current source state
-- `apps/rpg-ui/public/launcher/legacy-active-soft.png`
-- `apps/rpg-ui/public/launcher/legacy-inactive-soft.png`
-- `apps/rpg-ui/public/launcher/chronicles-active-soft.png`
-- `apps/rpg-ui/public/launcher/chronicles-inactive-soft.png`
-- `apps/rpg-ui/public/launcher/settings-active-soft.png`
-- `apps/rpg-ui/public/launcher/settings-inactive-soft.png`
+- `apps/rpg-ui/src/index.css`
 - `docs/dev/current-codex-output.md`
 
-Existing dirty files from prior/user work were preserved:
+Untracked user intake copies preserved:
 
-- `apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx`
-- `apps/rpg-ui/src/game-shell/components/SettingsScreen.tsx`
-- `apps/rpg-ui/src/game-shell/components/LauncherSpriteClock.tsx`
-- `apps/rpg-ui/src/index.css`
-- `apps/rpg-ui/public/clock/`
-- `unused assets/Active_Character.png`
-- `unused assets/Active_Chronicles.png`
-- `unused assets/Active_Settings.png`
-- `unused assets/Active_legacy.png`
-- `unused assets/Inactive_Chronicles.png`
-- `unused assets/Inactive_Legacy.png`
-- `unused assets/Inactive_Settings.png`
-- `unused assets/number_tile_dark.png`
+- `unused assets/Active_Character - Copy.png`
+- `unused assets/Active_Settings - Copy.png`
+- `unused assets/Active_legacy - Copy.png`
 
 ## Checks Run
 
-- `git status --short`: run before edits; showed prior sprite-clock/UI changes plus user-updated unused button assets.
-- Asset dimension inspection: all eight unused source images and all eight public launcher destinations are `700x200`.
-- Hash verification after copy: all eight public launcher destinations match their corresponding `unused assets/` source files byte-for-byte.
+- `git status --short`: run before edits; showed `apps/rpg-ui/src/index.css`, `docs/dev/current-codex-output.md`, and untracked user intake copies.
+- CSS inspection of launcher sidebar button image/filter rules.
+- Source/destination hash verification for all eight launcher button assets: passed; public assets still match the supplied `unused assets/` files and remain `700x200`.
 - `npm.cmd run tool:content-lint`: passed.
+- `node --test tests\unit\*presentation*.mjs`: passed, 32 tests.
 - `git diff --check`: passed with CRLF normalization warnings only.
 
 ## Behavior / Runtime Confirmation
 
-Runtime behavior did not change. Save/account state, content JSON, schemas, combat, magic, Legacy, progression, character creator logic, save-slot behavior, launcher routing, clock logic, and sidebar button interaction wiring were untouched.
+Runtime behavior did not change. Time source, time formatting, account state, save behavior, routes, content JSON, schemas, combat, magic, Legacy, progression, creator logic, save-slot behavior, launcher routing, and sidebar button interaction logic were untouched.
 
-This was limited to replacing the launcher sidebar button image assets already referenced by `AppShell`.
+This was limited to launcher visual CSS: stable clock width plus removal of the active image focus-visible filter/drop-shadow.
 
 ## Risks / Follow-Up
 
-- No browser visual QA was run; validation was asset dimension/hash plus lint/diff checks.
-- The `unused assets/` source images remain modified because they are the user-provided updated source assets.
-- Existing sprite-clock changes from the prior run remain in the worktree and were not modified by this asset replacement.
+- No browser visual QA was run; validation was CSS inspection plus lint/test/diff checks.
+- If a rectangle remains after removing this CSS filter, the next check should inspect computed styles in-browser for any inherited or browser-applied filter on `.launcher-sidebar-button-image-active`.
 
 ## Next Recommended Version
 
-Version 0.5.31 - Launcher Browser Visual QA
+Version 0.5.32 - Launcher Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): replace launcher sidebar button assets
+style(ui): remove active launcher button shadow filter

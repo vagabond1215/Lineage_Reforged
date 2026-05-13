@@ -479,9 +479,10 @@ body {
 .launcher-sprite-clock {
   display: inline-flex;
   height: 2.5rem;
-  flex: 0 0 auto;
+  width: 12rem;
+  flex: 0 0 12rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   color: var(--color-text-strong);
   filter:
     drop-shadow(0 1px 0 rgba(255, 238, 188, 0.08))
@@ -901,9 +902,7 @@ select {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition:
-    opacity 120ms ease,
-    filter 120ms ease;
+  transition: opacity 120ms ease;
 }
 
 .launcher-sidebar-button-image-active {
@@ -920,12 +919,6 @@ select {
 .launcher-sidebar-button.has-art:not(:disabled):focus-visible .launcher-sidebar-button-image-active,
 .launcher-sidebar-button.has-art.is-active .launcher-sidebar-button-image-active {
   opacity: 1;
-}
-
-.launcher-sidebar-button.has-art:not(:disabled):focus-visible .launcher-sidebar-button-image-active {
-  filter:
-    brightness(1.04)
-    drop-shadow(0 0 8px rgba(189, 166, 111, 0.28));
 }
 
 @media (min-width: 768px) {
