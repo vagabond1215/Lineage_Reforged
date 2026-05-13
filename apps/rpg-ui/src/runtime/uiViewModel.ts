@@ -34,6 +34,10 @@ import {
   type BodyStatePresentationViewModel
 } from './bodyStatePresentation.js';
 import {
+  buildCombatSkillGainNotificationItems,
+  type CombatDeltaLike
+} from './combatDeltaPresentation.js';
+import {
   compareGeographicKnowledgeEntries,
   getGeographicKnowledgeSectionLabel,
   getGeographicKnowledgeTierLabel,
@@ -291,6 +295,10 @@ function formatDate(snapshot: SaveSnapshot): string {
 
 function formatTimeOfDay(snapshot: SaveSnapshot): string {
   return timeOfDayLabels[snapshot.clock.subday] ?? 'Unknown Watch';
+}
+
+function formatNotificationTime(snapshot: SaveSnapshot): string {
+  return `Day ${snapshot.clock.day}, Tick ${snapshot.clock.tick}`;
 }
 
 function formatCoin(value: number): string {
@@ -2042,8 +2050,13 @@ function buildChronicleWindowDetails(snapshot: SaveSnapshot): Record<string, Win
 export function createUiViewModel(
   snapshot: SaveSnapshot,
   bodyStatePresentation: BodyStatePresentationViewModel,
-  accountProfile: AccountProfileState
+  accountProfile: AccountProfileState,
+  gameDeltas: Iterable<CombatDeltaLike> = []
 ): UiViewModel {
+  const combatSkillGainNotifications = buildCombatSkillGainNotificationItems(
+    gameDeltas,
+    formatNotificationTime(snapshot)
+  );
   const characterLists = buildCharacterLists(snapshot);
   const resolvedPublicReputation = resolveScopedReputation(snapshot.playerState);
   const resolvedPublicReputationCount = getResolvedPublicReputationCount(resolvedPublicReputation);
@@ -2202,6 +2215,7 @@ export function createUiViewModel(
   return {
     navItems,
     notifications: [
+      ...combatSkillGainNotifications,
       ...bodyStatePresentation.ephemeralNotifications,
       ...snapshot.sessionState.notifications.map((item) => ({
         id: item.id,

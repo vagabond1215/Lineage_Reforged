@@ -9,6 +9,7 @@ import {
 } from 'react';
 import type {
   AccountProfileState,
+  GameDelta,
   SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
 import { UiViewModelProvider } from './UiViewModelContext.js';
@@ -33,12 +34,14 @@ export interface GameSessionContextValue extends GameSessionState {
 }
 
 const GameSessionContext = createContext<GameSessionContextValue | null>(null);
+const EMPTY_GAME_DELTAS: readonly GameDelta[] = [];
 
 export function createGameSessionState(
   accountProfile: AccountProfileState,
   snapshot: SaveSnapshot,
   memory: BodyStatePresentationMemory = createInitialBodyStatePresentationMemory(),
-  dismissedToastIds: Set<string> = new Set()
+  dismissedToastIds: Set<string> = new Set(),
+  gameDeltas: readonly GameDelta[] = []
 ): GameSessionState {
   const bodyStatePresentation = buildBodyStatePresentation(snapshot, memory, dismissedToastIds);
 
@@ -46,19 +49,21 @@ export function createGameSessionState(
     accountProfile,
     snapshot,
     bodyStatePresentation,
-    uiViewModel: createUiViewModel(snapshot, bodyStatePresentation, accountProfile)
+    uiViewModel: createUiViewModel(snapshot, bodyStatePresentation, accountProfile, gameDeltas)
   };
 }
 
 type GameSessionProviderProps = {
   accountProfile: AccountProfileState;
   snapshot: SaveSnapshot;
+  gameDeltas?: readonly GameDelta[];
   onSnapshotChange: (snapshot: SaveSnapshot) => void;
   children: ReactNode;
 };
 
 export function GameSessionProvider({
   accountProfile,
+  gameDeltas = EMPTY_GAME_DELTAS,
   snapshot,
   onSnapshotChange,
   children
@@ -74,9 +79,10 @@ export function GameSessionProvider({
         accountProfile,
         snapshot,
         presentationMemoryRef.current,
-        dismissedToastIdSet
+        dismissedToastIdSet,
+        gameDeltas
       ),
-    [accountProfile, dismissedToastIdSet, snapshot]
+    [accountProfile, dismissedToastIdSet, gameDeltas, snapshot]
   );
 
   useEffect(() => {

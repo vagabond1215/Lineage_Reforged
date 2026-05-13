@@ -1,6 +1,6 @@
-import type { TagTone } from '../types.js';
+import type { NotificationItem, TagTone } from '../types.js';
 
-type CombatDeltaLike = {
+export type CombatDeltaLike = {
   kind?: unknown;
   payload?: unknown;
 };
@@ -84,4 +84,17 @@ export function buildCombatSkillGainMessageItems(
   }
 
   return items;
+}
+
+export function buildCombatSkillGainNotificationItems(
+  deltas: Iterable<CombatDeltaLike>,
+  time: string
+): NotificationItem[] {
+  return buildCombatSkillGainMessageItems(deltas).map((item) => ({
+    id: item.id,
+    title: item.title,
+    detail: item.detail,
+    time,
+    type: item.tone
+  }));
 }
