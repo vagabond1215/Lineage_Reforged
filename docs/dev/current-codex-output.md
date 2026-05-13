@@ -1,43 +1,46 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.24 - Launcher Seamless Sidebar Asset Fix
+Source version/run: Launcher Sidebar Button Scale And Background Softening
 Date: 2026-05-13
-Branch/status assumption: `master`; worktree was clean at run start before implementation.
+Branch/status assumption: `master`; worktree already contained the prior uncommitted framed-logo changes plus the user-provided untracked `unused assets/Logo_Dark_Frame.png` at run start.
 
 ## Result
 
-Refined the launcher asset integration so the top logo well, top menu bar, sub bar, and sidebar read as a more continuous forged-metal wraparound surface.
+Reduced the launcher sidebar image button rendering by 25%.
 
-The sidebar now uses the same dark texture asset as the top bar through the shell chrome token, with a darker charcoal overlay so it does not compete with the image buttons. Hard border emphasis across the logo well, top bar, sub bar, and side rail was replaced with transparent borders, charcoal inset shadows, and low-contrast ambient shading.
+Desktop launcher art buttons now render at 75% of the sidebar rail width while preserving the existing 7:2 aspect-ratio wrapper and non-distorting `object-fit: contain` behavior. The mobile/base button width was reduced from 12rem to 9rem with matching max-width reduction.
 
-The launcher image buttons now remove wrapper chrome, border width, padding, radius, and desktop nav spacing. On desktop, the button art fills the sidebar width and stacks flush vertically while preserving the 7:2 ratio. Normal state still uses inactive assets; active, hover, and keyboard focus-visible still use active assets.
-
-No button image files were changed.
+Softened the sidebar textured background by reducing the dark overlay opacity and lowering the side rail inset/ambient shadow strength so the buttons blend more naturally with the textured background image.
 
 ## Files Changed
 
-- `apps/rpg-ui/src/game-shell/components/AppShell.tsx`
 - `apps/rpg-ui/src/index.css`
 - `docs/dev/current-codex-output.md`
 
+Existing uncommitted files from the prior logo swap remain present and were not reverted:
+
+- `apps/rpg-ui/src/game-shell/components/AppShell.tsx`
+- `apps/rpg-ui/src/game-shell/components/ShellBrandLogo.tsx`
+- `apps/rpg-ui/public/branding/lineage-reforged-logo-dark-framed.png`
+- `unused assets/Logo_Dark_Frame.png`
+
 ## Checks Run
 
-- `git status --short`: clean at run start; final status shows only the intended modified files.
+- `git status --short`: run before edits; showed the prior uncommitted framed-logo changes.
 - `npm.cmd run tool:content-lint`: passed.
 - `node --test tests\unit\*presentation*.mjs`: passed.
-- `node -e "...typescript.transpileModule(...AppShell.tsx...)"`: passed (`AppShell TSX syntax: ok`).
 - `git diff --check`: passed.
 
 ## Behavior / Runtime Confirmation
 
-Runtime behavior did not change. Save/account state, content JSON, schemas, combat, magic, Legacy, progression logic, and character creator logic were untouched.
+Runtime behavior did not change. This was launcher visual styling only.
 
-The existing top-left Lineage: Reforged logo asset and sizing were not changed. The existing launcher button assets under `apps/rpg-ui/public/launcher/` were reused without cropping, resizing, regenerating, or modifying the image files.
+No save/account state, content JSON, schemas, combat, magic, Legacy, progression logic, character creator logic, or image files were changed in this follow-up.
 
 ## Risks / Follow-Up
 
-- No browser visual QA was run in this pass; validation was lint/tests/syntax/diff-only.
-- Mobile keeps the existing horizontal nav behavior while desktop receives the flush vertical art-stack treatment.
+- No browser visual QA was run; validation was lint/tests/diff-only.
+- The 75% sizing is CSS-rendered only. The source button assets remain unchanged.
 
 ## Next Recommended Version
 
@@ -45,4 +48,4 @@ Version 0.5.25 - Launcher Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): make launcher sidebar assets seamless
+style(ui): soften launcher sidebar button scale

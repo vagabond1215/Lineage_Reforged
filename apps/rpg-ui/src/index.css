@@ -112,7 +112,7 @@
     var(--launcher-dark-texture) center / cover repeat,
     var(--theme-charcoal-iron);
   --color-shell-chrome-side-bg:
-    linear-gradient(90deg, rgba(5, 5, 4, 0.88), rgba(17, 15, 12, 0.78) 42%, rgba(7, 7, 6, 0.9) 100%),
+    linear-gradient(90deg, rgba(9, 8, 7, 0.72), rgba(18, 16, 13, 0.62) 42%, rgba(8, 8, 7, 0.76) 100%),
     var(--launcher-dark-texture) center / cover repeat,
     var(--theme-forged-black);
   --color-shell-chrome-border: var(--theme-old-iron-edge);
@@ -421,9 +421,9 @@ body {
 .launcher-side-rail {
   background: var(--color-shell-chrome-side-bg);
   box-shadow:
-    inset 0 18px 28px rgba(0, 0, 0, 0.28),
-    inset -22px 0 34px rgba(0, 0, 0, 0.34),
-    14px 0 30px rgba(0, 0, 0, 0.14);
+    inset 0 18px 28px rgba(0, 0, 0, 0.18),
+    inset -18px 0 30px rgba(0, 0, 0, 0.24),
+    10px 0 24px rgba(0, 0, 0, 0.1);
 }
 
 .launcher-logo-well {
@@ -806,9 +806,10 @@ select {
 }
 
 .launcher-sidebar-button.has-art {
-  width: 12rem;
-  max-width: 14rem;
+  width: 9rem;
+  max-width: 10.5rem;
   min-height: auto;
+  margin-inline: auto;
   padding: 0;
   border-width: 0;
   border-color: transparent;
@@ -889,7 +890,7 @@ select {
   }
 
   .launcher-sidebar-button.has-art {
-    width: 100%;
+    width: 75%;
     max-width: none;
     min-width: 0;
   }
