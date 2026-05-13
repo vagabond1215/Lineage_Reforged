@@ -1,58 +1,48 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.23 - Launcher Button Asset Integration
+Source version/run: Version 0.5.24 - Launcher Seamless Sidebar Asset Fix
 Date: 2026-05-13
 Branch/status assumption: `master`; worktree was clean at run start before implementation.
 
 ## Result
 
-Integrated the manually cropped launcher button assets and dark texture asset into the RPG UI launcher shell.
+Refined the launcher asset integration so the top logo well, top menu bar, sub bar, and sidebar read as a more continuous forged-metal wraparound surface.
 
-The launcher sidebar now renders image-backed Character, Legacy, Chronicles, and Settings buttons while preserving the existing section ids, click handlers, disabled behavior, `aria-label`, and `aria-current` behavior. Normal state uses the inactive asset; active, hover, and keyboard focus-visible states use the active asset. The 700x200 button ratio is preserved with a 7:2 aspect-ratio wrapper and `object-fit: contain`.
+The sidebar now uses the same dark texture asset as the top bar through the shell chrome token, with a darker charcoal overlay so it does not compete with the image buttons. Hard border emphasis across the logo well, top bar, sub bar, and side rail was replaced with transparent borders, charcoal inset shadows, and low-contrast ambient shading.
 
-The top launcher menu bar now uses the copied dark texture asset through the shell chrome token, and the sub bar uses the same texture with a darker overlay. The existing top-left Lineage: Reforged logo asset and sizing were not changed.
+The launcher image buttons now remove wrapper chrome, border width, padding, radius, and desktop nav spacing. On desktop, the button art fills the sidebar width and stacks flush vertically while preserving the 7:2 ratio. Normal state still uses inactive assets; active, hover, and keyboard focus-visible still use active assets.
+
+No button image files were changed.
 
 ## Files Changed
 
 - `apps/rpg-ui/src/game-shell/components/AppShell.tsx`
 - `apps/rpg-ui/src/index.css`
-- `apps/rpg-ui/public/launcher/character-inactive.png`
-- `apps/rpg-ui/public/launcher/character-active.png`
-- `apps/rpg-ui/public/launcher/legacy-inactive.png`
-- `apps/rpg-ui/public/launcher/legacy-active.png`
-- `apps/rpg-ui/public/launcher/chronicles-inactive.png`
-- `apps/rpg-ui/public/launcher/chronicles-active.png`
-- `apps/rpg-ui/public/launcher/settings-inactive.png`
-- `apps/rpg-ui/public/launcher/settings-active.png`
-- `apps/rpg-ui/public/launcher/dark-background.png`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
 
-- `git status --short`: clean at run start; final status shows only the intended modified/new files.
-- Asset inspection: confirmed the eight source button assets are 700x200 and the copied background asset is 1254x1254.
+- `git status --short`: clean at run start; final status shows only the intended modified files.
 - `npm.cmd run tool:content-lint`: passed.
 - `node --test tests\unit\*presentation*.mjs`: passed.
 - `node -e "...typescript.transpileModule(...AppShell.tsx...)"`: passed (`AppShell TSX syntax: ok`).
 - `git diff --check`: passed.
-- `npx.cmd tsc --noEmit -p apps/rpg-ui/tsconfig.json`: failed before checking code because `npx` attempted a registry request and hit `UNABLE_TO_VERIFY_LEAF_SIGNATURE`.
-- `.\apps\rpg-ui\node_modules\.bin\tsc.cmd --noEmit -p apps/rpg-ui/tsconfig.json`: ran locally but failed on existing unrelated repo-wide type errors outside the touched launcher files; the earlier `AppShell.tsx` syntax issue was fixed and the narrow TSX syntax check passes.
 
 ## Behavior / Runtime Confirmation
 
 Runtime behavior did not change. Save/account state, content JSON, schemas, combat, magic, Legacy, progression logic, and character creator logic were untouched.
 
-The launcher button integration is presentation-only and uses served assets from `apps/rpg-ui/public/launcher/`, not the root `unused assets` folder.
+The existing top-left Lineage: Reforged logo asset and sizing were not changed. The existing launcher button assets under `apps/rpg-ui/public/launcher/` were reused without cropping, resizing, regenerating, or modifying the image files.
 
 ## Risks / Follow-Up
 
 - No browser visual QA was run in this pass; validation was lint/tests/syntax/diff-only.
-- The repo-wide app TypeScript check remains blocked by pre-existing unrelated type errors, so the narrow `AppShell.tsx` syntax check was used to validate the touched TSX render path.
+- Mobile keeps the existing horizontal nav behavior while desktop receives the flush vertical art-stack treatment.
 
 ## Next Recommended Version
 
-Version 0.5.24 - Launcher Asset Browser Visual QA
+Version 0.5.25 - Launcher Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): integrate launcher button assets
+style(ui): make launcher sidebar assets seamless

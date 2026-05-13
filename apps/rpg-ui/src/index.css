@@ -111,12 +111,15 @@
     linear-gradient(180deg, rgba(12, 11, 10, 0.78), rgba(5, 5, 5, 0.9)),
     var(--launcher-dark-texture) center / cover repeat,
     var(--theme-charcoal-iron);
-  --color-shell-chrome-side-bg: var(--theme-forged-black);
+  --color-shell-chrome-side-bg:
+    linear-gradient(90deg, rgba(5, 5, 4, 0.88), rgba(17, 15, 12, 0.78) 42%, rgba(7, 7, 6, 0.9) 100%),
+    var(--launcher-dark-texture) center / cover repeat,
+    var(--theme-forged-black);
   --color-shell-chrome-border: var(--theme-old-iron-edge);
   --shadow-shell-bar:
-    inset 0 1px 0 rgba(232, 221, 198, 0.04),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.55),
-    0 10px 24px rgba(0, 0, 0, 0.28);
+    inset 0 1px 0 rgba(232, 221, 198, 0.035),
+    inset 0 -14px 22px rgba(0, 0, 0, 0.34),
+    0 10px 26px rgba(0, 0, 0, 0.22);
   --shadow-active-outline:
     0 0 0 1px rgba(209, 188, 130, 0.26),
     inset 0 1px 0 rgba(232, 221, 198, 0.06),
@@ -403,32 +406,28 @@ body {
 .launcher-logo-well,
 .launcher-subbar,
 .launcher-side-rail {
-  border-color: color-mix(in srgb, var(--color-shell-chrome-border) 72%, transparent);
-  background:
-    linear-gradient(180deg, rgba(232, 221, 198, 0.025), transparent 34%),
-    var(--color-shell-chrome-top-bg);
-  box-shadow:
-    inset 0 1px 0 rgba(232, 221, 198, 0.035),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.42);
+  border-color: transparent;
+  background: var(--color-shell-chrome-top-bg);
+  box-shadow: var(--shadow-shell-bar);
 }
 
 .launcher-subbar {
-  background:
-    linear-gradient(180deg, rgba(232, 221, 198, 0.018), transparent 32%),
-    var(--color-shell-chrome-subbar-bg);
+  background: var(--color-shell-chrome-subbar-bg);
+  box-shadow:
+    inset 0 14px 22px rgba(0, 0, 0, 0.32),
+    inset 0 -14px 22px rgba(0, 0, 0, 0.28);
 }
 
 .launcher-side-rail {
-  background:
-    linear-gradient(90deg, rgba(232, 221, 198, 0.018), transparent 30%),
-    var(--color-shell-chrome-side-bg);
+  background: var(--color-shell-chrome-side-bg);
+  box-shadow:
+    inset 0 18px 28px rgba(0, 0, 0, 0.28),
+    inset -22px 0 34px rgba(0, 0, 0, 0.34),
+    14px 0 30px rgba(0, 0, 0, 0.14);
 }
 
 .launcher-logo-well {
-  box-shadow:
-    inset 0 1px 0 rgba(232, 221, 198, 0.04),
-    inset -1px 0 0 rgba(0, 0, 0, 0.34),
-    0 10px 24px rgba(0, 0, 0, 0.18);
+  background: var(--color-shell-chrome-top-bg);
 }
 
 .launcher-control {
@@ -802,14 +801,21 @@ select {
     inset 0 0 42px rgba(189, 207, 224, 0.16);
 }
 
+.launcher-sidebar-nav {
+  scrollbar-width: thin;
+}
+
 .launcher-sidebar-button.has-art {
   width: 12rem;
   max-width: 14rem;
   min-height: auto;
-  padding: 0.125rem;
+  padding: 0;
+  border-width: 0;
   border-color: transparent;
+  border-radius: 0;
   background: transparent;
   box-shadow: none;
+  line-height: 0;
 }
 
 .launcher-sidebar-button.has-art::before,
@@ -827,8 +833,7 @@ select {
 }
 
 .launcher-sidebar-button.has-art:focus-visible {
-  outline: 1px solid var(--theme-muted-noble-gold);
-  outline-offset: 1px;
+  outline: none;
 }
 
 .launcher-sidebar-button.has-art:disabled {
@@ -840,6 +845,7 @@ select {
   display: block;
   width: 100%;
   aspect-ratio: 7 / 2;
+  overflow: hidden;
 }
 
 .launcher-sidebar-button-image {
@@ -870,12 +876,22 @@ select {
   opacity: 1;
 }
 
+.launcher-sidebar-button.has-art:not(:disabled):focus-visible .launcher-sidebar-button-image-active {
+  filter:
+    brightness(1.04)
+    drop-shadow(0 0 8px rgba(189, 166, 111, 0.28));
+}
+
 @media (min-width: 768px) {
+  .launcher-sidebar-nav {
+    gap: 0;
+    padding: 0;
+  }
+
   .launcher-sidebar-button.has-art {
     width: 100%;
     max-width: none;
     min-width: 0;
-    padding: 0.125rem 0.375rem;
   }
 }
 

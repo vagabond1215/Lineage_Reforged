@@ -163,7 +163,7 @@ export function SidebarNav({
   return (
     <nav
       aria-label={label}
-      className="flex gap-3 overflow-x-auto p-4 md:flex-col md:gap-0 md:overflow-visible md:p-0"
+      className="launcher-sidebar-nav flex gap-3 overflow-x-auto p-4 md:flex-col md:gap-0 md:overflow-visible md:p-0"
     >
       {items.map((item) => {
         const assets = launcherSidebarAssets[item.id];
