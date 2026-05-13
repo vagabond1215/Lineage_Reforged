@@ -377,11 +377,10 @@ Forbidden in early phases:
 
 ## O. Recommended Next Codex Prompt
 
-"Implement Phase 2 (data-shape only) from `docs/design/magic-system-charter.md`:
+"Audit Phase 4 readiness for a read-only spellbook compatibility UI:
 
-- add additive data structures for conduit/casting tags on compatible weapon/item records
-- add additive metadata structures for spell compatibility (`requiredTags`, `preferredTags`, `discouragedTags`)
-- add additive catalyst tier vocabulary constants (Tier 0-5) in content schemas
-- add/adjust focused validation rules so tags are validated as vocabulary only
-- do **not** change runtime spell effect execution, combat resolution, Legacy power, or skill-rank mutation behavior
-- run `npm.cmd run tool:content-lint` and report only schema/lint impacts"
+- inspect current spell compatibility, primary-family, conduit, and catalyst metadata surfaces
+- identify the smallest view-model/display contract for showing spell readiness, family, compatible conduit tags, catalyst hints, and deferred warnings
+- keep the UI strictly read-only and presentation-only
+- do **not** add known-spell acquisition, cast commands, runtime spell effect execution, combat resolution, catalyst effects, Legacy power, or skill-rank mutation behavior
+- run focused metadata tests and `npm.cmd run tool:content-lint` for validation context only"

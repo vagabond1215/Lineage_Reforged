@@ -1,45 +1,42 @@
 # Current Codex Output
 
-Source version/run: v0.5.14 - Beta Spell Compatibility Profile Batch
+Source version/run: v0.5.16 - Magic Readiness Documentation Cleanup
 Date: 2026-05-13
-Branch/status assumption: `master`; worktree was clean before edits and the live spell baseline matched the expected counts and partial list.
+Branch/status assumption: `master`; worktree was clean before edits and the live spell baseline matched the post-Beta expected counts.
 
 ## Result
 
-Added the Beta metadata-only spell compatibility batch. Surge, Void Bolt, Vinebind, Shadowstep, Shuriken, Battle Rhythm, Guard Song, and Stone Dance are now `ready` with compatibility profiles. Drain now has a compatibility profile but remains `partial` because true damage-to-heal coupling is still runtime-deferred.
-
-The authored spell catalog now has 55 spells: 23 ready, 5 partial, 27 deferred, 0 placeholder, 28 compatibility profiles, and 55 top-level `primaryFamily` values.
+Aligned current-facing magic readiness docs with the post-Beta spell catalog. The spellbook expansion blueprint now reports 23 ready, 5 partial, 27 deferred, 28 profiled spells, updates Beta-promoted spell statuses and Drain's profiled-partial status, and adds a Beta implementation-batch row. The magic system charter now points its recommended next prompt at a read-only spellbook compatibility UI readiness audit instead of the already-completed Phase 2 data-shape work.
 
 ## Files Changed
 
-- `packages/content/base/player/spells.json`
-- `tests/unit/spell-compatibility-status.test.mjs`
-- `docs/future_content_backlog.md`
+- `docs/design/spellbook-expansion-blueprint.md`
+- `docs/design/magic-system-charter.md`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
 
 - `git status --short`: clean before edits
-- Live baseline verification from `spells.json`: matched expected 55 total, 15 ready, 13 partial, 27 deferred, 19 profiles, 55 primary families
-- Post-edit count verification from `spells.json`: 55 total, 23 ready, 5 partial, 27 deferred, 28 profiles, 55 primary families
+- Live baseline verification from `spells.json`: 55 total, 23 ready, 5 partial, 27 deferred, 0 placeholder, 28 profiles, 55 primary families
+- Stale-doc scan for pre-Beta current-facing counts/status prompts: no remaining matches in current magic docs
 - `npm.cmd run tool:content-lint`: passed
-- `node --test tests\unit\spell-compatibility-status.test.mjs tests\unit\spell-primary-family.test.mjs`: passed, 19 tests
+- `node --test tests\unit\spell-compatibility-status.test.mjs tests\unit\spell-primary-family.test.mjs tests\unit\magic-metadata-support.test.mjs tests\unit\spell-hook-support.test.mjs`: passed, 45 tests
 - `git diff --check`: passed
 
 ## Behavior / Runtime Confirmation
 
-Metadata, validation tests, and backlog documentation only. No spell IDs, display names, target shapes, hooks, costs, runtime behavior, acquisition, catalyst effects, affinity/resistance behavior, magic skill gain, spellbook UI, Magic Legacy, save/account schema, package files, or validator vocabulary changed.
+Docs-only cleanup. No README, CHANGELOG, backlog, source code, content JSON, schemas, package files, tests, runtime behavior, UI behavior, acquisition behavior, catalyst effects, affinity/resistance behavior, magic skill gain, Magic Legacy, save/account schema, or validator vocabulary changed.
 
 ## Risks / Follow-Up
 
-- Drain remains partial until lifesteal coupling is owned by runtime behavior.
-- Curse, Berry, Bloom, and War Song remain partial because deferred debuff, generated-item, regeneration, and performance-song hooks are not implemented.
-- Ready status remains a metadata/profile readiness signal, not permission for runtime magic expansion.
+- The next spellbook UI work should remain read-only and must not imply known-spell acquisition, castability, catalyst execution, or runtime effects.
+- Historical backlog run notes still mention older counts by design; they were preserved as historical context.
+- `spell-hook-support.test.mjs` still has an Alpha-named promoted-hook coverage helper, though all ready spells remain covered by compatibility validation.
 
 ## Next Recommended Version
 
-Version 0.5.15 - Magic Readiness Audit After Beta Profile Batch
+Version 0.5.17 - Spellbook Read-Only UI Readiness Audit
 
 ## Suggested Commit Message
 
-content(magic): add beta spell compatibility profiles
+docs(magic): align readiness docs after beta profiles

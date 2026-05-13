@@ -1,7 +1,7 @@
 # Spellbook Expansion Blueprint
 
 Status: Design-only blueprint (no runtime activation)
-Last updated: 2026-05-10
+Last updated: 2026-05-13
 
 ## A. Sources and Boundary
 
@@ -12,10 +12,10 @@ This document adapts the approved spellbook expansion research into the reposito
 Current catalog baseline from `packages/content/base/player/spells.json`:
 
 - 55 authored spells
-- 15 `ready`
-- 13 `partial`
+- 23 `ready`
+- 5 `partial`
 - 27 `deferred`
-- 19 spells with `compatibilityProfile`
+- 28 spells with `compatibilityProfile`
 - 55 spells with top-level `primaryFamily` metadata
 
 This blueprint does not change runtime behavior. It does not edit `spells.json`, add spells, remove spells, rename spell ids, change costs, add schema fields, or activate magic acquisition, catalyst effects, affinities, skill gain, Legacy, account, preparation, payout, or UI behavior.
@@ -69,7 +69,7 @@ This table maps the live catalog into the corrected taxonomy. It is a design pro
 | `spell.lightning.elemental.spark` Spark | ready | lightning | none | arcane | short/medium/long projectile | Rename/refine later; profiled Alpha ready spell. |
 | `spell.lightning.enfeebling.shock` Shock | ready | lightning | control | arcane | short/medium projectile | Profiled Alpha interrupt identity. |
 | `spell.lightning.enhancing.charge` Charge | deferred | lightning | enhancing | arcane | self/ally imbue | Redesign later as imbue or overcharge. |
-| `spell.lightning.healing.surge` Surge | partial | lightning | healing, enhancing | arcane | touch/short ally | Promote/profile sharp stimulant heal. |
+| `spell.lightning.healing.surge` Surge | ready | lightning | healing, enhancing | arcane | touch/short/medium ally | Profiled Beta sharp stimulant heal. |
 | `spell.ice.elemental.ice_shard` Ice Shard | ready | ice | none | arcane | short/medium/long projectile | Profiled Alpha ready spell. |
 | `spell.ice.enfeebling.freeze` Freeze | ready | ice | control | arcane | short/medium projectile | Profiled Alpha bind/slow candidate. |
 | `spell.ice.enhancing.frostguard` Frostguard | ready | ice | warding | arcane | self/ally ward | Profiled Alpha defensive ice anchor. |
@@ -78,27 +78,27 @@ This table maps the live catalog into the corrected taxonomy. It is a design pro
 | `spell.light.enfeebling.blind` Blind | deferred | divine/light | enfeebling, control | arcane/divine | short/medium/long projectile | Rename later; keep glare identity. |
 | `spell.light.enhancing.bless` Bless | deferred | divine/light | enhancing | arcane/divine | ally/aura | Rename later; broad boon is too generic at scale. |
 | `spell.light.healing.restore` Restore | ready | divine/light | healing | arcane/divine | touch/short/medium ally | Keep as direct restoration anchor. |
-| `spell.shadow.elemental.void_bolt` Void Bolt | partial | dark/shadow/void | none | arcane/dark | short/medium/long projectile | Rename/refine later; reserve void for high-risk variants. |
+| `spell.shadow.elemental.void_bolt` Void Bolt | ready | dark/shadow/void | none | arcane/dark | short/medium/long projectile | Profiled Beta dark projectile; rename/refine later and reserve void for high-risk variants. |
 | `spell.shadow.enfeebling.curse` Curse | partial | dark/shadow/void | enfeebling | arcane/dark | short/medium projectile | Keep concept; dark status semantics remain deferred. |
 | `spell.shadow.enhancing.veil` Veil | deferred | dark/shadow/void | warding, utility | arcane/dark | self/aura | Keep as concealment/defense shroud. |
-| `spell.shadow.healing.drain` Drain | partial | dark/shadow/void | enfeebling, healing | arcane/dark | short/medium projectile | Promote/profile sustain-through-damage seed. |
+| `spell.shadow.healing.drain` Drain | partial | dark/shadow/void | enfeebling, healing | arcane/dark | short/medium projectile | Profiled Beta partial; lifesteal coupling remains deferred. |
 | `spell.druidic.control.root` Root | ready | earth | control, druidic | druidic | short/medium bind | Profiled Alpha deterministic bind. |
-| `spell.druidic.control.vinebind` Vinebind | partial | earth | control, druidic | druidic | medium area bind | Promote/profile area bind. |
+| `spell.druidic.control.vinebind` Vinebind | ready | earth | control, druidic | druidic | short/medium bind | Profiled Beta current single-target bind. |
 | `spell.druidic.utility.speak_plant` Speak Plant | deferred | earth | utility, druidic | druidic | ritual/self | Keep ritual utility deferred. |
 | `spell.druidic.utility.speak_beast` Speak Beast | deferred | water | utility, druidic | druidic | ritual/self | Water is the cleaner animal-empathy fit; keep deferred. |
 | `spell.druidic.healing.berry` Berry | partial | earth | healing, utility, druidic | druidic | self/ally utility | Rename/refine later; item-generation behavior remains blocked. |
 | `spell.druidic.healing.bloom` Bloom | partial | water | healing, druidic | druidic | aura/area | Rename/refine later; regeneration semantics remain deferred. |
 | `spell.druidic.enhancing.thornskin` Thornskin | deferred | earth | warding, druidic | druidic | self/aura ward | Strong name; defer reactive runtime. |
-| `spell.ninjutsu.utility.shadowstep` Shadowstep | partial | dark/shadow/void | ninjutsu, utility | ninjutsu | self mobility | Promote/profile evasion and close-magic mobility. |
-| `spell.ninjutsu.ranged.shuriken` Shuriken | partial | air | ninjutsu | ninjutsu | medium/long projectile | Promote/profile physical-ranged support lane. |
+| `spell.ninjutsu.utility.shadowstep` Shadowstep | ready | dark/shadow/void | ninjutsu, utility | ninjutsu | self mobility | Profiled Beta evasion and close-magic mobility. |
+| `spell.ninjutsu.ranged.shuriken` Shuriken | ready | air | ninjutsu | ninjutsu | medium/long projectile | Profiled Beta physical-ranged support lane. |
 | `spell.ninjutsu.enfeebling.blind_powder` Blind Powder | deferred | dark/shadow/void | ninjutsu, enfeebling | ninjutsu | short cone | Keep as dark/stealth control overlay. |
 | `spell.ninjutsu.utility.smoke` Smoke | deferred | dark/shadow/void | ninjutsu, utility | ninjutsu | self/aura area | Keep deferred until field/visibility behavior exists. |
 | `spell.ninjutsu.enhancing.haze` Haze | deferred | dark/shadow/void | ninjutsu, utility | ninjutsu | self/aura | Reclass from enhancing to utility later. |
 | `spell.ninjutsu.utility.mirror` Mirror | deferred | dark/shadow/void | ninjutsu, utility, warding | ninjutsu | self ward/illusion | Keep deferred until decoy/illusion behavior exists. |
-| `spell.performance.enhancing.war_song` War Song | partial | lightning | performance, enhancing | performance | aura/cone | Strong name; early-profile candidate after performance support is bounded. |
-| `spell.performance.enhancing.battle_rhythm` Battle Rhythm | partial | lightning | performance, enhancing | performance | aura | Promote/profile candidate. |
-| `spell.performance.enhancing.guard_song` Guard Song | partial | earth | performance, warding | performance | aura | Strong grounded warding seed. |
-| `spell.performance.enhancing.stone_dance` Stone Dance | partial | earth | performance, enhancing | performance | aura | Strong grounded stance seed. |
+| `spell.performance.enhancing.war_song` War Song | partial | lightning | performance, enhancing | performance | aura/cone | Profiled partial; `buff.war_song` remains deferred. |
+| `spell.performance.enhancing.battle_rhythm` Battle Rhythm | ready | lightning | performance, enhancing | performance | aura | Profiled Beta performance anthem. |
+| `spell.performance.enhancing.guard_song` Guard Song | ready | earth | performance, warding | performance | aura | Profiled Beta grounded warding support. |
+| `spell.performance.enhancing.stone_dance` Stone Dance | ready | earth | performance, enhancing | performance | aura | Profiled Beta grounded stance ward. |
 | `spell.performance.healing.regen_song` Regen Song | deferred | divine/light | performance, healing | performance/divine | aura | Keep deferred; resource-over-time semantics blocked. |
 | `spell.performance.healing.mana_song` Mana Song | deferred | lightning | performance, utility | performance | aura | Reclass away from HP healing; defer resource semantics. |
 | `spell.performance.utility.march` March | deferred | air | performance, enhancing | performance | aura | Rename/refine later; movement cadence stays deferred. |
@@ -139,6 +139,7 @@ The first twenty concepts in each family are the reference core shape. The final
 | Batch | Scope | Intent | Safe content profile |
 |---|---|---|---|
 | Alpha | Metadata-safe current partials | Expand honest profile coverage and ready-candidate set | Existing deterministic damage, healing, bind, interrupt, protection |
+| Beta | Second metadata-safe current partials | Bring hook-safe healing, dark projectile, druidic bind, ninjutsu, and performance support profiles up to date | Existing runtime/classifier hooks only; Drain remains profiled partial |
 | Embersteel | Magic melee seed spells | Make dagger/sword conduits matter | Touch, short arcs, brands, close cones |
 | Bastion | Protect, shell, stoneskin suite | Fill shield-tank and support gaps | Wards, mitigation, shells, lane defense |
 | Weight and Veil | Enfeeble/control suite | Fill control/enfeeble and evasion-tank profiles | Slow, bind, burden, blind, silence, gravity-adjacent control |
@@ -159,17 +160,17 @@ The first tranche is the near-term design candidate set only. It does not author
 | Stone Skin | earth | Core warding seed | R | Profiled current spell |
 | Spark | lightning | Baseline lightning offense | R | Profiled current spell |
 | Shock | lightning | Early interrupt identity | R | Profiled current spell |
-| Surge | lightning | Non-divine sharp heal identity | P | Promote/profile current spell |
+| Surge | lightning | Non-divine sharp heal identity | R | Profiled current spell |
 | Ice Shard | ice | Baseline ice offense | R | Profiled current spell |
 | Freeze | ice | Classic bind/slow seed | R | Profiled current spell |
 | Frostguard | ice | Defensive ice anchor | R | Profiled current spell |
 | Radiance | divine/light | Offensive light anchor | R | Profiled current spell |
-| Void Bolt | dark/shadow/void | Offensive dark anchor | P | Promote/profile current spell |
-| Drain | dark/shadow/void | Sustain-through-damage seed | P | Promote/profile current spell |
+| Void Bolt | dark/shadow/void | Offensive dark anchor | R | Profiled current spell |
+| Drain | dark/shadow/void | Sustain-through-damage seed | P | Profiled partial; lifesteal coupling deferred |
 | Root | earth | Deterministic bind reference | R | Profiled current spell |
-| Vinebind | earth | Area bind reference | P | Promote/profile current spell |
-| Shadowstep | dark/shadow/void | Evasion-tank and magic-melee mobility | P | Promote/profile current spell |
-| Shuriken | air | Physical-ranged support lane | P | Promote/profile current spell |
+| Vinebind | earth | Current single-target bind reference | R | Profiled current spell |
+| Shadowstep | dark/shadow/void | Evasion-tank and magic-melee mobility | R | Profiled current spell |
+| Shuriken | air | Physical-ranged support lane | R | Profiled current spell |
 | Ash Lance | fire | Long-range non-bolt fire variety | P | New blueprint concept |
 | Scorch Arc | fire | Magic-melee fire seed | P | New blueprint concept |
 | Hearthbrand | fire | Physical/melee hybrid support | P | New blueprint concept |
