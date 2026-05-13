@@ -13,6 +13,21 @@
 - Use `Version X.Y.Z - Short Name` for Codex workflow labels. Do not use old `Step N` labels for new work.
 - Each Codex prompt should include a version label when it is part of the ongoing workflow.
 - Internal workflow versions are development maturity markers, not public game release versions.
+- Patch numbers may be multi-digit, such as `Version 0.5.10 - Workflow Baseline Review`; do not roll from `v0.5.9` to `v0.6.0` automatically.
+- Minor-band advancement means project maturity has changed, not that the patch count reached 9.
+- Patch versions advance for scoped audits, implementations, cleanup, docs, validation, or handoff runs within the same maturity band.
+- Advance to a new minor band only when the project enters the next maturity phase described below:
+  - `v0.1.x`: repository scaffold, workspace conventions, schemas, and first canonical content foundations.
+  - `v0.2.x`: player identity, save compatibility, creator/start-state, and core local UI flow foundations.
+  - `v0.3.x`: world, civilization, economy, reputation foundations, and stricter content validation.
+  - `v0.4.x`: account, Legacy, Chronicle, progression, and local persistence foundations.
+  - `v0.5.x`: foundation stabilization, including metadata guardrails, branding alignment, workflow rules, repo hygiene, generated/log/temp cleanup, and validation hardening.
+  - `v0.6.x`: runtime ownership transition, replacing UI-authored or demo command handling with engine-owned commands, tick/event output, and authoritative session updates.
+  - `v0.7.x`: integrated gameplay systems interacting through stable shared contracts.
+  - `v0.8.x`: pre-alpha vertical-slice hardening, narrow content completeness, balancing, and regression coverage.
+  - `v0.9.x`: alpha-readiness stabilization, migration policy, known limitations, packaging/launch flow, save compatibility, and release-candidate QA.
+- Use later `v0.8.x` labels only when a narrow playable path is being stabilized as a pre-alpha slice.
+- Reserve alpha readiness until a playable, validated vertical slice has engine-owned runtime behavior, stable save/load, and explicit known limits.
 - Platform/tool recommendations belong outside and before copy-paste prompt bodies, not inside the prompt itself.
 - Accepted platform/tool labels:
   - ChatGPT via GitHub Connector
