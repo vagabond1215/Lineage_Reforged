@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "status": "non_runtime_policy_draft",
+  "runtimeImportAllowed": false,
+  "baseBackgroundSkillBonusDefault": 5,
+  "futureStatusValues": [
+    "default",
+    "legacy_locked",
+    "rename",
+    "rewrite",
+    "retire",
+    "convert_to_achievement",
+    "special_non_default"
+  ],
+  "toneActionValues": [
+    "keep",
+    "rename",
+    "rewrite",
+    "split",
+    "retire",
+    "convert_to_achievement"
+  ],
+  "unlockEvidenceKindValues": [
+    "skill_threshold",
+    "achievement",
+    "activity_tag",
+    "profession_history",
+    "faction_or_region_reputation",
+    "combat_accomplishment",
+    "noncombat_accomplishment",
+    "lineage_title",
+    "estate_milestone",
+    "renown_milestone",
+    "special_chronicle_flag"
+  ],
+  "records": [
+    {
+      "backstoryId": "backstory.local",
+      "futureStatus": "default",
+      "defaultUnlocked": true,
+      "recommendedPrimaryBackgroundSkillId": "skill.knowledge.civic_lore",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["activity_tag", "faction_or_region_reputation"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Neutral settlement-rooted start. Keep available for new accounts and use as the baseline civic/local background."
+    },
+    {
+      "backstoryId": "backstory.vagabond",
+      "futureStatus": "default",
+      "defaultUnlocked": true,
+      "recommendedPrimaryBackgroundSkillId": "skill.survival.navigation",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "achievement", "activity_tag"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Grounded travel hardship start. Future unlock evidence can deepen route and travel identity, but the base option should remain available."
+    },
+    {
+      "backstoryId": "backstory.exile",
+      "futureStatus": "default",
+      "defaultUnlocked": true,
+      "recommendedPrimaryBackgroundSkillId": "skill.survival.endurance",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "activity_tag", "special_chronicle_flag"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Consequence-driven hardship start. Keep default so new accounts have a serious displaced-origin option."
+    },
+    {
+      "backstoryId": "backstory.merchants_child",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.settlement.trade",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "achievement",
+        "profession_history",
+        "renown_milestone"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Strong household trade background. Lock behind family trade evidence or merchant-house history."
+    },
+    {
+      "backstoryId": "backstory.craftsmans_child",
+      "futureStatus": "rewrite",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.crafting.basic_crafting",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "achievement", "profession_history"],
+      "toneAction": "rewrite",
+      "recommendedName": "Workshop Child",
+      "notes": "Good general workshop premise, but broad. Consider Workshop Child or later split into specific craft-house starts."
+    },
+    {
+      "backstoryId": "backstory.performer",
+      "futureStatus": "rewrite",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.leadership.morale",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["achievement", "activity_tag", "faction_or_region_reputation"],
+      "toneAction": "rewrite",
+      "recommendedName": "Troupe-Raised",
+      "notes": "Keep the public-performance identity grounded. Split or defer magical performer implications before runtime use."
+    },
+    {
+      "backstoryId": "backstory.minor_noble",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.leadership.authority",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["lineage_title", "estate_milestone", "renown_milestone"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Status upbringing should be family or renown backed, not universally available to new accounts."
+    },
+    {
+      "backstoryId": "backstory.carpenters_child",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.crafting.carpentry",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "profession_history", "achievement"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Strong practical trade background. Good early candidate for future profession-backed unlocks."
+    },
+    {
+      "backstoryId": "backstory.village_hunter",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.resource.hunting",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "activity_tag", "noncombat_accomplishment"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Grounded specialist background. Future implementation should avoid bundling archery power and a starting combat ability by default."
+    },
+    {
+      "backstoryId": "backstory.miners_kin",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.resource.mining",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "profession_history", "estate_milestone"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Strong extraction-family background. Lock behind mining, quarrying, or workplace evidence."
+    },
+    {
+      "backstoryId": "backstory.farmhand",
+      "futureStatus": "default",
+      "defaultUnlocked": true,
+      "recommendedPrimaryBackgroundSkillId": "skill.settlement.agriculture",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "profession_history", "estate_milestone"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Grounded rural labor start. Keep default to preserve common-life coverage for new accounts."
+    },
+    {
+      "backstoryId": "backstory.military_brat",
+      "futureStatus": "rename",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.combat.tactics.formation_discipline",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "combat_accomplishment",
+        "faction_or_region_reputation"
+      ],
+      "toneAction": "rename",
+      "recommendedName": "Garrison Ward",
+      "notes": "Concept is strong, but the current name is too modern and casual. Keep locked behind garrison or family service evidence."
+    },
+    {
+      "backstoryId": "backstory.gutter_rat",
+      "futureStatus": "rename",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.combat.defense.evasion",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "activity_tag", "noncombat_accomplishment"],
+      "toneAction": "rename",
+      "recommendedName": "Street-Raised",
+      "notes": "Useful urban hardship background, but the current name is tropey and derogatory. Consider default availability only after renaming."
+    },
+    {
+      "backstoryId": "backstory.scouts_ward",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.resource.spotting.fauna",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "activity_tag", "noncombat_accomplishment"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Specific and grounded scout-household background. Lock behind observation, route, or hunting evidence."
+    },
+    {
+      "backstoryId": "backstory.scholars_apprentice",
+      "futureStatus": "rewrite",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.knowledge.arcane_lore",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "profession_history", "achievement"],
+      "toneAction": "split",
+      "recommendedName": "Scribe's Apprentice / Arcane Apprentice",
+      "notes": "Current record blends mundane scholarship and active magic. Split before runtime policy decides which path owns the primary skill."
+    },
+    {
+      "backstoryId": "backstory.temple_acolyte",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.survival.field_medicine",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "profession_history",
+        "faction_or_region_reputation"
+      ],
+      "toneAction": "rewrite",
+      "recommendedName": "",
+      "notes": "Strong service background. Keep primary benefit grounded in care or stewardship before any divine-magic unlock."
+    },
+    {
+      "backstoryId": "backstory.hedge_adept",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.magic.mana_control",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["skill_threshold", "special_chronicle_flag"],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "Good practical magic premise, but high runtime risk. Keep locked until magic and magic Legacy ownership are reviewed."
+    },
+    {
+      "backstoryId": "backstory.isekai_outcast",
+      "futureStatus": "special_non_default",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.knowledge.general_lore",
+      "baseBackgroundSkillBonus": 0,
+      "unlockEvidenceKinds": ["special_chronicle_flag"],
+      "toneAction": "retire",
+      "recommendedName": "World-Stray",
+      "notes": "Too genre-meta for the grounded standard catalog. Retire from ordinary starts or reserve as a special non-default Chronicle flag."
+    },
+    {
+      "backstoryId": "backstory.amnesiac",
+      "futureStatus": "default",
+      "defaultUnlocked": true,
+      "recommendedPrimaryBackgroundSkillId": "skill.survival.endurance",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": ["special_chronicle_flag"],
+      "toneAction": "rewrite",
+      "recommendedName": "",
+      "notes": "Useful fallback identity, but should remain restrained and avoid becoming a mystery-box power start."
+    },
+    {
+      "backstoryId": "backstory.local_hero",
+      "futureStatus": "convert_to_achievement",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.knowledge.civic_lore",
+      "baseBackgroundSkillBonus": 0,
+      "unlockEvidenceKinds": [
+        "achievement",
+        "faction_or_region_reputation",
+        "renown_milestone"
+      ],
+      "toneAction": "convert_to_achievement",
+      "recommendedName": "Local Champion",
+      "notes": "Reads as an earned reputation state rather than formative background. Convert to achievement, title, or special Legacy start."
+    }
+  ]
+}
