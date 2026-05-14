@@ -180,7 +180,7 @@ export function MainMenuScreen({
     manualSlots.find((slot) => slot.id === pendingDeleteSlotId) ?? null;
   const shellButtonClass =
     'launcher-control inline-flex h-10 items-center justify-center disabled:cursor-not-allowed disabled:opacity-45';
-  const continueButtonClass = `${shellButtonClass} max-w-[22rem] px-4 text-sm font-semibold`;
+  const continueButtonClass = `${shellButtonClass} launcher-metal-control launcher-primary-control max-w-[22rem] px-4 text-sm font-semibold`;
   const accountMenuButtonClass =
     'w-full rounded-md px-3 py-2 text-left text-sm font-medium text-[color:var(--color-text-strong)] transition hover:bg-[color:var(--color-surface-selected)]';
   const activePageButtonClass =
@@ -357,7 +357,7 @@ export function MainMenuScreen({
                       <>
                         <div className="grid min-w-0 gap-3 px-4 py-1 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)_minmax(0,1.5fr)]">
                           <div className="flex min-w-0 items-center">
-                            <div className="truncate text-[2rem] font-light leading-tight tracking-[0.08em] text-[color:var(--color-text-primary)] sm:text-[2.25rem]">
+                            <div className="truncate text-[1.5rem] font-light leading-tight tracking-[0.08em] text-[color:var(--color-text-primary)] sm:text-[1.6875rem]">
                               {slot.playerName}
                             </div>
                           </div>
@@ -391,7 +391,7 @@ export function MainMenuScreen({
                           aria-label={`Delete ${slot.playerName ?? 'saved character'}`}
                           title="Delete save"
                         >
-                          <Icon name="trash" className="h-10 w-10" />
+                          <Icon name="closeCircle" className="h-10 w-10" />
                         </button>
                       </>
                     ) : (

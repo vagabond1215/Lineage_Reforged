@@ -881,13 +881,13 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
     /return `\$\{levelLabel\} \$\{sexLabel\} \$\{lineageLabel\} \$\{roleLabel\} in \$\{locationLabel\} with \$\{fundsLabel\}`/
   );
   assert.match(mainMenuSource, /slot\.playerName/);
-  assert.match(mainMenuSource, /text-\[2rem\] font-light leading-tight tracking-\[0\.08em\] text-\[color:var\(--color-text-primary\)\]/);
+  assert.match(mainMenuSource, /text-\[1\.5rem\] font-light leading-tight tracking-\[0\.08em\] text-\[color:var\(--color-text-primary\)\]/);
   assert.match(mainMenuSource, /formatSlotHeaderTimestamp\(slot\.lastSavedAt\)/);
   assert.match(mainMenuSource, /slot\.playtimeLabel \?\? '0 ticks played'/);
   assert.match(mainMenuSource, /formatInGameDateLabel\(slot\.inGameDate\)/);
   assert.match(mainMenuSource, /formatCharacterSummaryLine\(slot\)/);
   assert.match(mainMenuSource, /min-h-\[4\.5rem\]/);
-  assert.match(mainMenuSource, /text-\[2rem\]/);
+  assert.match(mainMenuSource, /text-\[1\.5rem\]/);
   assert.match(mainMenuSource, /text-\[1\.125rem\]/);
   assert.match(mainMenuSource, /text-\[1rem\]/);
   assert.match(mainMenuSource, /Empty/);
@@ -897,7 +897,7 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(mainMenuSource, /fontFamily: 'var\(--font-display\)'/);
   assert.match(mainMenuSource, /text-\[color:var\(--color-text-muted\)\]/);
   assert.match(mainMenuSource, /text-rose-600/);
-  assert.match(mainMenuSource, /Icon name="trash" className="h-10 w-10"/);
+  assert.match(mainMenuSource, /Icon name="closeCircle" className="h-10 w-10"/);
   assert.doesNotMatch(mainMenuSource, /Available for a new character in this slot\./);
   assert.doesNotMatch(
     mainMenuSource,

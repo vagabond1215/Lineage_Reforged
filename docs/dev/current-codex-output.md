@@ -1,46 +1,45 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.33 - Launcher Metallic Control Styling
+Source version/run: Version 0.5.34 - Launcher Metallic Buttons And Save Slot Polish
 Date: 2026-05-14
 Branch/status assumption: Current local branch reality; `git status --short` was clean before edits.
 
 ## Result
 
-Refined the launcher primary top-bar account button and secondary top-bar page buttons with a targeted dark-mode metallic control variant.
+Applied the launcher metallic control treatment to the Continue button and kept the account/menu and page buttons on the same slim forged-metal variant.
 
-The new variant keeps inactive controls dark and slim with aged-gold border/text harmony, then changes hover, focus-visible, and active states into a restrained bronze/brass metal plate with near-black text. The styling is attached only to the launcher account buttons and save-page buttons, leaving sidebar image buttons, logo, sprite clock, save slots, creator screens, and runtime behavior untouched.
+Save-slot rows now have dark-mode forged-metal row styling with slim metallic borders, subtle beveling, and bronze/brass hover/focus/active accent treatment. The occupied save-slot player name display was reduced from `2rem` / `2.25rem` to `1.5rem` / `1.6875rem`, preserving truncation and row layout. The delete rail now uses the existing `closeCircle` icon and has restrained inactive styling with an opaque dark-ruby hover/focus/active state.
 
 ## Files Changed
 
 - `apps/rpg-ui/src/index.css`
 - `apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx`
-- `apps/rpg-ui/src/game-shell/components/SettingsScreen.tsx`
+- `tests/unit/legacy-ledger-presentation.test.mjs`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
 
 - `git status --short`: run before edits; clean.
-- Focused test search for existing launcher/MainMenu/Settings UI tests: none found.
 - `npm.cmd run tool:content-lint`: passed.
-- Root `node -e` TypeScript syntax probe: blocked because `typescript` is not installed at the repo root.
-- App-local TSX syntax/transpile probe for `MainMenuScreen.tsx` and `SettingsScreen.tsx`: passed from `apps/rpg-ui`.
+- `node --test tests\unit\*presentation*.mjs`: initially failed on the existing save-name font-size and trash-icon assertions, then passed after updating those focused assertions to the requested UI contract.
+- App-local TSX syntax/transpile probe for `MainMenuScreen.tsx`: passed from `apps/rpg-ui`.
 - `git diff --check`: passed.
 
 ## Behavior / Runtime Confirmation
 
-Runtime behavior did not change. Routing, save/account state, clock logic, content JSON, schemas, combat, magic, Legacy, progression, creator logic, save-slot behavior, account dropdown behavior, and page button click/ARIA behavior were untouched.
+Runtime behavior did not change. Routing, save/account state, pagination logic, clock logic, content JSON, schemas, combat, magic, Legacy, progression, creator logic, save-slot activation, save deletion logic, stopPropagation behavior, and delete confirmation flow were untouched.
 
-This run changed launcher visual styling only.
+This run changed launcher visual classes/CSS and the existing icon reference only.
 
 ## Risks / Follow-Up
 
-- No browser visual QA was run in this pass; validation was code/CSS inspection plus requested command checks.
-- Light mode was not intentionally redesigned; the new metallic styling is scoped to non-light theme roots.
+- No browser visual QA was run in this pass; validation was code/CSS inspection plus focused lint/test/diff checks.
+- Light mode was not intentionally redesigned; new save-row and control polish is scoped to non-light theme roots where practical.
 
 ## Next Recommended Version
 
-Version 0.5.34 - Launcher Visual QA Pass
+Version 0.5.35 - Launcher Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): refine launcher metallic controls
+style(ui): refine launcher controls and save slots

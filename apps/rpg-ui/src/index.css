@@ -518,6 +518,10 @@ body {
   letter-spacing: 0.01em;
 }
 
+:root:not([data-theme='light']) .launcher-primary-control {
+  letter-spacing: 0.02em;
+}
+
 .launcher-sprite-clock {
   display: inline-flex;
   height: 2.5rem;
@@ -619,6 +623,89 @@ body {
 .launcher-delete-rail:focus-visible {
   border-color: var(--color-tone-danger-border);
   background: var(--color-tone-danger-bg);
+}
+
+:root:not([data-theme='light']) .launcher-save-row {
+  border-color: rgba(189, 166, 111, 0.42);
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.048), rgba(0, 0, 0, 0) 34%),
+    linear-gradient(180deg, #211d18 0%, #14120f 60%, #0f0d0b 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 221, 198, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.56),
+    0 1px 2px rgba(0, 0, 0, 0.28);
+}
+
+:root:not([data-theme='light']) .launcher-save-row:hover,
+:root:not([data-theme='light']) .launcher-save-row:focus-visible {
+  border-color: rgba(242, 219, 151, 0.68);
+  background:
+    linear-gradient(90deg, rgba(181, 137, 74, 0.22), rgba(181, 137, 74, 0.04) 58%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(180deg, rgba(226, 207, 146, 0.16), rgba(116, 67, 33, 0.14)),
+    linear-gradient(180deg, #201a13 0%, #15100d 100%);
+  box-shadow:
+    inset 3px 0 0 rgba(213, 178, 100, 0.72),
+    inset 0 1px 0 rgba(255, 246, 202, 0.24),
+    inset 0 -1px 0 rgba(54, 27, 10, 0.54),
+    0 1px 2px rgba(0, 0, 0, 0.34);
+}
+
+:root:not([data-theme='light']) .launcher-save-row:focus-visible {
+  outline: 1px solid rgba(232, 221, 198, 0.56);
+  outline-offset: 2px;
+}
+
+:root:not([data-theme='light']) .launcher-save-row.is-active {
+  border-color: rgba(242, 219, 151, 0.76);
+  background:
+    linear-gradient(90deg, rgba(181, 137, 74, 0.28), rgba(181, 137, 74, 0.06) 64%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(180deg, rgba(226, 207, 146, 0.2), rgba(116, 67, 33, 0.16)),
+    linear-gradient(180deg, #221b13 0%, #15100c 100%);
+  box-shadow:
+    inset 3px 0 0 rgba(226, 207, 146, 0.82),
+    inset 0 1px 0 rgba(255, 246, 202, 0.28),
+    inset 0 -1px 0 rgba(54, 27, 10, 0.58),
+    0 1px 2px rgba(0, 0, 0, 0.36);
+}
+
+:root:not([data-theme='light']) .launcher-save-row.is-empty {
+  border-color: rgba(119, 107, 90, 0.34);
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.026), rgba(0, 0, 0, 0) 30%),
+    linear-gradient(180deg, #171410 0%, #100f0d 100%);
+}
+
+:root:not([data-theme='light']) .launcher-save-index,
+:root:not([data-theme='light']) .launcher-delete-rail {
+  background:
+    linear-gradient(180deg, rgba(232, 221, 198, 0.04), rgba(0, 0, 0, 0) 32%),
+    linear-gradient(180deg, #1b1713 0%, #100e0c 100%);
+}
+
+:root:not([data-theme='light']) .launcher-save-index {
+  border-right-color: rgba(189, 166, 111, 0.3);
+}
+
+:root:not([data-theme='light']) .launcher-delete-rail {
+  border-left-color: rgba(189, 166, 111, 0.3);
+  color: #d9b7b2;
+}
+
+:root:not([data-theme='light']) .launcher-delete-rail:hover,
+:root:not([data-theme='light']) .launcher-delete-rail:focus-visible,
+:root:not([data-theme='light']) .launcher-delete-rail:active {
+  border-color: #b64d55;
+  background:
+    linear-gradient(180deg, #9b3640 0%, #6d1b24 56%, #421016 100%);
+  color: #fff0e5;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 210, 0.28),
+    inset 0 -1px 0 rgba(35, 6, 10, 0.66);
+}
+
+:root:not([data-theme='light']) .launcher-delete-rail:focus-visible {
+  outline: 1px solid rgba(255, 215, 195, 0.62);
+  outline-offset: -4px;
 }
 
 .creator-forged-card,
