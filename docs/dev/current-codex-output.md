@@ -1,136 +1,220 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.39 - Background Legacy Unlock Policy Audit
+Source version/run: Version 0.5.40 - Backstory Coverage And Tone Audit
 Date: 2026-05-14
-Branch/status assumption: Current local branch reality; `git status --short` was clean before the audit. This was a read-only policy audit except for this output file.
+Branch/status assumption: Current local branch reality; `git status --short` was clean before the audit. This was a read-only content-design audit except for this output file.
 
 ## Result
 
-Audited the current backstory, starter skill, character creator, snapshot creation, account history, achievement, and Legacy seams for a future background-unlock policy.
+Audited the current backstory catalog for narrative quality, grounded medieval-fantasy tone, early-game skill coverage, and compatibility with the planned Background Legacy unlock model.
 
-Current state: all 20 authored backstories are freely selectable when the lineage id is valid. Backstories currently grant direct trained starter skill ranks, usually rank 25 across three to five skills, not a small `+5` background skill bonus. The existing starter-skill guardrails cap authored starts at rank 25, keep them below the first breakthrough rank at 30, limit each backstory to five skills, and block direct Legacy skill-rank grants.
-
-Recommended policy direction: keep a small neutral/default starter set available for new accounts, lock specialist/status/combat/magic/profession backgrounds behind family-scoped Legacy eligibility, and store ancestry evidence separately from generic account-wide ownership so descendants cannot start with skill levels unsupported by their family line.
-
-## Files Changed
-
-- `docs/dev/current-codex-output.md`
+Overall finding: the catalog is a solid foundation. Most backstories feel like lived conditions, households, trades, institutions, hardships, or social positions rather than explicit RPG classes. The main problems are not broad narrative quality; they are future model mismatch and a few tone/name issues. Current backstories grant three to five trained skills, usually at rank 25, while the planned model wants a small `+5` bonus to one primary background skill. Several current backstories should become Legacy-locked specialist/status/profession/magic starts, `backstory.local_hero` is better treated as an achievement/title state, and `backstory.isekai_outcast` is too genre-meta for the grounded default catalog.
 
 ## Files Inspected
 
-- `README.md`
-- `docs/future_content_backlog.md`
-- `docs/design/legacy-upgrade-catalog-draft.json`
-- `packages/schemas/player/backstory.schema.json`
 - `packages/content/base/player/backstories.json`
-- `packages/content/base/player/legacy_unlocks.json`
+- `packages/content/base/player/skills.json`
+- `packages/content/base/player/abilities.json`
 - `packages/content/base/player/achievements.json`
-- `packages/shared/types/src/contracts.ts`
-- `packages/shared/types/src/settlement-institutions.ts`
-- `packages/engines/game-engine/src/legacy-account.ts`
-- `packages/engines/game-engine/src/legacy-unlocks.ts`
-- `packages/engines/game-engine/src/achievements.ts`
-- `packages/engines/player-engine/src/progression.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationMath.ts`
-- `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`
-- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
-- `apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts`
-- `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
-- `tests/unit/player-identity-content.test.mjs`
-- `tests/unit/player-progression.test.mjs`
-- `tests/unit/legacy-start-resources.test.mjs`
-- `tests/unit/legacy-unlocks.test.mjs`
+- `docs/design/legacy-upgrade-catalog-draft.json`
+- `docs/future_content_backlog.md`
+- `packages/schemas/player/backstory.schema.json`
+- `docs/dev/current-codex-output.md`
+- `README.md`
 
-## Audit Findings
+## Current Catalog Overview
 
-1. Current story/background data:
-   `packages/content/base/player/backstories.json` contains 20 records. Each record has `id`, `name`, `summary`, `description`, `startingSkills`, optional zero-sum `attributeAdjustments`, and optional `startingAbilityIds`. Current starter ranks are 15, 20, or 25. Two records grant a starting ability: `backstory.village_hunter` grants `ability.ranged.quick_shot`, and `backstory.military_brat` grants `ability.command.hold_formation`.
+- Current backstories: 20.
+- Current starter skill entries: 86.
+- Current starter skill ranks: 15, 20, and 25.
+- Current guardrails: at most five starter skills per backstory, no duplicate starter skills, starter rank maximum 25, and no starter skill at the first breakthrough rank 30.
+- Starting abilities: only `backstory.village_hunter` and `backstory.military_brat` grant one ability each.
+- Current schema does not support default/locked state, primary background skill, unlock evidence, background skill bonus tiers, or ancestry caps.
+- The future Legacy draft already sketches catalog-only backstory unlock ideas, but it is explicitly non-runtime and should not be imported directly.
 
-2. Recommended default-unlocked backgrounds:
-   Keep `backstory.local`, `backstory.vagabond`, `backstory.exile`, and `backstory.amnesiac` as the practical starter-safe default set. If the first implementation needs a stricter minimum, use `backstory.local` plus `backstory.amnesiac`. Lock `local_hero`, profession-family, nobility, military, hunter/scout, scholar, temple, hedge-magic, and other specialist backgrounds until family evidence exists. Do not default-unlock `backstory.isekai_outcast` without a separate tone/design decision.
+Strong coverage today:
+- settlement/local life, travel/exile/survival, rural labor, hunting/scouting, mining/quarrying, wood/carpentry/building, trade, general workshop craft, noble/status upbringing, temple/service/healing, scholarship/literacy, hedge magic, garrison/military life, and street survival.
 
-3. Where starter skills are defined, validated, previewed, and applied:
-   Definition lives in `backstories.json`. Schema shape lives in `backstory.schema.json`. Content lint validates id uniqueness, zero-sum attribute adjustments, at most five starter skills, duplicate prevention, cap/breakthrough boundaries, and starting ability allowlist. `player-identity-content.test.mjs` mirrors those guardrails. `characterCreationCatalog.ts` converts content records into `StarterBackstoryTemplate` objects and formats labels. `CharacterCreationNarrativeScreen.tsx` renders all options and shows selected starter skills/abilities. `newGameSnapshot.ts` previews `starterSkills` and applies `skills: [...backstory.startingSkills]`; `characterCreationMath.ts` applies backstory attribute adjustments.
+Weak or missing coverage today:
+- fishing, river/coastal work, docks/ferry/boats, water safety, forge/smithing/metals as a trade, leather/tanning/textiles, cooking/inn/service, masonry/stonework, administration/scribing/logistics, stable/ranch work as a primary identity, and several early combat families such as dagger, axe, polearm/spear, shield handling, parrying, staff, hand-to-hand, throwing, and armor handling.
 
-4. Current starter-skill limits:
-   `tools/content-lint/index.mjs` sets `PLAYER_STARTER_SKILL_DEFAULT_CAP = 25`, `PLAYER_STARTER_SKILL_ABSOLUTE_CAP = 30`, and `PLAYER_BACKSTORY_MAX_STARTING_SKILL_COUNT = 5`. `resolveLegacyStarterSkillPolicy()` returns `starterSkillCap: 25`, `absoluteStarterSkillCap: 29`, `maxStarterSkillCount: 5`, `directSkillRankGrantsAllowed: false`, and no unlocked skill lanes/options. Existing tests assert account start resources and selected preparations do not alter starter skills.
+## Backstory Evaluation
 
-5. Breakthrough and skill-gate policy:
-   `packages/engines/player-engine/src/progression.ts` defines gates at 30, 55, 80, and 100. Rank growth can reach 30 in the first band, but growth above 30 requires the `familiar` band; later gates require `proficient`, `skilled`, and `mastery`. Current starter content stays at or below 25, below the first gate. Future background bonuses should remain below the first gate unless ancestry has already unlocked/earned the relevant band and the starter policy explicitly permits that higher floor.
+| Id | Current name | Narrative quality | Tone/lore fit | Early-game role | Current issues | Future status | Primary background skill | Recommended unlock evidence |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `backstory.local` | Local | Strong; clear social and civic roots. | Grounded, neutral, broadly useful. | Settlement familiarity and civic fluency. | Too broad for future one-skill model; diplomacy plus three lore skills makes it a civic package. | Default. Keep with small rewrite only if needed. | `skill.knowledge.civic_lore` | Default unlocked; optional evidence can use starts in same settlement/region and local reputation. |
+| `backstory.vagabond` | Vagabond | Strong; lived travel hardship rather than class fantasy. | Grounded and useful. | Travel, endurance, route sense, light survival. | Five skills overstate breadth under the future model. | Default or very early unlock. | `skill.survival.navigation` | Family Navigation 10, `achievement.character.road_worn`, travel activity tags, route/completed journey history. |
+| `backstory.exile` | Exile | Strong; consequence-driven, distinct from Vagabond. | Grounded, serious, plausible. | Survival after displacement. | Overlaps Vagabond heavily on endurance/navigation/foraging; guard is defensible but broad. | Default. | `skill.survival.endurance` | Default unlocked; optional evidence from exile/death/archive story tags, survival days, hostile-region escape, or family hardship record. |
+| `backstory.merchants_child` | Merchant's Child | Strong household framing. | Grounded medieval trade/status life. | Trade, negotiation, appraisal. | Mineral identification feels too narrow unless tied to commodity trade; too many economic skills. | Legacy-locked profession/status. | `skill.settlement.trade` | Family Trade 10, `achievement.character.closed_deal`, `achievement.account.market_memory`, merchant profession history, market reputation, trade estate milestone. |
+| `backstory.craftsmans_child` | Craftsman's Child | Solid but broad. | Grounded, useful, slightly generic. | General workshop upbringing. | Broad catch-all overlaps Carpenter's Child and should not grant both basic crafting and processing as a package. | Legacy-locked or split by craft family. | `skill.crafting.basic_crafting` | Family Basic Crafting 10, `achievement.character.worked_hands`, `achievement.account.makers_mark`, workshop profession history. |
+| `backstory.performer` | Performer | Good public-life concept. | Mostly grounded, but `Performance Magic` makes it more magical than the prose implies. | Crowd work, morale, reputation, cultural literacy. | Could read like a bard class package if magic remains primary. | Legacy-locked; rename/rewrite to `Troupe-Raised` or split mundane performer from magical performer. | `skill.leadership.morale` | Performance activity tags, reputation threshold, `achievement.character.name_in_town`, troupe/guild association, cultural event history. |
+| `backstory.minor_noble` | Minor Noble | Strong status upbringing. | Grounded and appropriate. | Etiquette, authority, negotiation, civic standing. | Status start should be earned by family evidence; current skills imply significant court training. | Legacy-locked status. | `skill.leadership.authority` | Family Prestige, noble lineage title, estate/renown milestone, diplomacy/authority threshold, regional reputation. |
+| `backstory.carpenters_child` | Carpenter's Child | Strong practical household identity. | Grounded and useful. | Woodwork, construction, building labor. | Five skills are too much; overlaps Craftman's Child. | Legacy-locked profession; implementation-ready after primary skill metadata exists. | `skill.crafting.carpentry` | Family Carpentry 10, Building 10, `achievement.character.worked_hands`, `achievement.account.makers_mark`, construction/workplace history. |
+| `backstory.village_hunter` | Village Hunter | Strong and concrete. | Grounded, but starting ability plus archery can drift into combat class start. | Food supply, tracking, butchery, field archery. | Grants five skills plus `Quick Shot`; too much for future background bonus. | Legacy-locked specialist. | `skill.resource.hunting` | Family Hunting 10 or Archery 10, hunting activity tags, Beast Lore evidence, provisioned-settlement accomplishment, `achievement.character.keen_eye`. |
+| `backstory.miners_kin` | Miner's Kin | Strong, plausible, household-based. | Grounded. | Mining, quarrying, ore/stone familiarity. | Good identity, but current bundle over-covers extraction and material processing. | Legacy-locked profession. | `skill.resource.mining` | Family Mining 10, Quarrying 10, Earth Lore 10, extraction workplace history, mining estate or settlement renown. |
+| `backstory.farmhand` | Farmhand | Strong, grounded, broad common-life anchor. | Very lore-friendly. | Rural labor, animals, gathering, endurance. | Five skills would become too much, but the concept is common enough to remain available. | Default or first low-cost unlock; recommended default if the starter set needs rural coverage. | `skill.settlement.agriculture` | Default unlocked; optional evidence from Agriculture 10, animal handling activity, harvest work, rural estate milestone. |
+| `backstory.military_brat` | Military Brat | Concept is strong; name is the problem. | Name is too modern/casual; prose is grounded. | Garrison upbringing, formation discipline, camp order. | Rename required. Current sword, guard, melee, tactics, and command ability imply too much formal combat training. | Rename and Legacy-lock as combat/status. Best names: `Garrison Ward`, `Soldier's Kin`, `Camp-Raised`, or `Garrison-Bred`. | `skill.combat.tactics.formation_discipline` | Family Formation Discipline 10, Guard 10, Sword 10, `achievement.character.first_blooded`, garrison settlement access, military service history. |
+| `backstory.gutter_rat` | Gutter Rat | Vivid and playable. | Plausible, but derogatory/tropey as a label. | Urban poverty, alleys, evasion, scavenging. | Rename to reduce trope and insult. Overlaps Vagabond/Exile on foraging/navigation/evasion. | Rename. Could be default if softened, otherwise low-tier Legacy unlock. Best names: `Street-Raised`, `Backstreet Survivor`, `Alleyborn`, or `Warren Child`. | `skill.combat.defense.evasion` | Family Evasion 10, Civic Lore 10, urban survival activity tags, theft/escape noncombat accomplishment, low-district reputation. |
+| `backstory.scouts_ward` | Scout's Ward | Strong, specific, not generic. | Grounded. | Observation, routes, sign, hunting support. | Overlaps Village Hunter and Vagabond; archery makes it partly combat-start. | Legacy-locked specialist. | `skill.resource.spotting.fauna` | Family Spotting.Fauna 10, Navigation 10, Hunting 10, `achievement.character.keen_eye`, scout/route activity history. |
+| `backstory.scholars_apprentice` | Scholar's Apprentice | Strong institutional learning identity. | Grounded if focused on literacy; less grounded when it grants mana/spellcasting. | Books, copying, memory, theory. | Currently blends scholarship with active magic. Should split mundane `Scribe's Apprentice` or `Scholar's Apprentice` from magical `Arcane Apprentice`. | Legacy-locked; rewrite or split. | `skill.knowledge.arcane_lore` if magical, `skill.knowledge.general_lore` if mundane. | Family Arcane Lore 10 or Common Lore 10, `achievement.account.finders_ledger`, scribing/scholar profession history, academy/temple/guild reputation. |
+| `backstory.temple_acolyte` | Temple Acolyte | Strong duty/service framing. | Grounded and lore-friendly. | Temple service, healing discipline, stewardship. | Divine magic plus field medicine plus stewardship is broad; should choose care/service as primary. | Legacy-locked institution. | `skill.survival.field_medicine` | Family Field Medicine 10, Stewardship 10, `achievement.character.sworn_task`, temple service history, religious faction reputation. |
+| `backstory.hedge_adept` | Hedge Adept | Strong concept for practical magic outside institutions. | Good medieval-fantasy fit. | Informal magic practice. | Four magic skills at rank 25 is high-risk and should remain locked until magic runtime/storage is ready. | Legacy-locked magic; backlog-only for live unlocks. | `skill.magic.mana_control` | Family Mana Control 10, Spellcasting 10, arcane event tag, magic tutor/source evidence, magic Legacy once approved. |
+| `backstory.isekai_outcast` | Isekai Outcast | Mechanically understandable, narratively special-case. | Too genre-meta and modern for grounded default tone. | Outsider broad familiarity. | Name breaks immersion; concept is not a normal medieval formative condition. | Retire from standard catalog, or rename to an in-world special unlock such as `World-Stray`, `Unmoored Stranger`, or `Far-Woken`. Never default. | `skill.knowledge.general_lore` if retained. | Rare Chronicle/event flag, account-level special mode, hidden achievement, not family skill evidence. |
+| `backstory.amnesiac` | Amnesiac | Usable but trope-prone. | Grounded enough if restrained. | Fragmented habits, endurance, dislocation. | Mystery-box identity can feel generic; useful as fallback but should not carry too much power. | Default fallback or special default. Minor rewrite recommended. | `skill.survival.endurance` | Default unlocked; optional trauma/survival event evidence if made special. |
+| `backstory.local_hero` | Local Hero | Reads more like earned reputation than formative origin. | Grounded, but not a starting-life background. | Local trust after useful deeds. | Achievement/title state, not a new-account start. Also grants civic, cultural, melee, and medicine as a power bundle. | Convert to achievement/title or Legacy-locked special start; not default. | `skill.knowledge.civic_lore` if retained. | `achievement.character.name_in_town`, completed quest, local reputation 10+, settlement renown, lineage title, saved-settlement event. |
 
-6. Creator assumptions:
-   `getBackstoryOptionsForSelection()` returns every backstory for any known lineage and ignores `selectedWorld`. `validateCharacterCreationForm()` only checks `isKnownBackstoryId()`. `CharacterCreationNarrativeScreen.tsx` renders all returned backstories as normal selectable cards. There is no concept of locked, hidden, disabled, or explanation-only backstories.
+## Skill Coverage Matrix
 
-7. New-character snapshot application:
-   `deriveCharacterCreationState()` resolves the selected backstory and writes its starter skills directly to `playerState.skills`. It also applies starting abilities through `getStartingAbilityStates()`, backstory id into core data and flags, and backstory-driven attribute adjustments through the character creation math path. No ancestry, account, or Legacy eligibility check exists at this boundary.
+| Practical skill/family | Current coverage | Coverage quality | Notes |
+| --- | --- | --- | --- |
+| Settlement/local life | Local, Minor Noble, Gutter Rat, Local Hero | Strong but clustered around Civic Lore. | Local is the best default. Local Hero should become earned reputation. |
+| Travel/exile/survival | Vagabond, Exile, Amnesiac | Strong. | Vagabond and Exile overlap but have different emotional premises. |
+| Rural labor | Farmhand | Good. | Good default candidate; only broadness needs reduction. |
+| Hunting/scouting | Village Hunter, Scout's Ward | Strong. | These are good Legacy specialist starts; separate hunting from scouting/spotting. |
+| Mining/quarrying | Miner's Kin | Good. | Add Forge/Smith later so ore extraction does not carry all metals coverage. |
+| Wood/carpentry/building | Carpenter's Child, Craftsman's Child | Good but overlapping. | Carpenter's Child is stronger and more specific. |
+| Trade/merchant life | Merchant's Child | Good. | Strong Legacy profession/status candidate. |
+| General workshop life | Craftsman's Child | Moderate. | Too generic; split or keep as broad low-tier workshop start. |
+| Noble/status upbringing | Minor Noble | Good. | Should be family/status locked. |
+| Temple/service/healing | Temple Acolyte | Good. | Keep primary grounded in Field Medicine or Stewardship before Divine Magic. |
+| Scholarship/literacy | Scholar's Apprentice | Moderate. | Needs a mundane scribe/scholar variant separate from active magic. |
+| Hedge/practical magic | Hedge Adept | Good concept, high runtime risk. | Backlog until magic runtime and magic Legacy boundaries are ready. |
+| Military/garrison/militia | Military Brat | Good concept, bad name. | Rename; reduce from weapon package to formation/guard identity. |
+| Street/poverty/criminal-adjacent | Gutter Rat | Good concept, tropey name. | Rename and make tone less derogatory. |
+| Fishing/river/coastal life | None | Missing. | Add Fisher's Child, Net-Tender, Riverhand, or Tideworker. |
+| Dock/ferry/boat/water safety | None | Missing. | Add Dockhand, Ferryman's Kin, Barge Child, or Quay-Raised. |
+| Forge/smithing/metals | Only indirect via Miner's Kin/Craftsman's Child | Weak. | Add Smith's Apprentice or Forge-Raised for Blacksmithing/Smelting. |
+| Leather/tanning/textiles | None | Missing. | Add Tanner's Child or Loomhouse Child; do not overload generic craft. |
+| Cooking/inn/service | None | Missing. | Add Inn-Kitchen Hand, Cook's Helper, or Taproom-Raised. |
+| Herbalism/flora/medicine | Farmhand, Vagabond, Temple Acolyte, Isekai Outcast | Moderate. | Add Herbalist's Helper or Physicker's Assistant for grounded flora/medicine. |
+| Masonry/stonework | Miner's Kin only indirectly | Weak. | Add Mason's Child or Stonewright's Kin. |
+| Logistics/administration/scribing | Local/Minor Noble/Scholar only indirectly | Weak. | Add Clerk's Ward, Scribe's Apprentice, or Quartermaster's Runner. |
+| Melee fundamentals | Military Brat, Local Hero | Weak for grounded starts. | Local Hero should convert to achievement; add militia/levy background later. |
+| Sword | Military Brat | Narrow and high-power. | Keep locked; require family sword or garrison evidence. |
+| Dagger | None | Missing. | Could fit Street-Raised, Sailor/Dockhand, or Cutpurse-adjacent special unlock. |
+| Axe | None | Missing. | Could fit Woodcutter's Child or militia levy. |
+| Polearm/spear | None | Missing. | Add Militia Levy, Watchman's Child, or Spear-Bearer's Kin. |
+| Archery | Village Hunter, Scout's Ward | Strong. | Keep tied to hunting/scouting rather than a generic archer class. |
+| Shield/guard | Exile, Military Brat | Moderate. | Add Watchman's Child or Shield-Bearer's Kin later. |
+| Evasion | Vagabond, Gutter Rat | Strong but overlapping. | Best primary for renamed Street-Raised. |
+| Staff/hand-to-hand | None | Missing. | Could fit Monastery Novice, Drover, or Quarterstaff Watch background later. |
+| Throwing | None | Missing. | Could fit Hunter, Dockhand, or Street-Raised if future coverage needs it. |
+| Armor handling | None | Missing. | Better reserved for garrison/armorer starts and later combat runtime. |
 
-8. Existing Legacy/account/profile storage seams:
-   `AccountProfileState` currently has `legacy`, `achievements`, `history`, and `estate`. `AccountLegacyState` stores points, unlock states, transactions, and selected preparation payloads. `AccountHistoryState.runRecords` stores compact run identity, lineage, starting location, outcome, survival/payout fields, source-run linkage, and save slots, but not backstory id or skill maxima. `AccountAchievementsState` stores broad metric totals and achievement unlocks. These are useful seams, but none currently stores unlocked backgrounds, ancestral skill maxima, relevant background-specific accomplishments, or background skill bonus tiers.
+## Recommended Renames
 
-9. Safest future data model:
-   Add explicit family/ancestry-scoped background state rather than overloading generic `legacyUnlocks`.
-   Recommended shape:
-   - `defaultUnlockedBackgroundIds`: static policy from content/resolver, not persisted per profile.
-   - `familyBackgroundUnlocks`: `Record<familyId, Record<backstoryId, unlockEvidence>>`.
-   - `familySkillMaxima`: `Record<familyId, Record<skillId, { rank, sourceCharacterId, sourceRunId, recordedAt, sourceKind }>>`.
-   - `familyBackgroundSkillBonusTiers`: `Record<familyId, Record<backstoryId, tier>>`.
-   - `backgroundUnlockRules` in content/schema: default flag, primary background skill id, base bonus, eligible evidence predicates, and tags.
-   Until a real `familyId` exists, use the existing `sourceRunId` chain only as a temporary lineage-source reference, not an account-wide substitute.
+- `Military Brat` -> `Garrison Ward` as first choice. Alternatives: `Soldier's Kin`, `Camp-Raised`, `Garrison-Bred`.
+- `Gutter Rat` -> `Street-Raised` as first choice. Alternatives: `Backstreet Survivor`, `Alleyborn`, `Warren Child`.
+- `Isekai Outcast` -> retire from standard catalog. If retained as a special mode, use `World-Stray`, `Unmoored Stranger`, or `Far-Woken`.
+- `Local Hero` -> convert to a title/achievement such as `Name in Town`, `Settlement's Thanks`, or `Local Champion`; avoid using it as a normal start.
+- `Craftsman's Child` -> consider `Workshop Child` or split into specific craft-house starts.
+- `Performer` -> consider `Troupe-Raised` if it is mundane, or `Stage Adept` only if performance magic is intentionally retained.
 
-10. Ancestry gating policy:
-   Use family-line maximum as the main cap. Account-wide max is too permissive and would turn background unlocks into generic account power. Background-specific max is too narrow because a family swordmaster should support multiple martial origins. A strict character-line/source-run chain is good for heir-specific starts but too brittle for broader family identity. Use non-deleted, lineage-authoritative family records only. Store `earned` versus `starter-granted` skill maxima separately so old or future starter bonuses do not bootstrap themselves into higher descendant starts. For new accounts, allow only neutral defaults at a conservative base `+5` floor; upgrades beyond that floor require family evidence.
+## Recommended Rewrites
 
-11. Relevant player experiences:
-   Represent experiences as typed evidence predicates, not freeform copy. Useful predicates include `skill_threshold`, `achievement`, `quest_or_event_tag`, `activity_tag`, `profession_history`, `faction_or_region_reputation`, `combat_accomplishment`, `noncombat_accomplishment`, `lineage_title`, `estate_milestone`, and `renown_milestone`. Current achievements can cover broad early categories, but the account profile does not yet store enough detailed quest/event/activity/faction evidence for rich background unlocks.
+- Rewrite `Military Brat` around garrison household discipline, quartermaster routines, watch drills, and formation expectations without implying full soldier competence.
+- Rewrite `Gutter Rat` to keep urban survival but remove the insulting trope label and reduce the criminal stereotype.
+- Rewrite `Scholar's Apprentice` into either a mundane scholar/scribe background or split it from a future `Arcane Apprentice`.
+- Rewrite `Performer` to decide whether it is a mundane troupe/crowd background or a magical performance lineage.
+- Rewrite `Temple Acolyte` so the primary benefit is care, service, field medicine, or stewardship; reserve divine magic for a later locked upgrade.
+- Retire or quarantine `Isekai Outcast` from the grounded catalog unless the game intentionally supports special out-of-world starts.
+- Convert `Local Hero` into an achievement/title/unlock condition rather than a default character origin.
 
-12. Background skill Legacy upgrade policy:
-   Treat this as background-specific enhancement, not generic skill purchase. A background skill bonus tier should apply only when that backstory is selected, only to that backstory's authored primary skill, and only up to the minimum of starter cap, breakthrough cap, family skill max, and authored background cap. Suggested formula: `effectiveBonus = min(baseBonus + tierBonus, familySkillMax[skillId], starterSkillPolicyCap, breakthroughSafeCap)`, with the neutral first-generation `+5` floor handled explicitly. A Legacy purchase alone must never unlock a rank unsupported by family history.
+## Recommended Default And Legacy-Locked Split
 
-13. Validation/tests needed before implementation:
-   Add content/schema tests for default background coverage, one primary background skill, base `+5`, no direct attribute/stat bonuses, and no bonus above starter/breakthrough caps. Add pure resolver tests for default availability, locked specialist backgrounds, family max capping, deleted-run exclusion, account-wide leakage prevention, stale ids, duplicate evidence, mutation safety, and no direct Legacy skill grants. Add creator tests for disabled/hidden cards, stale locked selection rejection, visible locked reasons, and snapshot refusal when eligibility fails. Add account storage migration/roundtrip tests before persisting ancestry maxima or background unlock state.
+Recommended default-unlocked set:
+- `backstory.local`
+- `backstory.vagabond`
+- `backstory.exile`
+- `backstory.farmhand`
+- `backstory.amnesiac`
 
-14. First implementation out of scope:
-   Do not change combat math, progression gates, current skill gain rules, save/account schema, backstory JSON values, character creator layout, Legacy payout, achievement reward formulas, or magic systems in the first slice. Do not add generic skill buying, direct attribute/stat bonuses, universal account-wide specialist unlocks, or broad event-ledger storage before the family ownership model is clear.
+Conditional default after rename:
+- `backstory.gutter_rat` only if renamed to `Street-Raised` or similar and softened.
+
+Recommended Legacy-locked specialist/status/profession backgrounds:
+- `backstory.merchants_child`
+- `backstory.craftsmans_child`
+- `backstory.performer`
+- `backstory.minor_noble`
+- `backstory.carpenters_child`
+- `backstory.village_hunter`
+- `backstory.miners_kin`
+- `backstory.military_brat`
+- `backstory.scouts_ward`
+- `backstory.scholars_apprentice`
+- `backstory.temple_acolyte`
+- `backstory.hedge_adept`
+
+Recommended retire or convert:
+- `backstory.isekai_outcast`: retire from standard starts or make special non-default unlock.
+- `backstory.local_hero`: convert to achievement/title or special Legacy start keyed to local reputation.
+
+## Recommended New Background Concepts
+
+Implementation-ready soon, because they cover practical gaps without needing new runtime systems:
+- `Fisher's Child` or `Net-Tender`: primary `skill.resource.fishing`; evidence from fishing, water safety, coastal/river settlement starts.
+- `Dockhand` or `Ferryman's Kin`: primary `skill.survival.water_safety` or `skill.settlement.logistics`; evidence from dock/ferry work, travel entries, coastal reputation.
+- `Smith's Apprentice` or `Forge-Raised`: primary `skill.crafting.blacksmithing`; evidence from blacksmithing/smelting, worked-hands, forge workplace history.
+- `Tanner's Child` or `Loomhouse Child`: primary `skill.crafting.tanning` or `skill.crafting.weaving`; evidence from workshop history and makers-mark style achievements.
+- `Inn-Kitchen Hand`: primary `skill.crafting.cooking`; evidence from service work, cooking/brewing, trade/social activity tags.
+- `Scribe's Apprentice` or `Clerk's Ward`: primary `skill.settlement.administration`; evidence from scribing, administration, contracts, civic reputation.
+- `Mason's Child` or `Stonewright's Kin`: primary `skill.crafting.masonry`; evidence from masonry/quarry/building history.
+- `Stablehand` or `Drover's Child`: primary `skill.survival.animal_handling`; evidence from ranching, animal handling, rural estate history.
+
+Backlog-only until combat/runtime ownership is broader:
+- `Militia Levy`: primary `skill.combat.defense.guard` or `skill.combat.weapon.polearm`; evidence from First Blooded, guard duty, settlement defense.
+- `Watchman's Child`: primary `skill.combat.defense.shield_handling` or `skill.knowledge.civic_lore`; evidence from civic authority and guard history.
+- `Woodcutter's Kin`: primary `skill.resource.woodcutting` or `skill.combat.weapon.axe`; evidence from woodcutting and forestry work. Use noncombat primary first.
+- `Monastery Novice`: primary `skill.combat.weapon.staff` or `skill.leadership.stewardship`; backlog if it implies staff combat or divine power.
 
 ## Recommended First Implementation Slice
 
-Version 0.5.40 - Background Unlock Policy Resolver
+Before implementing locked backgrounds, do a content metadata and resolver-only slice:
 
-Smallest safe next slice:
-- Add a pure policy helper that accepts current backstory templates, a static neutral default set, and a future-compatible ancestry summary object.
-- Return per-backstory availability, lock reason, primary background skill, base background skill bonus, and effective capped bonus.
-- Keep current creator behavior unchanged in that first slice unless the resolver is explicitly wired behind a display-only preview.
-- Add focused tests with synthetic ancestry summaries for default unlocks, locked specialist backgrounds, family skill caps, breakthrough-safe caps, duplicate evidence, and mutation safety.
+1. Add or stage a pure backstory policy manifest that maps existing backstory ids to:
+   - `defaultUnlocked`
+   - `recommendedPrimaryBackgroundSkillId`
+   - `recommendedFutureStatus`
+   - `unlockEvidenceKinds`
+   - optional `toneAction` such as rename, rewrite, retire, or convert.
+2. Do not change `backstories.json` values or starter skill ranks in that slice.
+3. Add tests proving every current backstory has one primary background skill recommendation, every default set leaves at least one available start, and every retired/convert recommendation is explicit.
+4. Keep runtime, creator filtering, save/account schema, and Legacy catalog imports untouched until the resolver output is reviewed.
 
-Only after that should a later slice add account/family storage and creator selectability enforcement.
+After that, the safest implementation order is:
+- Rename/rewrite the obvious tone problems.
+- Add the pure eligibility resolver.
+- Add family/ancestry summary storage.
+- Wire creator availability states.
+- Migrate current multi-skill starts toward the `+5` one-primary-skill model.
+
+## Risks / Follow-Up
+
+- Current starter skills are much stronger than the planned one-skill `+5` model. Any implementation must treat that as a content/balance migration, not just a UI lock.
+- Locking too many backgrounds before family evidence storage exists would make the catalog feel smaller without giving players a path to earn it.
+- `Isekai Outcast` is the clearest tone conflict. Keeping it in the normal catalog weakens the grounded medieval-fantasy standard.
+- `Local Hero` is a good achievement/title concept but undermines the premise of starting from formative background if kept as a normal origin.
+- Combat-adjacent backgrounds need care so they do not become class packages or early weapon specialization shortcuts.
+- Magic backgrounds should stay locked/backlog until magic runtime and magic Legacy boundaries are intentionally opened.
 
 ## Checks Run
 
 - `git status --short`: passed before audit; clean.
 - `npm.cmd run tool:content-lint`: passed, `content-lint: ok (53 files checked)`.
 - `node --test tests\unit\*skill*.mjs tests\unit\*legacy*.mjs tests\unit\*creator*.mjs tests\unit\*backstory*.mjs`: passed, 62 tests.
-- `git diff --check`: passed. Git emitted the existing line-ending warning that `docs/dev/current-codex-output.md` will be normalized from LF to CRLF the next time Git touches it.
+- `git diff --check`: passed. Git emitted the line-ending warning that `docs/dev/current-codex-output.md` will be normalized from LF to CRLF the next time Git touches it.
 
 ## Behavior / Runtime Confirmation
 
-No runtime, UI, schema, content JSON, save/account, combat, magic, Legacy, progression, or character creator behavior changed.
+No runtime, UI, schema, content JSON, save/account, combat, magic, Legacy, progression, launcher, or character creator behavior changed.
 
 This run modified only `docs/dev/current-codex-output.md`.
 
-## Risks / Follow-Up
-
-- Current backstories are much stronger than the proposed future `+5` one-skill background bonus. Migrating from current rank-25 multi-skill starts to the future policy will need a separate balance/content migration decision.
-- Current account run history does not preserve backstory id, final skill maxima, earned-versus-starter skill source, faction/region reputation evidence, or detailed activity tags. Locking specialist backgrounds before adding that storage would make unlocks mostly impossible.
-- Existing `LegacyUnlockRequirementState` includes future `character_skill`, `role_rank`, and `wealth` requirements, but the resolver marks those unsupported today. Do not use them for live gating until account/family evidence storage exists.
-- Existing source-run/heir linkage is useful but not a complete family ledger. Avoid treating all account runs as one ancestry pool.
-- Existing draft Legacy catalog already sketches backstory unlock intent, but it is explicitly non-runtime and must not be imported directly into gameplay.
-
 ## Next Recommended Version
 
-Version 0.5.40 - Background Unlock Policy Resolver
+Version 0.5.41 - Backstory Policy Metadata Plan
 
 ## Suggested Commit Message
 
-docs(legacy): audit background unlock policy
+docs(content): audit backstory coverage and tone
