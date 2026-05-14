@@ -330,7 +330,7 @@ export function MainMenuScreen({
         {activeSection === 'characters' ? (
           <section aria-label="Characters" className="space-y-4">
             {visibleSlots.length > 0 && (
-              <div className="space-y-3">
+              <div className="launcher-save-list space-y-3">
                 {visibleSlots.map((slot) => (
                   <div
                     key={slot.id}
@@ -346,7 +346,7 @@ export function MainMenuScreen({
                     className={`launcher-save-row group relative grid min-h-[4.5rem] overflow-hidden text-left transition ${
                       slot.hasSave
                         ? 'grid-cols-[4.25rem_minmax(0,1fr)_4.25rem]'
-                        : 'is-empty grid-cols-[4.25rem_minmax(0,1fr)] opacity-70 hover:opacity-70'
+                        : 'is-empty grid-cols-[4.25rem_minmax(0,1fr)]'
                     }`}
                   >
                     <div className="launcher-save-index flex min-h-[4.5rem] items-center justify-center self-stretch px-1 text-[1.45rem] font-semibold tabular-nums text-[color:var(--color-text-secondary)] sm:text-[1.65rem]">

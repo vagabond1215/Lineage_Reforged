@@ -886,13 +886,14 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(mainMenuSource, /slot\.playtimeLabel \?\? '0 ticks played'/);
   assert.match(mainMenuSource, /formatInGameDateLabel\(slot\.inGameDate\)/);
   assert.match(mainMenuSource, /formatCharacterSummaryLine\(slot\)/);
+  assert.match(mainMenuSource, /launcher-save-list space-y-3/);
   assert.match(mainMenuSource, /min-h-\[4\.5rem\]/);
   assert.match(mainMenuSource, /text-\[1\.5rem\]/);
   assert.match(mainMenuSource, /text-\[1\.125rem\]/);
   assert.match(mainMenuSource, /text-\[1rem\]/);
   assert.match(mainMenuSource, /Empty/);
   assert.match(mainMenuSource, /opacity-45/);
-  assert.match(mainMenuSource, /hover:opacity-70/);
+  assert.doesNotMatch(mainMenuSource, /hover:opacity-70/);
   assert.match(mainMenuSource, /tracking-\[0\.15em\]/);
   assert.match(mainMenuSource, /fontFamily: 'var\(--font-display\)'/);
   assert.match(mainMenuSource, /text-\[color:var\(--color-text-muted\)\]/);
