@@ -334,9 +334,9 @@
                     },
                     {
                         "id":  "backstory.military_brat",
-                        "name":  "Military Brat",
-                        "summary":  "Garrisons, discipline, and formation life shaped your upbringing.",
-                        "description":  "You were raised around drills, quartermasters, orders, and the visible consequences of disorder. Even without formal rank, you learned battlefield habits, camp discipline, and what kinds of people a military settlement trusts.",
+                        "name":  "Garrison Ward",
+                        "summary":  "Quartermaster routines, watch drills, and camp discipline shaped your upbringing.",
+                        "description":  "You grew up under the rhythms of a garrison household, close to stores, duty rosters, watch rotations, and the daily weight of orders. You held no rank, but you learned why formations matter, how disorder spreads, and what discipline a military settlement expects from those it shelters.",
                         "attributeAdjustments":  {
                                                      "CON":  1,
                                                      "CHA":  -1
@@ -365,9 +365,9 @@
                     },
                     {
                         "id":  "backstory.gutter_rat",
-                        "name":  "Gutter Rat",
-                        "summary":  "You survived by reading alleys, people, and opportunity before it vanished.",
-                        "description":  "City margins taught you quick reads, faster feet, and how to spot useful scraps before someone stronger claimed them. You learned settlement survival from the underside rather than from comfortable instruction.",
+                        "name":  "Street-Raised",
+                        "summary":  "Urban hardship taught you crowd sense, hidden routes, and how to make scraps last.",
+                        "description":  "You grew up among alleys, side doors, market spill, and the overlooked spaces of a crowded settlement. Survival meant reading a street before stepping into it, finding informal paths, and knowing when to move on without turning hardship into a badge of romance or crime.",
                         "attributeAdjustments":  {
                                                      "AGI":  1,
                                                      "CHA":  -1
@@ -512,9 +512,9 @@
                     },
                     {
                         "id":  "backstory.isekai_outcast",
-                        "name":  "Isekai Outcast",
-                        "summary":  "You carry useful instincts but no clean place in the world\u0027s ordinary categories.",
-                        "description":  "You arrived as an outsider in a way few can fully explain. What you know is broad rather than rooted, practical rather than inherited, and often useful in ways that are hard to place inside ordinary local expectations.",
+                        "name":  "World-Stray",
+                        "summary":  "You carry useful instincts from a life no local record can place.",
+                        "description":  "You came into this world with fragments that do not fit any household, guild, shrine, or road ledger. Your knowledge is broad but unrooted, practical but difficult to explain, and useful in ways that leave you outside ordinary expectations.",
                         "attributeAdjustments":  {
                                                      "INT":  1,
                                                      "CHA":  -1
@@ -568,9 +568,9 @@
                     },
                     {
                         "id":  "backstory.local_hero",
-                        "name":  "Local Hero",
-                        "summary":  "You are already known for proving useful when your home needed it most.",
-                        "description":  "Your settlement remembers that you helped when help was needed. Whether that meant courage, steadiness, or practical competence, you begin with more local trust than most and a stronger sense of what your home expects from you next.",
+                        "name":  "Local Champion",
+                        "summary":  "Your home remembers a service already rendered and expects you to live up to it.",
+                        "description":  "This is less an ordinary upbringing than an earned place in local memory. A settlement has reason to speak well of you because you answered a need with courage, steadiness, or practical competence, and that reputation now carries both trust and expectation.",
                         "attributeAdjustments":  {
                                                      "CHA":  1,
                                                      "WIS":  1,

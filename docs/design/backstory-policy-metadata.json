@@ -173,7 +173,7 @@
       ],
       "toneAction": "rename",
       "recommendedName": "Garrison Ward",
-      "notes": "Concept is strong, but the current name is too modern and casual. Keep locked behind garrison or family service evidence."
+      "notes": "Visible content now uses the grounded Garrison Ward name. Keep locked behind garrison or family service evidence in any future resolver."
     },
     {
       "backstoryId": "backstory.gutter_rat",
@@ -184,7 +184,7 @@
       "unlockEvidenceKinds": ["skill_threshold", "activity_tag", "noncombat_accomplishment"],
       "toneAction": "rename",
       "recommendedName": "Street-Raised",
-      "notes": "Useful urban hardship background, but the current name is tropey and derogatory. Consider default availability only after renaming."
+      "notes": "Visible content now uses the grounded Street-Raised name. Consider default availability only after a later runtime policy review."
     },
     {
       "backstoryId": "backstory.scouts_ward",
@@ -243,7 +243,7 @@
       "unlockEvidenceKinds": ["special_chronicle_flag"],
       "toneAction": "retire",
       "recommendedName": "World-Stray",
-      "notes": "Too genre-meta for the grounded standard catalog. Retire from ordinary starts or reserve as a special non-default Chronicle flag."
+      "notes": "Visible content now uses an in-world World-Stray name. Retire from ordinary starts or reserve as a special non-default Chronicle flag."
     },
     {
       "backstoryId": "backstory.amnesiac",
@@ -269,7 +269,7 @@
       ],
       "toneAction": "convert_to_achievement",
       "recommendedName": "Local Champion",
-      "notes": "Reads as an earned reputation state rather than formative background. Convert to achievement, title, or special Legacy start."
+      "notes": "Visible content now uses the title-style Local Champion name. Convert to achievement, title, or special Legacy start before runtime policy consumption."
     }
   ]
 }
