@@ -1,18 +1,19 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.36 - Launcher Metallic Palette Tuning
+Source version/run: Version 0.5.37 - Launcher Save Area Flush Padding Fix
 Date: 2026-05-14
 Branch/status assumption: Current local branch reality; `git status --short` was clean before edits.
 
 ## Result
 
-Tuned the launcher metallic palette away from bright yellow-gold and toward steel inactive states with muted bronze/brass active states.
+Removed the launcher Characters view padding gap caused by the shared `ShellContent` inner wrapper.
 
-Inactive launcher controls and save rows now use darker steel/aged-iron interiors, softer silver-steel borders, and aged-silver text. Hover/focus/active launcher controls, occupied save rows, and occupied save-slot number columns now use a darker muted bronze/brass gradient with reduced highlight brightness. Empty save slots were kept in the dark steel family so their inactive and hover states remain subdued.
+The root cause was the default inner wrapper class `mx-auto w-full max-w-7xl p-4 sm:p-5 lg:p-6`. `AppShell` now supports an optional `contentInnerClassName` override while preserving that default for all existing callers. `MainMenuScreen` uses the override only for the Characters save-slot surface, passing `w-full p-0` so the existing textured save-slot field can meet the top/subbar and sidebar chrome without the former outer padding gap.
 
 ## Files Changed
 
-- `apps/rpg-ui/src/index.css`
+- `apps/rpg-ui/src/game-shell/components/AppShell.tsx`
+- `apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
@@ -20,23 +21,24 @@ Inactive launcher controls and save rows now use darker steel/aged-iron interior
 - `git status --short`: run before edits; clean.
 - `npm.cmd run tool:content-lint`: passed.
 - `node --test tests\unit\*presentation*.mjs`: passed.
+- App-local TSX syntax/transpile probe for `AppShell.tsx` and `MainMenuScreen.tsx`: passed from `apps/rpg-ui`.
 - `git diff --check`: passed.
 
 ## Behavior / Runtime Confirmation
 
-Runtime behavior did not change. Layout, save/account state, pagination, deletion, clock logic, content JSON, schemas, combat, magic, Legacy, progression, creator logic, image assets, logo, sprite clock, and delete ruby styling were untouched.
+Runtime behavior did not change. Save/account state, save-slot routing, deletion logic, pagination logic, clock logic, content JSON, schemas, combat, magic, Legacy, progression, creator logic, sidebar art, logo, sprite clock, account menu behavior, page button logic, and image assets were untouched.
 
-This run changed launcher color/styling CSS only.
+This run changed launcher/main-menu layout styling only through a narrow AppShell content-inner override.
 
 ## Risks / Follow-Up
 
-- No browser visual QA was run in this pass; validation was CSS inspection plus lint/test/diff checks.
-- Light mode was not intentionally redesigned; palette changes are scoped to non-light theme roots.
+- No browser visual QA was run in this pass; validation was code inspection plus focused lint/test/diff checks.
+- Notices on the Characters surface now share the flush content wrapper if present; the save-slot field itself retains internal spacing for row readability.
 
 ## Next Recommended Version
 
-Version 0.5.37 - Launcher Browser Visual QA
+Version 0.5.38 - Launcher Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): tune launcher metallic palette
+style(ui): remove launcher save area padding gap

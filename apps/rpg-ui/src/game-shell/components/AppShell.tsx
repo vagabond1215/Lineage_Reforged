@@ -15,6 +15,7 @@ type AppShellProps = TopBarProps & {
   subBar?: ReactNode;
   notice?: ReactNode;
   contentClassName?: string;
+  contentInnerClassName?: string;
   children: ReactNode;
 };
 
@@ -141,14 +142,19 @@ export function ShellSubBar({ children }: { children: ReactNode }) {
 
 export function ShellContent({
   children,
-  className = ''
+  className = '',
+  innerClassName
 }: {
   children: ReactNode;
   className?: string;
+  innerClassName?: string;
 }) {
+  const contentInnerClassName =
+    innerClassName ?? 'mx-auto w-full max-w-7xl p-4 sm:p-5 lg:p-6';
+
   return (
     <main className={`panel-scroll min-w-0 flex-1 overflow-auto ${className}`}>
-      <div className="mx-auto w-full max-w-7xl p-4 sm:p-5 lg:p-6">{children}</div>
+      <div className={contentInnerClassName}>{children}</div>
     </main>
   );
 }
@@ -234,6 +240,7 @@ export function AppShell({
   subBar,
   notice,
   contentClassName,
+  contentInnerClassName,
   children
 }: AppShellProps) {
   const hasDesktopBrandCorner = Boolean(brand && sidebar);
@@ -291,7 +298,7 @@ export function AppShell({
             {sidebar}
           </aside>
         )}
-        <ShellContent className={contentClassName ?? ''}>
+        <ShellContent className={contentClassName ?? ''} innerClassName={contentInnerClassName}>
           {notice && <div className="mb-4">{notice}</div>}
           {children}
         </ShellContent>

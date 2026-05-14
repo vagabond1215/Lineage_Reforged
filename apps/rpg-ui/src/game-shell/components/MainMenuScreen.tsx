@@ -326,6 +326,7 @@ export function MainMenuScreen({
         }
         subBar={shellSubBar}
         notice={notice ? <NoticeBanner notice={notice} onDismiss={onDismissNotice} /> : null}
+        contentInnerClassName={activeSection === 'characters' ? 'w-full p-0' : undefined}
       >
         {activeSection === 'characters' ? (
           <section aria-label="Characters" className="space-y-4">
