@@ -896,6 +896,8 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.doesNotMatch(mainMenuSource, /hover:opacity-70/);
   assert.match(mainMenuSource, /tracking-\[0\.15em\]/);
   assert.match(mainMenuSource, /fontFamily: 'var\(--font-display\)'/);
+  assert.match(mainMenuSource, /launcher-save-summary-line/);
+  assert.match(mainMenuSource, /items-end justify-center text-right/);
   assert.match(mainMenuSource, /text-\[color:var\(--color-text-muted\)\]/);
   assert.match(mainMenuSource, /text-rose-600/);
   assert.match(mainMenuSource, /Icon name="closeCircle" className="h-10 w-10"/);
@@ -911,7 +913,7 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(mainMenuSource, /justify-end gap-2/);
   assert.match(
     mainMenuSource,
-    /md:grid-cols-\[minmax\(0,1\.05fr\)_minmax\(0,0\.9fr\)_minmax\(0,1\.5fr\)\]/
+    /md:grid-cols-\[minmax\(0,1fr\)_minmax\(0,1\.55fr\)_minmax\(0,0\.85fr\)\]/
   );
   assert.match(mainMenuSource, /continueLabel/);
   assert.match(mainMenuSource, /formatPossessiveName/);

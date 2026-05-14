@@ -355,28 +355,28 @@ export function MainMenuScreen({
 
                     {slot.hasSave ? (
                       <>
-                        <div className="grid min-w-0 gap-3 px-4 py-1 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)_minmax(0,1.5fr)]">
-                          <div className="flex min-w-0 items-center">
+                        <div className="grid min-w-0 gap-3 px-4 py-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.55fr)_minmax(0,0.85fr)]">
+                          <div className="flex min-w-0 flex-col justify-center">
                             <div className="truncate text-[1.5rem] font-light leading-tight tracking-[0.08em] text-[color:var(--color-text-primary)] sm:text-[1.6875rem]">
                               {slot.playerName}
                             </div>
+                            <div className="mt-1 truncate text-[1rem] text-[color:var(--color-text-muted)]">
+                              {formatInGameDateLabel(slot.inGameDate)}
+                            </div>
                           </div>
 
-                          <div className="flex min-w-0 flex-col items-center justify-center text-center">
+                          <div className="flex min-w-0 flex-col justify-center text-[1.125rem] leading-6 text-[color:var(--color-text-secondary)]">
+                            <div className="launcher-save-summary-line">
+                              {formatCharacterSummaryLine(slot)}
+                            </div>
+                          </div>
+
+                          <div className="flex min-w-0 flex-col items-end justify-center text-right">
                             <div className="truncate text-[1rem] font-medium text-[color:var(--color-text-muted)]">
                               {formatSlotHeaderTimestamp(slot.lastSavedAt)}
                             </div>
                             <div className="mt-1 truncate text-[1.125rem] font-medium leading-6 text-[color:var(--color-text-secondary)]">
                               {slot.playtimeLabel ?? '0 ticks played'}
-                            </div>
-                          </div>
-
-                          <div className="flex min-w-0 flex-col justify-center text-[1.125rem] leading-6 text-[color:var(--color-text-secondary)]">
-                            <div className="truncate">
-                              {formatCharacterSummaryLine(slot)}
-                            </div>
-                            <div className="mt-1 truncate text-[1rem] text-[color:var(--color-text-muted)]">
-                              {formatInGameDateLabel(slot.inGameDate)}
                             </div>
                           </div>
                         </div>

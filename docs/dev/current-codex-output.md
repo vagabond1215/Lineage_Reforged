@@ -1,21 +1,26 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.35 - Launcher Save Slot Metallic Hover Polish
+Source version/run: Version 0.5.36 - Launcher Save Slot Layout And Background Polish
 Date: 2026-05-14
 Branch/status assumption: Current local branch reality; `git status --short` was clean before edits.
 
 ## Result
 
-Refined the launcher save-slot surface so the row hover/focus/active treatment matches the metallic page-button language more closely.
+Polished the launcher save-slot field, empty-row hover behavior, and occupied-row information layout.
 
-Save rows now switch to an opaque bronze/brass/gold metallic plate on hover, focus-visible, and active states, with row-local text variables changing the occupied row copy and slot number column to dark text together. The slot number column now participates visually in the same hovered/active plate instead of staying as a separate dark block, while the delete rail remains visually distinct on the far right.
+The save-slot list now sits on a darker recessed textured field using the existing launcher dark texture variable, with heavier charcoal/black shadowing and no bright border emphasis. Occupied save rows keep the metallic brass/bronze/gold hover/focus/active treatment, while empty rows now have explicit dark hover/focus states so they do not turn gold and their slot number column does not flip to high-contrast dark text.
 
-Added a narrow `launcher-save-list` wrapper around the save rows with a subtle opaque black/dark-gray texture using the existing launcher dark texture variable. Empty rows remain subdued in their inactive state, but no longer carry the old hover opacity class that would dull the opaque metallic hover treatment.
+Occupied save rows were reorganized:
+
+- Left: player name with in-game calendar/date underneath.
+- Middle: character summary in a two-line clamped block.
+- Right: real-world save update time/date with ticks played underneath, right-aligned.
+- Far right: existing circle-x delete rail preserved.
 
 ## Files Changed
 
-- `apps/rpg-ui/src/index.css`
 - `apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx`
+- `apps/rpg-ui/src/index.css`
 - `tests/unit/legacy-ledger-presentation.test.mjs`
 - `docs/dev/current-codex-output.md`
 
@@ -23,7 +28,7 @@ Added a narrow `launcher-save-list` wrapper around the save rows with a subtle o
 
 - `git status --short`: run before edits; clean.
 - `npm.cmd run tool:content-lint`: passed.
-- `node --test tests\unit\*presentation*.mjs`: initially failed on the old `hover:opacity-70` assertion, then passed after updating that focused assertion to the requested opaque hover contract.
+- `node --test tests\unit\*presentation*.mjs`: initially failed on the old save-row grid assertion, then passed after updating the focused assertion to the new layout contract.
 - App-local TSX syntax/transpile probe for `MainMenuScreen.tsx`: passed from `apps/rpg-ui`.
 - `git diff --check`: passed.
 
@@ -31,17 +36,17 @@ Added a narrow `launcher-save-list` wrapper around the save rows with a subtle o
 
 Runtime behavior did not change. Save/account state, save-slot routing, deletion logic, pagination logic, clock logic, content JSON, schemas, combat, magic, Legacy, progression, and creator logic were untouched.
 
-This run changed launcher save-slot visual styling and a focused presentation assertion only. The existing `closeCircle` delete icon and opaque ruby delete hover/focus/active styling were preserved.
+This run changed launcher save-slot visual/layout classes and focused presentation assertions only. The circle-x delete icon and delete confirmation flow were preserved.
 
 ## Risks / Follow-Up
 
 - No browser visual QA was run in this pass; validation was code/CSS inspection plus focused lint/test/diff checks.
-- Light mode was not intentionally redesigned; new save-list and row polish is scoped to non-light theme roots where practical.
+- Light mode was not intentionally redesigned; new save-field and dark-hover behavior is scoped to non-light theme roots where practical.
 
 ## Next Recommended Version
 
-Version 0.5.36 - Launcher Browser Visual QA
+Version 0.5.37 - Launcher Browser Visual QA
 
 ## Suggested Commit Message
 
-style(ui): polish launcher save slot hover styling
+style(ui): polish launcher save slot layout
