@@ -205,7 +205,7 @@ export function MainMenuScreen({
                 key={`page.${pageIndex}`}
                 type="button"
                 onClick={() => setCurrentPage(pageIndex)}
-                className={`launcher-control inline-flex h-9 w-9 items-center justify-center rounded-md border text-base font-semibold transition ${
+                className={`launcher-control launcher-metal-control launcher-page-control inline-flex h-9 w-9 items-center justify-center rounded-md border text-base font-semibold transition ${
                   active
                     ? activePageButtonClass
                     : ''
@@ -244,7 +244,7 @@ export function MainMenuScreen({
             <button
               type="button"
               onClick={() => setAccountMenuOpen((open) => !open)}
-              className="launcher-control inline-flex h-10 max-w-[14rem] items-center justify-center truncate px-3 text-sm font-medium"
+              className="launcher-control launcher-metal-control launcher-account-control inline-flex h-10 max-w-[14rem] items-center justify-center truncate px-3 text-sm font-medium"
               aria-haspopup="menu"
               aria-expanded={accountMenuOpen}
               title={accountProfile.displayName}

@@ -1,52 +1,46 @@
 # Current Codex Output
 
-Source version/run: Launcher Active Button CSS Shadow Removal
-Date: 2026-05-13
-Branch/status assumption: `master`; worktree already had the launcher clock-spacing CSS change and this output doc modified at run start. Untracked user intake copies were preserved.
+Source version/run: Version 0.5.33 - Launcher Metallic Control Styling
+Date: 2026-05-14
+Branch/status assumption: Current local branch reality; `git status --short` was clean before edits.
 
 ## Result
 
-Removed the only CSS filter/drop-shadow path attached to active launcher sidebar button images.
+Refined the launcher primary top-bar account button and secondary top-bar page buttons with a targeted dark-mode metallic control variant.
 
-The dev-tools observation pointed to `.launcher-sidebar-button-image-active`. CSS inspection showed the art-button wrapper is already transparent, pseudo-elements are disabled for `.has-art`, and the active image only had one extra visual treatment: a focus-visible `brightness(...) drop-shadow(...)` filter. That rule is now removed, and the image transition now animates opacity only.
-
-Kept the fixed `12rem` launcher sprite-clock slot from the previous spacing change so the account/player menu button no longer shifts when the clock changes between 3-digit and 4-digit visible times.
+The new variant keeps inactive controls dark and slim with aged-gold border/text harmony, then changes hover, focus-visible, and active states into a restrained bronze/brass metal plate with near-black text. The styling is attached only to the launcher account buttons and save-page buttons, leaving sidebar image buttons, logo, sprite clock, save slots, creator screens, and runtime behavior untouched.
 
 ## Files Changed
 
 - `apps/rpg-ui/src/index.css`
+- `apps/rpg-ui/src/game-shell/components/MainMenuScreen.tsx`
+- `apps/rpg-ui/src/game-shell/components/SettingsScreen.tsx`
 - `docs/dev/current-codex-output.md`
-
-Untracked user intake copies preserved:
-
-- `unused assets/Active_Character - Copy.png`
-- `unused assets/Active_Settings - Copy.png`
-- `unused assets/Active_legacy - Copy.png`
 
 ## Checks Run
 
-- `git status --short`: run before edits; showed `apps/rpg-ui/src/index.css`, `docs/dev/current-codex-output.md`, and untracked user intake copies.
-- CSS inspection of launcher sidebar button image/filter rules.
-- Source/destination hash verification for all eight launcher button assets: passed; public assets still match the supplied `unused assets/` files and remain `700x200`.
+- `git status --short`: run before edits; clean.
+- Focused test search for existing launcher/MainMenu/Settings UI tests: none found.
 - `npm.cmd run tool:content-lint`: passed.
-- `node --test tests\unit\*presentation*.mjs`: passed, 32 tests.
-- `git diff --check`: passed with CRLF normalization warnings only.
+- Root `node -e` TypeScript syntax probe: blocked because `typescript` is not installed at the repo root.
+- App-local TSX syntax/transpile probe for `MainMenuScreen.tsx` and `SettingsScreen.tsx`: passed from `apps/rpg-ui`.
+- `git diff --check`: passed.
 
 ## Behavior / Runtime Confirmation
 
-Runtime behavior did not change. Time source, time formatting, account state, save behavior, routes, content JSON, schemas, combat, magic, Legacy, progression, creator logic, save-slot behavior, launcher routing, and sidebar button interaction logic were untouched.
+Runtime behavior did not change. Routing, save/account state, clock logic, content JSON, schemas, combat, magic, Legacy, progression, creator logic, save-slot behavior, account dropdown behavior, and page button click/ARIA behavior were untouched.
 
-This was limited to launcher visual CSS: stable clock width plus removal of the active image focus-visible filter/drop-shadow.
+This run changed launcher visual styling only.
 
 ## Risks / Follow-Up
 
-- No browser visual QA was run; validation was CSS inspection plus lint/test/diff checks.
-- If a rectangle remains after removing this CSS filter, the next check should inspect computed styles in-browser for any inherited or browser-applied filter on `.launcher-sidebar-button-image-active`.
+- No browser visual QA was run in this pass; validation was code/CSS inspection plus requested command checks.
+- Light mode was not intentionally redesigned; the new metallic styling is scoped to non-light theme roots.
 
 ## Next Recommended Version
 
-Version 0.5.32 - Launcher Browser Visual QA
+Version 0.5.34 - Launcher Visual QA Pass
 
 ## Suggested Commit Message
 
-style(ui): remove active launcher button shadow filter
+style(ui): refine launcher metallic controls

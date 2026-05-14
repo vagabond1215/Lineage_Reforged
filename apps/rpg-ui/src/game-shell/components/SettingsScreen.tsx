@@ -431,7 +431,7 @@ export function SettingsScreen({
           <button
             type="button"
             onClick={() => setAccountMenuOpen((open) => !open)}
-            className="launcher-control inline-flex h-10 max-w-[14rem] items-center justify-center truncate px-3 text-sm font-medium"
+            className="launcher-control launcher-metal-control launcher-account-control inline-flex h-10 max-w-[14rem] items-center justify-center truncate px-3 text-sm font-medium"
             aria-haspopup="menu"
             aria-expanded={accountMenuOpen}
             title={accountProfile.displayName}
