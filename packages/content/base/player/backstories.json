@@ -90,9 +90,9 @@
                     },
                     {
                         "id":  "backstory.merchants_child",
-                        "name":  "Merchant\u0027s Child",
+                        "name":  "Merchant Family",
                         "summary":  "Trade, appraisal, and negotiated value were household lessons.",
-                        "description":  "You were raised around ledgers, bargaining, and the constant movement of goods. Timing, trust, and market knowledge mattered in your home, and you learned to judge usefulness and value long before you held real authority.",
+                        "description":  "You were raised in a family where ledgers, bargaining, and the constant movement of goods shaped daily life. Timing, trust, market habits, and household pressure taught you to judge usefulness and value long before you held any authority of your own.",
                         "attributeAdjustments":  {
                                                      "CHA":  1,
                                                      "CON":  -1
@@ -122,8 +122,8 @@
                     },
                     {
                         "id":  "backstory.craftsmans_child",
-                        "name":  "Workshop Child",
-                        "summary":  "Tools, repairs, measuring, and repeated small tasks shaped your early life.",
+                        "name":  "Workshop-Raised",
+                        "summary":  "Tools, repairs, measuring, and repeated small tasks shaped your workshop habits.",
                         "description":  "You grew up in a working shop, close to benches, bins, offcuts, worn tools, and half-finished repairs. Your lessons came through carrying, cleaning, sorting, measuring, and assisting until material habits made sense by repetition rather than mastery.",
                         "attributeAdjustments":  {
                                                      "DEX":  1,
@@ -206,9 +206,9 @@
                     },
                     {
                         "id":  "backstory.carpenters_child",
-                        "name":  "Carpenter\u0027s Child",
-                        "summary":  "Wood, joinery, and building labor were familiar from a young age.",
-                        "description":  "Timber, frames, repairs, and the steady logic of construction shaped your early training. You learned how useful work takes shape in stages and how good workmanship begins long before the final surface is seen.",
+                        "name":  "Carpenter Household",
+                        "summary":  "Wood, joinery, and building labor were part of household life.",
+                        "description":  "Timber, frames, repairs, and the steady logic of construction shaped your household routines. You learned how useful work takes shape in stages and how good workmanship begins long before the final surface is seen.",
                         "attributeAdjustments":  {
                                                      "DEX":  1,
                                                      "CON":  1,

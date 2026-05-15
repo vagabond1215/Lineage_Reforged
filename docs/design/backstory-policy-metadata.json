@@ -79,9 +79,9 @@
         "profession_history",
         "renown_milestone"
       ],
-      "toneAction": "keep",
-      "recommendedName": "",
-      "notes": "Strong household trade background. Lock behind family trade evidence or merchant-house history."
+      "toneAction": "rename",
+      "recommendedName": "Merchant Family",
+      "notes": "Visible content now uses Merchant Family and frames trade as family exposure, household pressure, ledgers, bargaining, and market habits without making the character a current merchant."
     },
     {
       "backstoryId": "backstory.craftsmans_child",
@@ -91,8 +91,8 @@
       "baseBackgroundSkillBonus": 5,
       "unlockEvidenceKinds": ["skill_threshold", "achievement", "profession_history"],
       "toneAction": "rewrite",
-      "recommendedName": "Workshop Child",
-      "notes": "Visible content now uses Workshop Child and frames a general workshop household without mastery. Later craft-specific starts can split from this premise."
+      "recommendedName": "Workshop-Raised",
+      "notes": "Visible content now uses Workshop-Raised and frames a general workshop environment through assisting, sorting, measuring, cleaning, repairs, and material habits without implying broad craft mastery. Later craft-specific starts can split from this premise."
     },
     {
       "backstoryId": "backstory.performer",
@@ -123,9 +123,9 @@
       "recommendedPrimaryBackgroundSkillId": "skill.crafting.carpentry",
       "baseBackgroundSkillBonus": 5,
       "unlockEvidenceKinds": ["skill_threshold", "profession_history", "achievement"],
-      "toneAction": "keep",
-      "recommendedName": "",
-      "notes": "Strong practical trade background. Good early candidate for future profession-backed unlocks."
+      "toneAction": "rename",
+      "recommendedName": "Carpenter Household",
+      "notes": "Visible content now uses Carpenter Household and frames carpentry as formative household and worksite exposure rather than current employment or mastery. Good early candidate for future profession-backed unlocks."
     },
     {
       "backstoryId": "backstory.village_hunter",
