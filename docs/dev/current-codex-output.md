@@ -1,14 +1,14 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.42 - Backstory Tone Rename Content Pass
+Source version/run: Version 0.5.43 - Backstory Specialist Rewrite Pass
 Date: 2026-05-14
-Branch/status assumption: Current local branch reality; `git status --short` was run before edits and no unrelated changes were reported in tool output.
+Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed unrelated untracked files under `unused assets/`; those files were not touched.
 
 ## Result
 
-Applied the first safe backstory tone and naming cleanup pass from the v0.5.40 audit and v0.5.41 planning metadata.
+Refined the remaining primary specialist backstories that could read like class packages, magical overreach, or overly broad expertise before any future Background Legacy resolver work.
 
-The pass updates four visible backstory names plus their summaries/descriptions, while keeping all ids, starter skills, starter abilities, attribute adjustments, creator behavior, runtime behavior, and live availability logic unchanged.
+This pass updates visible content prose only, plus matching non-runtime policy metadata notes. It does not implement background locking or change live backstory availability.
 
 ## Files Changed
 
@@ -18,23 +18,34 @@ The pass updates four visible backstory names plus their summaries/descriptions,
 
 ## Exact Backstory Names Changed
 
-- `backstory.military_brat`: `Military Brat` -> `Garrison Ward`
-- `backstory.gutter_rat`: `Gutter Rat` -> `Street-Raised`
-- `backstory.isekai_outcast`: `Isekai Outcast` -> `World-Stray`
-- `backstory.local_hero`: `Local Hero` -> `Local Champion`
+- `backstory.performer`: `Performer` -> `Troupe-Raised`
+- `backstory.craftsmans_child`: `Craftsman's Child` -> `Workshop Child`
 
-## Tone Rewrite Summary
+Names intentionally left unchanged:
 
-- `Garrison Ward` now reads as garrison household life shaped by quartermaster routines, watch rotations, orders, camp discipline, and formation expectations without implying formal rank or veteran competence.
-- `Street-Raised` now emphasizes urban hardship, crowd sense, hidden routes, scraps, alleys, side doors, and overlooked spaces without romanticizing crime or using a thief-package tone.
-- `World-Stray` now uses in-world uncertainty instead of genre-meta language and keeps the background special and unrooted without using `isekai` wording.
-- `Local Champion` now reads as an earned reputation or future title-style state rather than an ordinary formative background.
+- `backstory.scholars_apprentice`: remains `Scholar's Apprentice`
+- `backstory.temple_acolyte`: remains `Temple Acolyte`
 
-`docs/design/backstory-policy-metadata.json` received matching note updates for these four records. The manifest remains non-runtime planning metadata with `runtimeImportAllowed: false`.
+## Prose Rewrite Summary
+
+- `Troupe-Raised` now reads as grounded troupe and public-life upbringing: rehearsal, travel, patronage, crowd mood, timing, morale, reputation, and public obligation without ordinary spellcasting implications.
+- `Scholar's Apprentice` now emphasizes copying, records, language, memory, reference habits, instruction, and patient study instead of reading like an active mage premise.
+- `Temple Acolyte` now foregrounds service, ritual order, care, stewardship, mediation, and field medicine without presenting divine magic as the ordinary starting identity.
+- `Workshop Child` now frames a general workshop household through tools, materials, repairs, measuring, cleaning, sorting, assisting, and repetition without implying mastery across all crafts.
+
+`docs/design/backstory-policy-metadata.json` was updated only in notes for these four records. The manifest remains `status: "non_runtime_policy_draft"` with `runtimeImportAllowed: false`.
+
+Optional light-touch records were inspected but not changed:
+
+- `backstory.merchants_child`
+- `backstory.minor_noble`
+- `backstory.hedge_adept`
+
+Their current prose already stays narrow enough for this pass.
 
 ## Checks Run
 
-- `git status --short`: run before edits.
+- `git status --short`: run before edits; showed unrelated untracked `unused assets/` files only.
 - `npm.cmd run tool:content-lint`: passed, `content-lint: ok (53 files checked)`.
 - `node --test tests\unit\*backstory*.mjs tests\unit\player-identity-content.test.mjs tests\unit\*legacy*.mjs tests\unit\*creator*.mjs`: passed, 68 tests.
 - `git diff --check`: passed. Git emitted line-ending normalization warnings for edited text files.
@@ -43,20 +54,20 @@ The pass updates four visible backstory names plus their summaries/descriptions,
 
 No runtime behavior changed.
 
-This pass did not change backstory ids, `startingSkills`, `startingAbilityIds`, `attributeAdjustments`, character creator behavior, starter skill application, save/account schemas, Legacy runtime, progression gates, combat, magic, launcher UI, or live backstory availability logic.
+This pass did not change backstory ids, `startingSkills`, `startingAbilityIds`, `attributeAdjustments`, character creator behavior, starter skill application, save/account schemas, Legacy runtime, progression gates, combat, magic, launcher UI, live availability logic, schemas, or policy metadata imports.
 
-No runtime/source file imports `docs/design/backstory-policy-metadata.json`; the existing focused test still verifies the non-import guard.
+The focused policy metadata test still confirms `docs/design/backstory-policy-metadata.json` is not imported by live runtime/source paths.
 
 ## Risks / Follow-Up
 
-- `backstory.local_hero` still exists as selectable content for now; a later implementation should convert equivalent policy into an achievement/title or special Legacy start before any runtime lock resolver is built.
-- `backstory.isekai_outcast` is now named in-world, but it should remain special/non-default in future policy rather than becoming an ordinary starter background.
-- The policy metadata is still a planning draft, not a creator availability state or resolver contract.
+- `backstory.performer` still carries the current `skill.magic.school.performance` starter skill. This was intentionally left unchanged until a later background-skill or magic-split implementation is approved.
+- `backstory.scholars_apprentice` still carries magic-related starting skills. The prose now narrows the visible premise, but a future split between mundane scholarship and active arcane starts remains deferred.
+- `backstory.temple_acolyte` still carries `skill.magic.school.divine`. The visible premise is now grounded in service and care; any future divine-magic unlock should remain separately reviewed.
 
 ## Next Recommended Version
 
-Version 0.5.43 - Backstory Specialist Rewrite Pass
+Version 0.5.44 - Backstory Coverage Concept Plan
 
 ## Suggested Commit Message
 
-content(player): refine backstory tone and names
+content(player): refine specialist backstory prose

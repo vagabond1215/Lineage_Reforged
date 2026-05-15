@@ -122,9 +122,9 @@
                     },
                     {
                         "id":  "backstory.craftsmans_child",
-                        "name":  "Craftsman\u0027s Child",
-                        "summary":  "Useful work, tools, and disciplined repetition shaped your early life.",
-                        "description":  "You grew up where materials were judged by hand and finished work had to justify itself. Practical craft taught you patience, process, and the difference between something merely assembled and something truly made well.",
+                        "name":  "Workshop Child",
+                        "summary":  "Tools, repairs, measuring, and repeated small tasks shaped your early life.",
+                        "description":  "You grew up in a working shop, close to benches, bins, offcuts, worn tools, and half-finished repairs. Your lessons came through carrying, cleaning, sorting, measuring, and assisting until material habits made sense by repetition rather than mastery.",
                         "attributeAdjustments":  {
                                                      "DEX":  1,
                                                      "CHA":  -1
@@ -150,9 +150,9 @@
                     },
                     {
                         "id":  "backstory.performer",
-                        "name":  "Performer",
-                        "summary":  "Crowds, timing, and public presence were part of your training.",
-                        "description":  "You learned how to hold attention, guide a room, and turn rhythm or spectacle into livelihood. Performance taught you cultural cues, morale, and how quickly reputation can spread when people remember your work.",
+                        "name":  "Troupe-Raised",
+                        "summary":  "Crowds, timing, reputation, and public obligation shaped your upbringing.",
+                        "description":  "You grew up around performers who lived by rehearsal, travel, local patronage, and the mood of a gathered crowd. The work taught timing, morale, reputation, and the obligation to hold public attention without turning applause into proof of mastery.",
                         "attributeAdjustments":  {
                                                      "CHA":  1,
                                                      "WIS":  -1
@@ -426,8 +426,8 @@
                     {
                         "id":  "backstory.scholars_apprentice",
                         "name":  "Scholar\u0027s Apprentice",
-                        "summary":  "Study, memory, and disciplined learning formed the center of your training.",
-                        "description":  "You were raised around texts, instruction, copying, and the slow work of making knowledge usable. Scholarly training taught you structure, language, reference habits, and respect for ideas that outlast one generation.",
+                        "summary":  "Copying, records, memory, and patient instruction shaped your habits.",
+                        "description":  "You served in rooms where texts were copied, records checked, languages compared, and instruction repeated until memory became reliable. Your training built reference habits, careful study, and respect for knowledge that must be preserved before it can be used.",
                         "attributeAdjustments":  {
                                                      "INT":  2,
                                                      "STR":  -1,
@@ -455,8 +455,8 @@
                     {
                         "id":  "backstory.temple_acolyte",
                         "name":  "Temple Acolyte",
-                        "summary":  "Ritual order, service, and healing discipline shaped your youth.",
-                        "description":  "Temple life taught you stewardship, structured duty, and the calm repetition that supports ritual and care. Service mattered as much as doctrine, and healing or mediation were treated as serious responsibilities rather than abstractions.",
+                        "summary":  "Service, ritual order, care, and mediation shaped your youth.",
+                        "description":  "Temple life taught you structured duty through swept floors, prepared rites, tended sickbeds, stored offerings, and disputes heard before they became feuds. Care and stewardship mattered as much as doctrine, and field medicine was treated as work that required calm hands.",
                         "attributeAdjustments":  {
                                                      "WIS":  1,
                                                      "SPT":  1,

@@ -92,7 +92,7 @@
       "unlockEvidenceKinds": ["skill_threshold", "achievement", "profession_history"],
       "toneAction": "rewrite",
       "recommendedName": "Workshop Child",
-      "notes": "Good general workshop premise, but broad. Consider Workshop Child or later split into specific craft-house starts."
+      "notes": "Visible content now uses Workshop Child and frames a general workshop household without mastery. Later craft-specific starts can split from this premise."
     },
     {
       "backstoryId": "backstory.performer",
@@ -103,7 +103,7 @@
       "unlockEvidenceKinds": ["achievement", "activity_tag", "faction_or_region_reputation"],
       "toneAction": "rewrite",
       "recommendedName": "Troupe-Raised",
-      "notes": "Keep the public-performance identity grounded. Split or defer magical performer implications before runtime use."
+      "notes": "Visible content now uses Troupe-Raised and keeps performance grounded in troupe, crowd, reputation, and morale. Split or defer magical performer implications before runtime use."
     },
     {
       "backstoryId": "backstory.minor_noble",
@@ -206,7 +206,7 @@
       "unlockEvidenceKinds": ["skill_threshold", "profession_history", "achievement"],
       "toneAction": "split",
       "recommendedName": "Scribe's Apprentice / Arcane Apprentice",
-      "notes": "Current record blends mundane scholarship and active magic. Split before runtime policy decides which path owns the primary skill."
+      "notes": "Visible content now emphasizes scribal apprenticeship, copying, records, memory, and patient study. Split mundane scholarship from active magic before runtime policy decides which path owns the primary skill."
     },
     {
       "backstoryId": "backstory.temple_acolyte",
@@ -221,7 +221,7 @@
       ],
       "toneAction": "rewrite",
       "recommendedName": "",
-      "notes": "Strong service background. Keep primary benefit grounded in care or stewardship before any divine-magic unlock."
+      "notes": "Visible content now foregrounds temple service, care, ritual order, stewardship, mediation, and field medicine. Keep any divine-magic unlock separate from the ordinary premise."
     },
     {
       "backstoryId": "backstory.hedge_adept",
