@@ -79,6 +79,22 @@ Name quality tests:
 
 Future Backstory Legacy should use three broad tiers.
 
+The future metadata draft should classify backstories by benefit level, prestige, unlock difficulty, and expected replay time. Do not use `standalone` as a tier value or branch-role category unless there is no defensible alternative. A backstory without a lower-tier precursor should normally still be classified as `tier_1`, `tier_2`, or `tier_3`.
+
+Allowed planning tier values:
+
+- `tier_1`
+- `tier_2`
+- `tier_3`
+- `special`
+- `deferred`
+
+Do not use:
+
+- `standalone`
+
+Use `special` when a narrative exception is not ready for normal tier classification, such as `World-Stray`, `Local Champion`, illegitimate or heir-status concepts, or other unusual origin states. Use `deferred` when a concept is unsafe, too undefined, or blocked by missing runtime ownership.
+
 ### Tier 1
 
 Tier 1 origins are common, low-skill, hardship, labor, local, or basic formative experiences.
@@ -123,6 +139,32 @@ Expected properties:
 - Should be deferred when its premise depends on unsupported runtime systems.
 
 Examples include `Swordmaster's Line`, `Knightly Household`, `Dragoon Tradition`, `Veteran Captain's Line`, `Trade House`, `Shipping House`, `Forge-Borne`, `Master Builder's Line`, `River Pilot`, `Chirurgeon Line`, `Archivist Line`, `Paladin Oathline`, `Shrine Steward Line`, `Restored Scion`, `Left-Hand Line`, and `Recognized Heir`.
+
+## Precursor And Alternate Unlock Model
+
+Tier classification must not be used to imply that every higher-tier origin has a direct lower-tier precursor. Missing precursors should be represented explicitly instead of inventing a `standalone` category.
+
+Planning fields for precursor shape:
+
+- `hasPrecursor`
+- `parentBackstoryIds`
+- `alternateUnlockPath`
+- `alternateUnlockKinds`
+
+Rules:
+
+- `hasPrecursor: true` means the origin has one or more direct lower-tier parent backstories.
+- `parentBackstoryIds: []` is valid when `hasPrecursor: false`.
+- `alternateUnlockPath: true` means the origin is unlocked through earned evidence outside a direct backstory chain.
+- `alternateUnlockKinds` should name the evidence families that can substitute for a direct precursor.
+- A higher-tier backstory can have no lower-tier precursor, but it still needs meaningful unlock criteria from previous play plus Legacy purchase, prestige, Echo, or equivalent account/family requirements.
+- Legacy points alone are not enough to unlock a higher-tier backstory.
+
+Examples:
+
+- A nobility or status backstory can be `tier_2` or `tier_3` with `hasPrecursor: false` if it is unlocked through earned prestige, lineage recognition, estate status, adoption, marriage, patronage, or a story outcome rather than a lower-tier chain.
+- `World-Stray`, `Local Champion`, illegitimate or heir-status concepts, and other narrative exceptions can use `special` when tier classification is not appropriate yet.
+- Unknown, unsafe, or runtime-blocked concepts can use `deferred`.
 
 ## Branching Model
 
@@ -178,9 +220,20 @@ A future runtime-safe backstory record should separate identity, skill support, 
 
 Proposed future fields:
 
+- `tierIntent`
+- `hasPrecursor`
+- `parentBackstoryIds`
+- `alternateUnlockPath`
+- `alternateUnlockKinds`
 - `primaryBackgroundSkillId`
 - `baseBonus`
 - `upgradeTiers`
+- `upgradeScaleIntent`
+- `expectedUpgradeCountRange`
+- `upgradeCostCurveIntent`
+- `prestigeRequirementIntent`
+- `echoRequirementIntent`
+- `capProgressionIntent`
 - `maxCap`
 - `familyAncestrySkillMaxCap`
 - `breakthroughSafeCap`
@@ -195,6 +248,8 @@ Rules:
 - Higher-tier backstories may reach a higher cap.
 - Higher-tier backstories may gain one narrow effect.
 - Family, ancestry, source-run, institution, achievement, skill, reputation, and chronicle evidence should be recorded separately so the resolver can explain why an origin is eligible.
+- A higher-tier origin with `hasPrecursor: false` still needs meaningful previous-play criteria and non-trivial Legacy, prestige, Echo, or equivalent requirements.
+- Legacy points alone must not unlock higher-tier competence, noble/status recognition, elite identity, or institutional acceptance.
 - Caps must respect existing breakthrough policy. No backstory should silently cross a breakthrough gate at character start.
 
 Illustrative cap shape:
@@ -206,6 +261,21 @@ Illustrative cap shape:
 | Tier 3 | moderate | high but bounded | several runs, lane-specific proof, and family or institutional support |
 
 Exact numeric values should be set in a later metadata draft after the current starter cap, breakthrough gates, family ledger design, and eligibility resolver are reviewed together.
+
+## Long-Term Upgrade Scale Planning
+
+Backstory Legacy progression may involve many incremental upgrades per backstory or per tier. Expected early planning ranges may be 30 to 100 upgrades, but the metadata model should not hardcode that ceiling. Some lanes may eventually support hundreds or even 1000+ small upgrades if Echo, prestige, cost curves, and cap progression justify that scale.
+
+Planning fields:
+
+- `upgradeScaleIntent`: narrative and balance reason for the upgrade density.
+- `expectedUpgradeCountRange`: rough planning range, not a runtime maximum.
+- `upgradeCostCurveIntent`: whether costs are flat, stepped, escalating, milestone-gated, or prestige/Echo-weighted.
+- `prestigeRequirementIntent`: how reputation, family standing, estate status, institution rank, or public recognition should gate progress.
+- `echoRequirementIntent`: how Echo-like meta currency or account memory should support the lane without replacing evidence.
+- `capProgressionIntent`: how incremental purchases affect starting bonus, cap, growth speed, or unlock visibility.
+
+These fields are planning-only. They must not become runtime behavior, schema requirements, creator filtering, purchase logic, or live cap changes until a later resolver and balance implementation is explicitly approved.
 
 ## Extra Effect Rules
 
@@ -505,11 +575,40 @@ Type:
 
 - Content-only plus non-runtime metadata notes.
 
-### Version 0.5.46 - Tiered Backstory Lane Metadata Draft
+### Version 0.5.46 - Backstory Metadata Model Guardrail Revision
+
+Purpose:
+
+- Revise the planning model before metadata implementation so tier values, precursor fields, alternate unlock paths, and long-term upgrade-scale fields are explicit.
+- Block `standalone` as a tier value or branch-role category.
+
+Likely files:
+
+- `docs/design/backstory-tiered-lane-design.md`
+- `docs/future_content_backlog.md`
+- `docs/dev/current-codex-output.md`
+
+Must stay out of scope:
+
+- Runtime resolver.
+- Character creator integration.
+- Live Legacy purchases.
+- New starter skill behavior.
+- Content records.
+- Schema changes.
+
+Type:
+
+- Docs-only planning.
+
+### Version 0.5.47 - Tiered Backstory Lane Metadata Draft
 
 Purpose:
 
 - Draft non-runtime metadata for tier, lane, branch, prerequisite intent, cap intent, and extra-effect intent.
+- Use `tier_1`, `tier_2`, `tier_3`, `special`, and `deferred`; do not use `standalone`.
+- Separate missing precursors with `hasPrecursor`, `parentBackstoryIds`, `alternateUnlockPath`, and `alternateUnlockKinds`.
+- Include planning-only upgrade-scale fields such as `upgradeScaleIntent`, `expectedUpgradeCountRange`, `upgradeCostCurveIntent`, `prestigeRequirementIntent`, `echoRequirementIntent`, and `capProgressionIntent`.
 - Keep the draft separate from live runtime imports.
 
 Likely files:
@@ -530,7 +629,7 @@ Type:
 
 - Metadata-only planning.
 
-### Version 0.5.47 - Backstory Coverage First-Batch Plan
+### Version 0.5.48 - Backstory Coverage First-Batch Plan
 
 Purpose:
 
@@ -555,7 +654,7 @@ Type:
 
 - Docs-only planning.
 
-### Version 0.5.48 - Tier 1 Backstory Content Batch
+### Version 0.5.49 - Tier 1 Backstory Content Batch
 
 Purpose:
 
@@ -583,7 +682,7 @@ Type:
 
 - Content-only with non-runtime metadata alignment.
 
-### Version 0.5.49 - Backstory Eligibility Resolver Plan
+### Version 0.5.50 - Backstory Eligibility Resolver Plan
 
 Purpose:
 

@@ -1,86 +1,92 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.45 - Backstory Naming Convention Content Pass
+Source version/run: Version 0.5.46 - Backstory Metadata Model Guardrail Revision
 Date: 2026-05-15
 Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed a clean worktree.
 
 ## Result
 
-Applied a narrow live backstory naming cleanup based on the v0.5.44 tiered backstory lane and naming design.
+Revised the planning-only Backstory Legacy metadata model before implementing any metadata draft.
 
-This was a content-only visible-name and prose-alignment pass plus non-runtime policy metadata note alignment. No tiered lanes, eligibility logic, runtime availability, creator filtering, Legacy behavior, save/account schemas, starter skills, combat, magic, economy, progression, or launcher UI behavior were changed.
+The design now blocks `standalone` as a normal tier value or branch-role category, separates missing precursors into explicit fields, and adds long-term upgrade-scale planning fields without creating runtime behavior.
 
 ## Files Changed
 
-- `packages/content/base/player/backstories.json`
-- `docs/design/backstory-policy-metadata.json`
+- `docs/design/backstory-tiered-lane-design.md`
+- `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Exact Backstory Names Changed
+## Metadata Model Decisions
 
-- `backstory.merchants_child`: `Merchant's Child` -> `Merchant Family`
-- `backstory.carpenters_child`: `Carpenter's Child` -> `Carpenter Household`
-- `backstory.craftsmans_child`: `Workshop Child` -> `Workshop-Raised`
+- Future tier values should use `tier_1`, `tier_2`, `tier_3`, `special`, and `deferred`.
+- `standalone` should not be used as a tier value or branch-role category unless no defensible alternative exists.
+- Tier classification is based on benefit level, prestige, unlock difficulty, and expected replay time.
+- A higher-tier backstory can have no lower-tier precursor, but it still needs meaningful previous-play evidence plus Legacy purchase, prestige, Echo, or equivalent requirements.
+- Legacy points alone are not enough to unlock higher-tier competence, noble/status recognition, elite identity, or institutional acceptance.
 
-Light prose adjustments:
+## Precursor / Alternate Unlock Fields
 
-- `Merchant Family` now frames trade as family exposure, household pressure, ledgers, bargaining, and market habits without making the character a current merchant.
-- `Carpenter Household` now frames carpentry as household/worksite exposure rather than current employment or mastery.
-- `Workshop-Raised` now removes the child label and keeps the premise centered on workshop habits, assisting, sorting, measuring, cleaning, repairs, and material repetition.
+Added planning guidance for:
 
-## Names Reviewed And Intentionally Kept
+- `hasPrecursor`
+- `parentBackstoryIds`
+- `alternateUnlockPath`
+- `alternateUnlockKinds`
 
-- `backstory.miners_kin`: `Miner's Kin`
-- `backstory.scouts_ward`: `Scout's Ward`
-- `backstory.military_brat`: `Garrison Ward`
-- `backstory.gutter_rat`: `Street-Raised`
-- `backstory.performer`: `Troupe-Raised`
-- `backstory.temple_acolyte`: `Temple Acolyte`
-- `backstory.hedge_adept`: `Hedge Adept`
-- `backstory.local_hero`: `Local Champion`
-- `backstory.isekai_outcast`: `World-Stray`
-- `backstory.minor_noble`: `Minor Noble`
-- `backstory.village_hunter`: `Village Hunter`
-- `backstory.scholars_apprentice`: `Scholar's Apprentice`
+Examples captured:
 
-## Policy Metadata Updates
+- Nobility/status origins can be `tier_2` or `tier_3` with `hasPrecursor: false` when earned through prestige, lineage recognition, estate status, adoption, marriage, patronage, or story outcome.
+- `World-Stray`, `Local Champion`, illegitimate/heir-status concepts, and similar narrative exceptions can use `special` when normal tiering is not appropriate.
+- Unknown or unsafe future concepts can use `deferred`.
 
-- `backstory.merchants_child` now has `recommendedName: "Merchant Family"` and notes matching the live family-trade framing.
-- `backstory.craftsmans_child` now has `recommendedName: "Workshop-Raised"` and notes matching the live workshop-environment framing.
-- `backstory.carpenters_child` now has `recommendedName: "Carpenter Household"` and notes matching the live household/worksite framing.
-- `docs/design/backstory-policy-metadata.json` still has `status: "non_runtime_policy_draft"` and `runtimeImportAllowed: false`.
-- Policy metadata was not imported into runtime or source files.
+## Upgrade-Scale Planning Fields
 
-## Behavior / Runtime Confirmation
+Added planning-only guidance for:
 
-No runtime behavior changed.
-No backstory ids changed.
-No backstory records were added or removed.
-No `startingSkills` changed.
-No `startingAbilityIds` changed.
-No `attributeAdjustments` changed.
-No character creator behavior changed.
-No starter skill, Legacy, save/account, combat, magic, economy, progression, launcher UI, live availability, or runtime eligibility behavior changed.
+- `upgradeScaleIntent`
+- `expectedUpgradeCountRange`
+- `upgradeCostCurveIntent`
+- `prestigeRequirementIntent`
+- `echoRequirementIntent`
+- `capProgressionIntent`
+
+The design now states expected early planning ranges may be 30 to 100 upgrades, but the metadata model must not hardcode that ceiling. Some lanes may eventually support hundreds or 1000+ small upgrades if Echo, prestige, cost curves, and cap progression justify it.
+
+## Prompt Pipeline Update
+
+- Inserted this docs-only guardrail revision as Version 0.5.46.
+- Shifted the non-runtime Tiered Backstory Lane Metadata Draft to Version 0.5.47.
+- Shifted later recommended prompts through Version 0.5.50.
+
+## Backlog Note
+
+Added a 2026-05-15 run note to `docs/future_content_backlog.md` recording the revised tier vocabulary, explicit precursor modeling, alternate-unlock requirement, long-term upgrade-scale planning, and the fact that no runtime behavior changed.
 
 ## Checks Run
 
 - `git status --short`: before edits, clean worktree.
-- `git status --short`: after content edits, showed only `docs/design/backstory-policy-metadata.json` and `packages/content/base/player/backstories.json` modified.
 - `npm.cmd run tool:content-lint`: passed, `content-lint: ok (53 files checked)`.
-- `node --test tests\unit\*backstory*.mjs tests\unit\player-identity-content.test.mjs tests\unit\*legacy*.mjs tests\unit\*creator*.mjs`: passed, 68 tests.
 - `git diff --check`: passed.
-- Final `git status --short`: `docs/design/backstory-policy-metadata.json`, `docs/dev/current-codex-output.md`, and `packages/content/base/player/backstories.json` modified.
+- Final `git status --short`: `docs/design/backstory-tiered-lane-design.md`, `docs/dev/current-codex-output.md`, and `docs/future_content_backlog.md` modified.
+
+## Behavior / Runtime Confirmation
+
+No runtime behavior changed.
+No content JSON changed.
+No backstory records were added, removed, renamed, or modified.
+No metadata JSON was changed.
+No schemas changed.
+No character creator, starter skill, Legacy, save/account, combat, magic, economy, progression, launcher UI, or availability behavior changed.
 
 ## Risks / Follow-Up
 
-- Generated `apps/rpg-ui/dist` output still contains old built-name text from a prior build. It was left untouched because this pass was content-only and generated artifacts should not be edited directly unless requested.
-- `backstory.scholars_apprentice`, `backstory.temple_acolyte`, `backstory.performer`, and `backstory.hedge_adept` still carry magic-adjacent starter skills from current branch reality. This pass intentionally did not split, rebalance, or reinterpret those starts.
-- No backlog update was made because this pass introduced no new deferred systems and did not start or complete an existing deferred item.
+- The next metadata draft should enforce this vocabulary in the draft shape and avoid introducing `standalone` as a convenience category.
+- Upgrade-scale fields are planning-only and should not be wired into purchase logic, caps, creator filtering, or runtime resolvers until a dedicated implementation pass exists.
 
 ## Next Recommended Version
 
-Version 0.5.46 - Tiered Backstory Lane Metadata Draft
+Version 0.5.47 - Tiered Backstory Lane Metadata Draft
 
 ## Suggested Commit Message
 
-content(player): align backstory names with origin framing
+docs(content): revise backstory metadata model guardrails
