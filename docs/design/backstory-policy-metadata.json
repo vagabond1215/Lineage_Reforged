@@ -1187,6 +1187,84 @@
       "capProgressionIntent": "bonus_only"
     },
     {
+      "backstoryId": "backstory.drovers_hand",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.survival.animal_handling",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "activity_tag",
+        "profession_history"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "New Tier 1 rural labor origin. Keep future handling free of mounts, riding, cavalry framing, animal ownership, pack-animal runtime effects, companions, or trade-route authority.",
+      "tier": "tier_1",
+      "laneId": "rural_labor",
+      "branchRole": "root",
+      "hasPrecursor": false,
+      "parentBackstoryIds": [],
+      "futureBranchIds": [],
+      "alternateUnlockPath": false,
+      "alternateUnlockKinds": [
+        "none"
+      ],
+      "prerequisiteIntent": "Early animal-handling, ranching, rural labor, or road movement evidence before future upgrades; no mounted or ownership behavior.",
+      "capIntent": "low_cap",
+      "extraEffectIntent": "none",
+      "runtimeRisk": "low",
+      "implementationReadiness": "current_record",
+      "upgradeScaleIntent": "short_track",
+      "expectedUpgradeCountRange": {
+        "min": 30,
+        "max": 100
+      },
+      "upgradeCostCurveIntent": "stepped",
+      "prestigeRequirementIntent": "none",
+      "echoRequirementIntent": "low",
+      "capProgressionIntent": "bonus_only"
+    },
+    {
+      "backstoryId": "backstory.kitchen_hand",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.crafting.cooking",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "activity_tag",
+        "profession_history"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "New Tier 1 kitchen and service-labor origin. Keep future handling free of inn ownership, hospitality contacts, discounts, passive economy behavior, free food generation, or chef mastery.",
+      "tier": "tier_1",
+      "laneId": "civic_local",
+      "branchRole": "root",
+      "hasPrecursor": false,
+      "parentBackstoryIds": [],
+      "futureBranchIds": [],
+      "alternateUnlockPath": false,
+      "alternateUnlockKinds": [
+        "none"
+      ],
+      "prerequisiteIntent": "Early cooking, fire-control, household, service, or settlement-routine evidence before future upgrades; no economy or contact effects.",
+      "capIntent": "low_cap",
+      "extraEffectIntent": "none",
+      "runtimeRisk": "low",
+      "implementationReadiness": "current_record",
+      "upgradeScaleIntent": "short_track",
+      "expectedUpgradeCountRange": {
+        "min": 30,
+        "max": 100
+      },
+      "upgradeCostCurveIntent": "stepped",
+      "prestigeRequirementIntent": "none",
+      "echoRequirementIntent": "low",
+      "capProgressionIntent": "bonus_only"
+    },
+    {
       "backstoryId": "backstory.local_hero",
       "futureStatus": "convert_to_achievement",
       "defaultUnlocked": false,

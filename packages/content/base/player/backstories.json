@@ -707,6 +707,62 @@
                                            ]
                     },
                     {
+                        "id":  "backstory.drovers_hand",
+                        "name":  "Drover's Hand",
+                        "summary":  "Pens, roads, feed, and stubborn animals taught you practical handling through labor rather than ownership.",
+                        "description":  "You learned animal work from the ground: opening gates, moving stock, hauling feed, watching tempers, and keeping tired animals pointed in the right direction. The labor taught patience, weather sense, and the practical truth that strength matters less than calm hands and steady feet.",
+                        "attributeAdjustments":  {
+                                                     "VIT":  1,
+                                                     "INT":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.survival.animal_handling",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.settlement.ranching",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.navigation",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.kitchen_hand",
+                        "name":  "Kitchen Hand",
+                        "summary":  "Stores, fires, preparation, cleaning, and service rhythms taught you how people are kept fed.",
+                        "description":  "You learned work in the heat and hurry behind meals: fetching stores, tending fires, scraping boards, stretching supplies, and keeping pace when hungry people were waiting. It was service before status, but it taught discipline, timing, and the quiet importance of food done well enough to keep a household moving.",
+                        "attributeAdjustments":  {
+                                                     "CON":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.crafting.cooking",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.fire_control",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
                         "id":  "backstory.local_hero",
                         "name":  "Local Champion",
                         "summary":  "Your home remembers a service already rendered and expects you to live up to it.",

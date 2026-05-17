@@ -100,8 +100,8 @@ test("backstories stay within starter skill cap guardrails", async () => {
     );
   }
 
-  assert.equal(records.length, 25);
-  assert.equal(totalStarterSkillEntries, 106);
+  assert.equal(records.length, 27);
+  assert.equal(totalStarterSkillEntries, 114);
   assert.equal(highestStarterRank, STARTER_SKILL_POLICY.defaultCap);
 });
 
