@@ -1,25 +1,26 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.48 - Backstory Coverage First-Batch Plan
+Source version/run: Version 0.5.49 - Tier 1 Backstory Content Batch
 Date: 2026-05-17
 Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed a clean worktree.
 
 ## Result
 
-Created a docs-only first-batch plan for later Tier 1 backstory content. The plan recommends a small grounded batch that uses current canonical skill ids and avoids runtime-owner gaps.
+Added the smaller approved first batch of five safe Tier 1 backstory records and aligned the non-runtime backstory policy metadata.
 
-Recommended later implementation batch:
+New live content records:
 
-- Militia Levy
-- Street Vendor
-- Net-Tender
-- Gatherer
-- Scribe's Apprentice
-- Drover's Hand
-- Kitchen Hand
+- `backstory.militia_levy`
+- `backstory.street_vendor`
+- `backstory.net_tender`
+- `backstory.gatherer`
+- `backstory.scribes_apprentice`
+
+No unlock resolver, hidden availability logic, starter-skill validation rule, runtime policy import, schema change, starting ability, or generated UI output was added.
 
 ## Files Inspected
 
+- `docs/design/backstory-coverage-first-batch-plan.md`
 - `docs/design/backstory-tiered-lane-design.md`
 - `docs/design/backstory-policy-metadata.json`
 - `docs/design/backstory-policy-metadata.md`
@@ -27,107 +28,117 @@ Recommended later implementation batch:
 - `packages/content/base/player/skills.json`
 - `packages/content/base/player/achievements.json`
 - `packages/content/base/player/abilities.json`
+- `packages/schemas/player/backstory.schema.json`
+- `tests/unit/backstory-policy-metadata.test.mjs`
+- `tests/unit/player-identity-content.test.mjs`
+- `tools/content-lint/index.mjs`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
 ## Files Changed
 
-- `docs/design/backstory-coverage-first-batch-plan.md`
+- `packages/content/base/player/backstories.json`
+- `docs/design/backstory-policy-metadata.json`
+- `tests/unit/player-identity-content.test.mjs`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Current Coverage Gap Summary
+## Exact New Backstory Records Added
 
-- No low-tier civic defense origin exists below Garrison Ward.
-- No low-status market/trade origin exists below Merchant Family.
-- No fishing or river/coastal labor origin exists.
-- Gatherer/flora collection is only covered indirectly through Farmhand and Vagabond.
-- No mundane records/admin origin exists separate from magic-bearing Scholar's Apprentice.
-- Animal-handling/ranch labor is bundled into Farmhand rather than represented as a distinct formative origin.
-- Cooking/service has no current backstory coverage.
+### `backstory.militia_levy` / Militia Levy
 
-## Candidate Evaluation Summary
+- Attribute adjustments: `CON +1`, `CHA -1`
+- Starting skills: `skill.combat.tactics.formation_discipline`, `skill.combat.defense.guard`, `skill.survival.endurance`, `skill.knowledge.civic_lore`
+- Starting abilities: none
 
-The plan evaluated Militia Levy, Street Vendor, Net-Tender, Gatherer, Scribe's Apprentice, Forge Yard/Forge Hand, Forge Apprentice, Dockhand/Riverhand, Barge Hand, Stablehand, Drover's Hand, Kitchen Hand, Tanner's Yard, Loomhouse, Hidden Blood, Unacknowledged Blood, and Red-Lantern Ward/Courtesan's House.
+### `backstory.street_vendor` / Street Vendor
 
-Safe first-batch candidates were chosen for current skill support, low runtime risk, and ability to stay formative rather than job/class-like. Later candidates were deferred when they overlapped too much with existing records, implied transport/economy/contact/runtime ownership, or fit better as Tier 2/Tier 3 branches.
+- Attribute adjustments: `CHA +1`, `STR -1`
+- Starting skills: `skill.settlement.trade`, `skill.leadership.negotiation`, `skill.knowledge.civic_lore`, `skill.knowledge.general_lore`
+- Starting abilities: none
 
-## Recommended First Batch
+### `backstory.net_tender` / Net-Tender
 
-- Militia Levy: civic defense and formation exposure; ability-free and weapon-neutral.
-- Street Vendor: low-status trade/market exposure without economy effects.
-- Net-Tender: fishing and water-safety origin without route, boat, cargo, or contact promises.
-- Gatherer: field collection and flora familiarity without healing, alchemy, or item-generation behavior.
-- Scribe's Apprentice: mundane records/admin origin separate from magic.
-- Drover's Hand: animal handling and ranch support without mounts or riding.
-- Kitchen Hand: cooking/service routines without inn ownership, contacts, or discounts.
+- Attribute adjustments: `VIT +1`, `INT -1`
+- Starting skills: `skill.resource.fishing`, `skill.survival.water_safety`, `skill.survival.swimming`, `skill.survival.endurance`
+- Starting abilities: none
 
-If Version 0.5.49 needs a smaller content pass, the plan recommends keeping the first five: Militia Levy, Street Vendor, Net-Tender, Gatherer, and Scribe's Apprentice.
+### `backstory.gatherer` / Gatherer
 
-## Deferred/Later Candidates
+- Attribute adjustments: `WIS +1`, `STR -1`
+- Starting skills: `skill.resource.gathering`, `skill.resource.foraging`, `skill.knowledge.flora_lore`, `skill.survival.endurance`
+- Starting abilities: none
 
-- Dockhand / Riverhand: later Tier 1 after Net-Tender proves the river/coastal lane.
-- Barge Hand: later, because cargo/route/transport implications need clearer ownership.
-- Forge Yard / Forge Hand: later, only with low-status wording that avoids skilled forge overreach.
-- Forge Apprentice: Tier 2, not Tier 1.
-- Stablehand: safe alternate, but Drover's Hand better avoids mount-adjacent framing.
-- Tanner's Yard and Loomhouse: current skills exist, but better for a later craft/textile pass.
-- Hidden Blood, Unacknowledged Blood, Red-Lantern Ward, and Courtesan's House: special/deferred until family, ancestry, status, patronage, stigma, and contact ownership exist.
+### `backstory.scribes_apprentice` / Scribe's Apprentice
 
-## Skill-ID Support Notes
+- Attribute adjustments: `INT +1`, `STR -1`
+- Starting skills: `skill.settlement.administration`, `skill.knowledge.general_lore`, `skill.knowledge.civic_lore`, `skill.knowledge.cultural_lore`
+- Starting abilities: none
 
-Current canonical skill ids support the recommended batch:
+All new starter skills use current canonical skill ids and rank 25.
 
-- `skill.combat.tactics.formation_discipline`
-- `skill.settlement.trade`
-- `skill.resource.fishing`
-- `skill.resource.gathering`
-- `skill.settlement.administration`
-- `skill.survival.animal_handling`
-- `skill.crafting.cooking`
+## Policy Metadata Updates
 
-Additional checked current ids include `skill.survival.water_safety`, `skill.survival.swimming`, `skill.settlement.logistics`, `skill.crafting.smelting`, `skill.crafting.blacksmithing`, `skill.settlement.ranching`, `skill.crafting.tanning`, and `skill.crafting.weaving`.
+- Added one `records[]` entry for each new backstory.
+- Kept `status: "non_runtime_policy_draft"`.
+- Kept `runtimeImportAllowed: false`.
+- Used `tier_1`, `branchRole: "root"`, `hasPrecursor: false`, `parentBackstoryIds: []`, `alternateUnlockPath: false`, `alternateUnlockKinds: ["none"]`, `capIntent: "low_cap"`, `upgradeScaleIntent: "short_track"`, `expectedUpgradeCountRange: { "min": 30, "max": 100 }`, `upgradeCostCurveIntent: "stepped"`, `echoRequirementIntent: "low"`, and `capProgressionIntent: "bonus_only"` for all five records.
+- Used `runtimeRisk: "moderate"` for Militia Levy and `runtimeRisk: "low"` for the other four records.
+- Used `implementationReadiness: "current_record"` because these are now live content records.
+- Removed the matching future draft placeholders from `futureBackstoryLaneDrafts[]`.
+- Repointed downstream future draft parents from removed draft ids to the new live backstory ids.
+- Updated existing policy `futureBranchIds` references where they previously pointed at the five removed draft placeholders.
+- Did not use `standalone`.
 
-## Content Implementation Guardrails
+## Future Draft / Backlog Handling
 
-- Add only approved Tier 1 records in Version 0.5.49.
-- Use existing canonical skill ids only.
-- Keep starting skills at or below the current starter cap and preserve starter-skill validation limits.
-- Do not add starting abilities.
-- Do not add unlock logic, resolver behavior, hidden availability, schema changes, account/save changes, runtime effects, or generated UI output.
-- Do not add market passives, contacts, mounts, riding/cavalry behavior, route authority, cargo behavior, healing/surgery behavior, heir legitimacy, magic access, or institution privileges.
-- Keep all names and descriptions framed as formative origin, household exposure, low-status labor, or early practical habits rather than current profession or class identity.
-- Align non-runtime policy metadata in the same later content pass if records are added.
+Removed future draft placeholders for:
 
-## Checks Run
+- `draft.backstory.militia_levy`
+- `draft.backstory.street_vendor`
+- `draft.backstory.net_tender`
+- `draft.backstory.gatherer`
+- `draft.backstory.scribes_apprentice`
+
+Kept later concepts deferred, including Drover's Hand, Kitchen Hand, Dockhand/Riverhand, Barge Hand, Forge Yard/Forge Hand, Forge Apprentice, Stablehand, Tanner's Yard, Loomhouse, Hidden Blood, Unacknowledged Blood, Red-Lantern Ward, and Courtesan's House.
+
+Added a concise backlog run note that the first five records are live and that Drover's Hand and Kitchen Hand remain planned for a later content batch.
+
+## Validation Checks Run
 
 - `git status --short`: before edits, clean worktree.
-- `git status --short`: after planning edits, expected docs-only changes.
+- `git status --short`: after edits, expected modified files only.
 - `npm.cmd run tool:content-lint`: passed, `content-lint: ok (53 files checked)`.
+- `node --test tests\unit\backstory-policy-metadata.test.mjs tests\unit\*backstory*.mjs tests\unit\*legacy*.mjs tests\unit\*creator*.mjs`: passed, 62 tests.
+- `node --test tests\unit\player-identity-content.test.mjs`: passed, 6 tests.
 - `git diff --check`: passed. Git printed LF-to-CRLF working-copy warnings only.
-
-Broad tests were not run because this was a docs-only planning pass and no tests/content/runtime files were changed.
 
 ## Behavior / Runtime Confirmation
 
 No runtime behavior changed.
-No content JSON changed.
-No live backstory records were added, removed, renamed, or modified.
-No metadata JSON changed.
-No character creator, starter skill, Legacy, save/account, combat, magic, economy, progression, launcher UI, generated UI output, or availability behavior changed.
+No existing backstory records were renamed, removed, or modified except for the explicitly listed addition of five new records.
+No starting abilities were added.
+No character creator code behavior changed.
+No starter skill validation rules changed.
+No Legacy, save/account, combat, magic, economy, progression, launcher UI, generated UI output, or availability filtering behavior changed.
+Policy metadata remains non-runtime and is not imported by runtime/source paths.
+
+The canonical content catalog now contains five additional live backstory records as requested; the current creator catalog imports live backstory content dynamically, but no creator filtering or runtime logic was changed.
 
 ## Risks / Follow-Up
 
-- Militia Levy is combat-adjacent and must stay ability-free, weapon-neutral, and non-elite when implemented.
-- Scribe's Apprentice must stay mundane and avoid arcane lore, mana, spellcasting, or institution privilege.
-- Street Vendor and Kitchen Hand must not imply passive economy effects, contacts, discounts, or ownership.
-- Drover's Hand must not imply mounts, riding, cavalry, or animal-ownership runtime.
-- Version 0.5.49 should remain a narrow content-only batch with focused validation.
+- Because the current creator catalog imports canonical backstory content dynamically, these records can appear wherever the existing live catalog is displayed.
+- Militia Levy remains combat-adjacent; keep it ability-free, weapon-neutral, and below Garrison Ward in any future policy work.
+- Street Vendor must not gain discounts, contacts, passive income, business ownership, or extra coin without a separate economy/runtime owner.
+- Net-Tender must not gain boat ownership, route authority, cargo behavior, contacts, or trade/shipping privilege without later travel/economy ownership.
+- Gatherer must not gain healing, alchemy, item-generation behavior, or herbalist rank without a separate system pass.
+- Scribe's Apprentice must stay mundane and separate from arcane lore, mana, spellcasting, and institution privilege.
+- Drover's Hand and Kitchen Hand remain the next safest candidates for a later narrow content batch.
 
 ## Next Recommended Version
 
-Version 0.5.49 - Tier 1 Backstory Content Batch
+Version 0.5.50 - Backstory Eligibility Resolver Plan
 
 ## Suggested Commit Message
 
-docs(content): plan first tier one backstory batch
+content(player): add first tier one backstories

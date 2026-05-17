@@ -191,9 +191,9 @@
       "hasPrecursor": false,
       "parentBackstoryIds": [],
       "futureBranchIds": [
-        "draft.backstory.militia_levy",
-        "draft.backstory.street_vendor",
-        "draft.backstory.scribes_apprentice"
+        "backstory.militia_levy",
+        "backstory.street_vendor",
+        "backstory.scribes_apprentice"
       ],
       "alternateUnlockPath": false,
       "alternateUnlockKinds": [
@@ -618,7 +618,7 @@
       "hasPrecursor": false,
       "parentBackstoryIds": [],
       "futureBranchIds": [
-        "draft.backstory.gatherer",
+        "backstory.gatherer",
         "draft.backstory.herbalists_helper"
       ],
       "alternateUnlockPath": false,
@@ -706,7 +706,7 @@
       "hasPrecursor": false,
       "parentBackstoryIds": [],
       "futureBranchIds": [
-        "draft.backstory.street_vendor"
+        "backstory.street_vendor"
       ],
       "alternateUnlockPath": false,
       "alternateUnlockKinds": [
@@ -977,6 +977,216 @@
       "capProgressionIntent": "bonus_only"
     },
     {
+      "backstoryId": "backstory.militia_levy",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.combat.tactics.formation_discipline",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "activity_tag",
+        "combat_accomplishment",
+        "faction_or_region_reputation"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "New Tier 1 civic defense origin. Keep future handling ability-free, weapon-neutral, and below Garrison Ward or specialized combat branches.",
+      "tier": "tier_1",
+      "laneId": "militia_garrison",
+      "branchRole": "root",
+      "hasPrecursor": false,
+      "parentBackstoryIds": [],
+      "futureBranchIds": [
+        "draft.backstory.sword_drill",
+        "draft.backstory.spear_drill",
+        "draft.backstory.shield_ward",
+        "draft.backstory.bow_levy",
+        "draft.backstory.mounted_scout"
+      ],
+      "alternateUnlockPath": false,
+      "alternateUnlockKinds": [
+        "none"
+      ],
+      "prerequisiteIntent": "Early civic-defense or local-service evidence before future upgrades; never Legacy points alone for specialized combat branches.",
+      "capIntent": "low_cap",
+      "extraEffectIntent": "none",
+      "runtimeRisk": "moderate",
+      "implementationReadiness": "current_record",
+      "upgradeScaleIntent": "short_track",
+      "expectedUpgradeCountRange": {
+        "min": 30,
+        "max": 100
+      },
+      "upgradeCostCurveIntent": "stepped",
+      "prestigeRequirementIntent": "low",
+      "echoRequirementIntent": "low",
+      "capProgressionIntent": "bonus_only"
+    },
+    {
+      "backstoryId": "backstory.street_vendor",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.settlement.trade",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "achievement",
+        "profession_history"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "New Tier 1 low-status market origin. Keep future handling free of discounts, contacts, passive income, extra coin, or business ownership.",
+      "tier": "tier_1",
+      "laneId": "trade_market",
+      "branchRole": "root",
+      "hasPrecursor": false,
+      "parentBackstoryIds": [],
+      "futureBranchIds": [
+        "draft.backstory.merchant_household"
+      ],
+      "alternateUnlockPath": false,
+      "alternateUnlockKinds": [
+        "none"
+      ],
+      "prerequisiteIntent": "Early trade, market, or settlement activity evidence before future upgrades; no passive economy behavior.",
+      "capIntent": "low_cap",
+      "extraEffectIntent": "none",
+      "runtimeRisk": "low",
+      "implementationReadiness": "current_record",
+      "upgradeScaleIntent": "short_track",
+      "expectedUpgradeCountRange": {
+        "min": 30,
+        "max": 100
+      },
+      "upgradeCostCurveIntent": "stepped",
+      "prestigeRequirementIntent": "none",
+      "echoRequirementIntent": "low",
+      "capProgressionIntent": "bonus_only"
+    },
+    {
+      "backstoryId": "backstory.net_tender",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.resource.fishing",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "activity_tag",
+        "profession_history"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "New Tier 1 water-labor origin. Keep future handling away from boat ownership, route authority, cargo behavior, contacts, and trade privilege.",
+      "tier": "tier_1",
+      "laneId": "river_coastal",
+      "branchRole": "root",
+      "hasPrecursor": false,
+      "parentBackstoryIds": [],
+      "futureBranchIds": [
+        "draft.backstory.ferrymans_household"
+      ],
+      "alternateUnlockPath": false,
+      "alternateUnlockKinds": [
+        "none"
+      ],
+      "prerequisiteIntent": "Early fishing, water-safety, weather, or low-status water-work evidence before future upgrades.",
+      "capIntent": "low_cap",
+      "extraEffectIntent": "none",
+      "runtimeRisk": "low",
+      "implementationReadiness": "current_record",
+      "upgradeScaleIntent": "short_track",
+      "expectedUpgradeCountRange": {
+        "min": 30,
+        "max": 100
+      },
+      "upgradeCostCurveIntent": "stepped",
+      "prestigeRequirementIntent": "none",
+      "echoRequirementIntent": "low",
+      "capProgressionIntent": "bonus_only"
+    },
+    {
+      "backstoryId": "backstory.gatherer",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.resource.gathering",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "activity_tag",
+        "noncombat_accomplishment"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "New Tier 1 field-collection origin. Keep future handling free of healing, alchemy, item generation, or herbalist rank.",
+      "tier": "tier_1",
+      "laneId": "medicine_herbal",
+      "branchRole": "root",
+      "hasPrecursor": false,
+      "parentBackstoryIds": [],
+      "futureBranchIds": [
+        "draft.backstory.herbalists_helper"
+      ],
+      "alternateUnlockPath": false,
+      "alternateUnlockKinds": [
+        "none"
+      ],
+      "prerequisiteIntent": "Early gathering, foraging, flora, or field survival evidence before future upgrades.",
+      "capIntent": "low_cap",
+      "extraEffectIntent": "none",
+      "runtimeRisk": "low",
+      "implementationReadiness": "current_record",
+      "upgradeScaleIntent": "short_track",
+      "expectedUpgradeCountRange": {
+        "min": 30,
+        "max": 100
+      },
+      "upgradeCostCurveIntent": "stepped",
+      "prestigeRequirementIntent": "none",
+      "echoRequirementIntent": "low",
+      "capProgressionIntent": "bonus_only"
+    },
+    {
+      "backstoryId": "backstory.scribes_apprentice",
+      "futureStatus": "legacy_locked",
+      "defaultUnlocked": false,
+      "recommendedPrimaryBackgroundSkillId": "skill.settlement.administration",
+      "baseBackgroundSkillBonus": 5,
+      "unlockEvidenceKinds": [
+        "skill_threshold",
+        "profession_history",
+        "noncombat_accomplishment"
+      ],
+      "toneAction": "keep",
+      "recommendedName": "",
+      "notes": "New Tier 1 mundane records origin. Keep separate from Scholar's Apprentice and do not add arcane lore, mana, spellcasting, or institution privilege.",
+      "tier": "tier_1",
+      "laneId": "scholar_institution",
+      "branchRole": "root",
+      "hasPrecursor": false,
+      "parentBackstoryIds": [],
+      "futureBranchIds": [
+        "draft.backstory.arcane_assistant",
+        "draft.backstory.archivist_line"
+      ],
+      "alternateUnlockPath": false,
+      "alternateUnlockKinds": [
+        "none"
+      ],
+      "prerequisiteIntent": "Early records, administration, civic lore, or mundane institution-service evidence before future upgrades.",
+      "capIntent": "low_cap",
+      "extraEffectIntent": "none",
+      "runtimeRisk": "low",
+      "implementationReadiness": "current_record",
+      "upgradeScaleIntent": "short_track",
+      "expectedUpgradeCountRange": {
+        "min": 30,
+        "max": 100
+      },
+      "upgradeCostCurveIntent": "stepped",
+      "prestigeRequirementIntent": "none",
+      "echoRequirementIntent": "low",
+      "capProgressionIntent": "bonus_only"
+    },
+    {
       "backstoryId": "backstory.local_hero",
       "futureStatus": "convert_to_achievement",
       "defaultUnlocked": false,
@@ -1021,46 +1231,16 @@
   ],
   "futureBackstoryLaneDrafts": [
     {
-      "draftId": "draft.backstory.militia_levy",
-      "displayName": "Militia Levy",
-      "laneId": "militia_garrison",
-      "tier": "tier_1",
-      "branchRole": "root",
-      "hasPrecursor": false,
-      "parentDraftIds": [],
-      "parentBackstoryIds": [],
-      "alternateUnlockPath": false,
-      "alternateUnlockKinds": [
-        "none"
-      ],
-      "primaryBackgroundSkillId": "skill.combat.tactics.formation_discipline",
-      "prerequisiteIntent": "Basic civic defense evidence, local service, or early account combat exposure before any future unlock.",
-      "capIntent": "low_cap",
-      "extraEffectIntent": "institution_familiarity_later",
-      "runtimeRisk": "moderate",
-      "implementationReadiness": "safe_near_term",
-      "upgradeScaleIntent": "short_track",
-      "expectedUpgradeCountRange": {
-        "min": 30,
-        "max": 100
-      },
-      "upgradeCostCurveIntent": "stepped",
-      "prestigeRequirementIntent": "low",
-      "echoRequirementIntent": "low",
-      "capProgressionIntent": "bonus_only",
-      "notes": "Planning concept only; should not grant combat abilities or live availability without a later resolver."
-    },
-    {
       "draftId": "draft.backstory.sword_drill",
       "displayName": "Sword Drill",
       "laneId": "combat_sword",
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.militia_levy"
+      "parentDraftIds": [],
+      "parentBackstoryIds": [
+        "backstory.militia_levy"
       ],
-      "parentBackstoryIds": [],
       "alternateUnlockPath": false,
       "alternateUnlockKinds": [
         "none"
@@ -1089,10 +1269,10 @@
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.militia_levy"
+      "parentDraftIds": [],
+      "parentBackstoryIds": [
+        "backstory.militia_levy"
       ],
-      "parentBackstoryIds": [],
       "alternateUnlockPath": false,
       "alternateUnlockKinds": [
         "none"
@@ -1121,10 +1301,10 @@
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.militia_levy"
+      "parentDraftIds": [],
+      "parentBackstoryIds": [
+        "backstory.militia_levy"
       ],
-      "parentBackstoryIds": [],
       "alternateUnlockPath": false,
       "alternateUnlockKinds": [
         "none"
@@ -1153,10 +1333,10 @@
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.militia_levy"
+      "parentDraftIds": [],
+      "parentBackstoryIds": [
+        "backstory.militia_levy"
       ],
-      "parentBackstoryIds": [],
       "alternateUnlockPath": false,
       "alternateUnlockKinds": [
         "none"
@@ -1185,12 +1365,11 @@
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.militia_levy"
-      ],
+      "parentDraftIds": [],
       "parentBackstoryIds": [
         "backstory.vagabond",
-        "backstory.scouts_ward"
+        "backstory.scouts_ward",
+        "backstory.militia_levy"
       ],
       "alternateUnlockPath": true,
       "alternateUnlockKinds": [
@@ -1327,50 +1506,16 @@
       "notes": "Primary skill is null because mounts, mounted combat, and dragoon behavior have no current runtime owner."
     },
     {
-      "draftId": "draft.backstory.street_vendor",
-      "displayName": "Street Vendor",
-      "laneId": "trade_market",
-      "tier": "tier_1",
-      "branchRole": "root",
-      "hasPrecursor": false,
-      "parentDraftIds": [],
-      "parentBackstoryIds": [
-        "backstory.local",
-        "backstory.gutter_rat"
-      ],
-      "alternateUnlockPath": false,
-      "alternateUnlockKinds": [
-        "none"
-      ],
-      "primaryBackgroundSkillId": "skill.settlement.trade",
-      "prerequisiteIntent": "Early market, settlement, or survival-trade evidence before any future trade branch grows.",
-      "capIntent": "low_cap",
-      "extraEffectIntent": "market_visibility_later",
-      "runtimeRisk": "low",
-      "implementationReadiness": "safe_near_term",
-      "upgradeScaleIntent": "short_track",
-      "expectedUpgradeCountRange": {
-        "min": 30,
-        "max": 100
-      },
-      "upgradeCostCurveIntent": "stepped",
-      "prestigeRequirementIntent": "low",
-      "echoRequirementIntent": "low",
-      "capProgressionIntent": "visibility_unlock",
-      "notes": "Planning concept only; market visibility must wait for economy interaction surfaces."
-    },
-    {
       "draftId": "draft.backstory.merchant_household",
       "displayName": "Merchant Household",
       "laneId": "trade",
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.street_vendor"
-      ],
+      "parentDraftIds": [],
       "parentBackstoryIds": [
-        "backstory.merchants_child"
+        "backstory.merchants_child",
+        "backstory.street_vendor"
       ],
       "alternateUnlockPath": true,
       "alternateUnlockKinds": [
@@ -1504,46 +1649,16 @@
       "notes": "Planning concept only; higher craft caps need family/shop lineage ownership."
     },
     {
-      "draftId": "draft.backstory.net_tender",
-      "displayName": "Net-Tender",
-      "laneId": "river_coastal",
-      "tier": "tier_1",
-      "branchRole": "root",
-      "hasPrecursor": false,
-      "parentDraftIds": [],
-      "parentBackstoryIds": [],
-      "alternateUnlockPath": false,
-      "alternateUnlockKinds": [
-        "none"
-      ],
-      "primaryBackgroundSkillId": "skill.resource.fishing",
-      "prerequisiteIntent": "Basic fishing, water-safety, weather, or dock-labor evidence.",
-      "capIntent": "low_cap",
-      "extraEffectIntent": "narrow_contextual",
-      "runtimeRisk": "low",
-      "implementationReadiness": "safe_near_term",
-      "upgradeScaleIntent": "short_track",
-      "expectedUpgradeCountRange": {
-        "min": 30,
-        "max": 100
-      },
-      "upgradeCostCurveIntent": "stepped",
-      "prestigeRequirementIntent": "low",
-      "echoRequirementIntent": "low",
-      "capProgressionIntent": "bonus_only",
-      "notes": "Planning concept only; should not grant route authority or cargo effects."
-    },
-    {
       "draftId": "draft.backstory.ferrymans_household",
       "displayName": "Ferryman's Household",
       "laneId": "river_coastal",
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.net_tender"
+      "parentDraftIds": [],
+      "parentBackstoryIds": [
+        "backstory.net_tender"
       ],
-      "parentBackstoryIds": [],
       "alternateUnlockPath": true,
       "alternateUnlockKinds": [
         "skill_threshold",
@@ -1603,49 +1718,16 @@
       "notes": "Planning concept only; route/cargo/hazard effects remain deferred."
     },
     {
-      "draftId": "draft.backstory.gatherer",
-      "displayName": "Gatherer",
-      "laneId": "medicine_herbal",
-      "tier": "tier_1",
-      "branchRole": "root",
-      "hasPrecursor": false,
-      "parentDraftIds": [],
-      "parentBackstoryIds": [
-        "backstory.farmhand"
-      ],
-      "alternateUnlockPath": false,
-      "alternateUnlockKinds": [
-        "none"
-      ],
-      "primaryBackgroundSkillId": "skill.resource.gathering",
-      "prerequisiteIntent": "Basic gathering, foraging, flora, or rural-labor evidence.",
-      "capIntent": "low_cap",
-      "extraEffectIntent": "narrow_contextual",
-      "runtimeRisk": "low",
-      "implementationReadiness": "safe_near_term",
-      "upgradeScaleIntent": "short_track",
-      "expectedUpgradeCountRange": {
-        "min": 30,
-        "max": 100
-      },
-      "upgradeCostCurveIntent": "stepped",
-      "prestigeRequirementIntent": "none",
-      "echoRequirementIntent": "low",
-      "capProgressionIntent": "bonus_only",
-      "notes": "Planning concept only; should not imply healing behavior."
-    },
-    {
       "draftId": "draft.backstory.herbalists_helper",
       "displayName": "Herbalist's Helper",
       "laneId": "medicine_herbal",
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.gatherer"
-      ],
+      "parentDraftIds": [],
       "parentBackstoryIds": [
-        "backstory.farmhand"
+        "backstory.farmhand",
+        "backstory.gatherer"
       ],
       "alternateUnlockPath": true,
       "alternateUnlockKinds": [
@@ -1706,46 +1788,16 @@
       "notes": "Planning concept only; injury, recovery, and medical service systems must own future effects."
     },
     {
-      "draftId": "draft.backstory.scribes_apprentice",
-      "displayName": "Scribe's Apprentice",
-      "laneId": "scholar_institution",
-      "tier": "tier_1",
-      "branchRole": "root",
-      "hasPrecursor": false,
-      "parentDraftIds": [],
-      "parentBackstoryIds": [],
-      "alternateUnlockPath": false,
-      "alternateUnlockKinds": [
-        "none"
-      ],
-      "primaryBackgroundSkillId": "skill.knowledge.general_lore",
-      "prerequisiteIntent": "Basic records, copying, language, ledger, or civic knowledge evidence.",
-      "capIntent": "low_cap",
-      "extraEffectIntent": "institution_familiarity_later",
-      "runtimeRisk": "low",
-      "implementationReadiness": "safe_near_term",
-      "upgradeScaleIntent": "short_track",
-      "expectedUpgradeCountRange": {
-        "min": 30,
-        "max": 100
-      },
-      "upgradeCostCurveIntent": "stepped",
-      "prestigeRequirementIntent": "none",
-      "echoRequirementIntent": "low",
-      "capProgressionIntent": "visibility_unlock",
-      "notes": "Planning concept only; should stay mundane unless a later branch owns arcane work."
-    },
-    {
       "draftId": "draft.backstory.arcane_assistant",
       "displayName": "Arcane Assistant",
       "laneId": "scholar_institution",
       "tier": "tier_2",
       "branchRole": "branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.scribes_apprentice"
+      "parentDraftIds": [],
+      "parentBackstoryIds": [
+        "backstory.scribes_apprentice"
       ],
-      "parentBackstoryIds": [],
       "alternateUnlockPath": true,
       "alternateUnlockKinds": [
         "institution_acceptance",
@@ -1777,11 +1829,10 @@
       "tier": "tier_3",
       "branchRole": "advanced_branch",
       "hasPrecursor": true,
-      "parentDraftIds": [
-        "draft.backstory.scribes_apprentice"
-      ],
+      "parentDraftIds": [],
       "parentBackstoryIds": [
-        "backstory.scholars_apprentice"
+        "backstory.scholars_apprentice",
+        "backstory.scribes_apprentice"
       ],
       "alternateUnlockPath": true,
       "alternateUnlockKinds": [

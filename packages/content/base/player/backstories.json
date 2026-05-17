@@ -567,6 +567,146 @@
                                            ]
                     },
                     {
+                        "id":  "backstory.militia_levy",
+                        "name":  "Militia Levy",
+                        "summary":  "Local defense drills and civic alarm duties taught you discipline without making you a soldier.",
+                        "description":  "You were called into the ordinary obligations of local defense: watch rotations, alarm drills, hurried formations, and the hard lesson that frightened people survive better when they stand in order. The training was basic, uneven, and practical, but it taught you how to hold a place in a line before anyone mistook you for a veteran.",
+                        "attributeAdjustments":  {
+                                                     "CON":  1,
+                                                     "CHA":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.combat.tactics.formation_discipline",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.combat.defense.guard",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.street_vendor",
+                        "name":  "Street Vendor",
+                        "summary":  "Small sales, crowded lanes, and hard bargaining shaped your practical market habits.",
+                        "description":  "You learned trade from the low end of the market: carrying goods, minding a stall, counting change, reading passing faces, and bargaining hard enough to matter without offending the wrong customer. It taught you that value is never only in the object, and that crowded streets punish careless attention.",
+                        "attributeAdjustments":  {
+                                                     "CHA":  1,
+                                                     "STR":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.settlement.trade",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.leadership.negotiation",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.net_tender",
+                        "name":  "Net-Tender",
+                        "summary":  "Nets, wet rope, weather, and fish handling taught you the routines of water work.",
+                        "description":  "You worked where cold water, tangled cord, and patient hands mattered more than pride. Nets had to be mended, catches sorted, weather watched, and bodies kept safe near uncertain currents. The work was humble, repetitive, and unforgiving enough to teach respect for water.",
+                        "attributeAdjustments":  {
+                                                     "VIT":  1,
+                                                     "INT":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.resource.fishing",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.water_safety",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.swimming",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.gatherer",
+                        "name":  "Gatherer",
+                        "summary":  "Field collection and useful plants shaped your practical survival habits.",
+                        "description":  "You learned to move slowly through useful places: hedgerows, field edges, damp hollows, and old paths where the right hands could find food, fiber, fuel, or trouble. Gathering taught patience, memory, and the difference between taking what helps and trusting what harms.",
+                        "attributeAdjustments":  {
+                                                     "WIS":  1,
+                                                     "STR":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.resource.gathering",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.resource.foraging",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.flora_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.survival.endurance",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
+                        "id":  "backstory.scribes_apprentice",
+                        "name":  "Scribe's Apprentice",
+                        "summary":  "Copying, ledgers, and patient correction taught you the habits of records work.",
+                        "description":  "You learned by copying names, totals, messages, petitions, and corrections until small mistakes became easy to spot. The work was quiet and exacting rather than glorious, but it taught you how settlements remember debts, duties, promises, and the people who try to avoid them.",
+                        "attributeAdjustments":  {
+                                                     "INT":  1,
+                                                     "STR":  -1
+                                                 },
+                        "startingSkills":  [
+                                               {
+                                                   "skillId":  "skill.settlement.administration",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.general_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.civic_lore",
+                                                   "level":  25
+                                               },
+                                               {
+                                                   "skillId":  "skill.knowledge.cultural_lore",
+                                                   "level":  25
+                                               }
+                                           ]
+                    },
+                    {
                         "id":  "backstory.local_hero",
                         "name":  "Local Champion",
                         "summary":  "Your home remembers a service already rendered and expects you to live up to it.",
