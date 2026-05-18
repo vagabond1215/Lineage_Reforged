@@ -74,6 +74,40 @@ export {
   validateLegacyUnlockDefinitions
 } from "./legacy-unlocks.js";
 export {
+  BACKSTORY_BLOCKED_EVIDENCE_KINDS,
+  BACKSTORY_ELIGIBILITY_DEFAULT_BACKSTORY_IDS,
+  BACKSTORY_ELIGIBILITY_POLICY,
+  BACKSTORY_ELIGIBILITY_POLICY_STATUSES,
+  BACKSTORY_ELIGIBILITY_SCOPES,
+  BACKSTORY_ELIGIBILITY_SOURCE_TYPES,
+  BACKSTORY_ELIGIBILITY_TIERS,
+  validateBackstoryEligibilityPolicy,
+  type BackstoryBlockedEvidenceKind,
+  type BackstoryEligibilityAvailabilityStatus,
+  type BackstoryEligibilityLegacyPurchaseRequirement,
+  type BackstoryEligibilityMissingBehavior,
+  type BackstoryEligibilityPolicy,
+  type BackstoryEligibilityPolicyValidationIssue,
+  type BackstoryEligibilityRequirement,
+  type BackstoryEligibilityRequirementKind,
+  type BackstoryEligibilityRule,
+  type BackstoryEligibilityScope,
+  type BackstoryEligibilityScopePolicy,
+  type BackstoryEligibilitySourceType,
+  type BackstoryEligibilityThresholdRequirement,
+  type BackstoryEligibilityTier,
+  type BackstorySelectedBackstoryEffectPolicy
+} from "./backstory-eligibility-policy.js";
+export {
+  resolveBackstoryEligibility,
+  type BackstoryEligibilityEvidenceInput,
+  type BackstoryEligibilityEvidenceRecord,
+  type BackstoryEligibilityRecordResult,
+  type BackstoryEligibilityResolution,
+  type BackstoryEligibilityState,
+  type BackstoryEligibilityThresholdRecord
+} from "./backstory-eligibility.js";
+export {
   createCombatModeState,
   createDefaultGameState,
   createDefaultRunDifficultyState,
