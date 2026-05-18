@@ -13,6 +13,7 @@ import {
   isKnownBackstoryId,
   isKnownLineageId,
   isKnownStartingBundleId,
+  isSelectableBackstoryId,
   resolveCanonicalAgeBandId,
   resolveCanonicalFocusId,
   resolveCanonicalNatureId,
@@ -348,6 +349,13 @@ export function validateCharacterCreationForm(
 
   if (!isKnownBackstoryId(form.backstoryId)) {
     errors.backstoryId = "Choose a valid backstory.";
+  } else if (
+    !isSelectableBackstoryId(form.backstoryId, {
+      selectedBackstoryId: form.backstoryId,
+      sourceRunIds: form.sourceRunId.trim().length > 0 ? [form.sourceRunId] : []
+    })
+  ) {
+    errors.backstoryId = "Choose an available backstory.";
   }
 
   if (!isKnownStartingBundleId(form.startingBundleId)) {

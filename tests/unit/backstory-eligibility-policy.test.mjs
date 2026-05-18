@@ -169,21 +169,31 @@ test("resolver and runtime policy modules do not import design-only metadata", a
     assert.doesNotMatch(source, /legacy-upgrade-catalog-draft/, sourceFile);
     assert.doesNotMatch(source, /futureBackstoryLaneDrafts/, sourceFile);
     assert.doesNotMatch(source, /docs\/design|docs\\design/, sourceFile);
-    assert.doesNotMatch(source, /alias|retired|converted|migration|old-save|old-account|historical id/i, sourceFile);
+    assert.doesNotMatch(source, /legacyIdAliases|idAliases|retired|converted|migrationFallback|old-save|old-account|historical id/i, sourceFile);
   }
 });
 
-test("creator runtime paths are not wired to the resolver yet", async () => {
+test("creator runtime paths use approved resolver boundary without design-only metadata", async () => {
   const creatorSourceFiles = [
     "apps/rpg-ui/src/game-shell/characterCreationCatalog.ts",
     "apps/rpg-ui/src/game-shell/characterCreationForm.ts",
-    "apps/rpg-ui/src/game-shell/newGameSnapshot.ts"
+    "apps/rpg-ui/src/game-shell/newGameSnapshot.ts",
+    "apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx"
   ];
+  const catalogSource = await readFile(
+    "apps/rpg-ui/src/game-shell/characterCreationCatalog.ts",
+    "utf8"
+  );
+
+  assert.match(catalogSource, /resolveBackstoryEligibility/);
 
   for (const sourceFile of creatorSourceFiles) {
     const source = await readFile(sourceFile, "utf8");
 
-    assert.doesNotMatch(source, /backstory-eligibility/, sourceFile);
-    assert.doesNotMatch(source, /resolveBackstoryEligibility/, sourceFile);
+    assert.doesNotMatch(source, /backstory-policy-metadata/, sourceFile);
+    assert.doesNotMatch(source, /legacy-upgrade-catalog-draft/, sourceFile);
+    assert.doesNotMatch(source, /futureBackstoryLaneDrafts/, sourceFile);
+    assert.doesNotMatch(source, /docs\/design|docs\\design/, sourceFile);
+    assert.doesNotMatch(source, /legacyIdAliases|idAliases|retired|converted|migrationFallback|old-save|old-account|historical id/i, sourceFile);
   }
 });

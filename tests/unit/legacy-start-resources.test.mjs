@@ -64,7 +64,7 @@ function purchaseRanks(profile, unlockId, ranks, startMinute = 0) {
   return nextProfile;
 }
 
-function createCompleteCharacterForm(backstoryId = "backstory.local_hero") {
+function createCompleteCharacterForm(backstoryId = "backstory.local") {
   const identity = getLineageIdentityCatalog("lineage.human");
   assert.ok(identity);
   const startingBundleId = "starting_bundle.traveler";
@@ -113,7 +113,7 @@ function snapshotSkillSignature(snapshot) {
 test("createNewGameSnapshot preserves current backstory starter skills exactly", () => {
   const profile = createDefaultAccountProfileState();
 
-  for (const backstory of getBackstoryOptionsForSelection("lineage.human")) {
+  for (const backstory of getBackstoryOptionsForSelection("lineage.human").filter((option) => option.selectable)) {
     const form = createCompleteCharacterForm(backstory.id);
     const snapshot = createNewGameSnapshot(form, profile.accountId, {
       accountProfile: profile
@@ -128,7 +128,7 @@ test("createNewGameSnapshot preserves current backstory starter skills exactly",
 });
 
 test("createNewGameSnapshot initializes fresh stat growth instead of inheriting demo data", () => {
-  const form = createCompleteCharacterForm("backstory.local_hero");
+  const form = createCompleteCharacterForm("backstory.local");
   const profile = createDefaultAccountProfileState();
   const snapshot = createNewGameSnapshot(form, profile.accountId, {
     accountProfile: profile
@@ -149,7 +149,7 @@ test("createNewGameSnapshot initializes fresh stat growth instead of inheriting 
 });
 
 test("createNewGameSnapshot initializes fresh world, civilization, timing, and optional player state", () => {
-  const form = createCompleteCharacterForm("backstory.local_hero");
+  const form = createCompleteCharacterForm("backstory.local");
   const profile = createDefaultAccountProfileState();
   const expectedClock = createInitialClock();
   const snapshot = createNewGameSnapshot(form, profile.accountId, {

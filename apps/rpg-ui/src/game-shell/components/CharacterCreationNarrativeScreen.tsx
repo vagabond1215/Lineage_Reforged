@@ -616,7 +616,18 @@ export function CharacterCreationNarrativeScreen({
     settlementId: form.startingSettlementId,
     backstoryId: form.backstoryId
   });
-  const backstories = getBackstoryOptionsForSelection(form.lineageId, selectedWorld);
+  const backstoryAvailabilityOptions = {
+    selectedBackstoryId: form.backstoryId,
+    ...(accountProfile?.accountId ? { accountId: accountProfile.accountId } : {}),
+    ...(form.sourceRunId.trim().length > 0
+      ? { sourceRunIds: [form.sourceRunId.trim()] }
+      : {})
+  };
+  const backstories = getBackstoryOptionsForSelection(
+    form.lineageId,
+    selectedWorld,
+    backstoryAvailabilityOptions
+  );
   const validations = useMemo(
     () =>
       Object.fromEntries(
@@ -2294,48 +2305,76 @@ export function CharacterCreationNarrativeScreen({
   } else if (currentStepId === 'backstory') {
     mainContent = (
       <div className="space-y-3">
-        {backstories.map((option) => (
-          <div
-            key={option.id}
-            className={getSelectableCardClass(
-              form.backstoryId === option.id,
-              'backstory'
-            )}
-            style={form.backstoryId === option.id ? activeOutlineStyle : undefined}
-          >
-            <button
-              type="button"
-              onClick={() =>
-                choose('backstory', form.backstoryId, option.id, {
-                  backstoryId: option.id
-                })
-              }
-              className="w-full px-5 py-4 text-left"
+        {backstories.map((option) => {
+          const selected = form.backstoryId === option.id;
+          const lockedCopy = option.lockedReason ?? option.unlockHint;
+          const availabilityMutedClass = option.selectable
+            ? ''
+            : 'opacity-80';
+
+          return (
+            <div
+              key={option.id}
+              className={`${getSelectableCardClass(
+                selected,
+                'backstory'
+              )} ${availabilityMutedClass}`}
+              style={selected ? activeOutlineStyle : undefined}
             >
-              <div className="text-lg font-semibold text-[color:var(--color-text-strong)]">
-                {option.label}
-              </div>
-              <div className="mt-2 text-sm leading-7 text-[color:var(--color-text-soft)]">
-                {option.summaryText}
-              </div>
-            </button>
-            {form.backstoryId === option.id && (
-              <div className="border-t border-[color:var(--color-border)] px-5 py-4">
-                <div className="text-sm leading-7 text-[color:var(--color-text-soft)]">
-                  {option.detailText}
-                </div>
-                <div className="mt-4 space-y-3">
-                  {option.startingSkillLabels.length > 0 && (
-                    <div>{renderTags('Starting Lore', option.startingSkillLabels)}</div>
+              <button
+                type="button"
+                disabled={!option.selectable}
+                aria-disabled={!option.selectable}
+                onClick={() => {
+                  if (!option.selectable) {
+                    return;
+                  }
+
+                  choose('backstory', form.backstoryId, option.id, {
+                    backstoryId: option.id
+                  });
+                }}
+                className={`w-full px-5 py-4 text-left ${
+                  option.selectable ? '' : 'cursor-not-allowed'
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 text-lg font-semibold text-[color:var(--color-text-strong)]">
+                    {option.label}
+                  </div>
+                  {option.availabilityBadge && (
+                    <div className="shrink-0 rounded-full border border-[color:var(--color-border)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                      {option.availabilityBadge}
+                    </div>
                   )}
-                  {option.startingAbilityLabels.length > 0 && (
-                    <div>{renderTags('Starting Ability', option.startingAbilityLabels)}</div>
-                  )}
                 </div>
-              </div>
-            )}
-          </div>
-        ))}
+                <div className="mt-2 text-sm leading-7 text-[color:var(--color-text-soft)]">
+                  {option.summaryText}
+                </div>
+                {!option.selectable && lockedCopy && (
+                  <div className="mt-3 text-xs font-semibold leading-5 text-[color:var(--color-muted-strong)]">
+                    {lockedCopy}
+                  </div>
+                )}
+              </button>
+              {selected && option.selectable && (
+                <div className="border-t border-[color:var(--color-border)] px-5 py-4">
+                  <div className="text-sm leading-7 text-[color:var(--color-text-soft)]">
+                    {option.detailText}
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    {option.startingSkillLabels.length > 0 && (
+                      <div>{renderTags('Starting Lore', option.startingSkillLabels)}</div>
+                    )}
+                    {option.startingAbilityLabels.length > 0 && (
+                      <div>{renderTags('Starting Ability', option.startingAbilityLabels)}</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   } else if (currentStepId === 'starting_bundle') {

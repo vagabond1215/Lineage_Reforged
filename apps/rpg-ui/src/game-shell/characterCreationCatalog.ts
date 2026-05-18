@@ -14,6 +14,13 @@
   type PlayerSkillState,
   type PlayerSexId
 } from "../../../../packages/shared/types/src/index.js";
+import {
+  resolveBackstoryEligibility,
+  type BackstoryEligibilityAvailabilityStatus,
+  type BackstoryEligibilityEvidenceInput,
+  type BackstoryEligibilityRecordResult,
+  type BackstoryEligibilityState
+} from "../../../../packages/engines/game-engine/src/index.js";
 import abilityCatalogData from "../../../../packages/content/base/player/abilities.json" with { type: "json" };
 import backstoryCatalogData from "../../../../packages/content/base/player/backstories.json" with { type: "json" };
 import itemCatalogData from "../../../../packages/content/base/items/items.json" with { type: "json" };
@@ -166,6 +173,33 @@ export interface StarterBackstoryTemplate extends CharacterCreationOption {
   startingAbilityIds: string[];
   startingSkillLabels: string[];
   startingAbilityLabels: string[];
+}
+
+export type BackstoryCreatorSortGroup =
+  | "selectable_default"
+  | "selectable"
+  | "locked"
+  | "special";
+
+export interface BackstoryCreatorAvailabilityOptions {
+  accountId?: string | null;
+  selectedBackstoryId?: string | null;
+  sourceRunIds?: readonly string[] | null;
+}
+
+export interface StarterBackstoryPresentation extends StarterBackstoryTemplate {
+  availabilityStatus: BackstoryEligibilityAvailabilityStatus;
+  availabilityState: BackstoryEligibilityState;
+  selectable: boolean;
+  visible: boolean;
+  availabilityBadge: string | null;
+  lockedReason: string | null;
+  unlockHint: string | null;
+  isDefault: boolean;
+  isSpecial: boolean;
+  isDeferred: boolean;
+  sortGroup: BackstoryCreatorSortGroup;
+  resolverReasons: string[];
 }
 
 export interface StartingBundleChoiceGroup {
@@ -2465,6 +2499,8 @@ const BACKSTORY_TEMPLATES: Record<string, StarterBackstoryTemplate> = Object.fro
   backstoryCatalogData.records.map((record) => [record.id, buildBackstoryTemplateFromContent(record)])
 );
 
+const LIVE_BACKSTORY_IDS = backstoryCatalogData.records.map((record) => record.id);
+
 const STARTING_BUNDLE_TEMPLATES: Record<string, StartingBundleTemplate> = Object.fromEntries(
   startingBundleCatalogData.records.map((record) => [record.id, buildStartingBundleTemplateFromContent(record)])
 );
@@ -2553,6 +2589,166 @@ export function isKnownStartingBundleId(startingBundleId: string): boolean {
 
 export function isKnownBackstoryId(backstoryId: string): boolean {
   return backstoryId in BACKSTORY_TEMPLATES;
+}
+
+function normalizeOptionalId(value: string | null | undefined): string | null {
+  const normalized = value?.trim() ?? "";
+  return normalized.length > 0 ? normalized : null;
+}
+
+function buildBackstoryEligibilityEvidenceInput(
+  options: BackstoryCreatorAvailabilityOptions
+): BackstoryEligibilityEvidenceInput {
+  const evidence: BackstoryEligibilityEvidenceInput = {};
+  const selectedBackstoryId = normalizeOptionalId(options.selectedBackstoryId);
+  const accountId = normalizeOptionalId(options.accountId);
+  const sourceRunIds = (options.sourceRunIds ?? [])
+    .map((sourceRunId) => sourceRunId.trim())
+    .filter((sourceRunId) => sourceRunId.length > 0);
+
+  if (selectedBackstoryId) {
+    evidence.selectedBackstoryId = selectedBackstoryId;
+  }
+
+  if (accountId) {
+    evidence.accountId = accountId;
+  }
+
+  if (sourceRunIds.length > 0) {
+    evidence.sourceRunIds = sourceRunIds;
+  }
+
+  return evidence;
+}
+
+function resolveBackstoryCreatorEligibility(options: BackstoryCreatorAvailabilityOptions = {}) {
+  return resolveBackstoryEligibility({
+    liveBackstoryIds: LIVE_BACKSTORY_IDS,
+    evidence: buildBackstoryEligibilityEvidenceInput(options)
+  });
+}
+
+function safeUnavailableCopy(record: BackstoryEligibilityRecordResult | null): string | null {
+  if (!record || record.selectable) {
+    return null;
+  }
+
+  if (record.state === "special") {
+    return "Not available in the current creator.";
+  }
+
+  if (record.state === "deferred") {
+    return "Requires a future system that is not active yet.";
+  }
+
+  if (record.availabilityStatus === "early_legacy") {
+    return "Requires matching previous-play evidence that is not currently available.";
+  }
+
+  return "Requires matching evidence that is not currently available.";
+}
+
+function safeUnlockHint(record: BackstoryEligibilityRecordResult | null): string | null {
+  if (!record || record.selectable) {
+    return null;
+  }
+
+  if (record.state === "special") {
+    return "Special origins need narrative availability before selection.";
+  }
+
+  if (record.state === "deferred") {
+    return "This origin is deferred until its owner system exists.";
+  }
+
+  return "Select an available origin or return after the required evidence exists.";
+}
+
+function availabilityBadgeFor(
+  record: BackstoryEligibilityRecordResult | null,
+  isDefault: boolean
+): string | null {
+  if (!record) {
+    return "Locked";
+  }
+
+  if (record.state === "special") {
+    return "Special";
+  }
+
+  if (record.state === "locked") {
+    return "Locked";
+  }
+
+  if (isDefault) {
+    return "Default";
+  }
+
+  if (record.availabilityStatus === "always_available") {
+    return "Available";
+  }
+
+  if (record.availabilityStatus === "early_legacy") {
+    return "Early Legacy";
+  }
+
+  return null;
+}
+
+function sortGroupFor(
+  record: BackstoryEligibilityRecordResult | null,
+  isDefault: boolean
+): BackstoryCreatorSortGroup {
+  if (!record) {
+    return "locked";
+  }
+
+  if (record.selectable && isDefault) {
+    return "selectable_default";
+  }
+
+  if (record.selectable) {
+    return "selectable";
+  }
+
+  if (record.state === "special") {
+    return "special";
+  }
+
+  return "locked";
+}
+
+const BACKSTORY_SORT_GROUP_RANK: Record<BackstoryCreatorSortGroup, number> = {
+  selectable_default: 0,
+  selectable: 1,
+  locked: 2,
+  special: 3
+};
+
+function buildBackstoryPresentation(
+  template: StarterBackstoryTemplate,
+  record: BackstoryEligibilityRecordResult | null,
+  isDefault: boolean
+): StarterBackstoryPresentation {
+  const availabilityState = record?.state ?? "locked";
+  const availabilityStatus = record?.availabilityStatus ?? "locked";
+  const sortGroup = sortGroupFor(record, isDefault);
+
+  return {
+    ...template,
+    availabilityStatus,
+    availabilityState,
+    selectable: record?.selectable ?? false,
+    visible: record?.visible ?? true,
+    availabilityBadge: availabilityBadgeFor(record, isDefault),
+    lockedReason: safeUnavailableCopy(record),
+    unlockHint: safeUnlockHint(record),
+    isDefault,
+    isSpecial: availabilityState === "special",
+    isDeferred: availabilityState === "deferred",
+    sortGroup,
+    resolverReasons: [...(record?.reasons ?? ["Backstory availability policy is missing."])]
+  };
 }
 
 export function getStartingBundleTemplate(startingBundleId: string): StartingBundleTemplate {
@@ -2932,7 +3128,25 @@ export function getIdentityOptionLabel(
 }
 
 export function isCompatibleBackstorySelection(lineageId: string, backstoryId: string): boolean {
-  return isKnownLineageId(lineageId) && isKnownBackstoryId(backstoryId);
+  return isKnownLineageId(lineageId) && isSelectableBackstoryId(backstoryId);
+}
+
+export function isSelectableBackstoryId(
+  backstoryId: string,
+  options: BackstoryCreatorAvailabilityOptions = {}
+): boolean {
+  if (!isKnownBackstoryId(backstoryId)) {
+    return false;
+  }
+
+  const resolution = resolveBackstoryCreatorEligibility({
+    ...options,
+    selectedBackstoryId: options.selectedBackstoryId ?? backstoryId
+  });
+
+  return resolution.records.some(
+    (record) => record.backstoryId === backstoryId && record.selectable
+  );
 }
 
 export function getBackstoryTemplate(
@@ -2951,14 +3165,40 @@ export function getBackstoryTemplate(
 
 export function getBackstoryOptionsForSelection(
   lineageId: string,
-  selectedWorld?: ResolvedWorldSelection | null
-): StarterBackstoryTemplate[] {
+  selectedWorld?: ResolvedWorldSelection | null,
+  availabilityOptions: BackstoryCreatorAvailabilityOptions = {}
+): StarterBackstoryPresentation[] {
   void selectedWorld;
   if (!isKnownLineageId(lineageId)) {
     return [];
   }
 
-  return Object.values(BACKSTORY_TEMPLATES);
+  const resolution = resolveBackstoryCreatorEligibility(availabilityOptions);
+  const recordsById = new Map(
+    resolution.records.map((record) => [record.backstoryId, record])
+  );
+  const defaultBackstoryIds = new Set(resolution.defaultBackstoryIds);
+
+  return Object.values(BACKSTORY_TEMPLATES)
+    .map((template, index) => ({
+      index,
+      presentation: buildBackstoryPresentation(
+        template,
+        recordsById.get(template.id) ?? null,
+        defaultBackstoryIds.has(template.id)
+      )
+    }))
+    .filter(({ presentation }) =>
+      presentation.visible &&
+      presentation.availabilityState !== "hidden" &&
+      presentation.availabilityState !== "deferred"
+    )
+    .sort((left, right) => {
+      const leftRank = BACKSTORY_SORT_GROUP_RANK[left.presentation.sortGroup];
+      const rightRank = BACKSTORY_SORT_GROUP_RANK[right.presentation.sortGroup];
+      return leftRank === rightRank ? left.index - right.index : leftRank - rightRank;
+    })
+    .map(({ presentation }) => presentation);
 }
 
 export function generateRandomCharacterName(

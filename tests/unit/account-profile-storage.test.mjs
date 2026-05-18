@@ -99,7 +99,7 @@ function createSnapshot(accountId, playerName) {
   return snapshot;
 }
 
-function createCompleteCharacterForm(backstoryId = "backstory.local_hero") {
+function createCompleteCharacterForm(backstoryId = "backstory.local") {
   const identity = getLineageIdentityCatalog("lineage.human");
   assert.ok(identity);
   const startingBundleId = "starting_bundle.traveler";
