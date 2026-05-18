@@ -1,14 +1,14 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.56 - Backstory Eligibility Resolver Implementation
+Source version/run: Version 0.5.57 - Creator Locked Backstory Presentation Plan
 Date: 2026-05-18
 Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed a clean worktree.
 
 ## Result
 
-Implemented the first narrow runtime-owned Backstory Eligibility Resolver foundation under the game-engine layer.
+Added a planning-only design document for future creator presentation of Backstory Eligibility Resolver states.
 
-This pass added an approved source policy shape, a runtime-owned default policy for all 27 current live backstory ids, a pure resolver function, engine exports, and focused unit tests. The resolver is not wired into the character creator, so current user-facing backstory availability remains unchanged.
+The plan defines how creator surfaces should eventually merge live backstory catalog data with resolver output for available, locked, hidden, deferred, and special states without wiring the resolver into the creator yet.
 
 ## Files Inspected
 
@@ -19,198 +19,166 @@ This pass added an approved source policy shape, a runtime-owned default policy 
 - `docs/design/backstory-evidence-ownership-plan.md`
 - `docs/design/backstory-eligibility-resolver-plan.md`
 - `docs/design/backstory-tiered-lane-design.md`
-- `docs/design/backstory-policy-metadata.json`
-- `docs/design/backstory-policy-metadata.md`
-- `docs/design/legacy-upgrade-catalog-draft.json`
 - `docs/future_content_backlog.md`
-- `packages/content/base/player/backstories.json`
-- `packages/content/base/player/skills.json`
-- `packages/content/base/player/achievements.json`
-- `packages/content/base/player/legacy_unlocks.json`
-- `packages/shared/types/src/contracts.ts`
+- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
+- `packages/engines/game-engine/src/backstory-eligibility.ts`
 - `packages/engines/game-engine/src/index.ts`
-- `packages/engines/game-engine/src/legacy-unlocks.ts`
-- `packages/engines/game-engine/src/account-achievement-state.ts`
-- `packages/engines/game-engine/src/achievements.ts`
-- `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
-- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
-- `apps/rpg-ui/src/game-shell/achievementChroniclesPresentation.ts`
-- `apps/rpg-ui/src/game-shell/runLifecycle.ts`
-- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
+- `packages/content/base/player/backstories.json`
 - `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
 - `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
-- `tests/unit/backstory-policy-metadata.test.mjs`
+- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
+- `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`
+- `tests/unit/backstory-eligibility-policy.test.mjs`
+- `tests/unit/backstory-eligibility-resolver.test.mjs`
 - `tests/unit/player-identity-content.test.mjs`
 - `docs/dev/current-codex-output.md`
 
 ## Files Changed
 
-- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-- `packages/engines/game-engine/src/backstory-eligibility-policy.js`
-- `packages/engines/game-engine/src/backstory-eligibility.ts`
-- `packages/engines/game-engine/src/backstory-eligibility.js`
-- `packages/engines/game-engine/src/index.ts`
-- `tests/unit/backstory-eligibility-policy.test.mjs`
-- `tests/unit/backstory-eligibility-resolver.test.mjs`
+- `docs/design/backstory-creator-presentation-plan.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Runtime Policy Implementation Summary
+## Creator Presentation Planning Summary
 
-Added `BACKSTORY_ELIGIBILITY_POLICY` as runtime-owned source policy data, not design JSON.
+The new plan documents a future flow where the creator loads live backstory catalog data for labels, descriptions, starter skill display, attributes, and selected effects, then calls the runtime-owned resolver with current-data evidence and merges the resolver projection into a presentation view model.
 
-The policy includes:
+The plan keeps settlement-start authorization separate and keeps selected backstory effect application unchanged.
 
-- `status: "runtime_owned_policy"`
-- `runtimeImportAllowed: true`
-- the seven approved availability statuses only: `always_available`, `default_available`, `early_legacy`, `locked`, `hidden`, `special`, `deferred`
-- baseline default ids: `backstory.local`, `backstory.vagabond`, `backstory.exile`, `backstory.farmhand`, `backstory.amnesiac`
-- one rule for each current live backstory id
-- a central blocked-evidence list for unsupported family, status, estate/title, regional renown, institution, contact, adoption, marriage, mount, market/economy, magic, medical, and oath/paladin owners
-- selected-backstory effect policy requiring only the selected backstory to apply effects
+## Availability-State Presentation Summary
 
-## Resolver Implementation Summary
+The plan covers the current resolver statuses:
 
-Added `resolveBackstoryEligibility` as a pure function that accepts live backstory ids, an optional runtime policy, and current-data evidence input.
+- `always_available`
+- `default_available`
+- `early_legacy`
+- `locked`
+- `hidden`
+- `special`
+- `deferred`
 
-The resolver returns:
+It defines visibility, selectability, badge direction, detail visibility, safe explanation direction, and unsupported promises to avoid for each status.
 
-- eligible/selectable ids
-- locked records with safe reasons
-- hidden ids
-- deferred ids
-- special ids
-- filtered default ids
-- per-record policy projection
-- current-data validation warnings
+The plan does not reintroduce `retired`, `converted`, alias rescue behavior, or old-data rescue states.
 
-The resolver does not read files, mutate input, reach into UI state, purchase Legacy unlocks, write account/save state, or change creator behavior.
+## Locked Explanation Rules
 
-## Test Coverage Summary
+Locked explanations should use player-safe language, avoid raw policy/evidence ids, and avoid promising blocked systems.
 
-Added focused tests covering:
+Safe examples include:
 
-- all 27 current live backstory ids have one runtime eligibility rule
-- default ids are live and non-empty
-- duplicate rules are rejected
-- missing live id references are rejected
-- future examples are not treated as live policy
-- blocked evidence cannot unlock content
-- starter-granted ranks are excluded from earned skill evidence
-- Tier 2 origins require Legacy support plus scoped evidence
-- family-scoped rules do not fall back to account-wide evidence
-- unknown selected ids produce direct current-data validation warnings
-- resolver input is not mutated
+- "Requires a matching family history."
+- "Requires earned trade evidence."
+- "Not available in the current creator."
+- "Requires a future system that is not active yet."
 
-## Non-Import Boundary Summary
+Unsafe examples include Legacy purchase promises before purchase support exists, title/estate ownership promises before those systems exist, and institution/contact/mount/magic/medical/oath promises before their owners exist.
 
-Static source tests assert the new resolver and policy modules do not import or consume:
+## Default Safety Presentation Summary
 
-- `docs/design/backstory-policy-metadata.json`
-- `docs/design/legacy-upgrade-catalog-draft.json`
-- `futureBackstoryLaneDrafts`
-- design documents under `docs/design/`
+The plan preserves the baseline default ids as the current default safety set:
 
-Creator boundary tests also assert `characterCreationCatalog.ts`, `characterCreationForm.ts`, and `newGameSnapshot.ts` are not wired to the resolver yet.
+- `backstory.local`
+- `backstory.vagabond`
+- `backstory.exile`
+- `backstory.farmhand`
+- `backstory.amnesiac`
 
-## Default / Current-Data Behavior Summary
+Missing optional evidence must not dead-end creation, must not bypass settlement-start authorization, and must not unlock Tier 2, Tier 3, special, hidden, or deferred origins.
 
-Missing optional evidence still returns default-safe current behavior. The baseline default set remains live and non-empty, and default fallback does not unlock Tier 2, Tier 3, special, hidden, or deferred origins.
+## Hidden / Deferred / Special Handling
 
-Current content ids validate directly. Unknown selected ids are reported as current-data warnings, not rescued through aliases, old ids, or compatibility paths.
+The plan says hidden and deferred records should be omitted from normal creator lists.
 
-## Evidence / Scope / Blocked Behavior Summary
+Special records should usually remain hidden unless a dedicated narrative owner scopes their presentation. World-Stray remains special/manual or hidden, Local Champion remains special or region/achievement/story scoped, and Minor Noble remains blocked or deferred until family, estate, title, and status evidence owners exist.
 
-The resolver evaluates:
+## Future View-Model Shape Summary
 
-- `requiresAll`
-- `requiresAny`
-- `requiresEvidence`
-- `requiresLegacyPurchase`
-- `requiresPrestige`
-- `requiresEcho`
-- `blocksIf`
+The plan drafts a future creator presentation view model with fields for:
 
-Nested groups are not implemented in this foundation and remain unnecessary for the current tests.
+- id/name/summary/description
+- starter skill, attribute, and starting ability display
+- availability state
+- selectable and visible booleans
+- badge, locked reason, and unlock hint
+- default/special/deferred flags
+- sort group
 
-Scope checks prove family, source-run, account, region, institution, and estate/title evidence do not silently substitute for each other. Missing family, lineage, or source-run ownership does not grant scoped access.
+This remains planning only and is not implemented.
 
-## Starter-Granted Exclusion Summary
+## Selection / Snapshot Boundary Summary
 
-Earned skill evidence requires approved provenance such as `earned_play` or `source_run`. Starter-granted ranks from `starter_backstory` or `starter_bundle` do not satisfy earned skill maxima by default.
+Future selection should allow only resolver-eligible/default/always records. Locked, hidden, deferred, and ordinary special records cannot be selected unless resolver output and a scoped owner allow it.
 
-The focused Militia Levy/Garrison Ward fixture proves starter formation discipline does not unlock the Tier 2 garrison origin by itself.
+Snapshot creation remains selected-only: the resolver affects availability, not starter skills, attributes, abilities, flags, or Chronicle effect logic. Parent and child backstory effects must not stack.
 
-## No-Stacking Summary
+## Evidence Input Boundary Summary
 
-Each policy rule carries selected-effect policy:
+The first future integration should pass only evidence that the app already owns safely, such as live ids, selected id for warnings, account id if available, and owned scoped fields only when their storage exists.
 
-- `appliesOnlySelectedBackstory: true`
-- `parentEffectsStack: false`
-- `previousBackstoriesAreEvidenceOnly: true`
+The creator must not pass invented evidence, fake Legacy purchases, dummy family evidence, starter-granted skills as earned maxima, or blocked owner stubs that unlock content.
 
-Resolver tests prove access evidence does not imply stacked parent/child effects.
+## Future Implementation Test Plan
 
-## No-Compatibility Behavior Summary
+Future creator integration tests should prove:
 
-The policy vocabulary does not include `retired`, `converted`, aliases, old-id rescue states, or migration-only states.
+- creator view model uses resolver projection
+- eligible records are selectable
+- locked records are visible but not selectable when safe to show
+- hidden and deferred records are omitted from normal lists
+- special records are not ordinary selectable origins
+- default records remain selectable when evidence is missing
+- selection cannot bypass resolver output
+- settlement-start validation remains separate
+- snapshot creation applies only the selected backstory package
+- creator code does not import design metadata or planning drafts
+- no backwards-compatibility rescue behavior is introduced
+- visible copy does not promise blocked systems
 
-Tests enforce:
+## Recommended Next Pipeline
 
-- no alias-based id rescue
-- no retired/converted status handling
-- no historical id preservation logic
-- direct current content id validation
-- missing old data does not grant access
+1. Version 0.5.58 - Creator Backstory Resolver Integration
+2. Version 0.5.59 - Backstory Legacy Purchase Integration Plan
 
-## Creator Integration Boundary Confirmation
-
-No resolver wiring was added to the creator.
-
-Current UI behavior remains unchanged: `characterCreationCatalog.ts` still builds from live backstory content, `characterCreationForm.ts` still validates known ids and settlement-start access, and `newGameSnapshot.ts` still applies the selected live backstory only.
-
-Locked-backstory creator presentation remains deferred to Version 0.5.57.
+Creator resolver integration should come before Backstory Legacy purchase integration.
 
 ## Checks Run
 
-- `git status --short` - showed only the files changed in this pass:
-  - `docs/dev/current-codex-output.md`
-  - `docs/future_content_backlog.md`
-  - `packages/engines/game-engine/src/index.ts`
-  - `packages/engines/game-engine/src/backstory-eligibility-policy.js`
-  - `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-  - `packages/engines/game-engine/src/backstory-eligibility.js`
-  - `packages/engines/game-engine/src/backstory-eligibility.ts`
-  - `tests/unit/backstory-eligibility-policy.test.mjs`
-  - `tests/unit/backstory-eligibility-resolver.test.mjs`
-- Passed: `npm.cmd run tool:content-lint` - `content-lint: ok (53 files checked)`
-- Passed: `node --test tests\unit\backstory-eligibility*.test.mjs` - 21 tests passed
-- Passed: `node --test tests\unit\backstory-policy-metadata.test.mjs tests\unit\player-identity-content.test.mjs` - 11 tests passed
-- Failed: `npm.cmd run typecheck` - root `tsc` is not available on PATH in this workspace command
-- Failed, unrelated existing issues: `.\\apps\\rpg-ui\\node_modules\\.bin\\tsc.cmd --noEmit -p tsconfig.json` reports broad pre-existing TypeScript issues; filtering the output for `backstory-eligibility` returned no matches
-- Passed: `git diff --check` - passed with line-ending normalization warnings only
+- `git status --short`
+  - Showed only the expected docs changes:
+    - `M docs/dev/current-codex-output.md`
+    - `M docs/future_content_backlog.md`
+    - `?? docs/design/backstory-creator-presentation-plan.md`
+- `npm.cmd run tool:content-lint`
+  - Passed: `content-lint: ok (53 files checked)`
+- `git diff --check`
+  - Passed. Git reported line-ending normalization warnings for `docs/dev/current-codex-output.md` and `docs/future_content_backlog.md`.
 
 ## Behavior / Runtime Confirmation
 
-Runtime resolver/policy modules were added.
+No runtime behavior changed.
 No creator behavior changed.
+No resolver wiring was added.
 No content JSON changed.
 No live backstory records were added, removed, renamed, or modified.
 No policy metadata JSON changed.
 No starter skill, Legacy purchase, save/account schema, combat, magic, economy, progression, launcher UI, generated UI output, or visible availability behavior changed.
-The resolver is not wired into creator filtering yet.
+This pass only adds a planning document for future creator locked-backstory presentation.
 
 ## Risks / Follow-Up
 
-- Creator locked-backstory presentation remains deferred.
+- Creator currently still shows raw live catalog availability.
+- Evidence inputs remain limited until family/source-run/earned-skill ledgers exist.
+- Locked explanations must not promise unsupported systems.
+- Broad creator rewrites remain high risk.
+- Generated UI output should remain untouched.
+- The previous handoff noted known workspace TypeScript issues; this docs-only pass does not run typecheck or address them.
 - Backstory Legacy purchase integration remains deferred.
-- Family/source-run evidence ledgers, earned skill maxima storage, institution/status/estate/title ownership, magic licensing, mounts, contacts, market/economy effects, medical systems, and oath/paladin behavior remain deferred or blocked evidence owners.
-- Root typecheck remains blocked by workspace tooling/pre-existing TypeScript issues outside this pass.
 
 ## Next Recommended Version
 
-Version 0.5.57 - Creator Locked Backstory Presentation Plan
+Version 0.5.58 - Creator Backstory Resolver Integration
 
 ## Suggested Commit Message
 
-feat(engine): add backstory eligibility resolver foundation
+docs(ui): plan creator backstory availability presentation
