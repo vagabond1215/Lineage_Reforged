@@ -1,102 +1,150 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.51 - Backstory Eligibility Resolver Plan
+Source version/run: Version 0.5.52 - Backstory Evidence Ownership Plan
 Date: 2026-05-17
 Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed a clean worktree.
 
 ## Result
 
-Added a planning-only design document for a future Backstory Eligibility Resolver. The plan defines resolver responsibilities, input categories, evidence ownership, runtime-safe rule shape, tier handling, no-stacking behavior, family/account unlock boundaries, default safety, migration concerns, and a staged implementation pipeline.
+Added a planning-only design document for durable evidence ownership before future Backstory Eligibility Resolver work. The plan defines evidence category ownership, likely storage, scope, readiness, source attribution, starter-granted skill exclusion, migration defaults, blocked systems, representative backstory evidence paths, and an updated implementation pipeline.
 
-No resolver, runtime filtering, unlock logic, Legacy purchase, policy metadata import, schema change, content JSON change, creator UI change, or live availability change was added.
+No evidence ledger, resolver, runtime policy data, content JSON change, policy metadata JSON change, Legacy behavior change, creator behavior change, schema change, or live availability change was added.
 
 ## Files Inspected
 
 - `README.md`
+- `docs/design/backstory-eligibility-resolver-plan.md`
 - `docs/design/backstory-tiered-lane-design.md`
-- `docs/design/backstory-coverage-first-batch-plan.md`
 - `docs/design/backstory-policy-metadata.json`
 - `docs/design/backstory-policy-metadata.md`
+- `docs/design/legacy-upgrade-catalog-draft.json`
+- `docs/future_content_backlog.md`
 - `packages/content/base/player/backstories.json`
 - `packages/content/base/player/skills.json`
 - `packages/content/base/player/achievements.json`
-- `packages/content/base/player/abilities.json`
 - `packages/content/base/player/legacy_unlocks.json`
-- `docs/design/legacy-upgrade-catalog-draft.json`
-- `docs/future_content_backlog.md`
+- `packages/shared/types/src/contracts.ts`
+- `packages/engines/game-engine/src/legacy-unlocks.ts`
+- `packages/engines/game-engine/src/account-achievement-state.ts`
+- `packages/engines/game-engine/src/achievements.ts`
+- `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
+- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
+- `apps/rpg-ui/src/game-shell/achievementChroniclesPresentation.ts`
+- `apps/rpg-ui/src/game-shell/runLifecycle.ts`
+- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
 - `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
 - `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
-- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
-- `packages/engines/game-engine/src/legacy-unlocks.ts`
-- `packages/shared/types/src/settlement-institutions.ts`
 - `docs/dev/current-codex-output.md`
+
+Listed files not present on this branch:
+
+- `apps/rpg-ui/src/game-shell/accountProfile.ts`; closest equivalent inspected: `accountProfileManager.ts`
+- `apps/rpg-ui/src/game-shell/chronicle.ts`; closest equivalents inspected: `accountMetaPresentation.ts`, `achievementChroniclesPresentation.ts`, `runLifecycle.ts`, and `newGameSnapshot.ts`
 
 ## Files Changed
 
-- `docs/design/backstory-eligibility-resolver-plan.md`
+- `docs/design/backstory-evidence-ownership-plan.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Resolver Planning Summary
-
-- The future resolver should return eligible, locked, hidden/deferred, special, and default backstory projections without mutating account state.
-- It should explain locked states safely, preserve at least one default/new-account option, enforce one selected backstory, and keep tier bonuses non-stacking.
-- It must not read `docs/design/backstory-policy-metadata.json` or `docs/design/legacy-upgrade-catalog-draft.json` as runtime policy.
-- It should keep backstory eligibility separate from existing settlement-start authorization.
-
 ## Evidence Ownership Summary
 
-The plan separates evidence into channels such as `skill_threshold`, `earned_skill_maximum`, `achievement`, `activity_tag`, `source_run_evidence`, `chronicle_flag`, `profession_history`, reputation, renown, title, estate, institution, patronage, adoption, marriage, story outcome, family skill maximum, family backstory history, and special cases.
+The new plan covers these evidence categories:
 
-Near-term candidates are reviewed achievements, source-run evidence, and earned skill maxima after source attribution exists. Blocked channels include family ledgers, estate/title/status, institutional membership, patronage, adoption, marriage, contacts, mounted behavior, magic licensing, and economy effects.
+- `skill_threshold`
+- `earned_skill_maximum`
+- `achievement`
+- `activity_tag`
+- `source_run_evidence`
+- `chronicle_flag`
+- `profession_history`
+- `faction_or_region_reputation`
+- `renown_milestone`
+- `lineage_title`
+- `estate_milestone`
+- `institution_acceptance`
+- `patronage`
+- `adoption`
+- `marriage`
+- `story_outcome`
+- `family_skill_maximum`
+- `family_backstory_history`
+- `legacy_purchase`
+- `echo_requirement`
+- `prestige_requirement`
+- `special_case`
 
-Starter-granted skill ranks must not count as earned skill maxima unless a later system explicitly allows it.
+For each category, the plan defines meaning, likely owner, future storage location, scope, readiness, whether starter-granted values count, tier suitability, missing/default behavior, and risks.
 
-## Tier Handling Summary
+## Source Attribution Summary
 
-- Tier 1: default, early Legacy, or simple evidence unlock; low risk and no required precursor.
-- Tier 2: previous-play evidence or valid alternate unlock path; Legacy purchase plus evidence, never purchase alone.
-- Tier 3: long-term unlock with several runs or strong family/institution/status/renown/estate support.
-- Special: narrative exceptions outside normal progression.
-- Deferred: blocked until runtime owner exists.
+The plan requires future evidence to distinguish starter-granted skill ranks, earned skill gains, inherited/family evidence, Legacy-purchased access, account-wide meta unlocks, family-specific unlocks, source-run evidence, Chronicle flags, and achievements.
 
-The plan classifies current live records for future locking intent without changing current availability.
+Starter-granted skill ranks must not count as earned skill maxima by default. Suggested future provenance fields include `sourceType`, `sourceId`, `sourceRunId`, `familyId`, `lineageId`, `scopeType`, `scopeId`, `earnedRankMax`, `starterRankIgnored`, `recordedAt`, and `contentVersion`.
 
-## Family / Account Unlock Distinction
+## Scope Model Summary
 
-Family-specific unlocks should own ancestry, lineage, household, estate, title, local-renown, institution, and inherited-standing evidence. Account-wide unlocks may be acceptable for broad defaults, special meta unlocks, content visibility, and non-lineage quality-of-life features.
+The plan defines account-wide, family-specific, lineage-specific, character-specific, source-run-specific, region-specific, faction-specific, institution-specific, estate/title-specific, and special/manual scopes.
 
-A random new family should not receive noble, local-renown, garrison, institution, or heir-status backstories because an unrelated lineage earned them.
+Key boundary examples:
 
-## Default / New-Account Safety Summary
+- Minor Noble should be family, estate, title, or status scoped, not account-wide.
+- Merchant Family may require family or source-run trade evidence.
+- Garrison Ward may require family or source-run militia evidence.
+- Street Vendor can be default, early account unlock, or simple evidence unlock.
+- Local Champion should be local-renown, achievement, title, or region scoped.
+- World-Stray should remain special/manual or hidden.
 
-The plan preserves the current policy-default set as the safe baseline:
+## Near-Term Safe Evidence
 
-- Local
-- Vagabond
-- Exile
-- Farmhand
-- Amnesiac
+Safest future channels:
 
-It marks Street Vendor, Net-Tender, Gatherer, Drover's Hand, and Kitchen Hand as possible future default or early-Legacy candidates. Militia Levy and Scribe's Apprentice are better early-Legacy candidates until combat-adjacent and mundane-scholar boundaries are reviewed.
+- achievements, if mapped narrowly
+- source-run evidence, after explicit evidence summaries exist
+- earned skill maxima, only after source attribution separates earned ranks from starter-granted ranks
+- Chronicle flags, only after a durable vocabulary and owner are defined
+
+## Blocked Evidence
+
+Blocked until owning systems exist:
+
+- family skill maxima
+- family backstory history
+- heir legitimacy/status
+- estate/title ownership
+- regional renown storage if not durable and scoped
+- institutional membership
+- patronage/contact systems
+- adoption
+- marriage
+- mounted behavior and mount ownership
+- market/economy effects
+- magic licensing/acquisition
+- medical/injury systems
+- oath and paladin behavior
+
+## Representative Backstory Examples
+
+The plan maps future evidence directions for Local, Street Vendor, Militia Levy, Scribe's Apprentice, Merchant Family, Carpenter Household, Miner's Kin, Village Hunter, Scout's Ward, Garrison Ward, Scholar's Apprentice, Temple Acolyte, Hedge Adept, Minor Noble, Local Champion, World-Stray, future Sword Drill, future Trade House, future Paladin Oathline, and future Recognized Heir.
 
 ## Migration / Compatibility Notes
 
-- Existing selected backstories remain valid.
-- Old saves should not lose identity or starter skills.
-- Future locking affects only new character creation after implementation.
-- Retired, renamed, or converted backstories should preserve old character history.
-- Missing family, unlock, renown, prestige, Echo, and evidence fields should resolve to safe defaults.
-- Runtime policy/content versioning should be explicit before implementation.
+- Old accounts with no family ledger should use default/new-account backstories plus explicitly supported account-wide evidence only.
+- Old saves with selected backstories that later become locked should keep historical identity.
+- Old runs lacking source attribution should not infer earned skill maxima.
+- Broad old achievements should not unlock narrow Tier 2 or Tier 3 origins until reviewed.
+- Missing family or lineage ids should not grant family/lineage-scoped origins.
+- Renamed, retired, or converted content ids should preserve historical ids and map only through reviewed migrations.
 
 ## Recommended Next Pipeline
 
-1. Version 0.5.52 - Backstory Evidence Ownership Plan
-2. Version 0.5.53 - Backstory Runtime Policy Shape Draft
-3. Version 0.5.54 - Backstory Eligibility Resolver Test Plan
-4. Version 0.5.55 - Backstory Eligibility Resolver Implementation
-5. Version 0.5.56 - Creator Locked Backstory Presentation Plan
-6. Version 0.5.57 - Backstory Legacy Purchase Integration Plan
+1. Version 0.5.53 - Backstory Runtime Policy Shape Draft
+2. Version 0.5.54 - Backstory Eligibility Resolver Test Plan
+3. Version 0.5.55 - Backstory Eligibility Resolver Implementation
+4. Version 0.5.56 - Creator Locked Backstory Presentation Plan
+5. Version 0.5.57 - Backstory Legacy Purchase Integration Plan
+
+No extra planning step is required before the runtime policy shape draft if that draft remains non-runtime and schema-free.
 
 ## Checks Run
 
@@ -116,14 +164,15 @@ No character creator, starter skill, Legacy, save/account, combat, magic, econom
 
 ## Risks / Follow-Up
 
-- The future resolver is still blocked on evidence ownership, runtime policy shape, migration behavior, and test planning.
-- Family/ancestry data, heir legitimacy/status, estate/title ownership, regional renown, institutional membership, contacts, patronage, mounted behavior, magic acquisition/licensing, medical/injury systems, and oath/paladin behavior remain blocked for runtime use.
-- The next pass should define durable evidence ownership before drafting runtime policy data.
+- Future resolver work remains blocked on runtime policy shape, tests, and durable evidence storage.
+- Earned skill maxima are still not safe until starter-granted and earned sources are separated.
+- Family, title, estate, institution, patronage, adoption, marriage, mounted, magic, medical, oath, and economy evidence remain blocked until owner systems exist.
+- The next draft must encode source, scope, and missing-data behavior so blocked evidence cannot accidentally unlock content.
 
 ## Next Recommended Version
 
-Version 0.5.52 - Backstory Evidence Ownership Plan
+Version 0.5.53 - Backstory Runtime Policy Shape Draft
 
 ## Suggested Commit Message
 
-docs(content): plan backstory eligibility resolver
+docs(content): plan backstory evidence ownership
