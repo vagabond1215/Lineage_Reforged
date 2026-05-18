@@ -64,7 +64,7 @@ The future output should be designed before implementation, but a safe shape wou
 - `specialBackstories`: narrative exception ids with manual or story-owned gates
 - `defaultBackstoryIds`: safe fallback ids for new accounts and missing evidence
 - `selectedBackstoryPolicy`: resolved policy for the one selected backstory only
-- `warnings`: non-blocking migration, missing-field, or content-version notes
+- `warnings`: non-blocking missing-field, blocked-owner, or content-version notes
 
 Locked reasons should be stable enough for tests and UI, but not expose every raw ledger detail. Player-facing text can be produced later by the creator presentation layer.
 
@@ -87,11 +87,10 @@ Do not create schemas yet. The future resolver should plan for these input categ
 - achievements
 - Chronicle flags
 - completed runs and archived run summaries
-- source-run evidence from retired or dead characters
+- source-run evidence from completed or archived characters
 - region, faction, and institution reputation
 - estate, title, and social-status evidence
 - special narrative flags
-- migration or compatibility flags for older accounts
 
 Starter-granted skill ranks must not count as earned skill maxima for unlocking future higher-tier backstories unless a later system explicitly allows that source. A character who began with `skill.combat.weapon.sword` from a backstory should not automatically satisfy a future Sword Drill evidence requirement without earned play evidence.
 
@@ -106,7 +105,7 @@ Backstory unlocking should use separate evidence channels rather than one vague 
 | `achievement` | safe near-term | Existing achievements can provide account/character evidence after mapping is reviewed. |
 | `activity_tag` | needs owner | Activity/runtime systems need durable tagged history before use. |
 | `source_run_evidence` | partial | Account archive/source-run linkage exists lightly, but evidence semantics need a ledger. |
-| `chronicle_flag` | partial | Chronicle/account systems can preserve flags, but flag vocabulary needs review. |
+| `chronicle_flag` | partial | Chronicle/account systems can record reviewed flags, but flag vocabulary needs review. |
 | `profession_history` | blocked | No durable profession or job history owner yet. |
 | `faction_or_region_reputation` | partial | Reputation exists, but scope, family carryover, and thresholds need runtime ownership. |
 | `renown_milestone` | partial | Current Legacy renown presence is presentation-oriented; true regional renown storage is later work. |
@@ -119,7 +118,7 @@ Backstory unlocking should use separate evidence channels rather than one vague 
 | `story_outcome` | needs owner | Narrative outcome flags need a reviewed Chronicle or quest owner. |
 | `family_skill_maximum` | blocked | Family skill maxima need family ledger storage. |
 | `family_backstory_history` | blocked | Family backstory history needs source-run/family storage. |
-| `special_case` | manual only | Special gates need explicit narrative or migration handling. |
+| `special_case` | manual only | Special gates need explicit narrative handling. |
 
 Near-term implementation should prefer `achievement`, reviewed `source_run_evidence`, and carefully separated `earned_skill_maximum` once source attribution exists. It should not use blocked family, estate, institution, patronage, adoption, marriage, magic, mounted, contact, or economy evidence until those systems own durable data.
 
@@ -142,8 +141,7 @@ The eventual runtime policy should be a separate reviewed data shape, not the pl
   "requiresLineageOrStatusEvidence": [],
   "blocksIf": [],
   "explainLocked": "Earn matching evidence before this origin can be chosen.",
-  "explainUnlocked": "Your family has enough matching history to choose this origin.",
-  "migrationFallback": "hide_until_policy_ready"
+  "explainUnlocked": "Your family has enough matching history to choose this origin."
 }
 ```
 
@@ -160,10 +158,9 @@ Potential fields:
 - `requiresFamilyEvidence`: family-specific prerequisites.
 - `requiresEarnedSkillEvidence`: earned skill maxima or source-run skill proof.
 - `requiresLineageOrStatusEvidence`: title, estate, lineage, adoption, marriage, or patronage proof.
-- `blocksIf`: unsupported runtime owner, retired content, incompatible lineage, migration block, or spoiler block.
+- `blocksIf`: unsupported runtime owner, incompatible lineage, invalid current content, or spoiler block.
 - `explainLocked`: player-safe locked explanation.
 - `explainUnlocked`: player-safe unlocked explanation.
-- `migrationFallback`: behavior when old accounts lack fields.
 
 This shape should be designed and tested before any creator filtering uses it.
 
@@ -189,7 +186,7 @@ Tier 3 records must remain blocked if the runtime systems needed to explain or e
 
 ### Special
 
-Special origins are narrative exceptions. They should not be treated as normal tier progression and may need manual gating, narrative ownership, migration behavior, or removal from ordinary selection.
+Special origins are narrative exceptions. They should not be treated as normal tier progression and may need manual gating, narrative ownership, or removal from ordinary selection.
 
 ### Deferred
 
@@ -301,7 +298,7 @@ Possible early-Legacy but not broad default candidates:
 - Militia Levy, because it is combat-adjacent
 - Scribe's Apprentice, because it must remain clearly mundane and separate from magical scholarship
 
-Default policy should be explicit, content-versioned, and tested. If a migration or missing account field removes all unlock evidence, the resolver should fall back to the approved default set.
+Default policy should be explicit, content-versioned, and tested. If optional evidence fields are missing or unavailable, the resolver should fall back to the approved default set rather than granting scoped or high-tier access.
 
 ## UI And Explainability Requirements
 
@@ -327,20 +324,19 @@ Presentation rules:
 
 This is design guidance only. No UI changes are part of this pass.
 
-## Migration And Compatibility
+## Current-Data Behavior And No Compatibility Layer
 
-Future filtering must not break existing saves or accounts.
+This project is pre-release. Do not design a backstory compatibility or migration layer unless the user explicitly requests compatibility work.
 
 Rules:
 
-- Existing selected backstories remain valid on old characters.
-- Old saves should not lose identity or starter skills.
-- Locking affects only new character creation after implementation.
-- If a backstory is retired, renamed, or converted later, old characters keep historical `backstoryId` data.
-- The resolver must tolerate missing family, unlock, renown, prestige, Echo, and evidence fields with safe defaults.
-- Unknown historical backstory ids should be preserved in save data and displayed conservatively.
-- Metadata/content versioning should be explicit in the runtime policy.
-- Migration fallback should prefer hiding unsupported new options rather than invalidating existing characters.
+- Resolver design should target current authored content and current account/save shapes.
+- Data model changes may be clean breaks while the project remains pre-release.
+- Missing future evidence should resolve to default-safe current behavior, locked, hidden, or deferred.
+- Missing family, unlock, renown, prestige, Echo, or evidence fields must not grant scoped or high-tier access.
+- Current content ids should be validated directly; do not plan historical id aliases, retired-id handling, converted-id handling, or old-data rescue behavior.
+- No old-save or old-account behavior should drive the resolver design yet.
+- Metadata/content versioning may still identify the current validated catalog, but it should not imply compatibility policy.
 
 ## Runtime Boundary
 
@@ -368,16 +364,17 @@ Those systems can provide inputs or consume resolver output after separate owner
 
 ## Recommended Implementation Sequence
 
-Prefer at least one more data-ownership step before implementation.
+The no-compatibility cleanup should land before the test plan.
 
 1. Version 0.5.52 - Backstory Evidence Ownership Plan
 2. Version 0.5.53 - Backstory Runtime Policy Shape Draft
-3. Version 0.5.54 - Backstory Eligibility Resolver Test Plan
-4. Version 0.5.55 - Backstory Eligibility Resolver Implementation
-5. Version 0.5.56 - Creator Locked Backstory Presentation Plan
-6. Version 0.5.57 - Backstory Legacy Purchase Integration Plan
+3. Version 0.5.54 - Backstory No-Compatibility Guardrail Revision
+4. Version 0.5.55 - Backstory Eligibility Resolver Test Plan
+5. Version 0.5.56 - Backstory Eligibility Resolver Implementation
+6. Version 0.5.57 - Creator Locked Backstory Presentation Plan
+7. Version 0.5.58 - Backstory Legacy Purchase Integration Plan
 
-Implementation should not start until the runtime policy shape, evidence ledger ownership, migration behavior, and no-stacking tests are clear.
+Implementation should not start until the runtime policy shape, evidence ledger ownership, no-compatibility boundary, and no-stacking tests are clear.
 
 ## Risks And Blocked Systems
 

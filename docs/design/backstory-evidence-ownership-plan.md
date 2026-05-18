@@ -8,7 +8,7 @@ Status: planning-only design document
 
 This document defines ownership boundaries for evidence that may later feed the Backstory Eligibility Resolver described in `docs/design/backstory-eligibility-resolver-plan.md`.
 
-It does not create evidence storage, implement the resolver, create runtime policy data, change live availability, change starter skills, change Legacy behavior, or alter account/save schemas. It is a planning pass for durable evidence sources, scopes, provenance, migration behavior, and blocked owners.
+It does not create evidence storage, implement the resolver, create runtime policy data, change live availability, change starter skills, change Legacy behavior, or alter account/save schemas. It is a planning pass for durable evidence sources, scopes, provenance, current-data behavior, and blocked owners.
 
 Current branch reality for this pass:
 
@@ -54,13 +54,13 @@ This plan does not:
 | `patronage` | Patron support, household protection, or sponsor status. | Future patron/contact owner. | Future social/contact ledger. | Family, institution, social-status. | blocked | Not applicable. | Tier 2, Tier 3, special. | Treat as unavailable. | Do not imply contacts before contact systems exist. |
 | `adoption` | Legal or household adoption evidence. | Future family/legal relationship owner. | Future family relationship ledger. | Family, lineage, social-status. | blocked | Not applicable. | Tier 2, Tier 3, special. | Treat as unavailable. | Needs legal/family semantics before use. |
 | `marriage` | Marriage or alliance evidence. | Future family/legal relationship owner. | Future family relationship ledger. | Family, lineage, estate/title. | blocked | Not applicable. | Tier 2, Tier 3, special. | Treat as unavailable. | Must not be account-wide. |
-| `story_outcome` | Authored outcome from quest, narrative, or Chronicle. | Quest/Chronicle narrative owner. | Future story outcome ledger. | Character, source-run, family, region. | needs owner | Not applicable. | Tier 2, Tier 3, special. | Treat as absent. | Needs reviewed vocabulary and migration behavior. |
+| `story_outcome` | Authored outcome from quest, narrative, or Chronicle. | Quest/Chronicle narrative owner. | Future story outcome ledger. | Character, source-run, family, region. | needs owner | Not applicable. | Tier 2, Tier 3, special. | Treat as absent. | Needs reviewed vocabulary and current-data ownership. |
 | `family_skill_maximum` | Family-level maximum earned in a skill. | Future family ledger plus player progression. | Future family skill evidence ledger. | Family, lineage. | blocked | No. | Tier 2, Tier 3. | Treat as unavailable. | Must separate true earned skill from starter packages. |
 | `family_backstory_history` | A family previously used or earned a backstory lane. | Future family/source-run history owner. | Future family backstory ledger. | Family, lineage, source-run. | blocked | Not by itself. | Tier 2, Tier 3. | Treat as unavailable. | Requires family identity and selected-backstory history. |
 | `legacy_purchase` | Account or family purchased an unlock. | Legacy unlock runtime. | `AccountLegacyState.legacyUnlocks` now; future family/renown ledgers later. | Account, family, region. | partial | Not applicable. | Tier 1 with care; Tier 2/3 only with evidence. | Treat as unpurchased. | Legacy points alone must not unlock competence, status, or institutions. |
 | `echo_requirement` | Echo peak or threshold from prior runs. | Account history/run lifecycle. | `AccountRunHistoryRecord.echoLevelReached` and future source summaries. | Account, source-run, family. | partial | Not applicable. | Tier 2 or Tier 3 support. | Treat as 0. | Useful as supporting weight, not standalone proof. |
 | `prestige_requirement` | Prestige, renown, or family standing threshold. | Legacy/account now; future family prestige owner. | `AccountLegacyState` for current Prestige; future family/regional ledgers. | Account, family, region, institution. | partial | Not applicable. | Tier 2, Tier 3. | Treat as 0. | Account Prestige should not substitute for family/status evidence. |
-| `special_case` | Manual or narrative exception. | Narrative/migration owner. | Future special-case allowlist or story flags. | Special/manual. | manual only | Not applicable. | Special or deferred. | Hide or block by default. | Do not expose unsupported mechanics as promises. |
+| `special_case` | Manual or narrative exception. | Narrative owner. | Future special-case allowlist or story flags. | Special/manual. | manual only | Not applicable. | Special or deferred. | Hide or block by default. | Do not expose unsupported mechanics as promises. |
 
 ## Source Attribution Model
 
@@ -82,8 +82,8 @@ Starter-granted skill ranks must not count as earned skill maxima by default. If
 
 Likely future provenance fields:
 
-- `sourceType`: `starter_backstory`, `starter_bundle`, `earned_play`, `legacy_purchase`, `achievement`, `source_run`, `family_ledger`, `chronicle_flag`, `story_outcome`, `migration`
-- `sourceId`: backstory id, bundle id, unlock id, achievement id, run id, flag id, or migration id
+- `sourceType`: `starter_backstory`, `starter_bundle`, `earned_play`, `legacy_purchase`, `achievement`, `source_run`, `family_ledger`, `chronicle_flag`, `story_outcome`
+- `sourceId`: backstory id, bundle id, unlock id, achievement id, run id, or flag id
 - `sourceRunId`: prior character/run id when evidence came from a source run
 - `familyId`: family-scoped evidence owner
 - `lineageId`: lineage-scoped owner when ancestry matters
@@ -91,7 +91,7 @@ Likely future provenance fields:
 - `scopeId`: id for the scoped entity
 - `earnedRankMax`: rank reached through earned play
 - `starterRankIgnored`: true when a starter rank was excluded from evidence
-- `recordedAt` and `contentVersion`: migration and compatibility anchors
+- `recordedAt` and `contentVersion`: current-data audit anchors
 
 ## Scope Model
 
@@ -103,12 +103,12 @@ Backstory evidence should be scoped to the fiction it represents.
 | family-specific | household reputation, family skill maxima, inherited trade, noble/status, source-run chains | unrelated families |
 | lineage-specific | ancestry, source-run descent, lineage traditions | generic account visibility |
 | character-specific | current run eligibility, current character achievements | future descendants unless archived into a ledger |
-| source-run-specific | a prior retired/archived character's proof | broad account unlock without consent |
+| source-run-specific | a prior completed or archived character's proof | broad account unlock without consent |
 | region-specific | local renown, regional reputation, local champion status | global status |
 | faction-specific | faction reputation and service | unrelated institutions |
 | institution-specific | temple, scholar, guild, oath acceptance | generic social standing |
 | estate/title-specific | noble, heir, recognized estate, legal claim | account-wide purchases |
-| special/manual | World-Stray, special narrative cases, migrations | normal tier progression |
+| special/manual | World-Stray and special narrative cases | normal tier progression |
 
 Examples:
 
@@ -124,7 +124,7 @@ Examples:
 The safest future evidence channels are limited and still need review before runtime use.
 
 - Achievements are the safest current durable evidence because account and character achievement state already exists. They are only safe when mapped narrowly: a broad first-run achievement should not unlock a specialized Tier 2 origin.
-- Source-run evidence is partially safe because account history, source-run id, retained retired runs, and archived run records exist. It is not ready for high-tier backstory unlocks until the source-run summary records the actual evidence used.
+- Source-run evidence is partially safe because account history, source-run id, retained source-run hooks, and archived run records exist. It is not ready for high-tier backstory unlocks until the source-run summary records the actual evidence used.
 - Earned skill maxima are important but not ready. They become safe only after progression can distinguish earned ranks from starter-granted ranks and archive those maxima durably.
 - Chronicle flags are partial. Session Chronicle and account presentation exist, but a durable flag vocabulary and owner are needed before a resolver can use them.
 
@@ -203,18 +203,20 @@ Mitigations:
 - hide blocked mechanics until owner systems exist
 - keep special cases manual or narrative-owned
 
-## Migration Behavior
+## Current-Data Behavior And No Compatibility Layer
 
-When future resolver inputs are missing, choose safe fallback behavior:
+This project is pre-release. Do not plan old-account, old-save, alias, retired-id, converted-id, or historical-id behavior unless the user explicitly requests compatibility work.
 
-- Old accounts with no family ledger: use default/new-account backstories only, plus any account-wide evidence explicitly supported.
-- Old saves with selected backstories that later become locked: keep the historical backstory valid for that character.
-- Old runs lacking source attribution: do not infer earned skill maxima; treat high-tier evidence as missing.
-- Old achievements that are too broad: do not use them for narrow Tier 2 or Tier 3 unlocks until reviewed.
-- Policy version changed: use migration fallback and log/report warnings in resolver output.
-- Family id missing: do not grant family-scoped origins.
-- Lineage id missing: do not grant lineage-scoped origins.
-- Content id renamed, retired, or converted: preserve historical ids on old characters, and map only through reviewed migration records.
+When future resolver inputs are missing, choose safe current-data behavior:
+
+- If required evidence storage does not exist, the evidence is unavailable.
+- If family id is missing, do not grant family-scoped origins.
+- If lineage id is missing, do not grant lineage-scoped origins.
+- If source-run evidence is missing, do not grant source-run-scoped origins.
+- If source attribution is missing, do not infer earned skill maxima.
+- If achievements are too broad, do not use them for narrow Tier 2 or Tier 3 unlocks until reviewed.
+- Future storage can be introduced as a clean current-data model.
+- Current content ids should be validated directly; do not plan historical id aliases or rescue behavior.
 
 Missing evidence should usually mean locked, hidden, or default fallback, not data repair by assumption.
 
@@ -243,7 +245,7 @@ Missing evidence should usually mean locked, hidden, or default fallback, not da
 | `legacy_purchase` | Legacy runtime | account/family/region | partial | n/a | only with evidence | Tier 1/2/3 support | Not sufficient alone for higher tiers. |
 | `echo_requirement` | Account history/run lifecycle | account/source-run/family | partial | n/a | support only | Tier 2/3 support | Echo supports, not proves, identity. |
 | `prestige_requirement` | Legacy/future prestige owner | account/family/region | partial | n/a | support only | Tier 2/3 support | Account Prestige is not family status. |
-| `special_case` | Narrative/migration owner | special/manual | manual only | n/a | no | special/deferred | Hide or manually gate. |
+| `special_case` | Narrative owner | special/manual | manual only | n/a | no | special/deferred | Hide or manually gate. |
 
 ## Implementation Sequence Update
 
@@ -252,9 +254,10 @@ This ownership pass confirms that a runtime policy shape can be drafted next, bu
 Recommended pipeline:
 
 1. Version 0.5.53 - Backstory Runtime Policy Shape Draft
-2. Version 0.5.54 - Backstory Eligibility Resolver Test Plan
-3. Version 0.5.55 - Backstory Eligibility Resolver Implementation
-4. Version 0.5.56 - Creator Locked Backstory Presentation Plan
-5. Version 0.5.57 - Backstory Legacy Purchase Integration Plan
+2. Version 0.5.54 - Backstory No-Compatibility Guardrail Revision
+3. Version 0.5.55 - Backstory Eligibility Resolver Test Plan
+4. Version 0.5.56 - Backstory Eligibility Resolver Implementation
+5. Version 0.5.57 - Creator Locked Backstory Presentation Plan
+6. Version 0.5.58 - Backstory Legacy Purchase Integration Plan
 
-Before implementation, the policy shape and test plan must prove that blocked evidence cannot unlock content, starter-granted skill ranks are excluded, family-scoped fiction stays family-scoped, and missing old data falls back safely.
+Before implementation, the policy shape and test plan must prove that blocked evidence cannot unlock content, starter-granted skill ranks are excluded, family-scoped fiction stays family-scoped, and missing current evidence falls back safely without granting scoped or high-tier access.

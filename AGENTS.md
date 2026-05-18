@@ -18,14 +18,14 @@
 - Patch versions advance for scoped audits, implementations, cleanup, docs, validation, or handoff runs within the same maturity band.
 - Advance to a new minor band only when the project enters the next maturity phase described below:
   - `v0.1.x`: repository scaffold, workspace conventions, schemas, and first canonical content foundations.
-  - `v0.2.x`: player identity, save compatibility, creator/start-state, and core local UI flow foundations.
+  - `v0.2.x`: player identity, clean save/load behavior, creator/start-state, and core local UI flow foundations.
   - `v0.3.x`: world, civilization, economy, reputation foundations, and stricter content validation.
   - `v0.4.x`: account, Legacy, Chronicle, progression, and local persistence foundations.
   - `v0.5.x`: foundation stabilization, including metadata guardrails, branding alignment, workflow rules, repo hygiene, generated/log/temp cleanup, and validation hardening.
   - `v0.6.x`: runtime ownership transition, replacing UI-authored or demo command handling with engine-owned commands, tick/event output, and authoritative session updates.
   - `v0.7.x`: integrated gameplay systems interacting through stable shared contracts.
   - `v0.8.x`: pre-alpha vertical-slice hardening, narrow content completeness, balancing, and regression coverage.
-  - `v0.9.x`: alpha-readiness stabilization, migration policy, known limitations, packaging/launch flow, save compatibility, and release-candidate QA.
+  - `v0.9.x`: alpha-readiness stabilization, current-data policy, known limitations, packaging/launch flow, clean save/load reliability, and release-candidate QA.
 - Use later `v0.8.x` labels only when a narrow playable path is being stabilized as a pre-alpha slice.
 - Reserve alpha readiness until a playable, validated vertical slice has engine-owned runtime behavior, stable save/load, and explicit known limits.
 - Platform/tool recommendations belong outside and before copy-paste prompt bodies, not inside the prompt itself.
@@ -66,6 +66,7 @@
 - Do not mix cleanup, feature work, rename work, and system design in one run unless explicitly requested.
 - Do not refactor unrelated systems.
 - Skip uncertain changes instead of guessing.
+- Until explicitly requested, this pre-release project should not plan or implement backwards compatibility. Do not add old-save preservation, old-account preservation, migration aliases, retired-id compatibility, converted-id compatibility, historical id preservation, or migration-only behavior unless the user explicitly asks for compatibility work.
 - Update `README.md`, `docs/future_content_backlog.md`, changelogs, `AGENTS.md`, or `.gitignore` only when relevant to the current change.
 - If generated or vendor artifacts appear tracked, flag them rather than editing them unless explicitly asked.
 

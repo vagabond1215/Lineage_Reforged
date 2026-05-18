@@ -555,7 +555,7 @@ This document should not be used as permission to add runtime eligibility logic,
 Purpose:
 
 - Review current live backstory names against the naming philosophy in this document.
-- Decide which names should be kept, renamed, split later, or left as current branch compatibility.
+- Decide which names should be kept, renamed, split later, or left unchanged under current branch constraints.
 
 Likely files:
 
@@ -687,7 +687,7 @@ Type:
 Purpose:
 
 - Plan the runtime-safe eligibility resolver before implementation.
-- Define inputs, evidence ownership, explainability, non-stacking selection, cap rules, and migration boundaries.
+- Define inputs, evidence ownership, explainability, non-stacking selection, cap rules, and current-data boundaries.
 
 Likely files:
 
@@ -702,7 +702,7 @@ Must stay out of scope:
 - Live character creator filtering.
 - Legacy purchase behavior.
 - Starter skill application.
-- Save/account migrations.
+- Save/account shape changes.
 
 Type:
 

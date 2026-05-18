@@ -47,11 +47,11 @@ Reasons:
 
 - Design metadata is intentionally loose, descriptive, and planning-oriented.
 - Runtime policy needs stricter validation than planning metadata.
-- Runtime policy needs explicit source attribution, scope behavior, migration behavior, missing-data behavior, and blocked-owner behavior.
+- Runtime policy needs explicit source attribution, scope behavior, current-data behavior, missing-data behavior, and blocked-owner behavior.
 - Runtime policy needs tests proving that design-only drafts cannot affect creator availability.
 - Future policy data must be owned by the runtime implementation that consumes it, not by documentation.
 
-The eventual runtime policy may copy reviewed intent from planning documents, but it must do so through a deliberate migration and test pass.
+The eventual runtime policy may copy reviewed intent from planning documents, but it must do so through a deliberate implementation and test pass.
 
 ## Proposed Top-Level Policy Shape
 
@@ -75,7 +75,6 @@ This is draft documentation only, not a schema and not live policy data.
   "blockedEvidenceKinds": [],
   "evidenceKindDefinitions": {},
   "scopeDefinitions": {},
-  "migrationFallbacks": {},
   "explainabilityStrings": {}
 }
 ```
@@ -85,16 +84,15 @@ Planned field meanings:
 | Field | Meaning |
 | --- | --- |
 | `schemaVersion` | Runtime data contract version once a schema exists. |
-| `policyVersion` | Authored policy version used for migrations and test fixtures. |
+| `policyVersion` | Authored policy version used for current-data validation and test fixtures. |
 | `status` | Runtime approval state. Drafts should remain non-runtime. |
 | `runtimeImportAllowed` | Must remain false for drafts; a future runtime-approved file needs a separate approval gate. |
 | `contentVersion` | Catalog/content version the policy was validated against. |
 | `defaultBackstoryIds` | Minimum safe fallback ids for new accounts and missing evidence. |
-| `availabilityRules` | One reviewed rule per live backstory id, plus explicit migration-only records if needed. |
+| `availabilityRules` | One reviewed rule per live backstory id, plus explicitly marked future examples in docs/tests when needed. |
 | `blockedEvidenceKinds` | Evidence kinds that must never satisfy rules until their owners exist. |
 | `evidenceKindDefinitions` | Runtime-owned definitions for evidence kinds, source labels, and owner readiness. |
 | `scopeDefinitions` | Runtime-owned definitions for account, family, lineage, source-run, region, faction, institution, estate/title, and special scopes. |
-| `migrationFallbacks` | Safe behavior for old accounts, old saves, retired ids, aliases, and missing fields. |
 | `explainabilityStrings` | Stable player-safe copy keys or strings for locked/unlocked/deferred states. |
 
 ## Availability Statuses
@@ -106,16 +104,14 @@ Planned field meanings:
 | `early_legacy` | Usually after purchase or simple evidence | Yes | Low-risk Tier 1 unlock that may use account-level or simple evidence without implying high competence. |
 | `locked` | No until requirements pass | Yes | Explainable future unlock with reviewed requirements and supported owner systems. |
 | `hidden` | No | No, or only in debug/admin | Spoiler, unsupported, or unsafe to promise in creator UI. |
-| `special` | Usually no by ordinary rules | Maybe | Narrative/manual/migration-owned case outside normal tier progression. |
+| `special` | Usually no by ordinary rules | Maybe | Narrative/manual case outside normal tier progression. |
 | `deferred` | No | No, or conservative placeholder only | Blocked until runtime owners exist. Must not expose unsupported mechanics as a promise. |
-| `retired` | No for new characters | Migration-only | Historical id remains valid on old characters, but cannot be newly selected. |
-| `converted` | No by original id | Migration-only | Historical id maps to another reviewed id or presentation state for old data. |
 
-Selectable statuses must still pass content existence, migration safety, and selected-effect policy. Hidden, deferred, retired, and converted statuses must not grant new character creation access.
+Selectable statuses must still pass current content existence and selected-effect policy. Hidden and deferred statuses must not grant new character creation access.
 
 ## Rule Record Shape
 
-One future rule should describe one live backstory id or one explicit migration-only historical id.
+One future rule should describe one current live backstory id. Future-only examples in docs should be clearly marked as examples and must not be counted as live policy records.
 
 ```json
 {
@@ -147,8 +143,7 @@ One future rule should describe one live backstory id or one explicit migration-
     "parentEffectsStack": false
   },
   "explainLocked": "backstory.example.locked",
-  "explainUnlocked": "backstory.example.unlocked",
-  "migrationFallback": "treat_as_unmet"
+  "explainUnlocked": "backstory.example.unlocked"
 }
 ```
 
@@ -156,7 +151,7 @@ Planned field meanings:
 
 | Field | Meaning |
 | --- | --- |
-| `backstoryId` | Live backstory id, or explicit migration-only id. |
+| `backstoryId` | Current live backstory id. |
 | `availabilityStatus` | Selection/visibility behavior for this rule. |
 | `tier` | Runtime-approved tier classification. Do not blindly copy planning metadata. |
 | `scopePolicy` | Which scope owns access and which evidence scopes are acceptable. |
@@ -166,12 +161,11 @@ Planned field meanings:
 | `requiresPrestige` | Prestige, renown, or status threshold if owned by a suitable ledger. |
 | `requiresEcho` | Echo threshold or peak support if tied to source-run/account evidence. |
 | `requiresEvidence` | Flat evidence requirements when grouping is unnecessary. |
-| `blocksIf` | Owner missing, evidence blocked, migrated id retired, incompatible scope, spoiler, or content-version block. |
+| `blocksIf` | Owner missing, evidence blocked, incompatible scope, spoiler, or current content-version block. |
 | `starterSkillEvidencePolicy` | Source rules for skill evidence. Starter-granted ranks are excluded by default. |
 | `selectedBackstoryEffectPolicy` | No-stacking behavior for selected origin effects. |
 | `explainLocked` | Player-safe string key or copy for unmet requirements. |
 | `explainUnlocked` | Player-safe string key or copy for satisfied access. |
-| `migrationFallback` | Safe fallback when old data, missing fields, retired ids, or policy drift are encountered. |
 
 ## Requirement Group Shape
 
@@ -244,12 +238,12 @@ Planned scopes:
 | `family` | Household memory, family skill maxima, family trade/craft/garrison history, inherited standing. |
 | `lineage` | Ancestry, source-run descent, lineage traditions. |
 | `character` | Current-run checks that do not grant future descendants access by themselves. |
-| `source_run` | A specific retired or archived character used as evidence. |
+| `source_run` | A specific prior character/run used as evidence after source-run ownership exists. |
 | `region` | Local renown, regional reputation, local champion or settlement-bound starts. |
 | `faction` | Faction service or standing. |
 | `institution` | Temple, scholar, guild, oath, or order acceptance. |
 | `estate_title` | Noble, heir, estate, legal claim, or recognized title evidence. |
-| `special_manual` | World-Stray, special migrations, manual narrative exceptions. |
+| `special_manual` | World-Stray and manual narrative exceptions. |
 
 Scope rules:
 
@@ -266,7 +260,7 @@ Examples:
 - `backstory.merchants_child` can use family or source-run trade evidence plus supporting Legacy or Prestige.
 - `backstory.military_brat` can use Militia Levy, militia service, or source-run civic defense evidence.
 - `backstory.street_vendor` can be default, early Legacy, or simple account/evidence unlock because it grants no market passive.
-- `backstory.local_hero` should be region, achievement, title, or story scoped if converted later.
+- `backstory.local_hero` should be region, achievement, title, or story scoped if it becomes selectable through a future policy.
 - `backstory.isekai_outcast` should remain special/manual or hidden.
 
 ## Source Attribution Requirements
@@ -284,7 +278,6 @@ Future evidence must distinguish where values came from. The policy should suppo
 | `family_ledger` | Future family-scoped evidence. |
 | `chronicle_flag` | Reviewed narrative or Chronicle flag. |
 | `story_outcome` | Authored quest/story outcome. |
-| `migration` | Compatibility source for old data. |
 
 Rules:
 
@@ -292,7 +285,6 @@ Rules:
 - Earned skill maxima require `earned_play` or an explicitly reviewed `source_run` summary.
 - Legacy purchase can support access but cannot create evidence alone for Tier 2 or Tier 3.
 - Account-wide meta unlocks should not grant family, status, title, noble, or institution evidence without an explicit scoped bridge.
-- Migration can preserve old saves and old selected backstories, but should not grant new character access unless reviewed.
 - Source-run evidence should be tied to a run id, character id, family id or lineage id when fiction depends on ancestry.
 
 ## Missing And Blocked Data Behavior
@@ -305,8 +297,7 @@ Policy and requirement records should make missing data behavior explicit.
 | `hide` | Spoilers, unsupported mechanics, or concepts unsafe to explain. |
 | `defer` | Evidence owner is not implemented or not durable enough. |
 | `use_default_fallback` | Default/new-account safety when optional ledgers are missing. |
-| `migration_keep_existing_only` | Old selected backstory remains valid, but new selection is blocked. |
-| `manual_review` | Special narrative cases, conversions, or ambiguous old data. |
+| `manual_review` | Special narrative cases or current-data states that require an explicit owner. |
 
 Blocked evidence must not unlock content. If an evidence kind is blocked because family ledgers, estate/title ownership, institutional membership, contacts, magic licensing, mounted behavior, medical systems, or oath behavior do not exist, the resolver should resolve the related rule as hidden, deferred, or unmet.
 
@@ -319,7 +310,7 @@ Blocked evidence should not be shown as a promise in UI. A locked explanation sh
 | `tier_1` | Can be default, early Legacy, or simple evidence unlock. Low evidence requirements. No required precursor. Starter-granted ranks still do not count as earned skill evidence. |
 | `tier_2` | Requires previous-play evidence or a valid alternate unlock path. If purchase gated, requires Legacy purchase plus evidence. May require family, source-run, institution, or regional scope. No currency-only unlocks. |
 | `tier_3` | Long-term unlock requiring multiple evidence sources or strong equivalent evidence. Family, institution, status, renown, estate, title, or source-run support should be explicit. Block if owners are missing. |
-| `special` | Manual, narrative-owned, migration-owned, or hidden. Do not assume normal tier progression. |
+| `special` | Manual, narrative-owned, or hidden. Do not assume normal tier progression. |
 | `deferred` | Hidden or blocked until runtime owner exists. No unlock promise until owner, storage, and tests exist. |
 
 Tier rules should be defaults, not a substitute for per-record review.
@@ -335,7 +326,7 @@ Policy fields should make this explicit:
   "selectedBackstoryEffectPolicy": {
     "appliesOnlySelectedBackstory": true,
     "parentEffectsStack": false,
-    "historicalBackstoriesAreEvidenceOnly": true
+    "previousBackstoriesAreEvidenceOnly": true
   }
 }
 ```
@@ -345,12 +336,12 @@ Rules:
 - Unlocking a parent origin enables access only.
 - Parent and child bonuses do not stack.
 - Selected backstory effects are the only applied effects.
-- Previous selected backstories remain historical evidence only if a separate owner records them.
+- Previous selected backstories count as evidence only if a separate current-data owner records them.
 - A higher-tier rule can require `backstory.militia_levy` as history, but selecting future Sword Drill should not apply both Militia Levy and Sword Drill starter packages.
 
 ## Default And New-Account Safety
 
-The resolver must preserve at least one safe selectable option for every new or migrated account.
+The resolver must keep at least one safe selectable option for every new account and every current-data account shape.
 
 Baseline current default set from planning metadata:
 
@@ -394,8 +385,7 @@ These examples are illustrative only. They are not runtime policy data.
   "tier": "tier_1",
   "scopePolicy": { "primaryScope": "account", "accountWideAllowed": true },
   "requiresAll": [],
-  "requiresAny": [],
-  "migrationFallback": "use_default_fallback"
+  "requiresAny": []
 }
 ```
 
@@ -514,12 +504,11 @@ Intent: family, estate, title, legal claim, or story-scoped evidence only. No ac
     { "kind": "achievement", "achievementId": "achievement.example.local_champion" },
     { "kind": "renown_milestone", "scope": "region", "ownerReadiness": "partial" },
     { "kind": "story_outcome", "scope": "region", "ownerReadiness": "needs_owner" }
-  ],
-  "migrationFallback": "manual_review"
+  ]
 }
 ```
 
-Intent: special or converted local-renown/title origin. It should remain non-default and region/story scoped.
+Intent: special local-renown/title origin. It should remain non-default and region/story scoped.
 
 ### World-Stray
 
@@ -530,8 +519,7 @@ Intent: special or converted local-renown/title origin. It should remain non-def
   "tier": "special",
   "scopePolicy": { "primaryScope": "special_manual" },
   "requiresAll": [],
-  "blocksIf": [{ "kind": "special_case", "missingBehavior": "manual_review" }],
-  "migrationFallback": "migration_keep_existing_only"
+  "blocksIf": [{ "kind": "special_case", "missingBehavior": "manual_review" }]
 }
 ```
 
@@ -586,10 +574,10 @@ Intent: blocked until family, title, estate, legal claim, and story owners exist
 
 ## Future Validation Expectations
 
-Version 0.5.54 or later should design tests that prove:
+Version 0.5.55 or later should design tests that prove:
 
-- every live backstory has a rule or explicit fallback
-- no rule references missing live backstory ids unless it is marked migration-only, retired, converted, or future-draft-only
+- every live backstory has a rule or explicit current-data fallback
+- no rule references missing live backstory ids except explicitly marked future examples
 - no runtime rule consumes `docs/design/backstory-policy-metadata.json`
 - no runtime rule consumes `docs/design/legacy-upgrade-catalog-draft.json`
 - no runtime rule consumes `futureBackstoryLaneDrafts[]`
@@ -599,40 +587,29 @@ Version 0.5.54 or later should design tests that prove:
 - family-scoped rules do not fall back to account-wide evidence
 - noble, heir, title, estate, and local-renown fiction stays scoped
 - default set is never empty
-- old selected backstories remain valid
-- retired and converted ids are migration-only
 - deferred and special records do not leak unsupported UI promises
 - parent and child backstory effects do not stack
-- missing future ledgers fall back safely without crashing
-- policy version and content version mismatches produce safe warnings or migration fallbacks
+- missing future ledgers fall back safely without granting scoped or high-tier access
 
-## Migration Strategy
+## Current-Data Strategy
 
-Future policy data should include explicit migration fields:
+Future policy data should stay focused on current authored content and current account/save shapes. This project is pre-release, so do not add old-save, old-account, alias, retired-id, converted-id, historical-id, or migration-only behavior unless the user explicitly requests compatibility work.
 
 ```json
 {
   "policyVersion": "0.0.0",
-  "contentVersion": "0.0.0",
-  "legacyIdAliases": {},
-  "retiredBackstoryIds": [],
-  "convertedBackstoryIds": {},
-  "preserveExistingSelection": true,
-  "hideForNewCharacters": []
+  "contentVersion": "0.0.0"
 }
 ```
 
-Migration behavior:
+Current-data behavior:
 
-- Existing selected backstories remain valid on old saves.
-- Locked status affects only new character creation after implementation.
-- Old saves should not lose player identity because a future policy locks an origin.
-- If a backstory is retired or converted, old characters keep historical data.
-- Aliases and conversions must be reviewed and tested before use.
+- Current content ids should be validated directly.
 - Missing family, lineage, source-run, or evidence fields should not grant family-scoped or high-tier access.
-- Old runs without source attribution should not infer earned skill maxima.
-- Broad old achievements should not unlock narrow Tier 2 or Tier 3 origins unless explicitly mapped.
-- Migration sources can preserve compatibility, but should not silently create new access.
+- Source-run records without source attribution should not infer earned skill maxima.
+- Broad achievements should not unlock narrow Tier 2 or Tier 3 origins unless explicitly mapped.
+- Data model changes may be clean breaks until compatibility is explicitly requested.
+- Policy and content versions should identify the current validated data set, not imply a compatibility layer.
 
 ## Recommended Next Pipeline
 
@@ -640,12 +617,13 @@ The evidence ownership plan and this runtime policy shape draft are enough to pr
 
 Recommended sequence:
 
-1. Version 0.5.54 - Backstory Eligibility Resolver Test Plan
-2. Version 0.5.55 - Backstory Eligibility Resolver Implementation
-3. Version 0.5.56 - Creator Locked Backstory Presentation Plan
-4. Version 0.5.57 - Backstory Legacy Purchase Integration Plan
+1. Version 0.5.54 - Backstory No-Compatibility Guardrail Revision
+2. Version 0.5.55 - Backstory Eligibility Resolver Test Plan
+3. Version 0.5.56 - Backstory Eligibility Resolver Implementation
+4. Version 0.5.57 - Creator Locked Backstory Presentation Plan
+5. Version 0.5.58 - Backstory Legacy Purchase Integration Plan
 
-The test plan should come before implementation because it needs to lock down non-import boundaries, blocked evidence behavior, starter-granted skill exclusion, family/account scope boundaries, default safety, migration fallback behavior, and no-stacking rules.
+The test plan should come before implementation because it needs to lock down non-import boundaries, blocked evidence behavior, starter-granted skill exclusion, family/account scope boundaries, default safety, no-compatibility behavior, and no-stacking rules.
 
 ## Risks And Blockers
 
@@ -653,5 +631,5 @@ The test plan should come before implementation because it needs to lock down no
 - No earned-skill maximum storage separates earned play from starter-granted ranks.
 - Source-run history exists lightly, but not as a backstory evidence ledger.
 - Regional renown, institution acceptance, title/estate ownership, patronage, adoption, marriage, contacts, magic licensing, mounted behavior, medical systems, and oath/paladin behavior remain blocked or partial.
-- Runtime policy data must not be authored until tests define how rules validate, how blocked owners fail, and how old saves remain valid.
+- Runtime policy data must not be authored until tests define how rules validate, how blocked owners fail, and how missing current-data evidence behaves.
 - Creator presentation should not expose hidden/deferred mechanics until the resolver and UI copy are reviewed together.
