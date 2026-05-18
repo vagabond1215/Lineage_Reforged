@@ -1,19 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.52 - Backstory Evidence Ownership Plan
-Date: 2026-05-17
+Source version/run: Version 0.5.53 - Backstory Runtime Policy Shape Draft
+Date: 2026-05-18
 Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed a clean worktree.
 
 ## Result
 
-Added a planning-only design document for durable evidence ownership before future Backstory Eligibility Resolver work. The plan defines evidence category ownership, likely storage, scope, readiness, source attribution, starter-granted skill exclusion, migration defaults, blocked systems, representative backstory evidence paths, and an updated implementation pipeline.
+Added a planning-only runtime policy shape draft for future Backstory Eligibility Resolver work. The draft defines how a future runtime-approved policy container, availability statuses, rule records, requirement groups, scope policy, source attribution, missing/blocked-data behavior, no-stacking behavior, default safety, migration fields, and validation expectations should be shaped before implementation.
 
-No evidence ledger, resolver, runtime policy data, content JSON change, policy metadata JSON change, Legacy behavior change, creator behavior change, schema change, or live availability change was added.
+No resolver, runtime policy data, schema, creator filtering, Legacy purchase, content JSON change, policy metadata JSON change, save/account migration, UI change, or live availability change was added.
 
 ## Files Inspected
 
 - `README.md`
 - `docs/design/backstory-eligibility-resolver-plan.md`
+- `docs/design/backstory-evidence-ownership-plan.md`
 - `docs/design/backstory-tiered-lane-design.md`
 - `docs/design/backstory-policy-metadata.json`
 - `docs/design/backstory-policy-metadata.md`
@@ -36,123 +37,149 @@ No evidence ledger, resolver, runtime policy data, content JSON change, policy m
 - `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
 - `docs/dev/current-codex-output.md`
 
-Listed files not present on this branch:
-
-- `apps/rpg-ui/src/game-shell/accountProfile.ts`; closest equivalent inspected: `accountProfileManager.ts`
-- `apps/rpg-ui/src/game-shell/chronicle.ts`; closest equivalents inspected: `accountMetaPresentation.ts`, `achievementChroniclesPresentation.ts`, `runLifecycle.ts`, and `newGameSnapshot.ts`
-
 ## Files Changed
 
-- `docs/design/backstory-evidence-ownership-plan.md`
+- `docs/design/backstory-runtime-policy-shape-draft.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Evidence Ownership Summary
+## Runtime Policy Shape Summary
 
-The new plan covers these evidence categories:
+The new draft keeps runtime policy separate from `docs/design/backstory-policy-metadata.json`, `docs/design/legacy-upgrade-catalog-draft.json`, `futureBackstoryLaneDrafts[]`, and design docs.
 
-- `skill_threshold`
-- `earned_skill_maximum`
-- `achievement`
-- `activity_tag`
-- `source_run_evidence`
-- `chronicle_flag`
-- `profession_history`
-- `faction_or_region_reputation`
-- `renown_milestone`
-- `lineage_title`
-- `estate_milestone`
-- `institution_acceptance`
-- `patronage`
-- `adoption`
-- `marriage`
-- `story_outcome`
-- `family_skill_maximum`
-- `family_backstory_history`
-- `legacy_purchase`
-- `echo_requirement`
-- `prestige_requirement`
-- `special_case`
+It proposes a future policy container with:
 
-For each category, the plan defines meaning, likely owner, future storage location, scope, readiness, whether starter-granted values count, tier suitability, missing/default behavior, and risks.
+- `schemaVersion`
+- `policyVersion`
+- `status`
+- `runtimeImportAllowed`
+- `contentVersion`
+- `defaultBackstoryIds`
+- `availabilityRules`
+- `blockedEvidenceKinds`
+- `evidenceKindDefinitions`
+- `scopeDefinitions`
+- `migrationFallbacks`
+- `explainabilityStrings`
 
-## Source Attribution Summary
+The example container remains `runtimeImportAllowed: false` because this pass is a non-runtime draft.
 
-The plan requires future evidence to distinguish starter-granted skill ranks, earned skill gains, inherited/family evidence, Legacy-purchased access, account-wide meta unlocks, family-specific unlocks, source-run evidence, Chronicle flags, and achievements.
+## Availability Status Summary
 
-Starter-granted skill ranks must not count as earned skill maxima by default. Suggested future provenance fields include `sourceType`, `sourceId`, `sourceRunId`, `familyId`, `lineageId`, `scopeType`, `scopeId`, `earnedRankMax`, `starterRankIgnored`, `recordedAt`, and `contentVersion`.
+The draft defines planned statuses:
 
-## Scope Model Summary
+- `always_available`
+- `default_available`
+- `early_legacy`
+- `locked`
+- `hidden`
+- `special`
+- `deferred`
+- `retired`
+- `converted`
 
-The plan defines account-wide, family-specific, lineage-specific, character-specific, source-run-specific, region-specific, faction-specific, institution-specific, estate/title-specific, and special/manual scopes.
+Each status is documented with intended selection, visibility, migration, and blocked-owner behavior.
 
-Key boundary examples:
+## Requirement / Scope / Source Attribution Summary
 
-- Minor Noble should be family, estate, title, or status scoped, not account-wide.
-- Merchant Family may require family or source-run trade evidence.
-- Garrison Ward may require family or source-run militia evidence.
-- Street Vendor can be default, early account unlock, or simple evidence unlock.
-- Local Champion should be local-renown, achievement, title, or region scoped.
-- World-Stray should remain special/manual or hidden.
+The draft proposes rule fields including:
 
-## Near-Term Safe Evidence
+- `backstoryId`
+- `availabilityStatus`
+- `tier`
+- `scopePolicy`
+- `requiresAny`
+- `requiresAll`
+- `requiresLegacyPurchase`
+- `requiresPrestige`
+- `requiresEcho`
+- `requiresEvidence`
+- `blocksIf`
+- `starterSkillEvidencePolicy`
+- `selectedBackstoryEffectPolicy`
+- `explainLocked`
+- `explainUnlocked`
+- `migrationFallback`
 
-Safest future channels:
+Requirement groups include fields for evidence `kind`, `scope`, `scopeId`, `minValue`, `threshold`, allowed source types, starter-granted exclusion, earned-source requirements, owner readiness, missing behavior, blocked behavior, and explanation copy.
 
-- achievements, if mapped narrowly
-- source-run evidence, after explicit evidence summaries exist
-- earned skill maxima, only after source attribution separates earned ranks from starter-granted ranks
-- Chronicle flags, only after a durable vocabulary and owner are defined
+Scope policy covers account, family, lineage, character, source-run, region, faction, institution, estate/title, and special/manual scopes. Source attribution covers starter backstory, starter bundle, earned play, Legacy purchase, achievement, source-run, family ledger, Chronicle flag, story outcome, and migration sources.
 
-## Blocked Evidence
+Starter-granted skill ranks remain excluded from earned skill evidence by default.
 
-Blocked until owning systems exist:
+## Missing / Blocked Data Behavior Summary
 
-- family skill maxima
-- family backstory history
-- heir legitimacy/status
-- estate/title ownership
-- regional renown storage if not durable and scoped
-- institutional membership
-- patronage/contact systems
-- adoption
-- marriage
-- mounted behavior and mount ownership
-- market/economy effects
-- magic licensing/acquisition
-- medical/injury systems
-- oath and paladin behavior
+The draft defines missing or blocked behavior values:
 
-## Representative Backstory Examples
+- `treat_as_unmet`
+- `hide`
+- `defer`
+- `use_default_fallback`
+- `migration_keep_existing_only`
+- `manual_review`
 
-The plan maps future evidence directions for Local, Street Vendor, Militia Levy, Scribe's Apprentice, Merchant Family, Carpenter Household, Miner's Kin, Village Hunter, Scout's Ward, Garrison Ward, Scholar's Apprentice, Temple Acolyte, Hedge Adept, Minor Noble, Local Champion, World-Stray, future Sword Drill, future Trade House, future Paladin Oathline, and future Recognized Heir.
+Blocked evidence must not unlock content. Blocked mechanics should not appear in creator UI as near-term promises.
 
-## Migration / Compatibility Notes
+## Example Rule Summary
 
-- Old accounts with no family ledger should use default/new-account backstories plus explicitly supported account-wide evidence only.
-- Old saves with selected backstories that later become locked should keep historical identity.
-- Old runs lacking source attribution should not infer earned skill maxima.
-- Broad old achievements should not unlock narrow Tier 2 or Tier 3 origins until reviewed.
-- Missing family or lineage ids should not grant family/lineage-scoped origins.
-- Renamed, retired, or converted content ids should preserve historical ids and map only through reviewed migrations.
+The draft includes illustrative, non-runtime examples for:
+
+- Local as `default_available`
+- Street Vendor as a default or `early_legacy` candidate
+- Militia Levy as `early_legacy` or civic-defense evidence gated
+- Merchant Family as Tier 2 trade evidence plus Legacy/Prestige support
+- Garrison Ward as Tier 2 Militia Levy or militia/source-run evidence plus purchase support
+- Minor Noble as Tier 3/special and blocked until family, title, estate, legal claim, or story owners exist
+- Local Champion as special/converted and region/achievement/story scoped
+- World-Stray as special/manual or hidden
+- future Sword Drill as Tier 2 with Militia Levy or earned weapon/drill evidence plus Legacy purchase
+- future Recognized Heir as deferred/special until title, estate, family, and legal-claim owners exist
+
+## Future Validation Expectations
+
+Future test planning should cover:
+
+- every live backstory has a rule or explicit fallback
+- no rule references missing ids except explicit migration/future cases
+- runtime policy does not consume design metadata or future drafts
+- blocked evidence cannot unlock content
+- starter-granted skills are excluded by default
+- Tier 2 and Tier 3 cannot unlock from Legacy purchase alone
+- family-scoped rules do not fall back to account-wide evidence
+- default set is never empty
+- old selected backstories remain valid
+- deferred/special records do not leak unsupported UI promises
+- parent and child backstory effects do not stack
+- missing future ledgers fall back safely
+
+## Migration Strategy
+
+The draft recommends explicit migration fields:
+
+- `policyVersion`
+- `contentVersion`
+- `legacyIdAliases`
+- `retiredBackstoryIds`
+- `convertedBackstoryIds`
+- `preserveExistingSelection`
+- `hideForNewCharacters`
+
+Old selected backstories should remain valid on existing saves even if future filtering locks the same origin for new characters. Missing family, lineage, source-run, or evidence fields should not grant high-tier or family-scoped access.
 
 ## Recommended Next Pipeline
 
-1. Version 0.5.53 - Backstory Runtime Policy Shape Draft
-2. Version 0.5.54 - Backstory Eligibility Resolver Test Plan
-3. Version 0.5.55 - Backstory Eligibility Resolver Implementation
-4. Version 0.5.56 - Creator Locked Backstory Presentation Plan
-5. Version 0.5.57 - Backstory Legacy Purchase Integration Plan
+1. Version 0.5.54 - Backstory Eligibility Resolver Test Plan
+2. Version 0.5.55 - Backstory Eligibility Resolver Implementation
+3. Version 0.5.56 - Creator Locked Backstory Presentation Plan
+4. Version 0.5.57 - Backstory Legacy Purchase Integration Plan
 
-No extra planning step is required before the runtime policy shape draft if that draft remains non-runtime and schema-free.
+No extra planning step is required before the test plan if the test plan stays non-runtime until implementation is explicitly approved.
 
 ## Checks Run
 
-- `git status --short`
-- `npm.cmd run tool:content-lint`
-- `git diff --check`
-
-`git diff --check` passed with line-ending normalization warnings only.
+- `git status --short` - showed only the docs changed in this pass.
+- `npm.cmd run tool:content-lint` - passed, `content-lint: ok (53 files checked)`.
+- `git diff --check` - passed with line-ending normalization warnings only.
 
 ## Behavior / Runtime Confirmation
 
@@ -164,15 +191,15 @@ No character creator, starter skill, Legacy, save/account, combat, magic, econom
 
 ## Risks / Follow-Up
 
-- Future resolver work remains blocked on runtime policy shape, tests, and durable evidence storage.
-- Earned skill maxima are still not safe until starter-granted and earned sources are separated.
-- Family, title, estate, institution, patronage, adoption, marriage, mounted, magic, medical, oath, and economy evidence remain blocked until owner systems exist.
-- The next draft must encode source, scope, and missing-data behavior so blocked evidence cannot accidentally unlock content.
+- Future resolver work still needs a test plan before implementation.
+- Runtime policy data must not be authored until validation can enforce non-import boundaries, blocked evidence behavior, scope isolation, migration safety, and no-stacking.
+- Earned skill maxima remain blocked until starter-granted and earned sources are separated.
+- Family, lineage, estate/title, institution, patronage, adoption, marriage, mounted, magic, medical, oath, and economy evidence remain blocked or partial until owning systems exist.
 
 ## Next Recommended Version
 
-Version 0.5.53 - Backstory Runtime Policy Shape Draft
+Version 0.5.54 - Backstory Eligibility Resolver Test Plan
 
 ## Suggested Commit Message
 
-docs(content): plan backstory evidence ownership
+docs(content): draft backstory runtime policy shape
