@@ -39,11 +39,11 @@ Connector-created commit:
 
 - `eedf1097a5334a7825a763a9a877c07a4f127231`
 
-### Typecheck Blocker Triage Plan Added
+### Typecheck Blocker Triage Folded Into Handoff
 
-Created `docs/dev/typecheck-blocker-triage-plan.md`.
+The standalone `docs/dev/typecheck-blocker-triage-plan.md` was removed after its useful findings were folded into this current handoff. Do not look for that deleted file in future Codex work.
 
-Relevant findings:
+Relevant findings to preserve:
 
 - Root `package.json` defines `typecheck` as `tsc --noEmit -p tsconfig.json`.
 - TypeScript is declared in `apps/rpg-ui/package.json`, not root `package.json`, matching the current Codex handoff's root `tsc` unavailable blocker.
@@ -53,9 +53,10 @@ Relevant findings:
 - Missing `process` type errors likely come from shared/browser-facing code using `process.env` fallback logic without a clear environment typing policy.
 - `exactOptionalPropertyTypes` issues should be cleaned by area, not suppressed globally.
 
-Connector-created commit:
+Connector-created commits:
 
-- `e289b82c1e3a0d5305898324888db5eb0fa60f00`
+- `e289b82c1e3a0d5305898324888db5eb0fa60f00` created the temporary triage plan.
+- `1e13bfde5a093fa147c488ab546f50251664124e` removed the temporary triage plan after folding its useful findings into this handoff.
 
 ## Current Pipeline Reminder
 
