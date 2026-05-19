@@ -8,16 +8,17 @@ Branch/status assumption: GitHub `master` inspected through the connector. No lo
 
 This file is the short current handoff from ChatGPT/GitHub Connector work to future Codex work. It should contain only current connector-side findings, immediate prompt guardrails, and follow-up context that materially affects upcoming development.
 
-This is not a transcript, backlog, roadmap, or durable design ledger. Prune or replace stale entries when their useful guidance moves into another document.
+This is not a transcript, backlog, roadmap, durable design ledger, or archive of every connector audit. Prune or replace stale entries when their useful guidance moves into another document.
 
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest Codex implementation handoff.
 - This file records current connector-side audits, prompt guardrails, and immediate risks.
-- `docs/dev/project-roadmap.md` owns version order, version-band meaning, playability checkpoints, and the lightweight audit queue.
+- `docs/dev/project-roadmap.md` owns version order, version-band meaning, playability checkpoints, and the lightweight audit/source index.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria, vocabulary rules, conceptual boundaries, and open design questions.
 - `docs/dev/project-vision-and-continuity-brief.md` remains the strategic north-star and source map until it is fully decomposed.
 - `docs/future_content_backlog.md` remains the chronological deferred-work and run-note ledger.
+- Focused audit/source docs under `docs/design/` or `docs/dev/` are temporary guardrails while they are useful. Delete or fold them after their guidance is implemented, superseded, or promoted into a durable authority file.
 - If this file conflicts with a newer Codex handoff, trust the newer Codex handoff for exact implementation state and update this file if needed.
 - Do not update `docs/dev/current-codex-output.md` from a GPT/GitHub Connector planning pass.
 
@@ -98,11 +99,31 @@ Minimum acceptance criteria for `0.5.65`:
 - tests prove source-run/heir selection alone does not imply family purchase ownership
 - tests prove selected-backstory starter effects do not stack with parent/child backstory effects
 
+## Focused Audit / Source Docs
+
+These docs were created by connector-safe audit passes. Use them only when their topic is active, and remove or fold them after they stop being useful.
+
+- `docs/design/bloodlines-information-architecture-audit.md` for `0.5.67` / `0.5.68` Bloodlines view-model and read-only UI work.
+- `docs/design/heirloom-vs-bequest-vocabulary-audit.md` for `0.5.66` heirloom/bequest planning.
+- `docs/design/chronicle-run-end-summary-source-audit.md` for future run-end summary planning.
+- `docs/design/combat-audit-scoping-pass.md` before combat/equipment implementation.
+- `docs/design/magic-runtime-readiness-audit.md` before magic runtime/acquisition work.
+- `docs/design/economy-clarity-audit.md` before economy clarity view-model/UI work.
+- `docs/design/calendar-climate-popup-ia-audit.md` before calendar/climate popup work.
+- `docs/dev/prompt-template-hardening-pass.md` when generating future Codex/GitHub Connector prompts.
+
+Temporary guardrail lifecycle:
+
+1. Keep a focused audit/source doc while it prevents confusion for an upcoming implementation or plan.
+2. When a Codex run consumes it, decide whether its guidance should move into `current-gpt-handoff.md`, `project-roadmap.md`, `future-system-design-ledger.md`, `future_content_backlog.md`, or `current-codex-output.md`.
+3. Delete the focused audit/source doc after its useful guidance is implemented, superseded, or promoted into a durable file.
+4. Do not let temporary guardrail files accumulate as a second backlog.
+
 ## Recent Connector Work Folded Elsewhere
 
 ### Long-Term Roadmap
 
-`docs/dev/project-roadmap.md` exists and owns version-band meaning, active pipeline order, lightweight audit queue, playability checkpoints, and major deferred systems.
+`docs/dev/project-roadmap.md` exists and owns version-band meaning, active pipeline order, focused audit/source index, playability checkpoints, and major deferred systems.
 
 ### Future System Design Ledger
 
@@ -170,24 +191,9 @@ Before substantial Codex work, inspect:
 - `docs/design/future-system-design-ledger.md` when design criteria, vocabulary, or future-system boundaries matter
 - `docs/dev/project-vision-and-continuity-brief.md` when strategic direction or source history matters
 - `docs/future_content_backlog.md` when deferred work, historical run notes, or scope changes matter
+- focused audit/source docs only when the active task explicitly references their topic
 
 Do not treat this file as permission to implement broad cleanup or feature work. Use it to avoid repeating connector-side analysis and to keep future prompts narrower.
-
-## Useful GPT/GitHub Connector Passes Still Available
-
-These remain light enough for GPT/GitHub Connector before Codex implementation work:
-
-- Bloodlines Information Architecture Audit
-- Heirloom vs Bequest Vocabulary Audit
-- Chronicle Run-End Summary Source Audit
-- Combat Audit Scoping Pass
-- Magic Runtime Readiness Audit
-- Economy Clarity Audit
-- Calendar / Climate Popup IA Audit
-- Prompt Template Hardening Pass
-- Documentation guidance file maintenance
-
-Escalate to Codex Local when files must be edited beyond docs, validation must be run, or runtime/source/content/schema/UI behavior changes.
 
 ## Maintenance Rules For This File
 
