@@ -11,7 +11,7 @@ This roadmap is a repo-readable planning document for long-term version directio
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic north star and source map until the brief is fully decomposed.
 - `docs/future_content_backlog.md` for deferred content and historical run notes.
 
-The current Codex handoff controls exact current version state. The current GPT handoff controls immediate connector-side guardrails. This roadmap controls version order, maturity bands, playability checkpoints, and lightweight audit queue. The design ledger controls durable conceptual criteria.
+The current Codex handoff controls exact current version state. The current GPT handoff controls immediate connector-side guardrails. This roadmap controls version order, maturity bands, playability checkpoints, and lightweight audit/source indexing. The design ledger controls durable conceptual criteria.
 
 ## 1. Current Anchor
 
@@ -98,6 +98,26 @@ Escalate to Codex Local when:
 - Source code, tests, schemas, runtime content, or UI components must change.
 - Validation commands must be run.
 - The task touches save/account schema, Legacy runtime behavior, resolver behavior, combat math, economy simulation, magic runtime, or generated output.
+
+### Temporary Guardrail File Lifecycle
+
+Focused audit/source docs are useful, but they are temporary guardrails rather than a second backlog.
+
+Keep a focused audit/source doc while:
+
+- it will be directly referenced by an upcoming implementation or planning prompt;
+- it prevents repeated connector-side analysis;
+- its guidance is too detailed for `current-gpt-handoff.md` and too task-specific for the durable design ledger.
+
+After the relevant Codex or planning run consumes it, do one of the following in the same cleanup window:
+
+- delete it if its guidance is implemented or obsolete;
+- fold durable concepts into `docs/design/future-system-design-ledger.md`;
+- fold immediate risk/prompt guardrails into `docs/dev/current-gpt-handoff.md`;
+- fold version/order changes into `docs/dev/project-roadmap.md`;
+- fold chronological deferral/run-note material into `docs/future_content_backlog.md`.
+
+Do not let temporary guardrail files accumulate indefinitely.
 
 ## 5. Near-Term Roadmap After Active Pipeline
 
@@ -204,4 +224,5 @@ These are strategically important but should not interrupt the current ownership
 - Prefer read-only audits before broad implementation work.
 - Preserve the no-backwards-compatibility rule unless explicitly changed by the user.
 - Move durable system criteria to `docs/design/future-system-design-ledger.md`, not into this roadmap.
+- Delete or fold temporary guardrail/source docs after their guidance is implemented, superseded, or promoted into durable files.
 - When in doubt, choose the smallest pass that clarifies ownership, dependencies, validation, or player-facing readability.
