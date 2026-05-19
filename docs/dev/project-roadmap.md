@@ -58,7 +58,7 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.64` | Backstory Legacy Purchase Content Draft | Codex Local after GitHub prompt prep | Content / guard | Next implementation run. Author initial Backstory Legacy purchase records only if exposure is controlled. | Do not naively add live `legacy_unlocks.json` records that become visible/purchasable. Use draft-only records or a minimal visibility/purchase guard. |
 | `0.5.65` | Backstory Legacy Purchase Resolver Integration | Codex Local, or Plan Mode first if seam is unclear | Resolver integration | Pass owned purchase ids into resolver in a scoped tested way. | Explicit source of account purchase ids, family purchase ids, and `familyId`; no fake evidence. |
 | `0.5.66` | Heirloom And Bequest Systems Plan | GitHub Connector or Codex Plan Mode | Docs / planning | Separate material bequests from item-chain heirlooms and Bloodline traits. | Planning-only unless explicitly changed. |
-| `0.5.67` | Bloodlines View Model Implementation Plan | GitHub Connector or Codex Plan Mode | Docs / planning | Define pure projection of families, tree, and prestige summaries. | View-model-first; no React sprawl. |
+| `0.5.67` | Bloodlines View Model Implementation Plan | GitHub Connector or Codex Plan Mode | Docs / planning | Define pure projection of families, tree, and prestige summaries. | Use `docs/design/bloodlines-information-architecture-audit.md`; view-model-first; no React sprawl. |
 | `0.5.68` | Bloodlines Read-Only Account Meta UI | Codex Local | View-model / UI | Render Bloodlines in account meta / Chronicles surface. | Read-only; no family management, purchase execution, or resolver bypass. |
 
 ## 4. Lightweight GPT + GitHub Connector Audit / Planning Queue
@@ -75,21 +75,21 @@ Completed or folded connector passes:
 | Backlog Superseded-Ordering Cleanup Plan | `current-gpt-handoff.md` precedence rules; `future_content_backlog.md` remains historical. |
 | Typecheck Blocker Triage Plan | Folded into `current-gpt-handoff.md`; temporary plan file removed. |
 | Future System Design Ledger Creation | `docs/design/future-system-design-ledger.md`. |
-| Development Guidance File Cleanup | This roadmap plus `current-gpt-handoff.md`; continuity brief cleanup may continue separately. |
+| Development Guidance File Cleanup | Roadmap, current handoff, and continuity brief deconstruction. |
+| Bloodlines Information Architecture Audit | `docs/design/bloodlines-information-architecture-audit.md`; use for `0.5.67` / `0.5.68`. |
 
 Remaining useful connector passes:
 
 | Priority | Pass | Why It Is Light Enough | Suggested Files To Inspect | Output |
 | --- | --- | --- | --- | --- |
-| 1 | Bloodlines Information Architecture Audit | Planning-only review of what a read-only Bloodlines surface should show first. | `future-system-design-ledger.md`, Bloodline/tree presentation plan, account family types/helpers, run history types, account meta presentation. | View-model/UI information hierarchy. |
-| 2 | Heirloom vs Bequest Vocabulary Audit | Terminology risk can be reduced before implementation. | `future-system-design-ledger.md`, continuity brief, design plans, backlog references. | Vocabulary rules and forbidden conflations, likely folded into ledger if missing. |
-| 3 | Chronicle Run-End Summary Source Audit | Identifies existing data sources for future death/retirement/impact summary without implementation. | Chronicle/history/account profile files, run history contracts, launcher/account UI files. | Data-source map and missing owner list. |
-| 4 | Combat Audit Scoping Pass | Broad combat implementation is high-risk, but a read-only scope audit is cheap and useful. | Combat engine files, equipment profiles, combat tests, backlog notes, design ledger. | Ranked list of high-ROI combat issues to later validate locally. |
-| 5 | Magic Runtime Readiness Audit | Keeps magic from jumping from metadata to runtime without owner boundaries. | Magic charter, spellbook blueprint, spells catalog, magic validation tests, design ledger. | Runtime-readiness checklist and blocked areas. |
-| 6 | Economy Clarity Audit | Economic clarity can be planned from existing data without changing simulation. | Economy docs/content, market profile files, UI display surfaces, design ledger. | Candidate player-facing labels and data sources. |
-| 7 | Calendar / Climate Popup IA Audit | UI planning only; no runtime changes. | Calendar/climate content, current UI shell, README data system notes, design ledger. | Popup contents, data dependencies, and deferred behavior. |
-| 8 | Prompt Template Hardening Pass | Improves future Codex prompts without code changes. | AGENTS, current handoffs, roadmap, design ledger. | Reusable acceptance-criteria blocks for content/resolver/UI/docs runs. |
-| 9 | Roadmap Maintenance Pass | Keeps long-term version checkpoints updated as new handoffs land. | This roadmap, current handoffs, design ledger, backlog. | Small docs-only update when direction changes. |
+| 1 | Heirloom vs Bequest Vocabulary Audit | Terminology risk can be reduced before implementation. | `future-system-design-ledger.md`, continuity brief, design plans, backlog references. | Vocabulary rules and forbidden conflations, likely folded into ledger if missing. |
+| 2 | Chronicle Run-End Summary Source Audit | Identifies existing data sources for future death/retirement/impact summary without implementation. | Chronicle/history/account profile files, run history contracts, launcher/account UI files. | Data-source map and missing owner list. |
+| 3 | Combat Audit Scoping Pass | Broad combat implementation is high-risk, but a read-only scope audit is cheap and useful. | Combat engine files, equipment profiles, combat tests, backlog notes, design ledger. | Ranked list of high-ROI combat issues to later validate locally. |
+| 4 | Magic Runtime Readiness Audit | Keeps magic from jumping from metadata to runtime without owner boundaries. | Magic charter, spellbook blueprint, spells catalog, magic validation tests, design ledger. | Runtime-readiness checklist and blocked areas. |
+| 5 | Economy Clarity Audit | Economic clarity can be planned from existing data without changing simulation. | Economy docs/content, market profile files, UI display surfaces, design ledger. | Candidate player-facing labels and data sources. |
+| 6 | Calendar / Climate Popup IA Audit | UI planning only; no runtime changes. | Calendar/climate content, current UI shell, README data system notes, design ledger. | Popup contents, data dependencies, and deferred behavior. |
+| 7 | Prompt Template Hardening Pass | Improves future Codex prompts without code changes. | AGENTS, current handoffs, roadmap, design ledger. | Reusable acceptance-criteria blocks for content/resolver/UI/docs runs. |
+| 8 | Roadmap Maintenance Pass | Keeps long-term version checkpoints updated as new handoffs land. | This roadmap, current handoffs, design ledger, backlog. | Small docs-only update when direction changes. |
 
 ### Connector Pass Rules
 
@@ -120,7 +120,7 @@ These are likely candidates after `0.5.68`, subject to the current handoff at th
 | `0.5.69+` | Magic runtime readiness refresh | Deep Research, GitHub Connector, or Plan Mode | Research / docs | No runtime magic until owner boundaries are explicit. |
 | `0.5.69+` | Economic clarity layer plan | GitHub Connector or Plan Mode | Planning | Clarity before simulation. |
 | `0.5.69+` | Calendar / climate popup plan | GitHub Connector | UI IA | Data-backed popup before broader time/weather effects. |
-| `0.5.69+` | Continuity brief deconstruction | GitHub Connector | Docs-only | Shorten brief after the roadmap, handoffs, backlog, and ledger are stable. |
+| `0.5.69+` | Continuity brief maintenance | GitHub Connector | Docs-only | Keep strategic index short as other docs absorb detail. |
 
 ## 6. `v0.6.x` Runtime Ownership Transition
 
