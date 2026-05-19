@@ -5,15 +5,17 @@ Keep the DOCX as the formatted human-readable copy. Prefer this Markdown file as
 
 # Lineage: Reforged - Project Vision, Development Direction, and Continuity Brief
 
-Updated 2026-05-19 after the `v0.5.63 - Backstory Legacy Purchase Runtime Shape` handoff and Markdown conversion.
+Updated 2026-05-19 after the `v0.5.63 - Backstory Legacy Purchase Runtime Shape` handoff, Markdown conversion, and Deep Research alignment review.
 
-Source note: this document consolidates the uploaded project brief, older EoL / Echoes prompt archives, ongoing project discussions, the current GitHub handoff, and the standing repository workflow rules. Older prompts are treated as useful direction, backlog, or deferred material only where they still fit the current Lineage: Reforged development strategy.
+Source note: this document consolidates the uploaded project brief, older EoL / Echoes prompt archives, ongoing project discussions, the current GitHub handoff, and the standing repository workflow rules. Older prompts are treated as useful direction, backlog, or deferred material only where they still fit the current Lineage: Reforged development strategy. Chronological backlog run notes may preserve superseded same-day ordering experiments; when ordering conflicts arise, use the live handoff plus this brief's current pipeline table as the active authority.
 
 ## Revision Note
 
 The current repository anchor is `Version 0.5.63 - Backstory Legacy Purchase Runtime Shape`. That pass added the first family-scoped unlock ownership shape and a read-only Backstory Legacy purchase evidence helper while keeping purchase content, resolver wiring, creator behavior, Legacy purchase UI, and visible backstory availability unchanged.
 
 The prior prompt-routing/tool-selection concern is now treated as an operating rule rather than a blocking pipeline item. `AGENTS.md` already establishes that platform/tool recommendations belong outside prompt bodies. This brief preserves the practical routing matrix so future threads can choose between GitHub Connector, Deep Research, Agent Mode, Codex Plan Mode, Codex Local, Codex Cloud, and lower-cost models without blocking the active game-system pipeline.
+
+The Deep Research alignment review confirmed that the active pipeline remains sound, but tightened two near-term guardrails: the `0.5.64` content draft must be safe catalog authoring rather than live purchase exposure, and `0.5.65` resolver integration must explicitly identify where family context and owned purchase ids come from before any family-scoped purchase evidence reaches the resolver.
 
 The current next pipeline step is `Version 0.5.64 - Backstory Legacy Purchase Content Draft`.
 
@@ -67,6 +69,8 @@ The current near-term pipeline is focused on Legacy and Bloodline infrastructure
 The project has moved out of the earlier broad stabilization pass and into a safer systems-building phase. The latest inspected handoff is `Version 0.5.63 - Backstory Legacy Purchase Runtime Shape`. That pass added runtime-owned family-scoped unlock ownership and a read-only Backstory Legacy purchase evidence helper while keeping purchase content, resolver/creator wiring, Legacy purchase UI, and visible availability deferred.
 
 The prompt-routing review remains important as an operating rule, but it no longer blocks the game-system pipeline. Future prompts should still choose the right platform/model/tool and avoid wasting Codex tokens, while the next repository pass should proceed to the Backstory Legacy purchase content draft.
+
+The live handoff takes precedence over this brief for exact current version state. This brief takes precedence over older pasted prompt lists and chronological backlog notes for active strategic ordering, unless a newer live handoff explicitly supersedes it.
 
 | Area | Current State | Development Meaning |
 | --- | --- | --- |
@@ -156,6 +160,14 @@ When the user asks whether Codex 5.4 is fine versus Codex 5.5, the default answe
 - Avoid loading unrelated systems, generated output, screenshots, or content files unless the task needs them.
 - Be token-aware, but never sacrifice correctness, validation, continuity, or architecture just to save tokens.
 
+### 5.5 Prompt acceptance-criteria guardrails
+
+- Content prompts must explicitly state whether authored records are live, draft-only, hidden, catalog-visible, or inert until later wiring.
+- Resolver-integration prompts must explicitly identify the caller-owned source of purchase ids, `familyId`, region context, and any other scoped evidence before passing data into resolver logic.
+- Creator-facing prompts must prove they do not bypass resolver selectability or fabricate family/status/region evidence in UI code.
+- Docs-only prompts should not update `docs/dev/current-codex-output.md` unless they are the actual Codex handoff for that run.
+- If the backlog, old prompts, or pasted context disagree with the live handoff and this brief, prompts must call out the mismatch instead of silently merging priorities.
+
 ## 6. Legacy, Chronicle, Bloodlines, and Backstory Direction
 
 ### 6.1 Top-level meta-progression structure
@@ -217,11 +229,13 @@ Categories should describe how an upgrade affects the player/family. They should
 
 The latest inspected handoff says `Version 0.5.63 - Backstory Legacy Purchase Runtime Shape` has landed. The next run should be the Backstory Legacy Purchase Content Draft, using the newly added ownership/evidence-helper shape without wiring purchases into the resolver or creator yet.
 
+The active order remains correct after the Deep Research alignment review. The refinement is not a reorder; it is stricter acceptance criteria for `0.5.64` and `0.5.65` so content authoring does not accidentally become live exposure and resolver integration does not fabricate family context.
+
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
 | 0.5.63 | Backstory Legacy Purchase Runtime Shape | Landed: added family-scoped unlock ownership and a read-only Backstory Legacy purchase evidence helper. | No purchase content, no resolver/creator wiring, no visible availability change. |
-| 0.5.64 | Backstory Legacy Purchase Content Draft | Author initial Backstory Legacy purchase content draft after ownership shape exists. | No resolver integration and no creator-visible change yet. |
-| 0.5.65 | Backstory Legacy Purchase Resolver Integration | Pass owned purchase ids into resolver in a scoped, tested way. | No fake family evidence; wrong-scope purchases fail. |
+| 0.5.64 | Backstory Legacy Purchase Content Draft | Author initial Backstory Legacy purchase records against the existing ownership/helper shape. | Safe catalog-authoring only: deliberate tags/scopes, no accidental live purchase exposure, no resolver integration, no creator-visible change, and unsupported scopes remain inert/warned. |
+| 0.5.65 | Backstory Legacy Purchase Resolver Integration | Pass owned purchase ids into resolver in a scoped, tested way. | Explicitly define where account purchase ids, family purchase ids, and `familyId` come from; no fake family evidence; wrong-scope purchases fail; creator-visible family purchase availability is not implied unless separately scoped. |
 | 0.5.66 | Heirloom And Bequest Systems Plan | Plan estate/material inheritance and item-chain inheritance separately from Bloodline traits. | Planning-only unless explicitly changed. |
 | 0.5.67 | Bloodlines View Model Implementation Plan | Plan or begin pure projection of families, tree, and prestige summaries. | View-model first; no React sprawl. |
 | 0.5.68 | Bloodlines Read-Only Account Meta UI | Render Bloodlines in the account meta/Chronicles surface. | Read-only; no family management or unlock bypass. |
@@ -325,6 +339,8 @@ Family records and prestige ledger shape now exist, but no family creation/manag
 - Always include validation commands appropriate to the scope.
 - For docs-only passes, do not run broad tests or typecheck unless tooling requires it.
 - For runtime shape passes, include focused tests and document known typecheck blockers.
+- For content-draft passes, include explicit assertions that content records do not become visible, selectable, purchasable, or effect-bearing unless that behavior is the named scope of the run.
+- For resolver-integration passes, include explicit assertions about ownership, wrong-scope failure, unsupported-scope warnings, and the source of caller context such as `familyId`.
 - Never allow a prompt to import design docs/draft catalogs into runtime code unless the pass is explicitly a migration into live content.
 - Always state whether Deep Research or Agent Mode should be used before Codex when outside knowledge, broad investigation, or multi-step research would improve quality.
 - Prefer ChatGPT/GitHub Connector for handoff inspection and prompt generation to reduce Codex token use.
@@ -358,6 +374,8 @@ That is the difference between Lineage: Reforged and a generic RPG. The safest p
 | Ideas file | Used for raw future ideas and triage. Consolidated into current terminology; obsolete phrasing replaced where appropriate. |
 | Current GitHub handoff v0.5.63 | Used as the current pipeline anchor and repository reality checkpoint. |
 | AGENTS workflow review | Used to preserve prompt-routing and token-aware tool/model selection requirements. |
+| Deep Research alignment review | Used to tighten near-term pipeline guardrails, especially safe `0.5.64` content exposure boundaries and the `0.5.65` family-context resolver seam. |
+| Chronological future backlog | Treated as historical run notes plus deferred work tracking. When same-day run notes contain superseded ordering experiments, the live handoff and this brief's current pipeline table control active sequence. |
 | Ongoing conversation | Used for decisions about Chronicle/Bloodlines, Family Prestige, Chronicle Marks, Lineage Seals, Bloodline vs Bequest vs Heirloom, backstory resolver guardrails, Codex workflow, and prompt routing. |
 
 ## Appendix B - Prompt Routing Cheat Sheet
