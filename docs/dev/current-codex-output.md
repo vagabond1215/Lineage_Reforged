@@ -1,165 +1,168 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.59 - Backstory Legacy Purchase Integration Plan
+Source version/run: Version 0.5.60 - Legacy Scope And Bloodline Economy Plan
 Date: 2026-05-19
 Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed a clean worktree.
 
 ## Result
 
-Added a planning-only Backstory Legacy Purchase Integration Plan for future Backstory Legacy purchase work now that the character creator consumes resolver-backed backstory availability.
-
-The plan keeps Legacy purchases as support for resolver eligibility, not a substitute for scoped evidence or blocked owner systems. It does not add purchase records, change runtime behavior, change resolver policy semantics, or change creator availability.
+Added a planning-only Legacy Scope and Bloodline Economy Plan. This revises the immediate Backstory Legacy purchase pipeline so family records, family prestige ledgers, Bloodline economy boundaries, and scoped purchase ownership are planned before Backstory Legacy purchase runtime work.
 
 ## Files Inspected
 
 - `AGENTS.md`
 - `README.md`
+- `docs/dev/current-codex-output.md`
+- `docs/future_content_backlog.md`
+- `docs/design/backstory-legacy-purchase-integration-plan.md`
 - `docs/design/backstory-creator-presentation-plan.md`
-- `docs/design/backstory-eligibility-resolver-test-plan.md`
-- `docs/design/backstory-runtime-policy-shape-draft.md`
 - `docs/design/backstory-evidence-ownership-plan.md`
+- `docs/design/backstory-runtime-policy-shape-draft.md`
 - `docs/design/backstory-eligibility-resolver-plan.md`
 - `docs/design/backstory-tiered-lane-design.md`
-- `docs/design/backstory-policy-metadata.md`
-- `docs/future_content_backlog.md`
-- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-- `packages/engines/game-engine/src/backstory-eligibility.ts`
+- `docs/design/legacy-upgrade-catalog-draft.json`
+- `packages/shared/types/src/contracts.ts`
 - `packages/engines/game-engine/src/legacy-unlocks.ts`
 - `packages/engines/game-engine/src/legacy-account.ts`
-- `packages/engines/game-engine/src/index.ts`
-- `packages/content/base/player/backstories.json`
+- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
 - `packages/content/base/player/legacy_unlocks.json`
-- `packages/shared/types/src/contracts.ts`
 - `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
 - `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
 - `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
-- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
-- `docs/dev/current-codex-output.md`
 
 ## Files Changed
 
+- `docs/design/legacy-scope-bloodline-economy-plan.md`
 - `docs/design/backstory-legacy-purchase-integration-plan.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Core Purchase Principle Summary
+## Legacy Scope Organization Summary
 
-The new plan defines the central rule: Legacy purchase can support access, but it must not create unsupported history.
+The plan organizes future Legacy presentation as:
 
-For Tier 2 and Tier 3 origins, purchase alone must fail. Matching evidence still needs to exist, and purchase acts as support, recognition, authorization, or investment rather than invented competence, status, or institutional membership.
+```text
+Legacy
+  Chronicle
+  Bloodlines
+```
 
-## Scope Model Summary
+Chronicle covers account-wide upgrades, cross-family progression, broad system unlocks, global preparation capacity, and account-level marks. Bloodlines covers family lists, family records, family trees, heir slots once owned, family prestige, family-specific upgrades, bloodline preparations, bequests, heirlooms, and family-scoped backstory unlock support.
 
-The plan separates purchase scopes:
+"New Game+" is not a top-level lore category; those effects should live inside Chronicle or Bloodlines depending on scope.
 
-- account scope for broad low-risk Tier 1 access only
-- family scope for household, family, trade, craft, garrison, or inherited origins
-- region scope for local renown or regional access
-- institution scope for temple, scholar, guild, oath, or order origins after ownership exists
-- estate/title scope for noble, heir, and recognized-claim origins after ownership exists
-- source-run support only after source-run evidence is durable
+## Family Tree Planning Summary
 
-It explicitly keeps Minor Noble, Merchant Family, Garrison Ward, Local Champion, and World-Stray from becoming account-wide shortcuts.
+Family trees are planned as derived hierarchical presentation over flat records:
 
-## Tier Rule Summary
+- family records
+- character/run records tagged with `familyId`
+- optional `parentCharacterId`
+- later branch, cadet, illegitimate branch, adoption, marriage, or recognition metadata
 
-- Tier 1: some low-risk origins may be early-Legacy or account-level unlocks when no blocked owner is needed.
-- Tier 2: requires scoped evidence plus purchase/support; purchase alone fails.
-- Tier 3: long-term, evidence-heavy, and usually blocked until family/status/institution/estate/renown owners exist.
-- Special: narrative/manual/story-owned; usually not ordinary Legacy purchases.
-- Deferred: no purchase path until required owner systems exist.
+The plan avoids nested mutable tree storage unless a later implementation proves it is necessary.
 
-## Evidence And Blocked-Owner Summary
+## Category Model Summary
 
-The plan keeps `requiresLegacyPurchase` as support for `requiresEvidence`, `requiresAny`, and `requiresAll`.
+Categories are planned as sorting/organization tags, not separate currencies by default.
 
-Blocked owners remain blocked:
+Recommended categories:
 
-- family skill maxima
-- family backstory history
-- heir legitimacy/status
-- estate/title ownership
-- regional renown storage if not durable/scoped
-- institutional membership
-- patronage/contact systems
-- adoption
-- marriage
-- mounted behavior and mount ownership
-- market/economy effects
-- magic licensing/acquisition
-- medical/injury systems
-- oath and paladin behavior
+- Renown
+- Martial
+- Production
+- Commerce
+- Lore & Faith
+- Survival / Utility
+- Household / Lineage
+- Preparation
 
-Legacy purchase must not bypass these owners.
+The plan explicitly avoids category-specific prestige pools unless later balancing proves they are needed.
 
-## Resolver Integration Planning Summary
+## Currency / Marks Model Summary
 
-The resolver already accepts `legacyPurchaseIds` and evaluates `requiresLegacyPurchase`.
+The plan separates three future resources:
 
-Future integration should pass only purchase ids owned by account/family/region/institution/storage once those owners exist. The creator should continue consuming resolver output rather than checking purchase state directly.
+- Family Prestige: earned and spent by a specific family.
+- Chronicle Marks: account-wide marks from family accomplishments, reduced family-prestige conversion, or major milestones.
+- Lineage Seals: rare benchmark currency from branch closure, heir claim retirement, major family milestones, or high-value sacrifices.
 
-## Legacy Runtime Integration Planning Summary
+No currency or storage was implemented.
 
-Future runtime work should:
+## Family Prestige Ledger Summary
 
-- add Backstory Legacy unlock records only after the runtime shape is approved
-- classify purchase mode, scope, currency, duration, and implementation priority explicitly
-- validate requirements before purchase
-- treat unsupported requirements as blocked
-- avoid starter skill, attribute, ability, item, money, contact, market, mount, magic, medical, title, or oath effects
-- preserve selected-backstory-only starter effects and no parent/child stacking
+The plan requires ledger-based Family Prestige instead of summing earned prestige per character.
 
-## Creator/UI Planning Summary
+Draft transaction fields include transaction id, family id, character/source-run source, grant/spend kind, amount, category tag, source type/id, timestamp, and summary. Derived totals should include earned, spent, available, and optional category/source presentation totals.
 
-The plan keeps purchases out of the creator until a real purchase path exists. The account/Legacy surface is the likely purchase location. Creator locked copy should stay conservative and should not promise unsupported systems or purchase buttons ahead of implementation.
+## Chronicle Conversion / Heir Claim Retirement Summary
 
-## Future Storage Planning Summary
+The plan allows reduced conversion from family success to account-wide Chronicle Marks after explicit unlocks. It also plans future heir claim retirement, branch closure, or line dedication as ways to convert old family momentum into Chronicle Marks or Lineage Seals.
 
-Future storage may need account-level purchased ids for low-risk Tier 1 access and scoped purchased ids for family, region, institution, estate/title, or source-run support. Missing storage should resolve as absent, not inferred from account Legacy points.
+Suggested language includes:
 
-No save/account schema changes were made.
+- Enter into the Chronicle
+- Preserve the Family Record
+- Settle the Line
+- Close a Branch
+- Dedicate a Branch to the Chronicle
 
-## Testing Plan Summary
+## Bloodline Upgrades Summary
 
-The plan calls for future tests proving:
+Bloodline upgrades are defined as inherited potential, family tendency, aptitude, temperament, growth, or prestige affinity.
 
-- Tier 1 early-Legacy purchase paths work only when policy allows
-- Tier 2/Tier 3 purchase alone fails
-- wrong-scope purchases fail
-- blocked evidence plus purchase fails or defers
-- family-scoped purchases do not work account-wide
-- account purchases cannot unlock Minor Noble/status/institution/magic/mount/medical/oath origins
-- creator passes only owned purchase ids
-- purchases grant no starter effects by themselves
-- no parent/child backstory stacking
-- no design metadata imports
-- no compatibility rescue behavior
+Examples include improved starting stat point chance, family-associated skill growth, increased prestige gain for descendants, improved physique/nature/focus chances, small temperament/resistance bonuses, and better aptitude for production, combat, social, or utility paths.
 
-## Initial Candidate Purchase Matrix Summary
+These are intentionally separate from bequests.
 
-The plan classifies all 27 current live backstories:
+## Bequest Model Summary
 
-- Default/no purchase: Local, Vagabond, Exile, Farmhand, Amnesiac, plus current common always-available Workshop-Raised and Street-Raised.
-- Possible low-risk Tier 1 early-Legacy: Street Vendor, Net-Tender, Gatherer, Drover's Hand, Kitchen Hand, Militia Levy, Scribe's Apprentice.
-- Tier 2 purchase plus evidence: Merchant Family, Carpenter Household, Miner's Kin, Village Hunter, Scout's Ward, Garrison Ward.
-- Hidden/deferred due blocked systems: Troupe-Raised, Scholar's Apprentice, Temple Acolyte, Hedge Adept.
-- Tier 3/deferred owner blocked: Minor Noble.
-- Special/manual: Local Champion and World-Stray.
+Bequests are intentional estate or material transfers: coin, tools, supplies, land parcels, workshop stakes, estate claims, documents, trade licenses, legal writs, or later contacts after contact systems exist.
 
-No live policy was changed.
+Bequests should not represent genetic/stat/growth RNG-style upgrades and should not unlock social/status origins by themselves.
 
-## Recommended Next Pipeline
+## Heirloom System Summary
 
-1. Version 0.5.60 - Backstory Legacy Purchase Runtime Shape
-2. Version 0.5.61 - Backstory Legacy Purchase Content Draft
-3. Version 0.5.62 - Backstory Legacy Purchase Resolver Integration
-4. Version 0.5.63 - Backstory Legacy Purchase UI/Account Presentation Plan
+Heirlooms are planned as a distinct family item-chain system:
+
+- expensive family unlock to register a specific item instance
+- family prestige cost to pass it forward
+- one eligible holder at a time
+- no duplication
+- loss, theft, confiscation, destruction, or irreparable breakage interrupts the chain
+
+No item persistence was implemented.
+
+## Backstory Unlock Relationship Summary
+
+The plan explains how Bloodline economy planning supports future Backstory Eligibility work:
+
+- Family Prestige can support family-scoped backstory unlocks.
+- Family tree/history can become evidence later.
+- Bloodline upgrades can unlock family tendencies without stacking starter effects.
+- Bequests and heirlooms should not directly grant backstory identity.
+- Minor Noble, Merchant Family, Garrison Ward, Local Champion, and World-Stray remain scoped or blocked according to their existing resolver direction.
+
+No current backstory policy changed.
+
+## Revised Pipeline Summary
+
+The v0.5.59 immediate Backstory Legacy purchase runtime sequence is superseded.
+
+Revised pipeline:
+
+1. Version 0.5.61 - Family Records And Prestige Ledger Runtime Shape
+2. Version 0.5.62 - Chronicles Bloodline Tree Presentation Plan
+3. Version 0.5.63 - Backstory Legacy Purchase Runtime Shape
+4. Version 0.5.64 - Backstory Legacy Purchase Content Draft
+5. Version 0.5.65 - Backstory Legacy Purchase Resolver Integration
+6. Version 0.5.66 - Heirloom And Bequest Systems Plan
 
 ## Checks Run
 
 - `git status --short`
   - Showed only expected docs-only changes:
+    - `docs/design/legacy-scope-bloodline-economy-plan.md`
     - `docs/design/backstory-legacy-purchase-integration-plan.md`
     - `docs/future_content_backlog.md`
     - `docs/dev/current-codex-output.md`
@@ -178,23 +181,26 @@ No content JSON changed.
 No live backstory records were added, removed, renamed, or modified.
 No policy metadata JSON changed.
 No starter skill, starting ability, attribute, save/account schema, combat, magic, economy, progression, launcher UI asset, generated UI output, or visible availability behavior changed.
-This pass only adds a planning document for future Backstory Legacy purchase integration.
+This pass only adds a planning document and revises the future pipeline.
 
 ## Risks / Follow-Up
 
-- Family/source-run ledgers remain missing.
-- Earned skill maxima storage remains missing.
-- Scoped purchase storage remains missing.
-- Existing Legacy runtime may not yet represent family-scoped backstory purchases cleanly.
-- Broad achievements remain too loose for narrow Tier 2/Tier 3 unlocks without explicit mapping.
-- Creator now consumes resolver output, so bad purchase evidence could visibly unlock content.
-- Blocked owner bypass remains the main risk.
-- Typecheck remains affected by known workspace/pre-existing TypeScript issues from the previous handoff.
+- Family ids do not yet exist on run history records.
+- Parent/child lineage links do not yet exist.
+- Family prestige storage does not yet exist.
+- Chronicle Marks and Lineage Seals do not yet exist.
+- Heir slots do not yet exist.
+- Heirloom item-instance persistence does not yet exist.
+- Estate/title/status systems are still missing.
+- Categories should remain sorting tags, not currency fragmentation.
+- Bad family-scoped evidence could incorrectly unlock creator backstories because creator now consumes resolver output.
+- Broad runtime implementation should not start until the runtime shape is narrow and tested.
+- Typecheck remains affected by known workspace/pre-existing TypeScript issues.
 
 ## Next Recommended Version
 
-Version 0.5.60 - Backstory Legacy Purchase Runtime Shape
+Version 0.5.61 - Family Records And Prestige Ledger Runtime Shape
 
 ## Suggested Commit Message
 
-docs(legacy): plan backstory purchase integration
+docs(legacy): plan bloodline economy scope

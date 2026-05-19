@@ -4,6 +4,10 @@ Source version/run: Version 0.5.59 - Backstory Legacy Purchase Integration Plan
 Date: 2026-05-19
 Status: planning-only design document
 
+## Pipeline Supersession Note
+
+Version 0.5.60 adds `docs/design/legacy-scope-bloodline-economy-plan.md` and supersedes the immediate Backstory Legacy purchase runtime sequence proposed at the end of this document. Backstory Legacy purchase runtime work should wait until family records, family prestige ledger shape, Bloodline economy boundaries, and scoped purchase ownership are planned.
+
 ## Purpose
 
 This document plans how future Backstory Legacy purchases should support the runtime-owned Backstory Eligibility Resolver. It is design guidance only.
@@ -385,14 +389,23 @@ This table is planning only. It does not change live policy, Legacy catalog reco
 
 ## Recommended Implementation Sequence
 
-Recommended next pipeline:
+Original recommended next pipeline from Version 0.5.59:
 
 1. Version 0.5.60 - Backstory Legacy Purchase Runtime Shape
 2. Version 0.5.61 - Backstory Legacy Purchase Content Draft
 3. Version 0.5.62 - Backstory Legacy Purchase Resolver Integration
 4. Version 0.5.63 - Backstory Legacy Purchase UI/Account Presentation Plan
 
-Version 0.5.60 should choose the runtime purchase shape before any Legacy catalog records are added. It should answer whether Backstory Legacy purchases use a new category, existing `Lineage`/`Chronicle` categories, account-only storage, or a future scoped storage model.
+This sequence is superseded by Version 0.5.60 because family/source-run ledgers, scoped purchase storage, family prestige ownership, and Bloodline structure need deeper planning before Backstory Legacy purchase runtime work starts.
+
+Revised pipeline:
+
+1. Version 0.5.61 - Family Records And Prestige Ledger Runtime Shape
+2. Version 0.5.62 - Chronicles Bloodline Tree Presentation Plan
+3. Version 0.5.63 - Backstory Legacy Purchase Runtime Shape
+4. Version 0.5.64 - Backstory Legacy Purchase Content Draft
+5. Version 0.5.65 - Backstory Legacy Purchase Resolver Integration
+6. Version 0.5.66 - Heirloom And Bequest Systems Plan
 
 ## Risks And Open Questions
 
