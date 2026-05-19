@@ -31,6 +31,10 @@ export {
   FAMILY_PRESTIGE_TRANSACTION_KINDS,
   createDefaultAccountFamiliesState,
   createEmptyAccountFamilyPrestigeTotals,
+  hasFamilyUnlock,
+  listFamilyUnlockIds,
+  listFamilyUnlocks,
+  resolveFamilyUnlocksByFamily,
   resolveFamilyPrestigeTotals,
   resolveFamilyPrestigeTotalsByFamily
 } from "./account-family.js";
@@ -116,6 +120,12 @@ export {
   type BackstoryEligibilityState,
   type BackstoryEligibilityThresholdRecord
 } from "./backstory-eligibility.js";
+export {
+  isBackstoryLegacyPurchaseDefinition,
+  resolveOwnedBackstoryLegacyPurchaseIds,
+  type OwnedBackstoryLegacyPurchaseIdResolution,
+  type ResolveOwnedBackstoryLegacyPurchaseIdsParams
+} from "./backstory-legacy-purchases.js";
 export {
   createCombatModeState,
   createDefaultGameState,

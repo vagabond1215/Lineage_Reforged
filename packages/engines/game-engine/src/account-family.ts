@@ -1,5 +1,6 @@
 import type {
   AccountFamiliesState,
+  AccountFamilyUnlockState,
   AccountFamilyPrestigeCategoryTotals,
   AccountFamilyPrestigeTotals,
   AccountFamilyStatus,
@@ -40,7 +41,8 @@ function createEmptyCategoryTotals(): AccountFamilyPrestigeCategoryTotals {
 export function createDefaultAccountFamiliesState(): AccountFamiliesState {
   return {
     families: [],
-    prestigeTransactions: []
+    prestigeTransactions: [],
+    familyUnlocks: []
   };
 }
 
@@ -90,6 +92,43 @@ export function resolveFamilyPrestigeTotalsByFamily(
     state.families.map((family) => [
       family.familyId,
       resolveFamilyPrestigeTotals(state, family.familyId)
+    ])
+  );
+}
+
+export function listFamilyUnlocks(
+  state: AccountFamiliesState,
+  familyId: string
+): AccountFamilyUnlockState[] {
+  return state.familyUnlocks
+    .filter((unlock) => unlock.familyId === familyId)
+    .map((unlock) => ({ ...unlock }));
+}
+
+export function listFamilyUnlockIds(
+  state: AccountFamiliesState,
+  familyId: string
+): string[] {
+  return listFamilyUnlocks(state, familyId).map((unlock) => unlock.unlockId);
+}
+
+export function hasFamilyUnlock(
+  state: AccountFamiliesState,
+  familyId: string,
+  unlockId: string
+): boolean {
+  return state.familyUnlocks.some(
+    (unlock) => unlock.familyId === familyId && unlock.unlockId === unlockId
+  );
+}
+
+export function resolveFamilyUnlocksByFamily(
+  state: AccountFamiliesState
+): Record<string, AccountFamilyUnlockState[]> {
+  return Object.fromEntries(
+    state.families.map((family) => [
+      family.familyId,
+      listFamilyUnlocks(state, family.familyId)
     ])
   );
 }

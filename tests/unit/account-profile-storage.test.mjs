@@ -292,6 +292,15 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
             characterId: "player.arden_voss",
             sourceRunId: "player.arden_voss::2026-04-17T12:00:00.000Z"
           }
+        ],
+        familyUnlocks: [
+          {
+            unlockId: "legacy.backstory.militia_levy",
+            familyId: "family.voss",
+            unlockedAt: "2026-04-17T12:15:00.000Z",
+            sourceTransactionId: "family.prestige.transaction.voss.1",
+            rank: 1
+          }
         ]
       },
       estate: {
@@ -392,6 +401,15 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
     assert.deepEqual(loaded.families.families[0]?.memberCharacterIds, ["player.arden_voss"]);
     assert.equal(loaded.families.prestigeTransactions[0]?.categoryTag, "renown");
     assert.equal(loaded.families.prestigeTransactions[0]?.amount, 5);
+    assert.deepEqual(loaded.families.familyUnlocks, [
+      {
+        unlockId: "legacy.backstory.militia_levy",
+        familyId: "family.voss",
+        unlockedAt: "2026-04-17T12:15:00.000Z",
+        sourceTransactionId: "family.prestige.transaction.voss.1",
+        rank: 1
+      }
+    ]);
     assert.equal(loaded.estate.deposits.length, 1);
     assert.equal(loaded.estate.deposits[0]?.sourceName, "Arden Voss");
     assert.equal(loaded.estate.assets.length, 3);
@@ -511,7 +529,11 @@ test("current account profiles preserve empty family state with optional prepara
     assert.deepEqual(loaded.achievements.unlocked, []);
     assert.deepEqual(loaded.achievements.revealedCharacterAchievementIds, []);
     assert.deepEqual(loaded.history.runRecords, []);
-    assert.deepEqual(loaded.families, { families: [], prestigeTransactions: [] });
+    assert.deepEqual(loaded.families, {
+      families: [],
+      prestigeTransactions: [],
+      familyUnlocks: []
+    });
     assert.deepEqual(loaded.estate, { deposits: [], assets: [] });
   }));
 
@@ -566,13 +588,187 @@ test("stored family prestige transactions must reference current family records"
               recordedAt: "2026-04-17T12:05:00.000Z",
               summary: "Orphan transaction should not validate."
             }
-          ]
+          ],
+          familyUnlocks: []
         }
       })
     );
 
     assert.throws(
       () => loadAccountProfile("account.local.orphan_family_prestige"),
+      /malformed/
+    );
+  }));
+
+test("stored family unlocks must reference current family records", () =>
+  withMockWindow((storage) => {
+    const profile = createDefaultAccountProfileState({
+      accountId: "account.local.orphan_family_unlock",
+      displayName: "Orphan Family Unlock"
+    });
+
+    storage.setItem(
+      "cataclysm-rpg-ui.accounts.v1.account.account.local.orphan_family_unlock",
+      JSON.stringify({
+        ...profile,
+        families: {
+          families: [],
+          prestigeTransactions: [],
+          familyUnlocks: [
+            {
+              unlockId: "legacy.backstory.militia_levy",
+              familyId: "family.missing",
+              unlockedAt: "2026-04-17T12:15:00.000Z",
+              sourceTransactionId: "family.prestige.transaction.missing.1"
+            }
+          ]
+        }
+      })
+    );
+
+    assert.throws(
+      () => loadAccountProfile("account.local.orphan_family_unlock"),
+      /malformed/
+    );
+  }));
+
+test("stored family unlocks reject duplicate unlock ids within the same family", () =>
+  withMockWindow((storage) => {
+    const profile = createDefaultAccountProfileState({
+      accountId: "account.local.duplicate_family_unlock",
+      displayName: "Duplicate Family Unlock"
+    });
+
+    storage.setItem(
+      "cataclysm-rpg-ui.accounts.v1.account.account.local.duplicate_family_unlock",
+      JSON.stringify({
+        ...profile,
+        families: {
+          families: [
+            {
+              familyId: "family.voss",
+              familyName: "Voss Line",
+              rootCharacterId: null,
+              status: "active",
+              createdAt: "2026-04-17T12:00:00.000Z",
+              updatedAt: "2026-04-17T12:00:00.000Z",
+              memberCharacterIds: [],
+              notes: []
+            }
+          ],
+          prestigeTransactions: [
+            {
+              transactionId: "family.prestige.transaction.voss.1",
+              familyId: "family.voss",
+              kind: "grant",
+              amount: 1,
+              categoryTag: "renown",
+              sourceType: "test",
+              sourceId: "test.voss",
+              recordedAt: "2026-04-17T12:10:00.000Z",
+              summary: "Family prestige unlock source."
+            }
+          ],
+          familyUnlocks: [
+            {
+              unlockId: "legacy.backstory.militia_levy",
+              familyId: "family.voss",
+              unlockedAt: "2026-04-17T12:15:00.000Z",
+              sourceTransactionId: "family.prestige.transaction.voss.1"
+            },
+            {
+              unlockId: "legacy.backstory.militia_levy",
+              familyId: "family.voss",
+              unlockedAt: "2026-04-17T12:16:00.000Z",
+              sourceTransactionId: "family.prestige.transaction.voss.1"
+            }
+          ]
+        }
+      })
+    );
+
+    assert.throws(
+      () => loadAccountProfile("account.local.duplicate_family_unlock"),
+      /malformed/
+    );
+  }));
+
+test("stored family unlocks reject invalid ranks and missing source transactions", () =>
+  withMockWindow((storage) => {
+    const baseProfile = createDefaultAccountProfileState({
+      accountId: "account.local.invalid_family_unlock",
+      displayName: "Invalid Family Unlock"
+    });
+    const familyState = {
+      families: [
+        {
+          familyId: "family.voss",
+          familyName: "Voss Line",
+          rootCharacterId: null,
+          status: "active",
+          createdAt: "2026-04-17T12:00:00.000Z",
+          updatedAt: "2026-04-17T12:00:00.000Z",
+          memberCharacterIds: [],
+          notes: []
+        }
+      ],
+      prestigeTransactions: [
+        {
+          transactionId: "family.prestige.transaction.voss.1",
+          familyId: "family.voss",
+          kind: "grant",
+          amount: 1,
+          categoryTag: "renown",
+          sourceType: "test",
+          sourceId: "test.voss",
+          recordedAt: "2026-04-17T12:10:00.000Z",
+          summary: "Family prestige unlock source."
+        }
+      ]
+    };
+
+    storage.setItem(
+      "cataclysm-rpg-ui.accounts.v1.account.account.local.invalid_family_unlock",
+      JSON.stringify({
+        ...baseProfile,
+        families: {
+          ...familyState,
+          familyUnlocks: [
+            {
+              unlockId: "legacy.backstory.militia_levy",
+              familyId: "family.voss",
+              unlockedAt: "2026-04-17T12:15:00.000Z",
+              sourceTransactionId: "family.prestige.transaction.voss.1",
+              rank: 0
+            }
+          ]
+        }
+      })
+    );
+    assert.throws(
+      () => loadAccountProfile("account.local.invalid_family_unlock"),
+      /malformed/
+    );
+
+    storage.setItem(
+      "cataclysm-rpg-ui.accounts.v1.account.account.local.invalid_family_unlock",
+      JSON.stringify({
+        ...baseProfile,
+        families: {
+          ...familyState,
+          familyUnlocks: [
+            {
+              unlockId: "legacy.backstory.militia_levy",
+              familyId: "family.voss",
+              unlockedAt: "2026-04-17T12:15:00.000Z",
+              sourceTransactionId: "family.prestige.transaction.missing.1"
+            }
+          ]
+        }
+      })
+    );
+    assert.throws(
+      () => loadAccountProfile("account.local.invalid_family_unlock"),
       /malformed/
     );
   }));

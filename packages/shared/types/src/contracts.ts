@@ -2105,6 +2105,14 @@ export interface FamilyPrestigeTransactionState {
   unlockId?: string;
 }
 
+export interface AccountFamilyUnlockState {
+  unlockId: string;
+  familyId: string;
+  unlockedAt: string;
+  sourceTransactionId: string;
+  rank?: number;
+}
+
 export interface AccountFamilyPrestigeCategoryTotals {
   earned: number;
   spent: number;
@@ -2121,6 +2129,7 @@ export interface AccountFamilyPrestigeTotals {
 export interface AccountFamiliesState {
   families: AccountFamilyRecord[];
   prestigeTransactions: FamilyPrestigeTransactionState[];
+  familyUnlocks: AccountFamilyUnlockState[];
 }
 
 export type AccountEstateAssetKind = "currency" | "item" | "operational";

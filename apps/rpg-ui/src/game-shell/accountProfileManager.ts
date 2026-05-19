@@ -3,6 +3,7 @@ import type {
   AccountAchievementsState,
   AccountFamiliesState,
   AccountFamilyRecord,
+  AccountFamilyUnlockState,
   AccountEstateAssetRecord,
   AccountEstateDepositRecord,
   AccountEstateState,
@@ -75,6 +76,10 @@ function isNonNegativeInteger(value: unknown): value is number {
 
 function isPositiveInteger(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value > 0;
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
 }
 
 function isFiniteNumber(value: unknown): value is number {
@@ -280,19 +285,59 @@ function isFamilyPrestigeTransactionState(
   );
 }
 
+function isAccountFamilyUnlockState(value: unknown): value is AccountFamilyUnlockState {
+  return (
+    isRecord(value) &&
+    isNonEmptyString(value.unlockId) &&
+    isNonEmptyString(value.familyId) &&
+    isNonEmptyString(value.unlockedAt) &&
+    isNonEmptyString(value.sourceTransactionId) &&
+    (value.rank === undefined || isPositiveInteger(value.rank))
+  );
+}
+
 function isAccountFamiliesState(value: unknown): value is AccountFamiliesState {
   if (
     !isRecord(value) ||
     !Array.isArray(value.families) ||
     !value.families.every(isAccountFamilyRecord) ||
     !Array.isArray(value.prestigeTransactions) ||
-    !value.prestigeTransactions.every(isFamilyPrestigeTransactionState)
+    !value.prestigeTransactions.every(isFamilyPrestigeTransactionState) ||
+    !Array.isArray(value.familyUnlocks) ||
+    !value.familyUnlocks.every(isAccountFamilyUnlockState)
   ) {
     return false;
   }
 
   const familyIds = new Set(value.families.map((family) => family.familyId));
-  return value.prestigeTransactions.every((transaction) => familyIds.has(transaction.familyId));
+  const transactionFamilyIds = new Map(
+    value.prestigeTransactions.map((transaction) => [
+      transaction.transactionId,
+      transaction.familyId
+    ])
+  );
+  const seenFamilyUnlocks = new Set<string>();
+
+  return (
+    value.prestigeTransactions.every((transaction) => familyIds.has(transaction.familyId)) &&
+    value.familyUnlocks.every((unlock) => {
+      if (!familyIds.has(unlock.familyId)) {
+        return false;
+      }
+
+      if (transactionFamilyIds.get(unlock.sourceTransactionId) !== unlock.familyId) {
+        return false;
+      }
+
+      const duplicateKey = `${unlock.familyId}\u0000${unlock.unlockId}`;
+      if (seenFamilyUnlocks.has(duplicateKey)) {
+        return false;
+      }
+
+      seenFamilyUnlocks.add(duplicateKey);
+      return true;
+    })
+  );
 }
 
 function isEstateLocationState(value: unknown): value is NonNullable<AccountEstateAssetRecord["location"]> {
@@ -541,10 +586,39 @@ function normalizeFamilies(families: AccountFamiliesState): AccountFamiliesState
       }
     ];
   });
+  const transactionFamilyIds = new Map(
+    prestigeTransactions.map((transaction) => [
+      transaction.transactionId,
+      transaction.familyId
+    ])
+  );
+  const seenFamilyUnlocks = new Set<string>();
+  const familyUnlocks = families.familyUnlocks.flatMap((unlock) => {
+    const duplicateKey = `${unlock.familyId}\u0000${unlock.unlockId}`;
+    if (
+      seenFamilyUnlocks.has(duplicateKey) ||
+      !familyIds.has(unlock.familyId) ||
+      transactionFamilyIds.get(unlock.sourceTransactionId) !== unlock.familyId
+    ) {
+      return [];
+    }
+
+    seenFamilyUnlocks.add(duplicateKey);
+    return [
+      {
+        unlockId: unlock.unlockId,
+        familyId: unlock.familyId,
+        unlockedAt: unlock.unlockedAt,
+        sourceTransactionId: unlock.sourceTransactionId,
+        ...(unlock.rank !== undefined ? { rank: Math.max(1, Math.trunc(unlock.rank)) } : {})
+      }
+    ];
+  });
 
   return {
     families: normalizedFamilies,
-    prestigeTransactions
+    prestigeTransactions,
+    familyUnlocks
   };
 }
 
