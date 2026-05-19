@@ -118,6 +118,28 @@ Output:
 - next recommended pass
 ```
 
+## Temporary Guardrail Cleanup Requirement
+
+When a prompt references a focused audit/source/guardrail doc, include an explicit cleanup decision in the required output.
+
+Use this block when relevant:
+
+```text
+Temporary guardrail cleanup:
+- State whether any focused audit/source docs used by this run remain useful.
+- If a doc is consumed, implemented, superseded, or promoted into another durable file, delete it in this run or recommend exact deletion/folding follow-up.
+- Do not leave temporary guardrail docs accumulating as a second backlog.
+```
+
+Apply this especially to docs such as:
+
+- `docs/design/*-audit.md`
+- `docs/design/*-scoping-pass.md`
+- `docs/dev/*-triage-plan.md`
+- `docs/dev/*-hardening-pass.md`
+
+Do not delete a focused guardrail doc before its guidance has been consumed, implemented, superseded, or promoted into `current-gpt-handoff.md`, `project-roadmap.md`, `future-system-design-ledger.md`, `future_content_backlog.md`, or `current-codex-output.md`.
+
 ## Content Draft Prompt Guardrails
 
 Use when authoring content records.
