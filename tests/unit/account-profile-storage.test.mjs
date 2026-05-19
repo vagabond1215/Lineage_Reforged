@@ -242,6 +242,7 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
             characterId: "player.arden_voss",
             name: "Arden Voss",
             lineageId: "lineage.human",
+            familyId: "family.voss",
             startingContinentId: "continent.kaelvar",
             startingRegionId: "region.aurelia",
             startingSettlementId: "settlement.aurelis",
@@ -261,6 +262,35 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
             legacyPayoutResolvedAt: "2026-04-17T12:14:00.000Z",
             legacyPayoutTransactionId: spent.profile.legacy.legacyTransactions.at(-1)?.id,
             saveSlotIds: []
+          }
+        ]
+      },
+      families: {
+        families: [
+          {
+            familyId: "family.voss",
+            familyName: "Voss Line",
+            rootCharacterId: "player.arden_voss",
+            status: "active",
+            createdAt: "2026-04-17T12:00:00.000Z",
+            updatedAt: "2026-04-17T12:14:00.000Z",
+            memberCharacterIds: ["player.arden_voss"],
+            notes: ["First family record drafted for storage validation."]
+          }
+        ],
+        prestigeTransactions: [
+          {
+            transactionId: "family.prestige.transaction.voss.1",
+            familyId: "family.voss",
+            kind: "grant",
+            amount: 5,
+            categoryTag: "renown",
+            sourceType: "test",
+            sourceId: "test.voss.renown",
+            recordedAt: "2026-04-17T12:14:00.000Z",
+            summary: "Family renown recorded for storage validation.",
+            characterId: "player.arden_voss",
+            sourceRunId: "player.arden_voss::2026-04-17T12:00:00.000Z"
           }
         ]
       },
@@ -342,6 +372,7 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
     assert.equal(loaded.history.runRecords[0]?.outcome, "archived");
     assert.equal(loaded.history.runRecords[0]?.archiveReason, "retired");
     assert.equal(loaded.history.runRecords[0]?.name, "Arden Voss");
+    assert.equal(loaded.history.runRecords[0]?.familyId, "family.voss");
     assert.deepEqual(loaded.history.runRecords[0]?.legacyPayoutBaseline, { echoLevel: 1 });
     assert.equal(loaded.history.runRecords[0]?.totalPlayTicks, 360);
     assert.equal(loaded.history.runRecords[0]?.survivedDays, 15);
@@ -356,6 +387,11 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
       loaded.history.runRecords[0]?.legacyPayoutTransactionId,
       spent.profile.legacy.legacyTransactions.at(-1)?.id
     );
+    assert.equal(loaded.families.families[0]?.familyName, "Voss Line");
+    assert.equal(loaded.families.families[0]?.rootCharacterId, "player.arden_voss");
+    assert.deepEqual(loaded.families.families[0]?.memberCharacterIds, ["player.arden_voss"]);
+    assert.equal(loaded.families.prestigeTransactions[0]?.categoryTag, "renown");
+    assert.equal(loaded.families.prestigeTransactions[0]?.amount, 5);
     assert.equal(loaded.estate.deposits.length, 1);
     assert.equal(loaded.estate.deposits[0]?.sourceName, "Arden Voss");
     assert.equal(loaded.estate.assets.length, 3);
@@ -377,7 +413,7 @@ test("account profile roundtrip preserves display name, lastPlayedAt, unlocks, a
     );
   }));
 
-test("account profiles preserve retained retired records without migrating archived retirements", () =>
+test("account profiles preserve retained retired and archived records with current fields", () =>
   withMockWindow(() => {
     const profile = {
       ...createDefaultAccountProfileState({
@@ -392,6 +428,8 @@ test("account profiles preserve retained retired records without migrating archi
             characterId: "player.retained_retired",
             name: "Retained Retired",
             lineageId: "lineage.human",
+            familyId: "family.retired_storage",
+            parentCharacterId: "player.parent",
             startingContinentId: "continent.kaelvar",
             startingRegionId: "region.aurelia",
             startingSettlementId: "settlement.aurelis",
@@ -433,6 +471,8 @@ test("account profiles preserve retained retired records without migrating archi
     const loaded = loadAccountProfile("account.local.retired_storage");
     assert.equal(loaded.history.runRecords[0]?.outcome, "retired");
     assert.equal(loaded.history.runRecords[0]?.inheritanceUsesRemaining, 2);
+    assert.equal(loaded.history.runRecords[0]?.familyId, "family.retired_storage");
+    assert.equal(loaded.history.runRecords[0]?.parentCharacterId, "player.parent");
     assert.equal(
       loaded.history.runRecords[0]?.sourceRunId,
       "player.parent::2026-04-16T12:00:00.000Z"
@@ -444,15 +484,18 @@ test("account profiles preserve retained retired records without migrating archi
     assert.equal(loaded.history.runRecords[1]?.inheritanceUsesRemaining, undefined);
   }));
 
-test("legacy-only account profiles normalize forward with achievements and history defaults", () =>
+test("current account profiles preserve empty family state with optional preparation fields", () =>
   withMockWindow((storage) => {
+    const profile = createDefaultAccountProfileState({
+      accountId: "account.local.current_shape",
+      displayName: "Current Ledger",
+      createdAt: "2026-04-17T12:00:00.000Z",
+      updatedAt: "2026-04-17T12:05:00.000Z"
+    });
     storage.setItem(
-      "cataclysm-rpg-ui.accounts.v1.account.account.local.legacy_only",
+      "cataclysm-rpg-ui.accounts.v1.account.account.local.current_shape",
       JSON.stringify({
-        accountId: "account.local.legacy_only",
-        displayName: "Old Ledger",
-        createdAt: "2026-04-17T12:00:00.000Z",
-        updatedAt: "2026-04-17T12:05:00.000Z",
+        ...profile,
         legacy: {
           legacyPoints: 4,
           lifetimeLegacyEarned: 7,
@@ -462,13 +505,76 @@ test("legacy-only account profiles normalize forward with achievements and histo
       })
     );
 
-    const loaded = loadAccountProfile("account.local.legacy_only");
+    const loaded = loadAccountProfile("account.local.current_shape");
     assert.equal(loaded.legacy.legacyPoints, 4);
     assert.deepEqual(loaded.legacy.selectedPreparationUnlockIds, []);
     assert.deepEqual(loaded.achievements.unlocked, []);
     assert.deepEqual(loaded.achievements.revealedCharacterAchievementIds, []);
     assert.deepEqual(loaded.history.runRecords, []);
+    assert.deepEqual(loaded.families, { families: [], prestigeTransactions: [] });
     assert.deepEqual(loaded.estate, { deposits: [], assets: [] });
+  }));
+
+test("stored account profiles require current family state", () =>
+  withMockWindow((storage) => {
+    storage.setItem(
+      "cataclysm-rpg-ui.accounts.v1.account.account.local.missing_families",
+      JSON.stringify({
+        accountId: "account.local.missing_families",
+        displayName: "Missing Families",
+        createdAt: "2026-04-17T12:00:00.000Z",
+        updatedAt: "2026-04-17T12:05:00.000Z",
+        legacy: {
+          legacyPoints: 0,
+          lifetimeLegacyEarned: 0,
+          legacyUnlocks: [],
+          legacyTransactions: [],
+          selectedPreparationUnlockIds: [],
+          selectedPreparationChoicePayloads: {}
+        }
+      })
+    );
+
+    assert.throws(
+      () => loadAccountProfile("account.local.missing_families"),
+      /malformed/
+    );
+  }));
+
+test("stored family prestige transactions must reference current family records", () =>
+  withMockWindow((storage) => {
+    const profile = createDefaultAccountProfileState({
+      accountId: "account.local.orphan_family_prestige",
+      displayName: "Orphan Family Prestige"
+    });
+
+    storage.setItem(
+      "cataclysm-rpg-ui.accounts.v1.account.account.local.orphan_family_prestige",
+      JSON.stringify({
+        ...profile,
+        families: {
+          families: [],
+          prestigeTransactions: [
+            {
+              transactionId: "family.prestige.transaction.orphan.1",
+              familyId: "family.missing",
+              kind: "grant",
+              amount: 1,
+              categoryTag: "renown",
+              sourceType: "test",
+              sourceId: "test.orphan",
+              recordedAt: "2026-04-17T12:05:00.000Z",
+              summary: "Orphan transaction should not validate."
+            }
+          ]
+        }
+      })
+    );
+
+    assert.throws(
+      () => loadAccountProfile("account.local.orphan_family_prestige"),
+      /malformed/
+    );
   }));
 
 test("account profile roundtrip preserves owned and selected Legacy preparations separately", () =>

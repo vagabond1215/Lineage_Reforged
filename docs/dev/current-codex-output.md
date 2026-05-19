@@ -1,12 +1,12 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.60 - Legacy Scope And Bloodline Economy Plan
+Source version/run: Version 0.5.61 - Family Records And Prestige Ledger Runtime Shape
 Date: 2026-05-19
 Branch/status assumption: Current local branch reality. `git status --short` was run before edits and showed a clean worktree.
 
 ## Result
 
-Added a planning-only Legacy Scope and Bloodline Economy Plan. This revises the immediate Backstory Legacy purchase pipeline so family records, family prestige ledgers, Bloodline economy boundaries, and scoped purchase ownership are planned before Backstory Legacy purchase runtime work.
+Added the first runtime-owned family/Bloodline account shape. Account profiles now have a current-data `families` container, run history records can carry optional family linkage fields, and the game engine exposes passive family prestige ledger total helpers.
 
 ## Files Inspected
 
@@ -14,193 +14,146 @@ Added a planning-only Legacy Scope and Bloodline Economy Plan. This revises the 
 - `README.md`
 - `docs/dev/current-codex-output.md`
 - `docs/future_content_backlog.md`
+- `docs/design/legacy-scope-bloodline-economy-plan.md`
 - `docs/design/backstory-legacy-purchase-integration-plan.md`
-- `docs/design/backstory-creator-presentation-plan.md`
 - `docs/design/backstory-evidence-ownership-plan.md`
-- `docs/design/backstory-runtime-policy-shape-draft.md`
-- `docs/design/backstory-eligibility-resolver-plan.md`
-- `docs/design/backstory-tiered-lane-design.md`
-- `docs/design/legacy-upgrade-catalog-draft.json`
 - `packages/shared/types/src/contracts.ts`
-- `packages/engines/game-engine/src/legacy-unlocks.ts`
 - `packages/engines/game-engine/src/legacy-account.ts`
-- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-- `packages/content/base/player/legacy_unlocks.json`
+- `packages/engines/game-engine/src/account-achievement-state.ts`
+- `packages/engines/game-engine/src/account-estate.ts`
+- `packages/engines/game-engine/src/legacy-unlocks.ts`
+- `packages/engines/game-engine/src/index.ts`
 - `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
 - `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
 - `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
+- `tests/unit/account-profile-storage.test.mjs`
+- `tests/unit/legacy-start-resources.test.mjs`
+- `tests/unit/legacy-account.test.mjs`
+- `tests/unit/account-estate.test.mjs`
+- `tests/unit/achievements.test.mjs`
+- `tests/unit/run-lifecycle.test.mjs`
 
 ## Files Changed
 
-- `docs/design/legacy-scope-bloodline-economy-plan.md`
-- `docs/design/backstory-legacy-purchase-integration-plan.md`
+- `packages/shared/types/src/contracts.ts`
+- `packages/engines/game-engine/src/account-family.ts`
+- `packages/engines/game-engine/src/account-family.js`
+- `packages/engines/game-engine/src/legacy-account.ts`
+- `packages/engines/game-engine/src/index.ts`
+- `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
+- `tests/unit/account-family.test.mjs`
+- `tests/unit/account-profile-storage.test.mjs`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Legacy Scope Organization Summary
+## Runtime Shape Summary
 
-The plan organizes future Legacy presentation as:
+Added shared current-data types for:
 
-```text
-Legacy
-  Chronicle
-  Bloodlines
-```
+- `AccountFamiliesState`
+- `AccountFamilyRecord`
+- `AccountFamilyStatus`
+- `FamilyPrestigeTransactionState`
+- `FamilyPrestigeTransactionKind`
+- `FamilyPrestigeCategoryTag`
+- `AccountFamilyPrestigeTotals`
+- `AccountFamilyPrestigeCategoryTotals`
 
-Chronicle covers account-wide upgrades, cross-family progression, broad system unlocks, global preparation capacity, and account-level marks. Bloodlines covers family lists, family records, family trees, heir slots once owned, family prestige, family-specific upgrades, bloodline preparations, bequests, heirlooms, and family-scoped backstory unlock support.
+`AccountProfileState` now includes `families: AccountFamiliesState`.
 
-"New Game+" is not a top-level lore category; those effects should live inside Chronicle or Bloodlines depending on scope.
+## Family Linkage Summary
 
-## Family Tree Planning Summary
+`AccountRunHistoryRecord` now supports optional current-data family linkage fields:
 
-Family trees are planned as derived hierarchical presentation over flat records:
+- `familyId?: string`
+- `parentCharacterId?: string`
 
-- family records
-- character/run records tagged with `familyId`
-- optional `parentCharacterId`
-- later branch, cadet, illegitimate branch, adoption, marriage, or recognition metadata
-
-The plan avoids nested mutable tree storage unless a later implementation proves it is necessary.
-
-## Category Model Summary
-
-Categories are planned as sorting/organization tags, not separate currencies by default.
-
-Recommended categories:
-
-- Renown
-- Martial
-- Production
-- Commerce
-- Lore & Faith
-- Survival / Utility
-- Household / Lineage
-- Preparation
-
-The plan explicitly avoids category-specific prestige pools unless later balancing proves they are needed.
-
-## Currency / Marks Model Summary
-
-The plan separates three future resources:
-
-- Family Prestige: earned and spent by a specific family.
-- Chronicle Marks: account-wide marks from family accomplishments, reduced family-prestige conversion, or major milestones.
-- Lineage Seals: rare benchmark currency from branch closure, heir claim retirement, major family milestones, or high-value sacrifices.
-
-No currency or storage was implemented.
+These fields are stored and normalized when present. No family tree UI, heir generation, or parent/child behavior was added.
 
 ## Family Prestige Ledger Summary
 
-The plan requires ledger-based Family Prestige instead of summing earned prestige per character.
+Added `packages/engines/game-engine/src/account-family.ts` with:
 
-Draft transaction fields include transaction id, family id, character/source-run source, grant/spend kind, amount, category tag, source type/id, timestamp, and summary. Derived totals should include earned, spent, available, and optional category/source presentation totals.
+- default empty family/Bloodline state creation
+- family status, prestige transaction kind, and category tag constants
+- passive read-only prestige total helpers by family
 
-## Chronicle Conversion / Heir Claim Retirement Summary
+The helpers derive earned, spent, available, and category totals from ledger transactions. They do not grant prestige, spend prestige, create families, create heirs, unlock backstories, or mutate input.
 
-The plan allows reduced conversion from family success to account-wide Chronicle Marks after explicit unlocks. It also plans future heir claim retirement, branch closure, or line dedication as ways to convert old family momentum into Chronicle Marks or Lineage Seals.
+## Account Profile / Storage Validation Summary
 
-Suggested language includes:
+Default account profile creation now includes an empty `families` container.
 
-- Enter into the Chronicle
-- Preserve the Family Record
-- Settle the Line
-- Close a Branch
-- Dedicate a Branch to the Chronicle
+Account profile storage validation now understands:
 
-## Bloodline Upgrades Summary
+- family records
+- family prestige transactions
+- required transaction-to-family references
+- optional run history family linkage fields
 
-Bloodline upgrades are defined as inherited potential, family tendency, aptitude, temperament, growth, or prestige affinity.
+Stored account profiles now require the current-data family state. No old-account or old-save rescue path was added.
 
-Examples include improved starting stat point chance, family-associated skill growth, increased prestige gain for descendants, improved physique/nature/focus chances, small temperament/resistance bonuses, and better aptitude for production, combat, social, or utility paths.
+## Test Coverage Summary
 
-These are intentionally separate from bequests.
+Added `tests/unit/account-family.test.mjs` for:
 
-## Bequest Model Summary
+- empty default family state
+- derived family prestige totals
+- family isolation in totals
+- input immutability
 
-Bequests are intentional estate or material transfers: coin, tools, supplies, land parcels, workshop stakes, estate claims, documents, trade licenses, legal writs, or later contacts after contact systems exist.
+Updated `tests/unit/account-profile-storage.test.mjs` for:
 
-Bequests should not represent genetic/stat/growth RNG-style upgrades and should not unlock social/status origins by themselves.
+- family state roundtrip
+- run history `familyId` and `parentCharacterId` preservation
+- current family state requirement
+- rejection of orphan family prestige transactions
 
-## Heirloom System Summary
-
-Heirlooms are planned as a distinct family item-chain system:
-
-- expensive family unlock to register a specific item instance
-- family prestige cost to pass it forward
-- one eligible holder at a time
-- no duplication
-- loss, theft, confiscation, destruction, or irreparable breakage interrupts the chain
-
-No item persistence was implemented.
-
-## Backstory Unlock Relationship Summary
-
-The plan explains how Bloodline economy planning supports future Backstory Eligibility work:
-
-- Family Prestige can support family-scoped backstory unlocks.
-- Family tree/history can become evidence later.
-- Bloodline upgrades can unlock family tendencies without stacking starter effects.
-- Bequests and heirlooms should not directly grant backstory identity.
-- Minor Noble, Merchant Family, Garrison Ward, Local Champion, and World-Stray remain scoped or blocked according to their existing resolver direction.
-
-No current backstory policy changed.
-
-## Revised Pipeline Summary
-
-The v0.5.59 immediate Backstory Legacy purchase runtime sequence is superseded.
-
-Revised pipeline:
-
-1. Version 0.5.61 - Family Records And Prestige Ledger Runtime Shape
-2. Version 0.5.62 - Chronicles Bloodline Tree Presentation Plan
-3. Version 0.5.63 - Backstory Legacy Purchase Runtime Shape
-4. Version 0.5.64 - Backstory Legacy Purchase Content Draft
-5. Version 0.5.65 - Backstory Legacy Purchase Resolver Integration
-6. Version 0.5.66 - Heirloom And Bequest Systems Plan
+Existing focused account, Legacy, achievement, estate, and run-lifecycle tests still pass.
 
 ## Checks Run
 
 - `git status --short`
-  - Showed only expected docs-only changes:
-    - `docs/design/legacy-scope-bloodline-economy-plan.md`
-    - `docs/design/backstory-legacy-purchase-integration-plan.md`
-    - `docs/future_content_backlog.md`
-    - `docs/dev/current-codex-output.md`
+  - Initially clean before edits.
+- `node --test tests\unit\account-family.test.mjs tests\unit\account-profile-storage.test.mjs tests\unit\legacy-start-resources.test.mjs`
+  - Passed: 22 tests.
+- `node --test tests\unit\legacy-account.test.mjs tests\unit\account-estate.test.mjs tests\unit\achievements.test.mjs tests\unit\run-lifecycle.test.mjs`
+  - Passed: 32 tests.
 - `npm.cmd run tool:content-lint`
-  - Passed: `content-lint: ok (53 files checked)`
+  - Passed: `content-lint: ok (53 files checked)`.
+- `npm.cmd run typecheck`
+  - Failed because root `tsc` is not installed on PATH: `'tsc' is not recognized as an internal or external command`.
+- `.\apps\rpg-ui\node_modules\.bin\tsc.cmd --noEmit -p tsconfig.json`
+  - Failed on broad pre-existing workspace TypeScript issues, starting with JSON import attributes in `apps/rpg-ui/src/features/characterPanelState.ts`, missing Node/process types in creator math/options files, JSX config for `GameSessionContext.tsx`, and existing strict optional issues in `apps/rpg-ui/src/runtime/uiViewModel.ts`.
+  - No errors were reported for the new `account-family` module or changed family/profile shape after the narrow `legacy-account.ts` optional `unlockId` cleanup.
 - `git diff --check`
   - Passed. Git reported line-ending normalization warnings only.
 
 ## Behavior / Runtime Confirmation
 
-No runtime behavior changed.
+Runtime account/profile shape modules were added.
 No creator behavior changed.
 No Legacy purchase behavior changed.
-No resolver policy semantics changed.
+No Backstory Eligibility resolver policy semantics changed.
 No content JSON changed.
 No live backstory records were added, removed, renamed, or modified.
 No policy metadata JSON changed.
-No starter skill, starting ability, attribute, save/account schema, combat, magic, economy, progression, launcher UI asset, generated UI output, or visible availability behavior changed.
-This pass only adds a planning document and revises the future pipeline.
+No starter skill, starting ability, attribute, combat, magic, economy, progression, launcher UI asset, generated UI output, or visible backstory availability behavior changed.
+No family tree UI, heir generation, heir slot, heirloom, bequest, Chronicle Mark, Lineage Seal, automatic family prestige earning/spending, Backstory Legacy purchase, or family evidence integration was added.
 
 ## Risks / Follow-Up
 
-- Family ids do not yet exist on run history records.
-- Parent/child lineage links do not yet exist.
-- Family prestige storage does not yet exist.
-- Chronicle Marks and Lineage Seals do not yet exist.
-- Heir slots do not yet exist.
-- Heirloom item-instance persistence does not yet exist.
-- Estate/title/status systems are still missing.
-- Categories should remain sorting tags, not currency fragmentation.
-- Bad family-scoped evidence could incorrectly unlock creator backstories because creator now consumes resolver output.
-- Broad runtime implementation should not start until the runtime shape is narrow and tested.
-- Typecheck remains affected by known workspace/pre-existing TypeScript issues.
+- Family records are now typed and stored, but no runtime flow creates or manages family records yet.
+- Family prestige is ledger-shaped and totalable, but no automatic grant/spend behavior exists.
+- Chronicle Marks and Lineage Seals remain unimplemented.
+- Heir slots, heir generation, heirlooms, bequests, and estate/title/status ownership remain deferred.
+- Family-scoped backstory evidence remains blocked from the resolver until explicit evidence owners exist.
+- Broad typecheck remains blocked by existing workspace TypeScript configuration and strictness issues outside this pass.
 
 ## Next Recommended Version
 
-Version 0.5.61 - Family Records And Prestige Ledger Runtime Shape
+Version 0.5.62 - Chronicles Bloodline Tree Presentation Plan
 
 ## Suggested Commit Message
 
-docs(legacy): plan bloodline economy scope
+feat(legacy): add family prestige ledger shape

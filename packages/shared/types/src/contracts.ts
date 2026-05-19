@@ -2035,6 +2035,8 @@ export interface AccountRunHistoryRecord {
   characterId: string;
   name: string;
   lineageId: string;
+  familyId?: string;
+  parentCharacterId?: string;
   startingContinentId: string;
   startingRegionId: string;
   startingSettlementId: string;
@@ -2061,6 +2063,64 @@ export interface AccountRunHistoryRecord {
 
 export interface AccountHistoryState {
   runRecords: AccountRunHistoryRecord[];
+}
+
+export type FamilyPrestigeTransactionKind = "grant" | "spend";
+
+export type FamilyPrestigeCategoryTag =
+  | "renown"
+  | "martial"
+  | "production"
+  | "commerce"
+  | "lore_faith"
+  | "survival_utility"
+  | "household_lineage"
+  | "preparation";
+
+export type AccountFamilyStatus = "active" | "dormant" | "closed";
+
+export interface AccountFamilyRecord {
+  familyId: string;
+  familyName: string;
+  rootCharacterId: string | null;
+  status: AccountFamilyStatus;
+  createdAt: string;
+  updatedAt: string;
+  memberCharacterIds: string[];
+  notes: string[];
+}
+
+export interface FamilyPrestigeTransactionState {
+  transactionId: string;
+  familyId: string;
+  kind: FamilyPrestigeTransactionKind;
+  amount: number;
+  categoryTag: FamilyPrestigeCategoryTag;
+  sourceType: string;
+  sourceId: string;
+  recordedAt: string;
+  summary: string;
+  characterId?: string;
+  sourceRunId?: string;
+  unlockId?: string;
+}
+
+export interface AccountFamilyPrestigeCategoryTotals {
+  earned: number;
+  spent: number;
+  available: number;
+}
+
+export interface AccountFamilyPrestigeTotals {
+  earned: number;
+  spent: number;
+  available: number;
+  byCategory: Partial<Record<FamilyPrestigeCategoryTag, AccountFamilyPrestigeCategoryTotals>>;
+}
+
+export interface AccountFamiliesState {
+  families: AccountFamilyRecord[];
+  prestigeTransactions: FamilyPrestigeTransactionState[];
 }
 
 export type AccountEstateAssetKind = "currency" | "item" | "operational";
@@ -2600,6 +2660,7 @@ export interface AccountProfileState {
   legacy: AccountLegacyState;
   achievements: AccountAchievementsState;
   history: AccountHistoryState;
+  families: AccountFamiliesState;
   estate: AccountEstateState;
 }
 

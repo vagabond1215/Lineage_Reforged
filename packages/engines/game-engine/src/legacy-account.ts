@@ -1,4 +1,5 @@
 import type {
+  AccountFamiliesState,
   AccountLegacyState,
   AccountProfileState,
   LegacyTransactionKind,
@@ -10,6 +11,7 @@ import {
   createDefaultAccountHistoryState
 } from "./account-achievement-state.js";
 import { createDefaultAccountEstateState } from "./account-estate.js";
+import { createDefaultAccountFamiliesState } from "./account-family.js";
 
 export const DEFAULT_ACCOUNT_ID = "account.local.default";
 export const DEFAULT_ACCOUNT_DISPLAY_NAME = "Wayfarer Ledger";
@@ -104,6 +106,7 @@ export function createDefaultAccountProfileState(params: {
   updatedAt?: string;
   lastPlayedAt?: string;
   legacy?: AccountLegacyState;
+  families?: AccountFamiliesState;
 } = {}): AccountProfileState {
   const now = params.updatedAt ?? params.createdAt ?? new Date().toISOString();
 
@@ -116,6 +119,7 @@ export function createDefaultAccountProfileState(params: {
     legacy: params.legacy ?? createDefaultAccountLegacyState(),
     achievements: createDefaultAccountAchievementsState(),
     history: createDefaultAccountHistoryState(),
+    families: params.families ?? createDefaultAccountFamiliesState(),
     estate: createDefaultAccountEstateState()
   };
 }
@@ -201,7 +205,7 @@ export function grantLegacy(
     sourceType: params.sourceType,
     sourceId: params.sourceId,
     recordedAt,
-    unlockId: params.unlockId
+    ...(params.unlockId ? { unlockId: params.unlockId } : {})
   });
 
   return {
@@ -261,7 +265,7 @@ export function spendLegacy(
     sourceType: params.sourceType,
     sourceId: params.sourceId,
     recordedAt,
-    unlockId: params.unlockId
+    ...(params.unlockId ? { unlockId: params.unlockId } : {})
   });
 
   const nextUnlocks: LegacyUnlockState[] = params.unlockId
@@ -342,7 +346,7 @@ export function grantLegacyReward(
     sourceType: params.sourceType,
     sourceId: params.sourceId,
     recordedAt,
-    unlockId: params.unlockId
+    ...(params.unlockId ? { unlockId: params.unlockId } : {})
   });
 
   const nextUnlocks: LegacyUnlockState[] = params.unlockId

@@ -1,6 +1,8 @@
 import type {
   AccountAchievementUnlockState,
   AccountAchievementsState,
+  AccountFamiliesState,
+  AccountFamilyRecord,
   AccountEstateAssetRecord,
   AccountEstateDepositRecord,
   AccountEstateState,
@@ -9,6 +11,7 @@ import type {
   AccountProfileState,
   AccountRunHistoryRecord,
   AchievementMetricId,
+  FamilyPrestigeTransactionState,
   RunLegacyPayoutBaselineState,
   LegacyTransactionState,
   LegacyUnlockState,
@@ -20,6 +23,12 @@ import {
   createDefaultAccountProfileState
 } from "../../../../packages/engines/game-engine/src/legacy-account.js";
 import { createDefaultAccountEstateState } from "../../../../packages/engines/game-engine/src/account-estate.js";
+import {
+  ACCOUNT_FAMILY_STATUSES,
+  FAMILY_PRESTIGE_CATEGORY_TAGS,
+  FAMILY_PRESTIGE_TRANSACTION_KINDS,
+  createDefaultAccountFamiliesState
+} from "../../../../packages/engines/game-engine/src/account-family.js";
 import { resolveLegacyPreparationSelection } from "../../../../packages/engines/game-engine/src/legacy-unlocks.js";
 import {
   ACHIEVEMENT_METRIC_IDS,
@@ -30,6 +39,9 @@ import {
 
 const ACCOUNT_STORAGE_PREFIX = "cataclysm-rpg-ui.accounts.v1";
 const ACTIVE_ACCOUNT_KEY = `${ACCOUNT_STORAGE_PREFIX}.active-account`;
+const ACCOUNT_FAMILY_STATUS_SET = new Set<string>(ACCOUNT_FAMILY_STATUSES);
+const FAMILY_PRESTIGE_TRANSACTION_KIND_SET = new Set<string>(FAMILY_PRESTIGE_TRANSACTION_KINDS);
+const FAMILY_PRESTIGE_CATEGORY_TAG_SET = new Set<string>(FAMILY_PRESTIGE_CATEGORY_TAGS);
 
 function getAccountStorage(): Storage {
   if (typeof window === "undefined") {
@@ -179,6 +191,9 @@ function isAccountRunHistoryRecord(value: unknown): value is AccountRunHistoryRe
     typeof value.characterId === "string" &&
     typeof value.name === "string" &&
     typeof value.lineageId === "string" &&
+    (typeof value.familyId === "string" || value.familyId === undefined) &&
+    (typeof value.parentCharacterId === "string" ||
+      value.parentCharacterId === undefined) &&
     typeof value.startingContinentId === "string" &&
     typeof value.startingRegionId === "string" &&
     typeof value.startingSettlementId === "string" &&
@@ -224,6 +239,60 @@ function isAccountHistoryState(value: unknown): value is AccountHistoryState {
     Array.isArray(value.runRecords) &&
     value.runRecords.every(isAccountRunHistoryRecord)
   );
+}
+
+function isAccountFamilyRecord(value: unknown): value is AccountFamilyRecord {
+  return (
+    isRecord(value) &&
+    typeof value.familyId === "string" &&
+    typeof value.familyName === "string" &&
+    (typeof value.rootCharacterId === "string" || value.rootCharacterId === null) &&
+    typeof value.status === "string" &&
+    ACCOUNT_FAMILY_STATUS_SET.has(value.status) &&
+    typeof value.createdAt === "string" &&
+    typeof value.updatedAt === "string" &&
+    Array.isArray(value.memberCharacterIds) &&
+    value.memberCharacterIds.every((entry) => typeof entry === "string") &&
+    Array.isArray(value.notes) &&
+    value.notes.every((entry) => typeof entry === "string")
+  );
+}
+
+function isFamilyPrestigeTransactionState(
+  value: unknown
+): value is FamilyPrestigeTransactionState {
+  return (
+    isRecord(value) &&
+    typeof value.transactionId === "string" &&
+    typeof value.familyId === "string" &&
+    typeof value.kind === "string" &&
+    FAMILY_PRESTIGE_TRANSACTION_KIND_SET.has(value.kind) &&
+    isPositiveInteger(value.amount) &&
+    typeof value.categoryTag === "string" &&
+    FAMILY_PRESTIGE_CATEGORY_TAG_SET.has(value.categoryTag) &&
+    typeof value.sourceType === "string" &&
+    typeof value.sourceId === "string" &&
+    typeof value.recordedAt === "string" &&
+    typeof value.summary === "string" &&
+    (typeof value.characterId === "string" || value.characterId === undefined) &&
+    (typeof value.sourceRunId === "string" || value.sourceRunId === undefined) &&
+    (typeof value.unlockId === "string" || value.unlockId === undefined)
+  );
+}
+
+function isAccountFamiliesState(value: unknown): value is AccountFamiliesState {
+  if (
+    !isRecord(value) ||
+    !Array.isArray(value.families) ||
+    !value.families.every(isAccountFamilyRecord) ||
+    !Array.isArray(value.prestigeTransactions) ||
+    !value.prestigeTransactions.every(isFamilyPrestigeTransactionState)
+  ) {
+    return false;
+  }
+
+  const familyIds = new Set(value.families.map((family) => family.familyId));
+  return value.prestigeTransactions.every((transaction) => familyIds.has(transaction.familyId));
 }
 
 function isEstateLocationState(value: unknown): value is NonNullable<AccountEstateAssetRecord["location"]> {
@@ -302,6 +371,7 @@ function isAccountProfileState(value: unknown): value is AccountProfileState {
     isAccountLegacyState(value.legacy) &&
     (value.achievements === undefined || isAccountAchievementsState(value.achievements)) &&
     (value.history === undefined || isAccountHistoryState(value.history)) &&
+    isAccountFamiliesState(value.families) &&
     (value.estate === undefined || isAccountEstateState(value.estate))
   );
 }
@@ -370,6 +440,10 @@ function normalizeHistory(history: AccountHistoryState | undefined): AccountHist
   return {
     runRecords: history.runRecords.map((record) => ({
       ...record,
+      ...(record.familyId !== undefined ? { familyId: record.familyId } : {}),
+      ...(record.parentCharacterId !== undefined
+        ? { parentCharacterId: record.parentCharacterId }
+        : {}),
       echoLevelReached: Math.max(0, Math.trunc(record.echoLevelReached)),
       notableCharacterAchievementIds: [...new Set(record.notableCharacterAchievementIds)],
       ...(record.legacyPayoutBaseline !== undefined
@@ -409,6 +483,68 @@ function normalizeHistory(history: AccountHistoryState | undefined): AccountHist
         : {}),
       saveSlotIds: [...new Set(record.saveSlotIds)]
     }))
+  };
+}
+
+function normalizeFamilies(families: AccountFamiliesState): AccountFamiliesState {
+  const defaults = createDefaultAccountFamiliesState();
+
+  if (!families) {
+    return defaults;
+  }
+
+  const seenFamilies = new Set<string>();
+  const normalizedFamilies = families.families.flatMap((family) => {
+    if (seenFamilies.has(family.familyId)) {
+      return [];
+    }
+
+    seenFamilies.add(family.familyId);
+    return [
+      {
+        familyId: family.familyId,
+        familyName: family.familyName,
+        rootCharacterId: family.rootCharacterId,
+        status: family.status,
+        createdAt: family.createdAt,
+        updatedAt: family.updatedAt,
+        memberCharacterIds: [...new Set(family.memberCharacterIds)],
+        notes: [...family.notes]
+      }
+    ];
+  });
+  const familyIds = new Set(normalizedFamilies.map((family) => family.familyId));
+  const seenTransactions = new Set<string>();
+  const prestigeTransactions = families.prestigeTransactions.flatMap((transaction) => {
+    if (
+      seenTransactions.has(transaction.transactionId) ||
+      !familyIds.has(transaction.familyId)
+    ) {
+      return [];
+    }
+
+    seenTransactions.add(transaction.transactionId);
+    return [
+      {
+        transactionId: transaction.transactionId,
+        familyId: transaction.familyId,
+        kind: transaction.kind,
+        amount: Math.max(1, Math.trunc(transaction.amount)),
+        categoryTag: transaction.categoryTag,
+        sourceType: transaction.sourceType,
+        sourceId: transaction.sourceId,
+        recordedAt: transaction.recordedAt,
+        summary: transaction.summary,
+        ...(transaction.characterId ? { characterId: transaction.characterId } : {}),
+        ...(transaction.sourceRunId ? { sourceRunId: transaction.sourceRunId } : {}),
+        ...(transaction.unlockId ? { unlockId: transaction.unlockId } : {})
+      }
+    ];
+  });
+
+  return {
+    families: normalizedFamilies,
+    prestigeTransactions
   };
 }
 
@@ -512,6 +648,7 @@ function normalizeProfile(profile: AccountProfileState): AccountProfileState {
     },
     achievements: normalizeAchievements(profile.achievements),
     history: normalizeHistory(profile.history),
+    families: normalizeFamilies(profile.families),
     estate: normalizeEstate(profile.estate)
   };
   const selection = resolveLegacyPreparationSelection(normalized);
