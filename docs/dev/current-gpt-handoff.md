@@ -142,6 +142,44 @@ Practical sequencing note:
 
 If `0.5.64` keeps Backstory Legacy records draft-only, `0.5.65` may need to remain a seam/test integration with controlled fixtures rather than live-player-visible unlocks. If `0.5.64` adds guarded live records, `0.5.65` can wire account-scoped purchase ids into creator availability while still leaving family-scoped purchases blocked until a real family context exists.
 
+### Creator Terminology Drift Audit Folded Into Handoff
+
+Ran a connector-only audit of creator/backstory terminology before more Backstory Legacy and resolver work.
+
+Relevant findings to preserve:
+
+- The canonical player-facing content in `packages/content/base/player/backstories.json` is mostly aligned with grounded upbringing/origin language. It describes household, settlement, road, work, institution, and memory contexts rather than hard classes.
+- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts` still defines `BackstoryArchetypeId` with archetype-style values such as `local`, `vagabond`, `merchant`, `craftsman`, and `minor_noble`. This may be harmless if unused, but future work should not use `archetype` as the user-facing or policy-facing vocabulary.
+- The current creator template builder labels starting skills as `Starting Lore`, even when the skills are combat, settlement, survival, resource, magic, crafting, or leadership skills. This is misleading. Prefer `Starting Skills`, `Starting Training`, or another broad label.
+- `packages/engines/game-engine/src/backstory-eligibility-policy.ts` consistently uses `origin` in player-facing explanation strings. That is acceptable and should remain distinct from system identifiers such as `backstoryId`.
+- `docs/design/backstory-creator-presentation-plan.md` already gives a good presentation boundary: live backstory catalog for names/summaries/descriptions/starter skills, resolver output for availability, and selected-only snapshot effects.
+- Save metadata still carries `classLabel`, and the main-menu summary uses `slot.backstoryLabel ?? slot.classLabel ?? "Unrecorded"`. This is acceptable for current data shape, but new creator work should not add new player-facing `class` language or make class the identity model.
+
+Recommended vocabulary rules:
+
+- Use `Backstory` for the system/content type.
+- Use `origin`, `upbringing`, `background`, or `household history` in player-facing prose depending on context.
+- Use `Legacy support` or `family history` for gated higher-tier availability, not `perk`, `class`, or `archetype`.
+- Use `Starting Skills` or `Starting Training` for displayed skill packages, not `Starting Lore` unless the listed items are actually lore-only.
+- Keep `lineage` for ancestry/species/bloodline identity and do not conflate it with `familyId` or `sourceRunId`.
+- Keep `Family`/`Bloodline` vocabulary reserved for account-family/Bloodlines work where ownership context is explicit.
+- Avoid adding new `class`, `archetype`, `profession class`, or `role class` terminology unless a dedicated design pass approves it.
+
+Suggested future cleanup candidate:
+
+`Version 0.5.69 - Creator Terminology Cleanup`
+
+Route: Codex 5.5 Local
+
+Recommended scope:
+
+- Rename or remove unused `BackstoryArchetypeId` if safe.
+- Change creator display copy from `Starting Lore` to `Starting Skills` or `Starting Training`.
+- Audit creator/save/menu labels for avoidable `class` terminology while preserving existing storage shape unless a dedicated schema cleanup is approved.
+- Add a focused presentation test if one already exists for backstory creator options, or update the existing backstory creator availability test expectations.
+
+Do not fold this into `0.5.64` or `0.5.65` unless the touched prompt already edits the same creator presentation lines. If touched, keep it copy-only and avoid schema/data migration.
+
 ## Current Pipeline Reminder
 
 Keep the active implementation pipeline intact unless a newer handoff supersedes it:
@@ -190,6 +228,10 @@ If the records are placed in the live Legacy catalog, add the minimal visibility
 
 `Version 0.5.65 - Backstory Legacy Purchase Resolver Integration` should use the existing `BackstoryCreatorAvailabilityOptions` -> `buildBackstoryEligibilityEvidenceInput(...)` -> `resolveBackstoryEligibility(...)` seam. Do not redesign the resolver, add a family picker, or infer family ownership from source runs.
 
+### Keep Creator Terminology Cleanup Separate
+
+Creator terminology cleanup is useful, but it should not derail the active Backstory Legacy content/resolver sequence. If nearby creator lines are already touched, use the vocabulary rules above. Otherwise keep this as a separate small cleanup candidate.
+
 ### Keep Typecheck Cleanup Separate
 
 Typecheck cleanup should not be folded into `0.5.64` or `0.5.65` unless a specific touched file blocks that run.
@@ -208,7 +250,6 @@ Do not disable `strict`, `noUncheckedIndexedAccess`, or `exactOptionalPropertyTy
 
 These remain light enough for GPT/GitHub Connector before Codex implementation work:
 
-- Creator Terminology Drift Audit
 - Backlog Superseded-Ordering Cleanup Plan
 - Bloodlines Information Architecture Audit
 - Heirloom vs Bequest Vocabulary Audit
