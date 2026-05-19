@@ -63,9 +63,7 @@ These are internal development maturity markers, not public release promises. Pa
 
 ## 4. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
-These are intentionally light enough to do through ChatGPT via GitHub Connector because they are repo-aware, read-only or docs-only, and do not require local commands, tests, or multi-file runtime edits. They should not update `docs/dev/current-codex-output.md` unless they become actual Codex runs later.
-
-Completed or folded connector passes:
+These connector-safe audit/planning passes have been completed or folded. They should not update `docs/dev/current-codex-output.md` unless they become actual Codex runs later.
 
 | Pass | Current location of useful guidance |
 | --- | --- |
@@ -78,22 +76,17 @@ Completed or folded connector passes:
 | Development Guidance File Cleanup | Roadmap, current handoff, and continuity brief deconstruction. |
 | Bloodlines Information Architecture Audit | `docs/design/bloodlines-information-architecture-audit.md`; use for `0.5.67` / `0.5.68`. |
 | Heirloom vs Bequest Vocabulary Audit | `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; use for `0.5.66`. |
-
-Remaining useful connector passes:
-
-| Priority | Pass | Why It Is Light Enough | Suggested Files To Inspect | Output |
-| --- | --- | --- | --- | --- |
-| 1 | Chronicle Run-End Summary Source Audit | Identifies existing data sources for future death/retirement/impact summary without implementation. | Chronicle/history/account profile files, run history contracts, launcher/account UI files. | Data-source map and missing owner list. |
-| 2 | Combat Audit Scoping Pass | Broad combat implementation is high-risk, but a read-only scope audit is cheap and useful. | Combat engine files, equipment profiles, combat tests, backlog notes, design ledger. | Ranked list of high-ROI combat issues to later validate locally. |
-| 3 | Magic Runtime Readiness Audit | Keeps magic from jumping from metadata to runtime without owner boundaries. | Magic charter, spellbook blueprint, spells catalog, magic validation tests, design ledger. | Runtime-readiness checklist and blocked areas. |
-| 4 | Economy Clarity Audit | Economic clarity can be planned from existing data without changing simulation. | Economy docs/content, market profile files, UI display surfaces, design ledger. | Candidate player-facing labels and data sources. |
-| 5 | Calendar / Climate Popup IA Audit | UI planning only; no runtime changes. | Calendar/climate content, current UI shell, README data system notes, design ledger. | Popup contents, data dependencies, and deferred behavior. |
-| 6 | Prompt Template Hardening Pass | Improves future Codex prompts without code changes. | AGENTS, current handoffs, roadmap, design ledger. | Reusable acceptance-criteria blocks for content/resolver/UI/docs runs. |
-| 7 | Roadmap Maintenance Pass | Keeps long-term version checkpoints updated as new handoffs land. | This roadmap, current handoffs, design ledger, backlog. | Small docs-only update when direction changes. |
+| Chronicle Run-End Summary Source Audit | `docs/design/chronicle-run-end-summary-source-audit.md`; use for future run-end summary planning. |
+| Combat Audit Scoping Pass | `docs/design/combat-audit-scoping-pass.md`; use before combat/equipment implementation. |
+| Magic Runtime Readiness Audit | `docs/design/magic-runtime-readiness-audit.md`; use before magic runtime/acquisition work. |
+| Economy Clarity Audit | `docs/design/economy-clarity-audit.md`; use before market/trade clarity UI work. |
+| Calendar / Climate Popup IA Audit | `docs/design/calendar-climate-popup-ia-audit.md`; use before calendar/climate UI work. |
+| Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
+| Roadmap Maintenance Pass | This update. |
 
 ### Connector Pass Rules
 
-Use GitHub Connector for these when:
+Use GitHub Connector for future light passes when:
 
 - The task is read-only, docs-only, or prompt-preparation.
 - The output can be a memo, checklist, acceptance criteria, or a tiny documentation edit.
@@ -115,11 +108,11 @@ These are likely candidates after `0.5.68`, subject to the current handoff at th
 | `0.5.69+` | README dynasty identity alignment | GitHub Connector | Docs-only | Low-risk once roadmap, brief, and ledger are stable. |
 | `0.5.69+` | Creator terminology cleanup | Codex Local or GitHub Connector for docs-only | Copy / small source cleanup | Use ledger vocabulary. Do not rewrite creator UI during active resolver work. |
 | `0.5.69+` | Typecheck script and target policy cleanup | Codex Local | Tooling/config cleanup | Keep separate from feature work; do not weaken strictness. |
-| `0.5.69+` | Run-end / Chronicle impact summary plan | GitHub Connector or Plan Mode | Planning | High payoff; map data sources before UI. |
-| `0.5.69+` | Combat / equipment audit | GitHub Connector first, Codex Local later | Audit then focused fixes | Audit before touching math. |
-| `0.5.69+` | Magic runtime readiness refresh | Deep Research, GitHub Connector, or Plan Mode | Research / docs | No runtime magic until owner boundaries are explicit. |
-| `0.5.69+` | Economic clarity layer plan | GitHub Connector or Plan Mode | Planning | Clarity before simulation. |
-| `0.5.69+` | Calendar / climate popup plan | GitHub Connector | UI IA | Data-backed popup before broader time/weather effects. |
+| `0.5.69+` | Chronicle run-end summary view-model plan | GitHub Connector or Plan Mode | Planning | Use `chronicle-run-end-summary-source-audit.md`; map data sources before UI. |
+| `0.5.69+` | Combat / equipment mapping audit | GitHub Connector first, Codex Local later | Audit then focused fixes | Use `combat-audit-scoping-pass.md`; audit before touching math. |
+| `0.5.69+` | Known spell ownership plan | GitHub Connector or Plan Mode | Planning | Use `magic-runtime-readiness-audit.md`; no runtime magic until owners are explicit. |
+| `0.5.69+` | Economy price clarity view-model plan | GitHub Connector or Plan Mode | Planning | Use `economy-clarity-audit.md`; clarity before simulation changes. |
+| `0.5.69+` | Calendar climate popup view-model plan | GitHub Connector | UI IA | Use `calendar-climate-popup-ia-audit.md`; data-backed popup before effects. |
 | `0.5.69+` | Continuity brief maintenance | GitHub Connector | Docs-only | Keep strategic index short as other docs absorb detail. |
 
 ## 6. `v0.6.x` Runtime Ownership Transition
