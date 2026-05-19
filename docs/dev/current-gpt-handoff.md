@@ -94,7 +94,53 @@ Minimum acceptance criteria if live Backstory Legacy records are added:
 
 Connector-created commit:
 
-- Pending this handoff update commit.
+- `5ef946fd9eaaf1ae23de3e0c8196d778b3d0acd3`
+
+### `0.5.65` Family Context Seam Audit Folded Into Handoff
+
+Ran a connector-only seam audit for `Version 0.5.65 - Backstory Legacy Purchase Resolver Integration`.
+
+Relevant findings to preserve:
+
+- `packages/engines/game-engine/src/backstory-eligibility.ts` already has the evidence fields needed for purchase-aware resolution: `accountId`, `familyId`, `lineageId`, `sourceRunIds`, `regionId`, `legacyPurchaseIds`, `evidenceRecords`, `prestigeRecords`, `echoRecords`, and `selectedBackstoryId`.
+- The resolver's `legacyPurchasePasses(...)` checks that the required scope owner is present, then checks whether `input.legacyPurchaseIds` includes the required unlock id. It does not independently verify that a listed purchase id came from the correct account/family owner.
+- Therefore, the caller that builds `legacyPurchaseIds` is the trust boundary. Do not hand-copy ids from account storage into resolver evidence. Use `resolveOwnedBackstoryLegacyPurchaseIds(...)` or an equivalent scoped helper.
+- `packages/engines/game-engine/src/backstory-legacy-purchases.ts` is already the right ownership collector for this pass. It uses runtime Legacy definitions, filters only backstory-tagged definitions, resolves account-owned ids from `profile.legacy.legacyUnlocks`, resolves family-owned ids only for a matching explicit `familyId`, and warns/excludes unsupported scopes.
+- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts` currently defines `BackstoryCreatorAvailabilityOptions` with only `accountId`, `selectedBackstoryId`, and `sourceRunIds`.
+- `buildBackstoryEligibilityEvidenceInput(...)` currently copies only those three fields into resolver evidence.
+- `getBackstoryOptionsForSelection(...)` is a clean narrow seam: it already accepts `availabilityOptions`, builds resolver evidence, calls `resolveBackstoryEligibility(...)`, and projects creator-facing backstory cards.
+- `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx` currently builds `backstoryAvailabilityOptions` from `form.backstoryId`, `accountProfile.accountId`, and `form.sourceRunId`, then passes them to `getBackstoryOptionsForSelection(...)`.
+- Current family ownership storage can prove family unlocks if a specific `familyId` is known, but no active family-selection UI or obvious creator-family context exists yet.
+- Retired/source-run inheritance has a `sourceRunId` seam through `resolveEligibleHeirSources(...)` and `resolveHeirSourceById(...)`, but those records are not the same thing as a family id.
+
+Instruction for future `0.5.65` Codex prompt:
+
+`0.5.65` should be a caller-seam integration, not a resolver redesign.
+
+Recommended safe implementation shape:
+
+1. Extend `BackstoryCreatorAvailabilityOptions` to accept optional `legacyPurchaseIds`, `familyId`, `regionId`, and maybe warning passthrough only if needed.
+2. Update `buildBackstoryEligibilityEvidenceInput(...)` to copy those optional fields into `BackstoryEligibilityEvidenceInput` using the same trim/empty filtering pattern already used for `accountId` and `sourceRunIds`.
+3. Add a small pure helper for deriving creator purchase evidence from `AccountProfileState` plus runtime Legacy definitions. It should call `resolveOwnedBackstoryLegacyPurchaseIds(...)` instead of fabricating ids.
+4. In the current creator UI path, do not invent a `familyId`. Until a real family-selection/Bloodlines context exists, pass account-scoped purchases only or leave `familyId` absent.
+5. If `familyId` is absent, family-scoped owned purchases must not unlock backstories. Warnings are acceptable; fabricated family evidence is not.
+6. Do not add a family picker, Bloodlines UI, family management, Family Prestige spending, or automatic family creation as part of `0.5.65`.
+7. Keep resolver policy semantics unchanged unless a test proves the existing contract is wrong.
+
+Minimum acceptance criteria for `0.5.65`:
+
+- Tests prove `buildBackstoryEligibilityEvidenceInput(...)` carries `legacyPurchaseIds` and `familyId` only when explicitly supplied.
+- Tests prove account-scoped backstory purchases can satisfy a resolver rule only when collected by the ownership helper and passed into the resolver.
+- Tests prove family-scoped purchases do not satisfy rules without a matching explicit `familyId`.
+- Tests prove wrong-family ownership does not unlock a backstory.
+- Tests prove unsupported scoped purchases still warn/exclude rather than unlock.
+- Tests prove source-run/heir selection alone does not imply family purchase ownership.
+- Tests prove selected-backstory effects still apply only for the selected backstory and do not stack parent/child effects.
+- No creator UI family picker, family tree, heir management, or purchase execution is introduced.
+
+Practical sequencing note:
+
+If `0.5.64` keeps Backstory Legacy records draft-only, `0.5.65` may need to remain a seam/test integration with controlled fixtures rather than live-player-visible unlocks. If `0.5.64` adds guarded live records, `0.5.65` can wire account-scoped purchase ids into creator availability while still leaving family-scoped purchases blocked until a real family context exists.
 
 ## Current Pipeline Reminder
 
@@ -107,6 +153,8 @@ Keep the active implementation pipeline intact unless a newer handoff supersedes
 5. `Version 0.5.68 - Bloodlines Read-Only Account Meta UI`
 
 Important refinement: `0.5.64` should not be a naive live `legacy_unlocks.json` content-only pass. Either keep records draft-only, or include the minimal guard that prevents backstory-tagged catalog-only/backlog records from becoming visible/purchasable in the existing Legacy UI.
+
+Important refinement: `0.5.65` should not invent family context. It should carry explicit purchase evidence through the existing creator/resolver seam and only use family-scoped purchase ids when a real matching `familyId` is supplied.
 
 ## Instructions For Future Codex Runs
 
@@ -138,6 +186,10 @@ Do not treat this file as permission to implement broad cleanup or feature work.
 
 If the records are placed in the live Legacy catalog, add the minimal visibility/purchase guard as part of the same run or delay live catalog insertion.
 
+### Keep `0.5.65` To The Existing Seam
+
+`Version 0.5.65 - Backstory Legacy Purchase Resolver Integration` should use the existing `BackstoryCreatorAvailabilityOptions` -> `buildBackstoryEligibilityEvidenceInput(...)` -> `resolveBackstoryEligibility(...)` seam. Do not redesign the resolver, add a family picker, or infer family ownership from source runs.
+
 ### Keep Typecheck Cleanup Separate
 
 Typecheck cleanup should not be folded into `0.5.64` or `0.5.65` unless a specific touched file blocks that run.
@@ -156,7 +208,6 @@ Do not disable `strict`, `noUncheckedIndexedAccess`, or `exactOptionalPropertyTy
 
 These remain light enough for GPT/GitHub Connector before Codex implementation work:
 
-- `0.5.65` Family Context Seam Plan
 - Creator Terminology Drift Audit
 - Backlog Superseded-Ordering Cleanup Plan
 - Bloodlines Information Architecture Audit
