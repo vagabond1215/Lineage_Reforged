@@ -95,11 +95,19 @@ Treat these as high-risk and require narrow scope plus focused validation:
 
 ## Codex Run Maintenance
 
-- At the start of substantial Codex work, review [README.md](README.md) and [docs/future_content_backlog.md](docs/future_content_backlog.md) before running major commands or editing files.
+- At the start of substantial Codex work, review [README.md](README.md), [docs/dev/current-gpt-handoff.md](docs/dev/current-gpt-handoff.md) when present, and [docs/future_content_backlog.md](docs/future_content_backlog.md) before running major commands or editing files.
 - On every Codex run that adds content, changes scope, or explicitly defers work, update [docs/future_content_backlog.md](docs/future_content_backlog.md).
 - Add newly deferred systems, blocked follow-up work, and implementation notes for anything intentionally held off.
 - When a deferred item is started or completed, update or remove its backlog entry in the same run.
 - Keep backlog entries concrete: what is deferred, what prerequisite must exist first, and which content/system layer should own future implementation.
+
+## GPT Handoff Policy
+
+- [docs/dev/current-gpt-handoff.md](docs/dev/current-gpt-handoff.md) is the current ChatGPT/GitHub Connector, Deep Research, or Agent Mode handoff for future Codex work.
+- It should contain only connector-side findings, instructions, risks, and follow-up context that remain pertinent for future development.
+- It is not a transcript or accumulating long log. Replace or prune stale entries when they are implemented, superseded, or no longer useful.
+- Do not update [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) from a GPT/GitHub Connector planning pass.
+- If [docs/dev/current-gpt-handoff.md](docs/dev/current-gpt-handoff.md) conflicts with a newer Codex handoff, trust the newer Codex handoff for exact implementation state and update the GPT handoff when appropriate.
 
 ## Codex Output Policy
 
