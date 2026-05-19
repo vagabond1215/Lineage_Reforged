@@ -109,6 +109,14 @@ Treat these as high-risk and require narrow scope plus focused validation:
 - Do not update [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) from a GPT/GitHub Connector planning pass.
 - If [docs/dev/current-gpt-handoff.md](docs/dev/current-gpt-handoff.md) conflicts with a newer Codex handoff, trust the newer Codex handoff for exact implementation state and update the GPT handoff when appropriate.
 
+## Temporary Guardrail Docs
+
+- Focused audit, source, triage, and hardening docs are temporary guardrails, not a second backlog.
+- Keep them while they directly support an upcoming implementation or planning prompt, prevent repeated analysis, or hold task-specific guidance that is too detailed for the current handoff or durable design ledger.
+- When a Codex or planning run consumes one, decide whether remaining guidance should stay in that file, move into the current handoff, move into the roadmap, become durable design-ledger material, or be recorded in the backlog.
+- After the useful guidance is implemented, superseded, or promoted into a durable authority file, remove the temporary guardrail doc in a cleanup pass.
+- Prompts that rely on temporary guardrail docs should require an explicit cleanup decision in their final output.
+
 ## Codex Output Policy
 
 - Prefer writing the final detailed result to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md).
