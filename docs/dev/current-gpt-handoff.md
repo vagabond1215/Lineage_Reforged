@@ -180,6 +180,49 @@ Recommended scope:
 
 Do not fold this into `0.5.64` or `0.5.65` unless the touched prompt already edits the same creator presentation lines. If touched, keep it copy-only and avoid schema/data migration.
 
+### Backlog Superseded-Ordering Audit Folded Into Handoff
+
+Ran a connector-only audit of chronological backlog notes and active planning order.
+
+Relevant findings to preserve:
+
+- `docs/future_content_backlog.md` is useful as historical run notes plus deferred-work tracking, but it is intentionally chronological and includes same-day ordering experiments that are now superseded by newer handoff/brief/roadmap direction.
+- `docs/dev/project-vision-and-continuity-brief.md` already states the correct precedence: older prompts and chronological backlog notes are useful only where they still fit current strategy, and if same-day ordering conflicts arise, the live handoff plus the brief's current pipeline table control.
+- `docs/dev/project-roadmap.md` now complements that by making the active anchor and active pipeline explicit, including `0.5.64` through `0.5.68`.
+- `docs/dev/current-codex-output.md` remains the exact current implementation anchor: `Version 0.5.63 - Backstory Legacy Purchase Runtime Shape`, with `Version 0.5.64 - Backstory Legacy Purchase Content Draft` as the next recommended implementation version.
+- `docs/design/backstory-legacy-purchase-integration-plan.md` is still useful design guidance, but it explicitly has a pipeline supersession note saying the immediate Backstory Legacy purchase runtime sequence was superseded by `docs/design/legacy-scope-bloodline-economy-plan.md`.
+- `docs/design/legacy-scope-bloodline-economy-plan.md` is still useful for scope/currency/family economy boundaries, but several pieces of its then-future runtime shape have since partially landed. Treat it as boundary guidance, not exact current state.
+
+Instruction for future prompt/order work:
+
+- Do not delete `docs/future_content_backlog.md` merely because it contains old sequencing. It is the historical deferred-work ledger.
+- Do not delete older Backstory design docs unless their useful boundary guidance has been explicitly folded into newer docs and the user asks for pruning.
+- When backlog/design docs disagree with current ordering, use this precedence:
+  1. `docs/dev/current-codex-output.md` for exact latest implementation state.
+  2. `docs/dev/current-gpt-handoff.md` for latest connector-side audits and prompt guardrails.
+  3. `docs/dev/project-vision-and-continuity-brief.md` for strategic direction and current pipeline intent.
+  4. `docs/dev/project-roadmap.md` for long-term version/playability/checkpoint routing.
+  5. `docs/future_content_backlog.md` for historical deferred notes and reminders.
+  6. Older `docs/design/*` plans for boundary rationale, not active sequencing, unless the newer handoff/brief points at them.
+- If a future Codex prompt uses an older design plan, make it quote the relevant boundary rule and also state whether that plan is superseded for sequence/status.
+- If a future cleanup pass edits the backlog, prefer adding a short precedence header or pruning only fully folded temporary docs. Do not rewrite the chronological run-note history into a fake current plan.
+
+Suggested future cleanup candidate:
+
+`Version 0.5.69 - Backlog Precedence Header Cleanup`
+
+Route: ChatGPT via GitHub Connector for tiny docs edit, or Codex 5.5 Local if paired with local validation/backlog maintenance.
+
+Recommended scope:
+
+- Add a small note near the top of `docs/future_content_backlog.md` clarifying that chronological run notes are historical and that current-codex-output/current-gpt-handoff/continuity brief/roadmap control active sequencing.
+- Do not remove old run notes.
+- Do not update `docs/dev/current-codex-output.md` for this docs-only connector cleanup.
+
+Connector-created commit:
+
+- Pending this handoff update commit.
+
 ## Current Pipeline Reminder
 
 Keep the active implementation pipeline intact unless a newer handoff supersedes it:
@@ -228,6 +271,10 @@ If the records are placed in the live Legacy catalog, add the minimal visibility
 
 `Version 0.5.65 - Backstory Legacy Purchase Resolver Integration` should use the existing `BackstoryCreatorAvailabilityOptions` -> `buildBackstoryEligibilityEvidenceInput(...)` -> `resolveBackstoryEligibility(...)` seam. Do not redesign the resolver, add a family picker, or infer family ownership from source runs.
 
+### Treat Backlog Notes As History, Not Active Ordering
+
+Use backlog run notes to understand deferred intent and avoid repeating old mistakes. Do not let old same-day notes override the current handoff, GPT handoff, continuity brief, or roadmap pipeline.
+
 ### Keep Creator Terminology Cleanup Separate
 
 Creator terminology cleanup is useful, but it should not derail the active Backstory Legacy content/resolver sequence. If nearby creator lines are already touched, use the vocabulary rules above. Otherwise keep this as a separate small cleanup candidate.
@@ -250,7 +297,6 @@ Do not disable `strict`, `noUncheckedIndexedAccess`, or `exactOptionalPropertyTy
 
 These remain light enough for GPT/GitHub Connector before Codex implementation work:
 
-- Backlog Superseded-Ordering Cleanup Plan
 - Bloodlines Information Architecture Audit
 - Heirloom vs Bequest Vocabulary Audit
 - Chronicle Run-End Summary Source Audit
