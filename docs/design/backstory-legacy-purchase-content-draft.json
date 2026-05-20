@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "sourceVersion": "Version 0.5.64 - Backstory Legacy Purchase Content Draft",
+  "status": "draft_only_non_runtime",
+  "runtimeImportAllowed": false,
+  "contentIntent": "future_backstory_legacy_purchase_candidates",
+  "notes": [
+    "This file is a draft-only planning catalog and is not imported by the Legacy runtime, account meta UI, Backstory Eligibility resolver, or character creator.",
+    "Records in this file are future eligibility support concepts only. They grant no starter skills, attributes, abilities, items, coin, contacts, market effects, family history, social status, magic access, mounts, medical effects, oath behavior, estate ownership, or institution membership.",
+    "A later implementation pass must migrate approved records into runtime-owned Legacy content with explicit visibility, purchase, scope, storage, resolver, and UI tests before any record can become live."
+  ],
+  "records": [
+    {
+      "id": "legacy.backstory.street_vendor",
+      "targetBackstoryId": "backstory.street_vendor",
+      "name": "Preserve Street Vendor Origins",
+      "status": "draft_only_non_runtime",
+      "tier": "tier_1",
+      "scopeIntent": "account",
+      "purchaseIntent": "early_legacy_access_support_only",
+      "candidateTags": ["backstory", "backstory_legacy", "tier_1", "draft_only"],
+      "evidenceRole": "legacy_purchase_support",
+      "effectIntent": "none",
+      "summary": "A future low-risk account-level support purchase for humble stall, errand, and market-table origins.",
+      "guardrails": [
+        "Does not grant discounts, contacts, passive income, business ownership, extra coin, or inventory.",
+        "Does not replace any required source-run or earned trade evidence if a later resolver rule requires it.",
+        "Does not stack with any parent or child backstory package."
+      ]
+    },
+    {
+      "id": "legacy.backstory.net_tender",
+      "targetBackstoryId": "backstory.net_tender",
+      "name": "Preserve Net-Tender Origins",
+      "status": "draft_only_non_runtime",
+      "tier": "tier_1",
+      "scopeIntent": "account",
+      "purchaseIntent": "early_legacy_access_support_only",
+      "candidateTags": ["backstory", "backstory_legacy", "tier_1", "draft_only"],
+      "evidenceRole": "legacy_purchase_support",
+      "effectIntent": "none",
+      "summary": "A future low-risk account-level support purchase for shore, net, and patient water-work origins.",
+      "guardrails": [
+        "Does not grant boats, cargo behavior, route authority, fish generation, or water-trade access.",
+        "Does not replace any required source-run or earned fishing evidence if a later resolver rule requires it.",
+        "Does not stack with any parent or child backstory package."
+      ]
+    },
+    {
+      "id": "legacy.backstory.gatherer",
+      "targetBackstoryId": "backstory.gatherer",
+      "name": "Preserve Gatherer Origins",
+      "status": "draft_only_non_runtime",
+      "tier": "tier_1",
+      "scopeIntent": "account",
+      "purchaseIntent": "early_legacy_access_support_only",
+      "candidateTags": ["backstory", "backstory_legacy", "tier_1", "draft_only"],
+      "evidenceRole": "legacy_purchase_support",
+      "effectIntent": "none",
+      "summary": "A future low-risk account-level support purchase for field gathering, path memory, and simple foraging origins.",
+      "guardrails": [
+        "Does not generate items, herbs, food, alchemy access, healing effects, or resource claims.",
+        "Does not replace any required source-run or earned gathering evidence if a later resolver rule requires it.",
+        "Does not stack with any parent or child backstory package."
+      ]
+    },
+    {
+      "id": "legacy.backstory.scribes_apprentice",
+      "targetBackstoryId": "backstory.scribes_apprentice",
+      "name": "Preserve Scribe Training",
+      "status": "draft_only_non_runtime",
+      "tier": "tier_1",
+      "scopeIntent": "account",
+      "purchaseIntent": "early_legacy_access_support_only",
+      "candidateTags": ["backstory", "backstory_legacy", "tier_1", "draft_only"],
+      "evidenceRole": "legacy_purchase_support",
+      "effectIntent": "none",
+      "summary": "A future low-risk account-level support purchase for mundane records, copying, and administrative apprenticeship origins.",
+      "guardrails": [
+        "Does not grant scholar institution membership, arcane privilege, magic access, legal office, or authority.",
+        "Does not replace any required source-run or earned administration evidence if a later resolver rule requires it.",
+        "Does not stack with any parent or child backstory package."
+      ]
+    },
+    {
+      "id": "legacy.backstory.kitchen_hand",
+      "targetBackstoryId": "backstory.kitchen_hand",
+      "name": "Preserve Kitchen Service",
+      "status": "draft_only_non_runtime",
+      "tier": "tier_1",
+      "scopeIntent": "account",
+      "purchaseIntent": "early_legacy_access_support_only",
+      "candidateTags": ["backstory", "backstory_legacy", "tier_1", "draft_only"],
+      "evidenceRole": "legacy_purchase_support",
+      "effectIntent": "none",
+      "summary": "A future low-risk account-level support purchase for stores, fires, cleaning, and food-service origins.",
+      "guardrails": [
+        "Does not grant inn ownership, chef mastery, contacts, free food, supplies, market effects, or hospitality income.",
+        "Does not replace any required source-run or earned cooking evidence if a later resolver rule requires it.",
+        "Does not stack with any parent or child backstory package."
+      ]
+    }
+  ],
+  "intentionallyDeferredCandidateIds": [
+    "legacy.backstory.drovers_hand",
+    "legacy.backstory.militia_levy",
+    "legacy.backstory.merchant_family",
+    "legacy.backstory.garrison_ward",
+    "legacy.backstory.carpenter_household",
+    "legacy.backstory.miners_kin",
+    "legacy.backstory.village_hunter",
+    "legacy.backstory.scouts_ward",
+    "legacy.backstory.minor_noble",
+    "legacy.backstory.local_champion",
+    "legacy.backstory.world_stray",
+    "legacy.backstory.hedge_adept",
+    "legacy.backstory.temple_acolyte",
+    "legacy.backstory.scholars_apprentice",
+    "legacy.backstory.performer"
+  ]
+}

@@ -119,6 +119,14 @@ test("Backstory Legacy purchase helper includes family-owned definitions only fo
     }).legacyPurchaseIds,
     ["legacy.backstory.militia_levy"]
   );
+  assert.deepEqual(
+    resolveOwnedBackstoryLegacyPurchaseIds({
+      profile,
+      legacyUnlockDefinitions: definitions,
+      familyId: "family.mira"
+    }).legacyPurchaseIds,
+    ["legacy.backstory.gatherer"]
+  );
   const withoutFamily = resolveOwnedBackstoryLegacyPurchaseIds({
     profile,
     legacyUnlockDefinitions: definitions
