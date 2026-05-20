@@ -17,12 +17,22 @@ import { getBackstoryOptionsForSelection } from "../../apps/rpg-ui/src/game-shel
 const DRAFT_PATH = "docs/design/backstory-legacy-purchase-content-draft.json";
 const DRAFT_IMPORT_PATTERN =
   /backstory-legacy-purchase-content-draft|legacy\.backstory\.street_vendor|legacy\.backstory\.net_tender|legacy\.backstory\.kitchen_hand/;
+const PLAYER_COPY_FORBIDDEN_PATTERN = /\b(future|low-risk|account-level|support purchase|purchase|eligibility|runtime|legacy unlock|scope|resolver|catalog|draft-only|draft_only|guardrail)\b/i;
+const PAST_SHAPING_PATTERN = /\b(shaped|taught|learned|formed|trained|raised|grew|worked)\b/i;
+const CURRENT_IDENTITY_PATTERN = /\bcurrently employed|currently recognized|now employed|now recognized|is a vendor|is a net-tender|is a gatherer|is a scribe|is a kitchen hand\b/i;
 const EXPECTED_DRAFT_IDS = [
   "legacy.backstory.street_vendor",
   "legacy.backstory.net_tender",
   "legacy.backstory.gatherer",
   "legacy.backstory.scribes_apprentice",
   "legacy.backstory.kitchen_hand"
+];
+const EXPECTED_DRAFT_NAMES = [
+  "Market-Learned Habits",
+  "Water-Work Lessons",
+  "Field-Gathering Habits",
+  "Records-Room Training",
+  "Kitchen-Service Discipline"
 ];
 const EXPECTED_TARGET_BACKSTORY_IDS = [
   "backstory.street_vendor",
@@ -86,12 +96,16 @@ async function listSourceFiles(root) {
 test("draft Backstory Legacy purchase content is explicitly non-runtime and low-risk", async () => {
   const draft = await loadDraft();
   const recordIds = draft.records.map((record) => record.id);
+  const recordNames = draft.records.map((record) => record.name);
   const targetBackstoryIds = draft.records.map((record) => record.targetBackstoryId);
 
   assert.equal(draft.status, "draft_only_non_runtime");
   assert.equal(draft.runtimeImportAllowed, false);
   assert.deepEqual(recordIds, EXPECTED_DRAFT_IDS);
+  assert.deepEqual(recordNames, EXPECTED_DRAFT_NAMES);
   assert.deepEqual(targetBackstoryIds, EXPECTED_TARGET_BACKSTORY_IDS);
+  assert.match(draft.notes.join("\n"), /formative past conditions that shaped the new character/);
+  assert.match(draft.notes.join("\n"), /not current job titles/);
 
   for (const forbiddenId of FORBIDDEN_DRAFT_IDS) {
     assert.equal(recordIds.includes(forbiddenId), false, forbiddenId);
@@ -105,11 +119,30 @@ test("draft Backstory Legacy purchase content is explicitly non-runtime and low-
     assert.equal(record.evidenceRole, "legacy_purchase_support", record.id);
     assert.equal(record.effectIntent, "none", record.id);
     assert.deepEqual(record.candidateTags.slice(0, 2), ["backstory", "backstory_legacy"]);
+    assert.equal("summary" in record, false, record.id);
+    assert.equal(typeof record.playerFacingSummary, "string", record.id);
+    assert.equal(typeof record.implementationSummary, "string", record.id);
     assert.equal("cost" in record, false, record.id);
     assert.equal("effects" in record, false, record.id);
     assert.equal("purchaseMode" in record, false, record.id);
     assert.equal("currency" in record, false, record.id);
     assert.equal("requirements" in record, false, record.id);
+  }
+});
+
+test("draft player-facing copy describes formative past instead of implementation mechanics", async () => {
+  const draft = await loadDraft();
+
+  for (const record of draft.records) {
+    assert.doesNotMatch(record.name, PLAYER_COPY_FORBIDDEN_PATTERN, record.id);
+    assert.doesNotMatch(record.name, CURRENT_IDENTITY_PATTERN, record.id);
+    assert.doesNotMatch(record.playerFacingSummary, PLAYER_COPY_FORBIDDEN_PATTERN, record.id);
+    assert.doesNotMatch(record.playerFacingSummary, CURRENT_IDENTITY_PATTERN, record.id);
+    assert.match(record.playerFacingSummary, PAST_SHAPING_PATTERN, record.id);
+    assert.match(record.implementationSummary, /Draft-only internal candidate/, record.id);
+    assert.match(record.implementationSummary, /formative/, record.id);
+    assert.match(record.guardrails.join("\n"), /Represents formative past experience only/, record.id);
+    assert.match(record.guardrails.join("\n"), /does not make the new character currently employed/, record.id);
   }
 });
 
