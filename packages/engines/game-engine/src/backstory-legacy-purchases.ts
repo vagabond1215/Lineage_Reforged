@@ -5,12 +5,10 @@ import type {
 } from "../../../shared/types/src/index.js";
 import { hasFamilyUnlock } from "./account-family.js";
 import { hasLegacyUnlock } from "./legacy-account.js";
-
-const BACKSTORY_LEGACY_PURCHASE_TAGS = new Set([
-  "backstory",
-  "backstory_legacy",
-  "origin"
-]);
+import {
+  isBackstoryLegacyUnlockDefinition,
+  isNonLiveBackstoryLegacyUnlockDefinition
+} from "./legacy-unlocks.js";
 
 const SUPPORTED_ACCOUNT_SCOPE: LegacyUnlockScope = "account";
 const SUPPORTED_FAMILY_SCOPE: LegacyUnlockScope = "family";
@@ -33,7 +31,7 @@ export type OwnedBackstoryLegacyPurchaseIdResolution = {
 export function isBackstoryLegacyPurchaseDefinition(
   definition: Pick<LegacyUnlockDefinitionState, "tags">
 ): boolean {
-  return definition.tags?.some((tag) => BACKSTORY_LEGACY_PURCHASE_TAGS.has(tag)) ?? false;
+  return isBackstoryLegacyUnlockDefinition(definition);
 }
 
 function pushUnique(values: string[], value: string): void {
@@ -71,6 +69,19 @@ export function resolveOwnedBackstoryLegacyPurchaseIds(
 
   for (const definition of params.legacyUnlockDefinitions) {
     if (!isBackstoryLegacyPurchaseDefinition(definition)) {
+      continue;
+    }
+
+    if (isNonLiveBackstoryLegacyUnlockDefinition(definition)) {
+      const accountOwned = hasLegacyUnlock(params.profile, definition.id);
+      const familyOwnedAnywhere = hasAnyFamilyUnlock(params.profile, definition.id);
+
+      if (accountOwned || familyOwnedAnywhere) {
+        pushUnique(resolution.unsupportedScopeUnlockIds, definition.id);
+        resolution.warnings.push(
+          `${definition.id} is a Backstory Legacy purchase definition that is not live.`
+        );
+      }
       continue;
     }
 

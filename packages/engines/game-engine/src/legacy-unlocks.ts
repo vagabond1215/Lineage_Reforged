@@ -99,6 +99,7 @@ const KNOWN_EFFECT_KINDS = new Set<LegacyUnlockEffectKind>([
 ]);
 
 const FUTURE_REQUIREMENT_TYPES = new Set(["character_skill", "role_rank", "wealth"]);
+const BACKSTORY_LEGACY_PURCHASE_TAGS = new Set(["backstory", "backstory_legacy", "origin"]);
 
 export type LegacyUnlockAffordability = "affordable" | "unaffordable" | "no_cost";
 export type LegacyUnlockOwnershipState = "locked" | "unlocked" | "maxed";
@@ -143,6 +144,7 @@ export type LegacyUnlockResolvedState = {
 
 export type LegacyUnlockPurchaseFailureReason =
   | "unknown_unlock"
+  | "non_live_backstory_unlock"
   | "max_rank"
   | "unsupported_requirement"
   | "ineligible"
@@ -288,6 +290,18 @@ export type LegacyStarterSkillPolicyResolution = {
   unlockedStarterSkillLaneIds: string[];
   unlockedStarterSkillOptionIds: string[];
 };
+
+export function isBackstoryLegacyUnlockDefinition(
+  definition: Pick<LegacyUnlockDefinitionState, "tags">
+): boolean {
+  return definition.tags?.some((tag) => BACKSTORY_LEGACY_PURCHASE_TAGS.has(tag)) ?? false;
+}
+
+export function isNonLiveBackstoryLegacyUnlockDefinition(
+  definition: Pick<LegacyUnlockDefinitionState, "tags" | "implementationPriority">
+): boolean {
+  return isBackstoryLegacyUnlockDefinition(definition) && definition.implementationPriority !== "live";
+}
 
 function formatPreparationResourceChoiceLabel(choiceId: PlayerResourceKey): string {
   switch (choiceId) {
@@ -1249,19 +1263,23 @@ function resolveDefinitionState(
   const state: LegacyUnlockOwnershipState =
     nextRank === null ? "maxed" : currentRank > 0 ? "unlocked" : "locked";
   const unsupported = requirementResults.some((result) => result.state === "unsupported");
-  const canPurchase = nextRank !== null && eligible && affordability === "affordable";
+  const nonLiveBackstoryUnlock = isNonLiveBackstoryLegacyUnlockDefinition(definition);
+  const canPurchase =
+    !nonLiveBackstoryUnlock && nextRank !== null && eligible && affordability === "affordable";
   const purchaseBlockedReason =
-    nextRank === null
-      ? "Maximum rank reached"
-      : unsupported
-        ? "Requirement not supported yet"
-        : !eligible
-          ? "Requirements unmet"
-          : nextCost === null
-            ? "Prestige cost unavailable"
-            : affordability !== "affordable"
-            ? "Insufficient Prestige"
-            : null;
+    nonLiveBackstoryUnlock
+      ? "Backstory Legacy record is not live"
+      : nextRank === null
+        ? "Maximum rank reached"
+        : unsupported
+          ? "Requirement not supported yet"
+          : !eligible
+            ? "Requirements unmet"
+            : nextCost === null
+              ? "Prestige cost unavailable"
+              : affordability !== "affordable"
+                ? "Insufficient Prestige"
+                : null;
 
   return {
     id: definition.id,
@@ -1339,9 +1357,9 @@ function resolveUnknownUnlockState(unlock: LegacyUnlockState): LegacyUnlockResol
 }
 
 export function resolveLegacyUnlockStates(
-  profile: AccountProfileState
+  profile: AccountProfileState,
+  definitions: readonly LegacyUnlockDefinitionState[] = getLegacyUnlockDefinitions()
 ): LegacyUnlockResolvedState[] {
-  const definitions = getLegacyUnlockDefinitions();
   const definitionsById = new Map(definitions.map((definition) => [definition.id, definition]));
   const definitionIds = new Set(definitions.map((definition) => definition.id));
   const knownStates = definitions.map((definition) =>
@@ -1940,9 +1958,10 @@ function buildUnlockState(
 export function purchaseLegacyUnlock(
   profile: AccountProfileState,
   unlockId: string,
-  recordedAt = new Date().toISOString()
+  recordedAt = new Date().toISOString(),
+  definitions: readonly LegacyUnlockDefinitionState[] = getLegacyUnlockDefinitions()
 ): LegacyUnlockPurchaseSuccess | LegacyUnlockPurchaseFailure {
-  const definition = getLegacyUnlockDefinitionById(unlockId);
+  const definition = definitions.find((entry) => entry.id === unlockId) ?? null;
 
   if (!definition) {
     return {
@@ -1952,7 +1971,14 @@ export function purchaseLegacyUnlock(
     };
   }
 
-  const definitions = getLegacyUnlockDefinitions();
+  if (isNonLiveBackstoryLegacyUnlockDefinition(definition)) {
+    return {
+      ok: false,
+      profile,
+      error: "non_live_backstory_unlock"
+    };
+  }
+
   const definitionsById = new Map(definitions.map((entry) => [entry.id, entry]));
   const resolved = resolveDefinitionState(profile, definition, definitionsById);
   if (resolved.nextRank === null) {

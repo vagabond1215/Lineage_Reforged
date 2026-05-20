@@ -6,11 +6,15 @@ import {
   resolveOwnedBackstoryLegacyPurchaseIds
 } from "../../packages/engines/game-engine/src/index.ts";
 
-function createDefinition(id, { scope = "account", tags = ["backstory_legacy"] } = {}) {
+function createDefinition(
+  id,
+  { scope = "account", tags = ["backstory_legacy"], implementationPriority = "live" } = {}
+) {
   return {
     id,
     scope,
-    tags
+    tags,
+    implementationPriority
   };
 }
 
@@ -180,6 +184,75 @@ test("Backstory Legacy purchase helper treats unsupported scopes conservatively"
     "legacy.backstory.local_champion"
   ]);
   assert.match(resolution.warnings.join("\n"), /regional scoped purchase storage/);
+});
+
+test("Backstory Legacy purchase helper excludes non-live backstory-tagged definitions", () => {
+  const profile = {
+    ...createDefaultAccountProfileState(),
+    legacy: {
+      ...createDefaultAccountProfileState().legacy,
+      legacyUnlocks: [
+        createAccountUnlock("legacy.backstory.catalog_only"),
+        createAccountUnlock("legacy.backstory.backlog")
+      ]
+    }
+  };
+  const resolution = resolveOwnedBackstoryLegacyPurchaseIds({
+    profile,
+    legacyUnlockDefinitions: [
+      createDefinition("legacy.backstory.catalog_only", {
+        implementationPriority: "catalog_only"
+      }),
+      createDefinition("legacy.backstory.backlog", {
+        implementationPriority: "backlog"
+      })
+    ]
+  });
+
+  assert.deepEqual(resolution.legacyPurchaseIds, []);
+  assert.deepEqual(resolution.accountUnlockIds, []);
+  assert.deepEqual(resolution.familyUnlockIds, []);
+  assert.deepEqual(resolution.unsupportedScopeUnlockIds, [
+    "legacy.backstory.catalog_only",
+    "legacy.backstory.backlog"
+  ]);
+  assert.match(resolution.warnings.join("\n"), /not live/);
+});
+
+test("Backstory Legacy purchase helper excludes non-live family-owned definitions", () => {
+  const profile = {
+    ...createDefaultAccountProfileState(),
+    families: {
+      families: [createFamilyRecord("family.arden")],
+      prestigeTransactions: [
+        createFamilyTransaction("family.transaction.arden.1", "family.arden")
+      ],
+      familyUnlocks: [
+        createFamilyUnlock(
+          "legacy.backstory.family_catalog_only",
+          "family.arden",
+          "family.transaction.arden.1"
+        )
+      ]
+    }
+  };
+  const resolution = resolveOwnedBackstoryLegacyPurchaseIds({
+    profile,
+    familyId: "family.arden",
+    legacyUnlockDefinitions: [
+      createDefinition("legacy.backstory.family_catalog_only", {
+        scope: "family",
+        implementationPriority: "catalog_only"
+      })
+    ]
+  });
+
+  assert.deepEqual(resolution.legacyPurchaseIds, []);
+  assert.deepEqual(resolution.accountUnlockIds, []);
+  assert.deepEqual(resolution.familyUnlockIds, []);
+  assert.deepEqual(resolution.unsupportedScopeUnlockIds, [
+    "legacy.backstory.family_catalog_only"
+  ]);
 });
 
 test("Backstory Legacy purchase helper does not mutate input", () => {

@@ -1,6 +1,7 @@
 import type {
   AccountProfileState,
   AccountRunHistoryRecord,
+  LegacyUnlockDefinitionState,
   LegacyRenownTier
 } from "../../../../packages/shared/types/src/index.js";
 import { getAchievementDefinitionById } from "../../../../packages/engines/game-engine/src/achievements.js";
@@ -10,6 +11,7 @@ import {
 } from "../../../../packages/engines/game-engine/src/account-estate.js";
 import {
   getLegacyPreparationChoiceOptions,
+  isNonLiveBackstoryLegacyUnlockDefinition,
   isLegacyPreparationChoiceRequired,
   resolveLegacyPreparationSelection,
   resolveLegacyUnlockStates
@@ -148,6 +150,10 @@ export type ChroniclesMetaViewModel = {
 export type AccountMetaViewModel = {
   legacy: LegacyMetaViewModel;
   chronicles: ChroniclesMetaViewModel;
+};
+
+export type AccountMetaViewModelOptions = {
+  legacyUnlockDefinitions?: readonly LegacyUnlockDefinitionState[];
 };
 
 const FALLBACK_UNLOCK_TYPES = [
@@ -440,88 +446,96 @@ function buildPreparationBlockedReason(
   return null;
 }
 
-function buildLegacyEntries(profile: AccountProfileState): LegacyUnlockEntryViewModel[] {
+function buildLegacyEntries(
+  profile: AccountProfileState,
+  definitions?: readonly LegacyUnlockDefinitionState[]
+): LegacyUnlockEntryViewModel[] {
   const preparationSelection = resolveLegacyPreparationSelection(profile);
   const selectedPreparationIds = new Set(preparationSelection.selectedUnlockIds);
   const selectedPreparationChoices = preparationSelection.selectedChoicePayloads;
 
-  return resolveLegacyUnlockStates(profile).map((entry) => {
-    const requirementSummary = resolveRequirementSummary(entry.requirementResults);
-    const isPreparation = entry.classification === "preparation";
-    const isChoicePreparation =
-      isPreparation &&
-      entry.isKnown &&
-      entry.currentRank > 0 &&
-      isLegacyPreparationChoiceRequired(entry.id);
-    const isSelectedPreparation = selectedPreparationIds.has(entry.id);
-    const choiceOptions = isChoicePreparation
-      ? getLegacyPreparationChoiceOptions(entry.id)
-      : [];
-    const selectedPreparationChoiceId = selectedPreparationChoices[entry.id] ?? null;
-    const rawPreparationBlockedReason = buildPreparationBlockedReason(
-      entry,
-      isSelectedPreparation,
-      preparationSelection.selectedUnlockIds.length,
-      preparationSelection.capacity,
-      choiceOptions.length > 0
-    );
-    const preparationBlockedReason = isSelectedPreparation ? null : rawPreparationBlockedReason;
-    const canRemovePreparation = isPreparation && isSelectedPreparation;
-    const canSelectPreparation =
-      isPreparation &&
-      entry.isKnown &&
-      entry.currentRank > 0 &&
-      !isChoicePreparation &&
-      !isSelectedPreparation &&
-      preparationBlockedReason === null;
-    const requiresLabel =
-      preparationBlockedReason ??
-      (isChoicePreparation &&
-      choiceOptions.length > 0 &&
-      !isSelectedPreparation
-        ? "Choose one"
-        : null) ??
-      buildRequiresLabel(
+  return resolveLegacyUnlockStates(profile, definitions)
+    .filter(
+      (entry) =>
+        !entry.definition || !isNonLiveBackstoryLegacyUnlockDefinition(entry.definition)
+    )
+    .map((entry) => {
+      const requirementSummary = resolveRequirementSummary(entry.requirementResults);
+      const isPreparation = entry.classification === "preparation";
+      const isChoicePreparation =
+        isPreparation &&
+        entry.isKnown &&
+        entry.currentRank > 0 &&
+        isLegacyPreparationChoiceRequired(entry.id);
+      const isSelectedPreparation = selectedPreparationIds.has(entry.id);
+      const choiceOptions = isChoicePreparation
+        ? getLegacyPreparationChoiceOptions(entry.id)
+        : [];
+      const selectedPreparationChoiceId = selectedPreparationChoices[entry.id] ?? null;
+      const rawPreparationBlockedReason = buildPreparationBlockedReason(
         entry,
-        requirementSummary.requirementLabel,
-        requirementSummary.requirementState
+        isSelectedPreparation,
+        preparationSelection.selectedUnlockIds.length,
+        preparationSelection.capacity,
+        choiceOptions.length > 0
       );
+      const preparationBlockedReason = isSelectedPreparation ? null : rawPreparationBlockedReason;
+      const canRemovePreparation = isPreparation && isSelectedPreparation;
+      const canSelectPreparation =
+        isPreparation &&
+        entry.isKnown &&
+        entry.currentRank > 0 &&
+        !isChoicePreparation &&
+        !isSelectedPreparation &&
+        preparationBlockedReason === null;
+      const requiresLabel =
+        preparationBlockedReason ??
+        (isChoicePreparation &&
+        choiceOptions.length > 0 &&
+        !isSelectedPreparation
+          ? "Choose one"
+          : null) ??
+        buildRequiresLabel(
+          entry,
+          requirementSummary.requirementLabel,
+          requirementSummary.requirementState
+        );
 
-    return {
-      id: entry.id,
-      title: entry.title,
-      description: entry.description,
-      type: entry.category,
-      unlockClassification: entry.classification,
-      costLabel: buildCostLabel(entry),
-      detailLabels: buildLegacyDetailLabels(entry, isSelectedPreparation),
-      statusTagLabel: isSelectedPreparation ? "Selected" : buildStatusTagLabel(entry),
-      requiresLabel,
-      purchaseButtonLabel: buildPurchaseButtonLabel(entry),
-      purchaseBlockedReason: entry.purchaseBlockedReason,
-      state: entry.state,
-      currentRank: entry.currentRank,
-      maxRank: entry.maxRank,
-      renownTier: entry.renownTier,
-      renownDepth: resolveRenownDepth(entry.renownTier),
-      isPlaceholder: false,
-      isKnownCatalogEntry: entry.isKnown,
-      catalogCanPurchase: entry.canPurchase,
-      isPreparation,
-      isChoicePreparation,
-      isSelectedPreparation,
-      selectedPreparationChoiceId,
-      preparationChoiceOptions: choiceOptions.map((option) => ({
-        id: option.id,
-        label: option.label,
-        isSelected: selectedPreparationChoiceId === option.id,
-        disabled: !isSelectedPreparation && preparationBlockedReason !== null
-      })),
-      canSelectPreparation,
-      canRemovePreparation,
-      preparationBlockedReason
-    };
-  });
+      return {
+        id: entry.id,
+        title: entry.title,
+        description: entry.description,
+        type: entry.category,
+        unlockClassification: entry.classification,
+        costLabel: buildCostLabel(entry),
+        detailLabels: buildLegacyDetailLabels(entry, isSelectedPreparation),
+        statusTagLabel: isSelectedPreparation ? "Selected" : buildStatusTagLabel(entry),
+        requiresLabel,
+        purchaseButtonLabel: buildPurchaseButtonLabel(entry),
+        purchaseBlockedReason: entry.purchaseBlockedReason,
+        state: entry.state,
+        currentRank: entry.currentRank,
+        maxRank: entry.maxRank,
+        renownTier: entry.renownTier,
+        renownDepth: resolveRenownDepth(entry.renownTier),
+        isPlaceholder: false,
+        isKnownCatalogEntry: entry.isKnown,
+        catalogCanPurchase: entry.canPurchase,
+        isPreparation,
+        isChoicePreparation,
+        isSelectedPreparation,
+        selectedPreparationChoiceId,
+        preparationChoiceOptions: choiceOptions.map((option) => ({
+          id: option.id,
+          label: option.label,
+          isSelected: selectedPreparationChoiceId === option.id,
+          disabled: !isSelectedPreparation && preparationBlockedReason !== null
+        })),
+        canSelectPreparation,
+        canRemovePreparation,
+        preparationBlockedReason
+      };
+    });
 }
 
 function resolveLineageLabel(record: AccountRunHistoryRecord): string {
@@ -787,8 +801,11 @@ function buildEstateSummary(profile: AccountProfileState): ChronicleEstateViewMo
   };
 }
 
-export function buildAccountMetaViewModel(profile: AccountProfileState): AccountMetaViewModel {
-  const unlockEntries = buildLegacyEntries(profile);
+export function buildAccountMetaViewModel(
+  profile: AccountProfileState,
+  options: AccountMetaViewModelOptions = {}
+): AccountMetaViewModel {
+  const unlockEntries = buildLegacyEntries(profile, options.legacyUnlockDefinitions);
   const preparationSelection = resolveLegacyPreparationSelection(profile);
   const observedUnlockTypes = new Set(unlockEntries.map((entry) => entry.type));
   const extraUnlockTypes = [...observedUnlockTypes]

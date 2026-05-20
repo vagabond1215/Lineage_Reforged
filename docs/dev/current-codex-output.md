@@ -1,138 +1,106 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.65 - Backstory Legacy Live Content Readiness Decision
+Source version/run: Version 0.5.66 - Backstory Legacy Live Catalog Guard
 Date: 2026-05-20
-Branch/status assumption: `master`; `git status --short` was clean before this pass, and the intended only file change is this handoff.
+Branch/status assumption: `master`; `git status --short` was clean before edits.
 
 ## Result
-Decision: choose Route B for the next implementation. The five draft records are good formative-past candidates, but live Backstory Legacy content should not be added to `packages/content/base/player/legacy_unlocks.json` until a minimal live-catalog visibility/purchase guard exists and is tested.
+Added the narrow live-catalog guard needed before Backstory Legacy content migration. Backstory-tagged Legacy definitions are now treated as non-live unless `implementationPriority: "live"` is explicit, and non-live Backstory Legacy definitions are blocked from account-meta purchase presentation, direct purchase execution, and Backstory Legacy purchase evidence collection.
 
-Recommended next implementation:
+No Backstory Legacy draft records were migrated into the live Legacy catalog.
 
-`Version 0.5.66 - Backstory Legacy Live Catalog Guard`
+## Files Inspected
+- `AGENTS.md`
+- `README.md`
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/project-roadmap.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
+- `docs/design/future-system-design-ledger.md`
+- `docs/design/backstory-legacy-purchase-content-draft.json`
+- `docs/design/backstory-legacy-purchase-integration-plan.md`
+- `docs/design/backstory-evidence-ownership-plan.md`
+- `docs/design/legacy-scope-bloodline-economy-plan.md`
+- `docs/dev/prompt-template-hardening-pass.md`
+- `packages/content/base/player/legacy_unlocks.json`
+- `packages/content/base/player/backstories.json`
+- `packages/engines/game-engine/src/legacy-unlocks.ts`
+- `packages/engines/game-engine/src/backstory-legacy-purchases.ts`
+- `packages/engines/game-engine/src/backstory-eligibility.ts`
+- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
+- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
+- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
+- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
+- `tests/unit/backstory-legacy-purchase-content-draft.test.mjs`
+- `tests/unit/backstory-legacy-purchases.test.mjs`
+- `tests/unit/backstory-creator-availability.test.mjs`
+- `tests/unit/backstory-eligibility-policy.test.mjs`
+- `tests/unit/backstory-eligibility-resolver.test.mjs`
+- `tests/unit/legacy-start-resources.test.mjs`
 
-Purpose: add the smallest Legacy catalog guard proving backstory-tagged `catalog_only` / `backlog` / draft-style records cannot appear as ordinary account-meta purchase buttons and cannot be purchased until intentionally exposed.
+## Files Changed
+- `packages/engines/game-engine/src/legacy-unlocks.ts`
+- `packages/engines/game-engine/src/backstory-legacy-purchases.ts`
+- `packages/engines/game-engine/src/index.ts`
+- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
+- `tests/unit/backstory-legacy-purchases.test.mjs`
+- `tests/unit/backstory-legacy-catalog-guard.test.mjs`
+- `docs/dev/current-codex-output.md`
 
-## Current Repo State Confirmed
-- Latest exact Codex handoff is `Version 0.5.64 - Backstory Legacy Purchase Content Draft`.
-- 0.5.64 landed Route A: `docs/design/backstory-legacy-purchase-content-draft.json` is draft-only, non-runtime content outside the live Legacy catalog.
-- The draft contains exactly five low-risk Tier 1 candidates: `legacy.backstory.street_vendor`, `legacy.backstory.net_tender`, `legacy.backstory.gatherer`, `legacy.backstory.scribes_apprentice`, and `legacy.backstory.kitchen_hand`.
-- Connector-side follow-up after 0.5.64 is present locally: draft records now use `playerFacingSummary` and `implementationSummary`, and tests guard against player-facing implementation wording.
-- No draft ids are live Legacy definitions.
-- No draft ids are purchasable through `purchaseLegacyUnlock(...)`.
-- No draft ids appear in account meta.
-- No draft ids enter resolver evidence.
-- No draft ids alter creator availability.
-- `packages/content/base/player/legacy_unlocks.json` remains the live imported Legacy catalog.
-- `accountMetaPresentation.ts` maps `resolveLegacyUnlockStates(...)` output into visible unlock entries.
-- `purchaseLegacyUnlock(...)` resolves directly from live catalog definitions.
-- `implementationPriority`, `catalog_only`, and `backlog` are not currently sufficient visibility/purchase safety guards for Backstory Legacy records unless runtime/UI code enforces them.
-- `docs/dev/project-roadmap.md` is stale for the immediate next step: it still says 0.5.64 is next and 0.5.65 is resolver integration. Newer `docs/dev/current-codex-output.md` and `docs/dev/current-gpt-handoff.md` supersede that sequence.
+## Guard Design
+- Backstory Legacy definitions are identified by `backstory`, `backstory_legacy`, or `origin` tags.
+- Non-live Backstory Legacy definitions are any Backstory Legacy definitions whose `implementationPriority` is not exactly `"live"`. This intentionally includes `catalog_only`, `backlog`, and missing priority.
+- Account-meta visibility is blocked by filtering non-live Backstory Legacy definitions out of the account-meta Legacy view model, so they do not appear as ordinary account-meta purchase entries or buttons.
+- Purchase execution is blocked by `purchaseLegacyUnlock(...)`, which now returns `non_live_backstory_unlock` for non-live Backstory Legacy definitions.
+- Resolver evidence collection is blocked by `resolveOwnedBackstoryLegacyPurchaseIds(...)`, which skips non-live Backstory Legacy definitions and reports them as unsupported/warned if account or family state somehow contains the id.
+- Existing non-backstory Legacy definitions are not blocked by this guard, even if their implementation priority is `catalog_only` or `backlog`.
+- Test-only injected definition seams were added to `resolveLegacyUnlockStates(...)`, `purchaseLegacyUnlock(...)`, and `buildAccountMetaViewModel(...)` so fixture definitions can prove the guard without adding live content records.
 
-## Checks Run
-- `git status --short` - clean before this pass
+## Behavior / Runtime Confirmation
+- No live Backstory Legacy records were added.
+- `packages/content/base/player/legacy_unlocks.json` did not change.
+- Account meta behavior for existing live records should remain unchanged.
+- `purchaseLegacyUnlock(...)` behavior for existing live records should remain unchanged.
+- Future/non-live Backstory Legacy definitions are now intentionally hidden from account-meta purchase presentation and blocked from purchase.
+- Backstory Eligibility resolver behavior did not change.
+- Creator availability did not change.
+- No `legacyPurchaseIds` are passed into creator/resolver evidence by this pass.
+- No starter skills, starting abilities, attributes, content JSON, schemas, family creation, Family Prestige spending, heir slots, heirlooms, bequests, Chronicle Marks, Lineage Seals, magic runtime, combat math, economy simulation, or generated UI output changed.
+- Deferred systems were not touched.
+
+## Tests / Checks Run
+- `git status --short` - clean before edits
 - `npm.cmd run tool:content-lint` - passed (`content-lint: ok`, 53 files checked)
+- `node --test tests\unit\backstory-legacy-catalog-guard.test.mjs` - passed (6 tests)
+- `node --test tests\unit\backstory-legacy-purchases.test.mjs` - passed (10 tests)
 - `node --test tests\unit\backstory-legacy-purchase-content-draft.test.mjs` - passed (8 tests)
-- `node --test tests\unit\backstory-legacy-purchases.test.mjs` - passed (8 tests)
 - `node --test tests\unit\backstory-creator-availability.test.mjs` - passed (7 tests)
 - `node --test tests\unit\backstory-eligibility*.test.mjs` - passed (21 tests)
 - `node --test tests\unit\legacy-start-resources.test.mjs` - passed (8 tests)
-- `git diff --check` - passed with Git line-ending normalization warning only for `docs/dev/current-codex-output.md`
+- `node --test tests\unit\legacy-unlocks.test.mjs` - passed (21 tests)
+- `node --test tests\unit\legacy-ledger-presentation.test.mjs` - passed (13 tests)
+- `git diff --check` - passed with Git line-ending normalization warnings only
 
-Broad typecheck was not run. Previous handoffs record known broad workspace typecheck blockers, and this pass did not change TypeScript source.
-
-## Draft Content Review
-The five draft records are suitable as formative-past concepts.
-
-- `Market-Learned Habits` safely frames Street Vendor as crowded market lanes, stall work, bargaining, and errand running that shaped practical attention.
-- `Water-Work Lessons` safely frames Net-Tender as wet rope, weather, fish handling, and shoreline labor that shaped routine and respect for water.
-- `Field-Gathering Habits` safely frames Gatherer as field collection, path memory, useful plants, and cautious foraging that shaped practical survival habits.
-- `Records-Room Training` safely frames Scribe's Apprentice as copying, ledgers, corrections, and administrative patience that shaped memory, accuracy, and record work.
-- `Kitchen-Service Discipline` safely frames Kitchen Hand as stores, fires, preparation, cleaning, and service rhythms that shaped discipline and timing.
-
-Checklist answers:
-
-1. Are the five draft records suitable as formative-past concepts? Yes.
-2. Are their `playerFacingSummary` fields safe for future player-facing use? Yes. They describe past shaping pressure and avoid current-job/current-status framing.
-3. Is `implementationSummary` clearly internal-only? Yes. It uses internal draft wording and remains separated from future player-facing copy.
-4. Are the records still inert and non-runtime? Yes. They live only under `docs/design/`, have `runtimeImportAllowed: false`, and are covered by inertness tests.
-5. Is live `legacy_unlocks.json` currently safe to receive backstory records without new guards? No.
-6. Would adding the five records live today accidentally expose purchase UI? It could. Live catalog definitions flow into account meta entries, and ordinary purchase buttons appear when catalog state reports `canPurchase`.
-7. Would adding the five records live today make `purchaseLegacyUnlock(...)` accept them? Yes, if they are valid live definitions and their normal requirements/cost/eligibility pass. The function resolves directly by live catalog id.
-8. Is resolver integration meaningful before live purchase records exist? Not for production behavior. The resolver can consume `legacyPurchaseIds`, but there are no live Backstory Legacy purchases to own those ids.
-9. Should resolver integration be delayed until after live content ownership/exposure is settled? Yes.
-10. Which exact route should the next implementation take? Route B: prepare live guarded content by adding the live-catalog visibility/purchase guard first.
-
-## Live Content Readiness Decision
-Route B is the right next route.
-
-Do not keep drifting on Route A alone: the draft candidates and copy are ready enough to preserve as intended future content. Do not choose Route C yet: making the records live and purchasable would be a visible behavior change, and the current live catalog path does not yet have a Backstory-specific exposure guard.
-
-The next implementation should add a minimal live-catalog guard before migrating the five records. That guard should ensure backstory-tagged records with non-live/draft/catalog-only/backlog priority cannot:
-
-- appear as ordinary account-meta purchase buttons;
-- be purchased through `purchaseLegacyUnlock(...)`;
-- enter `resolveOwnedBackstoryLegacyPurchaseIds(...)` as owned resolver evidence unless explicitly live and owned;
-- alter creator availability.
-
-After that guard passes, a follow-up pass can migrate the five low-risk records into live runtime-owned Legacy content with deliberate scope, category, purchase mode, cost, visibility, and tests.
-
-## Resolver Integration Readiness
-Resolver integration is not ready now.
-
-The resolver seam already exists and can evaluate `legacyPurchaseIds`, but integration should wait until there is approved live purchase content or a deliberate live ownership path. Wiring the resolver now would either have no production effect or would require fabricated purchase ids, which violates the trust-boundary guardrail.
-
-Must land before resolver integration:
-
-- a live-catalog guard for Backstory Legacy purchase records;
-- explicit decision about whether the five records are hidden/catalog-only or intentionally visible;
-- tests proving non-live backstory-tagged records are not visible/purchasable;
-- tests proving only owned live Backstory Legacy definitions can become resolver `legacyPurchaseIds`;
-- tests proving creator availability changes only through real owned purchase input.
-
-## Recommended Next Version
-Version 0.5.66 - Backstory Legacy Live Catalog Guard
-
-Add a minimal Legacy catalog visibility/purchase guard so Backstory Legacy records can be migrated safely in a later pass without accidental account-meta exposure or purchase execution.
-
-## Guardrails For Next Prompt
-- Do not migrate draft records into `packages/content/base/player/legacy_unlocks.json` until the guard exists or the prompt explicitly scopes migration after the guard.
-- Do not wire `resolveOwnedBackstoryLegacyPurchaseIds(...)` into the creator or resolver yet.
-- Do not pass `legacyPurchaseIds` into resolver evidence yet.
-- Do not add creator purchase buttons, account purchase UI redesign, family picker, Bloodlines UI, family management, Family Prestige spending, automatic family creation, heirs, heirlooms, bequests, Chronicle Marks, or Lineage Seals.
-- Do not change Backstory Eligibility policy semantics unless a focused guard test proves a narrow issue.
-- Do not change content JSON except in the later live-content migration pass.
-- Treat `implementationPriority: "catalog_only"` and `"backlog"` as unsafe unless enforced by runtime/UI/purchase tests.
-- Preserve current-data/no-compatibility behavior.
-- Keep generated `apps/rpg-ui/dist` untouched.
-- Required next tests should cover account meta visibility, `purchaseLegacyUnlock(...)` blocking, non-backstory Legacy unlock stability, draft catalog inertness, resolver evidence absence, creator availability stability, and existing Legacy start-resource behavior.
-
-## Files Changed
-- `docs/dev/current-codex-output.md`
-
-No runtime source, live content JSON, schemas, UI, roadmap, handoff, backlog, or tests were edited.
-
-## Behavior / Runtime Confirmation
-No runtime source changed.
-No live content JSON changed.
-No schemas changed.
-No UI changed.
-No creator behavior changed.
-No resolver behavior changed.
-No purchase behavior changed.
-No generated output changed.
-No Backstory Legacy purchase records were migrated into the live Legacy catalog.
-No resolver purchase wiring was added.
-No visible backstory availability changed.
-
-This pass only records the readiness decision and focused validation results.
+Broad typecheck was not run. Prior handoffs note known broad workspace typecheck blockers, and this pass stayed focused on the guard plus targeted tests.
 
 ## Risks / Follow-Up
-- The roadmap remains stale until a separate docs maintenance pass updates the 0.5.65/0.5.66 sequence.
-- The current live Legacy catalog path would expose/accept valid live records unless a guard blocks non-live Backstory records.
-- Resolver integration remains easy to misuse if a future prompt fabricates `legacyPurchaseIds` instead of collecting them from owned live definitions.
-- The five draft records are low-risk, but their future live migration still needs deliberate category, cost, scope, purchase mode, and exposure decisions.
-- Family-scoped, region-scoped, institution-scoped, estate/title-scoped, and source-run-scoped Backstory Legacy purchases remain deferred.
+- Future live Backstory Legacy records must declare `implementationPriority: "live"` before they can be visible/purchasable.
+- Non-live Backstory Legacy definitions remain resolvable as non-purchasable state to engine callers, but account-meta presentation filters them out.
+- Resolver integration should still wait until live Backstory Legacy records exist and ownership/exposure is settled.
+- `docs/dev/project-roadmap.md` remains stale for the immediate sequence; current Codex output and GPT handoff remain the near-term authority.
+
+## Temporary Guardrail Cleanup Decision
+- Keep `docs/design/backstory-legacy-purchase-content-draft.json` until the five draft candidates are migrated into approved runtime content or rejected.
+- Keep `docs/design/backstory-legacy-purchase-integration-plan.md` through live content migration and resolver integration.
+- Keep `docs/design/backstory-evidence-ownership-plan.md` through resolver evidence integration.
+- Keep `docs/design/legacy-scope-bloodline-economy-plan.md` for family-scoped purchase, Bloodlines, bequest, and heirloom boundaries.
+- Keep `docs/dev/prompt-template-hardening-pass.md` while future prompts still need its guardrail scaffolding.
+- No temporary guardrail docs were deleted in this implementation pass.
+
+## Next Recommended Version
+Version 0.5.67 - Backstory Legacy Live Content Migration
+
+Migrate the approved low-risk Backstory Legacy candidates into the live Legacy catalog with explicit live priority, guarded visibility/purchase behavior, and focused tests.
 
 ## Suggested Commit Message
-docs(legacy): record backstory live-content readiness decision
+feat(legacy): guard backstory catalog-only purchases
