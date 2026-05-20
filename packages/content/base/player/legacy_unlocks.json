@@ -119,6 +119,161 @@
       "tags": ["chronicle", "archive"]
     },
     {
+      "id": "legacy.backstory.street_vendor",
+      "category": "Chronicle",
+      "kind": "binary",
+      "classification": "permanent",
+      "purchaseMode": "unlock_only",
+      "currency": "account_legacy",
+      "scope": "account",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "title": "Market-Learned Habits",
+      "description": "Crowded market lanes, stall work, bargaining, and errand running shaped your practical sense of value and attention.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.backstory.street_vendor",
+          "value": true
+        }
+      ],
+      "tags": ["backstory", "backstory_legacy", "origin", "tier_1"]
+    },
+    {
+      "id": "legacy.backstory.net_tender",
+      "category": "Chronicle",
+      "kind": "binary",
+      "classification": "permanent",
+      "purchaseMode": "unlock_only",
+      "currency": "account_legacy",
+      "scope": "account",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "title": "Water-Work Lessons",
+      "description": "Nets, wet rope, weather, fish handling, and patient shoreline labor shaped your respect for water and routine.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.backstory.net_tender",
+          "value": true
+        }
+      ],
+      "tags": ["backstory", "backstory_legacy", "origin", "tier_1"]
+    },
+    {
+      "id": "legacy.backstory.gatherer",
+      "category": "Chronicle",
+      "kind": "binary",
+      "classification": "permanent",
+      "purchaseMode": "unlock_only",
+      "currency": "account_legacy",
+      "scope": "account",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "title": "Field-Gathering Habits",
+      "description": "Field collection, path memory, useful plants, and cautious foraging shaped your patience and practical survival habits.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.backstory.gatherer",
+          "value": true
+        }
+      ],
+      "tags": ["backstory", "backstory_legacy", "origin", "tier_1"]
+    },
+    {
+      "id": "legacy.backstory.scribes_apprentice",
+      "category": "Chronicle",
+      "kind": "binary",
+      "classification": "permanent",
+      "purchaseMode": "unlock_only",
+      "currency": "account_legacy",
+      "scope": "account",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "title": "Records-Room Training",
+      "description": "Copying, ledgers, corrections, and administrative patience shaped your habits of memory, accuracy, and record work.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.backstory.scribes_apprentice",
+          "value": true
+        }
+      ],
+      "tags": ["backstory", "backstory_legacy", "origin", "tier_1"]
+    },
+    {
+      "id": "legacy.backstory.kitchen_hand",
+      "category": "Chronicle",
+      "kind": "binary",
+      "classification": "permanent",
+      "purchaseMode": "unlock_only",
+      "currency": "account_legacy",
+      "scope": "account",
+      "duration": "permanent",
+      "implementationPriority": "live",
+      "title": "Kitchen-Service Discipline",
+      "description": "Stores, fires, preparation, cleaning, and service rhythms shaped your discipline, timing, and respect for feeding others.",
+      "cost": {
+        "type": "fixed",
+        "amount": 2
+      },
+      "requirements": [
+        {
+          "type": "lifetime_legacy",
+          "amount": 1
+        }
+      ],
+      "effects": [
+        {
+          "type": "account_flag",
+          "key": "legacy.backstory.kitchen_hand",
+          "value": true
+        }
+      ],
+      "tags": ["backstory", "backstory_legacy", "origin", "tier_1"]
+    },
+    {
       "id": "legacy.unlock.lineage.heirloom_blade",
       "category": "Lineage",
       "kind": "binary",

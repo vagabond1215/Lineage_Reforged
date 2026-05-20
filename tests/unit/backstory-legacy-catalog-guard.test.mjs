@@ -3,12 +3,48 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
   createDefaultAccountProfileState,
+  getLegacyUnlockDefinitions,
   isBackstoryLegacyUnlockDefinition,
   isNonLiveBackstoryLegacyUnlockDefinition,
   purchaseLegacyUnlock,
   resolveOwnedBackstoryLegacyPurchaseIds
 } from "../../packages/engines/game-engine/src/index.ts";
 import { buildAccountMetaViewModel } from "../../apps/rpg-ui/src/game-shell/accountMetaPresentation.ts";
+
+const LIVE_BACKSTORY_PURCHASES = [
+  {
+    id: "legacy.backstory.street_vendor",
+    targetBackstoryId: "backstory.street_vendor",
+    title: "Market-Learned Habits"
+  },
+  {
+    id: "legacy.backstory.net_tender",
+    targetBackstoryId: "backstory.net_tender",
+    title: "Water-Work Lessons"
+  },
+  {
+    id: "legacy.backstory.gatherer",
+    targetBackstoryId: "backstory.gatherer",
+    title: "Field-Gathering Habits"
+  },
+  {
+    id: "legacy.backstory.scribes_apprentice",
+    targetBackstoryId: "backstory.scribes_apprentice",
+    title: "Records-Room Training"
+  },
+  {
+    id: "legacy.backstory.kitchen_hand",
+    targetBackstoryId: "backstory.kitchen_hand",
+    title: "Kitchen-Service Discipline"
+  }
+];
+const LIVE_BACKSTORY_PURCHASE_IDS = LIVE_BACKSTORY_PURCHASES.map((record) => record.id);
+const PLAYER_COPY_FORBIDDEN_PATTERN =
+  /\b(future|low-risk|account-level|support purchase|purchase|eligibility|runtime|resolver|catalog|draft-only|draft_only|guardrail)\b/i;
+const PAST_SHAPING_PATTERN =
+  /\b(shaped|learned|trained|raised|worked|served|endured|practiced)\b/i;
+const CURRENT_IDENTITY_PATTERN =
+  /\b(currently|present employment|present obligation|current job|current identity|owned status|is a vendor|is a net-tender|is a gatherer|is a scribe|is a kitchen hand)\b/i;
 
 function createProfileWithPrestige(amount = 10) {
   const profile = createDefaultAccountProfileState();
@@ -67,6 +103,106 @@ function createDefinition(
     tags
   };
 }
+
+test("live Backstory Legacy records are explicit account-scoped catalog entries", () => {
+  const definitionsById = new Map(
+    getLegacyUnlockDefinitions().map((definition) => [definition.id, definition])
+  );
+
+  for (const record of LIVE_BACKSTORY_PURCHASES) {
+    const definition = definitionsById.get(record.id);
+
+    assert.ok(definition, `${record.id} should exist in the live Legacy catalog`);
+    assert.equal(definition.title, record.title, record.id);
+    assert.equal(definition.kind, "binary", record.id);
+    assert.equal(definition.classification, "permanent", record.id);
+    assert.equal(definition.purchaseMode, "unlock_only", record.id);
+    assert.equal(definition.currency, "account_legacy", record.id);
+    assert.equal(definition.scope, "account", record.id);
+    assert.equal(definition.duration, "permanent", record.id);
+    assert.equal(definition.implementationPriority, "live", record.id);
+    assert.equal(definition.cost.type, "fixed", record.id);
+    assert.equal(definition.cost.amount, 2, record.id);
+    assert.deepEqual(definition.requirements, [
+      {
+        type: "lifetime_legacy",
+        amount: 1
+      }
+    ]);
+    assert.ok(definition.tags?.includes("backstory"), record.id);
+    assert.ok(definition.tags?.includes("backstory_legacy"), record.id);
+    assert.equal(isBackstoryLegacyUnlockDefinition(definition), true, record.id);
+    assert.equal(isNonLiveBackstoryLegacyUnlockDefinition(definition), false, record.id);
+    assert.deepEqual(definition.effects, [
+      {
+        type: "account_flag",
+        key: record.id,
+        value: true
+      }
+    ]);
+    assert.doesNotMatch(definition.title, PLAYER_COPY_FORBIDDEN_PATTERN, record.id);
+    assert.doesNotMatch(definition.description, PLAYER_COPY_FORBIDDEN_PATTERN, record.id);
+    assert.doesNotMatch(definition.title, CURRENT_IDENTITY_PATTERN, record.id);
+    assert.doesNotMatch(definition.description, CURRENT_IDENTITY_PATTERN, record.id);
+    assert.match(definition.description, PAST_SHAPING_PATTERN, record.id);
+  }
+});
+
+test("live Backstory Legacy records appear as ordinary account-meta purchase entries", () => {
+  const viewModel = buildAccountMetaViewModel(createProfileWithPrestige(20));
+  const entriesById = new Map(viewModel.legacy.unlockEntries.map((entry) => [entry.id, entry]));
+
+  for (const unlockId of LIVE_BACKSTORY_PURCHASE_IDS) {
+    const entry = entriesById.get(unlockId);
+
+    assert.ok(entry, `${unlockId} should appear in account meta`);
+    assert.equal(entry.catalogCanPurchase, true, unlockId);
+    assert.equal(entry.purchaseBlockedReason, null, unlockId);
+  }
+});
+
+test("live Backstory Legacy records can be purchased as account-owned unlocks", () => {
+  for (const unlockId of LIVE_BACKSTORY_PURCHASE_IDS) {
+    const result = purchaseLegacyUnlock(
+      createProfileWithPrestige(20),
+      unlockId,
+      "2026-05-20T13:00:00.000Z"
+    );
+
+    assert.equal(result.ok, true, unlockId);
+    assert.equal(result.unlock.unlockId, unlockId);
+    assert.equal(result.profile.legacy.legacyUnlocks.some((unlock) => unlock.unlockId === unlockId), true);
+    assert.deepEqual(result.profile.families.familyUnlocks, []);
+  }
+});
+
+test("owned live Backstory Legacy records resolve as account purchase evidence", () => {
+  let profile = createProfileWithPrestige(20);
+
+  for (const unlockId of LIVE_BACKSTORY_PURCHASE_IDS) {
+    const purchased = purchaseLegacyUnlock(
+      profile,
+      unlockId,
+      `2026-05-20T13:${profile.legacy.legacyTransactions.length
+        .toString()
+        .padStart(2, "0")}:00.000Z`
+    );
+
+    assert.equal(purchased.ok, true, unlockId);
+    profile = purchased.profile;
+  }
+
+  const resolution = resolveOwnedBackstoryLegacyPurchaseIds({
+    profile,
+    legacyUnlockDefinitions: getLegacyUnlockDefinitions()
+  });
+
+  assert.deepEqual(resolution.legacyPurchaseIds, LIVE_BACKSTORY_PURCHASE_IDS);
+  assert.deepEqual(resolution.accountUnlockIds, LIVE_BACKSTORY_PURCHASE_IDS);
+  assert.deepEqual(resolution.familyUnlockIds, []);
+  assert.deepEqual(resolution.unsupportedScopeUnlockIds, []);
+  assert.deepEqual(resolution.warnings, []);
+});
 
 test("Backstory Legacy catalog-only and backlog definitions are not ordinary account-meta purchase entries", () => {
   const definitions = [

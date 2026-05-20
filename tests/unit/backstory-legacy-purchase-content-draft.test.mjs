@@ -3,15 +3,8 @@ import path from "node:path";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  BACKSTORY_ELIGIBILITY_POLICY,
-  createDefaultAccountProfileState,
-  getLegacyUnlockDefinitions,
-  purchaseLegacyUnlock,
-  resolveBackstoryEligibility,
-  resolveLegacyUnlockStates,
-  resolveOwnedBackstoryLegacyPurchaseIds
+  getLegacyUnlockDefinitions
 } from "../../packages/engines/game-engine/src/index.ts";
-import { buildAccountMetaViewModel } from "../../apps/rpg-ui/src/game-shell/accountMetaPresentation.ts";
 import { getBackstoryOptionsForSelection } from "../../apps/rpg-ui/src/game-shell/characterCreationCatalog.ts";
 
 const DRAFT_PATH = "docs/design/backstory-legacy-purchase-content-draft.json";
@@ -62,19 +55,6 @@ const FORBIDDEN_DRAFT_IDS = [
 async function loadDraft() {
   const raw = await readFile(DRAFT_PATH, "utf8");
   return JSON.parse(raw.replace(/^\uFEFF/, ""));
-}
-
-async function loadLiveBackstoryIds() {
-  const raw = await readFile("packages/content/base/player/backstories.json", "utf8");
-  return JSON.parse(raw.replace(/^\uFEFF/, "")).records.map((record) => record.id);
-}
-
-function createAccountUnlock(unlockId) {
-  return {
-    unlockId,
-    unlockedAt: "2026-05-20T12:00:00.000Z",
-    sourceTransactionId: "legacy.transaction.test.draft"
-  };
 }
 
 async function listSourceFiles(root) {
@@ -146,44 +126,23 @@ test("draft player-facing copy describes formative past instead of implementatio
   }
 });
 
-test("draft content is not imported by runtime Legacy unlock state resolution", async () => {
+test("approved draft candidates are live only through runtime-owned Legacy catalog records", async () => {
   const draft = await loadDraft();
-  const draftIds = draft.records.map((record) => record.id);
-  const liveDefinitionIds = getLegacyUnlockDefinitions().map((definition) => definition.id);
-  const resolvedIds = resolveLegacyUnlockStates(createDefaultAccountProfileState()).map(
-    (entry) => entry.id
+  const definitionsById = new Map(
+    getLegacyUnlockDefinitions().map((definition) => [definition.id, definition])
   );
 
-  for (const draftId of draftIds) {
-    assert.equal(liveDefinitionIds.includes(draftId), false, draftId);
-    assert.equal(resolvedIds.includes(draftId), false, draftId);
-  }
-});
-
-test("draft content does not appear in account meta Legacy purchase entries", async () => {
-  const draft = await loadDraft();
-  const draftIds = draft.records.map((record) => record.id);
-  const profile = createDefaultAccountProfileState();
-  const viewModel = buildAccountMetaViewModel(profile);
-  const accountMetaIds = viewModel.legacy.unlockEntries.map((entry) => entry.id);
-  const purchaseEntryIds = viewModel.legacy.unlockEntries
-    .filter((entry) => entry.catalogCanPurchase)
-    .map((entry) => entry.id);
-
-  for (const draftId of draftIds) {
-    assert.equal(accountMetaIds.includes(draftId), false, draftId);
-    assert.equal(purchaseEntryIds.includes(draftId), false, draftId);
-  }
-});
-
-test("draft content cannot be purchased through the live Legacy purchase path", async () => {
-  const draft = await loadDraft();
-  const profile = createDefaultAccountProfileState();
-
   for (const record of draft.records) {
-    const result = purchaseLegacyUnlock(profile, record.id);
-    assert.equal(result.ok, false, record.id);
-    assert.equal(result.error, "unknown_unlock", record.id);
+    const definition = definitionsById.get(record.id);
+
+    assert.ok(definition, `${record.id} should have a live migrated definition`);
+    assert.equal(definition.title, record.name, record.id);
+    assert.equal(definition.description, record.playerFacingSummary, record.id);
+    assert.equal(definition.implementationPriority, "live", record.id);
+    assert.equal(definition.scope, "account", record.id);
+    assert.equal(definition.purchaseMode, "unlock_only", record.id);
+    assert.ok(definition.tags?.includes("backstory"), record.id);
+    assert.ok(definition.tags?.includes("backstory_legacy"), record.id);
   }
 });
 
@@ -199,38 +158,6 @@ test("draft content does not change creator backstory availability", async () =>
     assert.equal(option.availabilityState, "locked", record.targetBackstoryId);
     assert.equal(option.availabilityStatus, "early_legacy", record.targetBackstoryId);
     assert.doesNotMatch(option.lockedReason ?? "", /Legacy points|purchase|buy/i);
-  }
-});
-
-test("draft content does not enter resolver purchase evidence", async () => {
-  const draft = await loadDraft();
-  const draftIds = draft.records.map((record) => record.id);
-  const profile = {
-    ...createDefaultAccountProfileState(),
-    legacy: {
-      ...createDefaultAccountProfileState().legacy,
-      legacyUnlocks: draftIds.map(createAccountUnlock)
-    }
-  };
-  const purchaseEvidence = resolveOwnedBackstoryLegacyPurchaseIds({
-    profile,
-    legacyUnlockDefinitions: getLegacyUnlockDefinitions()
-  });
-  const liveBackstoryIds = await loadLiveBackstoryIds();
-  const resolverResult = resolveBackstoryEligibility({
-    liveBackstoryIds,
-    policy: BACKSTORY_ELIGIBILITY_POLICY,
-    evidence: {
-      legacyPurchaseIds: purchaseEvidence.legacyPurchaseIds
-    }
-  });
-
-  assert.deepEqual(purchaseEvidence.legacyPurchaseIds, []);
-  assert.deepEqual(purchaseEvidence.accountUnlockIds, []);
-  assert.deepEqual(purchaseEvidence.familyUnlockIds, []);
-
-  for (const targetBackstoryId of EXPECTED_TARGET_BACKSTORY_IDS) {
-    assert.equal(resolverResult.eligibleBackstoryIds.includes(targetBackstoryId), false);
   }
 });
 
