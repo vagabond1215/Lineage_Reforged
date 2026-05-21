@@ -1,21 +1,15 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.68 - Backstory Legacy Purchase Resolver Integration
+Source version/run: Version 0.5.69 - Backstory Legacy Creator Copy And Handoff Cleanup
 Date: 2026-05-21
-Branch/status assumption: Ran locally on `master`; initial `git status --short --branch` was clean (`## master...origin/master`) before edits.
+Branch/status assumption: Ran locally on `master`; initial `git status --short --branch` was clean at `## master...origin/master`.
 
 ## Result
-Integrated owned account-scoped Backstory Legacy purchases into the character creator availability caller path. The creator now accepts the current account profile through `BackstoryCreatorAvailabilityOptions`, resolves owned live Backstory Legacy purchase ids with `resolveOwnedBackstoryLegacyPurchaseIds(...)`, and passes only those `legacyPurchaseIds` into the existing Backstory Eligibility evidence path.
 
-The five live low-risk Backstory Legacy purchases can now make their matching formative backstories selectable when owned by the current account:
-
-- `legacy.backstory.street_vendor` -> `backstory.street_vendor`
-- `legacy.backstory.net_tender` -> `backstory.net_tender`
-- `legacy.backstory.gatherer` -> `backstory.gatherer`
-- `legacy.backstory.scribes_apprentice` -> `backstory.scribes_apprentice`
-- `legacy.backstory.kitchen_hand` -> `backstory.kitchen_hand`
+Cleaned the post-0.5.68 Backstory Legacy integration surface without adding new behavior. Player-facing creator locked copy now avoids internal terms and current-identity implications, Backstory Eligibility policy metadata is aligned to the current cleanup version, and the stale GPT handoff and roadmap pipeline now reflect that the low-risk account-scoped Backstory Legacy slice has landed.
 
 ## Files Inspected
+
 - `AGENTS.md`
 - `README.md`
 - `docs/dev/current-codex-output.md`
@@ -32,91 +26,109 @@ The five live low-risk Backstory Legacy purchases can now make their matching fo
 - `packages/content/base/player/legacy_unlocks.json`
 - `packages/content/base/player/backstories.json`
 - `packages/shared/types/src/contracts.ts`
-- `packages/engines/game-engine/src/legacy-unlocks.ts`
-- `packages/engines/game-engine/src/backstory-legacy-purchases.ts`
-- `packages/engines/game-engine/src/backstory-eligibility.ts`
 - `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-- `apps/rpg-ui/src/App.tsx`
-- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
-- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
+- `packages/engines/game-engine/src/backstory-eligibility.ts`
+- `packages/engines/game-engine/src/backstory-legacy-purchases.ts`
+- `packages/engines/game-engine/src/legacy-unlocks.ts`
 - `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
 - `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
 - `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`
 - `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
-- `tests/unit/backstory-legacy-catalog-guard.test.mjs`
-- `tests/unit/backstory-legacy-purchase-content-draft.test.mjs`
-- `tests/unit/backstory-legacy-purchases.test.mjs`
 - `tests/unit/backstory-creator-availability.test.mjs`
 - `tests/unit/backstory-eligibility-resolver.test.mjs`
 - `tests/unit/backstory-eligibility-policy.test.mjs`
+- `tests/unit/backstory-legacy-catalog-guard.test.mjs`
+- `tests/unit/backstory-legacy-purchase-content-draft.test.mjs`
+- `tests/unit/backstory-legacy-purchases.test.mjs`
 - `tests/unit/legacy-start-resources.test.mjs`
 - `tests/unit/legacy-unlocks.test.mjs`
 - `tests/unit/legacy-ledger-presentation.test.mjs`
 
 ## Files Changed
-- `apps/rpg-ui/src/App.tsx`
+
 - `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
-- `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`
-- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
 - `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-- `packages/engines/game-engine/src/backstory-eligibility.ts`
 - `tests/unit/backstory-creator-availability.test.mjs`
-- `tests/unit/backstory-eligibility-resolver.test.mjs`
-- `tests/unit/backstory-legacy-purchases.test.mjs`
+- `tests/unit/backstory-eligibility-policy.test.mjs`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/project-roadmap.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Integration Design
-Creator availability receives account evidence through the existing `BackstoryCreatorAvailabilityOptions` path in `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`. The options type now accepts `accountProfile` and an optional `legacyUnlockDefinitions` override for focused tests.
+## Copy / Metadata Cleanup
 
-`buildBackstoryEligibilityEvidenceInput(...)` calls `resolveOwnedBackstoryLegacyPurchaseIds(...)` only when an account profile is supplied. It passes the current account profile and either the supplied test definitions or the live runtime definitions from `getLegacyUnlockDefinitions()`. The creator does not read `profile.legacy.legacyUnlocks` directly.
+Creator locked/unavailable copy was left conservative and adjusted only where it exposed internal framing. The visible fallback text now talks about missing records, narrative openings, or origins not being ready for the current creator. It no longer uses player-facing words such as evidence, policy, resolver, source-run, runtime, catalog, draft, guardrail, account-scoped, or raw backstory ids.
 
-Only the helper result's `legacyPurchaseIds` are copied into `BackstoryEligibilityEvidenceInput`. Those ids flow through the existing `resolveBackstoryEligibility(...)` caller seam.
+The copy does not imply that a purchased backstory makes the new character currently employed as a street vendor, net-tender, gatherer, scribe, kitchen hand, or any other present job or social identity. It also avoids promising family history, institution membership, estate/title ownership, contacts, discounts, items, coin, skills, magic, authority, or obligations.
 
-When no account profile is supplied, no purchase evidence is resolved or passed, so creator availability remains on the pre-existing achievement/source-run evidence path.
+`BACKSTORY_ELIGIBILITY_POLICY.policyVersion` was updated from `0.5.56` to `0.5.69`. The existing `contentVersion` remains `current-live-backstories-27` because this pass did not change live backstory content. Policy reason text was cleaned to avoid implementation wording such as "resolver use"; rule predicates and resolver behavior were not changed.
 
-No `familyId` is supplied in this pass because the current creator path has no explicit real family-selection context. The integration intentionally does not infer family context from source run ids, lineage ids, account ids, selected characters, selected backstories, or UI state.
+Focused tests now assert the updated policy version/content version and enforce the stricter player-facing locked-copy guard.
 
-The policy/resolver change is narrow: the five live Tier 1 low-risk Backstory Legacy targets now carry account-scoped purchase requirements, and Tier 1 rules can be satisfied by their matching account purchase id. Tier 2 and higher rules still require their scoped evidence and are not unlocked by purchase evidence alone.
+## Handoff / Roadmap Cleanup
+
+`docs/dev/current-gpt-handoff.md` was replaced with a short current handoff instead of appending to stale material. It now records that:
+
+- `Version 0.5.67 - Backstory Legacy Live Content Migration` migrated the five low-risk records live.
+- `Version 0.5.68 - Backstory Legacy Purchase Resolver Integration` wired owned account-scoped purchases into creator availability through `resolveOwnedBackstoryLegacyPurchaseIds(...)`.
+- The five live mappings are `legacy.backstory.street_vendor` -> `backstory.street_vendor`, `legacy.backstory.net_tender` -> `backstory.net_tender`, `legacy.backstory.gatherer` -> `backstory.gatherer`, `legacy.backstory.scribes_apprentice` -> `backstory.scribes_apprentice`, and `legacy.backstory.kitchen_hand` -> `backstory.kitchen_hand`.
+- The creator caller does not infer or supply `familyId`.
+- Family/source-run/region/institution/estate/title/heir/preparation scoped Backstory Legacy evidence and higher-risk candidates remain deferred.
+- Future Backstory Legacy records must stay formative-past access, not current identity.
+
+`docs/dev/project-roadmap.md` now marks `0.5.64` through `0.5.68` as landed where appropriate, sets `0.5.69` as the current cleanup pass, and sets `Version 0.5.70 - Heirloom And Bequest Systems Plan` as the next recommended direction. The roadmap was not rewritten beyond active-pipeline drift and immediate near-term labels.
+
+`docs/future_content_backlog.md` received a concise run note that this cleanup is complete and that scoped Backstory Legacy evidence, Family Prestige spending, higher-risk candidates, Bloodlines UI, creator purchase UI, generated UI output, and broader creator changes remain deferred.
 
 ## Behavior / Runtime Confirmation
-- Creator availability now changes for owned account-scoped Backstory Legacy purchases: each of the five live account-owned purchases makes only its matching backstory selectable.
-- Unowned live low-risk Backstory Legacy records remain locked.
-- Higher-risk candidates remain locked, hidden, or special according to existing policy.
-- Resolver policy semantics changed only for the narrow Tier 1 account purchase-evidence path needed by this integration; existing no-evidence behavior, source-run requirements, family rules, and Tier 2+ purchase behavior remain covered by tests.
-- Family-scoped behavior did not change. Family-owned records do not unlock creator availability without an explicit matching family context, and the creator caller does not supply one.
-- Account meta purchase visibility and purchase behavior were not redesigned or edited; focused Legacy/account tests remain passing.
-- Live `packages/content/base/player/legacy_unlocks.json` content did not change.
-- `packages/content/base/player/backstories.json` did not change.
-- Generated `apps/rpg-ui/dist` output was not touched.
-- Family/source-run purchase evidence, Family Prestige spending, scoped purchase storage, purchase UI redesign, higher-risk Backstory Legacy candidates, Bloodlines UI, heir systems, magic runtime, combat math, economy simulation, and broader creator changes remain deferred.
-- `docs/dev/current-gpt-handoff.md` and `docs/dev/project-roadmap.md` were not updated.
+
+- Backstory Eligibility resolver behavior changed: No. This pass changed metadata and explanatory copy only.
+- Creator availability behavior changed: No. Owned account-scoped Backstory Legacy purchase behavior remains the 0.5.68 behavior.
+- Live Legacy content changed: No. `packages/content/base/player/legacy_unlocks.json` was not edited.
+- Account meta purchase behavior changed: No.
+- Family-scoped behavior changed: No.
+- `backstories.json` changed: No.
+- Generated output changed: No. `apps/rpg-ui/dist` was not touched.
+- Deferred systems were touched: No runtime/deferred systems were implemented. They were only re-documented as deferred.
+- Player-facing locked copy changed: Yes, copy-only, to remove internal terms and current-identity implications.
 
 ## Tests / Checks Run
-- `node --test tests/unit/backstory-creator-availability.test.mjs` - passed, 18 tests.
-- `node --test tests/unit/backstory-eligibility-resolver.test.mjs` - passed, 14 tests.
-- `node --test tests/unit/backstory-legacy-purchases.test.mjs` - passed, 10 tests.
-- `npm.cmd run tool:content-lint` - passed, `content-lint: ok (53 files checked)`.
-- `node --test tests/unit/backstory-legacy-catalog-guard.test.mjs` - passed, 10 tests.
-- `node --test tests/unit/backstory-legacy-purchase-content-draft.test.mjs` - passed, 5 tests.
-- `node --test tests/unit/backstory-eligibility*.test.mjs` - passed, 22 tests.
-- `node --test tests/unit/legacy-start-resources.test.mjs` - passed, 8 tests.
-- `node --test tests/unit/legacy-unlocks.test.mjs` - passed, 21 tests.
-- `node --test tests/unit/legacy-ledger-presentation.test.mjs` - passed, 13 tests.
-- `git diff --check` - passed; Git reported line-ending conversion warnings only for modified text files.
+
+- `npm.cmd run tool:content-lint` - passed; `content-lint: ok (53 files checked)`.
+- `node --test tests/unit/backstory-creator-availability.test.mjs` - passed; 18 tests.
+- `node --test tests/unit/backstory-eligibility-resolver.test.mjs` - passed; 14 tests.
+- `node --test tests/unit/backstory-eligibility-policy.test.mjs` - passed; 8 tests.
+- `node --test tests/unit/backstory-legacy-catalog-guard.test.mjs` - passed; 10 tests.
+- `node --test tests/unit/backstory-legacy-purchase-content-draft.test.mjs` - passed; 5 tests.
+- `node --test tests/unit/backstory-legacy-purchases.test.mjs` - passed; 10 tests.
+- `node --test tests/unit/legacy-start-resources.test.mjs` - passed; 8 tests.
+- `node --test tests/unit/legacy-unlocks.test.mjs` - passed; 21 tests.
+- `node --test tests/unit/legacy-ledger-presentation.test.mjs` - passed; 13 tests.
+- `git diff --check` - passed with Windows line-ending warnings only.
+
+Broad typecheck was not run; previous handoffs record known broad workspace typecheck blockers, and this pass stayed to copy, metadata, docs, and focused validation.
 
 ## Risks / Follow-Up
-- The creator now depends on an account profile being passed through validation and start-snapshot creation; any future creator entry point must pass the profile when account-scoped purchases should affect availability.
-- The new Tier 1 purchase path is intentionally narrow. Future Backstory Legacy candidates with family, source-run, region, institution, estate/title, heir, preparation, or higher-risk requirements still need dedicated scoped evidence design before they can affect creator availability.
-- Creator locked copy remains conservative and does not explain purchase mechanics. A follow-up copy/handoff cleanup pass should verify whether any player-facing text should mention formative-background access without implying current employment or live social identity.
-- Broad workspace typecheck was not run in this pass; previous handoffs note known broad typecheck blockers.
+
+- `docs/dev/project-vision-and-continuity-brief.md` still contains older active-pipeline references. It was inspected but left unchanged because this pass was scoped to player copy, policy metadata, GPT handoff, roadmap drift, backlog note, and output reporting.
+- Temporary Backstory Legacy guardrail docs still carry useful scoped/family evidence planning details; revisit them when that future work is planned or explicitly promoted into durable docs.
+- Future policy metadata updates should keep the policy-version test aligned.
+- Broad typecheck remains a separate cleanup/tooling concern.
 
 ## Temporary Guardrail Cleanup Decision
-Keep `docs/design/backstory-legacy-purchase-content-draft.json` and the related Backstory Legacy guardrail/planning docs for now. This run consumed the account-scoped low-risk resolver integration guidance, but the docs still preserve deferred higher-risk candidates, family/source-run evidence boundaries, copy guidance, and cleanup context for the next handoff pass. Revisit cleanup or promotion after the creator copy and handoff cleanup run.
+
+Kept `docs/design/backstory-legacy-purchase-content-draft.json` because it still records formative-past copy constraints and deferred higher-risk Backstory Legacy candidates.
+
+Kept `docs/design/backstory-legacy-purchase-integration-plan.md`, `docs/design/backstory-evidence-ownership-plan.md`, and `docs/design/legacy-scope-bloodline-economy-plan.md` because they still preserve family/source-run/scoped evidence boundaries, Bloodline/economy constraints, and future scoped storage guidance that was not fully folded into durable docs in this cleanup pass.
+
+No temporary guardrail files were deleted. The immediately relevant low-risk account-scoped status and next direction were folded into `docs/dev/current-gpt-handoff.md` and `docs/dev/project-roadmap.md`.
 
 ## Next Recommended Version
-Version 0.5.69 - Backstory Legacy Creator Copy And Handoff Cleanup
+
+Version 0.5.70 - Heirloom And Bequest Systems Plan
+
+This is the best next step because the low-risk account-scoped Backstory Legacy slice has now been migrated, wired into creator availability, and cleaned up in handoff/roadmap docs. The roadmap should return to the previously planned heirloom/bequest planning sequence before any Bloodlines or scoped Legacy behavior is implemented.
 
 ## Suggested Commit Message
-feat(backstory): wire legacy purchase evidence into creator availability
+
+docs(dev): align backstory legacy handoff

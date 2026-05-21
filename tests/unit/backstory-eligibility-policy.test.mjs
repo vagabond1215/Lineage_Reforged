@@ -33,6 +33,8 @@ test("runtime backstory eligibility policy covers every current live backstory",
   const policyIds = BACKSTORY_ELIGIBILITY_POLICY.availabilityRules.map((rule) => rule.backstoryId);
 
   assert.deepEqual(issues, []);
+  assert.equal(BACKSTORY_ELIGIBILITY_POLICY.policyVersion, "0.5.69");
+  assert.equal(BACKSTORY_ELIGIBILITY_POLICY.contentVersion, "current-live-backstories-27");
   assert.equal(BACKSTORY_ELIGIBILITY_POLICY.status, "runtime_owned_policy");
   assert.equal(BACKSTORY_ELIGIBILITY_POLICY.runtimeImportAllowed, true);
   assert.equal(new Set(policyIds).size, policyIds.length);

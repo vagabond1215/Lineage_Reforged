@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-05-19
+Last reviewed: 2026-05-21
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -17,18 +17,20 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.63 - Backstory Legacy Purchase Runtime Shape`
-- Next recommended version: `Version 0.5.64 - Backstory Legacy Purchase Content Draft`
+- Latest landed implementation version: `Version 0.5.68 - Backstory Legacy Purchase Resolver Integration`
+- Current cleanup version: `Version 0.5.69 - Backstory Legacy Creator Copy And Handoff Cleanup`
+- Next recommended version: `Version 0.5.70 - Heirloom And Bequest Systems Plan`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Current repo reality:
 
 - Family-scoped unlock ownership shape exists.
 - Family unlock ownership is current-data only and defaults empty.
-- Backstory Legacy purchase evidence helper exists.
-- Backstory Legacy purchase content records are not added yet.
-- Backstory Eligibility resolver purchase wiring is not added yet.
-- Creator-visible purchase behavior is not changed yet.
+- Five low-risk Backstory Legacy records are live account-scoped unlock-only records in the Legacy catalog.
+- Owned account-scoped Backstory Legacy purchases feed creator availability through `resolveOwnedBackstoryLegacyPurchaseIds(...)`.
+- Each of the five live account-owned Backstory Legacy purchases makes only its matching formative backstory selectable.
+- Higher-risk Backstory Legacy candidates remain locked, hidden, special, or deferred.
+- The creator does not infer or supply `familyId`; family/source-run/scoped Backstory Legacy evidence remains deferred.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family tree UI, heirs, heirlooms, bequests, Chronicle Marks, and Lineage Seals remain deferred.
 - Workspace-wide typecheck still has known pre-existing blockers; focused tests are the current confidence path.
@@ -55,11 +57,13 @@ These are internal development maturity markers, not public release promises. Pa
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |
 | `0.5.63` | Backstory Legacy Purchase Runtime Shape | Codex Local | Runtime shape | Landed. Added family-scoped unlock ownership and read-only purchase evidence helper. | No content, resolver wiring, creator behavior, or visible availability changes. |
-| `0.5.64` | Backstory Legacy Purchase Content Draft | Codex Local after GitHub prompt prep | Content / guard | Next implementation run. Author initial Backstory Legacy purchase records only if exposure is controlled. | Do not naively add live `legacy_unlocks.json` records that become visible/purchasable. Use draft-only records or a minimal visibility/purchase guard. |
-| `0.5.65` | Backstory Legacy Purchase Resolver Integration | Codex Local, or Plan Mode first if seam is unclear | Resolver integration | Pass owned purchase ids into resolver in a scoped tested way. | Explicit source of account purchase ids, family purchase ids, and `familyId`; no fake evidence. |
-| `0.5.66` | Heirloom And Bequest Systems Plan | GitHub Connector or Codex Plan Mode | Docs / planning | Separate material bequests from item-chain heirlooms and Bloodline traits. | Use `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; planning-only unless explicitly changed. |
-| `0.5.67` | Bloodlines View Model Implementation Plan | GitHub Connector or Codex Plan Mode | Docs / planning | Define pure projection of families, tree, and prestige summaries. | Use `docs/design/bloodlines-information-architecture-audit.md`; view-model-first; no React sprawl. |
-| `0.5.68` | Bloodlines Read-Only Account Meta UI | Codex Local | View-model / UI | Render Bloodlines in account meta / Chronicles surface. | Read-only; no family management, purchase execution, or resolver bypass. |
+| `0.5.64` | Backstory Legacy Purchase Content Draft | Codex Local after GitHub prompt prep | Content / guard | Landed. Added draft-only low-risk Backstory Legacy candidate catalog outside runtime. | Draft remained non-runtime and guarded from runtime imports. |
+| `0.5.65` | Backstory Legacy Live Content Readiness Decision | Codex Local | Readiness / guard | Landed. Chose the guarded live-catalog route for the low-risk account-scoped records. | Do not expose hidden draft/backlog records accidentally. |
+| `0.5.66` | Backstory Legacy Live Catalog Guard | Codex Local | Runtime guard | Landed. Hardened live/non-live Backstory Legacy catalog and purchase boundaries. | Catalog-only/backlog Backstory Legacy records must not become purchasable or resolver evidence. |
+| `0.5.67` | Backstory Legacy Live Content Migration | Codex Local | Live content | Landed. Migrated five low-risk account-scoped Backstory Legacy records into `legacy_unlocks.json`. | Live records are unlock-only access support, not starter effects or current identity. |
+| `0.5.68` | Backstory Legacy Purchase Resolver Integration | Codex Local | Resolver caller integration | Landed. Owned account-scoped Backstory Legacy purchases now feed creator availability through the ownership helper. | Creator does not infer `familyId`; higher-risk and scoped evidence remains deferred. |
+| `0.5.69` | Backstory Legacy Creator Copy And Handoff Cleanup | Codex Local | Copy / docs / metadata cleanup | Current cleanup pass. Align locked copy, policy metadata, handoff, and roadmap after 0.5.68. | No new Backstory Legacy behavior or content expansion. |
+| `0.5.70` | Heirloom And Bequest Systems Plan | GitHub Connector or Codex Plan Mode | Docs / planning | Next recommended step. Separate material bequests from item-chain heirlooms and Bloodline traits. | Use `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; planning-only unless explicitly changed. |
 
 ## 4. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -121,19 +125,19 @@ Do not let temporary guardrail files accumulate indefinitely.
 
 ## 5. Near-Term Roadmap After Active Pipeline
 
-These are likely candidates after `0.5.68`, subject to the current handoff at that time.
+These are likely candidates after `0.5.69`, subject to the current handoff at that time.
 
 | Candidate Version Band | Candidate Topic | Route | Work Type | Dependency / Note |
 | --- | --- | --- | --- | --- |
-| `0.5.69+` | README dynasty identity alignment | GitHub Connector | Docs-only | Low-risk once roadmap, brief, and ledger are stable. |
-| `0.5.69+` | Creator terminology cleanup | Codex Local or GitHub Connector for docs-only | Copy / small source cleanup | Use ledger vocabulary. Do not rewrite creator UI during active resolver work. |
-| `0.5.69+` | Typecheck script and target policy cleanup | Codex Local | Tooling/config cleanup | Keep separate from feature work; do not weaken strictness. |
-| `0.5.69+` | Chronicle run-end summary view-model plan | GitHub Connector or Plan Mode | Planning | Use `chronicle-run-end-summary-source-audit.md`; map data sources before UI. |
-| `0.5.69+` | Combat / equipment mapping audit | GitHub Connector first, Codex Local later | Audit then focused fixes | Use `combat-audit-scoping-pass.md`; audit before touching math. |
-| `0.5.69+` | Known spell ownership plan | GitHub Connector or Plan Mode | Planning | Use `magic-runtime-readiness-audit.md`; no runtime magic until owners are explicit. |
-| `0.5.69+` | Economy price clarity view-model plan | GitHub Connector or Plan Mode | Planning | Use `economy-clarity-audit.md`; clarity before simulation changes. |
-| `0.5.69+` | Calendar climate popup view-model plan | GitHub Connector | UI IA | Use `calendar-climate-popup-ia-audit.md`; data-backed popup before effects. |
-| `0.5.69+` | Continuity brief maintenance | GitHub Connector | Docs-only | Keep strategic index short as other docs absorb detail. |
+| `0.5.70+` | README dynasty identity alignment | GitHub Connector | Docs-only | Low-risk once roadmap, brief, and ledger are stable. |
+| `0.5.70+` | Creator terminology cleanup | Codex Local or GitHub Connector for docs-only | Copy / small source cleanup | Use ledger vocabulary. Do not rewrite creator UI during active resolver work. |
+| `0.5.70+` | Typecheck script and target policy cleanup | Codex Local | Tooling/config cleanup | Keep separate from feature work; do not weaken strictness. |
+| `0.5.70+` | Chronicle run-end summary view-model plan | GitHub Connector or Plan Mode | Planning | Use `chronicle-run-end-summary-source-audit.md`; map data sources before UI. |
+| `0.5.70+` | Combat / equipment mapping audit | GitHub Connector first, Codex Local later | Audit then focused fixes | Use `combat-audit-scoping-pass.md`; audit before touching math. |
+| `0.5.70+` | Known spell ownership plan | GitHub Connector or Plan Mode | Planning | Use `magic-runtime-readiness-audit.md`; no runtime magic until owners are explicit. |
+| `0.5.70+` | Economy price clarity view-model plan | GitHub Connector or Plan Mode | Planning | Use `economy-clarity-audit.md`; clarity before simulation changes. |
+| `0.5.70+` | Calendar climate popup view-model plan | GitHub Connector | UI IA | Use `calendar-climate-popup-ia-audit.md`; data-backed popup before effects. |
+| `0.5.70+` | Continuity brief maintenance | GitHub Connector | Docs-only | Keep strategic index short as other docs absorb detail. |
 
 ## 6. `v0.6.x` Runtime Ownership Transition
 

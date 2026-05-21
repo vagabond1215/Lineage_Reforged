@@ -2656,14 +2656,14 @@ function safeUnavailableCopy(record: BackstoryEligibilityRecordResult | null): s
   }
 
   if (record.state === "deferred") {
-    return "Requires a future system that is not active yet.";
+    return "Not ready for the current creator.";
   }
 
   if (record.availabilityStatus === "early_legacy") {
-    return "Requires matching previous-play evidence that is not currently available.";
+    return "Requires a matching record from earlier play that is not available yet.";
   }
 
-  return "Requires matching evidence that is not currently available.";
+  return "Requires matching records that are not available yet.";
 }
 
 function safeUnlockHint(record: BackstoryEligibilityRecordResult | null): string | null {
@@ -2672,14 +2672,14 @@ function safeUnlockHint(record: BackstoryEligibilityRecordResult | null): string
   }
 
   if (record.state === "special") {
-    return "Special origins need narrative availability before selection.";
+    return "Special origins need a narrative opening before selection.";
   }
 
   if (record.state === "deferred") {
-    return "This origin is deferred until its owner system exists.";
+    return "This origin is not ready for the current creator.";
   }
 
-  return "Select an available origin or return after the required evidence exists.";
+  return "Select an available origin or return when the required record exists.";
 }
 
 function availabilityBadgeFor(
@@ -2765,7 +2765,7 @@ function buildBackstoryPresentation(
     isSpecial: availabilityState === "special",
     isDeferred: availabilityState === "deferred",
     sortGroup,
-    resolverReasons: [...(record?.reasons ?? ["Backstory availability policy is missing."])]
+    resolverReasons: [...(record?.reasons ?? ["Backstory availability data is missing."])]
   };
 }
 

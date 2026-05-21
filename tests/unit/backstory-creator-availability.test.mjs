@@ -217,7 +217,7 @@ test("creator backstory presentation uses resolver projection", () => {
   assert.equal(merchant.availabilityBadge, "Locked");
   assert.equal(
     merchant.lockedReason,
-    "Requires matching evidence that is not currently available."
+    "Requires matching records that are not available yet."
   );
 
   assert.equal(hedge, null);
@@ -468,7 +468,8 @@ test("new-game snapshot applies only the selected purchased backstory package", 
 
 test("visible unavailable copy avoids blocked-system promises and raw policy ids", () => {
   const options = getBackstoryOptionsForSelection("lineage.human");
-  const forbiddenCopy = /legacy points|source_run|policy|backstory\.|estate|title|institution|contact|mount|magic|medical|oath|paladin/i;
+  const forbiddenCopy =
+    /legacy points|\bbuy\b|\bpurchase\b|source_run|resolver|policy|\bevidence\b|legacyPurchaseIds|implementationPriority|account-scoped|runtime|catalog|guardrail|draft|backlog|backstory\.|estate|title|institution|contact|mount|magic|medical|oath|paladin/i;
 
   for (const option of options.filter((entry) => !entry.selectable)) {
     assert.doesNotMatch(option.lockedReason ?? "", forbiddenCopy, option.id);

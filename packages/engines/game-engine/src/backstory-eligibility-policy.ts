@@ -317,13 +317,13 @@ function earlyLegacyRule(
               unlockId: backstoryId.replace(/^backstory\./, "legacy.backstory."),
               scope: "account" as const,
               evidenceRequired: false,
-              explain: "This origin needs matching previous-play evidence that is not currently available."
+              explain: "This origin needs a matching preserved Legacy record."
             }
           }
         : {}),
       requiresAny: evidence,
-      explainLocked: "This origin needs simple prior-play evidence before future resolver access.",
-      explainUnlocked: "Current evidence supports this early origin."
+      explainLocked: "This origin needs simple prior-play records before it can be selected.",
+      explainUnlocked: "Current records support this early origin."
     }
   );
 }
@@ -354,7 +354,7 @@ function legacyTierRule(
 
 export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
   schemaVersion: 1,
-  policyVersion: "0.5.56",
+  policyVersion: "0.5.69",
   status: "runtime_owned_policy",
   runtimeImportAllowed: true,
   contentVersion: "current-live-backstories-27",
@@ -388,7 +388,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
       INSTITUTION_SCOPE,
       {
         blocksIf: [{ kind: "magic_licensing_acquisition", blockedBehavior: "defer" }],
-        explainLocked: "Performance magic ownership is not ready for resolver use.",
+        explainLocked: "Performance magic ownership is not ready for selection.",
         explainUnlocked: "Performance institution ownership is available."
       }
     ),
@@ -403,7 +403,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
           { kind: "estate_title_ownership", blockedBehavior: "defer" },
           { kind: "heir_legitimacy_status", blockedBehavior: "defer" }
         ],
-        explainLocked: "Noble status needs estate, title, family, or lineage ownership before resolver use.",
+        explainLocked: "Noble status needs estate, title, family, or lineage ownership before selection.",
         explainUnlocked: "Estate or title evidence supports this origin."
       }
     ),
@@ -499,7 +499,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
           { kind: "institutional_membership", blockedBehavior: "defer" },
           { kind: "magic_licensing_acquisition", blockedBehavior: "defer" }
         ],
-        explainLocked: "Scholar institution and magic ownership are not ready for resolver use.",
+        explainLocked: "Scholar institution and magic ownership are not ready for selection.",
         explainUnlocked: "Scholar institution evidence supports this origin."
       }
     ),
@@ -514,7 +514,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
           { kind: "magic_licensing_acquisition", blockedBehavior: "defer" },
           { kind: "oath_paladin_behavior", blockedBehavior: "defer" }
         ],
-        explainLocked: "Temple, divine magic, and oath ownership are not ready for resolver use.",
+        explainLocked: "Temple, divine magic, and oath ownership are not ready for selection.",
         explainUnlocked: "Temple institution evidence supports this origin."
       }
     ),
@@ -525,7 +525,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
       INSTITUTION_SCOPE,
       {
         blocksIf: [{ kind: "magic_licensing_acquisition", blockedBehavior: "defer" }],
-        explainLocked: "Magic acquisition ownership is not ready for resolver use.",
+        explainLocked: "Magic acquisition ownership is not ready for selection.",
         explainUnlocked: "Magic ownership supports this origin."
       }
     ),
