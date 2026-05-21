@@ -1,4 +1,5 @@
 import type {
+  AccountProfileState,
   PlayerIdentityAgeBandId,
   PlayerIdentityFocusId,
   PlayerIdentityNatureId,
@@ -98,6 +99,10 @@ export interface CharacterCreationStepDefinition {
 export interface CharacterCreationValidationResult {
   isValid: boolean;
   errors: Partial<Record<CharacterCreationField, string>>;
+}
+
+export interface CharacterCreationValidationOptions {
+  accountProfile?: AccountProfileState | null;
 }
 
 export interface CompleteCharacterCreationFormState extends CharacterCreationFormState {
@@ -278,7 +283,8 @@ export function getPreviousCharacterCreationStepId(
 }
 
 export function validateCharacterCreationForm(
-  form: CharacterCreationFormState
+  form: CharacterCreationFormState,
+  options: CharacterCreationValidationOptions = {}
 ): CharacterCreationValidationResult {
   const errors: Partial<Record<CharacterCreationField, string>> = {};
 
@@ -351,6 +357,7 @@ export function validateCharacterCreationForm(
     errors.backstoryId = "Choose a valid backstory.";
   } else if (
     !isSelectableBackstoryId(form.backstoryId, {
+      ...(options.accountProfile ? { accountProfile: options.accountProfile } : {}),
       selectedBackstoryId: form.backstoryId,
       sourceRunIds: form.sourceRunId.trim().length > 0 ? [form.sourceRunId] : []
     })
@@ -432,7 +439,8 @@ export function validateCharacterCreationForm(
 
 export function validateCharacterCreationStep(
   form: CharacterCreationFormState,
-  stepId: CharacterCreationStepId
+  stepId: CharacterCreationStepId,
+  options: CharacterCreationValidationOptions = {}
 ): CharacterCreationValidationResult {
   if (stepId === "settlement") {
     const errors: Partial<Record<CharacterCreationField, string>> = {};
@@ -452,7 +460,7 @@ export function validateCharacterCreationStep(
     };
   }
 
-  const fullValidation = validateCharacterCreationForm(form);
+  const fullValidation = validateCharacterCreationForm(form, options);
   const step = CHARACTER_CREATION_STEPS.find((item) => item.id === stepId);
 
   if (!step) {

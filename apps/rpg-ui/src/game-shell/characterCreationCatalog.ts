@@ -1,6 +1,8 @@
 ﻿import {
   PLAYER_LINEAGE_PROFILES,
+  type AccountProfileState,
   type InventoryStack,
+  type LegacyUnlockDefinitionState,
   type PlayerAttributeKey,
   type PlayerAttributeAdjustments,
   type PlayerAbilityState,
@@ -15,7 +17,9 @@
   type PlayerSexId
 } from "../../../../packages/shared/types/src/index.js";
 import {
+  getLegacyUnlockDefinitions,
   resolveBackstoryEligibility,
+  resolveOwnedBackstoryLegacyPurchaseIds,
   type BackstoryEligibilityAvailabilityStatus,
   type BackstoryEligibilityEvidenceInput,
   type BackstoryEligibilityRecordResult,
@@ -183,6 +187,8 @@ export type BackstoryCreatorSortGroup =
 
 export interface BackstoryCreatorAvailabilityOptions {
   accountId?: string | null;
+  accountProfile?: AccountProfileState | null;
+  legacyUnlockDefinitions?: readonly LegacyUnlockDefinitionState[] | null;
   selectedBackstoryId?: string | null;
   sourceRunIds?: readonly string[] | null;
 }
@@ -2601,10 +2607,16 @@ function buildBackstoryEligibilityEvidenceInput(
 ): BackstoryEligibilityEvidenceInput {
   const evidence: BackstoryEligibilityEvidenceInput = {};
   const selectedBackstoryId = normalizeOptionalId(options.selectedBackstoryId);
-  const accountId = normalizeOptionalId(options.accountId);
+  const accountId = normalizeOptionalId(options.accountId ?? options.accountProfile?.accountId);
   const sourceRunIds = (options.sourceRunIds ?? [])
     .map((sourceRunId) => sourceRunId.trim())
     .filter((sourceRunId) => sourceRunId.length > 0);
+  const ownedBackstoryLegacyPurchases = options.accountProfile
+    ? resolveOwnedBackstoryLegacyPurchaseIds({
+        profile: options.accountProfile,
+        legacyUnlockDefinitions: options.legacyUnlockDefinitions ?? getLegacyUnlockDefinitions()
+      })
+    : null;
 
   if (selectedBackstoryId) {
     evidence.selectedBackstoryId = selectedBackstoryId;
@@ -2618,10 +2630,16 @@ function buildBackstoryEligibilityEvidenceInput(
     evidence.sourceRunIds = sourceRunIds;
   }
 
+  if (ownedBackstoryLegacyPurchases?.legacyPurchaseIds.length) {
+    evidence.legacyPurchaseIds = ownedBackstoryLegacyPurchases.legacyPurchaseIds;
+  }
+
   return evidence;
 }
 
-function resolveBackstoryCreatorEligibility(options: BackstoryCreatorAvailabilityOptions = {}) {
+export function resolveBackstoryCreatorEligibility(
+  options: BackstoryCreatorAvailabilityOptions = {}
+) {
   return resolveBackstoryEligibility({
     liveBackstoryIds: LIVE_BACKSTORY_IDS,
     evidence: buildBackstoryEligibilityEvidenceInput(options)

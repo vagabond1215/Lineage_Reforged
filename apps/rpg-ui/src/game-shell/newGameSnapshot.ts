@@ -860,7 +860,10 @@ export function createNewGameSnapshot(
     crossLineageStart?: boolean;
   } = {}
 ): SaveSnapshot {
-  const validation = validateCharacterCreationForm(form);
+  const validation = validateCharacterCreationForm(
+    form,
+    options.accountProfile ? { accountProfile: options.accountProfile } : {}
+  );
   if (!validation.isValid) throw new Error(Object.values(validation.errors)[0] ?? 'Complete character creation before starting the campaign.');
   if (!hasCompleteCharacterCreationSelections(form)) throw new Error('Complete character creation before starting the campaign.');
   const derived = deriveCharacterCreationState({

@@ -618,6 +618,7 @@ export function CharacterCreationNarrativeScreen({
   });
   const backstoryAvailabilityOptions = {
     selectedBackstoryId: form.backstoryId,
+    ...(accountProfile ? { accountProfile } : {}),
     ...(accountProfile?.accountId ? { accountId: accountProfile.accountId } : {}),
     ...(form.sourceRunId.trim().length > 0
       ? { sourceRunIds: [form.sourceRunId.trim()] }
@@ -633,13 +634,13 @@ export function CharacterCreationNarrativeScreen({
       Object.fromEntries(
         CHARACTER_CREATION_STEPS.map((step) => [
           step.id,
-          validateCharacterCreationStep(form, step.id)
+          validateCharacterCreationStep(form, step.id, { accountProfile })
         ])
       ) as Record<CharacterCreationStepId, ReturnType<typeof validateCharacterCreationStep>>,
-    [form]
+    [accountProfile, form]
   );
   const currentValidation = validations[currentStepId];
-  const fullValidation = validateCharacterCreationForm(form);
+  const fullValidation = validateCharacterCreationForm(form, { accountProfile });
   const regionSelectionLocked = form.continentId.trim().length === 0;
   const settlementSelectionLocked = form.regionId.trim().length === 0;
   const currentIndex = CHARACTER_CREATION_STEPS.findIndex(

@@ -302,7 +302,8 @@ function alwaysRule(backstoryId: string): BackstoryEligibilityRule {
 
 function earlyLegacyRule(
   backstoryId: string,
-  evidence: BackstoryEligibilityRequirement[]
+  evidence: BackstoryEligibilityRequirement[],
+  accountLegacyPurchaseAllowed = false
 ): BackstoryEligibilityRule {
   return baseRule(
     backstoryId,
@@ -310,6 +311,16 @@ function earlyLegacyRule(
     "tier_1",
     SOURCE_RUN_SCOPE,
     {
+      ...(accountLegacyPurchaseAllowed
+        ? {
+            requiresLegacyPurchase: {
+              unlockId: backstoryId.replace(/^backstory\./, "legacy.backstory."),
+              scope: "account" as const,
+              evidenceRequired: false,
+              explain: "This origin needs matching previous-play evidence that is not currently available."
+            }
+          }
+        : {}),
       requiresAny: evidence,
       explainLocked: "This origin needs simple prior-play evidence before future resolver access.",
       explainUnlocked: "Current evidence supports this early origin."
@@ -537,7 +548,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
     earlyLegacyRule("backstory.street_vendor", [
       { kind: "achievement", scope: "account", achievementId: "achievement.account.market_memory" },
       { kind: "source_run_evidence", scope: "source_run", tag: "market_service" }
-    ]),
+    ], true),
     earlyLegacyRule("backstory.net_tender", [
       { kind: "source_run_evidence", scope: "source_run", tag: "water_work" },
       {
@@ -549,7 +560,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
         starterGrantedAllowed: false,
         requiresEarnedSource: true
       }
-    ]),
+    ], true),
     earlyLegacyRule("backstory.gatherer", [
       { kind: "source_run_evidence", scope: "source_run", tag: "field_gathering" },
       {
@@ -561,7 +572,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
         starterGrantedAllowed: false,
         requiresEarnedSource: true
       }
-    ]),
+    ], true),
     earlyLegacyRule("backstory.scribes_apprentice", [
       { kind: "source_run_evidence", scope: "source_run", tag: "records_work" },
       {
@@ -573,7 +584,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
         starterGrantedAllowed: false,
         requiresEarnedSource: true
       }
-    ]),
+    ], true),
     earlyLegacyRule("backstory.drovers_hand", [
       { kind: "source_run_evidence", scope: "source_run", tag: "animal_labor" },
       {
@@ -597,7 +608,7 @@ export const BACKSTORY_ELIGIBILITY_POLICY: BackstoryEligibilityPolicy = {
         starterGrantedAllowed: false,
         requiresEarnedSource: true
       }
-    ]),
+    ], true),
     baseRule(
       "backstory.local_hero",
       "special",

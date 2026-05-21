@@ -1013,6 +1013,8 @@ export default function App() {
     const validation = validateCharacterCreationForm({
       ...state.form,
       playerName
+    }, {
+      accountProfile: state.accountProfile
     });
 
     if (!validation.isValid) {

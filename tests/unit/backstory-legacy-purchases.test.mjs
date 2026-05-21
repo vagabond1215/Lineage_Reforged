@@ -289,20 +289,34 @@ test("Backstory Legacy purchase runtime code does not import planning metadata o
   assert.doesNotMatch(source, /legacy_unlocks\.json/);
 });
 
-test("Backstory Legacy purchase helper is not wired into resolver or creator code", () => {
-  const files = [
+test("Backstory Legacy purchase helper is wired only through the creator caller seam", () => {
+  const resolverFiles = [
     "packages/engines/game-engine/src/backstory-eligibility.ts",
-    "packages/engines/game-engine/src/backstory-eligibility-policy.ts",
-    "apps/rpg-ui/src/game-shell/characterCreationCatalog.ts",
+    "packages/engines/game-engine/src/backstory-eligibility-policy.ts"
+  ];
+  const nonCallerCreatorFiles = [
     "apps/rpg-ui/src/game-shell/characterCreationForm.ts",
     "apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx"
   ];
+  const catalogSource = readFileSync(
+    "apps/rpg-ui/src/game-shell/characterCreationCatalog.ts",
+    "utf8"
+  );
 
-  for (const file of files) {
+  for (const file of resolverFiles) {
     const source = readFileSync(file, "utf8");
     assert.doesNotMatch(source, /backstory-legacy-purchases/);
     assert.doesNotMatch(source, /resolveOwnedBackstoryLegacyPurchaseIds/);
   }
+
+  for (const file of nonCallerCreatorFiles) {
+    const source = readFileSync(file, "utf8");
+    assert.doesNotMatch(source, /backstory-legacy-purchases/);
+    assert.doesNotMatch(source, /resolveOwnedBackstoryLegacyPurchaseIds/);
+  }
+
+  assert.match(catalogSource, /resolveOwnedBackstoryLegacyPurchaseIds/);
+  assert.match(catalogSource, /legacyPurchaseIds/);
 });
 
 test("Backstory Legacy purchase helper does not introduce compatibility rescue states", () => {

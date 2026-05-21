@@ -429,7 +429,10 @@ function resolveRuleState(
   }
 
   const legacyPassed = legacyPurchasePasses(rule, input);
-  if (!legacyPassed) {
+  const tierOneLegacyPurchaseSatisfied =
+    Boolean(rule.requiresLegacyPurchase) && rule.tier === "tier_1" && legacyPassed;
+
+  if (rule.requiresLegacyPurchase && rule.tier !== "tier_1" && !legacyPassed) {
     return {
       state: "locked",
       reasons: [rule.requiresLegacyPurchase?.explain ?? rule.explainLocked]
@@ -444,6 +447,13 @@ function resolveRuleState(
     return {
       state: "locked",
       reasons: ["Legacy purchase cannot be the only Tier 2 or Tier 3 requirement."]
+    };
+  }
+
+  if (tierOneLegacyPurchaseSatisfied) {
+    return {
+      state: "eligible",
+      reasons: [rule.explainUnlocked]
     };
   }
 

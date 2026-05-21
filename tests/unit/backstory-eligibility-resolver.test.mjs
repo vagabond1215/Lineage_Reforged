@@ -82,6 +82,26 @@ test("resolver reports locked, deferred, hidden, and special buckets without UI 
   assert.equal(result.hiddenBackstoryIds.length, 0);
 });
 
+test("Tier 1 account Legacy purchase ids can satisfy early Backstory Legacy rules", async () => {
+  const liveIds = await loadLiveBackstoryIds();
+  const result = resolve(liveIds, {
+    legacyPurchaseIds: ["legacy.backstory.street_vendor"]
+  });
+
+  assert.equal(recordFor(result, "backstory.street_vendor").state, "eligible");
+  assert.equal(result.eligibleBackstoryIds.includes("backstory.street_vendor"), true);
+
+  for (const backstoryId of [
+    "backstory.net_tender",
+    "backstory.gatherer",
+    "backstory.scribes_apprentice",
+    "backstory.kitchen_hand"
+  ]) {
+    assert.equal(recordFor(result, backstoryId).state, "locked", backstoryId);
+    assert.equal(result.eligibleBackstoryIds.includes(backstoryId), false, backstoryId);
+  }
+});
+
 test("Tier 2 origins require Legacy support plus scoped evidence", async () => {
   const liveIds = await loadLiveBackstoryIds();
   const purchaseOnly = resolve(liveIds, {
