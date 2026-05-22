@@ -1,12 +1,14 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.69 - Backstory Legacy Creator Copy And Handoff Cleanup
+Source version/run: Version 0.5.70 - Heirloom And Bequest Systems Plan
 Date: 2026-05-21
 Branch/status assumption: Ran locally on `master`; initial `git status --short --branch` was clean at `## master...origin/master`.
 
 ## Result
 
-Cleaned the post-0.5.68 Backstory Legacy integration surface without adding new behavior. Player-facing creator locked copy now avoids internal terms and current-identity implications, Backstory Eligibility policy metadata is aligned to the current cleanup version, and the stale GPT handoff and roadmap pipeline now reflect that the low-risk account-scoped Backstory Legacy slice has landed.
+Created `docs/design/heirloom-and-bequest-systems-plan.md` as the active planning-only heirloom/bequest design artifact. The plan separates Bloodline upgrades, bequests, heirlooms, estate assets, Family Prestige, Chronicle Marks, Lineage Seals, and Backstory support without implementing runtime behavior.
+
+Added a concise run note to `docs/future_content_backlog.md`. No runtime source, schemas, tests, content JSON, UI components, generated output, or current handoff/roadmap files were changed.
 
 ## Files Inspected
 
@@ -17,118 +19,107 @@ Cleaned the post-0.5.68 Backstory Legacy integration surface without adding new 
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/design/future-system-design-ledger.md`
-- `docs/design/backstory-legacy-purchase-content-draft.json`
-- `docs/design/backstory-legacy-purchase-integration-plan.md`
-- `docs/design/backstory-evidence-ownership-plan.md`
+- `docs/design/heirloom-vs-bequest-vocabulary-audit.md`
 - `docs/design/legacy-scope-bloodline-economy-plan.md`
-- `docs/dev/prompt-template-hardening-pass.md`
+- `docs/design/bloodlines-information-architecture-audit.md`
+- `docs/design/chronicles-bloodline-tree-presentation-plan.md`
 - `docs/future_content_backlog.md`
-- `packages/content/base/player/legacy_unlocks.json`
-- `packages/content/base/player/backstories.json`
 - `packages/shared/types/src/contracts.ts`
-- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-- `packages/engines/game-engine/src/backstory-eligibility.ts`
-- `packages/engines/game-engine/src/backstory-legacy-purchases.ts`
+- `packages/engines/game-engine/src/account-family.ts`
+- `packages/engines/game-engine/src/account-estate.ts`
+- `packages/engines/game-engine/src/legacy-account.ts`
 - `packages/engines/game-engine/src/legacy-unlocks.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationForm.ts`
-- `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`
-- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`
-- `tests/unit/backstory-creator-availability.test.mjs`
-- `tests/unit/backstory-eligibility-resolver.test.mjs`
-- `tests/unit/backstory-eligibility-policy.test.mjs`
-- `tests/unit/backstory-legacy-catalog-guard.test.mjs`
-- `tests/unit/backstory-legacy-purchase-content-draft.test.mjs`
-- `tests/unit/backstory-legacy-purchases.test.mjs`
-- `tests/unit/legacy-start-resources.test.mjs`
-- `tests/unit/legacy-unlocks.test.mjs`
+- `packages/engines/game-engine/src/backstory-legacy-purchases.ts`
+- `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
+- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
+- `tests/unit/account-family.test.mjs`
+- `tests/unit/account-profile-storage.test.mjs`
 - `tests/unit/legacy-ledger-presentation.test.mjs`
+- `tests/unit/legacy-unlocks.test.mjs`
 
 ## Files Changed
 
-- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
-- `packages/engines/game-engine/src/backstory-eligibility-policy.ts`
-- `tests/unit/backstory-creator-availability.test.mjs`
-- `tests/unit/backstory-eligibility-policy.test.mjs`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/project-roadmap.md`
+- `docs/design/heirloom-and-bequest-systems-plan.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Copy / Metadata Cleanup
+## Planning Summary
 
-Creator locked/unavailable copy was left conservative and adjusted only where it exposed internal framing. The visible fallback text now talks about missing records, narrative openings, or origins not being ready for the current creator. It no longer uses player-facing words such as evidence, policy, resolver, source-run, runtime, catalog, draft, guardrail, account-scoped, or raw backstory ids.
+- Bloodline: family-scoped inherited tendency, aptitude, temperament, growth, resistance, prestige affinity, or family potential. It is not a material transfer or backstory identity.
+- Bequest: intentional material, estate, legal, household, or claim-based transfer. It requires source owner and recipient/claimant rules and must not grant genetic traits, stat tendencies, or social identity by itself.
+- Heirloom: one specific persistent item instance with an ownership chain. It requires `heirloomId`, `itemInstanceId`, `familyId`, current holder or unavailable state, and transfer history before runtime behavior is safe.
+- Estate asset: stored material/property/legal/operational asset or claim. It can store or preview assets, but does not prove delivery, status, title, or family legitimacy.
+- Family Prestige: family-ledger resource that may later fund family-scoped actions. It is not proof that an item, bequest, estate asset, transfer, or effect exists.
+- Chronicle Mark: future account-wide milestone/progression mark. It must not fabricate family-specific item, estate, or status history for unrelated families.
+- Lineage Seal: future rare capstone or branch-closure benchmark. It should not become a farmable generic currency.
+- Backstory support: resolver-owned formative-origin access support only. Bequests, heirlooms, Bloodline upgrades, estate assets, Family Prestige, Chronicle Marks, and Lineage Seals do not directly unlock Backstory identity.
 
-The copy does not imply that a purchased backstory makes the new character currently employed as a street vendor, net-tender, gatherer, scribe, kitchen hand, or any other present job or social identity. It also avoids promising family history, institution membership, estate/title ownership, contacts, discounts, items, coin, skills, magic, authority, or obligations.
+## Current Repo Reality Confirmed
 
-`BACKSTORY_ELIGIBILITY_POLICY.policyVersion` was updated from `0.5.56` to `0.5.69`. The existing `contentVersion` remains `current-live-backstories-27` because this pass did not change live backstory content. Policy reason text was cleaned to avoid implementation wording such as "resolver use"; rule predicates and resolver behavior were not changed.
-
-Focused tests now assert the updated policy version/content version and enforce the stricter player-facing locked-copy guard.
-
-## Handoff / Roadmap Cleanup
-
-`docs/dev/current-gpt-handoff.md` was replaced with a short current handoff instead of appending to stale material. It now records that:
-
-- `Version 0.5.67 - Backstory Legacy Live Content Migration` migrated the five low-risk records live.
-- `Version 0.5.68 - Backstory Legacy Purchase Resolver Integration` wired owned account-scoped purchases into creator availability through `resolveOwnedBackstoryLegacyPurchaseIds(...)`.
-- The five live mappings are `legacy.backstory.street_vendor` -> `backstory.street_vendor`, `legacy.backstory.net_tender` -> `backstory.net_tender`, `legacy.backstory.gatherer` -> `backstory.gatherer`, `legacy.backstory.scribes_apprentice` -> `backstory.scribes_apprentice`, and `legacy.backstory.kitchen_hand` -> `backstory.kitchen_hand`.
-- The creator caller does not infer or supply `familyId`.
-- Family/source-run/region/institution/estate/title/heir/preparation scoped Backstory Legacy evidence and higher-risk candidates remain deferred.
-- Future Backstory Legacy records must stay formative-past access, not current identity.
-
-`docs/dev/project-roadmap.md` now marks `0.5.64` through `0.5.68` as landed where appropriate, sets `0.5.69` as the current cleanup pass, and sets `Version 0.5.70 - Heirloom And Bequest Systems Plan` as the next recommended direction. The roadmap was not rewritten beyond active-pipeline drift and immediate near-term labels.
-
-`docs/future_content_backlog.md` received a concise run note that this cleanup is complete and that scoped Backstory Legacy evidence, Family Prestige spending, higher-risk candidates, Bloodlines UI, creator purchase UI, generated UI output, and broader creator changes remain deferred.
+- Account profiles currently include `legacy`, `achievements`, `history`, `families`, and `estate`.
+- Family state currently supports family records, Family Prestige transactions, and family unlock ownership.
+- `account-family.ts` supports passive Family Prestige totals and family unlock lookups.
+- Family Prestige grant/spend transaction shape exists, but earning/spending behavior is not implemented beyond stored ledger records and passive totals.
+- Legacy unlock ownership exists on the account profile, including the live low-risk account-scoped Backstory Legacy records from the previous slice.
+- Estate state supports deposits and stored assets for currency, item, and operational asset previews.
+- Estate claim presentation is preview-only; assets remain stored until a later delivery seam moves them.
+- Account meta presentation currently renders Legacy and Chronicles, including estate summaries, but does not render Bloodlines.
+- No heirloom runtime exists.
+- No bequest runtime exists.
+- No estate transfer/claim execution behavior exists beyond preview.
+- No item-instance persistence suitable for heirlooms was confirmed. The repo has `instanceId` for settlement building instances, but no current player item-instance heirloom ownership chain.
+- No heir system, heir slots, active family management UI, Chronicle Marks, or Lineage Seals exist.
+- Scoped Backstory Legacy evidence remains deferred beyond the landed account-scoped low-risk slice.
 
 ## Behavior / Runtime Confirmation
 
-- Backstory Eligibility resolver behavior changed: No. This pass changed metadata and explanatory copy only.
-- Creator availability behavior changed: No. Owned account-scoped Backstory Legacy purchase behavior remains the 0.5.68 behavior.
-- Live Legacy content changed: No. `packages/content/base/player/legacy_unlocks.json` was not edited.
-- Account meta purchase behavior changed: No.
-- Family-scoped behavior changed: No.
-- `backstories.json` changed: No.
-- Generated output changed: No. `apps/rpg-ui/dist` was not touched.
-- Deferred systems were touched: No runtime/deferred systems were implemented. They were only re-documented as deferred.
-- Player-facing locked copy changed: Yes, copy-only, to remove internal terms and current-identity implications.
+- Runtime source changed: no.
+- Schemas changed: no.
+- Tests changed: no.
+- Content JSON changed: no.
+- UI changed: no.
+- Generated output changed: no.
+- Backstory Eligibility behavior changed: no.
+- Family Prestige behavior changed: no.
+- Heirloom/bequest runtime behavior added: no.
+- Deferred systems touched: planning only.
 
 ## Tests / Checks Run
 
 - `npm.cmd run tool:content-lint` - passed; `content-lint: ok (53 files checked)`.
-- `node --test tests/unit/backstory-creator-availability.test.mjs` - passed; 18 tests.
-- `node --test tests/unit/backstory-eligibility-resolver.test.mjs` - passed; 14 tests.
-- `node --test tests/unit/backstory-eligibility-policy.test.mjs` - passed; 8 tests.
-- `node --test tests/unit/backstory-legacy-catalog-guard.test.mjs` - passed; 10 tests.
-- `node --test tests/unit/backstory-legacy-purchase-content-draft.test.mjs` - passed; 5 tests.
-- `node --test tests/unit/backstory-legacy-purchases.test.mjs` - passed; 10 tests.
-- `node --test tests/unit/legacy-start-resources.test.mjs` - passed; 8 tests.
-- `node --test tests/unit/legacy-unlocks.test.mjs` - passed; 21 tests.
-- `node --test tests/unit/legacy-ledger-presentation.test.mjs` - passed; 13 tests.
-- `git diff --check` - passed with Windows line-ending warnings only.
+- `git diff --check` - passed after the output update with Windows line-ending warnings only.
+- `Select-String -Path docs/design/heirloom-and-bequest-systems-plan.md -Pattern '[ \t]$'` - passed; no trailing whitespace reported in the new untracked plan file.
 
-Broad typecheck was not run; previous handoffs record known broad workspace typecheck blockers, and this pass stayed to copy, metadata, docs, and focused validation.
+Broad typecheck was not run because this was docs-only and the repo has known broad workspace typecheck blockers.
 
 ## Risks / Follow-Up
 
-- `docs/dev/project-vision-and-continuity-brief.md` still contains older active-pipeline references. It was inspected but left unchanged because this pass was scoped to player copy, policy metadata, GPT handoff, roadmap drift, backlog note, and output reporting.
-- Temporary Backstory Legacy guardrail docs still carry useful scoped/family evidence planning details; revisit them when that future work is planned or explicitly promoted into durable docs.
-- Future policy metadata updates should keep the policy-version test aligned.
-- Broad typecheck remains a separate cleanup/tooling concern.
+- The plan is intentionally non-runtime; future implementation still needs contract readiness, validation, pure helpers, view models, UI, spending semantics, and mutating behavior in separate passes.
+- Heirloom work remains blocked on a real player item-instance owner and a holder/availability state model.
+- Bequest work remains blocked on estate/material/legal claim execution and explicit recipient/claimant rules.
+- Family Prestige spending remains blocked on exact spend references and failure-state validation.
+- Bloodlines presentation remains blocked on a view-model/read-only UI pass.
+- Chronicle Marks and Lineage Seals still need separate economy and capstone design before implementation.
+- Backstory support remains resolver-owned; future scoped evidence must not be inferred from family display, bequest labels, heirloom labels, or estate assets.
 
 ## Temporary Guardrail Cleanup Decision
 
-Kept `docs/design/backstory-legacy-purchase-content-draft.json` because it still records formative-past copy constraints and deferred higher-risk Backstory Legacy candidates.
+Kept `docs/design/heirloom-vs-bequest-vocabulary-audit.md`. The new plan consumes and expands it, but the audit remains useful as a compact checklist until a later implementation-readiness or cleanup pass folds durable rules into `docs/design/future-system-design-ledger.md`.
 
-Kept `docs/design/backstory-legacy-purchase-integration-plan.md`, `docs/design/backstory-evidence-ownership-plan.md`, and `docs/design/legacy-scope-bloodline-economy-plan.md` because they still preserve family/source-run/scoped evidence boundaries, Bloodline/economy constraints, and future scoped storage guidance that was not fully folded into durable docs in this cleanup pass.
+Kept `docs/design/legacy-scope-bloodline-economy-plan.md`. It still carries broader Legacy, Bloodline, Family Prestige, Chronicle Mark, and Lineage Seal economy boundaries that extend beyond this heirloom/bequest plan.
 
-No temporary guardrail files were deleted. The immediately relevant low-risk account-scoped status and next direction were folded into `docs/dev/current-gpt-handoff.md` and `docs/dev/project-roadmap.md`.
+Kept `docs/design/bloodlines-information-architecture-audit.md`. It remains the main source for a future Bloodlines view-model and read-only account meta planning pass.
+
+Kept `docs/design/chronicles-bloodline-tree-presentation-plan.md`. It remains useful for tree presentation, Chronicles placement, and Bloodlines UI sequencing.
+
+The new `docs/design/heirloom-and-bequest-systems-plan.md` becomes the active 0.5.70 heirloom/bequest planning artifact. After future implementation consumes it, durable rules should be folded into `docs/design/future-system-design-ledger.md`, and obsolete temporary guardrail docs should be deleted or retired in a dedicated cleanup pass.
 
 ## Next Recommended Version
 
-Version 0.5.70 - Heirloom And Bequest Systems Plan
+Version 0.5.71 - Bloodlines View Model Implementation Plan
 
-This is the best next step because the low-risk account-scoped Backstory Legacy slice has now been migrated, wired into creator availability, and cleaned up in handoff/roadmap docs. The roadmap should return to the previously planned heirloom/bequest planning sequence before any Bloodlines or scoped Legacy behavior is implemented.
+This is the best next step because the heirloom/bequest vocabulary and ownership boundaries are now planned, while the roadmap still needs a pure, read-only Bloodlines projection before any Bloodlines UI, family management, bequest, heirloom, Family Prestige spending, or scoped Backstory evidence behavior.
 
 ## Suggested Commit Message
 
-docs(dev): align backstory legacy handoff
+docs(design): plan heirloom and bequest systems
