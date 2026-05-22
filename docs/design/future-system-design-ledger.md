@@ -1,7 +1,7 @@
 # Future System Design Ledger
 
 Source route: ChatGPT via GitHub Connector
-Date: 2026-05-19
+Date: 2026-05-21
 Status: durable design-criteria ledger; not an implementation handoff
 
 ## Purpose
@@ -371,6 +371,22 @@ Core rules:
 - Tier 2 and Tier 3 origins require scoped evidence plus purchase/support when appropriate.
 - Blocked systems must remain locked/hidden/deferred/special.
 
+Implemented low-risk account-scoped slice:
+
+- The five low-risk account-scoped Backstory Legacy records are live and routed through the resolver caller path.
+- Current live low-risk records are Street Vendor, Net-Tender, Gatherer, Scribe's Apprentice, and Kitchen Hand.
+- These records are formative-background access support only.
+- They do not grant current employment, social identity, contacts, items, coin, skills, magic, status, family history, or obligations.
+- They do not authorize higher-risk or scoped origins.
+
+Remaining deferred Backstory Legacy scope:
+
+- Family-scoped purchases require explicit `familyId` and matching family ownership.
+- Region/local purchases require durable regional or settlement evidence.
+- Institution/title/estate/source-run/heir/preparation scopes require their owner systems before use.
+- Higher-risk candidates such as Merchant Family, Garrison Ward, Minor Noble, Local Champion, World-Stray, Hedge Adept, Temple Acolyte, Scholar's Apprentice, and Performer remain deferred.
+- Tier 2 and Tier 3 origins still require scoped evidence plus support; purchase evidence alone must not unlock them.
+
 Backstory Legacy purchase rules:
 
 - Account-scoped purchases are acceptable only for broad low-risk Tier 1 access.
@@ -389,18 +405,6 @@ Origin examples:
 - World-Stray remains special/manual or hidden.
 - Hedge Adept waits for magic acquisition/licensing ownership.
 - Temple Acolyte waits for institution/divine/oath ownership.
-
-`0.5.64` safety rule:
-
-- Do not add naive live `legacy_unlocks.json` Backstory Legacy records if they become visible or purchasable without the approved guard.
-- Either keep records draft-only outside the live imported catalog or add minimal visibility/purchase blocking for catalog-only/backlog backstory-tagged records.
-
-`0.5.65` seam rule:
-
-- The caller that builds `legacyPurchaseIds` is the trust boundary.
-- Use `resolveOwnedBackstoryLegacyPurchaseIds(...)` or an equivalent scoped helper.
-- Do not hand-copy ids into resolver evidence.
-- Do not invent `familyId` from source run, lineage id, account id, or UI state.
 
 ## Bloodline, Bequest, And Heirloom Criteria
 
@@ -649,16 +653,7 @@ Clarify:
 - Should the brief be actively shortened in a future docs pass, or left as a comprehensive master brief for now?
 - Should the new-thread starter live in the brief, the GPT handoff, or a separate `docs/dev/new-thread-starter.md` later?
 
-### 2. `0.5.64` Backstory Legacy Content Location
-
-Current audit found that live `legacy_unlocks.json` insertion is not safe without a visibility/purchase guard.
-
-Clarify preferred default:
-
-- draft-only Backstory Legacy catalog outside live runtime, or
-- guarded live catalog records with explicit hidden/purchase-blocked behavior?
-
-### 3. Bloodlines Placement
+### 2. Bloodlines Placement
 
 Current direction favors Bloodlines inside Chronicles/account meta first, with possible future independent surface only after enough behavior exists.
 
@@ -667,7 +662,7 @@ Clarify long-term preference:
 - always nested under Chronicles, or
 - nested first but eligible to become top-level once family/heir management matures?
 
-### 4. Family Creation Owner
+### 3. Family Creation Owner
 
 Current systems have family records but no active family creation flow.
 
@@ -677,7 +672,7 @@ Clarify future rule:
 - Does family creation begin only after the heir system exists?
 - Can a player choose family name at account/first-run creation, or should it emerge from run history?
 
-### 5. Renown Rank Naming
+### 4. Renown Rank Naming
 
 Current concept allows settlement/region/continent/universal tiers and government-specific names.
 
@@ -686,7 +681,7 @@ Clarify:
 - Should rank names vary heavily by culture/government, or use a common mechanical ladder with localized flavor labels?
 - Should kingdom/realm renown sit between region and continent where world data supports it?
 
-### 6. Chronicle Mark And Lineage Seal Economy
+### 5. Chronicle Mark And Lineage Seal Economy
 
 Current concept defines purpose but not conversion rates or spend categories.
 
@@ -695,7 +690,7 @@ Clarify later:
 - Should branch closure generate Chronicle Marks, Lineage Seals, or both?
 - Should conversion be mostly player choice, automatic milestone payout, or a rare capstone action?
 
-### 7. Magic Inheritance
+### 6. Magic Inheritance
 
 Current magic rules forbid early direct starter spell bundles and direct magic power Legacy.
 
@@ -704,7 +699,7 @@ Clarify later:
 - Should families eventually pass magical aptitude only, spell access permissions, known-spell traditions, or some combination?
 - Should any magic inheritance ever apply to a fresh unrelated character, or only family/heir contexts?
 
-### 8. Backstory Purchase Surface
+### 7. Backstory Purchase Surface
 
 Current design implies account/Legacy panel is likely purchase surface; creator consumes resolver output.
 
