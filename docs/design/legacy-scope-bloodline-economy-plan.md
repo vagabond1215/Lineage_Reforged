@@ -2,7 +2,9 @@
 
 Source version/run: Version 0.5.60 - Legacy Scope And Bloodline Economy Plan
 Date: 2026-05-19
-Status: planning-only design document
+Status: partially consumed temporary guardrail
+
+0.5.73 cleanup note: family records, Family Prestige ledger storage, Backstory Legacy purchase evidence, the Bloodlines projection, and the first read-only Bloodlines UI have landed in later narrow passes. Keep this plan for remaining Family Prestige spending, Chronicle Marks, Lineage Seals, scoped Backstory evidence, heirloom/bequest economy, and Bloodline economy boundaries.
 
 ## Purpose
 

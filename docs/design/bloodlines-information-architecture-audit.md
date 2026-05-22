@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only planning audit; no runtime/source/UI changes
+Status: partially consumed temporary guardrail
+
+0.5.73 cleanup note: `Version 0.5.71 - Bloodlines View Model Implementation Plan` implemented the pure Bloodlines projection, and `Version 0.5.72 - Bloodlines Read-Only Account Meta UI` rendered it as a read-only account meta section. Keep this audit for richer future Bloodlines tree/presentation constraints, but do not treat its old `0.5.67` / `0.5.68` sequence numbers as current pipeline authority.
 
 ## Purpose
 

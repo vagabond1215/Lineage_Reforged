@@ -2,7 +2,9 @@
 
 Source version/run: Version 0.5.62 - Chronicles Bloodline Tree Presentation Plan
 Date: 2026-05-19
-Status: planning-only design document
+Status: partially consumed temporary guardrail
+
+0.5.73 cleanup note: the pure Bloodlines projection and first read-only account meta UI landed in `Version 0.5.71` and `Version 0.5.72`. Keep this plan for richer tree visualization, future hierarchy/detail rules, and Chronicle/Bloodlines boundaries; the old implementation sequence at the end is historical, not the current roadmap.
 
 ## Purpose
 

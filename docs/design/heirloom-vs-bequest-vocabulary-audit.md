@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only vocabulary and boundary audit; no runtime/source/UI changes
+Status: consumed but retained temporary checklist
+
+0.5.73 cleanup note: `Version 0.5.70 - Heirloom And Bequest Systems Plan` consumed and expanded this vocabulary audit, and durable vocabulary now also lives in `docs/design/future-system-design-ledger.md`. Keep this file only as a compact checklist for a later heirloom/bequest runtime-readiness cleanup; use the newer plan and ledger as authority when they disagree.
 
 ## Purpose
 

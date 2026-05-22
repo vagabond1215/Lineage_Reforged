@@ -2,7 +2,9 @@
 
 Source version/run: Version 0.5.70 - Heirloom And Bequest Systems Plan
 Date: 2026-05-21
-Status: planning-only design document
+Status: active planning guardrail for future heirloom/bequest runtime readiness
+
+0.5.73 cleanup note: keep this document as the active heirloom/bequest planning artifact. The 0.5.71/0.5.72 Bloodlines projection and read-only UI only display heirlooms and bequests as inactive future-system notes; no heirloom, bequest, item-instance, estate-transfer, Family Prestige spending, or heir behavior has been implemented.
 
 ## 1. Purpose And Scope
 
@@ -401,12 +403,12 @@ These questions do not block this planning-only document, but they should be ans
 
 ## 14. Temporary Guardrail Cleanup Decision
 
-Keep `docs/design/heirloom-vs-bequest-vocabulary-audit.md` for now. This new plan consumes and expands its guidance, but the audit remains useful as a compact vocabulary checklist until an implementation-readiness pass folds durable rules into `docs/design/future-system-design-ledger.md`.
+Keep `docs/design/heirloom-vs-bequest-vocabulary-audit.md` for now as a consumed compact checklist. This plan and `docs/design/future-system-design-ledger.md` are the authority if the older audit disagrees.
 
 Keep `docs/design/legacy-scope-bloodline-economy-plan.md` for now. It still carries broader Legacy/Bloodline/Family Prestige economy boundaries that extend beyond heirloom and bequest planning.
 
-Keep `docs/design/bloodlines-information-architecture-audit.md` for now. It remains the active source for a future Bloodlines view-model and read-only UI pass.
+Keep `docs/design/bloodlines-information-architecture-audit.md` for now as a partially consumed Bloodlines presentation guardrail. The pure projection and first read-only UI landed in 0.5.71/0.5.72, but richer tree/detail rules remain useful.
 
-Keep `docs/design/chronicles-bloodline-tree-presentation-plan.md` for now. It remains useful for tree presentation, Chronicles placement, and read-only Bloodlines UI sequencing.
+Keep `docs/design/chronicles-bloodline-tree-presentation-plan.md` for now. It remains useful for richer tree presentation, Chronicles placement, and future Bloodlines boundaries.
 
 This document becomes the active `0.5.70` heirloom/bequest planning artifact. After later implementation consumes it, fold durable vocabulary and owner rules into `docs/design/future-system-design-ledger.md`, update the roadmap/handoff as needed, and delete or retire obsolete temporary audit docs in a dedicated cleanup pass.

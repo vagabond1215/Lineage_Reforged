@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-05-21
+Last reviewed: 2026-05-22
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -17,8 +17,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.70 - Heirloom And Bequest Systems Plan`
-- Next recommended version: `Version 0.5.71 - Bloodlines View Model Implementation Plan`
+- Latest landed version: `Version 0.5.72 - Bloodlines Read-Only Account Meta UI`
+- Current cleanup version: `Version 0.5.73 - Bloodlines Handoff And Temporary Guardrail Cleanup`
+- Next recommended version: `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Current repo reality:
@@ -31,8 +32,11 @@ Current repo reality:
 - Higher-risk Backstory Legacy candidates remain locked, hidden, special, or deferred.
 - The creator does not infer or supply `familyId`; family/source-run/scoped Backstory Legacy evidence remains deferred.
 - Heirloom and bequest vocabulary/ownership boundaries are planned in `docs/design/heirloom-and-bequest-systems-plan.md`.
+- A pure read-only Bloodlines projection exists in `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`.
+- The account meta / launcher surface renders a read-only Bloodlines section beside Legacy and Chronicles.
+- Bloodlines currently presents explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
 - Family Prestige earning/spending behavior is not implemented yet.
-- Family tree UI, heirs, heirlooms, bequests, Chronicle Marks, and Lineage Seals remain deferred.
+- Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
 - Workspace-wide typecheck still has known pre-existing blockers; focused tests are the current confidence path.
 
 ## 2. Version-Band Maturity Model
@@ -64,8 +68,10 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.68` | Backstory Legacy Purchase Resolver Integration | Codex Local | Resolver caller integration | Landed. Owned account-scoped Backstory Legacy purchases now feed creator availability through the ownership helper. | Creator does not infer `familyId`; higher-risk and scoped evidence remains deferred. |
 | `0.5.69` | Backstory Legacy Creator Copy And Handoff Cleanup | Codex Local | Copy / docs / metadata cleanup | Landed. Aligned locked copy, policy metadata, handoff, and roadmap after 0.5.68. | No new Backstory Legacy behavior or content expansion. |
 | `0.5.70` | Heirloom And Bequest Systems Plan | Codex Local | Docs / planning | Landed. Created the active heirloom/bequest planning artifact. | Planning-only; no heirs, item-instance persistence, bequest runtime, UI, or spending behavior implemented. |
-| `0.5.71` | Bloodlines View Model Implementation Plan | Codex Local or Codex Plan Mode | View-model planning / pure projection | Next recommended step. Define pure Bloodlines projections before UI. | No React sprawl, family management, mutating behavior, spending, heir systems, bequests, heirlooms, or scoped Backstory evidence. |
-| `0.5.72+` | Bloodlines Read-Only Account Meta UI | Codex Local | Read-only UI | Follow-up only after the view-model plan or pure projection lands. | Read-only; no management actions, purchase execution, transfer, claim, spend, or resolver bypass. |
+| `0.5.71` | Bloodlines View Model Implementation Plan | Codex Local | View-model / pure projection | Landed. Added a pure read-only Bloodlines projection from current account family, ledger, unlock, and run-history data. | No mutation, family management, spending, heir systems, bequests, heirlooms, or scoped Backstory evidence. |
+| `0.5.72` | Bloodlines Read-Only Account Meta UI | Codex Local | Read-only UI | Landed. Rendered Bloodlines read-only in the account meta / launcher surface. | No management actions, purchase execution, transfer, claim, spend, or resolver bypass. |
+| `0.5.73` | Bloodlines Handoff And Temporary Guardrail Cleanup | Codex Local | Docs / continuity cleanup | Current cleanup. Align handoff, roadmap, continuity brief, design ledger, temporary guardrail status, backlog, and Codex output. | Docs-only; do not change source, UI, tests, schemas, content JSON, or generated output. |
+| `0.5.74` | Typecheck Script And Target Policy Cleanup | Codex Local | Tooling / validation cleanup | Next recommended step. Make typecheck commands honest and repeatable before more UI/view-model work. | Do not weaken strictness or mix with gameplay feature work. |
 
 ## 4. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -77,11 +83,11 @@ These connector-safe audit/planning passes have been completed or folded. They s
 | `0.5.65` Family Context Seam Plan | `docs/dev/current-gpt-handoff.md` immediate guardrails. |
 | Creator Terminology Drift Audit | `docs/design/future-system-design-ledger.md` durable vocabulary rules; `current-gpt-handoff.md` near-term cleanup note. |
 | Backlog Superseded-Ordering Cleanup Plan | `current-gpt-handoff.md` precedence rules; `future_content_backlog.md` remains historical. |
-| Typecheck Blocker Triage Plan | Folded into `current-gpt-handoff.md`; temporary plan file removed. |
+| Typecheck Blocker Triage Plan | `docs/dev/typecheck-blocker-triage-plan.md`; use for `0.5.74 - Typecheck Script And Target Policy Cleanup`. |
 | Future System Design Ledger Creation | `docs/design/future-system-design-ledger.md`. |
 | Development Guidance File Cleanup | Roadmap, current handoff, and continuity brief deconstruction. |
-| Bloodlines Information Architecture Audit | `docs/design/bloodlines-information-architecture-audit.md`; use for `0.5.71 - Bloodlines View Model Implementation Plan`. |
-| Heirloom vs Bequest Vocabulary Audit | `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; consumed by `docs/design/heirloom-and-bequest-systems-plan.md`, but keep as a compact checklist until later cleanup. |
+| Bloodlines Information Architecture Audit | `docs/design/bloodlines-information-architecture-audit.md`; partially consumed by `0.5.71` and `0.5.72`, keep for richer tree and future Bloodlines presentation constraints. |
+| Heirloom vs Bequest Vocabulary Audit | `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger, retained only as a compact checklist until inheritance-runtime readiness cleanup. |
 | Chronicle Run-End Summary Source Audit | `docs/design/chronicle-run-end-summary-source-audit.md`; use for future run-end summary planning. |
 | Combat Audit Scoping Pass | `docs/design/combat-audit-scoping-pass.md`; use before combat/equipment implementation. |
 | Magic Runtime Readiness Audit | `docs/design/magic-runtime-readiness-audit.md`; use before magic runtime/acquisition work. |
@@ -127,18 +133,17 @@ Do not let temporary guardrail files accumulate indefinitely.
 
 ## 5. Near-Term Roadmap After Current Pipeline
 
-These are likely candidates after `0.5.71`, subject to the current handoff at that time.
+These are likely candidates after `0.5.73`, subject to the current handoff at that time.
 
 | Candidate Version Band | Candidate Topic | Route | Work Type | Dependency / Note |
 | --- | --- | --- | --- | --- |
-| `0.5.72+` | Bloodlines read-only account meta UI | Codex Local | Read-only UI | Only after Bloodlines projection/view-model is stable. |
-| `0.5.72+` | Typecheck script and target policy cleanup | Codex Local | Tooling/config cleanup | Keep separate from feature work; do not weaken strictness. |
-| `0.5.72+` | Chronicle run-end summary view-model plan | GitHub Connector or Plan Mode | Planning | Use `chronicle-run-end-summary-source-audit.md`; map data sources before UI. |
-| `0.5.72+` | Combat / equipment mapping audit | GitHub Connector first, Codex Local later | Audit then focused fixes | Use `combat-audit-scoping-pass.md`; audit before touching math. |
-| `0.5.72+` | Known spell ownership plan | GitHub Connector or Plan Mode | Planning | Use `magic-runtime-readiness-audit.md`; no runtime magic until owners are explicit. |
-| `0.5.72+` | Economy price clarity view-model plan | GitHub Connector or Plan Mode | Planning | Use `economy-clarity-audit.md`; clarity before simulation changes. |
-| `0.5.72+` | Calendar climate popup view-model plan | GitHub Connector | UI IA | Use `calendar-climate-popup-ia-audit.md`; data-backed popup before effects. |
-| `0.5.72+` | Continuity brief maintenance | GitHub Connector | Docs-only | Keep strategic index short as other docs absorb detail. |
+| `0.5.74` | Typecheck script and target policy cleanup | Codex Local | Tooling/config cleanup | Keep separate from feature work; do not weaken strictness. |
+| `0.5.75+` | Chronicle run-end summary view-model plan | GitHub Connector or Plan Mode | Planning | Use `chronicle-run-end-summary-source-audit.md`; map data sources before UI or mutation. |
+| `0.5.75+` | Economy price clarity view-model plan | GitHub Connector or Plan Mode | Planning | Use `economy-clarity-audit.md`; clarity before simulation changes. |
+| `0.5.75+` | Calendar climate popup view-model plan | GitHub Connector | UI IA | Use `calendar-climate-popup-ia-audit.md`; data-backed popup before effects. |
+| `0.5.75+` | Combat / equipment mapping audit | GitHub Connector first, Codex Local later | Audit then focused fixes | Use `combat-audit-scoping-pass.md`; audit before touching math. |
+| `0.5.75+` | Known spell ownership plan | GitHub Connector or Plan Mode | Planning | Use `magic-runtime-readiness-audit.md`; no runtime magic until owners are explicit. |
+| `0.5.75+` | Bloodlines richer tree / future management planning | GitHub Connector or Plan Mode | Planning | Only after a dedicated prompt; no family management, heirs, heirlooms, bequests, spending, or scoped Backstory evidence by default. |
 
 ## 6. `v0.6.x` Runtime Ownership Transition
 

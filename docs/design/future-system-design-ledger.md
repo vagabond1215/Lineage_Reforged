@@ -251,6 +251,24 @@ Rules:
 - Categories are sorting/presentation tags unless future balancing proves separate currencies are needed.
 - Do not fragment currencies without a strong balancing reason.
 
+### Bloodlines Projection And Read-Only UI Rules
+
+Implemented baseline:
+
+- Bloodlines now has a pure read-only projection and a read-only account meta / launcher section.
+- The current Bloodlines section is informational only.
+- Current inputs are explicit family records, family-scoped Family Prestige transactions, family-scoped unlocks, and explicit run-history `familyId` links.
+- Family Prestige shown in Bloodlines is ledger-derived; current UI must not imply spending is available.
+
+Durable rules:
+
+- `lineageId` must not be treated as `familyId`.
+- `sourceRunId` must not create a family relation or parent/child relation by itself.
+- Missing roots, missing members, and partial tree data should be shown honestly rather than repaired by guesses.
+- Inactive heirloom, bequest, heir, family-management, and Family Prestige spending surfaces must remain non-actionable until runtime owners, validation, and tests exist.
+- Bloodlines UI must not create Backstory Eligibility evidence, call purchase/spend/claim/register/transfer commands, or bypass the creator resolver.
+- Future richer tree presentation should remain derived from current explicit owner data unless a later prompt implements a stronger family lifecycle owner.
+
 ## Family / Ancestry / Heir Criteria
 
 Desired future `Family` or `Ancestry` surface:

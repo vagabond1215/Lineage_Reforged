@@ -5,7 +5,7 @@ Keep the DOCX as the formatted human-readable copy. Prefer this Markdown file as
 
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-21 after `Version 0.5.70 - Heirloom And Bequest Systems Plan` landed.
+Updated 2026-05-22 after `Version 0.5.72 - Bloodlines Read-Only Account Meta UI` landed.
 
 ## Purpose
 
@@ -25,11 +25,11 @@ Older long-form material from the former continuity brief has been intentionally
 
 Latest exact Codex handoff:
 
-- `Version 0.5.70 - Heirloom And Bequest Systems Plan`
+- `Version 0.5.72 - Bloodlines Read-Only Account Meta UI`
 
 Next recommended version:
 
-- `Version 0.5.71 - Bloodlines View Model Implementation Plan`
+- `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
 
 Current phase:
 
@@ -45,7 +45,9 @@ Current implementation reality:
 - Family/source-run/region/institution/estate/title/heir/preparation-scoped Backstory Legacy evidence remains deferred.
 - Higher-risk Backstory Legacy candidates remain deferred.
 - Heirloom and bequest vocabulary/ownership boundaries are planned in `docs/design/heirloom-and-bequest-systems-plan.md`.
-- Family Prestige earning/spending behavior, Bloodlines UI, heirs, heirlooms, bequests, Chronicle Marks, and Lineage Seals remain deferred.
+- The Bloodlines projection and read-only account meta UI have landed.
+- Bloodlines currently shows explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
+- No Bloodlines mutation path, family management, Family Prestige earning/spending behavior, heirs, heirlooms, bequests, Chronicle Marks, Lineage Seals, scoped Backstory evidence, or generated output was added.
 
 For exact current implementation state, inspect `docs/dev/current-codex-output.md` first. For current prompt guardrails, inspect `docs/dev/current-gpt-handoff.md` next. For version order, inspect `docs/dev/project-roadmap.md`.
 
@@ -102,10 +104,10 @@ Keep the active implementation pipeline aligned with the current roadmap unless 
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.71` | Bloodlines View Model Implementation Plan | Define pure projections of family records, trees, prestige summaries, unlock summaries, account history, and safe inactive inheritance surfaces. | View-model first; no React sprawl, family management, mutating behavior, spending, bequest/heirloom runtime, or scoped Backstory evidence. |
-| `0.5.72+` | Bloodlines Read-Only Account Meta UI | Render Bloodlines in the account meta / Chronicles surface. | Read-only; no family management, purchase execution, transfer, claim, spend, register, or resolver bypass. |
-| `0.5.72+` | Typecheck Script And Target Policy Cleanup | Clarify root/app typecheck targets without weakening strictness. | Keep separate from feature work; do not suppress strictness globally. |
-| `0.5.72+` | Chronicle / Economy / Calendar / Combat / Magic Planning Passes | Use the existing focused audit docs before implementation. | Audit first; do not broaden into runtime math, economy simulation, or magic acquisition. |
+| `0.5.73` | Bloodlines Handoff And Temporary Guardrail Cleanup | Align current handoff, roadmap, brief, design ledger, and guardrail status after the Bloodlines read-only UI landed. | Docs-only; do not change source, UI, tests, schemas, content JSON, or generated output. |
+| `0.5.74` | Typecheck Script And Target Policy Cleanup | Clarify root/app typecheck targets without weakening strictness. | Keep separate from feature work; do not suppress strictness globally. |
+| `0.5.75+` | Chronicle Run-End Summary View Model Plan | Map current run-ending data into a future read-only impact summary before UI or mutation. | View-model/source map first; do not change payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, or generated output. |
+| `0.5.75+` | Economy / Calendar / Combat / Magic Planning Passes | Use the existing focused audit docs before implementation. | Audit first; do not broaden into runtime math, economy simulation, or magic acquisition. |
 
 For version-band meaning and post-pipeline candidates, use `docs/dev/project-roadmap.md`.
 
@@ -150,10 +152,9 @@ Do not scatter these into unrelated patches. Use the roadmap and handoff to sequ
 
 Near-term and high-value tracks:
 
-- Bloodlines view model and read-only presentation.
 - Typecheck script and target policy cleanup.
-- Combat/equipment audit before broad combat edits.
 - Run-end / Chronicle impact summary.
+- Combat/equipment audit before broad combat edits.
 - Difficulty and starting season creator page after creator scope stabilizes.
 - Calendar/climate popup.
 - Magic runtime readiness audit before runtime magic expansion.

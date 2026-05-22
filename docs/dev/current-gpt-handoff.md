@@ -1,7 +1,7 @@
 # Current GPT Handoff
 
-Source route: GitHub Connector continuity alignment after Codex 0.5.70
-Date: 2026-05-21
+Source route: Codex continuity alignment after `Version 0.5.72 - Bloodlines Read-Only Account Meta UI`
+Date: 2026-05-22
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
 ## Purpose
@@ -15,20 +15,22 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/design/future-system-design-ledger.md` owns durable system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
-- Focused `docs/design/` guardrail docs remain temporary; delete or fold them after their guidance is implemented, superseded, or promoted.
+- Focused `docs/design/` guardrail docs are temporary. Keep, mark consumed, fold, or delete them when a cleanup pass consumes their guidance.
 
 ## Current Anchor
 
-Latest Codex handoff:
+Latest landed Codex version:
 
-- `Version 0.5.70 - Heirloom And Bequest Systems Plan`
+- `Version 0.5.72 - Bloodlines Read-Only Account Meta UI`
 
-0.5.70 result:
+Recent results:
 
-- Created `docs/design/heirloom-and-bequest-systems-plan.md` as the active planning-only heirloom/bequest design artifact.
-- Separated Bloodline upgrades, bequests, heirlooms, estate assets, Family Prestige, Chronicle Marks, Lineage Seals, and Backstory support.
-- Confirmed no runtime source, schemas, tests, content JSON, UI, generated output, Backstory Eligibility behavior, Family Prestige behavior, heirloom runtime, or bequest runtime changed.
-- Added a concise backlog note.
+- `0.5.71` added the pure, read-only Bloodlines projection in `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`.
+- `0.5.72` rendered that projection read-only in the account meta / launcher surface.
+- Bloodlines now appears beside Legacy and Chronicles.
+- The Bloodlines slice has projection plus read-only UI landed.
+- The UI displays explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
+- No mutation path, command id, button, purchase/spend/claim/register/transfer action, family management behavior, Backstory Eligibility evidence, or deferred runtime system was added.
 
 Previously landed Backstory Legacy slice:
 
@@ -46,6 +48,15 @@ Live low-risk Backstory Legacy records:
 
 ## Guardrails Still Active
 
+Bloodlines:
+
+- Future Bloodlines work must stay owner-aware.
+- Do not infer `familyId` from `lineageId`, `sourceRunId`, account id, selected character, selected backstory, or UI state.
+- `sourceRunId` may be displayed as context, but it must not create a family or parent relation by itself.
+- Family Prestige is ledger-derived and read-only in current UI.
+- Do not add family management, Family Prestige earning/spending, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, or scoped Backstory evidence without an explicit prompt and owner plan.
+- Bloodlines UI must not create Backstory Eligibility evidence or bypass the creator resolver.
+
 Backstory / Legacy:
 
 - Future Backstory Legacy records must describe formative-past access, not current employment, current social identity, family history proof, institution membership, title/status ownership, contacts, items, coin, skills, magic, authority, or live obligations.
@@ -60,58 +71,38 @@ Heirloom / bequest:
 - Bequests are intentional material, estate, legal, household, or claim-based transfers; they do not grant Bloodline traits or Backstory identity.
 - Heirlooms require one persistent item instance with an ownership chain; they are not duplicated starter gear.
 - Family Prestige may later fund registration, transfer, or support costs, but it is not proof of the item, transfer, estate asset, or effect.
-- No heirlooms, bequests, item-instance persistence, estate delivery, Family Prestige spending, Chronicle Marks, Lineage Seals, heir systems, or Bloodlines UI exist yet.
+- No heirlooms, bequests, item-instance persistence, estate delivery, Family Prestige spending, Chronicle Marks, Lineage Seals, heir systems, or family management behavior exists yet.
 
 ## Temporary Guardrail Docs
 
-Keep these while related future planning is active:
+Current status:
 
-- `docs/design/heirloom-and-bequest-systems-plan.md`
-- `docs/design/heirloom-vs-bequest-vocabulary-audit.md`
-- `docs/design/legacy-scope-bloodline-economy-plan.md`
-- `docs/design/bloodlines-information-architecture-audit.md`
-- `docs/design/chronicles-bloodline-tree-presentation-plan.md`
-- `docs/design/backstory-legacy-purchase-content-draft.json`
-- `docs/design/backstory-legacy-purchase-integration-plan.md`
-- `docs/design/backstory-evidence-ownership-plan.md`
-- `docs/dev/prompt-template-hardening-pass.md`
-
-The low-risk account-scoped Backstory Legacy slice and the 0.5.70 heirloom/bequest plan are no longer the active implementation target. Future work should move to the roadmap sequence unless a newer Codex handoff supersedes it.
+- `docs/design/bloodlines-information-architecture-audit.md` - partially consumed by `0.5.71` and `0.5.72`; keep for future richer tree/Bloodlines presentation constraints.
+- `docs/design/chronicles-bloodline-tree-presentation-plan.md` - partially consumed by read-only UI; keep for richer tree presentation, hierarchy, and Chronicle/Bloodlines boundaries.
+- `docs/design/heirloom-and-bequest-systems-plan.md` - keep as the active heirloom/bequest planning artifact.
+- `docs/design/legacy-scope-bloodline-economy-plan.md` - keep for Family Prestige, scoped evidence, Chronicle Marks, Lineage Seals, and economy boundary rules.
+- `docs/design/heirloom-vs-bequest-vocabulary-audit.md` - consumed by the heirloom/bequest plan and ledger, but retained as a compact checklist until a later inheritance-runtime readiness pass retires it.
+- `docs/design/backstory-legacy-purchase-content-draft.json`, `docs/design/backstory-legacy-purchase-integration-plan.md`, and `docs/design/backstory-evidence-ownership-plan.md` remain useful for deferred scoped Backstory Legacy evidence.
+- `docs/dev/prompt-template-hardening-pass.md` remains useful for generating future narrow prompts.
 
 ## Next Direction
 
-Recommended next version:
+Choose the next version from `docs/dev/project-roadmap.md` after this cleanup.
 
-- `Version 0.5.71 - Bloodlines View Model Implementation Plan`
+Recommended immediate next version:
 
-Expected direction:
+- `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
 
-- Define a pure, read-only Bloodlines projection before UI.
-- Use current account/family/run-history data only.
-- Include family records, family tree summaries, Family Prestige summaries, family unlock summaries, estate/bequest/heirloom inactive summaries if useful, and safe empty states.
-- Do not add React UI, family management, purchase/spend/register/claim/transfer actions, heir systems, heirlooms, bequests, item-instance persistence, Family Prestige spending, scoped Backstory evidence, or generated output.
+Why:
 
-## Next Prompt Source Stack
+- It is a small foundation-stabilization pass before more UI/view-model work.
+- It keeps known broad typecheck blockers separate from gameplay features.
+- It should make validation targets clearer without weakening strictness.
 
-For the `0.5.71` prompt, inspect these first:
+Use `docs/dev/typecheck-blocker-triage-plan.md` as the source plan for that pass.
 
-- `AGENTS.md`
-- `README.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/design/future-system-design-ledger.md`
-- `docs/design/bloodlines-information-architecture-audit.md`
-- `docs/design/chronicles-bloodline-tree-presentation-plan.md`
-- `docs/design/heirloom-and-bequest-systems-plan.md`
-- `docs/design/legacy-scope-bloodline-economy-plan.md`
-- `docs/future_content_backlog.md`
-- `packages/shared/types/src/contracts.ts`
-- `packages/engines/game-engine/src/account-family.ts`
-- `packages/engines/game-engine/src/legacy-account.ts`
-- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
-- `apps/rpg-ui/src/game-shell/accountProfileManager.ts`
-- relevant account family/profile tests
+After that, the best owner-aware feature-planning candidate is likely:
 
-The expected output should be a plan or pure view-model implementation prompt, depending on user instruction. Do not write runtime source, schemas, content JSON, UI, tests, generated output, or `docs/dev/current-codex-output.md` unless this becomes an actual Codex run.
+- `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+
+Use `docs/design/chronicle-run-end-summary-source-audit.md` for that later pass. Do not broaden into runtime payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines behavior, or generated UI output.
