@@ -7,11 +7,12 @@ This roadmap is a repo-readable planning document for long-term version directio
 - `AGENTS.md` for repository rules, version-label discipline, and tool routing.
 - `docs/dev/current-codex-output.md` for the latest exact Codex implementation handoff.
 - `docs/dev/current-gpt-handoff.md` for current connector-side audits, immediate risks, and prompt guardrails.
+- `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue after the current handoff.
 - `docs/design/future-system-design-ledger.md` for durable future-system criteria, vocabulary, boundaries, and open conceptual questions.
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic north star and source map until the brief is fully decomposed.
 - `docs/future_content_backlog.md` for deferred content and historical run notes.
 
-The current Codex handoff controls exact current version state. The current GPT handoff controls immediate connector-side guardrails. This roadmap controls version order, maturity bands, playability checkpoints, and lightweight audit/source indexing. The design ledger controls durable conceptual criteria.
+The current Codex handoff controls exact current version state. The current GPT handoff controls immediate connector-side guardrails. This roadmap controls version order, maturity bands, playability checkpoints, and lightweight audit/source indexing. The sequenced implementation plan gives Codex a concrete ordered queue. The design ledger controls durable conceptual criteria.
 
 ## 1. Current Anchor
 
@@ -20,6 +21,7 @@ Current live anchor:
 - Latest landed version: `Version 0.5.72 - Bloodlines Read-Only Account Meta UI`
 - Current cleanup version: `Version 0.5.73 - Bloodlines Handoff And Temporary Guardrail Cleanup`
 - Next recommended version: `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
+- Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Current repo reality:
@@ -73,28 +75,40 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.73` | Bloodlines Handoff And Temporary Guardrail Cleanup | Codex Local | Docs / continuity cleanup | Current cleanup. Align handoff, roadmap, continuity brief, design ledger, temporary guardrail status, backlog, and Codex output. | Docs-only; do not change source, UI, tests, schemas, content JSON, or generated output. |
 | `0.5.74` | Typecheck Script And Target Policy Cleanup | Codex Local | Tooling / validation cleanup | Next recommended step. Make typecheck commands honest and repeatable before more UI/view-model work. | Do not weaken strictness or mix with gameplay feature work. |
 
-## 4. Lightweight GPT + GitHub Connector Audit / Planning Queue
+## 4. Sequenced Near-Term Codex Queue
 
-These connector-safe audit/planning passes have been completed or folded. They should not update `docs/dev/current-codex-output.md` unless they become actual Codex runs later.
+Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for the ordered near-term queue after the current handoff. Summary:
+
+| Order | Version | Topic | Primary Source |
+| ---: | --- | --- | --- |
+| 1 | `0.5.74` | Typecheck Script And Target Policy Cleanup | `docs/dev/typecheck-blocker-triage-plan.md` |
+| 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | `docs/design/chronicle-run-end-summary-view-model-plan.md` |
+| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` |
+| 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `docs/design/chronicle-run-end-summary-view-model-plan.md` |
+| 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` |
+| 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` |
+| 7 | `0.5.80` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` |
+| 8 | `0.5.81` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` |
+| 9 | `0.5.82` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` |
+| 10 | `0.5.83` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` |
+
+Do not skip planning-to-projection-to-UI stages unless a newer handoff or user instruction explicitly changes the order.
+
+## 5. Lightweight GPT + GitHub Connector Audit / Planning Queue
+
+These connector-safe audit/planning passes have been completed, folded, or promoted into source plans. They should not update `docs/dev/current-codex-output.md` unless they become actual Codex runs later.
 
 | Pass | Current location of useful guidance |
 | --- | --- |
-| `0.5.64` Content Exposure Audit | `docs/dev/current-gpt-handoff.md` immediate guardrails. |
-| `0.5.65` Family Context Seam Plan | `docs/dev/current-gpt-handoff.md` immediate guardrails. |
-| Creator Terminology Drift Audit | `docs/design/future-system-design-ledger.md` durable vocabulary rules; `current-gpt-handoff.md` near-term cleanup note. |
-| Backlog Superseded-Ordering Cleanup Plan | `current-gpt-handoff.md` precedence rules; `future_content_backlog.md` remains historical. |
-| Typecheck Blocker Triage Plan | `docs/dev/typecheck-blocker-triage-plan.md`; use for `0.5.74 - Typecheck Script And Target Policy Cleanup`. |
-| Future System Design Ledger Creation | `docs/design/future-system-design-ledger.md`. |
-| Development Guidance File Cleanup | Roadmap, current handoff, and continuity brief deconstruction. |
-| Bloodlines Information Architecture Audit | `docs/design/bloodlines-information-architecture-audit.md`; partially consumed by `0.5.71` and `0.5.72`, keep for richer tree and future Bloodlines presentation constraints. |
-| Heirloom vs Bequest Vocabulary Audit | `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger, retained only as a compact checklist until inheritance-runtime readiness cleanup. |
-| Chronicle Run-End Summary Source Audit | `docs/design/chronicle-run-end-summary-source-audit.md`; use for future run-end summary planning. |
-| Combat Audit Scoping Pass | `docs/design/combat-audit-scoping-pass.md`; use before combat/equipment implementation. |
-| Magic Runtime Readiness Audit | `docs/design/magic-runtime-readiness-audit.md`; use before magic runtime/acquisition work. |
-| Economy Clarity Audit | `docs/design/economy-clarity-audit.md`; use before market/trade clarity UI work. |
-| Calendar / Climate Popup IA Audit | `docs/design/calendar-climate-popup-ia-audit.md`; use before calendar/climate UI work. |
+| Typecheck Blocker Triage Plan | `docs/dev/typecheck-blocker-triage-plan.md`; use for `0.5.74`. |
+| Chronicle Run-End Summary Source Audit | Promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`; use for `0.5.75`-`0.5.77`. |
+| Economy Clarity Audit | Promoted into `docs/design/economy-price-clarity-view-model-plan.md`; use for `0.5.78`-`0.5.79`. |
+| Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; use for `0.5.80`-`0.5.81`. |
+| Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; use for `0.5.82`. |
+| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.83`. |
+| Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
+| Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
-| Roadmap Maintenance Pass | This update. |
 
 ### Connector Pass Rules
 
@@ -130,20 +144,6 @@ After the relevant Codex or planning run consumes it, do one of the following in
 - fold chronological deferral/run-note material into `docs/future_content_backlog.md`.
 
 Do not let temporary guardrail files accumulate indefinitely.
-
-## 5. Near-Term Roadmap After Current Pipeline
-
-These are likely candidates after `0.5.73`, subject to the current handoff at that time.
-
-| Candidate Version Band | Candidate Topic | Route | Work Type | Dependency / Note |
-| --- | --- | --- | --- | --- |
-| `0.5.74` | Typecheck script and target policy cleanup | Codex Local | Tooling/config cleanup | Keep separate from feature work; do not weaken strictness. |
-| `0.5.75+` | Chronicle run-end summary view-model plan | GitHub Connector or Plan Mode | Planning | Use `chronicle-run-end-summary-source-audit.md`; map data sources before UI or mutation. |
-| `0.5.75+` | Economy price clarity view-model plan | GitHub Connector or Plan Mode | Planning | Use `economy-clarity-audit.md`; clarity before simulation changes. |
-| `0.5.75+` | Calendar climate popup view-model plan | GitHub Connector | UI IA | Use `calendar-climate-popup-ia-audit.md`; data-backed popup before effects. |
-| `0.5.75+` | Combat / equipment mapping audit | GitHub Connector first, Codex Local later | Audit then focused fixes | Use `combat-audit-scoping-pass.md`; audit before touching math. |
-| `0.5.75+` | Known spell ownership plan | GitHub Connector or Plan Mode | Planning | Use `magic-runtime-readiness-audit.md`; no runtime magic until owners are explicit. |
-| `0.5.75+` | Bloodlines richer tree / future management planning | GitHub Connector or Plan Mode | Planning | Only after a dedicated prompt; no family management, heirs, heirlooms, bequests, spending, or scoped Backstory evidence by default. |
 
 ## 6. `v0.6.x` Runtime Ownership Transition
 
