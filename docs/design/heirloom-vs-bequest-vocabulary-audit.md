@@ -6,7 +6,7 @@ Status: connector-only vocabulary and boundary audit; no runtime/source/UI chang
 
 ## Purpose
 
-This audit reduces terminology and ownership risk before `Version 0.5.66 - Heirloom And Bequest Systems Plan`.
+This audit reduces terminology and ownership risk before `Version 0.5.70 - Heirloom And Bequest Systems Plan`.
 
 It defines strict vocabulary boundaries between:
 
@@ -32,6 +32,21 @@ This document does not:
 - edit runtime/source/UI files
 - update generated UI output
 - update `docs/dev/current-codex-output.md`
+
+## 0.5.70 Planning Checklist
+
+Use this checklist before generating or running `Version 0.5.70 - Heirloom And Bequest Systems Plan`:
+
+- Confirm the output is planning-only unless the user explicitly scopes implementation.
+- Inspect `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/project-roadmap.md`, `docs/design/future-system-design-ledger.md`, this audit, and `docs/design/legacy-scope-bloodline-economy-plan.md` first.
+- Separate Bloodline upgrades, Bequests, Heirlooms, Estate assets, Family Prestige spending, Chronicle Marks, Lineage Seals, and Backstory support into distinct owners.
+- Produce a data-owner map before proposing any runtime shape.
+- Preserve the rule that bequests and heirlooms do not grant Backstory identity by themselves.
+- Preserve the rule that heirlooms require one persistent item instance, not duplicated starter gear.
+- Preserve the rule that bequests require an estate/material/legal transfer owner.
+- Keep Family Prestige spending conceptual unless a later implementation pass owns spending, ledger effects, and validation.
+- Do not add heir systems, heir slots, item persistence, estate delivery, bequest claims, heirloom registration, UI buttons, or generated output.
+- End the plan with a proposed implementation sequence and tests required before any future mutating behavior.
 
 ## Sources Inspected
 
@@ -394,9 +409,9 @@ Bloodlines
 
 Do not merge Bequests and Heirlooms into one panel once both become meaningful; they answer different player questions.
 
-## `0.5.66` Recommended Scope
+## `0.5.70` Recommended Scope
 
-`Version 0.5.66 - Heirloom And Bequest Systems Plan` should be planning-only unless explicitly re-scoped.
+`Version 0.5.70 - Heirloom And Bequest Systems Plan` should be planning-only unless explicitly re-scoped.
 
 Recommended output:
 
@@ -460,7 +475,7 @@ When implementation eventually begins, tests should prove:
 
 ## Open Questions For User
 
-These do not block a planning-only `0.5.66`, but should be answered before implementation:
+These do not block a planning-only `0.5.70`, but should be answered before implementation:
 
 1. Should bequests be limited to family/heir contexts only, or can some account-level estate bequests support unrelated future characters through Chronicle mechanics?
 2. Should heirlooms always require a family line, or can a non-family Chronicle heirloom exist later?
@@ -470,10 +485,10 @@ These do not block a planning-only `0.5.66`, but should be answered before imple
 
 ## Recommended Next Prompt Target
 
-Use this when `0.5.66` becomes active:
+Use this when `0.5.70` becomes active:
 
 ```text
-Version 0.5.66 - Heirloom And Bequest Systems Plan
+Version 0.5.70 - Heirloom And Bequest Systems Plan
 
 Use docs/design/heirloom-vs-bequest-vocabulary-audit.md as the vocabulary source.
 Create a planning-only design document that separates bequests, heirlooms, Bloodline upgrades, Estate assets, Family Prestige spending, Chronicle Marks, Lineage Seals, and Backstory support.
