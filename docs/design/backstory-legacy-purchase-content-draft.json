@@ -1,22 +1,31 @@
 {
   "schemaVersion": 1,
   "sourceVersion": "Version 0.5.64 - Backstory Legacy Purchase Content Draft",
-  "status": "draft_only_non_runtime",
+  "status": "partially_migrated_planning_reference",
   "runtimeImportAllowed": false,
   "contentIntent": "future_backstory_legacy_purchase_candidates",
+  "migratedCandidateIds": [
+    "legacy.backstory.street_vendor",
+    "legacy.backstory.net_tender",
+    "legacy.backstory.gatherer",
+    "legacy.backstory.scribes_apprentice",
+    "legacy.backstory.kitchen_hand"
+  ],
   "notes": [
-    "This file is a draft-only planning catalog and is not imported by the Legacy runtime, account meta UI, Backstory Eligibility resolver, or character creator.",
+    "This file is a planning reference and is not imported by the Legacy runtime, account meta UI, Backstory Eligibility resolver, or character creator.",
+    "The five low-risk account-scoped records in this file were migrated into live Legacy content in Version 0.5.67 and wired into creator availability in Version 0.5.68.",
+    "Do not re-migrate the five low-risk records from this file; inspect packages/content/base/player/legacy_unlocks.json for their current live content shape.",
     "Backstory records describe formative past conditions that shaped the new character; they are not current job titles, current social identities, owned status, present employment, or present obligations.",
-    "Records in this file are future eligibility support concepts only. They grant no starter skills, attributes, abilities, items, coin, contacts, market effects, family history, social status, magic access, mounts, medical effects, oath behavior, estate ownership, or institution membership.",
+    "Records and deferred ids in this file are future eligibility support concepts only. They grant no starter skills, attributes, abilities, items, coin, contacts, market effects, family history, social status, magic access, mounts, medical effects, oath behavior, estate ownership, or institution membership.",
     "Record names and playerFacingSummary fields should remain suitable for future player-facing display by describing past shaping experience only. implementationSummary and guardrails are internal Codex/design guidance and are not player-facing copy.",
-    "A later implementation pass must migrate approved records into runtime-owned Legacy content with explicit visibility, purchase, scope, storage, resolver, and UI tests before any record can become live."
+    "A later implementation pass may use the intentionallyDeferredCandidateIds list only after the required owner systems, scoped storage, visibility guards, resolver evidence, and UI tests exist."
   ],
   "records": [
     {
       "id": "legacy.backstory.street_vendor",
       "targetBackstoryId": "backstory.street_vendor",
       "name": "Market-Learned Habits",
-      "status": "draft_only_non_runtime",
+      "status": "migrated_live_account_scoped",
       "tier": "tier_1",
       "scopeIntent": "account",
       "purchaseIntent": "early_legacy_access_support_only",
@@ -24,7 +33,7 @@
       "evidenceRole": "legacy_purchase_support",
       "effectIntent": "none",
       "playerFacingSummary": "Crowded market lanes, stall work, bargaining, and errand running shaped your practical sense of value and attention.",
-      "implementationSummary": "Draft-only internal candidate preserving possible future access to a formative market-labor background.",
+      "implementationSummary": "Migrated live in Version 0.5.67 as account-scoped formative market-labor background access support.",
       "guardrails": [
         "Represents formative past experience only; does not make the new character currently employed, socially recognized, contracted, or obligated as a vendor.",
         "Does not grant discounts, contacts, passive income, business ownership, extra coin, or inventory.",
@@ -36,7 +45,7 @@
       "id": "legacy.backstory.net_tender",
       "targetBackstoryId": "backstory.net_tender",
       "name": "Water-Work Lessons",
-      "status": "draft_only_non_runtime",
+      "status": "migrated_live_account_scoped",
       "tier": "tier_1",
       "scopeIntent": "account",
       "purchaseIntent": "early_legacy_access_support_only",
@@ -44,7 +53,7 @@
       "evidenceRole": "legacy_purchase_support",
       "effectIntent": "none",
       "playerFacingSummary": "Nets, wet rope, weather, fish handling, and patient shoreline labor shaped your respect for water and routine.",
-      "implementationSummary": "Draft-only internal candidate preserving possible future access to a formative water-work background.",
+      "implementationSummary": "Migrated live in Version 0.5.67 as account-scoped formative water-work background access support.",
       "guardrails": [
         "Represents formative past experience only; does not make the new character currently employed, socially recognized, contracted, or obligated as a net-tender.",
         "Does not grant boats, cargo behavior, route authority, fish generation, or water-trade access.",
@@ -56,7 +65,7 @@
       "id": "legacy.backstory.gatherer",
       "targetBackstoryId": "backstory.gatherer",
       "name": "Field-Gathering Habits",
-      "status": "draft_only_non_runtime",
+      "status": "migrated_live_account_scoped",
       "tier": "tier_1",
       "scopeIntent": "account",
       "purchaseIntent": "early_legacy_access_support_only",
@@ -64,7 +73,7 @@
       "evidenceRole": "legacy_purchase_support",
       "effectIntent": "none",
       "playerFacingSummary": "Field collection, path memory, useful plants, and cautious foraging shaped your patience and practical survival habits.",
-      "implementationSummary": "Draft-only internal candidate preserving possible future access to a formative field-gathering background.",
+      "implementationSummary": "Migrated live in Version 0.5.67 as account-scoped formative field-gathering background access support.",
       "guardrails": [
         "Represents formative past experience only; does not make the new character currently employed, socially recognized, contracted, or obligated as a gatherer.",
         "Does not generate items, herbs, food, alchemy access, healing effects, or resource claims.",
@@ -76,7 +85,7 @@
       "id": "legacy.backstory.scribes_apprentice",
       "targetBackstoryId": "backstory.scribes_apprentice",
       "name": "Records-Room Training",
-      "status": "draft_only_non_runtime",
+      "status": "migrated_live_account_scoped",
       "tier": "tier_1",
       "scopeIntent": "account",
       "purchaseIntent": "early_legacy_access_support_only",
@@ -84,7 +93,7 @@
       "evidenceRole": "legacy_purchase_support",
       "effectIntent": "none",
       "playerFacingSummary": "Copying, ledgers, corrections, and administrative patience shaped your habits of memory, accuracy, and record work.",
-      "implementationSummary": "Draft-only internal candidate preserving possible future access to a formative records-room background.",
+      "implementationSummary": "Migrated live in Version 0.5.67 as account-scoped formative records-room background access support.",
       "guardrails": [
         "Represents formative past experience only; does not make the new character currently employed, socially recognized, contracted, or obligated as a scribe.",
         "Does not grant scholar institution membership, arcane privilege, magic access, legal office, or authority.",
@@ -96,7 +105,7 @@
       "id": "legacy.backstory.kitchen_hand",
       "targetBackstoryId": "backstory.kitchen_hand",
       "name": "Kitchen-Service Discipline",
-      "status": "draft_only_non_runtime",
+      "status": "migrated_live_account_scoped",
       "tier": "tier_1",
       "scopeIntent": "account",
       "purchaseIntent": "early_legacy_access_support_only",
@@ -104,7 +113,7 @@
       "evidenceRole": "legacy_purchase_support",
       "effectIntent": "none",
       "playerFacingSummary": "Stores, fires, preparation, cleaning, and service rhythms shaped your discipline, timing, and respect for feeding others.",
-      "implementationSummary": "Draft-only internal candidate preserving possible future access to a formative kitchen-service background.",
+      "implementationSummary": "Migrated live in Version 0.5.67 as account-scoped formative kitchen-service background access support.",
       "guardrails": [
         "Represents formative past experience only; does not make the new character currently employed, socially recognized, contracted, or obligated as a kitchen hand.",
         "Does not grant inn ownership, chef mastery, contacts, free food, supplies, market effects, or hospitality income.",
