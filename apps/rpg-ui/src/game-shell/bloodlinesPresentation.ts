@@ -377,7 +377,7 @@ export function buildBloodlinesViewModel(
     hasFamilies: families.length > 0,
     emptyLabel: families.length > 0 ? null : "No Bloodline records yet.",
     noteLabel:
-      "Bloodlines summarize explicit family records, family-ledger Prestige, family unlocks, and linked run history.",
+      "Bloodlines summarize explicit family records, Family Prestige ledger totals, family unlocks, and linked run history.",
     summaryStats: [
       {
         id: "families",

@@ -317,6 +317,12 @@ export function MainMenuScreen({
                 onSelect: () => onActiveSectionChange('chronicles')
               },
               {
+                id: 'bloodlines',
+                label: 'Bloodlines',
+                active: activeSection === 'bloodlines',
+                onSelect: () => onActiveSectionChange('bloodlines')
+              },
+              {
                 id: 'settings',
                 label: 'Settings',
                 onSelect: onOpenSettings

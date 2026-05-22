@@ -498,6 +498,11 @@ export function SettingsScreen({
               onSelect: () => onOpenLauncherSection('chronicles')
             },
             {
+              id: 'bloodlines',
+              label: 'Bloodlines',
+              onSelect: () => onOpenLauncherSection('bloodlines')
+            },
+            {
               id: 'settings',
               label: 'Settings',
               active: true

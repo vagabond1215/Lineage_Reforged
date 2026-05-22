@@ -798,6 +798,10 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
     new URL("../../apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx", import.meta.url),
     "utf8"
   );
+  const bloodlinesPresentationSource = readFileSync(
+    new URL("../../apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts", import.meta.url),
+    "utf8"
+  );
   const characterCreationSource = readFileSync(
     new URL(
       "../../apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx",
@@ -931,6 +935,7 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.doesNotMatch(mainMenuSource, /Open settings/);
   assert.doesNotMatch(mainMenuSource, /Signed In/);
   assert.match(mainMenuSource, /activeSection=\{activeSection\}/);
+  assert.match(mainMenuSource, /onActiveSectionChange\('bloodlines'\)/);
   assert.match(mainMenuSource, /onPurchaseLegacyUnlock/);
   assert.match(mainMenuSource, /onPurchaseUnlock=\{onPurchaseLegacyUnlock\}/);
   assert.match(mainMenuSource, /onSelectLegacyPreparation/);
@@ -974,6 +979,7 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(settingsSource, /onOpenLauncherSection\('characters'\)/);
   assert.match(settingsSource, /onOpenLauncherSection\('legacy'\)/);
   assert.match(settingsSource, /onOpenLauncherSection\('chronicles'\)/);
+  assert.match(settingsSource, /onOpenLauncherSection\('bloodlines'\)/);
   assert.doesNotMatch(settingsSource, /LegacyLedgerCard/);
   assert.doesNotMatch(settingsSource, /ChroniclesCard/);
   assert.doesNotMatch(settingsSource, /Launcher Notes/);
@@ -1003,6 +1009,7 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(accountMetaSource, /frameless = false/);
   assert.match(accountMetaSource, /Legacy/);
   assert.match(accountMetaSource, /Chronicles/);
+  assert.match(accountMetaSource, /Bloodlines/);
   assert.match(accountMetaSource, /Current Prestige/);
   assert.match(accountMetaSource, /Lifetime Prestige/);
   assert.match(accountMetaSource, /onPurchaseUnlock\?: \(\(unlockId: string\) => void\) \| undefined/);
@@ -1027,10 +1034,33 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(accountMetaSource, /selectedChronicleFilter/);
   assert.match(accountMetaSource, /filteredChronicleTiles/);
   assert.match(accountMetaSource, /lineageCueLabels\.map/);
+  assert.match(accountMetaSource, /buildBloodlinesViewModel/);
+  assert.match(accountMetaSource, /BloodlinesContent/);
+  assert.match(accountMetaSource, /BloodlinesFamilyCard/);
+  assert.match(accountMetaSource, /bloodlines\.summaryStats\.map/);
+  assert.match(accountMetaSource, /bloodlines\.families\.map/);
+  assert.match(accountMetaSource, /Family Prestige/);
+  assert.match(accountMetaSource, /Linked Run Summary/);
+  assert.match(accountMetaSource, /Future Systems/);
+  assert.match(accountMetaSource, /section\.stateLabel/);
   assert.doesNotMatch(accountMetaSource, /Claim Estate/);
   assert.doesNotMatch(accountMetaSource, /Withdraw Estate/);
   assert.doesNotMatch(accountMetaSource, /Purchase wiring pending/);
-  assert.doesNotMatch(accountMetaSource, /Heirs/);
+  assert.match(bloodlinesPresentationSource, /Heirs/);
+  assert.match(bloodlinesPresentationSource, /Heirlooms/);
+  assert.match(bloodlinesPresentationSource, /Bequests/);
+  assert.match(bloodlinesPresentationSource, /Family Management/);
+  assert.match(bloodlinesPresentationSource, /Family Prestige Spending/);
+  assert.doesNotMatch(accountMetaSource, /Create heir/);
+  assert.doesNotMatch(accountMetaSource, /Register heirloom/);
+  assert.doesNotMatch(accountMetaSource, /Claim bequest/);
+  assert.doesNotMatch(accountMetaSource, /Spend Family Prestige/);
+  assert.doesNotMatch(accountMetaSource, /Transfer assets/);
+  assert.doesNotMatch(bloodlinesPresentationSource, /Create heir/);
+  assert.doesNotMatch(bloodlinesPresentationSource, /Register heirloom/);
+  assert.doesNotMatch(bloodlinesPresentationSource, /Claim bequest/);
+  assert.doesNotMatch(bloodlinesPresentationSource, /Spend Family Prestige/);
+  assert.doesNotMatch(bloodlinesPresentationSource, /Transfer assets/);
   assert.match(accountMetaSource, /Prestige Cost/);
   assert.match(accountMetaSource, /Requires:/);
   assert.match(accountMetaSource, /Geographic Renown/);

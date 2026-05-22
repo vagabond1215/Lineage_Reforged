@@ -22,7 +22,7 @@ import {
   resolveRunHistorySourceId
 } from "./runLifecycle.js";
 
-export type AccountMetaSectionId = "legacy" | "chronicles";
+export type AccountMetaSectionId = "legacy" | "chronicles" | "bloodlines";
 export type LegacyUnlockStateFilter = "All" | "Locked" | "Unlocked";
 
 export type LegacyUnlockEntryViewModel = {

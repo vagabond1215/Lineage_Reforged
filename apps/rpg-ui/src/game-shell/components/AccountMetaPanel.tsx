@@ -9,6 +9,11 @@ import type {
   LegacyUnlockStateFilter
 } from "../accountMetaPresentation.js";
 import { buildAccountMetaViewModel } from "../accountMetaPresentation.js";
+import type {
+  BloodlinesFamilySummaryViewModel,
+  BloodlinesViewModel
+} from "../bloodlinesPresentation.js";
+import { buildBloodlinesViewModel } from "../bloodlinesPresentation.js";
 
 type AccountMetaPanelProps = {
   accountProfile: AccountProfileState;
@@ -24,7 +29,8 @@ type AccountMetaPanelProps = {
 
 const SECTION_ITEMS: Array<{ id: AccountMetaSectionId; label: string }> = [
   { id: "legacy", label: "Legacy" },
-  { id: "chronicles", label: "Chronicles" }
+  { id: "chronicles", label: "Chronicles" },
+  { id: "bloodlines", label: "Bloodlines" }
 ];
 
 const LEGACY_STATE_FILTERS: LegacyUnlockStateFilter[] = ["All", "Locked", "Unlocked"];
@@ -60,6 +66,44 @@ function buildRenownDepthClass(depth: number): string {
     default:
       return "";
   }
+}
+
+function formatCompactIdLabel(value: string | null | undefined, fallback: string): string {
+  if (!value) {
+    return fallback;
+  }
+
+  const segments = value.split(".");
+  const lastSegment = segments.length > 0 ? (segments[segments.length - 1] ?? value) : value;
+  const words = lastSegment.split(/[_-]+/).filter((word) => word.length > 0);
+
+  if (words.length === 0 || words.length > 5 || words.some((word) => word.length > 18)) {
+    return fallback;
+  }
+
+  return words
+    .map((word) => word[0]!.toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function formatTimestampLabel(value: string | null): string {
+  if (!value) {
+    return "No linked run activity";
+  }
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.valueOf())) {
+    return "Recorded activity";
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  }).format(parsed);
 }
 
 function LegacyUnlockCard({
@@ -363,6 +407,218 @@ function EstatePreviewPanel({ estate }: { estate: ChronicleEstateViewModel }) {
   );
 }
 
+function BloodlinesFamilyCard({ family }: { family: BloodlinesFamilySummaryViewModel }) {
+  const linkedRuns = family.tree.linkedRuns.slice(0, 5);
+  const overflowRunCount = Math.max(0, family.tree.linkedRuns.length - linkedRuns.length);
+
+  return (
+    <div className="creator-forged-card px-4 py-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="truncate text-base font-semibold text-[color:var(--color-text-strong)]">
+            {family.familyName}
+          </div>
+          <div className="mt-1 text-sm text-[color:var(--color-text-soft)]">
+            Root: {family.rootLabel}
+          </div>
+        </div>
+        <span className={`shrink-0 ${mutedBadgeClass}`}>
+          {family.statusLabel}
+        </span>
+      </div>
+
+      <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+        {[
+          ["Members", family.memberCountLabel],
+          ["Linked Runs", family.knownRunCountLabel],
+          ["Family Unlocks", family.unlockCountLabel],
+          ["Latest Activity", formatTimestampLabel(family.latestKnownActivityAt)]
+        ].map(([label, value]) => (
+          <div key={`${family.familyId}.${label}`} className="forged-subpanel px-3 py-2">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+              {label}
+            </div>
+            <div className="mt-1 text-sm font-semibold text-[color:var(--color-text-strong)]">
+              {value}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 forged-subpanel px-3 py-3">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
+              Family Prestige
+            </div>
+            <div className="mt-1 text-xs text-[color:var(--color-text-soft)]">
+              Ledger-derived summary only.
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <span className={prestigeBadgeClass}>Available {family.prestige.availableLabel}</span>
+            <span className={mutedBadgeClass}>Earned {family.prestige.earnedLabel}</span>
+            <span className={mutedBadgeClass}>Spent {family.prestige.spentLabel}</span>
+          </div>
+        </div>
+
+        {family.prestige.categorySummaries.length > 0 ? (
+          <div className="mt-3 grid gap-2 md:grid-cols-2">
+            {family.prestige.categorySummaries.map((category) => (
+              <div
+                key={`${family.familyId}.${category.categoryTag}`}
+                className="rounded-md border border-[color:var(--color-border-soft)] px-3 py-2 text-xs text-[color:var(--color-text-soft)]"
+              >
+                <span className="font-semibold text-[color:var(--color-text-strong)]">
+                  {category.label}
+                </span>
+                <span> / Available {category.availableLabel}</span>
+                <span> / Earned {category.earnedLabel}</span>
+                <span> / Spent {category.spentLabel}</span>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </div>
+
+      {family.unlocks.length > 0 ? (
+        <div className="mt-3">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+            Family Unlocks
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {family.unlocks.map((unlock) => (
+              <span key={`${family.familyId}.${unlock.unlockId}`} className={subduedChipClass}>
+                {formatCompactIdLabel(unlock.unlockId, "Family unlock")}
+                {unlock.rank ? ` / Rank ${unlock.rank}` : ""}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <div className="mt-3 forged-subpanel px-3 py-3">
+        <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
+          Linked Run Summary
+        </div>
+        {linkedRuns.length > 0 ? (
+          <div className="mt-2 space-y-2">
+            {linkedRuns.map((run) => (
+              <div
+                key={`${family.familyId}.${run.characterId}`}
+                className="rounded-md border border-[color:var(--color-border-soft)] px-3 py-2"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="min-w-0 truncate text-sm font-semibold text-[color:var(--color-text-strong)]">
+                    {run.nameLabel}
+                  </div>
+                  <span className={mutedBadgeClass}>
+                    {run.isRoot ? "Root" : run.parentKnown ? "Linked" : "Unlinked"}
+                  </span>
+                </div>
+                <div className="mt-1 text-xs text-[color:var(--color-text-soft)]">
+                  {run.statusLabel} / {formatCompactIdLabel(run.lineageLabel, "Unknown Line")}
+                </div>
+                {run.authorityNoteLabel ? (
+                  <div className="mt-1 text-xs text-[color:var(--color-muted-strong)]">
+                    {run.authorityNoteLabel}
+                  </div>
+                ) : null}
+              </div>
+            ))}
+            {overflowRunCount > 0 ? (
+              <div className="text-xs text-[color:var(--color-muted-strong)]">
+                +{overflowRunCount} more linked run{overflowRunCount === 1 ? "" : "s"}
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <div className="mt-2 text-sm text-[color:var(--color-text-soft)]">
+            {family.tree.missingRootLabel ?? "No linked run records yet."}
+          </div>
+        )}
+
+        {family.tree.unresolvedMemberIds.length > 0 ? (
+          <div className="mt-2 text-xs text-[color:var(--color-muted-strong)]">
+            Unresolved member references: {family.tree.unresolvedMemberIds.length}
+          </div>
+        ) : null}
+      </div>
+
+      {family.warnings.length > 0 ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {family.warnings.map((warning) => (
+            <span key={`${family.familyId}.${warning}`} className={mutedBadgeClass}>
+              {warning}
+            </span>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function BloodlinesContent({ bloodlines }: { bloodlines: BloodlinesViewModel }) {
+  return (
+    <div className="space-y-4">
+      <div className="forged-subpanel px-4 py-3 text-sm leading-6 text-[color:var(--color-text-soft)]">
+        {bloodlines.noteLabel}
+      </div>
+
+      <div className="grid gap-2 sm:grid-cols-3 xl:grid-cols-6">
+        {bloodlines.summaryStats.map((stat) => (
+          <div key={stat.id} className="forged-subpanel px-3 py-3">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+              {stat.label}
+            </div>
+            <div className="mt-1 text-2xl text-[color:var(--color-text-strong)]">
+              {stat.valueLabel}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {!bloodlines.hasFamilies ? (
+        <div className="forged-subpanel border-dashed px-4 py-5 text-sm text-[color:var(--color-text-soft)]">
+          {bloodlines.emptyLabel ?? "No Bloodline records yet."}
+        </div>
+      ) : (
+        <div className="grid gap-3 xl:grid-cols-2">
+          {bloodlines.families.map((family) => (
+            <BloodlinesFamilyCard key={family.familyId} family={family} />
+          ))}
+        </div>
+      )}
+
+      <div className="forged-card p-4">
+        <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
+          Future Systems
+        </div>
+        <div className="mt-1 text-xs text-[color:var(--color-text-soft)]">
+          These records are displayed only as inactive status notes.
+        </div>
+        <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+          {bloodlines.inactiveSections.map((section) => (
+            <div key={section.id} className="forged-subpanel px-3 py-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
+                    {section.label}
+                  </div>
+                  <div className="mt-1 text-xs leading-5 text-[color:var(--color-text-soft)]">
+                    {section.noteLabel}
+                  </div>
+                </div>
+                <span className={mutedBadgeClass}>{section.stateLabel}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function AccountMetaPanel({
   accountProfile,
   activeSection,
@@ -375,6 +631,7 @@ export function AccountMetaPanel({
   frameless = false
 }: AccountMetaPanelProps) {
   const meta = useMemo(() => buildAccountMetaViewModel(accountProfile), [accountProfile]);
+  const bloodlines = useMemo(() => buildBloodlinesViewModel(accountProfile), [accountProfile]);
   const [internalActiveSection, setInternalActiveSection] =
     useState<AccountMetaSectionId>("legacy");
   const [selectedLegacyType, setSelectedLegacyType] = useState("All");
@@ -604,7 +861,14 @@ export function AccountMetaPanel({
     </div>
   );
 
-  const content = resolvedActiveSection === "legacy" ? legacyContent : chroniclesContent;
+  const bloodlinesContent = <BloodlinesContent bloodlines={bloodlines} />;
+
+  const content =
+    resolvedActiveSection === "legacy"
+      ? legacyContent
+      : resolvedActiveSection === "chronicles"
+        ? chroniclesContent
+        : bloodlinesContent;
 
   return (
     <section
