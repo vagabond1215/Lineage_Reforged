@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex 5.5 Local cleanup of stale connector handoff
+Source route: Codex 5.5 Local cleanup of stale connector handoff, then GitHub Connector docs cleanup
 Date: 2026-05-21
-Branch/status assumption: Local `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
+Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
 ## Purpose
 
@@ -66,4 +66,21 @@ Recommended next version:
 
 - `Version 0.5.70 - Heirloom And Bequest Systems Plan`
 
-Keep it planning-only unless the user explicitly scopes implementation. Use `docs/design/heirloom-vs-bequest-vocabulary-audit.md` and avoid adding heir systems, heirlooms, bequests, Family Prestige spending, Bloodlines UI, or scoped Backstory Legacy evidence in that pass.
+Keep it planning-only unless the user explicitly scopes implementation. Avoid adding heir systems, heirlooms, bequests, Family Prestige spending, Bloodlines UI, or scoped Backstory Legacy evidence in that pass.
+
+## Next Prompt Source Stack
+
+For the `0.5.70` prompt, inspect these first:
+
+- `AGENTS.md`
+- `README.md`
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/project-roadmap.md`
+- `docs/design/future-system-design-ledger.md`
+- `docs/design/heirloom-vs-bequest-vocabulary-audit.md`
+- `docs/design/legacy-scope-bloodline-economy-plan.md`
+- `docs/design/bloodlines-information-architecture-audit.md`
+- `docs/future_content_backlog.md`
+
+The expected output should be a planning document or updated handoff only. Do not write runtime source, schemas, content JSON, UI, tests, generated output, or `docs/dev/current-codex-output.md` unless this becomes an actual Codex run.
