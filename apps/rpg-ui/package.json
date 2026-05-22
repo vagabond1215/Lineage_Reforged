@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck:node": "tsc --noEmit --tsBuildInfoFile ../../.tmp-rpg-ui-node.tsbuildinfo -p tsconfig.node.json",
     "build": "tsc -p tsconfig.json && vite build",
     "preview": "vite preview"
   },

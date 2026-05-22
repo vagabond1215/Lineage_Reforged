@@ -11,7 +11,10 @@
     "ui:dev:host": "npm --prefix ./apps/rpg-ui run dev -- --host 127.0.0.1 --port 5173",
     "ui:build": "npm --prefix ./apps/rpg-ui run build",
     "ui:preview": "npm --prefix ./apps/rpg-ui run preview",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "npm run typecheck:ui",
+    "typecheck:ui": "npm --prefix ./apps/rpg-ui run typecheck",
+    "typecheck:ui:node": "npm --prefix ./apps/rpg-ui run typecheck:node",
+    "typecheck:workspace": "npm --prefix ./apps/rpg-ui exec -- tsc --noEmit -p tsconfig.json",
     "test": "node --test"
   }
 }

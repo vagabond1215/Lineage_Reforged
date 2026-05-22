@@ -106,6 +106,8 @@ Launcher logs are written under `logs/`.
 - `npm run tool:content-lint`
 - `npm run tool:db-build`
 - `npm run tool:scenario`
+- `npm run typecheck` for the current default UI TypeScript target
+- `npm run typecheck:workspace` for the broader root `tsconfig.json` audit target, which may expose known cleanup blockers
 - `npm test`
 
 On Windows PowerShell, use `npm.cmd` in place of `npm` if the PowerShell execution policy blocks the npm shim.

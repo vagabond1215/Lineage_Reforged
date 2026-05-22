@@ -2,7 +2,9 @@
 
 Date: 2026-05-19
 Route used: ChatGPT via GitHub Connector
-Status: Planning / audit only
+Status: partially consumed temporary guardrail
+
+0.5.74 cleanup note: Pass A is implemented by `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`. Root `typecheck` now delegates to the UI app's local TypeScript target, while `typecheck:workspace` remains the broad root `tsconfig.json` audit target with known blockers. Keep this plan for the remaining JSON import, environment typing, and strict optional-property cleanup tracks.
 
 This document records a lightweight connector-only triage of current workspace typecheck blockers. It does not modify source files, tests, schemas, runtime behavior, content JSON, generated output, or the latest Codex handoff.
 
