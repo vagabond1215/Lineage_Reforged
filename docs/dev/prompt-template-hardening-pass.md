@@ -1,7 +1,7 @@
 # Prompt Template Hardening Pass
 
 Source route: ChatGPT via GitHub Connector
-Date: 2026-05-19
+Date: 2026-05-21
 Status: connector-only prompt guidance; no runtime/source/UI/content changes
 
 ## Purpose
@@ -86,6 +86,42 @@ Update docs/dev/current-codex-output.md with:
 - next recommended version
 - suggested commit message
 ```
+
+## Planning-Only Codex Prompt Skeleton
+
+Use when Codex should inspect the repo and produce a durable plan or update a docs plan, but must not implement runtime behavior.
+
+```text
+Version X.Y.Z - Planning Title
+
+Run locally on the current branch. This is a planning-only pass.
+
+Allowed:
+- inspect source/content/tests/docs
+- create or update the named planning document
+- update docs/dev/current-codex-output.md with the planning result
+- optionally add a narrow backlog note if the plan defers work
+
+Forbidden:
+- runtime/source/schema/content JSON behavior changes
+- UI implementation
+- tests that imply behavior exists
+- generated output
+- purchase/spend buttons
+- save/account shape changes
+- broad roadmap rewrites
+
+Required plan output:
+- glossary / vocabulary alignment
+- current repo reality
+- data-owner map
+- allowed/deferred behavior table
+- implementation sequence
+- future test requirements
+- cleanup decision for any focused guardrail docs used
+```
+
+Use this for `Version 0.5.70 - Heirloom And Bequest Systems Plan` unless the user explicitly scopes implementation.
 
 ## Docs-Only Connector Prompt Skeleton
 
