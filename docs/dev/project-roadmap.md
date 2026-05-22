@@ -17,8 +17,7 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed implementation version: `Version 0.5.68 - Backstory Legacy Purchase Resolver Integration`
-- Current cleanup version: `Version 0.5.69 - Backstory Legacy Creator Copy And Handoff Cleanup`
+- Latest landed version: `Version 0.5.69 - Backstory Legacy Creator Copy And Handoff Cleanup`
 - Next recommended version: `Version 0.5.70 - Heirloom And Bequest Systems Plan`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -62,7 +61,7 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.66` | Backstory Legacy Live Catalog Guard | Codex Local | Runtime guard | Landed. Hardened live/non-live Backstory Legacy catalog and purchase boundaries. | Catalog-only/backlog Backstory Legacy records must not become purchasable or resolver evidence. |
 | `0.5.67` | Backstory Legacy Live Content Migration | Codex Local | Live content | Landed. Migrated five low-risk account-scoped Backstory Legacy records into `legacy_unlocks.json`. | Live records are unlock-only access support, not starter effects or current identity. |
 | `0.5.68` | Backstory Legacy Purchase Resolver Integration | Codex Local | Resolver caller integration | Landed. Owned account-scoped Backstory Legacy purchases now feed creator availability through the ownership helper. | Creator does not infer `familyId`; higher-risk and scoped evidence remains deferred. |
-| `0.5.69` | Backstory Legacy Creator Copy And Handoff Cleanup | Codex Local | Copy / docs / metadata cleanup | Current cleanup pass. Align locked copy, policy metadata, handoff, and roadmap after 0.5.68. | No new Backstory Legacy behavior or content expansion. |
+| `0.5.69` | Backstory Legacy Creator Copy And Handoff Cleanup | Codex Local | Copy / docs / metadata cleanup | Landed. Aligned locked copy, policy metadata, handoff, and roadmap after 0.5.68. | No new Backstory Legacy behavior or content expansion. |
 | `0.5.70` | Heirloom And Bequest Systems Plan | GitHub Connector or Codex Plan Mode | Docs / planning | Next recommended step. Separate material bequests from item-chain heirlooms and Bloodline traits. | Use `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; planning-only unless explicitly changed. |
 
 ## 4. Lightweight GPT + GitHub Connector Audit / Planning Queue
@@ -123,9 +122,9 @@ After the relevant Codex or planning run consumes it, do one of the following in
 
 Do not let temporary guardrail files accumulate indefinitely.
 
-## 5. Near-Term Roadmap After Active Pipeline
+## 5. Near-Term Roadmap After Current Pipeline
 
-These are likely candidates after `0.5.69`, subject to the current handoff at that time.
+These are likely candidates after `0.5.70`, subject to the current handoff at that time.
 
 | Candidate Version Band | Candidate Topic | Route | Work Type | Dependency / Note |
 | --- | --- | --- | --- | --- |
