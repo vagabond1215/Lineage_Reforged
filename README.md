@@ -1,6 +1,18 @@
 # Lineage: Reforged RPG Foundation
 
-TypeScript-first, headless simulation scaffold for a survival / builder / RPG project.
+TypeScript-first, headless simulation scaffold for a grounded medieval-fantasy, dynasty-driven systemic RPG.
+
+## Project Identity
+
+Lineage: Reforged is a foundation-stage RPG where characters, families, places, records, and inherited consequences should matter over generic perk-tree progression. Current development favors narrow validated slices, current-data-first rules, owner-aware systems, and readable long-term payoff before broad runtime expansion.
+
+Strategic continuity lives in:
+
+- `docs/dev/current-codex-output.md` for the latest exact implementation handoff.
+- `docs/dev/current-gpt-handoff.md` for current prompt guardrails and connector-side risks.
+- `docs/dev/project-roadmap.md` for version order and maturity checkpoints.
+- `docs/design/future-system-design-ledger.md` for durable system criteria and vocabulary.
+- `docs/dev/project-vision-and-continuity-brief.md` for the strategic source map.
 
 ## Codex Workspace
 
