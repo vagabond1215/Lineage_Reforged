@@ -78,8 +78,8 @@ These connector-safe audit/planning passes have been completed or folded. They s
 | Typecheck Blocker Triage Plan | Folded into `current-gpt-handoff.md`; temporary plan file removed. |
 | Future System Design Ledger Creation | `docs/design/future-system-design-ledger.md`. |
 | Development Guidance File Cleanup | Roadmap, current handoff, and continuity brief deconstruction. |
-| Bloodlines Information Architecture Audit | `docs/design/bloodlines-information-architecture-audit.md`; use for `0.5.67` / `0.5.68`. |
-| Heirloom vs Bequest Vocabulary Audit | `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; use for `0.5.66`. |
+| Bloodlines Information Architecture Audit | `docs/design/bloodlines-information-architecture-audit.md`; use for future Bloodlines view-model and read-only UI planning. |
+| Heirloom vs Bequest Vocabulary Audit | `docs/design/heirloom-vs-bequest-vocabulary-audit.md`; use for `0.5.70 - Heirloom And Bequest Systems Plan`. |
 | Chronicle Run-End Summary Source Audit | `docs/design/chronicle-run-end-summary-source-audit.md`; use for future run-end summary planning. |
 | Combat Audit Scoping Pass | `docs/design/combat-audit-scoping-pass.md`; use before combat/equipment implementation. |
 | Magic Runtime Readiness Audit | `docs/design/magic-runtime-readiness-audit.md`; use before magic runtime/acquisition work. |
