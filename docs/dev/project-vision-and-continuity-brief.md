@@ -5,7 +5,7 @@ Keep the DOCX as the formatted human-readable copy. Prefer this Markdown file as
 
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-19 after the development guidance cleanup and creation of `docs/design/future-system-design-ledger.md`.
+Updated 2026-05-21 after the low-risk account-scoped Backstory Legacy slice landed and the roadmap/handoff were refreshed.
 
 ## Purpose
 
@@ -25,22 +25,28 @@ Older long-form material from the former continuity brief has been intentionally
 
 Latest exact Codex handoff:
 
-- `Version 0.5.63 - Backstory Legacy Purchase Runtime Shape`
+- `Version 0.5.69 - Backstory Legacy Creator Copy And Handoff Cleanup`
 
-Next recommended implementation version:
+Next recommended version:
 
-- `Version 0.5.64 - Backstory Legacy Purchase Content Draft`
+- `Version 0.5.70 - Heirloom And Bequest Systems Plan`
 
 Current phase:
 
 - `v0.5.x` foundation stabilization / ownership hardening
 
-Current high-risk refinement:
+Current implementation reality:
 
-- `0.5.64` must not naively add live Backstory Legacy records to `legacy_unlocks.json` if they become visible or purchasable without an approved guard.
-- `0.5.65` must not invent family context. Purchase ids and `familyId` must come from explicit scoped owners/helpers.
+- The low-risk account-scoped Backstory Legacy slice has landed.
+- Five low-risk Backstory Legacy records are live, purchasable, account-scoped, unlock-only records.
+- Owned account-scoped Backstory Legacy purchases feed creator availability through `resolveOwnedBackstoryLegacyPurchaseIds(...)`.
+- Each owned low-risk purchase makes only its matching formative backstory selectable.
+- The creator does not infer or supply `familyId`.
+- Family/source-run/region/institution/estate/title/heir/preparation-scoped Backstory Legacy evidence remains deferred.
+- Higher-risk Backstory Legacy candidates remain deferred.
+- Family Prestige earning/spending behavior, Bloodlines UI, heirs, heirlooms, bequests, Chronicle Marks, and Lineage Seals remain deferred.
 
-For exact current implementation state, inspect `docs/dev/current-codex-output.md` first. For current prompt guardrails, inspect `docs/dev/current-gpt-handoff.md` next.
+For exact current implementation state, inspect `docs/dev/current-codex-output.md` first. For current prompt guardrails, inspect `docs/dev/current-gpt-handoff.md` next. For version order, inspect `docs/dev/project-roadmap.md`.
 
 ## North Star
 
@@ -91,15 +97,15 @@ If a future Codex handoff conflicts with this brief, trust the newer Codex hando
 
 ## Active Pipeline
 
-Keep the active implementation pipeline intact unless a newer handoff supersedes it:
+Keep the active implementation pipeline aligned with the current roadmap unless a newer handoff supersedes it:
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.64` | Backstory Legacy Purchase Content Draft | Author initial Backstory Legacy purchase records only if exposure is controlled. | Use draft-only records or add a minimal visibility/purchase guard. No resolver or creator wiring. |
-| `0.5.65` | Backstory Legacy Purchase Resolver Integration | Pass owned purchase ids into resolver through the existing creator/resolver seam. | Explicit source of account purchase ids, family purchase ids, and `familyId`; no fake evidence. |
-| `0.5.66` | Heirloom And Bequest Systems Plan | Plan material bequests separately from item-chain heirlooms and Bloodline traits. | Planning-only unless explicitly changed. |
-| `0.5.67` | Bloodlines View Model Implementation Plan | Define pure projection of families, trees, and prestige summaries. | View-model first; no React sprawl. |
-| `0.5.68` | Bloodlines Read-Only Account Meta UI | Render Bloodlines in the account meta / Chronicles surface. | Read-only; no family management, purchase execution, or resolver bypass. |
+| `0.5.70` | Heirloom And Bequest Systems Plan | Plan the difference between material bequests, item-chain heirlooms, and Bloodline traits. | Planning-only unless explicitly changed. No heirs, items, bequests, UI, or spending behavior should be implemented here. |
+| `0.5.71+` | Bloodlines View Model Implementation Plan | Define pure projections of family records, trees, prestige summaries, and account history. | View-model first; no React sprawl, family management, or mutating behavior. |
+| `0.5.72+` | Bloodlines Read-Only Account Meta UI | Render Bloodlines in the account meta / Chronicles surface. | Read-only; no family management, purchase execution, or resolver bypass. |
+| `0.5.70+` | Typecheck Script And Target Policy Cleanup | Clarify root/app typecheck targets without weakening strictness. | Keep separate from feature work; do not suppress strictness globally. |
+| `0.5.70+` | Chronicle / Economy / Calendar / Combat / Magic Planning Passes | Use the existing focused audit docs before implementation. | Audit first; do not broaden into runtime math, economy simulation, or magic acquisition. |
 
 For version-band meaning and post-pipeline candidates, use `docs/dev/project-roadmap.md`.
 
@@ -144,9 +150,9 @@ Do not scatter these into unrelated patches. Use the roadmap and handoff to sequ
 
 Near-term and high-value tracks:
 
-- Backstory Legacy purchase content and resolver integration.
-- Bloodlines view model and read-only presentation.
 - Heirloom vs bequest planning.
+- Bloodlines view model and read-only presentation.
+- Typecheck script and target policy cleanup.
 - Combat/equipment audit before broad combat edits.
 - Run-end / Chronicle impact summary.
 - Difficulty and starting season creator page after creator scope stabilizes.
@@ -155,9 +161,13 @@ Near-term and high-value tracks:
 - Economy clarity layer before full simulation.
 - Context-aware actions after action ownership is clear.
 - Failure feedback and soft tutorial through real system causes.
+- Future scoped Backstory Legacy evidence only after owner systems and storage seams exist.
 
 Major deferred tracks:
 
+- family management and full heir system
+- heirlooms and bequests as runtime systems
+- Chronicle Marks and Lineage Seals
 - home, land, gardening, ranching, and property
 - living settlements, migration, prosperity, and supply/demand
 - kingdoms, diplomacy, governance, conquest, and war
@@ -203,4 +213,4 @@ When I ask “prompt please,” produce a routed, copy-paste-ready versioned pro
 - Move version sequencing to `docs/dev/project-roadmap.md`.
 - Move current connector findings to `docs/dev/current-gpt-handoff.md`.
 - Move deferred chronological notes to `docs/future_content_backlog.md`.
-- Update this brief only when the north star, document authority map, or strategic source structure changes.
+- Update this brief only when the north star, document authority map, strategic source structure, or current anchor becomes materially stale.
