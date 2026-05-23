@@ -4,7 +4,7 @@ Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
 Status: promoted clarity audit; no runtime/source/UI/content changes
 
-0.5.78 sequencing note: this audit has been promoted into `docs/design/economy-price-clarity-view-model-plan.md`, which is the active source for `Version 0.5.78 - Economy Price Clarity View Model Plan` and the planned `0.5.79` pure projection pass. Keep this audit for source detail, but do not treat the older `0.5.69` prompt target below as current pipeline authority.
+0.5.78 sequencing note: this audit has been promoted into `docs/design/economy-price-clarity-view-model-plan.md`, which is the active source for `Version 0.5.78 - Economy Price Clarity View Model Plan` and the planned `0.5.79` pure projection pass. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
@@ -210,14 +210,6 @@ If a future pure view-model implementation happens, test:
 - local scope preserved
 - no mutation of economy state
 
-## Recommended Next Prompt Target
+## Current Prompt Authority
 
-Historical prompt target below is superseded by `docs/design/economy-price-clarity-view-model-plan.md` and the current sequenced queue. It is retained only for context.
-
-```text
-Version 0.5.69 - Economy Price Clarity View-Model Plan
-
-Use docs/design/economy-clarity-audit.md as the source.
-Plan or implement a pure read-only economy clarity view model for local market price labels and pressure explanations.
-Do not change economy math, market content, settlement content, trade dispatch, crafting behavior, shop behavior, runtime state mutation, React UI, or generated output unless explicitly scoped.
-```
+Use `docs/design/economy-price-clarity-view-model-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.
