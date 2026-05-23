@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only clarity audit; no runtime/source/UI/content changes
+Status: promoted clarity audit; no runtime/source/UI/content changes
+
+0.5.78 sequencing note: this audit has been promoted into `docs/design/economy-price-clarity-view-model-plan.md`, which is the active source for `Version 0.5.78 - Economy Price Clarity View Model Plan` and the planned `0.5.79` pure projection pass. Keep this audit for source detail, but do not treat the older `0.5.69` prompt target below as current pipeline authority.
 
 ## Purpose
 
@@ -209,6 +211,8 @@ If a future pure view-model implementation happens, test:
 - no mutation of economy state
 
 ## Recommended Next Prompt Target
+
+Historical prompt target below is superseded by `docs/design/economy-price-clarity-view-model-plan.md` and the current sequenced queue. It is retained only for context.
 
 ```text
 Version 0.5.69 - Economy Price Clarity View-Model Plan
