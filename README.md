@@ -11,6 +11,7 @@ Strategic continuity lives in:
 - `docs/dev/current-codex-output.md` for the latest exact implementation handoff.
 - `docs/dev/current-gpt-handoff.md` for current prompt guardrails and connector-side risks.
 - `docs/dev/project-roadmap.md` for version order and maturity checkpoints.
+- `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue.
 - `docs/design/future-system-design-ledger.md` for durable system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic source map.
 
