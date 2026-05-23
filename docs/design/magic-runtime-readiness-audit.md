@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only readiness audit; no runtime/source/UI/content changes
+Status: promoted readiness audit; no runtime/source/UI/content changes
+
+0.5.83 sequencing note: this audit has been promoted into `docs/design/known-spell-ownership-plan.md`, which is the active source for `Version 0.5.83 - Known Spell Ownership Plan`. Keep this audit for source detail, but do not treat the older `0.5.69` prompt target below as current pipeline authority.
 
 ## Purpose
 
@@ -138,6 +140,8 @@ Any future prompt that touches runtime magic must state:
 - no generic tag execution
 
 ## Recommended Next Prompt Target
+
+Historical prompt target below is superseded by `docs/design/known-spell-ownership-plan.md` and the current sequenced queue. It is retained only for context.
 
 ```text
 Version 0.5.69 - Known Spell Ownership Plan
