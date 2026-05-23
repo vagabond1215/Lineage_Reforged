@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only source audit; no runtime/source/UI changes
+Status: promoted source audit; no runtime/source/UI changes
+
+0.5.75 sequencing note: this audit has been promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`, which is the active source for `Version 0.5.75 - Chronicle Run-End Summary View Model Plan` through the planned `0.5.76` projection and `0.5.77` read-only UI passes. Keep this audit for source detail, but do not treat the older `0.5.69` prompt target below as current pipeline authority.
 
 ## Purpose
 
@@ -328,6 +330,8 @@ Do not add this type in this audit.
 - no generated narrative claims unsupported by data
 
 ## Recommended Next Prompt Target
+
+Historical prompt target below is superseded by `docs/design/chronicle-run-end-summary-view-model-plan.md` and the current sequenced queue. It is retained only for context.
 
 ```text
 Version 0.5.69 - Chronicle Run-End Summary View-Model Plan
