@@ -121,7 +121,7 @@ Required plan output:
 - cleanup decision for any focused guardrail docs used
 ```
 
-Use this for `Version 0.5.70 - Heirloom And Bequest Systems Plan` unless the user explicitly scopes implementation.
+Use this for planning-only passes such as view-model plans, ownership plans, readiness plans, and system-boundary plans unless the user explicitly scopes implementation.
 
 ## Docs-Only Connector Prompt Skeleton
 
