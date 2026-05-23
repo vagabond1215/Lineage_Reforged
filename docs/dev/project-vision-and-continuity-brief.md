@@ -5,7 +5,7 @@ Keep the DOCX as the formatted human-readable copy. Prefer this Markdown file as
 
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-22 after `Version 0.5.72 - Bloodlines Read-Only Account Meta UI` landed.
+Updated 2026-05-22 after `Version 0.5.74 - Typecheck Script And Target Policy Cleanup` landed.
 
 ## Purpose
 
@@ -16,20 +16,25 @@ Detailed material now lives in specialized files:
 - `docs/dev/current-codex-output.md` for exact latest Codex implementation state.
 - `docs/dev/current-gpt-handoff.md` for current connector-side audits, immediate risks, and prompt guardrails.
 - `docs/dev/project-roadmap.md` for version order, version-band maturity, playability checkpoints, and lightweight audit queue.
+- `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue.
 - `docs/design/future-system-design-ledger.md` for durable future-system criteria, vocabulary, conceptual boundaries, and open design questions.
 - `docs/future_content_backlog.md` for chronological deferred work and historical run notes.
 
-Older long-form material from the former continuity brief has been intentionally decomposed into the roadmap, current handoffs, backlog, and design ledger. Do not re-expand this file into a transcript or catch-all memory dump.
+Older long-form material from the former continuity brief has been intentionally decomposed into the roadmap, current handoffs, backlog, sequenced implementation plan, and design ledger. Do not re-expand this file into a transcript or catch-all memory dump.
 
 ## Current Repo Anchor
 
 Latest exact Codex handoff:
 
-- `Version 0.5.72 - Bloodlines Read-Only Account Meta UI`
+- `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
 
 Next recommended version:
 
-- `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
+- `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+
+Current sequence source:
+
+- `docs/dev/codex-sequenced-implementation-plan.md`
 
 Current phase:
 
@@ -47,6 +52,8 @@ Current implementation reality:
 - Heirloom and bequest vocabulary/ownership boundaries are planned in `docs/design/heirloom-and-bequest-systems-plan.md`.
 - The Bloodlines projection and read-only account meta UI have landed.
 - Bloodlines currently shows explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
+- Typecheck script routing is explicit: default `typecheck` delegates to the UI app, `typecheck:ui:node` passes, and `typecheck:workspace` is the broad root audit target.
+- Default UI and broad workspace typecheck targets still fail on known pre-existing blockers, so future prompts should not require them as passing gates unless the task is specifically fixing those blockers.
 - No Bloodlines mutation path, family management, Family Prestige earning/spending behavior, heirs, heirlooms, bequests, Chronicle Marks, Lineage Seals, scoped Backstory evidence, or generated output was added.
 
 For exact current implementation state, inspect `docs/dev/current-codex-output.md` first. For current prompt guardrails, inspect `docs/dev/current-gpt-handoff.md` next. For version order, inspect `docs/dev/project-roadmap.md`.
@@ -91,25 +98,26 @@ Use this precedence when files disagree:
 1. `docs/dev/current-codex-output.md` for exact latest implementation state.
 2. `docs/dev/current-gpt-handoff.md` for current connector-side audits, immediate prompt guardrails, and near-term risks.
 3. `docs/dev/project-roadmap.md` for active version order, version-band maturity, playability checkpoints, and tool routing.
-4. `docs/design/future-system-design-ledger.md` for durable future-system criteria, vocabulary, boundaries, and open conceptual questions.
-5. This brief for strategic north-star and source map.
-6. `docs/future_content_backlog.md` for historical deferred notes and reminders.
-7. Older `docs/design/*` plans for rationale and boundaries, unless newer handoffs supersede their exact sequence or state.
+4. `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue.
+5. `docs/design/future-system-design-ledger.md` for durable future-system criteria, vocabulary, boundaries, and open conceptual questions.
+6. This brief for strategic north-star and source map.
+7. `docs/future_content_backlog.md` for historical deferred notes and reminders.
+8. Older `docs/design/*` plans for rationale and boundaries, unless newer handoffs supersede their exact sequence or state.
 
 If a future Codex handoff conflicts with this brief, trust the newer Codex handoff for repo state and update this brief only if strategic direction changes.
 
 ## Active Pipeline
 
-Keep the active implementation pipeline aligned with the current roadmap unless a newer handoff supersedes it:
+Keep the active implementation pipeline aligned with the current roadmap and sequenced plan unless a newer handoff supersedes it:
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.73` | Bloodlines Handoff And Temporary Guardrail Cleanup | Align current handoff, roadmap, brief, design ledger, and guardrail status after the Bloodlines read-only UI landed. | Docs-only; do not change source, UI, tests, schemas, content JSON, or generated output. |
-| `0.5.74` | Typecheck Script And Target Policy Cleanup | Clarify root/app typecheck targets without weakening strictness. | Keep separate from feature work; do not suppress strictness globally. |
-| `0.5.75+` | Chronicle Run-End Summary View Model Plan | Map current run-ending data into a future read-only impact summary before UI or mutation. | View-model/source map first; do not change payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, or generated output. |
-| `0.5.75+` | Economy / Calendar / Combat / Magic Planning Passes | Use the existing focused audit docs before implementation. | Audit first; do not broaden into runtime math, economy simulation, or magic acquisition. |
+| `0.5.74` | Typecheck Script And Target Policy Cleanup | Landed. Clarified root/app typecheck targets without weakening strictness. | Default and workspace typecheck targets still have known blockers; do not treat them as green gates yet. |
+| `0.5.75` | Chronicle Run-End Summary View Model Plan | Map current run-ending data into a future read-only impact summary before projection, UI, or mutation. | Planning-only; do not change payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines behavior, or generated output. |
+| `0.5.76` | Chronicle Run-End Summary Pure Projection | Planned. Implement a pure projection only after the 0.5.75 plan lands. | No UI or mutation; do not recompute payout. |
+| `0.5.77` | Chronicle Run-End Read-Only UI | Planned. Render the tested projection read-only. | No payout mutation, estate delivery, Chronicle Marks, Lineage Seals, or Family Prestige grants. |
 
-For version-band meaning and post-pipeline candidates, use `docs/dev/project-roadmap.md`.
+For the full 10-step queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For version-band meaning and post-pipeline candidates, use `docs/dev/project-roadmap.md`.
 
 ## Core Development Rules
 
@@ -148,12 +156,12 @@ Be token-aware, but do not sacrifice correctness, validation, architecture, or c
 
 ## High-ROI Tracks
 
-Do not scatter these into unrelated patches. Use the roadmap and handoff to sequence them.
+Do not scatter these into unrelated patches. Use the roadmap, sequence plan, and handoff to sequence them.
 
 Near-term and high-value tracks:
 
-- Typecheck script and target policy cleanup.
 - Run-end / Chronicle impact summary.
+- Remaining typecheck blocker tracks, kept separate from feature work.
 - Combat/equipment audit before broad combat edits.
 - Difficulty and starting season creator page after creator scope stabilizes.
 - Calendar/climate popup.
@@ -189,6 +197,7 @@ Primary repo instruction file: AGENTS.md
 Latest Codex handoff: docs/dev/current-codex-output.md
 Current GPT handoff: docs/dev/current-gpt-handoff.md
 Roadmap: docs/dev/project-roadmap.md
+Sequenced Codex plan: docs/dev/codex-sequenced-implementation-plan.md
 Future system design ledger: docs/design/future-system-design-ledger.md
 Strategic continuity brief: docs/dev/project-vision-and-continuity-brief.md
 Backlog: docs/future_content_backlog.md
@@ -196,6 +205,7 @@ Backlog: docs/future_content_backlog.md
 Read current-codex-output first for exact implementation state.
 Read current-gpt-handoff second for current connector-side guardrails.
 Use the roadmap for version order and playability checkpoints.
+Use the sequenced Codex plan for the current 10-step implementation queue.
 Use the design ledger for durable conceptual criteria and vocabulary.
 Use the continuity brief for north-star direction and source map.
 Use the backlog for deferred work and historical run notes.
@@ -210,7 +220,7 @@ When I ask “prompt please,” produce a routed, copy-paste-ready versioned pro
 - Keep this brief short.
 - Do not use this brief as a transcript or full design archive.
 - Move durable conceptual rules to `docs/design/future-system-design-ledger.md`.
-- Move version sequencing to `docs/dev/project-roadmap.md`.
+- Move version sequencing to `docs/dev/project-roadmap.md` and `docs/dev/codex-sequenced-implementation-plan.md`.
 - Move current connector findings to `docs/dev/current-gpt-handoff.md`.
 - Move deferred chronological notes to `docs/future_content_backlog.md`.
 - Update this brief only when the north star, document authority map, strategic source structure, or current anchor becomes materially stale.
