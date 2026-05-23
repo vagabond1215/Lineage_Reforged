@@ -127,6 +127,16 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 Do not skip planning-to-projection-to-UI stages unless a newer handoff or the user explicitly changes the order.
 
+## Next Three Prompt Queue
+
+Use this compact order when the user asks for the next prompt:
+
+1. `Version 0.5.75 - Chronicle Run-End Summary View Model Plan` - planning-only data-owner map and projection plan from `docs/design/chronicle-run-end-summary-view-model-plan.md`.
+2. `Version 0.5.76 - Chronicle Run-End Summary Pure Projection` - implement the pure projection and focused tests only after 0.5.75 lands.
+3. `Version 0.5.77 - Chronicle Run-End Read-Only UI` - render the tested projection read-only only after 0.5.76 lands.
+
+Do not combine these three into one Codex run unless the user explicitly re-scopes the work.
+
 ## Temporary Guardrail Docs
 
 Current status:
