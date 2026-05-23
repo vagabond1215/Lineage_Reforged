@@ -4,7 +4,7 @@ Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
 Status: promoted source audit; no runtime/source/UI changes
 
-0.5.75 sequencing note: this audit has been promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`, which is the active source for `Version 0.5.75 - Chronicle Run-End Summary View Model Plan` through the planned `0.5.76` projection and `0.5.77` read-only UI passes. Keep this audit for source detail, but do not treat the older `0.5.69` prompt target below as current pipeline authority.
+0.5.75 sequencing note: this audit has been promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`, which is the active source for `Version 0.5.75 - Chronicle Run-End Summary View Model Plan` through the planned `0.5.76` projection and `0.5.77` read-only UI passes. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
@@ -329,15 +329,6 @@ Do not add this type in this audit.
 - no resurrection/retry mechanics
 - no generated narrative claims unsupported by data
 
-## Recommended Next Prompt Target
+## Current Prompt Authority
 
-Historical prompt target below is superseded by `docs/design/chronicle-run-end-summary-view-model-plan.md` and the current sequenced queue. It is retained only for context.
-
-```text
-Version 0.5.69 - Chronicle Run-End Summary View-Model Plan
-
-Use docs/design/chronicle-run-end-summary-source-audit.md as the source map.
-Plan a pure read-only run-end summary view model from current AccountRunHistoryRecord, account profile, payout metadata, achievement titles, estate preview/deposit data, and source-run continuity fields.
-Do not implement React UI unless explicitly scoped.
-Do not change lifecycle behavior, payout behavior, estate delivery, Legacy rewards, family records, Family Prestige, Chronicle Marks, Lineage Seals, heirs, bequests, heirlooms, Backstory Eligibility, or generated UI output.
-```
+Use `docs/design/chronicle-run-end-summary-view-model-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.
