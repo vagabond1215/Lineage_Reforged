@@ -143,6 +143,12 @@ Current status:
 
 - `docs/design/bloodlines-information-architecture-audit.md` - partially consumed by `0.5.71` and `0.5.72`; keep for future richer tree/Bloodlines presentation constraints.
 - `docs/design/chronicles-bloodline-tree-presentation-plan.md` - partially consumed by read-only UI; keep for richer tree presentation, hierarchy, and Chronicle/Bloodlines boundaries.
+- `docs/design/chronicle-run-end-summary-source-audit.md` - promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`; keep only as source-detail reference for `0.5.75`-`0.5.77`.
+- `docs/design/economy-clarity-audit.md` - promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep only as source-detail reference for `0.5.78`-`0.5.79`.
+- `docs/design/calendar-climate-popup-ia-audit.md` - promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep only as source-detail reference for `0.5.80`-`0.5.81`.
+- `docs/design/combat-audit-scoping-pass.md` - promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; keep only as source-detail reference for `0.5.82`.
+- `docs/design/magic-runtime-readiness-audit.md` - promoted into `docs/design/known-spell-ownership-plan.md`; keep only as source-detail reference for `0.5.83`.
+- `docs/design/backstory-coverage-first-batch-plan.md` - partially consumed by live low-risk Backstory Legacy records; keep for remaining Militia Levy, Drover's Hand, and other low-risk coverage ideas only.
 - `docs/design/heirloom-and-bequest-systems-plan.md` - keep as the active heirloom/bequest planning artifact.
 - `docs/design/legacy-scope-bloodline-economy-plan.md` - keep for Family Prestige, scoped evidence, Chronicle Marks, Lineage Seals, and economy boundary rules.
 - `docs/design/heirloom-vs-bequest-vocabulary-audit.md` - consumed by the heirloom/bequest plan and ledger, but retained as a compact checklist until a later inheritance-runtime readiness pass retires it.
@@ -168,6 +174,30 @@ For `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`, inspect:
 - account meta presentation files only for source-shape inspection
 
 0.5.75 must stay planning scoped unless explicitly changed. It should map current run-ending data into a future read-only impact summary plan and avoid runtime payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines behavior, or generated UI output.
+
+## Follow-Up Source Stacks
+
+For `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`, inspect:
+
+- all 0.5.75 output and plan updates first,
+- `docs/design/chronicle-run-end-summary-view-model-plan.md`,
+- `docs/design/chronicle-run-end-summary-source-audit.md`,
+- account run-history contracts,
+- run lifecycle/archive result files,
+- existing account meta / Chronicle presentation helpers,
+- focused tests around account meta, run lifecycle, achievements, payout metadata, and any existing Chronicle presentation tests.
+
+0.5.76 should implement a pure projection and focused tests only. Do not render React UI, mutate lifecycle/payout/estate state, grant Legacy, create Chronicle Marks, Lineage Seals, Family Prestige, heirs, bequests, heirlooms, family records, or generated output.
+
+For `Version 0.5.77 - Chronicle Run-End Read-Only UI`, inspect:
+
+- all 0.5.76 output and projection tests first,
+- the tested Chronicle run-end summary projection,
+- account meta / launcher UI files,
+- existing Chronicle and Bloodlines read-only UI patterns,
+- relevant static tests for account meta UI copy and no-action guarantees.
+
+0.5.77 should render the tested projection read-only only. Do not add buttons, commands, payout mutation, estate delivery, family mutation, Chronicle Marks, Lineage Seals, Family Prestige grants, or generated output unless explicitly re-scoped.
 
 ## After 0.5.75
 
