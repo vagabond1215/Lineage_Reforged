@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only audit scope; no runtime/source/UI/content changes
+Status: promoted audit scope; no runtime/source/UI/content changes
+
+0.5.82 sequencing note: this audit has been promoted into `docs/design/combat-equipment-mapping-audit-plan.md`, which is the active source for `Version 0.5.82 - Combat Equipment Mapping Audit`. Keep this audit for source detail, but do not treat the older `0.5.69` prompt target below as current pipeline authority.
 
 ## Purpose
 
@@ -248,6 +250,8 @@ Run focused tests, not just broad confidence claims.
 - no hidden balance changes inside unrelated feature work
 
 ## Recommended Next Prompt Target
+
+Historical prompt target below is superseded by `docs/design/combat-equipment-mapping-audit-plan.md` and the current sequenced queue. It is retained only for context.
 
 ```text
 Version 0.5.69 - Combat Equipment Mapping Audit
