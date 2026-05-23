@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only IA audit; no runtime/source/UI/content changes
+Status: promoted IA audit; no runtime/source/UI/content changes
+
+0.5.80 sequencing note: this audit has been promoted into `docs/design/calendar-climate-popup-view-model-plan.md`, which is the active source for `Version 0.5.80 - Calendar Climate Popup View Model Plan` and the planned `0.5.81` read-only popup pass. Keep this audit for source detail, but do not treat the older `0.5.69` prompt target below as current pipeline authority.
 
 ## Purpose
 
@@ -184,6 +186,8 @@ These should be answered before runtime climate effects:
 5. Should weather be generated per settlement, region, route, or global time slice?
 
 ## Recommended Next Prompt Target
+
+Historical prompt target below is superseded by `docs/design/calendar-climate-popup-view-model-plan.md` and the current sequenced queue. It is retained only for context.
 
 ```text
 Version 0.5.69 - Calendar Climate Popup View-Model Plan
