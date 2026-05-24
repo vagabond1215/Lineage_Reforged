@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector continuity alignment after `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+Source route: ChatGPT via GitHub Connector continuity alignment after `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
 Date: 2026-05-24
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -23,7 +23,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+- `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
 
 Current sequence source:
 
@@ -31,17 +31,18 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
+- `Version 0.5.77 - Chronicle Run-End Read-Only UI`
 
 ## Recent Results
 
 Chronicle run-end summary:
 
 - `0.5.75` finalized the planning-only data-owner map for a future read-only Chronicle run-end impact summary.
-- The active source for the next implementation is now `docs/design/chronicle-run-end-summary-view-model-plan.md`.
-- The future projection file is planned as `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`.
-- The future function is planned as `buildChronicleRunEndSummaryViewModel(input)`.
-- The projection must read stored account/run/lifecycle/estate data only and must not recompute payout, mutate lifecycle state, move estate assets, create Chronicle Marks, create Lineage Seals, grant/spend Family Prestige, mutate Bloodlines, or emit actions.
+- `0.5.76` implemented the pure read-only projection and focused unit tests.
+- The active source for the next implementation is now the tested projection in `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts` plus `docs/design/chronicle-run-end-summary-view-model-plan.md`.
+- The projection function is `buildChronicleRunEndSummaryViewModel(input)`.
+- The projection reads stored account/run/lifecycle/estate data only and does not recompute payout, mutate lifecycle state, move estate assets, create Chronicle Marks, create Lineage Seals, grant/spend Family Prestige, mutate Bloodlines, or emit actions.
+- `0.5.77` should render that projection read-only without adding new actions, mutations, or generated output unless explicitly re-scoped.
 
 Typecheck tooling:
 
@@ -78,15 +79,14 @@ Live low-risk Backstory Legacy records:
 
 Chronicle run-end summary:
 
-- `0.5.76` must implement only a pure projection plus focused tests.
-- Use `docs/design/chronicle-run-end-summary-view-model-plan.md` as the active source.
-- Do not implement React UI in 0.5.76.
-- Do not change lifecycle behavior, payout behavior, estate delivery, Legacy grants, save deletion/retention, account history records, or generated output.
-- Do not recompute payout in the projection.
+- `0.5.77` must render the tested projection read-only.
+- Use `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`, `tests/unit/chronicle-run-end-summary-presentation.test.mjs`, and `docs/design/chronicle-run-end-summary-view-model-plan.md` as the active sources.
+- Do not add payout mutation, payout recomputation, lifecycle mutation, estate movement, Legacy grants, save deletion/retention behavior, account history mutation, or generated output.
 - Do not create Chronicle Marks, Lineage Seals, Family Prestige grants/spends, Bloodlines mutations, heirs, heirlooms, bequests, family management, or estate claim/transfer actions.
 - Do not infer `familyId` from `lineageId`, `sourceRunId`, account id, selected character, selected backstory, or UI state.
 - Do not infer parent/child relation from `sourceRunId` alone.
-- `actionIds` must always be empty in the first projection.
+- Do not pass stale lifecycle result context into an active/non-terminal record.
+- The UI may add close/continue/navigation affordances already owned by the launcher/account flow, but must not add claim, spend, convert, seal, mark, inherit, transfer, register, retry, resurrect, purchase, or payout action paths.
 
 Typecheck tooling:
 
@@ -129,8 +129,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | ---: | --- | --- | --- | --- |
 | 1 | `0.5.74` | Typecheck Script And Target Policy Cleanup | `docs/dev/typecheck-blocker-triage-plan.md` | Landed |
 | 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Landed |
-| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Next |
-| 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Planned |
+| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Landed |
+| 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Next |
 | 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
 | 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
 | 7 | `0.5.80` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
@@ -144,9 +144,9 @@ Do not skip planning-to-projection-to-UI stages unless a newer handoff or the us
 
 Use this compact order when the user asks for the next prompt:
 
-1. `Version 0.5.76 - Chronicle Run-End Summary Pure Projection` - implement the pure projection and focused tests from `docs/design/chronicle-run-end-summary-view-model-plan.md`.
-2. `Version 0.5.77 - Chronicle Run-End Read-Only UI` - render the tested projection read-only only after 0.5.76 lands.
-3. `Version 0.5.78 - Economy Price Clarity View Model Plan` - planning-only economy clarity source update after Chronicle UI sequence advances.
+1. `Version 0.5.77 - Chronicle Run-End Read-Only UI` - render the tested projection read-only.
+2. `Version 0.5.78 - Economy Price Clarity View Model Plan` - planning-only economy clarity source update after Chronicle UI sequence advances.
+3. `Version 0.5.79 - Economy Price Clarity Pure Projection` - implement the economy price clarity projection only after the 0.5.78 plan lands.
 
 Do not combine these three into one Codex run unless the user explicitly re-scopes the work.
 
@@ -156,7 +156,7 @@ Current status:
 
 - `docs/design/bloodlines-information-architecture-audit.md` - partially consumed by `0.5.71` and `0.5.72`; keep for future richer tree/Bloodlines presentation constraints.
 - `docs/design/chronicles-bloodline-tree-presentation-plan.md` - partially consumed by read-only UI; keep for richer tree presentation, hierarchy, and Chronicle/Bloodlines boundaries.
-- `docs/design/chronicle-run-end-summary-source-audit.md` - promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`; keep only as source-detail reference for `0.5.76`-`0.5.77`.
+- `docs/design/chronicle-run-end-summary-source-audit.md` - promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`; keep only as source-detail reference through `0.5.77`.
 - `docs/design/economy-clarity-audit.md` - promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep only as source-detail reference for `0.5.78`-`0.5.79`.
 - `docs/design/calendar-climate-popup-ia-audit.md` - promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep only as source-detail reference for `0.5.80`-`0.5.81`.
 - `docs/design/combat-audit-scoping-pass.md` - promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; keep only as source-detail reference for `0.5.82`.
@@ -171,7 +171,7 @@ Current status:
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`, inspect:
+For `Version 0.5.77 - Chronicle Run-End Read-Only UI`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -183,18 +183,18 @@ For `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`, inspect:
 - `docs/design/chronicle-run-end-summary-source-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- account run-history contracts
-- run lifecycle/archive result files
-- account estate helpers
-- existing account meta / Chronicle presentation helpers
-- focused tests around account meta, run lifecycle, achievements, payout metadata, and any existing Chronicle presentation tests
+- `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
+- `tests/unit/chronicle-run-end-summary-presentation.test.mjs`
+- account meta / launcher UI files
+- existing Chronicle and Bloodlines read-only UI patterns
+- relevant static tests for account meta UI copy and no-action guarantees
 
-0.5.76 should implement a pure projection and focused tests only. Do not render React UI, mutate lifecycle/payout/estate state, grant Legacy, create Chronicle Marks, Lineage Seals, Family Prestige, heirs, bequests, heirlooms, family records, or generated output.
+0.5.77 should render the tested projection read-only only. Do not add buttons, commands, payout mutation, estate delivery, family mutation, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines mutation, or generated output unless explicitly re-scoped.
 
-## After 0.5.76
+## After 0.5.77
 
 Return to the sequence file. The next implementation run should be:
 
-- `Version 0.5.77 - Chronicle Run-End Read-Only UI`
+- `Version 0.5.78 - Economy Price Clarity View Model Plan`
 
-Use `docs/design/chronicle-run-end-summary-view-model-plan.md` and the tested 0.5.76 projection. Do not broaden into mutation, payout, estate delivery, Marks, Seals, Family Prestige, or Bloodlines behavior.
+Use `docs/design/economy-price-clarity-view-model-plan.md`. Keep it planning-only unless explicitly re-scoped.
