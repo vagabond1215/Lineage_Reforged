@@ -1,15 +1,15 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.76 - Chronicle Run-End Summary Pure Projection
+Source version/run: Version 0.5.77 - Chronicle Run-End Read-Only UI
 Date: 2026-05-24
-Branch/status assumption: Ran locally on `master`. Initial worktree was clean but `master` was behind `origin/master` by 4 commits. Default `git pull` was blocked by local SSL certificate validation; `git -c http.sslBackend=schannel pull` fast-forwarded successfully, and `git status --short --branch` then showed clean `master...origin/master` before edits.
+Branch/status assumption: Ran locally on `master`. Preflight showed a clean worktree aligned with `origin/master`; default `git pull` was blocked by local SSL certificate validation, then `git -c http.sslBackend=schannel pull` fast-forwarded `master` from `32e90a6` to `1c99b56`. `git status --short --branch` then showed clean `master...origin/master` before edits.
 
 ## Result
-Implemented the pure read-only Chronicle run-end summary projection and focused tests defined by the 0.5.75 plan.
+Rendered the tested Chronicle run-end summary projection read-only inside the existing account meta Chronicles surface.
 
-Added `buildChronicleRunEndSummaryViewModel(...)` as a stored-data-only presentation projection for a single run-end Chronicle summary. The projection emits display-ready rows for identity, origin, survival, progression, deeds, payout, estate, continuity, slots, warnings, and an always-empty `actionIds` array.
+`AccountMetaPanel` now builds a `ChronicleRunEndSummaryViewModel` for the first visible run record in the active Chronicle filter and renders its projection-owned rows in a read-only `Run-End Summary` panel. The UI layer owns layout only; it does not duplicate payout, estate, continuity, or warning logic.
 
-No React UI, lifecycle mutation, payout recomputation, estate movement, Legacy grant, Bloodlines behavior, Chronicle Mark, Lineage Seal, Family Prestige behavior, schema, content JSON, or generated output was changed.
+No lifecycle mutation, payout recomputation, estate movement, Legacy grant, Bloodlines behavior, Chronicle Mark, Lineage Seal, Family Prestige behavior, schema, content JSON, generated output, or account mutation was added.
 
 ## Files Inspected
 - `AGENTS.md`
@@ -22,135 +22,113 @@ No React UI, lifecycle mutation, payout recomputation, estate movement, Legacy g
 - `docs/design/chronicle-run-end-summary-source-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `packages/shared/types/src/contracts.ts`
-- `packages/engines/game-engine/src/run-legacy-payout.ts`
-- `packages/engines/game-engine/src/account-estate.ts`
-- `packages/engines/game-engine/src/achievements.ts`
-- `apps/rpg-ui/src/game-shell/runLifecycle.ts`
-- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
-- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
-- `tests/unit/run-lifecycle.test.mjs`
-- `tests/unit/legacy-ledger-presentation.test.mjs`
-- `tests/unit/account-estate.test.mjs`
-- `tests/unit/bloodlines-presentation.test.mjs`
-
-## Files Changed
 - `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
 - `tests/unit/chronicle-run-end-summary-presentation.test.mjs`
+- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
+- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
+- `apps/rpg-ui/src/game-shell/runLifecycle.ts`
+- `tests/unit/legacy-ledger-presentation.test.mjs`
+
+## Files Changed
+- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
+- `tests/unit/chronicle-run-end-summary-ui.test.mjs`
 - `docs/dev/current-codex-output.md`
 
-## Projection Boundary
-New file:
+## UI Boundary
+The summary renders in the existing `AccountMetaPanel` Chronicles section, after the Chronicle filter controls and before the filtered Chronicle tile list.
 
-- `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
+The UI computes:
 
-New function:
+- the active filter's visible Chronicle tiles from existing account meta presentation state;
+- the first matching stored `AccountRunHistoryRecord` from `accountProfile.history.runRecords`;
+- a `chronicleRunEndSummary` by calling `buildChronicleRunEndSummaryViewModel({ accountProfile, runRecord })`.
 
-- `buildChronicleRunEndSummaryViewModel(input: ChronicleRunEndSummaryInput): ChronicleRunEndSummaryViewModel`
+No `lifecycleResult` is passed from this surface, so active/non-terminal records cannot receive stale terminal lifecycle context.
 
-Input shape:
+The new `ChronicleRunEndSummaryPanel` renders only projection output:
 
-- `accountProfile: AccountProfileState`
-- `runRecord: AccountRunHistoryRecord | null`
-- optional `lifecycleResult` context with read-only `legacyGranted`, `rewardTransactionId`, `clearedSlotIds`, `retainedSlotIds`, and `inheritanceUsesRemaining`
+- title/subtitle/outcome badge
+- warnings
+- identity rows
+- origin rows
+- survival rows
+- progression rows
+- deed rows
+- payout metadata rows
+- estate summary rows
+- continuity rows
+- slot rows
 
-Output shape:
+The React component does not compute payout, source links, estate matches, achievement fallbacks, or warning content. Those remain owned by `chronicleRunEndSummaryPresentation.ts`.
 
-- `title`, `subtitle`, `outcomeLabel`, `statusTone`
-- `identityRows`
-- `originRows`
-- `survivalRows`
-- `progressionRows`
-- `deedRows`
-- `payoutRows`
-- `estateRows`
-- `continuityRows`
-- `slotRows`
-- `warningLabels`
-- `actionIds: []`
-
-The projection is deterministic and presentation-only. It is not wired into React UI yet.
-
-## Data Rules Enforced
-- Reads `AccountRunHistoryRecord` fields only as stored.
-- Reads payout state from stored `payoutEligible`, `legacyGranted`, `payoutBreakdown`, `legacyPayoutResolvedAt`, and `legacyPayoutTransactionId`.
-- Does not import or call `resolveRunLegacyPayout(...)`.
-- Does not recompute payout from Echo, deeds, archive reason, or account state.
-- Reads achievement titles through the current achievement catalog; unknown achievement ids use conservative fallback labels.
-- Reads estate rows only from stored `accountProfile.estate.deposits/assets` matching `resolveRunHistorySourceId(record)`.
-- Deleted records are marked non-authoritative and expose no payout or estate rows.
-- `lineageId` is displayed only as lineage and is never treated as `familyId`.
-- `sourceRunId` may display source context but does not create parent/child copy without explicit `parentCharacterId`.
-- Explicit `familyId`, `parentCharacterId`, `crossLineageStart`, and `inheritanceUsesRemaining` are shown only as read-only stored continuity context.
-- Slot impact rows are read-only summaries from stored slot ids and optional lifecycle result context.
-- No claim, spend, convert, seal, mark, inherit, transfer, register, retry, resurrect, or purchase actions are emitted.
-- `actionIds` is always empty.
+## Read-Only Guardrails Enforced
+- No new action props, callbacks, handlers, command ids, or buttons were added for the run-end summary.
+- The run-end summary component renders no `<button>` elements.
+- The UI does not import or call `resolveRunLegacyPayout(...)`.
+- The UI does not recompute payout or inspect payout math inputs.
+- The UI does not grant Legacy or create Legacy transactions.
+- The UI does not deposit, move, claim, deliver, split, transfer, or mutate estate assets.
+- The UI does not create Chronicle Marks or Lineage Seals.
+- The UI does not create Family Prestige grants or spending.
+- The UI does not create or mutate Bloodlines behavior.
+- The UI does not create heirs, heirlooms, bequests, family records, or family management.
+- The UI does not infer `familyId` or parent/child relationships; it renders projection rows only.
+- The existing Legacy purchase/preparation callbacks remain unchanged and scoped to the Legacy section behavior that already existed.
 
 ## Behavior / Runtime Confirmation
-- runtime mutation changed: no
 - lifecycle behavior changed: no
 - payout behavior changed: no
-- payout recomputation added to presentation: no
+- payout recomputation added to UI: no
 - estate behavior changed: no
-- estate deposit/move/claim/delivery added: no
-- Legacy grant behavior changed: no
+- estate delivery/claim/transfer behavior added: no
+- Legacy behavior changed: no
 - Bloodlines behavior changed: no
 - Chronicle Marks added: no
 - Lineage Seals added: no
 - Family Prestige behavior changed: no
-- React UI changed: no
 - schema changed: no
 - content JSON changed: no
-- tests changed: yes, one focused unit test file added
 - generated output changed: no
+- account mutation changed: no
+- UI changed: yes, read-only Chronicle run-end summary panel only
+- tests changed: yes, one focused UI/static test file added
 
 ## Tests Added / Updated
-Added `tests/unit/chronicle-run-end-summary-presentation.test.mjs` covering:
+Added `tests/unit/chronicle-run-end-summary-ui.test.mjs` covering:
 
-1. Missing `runRecord` returns safe warning output and no actions.
-2. Active records render non-terminal context and do not claim payout resolution.
-3. Retained retired records render retirement, retained slots, inheritance-use count, and no estate deposit claim.
-4. Archived death records render death outcome, survival, Echo, deeds, and stored payout rows.
-5. Hardcore death records render a distinct hardcore death label from `archiveReason`.
-6. Deleted records render non-authoritative warnings and no payout, estate, or action claims.
-7. Stored payout metadata displays without importing/calling `resolveRunLegacyPayout(...)`.
-8. Contradictory payout fixtures display stored values instead of recomputing.
-9. Known achievement ids resolve titles; unknown ids use conservative fallback labels.
-10. Missing optional family/location/duration fields produce safe labels.
-11. `lineageId` is never treated as `familyId`.
-12. `sourceRunId` can display source context but does not create parent/child copy.
-13. Estate rows read only stored deposits/assets matching `resolveRunHistorySourceId(record)`.
-14. Estate rows expose no claim/transfer/bequest/heirloom action ids.
-15. Lifecycle cleared/retained slot ids produce read-only slot impact rows only.
-16. `actionIds` is always empty.
-17. Deferred Chronicle, Bloodlines, Family Prestige, estate delivery, Chronicle Mark, and Lineage Seal systems are not represented.
+1. Account meta Chronicles surface imports/calls the projection and renders summary row groups from projection output.
+2. The run-end summary UI component is read-only and has no forbidden action paths, buttons, command ids, claim/transfer/bequest/heirloom labels, Marks, Seals, Family Prestige behavior, or payout resolver call.
+3. Account meta passes no stale lifecycle result context into the projection.
+4. Existing Legacy, Chronicles, and Bloodlines account meta sections remain, and no run-end mutation callbacks were added.
+
+Existing 0.5.76 projection tests were preserved.
 
 ## Checks Run
-- `git status --short --branch` - initial worktree clean; branch was `master...origin/master [behind 4]`.
+- `git status --short --branch` - clean `master...origin/master` before sync.
 - `git pull` - failed before edits due local SSL certificate validation: `SSL certificate OpenSSL verify result: unable to get local issuer certificate (20)`.
 - `git -c http.sslBackend=schannel pull` - passed; fast-forwarded `master` to `origin/master`.
 - `git status --short --branch` - passed after sync; clean `master...origin/master`.
+- `node --test tests/unit/chronicle-run-end-summary-ui.test.mjs` - passed, 4 tests.
 - `node --test tests/unit/chronicle-run-end-summary-presentation.test.mjs` - passed, 17 tests.
-- `npm.cmd run tool:content-lint` - passed, `content-lint: ok (53 files checked)`.
+- `node --test tests/unit/chronicle-run-end-summary-ui.test.mjs` - passed, 4 tests.
 - `node --test tests/unit/run-lifecycle.test.mjs` - passed, 13 tests.
 - `node --test tests/unit/legacy-ledger-presentation.test.mjs` - passed, 13 tests.
-- `node --test tests/unit/chronicle-run-end-summary-presentation.test.mjs` - passed, 17 tests.
-- `git diff --check` - passed with LF-to-CRLF warning for `docs/dev/current-codex-output.md`.
+- `npm.cmd run tool:content-lint` - passed, `content-lint: ok (53 files checked)`.
+- `git diff --check` - passed with LF-to-CRLF warnings for `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx` and `docs/dev/current-codex-output.md`.
 
-No broad typecheck was run because this pass did not require it and the repo documents known typecheck target blockers.
+No broad typecheck was run because this pass did not require it and the repo documents known typecheck blockers.
 
 ## Risks / Follow-Up
-- The projection is not yet visible in UI. 0.5.77 should render it read-only without adding mutation paths.
-- Some display labels are intentionally conservative. The read-only UI pass may tune layout/copy while preserving the stored-data-only and no-action rules.
-- The projection imports lifecycle helpers for authority/source-id classification; it does not call payout resolution or lifecycle mutation paths.
-- Existing account meta Chronicle tiles remain unchanged and still use their current compact labels.
+- The summary currently shows the first run record in the active Chronicle filter rather than a user-selected detailed tile. A later UI pass can add selection if it stays read-only and action-free.
+- Existing Chronicle estate preview copy remains unchanged and still uses its current read-only claim-preview language outside the new run-end summary panel.
+- The new panel is static/read-only; no browser screenshot or build was run because this pass avoided broad UI build/typecheck targets with known blockers.
 - No new deferred work was discovered, so `docs/future_content_backlog.md` was not changed.
 
 ## Temporary Guardrail Cleanup Decision
-`docs/design/chronicle-run-end-summary-source-audit.md` remains useful through Version 0.5.77 as a source-detail reference for the read-only UI integration. After the UI pass lands, fold durable rules into `docs/design/future-system-design-ledger.md` and delete or mark the source audit consumed if it no longer protects implementation choices.
+`docs/design/chronicle-run-end-summary-source-audit.md` has now served the 0.5.75 planning, 0.5.76 projection, and 0.5.77 read-only UI sequence. It should be marked consumed or folded/deleted in a later connector/docs cleanup pass after durable run-end summary rules are promoted into `docs/design/future-system-design-ledger.md`. It is no longer needed as an active implementation source for the next run.
 
 ## Next Recommended Version
-Version 0.5.77 - Chronicle Run-End Read-Only UI
+Version 0.5.78 - Economy Price Clarity View Model Plan
 
 ## Suggested Commit Message
-feat(chronicle): add run-end summary projection
+feat(chronicle): render run-end summary read-only

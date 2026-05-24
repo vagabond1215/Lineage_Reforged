@@ -1,5 +1,8 @@
 import { useMemo, useState } from "react";
-import type { AccountProfileState } from "../../../../../packages/shared/types/src/index.js";
+import type {
+  AccountProfileState,
+  AccountRunHistoryRecord
+} from "../../../../../packages/shared/types/src/index.js";
 import type {
   AccountMetaSectionId,
   ChronicleFilterId,
@@ -14,6 +17,12 @@ import type {
   BloodlinesViewModel
 } from "../bloodlinesPresentation.js";
 import { buildBloodlinesViewModel } from "../bloodlinesPresentation.js";
+import type {
+  ChronicleRunEndSummaryRow,
+  ChronicleRunEndSummaryStatusTone,
+  ChronicleRunEndSummaryViewModel
+} from "../chronicleRunEndSummaryPresentation.js";
+import { buildChronicleRunEndSummaryViewModel } from "../chronicleRunEndSummaryPresentation.js";
 
 type AccountMetaPanelProps = {
   accountProfile: AccountProfileState;
@@ -407,6 +416,134 @@ function EstatePreviewPanel({ estate }: { estate: ChronicleEstateViewModel }) {
   );
 }
 
+function buildRunEndToneClass(tone: ChronicleRunEndSummaryStatusTone): string {
+  switch (tone) {
+    case "death":
+    case "hardcore_death":
+    case "deleted":
+      return [
+        "border-[color:var(--color-action-danger)]",
+        "bg-[color:var(--color-surface-muted)]",
+        "text-[color:var(--color-action-danger)]"
+      ].join(" ");
+    case "retired":
+      return [
+        "border-[color:var(--color-prestige-accent)]",
+        "bg-[color:var(--color-tone-accent-bg)]",
+        "text-[color:var(--color-prestige-accent)]"
+      ].join(" ");
+    case "active":
+      return [
+        "border-[color:var(--color-echo-accent)]",
+        "bg-[color:var(--color-tone-accent-bg)]",
+        "text-[color:var(--color-echo-accent)]"
+      ].join(" ");
+    case "missing":
+    case "archived":
+    default:
+      return [
+        "border-[color:var(--color-border-soft)]",
+        "bg-[color:var(--color-surface-muted)]",
+        "text-[color:var(--color-text-muted)]"
+      ].join(" ");
+  }
+}
+
+function ChronicleRunEndRowGrid({
+  label,
+  rows
+}: {
+  label: string;
+  rows: ChronicleRunEndSummaryRow[];
+}) {
+  if (rows.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="forged-subpanel px-3 py-3">
+      <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-muted-strong)]">
+        {label}
+      </div>
+      <div className="mt-2 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+        {rows.map((row) => (
+          <div
+            key={row.id}
+            className="rounded-md border border-[color:var(--color-border-soft)] px-3 py-2"
+          >
+            <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+              {row.label}
+            </div>
+            <div className="mt-1 text-sm font-semibold text-[color:var(--color-text-strong)]">
+              {row.valueLabel}
+            </div>
+            {row.detailLabel ? (
+              <div className="mt-1 text-xs leading-5 text-[color:var(--color-text-soft)]">
+                {row.detailLabel}
+              </div>
+            ) : null}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ChronicleRunEndSummaryPanel({
+  summary
+}: {
+  summary: ChronicleRunEndSummaryViewModel;
+}) {
+  const rowSections = [
+    ["Identity", summary.identityRows],
+    ["Origin", summary.originRows],
+    ["Survival", summary.survivalRows],
+    ["Progression", summary.progressionRows],
+    ["Deeds", summary.deedRows],
+    ["Payout Metadata", summary.payoutRows],
+    ["Estate Summary", summary.estateRows],
+    ["Continuity", summary.continuityRows],
+    ["Slots", summary.slotRows]
+  ] as const;
+
+  return (
+    <div className="forged-card p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-sm font-semibold text-[color:var(--color-text-strong)]">
+            Run-End Summary
+          </div>
+          <div className="mt-1 truncate text-lg font-semibold text-[color:var(--color-text-strong)]">
+            {summary.title}
+          </div>
+          <div className="mt-1 text-sm leading-6 text-[color:var(--color-text-soft)]">
+            {summary.subtitle}
+          </div>
+        </div>
+        <span className={`${badgeBaseClass} shrink-0 ${buildRunEndToneClass(summary.statusTone)}`}>
+          {summary.outcomeLabel}
+        </span>
+      </div>
+
+      {summary.warningLabels.length > 0 ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {summary.warningLabels.map((warning) => (
+            <span key={warning} className={mutedBadgeClass}>
+              {warning}
+            </span>
+          ))}
+        </div>
+      ) : null}
+
+      <div className="mt-3 grid gap-3">
+        {rowSections.map(([label, rows]) => (
+          <ChronicleRunEndRowGrid key={label} label={label} rows={rows} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function BloodlinesFamilyCard({ family }: { family: BloodlinesFamilySummaryViewModel }) {
   const linkedRuns = family.tree.linkedRuns.slice(0, 5);
   const overflowRunCount = Math.max(0, family.tree.linkedRuns.length - linkedRuns.length);
@@ -692,6 +829,25 @@ export function AccountMetaPanel({
       meta.chronicles.tiles.filter((tile) => tile.filterIds.includes(selectedChronicleFilter)),
     [meta.chronicles.tiles, selectedChronicleFilter]
   );
+  const selectedChronicleRunRecord = useMemo<AccountRunHistoryRecord | null>(() => {
+    const recordByCharacterId = new Map(
+      accountProfile.history.runRecords.map((record) => [record.characterId, record])
+    );
+
+    return (
+      filteredChronicleTiles
+        .map((tile) => recordByCharacterId.get(tile.id))
+        .find((record): record is AccountRunHistoryRecord => record !== undefined) ?? null
+    );
+  }, [accountProfile.history.runRecords, filteredChronicleTiles]);
+  const chronicleRunEndSummary = useMemo(
+    () =>
+      buildChronicleRunEndSummaryViewModel({
+        accountProfile,
+        runRecord: selectedChronicleRunRecord
+      }),
+    [accountProfile, selectedChronicleRunRecord]
+  );
 
   const legacyContent = (
     <div className="space-y-4">
@@ -846,6 +1002,8 @@ export function AccountMetaPanel({
           );
         })}
       </div>
+
+      <ChronicleRunEndSummaryPanel summary={chronicleRunEndSummary} />
 
       {filteredChronicleTiles.length === 0 ? (
         <div className="forged-subpanel border-dashed px-4 py-5 text-sm text-[color:var(--color-text-soft)]">
