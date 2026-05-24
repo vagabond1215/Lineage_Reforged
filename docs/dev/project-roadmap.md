@@ -1,11 +1,11 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-05-22
+Last reviewed: 2026-05-24
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
 - `AGENTS.md` for repository rules, version-label discipline, and tool routing.
-- `docs/dev/current-codex-output.md` for the latest exact Codex implementation handoff.
+- `docs/dev/current-codex-output.md` for the latest exact implementation handoff.
 - `docs/dev/current-gpt-handoff.md` for current connector-side audits, immediate risks, and prompt guardrails.
 - `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue after the current handoff.
 - `docs/design/future-system-design-ledger.md` for durable future-system criteria, vocabulary, boundaries, and open conceptual questions.
@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
-- Next recommended version: `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+- Latest landed version: `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+- Next recommended version: `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -36,8 +36,9 @@ Current repo reality:
 - A pure read-only Bloodlines projection exists in `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`.
 - The account meta / launcher surface renders a read-only Bloodlines section beside Legacy and Chronicles.
 - Bloodlines currently presents explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
-- Typecheck script routing is now explicit: default `typecheck` delegates to the UI app, `typecheck:ui:node` passes, and `typecheck:workspace` is the broad root audit target.
+- Typecheck script routing is explicit: default `typecheck` delegates to the UI app, `typecheck:ui:node` passes, and `typecheck:workspace` is the broad root audit target.
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers; focused tests remain the current confidence path.
+- Chronicle run-end summary planning has landed and defines the future pure projection boundary in `docs/design/chronicle-run-end-summary-view-model-plan.md`.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
 
@@ -74,7 +75,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.72` | Bloodlines Read-Only Account Meta UI | Codex Local | Read-only UI | Landed. Rendered Bloodlines read-only in the account meta / launcher surface. | No management actions, purchase execution, transfer, claim, spend, or resolver bypass. |
 | `0.5.73` | Bloodlines Handoff And Temporary Guardrail Cleanup | Codex Local | Docs / continuity cleanup | Landed. Aligned handoff, roadmap, continuity brief, design ledger, and temporary guardrail statuses after Bloodlines UI. | Docs-only; no source, UI, tests, schemas, content JSON, or generated output changes. |
 | `0.5.74` | Typecheck Script And Target Policy Cleanup | Codex Local | Tooling / validation cleanup | Landed. Made typecheck commands honest and repeatable while preserving strictness. | Default and workspace typecheck targets still have known blockers; do not treat them as green gates yet. |
-| `0.5.75` | Chronicle Run-End Summary View Model Plan | Codex Plan Mode or Codex Local docs-only | Planning | Next recommended step. Map current run-ending data into a future read-only impact summary before projection/UI work. | Planning-only; do not change lifecycle, payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines behavior, or generated output. |
+| `0.5.75` | Chronicle Run-End Summary View Model Plan | Codex Local docs-only | Planning | Landed. Finalized source ownership and future projection boundary for run-end Chronicle summary. | Planning-only; no lifecycle, payout, estate, UI, Chronicle Marks, Lineage Seals, Family Prestige, Bloodlines, or generated output changes. |
+| `0.5.76` | Chronicle Run-End Summary Pure Projection | Codex Local | Pure projection + tests | Next recommended step. Implement the tested read-only view model defined by the 0.5.75 plan. | No React UI, payout recomputation, lifecycle mutation, estate movement, actions, Marks, Seals, Family Prestige, or Bloodlines behavior. |
 
 ## 4. Sequenced Near-Term Codex Queue
 
@@ -83,8 +85,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
 | 1 | `0.5.74` | Typecheck Script And Target Policy Cleanup | `docs/dev/typecheck-blocker-triage-plan.md` | Landed |
-| 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Next |
-| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Planned |
+| 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Landed |
+| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Next |
 | 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Planned |
 | 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
 | 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
