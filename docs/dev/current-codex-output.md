@@ -1,15 +1,13 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.77 - Chronicle Run-End Read-Only UI
+Source version/run: Version 0.5.78 - Economy Price Clarity View Model Plan
 Date: 2026-05-24
-Branch/status assumption: Ran locally on `master`. Preflight showed a clean worktree aligned with `origin/master`; default `git pull` was blocked by local SSL certificate validation, then `git -c http.sslBackend=schannel pull` fast-forwarded `master` from `32e90a6` to `1c99b56`. `git status --short --branch` then showed clean `master...origin/master` before edits.
+Branch/status assumption: Ran locally on `master`. Initial worktree was clean. `git pull` failed on local OpenSSL certificate validation, then `git -c http.sslBackend=schannel pull` reported `Already up to date.` Direction-bearing docs still lag in places, so this run trusted the latest Codex output state that 0.5.77 landed and 0.5.78 was next.
 
 ## Result
-Rendered the tested Chronicle run-end summary projection read-only inside the existing account meta Chronicles surface.
+Finalized the planning-only economy price clarity view-model plan in `docs/design/economy-price-clarity-view-model-plan.md` from live repo inspection. The plan now defines the 0.5.79 pure projection boundary, source owners, label thresholds, missing-data behavior, read-only restrictions, and focused future tests.
 
-`AccountMetaPanel` now builds a `ChronicleRunEndSummaryViewModel` for the first visible run record in the active Chronicle filter and renders its projection-owned rows in a read-only `Run-End Summary` panel. The UI layer owns layout only; it does not duplicate payout, estate, continuity, or warning logic.
-
-No lifecycle mutation, payout recomputation, estate movement, Legacy grant, Bloodlines behavior, Chronicle Mark, Lineage Seal, Family Prestige behavior, schema, content JSON, generated output, or account mutation was added.
+No runtime, source, schema, UI, test, content JSON, generated output, or economy behavior was implemented.
 
 ## Files Inspected
 - `AGENTS.md`
@@ -18,117 +16,133 @@ No lifecycle mutation, payout recomputation, estate movement, Legacy grant, Bloo
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/chronicle-run-end-summary-view-model-plan.md`
-- `docs/design/chronicle-run-end-summary-source-audit.md`
+- `docs/design/economy-price-clarity-view-model-plan.md`
+- `docs/design/economy-clarity-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
+- `packages/shared/types/src/contracts.ts`
+- `packages/engines/civilization-engine/src/runtime-economy.ts`
+- `packages/engines/civilization-engine/src/settlement-simulation.ts`
+- `packages/engines/civilization-engine/src/trade-runtime.ts`
+- `packages/engines/civilization-engine/src/index.ts`
 - `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
-- `tests/unit/chronicle-run-end-summary-presentation.test.mjs`
+- `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`
 - `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
-- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
-- `apps/rpg-ui/src/game-shell/runLifecycle.ts`
-- `tests/unit/legacy-ledger-presentation.test.mjs`
+- `tests/unit/civilization-runtime-economy.test.mjs`
+- `tests/unit/civilization-trade-runtime.test.mjs`
+- `tests/unit/civilization-system-consistency.test.mjs`
 
 ## Files Changed
-- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
-- `tests/unit/chronicle-run-end-summary-ui.test.mjs`
+- `docs/design/economy-price-clarity-view-model-plan.md`
 - `docs/dev/current-codex-output.md`
 
-## UI Boundary
-The summary renders in the existing `AccountMetaPanel` Chronicles section, after the Chronicle filter controls and before the filtered Chronicle tile list.
+## Current Repo Reality
+Current contracts and runtime sources can support a read-only clarity layer without changing economy behavior:
 
-The UI computes:
+- `SettlementMarketState` contains settlement-local `stock`, `laborPressure`, and `priceView` rows.
+- `SettlementMarketPriceState` contains buy/sell prices, spread, estimated market value, production cost, and pressure sources.
+- `SettlementSupplyDemandState` contains surplus, shortage, import, export, consumption, dependency, and note fields.
+- `TradeOpportunityState` contains viability, strategic necessity, quantities, load/fill, protected reserve, absorption, prices, margins, route timing, route ids, rejection reasons, and explanations.
+- `ItemValueResolutionState` and `CraftResolutionState` contain enough read-only value/cost detail for later projection rows.
+- `tickCivilization(...)` currently stores computed market states and evaluated trade opportunities on civilization state, but the future projection should consume that resolved state only and must not tick, dispatch, or recompute.
 
-- the active filter's visible Chronicle tiles from existing account meta presentation state;
-- the first matching stored `AccountRunHistoryRecord` from `accountProfile.history.runRecords`;
-- a `chronicleRunEndSummary` by calling `buildChronicleRunEndSummaryViewModel({ accountProfile, runRecord })`.
+## Data-Owner Map
+- Price clarity: owned by runtime economy through `SettlementMarketPriceState` plus matching `SettlementMarketState`.
+- Stock scarcity/surplus clarity: owned by runtime economy stock pressure and settlement simulation supply/demand.
+- Labor pressure clarity: owned by runtime economy labor pressure rows.
+- Trade opportunity clarity: owned by trade runtime through `TradeOpportunityState`.
+- Item value clarity: owned by runtime item value resolution through supplied `ItemValueResolutionState`.
+- Craft cost clarity: owned by runtime craft estimate resolution through supplied `CraftResolutionState`.
+- Infrastructure context: owned by settlement simulation through supplied `SettlementInfrastructureRuntimeState`.
 
-No `lifecycleResult` is passed from this surface, so active/non-terminal records cannot receive stale terminal lifecycle context.
+## Planned Projection Boundary
+Future file:
 
-The new `ChronicleRunEndSummaryPanel` renders only projection output:
+- `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`
 
-- title/subtitle/outcome badge
-- warnings
-- identity rows
-- origin rows
-- survival rows
-- progression rows
-- deed rows
-- payout metadata rows
-- estate summary rows
-- continuity rows
-- slot rows
+Planned pure functions for 0.5.79:
 
-The React component does not compute payout, source links, estate matches, achievement fallbacks, or warning content. Those remain owned by `chronicleRunEndSummaryPresentation.ts`.
+- `buildEconomyPriceClarityViewModel(input: EconomyPriceClarityInput): EconomyPriceClarityViewModel`
+- `buildTradeOpportunityClarityViewModel(input: TradeOpportunityClarityInput): TradeOpportunityClarityViewModel`
+- `buildCraftCostClarityViewModel(input: CraftCostClarityInput): CraftCostClarityViewModel`
 
-## Read-Only Guardrails Enforced
-- No new action props, callbacks, handlers, command ids, or buttons were added for the run-end summary.
-- The run-end summary component renders no `<button>` elements.
-- The UI does not import or call `resolveRunLegacyPayout(...)`.
-- The UI does not recompute payout or inspect payout math inputs.
-- The UI does not grant Legacy or create Legacy transactions.
-- The UI does not deposit, move, claim, deliver, split, transfer, or mutate estate assets.
-- The UI does not create Chronicle Marks or Lineage Seals.
-- The UI does not create Family Prestige grants or spending.
-- The UI does not create or mutate Bloodlines behavior.
-- The UI does not create heirs, heirlooms, bequests, family records, or family management.
-- The UI does not infer `familyId` or parent/child relationships; it renders projection rows only.
-- The existing Legacy purchase/preparation callbacks remain unchanged and scoped to the Legacy section behavior that already existed.
+The plan allows all three in 0.5.79 only if each function remains a pure mapper over supplied state. It specifically blocks calling `resolveLocalMarketPrice(...)`, `buildSettlementMarketStates(...)`, `resolveItemValueAtSettlement(...)`, `resolveCraftAtSettlement(...)`, trade dispatch, or civilization tick helpers from inside the projection.
+
+Outputs should be display-ready rows, labels, warnings, and `actionIds: []`.
+
+## Label Rules
+- Price labels: `Cheap`, `Fair`, `Expensive`, or `Unknown` from local buy price versus estimated market value.
+- Spread labels: `Tight spread`, `Normal spread`, `Wide spread`, or `Unknown spread` from stored spread versus estimated market value.
+- Margin labels: `Blocked`, `Losing route`, `Thin margin`, `Fair margin`, `Strong margin`, or `Unknown margin` from stored trade opportunity margin fields.
+- Scarcity/import/export labels: derive from stock pressure plus supplied `SettlementSupplyDemandState`; missing inputs produce `Unknown pressure`.
+- Labor labels: `Labor constrained`, `Stable labor`, `Skilled labor available`, or `Labor data unavailable` from supplied labor pressure rows only.
+- Trade labels: derive from stored viability, strategic necessity, fill ratio, route time, rejection reasons, and explanation.
+- Craft/value labels: derive from supplied craft and item value states only; they must not imply inventory consumption, crafted item creation, worker assignment, shop availability, or craft execution.
+
+## Allowed / Deferred Behavior
+- Allowed for 0.5.79: read supplied current economy state, convert it into display-ready labels, show warnings for missing/mismatched data, and emit no action ids.
+- Deferred/forbidden: price recomputation, formula tuning, supply/demand changes, stockpile mutation, settlement content edits, trade dispatch, caravan state changes, shop actions, crafting execution, passive income, contacts, discounts, market privileges, Legacy economy effects, command ids, React UI, and generated output.
+- Cross-system behavior remains untouched: Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, and bequest systems are not part of this projection.
+
+## Future Tests
+Recommended 0.5.79 test file:
+
+- `tests/unit/economy-clarity-presentation.test.mjs`
+
+Focused coverage should prove:
+
+- missing price/trade/craft inputs return unknown or unavailable labels and `actionIds: []`;
+- cheap/fair/expensive and tight/normal/wide spread labels derive from stored price fields;
+- pressure source rows preserve stored source and note data;
+- scarcity, surplus, import-dependent, export-ready, protected-reserve, and labor labels derive only from supplied state;
+- viable, blocked, strategic, fill, route, rejection, and margin labels derive from `TradeOpportunityState`;
+- craft/value labels derive from supplied `CraftResolutionState` and `ItemValueResolutionState`;
+- mismatched settlement or item inputs produce warnings instead of guessed data;
+- input objects are not mutated;
+- no command/action ids are emitted;
+- the projection does not call economy resolvers, trade dispatch, or civilization tick helpers.
 
 ## Behavior / Runtime Confirmation
-- lifecycle behavior changed: no
-- payout behavior changed: no
-- payout recomputation added to UI: no
-- estate behavior changed: no
-- estate delivery/claim/transfer behavior added: no
-- Legacy behavior changed: no
-- Bloodlines behavior changed: no
-- Chronicle Marks added: no
-- Lineage Seals added: no
-- Family Prestige behavior changed: no
+- runtime changed: no
+- economy math changed: no
+- simulation changed: no
+- market content changed: no
+- settlement content changed: no
+- UI changed: no
 - schema changed: no
-- content JSON changed: no
+- tests changed: no
 - generated output changed: no
-- account mutation changed: no
-- UI changed: yes, read-only Chronicle run-end summary panel only
-- tests changed: yes, one focused UI/static test file added
-
-## Tests Added / Updated
-Added `tests/unit/chronicle-run-end-summary-ui.test.mjs` covering:
-
-1. Account meta Chronicles surface imports/calls the projection and renders summary row groups from projection output.
-2. The run-end summary UI component is read-only and has no forbidden action paths, buttons, command ids, claim/transfer/bequest/heirloom labels, Marks, Seals, Family Prestige behavior, or payout resolver call.
-3. Account meta passes no stale lifecycle result context into the projection.
-4. Existing Legacy, Chronicles, and Bloodlines account meta sections remain, and no run-end mutation callbacks were added.
-
-Existing 0.5.76 projection tests were preserved.
+- Chronicle behavior changed: no
+- Bloodlines behavior changed: no
+- Legacy behavior changed: no
+- Family Prestige behavior changed: no
+- Chronicle Marks changed: no
+- Lineage Seals changed: no
+- estate behavior changed: no
+- heirloom or bequest behavior changed: no
 
 ## Checks Run
-- `git status --short --branch` - clean `master...origin/master` before sync.
-- `git pull` - failed before edits due local SSL certificate validation: `SSL certificate OpenSSL verify result: unable to get local issuer certificate (20)`.
-- `git -c http.sslBackend=schannel pull` - passed; fast-forwarded `master` to `origin/master`.
-- `git status --short --branch` - passed after sync; clean `master...origin/master`.
-- `node --test tests/unit/chronicle-run-end-summary-ui.test.mjs` - passed, 4 tests.
-- `node --test tests/unit/chronicle-run-end-summary-presentation.test.mjs` - passed, 17 tests.
-- `node --test tests/unit/chronicle-run-end-summary-ui.test.mjs` - passed, 4 tests.
-- `node --test tests/unit/run-lifecycle.test.mjs` - passed, 13 tests.
-- `node --test tests/unit/legacy-ledger-presentation.test.mjs` - passed, 13 tests.
-- `npm.cmd run tool:content-lint` - passed, `content-lint: ok (53 files checked)`.
-- `git diff --check` - passed with LF-to-CRLF warnings for `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx` and `docs/dev/current-codex-output.md`.
+- `git status --short --branch` -> clean `master...origin/master` before edits.
+- `git pull` -> failed due local OpenSSL issuer certificate validation.
+- `git -c http.sslBackend=schannel pull` -> `Already up to date.`
+- `git status --short --branch` -> clean after sync.
+- `git diff --check` -> passed; PowerShell/Git warned that `docs/design/economy-price-clarity-view-model-plan.md` and `docs/dev/current-codex-output.md` line endings will be replaced by CRLF next time Git touches them.
 
-No broad typecheck was run because this pass did not require it and the repo documents known typecheck blockers.
+No focused runtime tests were run because this pass changed docs only.
 
 ## Risks / Follow-Up
-- The summary currently shows the first run record in the active Chronicle filter rather than a user-selected detailed tile. A later UI pass can add selection if it stays read-only and action-free.
-- Existing Chronicle estate preview copy remains unchanged and still uses its current read-only claim-preview language outside the new run-end summary panel.
-- The new panel is static/read-only; no browser screenshot or build was run because this pass avoided broad UI build/typecheck targets with known blockers.
-- No new deferred work was discovered, so `docs/future_content_backlog.md` was not changed.
+- Direction-bearing handoff and roadmap docs still lag behind the latest Codex output, but the prompt explicitly said to trust `docs/dev/current-codex-output.md` if drift exists.
+- 0.5.79 should keep the projection pure and should not hide resolver calls inside presentation code.
+- Craft clarity is source-owned enough for a pure mapper, but it should stay display-only and must not become craft execution or inventory behavior.
+- Future UI should remain read-only until shop, trade, craft, and settlement interaction owners exist.
 
 ## Temporary Guardrail Cleanup Decision
-`docs/design/chronicle-run-end-summary-source-audit.md` has now served the 0.5.75 planning, 0.5.76 projection, and 0.5.77 read-only UI sequence. It should be marked consumed or folded/deleted in a later connector/docs cleanup pass after durable run-end summary rules are promoted into `docs/design/future-system-design-ledger.md`. It is no longer needed as an active implementation source for the next run.
+Keep `docs/design/economy-clarity-audit.md` through 0.5.79. The updated plan is now the active implementation source, but the audit remains useful as a source-detail reference and first-candidate rationale.
+
+After 0.5.79 lands and durable rules are folded into `docs/design/future-system-design-ledger.md`, a cleanup pass can mark the audit consumed or delete it if no unique guidance remains.
 
 ## Next Recommended Version
-Version 0.5.78 - Economy Price Clarity View Model Plan
+Version 0.5.79 - Economy Price Clarity Pure Projection
 
 ## Suggested Commit Message
-feat(chronicle): render run-end summary read-only
+docs(economy): finalize price clarity view model plan
