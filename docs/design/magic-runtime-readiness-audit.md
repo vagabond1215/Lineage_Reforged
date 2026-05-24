@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only readiness audit; no runtime/source/UI/content changes
+Status: promoted readiness audit; no runtime/source/UI/content changes
+
+0.5.83 sequencing note: this audit has been promoted into `docs/design/known-spell-ownership-plan.md`, which is the active source for `Version 0.5.83 - Known Spell Ownership Plan`. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
@@ -108,11 +110,7 @@ Potential first runtime candidate should be narrow, deterministic, and already h
 
 ## Recommended First Planning Target
 
-The next good magic planning target is not runtime. It should be:
-
-```text
-Version 0.5.69 - Known Spell Ownership Plan
-```
+The next good magic planning target is not runtime. Current prompt generation should use `docs/design/known-spell-ownership-plan.md` and the sequenced queue, not historical version examples in this audit.
 
 Goal:
 
@@ -137,12 +135,6 @@ Any future prompt that touches runtime magic must state:
 - no Magic Legacy direct power
 - no generic tag execution
 
-## Recommended Next Prompt Target
+## Current Prompt Authority
 
-```text
-Version 0.5.69 - Known Spell Ownership Plan
-
-Use docs/design/magic-runtime-readiness-audit.md and docs/design/magic-system-charter.md.
-Create a planning-only design for known-spell ownership and acquisition boundaries.
-Do not implement runtime casting, catalyst effects, magic skill gain, Magic Legacy power, scrolls, tomes, new spells, source/schema/UI changes, or generated output.
-```
+Use `docs/design/known-spell-ownership-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.

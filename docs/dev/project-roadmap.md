@@ -18,9 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.72 - Bloodlines Read-Only Account Meta UI`
-- Current cleanup version: `Version 0.5.73 - Bloodlines Handoff And Temporary Guardrail Cleanup`
-- Next recommended version: `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
+- Latest landed version: `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
+- Next recommended version: `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -37,9 +36,10 @@ Current repo reality:
 - A pure read-only Bloodlines projection exists in `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`.
 - The account meta / launcher surface renders a read-only Bloodlines section beside Legacy and Chronicles.
 - Bloodlines currently presents explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
+- Typecheck script routing is now explicit: default `typecheck` delegates to the UI app, `typecheck:ui:node` passes, and `typecheck:workspace` is the broad root audit target.
+- Default UI and broad workspace typecheck targets still fail on known pre-existing blockers; focused tests remain the current confidence path.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
-- Workspace-wide typecheck still has known pre-existing blockers; focused tests are the current confidence path.
 
 ## 2. Version-Band Maturity Model
 
@@ -72,25 +72,26 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.70` | Heirloom And Bequest Systems Plan | Codex Local | Docs / planning | Landed. Created the active heirloom/bequest planning artifact. | Planning-only; no heirs, item-instance persistence, bequest runtime, UI, or spending behavior implemented. |
 | `0.5.71` | Bloodlines View Model Implementation Plan | Codex Local | View-model / pure projection | Landed. Added a pure read-only Bloodlines projection from current account family, ledger, unlock, and run-history data. | No mutation, family management, spending, heir systems, bequests, heirlooms, or scoped Backstory evidence. |
 | `0.5.72` | Bloodlines Read-Only Account Meta UI | Codex Local | Read-only UI | Landed. Rendered Bloodlines read-only in the account meta / launcher surface. | No management actions, purchase execution, transfer, claim, spend, or resolver bypass. |
-| `0.5.73` | Bloodlines Handoff And Temporary Guardrail Cleanup | Codex Local | Docs / continuity cleanup | Current cleanup. Align handoff, roadmap, continuity brief, design ledger, temporary guardrail status, backlog, and Codex output. | Docs-only; do not change source, UI, tests, schemas, content JSON, or generated output. |
-| `0.5.74` | Typecheck Script And Target Policy Cleanup | Codex Local | Tooling / validation cleanup | Next recommended step. Make typecheck commands honest and repeatable before more UI/view-model work. | Do not weaken strictness or mix with gameplay feature work. |
+| `0.5.73` | Bloodlines Handoff And Temporary Guardrail Cleanup | Codex Local | Docs / continuity cleanup | Landed. Aligned handoff, roadmap, continuity brief, design ledger, and temporary guardrail statuses after Bloodlines UI. | Docs-only; no source, UI, tests, schemas, content JSON, or generated output changes. |
+| `0.5.74` | Typecheck Script And Target Policy Cleanup | Codex Local | Tooling / validation cleanup | Landed. Made typecheck commands honest and repeatable while preserving strictness. | Default and workspace typecheck targets still have known blockers; do not treat them as green gates yet. |
+| `0.5.75` | Chronicle Run-End Summary View Model Plan | Codex Plan Mode or Codex Local docs-only | Planning | Next recommended step. Map current run-ending data into a future read-only impact summary before projection/UI work. | Planning-only; do not change lifecycle, payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines behavior, or generated output. |
 
 ## 4. Sequenced Near-Term Codex Queue
 
 Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for the ordered near-term queue after the current handoff. Summary:
 
-| Order | Version | Topic | Primary Source |
-| ---: | --- | --- | --- |
-| 1 | `0.5.74` | Typecheck Script And Target Policy Cleanup | `docs/dev/typecheck-blocker-triage-plan.md` |
-| 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | `docs/design/chronicle-run-end-summary-view-model-plan.md` |
-| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` |
-| 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `docs/design/chronicle-run-end-summary-view-model-plan.md` |
-| 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` |
-| 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` |
-| 7 | `0.5.80` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` |
-| 8 | `0.5.81` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` |
-| 9 | `0.5.82` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` |
-| 10 | `0.5.83` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` |
+| Order | Version | Topic | Primary Source | Status |
+| ---: | --- | --- | --- | --- |
+| 1 | `0.5.74` | Typecheck Script And Target Policy Cleanup | `docs/dev/typecheck-blocker-triage-plan.md` | Landed |
+| 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Next |
+| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Planned |
+| 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Planned |
+| 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
+| 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
+| 7 | `0.5.80` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
+| 8 | `0.5.81` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
+| 9 | `0.5.82` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
+| 10 | `0.5.83` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 Do not skip planning-to-projection-to-UI stages unless a newer handoff or user instruction explicitly changes the order.
 
@@ -100,7 +101,7 @@ These connector-safe audit/planning passes have been completed, folded, or promo
 
 | Pass | Current location of useful guidance |
 | --- | --- |
-| Typecheck Blocker Triage Plan | `docs/dev/typecheck-blocker-triage-plan.md`; use for `0.5.74`. |
+| Typecheck Blocker Triage Plan | `docs/dev/typecheck-blocker-triage-plan.md`; Pass A consumed by `0.5.74`, keep for remaining blocker tracks. |
 | Chronicle Run-End Summary Source Audit | Promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`; use for `0.5.75`-`0.5.77`. |
 | Economy Clarity Audit | Promoted into `docs/design/economy-price-clarity-view-model-plan.md`; use for `0.5.78`-`0.5.79`. |
 | Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; use for `0.5.80`-`0.5.81`. |

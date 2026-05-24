@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only IA audit; no runtime/source/UI/content changes
+Status: promoted IA audit; no runtime/source/UI/content changes
+
+0.5.80 sequencing note: this audit has been promoted into `docs/design/calendar-climate-popup-view-model-plan.md`, which is the active source for `Version 0.5.80 - Calendar Climate Popup View Model Plan` and the planned `0.5.81` read-only popup pass. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
@@ -183,12 +185,6 @@ These should be answered before runtime climate effects:
 4. Should climates affect travel first, body-state first, economy first, or only presentation first?
 5. Should weather be generated per settlement, region, route, or global time slice?
 
-## Recommended Next Prompt Target
+## Current Prompt Authority
 
-```text
-Version 0.5.69 - Calendar Climate Popup View-Model Plan
-
-Use docs/design/calendar-climate-popup-ia-audit.md as the source.
-Plan a pure read-only popup view model for current clock, season, and authored climate profile information.
-Do not change clock behavior, season mapping, climate profiles, travel effects, body-state effects, weather simulation, economy/crop behavior, React UI, or generated output unless explicitly scoped.
-```
+Use `docs/design/calendar-climate-popup-view-model-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.

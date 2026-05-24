@@ -11,6 +11,7 @@ Strategic continuity lives in:
 - `docs/dev/current-codex-output.md` for the latest exact implementation handoff.
 - `docs/dev/current-gpt-handoff.md` for current prompt guardrails and connector-side risks.
 - `docs/dev/project-roadmap.md` for version order and maturity checkpoints.
+- `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue.
 - `docs/design/future-system-design-ledger.md` for durable system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic source map.
 
@@ -106,8 +107,8 @@ Launcher logs are written under `logs/`.
 - `npm run tool:content-lint`
 - `npm run tool:db-build`
 - `npm run tool:scenario`
-- `npm run typecheck` for the current default UI TypeScript target
-- `npm run typecheck:workspace` for the broader root `tsconfig.json` audit target, which may expose known cleanup blockers
+- `npm run typecheck` for the current default UI TypeScript target; it is repeatable but may still fail on known strictness blockers until the typecheck backlog is cleaned.
+- `npm run typecheck:workspace` for the broader root `tsconfig.json` audit target, which is expected to expose known cleanup blockers.
 - `npm test`
 
 On Windows PowerShell, use `npm.cmd` in place of `npm` if the PowerShell execution policy blocks the npm shim.

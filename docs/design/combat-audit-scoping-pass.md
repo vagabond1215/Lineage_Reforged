@@ -2,7 +2,9 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: connector-only audit scope; no runtime/source/UI/content changes
+Status: promoted audit scope; no runtime/source/UI/content changes
+
+0.5.82 sequencing note: this audit has been promoted into `docs/design/combat-equipment-mapping-audit-plan.md`, which is the active source for `Version 0.5.82 - Combat Equipment Mapping Audit`. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
@@ -247,12 +249,6 @@ Run focused tests, not just broad confidence claims.
 - no weapon/crit/skill Legacy power until ownership and progression gates exist
 - no hidden balance changes inside unrelated feature work
 
-## Recommended Next Prompt Target
+## Current Prompt Authority
 
-```text
-Version 0.5.69 - Combat Equipment Mapping Audit
-
-Use docs/design/combat-audit-scoping-pass.md as the audit source.
-Produce a read-only report mapping current weapon, armor, shield, action, damage-hook, and skill-gain relationships.
-Do not change combat math, item content, source code, tests, UI, magic runtime, Legacy behavior, or generated output unless explicitly re-scoped.
-```
+Use `docs/design/combat-equipment-mapping-audit-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.

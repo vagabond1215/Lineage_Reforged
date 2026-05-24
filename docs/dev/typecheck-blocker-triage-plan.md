@@ -4,17 +4,19 @@ Date: 2026-05-19
 Route used: ChatGPT via GitHub Connector
 Status: partially consumed temporary guardrail
 
-0.5.74 cleanup note: Pass A is implemented by `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`. Root `typecheck` now delegates to the UI app's local TypeScript target, while `typecheck:workspace` remains the broad root `tsconfig.json` audit target with known blockers. Keep this plan for the remaining JSON import, environment typing, and strict optional-property cleanup tracks.
+0.5.74 cleanup note: Pass A is implemented by `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`. Root `typecheck` now delegates to the UI app's local TypeScript target, while `typecheck:workspace` remains the broad root `tsconfig.json` audit target with known blockers. Keep this plan for the remaining JSON import, environment typing, JSX/root config, target/lib, Node/package typing, and strict optional-property cleanup tracks.
 
-This document records a lightweight connector-only triage of current workspace typecheck blockers. It does not modify source files, tests, schemas, runtime behavior, content JSON, generated output, or the latest Codex handoff.
+This document records a lightweight connector-only triage of workspace typecheck blockers. The original audit did not modify source files, tests, schemas, runtime behavior, content JSON, generated output, or the latest Codex handoff. The root-script routing portion has since been consumed by 0.5.74; the remaining blocker categories are still useful as planning guardrails.
 
 ## Why This Pass Was Chosen
 
-The project is likely to revisit older and less-touched game systems soon. Before that happens, the safest lightweight pass is to isolate known workspace health blockers from feature work. The current handoff says focused tests are passing, but workspace-wide typecheck still fails for tooling and broad pre-existing issues. Keeping these issues separate prevents future Codex implementation prompts from confusing old typecheck noise with regressions from new gameplay work.
+The project is likely to revisit older and less-touched game systems soon. Before that happens, the safest lightweight pass is to isolate known workspace health blockers from feature work. The current handoff says focused tests are the confidence path, while the default UI typecheck and workspace audit still expose broad pre-existing issues. Keeping these issues separate prevents future Codex implementation prompts from confusing old typecheck noise with regressions from new gameplay work.
 
-This should remain a separate cleanup track. Do not mix it into Backstory Legacy content, resolver integration, Bloodlines, combat, economy, or magic work unless a specific blocker directly prevents that run.
+This should remain a separate cleanup track. Do not mix it into Backstory Legacy content, resolver integration, Bloodlines, Chronicle summary, combat, economy, or magic work unless a specific blocker directly prevents that run.
 
 ## Evidence Inspected
+
+Original connector audit inspected:
 
 - `docs/dev/project-roadmap.md`
 - `docs/dev/current-codex-output.md`
@@ -28,36 +30,37 @@ This should remain a separate cleanup track. Do not mix it into Backstory Legacy
 - repo search results for `with { type: json }`
 - repo search results for `process.env`
 
-## Current Known Blockers
+0.5.74 additionally validated script routing and recorded the exact current failures in `docs/dev/current-codex-output.md`.
 
-The latest handoff reports:
+## Current Known Blockers After 0.5.74
 
-- `npm.cmd run typecheck` failed because root `tsc` is not available in PATH.
-- `.\apps\rpg-ui\node_modules\.bin\tsc.cmd --noEmit -p tsconfig.json` failed on broad pre-existing workspace issues.
-- First reported issue categories included JSON import attributes in `apps/rpg-ui/src/features/characterPanelState.ts`, missing `process` types, JSX config, and many existing `exactOptionalPropertyTypes` / type issues.
-- No typecheck errors were reported for the files changed in `Version 0.5.63 - Backstory Legacy Purchase Runtime Shape`.
+- `npm.cmd run typecheck` now runs through app-local TypeScript but fails on known pre-existing UI/app strictness blockers.
+- `npm.cmd run typecheck:ui` fails on the same pre-existing UI/app blockers.
+- `npm.cmd run typecheck:ui:node` passes.
+- `npm.cmd run typecheck:workspace` fails on broad root-audit blockers.
+- First recorded default/UI blocker after 0.5.74: `src/components/TopStatusBar.tsx(118,18) TS2375` from `exactOptionalPropertyTypes` optional prop handling.
+- First recorded workspace-audit blocker after 0.5.74: `apps/rpg-ui/src/features/characterPanelState.ts(13,25) TS1543`, JSON import needs a `type: "json"` import attribute under NodeNext.
 
 ## Triage Findings
 
-### 1. Root TypeScript Tooling Is Not Installed At The Root
+### 1. Root TypeScript Tooling Was Not Installed At The Root - Consumed By 0.5.74
 
-The root `package.json` defines:
+Original finding:
 
-```json
-"typecheck": "tsc --noEmit -p tsconfig.json"
-```
+- The root `package.json` directly called `tsc --noEmit -p tsconfig.json`.
+- TypeScript was declared in `apps/rpg-ui/package.json`, not in the root package.
+- Root `npm.cmd run typecheck` therefore failed because `tsc` was unavailable.
 
-But TypeScript is declared in `apps/rpg-ui/package.json`, not in the root package. That matches the current handoff report that root `tsc` is unavailable.
+0.5.74 resolution:
 
-Recommended cleanup category: tooling / workspace configuration.
+- Root `typecheck` now delegates to the UI app's local TypeScript target.
+- `typecheck:workspace` now explicitly names the broad root `tsconfig.json` audit target.
+- The command-routing problem is consumed.
 
-Do not solve this by weakening typecheck. Use one of these explicit strategies in a later Codex run:
+Remaining concern:
 
-1. Add root TypeScript tooling intentionally if the repo wants root-level typecheck to be authoritative.
-2. Change root `typecheck` to delegate to package-local checks if that is the intended workspace model.
-3. Split typecheck scripts into named targets, such as `typecheck:root`, `typecheck:ui`, and future package-level checks.
-
-Preferred direction: split scripts and make the intended root behavior explicit. This avoids pretending the repo already has a monorepo package-manager workspace when it currently appears script-driven.
+- The default UI target and workspace audit target are repeatable but not green yet.
+- Future prompts should not treat broad typecheck as a required passing feature gate until the remaining blocker tracks are resolved.
 
 ### 2. Root Tsconfig Is A Broad Strict Sweep
 
@@ -74,29 +77,17 @@ It uses strict settings including `noUncheckedIndexedAccess` and `exactOptionalP
 
 Risk: broad typecheck can be too noisy to use as the required validation gate for narrow gameplay patches until the backlog is cleaned.
 
-Recommended cleanup category: validation routing.
+Recommended cleanup category: validation routing / workspace audit policy.
 
-Later Codex work should separate:
-
-- focused tests required for each feature pass
-- package/app typecheck targets
-- eventual workspace-wide typecheck once known blockers are addressed
+Future Codex work should preserve the target split and reduce blockers by area instead of weakening strictness.
 
 ### 3. UI App Typecheck Is Valid But Strict
 
-The UI app defines its own `tsconfig.json` with `jsx: react-jsx`, `resolveJsonModule`, strict checks, and `types: ["vite/client"]`. Its build script runs `tsc -p tsconfig.json && vite build`.
+The UI app defines its own `tsconfig.json` with `jsx: react-jsx`, `resolveJsonModule`, strict checks, and `types: ["vite/client"]`. Its build script runs `tsc -p tsconfig.json && vite build`, and 0.5.74 added a repeatable `typecheck` script using `--noEmit`.
 
-This suggests UI-local JSX configuration exists. If a root command reports JSX config issues, the likely cause is that root `tsconfig.json` is sweeping app source without inheriting UI app JSX settings or the error is from TSX files reached through imports.
+Recommended cleanup category: strict UI typing cleanup.
 
-Recommended cleanup category: config boundary.
-
-Later Codex should determine whether root typecheck should:
-
-- reference app configs using TypeScript project references,
-- exclude UI app source from root sweep and delegate to `npm --prefix ./apps/rpg-ui run build`, or
-- add compatible root JSX/settings if a single root sweep is truly desired.
-
-Do not guess this in a feature prompt.
+The first known blocker after 0.5.74 is an `exactOptionalPropertyTypes` issue in `TopStatusBar.tsx`. Do not fix it as part of unrelated feature work unless the prompt explicitly scopes the typecheck cleanup.
 
 ### 4. JSON Import Attributes Are Widespread Enough To Treat As A Pattern
 
@@ -112,7 +103,7 @@ Risk: changing only one JSON import style could create inconsistent module seman
 
 Recommended cleanup category: module/JSON import policy.
 
-Later Codex should audit TypeScript version, NodeNext/ESNext module settings, Vite support, emitted JS expectations, and test runner compatibility before changing this pattern.
+Future Codex should audit TypeScript version, NodeNext/ESNext module settings, Vite support, emitted JS expectations, and test runner compatibility before changing this pattern.
 
 ### 5. Missing `process` Types Are Likely Environment Boundary Issues
 
@@ -122,7 +113,7 @@ The UI tsconfig includes `vite/client` types, not Node types. The root tsconfig 
 
 Recommended cleanup category: environment typing.
 
-Later Codex should choose an explicit policy:
+Future Codex should choose an explicit policy:
 
 - avoid `process` in browser-shared code,
 - add a local ambient type for the exact fallback shape,
@@ -130,13 +121,40 @@ Later Codex should choose an explicit policy:
 
 Preferred direction: avoid broad Node ambient types in browser-facing code unless the repo clearly wants Node globals available everywhere.
 
-### 6. `exactOptionalPropertyTypes` Issues Should Be Cleaned By Area, Not Globally Suppressed
+### 6. JSX / Root Config Boundary Remains A Broad Audit Issue
 
-The current configs intentionally enable `exactOptionalPropertyTypes`. That is a useful guardrail for save/account/runtime data, but it can expose many older optional-property patterns.
+The root workspace audit can encounter TSX/JSX boundary problems because root `tsconfig.json` sweeps app source without being the app's UI-local config.
+
+Recommended cleanup category: root audit config boundary.
+
+Future Codex should decide whether the root audit should:
+
+- remain a broad but noisy audit target,
+- use project references,
+- exclude UI source and delegate to app-local checks,
+- or add compatible JSX/settings if a single root sweep is truly intended.
+
+Do not guess this in a feature prompt.
+
+### 7. Target / Lib And Node Package Typing Remain Separate Tracks
+
+After 0.5.74, the output recorded additional blocker categories:
+
+- target/lib cleanup for `.at()` and `replaceAll()` usage,
+- Node builtin typing for package content loaders,
+- `.ts` extension import policy gaps.
+
+Recommended cleanup category: tooling/config policy.
+
+These are separate from feature implementation and should not be patched opportunistically in Chronicle/economy/calendar/combat/magic work.
+
+### 8. `exactOptionalPropertyTypes` Issues Should Be Cleaned By Area, Not Globally Suppressed
+
+The current configs intentionally enable `exactOptionalPropertyTypes`. That is a useful guardrail for save/account/runtime data, but it exposes many older optional-property patterns.
 
 Recommended cleanup category: typed data hygiene.
 
-Later Codex should address these by coherent area, not by turning the setting off. Suggested order:
+Future Codex should address these by coherent area, not by turning the setting off. Suggested order:
 
 1. UI presentation/view-model object construction.
 2. account/profile and save-facing data construction.
@@ -147,42 +165,11 @@ Do not disable `exactOptionalPropertyTypes` as a quick fix.
 
 ## Recommended Cleanup Sequence
 
-### Pass A - Typecheck Script And Target Policy
+### Pass A - Typecheck Script And Target Policy - Consumed By 0.5.74
 
-Route: Codex 5.5 Local
-Type: tooling/config cleanup
+Status: implemented.
 
-Goal: make typecheck commands honest and repeatable without weakening strictness.
-
-Likely files:
-
-- `package.json`
-- `tsconfig.json`
-- `apps/rpg-ui/package.json`
-- `apps/rpg-ui/tsconfig.json`
-- `apps/rpg-ui/tsconfig.node.json`
-- possibly a new docs note if needed
-
-Allowed changes:
-
-- clarify root typecheck target behavior
-- add or delegate TypeScript tool usage intentionally
-- add named typecheck scripts if useful
-- document known limitations
-
-Forbidden changes:
-
-- no gameplay source edits
-- no schema/content JSON edits
-- no resolver/Legacy/account behavior changes
-- no disabling strictness just to pass
-- no generated output rebuild unless explicitly required
-
-Validation:
-
-- run the new or updated typecheck scripts and record exact results
-- run `npm.cmd run tool:content-lint` only if package script changes could affect tooling assumptions
-- run `git diff --check`
+Keep the result in `docs/dev/current-codex-output.md` as the source of exact command outcomes.
 
 ### Pass B - JSON Import Attribute Policy Audit / Cleanup
 
@@ -232,7 +219,32 @@ Validation:
 - affected package/app typecheck
 - focused tests around difficulty behavior if logic changes
 
-### Pass D - Strict Optional Property Cleanup By Area
+### Pass D - JSX / Root Config Boundary Policy
+
+Route: Codex 5.5 Local or Codex 5.5 Plan Mode first
+Type: tooling/config policy cleanup
+
+Goal: decide whether broad root typecheck should sweep TSX/app source directly or delegate to app-local configs.
+
+Guardrails:
+
+- do not weaken strictness,
+- do not hide root audit failures behind a fake-green command,
+- do not mix with feature work.
+
+### Pass E - Target / Lib And Node Package Typing Cleanup
+
+Route: Codex 5.5 Local
+Type: tooling/config cleanup
+
+Goal: resolve `.at()`, `replaceAll()`, Node builtin typing, and `.ts` extension import policy blockers through explicit config/source policy.
+
+Guardrails:
+
+- do not patch individual errors without a policy,
+- do not add broad Node globals to browser-shared code just to silence one error.
+
+### Pass F - Strict Optional Property Cleanup By Area
 
 Route: Codex 5.5 Local
 Type: typed data hygiene
@@ -252,22 +264,8 @@ Guardrail:
 
 ## What Should Not Happen
 
-- Do not fold typecheck cleanup into `0.5.64` Backstory Legacy Purchase Content Draft.
-- Do not fold typecheck cleanup into `0.5.65` Backstory Legacy Purchase Resolver Integration unless the specific touched files require it.
+- Do not fold typecheck cleanup into Chronicle, economy, calendar, combat, magic, Bloodlines, Backstory Legacy, or Legacy feature passes.
 - Do not disable `strict`, `noUncheckedIndexedAccess`, or `exactOptionalPropertyTypes` as a shortcut.
 - Do not convert JSON imports one file at a time without a policy decision.
 - Do not add broad Node globals to browser-shared code just to silence one `process` error.
 - Do not update `docs/dev/current-codex-output.md` from a connector-only planning pass.
-
-## Recommendation
-
-Keep the active `0.5.64` pipeline intact, but add a separate near-term cleanup prompt after either `0.5.64` or `0.5.65`:
-
-`Version 0.5.69 - Typecheck Script And Target Policy Cleanup`
-
-This should be a Codex Local run, not another connector-only pass, because it must run commands and verify the resulting typecheck targets. The goal is not to make the whole repo perfect in one patch. The goal is to make typecheck routing honest, repeatable, and less confusing before broader work re-enters older systems.
-
-Suggested follow-up after that:
-
-- `Version 0.5.70 - JSON Import And Environment Typing Cleanup Plan` if the first cleanup exposes module/env blockers as the next top layer.
-- Continue feature pipeline separately unless typecheck blockers directly obstruct a feature run.

@@ -2,7 +2,9 @@
 
 Source version/run: Version 0.5.48 - Backstory Coverage First-Batch Plan
 Date: 2026-05-17
-Status: docs-only planning
+Status: partially consumed historical planning reference
+
+Consumption note: five of the seven recommended low-risk concepts were later represented as live account-scoped, unlock-only Backstory Legacy records: Street Vendor, Net-Tender, Gatherer, Scribe's Apprentice, and Kitchen Hand. Militia Levy and Drover's Hand remain unimplemented/deferred candidates. Treat the original `Version 0.5.49` target below as historical, not current pipeline authority.
 
 ## Summary Recommendation
 
@@ -18,7 +20,19 @@ Recommended first batch:
 - Drover's Hand
 - Kitchen Hand
 
-This batch should remain content-only when implemented later. It should not add unlock logic, resolver behavior, hidden availability, market passives, contacts, mounts, heir legitimacy, magic access, new abilities, schema changes, or generated UI output.
+Current consumption status:
+
+| Concept | Current status |
+| --- | --- |
+| Militia Levy | Unimplemented/deferred; still combat-adjacent and should remain ability-free if revisited. |
+| Street Vendor | Represented by live Backstory Legacy record `legacy.backstory.street_vendor` -> `backstory.street_vendor`. |
+| Net-Tender | Represented by live Backstory Legacy record `legacy.backstory.net_tender` -> `backstory.net_tender`. |
+| Gatherer | Represented by live Backstory Legacy record `legacy.backstory.gatherer` -> `backstory.gatherer`. |
+| Scribe's Apprentice | Represented by live Backstory Legacy record `legacy.backstory.scribes_apprentice` -> `backstory.scribes_apprentice`. |
+| Drover's Hand | Unimplemented/deferred; still safe only if it avoids mounts, riding, cavalry, ownership, and pack-animal runtime effects. |
+| Kitchen Hand | Represented by live Backstory Legacy record `legacy.backstory.kitchen_hand` -> `backstory.kitchen_hand`. |
+
+This batch should remain content-only if remaining concepts are implemented later. It should not add unlock logic, resolver behavior, hidden availability, market passives, contacts, mounts, heir legitimacy, magic access, new abilities, schema changes, or generated UI output unless a newer prompt explicitly scopes and validates those changes.
 
 ## Current Coverage Gap Summary
 
@@ -131,7 +145,7 @@ These seven concepts are broad enough to improve first-screen variety later whil
 - Primary skill: `skill.crafting.cooking`
 - Likely starting skill bundle direction: cooking, fire control, general lore, stewardship or civic lore; no inn ownership, vendor discounts, contacts, or economy behavior.
 
-## Content Implementation Guardrails For Version 0.5.49
+## Content Implementation Guardrails For Historical Version 0.5.49
 
 - Add only the approved Tier 1 records, with no Tier 2, Tier 3, special, or deferred concepts.
 - Use existing canonical skill ids only; do not invent skills such as riding, scribing, port labor, hospitality, or social-status skills.
@@ -144,12 +158,12 @@ These seven concepts are broad enough to improve first-screen variety later whil
 
 ## Risks / Follow-Up
 
-- Militia Levy is the only recommended first-batch concept with moderate runtime risk because it is combat-adjacent; it must stay ability-free and avoid weapons specialization.
-- Scribe's Apprentice should use mundane administration/lore only so it does not duplicate the current magic-bearing Scholar's Apprentice.
+- Militia Levy remains the only original first-batch concept with moderate runtime risk because it is combat-adjacent; it must stay ability-free and avoid weapons specialization.
+- Drover's Hand remains safe only if it avoids mounts, riding, cavalry, animal ownership, and pack-animal runtime effects.
 - Street Vendor and Kitchen Hand must not imply economy effects, contacts, or passive discounts.
-- Drover's Hand must not imply mounts, riding, cavalry, or animal-ownership runtime.
-- If Version 0.5.49 needs to shrink scope, keep the first five records: Militia Levy, Street Vendor, Net-Tender, Gatherer, and Scribe's Apprentice.
+- Scribe's Apprentice should use mundane administration/lore only so it does not duplicate the current magic-bearing Scholar's Apprentice.
+- Any future Backstory Legacy expansion must follow the current Backstory/Legacy guardrails in `docs/dev/current-gpt-handoff.md`, not the historical version numbering in this plan.
 
-## Next Recommended Version
+## Current Prompt Authority
 
-Version 0.5.49 - Tier 1 Backstory Content Batch
+Use `docs/dev/current-gpt-handoff.md`, `docs/dev/project-roadmap.md`, and `docs/dev/codex-sequenced-implementation-plan.md` for current version order. This document remains a partially consumed historical planning reference for remaining low-risk Backstory coverage ideas.
