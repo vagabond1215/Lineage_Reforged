@@ -1,15 +1,15 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.74 - Typecheck Script And Target Policy Cleanup
-Date: 2026-05-22
-Branch/status assumption: Ran locally on `master`; worktree was clean at start with `## master...origin/master`. Current changes are limited to tooling scripts and documentation.
+Source version/run: Version 0.5.75 - Chronicle Run-End Summary View Model Plan
+Date: 2026-05-24
+Branch/status assumption: Ran locally on `master`; worktree was clean at start, and local `master` was behind `origin/master` by 21 commits. No pull or remote sync was performed during this docs-only pass.
 
 ## Result
-Implemented Pass A from `docs/dev/typecheck-blocker-triage-plan.md` by making typecheck targets explicit and repeatable without weakening strictness.
+Finalized the planning-only data-owner map for the future read-only Chronicle run-end impact summary.
 
-Root `npm run typecheck` now delegates to the UI app's local TypeScript target instead of calling an unavailable root `tsc`. The broad root `tsconfig.json` sweep is named separately as `typecheck:workspace` and documented as an audit target with known blockers. The UI node/config typecheck has its own target and routes its build-info cache to an ignored `.tmp*` path so validation does not leave generated tree noise.
+Local source inspection showed the existing plan had the right direction but needed a concrete 0.5.76 projection boundary. Updated `docs/design/chronicle-run-end-summary-view-model-plan.md` with current repo reality, source ownership, allowed/deferred behavior, read-only input/output shape, allowed fields, forbidden inferences, and focused future tests.
 
-No TypeScript strictness settings were relaxed. No gameplay, UI behavior, tests, schemas, content JSON, or generated output were intentionally changed.
+No runtime/source/schema/UI/content/test behavior was implemented.
 
 ## Files Inspected
 - `AGENTS.md`
@@ -18,128 +18,129 @@ No TypeScript strictness settings were relaxed. No gameplay, UI behavior, tests,
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/typecheck-blocker-triage-plan.md`
-- `docs/dev/prompt-template-hardening-pass.md`
+- `docs/design/chronicle-run-end-summary-view-model-plan.md`
+- `docs/design/chronicle-run-end-summary-source-audit.md`
+- `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `package.json`
-- `tsconfig.json`
-- `apps/rpg-ui/package.json`
-- `apps/rpg-ui/tsconfig.json`
-- `apps/rpg-ui/tsconfig.node.json`
-- `.gitignore`
+- `packages/shared/types/src/contracts.ts`
+- `packages/engines/game-engine/src/run-legacy-payout.ts`
+- `packages/engines/game-engine/src/account-estate.ts`
+- `apps/rpg-ui/src/game-shell/runLifecycle.ts`
+- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
+- `apps/rpg-ui/src/game-shell/components/AccountMetaPanel.tsx`
+- `tests/unit/run-lifecycle.test.mjs`
+- `tests/unit/legacy-ledger-presentation.test.mjs`
 
 ## Files Changed
-- `package.json`
-- `apps/rpg-ui/package.json`
-- `README.md`
-- `docs/dev/typecheck-blocker-triage-plan.md`
-- `docs/future_content_backlog.md`
+- `docs/design/chronicle-run-end-summary-view-model-plan.md`
 - `docs/dev/current-codex-output.md`
 
-## Typecheck Policy
-Root typecheck behavior:
-- `npm run typecheck` is now the default feature-facing TypeScript target and delegates to `npm run typecheck:ui`.
-- It is supported by the UI app's local TypeScript dependency rather than a missing root `tsc`.
-- It currently fails on pre-existing strict TypeScript blockers, so focused tests remain the primary confidence path until those blockers are resolved.
+## Current Repo Reality
+Current account history records can support a conservative read-only run-end summary from stored data:
 
-UI/app typecheck behavior:
-- `npm run typecheck:ui` delegates to `apps/rpg-ui` and runs `tsc --noEmit -p tsconfig.json`.
-- `npm run typecheck:ui:node` delegates to `apps/rpg-ui` and runs `tsc --noEmit --tsBuildInfoFile ../../.tmp-rpg-ui-node.tsbuildinfo -p tsconfig.node.json`.
-- The node/config target passes. The UI target fails on existing application/package strictness issues.
+- `AccountRunHistoryRecord` owns run identity, lineage id, optional family/source fields, starting location ids, timestamps, outcome/archive reason, Echo peak, notable achievement ids, payout metadata, duration fields, inheritance-use count, and save slot ids.
+- `runLifecycle.ts` owns terminal transitions. `archiveActiveRun(...)` evaluates achievements, resolves payout, grants Legacy when eligible, persists payout metadata, deposits estate assets, saves the account profile, and clears slots. `retainRetiredRun(...)` records retained retirement and inheritance uses without running the archive payout/deposit path.
+- `run-legacy-payout.ts` owns payout math. Future projection must read persisted payout metadata only and must not call the resolver to recompute awards.
+- `account-estate.ts` owns archive-time estate deposits and read-only claim previews. Future projection may summarize stored deposits/assets for the source run, but must not claim or move assets.
+- `accountMetaPresentation.ts` already has compact Chronicle tile and estate labels, but the run-end summary needs a richer single-run projection and stricter source-link copy.
+- `AccountMetaPanel.tsx` renders current account meta sections only; it should not be changed by the 0.5.76 pure projection pass.
 
-Broad workspace/audit behavior:
-- `npm run typecheck:workspace` runs the root `tsconfig.json` using the app-local TypeScript binary: `npm --prefix ./apps/rpg-ui exec -- tsc --noEmit -p tsconfig.json`.
-- This is an honest broad audit target, not the default green feature gate.
-- It currently fails on known root-config and strictness blockers.
+Still absent/deferred: Chronicle Marks, Lineage Seals, Family Prestige run-end grants/spending, heirs, heirlooms, bequests, estate claim delivery, family management, and Bloodlines mutation from run end.
 
-Future feature prompt routing:
-- Use focused unit tests first for normal feature validation.
-- Use `npm.cmd run typecheck` when a TypeScript check is specifically requested or a UI/app TypeScript change needs the current default target.
-- Use `npm.cmd run typecheck:ui:node` for Vite/Tailwind config validation.
-- Use `npm.cmd run typecheck:workspace` only when intentionally auditing the broad root `tsconfig.json` backlog.
+## Data-Owner Map
+- Run identity/outcome/origin: `AccountRunHistoryRecord`; validate with lifecycle authority helpers where relevant.
+- Survival/duration: lifecycle-persisted `totalPlayTicks` and `survivedDays`; do not infer survival from current time.
+- Echo/progression: stored `echoLevelReached` and optional payout baseline; do not infer additional progression.
+- Notable deeds: stored achievement ids plus current achievement definition titles; unknown ids need conservative fallbacks.
+- Legacy payout: stored `payoutEligible`, `legacyGranted`, `payoutBreakdown`, `legacyPayoutResolvedAt`, and `legacyPayoutTransactionId`; payout math remains owned by `run-legacy-payout.ts`.
+- Estate summary: `AccountProfileState.estate.deposits/assets` keyed by `resolveRunHistorySourceId(record)`; estate movement remains owned by account estate/lifecycle code.
+- Continuity/source line: explicit `sourceRunId`, `crossLineageStart`, `familyId`, `parentCharacterId`, and `inheritanceUsesRemaining`; never derive family or parentage from `lineageId` or `sourceRunId`.
+- Slot impact: optional lifecycle result context such as `clearedSlotIds` and `retainedSlotIds`; projection must not delete or retain saves.
+- Warnings/actions: projection owns warnings and must emit no action ids.
 
-Known blockers remain:
-- JSON import attribute policy for NodeNext root config.
-- Environment typing for `process` usage.
-- JSX/config boundary in the root audit target.
-- `exactOptionalPropertyTypes` and possibly undefined cleanup across app and package code.
-- Target/lib mismatch for `.at()` and `replaceAll()` usage.
-- Node builtin typing for package content loaders.
-- Existing package/source strictness issues outside this tooling pass.
+## Planned Projection Boundary
+Future file:
 
-Intentionally not fixed:
-- No JSON import conversion.
-- No environment typing cleanup.
-- No broad Node globals in browser-shared code.
-- No optional-property strictness cleanup.
-- No `skipLibCheck` or strictness changes.
-- No gameplay/source behavior cleanup.
+- `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
 
-## Script / Config Changes
-- Root `package.json`:
-  - `typecheck`: changed from direct `tsc --noEmit -p tsconfig.json` to `npm run typecheck:ui`.
-  - `typecheck:ui`: added `npm --prefix ./apps/rpg-ui run typecheck`.
-  - `typecheck:ui:node`: added `npm --prefix ./apps/rpg-ui run typecheck:node`.
-  - `typecheck:workspace`: added `npm --prefix ./apps/rpg-ui exec -- tsc --noEmit -p tsconfig.json`.
-- `apps/rpg-ui/package.json`:
-  - `typecheck`: added `tsc --noEmit -p tsconfig.json`.
-  - `typecheck:node`: added `tsc --noEmit --tsBuildInfoFile ../../.tmp-rpg-ui-node.tsbuildinfo -p tsconfig.node.json`.
-- `README.md`:
-  - Added quick-command notes for the default typecheck target and the broad workspace audit target.
-- `docs/dev/typecheck-blocker-triage-plan.md`:
-  - Marked the guardrail as partially consumed by 0.5.74 Pass A and kept it for remaining blocker tracks.
-- `docs/future_content_backlog.md`:
-  - Added a concise run note deferring JSON import, environment typing, JSX/config boundary, strict optional-property, and broader typecheck blocker cleanup.
-- `tsconfig.json`, `apps/rpg-ui/tsconfig.json`, and `apps/rpg-ui/tsconfig.node.json`:
-  - No changes.
+Future function:
+
+- `buildChronicleRunEndSummaryViewModel(input: ChronicleRunEndSummaryInput): ChronicleRunEndSummaryViewModel`
+
+Planned input:
+
+- `accountProfile: AccountProfileState`
+- `runRecord: AccountRunHistoryRecord | null`
+- optional lightweight `lifecycleResult` context containing read-only `legacyGranted`, `rewardTransactionId`, `clearedSlotIds`, `retainedSlotIds`, and `inheritanceUsesRemaining`
+
+Planned output:
+
+- display-ready title/subtitle/outcome/status tone
+- identity, origin, survival, progression, deed, payout, estate, continuity, and slot rows
+- warning labels
+- `actionIds: []`
+
+The future projection should read stored profile/run data only. It should not read a raw `SaveSnapshot` for final summary fields after lifecycle completion.
+
+## Allowed / Deferred Behavior
+- Allowed: display stored run identity, outcome, origin, duration, Echo, achievement labels, payout metadata, estate deposit summaries, explicit continuity/source fields, and slot impact rows.
+- Allowed: use conservative fallback labels for unknown ids or missing optional fields.
+- Deferred/forbidden: recompute payout, grant Legacy, create transactions, deposit or move estate assets, claim/deliver estate assets, create bequests or heirlooms, create heirs, create family records, create Family Prestige grants/spends, create Chronicle Marks, create Lineage Seals, create Bloodlines behavior, infer `familyId` from `lineageId`, infer parent/child relation from `sourceRunId`, or emit claim/spend/convert/seal/mark/inherit/transfer/register/retry/resurrect/purchase actions.
+
+## Future Tests
+Recommended focused tests for 0.5.76:
+
+1. Missing `runRecord` returns safe warning output and no actions.
+2. Active records do not claim terminal payout resolution.
+3. Retained retired records show retirement, retained slots, and inheritance-use count without estate claims.
+4. Death records show stored outcome, survival, Echo, deeds, and payout rows.
+5. Hardcore death records show a distinct label from `archiveReason`.
+6. Deleted records show non-authoritative warnings and no payout/estate/action claims.
+7. Payout rows read stored metadata without calling `resolveRunLegacyPayout(...)`.
+8. Contradictory payout fixture proves stored metadata wins over recomputation.
+9. Known achievement ids resolve titles; unknown ids use conservative fallbacks.
+10. Missing optional fields produce unknown/unavailable/omitted labels.
+11. `lineageId` is never treated as `familyId`.
+12. `sourceRunId` does not create parent/child copy without explicit evidence.
+13. Estate rows read only stored assets/deposits matching `resolveRunHistorySourceId(record)`.
+14. Estate rows never expose claim/transfer/bequest/heirloom actions.
+15. Lifecycle cleared/retained slot ids produce read-only slot rows only.
+16. `actionIds` is always empty.
+17. No Chronicle Marks, Lineage Seals, Family Prestige grants/spends, Bloodlines mutations, estate delivery, or Legacy grants are represented.
 
 ## Behavior / Runtime Confirmation
-- gameplay runtime changed: no
-- UI behavior changed: no
+- runtime changed: no
+- JSON changed: no
+- schema changed: no
+- UI changed: no
+- content changed: no
 - tests changed: no
-- schemas changed: no
-- content JSON changed: no
 - generated output changed: no
-- Backstory Eligibility behavior changed: no
-- creator availability changed: no
-- Legacy purchase behavior changed: no
+- payout behavior changed: no
+- estate behavior changed: no
+- Legacy behavior changed: no
 - Bloodlines behavior changed: no
-- deferred feature systems touched: no
+- Chronicle Marks added: no
+- Lineage Seals added: no
+- Family Prestige behavior changed: no
 
 ## Checks Run
-- `git status --short --branch` - clean at start: `## master...origin/master`.
-- Investigation before edits: `npm.cmd run typecheck` - failed because root `tsc` was unavailable: `'tsc' is not recognized as an internal or external command`.
-- `npm.cmd run typecheck` - failed after script cleanup with pre-existing TypeScript blockers. First meaningful error: `src/components/TopStatusBar.tsx(118,18) TS2375` from `exactOptionalPropertyTypes` optional prop handling. The command now routes through app-local TypeScript and no longer fails from missing root `tsc`.
-- `npm.cmd run typecheck:ui` - failed with the same pre-existing UI/app strictness blockers. First meaningful error: `src/components/TopStatusBar.tsx(118,18) TS2375`.
-- `npm.cmd run typecheck:ui:node` - passed.
-- `npm.cmd run typecheck:workspace` - failed with expected broad root audit blockers. First meaningful error: `apps/rpg-ui/src/features/characterPanelState.ts(13,25) TS1543`, JSON import needs a `type: "json"` import attribute under NodeNext.
-- `npm.cmd run tool:content-lint` - passed: `content-lint: ok (53 files checked)`.
-- `git diff --check` - passed with line-ending warnings only (`LF will be replaced by CRLF`).
+- `git status --short --branch` - clean at start; local `master` behind `origin/master` by 21 commits.
+- `git diff --check` - passed with line-ending warnings only.
 
-Validation note: an initial app-local `typecheck` draft used `tsc -p` without `--noEmit`, which emitted JavaScript/declaration artifacts. The script was corrected to `--noEmit`, the node target's `.tsbuildinfo` output was routed to ignored `.tmp-rpg-ui-node.tsbuildinfo`, and the generated artifacts from the validation run were removed.
-
-## Remaining Typecheck Blockers
-- JSON import attribute policy: root `typecheck:workspace` starts with TS1543 JSON import-attribute errors under NodeNext.
-- environment typing / `process.env`: app and package code still references `process` without an agreed environment typing boundary.
-- JSX/config boundary: root audit includes TS6142 for a `.tsx` module resolved while `--jsx` is not set.
-- `exactOptionalPropertyTypes` cleanup: UI props, view models, economy, estate, quest, transport, and player-engine areas still pass explicit `undefined` where target types do not accept it.
-- target/lib cleanup: current UI/package targets report `.at()` and `replaceAll()` usage against older lib settings.
-- Node/package typing cleanup: root and UI sweeps expose `node:fs` typing gaps and `.ts` extension import policy gaps.
-- other: existing possibly-undefined data access, duplicated object property warnings, stale prop mismatch in `InGameShell`, and package-specific strictness errors remain outside this pass.
+No typecheck, broad workspace validation, runtime tests, or content lint were run because this was a docs-only planning pass and no source/test/content files changed.
 
 ## Risks / Follow-Up
-- The default `npm.cmd run typecheck` is now honest and repeatable, but it is not green yet. Future prompts should not treat it as a required passing gate until the known blockers are triaged.
-- The repository still has no root TypeScript dependency or root lockfile. This pass intentionally reused the app-local TypeScript toolchain instead of introducing root package management changes.
-- Broad workspace cleanup should stay split into separate tracks: JSON import attributes, environment typing, JSX/root config boundary, target/lib policy, and `exactOptionalPropertyTypes` cleanup by area.
-- No broad build was run because this pass was a narrow tooling/config cleanup and the requested validation was script routing plus content lint and diff check.
+- Local `master` is behind `origin/master`; this run used current local branch reality as requested.
+- 0.5.76 should stay pure projection plus tests. It should not render React UI or touch lifecycle/payout/estate mutation.
+- Existing compact Chronicle tile copy in `accountMetaPresentation.ts` includes source-line cues that are acceptable for the current surface but should not be copied blindly into run-end summary if it implies parent/child relation from `sourceRunId` alone.
+- Future implementation should avoid importing broad lifecycle result types if a smaller read-only input contract is enough.
 
 ## Temporary Guardrail Cleanup Decision
-`docs/dev/typecheck-blocker-triage-plan.md` remains useful and is now marked partially consumed. Pass A is implemented by this run. Keep the guardrail for the remaining JSON import, environment typing, JSX/config boundary, and strict optional-property cleanup tracks; fold or delete it only after those tracks are resolved or promoted into durable tooling policy.
+`docs/design/chronicle-run-end-summary-source-audit.md` remains useful as a source-detail reference through 0.5.76 and 0.5.77. The updated view-model plan is now the active implementation source. After the pure projection and read-only UI land, fold durable rules into `docs/design/future-system-design-ledger.md`, then delete or mark the source audit consumed if it no longer protects implementation choices.
 
 ## Next Recommended Version
-Version 0.5.75 - Chronicle Run-End Summary View Model Plan
-
-Return to the sequenced queue in `docs/dev/codex-sequenced-implementation-plan.md`. This tooling pass does not change the queue or justify jumping directly into implementation beyond the planned owner-aware Chronicle view-model planning slice.
+Version 0.5.76 - Chronicle Run-End Summary Pure Projection
 
 ## Suggested Commit Message
-chore(tooling): clarify typecheck script targets
+docs(chronicle): finalize run-end summary view model plan
