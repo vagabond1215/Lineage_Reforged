@@ -5,7 +5,7 @@ Keep the DOCX as the formatted human-readable copy. Prefer this Markdown file as
 
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-24 after `Version 0.5.75 - Chronicle Run-End Summary View Model Plan` landed.
+Updated 2026-05-24 after `Version 0.5.76 - Chronicle Run-End Summary Pure Projection` landed.
 
 ## Purpose
 
@@ -26,11 +26,11 @@ Older long-form material from the former continuity brief has been intentionally
 
 Latest exact Codex handoff:
 
-- `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+- `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
 
 Next recommended version:
 
-- `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
+- `Version 0.5.77 - Chronicle Run-End Read-Only UI`
 
 Current sequence source:
 
@@ -55,7 +55,8 @@ Current implementation reality:
 - Typecheck script routing is explicit: default `typecheck` delegates to the UI app, `typecheck:ui:node` passes, and `typecheck:workspace` is the broad root audit target.
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers, so future prompts should not require them as passing gates unless the task is specifically fixing those blockers.
 - Chronicle run-end summary planning has landed and defines the future pure projection boundary in `docs/design/chronicle-run-end-summary-view-model-plan.md`.
-- No Chronicle run-end projection implementation, React UI, lifecycle mutation, payout recomputation, estate delivery, Bloodlines mutation, Chronicle Marks, Lineage Seals, Family Prestige behavior, or generated output has been added yet.
+- Chronicle run-end summary pure projection and focused tests have landed in `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts` and `tests/unit/chronicle-run-end-summary-presentation.test.mjs`.
+- No Chronicle run-end React UI, lifecycle mutation, payout recomputation, estate delivery, Bloodlines mutation, Chronicle Marks, Lineage Seals, Family Prestige behavior, or generated output has been added yet.
 
 For exact current implementation state, inspect `docs/dev/current-codex-output.md` first. For current prompt guardrails, inspect `docs/dev/current-gpt-handoff.md` next. For version order, inspect `docs/dev/project-roadmap.md`.
 
@@ -113,10 +114,10 @@ Keep the active implementation pipeline aligned with the current roadmap and seq
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.75` | Chronicle Run-End Summary View Model Plan | Landed. Mapped current run-ending data into a future read-only impact summary before projection, UI, or mutation. | Planning-only; no payout, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines behavior, or generated output. |
-| `0.5.76` | Chronicle Run-End Summary Pure Projection | Next. Implement the pure projection and focused tests defined by the 0.5.75 plan. | No React UI, mutation, payout recomputation, estate movement, actions, Marks, Seals, Family Prestige, or Bloodlines behavior. |
-| `0.5.77` | Chronicle Run-End Read-Only UI | Planned. Render the tested projection read-only. | No payout mutation, estate delivery, Chronicle Marks, Lineage Seals, or Family Prestige grants. |
+| `0.5.76` | Chronicle Run-End Summary Pure Projection | Landed. Implemented the pure projection and focused tests defined by the 0.5.75 plan. | No React UI, mutation, payout recomputation, estate movement, actions, Marks, Seals, Family Prestige, or Bloodlines behavior. |
+| `0.5.77` | Chronicle Run-End Read-Only UI | Next. Render the tested projection read-only. | No payout mutation, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, or new action paths. |
 | `0.5.78` | Economy Price Clarity View Model Plan | Planned. Return to the sequenced queue after the Chronicle read-only UI path advances. | Planning-only; no economy math changes. |
+| `0.5.79` | Economy Price Clarity Pure Projection | Planned. Implement only after the 0.5.78 plan lands. | Pure projection only; no trade commands or simulation changes. |
 
 For the full 10-step queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For version-band meaning and post-pipeline candidates, use `docs/dev/project-roadmap.md`.
 
