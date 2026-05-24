@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-05-22
+Date: 2026-05-24
 Route: ChatGPT via GitHub Connector
 Status: connector-authored sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`.
+This file gives Codex a stable ordered queue after `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`.
 
 It does not replace:
 
@@ -27,17 +27,21 @@ Latest cleanup/tooling slice:
 
 - `Version 0.5.74 - Typecheck Script And Target Policy Cleanup`
 
-Immediate next Codex run:
+Latest planning slice:
 
 - `Version 0.5.75 - Chronicle Run-End Summary View Model Plan`
+
+Immediate next Codex run:
+
+- `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
 
 ## Ordered 10-Step Trajectory
 
 | Order | Version | Topic | Route | Primary Source | Output Type | Status | Guardrail |
 | ---: | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `0.5.74` | Typecheck Script And Target Policy Cleanup | Codex 5.5 Local | `docs/dev/typecheck-blocker-triage-plan.md` | tooling/config cleanup | Landed | Make targets honest and repeatable; do not weaken strictness or touch gameplay. |
-| 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/chronicle-run-end-summary-view-model-plan.md` | planning doc | Next | Plan data-owner map and projection; no lifecycle, payout, estate, or UI behavior. |
-| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | Codex 5.5 Local | `docs/design/chronicle-run-end-summary-view-model-plan.md` | pure view-model + tests | Planned | Read stored/lifecycle result data only; do not recompute payout. |
+| 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | Codex 5.5 Local docs-only | `docs/design/chronicle-run-end-summary-view-model-plan.md` | planning doc | Landed | Planned data-owner map and projection; no lifecycle, payout, estate, or UI behavior. |
+| 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | Codex 5.5 Local | `docs/design/chronicle-run-end-summary-view-model-plan.md` | pure view-model + tests | Next | Read stored/lifecycle result data only; do not recompute payout. |
 | 4 | `0.5.77` | Chronicle Run-End Read-Only UI | Codex 5.5 Local | `docs/design/chronicle-run-end-summary-view-model-plan.md` | read-only UI | Planned | No payout mutation, estate delivery, Chronicle Marks, Lineage Seals, or Family Prestige grants. |
 | 5 | `0.5.78` | Economy Price Clarity View Model Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/economy-price-clarity-view-model-plan.md` | planning doc | Planned | Explain existing prices/scarcity only; no economy math changes. |
 | 6 | `0.5.79` | Economy Price Clarity Pure Projection | Codex 5.5 Local | `docs/design/economy-price-clarity-view-model-plan.md` | pure view-model + tests | Planned | Derive labels from existing state; no trade commands or simulation changes. |
