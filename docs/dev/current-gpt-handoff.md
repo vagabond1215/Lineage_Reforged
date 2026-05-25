@@ -1,7 +1,7 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector triage after `Version 0.5.79 - Economy Price Clarity Pure Projection`
-Date: 2026-05-24
+Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.80 - Economy Runtime Test Failure Triage`
+Date: 2026-05-25
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
 ## Purpose
@@ -14,7 +14,6 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/dev/current-gpt-handoff.md` is the immediate prompt-prep handoff.
 - `docs/dev/project-roadmap.md` owns version order, version-band meaning, and active pipeline direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the current sequenced Codex queue.
-- `docs/dev/economy-runtime-test-failure-triage-plan.md` owns the immediate 0.5.80 economy runtime validation triage.
 - `docs/design/future-system-design-ledger.md` owns durable system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -23,7 +22,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.79 - Economy Price Clarity Pure Projection`
+- `Version 0.5.80 - Economy Runtime Test Failure Triage`
 
 Current sequence source:
 
@@ -31,85 +30,18 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.80 - Economy Runtime Test Failure Triage`
+- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
 
-## Current Reason For Reordering
+## Recent Results
 
-`0.5.79` successfully added the pure economy clarity projection and its focused tests, but two required existing validation suites failed outside the new projection surface:
+Economy runtime validation:
 
-- `tests/unit/civilization-runtime-economy.test.mjs`
-- `tests/unit/civilization-trade-runtime.test.mjs`
-
-Do not proceed to Calendar/Climate planning until the economy runtime/trade failures are fixed or correctly re-scoped.
-
-## Immediate Source Stack
-
-For `Version 0.5.80 - Economy Runtime Test Failure Triage`, inspect:
-
-- `AGENTS.md`
-- `README.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/economy-runtime-test-failure-triage-plan.md`
-- `tests/unit/civilization-runtime-economy.test.mjs`
-- `tests/unit/civilization-trade-runtime.test.mjs`
-- `tests/unit/economy-clarity-presentation.test.mjs`
-- `packages/engines/civilization-engine/src/runtime-economy.ts`
-- `packages/engines/civilization-engine/src/trade-runtime.ts`
-- `packages/engines/civilization-engine/src/settlement-simulation.ts`
-- `packages/engines/civilization-engine/src/economy.ts`
-- `packages/engines/civilization-engine/src/index.ts`
-- relevant economy, settlement, workplace, production-chain, item, transport, and route content only if a failing runtime assertion depends on current content reality
-
-## Active Guardrails For 0.5.80
-
-Allowed:
-
-- Fix `runtime-economy.ts` if skill effects, craft output quantity, or cost/time propagation are wrong.
-- Fix `trade-runtime.ts` if autonomous trade evaluation/dispatch is over-filtering or failing to preserve expected viable opportunities.
-- Fix current economy/settlement/transport/content only if content is internally inconsistent and content lint remains green.
-- Re-scope stale test assertions only if source inspection proves the old expectation no longer matches current design/content reality.
-- Add narrow tests proving the corrected behavior.
-
-Forbidden:
-
-- Do not weaken tests by deleting failing assertions without replacement coverage.
-- Do not hard-code `vinecross`, `grain`, or a specific fixture into runtime logic.
-- Do not make all crafts globally scale quantity with skill.
-- Do not make every trade opportunity viable.
-- Do not bypass reserve, route, vehicle, throughput, stock, or dispatch constraints broadly.
-- Do not add React UI.
-- Do not add economy clarity UI.
-- Do not add shop, trade, craft, caravan, buy/sell, dispatch, or player command ids.
-- Do not update generated output.
-- Do not touch Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior.
-
-## Expected Validation For 0.5.80
-
-Required:
-
-- `node --test tests/unit/economy-clarity-presentation.test.mjs`
-- `node --test tests/unit/civilization-runtime-economy.test.mjs`
-- `node --test tests/unit/civilization-trade-runtime.test.mjs`
-- `npm.cmd run tool:content-lint`
-- `git diff --check`
-
-Optional if touched or relevant:
-
-- `node --test tests/unit/civilization-system-consistency.test.mjs`
-
-Do not require broad typecheck unless a narrow source change makes it useful; known broad typecheck blockers remain.
-
-## Recent Stable Context
-
-Chronicle run-end summary:
-
-- `0.5.75` finalized the planning-only Chronicle run-end summary data-owner map.
-- `0.5.76` implemented the pure read-only Chronicle run-end summary projection and focused tests.
-- `0.5.77` rendered that projection read-only inside Account Meta / Chronicles.
-- The Chronicle source audit is consumed as active prompt authority.
+- `0.5.80` fixed the focused economy runtime/trade validation failures that appeared after `0.5.79`.
+- Craft fixture tests now use the canonical authored cooking skill id `skill.crafting.cooking`.
+- Autonomous trade protected reserve math now operates in current stock snapshot units.
+- Autonomous trade destination need, absorption, and strategic necessity now use the same family-aware demand reference.
+- The focused economy runtime, trade runtime, economy clarity projection, civilization consistency, content lint, and diff checks passed in `0.5.80`.
+- `docs/dev/economy-runtime-test-failure-triage-plan.md` is consumed as active implementation guidance. Keep only as historical reference unless a cleanup deletes or folds it later.
 
 Economy clarity:
 
@@ -118,11 +50,43 @@ Economy clarity:
 - The new projection is source-only; no React UI consumes it yet.
 - Future economy clarity UI must stay read-only and must not add buy/sell/dispatch/craft controls.
 
+Chronicle run-end summary:
+
+- `0.5.75` finalized the planning-only Chronicle run-end summary data-owner map.
+- `0.5.76` implemented the pure read-only Chronicle run-end summary projection and focused tests.
+- `0.5.77` rendered that projection read-only inside Account Meta / Chronicles.
+- The Chronicle source audit is consumed as active prompt authority.
+
 Typecheck tooling:
 
 - `0.5.74` made typecheck commands honest and repeatable.
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require `npm.cmd run typecheck` unless a prompt specifically fixes those blockers.
+
+## Active Guardrails For 0.5.81
+
+Calendar/climate planning:
+
+- `0.5.81` should be planning-only.
+- Use `docs/design/calendar-climate-popup-view-model-plan.md` and `docs/design/calendar-climate-popup-ia-audit.md` as the active source stack.
+- Inspect current repo reality before writing or updating the plan.
+- Define the future data-owner map, view-model boundary, input/output shape, missing-data behavior, and test plan for a later read-only Calendar/Climate popup.
+- Do not implement React UI.
+- Do not implement a calendar/climate projection yet unless explicitly re-scoped.
+- Do not change weather, travel, crop, body-state, clock, economy, combat, magic, settlement simulation, save schema, generated output, or active-effect behavior.
+- Do not add player actions, command ids, warning effects, penalties, buffs, travel changes, crop growth, or weather simulation.
+
+Economy:
+
+- The 0.5.80 runtime validation blocker is resolved.
+- Do not expand economy clarity into UI, shop, trade commands, caravan controls, crafting execution, passive income, contacts, market privileges, or Legacy effects without a dedicated prompt.
+- Keep the 0.5.79 economy clarity projection pure and read-only.
+
+Cross-system guardrails:
+
+- Do not touch Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior unless explicitly prompted.
+- Do not infer `familyId` from `lineageId`, `sourceRunId`, account id, selected character, selected backstory, or UI state.
+- Future Backstory Legacy records must describe formative-past access, not current employment, current social identity, family history proof, institution membership, title/status ownership, contacts, items, coin, skills, magic, authority, or live obligations.
 
 ## Sequenced Codex Queue
 
@@ -130,17 +94,34 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Landed / Partial validation |
-| 2 | `0.5.80` | Economy Runtime Test Failure Triage | `docs/dev/economy-runtime-test-failure-triage-plan.md` | Next |
-| 3 | `0.5.81` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
-| 4 | `0.5.82` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
-| 5 | `0.5.83` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 6 | `0.5.84` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 1 | `0.5.80` | Economy Runtime Test Failure Triage | `docs/dev/economy-runtime-test-failure-triage-plan.md` | Landed |
+| 2 | `0.5.81` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Next |
+| 3 | `0.5.82` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
+| 4 | `0.5.83` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
+| 5 | `0.5.84` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
-## After 0.5.80
+## Next Prompt Source Stack
 
-If the focused economy tests pass and no new economy blocker appears, return to the sequence file. The next run should be:
+For `Version 0.5.81 - Calendar Climate Popup View Model Plan`, inspect:
 
-- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
+- `AGENTS.md`
+- `README.md`
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/project-roadmap.md`
+- `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/design/calendar-climate-popup-view-model-plan.md`
+- `docs/design/calendar-climate-popup-ia-audit.md`
+- `docs/design/future-system-design-ledger.md`
+- `docs/future_content_backlog.md`
+- shared time/calendar types and helpers
+- existing UI presentation helper patterns
+- any existing climate, calendar, season, settlement, travel, or start-condition source owners relevant to display-only planning
 
-Keep it planning-only unless explicitly re-scoped.
+## After 0.5.81
+
+If the planning pass lands cleanly, return to the sequence file. The next run should be:
+
+- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+
+Keep it read-only and informational unless explicitly re-scoped.
