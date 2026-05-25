@@ -5,7 +5,7 @@ Keep the DOCX as the formatted human-readable copy. Prefer this Markdown file as
 
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-24 after `Version 0.5.76 - Chronicle Run-End Summary Pure Projection` landed.
+Updated 2026-05-24 after `Version 0.5.78 - Economy Price Clarity View Model Plan` landed.
 
 ## Purpose
 
@@ -26,11 +26,11 @@ Older long-form material from the former continuity brief has been intentionally
 
 Latest exact Codex handoff:
 
-- `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
+- `Version 0.5.78 - Economy Price Clarity View Model Plan`
 
 Next recommended version:
 
-- `Version 0.5.77 - Chronicle Run-End Read-Only UI`
+- `Version 0.5.79 - Economy Price Clarity Pure Projection`
 
 Current sequence source:
 
@@ -52,11 +52,11 @@ Current implementation reality:
 - Heirloom and bequest vocabulary/ownership boundaries are planned in `docs/design/heirloom-and-bequest-systems-plan.md`.
 - The Bloodlines projection and read-only account meta UI have landed.
 - Bloodlines currently shows explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
+- Chronicle run-end summary planning, pure projection, focused tests, and read-only Account Meta UI have landed.
 - Typecheck script routing is explicit: default `typecheck` delegates to the UI app, `typecheck:ui:node` passes, and `typecheck:workspace` is the broad root audit target.
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers, so future prompts should not require them as passing gates unless the task is specifically fixing those blockers.
-- Chronicle run-end summary planning has landed and defines the future pure projection boundary in `docs/design/chronicle-run-end-summary-view-model-plan.md`.
-- Chronicle run-end summary pure projection and focused tests have landed in `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts` and `tests/unit/chronicle-run-end-summary-presentation.test.mjs`.
-- No Chronicle run-end React UI, lifecycle mutation, payout recomputation, estate delivery, Bloodlines mutation, Chronicle Marks, Lineage Seals, Family Prestige behavior, or generated output has been added yet.
+- Economy price clarity planning has landed and defines the future pure projection boundary in `docs/design/economy-price-clarity-view-model-plan.md`.
+- No economy clarity projection implementation, React UI, economy math changes, settlement content changes, shop/trade/craft/caravan commands, simulation changes, or generated output has been added yet.
 
 For exact current implementation state, inspect `docs/dev/current-codex-output.md` first. For current prompt guardrails, inspect `docs/dev/current-gpt-handoff.md` next. For version order, inspect `docs/dev/project-roadmap.md`.
 
@@ -114,10 +114,10 @@ Keep the active implementation pipeline aligned with the current roadmap and seq
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.76` | Chronicle Run-End Summary Pure Projection | Landed. Implemented the pure projection and focused tests defined by the 0.5.75 plan. | No React UI, mutation, payout recomputation, estate movement, actions, Marks, Seals, Family Prestige, or Bloodlines behavior. |
-| `0.5.77` | Chronicle Run-End Read-Only UI | Next. Render the tested projection read-only. | No payout mutation, estate delivery, Chronicle Marks, Lineage Seals, Family Prestige grants, or new action paths. |
-| `0.5.78` | Economy Price Clarity View Model Plan | Planned. Return to the sequenced queue after the Chronicle read-only UI path advances. | Planning-only; no economy math changes. |
-| `0.5.79` | Economy Price Clarity Pure Projection | Planned. Implement only after the 0.5.78 plan lands. | Pure projection only; no trade commands or simulation changes. |
+| `0.5.78` | Economy Price Clarity View Model Plan | Landed. Finalized the stored-state source-owner map, labels, thresholds, and future projection boundary. | Planning-only; no economy math, source, UI, tests, content, simulation, commands, or generated output. |
+| `0.5.79` | Economy Price Clarity Pure Projection | Next. Implement pure economy clarity presentation helpers and focused tests. | No resolver calls, economy math changes, stockpile mutation, shop/trade/craft/caravan commands, React UI, or generated output. |
+| `0.5.80` | Calendar Climate Popup View Model Plan | Planned. Return to the sequenced queue after economy projection advances. | Planning-only; no weather, travel, crop, body-state, clock, or active-effect behavior. |
+| `0.5.81` | Calendar Climate Read-Only Popup | Planned. Render tested calendar/climate context read-only. | Informational only; no active effects or simulation changes. |
 
 For the full 10-step queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For version-band meaning and post-pipeline candidates, use `docs/dev/project-roadmap.md`.
 
@@ -163,12 +163,12 @@ Do not scatter these into unrelated patches. Use the roadmap, sequence plan, and
 Near-term and high-value tracks:
 
 - Run-end / Chronicle impact summary.
+- Economy clarity layer before full simulation.
 - Remaining typecheck blocker tracks, kept separate from feature work.
 - Combat/equipment audit before broad combat edits.
 - Difficulty and starting season creator page after creator scope stabilizes.
 - Calendar/climate popup.
 - Magic runtime readiness audit before runtime magic expansion.
-- Economy clarity layer before full simulation.
 - Context-aware actions after action ownership is clear.
 - Failure feedback and soft tutorial through real system causes.
 - Future scoped Backstory Legacy evidence only after owner systems and storage seams exist.
