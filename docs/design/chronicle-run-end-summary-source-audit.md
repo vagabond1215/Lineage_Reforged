@@ -2,17 +2,17 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: promoted source audit; no runtime/source/UI changes
+Status: consumed historical source audit; no runtime/source/UI changes
 
-0.5.75 sequencing note: this audit has been promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`, which is the active source for `Version 0.5.75 - Chronicle Run-End Summary View Model Plan` through the planned `0.5.76` projection and `0.5.77` read-only UI passes. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
+Consumed sequencing note: this audit was promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md` and served the completed `0.5.75` planning, `0.5.76` pure projection, and `0.5.77` read-only UI sequence. It is retained only as historical source-detail reference. Do not treat historical prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
-This audit maps existing sources for a future run-end Chronicle impact summary for death, retirement, and archival outcomes.
+This audit mapped existing sources for a future run-end Chronicle impact summary for death, retirement, and archival outcomes.
 
-The goal is to prepare a future planning or implementation pass that makes run endings feel meaningful without inventing data or bypassing current run lifecycle ownership.
+The goal was to prepare a future planning or implementation pass that made run endings feel meaningful without inventing data or bypassing current run lifecycle ownership.
 
-This document does not:
+This document did not and does not:
 
 - implement a run-end UI
 - edit lifecycle logic
@@ -67,7 +67,7 @@ This document does not:
 - optional `crossLineageStart`
 - `saveSlotIds`
 
-This is enough for a read-only run-end impact summary focused on identity, outcome, survival length, Echo depth, notable deeds, Legacy payout, source-line continuity, and origin.
+This was enough for a read-only run-end impact summary focused on identity, outcome, survival length, Echo depth, notable deeds, Legacy payout, source-line continuity, and origin.
 
 ### Legacy payout
 
@@ -93,7 +93,7 @@ The breakdown includes:
 - modified score
 - final amount
 
-This can feed a future summary, but the UI should not recompute payout math. It should read resolved fields from the run record or lifecycle result.
+This could feed summary planning, but the UI should not recompute payout math. It should read resolved fields from the run record or lifecycle result.
 
 ### Run lifecycle
 
@@ -113,7 +113,7 @@ This can feed a future summary, but the UI should not recompute payout math. It 
 
 `archiveActiveRun(...)` evaluates achievements, resolves payout, grants Legacy if applicable, applies payout metadata to the run record, archives the run, deposits estate assets, saves the account profile, and clears slots.
 
-A future run-end summary should attach after this lifecycle owner has produced the authoritative result, not before.
+A run-end summary should attach after this lifecycle owner has produced the authoritative result, not before.
 
 ### Account meta Chronicle UI
 
@@ -132,9 +132,9 @@ A future run-end summary should attach after this lifecycle owner has produced t
 - filter ids
 - deleted/non-authoritative state
 
-This is a good source for consistent labels, but a run-end summary needs richer single-run breakdown than the current tile.
+This was a good source for consistent labels, but a run-end summary needed richer single-run breakdown than the current tile.
 
-`AccountMetaPanel.tsx` currently renders Legacy and Chronicles sections, including Chronicle summary stats, estate preview, filters, and Chronicle tiles.
+`AccountMetaPanel.tsx` renders Legacy, Chronicles, and Bloodlines sections, including Chronicle summary stats, estate preview, filters, Chronicle tiles, and the read-only run-end summary panel added in `0.5.77`.
 
 ## Recommended Summary Shape
 
@@ -285,7 +285,13 @@ A future run-end summary should not claim these until owners exist:
 
 ## Recommended View-Model Boundary
 
-Future implementation should add a pure view model before React:
+The implemented `0.5.76` projection lives at:
+
+- `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
+
+The read-only `0.5.77` UI renders this projection in Account Meta / Chronicles.
+
+Historical draft shape from this audit:
 
 ```ts
 type RunEndSummaryViewModel = {
@@ -305,17 +311,16 @@ type RunEndSummaryViewModel = {
 };
 ```
 
-Do not add this type in this audit.
+Do not treat this draft type as current API. Inspect the implemented projection for current API shape.
 
-## Recommended Implementation Sequence
+## Implemented Sequence
 
-1. Create a pure summary projection from an `AccountRunHistoryRecord` plus account profile.
-2. Reuse existing label helpers or factor them out from `accountMetaPresentation.ts` if needed.
-3. Add focused tests for death, hardcore death, retirement, no-payout, payout, estate-present, no-estate, source-run continuity, deleted/non-authoritative cases.
-4. Render summary after lifecycle result only.
-5. Keep all actions absent in the first UI pass.
+1. Created a pure summary projection from an `AccountRunHistoryRecord` plus account profile in `0.5.76`.
+2. Added focused tests for death, hardcore death, retirement, payout, estate, continuity, deleted/non-authoritative cases, and no-action guarantees in `0.5.76`.
+3. Rendered the summary read-only in Account Meta / Chronicles in `0.5.77`.
+4. Kept all actions absent in the first UI pass.
 
-## Forbidden In First Implementation
+## Forbidden Behavior Preserved
 
 - no payout recalculation in React
 - no Legacy grant from summary UI
@@ -331,4 +336,13 @@ Do not add this type in this audit.
 
 ## Current Prompt Authority
 
-Use `docs/design/chronicle-run-end-summary-view-model-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.
+Do not use this file as current pipeline authority.
+
+Use:
+
+- `docs/dev/current-codex-output.md` for exact latest Codex state
+- `docs/dev/current-gpt-handoff.md` for immediate guardrails
+- `docs/dev/project-roadmap.md` and `docs/dev/codex-sequenced-implementation-plan.md` for sequence
+- `docs/design/economy-price-clarity-view-model-plan.md` for the current `0.5.79` implementation source
+
+This audit remains a historical source-detail reference only.
