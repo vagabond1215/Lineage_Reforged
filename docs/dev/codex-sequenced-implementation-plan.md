@@ -6,14 +6,14 @@ Status: connector-authored sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.78 - Economy Price Clarity View Model Plan`.
+This file gives Codex a stable ordered queue after `Version 0.5.79 - Economy Price Clarity Pure Projection` and the follow-up connector triage that found failing existing economy runtime/trade validation suites.
 
 It does not replace:
 
 - `docs/dev/current-codex-output.md` for exact latest Codex state
 - `docs/dev/current-gpt-handoff.md` for immediate prompt guardrails
 - `docs/dev/project-roadmap.md` for version-band meaning and pipeline status
-- focused `docs/design/*` plans for detailed implementation constraints
+- focused `docs/design/*` or `docs/dev/*-triage-plan.md` files for detailed implementation constraints
 
 Use this file as the ordered table of what to implement or plan next, then inspect the focused source document for the active version.
 
@@ -23,9 +23,9 @@ Latest landed Chronicle slice:
 
 - `Version 0.5.77 - Chronicle Run-End Read-Only UI`
 
-Latest landed economy planning slice:
+Latest landed economy clarity slice:
 
-- `Version 0.5.78 - Economy Price Clarity View Model Plan`
+- `Version 0.5.79 - Economy Price Clarity Pure Projection`
 
 Latest cleanup/tooling slice:
 
@@ -33,7 +33,7 @@ Latest cleanup/tooling slice:
 
 Immediate next Codex run:
 
-- `Version 0.5.79 - Economy Price Clarity Pure Projection`
+- `Version 0.5.80 - Economy Runtime Test Failure Triage`
 
 ## Ordered 10-Step Trajectory
 
@@ -44,11 +44,12 @@ Immediate next Codex run:
 | 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | Codex 5.5 Local | `docs/design/chronicle-run-end-summary-view-model-plan.md` | pure view-model + tests | Landed | Read stored/lifecycle result data only; do not recompute payout. |
 | 4 | `0.5.77` | Chronicle Run-End Read-Only UI | Codex 5.5 Local | `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts` | read-only UI | Landed | Rendered tested projection read-only; no payout mutation, estate delivery, Marks, Seals, or Family Prestige grants. |
 | 5 | `0.5.78` | Economy Price Clarity View Model Plan | Codex 5.5 Local docs-only | `docs/design/economy-price-clarity-view-model-plan.md` | planning doc | Landed | Planned stored-state economy clarity labels; no economy math/content/UI changes. |
-| 6 | `0.5.79` | Economy Price Clarity Pure Projection | Codex 5.5 Local | `docs/design/economy-price-clarity-view-model-plan.md` | pure view-model + tests | Next | Derive labels from supplied resolved economy state; no resolver calls, trade commands, crafting, UI, or simulation changes. |
-| 7 | `0.5.80` | Calendar Climate Popup View Model Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/calendar-climate-popup-view-model-plan.md` | planning doc | Planned | Informational only; no weather, travel, body-state, crop, or clock changes. |
-| 8 | `0.5.81` | Calendar Climate Read-Only Popup | Codex 5.5 Local | `docs/design/calendar-climate-popup-view-model-plan.md` | read-only projection/UI | Planned | Render current time/season/climate context only; no active effects. |
-| 9 | `0.5.82` | Combat Equipment Mapping Audit | Codex 5.5 Local, or GitHub Connector first if prompt prep is needed | `docs/design/combat-equipment-mapping-audit-plan.md` | audit tables/tests if safe | Planned | Audit mapping before math; no combat formula rewrites. |
-| 10 | `0.5.83` | Known Spell Ownership Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Planned | Define ownership/acquisition before runtime casting; no spell execution. |
+| 6 | `0.5.79` | Economy Price Clarity Pure Projection | Codex 5.5 Local | `docs/design/economy-price-clarity-view-model-plan.md` | pure view-model + tests | Landed / Partial validation | Projection and new tests landed; existing civilization runtime/trade suites failed outside projection. |
+| 7 | `0.5.80` | Economy Runtime Test Failure Triage | Codex 5.5 Local | `docs/dev/economy-runtime-test-failure-triage-plan.md` | focused runtime/content/test fix | Next | Restore failing economy runtime/trade validations before calendar work; no UI/generated output/broad economy expansion. |
+| 8 | `0.5.81` | Calendar Climate Popup View Model Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/calendar-climate-popup-view-model-plan.md` | planning doc | Planned | Informational only; no weather, travel, body-state, crop, or clock changes. |
+| 9 | `0.5.82` | Calendar Climate Read-Only Popup | Codex 5.5 Local | `docs/design/calendar-climate-popup-view-model-plan.md` | read-only projection/UI | Planned | Render current time/season/climate context only; no active effects. |
+| 10 | `0.5.83` | Combat Equipment Mapping Audit | Codex 5.5 Local, or GitHub Connector first if prompt prep is needed | `docs/design/combat-equipment-mapping-audit-plan.md` | audit tables/tests if safe | Planned | Audit mapping before math; no combat formula rewrites. |
+| 11 | `0.5.84` | Known Spell Ownership Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Planned | Define ownership/acquisition before runtime casting; no spell execution. |
 
 ## Default Prompt Pattern
 
@@ -66,7 +67,8 @@ Each future Codex prompt should:
 - Do not skip directly from planning to mutating runtime behavior.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix Chronicle summary work with Chronicle Marks, Lineage Seals, estate delivery, or Family Prestige grants.
-- Do not mix economy clarity with economy simulation, shop, crafting, caravan, or trade command changes.
+- Do not mix economy clarity with economy simulation, shop, crafting, caravan, or trade command changes unless the active prompt is the focused `0.5.80` runtime validation fix.
+- Do not mix the `0.5.80` economy runtime validation fix with UI, generated output, broad content expansion, or player-facing trade/craft commands.
 - Do not mix calendar/climate UI with weather, travel, crop, body-state, or clock behavior.
 - Do not mix combat mapping audit with combat math rewrites.
 - Do not begin runtime magic until known-spell ownership and acquisition are explicitly planned.
