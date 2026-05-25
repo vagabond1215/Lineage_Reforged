@@ -1,13 +1,13 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.78 - Economy Price Clarity View Model Plan
+Source version/run: Version 0.5.79 - Economy Price Clarity Pure Projection
 Date: 2026-05-24
-Branch/status assumption: Ran locally on `master`. Initial worktree was clean. `git pull` failed on local OpenSSL certificate validation, then `git -c http.sslBackend=schannel pull` reported `Already up to date.` Direction-bearing docs still lag in places, so this run trusted the latest Codex output state that 0.5.77 landed and 0.5.78 was next.
+Branch/status assumption: Ran locally on `master`. Initial worktree was clean. Default `git pull` failed on the known local OpenSSL issuer certificate validation issue; `git -c http.sslBackend=schannel pull` reported `Already up to date.` Worktree was clean after sync and before edits.
 
 ## Result
-Finalized the planning-only economy price clarity view-model plan in `docs/design/economy-price-clarity-view-model-plan.md` from live repo inspection. The plan now defines the 0.5.79 pure projection boundary, source owners, label thresholds, missing-data behavior, read-only restrictions, and focused future tests.
+Implemented a pure, read-only economy clarity projection in `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts` plus focused unit tests in `tests/unit/economy-clarity-presentation.test.mjs`.
 
-No runtime, source, schema, UI, test, content JSON, generated output, or economy behavior was implemented.
+The projection maps supplied, already-resolved economy state into display-ready price, trade, and craft/value labels and rows. It does not call economy runtime helpers, does not mutate inputs, and always returns `actionIds: []`.
 
 ## Files Inspected
 - `AGENTS.md`
@@ -33,84 +33,77 @@ No runtime, source, schema, UI, test, content JSON, generated output, or economy
 - `tests/unit/civilization-system-consistency.test.mjs`
 
 ## Files Changed
-- `docs/design/economy-price-clarity-view-model-plan.md`
+- `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`
+- `tests/unit/economy-clarity-presentation.test.mjs`
 - `docs/dev/current-codex-output.md`
 
-## Current Repo Reality
-Current contracts and runtime sources can support a read-only clarity layer without changing economy behavior:
-
-- `SettlementMarketState` contains settlement-local `stock`, `laborPressure`, and `priceView` rows.
-- `SettlementMarketPriceState` contains buy/sell prices, spread, estimated market value, production cost, and pressure sources.
-- `SettlementSupplyDemandState` contains surplus, shortage, import, export, consumption, dependency, and note fields.
-- `TradeOpportunityState` contains viability, strategic necessity, quantities, load/fill, protected reserve, absorption, prices, margins, route timing, route ids, rejection reasons, and explanations.
-- `ItemValueResolutionState` and `CraftResolutionState` contain enough read-only value/cost detail for later projection rows.
-- `tickCivilization(...)` currently stores computed market states and evaluated trade opportunities on civilization state, but the future projection should consume that resolved state only and must not tick, dispatch, or recompute.
-
-## Data-Owner Map
-- Price clarity: owned by runtime economy through `SettlementMarketPriceState` plus matching `SettlementMarketState`.
-- Stock scarcity/surplus clarity: owned by runtime economy stock pressure and settlement simulation supply/demand.
-- Labor pressure clarity: owned by runtime economy labor pressure rows.
-- Trade opportunity clarity: owned by trade runtime through `TradeOpportunityState`.
-- Item value clarity: owned by runtime item value resolution through supplied `ItemValueResolutionState`.
-- Craft cost clarity: owned by runtime craft estimate resolution through supplied `CraftResolutionState`.
-- Infrastructure context: owned by settlement simulation through supplied `SettlementInfrastructureRuntimeState`.
-
-## Planned Projection Boundary
-Future file:
+## Projection Boundary
+New file:
 
 - `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`
 
-Planned pure functions for 0.5.79:
+Exported primitives:
 
-- `buildEconomyPriceClarityViewModel(input: EconomyPriceClarityInput): EconomyPriceClarityViewModel`
-- `buildTradeOpportunityClarityViewModel(input: TradeOpportunityClarityInput): TradeOpportunityClarityViewModel`
-- `buildCraftCostClarityViewModel(input: CraftCostClarityInput): CraftCostClarityViewModel`
+- `EconomyClarityTone`
+- `EconomyClarityRow`
 
-The plan allows all three in 0.5.79 only if each function remains a pure mapper over supplied state. It specifically blocks calling `resolveLocalMarketPrice(...)`, `buildSettlementMarketStates(...)`, `resolveItemValueAtSettlement(...)`, `resolveCraftAtSettlement(...)`, trade dispatch, or civilization tick helpers from inside the projection.
+Exported input/view-model types:
 
-Outputs should be display-ready rows, labels, warnings, and `actionIds: []`.
+- `EconomyPriceClarityInput`
+- `TradeOpportunityClarityInput`
+- `CraftCostClarityInput`
+- `EconomyPriceClarityViewModel`
+- `TradeOpportunityClarityViewModel`
+- `CraftCostClarityViewModel`
 
-## Label Rules
-- Price labels: `Cheap`, `Fair`, `Expensive`, or `Unknown` from local buy price versus estimated market value.
-- Spread labels: `Tight spread`, `Normal spread`, `Wide spread`, or `Unknown spread` from stored spread versus estimated market value.
-- Margin labels: `Blocked`, `Losing route`, `Thin margin`, `Fair margin`, `Strong margin`, or `Unknown margin` from stored trade opportunity margin fields.
-- Scarcity/import/export labels: derive from stock pressure plus supplied `SettlementSupplyDemandState`; missing inputs produce `Unknown pressure`.
-- Labor labels: `Labor constrained`, `Stable labor`, `Skilled labor available`, or `Labor data unavailable` from supplied labor pressure rows only.
-- Trade labels: derive from stored viability, strategic necessity, fill ratio, route time, rejection reasons, and explanation.
-- Craft/value labels: derive from supplied craft and item value states only; they must not imply inventory consumption, crafted item creation, worker assignment, shop availability, or craft execution.
+Exported pure functions:
 
-## Allowed / Deferred Behavior
-- Allowed for 0.5.79: read supplied current economy state, convert it into display-ready labels, show warnings for missing/mismatched data, and emit no action ids.
-- Deferred/forbidden: price recomputation, formula tuning, supply/demand changes, stockpile mutation, settlement content edits, trade dispatch, caravan state changes, shop actions, crafting execution, passive income, contacts, discounts, market privileges, Legacy economy effects, command ids, React UI, and generated output.
-- Cross-system behavior remains untouched: Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, and bequest systems are not part of this projection.
+- `buildEconomyPriceClarityViewModel(input)`
+- `buildTradeOpportunityClarityViewModel(input)`
+- `buildCraftCostClarityViewModel(input)`
 
-## Future Tests
-Recommended 0.5.79 test file:
+Output shape:
 
-- `tests/unit/economy-clarity-presentation.test.mjs`
+- display-ready titles/subtitles;
+- primary labels for price, spread, scarcity, viability, margin, and craft cost profile;
+- row groups for prices, pressure sources, labor, value estimates, trade route context, quantity/load, rejection reasons, explanations, craft cost proportions, craft inputs/outputs, and craft step summaries;
+- warning labels for missing or mismatched data;
+- `actionIds: []` always.
 
-Focused coverage should prove:
+## Label Rules Implemented
+- Price labels: `Unknown`, `Cheap`, `Fair`, `Expensive` from local buy price versus estimated market value.
+- Spread labels: `Unknown spread`, `Tight spread`, `Normal spread`, `Wide spread` from stored spread versus estimated market value.
+- Margin labels: `Blocked`, `Losing route`, `Thin margin`, `Fair margin`, `Strong margin`, `Unknown margin` from stored `TradeOpportunityState` margin fields.
+- Scarcity labels: `Scarce`, `Surplus`, `Import dependent`, `Export ready`, `Protected reserve`, `Unknown pressure` from supplied stock pressure, supply/demand, and trade opportunity reserve/rejection fields.
+- Labor labels: `Labor data unavailable`, `Labor constrained`, `Stable labor`, `Skilled labor available` from explicit supplied labor pressure rows.
+- Trade labels: `Viable route`, `Strategic necessity`, `Blocked route`, `Needs review`, plus load and route-time labels from stored opportunity fields.
+- Craft/value labels: `Material-heavy`, `Labor-heavy`, `Processing-heavy`, `Waste-sensitive`, `Fuel-sensitive`, `Tool-sensitive`, `Skill-sensitive`, `Value estimate unavailable` from supplied craft/value states only.
 
-- missing price/trade/craft inputs return unknown or unavailable labels and `actionIds: []`;
-- cheap/fair/expensive and tight/normal/wide spread labels derive from stored price fields;
-- pressure source rows preserve stored source and note data;
-- scarcity, surplus, import-dependent, export-ready, protected-reserve, and labor labels derive only from supplied state;
-- viable, blocked, strategic, fill, route, rejection, and margin labels derive from `TradeOpportunityState`;
-- craft/value labels derive from supplied `CraftResolutionState` and `ItemValueResolutionState`;
-- mismatched settlement or item inputs produce warnings instead of guessed data;
-- input objects are not mutated;
-- no command/action ids are emitted;
-- the projection does not call economy resolvers, trade dispatch, or civilization tick helpers.
+## Data Rules Enforced
+- The projection accepts supplied current state only.
+- It does not fetch content, rebuild market states, evaluate trade, dispatch caravans, run civilization ticks, resolve craft estimates, or resolve market prices.
+- Missing price/trade/craft data returns unknown or unavailable labels plus warnings.
+- Mismatched settlement/item/craft target inputs produce warnings instead of guessed repairs.
+- Input fixtures are not mutated.
+- Every view model returns `actionIds: []`.
+- Source-level tests confirm the projection source does not reference the forbidden economy runtime helpers or deferred cross-system behavior.
 
 ## Behavior / Runtime Confirmation
-- runtime changed: no
+- runtime behavior changed: no
 - economy math changed: no
+- price formulas changed: no
 - simulation changed: no
+- settlement stockpiles changed: no
 - market content changed: no
 - settlement content changed: no
-- UI changed: no
+- production chains changed: no
+- shop behavior changed: no
+- trade execution changed: no
+- caravan dispatch changed: no
+- crafting execution changed: no
 - schema changed: no
-- tests changed: no
+- content JSON changed: no
+- UI changed: no React UI was added
 - generated output changed: no
 - Chronicle behavior changed: no
 - Bloodlines behavior changed: no
@@ -119,30 +112,59 @@ Focused coverage should prove:
 - Chronicle Marks changed: no
 - Lineage Seals changed: no
 - estate behavior changed: no
-- heirloom or bequest behavior changed: no
+- heirloom behavior changed: no
+- bequest behavior changed: no
+- tests changed: yes, focused projection tests were added
+
+## Tests Added / Updated
+Added `tests/unit/economy-clarity-presentation.test.mjs` with coverage for:
+
+- missing price input warnings and empty actions;
+- cheap/fair/expensive labels;
+- tight/normal/wide spread labels;
+- pressure source row rendering;
+- scarce, surplus, export-ready, import-dependent, and protected-reserve labels;
+- labor constrained/stable/available labels;
+- trade viable/blocked/strategic labels;
+- trade losing/thin/fair/strong/unknown/blocked margin labels;
+- rejection reasons as read-only rows;
+- craft material/labor/processing/waste/fuel/tool/skill labels;
+- item value rows without resale-profit promises;
+- mismatched input warnings;
+- non-mutation of inputs;
+- empty action ids for every view model;
+- source guardrails against forbidden economy helper calls and deferred cross-system behavior.
 
 ## Checks Run
 - `git status --short --branch` -> clean `master...origin/master` before edits.
 - `git pull` -> failed due local OpenSSL issuer certificate validation.
 - `git -c http.sslBackend=schannel pull` -> `Already up to date.`
 - `git status --short --branch` -> clean after sync.
-- `git diff --check` -> passed; PowerShell/Git warned that `docs/design/economy-price-clarity-view-model-plan.md` and `docs/dev/current-codex-output.md` line endings will be replaced by CRLF next time Git touches them.
+- `node --test tests/unit/economy-clarity-presentation.test.mjs` -> passed, 19 tests.
+- `npm.cmd run tool:content-lint` -> passed, `content-lint: ok (53 files checked)`.
+- `node --test tests/unit/civilization-runtime-economy.test.mjs` -> failed in existing runtime assertions:
+  - `craft resolution uses worker skill to reduce time and cost` failed: higher skill did not reduce processing time.
+  - `recipe dimensions only affect quantity when the recipe allows it` failed: cheese high-skill quantity did not exceed low-skill quantity.
+- `node --test tests/unit/civilization-trade-runtime.test.mjs` -> failed in existing trade runtime assertions:
+  - `autonomous trade evaluation produces viable, explained opportunities` failed: no evaluated opportunities were produced.
+  - `autonomous trade dispatch creates caravans, reservations, and origin stock changes` failed: no convoy was launched.
+- `git diff --check` -> passed; Git warned that `docs/dev/current-codex-output.md` line endings will be replaced by CRLF next time Git touches it.
 
-No focused runtime tests were run because this pass changed docs only.
+The failing civilization runtime/trade tests do not import the new projection file and were not broadened into runtime fixes because this pass is presentation-only.
 
 ## Risks / Follow-Up
-- Direction-bearing handoff and roadmap docs still lag behind the latest Codex output, but the prompt explicitly said to trust `docs/dev/current-codex-output.md` if drift exists.
-- 0.5.79 should keep the projection pure and should not hide resolver calls inside presentation code.
-- Craft clarity is source-owned enough for a pure mapper, but it should stay display-only and must not become craft execution or inventory behavior.
-- Future UI should remain read-only until shop, trade, craft, and settlement interaction owners exist.
+- The new projection suite and content lint pass, but the required existing civilization runtime and trade suites currently fail. Those failures appear outside this patch's source surface and should be triaged in a dedicated economy runtime/data validation pass if they are not already known.
+- The projection is source-only; no React UI consumes it yet.
+- Future UI must stay read-only and must not add buy/sell/dispatch/craft controls from these labels.
+- Craft clarity remains explanatory only. It must not become crafting execution, worker assignment, inventory movement, quality creation, or shop availability.
 
 ## Temporary Guardrail Cleanup Decision
-Keep `docs/design/economy-clarity-audit.md` through 0.5.79. The updated plan is now the active implementation source, but the audit remains useful as a source-detail reference and first-candidate rationale.
+Keep `docs/design/economy-clarity-audit.md` for now. The active implementation guidance has moved into `docs/design/economy-price-clarity-view-model-plan.md` and this projection/test suite, but the audit still serves as source-detail reference until a later cleanup pass folds durable economy clarity rules into `docs/design/future-system-design-ledger.md`.
 
-After 0.5.79 lands and durable rules are folded into `docs/design/future-system-design-ledger.md`, a cleanup pass can mark the audit consumed or delete it if no unique guidance remains.
+After the read-only economy clarity UI direction is chosen, a connector cleanup pass can mark the audit consumed, fold any remaining durable language, or delete it if no unique guidance remains.
 
 ## Next Recommended Version
-Version 0.5.79 - Economy Price Clarity Pure Projection
+Version 0.5.80 - Calendar Climate Popup View Model Plan
 
 ## Suggested Commit Message
-docs(economy): finalize price clarity view model plan
+feat(economy): add price clarity projection
