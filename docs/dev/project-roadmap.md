@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-05-24
+Last reviewed: 2026-05-25
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.78 - Economy Price Clarity View Model Plan`
-- Next recommended version: `Version 0.5.79 - Economy Price Clarity Pure Projection`
+- Latest landed version: `Version 0.5.80 - Economy Runtime Test Failure Triage`
+- Next recommended version: `Version 0.5.81 - Calendar Climate Popup View Model Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -39,8 +39,10 @@ Current repo reality:
 - The Chronicle source audit has served the 0.5.75-0.5.77 sequence and is now consumed as active prompt authority.
 - Typecheck script routing is explicit: default `typecheck` delegates to the UI app, `typecheck:ui:node` passes, and `typecheck:workspace` is the broad root audit target.
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers; focused tests remain the current confidence path.
-- Economy price clarity planning has landed and defines the future pure projection boundary in `docs/design/economy-price-clarity-view-model-plan.md`.
-- No economy clarity projection implementation, React UI, economy math changes, settlement content changes, shop/trade/craft/caravan commands, simulation changes, or generated output has been added yet.
+- Economy price clarity planning, pure projection, and focused tests have landed.
+- The 0.5.80 economy runtime/trade validation triage restored the focused civilization economy validation path.
+- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy expansion has been added.
+- Calendar/climate popup planning is next and should remain planning-only.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
 
@@ -81,7 +83,9 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.76` | Chronicle Run-End Summary Pure Projection | Codex Local | Pure projection + tests | Landed. Implemented the stored-data-only run-end summary projection and focused test coverage. | No React UI, payout recomputation, lifecycle mutation, estate movement, actions, Marks, Seals, Family Prestige, or Bloodlines behavior. |
 | `0.5.77` | Chronicle Run-End Read-Only UI | Codex Local | Read-only UI | Landed. Rendered the tested run-end summary projection read-only in Account Meta / Chronicles. | No payout mutation, estate delivery, Marks, Seals, Family Prestige grants, or new action paths. |
 | `0.5.78` | Economy Price Clarity View Model Plan | Codex Local docs-only | Planning | Landed. Finalized source ownership, labels, thresholds, and future projection boundary for economy clarity. | Planning-only; no economy math, source, UI, tests, content, simulation, commands, or generated output changes. |
-| `0.5.79` | Economy Price Clarity Pure Projection | Codex Local | Pure projection + tests | Next recommended step. Implement the stored-state economy clarity projection and focused tests. | No resolver calls, economy math changes, stockpile mutation, shop/trade/craft/caravan commands, React UI, or generated output. |
+| `0.5.79` | Economy Price Clarity Pure Projection | Codex Local | Pure projection + tests | Landed. Implemented stored-state economy clarity projection and focused tests. | No resolver calls, economy math changes, stockpile mutation, shop/trade/craft/caravan commands, React UI, or generated output. |
+| `0.5.80` | Economy Runtime Test Failure Triage | Codex Local | Focused runtime/test validation fix | Landed. Restored focused civilization economy runtime/trade validation after 0.5.79. | No UI, generated output, broad economy expansion, or player-facing trade/craft commands. |
+| `0.5.81` | Calendar Climate Popup View Model Plan | Codex Local docs-only | Planning | Next recommended step. Plan future read-only Calendar/Climate popup. | Planning-only; no weather, travel, body-state, crop, clock, simulation, UI, or active-effect behavior. |
 
 ## 4. Sequenced Near-Term Codex Queue
 
@@ -94,11 +98,12 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Landed |
 | 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts` | Landed |
 | 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` | Landed |
-| 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Next |
-| 7 | `0.5.80` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
-| 8 | `0.5.81` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
-| 9 | `0.5.82` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 10 | `0.5.83` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Landed |
+| 7 | `0.5.80` | Economy Runtime Test Failure Triage | `docs/dev/economy-runtime-test-failure-triage-plan.md` | Landed |
+| 8 | `0.5.81` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Next |
+| 9 | `0.5.82` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
+| 10 | `0.5.83` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
+| 11 | `0.5.84` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 Do not skip planning-to-projection-to-UI stages unless a newer handoff or user instruction explicitly changes the order.
 
@@ -110,10 +115,11 @@ These connector-safe audit/planning passes have been completed, folded, or promo
 | --- | --- |
 | Typecheck Blocker Triage Plan | `docs/dev/typecheck-blocker-triage-plan.md`; Pass A consumed by `0.5.74`, keep for remaining blocker tracks. |
 | Chronicle Run-End Summary Source Audit | Consumed by `0.5.75`-`0.5.77`; retained only as historical source-detail reference. |
-| Economy Clarity Audit | Promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep through `0.5.79` as source-detail reference. |
-| Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; use for `0.5.80`-`0.5.81`. |
-| Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; use for `0.5.82`. |
-| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.83`. |
+| Economy Clarity Audit | Promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep until economy clarity UI direction is chosen. |
+| Economy Runtime Test Failure Triage Plan | Consumed by `0.5.80`; retained only as historical source-detail reference. |
+| Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; use for `0.5.81`-`0.5.82`. |
+| Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; use for `0.5.83`. |
+| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.84`. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
@@ -230,7 +236,7 @@ These are strategically important but should not interrupt the current ownership
 | Property / home / land / ranching | Estate ownership, economy guardrails, and material claim rules. | Strong dynasty fantasy, but high risk without ownership seams. |
 | Living settlements / migration / supply-demand | Economy stability, settlement state, performance bounds. | Flagship simulation layer; too large for current phase. |
 | Kingdoms / diplomacy / war / governance | Settlements, renown, titles, estate, combat, economy, AI/event systems. | Late-system dependency stack. |
-| Runtime magic expansion | Magic design, scaling roles, access model, acquisition, runtime hooks. | Current magic is metadata/validation-first; runtime expansion is high-risk. |
+| Runtime magic expansion | Magic design, scaling roles, access model, acquisition, runtime hooks. | Current magic is metadata/validation-first. |
 
 ## 11. Roadmap Maintenance Rules
 
