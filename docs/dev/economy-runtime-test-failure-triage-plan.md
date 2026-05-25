@@ -2,15 +2,24 @@
 
 Date: 2026-05-24
 Route: ChatGPT via GitHub Connector
-Status: active source for `Version 0.5.80 - Economy Runtime Test Failure Triage`
+Status: consumed historical triage plan; no longer active prompt authority
 
-## Purpose
+## Consumed Sequencing Note
 
-This connector-side triage plan exists because `Version 0.5.79 - Economy Price Clarity Pure Projection` landed cleanly for its new projection/test surface, but two required existing civilization validation suites failed outside that new projection surface.
+This connector-side triage plan was created after `Version 0.5.79 - Economy Price Clarity Pure Projection` because two existing civilization validation suites failed outside the new projection surface.
 
-This pass does not implement runtime, schema, content, UI, generated output, or test changes. It narrows the next Codex run so the failures are fixed before continuing to Calendar/Climate work.
+It served as the active source for `Version 0.5.80 - Economy Runtime Test Failure Triage`.
 
-## Current Failure Evidence
+`0.5.80` has now landed and restored the focused economy runtime/trade validation path. Use this file only as historical context. Do not treat it as the current next prompt target.
+
+Current prompt authority now lives in:
+
+- `docs/dev/current-codex-output.md` for exact latest Codex state
+- `docs/dev/current-gpt-handoff.md` for immediate guardrails
+- `docs/dev/codex-sequenced-implementation-plan.md` for queue order
+- `docs/design/calendar-climate-popup-view-model-plan.md` for the current `0.5.81` planning source
+
+## Original Failure Evidence
 
 From `docs/dev/current-codex-output.md` after `0.5.79`:
 
@@ -23,174 +32,49 @@ From `docs/dev/current-codex-output.md` after `0.5.79`:
   - `autonomous trade evaluation produces viable, explained opportunities`: no evaluated opportunities were produced.
   - `autonomous trade dispatch creates caravans, reservations, and origin stock changes`: no convoy was launched.
 
-The failing suites do not import `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`. Treat this as an economy runtime/content/test expectation triage, not as a rollback of the 0.5.79 projection.
+The failing suites did not import `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`. This was treated as an economy runtime/content/test expectation triage, not as a rollback of the 0.5.79 projection.
 
-## Files To Inspect First
+## Resolution Summary From 0.5.80
 
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/economy-runtime-test-failure-triage-plan.md`
-- `tests/unit/civilization-runtime-economy.test.mjs`
-- `tests/unit/civilization-trade-runtime.test.mjs`
-- `tests/unit/economy-clarity-presentation.test.mjs`
-- `packages/engines/civilization-engine/src/runtime-economy.ts`
-- `packages/engines/civilization-engine/src/trade-runtime.ts`
-- `packages/engines/civilization-engine/src/settlement-simulation.ts`
-- `packages/engines/civilization-engine/src/economy.ts`
-- `packages/engines/civilization-engine/src/index.ts`
-- relevant economy, settlement, workplace, production-chain, item, transport, and route content only if a failing runtime assertion depends on current content reality
+Craft validation:
 
-## Failure Cluster A: Craft Skill Runtime
+- Current production-chain and skill content use `skill.crafting.cooking`.
+- The failing test fixtures used stale `skill.craft.cooking`, so explicit low/high worker ranks were ignored.
+- Tests were re-scoped to the canonical cooking skill id while preserving coverage for skill-gated craft time, cost, and quantity dimensions.
 
-Failing tests:
+Autonomous trade validation:
 
-- `craft resolution uses worker skill to reduce time and cost`
-- `recipe dimensions only affect quantity when the recipe allows it`
+- Protected reserve math had multiplied one-tick stock snapshot reserve values into multi-tick buffers, making every current-content exportable surplus zero.
+- Runtime reserve math was scaled back to current market stock snapshot units.
+- Destination need, absorption, and strategic necessity now use the same family-aware demand reference.
+- The stale exact `grain` export invariant was re-scoped to a grain-family export from Vinecross because current authored content uses family-compatible staples such as barley.
 
-Known test expectations:
+## Historical Guardrails Preserved
 
-- `chain.food.bread` at `settlement.vinecross` should show high cooking skill reducing processing time and total cost versus low cooking skill.
-- Bread should not vary output quantity when no quantity dimension is allowed.
-- `chain.food.fresh_cheese` at `settlement.aurelis` should show higher cooking skill increasing output quantity when quantity is allowed, and at least one step should list `quantity` in `appliedDimensions`.
+The 0.5.80 pass was expected to and did preserve these boundaries:
 
-Relevant source observations:
+- no React UI
+- no economy clarity UI
+- no generated output
+- no player-facing shop, trade, craft, caravan, buy/sell, or dispatch commands
+- no broad economy expansion
+- no Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior changes
 
-- `createSkillEffect(...)` already computes `timeFactor`, `wasteMultiplier`, `laborRateFactor`, `qualityFactor`, and `quantityFactor` from `RecipeSkillCheckRecord`, worker rank, allowed dimensions, and labor pressure.
-- If a step has no `skillCheck`, `createSkillEffect(...)` returns neutral `timeFactor: 1` and `quantityFactor: 1`.
-- Quantity only changes when `allowedDimensions` includes `quantity`.
-- `estimateCraftResolution(...)` pushes quantity factors only when the step's applied dimensions include `quantity`, then derives `outputQuantity` from the final average quantity factor.
+## Historical Validation Target
 
-Likely causes to verify locally:
-
-1. Current content for `chain.food.bread` may not have a skillCheck on the relevant bake step, so both low and high worker skill produce neutral time/cost.
-2. Current content for `chain.food.bread` may allow quantity accidentally, or content may be fine but test fixture points at a settlement/chain path with no explicit skill gate.
-3. Current content for `chain.food.fresh_cheese` may no longer include `quantity` in allowed dimensions, may lack a skillCheck, or may target a chain/variant whose final output step does not carry the quantity dimension.
-4. The runtime may compute skill effects correctly, but material/recursive value resolution may dominate total cost so strongly that expected high-skill total cost reduction is masked.
-
-Recommended Codex approach:
-
-- First run the two failing tests and inspect actual low/high `CraftResolutionState` values by temporary local debugging only; do not commit debug logs.
-- Determine whether the source bug is runtime math, content drift, or stale test expectations.
-- Prefer fixing runtime/content only if current design intent says skill should affect the output.
-- If authored content no longer supports the old assertion, update the test to assert current intended behavior and preserve a smaller direct fixture that proves skill dimensions still work.
-- Keep projection code untouched unless a failing test directly proves it is implicated.
-
-Allowed fixes:
-
-- Fix `runtime-economy.ts` skill effect application when it is clearly wrong.
-- Fix production-chain/workplace/item content only if current authored data is internally inconsistent and content lint remains green.
-- Adjust test fixtures or assertions only if source inspection proves the old test is stale relative to current content/design.
-- Add a tiny direct fixture or focused assertion proving skill-gated time/cost and quantity dimensions remain functional.
-
-Forbidden fixes:
-
-- Do not weaken tests by deleting the failing assertions without replacement coverage.
-- Do not make all crafts globally scale quantity with skill.
-- Do not make all skill improvements unrealistically large just to satisfy one test.
-- Do not alter economy clarity presentation behavior to hide runtime failures.
-- Do not change UI, generated output, Chronicle, Bloodlines, Legacy, Family Prestige, Marks, Seals, estate, heirs, heirlooms, or bequests.
-
-## Failure Cluster B: Autonomous Trade Runtime
-
-Failing tests:
-
-- `autonomous trade evaluation produces viable, explained opportunities`
-- `autonomous trade dispatch creates caravans, reservations, and origin stock changes`
-
-Known test expectations:
-
-- The test settlement set is:
-  - `settlement.aurelis`
-  - `settlement.vinecross`
-  - `settlement.stonevein`
-  - `settlement.brineharbor`
-- `evaluateAutonomousTradeOpportunities(...)` should produce at least one opportunity, at least one viable opportunity, and a viable `grain` export from `settlement.vinecross`.
-- `runAutonomousTradeDispatch(...)` should dispatch at least one convoy, create matching caravans/reservations, store last evaluated opportunities, and reduce origin stock.
-
-Relevant source observations:
-
-- `evaluateAutonomousTradeOpportunities(...)` builds settlement simulation profiles from supplied market states.
-- Origin candidate stock is filtered to entries with `stockLevel > 0`, sorted by exportable surplus, and sliced to 18 entries.
-- Any stock entry with `exportableSurplus < 1` is skipped before destinations are considered.
-- Destinations are skipped unless `destinationNeedsItem(...)` returns true.
-- `projectedQuantity` is limited by capacity, exportable surplus, destination absorption, origin throughput, and destination throughput.
-- A non-strategic route is rejected if fill ratio is below the transport threshold or projected net margin is below the viability threshold.
-- Dispatch only processes opportunities where `opportunity.viable` is true.
-
-Likely causes to verify locally:
-
-1. Current economy content may produce no exportable surplus above protected reserve for the test settlements.
-2. `getProtectedReserve(...)` may now be too conservative relative to stock levels, especially for essential goods like grain.
-3. Current settlement simulation may no longer mark a destination as demanding `grain` or related families.
-4. Destination absorption may be zero even when destination demand content exists.
-5. Trade route/vehicle/transport availability content may now reject all candidates due infrastructure minimums, fill ratio, route capacity, or margins.
-6. The test may be stale if current content no longer guarantees `vinecross` grain export without a controlled fixture.
-
-Recommended Codex approach:
-
-- First run the two failing trade tests and inspect actual evaluation output with local temporary logging only; do not commit debug logs.
-- Determine whether zero opportunities comes from no exportable surplus, no destination demand, no absorption, transport rejection, route failure, or margin threshold.
-- Prefer a targeted source/content/test update that preserves the intended invariant: autonomous trade should produce at least one explained opportunity and one dispatchable convoy in a deterministic current-content fixture.
-- If live content no longer guarantees `settlement.vinecross` grain export, update the test to either use a controlled market fixture or a current-content pair that is intentionally stable.
-
-Allowed fixes:
-
-- Fix trade runtime if it is over-filtering before explanations are preserved.
-- Fix protected reserve/exportable surplus logic if it prevents all trade in ordinary current-content conditions.
-- Fix settlement/trade/transport content only if it is clearly internally inconsistent and lint remains green.
-- Adjust the test fixture to a deterministic current-content trade route only if the old `vinecross` grain invariant is stale.
-- Preserve rejected-opportunity explanations even when nothing is viable, where useful.
-
-Forbidden fixes:
-
-- Do not bypass reserve protection broadly.
-- Do not dispatch trade that violates route, transport, throughput, or stock constraints.
-- Do not hard-code `vinecross` or `grain` into runtime logic.
-- Do not make every evaluated opportunity viable.
-- Do not add shop/trade UI, command ids, player-facing dispatch actions, economy clarity UI, generated output, or cross-system rewards.
-
-## Recommended Next Codex Run
-
-Use:
-
-- `Version 0.5.80 - Economy Runtime Test Failure Triage`
-
-Intent:
-
-- Fix or correctly re-scope the existing failing economy runtime/trade tests before moving to Calendar/Climate planning.
-
-Route:
-
-- Codex 5.5 Local
-
-Expected scope:
-
-- Runtime/source/content/test changes only as needed to restore focused validation.
-- No React UI.
-- No economy clarity UI.
-- No generated output.
-- No broad system expansion.
-
-Expected validation:
+The consumed validation target was:
 
 - `node --test tests/unit/economy-clarity-presentation.test.mjs`
 - `node --test tests/unit/civilization-runtime-economy.test.mjs`
 - `node --test tests/unit/civilization-trade-runtime.test.mjs`
+- `node --test tests/unit/civilization-system-consistency.test.mjs` if touched or relevant
 - `npm.cmd run tool:content-lint`
 - `git diff --check`
 
-Optional if touched or relevant:
+## Current Next Step
 
-- `node --test tests/unit/civilization-system-consistency.test.mjs`
-
-Do not require broad typecheck unless a narrow source change makes it useful; known broad typecheck blockers remain.
-
-## After This Triage Lands
-
-If the focused economy tests pass and no new economy blocker appears, return to the sequenced queue with:
+After this consumed triage, the sequence resumes with:
 
 - `Version 0.5.81 - Calendar Climate Popup View Model Plan`
 
-The previous `0.5.80` Calendar plan is intentionally shifted down because economy runtime validation failed after `0.5.79`.
+Use `docs/design/calendar-climate-popup-view-model-plan.md` and `docs/design/calendar-climate-popup-ia-audit.md`. Keep the pass planning-only unless explicitly re-scoped.
