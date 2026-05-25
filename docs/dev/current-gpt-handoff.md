@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.80 - Economy Runtime Test Failure Triage`
+Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.81 - Calendar Climate Popup View Model Plan`
 Date: 2026-05-25
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -22,7 +22,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.80 - Economy Runtime Test Failure Triage`
+- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
 
 Current sequence source:
 
@@ -30,27 +30,30 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
+- `Version 0.5.82 - Calendar Climate Read-Only Popup`
 
 ## Recent Results
 
-Economy runtime validation:
+Calendar / climate:
 
-- `0.5.80` fixed the focused economy runtime/trade validation failures that appeared after `0.5.79`.
-- Craft fixture tests now use the canonical authored cooking skill id `skill.crafting.cooking`.
-- Autonomous trade protected reserve math now operates in current stock snapshot units.
-- Autonomous trade destination need, absorption, and strategic necessity now use the same family-aware demand reference.
-- The focused economy runtime, trade runtime, economy clarity projection, civilization consistency, content lint, and diff checks passed in `0.5.80`.
-- `docs/dev/economy-runtime-test-failure-triage-plan.md` is consumed as active implementation guidance. Keep only as historical reference unless a cleanup deletes or folds it later.
+- `0.5.81` finalized the planning-only Calendar/Climate popup view-model plan from live repo inspection.
+- The active source for the next implementation is `docs/design/calendar-climate-popup-view-model-plan.md`.
+- The 0.5.82 recommendation is pure projection plus focused tests first.
+- React popup wiring should stay deferred unless the next prompt explicitly broadens scope after accepting the projection boundary.
+- The planned projection file is `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`.
+- The planned pure function is `buildCalendarClimatePopupViewModel(input)`.
+- The projection should accept supplied `SimulationClock`, optional location labels, and optional explicit climate profile/source data.
+- The projection must not load global content, infer climate from settlement/region ids, mutate input, or emit command/action ids.
 
-Economy clarity:
+Economy:
 
 - `0.5.78` finalized the planning-only economy clarity data-owner map and label rules.
 - `0.5.79` implemented the pure economy clarity projection and focused tests.
-- The new projection is source-only; no React UI consumes it yet.
+- `0.5.80` fixed the focused economy runtime/trade validation failures that appeared after `0.5.79`.
+- The economy validation blocker is resolved.
 - Future economy clarity UI must stay read-only and must not add buy/sell/dispatch/craft controls.
 
-Chronicle run-end summary:
+Chronicle:
 
 - `0.5.75` finalized the planning-only Chronicle run-end summary data-owner map.
 - `0.5.76` implemented the pure read-only Chronicle run-end summary projection and focused tests.
@@ -63,30 +66,29 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require `npm.cmd run typecheck` unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.81
+## Active Guardrails For 0.5.82
 
-Calendar/climate planning:
+Calendar/climate projection:
 
-- `0.5.81` should be planning-only.
-- Use `docs/design/calendar-climate-popup-view-model-plan.md` and `docs/design/calendar-climate-popup-ia-audit.md` as the active source stack.
-- Inspect current repo reality before writing or updating the plan.
-- Define the future data-owner map, view-model boundary, input/output shape, missing-data behavior, and test plan for a later read-only Calendar/Climate popup.
-- Do not implement React UI.
-- Do not implement a calendar/climate projection yet unless explicitly re-scoped.
-- Do not change weather, travel, crop, body-state, clock, economy, combat, magic, settlement simulation, save schema, generated output, or active-effect behavior.
-- Do not add player actions, command ids, warning effects, penalties, buffs, travel changes, crop growth, or weather simulation.
-
-Economy:
-
-- The 0.5.80 runtime validation blocker is resolved.
-- Do not expand economy clarity into UI, shop, trade commands, caravan controls, crafting execution, passive income, contacts, market privileges, or Legacy effects without a dedicated prompt.
-- Keep the 0.5.79 economy clarity projection pure and read-only.
+- `0.5.82` should implement pure projection plus focused tests first.
+- Use `docs/design/calendar-climate-popup-view-model-plan.md` as the active source.
+- Use `docs/design/calendar-climate-popup-ia-audit.md` only as supporting source-detail reference.
+- Add `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`.
+- Add `tests/unit/calendar-climate-presentation.test.mjs`.
+- Do not add React UI unless explicitly re-scoped.
+- Do not load global content inside the projection.
+- Do not infer climate from settlement or region ids inside the projection.
+- Do not change clock progression, month-to-season mapping, climate profiles, calendar content, weather, travel, crop, body-state, economy, combat, save schema, generated output, or active-effect behavior.
+- Do not add player actions, command ids, warning effects, penalties, buffs, travel changes, crop growth, weather randomization, or weather simulation.
+- Use `clock.season` as the current runtime season.
+- Show expected temperature bands only from supplied explicit climate profile data for the current runtime season.
+- Missing clock/profile/profile season data should produce unavailable rows and warning notes, not inferred climate.
+- Every view model must return `actionIds: []`.
 
 Cross-system guardrails:
 
-- Do not touch Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior unless explicitly prompted.
+- Do not touch economy clarity, economy runtime, Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior unless explicitly prompted.
 - Do not infer `familyId` from `lineageId`, `sourceRunId`, account id, selected character, selected backstory, or UI state.
-- Future Backstory Legacy records must describe formative-past access, not current employment, current social identity, family history proof, institution membership, title/status ownership, contacts, items, coin, skills, magic, authority, or live obligations.
 
 ## Sequenced Codex Queue
 
@@ -94,15 +96,14 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.80` | Economy Runtime Test Failure Triage | `docs/dev/economy-runtime-test-failure-triage-plan.md` | Landed |
-| 2 | `0.5.81` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Next |
-| 3 | `0.5.82` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
-| 4 | `0.5.83` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 5 | `0.5.84` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 1 | `0.5.81` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Landed |
+| 2 | `0.5.82` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Next |
+| 3 | `0.5.83` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
+| 4 | `0.5.84` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.81 - Calendar Climate Popup View Model Plan`, inspect:
+For `Version 0.5.82 - Calendar Climate Read-Only Popup`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -114,14 +115,16 @@ For `Version 0.5.81 - Calendar Climate Popup View Model Plan`, inspect:
 - `docs/design/calendar-climate-popup-ia-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- shared time/calendar types and helpers
-- existing UI presentation helper patterns
-- any existing climate, calendar, season, settlement, travel, or start-condition source owners relevant to display-only planning
+- `packages/shared/time/src/index.ts`
+- `packages/shared/types/src/contracts.ts`
+- `apps/rpg-ui/src/runtime/uiViewModel.ts`
+- `apps/rpg-ui/src/components/TopStatusBar.tsx`
+- existing presentation helper tests/patterns
 
-## After 0.5.81
+## After 0.5.82
 
-If the planning pass lands cleanly, return to the sequence file. The next run should be:
+If the pure projection lands cleanly, return to the sequence file. The next run should be:
 
-- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- `Version 0.5.83 - Combat Equipment Mapping Audit`
 
-Keep it read-only and informational unless explicitly re-scoped.
+If the user wants React popup wiring immediately after the projection, insert a narrow `Calendar Climate Read-Only Popup UI` pass before combat audit.
