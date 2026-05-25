@@ -1,104 +1,147 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.80 - Economy Runtime Test Failure Triage
+Source version/run: Version 0.5.81 - Calendar Climate Popup View Model Plan
 Date: 2026-05-25
-Branch/status assumption: Ran locally on `master`. Initial worktree was clean. Default `git pull` failed on the known local OpenSSL issuer certificate validation issue; `git -c http.sslBackend=schannel pull` reported `Already up to date.` `git status --short --branch` reported clean `master...origin/master` before edits.
+Branch/status assumption: Ran locally on `master`. Initial worktree was clean and tracking `origin/master`. Default `git pull` failed local SSL issuer validation; `git -c http.sslBackend=schannel pull` succeeded and fast-forwarded to `f6a6525`. Worktree was clean after sync and before edits.
 
 ## Result
-Fixed the focused economy runtime and autonomous trade validation failures from 0.5.79.
 
-Craft failures were re-scoped to the current canonical cooking skill id used by authored content. Autonomous trade failures were fixed in runtime by scaling protected reserve math to the stock snapshot units actually exposed by market state, and by using the same family-aware demand reference for destination need, absorption, and strategic necessity checks.
+Finalized the planning-only Calendar/Climate popup view-model plan from live repo inspection. The 0.5.82 recommendation is pure projection plus focused tests first, with React popup wiring deferred unless the next prompt explicitly broadens scope after accepting the projection boundary.
 
 ## Files Inspected
+
 - `AGENTS.md`
 - `README.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/economy-runtime-test-failure-triage-plan.md`
-- `docs/design/economy-price-clarity-view-model-plan.md`
-- `docs/design/economy-clarity-audit.md`
+- `docs/design/calendar-climate-popup-view-model-plan.md`
+- `docs/design/calendar-climate-popup-ia-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `tests/unit/civilization-runtime-economy.test.mjs`
-- `tests/unit/civilization-trade-runtime.test.mjs`
-- `tests/unit/economy-clarity-presentation.test.mjs`
-- `packages/engines/civilization-engine/src/runtime-economy.ts`
-- `packages/engines/civilization-engine/src/trade-runtime.ts`
-- `packages/engines/civilization-engine/src/settlement-simulation.ts`
-- `packages/engines/civilization-engine/src/economy.ts`
-- `packages/engines/civilization-engine/src/index.ts`
-- `packages/content/base/civilization/production_chains.json`
+- `docs/data-dictionary/climate.md`
+- `packages/shared/time/src/index.ts`
+- `packages/shared/types/src/contracts.ts`
+- `packages/content/base/world/calendar.json`
+- `packages/content/base/world/climate_profiles.json`
 - `packages/content/base/world/settlements.json`
-- `packages/content/base/world/transport_profiles.json`
-- `packages/content/base/world/travel_networks.json`
-- `packages/content/base/items/items.json`
-- `packages/content/base/civilization/market_item_values.json`
+- `packages/content/base/world/regions.json`
+- `packages/content/base/world/region_localities.json`
+- `packages/content/base/world/world_map_features.json`
+- `packages/content/base/world/regional_ecology_profiles.json`
+- `packages/engines/civilization-engine/src/content.ts`
+- `packages/engines/civilization-engine/src/economy.ts`
+- `packages/engines/civilization-engine/src/spatial-world.ts`
+- `apps/rpg-ui/src/runtime/uiViewModel.ts`
+- `apps/rpg-ui/src/runtime/demoSnapshot.ts`
+- `apps/rpg-ui/src/runtime/GameSessionContext.tsx`
+- `apps/rpg-ui/src/components/TopStatusBar.tsx`
+- `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`
+- `tests/unit/clock-season-map.test.mjs`
+- `tests/simulation/save-load-roundtrip.test.mjs`
+- `tests/unit/economy-clarity-presentation.test.mjs`
 
 ## Files Changed
-- `packages/engines/civilization-engine/src/trade-runtime.ts`
-- `tests/unit/civilization-runtime-economy.test.mjs`
-- `tests/unit/civilization-trade-runtime.test.mjs`
+
+- `docs/design/calendar-climate-popup-view-model-plan.md`
 - `docs/dev/current-codex-output.md`
 
-## Failure Triage Summary
-- craft skill/time/cost/quantity: current production-chain and skill content use `skill.crafting.cooking`. The failing test fixtures supplied stale `skill.craft.cooking`, so explicit low/high worker ranks were ignored and runtime fell back to inferred neutral ranks. With the canonical skill id, bread high skill reduces processing time and total cost, bread quantity stays fixed because it has no quantity dimension, and fresh cheese high skill increases output quantity because quantity is allowed.
-- autonomous trade evaluation/dispatch: evaluation returned zero opportunities because protected reserve logic multiplied one-tick stock snapshot reserve values into multi-tick buffers, making every current-content exportable surplus zero. After reserve math was brought back into stock snapshot units, evaluation and dispatch resumed. The old exact `grain` export invariant was stale because current Vinecross content exports `barley` as the grain-family staple while authored destinations demand grain-family goods. Runtime absorption and strategic checks now use the same family-aware demand reference that destination need already used.
+## Current Repo Reality
 
-## Fix Boundary
-Changes were a combination of runtime and tests:
+Shared time owns runtime clock progression and the temporary month-to-season mapping. The clock starts at year 1, month 1, day 1, subday 1, tick 0, season Winter; the default clock config is 6 ticks per subday, 4 subdays per day, 8 days per month, and 13 months per year.
 
-- runtime: `trade-runtime.ts` protected reserve, destination absorption, destination need, and strategic necessity logic.
-- tests: `civilization-runtime-economy.test.mjs` canonicalized the cooking skill fixture id; `civilization-trade-runtime.test.mjs` re-scoped the stale exact `grain` assertion to a grain-family export from Vinecross.
-- content: no content JSON changed.
-- UI/projection: no UI or economy clarity projection source changed.
+Calendar content currently lists numeric months and six season names only. UI month/watch labels are local game-shell presentation details. Climate profiles are authored content with names, season lengths, variance, Celsius templates, and seasonal low/high bands, but profile-driven season progression and active weather are not runtime-owned.
+
+Settlement records link to map climate zones through `visualMapRef.climateZoneId`, and `world_map_features.json` maps those zones to `climateProfileId`. That is an explicit authored content link, but the active save/runtime path does not yet provide a stable current-location climate profile resolver. `worldState.weatherState` remains a generic record.
+
+## Data-Owner Map
+
+- Current time rows: `SimulationClock` from shared time/shared types.
+- Month labels: current game-shell UI constants or supplied projection labels; calendar content has no display month names.
+- Watch labels: 1-based watch labels should be projection-owned for 0.5.82.
+- Runtime season rows: `clock.season` from shared time mapping.
+- Climate rows: explicit supplied climate profile data only.
+- Temperature rows: supplied profile `seasonalTemperatureProfiles[clock.season]` only.
+- Settlement climate source: authored settlement climate zone plus world-map climate zone profile link, reserved for a separate explicit resolver if needed.
+- Informational/warning notes and `actionIds: []`: future projection owner.
+
+## Planned Projection Boundary
+
+Future file: `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`
+
+Future pure function: `buildCalendarClimatePopupViewModel(input)`
+
+Future output shape:
+
+- `title`
+- `subtitle`
+- `currentTimeRows`
+- `seasonRows`
+- `climateRows`
+- `temperatureRows`
+- `informationalEffectNotes`
+- `warningNotes`
+- `actionIds: []`
+
+The projection should accept a `SimulationClock`, optional location labels, and optional explicit climate profile/source data. It should not load global content, mutate inputs, infer climate from settlement/region ids, or emit command/action ids.
+
+## Label / Copy Rules
+
+- Current time: render year, month, day, subday/watch, tick, and current runtime season from the supplied clock.
+- Season: always use `clock.season`; explain that runtime season comes from shared time month mapping.
+- Climate profile: display profile name/id only when explicit profile data is supplied or an explicitly resolved profile id validates against supplied profile records.
+- Temperature band: show `Expected seasonal band` from the supplied profile's current-season low/high values only.
+- Informational notes: clearly state climate/weather are informational only and no travel, crop, body-state, combat, or economy effects are applied.
+- Warning notes: missing clock/profile/profile data/season band should produce unavailable notes, not inferred climate or active-effect warnings.
+
+## Allowed / Deferred Behavior
+
+- Allowed: read supplied clock/profile/location data, format read-only rows, show authored expected seasonal temperature bands, and emit informational-only notes.
+- Deferred/forbidden: clock progression changes, month-to-season changes, climate profile edits, calendar content edits, weather simulation, weather randomization, climate-driven travel penalties, body-state penalties, crop/farming behavior, economy/crop effects, combat/weather effects, player actions, command ids, generated UI output, or projection-side climate inference from settlement/region ids.
+
+## Future Tests
+
+- `initial clock renders year/month/day/watch/tick and Winter from runtime clock`
+- `runtime month-to-season language stays informational and does not use profile season lengths as active progression`
+- `known supplied climate profile renders profile label, source label, and current-season expected temperature band`
+- `missing climate profile renders unknown/unavailable rows and no inferred settlement climate`
+- `supplied profile id without matching profile data warns and omits temperature band`
+- `profile missing current-season temperature band warns and keeps the temperature row unavailable`
+- `view model always emits actionIds as an empty array`
+- `projection does not mutate clock, location, or profile input objects`
+- `informational notes avoid active-effect claims`
+- Optional only if an explicit resolver is added: settlement `visualMapRef.climateZoneId` resolves through `world_map_features.json` to a validated climate profile with source notes.
 
 ## Behavior / Runtime Confirmation
-- economy math changed: yes, autonomous trade protected reserve math now uses current market stock snapshot units instead of multiplying reserve values beyond available stock.
-- craft resolution runtime changed: no.
-- craft validation changed: yes, tests now pass the canonical cooking skill id.
-- trade evaluation changed: yes, family-compatible destination demand can now provide absorption/strategic context when exact item pressure rows are absent.
-- trade dispatch changed: yes, indirectly through restored viable opportunities; dispatch still respects route, transport, throughput, stock, and slot checks.
-- settlement content changed: no.
-- transport content changed: no.
-- schema changed: no.
-- UI changed: no.
-- generated output changed: no.
-- economy clarity projection changed: no.
-- Chronicle behavior changed: no.
-- Bloodlines behavior changed: no.
-- Legacy behavior changed: no.
-- Family Prestige behavior changed: no.
-- Chronicle Marks changed: no.
-- Lineage Seals changed: no.
-- estate behavior changed: no.
-- heirloom behavior changed: no.
-- bequest behavior changed: no.
 
-## Tests Added / Updated
-- Updated `tests/unit/civilization-runtime-economy.test.mjs` to use `skill.crafting.cooking`, preserving the existing coverage for skill-gated craft time, cost, and quantity dimensions against current canonical content.
-- Updated `tests/unit/civilization-trade-runtime.test.mjs` to assert a viable grain-family export from Vinecross instead of an exact `grain` item export, preserving the intended agrarian export coverage while matching current authored content.
+Docs-only planning change. Clock progression, season mapping, climate profiles, calendar content, weather, travel, body-state, crops, economy, combat, save schema, UI, generated output, Chronicle, Bloodlines, Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heirloom, and bequest behavior did not change.
 
 ## Checks Run
-- `git status --short --branch` -> clean `master...origin/master` before edits.
-- `git pull` -> failed due local OpenSSL issuer certificate validation.
-- `git -c http.sslBackend=schannel pull` -> `Already up to date.`
-- `git status --short --branch` -> clean after sync and before edits.
-- `node --test tests/unit/civilization-runtime-economy.test.mjs` -> passed, 5 tests.
-- `node --test tests/unit/civilization-trade-runtime.test.mjs` -> passed, 2 tests.
-- `node --test tests/unit/economy-clarity-presentation.test.mjs` -> passed, 19 tests.
-- `node --test tests/unit/civilization-system-consistency.test.mjs` -> passed, 1 test.
-- `npm.cmd run tool:content-lint` -> passed, `content-lint: ok (53 files checked)`.
-- `git diff --check` -> passed; Git warned that touched files will be normalized from LF to CRLF the next time Git writes them.
+
+- `git status --short --branch`
+- `git rev-parse --abbrev-ref HEAD`
+- `git pull` (failed due local SSL issuer validation)
+- `git -c http.sslBackend=schannel pull`
+- `git status --short --branch`
+- `git diff --check` (passed; Git reported LF-to-CRLF working-copy warnings)
+
+Focused runtime tests were not required because no source, test, content, schema, or UI files changed.
 
 ## Risks / Follow-Up
-- Autonomous trade now produces viable current-content opportunities again, including strategic low-fill staple routes when family-compatible shortages are severe. That matches the existing strategic-necessity behavior, but future economy balance should review strategic shipment thresholds once broader trade tuning is intentionally scoped.
-- `docs/dev/economy-runtime-test-failure-triage-plan.md` has now been consumed as implementation guidance. A later docs cleanup pass can remove it or fold any remaining useful notes into the current handoff/roadmap if desired.
-- `docs/future_content_backlog.md` was not updated because no new deferred content or system work was discovered.
+
+- The existing top-bar date/time labels are local UI presentation constants, not shared calendar content. 0.5.82 should avoid treating them as calendar data ownership.
+- Active climate profile resolution is not runtime-owned yet. The future projection should accept explicit profile data and keep any settlement-to-climate-zone resolver separate and tested.
+- The requested `region_locales.json` file is not present; the current repo uses `region_localities.json`.
+
+## Temporary Guardrail Cleanup Decision
+
+Keep `docs/design/calendar-climate-popup-ia-audit.md` through 0.5.82 as a source-detail reference. After projection implementation lands and tests confirm the boundary, a later cleanup pass should fold useful leftovers into the current handoff or durable design ledger, then mark the IA audit consumed or delete it.
 
 ## Next Recommended Version
-Version 0.5.81 - Calendar Climate Popup View Model Plan
+
+Version 0.5.82 - Calendar Climate Read-Only Popup
 
 ## Suggested Commit Message
-fix(economy): restore runtime trade validation
+
+docs(calendar): finalize climate popup view model plan
