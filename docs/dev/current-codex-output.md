@@ -1,13 +1,13 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.79 - Economy Price Clarity Pure Projection
-Date: 2026-05-24
-Branch/status assumption: Ran locally on `master`. Initial worktree was clean. Default `git pull` failed on the known local OpenSSL issuer certificate validation issue; `git -c http.sslBackend=schannel pull` reported `Already up to date.` Worktree was clean after sync and before edits.
+Source version/run: Version 0.5.80 - Economy Runtime Test Failure Triage
+Date: 2026-05-25
+Branch/status assumption: Ran locally on `master`. Initial worktree was clean. Default `git pull` failed on the known local OpenSSL issuer certificate validation issue; `git -c http.sslBackend=schannel pull` reported `Already up to date.` `git status --short --branch` reported clean `master...origin/master` before edits.
 
 ## Result
-Implemented a pure, read-only economy clarity projection in `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts` plus focused unit tests in `tests/unit/economy-clarity-presentation.test.mjs`.
+Fixed the focused economy runtime and autonomous trade validation failures from 0.5.79.
 
-The projection maps supplied, already-resolved economy state into display-ready price, trade, and craft/value labels and rows. It does not call economy runtime helpers, does not mutate inputs, and always returns `actionIds: []`.
+Craft failures were re-scoped to the current canonical cooking skill id used by authored content. Autonomous trade failures were fixed in runtime by scaling protected reserve math to the stock snapshot units actually exposed by market state, and by using the same family-aware demand reference for destination need, absorption, and strategic necessity checks.
 
 ## Files Inspected
 - `AGENTS.md`
@@ -16,155 +16,89 @@ The projection maps supplied, already-resolved economy state into display-ready 
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/dev/economy-runtime-test-failure-triage-plan.md`
 - `docs/design/economy-price-clarity-view-model-plan.md`
 - `docs/design/economy-clarity-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `packages/shared/types/src/contracts.ts`
-- `packages/engines/civilization-engine/src/runtime-economy.ts`
-- `packages/engines/civilization-engine/src/settlement-simulation.ts`
-- `packages/engines/civilization-engine/src/trade-runtime.ts`
-- `packages/engines/civilization-engine/src/index.ts`
-- `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
-- `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`
-- `apps/rpg-ui/src/game-shell/accountMetaPresentation.ts`
 - `tests/unit/civilization-runtime-economy.test.mjs`
 - `tests/unit/civilization-trade-runtime.test.mjs`
-- `tests/unit/civilization-system-consistency.test.mjs`
+- `tests/unit/economy-clarity-presentation.test.mjs`
+- `packages/engines/civilization-engine/src/runtime-economy.ts`
+- `packages/engines/civilization-engine/src/trade-runtime.ts`
+- `packages/engines/civilization-engine/src/settlement-simulation.ts`
+- `packages/engines/civilization-engine/src/economy.ts`
+- `packages/engines/civilization-engine/src/index.ts`
+- `packages/content/base/civilization/production_chains.json`
+- `packages/content/base/world/settlements.json`
+- `packages/content/base/world/transport_profiles.json`
+- `packages/content/base/world/travel_networks.json`
+- `packages/content/base/items/items.json`
+- `packages/content/base/civilization/market_item_values.json`
 
 ## Files Changed
-- `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`
-- `tests/unit/economy-clarity-presentation.test.mjs`
+- `packages/engines/civilization-engine/src/trade-runtime.ts`
+- `tests/unit/civilization-runtime-economy.test.mjs`
+- `tests/unit/civilization-trade-runtime.test.mjs`
 - `docs/dev/current-codex-output.md`
 
-## Projection Boundary
-New file:
+## Failure Triage Summary
+- craft skill/time/cost/quantity: current production-chain and skill content use `skill.crafting.cooking`. The failing test fixtures supplied stale `skill.craft.cooking`, so explicit low/high worker ranks were ignored and runtime fell back to inferred neutral ranks. With the canonical skill id, bread high skill reduces processing time and total cost, bread quantity stays fixed because it has no quantity dimension, and fresh cheese high skill increases output quantity because quantity is allowed.
+- autonomous trade evaluation/dispatch: evaluation returned zero opportunities because protected reserve logic multiplied one-tick stock snapshot reserve values into multi-tick buffers, making every current-content exportable surplus zero. After reserve math was brought back into stock snapshot units, evaluation and dispatch resumed. The old exact `grain` export invariant was stale because current Vinecross content exports `barley` as the grain-family staple while authored destinations demand grain-family goods. Runtime absorption and strategic checks now use the same family-aware demand reference that destination need already used.
 
-- `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`
+## Fix Boundary
+Changes were a combination of runtime and tests:
 
-Exported primitives:
-
-- `EconomyClarityTone`
-- `EconomyClarityRow`
-
-Exported input/view-model types:
-
-- `EconomyPriceClarityInput`
-- `TradeOpportunityClarityInput`
-- `CraftCostClarityInput`
-- `EconomyPriceClarityViewModel`
-- `TradeOpportunityClarityViewModel`
-- `CraftCostClarityViewModel`
-
-Exported pure functions:
-
-- `buildEconomyPriceClarityViewModel(input)`
-- `buildTradeOpportunityClarityViewModel(input)`
-- `buildCraftCostClarityViewModel(input)`
-
-Output shape:
-
-- display-ready titles/subtitles;
-- primary labels for price, spread, scarcity, viability, margin, and craft cost profile;
-- row groups for prices, pressure sources, labor, value estimates, trade route context, quantity/load, rejection reasons, explanations, craft cost proportions, craft inputs/outputs, and craft step summaries;
-- warning labels for missing or mismatched data;
-- `actionIds: []` always.
-
-## Label Rules Implemented
-- Price labels: `Unknown`, `Cheap`, `Fair`, `Expensive` from local buy price versus estimated market value.
-- Spread labels: `Unknown spread`, `Tight spread`, `Normal spread`, `Wide spread` from stored spread versus estimated market value.
-- Margin labels: `Blocked`, `Losing route`, `Thin margin`, `Fair margin`, `Strong margin`, `Unknown margin` from stored `TradeOpportunityState` margin fields.
-- Scarcity labels: `Scarce`, `Surplus`, `Import dependent`, `Export ready`, `Protected reserve`, `Unknown pressure` from supplied stock pressure, supply/demand, and trade opportunity reserve/rejection fields.
-- Labor labels: `Labor data unavailable`, `Labor constrained`, `Stable labor`, `Skilled labor available` from explicit supplied labor pressure rows.
-- Trade labels: `Viable route`, `Strategic necessity`, `Blocked route`, `Needs review`, plus load and route-time labels from stored opportunity fields.
-- Craft/value labels: `Material-heavy`, `Labor-heavy`, `Processing-heavy`, `Waste-sensitive`, `Fuel-sensitive`, `Tool-sensitive`, `Skill-sensitive`, `Value estimate unavailable` from supplied craft/value states only.
-
-## Data Rules Enforced
-- The projection accepts supplied current state only.
-- It does not fetch content, rebuild market states, evaluate trade, dispatch caravans, run civilization ticks, resolve craft estimates, or resolve market prices.
-- Missing price/trade/craft data returns unknown or unavailable labels plus warnings.
-- Mismatched settlement/item/craft target inputs produce warnings instead of guessed repairs.
-- Input fixtures are not mutated.
-- Every view model returns `actionIds: []`.
-- Source-level tests confirm the projection source does not reference the forbidden economy runtime helpers or deferred cross-system behavior.
+- runtime: `trade-runtime.ts` protected reserve, destination absorption, destination need, and strategic necessity logic.
+- tests: `civilization-runtime-economy.test.mjs` canonicalized the cooking skill fixture id; `civilization-trade-runtime.test.mjs` re-scoped the stale exact `grain` assertion to a grain-family export from Vinecross.
+- content: no content JSON changed.
+- UI/projection: no UI or economy clarity projection source changed.
 
 ## Behavior / Runtime Confirmation
-- runtime behavior changed: no
-- economy math changed: no
-- price formulas changed: no
-- simulation changed: no
-- settlement stockpiles changed: no
-- market content changed: no
-- settlement content changed: no
-- production chains changed: no
-- shop behavior changed: no
-- trade execution changed: no
-- caravan dispatch changed: no
-- crafting execution changed: no
-- schema changed: no
-- content JSON changed: no
-- UI changed: no React UI was added
-- generated output changed: no
-- Chronicle behavior changed: no
-- Bloodlines behavior changed: no
-- Legacy behavior changed: no
-- Family Prestige behavior changed: no
-- Chronicle Marks changed: no
-- Lineage Seals changed: no
-- estate behavior changed: no
-- heirloom behavior changed: no
-- bequest behavior changed: no
-- tests changed: yes, focused projection tests were added
+- economy math changed: yes, autonomous trade protected reserve math now uses current market stock snapshot units instead of multiplying reserve values beyond available stock.
+- craft resolution runtime changed: no.
+- craft validation changed: yes, tests now pass the canonical cooking skill id.
+- trade evaluation changed: yes, family-compatible destination demand can now provide absorption/strategic context when exact item pressure rows are absent.
+- trade dispatch changed: yes, indirectly through restored viable opportunities; dispatch still respects route, transport, throughput, stock, and slot checks.
+- settlement content changed: no.
+- transport content changed: no.
+- schema changed: no.
+- UI changed: no.
+- generated output changed: no.
+- economy clarity projection changed: no.
+- Chronicle behavior changed: no.
+- Bloodlines behavior changed: no.
+- Legacy behavior changed: no.
+- Family Prestige behavior changed: no.
+- Chronicle Marks changed: no.
+- Lineage Seals changed: no.
+- estate behavior changed: no.
+- heirloom behavior changed: no.
+- bequest behavior changed: no.
 
 ## Tests Added / Updated
-Added `tests/unit/economy-clarity-presentation.test.mjs` with coverage for:
-
-- missing price input warnings and empty actions;
-- cheap/fair/expensive labels;
-- tight/normal/wide spread labels;
-- pressure source row rendering;
-- scarce, surplus, export-ready, import-dependent, and protected-reserve labels;
-- labor constrained/stable/available labels;
-- trade viable/blocked/strategic labels;
-- trade losing/thin/fair/strong/unknown/blocked margin labels;
-- rejection reasons as read-only rows;
-- craft material/labor/processing/waste/fuel/tool/skill labels;
-- item value rows without resale-profit promises;
-- mismatched input warnings;
-- non-mutation of inputs;
-- empty action ids for every view model;
-- source guardrails against forbidden economy helper calls and deferred cross-system behavior.
+- Updated `tests/unit/civilization-runtime-economy.test.mjs` to use `skill.crafting.cooking`, preserving the existing coverage for skill-gated craft time, cost, and quantity dimensions against current canonical content.
+- Updated `tests/unit/civilization-trade-runtime.test.mjs` to assert a viable grain-family export from Vinecross instead of an exact `grain` item export, preserving the intended agrarian export coverage while matching current authored content.
 
 ## Checks Run
 - `git status --short --branch` -> clean `master...origin/master` before edits.
 - `git pull` -> failed due local OpenSSL issuer certificate validation.
 - `git -c http.sslBackend=schannel pull` -> `Already up to date.`
-- `git status --short --branch` -> clean after sync.
+- `git status --short --branch` -> clean after sync and before edits.
+- `node --test tests/unit/civilization-runtime-economy.test.mjs` -> passed, 5 tests.
+- `node --test tests/unit/civilization-trade-runtime.test.mjs` -> passed, 2 tests.
 - `node --test tests/unit/economy-clarity-presentation.test.mjs` -> passed, 19 tests.
+- `node --test tests/unit/civilization-system-consistency.test.mjs` -> passed, 1 test.
 - `npm.cmd run tool:content-lint` -> passed, `content-lint: ok (53 files checked)`.
-- `node --test tests/unit/civilization-runtime-economy.test.mjs` -> failed in existing runtime assertions:
-  - `craft resolution uses worker skill to reduce time and cost` failed: higher skill did not reduce processing time.
-  - `recipe dimensions only affect quantity when the recipe allows it` failed: cheese high-skill quantity did not exceed low-skill quantity.
-- `node --test tests/unit/civilization-trade-runtime.test.mjs` -> failed in existing trade runtime assertions:
-  - `autonomous trade evaluation produces viable, explained opportunities` failed: no evaluated opportunities were produced.
-  - `autonomous trade dispatch creates caravans, reservations, and origin stock changes` failed: no convoy was launched.
-- `git diff --check` -> passed; Git warned that `docs/dev/current-codex-output.md` line endings will be replaced by CRLF next time Git touches it.
-
-The failing civilization runtime/trade tests do not import the new projection file and were not broadened into runtime fixes because this pass is presentation-only.
+- `git diff --check` -> passed; Git warned that touched files will be normalized from LF to CRLF the next time Git writes them.
 
 ## Risks / Follow-Up
-- The new projection suite and content lint pass, but the required existing civilization runtime and trade suites currently fail. Those failures appear outside this patch's source surface and should be triaged in a dedicated economy runtime/data validation pass if they are not already known.
-- The projection is source-only; no React UI consumes it yet.
-- Future UI must stay read-only and must not add buy/sell/dispatch/craft controls from these labels.
-- Craft clarity remains explanatory only. It must not become crafting execution, worker assignment, inventory movement, quality creation, or shop availability.
-
-## Temporary Guardrail Cleanup Decision
-Keep `docs/design/economy-clarity-audit.md` for now. The active implementation guidance has moved into `docs/design/economy-price-clarity-view-model-plan.md` and this projection/test suite, but the audit still serves as source-detail reference until a later cleanup pass folds durable economy clarity rules into `docs/design/future-system-design-ledger.md`.
-
-After the read-only economy clarity UI direction is chosen, a connector cleanup pass can mark the audit consumed, fold any remaining durable language, or delete it if no unique guidance remains.
+- Autonomous trade now produces viable current-content opportunities again, including strategic low-fill staple routes when family-compatible shortages are severe. That matches the existing strategic-necessity behavior, but future economy balance should review strategic shipment thresholds once broader trade tuning is intentionally scoped.
+- `docs/dev/economy-runtime-test-failure-triage-plan.md` has now been consumed as implementation guidance. A later docs cleanup pass can remove it or fold any remaining useful notes into the current handoff/roadmap if desired.
+- `docs/future_content_backlog.md` was not updated because no new deferred content or system work was discovered.
 
 ## Next Recommended Version
-Version 0.5.80 - Calendar Climate Popup View Model Plan
+Version 0.5.81 - Calendar Climate Popup View Model Plan
 
 ## Suggested Commit Message
-feat(economy): add price clarity projection
+fix(economy): restore runtime trade validation

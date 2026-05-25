@@ -8,6 +8,7 @@ import {
   evaluateAutonomousTradeOpportunities,
   runAutonomousTradeDispatch
 } from "../../packages/engines/civilization-engine/src/index.js";
+import { resolveResourceFamilies } from "../../packages/engines/civilization-engine/src/resource-taxonomy.js";
 
 const TEST_SETTLEMENTS = [
   "settlement.aurelis",
@@ -35,6 +36,10 @@ function getStockLevel(marketStates, settlementId, itemKey) {
   return marketStates.find((state) => state.settlementId === settlementId)?.stock.find((entry) => entry.itemKey === itemKey)?.stockLevel ?? 0;
 }
 
+function isGrainFamilyItem(itemKey) {
+  return resolveResourceFamilies(itemKey).includes("grain");
+}
+
 test("autonomous trade evaluation produces viable, explained opportunities", () => {
   const fixture = createFixture();
   const evaluation = evaluateAutonomousTradeOpportunities({
@@ -49,10 +54,10 @@ test("autonomous trade evaluation produces viable, explained opportunities", () 
     evaluation.opportunities.some(
       (opportunity) =>
         opportunity.viable &&
-        opportunity.itemKey === "grain" &&
+        isGrainFamilyItem(opportunity.itemKey) &&
         opportunity.originSettlementId === "settlement.vinecross"
     ),
-    "expected a viable grain export from the agrarian settlement"
+    "expected a viable grain-family export from the agrarian settlement"
   );
   assert.ok(
     evaluation.opportunities.some((opportunity) => !opportunity.viable && opportunity.rejectionReasons.length > 0),

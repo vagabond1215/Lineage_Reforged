@@ -10,6 +10,7 @@ import {
 } from "../../packages/engines/civilization-engine/src/runtime-economy.ts";
 
 const TEST_SETTLEMENTS = ["settlement.vinecross", "settlement.stonevein", "settlement.aurelis"];
+const COOKING_SKILL_ID = "skill.crafting.cooking";
 
 function createMarketStateFixture() {
   const clock = createInitialClock();
@@ -40,7 +41,7 @@ test("craft resolution uses worker skill to reduce time and cost", () => {
     settlementId: "settlement.vinecross",
     marketState,
     workerSkills: {
-      "skill.craft.cooking": 22
+      [COOKING_SKILL_ID]: 22
     },
     availableToolTags: ["tool.bread_peel", "tool.oven_peel", "tool.hammer"],
     fuelAvailable: true
@@ -51,7 +52,7 @@ test("craft resolution uses worker skill to reduce time and cost", () => {
     settlementId: "settlement.vinecross",
     marketState,
     workerSkills: {
-      "skill.craft.cooking": 120
+      [COOKING_SKILL_ID]: 120
     },
     availableToolTags: ["tool.bread_peel", "tool.oven_peel", "tool.hammer"],
     fuelAvailable: true
@@ -110,7 +111,7 @@ test("market and craft results expose structured explanations", () => {
     settlementId: "settlement.aurelis",
     marketState,
     workerSkills: {
-      "skill.craft.cooking": 95
+      [COOKING_SKILL_ID]: 95
     },
     fuelAvailable: true
   });
@@ -133,7 +134,7 @@ test("recipe dimensions only affect quantity when the recipe allows it", () => {
     settlementId: "settlement.aurelis",
     marketState,
     workerSkills: {
-      "skill.craft.cooking": 22
+      [COOKING_SKILL_ID]: 22
     },
     fuelAvailable: true
   });
@@ -142,7 +143,7 @@ test("recipe dimensions only affect quantity when the recipe allows it", () => {
     settlementId: "settlement.aurelis",
     marketState,
     workerSkills: {
-      "skill.craft.cooking": 120
+      [COOKING_SKILL_ID]: 120
     },
     fuelAvailable: true
   });
@@ -151,7 +152,7 @@ test("recipe dimensions only affect quantity when the recipe allows it", () => {
     settlementId: "settlement.aurelis",
     marketState,
     workerSkills: {
-      "skill.craft.cooking": 22
+      [COOKING_SKILL_ID]: 22
     },
     fuelAvailable: true
   });
@@ -160,7 +161,7 @@ test("recipe dimensions only affect quantity when the recipe allows it", () => {
     settlementId: "settlement.aurelis",
     marketState,
     workerSkills: {
-      "skill.craft.cooking": 120
+      [COOKING_SKILL_ID]: 120
     },
     fuelAvailable: true
   });

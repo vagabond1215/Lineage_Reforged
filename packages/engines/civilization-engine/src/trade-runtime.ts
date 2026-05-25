@@ -106,6 +106,24 @@ function getStockEntry(state: SettlementMarketState | undefined, itemKey: string
   return state?.stock.find((entry) => entry.itemKey === itemKey);
 }
 
+function getDemandReferenceStockEntry(state: SettlementMarketState | undefined, itemKey: string): SettlementMarketItemPressureState | undefined {
+  const exactEntry = getStockEntry(state, itemKey);
+  if (exactEntry) {
+    return exactEntry;
+  }
+
+  const itemFamilies = new Set(resolveResourceFamilies(itemKey));
+  return state?.stock
+    .filter((entry) => resolveResourceFamilies(entry.itemKey).some((family) => itemFamilies.has(family)))
+    .sort(
+      (left, right) =>
+        right.unmetDemandPerTick - left.unmetDemandPerTick ||
+        right.demandPressure - left.demandPressure ||
+        right.reservePerTick - left.reservePerTick ||
+        left.itemKey.localeCompare(right.itemKey)
+    )[0];
+}
+
 function getPriceEntry(state: SettlementMarketState | undefined, itemKey: string): SettlementMarketPriceState | undefined {
   return state?.priceView.find((entry) => entry.itemKey === itemKey);
 }
@@ -146,11 +164,12 @@ function isEssentialGood(itemKey: string): boolean {
 function getProtectedReserve(itemKey: string, stockEntry: SettlementMarketItemPressureState | undefined, businesses: SettlementBusinessState[]): number {
   const reservePerTick = stockEntry?.reservePerTick ?? 0;
   const unmetDemandPerTick = stockEntry?.unmetDemandPerTick ?? 0;
-  const localConsumptionReserve = reservePerTick * 10;
-  const productionInputReserve = getBusinessInputBuffer(itemKey, businesses);
+  const stockLevel = stockEntry?.stockLevel ?? 0;
+  const localConsumptionReserve = reservePerTick;
+  const productionInputReserve = Math.min(getBusinessInputBuffer(itemKey, businesses) * 0.01, stockLevel * 0.2);
   const emergencyBuffer = isEssentialGood(itemKey)
-    ? Math.max(reservePerTick * 6, unmetDemandPerTick * 5)
-    : Math.max(reservePerTick * 2, unmetDemandPerTick * 2);
+    ? Math.max(reservePerTick, unmetDemandPerTick * 2)
+    : Math.max(reservePerTick * 0.5, unmetDemandPerTick);
   return roundNumber(localConsumptionReserve + productionInputReserve + emergencyBuffer);
 }
 
@@ -172,7 +191,7 @@ function destinationExplicitlyDemandsItem(settlement: SettlementContentRecord, i
 }
 
 function destinationNeedsItem(settlement: SettlementContentRecord, marketState: SettlementMarketState | undefined, itemKey: string): boolean {
-  const stockEntry = getStockEntry(marketState, itemKey);
+  const stockEntry = getDemandReferenceStockEntry(marketState, itemKey);
   return Boolean(
     destinationExplicitlyDemandsItem(settlement, itemKey) ||
       (stockEntry && (stockEntry.unmetDemandPerTick > 0.1 || stockEntry.demandPressure > 0.15))
@@ -185,7 +204,7 @@ function getDestinationAbsorption(
   marketState: SettlementMarketState | undefined,
   incomingByDestinationItem: Map<string, number>
 ): number {
-  const stockEntry = getStockEntry(marketState, itemKey);
+  const stockEntry = getDemandReferenceStockEntry(marketState, itemKey);
   const incoming = incomingByDestinationItem.get(getDestinationItemKey(destinationSettlementId, itemKey)) ?? 0;
   const baseAbsorption =
     (stockEntry?.unmetDemandPerTick ?? 0) * 12 +
@@ -195,7 +214,7 @@ function getDestinationAbsorption(
 }
 
 function isStrategicNecessity(destinationSettlement: SettlementContentRecord, marketState: SettlementMarketState | undefined, itemKey: string): boolean {
-  const stockEntry = getStockEntry(marketState, itemKey);
+  const stockEntry = getDemandReferenceStockEntry(marketState, itemKey);
   return Boolean(
     isEssentialGood(itemKey) &&
       ((stockEntry?.unmetDemandPerTick ?? 0) > 0.5 ||
