@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector continuity alignment after `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
+Source route: ChatGPT via GitHub Connector continuity alignment after `Version 0.5.78 - Economy Price Clarity View Model Plan`
 Date: 2026-05-24
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -23,7 +23,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.76 - Chronicle Run-End Summary Pure Projection`
+- `Version 0.5.78 - Economy Price Clarity View Model Plan`
 
 Current sequence source:
 
@@ -31,18 +31,26 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.77 - Chronicle Run-End Read-Only UI`
+- `Version 0.5.79 - Economy Price Clarity Pure Projection`
 
 ## Recent Results
 
+Economy clarity:
+
+- `0.5.78` finalized the planning-only data-owner map and label rules for a future read-only economy price clarity projection.
+- The active source for the next implementation is `docs/design/economy-price-clarity-view-model-plan.md`.
+- The planned future file is `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`.
+- Planned pure functions are `buildEconomyPriceClarityViewModel(...)`, `buildTradeOpportunityClarityViewModel(...)`, and `buildCraftCostClarityViewModel(...)` if each remains a pure mapper over supplied resolved state.
+- `0.5.79` should implement pure view-model helpers and focused tests only.
+- The projection must consume supplied resolved economy state only. It must not call economy resolvers, civilization tick helpers, trade dispatch, craft execution, shop behavior, or simulation mutation.
+
 Chronicle run-end summary:
 
-- `0.5.75` finalized the planning-only data-owner map for a future read-only Chronicle run-end impact summary.
-- `0.5.76` implemented the pure read-only projection and focused unit tests.
-- The active source for the next implementation is now the tested projection in `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts` plus `docs/design/chronicle-run-end-summary-view-model-plan.md`.
-- The projection function is `buildChronicleRunEndSummaryViewModel(input)`.
-- The projection reads stored account/run/lifecycle/estate data only and does not recompute payout, mutate lifecycle state, move estate assets, create Chronicle Marks, create Lineage Seals, grant/spend Family Prestige, mutate Bloodlines, or emit actions.
-- `0.5.77` should render that projection read-only without adding new actions, mutations, or generated output unless explicitly re-scoped.
+- `0.5.75` finalized the planning-only Chronicle run-end summary data-owner map.
+- `0.5.76` implemented the pure read-only Chronicle run-end summary projection and focused tests.
+- `0.5.77` rendered that projection read-only inside Account Meta / Chronicles.
+- The Chronicle source audit is consumed as active prompt authority; keep it only as historical source-detail reference unless a future cleanup deletes it.
+- Current Chronicle summary UI is read-only and adds no payout mutation, lifecycle mutation, estate delivery, Legacy grant, Bloodlines behavior, Chronicle Marks, Lineage Seals, Family Prestige behavior, schema, content JSON, generated output, or account mutation.
 
 Typecheck tooling:
 
@@ -57,7 +65,7 @@ Bloodlines:
 
 - `0.5.71` added the pure, read-only Bloodlines projection in `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`.
 - `0.5.72` rendered that projection read-only in the account meta / launcher surface.
-- Bloodlines now appears beside Legacy and Chronicles.
+- Bloodlines appears beside Legacy and Chronicles.
 - The UI displays explicit family records, Family Prestige ledger totals, family unlock summaries, linked run/tree summaries, safe empty state copy, and inactive future-system notes.
 - No mutation path, command id, button, purchase/spend/claim/register/transfer action, family management behavior, Backstory Eligibility evidence, or deferred runtime system was added.
 
@@ -77,16 +85,17 @@ Live low-risk Backstory Legacy records:
 
 ## Active Guardrails
 
-Chronicle run-end summary:
+Economy clarity:
 
-- `0.5.77` must render the tested projection read-only.
-- Use `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`, `tests/unit/chronicle-run-end-summary-presentation.test.mjs`, and `docs/design/chronicle-run-end-summary-view-model-plan.md` as the active sources.
-- Do not add payout mutation, payout recomputation, lifecycle mutation, estate movement, Legacy grants, save deletion/retention behavior, account history mutation, or generated output.
-- Do not create Chronicle Marks, Lineage Seals, Family Prestige grants/spends, Bloodlines mutations, heirs, heirlooms, bequests, family management, or estate claim/transfer actions.
-- Do not infer `familyId` from `lineageId`, `sourceRunId`, account id, selected character, selected backstory, or UI state.
-- Do not infer parent/child relation from `sourceRunId` alone.
-- Do not pass stale lifecycle result context into an active/non-terminal record.
-- The UI may add close/continue/navigation affordances already owned by the launcher/account flow, but must not add claim, spend, convert, seal, mark, inherit, transfer, register, retry, resurrect, purchase, or payout action paths.
+- `0.5.79` must implement pure projection helpers and focused tests only.
+- Use `docs/design/economy-price-clarity-view-model-plan.md` and `docs/design/economy-clarity-audit.md` as the active source stack; the plan is authoritative and the audit is supporting detail through `0.5.79`.
+- Do not add React UI in `0.5.79`.
+- Do not change economy math, price formulas, supply/demand simulation, settlement stockpiles, settlement content, market content, production chains, shop behavior, trade execution, caravan dispatch, crafting execution, passive income, contacts, discounts, market privileges, Legacy economy effects, schema, content JSON, or generated output.
+- Do not call `resolveLocalMarketPrice(...)`, `buildSettlementMarketStates(...)`, `resolveItemValueAtSettlement(...)`, `resolveCraftAtSettlement(...)`, trade dispatch, or `tickCivilization(...)` from presentation projection code.
+- Do not add command ids or action ids. All economy clarity view models should emit `actionIds: []`.
+- Missing or mismatched price/trade/craft data must produce unknown/unavailable labels and warnings, not guessed data.
+- Inputs must not be mutated.
+- Keep Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, and bequest behavior untouched.
 
 Typecheck tooling:
 
@@ -96,7 +105,7 @@ Typecheck tooling:
 - Remaining typecheck tracks are JSON import attribute policy, environment typing, JSX/root config boundary, target/lib cleanup, Node/package typing, and strict optional-property cleanup by area.
 - Do not weaken strictness or hide failing checks behind scripts that always succeed.
 
-Bloodlines:
+Bloodlines / Backstory / inheritance:
 
 - Future Bloodlines work must stay owner-aware.
 - Do not infer `familyId` from `lineageId`, `sourceRunId`, account id, selected character, selected backstory, or UI state.
@@ -104,14 +113,9 @@ Bloodlines:
 - Family Prestige is ledger-derived and read-only in current UI.
 - Do not add family management, Family Prestige earning/spending, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, or scoped Backstory evidence without an explicit prompt and owner plan.
 - Bloodlines UI must not create Backstory Eligibility evidence or bypass the creator resolver.
-
-Backstory / Legacy:
-
 - Future Backstory Legacy records must describe formative-past access, not current employment, current social identity, family history proof, institution membership, title/status ownership, contacts, items, coin, skills, magic, authority, or live obligations.
 - Do not add creator purchase buttons or redesign the account meta purchase surface without a dedicated prompt.
-- Family, source-run, region, institution, estate/title, heir-only, next-run, and preparation-scoped Backstory Legacy evidence remain deferred until their owner systems and storage seams exist.
 - No `familyId` may be derived from `sourceRunId`, `lineageId`, account id, selected character, selected backstory, or UI state.
-- Tier 2 and Tier 3 Backstory Legacy paths still need scoped evidence plus support; purchase evidence alone must not unlock them.
 
 Heirloom / bequest:
 
@@ -130,9 +134,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | 1 | `0.5.74` | Typecheck Script And Target Policy Cleanup | `docs/dev/typecheck-blocker-triage-plan.md` | Landed |
 | 2 | `0.5.75` | Chronicle Run-End Summary View Model Plan | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Landed |
 | 3 | `0.5.76` | Chronicle Run-End Summary Pure Projection | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Landed |
-| 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `docs/design/chronicle-run-end-summary-view-model-plan.md` | Next |
-| 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
-| 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Planned |
+| 4 | `0.5.77` | Chronicle Run-End Read-Only UI | `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts` | Landed |
+| 5 | `0.5.78` | Economy Price Clarity View Model Plan | `docs/design/economy-price-clarity-view-model-plan.md` | Landed |
+| 6 | `0.5.79` | Economy Price Clarity Pure Projection | `docs/design/economy-price-clarity-view-model-plan.md` | Next |
 | 7 | `0.5.80` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
 | 8 | `0.5.81` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Planned |
 | 9 | `0.5.82` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
@@ -144,9 +148,9 @@ Do not skip planning-to-projection-to-UI stages unless a newer handoff or the us
 
 Use this compact order when the user asks for the next prompt:
 
-1. `Version 0.5.77 - Chronicle Run-End Read-Only UI` - render the tested projection read-only.
-2. `Version 0.5.78 - Economy Price Clarity View Model Plan` - planning-only economy clarity source update after Chronicle UI sequence advances.
-3. `Version 0.5.79 - Economy Price Clarity Pure Projection` - implement the economy price clarity projection only after the 0.5.78 plan lands.
+1. `Version 0.5.79 - Economy Price Clarity Pure Projection` - implement the stored-state pure projection and focused tests only.
+2. `Version 0.5.80 - Calendar Climate Popup View Model Plan` - planning-only calendar/climate source update after economy projection advances.
+3. `Version 0.5.81 - Calendar Climate Read-Only Popup` - render the tested calendar/climate read-only projection only after the plan/projection sequence is ready.
 
 Do not combine these three into one Codex run unless the user explicitly re-scopes the work.
 
@@ -156,8 +160,8 @@ Current status:
 
 - `docs/design/bloodlines-information-architecture-audit.md` - partially consumed by `0.5.71` and `0.5.72`; keep for future richer tree/Bloodlines presentation constraints.
 - `docs/design/chronicles-bloodline-tree-presentation-plan.md` - partially consumed by read-only UI; keep for richer tree presentation, hierarchy, and Chronicle/Bloodlines boundaries.
-- `docs/design/chronicle-run-end-summary-source-audit.md` - promoted into `docs/design/chronicle-run-end-summary-view-model-plan.md`; keep only as source-detail reference through `0.5.77`.
-- `docs/design/economy-clarity-audit.md` - promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep only as source-detail reference for `0.5.78`-`0.5.79`.
+- `docs/design/chronicle-run-end-summary-source-audit.md` - consumed by `0.5.75`-`0.5.77`; retained only as historical source-detail reference.
+- `docs/design/economy-clarity-audit.md` - promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep through `0.5.79` as source-detail reference.
 - `docs/design/calendar-climate-popup-ia-audit.md` - promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep only as source-detail reference for `0.5.80`-`0.5.81`.
 - `docs/design/combat-audit-scoping-pass.md` - promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; keep only as source-detail reference for `0.5.82`.
 - `docs/design/magic-runtime-readiness-audit.md` - promoted into `docs/design/known-spell-ownership-plan.md`; keep only as source-detail reference for `0.5.83`.
@@ -171,7 +175,7 @@ Current status:
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.77 - Chronicle Run-End Read-Only UI`, inspect:
+For `Version 0.5.79 - Economy Price Clarity Pure Projection`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -179,22 +183,24 @@ For `Version 0.5.77 - Chronicle Run-End Read-Only UI`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/chronicle-run-end-summary-view-model-plan.md`
-- `docs/design/chronicle-run-end-summary-source-audit.md`
+- `docs/design/economy-price-clarity-view-model-plan.md`
+- `docs/design/economy-clarity-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
-- `tests/unit/chronicle-run-end-summary-presentation.test.mjs`
-- account meta / launcher UI files
-- existing Chronicle and Bloodlines read-only UI patterns
-- relevant static tests for account meta UI copy and no-action guarantees
+- `packages/shared/types/src/contracts.ts`
+- `packages/engines/civilization-engine/src/runtime-economy.ts`
+- `packages/engines/civilization-engine/src/settlement-simulation.ts`
+- `packages/engines/civilization-engine/src/trade-runtime.ts`
+- `packages/engines/civilization-engine/src/index.ts`
+- existing runtime economy/trade tests
+- existing presentation helper patterns
 
-0.5.77 should render the tested projection read-only only. Do not add buttons, commands, payout mutation, estate delivery, family mutation, Chronicle Marks, Lineage Seals, Family Prestige grants, Bloodlines mutation, or generated output unless explicitly re-scoped.
+0.5.79 should implement pure projection helpers and focused tests only. Do not add React UI, command ids, resolver calls, economy math changes, settlement or market content changes, trade/craft/shop/caravan actions, simulation mutation, or generated output.
 
-## After 0.5.77
+## After 0.5.79
 
 Return to the sequence file. The next implementation run should be:
 
-- `Version 0.5.78 - Economy Price Clarity View Model Plan`
+- `Version 0.5.80 - Calendar Climate Popup View Model Plan`
 
-Use `docs/design/economy-price-clarity-view-model-plan.md`. Keep it planning-only unless explicitly re-scoped.
+Use `docs/design/calendar-climate-popup-view-model-plan.md`. Keep it planning-only unless explicitly re-scoped.
