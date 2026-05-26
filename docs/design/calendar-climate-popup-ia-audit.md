@@ -2,21 +2,21 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: promoted supporting source-detail reference through `Version 0.5.82 - Calendar Climate Read-Only Popup`
+Status: promoted supporting source-detail reference through `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 
 ## Current Status
 
-This audit has been promoted into `docs/design/calendar-climate-popup-view-model-plan.md`.
+This audit has been promoted into `docs/design/calendar-climate-popup-view-model-plan.md`, and the pure projection from that plan has landed.
 
-The active planning source is now:
+The active implementation source is now:
 
-- `docs/design/calendar-climate-popup-view-model-plan.md`
+- `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`
 
 The current next implementation target is:
 
-- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 
-Use this audit only as supporting source-detail reference. Do not treat older version labels or prompt targets in this file as current pipeline authority.
+Use this audit only as supporting source-detail reference for safe UI copy and information architecture. Do not treat older version labels or prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
@@ -34,8 +34,7 @@ This document does not:
 - add climate effects
 - add travel penalties
 - add body-state penalties
-- edit React UI
-- update generated UI output
+- edit generated UI output
 - update `docs/dev/current-codex-output.md`
 
 ## Sources Inspected
@@ -101,20 +100,7 @@ Calendar & Climate
 
 ## Candidate View-Model Fields
 
-Future pure view-model shape:
-
-```ts
-type CalendarClimatePopupViewModel = {
-  title: string;
-  currentTimeRows: Array<{ label: string; valueLabel: string }>;
-  seasonRows: Array<{ label: string; valueLabel: string }>;
-  climateRows: Array<{ label: string; valueLabel: string }>;
-  effectNotes: string[];
-  warningNotes: string[];
-};
-```
-
-Do not add this type in this audit.
+The implemented pure projection now lives in `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`. UI should render that projection output rather than defining a competing data shape.
 
 ## Safe Data Sources
 
@@ -135,7 +121,7 @@ Safe climate profile fields when a current owner supplies a profile id:
 - seasonal low/high values for current season
 - temperature unit
 
-Do not guess a climate profile from settlement/region unless a current data link exists and is inspected in the implementation pass.
+Do not guess a climate profile from settlement/region inside UI. Render only what the projection provides.
 
 ## Copy Rules
 
@@ -165,15 +151,15 @@ Weather simulation is not active yet.
 
 ## Implementation Boundary
 
-A first implementation should be view-model/read-only only.
+The inserted UI pass should be read-only only.
 
 Allowed:
 
-- format current clock fields
-- show current season
-- show current climate profile if an inspected owner supplies it
-- show seasonal temperature band if profile and season exist
-- show inactive-system notes
+- render current clock rows from the projection
+- render current season rows from the projection
+- render supplied climate profile rows from the projection
+- render expected seasonal temperature rows from the projection
+- render inactive-system notes and warning notes from the projection
 
 Forbidden:
 
@@ -185,7 +171,8 @@ Forbidden:
 - applying economy/crop effects
 - adding weather randomization
 - adding world event behavior
-- adding region/settlement climate inference without explicit current data owner
+- adding region/settlement climate inference in UI
+- adding command/action buttons
 
 ## Open Owner Questions
 
@@ -199,4 +186,4 @@ These should be answered before runtime climate effects:
 
 ## Current Prompt Authority
 
-Use `docs/design/calendar-climate-popup-view-model-plan.md`, `docs/dev/current-gpt-handoff.md`, and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.
+Use `docs/dev/current-gpt-handoff.md`, `docs/dev/codex-sequenced-implementation-plan.md`, and `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` for current prompt generation. This audit remains a source-detail reference only.
