@@ -3227,12 +3227,13 @@ export function getBackstoryOptionsForSelection(
 
 export function generateRandomCharacterName(
   lineageId: string,
-  sexId: Extract<PlayerSexId, "male" | "female"> | ""
+  sexId: Extract<PlayerSexId, "male" | "female"> | "",
+  rng: () => number = Math.random
 ): string {
   const pool = NAME_POOLS[lineageId] ?? NAME_POOLS["lineage.human"]!;
   const resolvedSex = sexId === "female" ? "female" : "male";
-  const firstName = pickDeterministic(pool[resolvedSex], `${lineageId}.${resolvedSex}.${Math.random()}`);
-  const surname = pickDeterministic(pool.surnames, `${lineageId}.surname.${Math.random()}`);
+  const firstName = pickDeterministic(pool[resolvedSex], `${lineageId}.${resolvedSex}.${rng()}`);
+  const surname = pickDeterministic(pool.surnames, `${lineageId}.surname.${rng()}`);
   return `${firstName} ${surname}`;
 }
 

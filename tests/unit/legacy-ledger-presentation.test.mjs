@@ -1094,16 +1094,10 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(characterCreationSource, /Fresh Start/);
   assert.match(characterCreationSource, /Heir Start/);
   assert.match(characterCreationSource, /Source Line/);
-  assert.match(characterCreationSource, /overflow-x-auto pb-1/);
-  assert.match(characterCreationSource, /w-10 shrink-0 justify-center px-0/);
-  assert.match(
-    characterCreationSource,
-    /min-w-\[7\.75rem\] flex-1 justify-center gap-2 px-3/
-  );
-  assert.match(
-    characterCreationSource,
-    /const showReviewSummaryDetails = currentStepId === 'review' && preview\.isResolved/
-  );
+  assert.match(characterCreationSource, /buildCharacterCreationStepStates/);
+  assert.match(characterCreationSource, /getNextAvailableCharacterCreationStepId/);
+  assert.match(characterCreationSource, /Randomize Character/);
+  assert.match(characterCreationSource, /min-h-\[3\.25rem\] w-full/);
   assert.match(
     characterCreationSource,
     /grid-cols-\[repeat\(auto-fit,minmax\(2\.5rem,1fr\)\)\]/
@@ -1111,9 +1105,11 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(characterCreationSource, /summaryContextRows/);
   assert.match(characterCreationSource, /var\(--color-progress-active\)/);
   assert.match(characterCreationSource, /var\(--color-action-primary\)/);
-  assert.match(characterCreationSource, /var\(--color-shell-bar-bg\)/);
-  assert.doesNotMatch(characterCreationSource, /AppShell/);
+  assert.match(characterCreationSource, /AppShell/);
+  assert.match(characterCreationSource, /ShellBrandLogo/);
   assert.doesNotMatch(characterCreationSource, /SidebarNav/);
+  assert.doesNotMatch(characterCreationSource, /summaryVisible/);
+  assert.doesNotMatch(characterCreationSource, /SUMMARY_COLLAPSED_STEP_IDS/);
   assert.doesNotMatch(
     characterCreationSource,
     /xl:grid-cols-\[144px_minmax\(0,1fr\)_204px\]/

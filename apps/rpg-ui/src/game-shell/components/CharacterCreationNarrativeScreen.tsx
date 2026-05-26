@@ -10,9 +10,10 @@ import { Card } from '../../components/ui/Card';
 import { Tooltip } from '../../components/ui/Tooltip';
 import {
   CHARACTER_CREATION_STEPS,
+  buildCharacterCreationStepStates,
   createDefaultCharacterCreationFormState,
-  getNextCharacterCreationStepId,
-  getPreviousCharacterCreationStepId,
+  getNextAvailableCharacterCreationStepId,
+  getPreviousAvailableCharacterCreationStepId,
   type CharacterCreationStepId,
   type CharacterCreationFormState,
   validateCharacterCreationForm,
@@ -46,7 +47,11 @@ import {
   lineageOptions,
   startingBundleOptions
 } from '../characterCreationCatalog.js';
-import { buildCharacterCreationPreview } from '../newGameSnapshot.js';
+import { generateRandomCharacterCreationFormState } from '../characterCreationRandomization.js';
+import {
+  buildCharacterCreationPreview,
+  type CharacterCreationAttributePreviewRow
+} from '../newGameSnapshot.js';
 import { resolveRunHistorySourceId } from '../runLifecycle.js';
 import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
 import {
@@ -61,6 +66,8 @@ import {
   type WorldRegionResourceIcon
 } from '../worldSelectionCatalog.js';
 import { NoticeBanner } from './NoticeBanner.js';
+import { AppShell } from './AppShell.js';
+import { ShellBrandLogo } from './ShellBrandLogo.js';
 
 type Props = {
   form: CharacterCreationFormState;
@@ -74,8 +81,8 @@ type Props = {
   onDismissNotice: () => void;
   onReturnToMainMenu: () => void;
   onChange: (form: Partial<CharacterCreationFormState>) => void;
-  onCreateGame: () => void;
-  onConfirmOverwrite: () => void;
+  onCreateGame: (options?: { hasSelectableBackstories: boolean }) => void;
+  onConfirmOverwrite: (options?: { hasSelectableBackstories: boolean }) => void;
   onCancelOverwrite: () => void;
   themeMode: 'dark' | 'light';
   onToggleThemeMode: () => void;
@@ -120,11 +127,6 @@ const COLLAPSED_SHOWCASE_CARD_MIN_HEIGHT_CLASS = 'min-h-[14rem]';
 
 const LINEAGE_ART_ROTATION_MS = 7000;
 const STEP_UNLOCK_FEEDBACK_MS = 1600;
-const SUMMARY_COLLAPSED_STEP_IDS = new Set<CharacterCreationStepId>([
-  'continent',
-  'region',
-  'settlement'
-]);
 
 type ResourceBarId = 'hp' | 'mp' | 'stamina';
 
@@ -507,7 +509,10 @@ function formatIdentityNarrativeSummary(
   return `${article} ${descriptor} with ${physiqueArticle} ${physiqueLabel} physique, ${natureLabel} nature, and ${focusLabel} focus.`;
 }
 
-function renderAttributeTooltip(attributeKey: PlayerAttributeKey) {
+function renderAttributeTooltip(
+  attributeKey: PlayerAttributeKey,
+  previewRow?: CharacterCreationAttributePreviewRow
+) {
   const tooltip = getCharacterAttributeTooltipContent(attributeKey);
 
   return (
@@ -521,6 +526,28 @@ function renderAttributeTooltip(attributeKey: PlayerAttributeKey) {
       <span className="mt-2 block text-[color:var(--color-muted-strong)]">
         {tooltip.footer}
       </span>
+      {previewRow && (
+        <span className="mt-3 block border-t border-[color:var(--color-tooltip-border)] pt-2">
+          <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+            Attribute Breakdown
+          </span>
+          <span className="mt-1 block space-y-1">
+            {previewRow.contributions.map((contribution) => (
+              <span
+                key={`${previewRow.id}.${contribution.id}`}
+                className="flex items-center justify-between gap-4"
+              >
+                <span>{contribution.label}</span>
+                <span className="font-semibold text-[color:var(--color-text-strong)]">
+                  {contribution.value > 0 && contribution.id !== 'total'
+                    ? `+${contribution.value}`
+                    : contribution.value}
+                </span>
+              </span>
+            ))}
+          </span>
+        </span>
+      )}
     </span>
   );
 }
@@ -549,13 +576,7 @@ export function CharacterCreationNarrativeScreen({
   const [currentStepId, setCurrentStepId] =
     useState<CharacterCreationStepId>('lineage');
   const [showValidation, setShowValidation] = useState(false);
-  const [summaryVisible, setSummaryVisible] = useState(true);
   const [showAlternateLineageArt, setShowAlternateLineageArt] = useState(false);
-  const preview = buildCharacterCreationPreview(form, {
-    appliedLegacyPreparationIds,
-    appliedLegacyPreparationChoices,
-    accountProfile
-  });
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
   const selectedLineageArt = getLineageCardArt(form.lineageId);
   const activeOutlineStyle = {
@@ -571,8 +592,6 @@ export function CharacterCreationNarrativeScreen({
   const imageCardMetaClass = 'text-[color:var(--color-muted-strong)]';
   const lightSurfaceButtonClass =
     'bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)] hover:bg-[color:var(--color-surface-selected)]';
-  const summaryToggleActiveClass =
-    'forged-tone-accent';
   const primaryActionButtonClass =
     'forged-tone-accent';
   const dangerActionButtonClass =
@@ -602,7 +621,6 @@ export function CharacterCreationNarrativeScreen({
     'w-full pl-5 pr-6 text-[24px] font-semibold leading-tight text-[color:var(--color-text-strong)]';
   const collapsedLineageHoverLabelSurfaceClass = 'w-[14.5rem] max-w-[calc(100%-7rem)]';
   const inactiveIdentitySwatchBorderColor = 'var(--color-border-strong)';
-  const topBarBackground = 'var(--color-shell-bar-bg)';
   const continents = getWorldContinentOptions();
   const regions = getWorldRegionOptions(form.continentId);
   const settlements = getWorldSettlementOptions({
@@ -629,35 +647,67 @@ export function CharacterCreationNarrativeScreen({
     selectedWorld,
     backstoryAvailabilityOptions
   );
+  const hasSelectableBackstories = backstories.some((backstory) => backstory.selectable);
+  const validationOptions = {
+    accountProfile,
+    hasSelectableBackstories
+  };
+  const preview = buildCharacterCreationPreview(form, {
+    appliedLegacyPreparationIds,
+    appliedLegacyPreparationChoices,
+    accountProfile,
+    hasSelectableBackstories
+  });
   const validations = useMemo(
     () =>
       Object.fromEntries(
         CHARACTER_CREATION_STEPS.map((step) => [
           step.id,
-          validateCharacterCreationStep(form, step.id, { accountProfile })
+          validateCharacterCreationStep(form, step.id, validationOptions)
         ])
       ) as Record<CharacterCreationStepId, ReturnType<typeof validateCharacterCreationStep>>,
-    [accountProfile, form]
+    [accountProfile, form, hasSelectableBackstories]
   );
   const currentValidation = validations[currentStepId];
-  const fullValidation = validateCharacterCreationForm(form, { accountProfile });
+  const fullValidation = validateCharacterCreationForm(form, validationOptions);
   const regionSelectionLocked = form.continentId.trim().length === 0;
   const settlementSelectionLocked = form.regionId.trim().length === 0;
-  const currentIndex = CHARACTER_CREATION_STEPS.findIndex(
-    (step) => step.id === currentStepId
-  );
-  const firstInvalid = CHARACTER_CREATION_STEPS.findIndex(
-    (step) => !validations[step.id].isValid
-  );
-  const maxUnlocked =
-    firstInvalid === -1
-      ? CHARACTER_CREATION_STEPS.length - 1
-      : Math.max(firstInvalid, currentIndex);
   const [recentlyUnlockedStepIds, setRecentlyUnlockedStepIds] = useState<
     CharacterCreationStepId[]
   >([]);
+  const stepStates = useMemo(
+    () =>
+      buildCharacterCreationStepStates({
+        currentStepId,
+        validations,
+        regionLocked: regionSelectionLocked,
+        settlementLocked: settlementSelectionLocked,
+        backstoryLocked: !hasSelectableBackstories,
+        recentlyUnlockedStepIds
+      }),
+    [
+      currentStepId,
+      hasSelectableBackstories,
+      recentlyUnlockedStepIds,
+      regionSelectionLocked,
+      settlementSelectionLocked,
+      validations
+    ]
+  );
+  const currentStepState =
+    stepStates.find((stepState) => stepState.stepId === currentStepId) ?? null;
+  const maxUnlocked = stepStates.reduce((maxIndex, stepState, index) => {
+    if (!stepState.locked && !stepState.skipped) {
+      return index;
+    }
+
+    return maxIndex;
+  }, 0);
   const previousMaxUnlockedRef = useRef(maxUnlocked);
-  const previousStepId = getPreviousCharacterCreationStepId(currentStepId);
+  const previousStepId = getPreviousAvailableCharacterCreationStepId(
+    currentStepId,
+    stepStates
+  );
   const selectedSlot = slots.find((slot) => slot.id === form.saveSlotId) ?? null;
   const heirSourceOptions = useMemo(
     () => eligibleHeirSources.map(buildHeirSourceOption),
@@ -677,12 +727,12 @@ export function CharacterCreationNarrativeScreen({
     form,
     preview.lineageLabel
   );
-  const profileOutcomeRows = preview.generatedProfileMetrics;
-  const showReviewSummaryDetails = currentStepId === 'review' && preview.isResolved;
   const summaryContextRows = [
     preview.backstoryLabel
       ? { id: 'backstory', label: 'Backstory', value: preview.backstoryLabel }
-      : null,
+      : !hasSelectableBackstories
+        ? { id: 'backstory', label: 'Backstory', value: 'No backstory selected' }
+        : null,
     preview.startingBundleLabel
       ? { id: 'bundle', label: 'Bundle', value: preview.startingBundleLabel }
       : null,
@@ -708,11 +758,7 @@ export function CharacterCreationNarrativeScreen({
   );
 
   useEffect(() => {
-    containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentStepId]);
-
-  useEffect(() => {
-    setSummaryVisible(!SUMMARY_COLLAPSED_STEP_IDS.has(currentStepId));
+    containerRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }, [currentStepId]);
 
   useEffect(() => {
@@ -732,6 +778,18 @@ export function CharacterCreationNarrativeScreen({
 
     return () => window.clearInterval(intervalId);
   }, [currentStepId, form.lineageId, selectedLineageArt?.secondaryImageUrl]);
+
+  useEffect(() => {
+    if (!currentStepState?.skipped) {
+      return;
+    }
+
+    setCurrentStepId(
+      getNextAvailableCharacterCreationStepId(currentStepId, stepStates) ??
+        getPreviousAvailableCharacterCreationStepId(currentStepId, stepStates) ??
+        'lineage'
+    );
+  }, [currentStepId, currentStepState?.skipped, stepStates]);
 
   useEffect(() => {
     const previousMaxUnlocked = previousMaxUnlockedRef.current;
@@ -763,30 +821,14 @@ export function CharacterCreationNarrativeScreen({
     return () => window.clearTimeout(timeoutId);
   }, [maxUnlocked]);
 
-  const getStepDependencyLock = (stepId: CharacterCreationStepId) => {
-    if (stepId === 'region' && regionSelectionLocked) {
-      return {
-        locked: true,
-        redirectStep: 'continent' as CharacterCreationStepId
-      };
-    }
-
-    if (stepId === 'settlement' && settlementSelectionLocked) {
-      return {
-        locked: true,
-        redirectStep: 'region' as CharacterCreationStepId
-      };
-    }
-
-    return {
-      locked: false,
-      redirectStep: null
-    };
-  };
-
   const goToStep = (stepId: CharacterCreationStepId) => {
-    const dependencyLock = getStepDependencyLock(stepId);
-    setCurrentStepId(dependencyLock.redirectStep ?? stepId);
+    const stepState = stepStates.find((state) => state.stepId === stepId);
+
+    if (stepState?.locked || stepState?.skipped) {
+      return;
+    }
+
+    setCurrentStepId(stepId);
     setShowValidation(false);
   };
 
@@ -851,7 +893,7 @@ export function CharacterCreationNarrativeScreen({
       currentStepId === stepId &&
       validations[stepId].isValid
     ) {
-      const following = getNextCharacterCreationStepId(stepId);
+      const following = getNextAvailableCharacterCreationStepId(stepId, stepStates);
       if (following) {
         goToStep(following);
       }
@@ -868,6 +910,15 @@ export function CharacterCreationNarrativeScreen({
   const setSelection = (nextForm: Partial<CharacterCreationFormState>) => {
     onChange(nextForm);
     setShowValidation(false);
+  };
+
+  const randomizeFullCharacter = () => {
+    setSelection(
+      generateRandomCharacterCreationFormState({
+        currentForm: form,
+        accountProfile
+      })
+    );
   };
 
   const randomizeIdentitySelection = () => {
@@ -903,7 +954,7 @@ export function CharacterCreationNarrativeScreen({
   };
 
   const advanceSelectionStep = (stepId: CharacterCreationStepId) => {
-    const following = getNextCharacterCreationStepId(stepId);
+    const following = getNextAvailableCharacterCreationStepId(stepId, stepStates);
     if (following) {
       goToStep(following);
     }
@@ -932,16 +983,27 @@ export function CharacterCreationNarrativeScreen({
             }`}
           >
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
-              {isCharacterAttributeKey(value.label) ? (
-                <Tooltip
-                  content={renderAttributeTooltip(value.label)}
-                  panelClassName="w-72 max-w-[min(18rem,calc(100vw-2rem))] text-left leading-5"
-                  portal
-                  align="start"
-                >
-                  <span className="cursor-help">{value.label}</span>
-                </Tooltip>
-              ) : (
+              {isCharacterAttributeKey(value.label) ? (() => {
+                const previewRow = preview.attributePreviewRows.find(
+                  (row) => row.id === value.label
+                );
+
+                return (
+                  <Tooltip
+                    content={renderAttributeTooltip(value.label, previewRow)}
+                    panelClassName="w-80 max-w-[min(20rem,calc(100vw-2rem))] text-left leading-5"
+                    portal
+                    align="start"
+                  >
+                    <span
+                      tabIndex={0}
+                      className="cursor-help rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-focus-ring)]"
+                    >
+                      {value.label}
+                    </span>
+                  </Tooltip>
+                );
+              })() : (
                 value.label
               )}
             </div>
@@ -2496,6 +2558,39 @@ export function CharacterCreationNarrativeScreen({
                 <div className="mt-3">{preview.startingAccessDetail}</div>
               </div>
             </div>
+            {preview.isResolved && (
+              <div className={`${summaryBlockClass} space-y-4`}>
+                <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
+                  Starter Package Details
+                </div>
+                <div className="grid gap-4 lg:grid-cols-2">
+                  {preview.legacyPreparations.length > 0 && (
+                    <div>{renderLegacyPreparations(preview.legacyPreparations)}</div>
+                  )}
+                  {preview.starterSkills.length > 0 && (
+                    <div>{renderTags('Starting Lore', preview.starterSkills)}</div>
+                  )}
+                  {preview.starterLore.length > 0 && (
+                    <div>{renderTags('Lore Emphasis', preview.starterLore)}</div>
+                  )}
+                  {preview.starterSkillPolicyLabels.length > 0 && (
+                    <div>{renderTags('Starter Limits', preview.starterSkillPolicyLabels)}</div>
+                  )}
+                  {preview.starterTraits.length > 0 && (
+                    <div>{renderTags('Starting Traits', preview.starterTraits)}</div>
+                  )}
+                  {preview.starterGear.length > 0 && (
+                    <div>{renderTags('Equipped Gear', preview.starterGear)}</div>
+                  )}
+                  {preview.walletLabel && (
+                    <div>{renderTags('Funds', [preview.walletLabel])}</div>
+                  )}
+                  {preview.starterPack.length > 0 && (
+                    <div>{renderTags('Starter Pack', preview.starterPack)}</div>
+                  )}
+                </div>
+              </div>
+            )}
             {heirSourceOptions.length > 0 && (
               <div className={`${summaryBlockClass} space-y-3`}>
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -2596,7 +2691,7 @@ export function CharacterCreationNarrativeScreen({
               <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
-                  onClick={onConfirmOverwrite}
+                  onClick={() => onConfirmOverwrite({ hasSelectableBackstories })}
                   className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${dangerActionButtonClass}`}
                 >
                   Confirm Overwrite
@@ -2620,7 +2715,7 @@ export function CharacterCreationNarrativeScreen({
                 setShowValidation(true);
                 return;
               }
-              onCreateGame();
+              onCreateGame({ hasSelectableBackstories });
             }}
             disabled={needsOverwrite}
             className={`rounded-full border px-5 py-3 text-sm font-semibold transition disabled:opacity-50 ${primaryActionButtonClass}`}
@@ -2632,254 +2727,146 @@ export function CharacterCreationNarrativeScreen({
     );
   }
 
-  return (
-    <div ref={containerRef} className="h-screen overflow-auto pb-4">
-      <div
-        className="launcher-shell-bar sticky top-0 z-30 border-b"
-        style={{
-          background: topBarBackground,
-          boxShadow: 'var(--shadow-shell-bar)'
-        }}
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="grid min-h-[3.5rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2 sm:px-6">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => previousStepId && goToStep(previousStepId)}
-                disabled={!previousStepId}
-                className={`${topButtonClass} disabled:cursor-not-allowed disabled:opacity-40`}
-                title="Previous step"
-              >
-                <Icon name="arrowLeft" className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                onClick={onReturnToMainMenu}
-                className={topButtonClass}
-                title="Return to main menu"
-              >
-                <Icon name="menu" className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="justify-self-center text-center">
-              <Tooltip
-                content={
-                  <span>
-                    Choose the blood in your veins, the face you show the world,
-                    the city that raised you, the past that shaped you, the
-                    starter bundle you carry, and the profile mix that defines
-                    your first real strengths.
-                  </span>
-                }
-              >
-                <button
-                  type="button"
-                  className="text-base font-semibold tracking-[0.04em] text-[color:var(--color-text-primary)] sm:text-lg"
-                >
-                  Forge A New Character
-                </button>
-              </Tooltip>
-            </div>
-            <div className="flex items-center justify-self-end gap-2">
-              <button
-                type="button"
-                onClick={() => setSummaryVisible((current) => !current)}
-                aria-pressed={summaryVisible}
-                className={`${topPillButtonClass} min-w-[6.75rem] ${
-                  summaryVisible ? summaryToggleActiveClass : ''
-                }`}
-                style={summaryVisible ? activeOutlineStyle : undefined}
-              >
-                Summary
-              </button>
-              <button
-                type="button"
-                onClick={onToggleThemeMode}
-                className={topButtonClass}
-                title={
-                  themeMode === 'dark'
-                    ? 'Switch to light mode'
-                    : 'Switch to dark mode'
-                }
-              >
-                <Icon
-                  name={themeMode === 'dark' ? 'sun' : 'moon'}
-                  className="h-5 w-5"
-                />
-              </button>
-            </div>
-          </div>
-          <div className="border-t border-[color:var(--color-border-soft)] px-4 py-2 sm:px-6">
-            <div className="overflow-x-auto pb-1">
-              <div className="flex w-max min-w-full items-center gap-2">
-                {CHARACTER_CREATION_STEPS.map((step, index) => {
-                  const dependencyLock = getStepDependencyLock(step.id);
-                  const locked = index > maxUnlocked || dependencyLock.locked;
-                  const active = step.id === currentStepId;
-                  const complete = validations[step.id].isValid;
-                  const recentlyUnlocked = recentlyUnlockedStepIds.includes(step.id);
+  const creatorSidebar = (
+    <div className="flex h-full flex-col gap-4 overflow-y-auto p-4">
+      <section className={summaryBlockClass} aria-label="Character summary">
+        <div className="text-2xl font-semibold text-[color:var(--color-text-strong)]">
+          {summaryCharacterName}
+        </div>
+        <div className="mt-3 border-t-2 border-[color:var(--color-border-strong)] pt-3 text-sm leading-6 text-[color:var(--color-text-soft)]">
+          {summaryIdentityNarrative}
+        </div>
+      </section>
 
-                  return (
-                    <button
-                      key={step.id}
-                      type="button"
-                      onClick={() => !locked && goToStep(step.id)}
-                      disabled={locked}
-                      aria-current={active ? 'step' : undefined}
-                      title={locked ? `${step.label} locked` : step.label}
-                      className={`inline-flex h-10 items-center rounded-full border text-[10px] font-semibold uppercase tracking-[0.14em] transition disabled:cursor-not-allowed ${
-                        locked
-                          ? 'w-10 shrink-0 justify-center px-0'
-                          : 'min-w-[7.75rem] flex-1 justify-center gap-2 px-3'
-                      } ${getStepSegmentClass({
-                        active,
-                        complete,
-                        locked,
-                        recentlyUnlocked
-                      })}`}
-                      style={active ? activeOutlineStyle : undefined}
-                    >
-                      {locked ? (
-                        <Icon name="lock" className="h-4 w-4" />
-                      ) : (
-                        <>
-                          <span
-                            className={`inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full border px-1 text-[9px] font-semibold ${getStepIndexBadgeClass({
-                              active,
-                              complete
-                            })}`}
-                          >
-                            {index + 1}
-                          </span>
-                          <span className="truncate">{step.label}</span>
-                        </>
-                      )}
-                    </button>
-                  );
-                })}
+      <nav className="space-y-2" aria-label="Character creation steps">
+        {CHARACTER_CREATION_STEPS.map((step, index) => {
+          const stepState =
+            stepStates.find((state) => state.stepId === step.id) ?? null;
+          const locked = stepState?.locked ?? false;
+          const active = stepState?.active ?? false;
+          const complete = stepState?.complete ?? false;
+          const recentlyUnlocked = stepState?.recentlyUnlocked ?? false;
+
+          return (
+            <button
+              key={step.id}
+              type="button"
+              onClick={() => goToStep(step.id)}
+              disabled={locked}
+              aria-current={active ? 'step' : undefined}
+              title={stepState?.reasonLabel ?? step.label}
+              className={`inline-flex min-h-[3.25rem] w-full items-center justify-start gap-3 rounded-[12px] border px-3 py-2 text-left text-[10px] font-semibold uppercase tracking-[0.14em] transition disabled:cursor-not-allowed ${getStepSegmentClass({
+                active,
+                complete,
+                locked,
+                recentlyUnlocked
+              })}`}
+              style={active ? activeOutlineStyle : undefined}
+            >
+              <span
+                className={`inline-flex h-6 min-w-[1.55rem] items-center justify-center rounded-full border px-1 text-[9px] font-semibold ${getStepIndexBadgeClass({
+                  active,
+                  complete
+                })}`}
+              >
+                {locked ? <Icon name="lock" className="h-3.5 w-3.5" /> : index + 1}
+              </span>
+              <span className="min-w-0 flex-1 truncate">{step.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      <button
+        type="button"
+        onClick={randomizeFullCharacter}
+        className={`${primaryActionButtonClass} inline-flex min-h-[3rem] w-full items-center justify-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] transition`}
+      >
+        <Icon name="dice" className="h-4 w-4" />
+        Randomize Character
+      </button>
+
+      {summaryContextRows.length > 0 && (
+        <section className={summaryBlockClass} aria-label="Start context">
+          <div className="space-y-2.5">
+            {summaryContextRows.map((row) => (
+              <div key={row.id} className="space-y-0.5">
+                <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
+                  {row.label}
+                </div>
+                <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
+                  {row.value}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </div>
-      {notice && (
-        <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6">
-          <NoticeBanner notice={notice} onDismiss={onDismissNotice} />
-        </div>
+        </section>
       )}
-      <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4 px-4 pt-4 sm:px-6">
-        <div
-          className={`grid flex-1 gap-4 ${
-            summaryVisible
-              ? 'xl:grid-cols-[minmax(0,1fr)_220px]'
-              : 'xl:grid-cols-[minmax(0,1fr)]'
-          }`}
-        >
-          <div className="space-y-4">
-            {mainContent}
-            {showValidation &&
-              !currentValidation.isValid &&
-              currentStepId !== 'review' && (
-                <div className={validationNoticeClass}>
-                  {Object.values(currentValidation.errors)[0] ??
-                    'Complete the required choices on this step before moving on.'}
-                </div>
-              )}
-          </div>
-          {summaryVisible && (
-            <div className="space-y-4 xl:sticky xl:top-[7.25rem]">
-              <Card accent="var(--color-world)">
-                <div className="space-y-4">
-                  <div>
-                    <div className="text-2xl font-semibold text-[color:var(--color-text-strong)]">
-                      {summaryCharacterName}
-                    </div>
-                    <div className="mt-3 border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                      <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
-                        {summaryIdentityNarrative}
-                      </div>
-                    </div>
-                  </div>
-                  {summaryContextRows.length > 0 && (
-                    <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                      <div className="space-y-2.5">
-                        {summaryContextRows.map((row) => (
-                          <div key={row.id} className="space-y-0.5">
-                            <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
-                              {row.label}
-                            </div>
-                            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
-                              {row.value}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                    {renderStatList(preview.attributeMetrics, {
-                      compact: true,
-                      frame: false
-                    })}
-                  </div>
-                  <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                    {renderResourceBars(preview.resourceMetrics, {
-                      frame: false
-                    })}
-                  </div>
-                  {showReviewSummaryDetails && profileOutcomeRows.length > 0 && (
-                    <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                      <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted-strong)]">
-                        Generated Profile Bonuses
-                      </div>
-                      <div className="mt-2 space-y-2.5">
-                        {profileOutcomeRows.map((metric) => (
-                          <div key={`profile-outcome.${metric.id}`} className="space-y-0.5">
-                            <div className="text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">
-                              {metric.label}
-                            </div>
-                            <div className="text-sm leading-6 text-[color:var(--color-text-soft)]">
-                              {metric.value}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {showReviewSummaryDetails && preview.legacyPreparations.length > 0 && (
-                    <div className="border-t-2 border-[color:var(--color-border-strong)] pt-3">
-                      {renderLegacyPreparations(preview.legacyPreparations)}
-                    </div>
-                  )}
-                  {showReviewSummaryDetails && preview.starterSkills.length > 0 && (
-                    <div>{renderTags('Starting Lore', preview.starterSkills)}</div>
-                  )}
-                  {showReviewSummaryDetails && preview.starterLore.length > 0 && (
-                    <div>{renderTags('Lore Emphasis', preview.starterLore)}</div>
-                  )}
-                  {showReviewSummaryDetails && preview.starterSkillPolicyLabels.length > 0 && (
-                    <div>{renderTags('Starter Limits', preview.starterSkillPolicyLabels)}</div>
-                  )}
-                  {showReviewSummaryDetails && preview.starterTraits.length > 0 && (
-                    <div>{renderTags('Starting Traits', preview.starterTraits)}</div>
-                  )}
-                  {showReviewSummaryDetails && preview.starterGear.length > 0 && (
-                    <div>{renderTags('Equipped Gear', preview.starterGear)}</div>
-                  )}
-                  {showReviewSummaryDetails && preview.walletLabel && (
-                    <div>{renderTags('Funds', [preview.walletLabel])}</div>
-                  )}
-                  {showReviewSummaryDetails && preview.starterPack.length > 0 && (
-                    <div>{renderTags('Starter Pack', preview.starterPack)}</div>
-                  )}
-                </div>
-              </Card>
+
+      <section aria-label="Total attributes">
+        {renderStatList(preview.attributeMetrics, {
+          compact: true,
+          frame: true
+        })}
+      </section>
+
+      <section aria-label="Resource preview">
+        {renderResourceBars(preview.resourceMetrics, {
+          frame: true
+        })}
+      </section>
+    </div>
+  );
+
+  return (
+    <AppShell
+      brand={<ShellBrandLogo />}
+      title="Forge A New Character"
+      subtitle="Lineage, identity, homeland, backstory, bundle, and final review."
+      primaryActions={
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => previousStepId && goToStep(previousStepId)}
+            disabled={!previousStepId}
+            className={`${topButtonClass} disabled:cursor-not-allowed disabled:opacity-40`}
+            title="Previous step"
+          >
+            <Icon name="arrowLeft" className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={onReturnToMainMenu}
+            className={topButtonClass}
+            title="Return to main menu"
+          >
+            <Icon name="menu" className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={onToggleThemeMode}
+            className={topButtonClass}
+            title={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            <Icon name={themeMode === 'dark' ? 'sun' : 'moon'} className="h-5 w-5" />
+          </button>
+        </div>
+      }
+      sidebar={creatorSidebar}
+      notice={notice ? <NoticeBanner notice={notice} onDismiss={onDismissNotice} /> : null}
+    >
+      <div ref={containerRef} className="space-y-4">
+        {mainContent}
+        {showValidation &&
+          !currentValidation.isValid &&
+          currentStepId !== 'review' && (
+            <div className={validationNoticeClass}>
+              {Object.values(currentValidation.errors)[0] ??
+                'Complete the required choices on this step before moving on.'}
             </div>
           )}
-        </div>
       </div>
-    </div>
+    </AppShell>
   );
 
   function renderTags(title: string, values: string[]) {

@@ -1004,7 +1004,10 @@ export default function App() {
     }
   };
 
-  const attemptCreateGame = (forceOverwrite: boolean) => {
+  const attemptCreateGame = (
+    forceOverwrite: boolean,
+    options: { hasSelectableBackstories?: boolean } = {}
+  ) => {
     if (state.screen !== 'CHARACTER_CREATION') {
       return;
     }
@@ -1014,7 +1017,10 @@ export default function App() {
       ...state.form,
       playerName
     }, {
-      accountProfile: state.accountProfile
+      accountProfile: state.accountProfile,
+      ...(typeof options.hasSelectableBackstories === 'boolean'
+        ? { hasSelectableBackstories: options.hasSelectableBackstories }
+        : {})
     });
 
     if (!validation.isValid) {
@@ -1065,6 +1071,9 @@ export default function App() {
         appliedLegacyPreparationIds: preparationSelection.selectedUnlockIds,
         appliedLegacyPreparationChoices: preparationSelection.selectedChoicePayloads,
         accountProfile: state.accountProfile,
+        ...(typeof options.hasSelectableBackstories === 'boolean'
+          ? { hasSelectableBackstories: options.hasSelectableBackstories }
+          : {}),
         ...(selectedHeirSource ? { sourceRunId: selectedSourceRunId } : {}),
         ...(selectedHeirSource && selectedHeirSource.lineageId !== state.form.lineageId
           ? { crossLineageStart: true }
@@ -1784,8 +1793,8 @@ export default function App() {
         onDismissNotice={dismissNotice}
         onReturnToMainMenu={() => showSignedInMainMenu(state.launcherSession, state.accountProfile)}
         onChange={(form) => dispatch({ type: 'UPDATE_CHARACTER_CREATION_FORM', form })}
-        onCreateGame={() => attemptCreateGame(false)}
-        onConfirmOverwrite={() => attemptCreateGame(true)}
+        onCreateGame={(options) => attemptCreateGame(false, options)}
+        onConfirmOverwrite={(options) => attemptCreateGame(true, options)}
         onCancelOverwrite={() => dispatch({ type: 'SET_CHARACTER_OVERWRITE', slotId: null })}
         themeMode={themeMode}
         onToggleThemeMode={toggleThemeMode}

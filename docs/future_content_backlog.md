@@ -12,6 +12,7 @@ This file tracks content and systems that are intentionally deferred.
 
 ## Run Notes
 
+- 2026-05-26: Implemented the first creator-focused shell refinement by moving character creation into a left-sidebar `AppShell` flow with full-character randomization, skipped/no-package backstory starts when no selectable backstories exist, and total-attribute breakdown tooltips. Dedicated touch long-press tooltip behavior, gameplay shell unification, universal shell extraction, generated UI output, backstory purchase UI, family/source-run/scoped Backstory evidence, source-run/heir randomization, broader no-backstory content/id policy, broad typecheck cleanup, and Combat Equipment Mapping Audit remain deferred.
 - 2026-05-26: Added the planning-only Unified Shell And Creator Refinement Plan for moving character creation toward the main-menu left-sidebar shell before returning to combat audit. Gameplay shell unification, universal shell extraction, generated UI output, backstory purchase UI, family/source-run/scoped Backstory evidence, source-run/heir randomization, broader no-backstory content/id policy, broad typecheck cleanup, and Combat Equipment Mapping Audit remain deferred.
 - 2026-05-22: Clarified typecheck script routing so the default root typecheck delegates to the UI app's local TypeScript target and the broad root tsconfig sweep is named as a workspace audit target. JSON import attribute policy, environment typing, JSX/config boundary cleanup, strict optional-property cleanup, and broader typecheck blocker resolution remain deferred.
 - 2026-05-22: Cleaned Bloodlines continuity docs after the pure projection and read-only account meta UI landed. Current handoff, roadmap, continuity brief, future-system ledger, and temporary guardrail statuses now point away from the finished read-only Bloodlines slice; family management, richer tree behavior, heirs, heirlooms, bequests, item-instance persistence, estate transfers/claims, Family Prestige earning/spending behavior, Chronicle Marks, Lineage Seals, scoped Backstory Legacy evidence, generated UI output, and broader runtime behavior remain deferred.
@@ -995,6 +996,16 @@ This file tracks content and systems that are intentionally deferred.
 
 ### Frontend UI
 
+#### Creator attribute tooltip touch long-press support
+
+- Status: deferred
+- Prerequisite: the creator now exposes total attribute rows with hover and keyboard-focus breakdown tooltips; remaining prerequisite is a focused touch interaction pass that can adjust the shared tooltip component without disrupting existing hover/focus behavior across the app
+- Intended owner: `apps/rpg-ui/src/components/ui/Tooltip.tsx` and `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`
+- Intended implementation:
+  - add deliberate pointer/touch long-press behavior for tooltip triggers that need mobile access, including dismissal rules and viewport-safe positioning
+  - preserve the current hover and keyboard-focus tooltip behavior for desktop and accessibility users
+  - keep this as presentation-only UI behavior without changing creator stat math, validation, randomization, save creation, or generated output
+
 #### Complete docked launcher-shell migration for remaining pre-game surfaces
 
 - Status: deferred
@@ -1051,7 +1062,7 @@ This file tracks content and systems that are intentionally deferred.
   - remaining work is to promote the new shell layout state such as collapsed system tabs, right-side detail visibility, and in-game settings-panel state into canonical UI preferences or session-owned persistence if those presentation choices need to survive reloads instead of resetting per mount
   - the character creator now resolves continent, region, and settlement selection from canonical world data instead of the earlier UI-authored settlement-template catalog
   - remaining work is to replace the UI-authored character creation catalogs for identity palettes, backstories, paths, starter loadouts, and legal-start mappings with canonical content/database ownership once the player-content layer stabilizes
-  - the character creator now serves lineage and continent card art from `apps/rpg-ui/public/character-creator`, brings decorative art to the foreground on hover for image-backed cards, expands selected lineage/continent/region/settlement cards into art-forward confirm surfaces with left-side hover narrative overlays, keeps a slimmer live summary behind an inline top-bar toggle that defaults collapsed on continent, region, and settlement steps, and now uses a compact two-bar shell with inline segmented step progress instead of the older left-aligned step rail so reclaimed width can flow into the active form
+  - the character creator now serves lineage and continent card art from `apps/rpg-ui/public/character-creator`, brings decorative art to the foreground on hover for image-backed cards, expands selected lineage/continent/region/settlement cards into art-forward confirm surfaces with left-side hover narrative overlays, and now uses the launcher `AppShell` with a left sidebar for live summary, step navigation, full randomization, context, total attributes, and resource bars
   - remaining work is to move the current UI-owned lineage/continent card art manifests, expanded lineage color palettes, sex or height or build tradeoff tables, and any future region or settlement card art into canonical player-content ownership once the player-content layer can author visual identity and starting-stat modifiers directly
   - the character creator now also uses authored region card art, image-backed region resource icons, explicit presentation overrides for the Kaelvar trio plus the current Valtherion quartet, and a continent-style split selected layout for region cards; settlement cards now use the same image-backed treatment across the earlier Kaelvar and Valtherion set plus the newly added Sapphire Rivers, Serathyl mainland, Draemor mainland, Talmyra mainland, Watcher Coast, and most Thorn Peninsula starts, while uncovered settlements still fall back to the older art-light presentation
   - remaining work is to extend the settlement art registry and authored image set to the still-uncovered named starts: `Dyehollow`, `Pepperfield Estate`, `Starfall Port`, `Foammarket Ferry`, `Harbormast Quay`, `Pearlwake`, `Chainlight Bastion`, `Lantern Key`, `Driftglass Outpost`, `Glasswake Shrine`, `Lantern Deep`, `Stormfang Haven`, `Blackreef Anchorage`, `Squallhook Refuge`, `Aurora Anchorage`, `Icehook Jetty`, `Whalebone Watch`, `Nacredeep`, and `Stormhook Watch`; intended owner is `apps/rpg-ui` until canonical presentation content absorbs that responsibility

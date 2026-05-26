@@ -103,6 +103,26 @@ export interface CharacterCreationValidationResult {
 
 export interface CharacterCreationValidationOptions {
   accountProfile?: AccountProfileState | null;
+  hasSelectableBackstories?: boolean;
+}
+
+export interface CharacterCreationStepState {
+  stepId: CharacterCreationStepId;
+  locked: boolean;
+  skipped: boolean;
+  active: boolean;
+  complete: boolean;
+  recentlyUnlocked: boolean;
+  reasonLabel: string | null;
+}
+
+export interface BuildCharacterCreationStepStatesInput {
+  currentStepId: CharacterCreationStepId;
+  validations: Record<CharacterCreationStepId, CharacterCreationValidationResult>;
+  regionLocked?: boolean;
+  settlementLocked?: boolean;
+  backstoryLocked?: boolean;
+  recentlyUnlockedStepIds?: readonly CharacterCreationStepId[];
 }
 
 export interface CompleteCharacterCreationFormState extends CharacterCreationFormState {
@@ -228,9 +248,16 @@ export function createDefaultCharacterCreationFormState(
   };
 }
 
+function isBackstoryRequired(options: CharacterCreationValidationOptions = {}): boolean {
+  return options.hasSelectableBackstories ?? true;
+}
+
 export function hasCompleteCharacterCreationSelections(
-  form: CharacterCreationFormState
+  form: CharacterCreationFormState,
+  options: CharacterCreationValidationOptions = {}
 ): form is CompleteCharacterCreationFormState {
+  const backstoryRequired = isBackstoryRequired(options);
+
   return Boolean(
     form.sexId &&
       form.lineageId.trim() &&
@@ -242,7 +269,7 @@ export function hasCompleteCharacterCreationSelections(
       form.hairColorId.trim() &&
       form.eyeColorId.trim() &&
       form.skinToneId.trim() &&
-      form.backstoryId.trim() &&
+      (!backstoryRequired || form.backstoryId.trim()) &&
       form.startingBundleId.trim() &&
       hasValidStartingBundleChoiceSelections(
         form.startingBundleId,
@@ -280,6 +307,101 @@ export function getPreviousCharacterCreationStepId(
   }
 
   return CHARACTER_CREATION_STEP_SEQUENCE[currentIndex - 1] ?? null;
+}
+
+export function buildCharacterCreationStepStates({
+  currentStepId,
+  validations,
+  regionLocked = false,
+  settlementLocked = false,
+  backstoryLocked = false,
+  recentlyUnlockedStepIds = []
+}: BuildCharacterCreationStepStatesInput): CharacterCreationStepState[] {
+  const dependencyLocks: Partial<Record<CharacterCreationStepId, string>> = {};
+  const skippedStepIds = new Set<CharacterCreationStepId>();
+
+  if (regionLocked) {
+    dependencyLocks.region = "Choose a continent first.";
+  }
+
+  if (settlementLocked) {
+    dependencyLocks.settlement = "Choose a region first.";
+  }
+
+  if (backstoryLocked) {
+    dependencyLocks.backstory = "No selectable backstories are available.";
+    skippedStepIds.add("backstory");
+  }
+
+  const firstInvalid = CHARACTER_CREATION_STEPS.findIndex((step) => {
+    if (skippedStepIds.has(step.id)) {
+      return false;
+    }
+
+    if (dependencyLocks[step.id]) {
+      return true;
+    }
+
+    return !validations[step.id].isValid;
+  });
+  const currentIndex = getCharacterCreationStepIndex(currentStepId);
+  const maxUnlocked =
+    firstInvalid === -1
+      ? CHARACTER_CREATION_STEPS.length - 1
+      : Math.max(firstInvalid, currentIndex);
+
+  return CHARACTER_CREATION_STEPS.map((step, index) => {
+    const dependencyReason = dependencyLocks[step.id] ?? null;
+    const skipped = skippedStepIds.has(step.id);
+    const locked = Boolean(dependencyReason) || (!skipped && index > maxUnlocked);
+
+    return {
+      stepId: step.id,
+      locked,
+      skipped,
+      active: step.id === currentStepId,
+      complete: skipped || validations[step.id].isValid,
+      recentlyUnlocked:
+        !locked && !skipped && recentlyUnlockedStepIds.includes(step.id),
+      reasonLabel:
+        dependencyReason ?? (locked ? "Complete earlier required steps first." : null)
+    };
+  });
+}
+
+export function getNextAvailableCharacterCreationStepId(
+  stepId: CharacterCreationStepId,
+  stepStates: readonly CharacterCreationStepState[]
+): CharacterCreationStepId | null {
+  const currentIndex = stepStates.findIndex((stepState) => stepState.stepId === stepId);
+
+  if (currentIndex < 0) {
+    return null;
+  }
+
+  return (
+    stepStates
+      .slice(currentIndex + 1)
+      .find((stepState) => !stepState.locked && !stepState.skipped)?.stepId ?? null
+  );
+}
+
+export function getPreviousAvailableCharacterCreationStepId(
+  stepId: CharacterCreationStepId,
+  stepStates: readonly CharacterCreationStepState[]
+): CharacterCreationStepId | null {
+  const currentIndex = stepStates.findIndex((stepState) => stepState.stepId === stepId);
+
+  if (currentIndex <= 0) {
+    return null;
+  }
+
+  return (
+    [...stepStates]
+      .slice(0, currentIndex)
+      .reverse()
+      .find((stepState) => !stepState.locked && !stepState.skipped)?.stepId ?? null
+  );
 }
 
 export function validateCharacterCreationForm(
@@ -353,16 +475,21 @@ export function validateCharacterCreationForm(
     }
   }
 
-  if (!isKnownBackstoryId(form.backstoryId)) {
-    errors.backstoryId = "Choose a valid backstory.";
-  } else if (
-    !isSelectableBackstoryId(form.backstoryId, {
-      ...(options.accountProfile ? { accountProfile: options.accountProfile } : {}),
-      selectedBackstoryId: form.backstoryId,
-      sourceRunIds: form.sourceRunId.trim().length > 0 ? [form.sourceRunId] : []
-    })
-  ) {
-    errors.backstoryId = "Choose an available backstory.";
+  const backstoryRequired = isBackstoryRequired(options);
+  const hasBackstorySelection = form.backstoryId.trim().length > 0;
+
+  if (backstoryRequired || hasBackstorySelection) {
+    if (!isKnownBackstoryId(form.backstoryId)) {
+      errors.backstoryId = "Choose a valid backstory.";
+    } else if (
+      !isSelectableBackstoryId(form.backstoryId, {
+        ...(options.accountProfile ? { accountProfile: options.accountProfile } : {}),
+        selectedBackstoryId: form.backstoryId,
+        sourceRunIds: form.sourceRunId.trim().length > 0 ? [form.sourceRunId] : []
+      })
+    ) {
+      errors.backstoryId = "Choose an available backstory.";
+    }
   }
 
   if (!isKnownStartingBundleId(form.startingBundleId)) {

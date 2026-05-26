@@ -45,14 +45,19 @@ import {
 import { CHARACTER_ATTRIBUTE_ORDER } from './characterAttributes.js';
 import {
   getBackstoryTemplate,
+  getAgeBandAttributeAdjustments,
+  getBackstoryAttributeAdjustments,
   formatAgeBandModifierLine,
   formatHeightBandModifierLine,
+  getHeightBandAttributeAdjustments,
   getIdentityOptionLabel,
   getFocusLabel,
+  getLineageBaseAttributes,
   getNatureLabel,
   getPhysiqueLabel,
   getRepresentativeHeightCm,
   getSexOptionForLineage,
+  getSexAttributeAdjustments,
   resolveCanonicalAgeBandId,
   resolveCanonicalFocusId,
   resolveCanonicalNatureId,
@@ -153,7 +158,7 @@ function createEmptySessionState() {
 }
 
 type DerivedCharacterCreationState = {
-  backstoryLabel: string;
+  backstoryLabel: string | null;
   lineageLabel: string;
   startingBundleLabel: string;
   startingContinentLabel: string;
@@ -180,15 +185,29 @@ type DerivedCharacterCreationState = {
   snapshot: SaveSnapshot;
 };
 
-type CharacterCreationPreviewOptions = {
+export type CharacterCreationPreviewOptions = {
   appliedLegacyPreparationIds?: string[];
   appliedLegacyPreparationChoices?: Record<string, string>;
   accountProfile?: AccountProfileState | null;
+  hasSelectableBackstories?: boolean;
   sourceRunId?: string;
   crossLineageStart?: boolean;
 };
 
 type CharacterCreationPreviewMetric = { id: string; label: string; value: string | null };
+
+export type CharacterCreationAttributePreviewContribution = {
+  id: string;
+  label: string;
+  value: number;
+};
+
+export type CharacterCreationAttributePreviewRow = {
+  id: PlayerAttributeKey;
+  label: PlayerAttributeKey;
+  totalValue: number | null;
+  contributions: CharacterCreationAttributePreviewContribution[];
+};
 
 export type CharacterCreationPreview = {
   isResolved: boolean;
@@ -206,6 +225,7 @@ export type CharacterCreationPreview = {
   generatedProfileMetrics: CharacterCreationPreviewMetric[];
   resourceMetrics: CharacterCreationPreviewMetric[];
   attributeMetrics: CharacterCreationPreviewMetric[];
+  attributePreviewRows: CharacterCreationAttributePreviewRow[];
   starterSkills: string[];
   starterLore: string[];
   starterTraits: string[];
@@ -321,6 +341,144 @@ function buildAttributeMetrics(attributes: PlayerAttributes | null): CharacterCr
   );
 }
 
+function buildLegacyPreparationAttributeAdjustments(
+  form: CharacterCreationFormState,
+  options: CharacterCreationPreviewOptions
+) {
+  if ((options.appliedLegacyPreparationIds ?? []).length === 0) {
+    return {};
+  }
+
+  if (!isKnownStartingBundleId(form.startingBundleId)) {
+    return {};
+  }
+
+  try {
+    const bundle = getStartingBundleTemplate(form.startingBundleId);
+    const bundleStacks = getStartingBundleSelectedStacks(
+      form.startingBundleId,
+      form.startingBundleChoiceSelections
+    );
+    const equipment = buildStarterEquipment(bundleStacks);
+    const inventory = buildStarterInventory(bundleStacks, equipment);
+    const legacyStartBonuses = resolveLegacyCharacterStartBonuses(options.accountProfile);
+    const currency = {
+      gold: bundle.startingCurrency.gold + legacyStartBonuses.currencyDelta.gold,
+      silver: bundle.startingCurrency.silver + legacyStartBonuses.currencyDelta.silver,
+      copper: bundle.startingCurrency.copper + legacyStartBonuses.currencyDelta.copper
+    };
+
+    return applyLegacyPreparationBonuses({
+      preparationIds: options.appliedLegacyPreparationIds ?? [],
+      preparationChoices: options.appliedLegacyPreparationChoices ?? {},
+      currency,
+      equipment,
+      inventory
+    }).attributeAdjustments;
+  } catch {
+    return {};
+  }
+}
+
+function addAttributeAdjustments(
+  target: PlayerAttributes,
+  adjustments: Partial<Record<PlayerAttributeKey, number>>
+): PlayerAttributes {
+  const next = { ...target };
+
+  for (const attributeKey of CHARACTER_ATTRIBUTE_ORDER) {
+    next[attributeKey] += adjustments[attributeKey] ?? 0;
+  }
+
+  return next;
+}
+
+export function buildCharacterCreationAttributePreviewRows(
+  form: CharacterCreationFormState,
+  options: CharacterCreationPreviewOptions = {}
+): CharacterCreationAttributePreviewRow[] {
+  const lineageId = form.lineageId.trim() || "lineage.human";
+  const attributeResolution = resolveCharacterCreationAttributes({
+    lineageId,
+    sexId: form.sexId,
+    ageBandId: form.ageBandId,
+    heightBandId: form.heightBandId,
+    physiqueId: form.physiqueId,
+    natureId: form.natureId,
+    focusId: form.focusId,
+    backstoryId: form.backstoryId
+  });
+  const baseline = getLineageBaseAttributes(lineageId);
+  const sex = getSexAttributeAdjustments(lineageId, form.sexId);
+  const age = getAgeBandAttributeAdjustments(form.ageBandId);
+  const height = getHeightBandAttributeAdjustments(form.heightBandId);
+  const backstory =
+    form.backstoryId.trim().length > 0 && isKnownBackstoryId(form.backstoryId)
+      ? getBackstoryAttributeAdjustments(form.backstoryId)
+      : {};
+  const generated = attributeResolution.generatedProfilePoints;
+  const legacyPreparation = buildLegacyPreparationAttributeAdjustments(form, options);
+  const finalAttributes = addAttributeAdjustments(
+    attributeResolution.finalAttributes,
+    legacyPreparation
+  );
+
+  return CHARACTER_ATTRIBUTE_ORDER.map((attributeKey) => {
+    const contributionCandidates: CharacterCreationAttributePreviewContribution[] = [
+      {
+        id: "racial_baseline",
+        label: "Racial Baseline",
+        value: baseline[attributeKey]
+      },
+      {
+        id: "sex",
+        label: "Sex",
+        value: sex[attributeKey] ?? 0
+      },
+      {
+        id: "age",
+        label: "Age",
+        value: age[attributeKey] ?? 0
+      },
+      {
+        id: "height",
+        label: "Height",
+        value: height[attributeKey] ?? 0
+      },
+      {
+        id: "backstory",
+        label: "Backstory",
+        value: backstory[attributeKey] ?? 0
+      },
+      {
+        id: "generated_profile",
+        label: "Generated Build/Profile",
+        value: generated[attributeKey] ?? 0
+      },
+      {
+        id: "legacy_preparation",
+        label: "Legacy Preparation",
+        value: legacyPreparation[attributeKey] ?? 0
+      }
+    ];
+    const totalValue = finalAttributes[attributeKey];
+
+    return {
+      id: attributeKey,
+      label: attributeKey,
+      totalValue,
+      contributions: [
+        ...contributionCandidates.filter((contribution) => contribution.value !== 0),
+        {
+          id: "total",
+          label: "Total",
+          value: totalValue
+        }
+      ]
+    };
+  });
+}
+
 function resolveWorkingCharacterAttributes(
   form: Pick<
     CharacterCreationFormState,
@@ -429,10 +587,24 @@ function buildSessionState(
   playerName: string,
   form: CharacterCreationFormState,
   selectedWorld: NonNullable<ReturnType<typeof resolveWorldSelection>>,
-  backstoryLabel: string,
+  backstoryLabel: string | null,
   bundleLabel: string
 ): SaveSnapshot['sessionState'] {
   const settlement = selectedWorld.settlementRecord;
+  const backstoryFlags =
+    backstoryLabel && form.backstoryId.trim().length > 0
+      ? [`character.backstory.${form.backstoryId}`]
+      : [];
+  const backstoryEntities = backstoryLabel ? [backstoryLabel] : [];
+  const notificationDetail = backstoryLabel
+    ? `${playerName} begins as ${backstoryLabel} with the ${bundleLabel}.`
+    : `${playerName} arrives with the ${bundleLabel}.`;
+  const chronicleTitle = backstoryLabel
+    ? `${playerName} began as ${backstoryLabel}`
+    : `${playerName} began the journey`;
+  const chronicleStatChanges = backstoryLabel
+    ? ['Save slot created', `Origin set to ${backstoryLabel}`]
+    : ['Save slot created', 'No backstory package applied'];
   const locationType: WorldLocationType =
     settlement.settlementType === 'fort' || settlement.settlementType === 'citadel'
       ? 'fort'
@@ -442,8 +614,8 @@ function buildSessionState(
   return {
     ...createEmptySessionState(),
     activeEvents: ['event.campaign.started'],
-    flags: ['campaign.new_game', `character.backstory.${form.backstoryId}`, `character.starting_bundle.${form.startingBundleId}`, `character.start.${settlement.id}`],
-    notifications: [{ id: 'note.new_game', title: `${settlement.name} arrival`, detail: `${playerName} begins as ${backstoryLabel} with the ${bundleLabel}.`, timeLabel: 'Just now', tone: 'accent' }],
+    flags: ['campaign.new_game', ...backstoryFlags, `character.starting_bundle.${form.startingBundleId}`, `character.start.${settlement.id}`],
+    notifications: [{ id: 'note.new_game', title: `${settlement.name} arrival`, detail: notificationDetail, timeLabel: 'Just now', tone: 'accent' }],
     currentActivity: { id: `activity.arrival.${settlement.id}`, label: `Arriving in ${settlement.name}`, category: 'Arrival', detail: `${selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')} into ${settlement.name}.` },
     knownLocations: [{
       id: settlement.id,
@@ -463,13 +635,13 @@ function buildSessionState(
       { id: selectedWorld.settlement.id, sectionId: 'world.settlement', title: selectedWorld.settlement.label, subtitle: selectedWorld.region.label, summary: selectedWorld.settlement.description, tags: selectedWorld.settlement.dominantIndustries, detailEntries: [{ label: 'Population', value: selectedWorld.settlement.populationSize }, { label: 'Trade Role', value: selectedWorld.settlement.tradeRole }, { label: 'Authority', value: selectedWorld.settlement.landAuthorityType.replace(/_/g, ' ') }] }
     ],
     activityRecords: [{ id: `activity.start.${settlement.id}`, sectionId: 'activity.start', title: `Arrival at ${settlement.name}`, summary: selectedWorld.settlement.access.notes[0] ?? settlement.summary, tags: selectedWorld.settlement.dominantIndustries, detailEntries: [{ label: 'Spawn Mode', value: selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ') }, { label: 'Lodging', value: selectedWorld.settlement.access.lodgingType.replace(/_/g, ' ') }, { label: 'Land Authority', value: selectedWorld.settlement.landRestriction.authorityLabel }] }],
-    chronicle: [{ id: 'chronicle.campaign_started', category: 'social', title: `${playerName} began as ${backstoryLabel}`, timeLabel: 'Just now', summary: `${playerName} opens the campaign from ${settlement.name} in ${selectedWorld.region.label}.`, statusLabel: 'Campaign started', entities: [playerName, settlement.name, backstoryLabel, bundleLabel], results: ['Starter state generated', selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')], statChanges: ['Save slot created', `Origin set to ${backstoryLabel}`], tags: [selectedWorld.region.label, selectedWorld.continent.label, 'New Game'] }]
+    chronicle: [{ id: 'chronicle.campaign_started', category: 'social', title: chronicleTitle, timeLabel: 'Just now', summary: `${playerName} opens the campaign from ${settlement.name} in ${selectedWorld.region.label}.`, statusLabel: 'Campaign started', entities: [playerName, settlement.name, ...backstoryEntities, bundleLabel], results: ['Starter state generated', selectedWorld.settlement.access.spawnMode.replace(/_/g, ' ')], statChanges: chronicleStatChanges, tags: [selectedWorld.region.label, selectedWorld.continent.label, 'New Game'] }]
   };
 }
 
 function buildReviewNarrative(params: {
   characterName: string;
-  backstoryLabel: string;
+  backstoryLabel: string | null;
   settlementLabel: string;
   regionLabel: string;
   bundleLabel: string;
@@ -481,7 +653,10 @@ function buildReviewNarrative(params: {
 }) {
   const opportunity = formatList([...params.dominantIndustries.slice(0, 2), ...params.keyResources.slice(0, 2).map(humanizeId)], 'local trade and hard work').toLowerCase();
   const carried = formatList([...params.gearLabels.slice(0, 2), ...params.starterPackLabels.slice(0, 2)], 'a modest starter kit');
-  return `${params.characterName}. Your backstory is ${params.backstoryLabel}, and you arrive at ${params.settlementLabel} in ${params.regionLabel} with the ${params.bundleLabel}. ${params.settlementLabel} is known for ${opportunity}. You carry ${carried}, and ${params.walletLabel} must cover the first hard days.`;
+  const backstoryCopy = params.backstoryLabel
+    ? `Your backstory is ${params.backstoryLabel}, and you arrive`
+    : "You arrive with no formative backstory package applied yet";
+  return `${params.characterName}. ${backstoryCopy} at ${params.settlementLabel} in ${params.regionLabel} with the ${params.bundleLabel}. ${params.settlementLabel} is known for ${opportunity}. You carry ${carried}, and ${params.walletLabel} must cover the first hard days.`;
 }
 
 function buildPlaceholderPreview(
@@ -555,6 +730,7 @@ function buildPlaceholderPreview(
     ),
     resourceMetrics: [toMetric('hp', 'HP', previewResources.hp), toMetric('mp', 'MP', previewResources.mp), toMetric('stamina', 'Stamina', previewResources.stamina)],
     attributeMetrics: buildAttributeMetrics(attributes),
+    attributePreviewRows: buildCharacterCreationAttributePreviewRows(form, options),
     starterSkills: backstory?.startingSkillLabels ?? [],
     starterLore: backstory ? resolveLoreSkillLabels(backstory.startingSkills) : [],
     starterTraits: [],
@@ -572,13 +748,17 @@ function deriveCharacterCreationState(
   form: CompleteCharacterCreationFormState,
   options: CharacterCreationPreviewOptions = {}
 ): DerivedCharacterCreationState {
-  const selectedWorld = resolveWorldSelection({ continentId: form.continentId, regionId: form.regionId, settlementId: form.startingSettlementId, backstoryId: form.backstoryId });
+  const hasBackstorySelection =
+    form.backstoryId.trim().length > 0 && isKnownBackstoryId(form.backstoryId);
+  const selectedWorld = resolveWorldSelection({ continentId: form.continentId, regionId: form.regionId, settlementId: form.startingSettlementId, backstoryId: hasBackstorySelection ? form.backstoryId : "" });
   if (!selectedWorld) throw new Error('Cannot create a new game without a valid world selection.');
   if (selectedWorld.settlement.access.accessStatus !== 'allowed') throw new Error(selectedWorld.settlement.access.notes[0] ?? 'Selected settlement start is restricted.');
 
   const clock = createDefaultNewGameClock();
   const gameState = createDefaultGameState();
-  const backstory = getBackstoryTemplate(form.backstoryId, selectedWorld);
+  const backstory = hasBackstorySelection
+    ? getBackstoryTemplate(form.backstoryId, selectedWorld)
+    : null;
   const bundle = getStartingBundleTemplate(form.startingBundleId);
   const bundleStacks = getStartingBundleSelectedStacks(
     form.startingBundleId,
@@ -694,7 +874,7 @@ function deriveCharacterCreationState(
     { scope: 'settlement' as GeographicKnowledgeScope, geographyId: selectedWorld.settlement.id, level: 1 }
   ];
   const traits = buildStarterTraits(form.lineageId);
-  const sessionState = buildSessionState(playerName, form, selectedWorld, backstory.label, bundle.label);
+  const sessionState = buildSessionState(playerName, form, selectedWorld, backstory?.label ?? null, bundle.label);
   const activeQuestIds = sessionState.questJournal.filter((entry) => entry.category === 'active' || entry.category === 'contracts').map((entry) => entry.id);
   const completedQuestIds = sessionState.questJournal.filter((entry) => entry.category === 'completed').map((entry) => entry.id);
   const snapshot: SaveSnapshot = {
@@ -712,7 +892,7 @@ function deriveCharacterCreationState(
         sexId: form.sexId,
         classId: null,
         jobId: null,
-        backstoryId: form.backstoryId,
+        backstoryId: backstory?.id ?? null,
         startingBundleId: form.startingBundleId,
         identityProfile: {
           heightCm: getRepresentativeHeightCm(form.lineageId, form.heightBandId),
@@ -732,9 +912,9 @@ function deriveCharacterCreationState(
       resources: resources.resources,
       resourceRuntime: resources.resourceRuntime,
       progression,
-      skills: [...backstory.startingSkills],
+      skills: backstory ? [...backstory.startingSkills] : [],
       spells: [],
-      abilities: getStartingAbilityStates(form.backstoryId),
+      abilities: backstory ? getStartingAbilityStates(form.backstoryId) : [],
       traits,
       activeTrials: [],
       equipment,
@@ -759,7 +939,7 @@ function deriveCharacterCreationState(
       achievements: createDefaultCharacterAchievementsState(),
       activeQuestIds,
       completedQuestIds,
-      flags: ['player.new_game', `player.backstory.${backstory.id}`, `player.starting_bundle.${bundle.id}`, `player.start.${selectedWorld.settlement.id}`, `player.start_authority.${selectedWorld.settlement.landAuthorityType}`, `player.start_mode.${selectedWorld.settlement.access.spawnMode}`, ...legacyStartBonuses.appliedUnlockIds.map((unlockId) => `player.legacy_start.${unlockId}`)],
+      flags: ['player.new_game', ...(backstory ? [`player.backstory.${backstory.id}`] : []), `player.starting_bundle.${bundle.id}`, `player.start.${selectedWorld.settlement.id}`, `player.start_authority.${selectedWorld.settlement.landAuthorityType}`, `player.start_mode.${selectedWorld.settlement.access.spawnMode}`, ...legacyStartBonuses.appliedUnlockIds.map((unlockId) => `player.legacy_start.${unlockId}`)],
       combatProfile: createDefaultPlayerCombatProfile(),
       saveMeta: {
         totalPlayTicks: 0,
@@ -782,7 +962,7 @@ function deriveCharacterCreationState(
   const gearLabels = Object.values(equipment).flatMap((item) => (item ? [humanizeId(item.itemKey)] : []));
   const starterPackLabels = (inventory.bags[0]?.stacks ?? []).map((item) => `${humanizeId(item.itemKey)} x${item.quantity}`);
   return {
-    backstoryLabel: backstory.label,
+    backstoryLabel: backstory?.label ?? null,
     lineageLabel: originProfile.lineageLabel,
     startingBundleLabel: bundle.label,
     startingContinentLabel: selectedWorld.continent.label,
@@ -790,12 +970,12 @@ function deriveCharacterCreationState(
     startingRegionLabel: selectedWorld.region.label,
     startingAccessLabel: selectedWorld.settlement.access.accessStatus === 'allowed' ? 'Land restrictions satisfied' : 'Land restrictions unmet',
     startingAccessDetail: [selectedWorld.settlement.landRestriction.propertyNarrative, selectedWorld.settlement.landRestriction.currentStanding, selectedWorld.settlement.landRestriction.purchaseRequirements.length > 0 ? `Should you seek to buy land, the usual demands are ${formatList(selectedWorld.settlement.landRestriction.purchaseRequirements, 'no formal requirements are commonly spoken of').toLowerCase()}.` : ''].filter(Boolean).join(' '),
-    chosenOriginLabel: `${originProfile.lineageLabel} | ${backstory.label}`,
-    reviewNarrative: buildReviewNarrative({ characterName: playerName, backstoryLabel: backstory.label, settlementLabel: selectedWorld.settlement.label, regionLabel: selectedWorld.region.label, bundleLabel: bundle.label, dominantIndustries: selectedWorld.settlement.dominantIndustries, keyResources: selectedWorld.settlement.keyResources, gearLabels, starterPackLabels, walletLabel: formatWallet(currency) }),
+    chosenOriginLabel: `${originProfile.lineageLabel} | ${backstory?.label ?? 'No sworn backstory'}`,
+    reviewNarrative: buildReviewNarrative({ characterName: playerName, backstoryLabel: backstory?.label ?? null, settlementLabel: selectedWorld.settlement.label, regionLabel: selectedWorld.region.label, bundleLabel: bundle.label, dominantIndustries: selectedWorld.settlement.dominantIndustries, keyResources: selectedWorld.settlement.keyResources, gearLabels, starterPackLabels, walletLabel: formatWallet(currency) }),
     attributes,
     generatedProfileMetrics: buildGeneratedProfileMetrics(attributeResolution.generatedProfilePoints),
     resources: { hp: resources.resources.hp.current, mp: resources.resources.mp.current, stamina: resources.resources.stamina.current },
-    loreLabels: resolveLoreSkillLabels(backstory.startingSkills),
+    loreLabels: backstory ? resolveLoreSkillLabels(backstory.startingSkills) : [],
     currency,
     gearLabels,
     starterPackLabels,
@@ -803,9 +983,9 @@ function deriveCharacterCreationState(
     appliedLegacyPreparationIds: legacyPreparationApplication.appliedPreparationIds,
     appliedLegacyPreparationChoices: legacyPreparationApplication.appliedPreparationChoices,
     starterSkillPolicyLabels,
-    starterSkillLabels: backstory.startingSkillLabels,
+    starterSkillLabels: backstory?.startingSkillLabels ?? [],
     starterTraitLabels: traits.map((trait) => humanizeId(trait.id)),
-    starterNotes: [...originProfile.notes.slice(0, 2), backstory.detailText, bundle.description, selectedWorld.settlement.landRestriction.currentStanding, ...legacyStartBonuses.sourceLabels].filter(Boolean),
+    starterNotes: [...originProfile.notes.slice(0, 2), backstory?.detailText ?? '', bundle.description, selectedWorld.settlement.landRestriction.currentStanding, ...legacyStartBonuses.sourceLabels].filter(Boolean),
     snapshot
   };
 }
@@ -814,7 +994,7 @@ export function buildCharacterCreationPreview(
   form: CharacterCreationFormState,
   options: CharacterCreationPreviewOptions = {}
 ): CharacterCreationPreview {
-  if (!hasCompleteCharacterCreationSelections(form)) return buildPlaceholderPreview(form, options);
+  if (!hasCompleteCharacterCreationSelections(form, options)) return buildPlaceholderPreview(form, options);
   try {
     const derived = deriveCharacterCreationState(form, options);
     return {
@@ -833,6 +1013,7 @@ export function buildCharacterCreationPreview(
       generatedProfileMetrics: derived.generatedProfileMetrics,
       resourceMetrics: [toMetric('hp', 'HP', derived.resources.hp), toMetric('mp', 'MP', derived.resources.mp), toMetric('stamina', 'Stamina', derived.resources.stamina)],
       attributeMetrics: buildAttributeMetrics(derived.attributes),
+      attributePreviewRows: buildCharacterCreationAttributePreviewRows(form, options),
       starterSkills: derived.starterSkillLabels,
       starterLore: derived.loreLabels,
       starterTraits: derived.starterTraitLabels,
@@ -856,16 +1037,22 @@ export function createNewGameSnapshot(
     appliedLegacyPreparationIds?: string[];
     appliedLegacyPreparationChoices?: Record<string, string>;
     accountProfile?: AccountProfileState | null;
+    hasSelectableBackstories?: boolean;
     sourceRunId?: string;
     crossLineageStart?: boolean;
   } = {}
 ): SaveSnapshot {
   const validation = validateCharacterCreationForm(
     form,
-    options.accountProfile ? { accountProfile: options.accountProfile } : {}
+    {
+      ...(options.accountProfile ? { accountProfile: options.accountProfile } : {}),
+      ...(typeof options.hasSelectableBackstories === "boolean"
+        ? { hasSelectableBackstories: options.hasSelectableBackstories }
+        : {})
+    }
   );
   if (!validation.isValid) throw new Error(Object.values(validation.errors)[0] ?? 'Complete character creation before starting the campaign.');
-  if (!hasCompleteCharacterCreationSelections(form)) throw new Error('Complete character creation before starting the campaign.');
+  if (!hasCompleteCharacterCreationSelections(form, options)) throw new Error('Complete character creation before starting the campaign.');
   const derived = deriveCharacterCreationState({
     ...form,
     playerName: form.playerName.trim()
