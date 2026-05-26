@@ -2,9 +2,21 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
-Status: promoted IA audit; no runtime/source/UI/content changes
+Status: promoted supporting source-detail reference through `Version 0.5.82 - Calendar Climate Read-Only Popup`
 
-0.5.80 sequencing note: this audit has been promoted into `docs/design/calendar-climate-popup-view-model-plan.md`, which is the active source for `Version 0.5.80 - Calendar Climate Popup View Model Plan` and the planned `0.5.81` read-only popup pass. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
+## Current Status
+
+This audit has been promoted into `docs/design/calendar-climate-popup-view-model-plan.md`.
+
+The active planning source is now:
+
+- `docs/design/calendar-climate-popup-view-model-plan.md`
+
+The current next implementation target is:
+
+- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+
+Use this audit only as supporting source-detail reference. Do not treat older version labels or prompt targets in this file as current pipeline authority.
 
 ## Purpose
 
@@ -187,4 +199,4 @@ These should be answered before runtime climate effects:
 
 ## Current Prompt Authority
 
-Use `docs/design/calendar-climate-popup-view-model-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.
+Use `docs/design/calendar-climate-popup-view-model-plan.md`, `docs/dev/current-gpt-handoff.md`, and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.
