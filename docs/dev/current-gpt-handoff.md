@@ -1,7 +1,7 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.81 - Calendar Climate Popup View Model Plan`
-Date: 2026-05-25
+Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.82 - Calendar Climate Read-Only Popup`
+Date: 2026-05-26
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
 ## Purpose
@@ -22,7 +22,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
+- `Version 0.5.82 - Calendar Climate Read-Only Popup`
 
 Current sequence source:
 
@@ -30,60 +30,47 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 
 ## Recent Results
 
 Calendar / climate:
 
 - `0.5.81` finalized the planning-only Calendar/Climate popup view-model plan from live repo inspection.
-- The active source for the next implementation is `docs/design/calendar-climate-popup-view-model-plan.md`.
-- The 0.5.82 recommendation is pure projection plus focused tests first.
-- React popup wiring should stay deferred unless the next prompt explicitly broadens scope after accepting the projection boundary.
-- The planned projection file is `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`.
-- The planned pure function is `buildCalendarClimatePopupViewModel(input)`.
-- The projection should accept supplied `SimulationClock`, optional location labels, and optional explicit climate profile/source data.
-- The projection must not load global content, infer climate from settlement/region ids, mutate input, or emit command/action ids.
+- `0.5.82` implemented `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` and `tests/unit/calendar-climate-presentation.test.mjs`.
+- The 0.5.82 projection is pure, synchronous, supplied-data-only, read-only, and always returns `actionIds: []`.
+- The projection accepts supplied `SimulationClock`, optional location labels, and optional explicit climate profile/source data.
+- The projection does not load global content, infer climate from settlement/region ids, mutate input, or emit command/action ids.
+- A browser loading error was fixed by replacing the app import of `game-engine/src/index.js` with targeted browser-safe game-engine module imports in `characterCreationCatalog.ts`.
+- Browser-facing app scans were clean for `node:fs`, `readFileSync`, content-loader paths, and engine barrel imports after the fix.
 
-Economy:
+Economy and Chronicle:
 
-- `0.5.78` finalized the planning-only economy clarity data-owner map and label rules.
 - `0.5.79` implemented the pure economy clarity projection and focused tests.
 - `0.5.80` fixed the focused economy runtime/trade validation failures that appeared after `0.5.79`.
-- The economy validation blocker is resolved.
-- Future economy clarity UI must stay read-only and must not add buy/sell/dispatch/craft controls.
-
-Chronicle:
-
-- `0.5.75` finalized the planning-only Chronicle run-end summary data-owner map.
-- `0.5.76` implemented the pure read-only Chronicle run-end summary projection and focused tests.
-- `0.5.77` rendered that projection read-only inside Account Meta / Chronicles.
-- The Chronicle source audit is consumed as active prompt authority.
+- `0.5.77` rendered Chronicle run-end projection read-only inside Account Meta / Chronicles.
+- Future economy and Chronicle UI work must stay read-only unless explicitly re-scoped.
 
 Typecheck tooling:
 
 - `0.5.74` made typecheck commands honest and repeatable.
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
-- Do not require `npm.cmd run typecheck` unless a prompt specifically fixes those blockers.
+- Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.82
+## Active Guardrails For 0.5.83
 
-Calendar/climate projection:
+Calendar/climate UI:
 
-- `0.5.82` should implement pure projection plus focused tests first.
-- Use `docs/design/calendar-climate-popup-view-model-plan.md` as the active source.
-- Use `docs/design/calendar-climate-popup-ia-audit.md` only as supporting source-detail reference.
-- Add `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`.
-- Add `tests/unit/calendar-climate-presentation.test.mjs`.
-- Do not add React UI unless explicitly re-scoped.
-- Do not load global content inside the projection.
-- Do not infer climate from settlement or region ids inside the projection.
-- Do not change clock progression, month-to-season mapping, climate profiles, calendar content, weather, travel, crop, body-state, economy, combat, save schema, generated output, or active-effect behavior.
-- Do not add player actions, command ids, warning effects, penalties, buffs, travel changes, crop growth, weather randomization, or weather simulation.
-- Use `clock.season` as the current runtime season.
-- Show expected temperature bands only from supplied explicit climate profile data for the current runtime season.
-- Missing clock/profile/profile season data should produce unavailable rows and warning notes, not inferred climate.
-- Every view model must return `actionIds: []`.
+- `0.5.83` is an inserted narrow UI pass before combat audit.
+- Render the existing `buildCalendarClimatePopupViewModel(input)` output in a read-only Calendar/Climate popup or overlay.
+- Prefer attaching it to the existing top status bar date/season/time area in `apps/rpg-ui/src/components/TopStatusBar.tsx` if current component ownership supports it.
+- Reuse existing overlay/popover patterns from `TopStatusBar.tsx`; do not create a broad UI shell redesign.
+- Do not add new projection behavior unless a tiny display-only shape adjustment is required and covered by existing/focused tests.
+- Do not load global content or import Node-only content loaders into browser code.
+- Do not import `packages/engines/*/src/index.js` barrels into browser-facing app files if that pulls Node-only modules.
+- Do not add player actions, command ids, travel warnings, freezing-risk warnings, crop warnings, penalties, buffs, weather randomization, weather simulation, route changes, body-state changes, crop behavior, economy behavior, combat behavior, save schema changes, or generated output.
+- UI copy must keep climate/weather clearly informational-only.
+- Keep `actionIds: []` and do not render action buttons.
 
 Cross-system guardrails:
 
@@ -96,14 +83,14 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.81` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Landed |
-| 2 | `0.5.82` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Next |
-| 3 | `0.5.83` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 4 | `0.5.84` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 1 | `0.5.82` | Calendar Climate Read-Only Popup | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Landed |
+| 2 | `0.5.83` | Calendar Climate Read-Only Popup UI | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Next |
+| 3 | `0.5.84` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
+| 4 | `0.5.85` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.82 - Calendar Climate Read-Only Popup`, inspect:
+For `Version 0.5.83 - Calendar Climate Read-Only Popup UI`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -115,16 +102,17 @@ For `Version 0.5.82 - Calendar Climate Read-Only Popup`, inspect:
 - `docs/design/calendar-climate-popup-ia-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `packages/shared/time/src/index.ts`
-- `packages/shared/types/src/contracts.ts`
-- `apps/rpg-ui/src/runtime/uiViewModel.ts`
+- `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`
+- `tests/unit/calendar-climate-presentation.test.mjs`
 - `apps/rpg-ui/src/components/TopStatusBar.tsx`
-- existing presentation helper tests/patterns
+- `apps/rpg-ui/src/runtime/uiViewModel.ts`
+- `apps/rpg-ui/src/runtime/demoSnapshot.ts`
+- relevant narrow UI/component test patterns if present
 
-## After 0.5.82
+## After 0.5.83
 
-If the pure projection lands cleanly, return to the sequence file. The next run should be:
+If the read-only Calendar/Climate UI pass lands cleanly, return to the sequence file. The next run should be:
 
-- `Version 0.5.83 - Combat Equipment Mapping Audit`
+- `Version 0.5.84 - Combat Equipment Mapping Audit`
 
-If the user wants React popup wiring immediately after the projection, insert a narrow `Calendar Climate Read-Only Popup UI` pass before combat audit.
+Keep it audit-first and do not rewrite combat math unless explicitly re-scoped.
