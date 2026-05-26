@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-05-25
+Last reviewed: 2026-05-26
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.81 - Calendar Climate Popup View Model Plan`
-- Next recommended version: `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- Latest landed version: `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- Next recommended version: `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -37,8 +37,9 @@ Current repo reality:
 - Typecheck script routing is explicit; default UI and broad workspace typecheck targets still fail on known pre-existing blockers, so focused tests remain the current confidence path.
 - Economy price clarity planning, pure projection, and focused tests have landed.
 - The 0.5.80 economy runtime/trade validation triage restored the focused civilization economy validation path.
-- Calendar/climate popup planning has landed and recommends a pure projection plus focused tests before React popup wiring.
-- No economy clarity React UI, calendar/climate React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
+- Calendar/climate popup planning and pure projection have landed.
+- The next inserted pass is read-only Calendar/Climate UI wiring before returning to combat audit.
+- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
 
@@ -71,7 +72,9 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.79` | Economy Price Clarity Pure Projection | Codex Local | Pure projection + tests | Landed. Implemented stored-state economy clarity projection and focused tests. | No resolver calls, economy math changes, stockpile mutation, shop/trade/craft/caravan commands, React UI, or generated output. |
 | `0.5.80` | Economy Runtime Test Failure Triage | Codex Local | Focused runtime/test validation fix | Landed. Restored focused civilization economy runtime/trade validation after 0.5.79. | No UI, generated output, broad economy expansion, or player-facing trade/craft commands. |
 | `0.5.81` | Calendar Climate Popup View Model Plan | Codex Local docs-only | Planning | Landed. Finalized the future Calendar/Climate popup projection boundary from live repo inspection. | Planning-only; no weather, travel, body-state, crop, clock, simulation, UI, or active-effect behavior. |
-| `0.5.82` | Calendar Climate Read-Only Popup | Codex Local | Pure projection + tests | Next recommended step. Implement the pure Calendar/Climate view model first. | No React UI unless explicitly re-scoped; no active climate/weather/travel/crop/body-state effects. |
+| `0.5.82` | Calendar Climate Read-Only Popup | Codex Local | Pure projection + tests | Landed. Implemented the pure Calendar/Climate view model and focused tests. | No React UI, no active climate/weather/travel/crop/body-state effects. |
+| `0.5.83` | Calendar Climate Read-Only Popup UI | Codex Local | Read-only UI wiring | Next recommended step. Render the projection output in a narrow popup/overlay. | No commands, content loading, generated output, or active climate/weather effects. |
+| `0.5.84` | Combat Equipment Mapping Audit | Codex Local or connector-first | Audit | Planned. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
 
 ## 4. Sequenced Near-Term Codex Queue
 
@@ -79,10 +82,10 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.81` | Calendar Climate Popup View Model Plan | `docs/design/calendar-climate-popup-view-model-plan.md` | Landed |
-| 2 | `0.5.82` | Calendar Climate Read-Only Popup | `docs/design/calendar-climate-popup-view-model-plan.md` | Next |
-| 3 | `0.5.83` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 4 | `0.5.84` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 1 | `0.5.82` | Calendar Climate Read-Only Popup | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Landed |
+| 2 | `0.5.83` | Calendar Climate Read-Only Popup UI | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Next |
+| 3 | `0.5.84` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
+| 4 | `0.5.85` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 Do not skip planning-to-projection-to-UI stages unless a newer handoff or user instruction explicitly changes the order.
 
@@ -94,45 +97,14 @@ Do not skip planning-to-projection-to-UI stages unless a newer handoff or user i
 | Chronicle Run-End Summary Source Audit | Consumed by `0.5.75`-`0.5.77`; retained only as historical source-detail reference. |
 | Economy Clarity Audit | Promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep until economy clarity UI direction is chosen. |
 | Economy Runtime Test Failure Triage Plan | Consumed by `0.5.80`; retained only as historical source-detail reference. |
-| Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep through `0.5.82` as source-detail reference. |
-| Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; use for `0.5.83`. |
-| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.84`. |
+| Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep through the inserted Calendar/Climate UI pass as source-detail reference. |
+| Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; use for `0.5.84`. |
+| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.85`. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
 
-## 6. `v0.6.x` Runtime Ownership Transition
-
-Goal: shift from UI-authored/demo handling toward engine-owned commands, authoritative session updates, and reliable runtime event output.
-
-Expected checkpoints:
-
-- Engine-owned command paths for core gameplay actions.
-- Clear tick/event output for UI consumption.
-- Authoritative session update boundaries.
-- Clean separation between view models and mutating behavior.
-- Backstory/Legacy/Bloodline ownership paths proven safe enough for limited runtime use.
-- Save/load remains current-data-first and reliable for current branch state.
-
-Do not enter `v0.6.x` just because the `0.5.x` patch count is high. Enter it only when implementation focus changes from foundation hardening to runtime ownership.
-
-## 7. Major Deferred Systems
-
-These are strategically important but should not interrupt the current ownership pipeline. For durable design criteria, see `docs/design/future-system-design-ledger.md`.
-
-| System | Start Only After | Why Deferred |
-| --- | --- |
-| Full heir system | Family records, Bloodlines read-only UI, inheritance terminology, and safe family management seams. | Easy to fabricate family status or overbuild genealogy before data owners exist. |
-| Heirlooms | Item-instance persistence, ownership chains, loss/theft/breakage rules. | Must not duplicate items or become generic starter bonuses. |
-| Bequests | Estate/material ownership and claim lifecycle. | Must not become disguised Bloodline traits or economy exploits. |
-| Chronicle Marks | Account-wide milestone semantics and conversion rules. | Do not add another currency before payoff and source rules exist. |
-| Lineage Seals | Heir claim retirement, branch closure, rare milestone rules. | Too abstract until family lifecycle exists. |
-| Property / home / land / ranching | Estate ownership, economy guardrails, and material claim rules. | Strong dynasty fantasy, but high risk without ownership seams. |
-| Living settlements / migration / supply-demand | Economy stability, settlement state, performance bounds. | Flagship simulation layer; too large for current phase. |
-| Kingdoms / diplomacy / war / governance | Settlements, renown, titles, estate, combat, economy, AI/event systems. | Late-system dependency stack. |
-| Runtime magic expansion | Magic design, scaling roles, access model, acquisition, runtime hooks. | Current magic is metadata/validation-first. |
-
-## 8. Roadmap Maintenance Rules
+## 6. Roadmap Maintenance Rules
 
 - Update this file when a new handoff changes the active pipeline or maturity-band target.
 - Do not replace `docs/dev/current-codex-output.md`; that file remains the latest Codex handoff.
