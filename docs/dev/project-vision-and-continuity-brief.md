@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-26 after `Version 0.5.83 - Calendar Climate Read-Only Popup UI` landed.
+Updated 2026-05-26 after `Version 0.5.84 - Unified Shell And Creator Refinement Plan` landed.
 
 ## Purpose
 
@@ -19,11 +19,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
+- `Version 0.5.84 - Unified Shell And Creator Refinement Plan`
 
 Next recommended version:
 
-- `Version 0.5.84 - Combat Equipment Mapping Audit`
+- `Version 0.5.85 - Creator Sidebar Layout And Backstory Gating`
 
 Current sequence source:
 
@@ -42,8 +42,11 @@ Current phase:
 - Economy price clarity planning, pure projection, and focused tests have landed.
 - The 0.5.80 economy runtime/trade validation triage restored the focused civilization economy validation path.
 - Calendar/climate popup planning, pure projection, and read-only UI have landed.
+- Unified shell and creator refinement planning has landed; character creation is now the next implementation target before combat audit.
+- The next creator pass should move the live summary into a left sidebar, remove the separate summary toggle/right column, add fixed-width step states, gate/skip backstory only when no selectable backstories exist, add full-character randomization, and reduce visible stat preview to one total attribute matrix.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
-- Combat equipment mapping audit is next and should remain audit-first.
+- Gameplay shell unification remains deferred until the creator pass proves whether a tiny shared shell extraction is safe.
+- Combat equipment mapping audit should resume after the creator refinement pass and should remain audit-first.
 
 ## North Star
 
@@ -66,9 +69,10 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.83` | Calendar Climate Read-Only Popup UI | Landed. Rendered existing Calendar/Climate projection output in a narrow read-only top-status popup. | No commands, content loading, generated output, or active climate/weather effects. |
-| `0.5.84` | Combat Equipment Mapping Audit | Next. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
-| `0.5.85` | Known Spell Ownership Plan | Planned. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
+| `0.5.84` | Unified Shell And Creator Refinement Plan | Landed. Added the planning source for creator shell/sidebar, backstory gating, full randomization, and stat preview cleanup. | Planning-only; no UI/source behavior changes. |
+| `0.5.85` | Creator Sidebar Layout And Backstory Gating | Next. Implement the planned character creation sidebar/layout, backstory gating, full-randomize helper, and stat preview cleanup. | Character creation only; no gameplay shell unification, generated output, or combat work. |
+| `0.5.86` | Combat Equipment Mapping Audit | Planned. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
+| `0.5.87` | Known Spell Ownership Plan | Planned. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
