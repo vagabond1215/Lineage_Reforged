@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-05-25
+Date: 2026-05-26
 Route: ChatGPT via GitHub Connector
 Status: connector-authored sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.81 - Calendar Climate Popup View Model Plan` finalized the planning boundary for the Calendar/Climate projection.
+This file gives Codex a stable ordered queue after `Version 0.5.82 - Calendar Climate Read-Only Popup` implemented the pure Calendar/Climate projection and focused tests.
 
 It does not replace:
 
@@ -31,9 +31,9 @@ Latest landed economy validation slice:
 
 - `Version 0.5.80 - Economy Runtime Test Failure Triage`
 
-Latest landed calendar/climate planning slice:
+Latest landed calendar/climate projection slice:
 
-- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
+- `Version 0.5.82 - Calendar Climate Read-Only Popup`
 
 Latest cleanup/tooling slice:
 
@@ -41,7 +41,7 @@ Latest cleanup/tooling slice:
 
 Immediate next Codex run:
 
-- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 
 ## Ordered Trajectory
 
@@ -55,16 +55,17 @@ Immediate next Codex run:
 | 6 | `0.5.79` | Economy Price Clarity Pure Projection | Codex 5.5 Local | `docs/design/economy-price-clarity-view-model-plan.md` | pure view-model + tests | Landed | Derives labels from supplied resolved economy state; no resolver calls, trade commands, crafting, UI, or simulation changes. |
 | 7 | `0.5.80` | Economy Runtime Test Failure Triage | Codex 5.5 Local | `docs/dev/economy-runtime-test-failure-triage-plan.md` | focused runtime/content/test fix | Landed | Restored economy runtime/trade validation; no UI/generated output/broad economy expansion. |
 | 8 | `0.5.81` | Calendar Climate Popup View Model Plan | Codex 5.5 Local docs-only | `docs/design/calendar-climate-popup-view-model-plan.md` | planning doc | Landed | Planned pure projection boundary; no weather, travel, body-state, crop, clock, simulation, UI, or active-effect behavior. |
-| 9 | `0.5.82` | Calendar Climate Read-Only Popup | Codex 5.5 Local | `docs/design/calendar-climate-popup-view-model-plan.md` | pure projection + tests | Next | Implement projection first; no React UI unless explicitly re-scoped; no active climate/weather/travel/crop/body-state effects. |
-| 10 | `0.5.83` | Combat Equipment Mapping Audit | Codex 5.5 Local, or GitHub Connector first if prompt prep is needed | `docs/design/combat-equipment-mapping-audit-plan.md` | audit tables/tests if safe | Planned | Audit mapping before math; no combat formula rewrites. |
-| 11 | `0.5.84` | Known Spell Ownership Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Planned | Define ownership/acquisition before runtime casting; no spell execution. |
+| 9 | `0.5.82` | Calendar Climate Read-Only Popup | Codex 5.5 Local | `docs/design/calendar-climate-popup-view-model-plan.md` | pure projection + tests | Landed | Implemented projection first; no React UI, no active climate/weather/travel/crop/body-state effects. |
+| 10 | `0.5.83` | Calendar Climate Read-Only Popup UI | Codex 5.5 Local | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | read-only UI wiring | Next | Render projection output only; no commands, content loading, weather, travel, crop, body-state, economy, or active effects. |
+| 11 | `0.5.84` | Combat Equipment Mapping Audit | Codex 5.5 Local, or GitHub Connector first if prompt prep is needed | `docs/design/combat-equipment-mapping-audit-plan.md` | audit tables/tests if safe | Planned | Audit mapping before math; no combat formula rewrites. |
+| 12 | `0.5.85` | Known Spell Ownership Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Planned | Define ownership/acquisition before runtime casting; no spell execution. |
 
 ## Default Prompt Pattern
 
 Each future Codex prompt should:
 
 1. Read `AGENTS.md`, `README.md`, `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, and this sequence file first.
-2. Read the active version's primary source plan.
+2. Read the active version's primary source plan or source file.
 3. Keep the patch narrow and owner-aware.
 4. Update `docs/dev/current-codex-output.md` at the end.
 5. Update `docs/future_content_backlog.md` with a concise run note when useful.
@@ -77,6 +78,7 @@ Each future Codex prompt should:
 - Do not mix Chronicle summary work with Chronicle Marks, Lineage Seals, estate delivery, or Family Prestige grants.
 - Do not mix economy clarity with economy simulation, shop, crafting, caravan, or trade command changes.
 - Do not mix calendar/climate projection or UI with weather, travel, crop, body-state, clock, economy, or active-effect behavior.
+- Do not import Node-only content loaders or engine barrels into browser-facing UI files.
 - Do not mix combat mapping audit with combat math rewrites.
 - Do not begin runtime magic until known-spell ownership and acquisition are explicitly planned.
 
