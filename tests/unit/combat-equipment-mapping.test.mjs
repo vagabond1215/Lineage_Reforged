@@ -14,7 +14,7 @@ import { createNewGameSnapshot } from "../../apps/rpg-ui/src/game-shell/newGameS
 import { getDefaultWorldSelection } from "../../apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts";
 
 const KNOWN_STARTER_WEAPON_PROFILE_GAPS = new Set(["item.short_bow", "item.butcher_knife"]);
-const KNOWN_STARTER_WEAPON_TRAINING_GAPS = new Set(["item.battle_staff", "item.pickaxe"]);
+const KNOWN_STARTER_ACTION_TRAINING_GAPS = new Set(["item.battle_staff", "item.buckler_shield", "item.pickaxe"]);
 const KNOWN_STARTER_NON_MITIGATING_APPAREL = new Set(["item.casual_tunic"]);
 
 async function loadRecords(relativePath) {
@@ -220,7 +220,7 @@ test("starter equipped weapon-slot items either map to combat profiles or known 
   }
 
   assert.deepEqual(profileGaps, [...KNOWN_STARTER_WEAPON_PROFILE_GAPS].sort());
-  assert.deepEqual(trainingGaps, [...KNOWN_STARTER_WEAPON_TRAINING_GAPS].sort());
+  assert.deepEqual(trainingGaps, [...KNOWN_STARTER_ACTION_TRAINING_GAPS].sort());
 });
 
 test("starter equipped armor-slot items either map to mitigation profiles or known non-mitigating apparel", async () => {
