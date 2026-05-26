@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-26 after `Version 0.5.82 - Calendar Climate Read-Only Popup` landed.
+Updated 2026-05-26 after `Version 0.5.83 - Calendar Climate Read-Only Popup UI` landed.
 
 ## Purpose
 
@@ -19,11 +19,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 
 Next recommended version:
 
-- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
+- `Version 0.5.84 - Combat Equipment Mapping Audit`
 
 Current sequence source:
 
@@ -41,9 +41,9 @@ Current phase:
 - Typecheck script routing is explicit, but default UI and broad workspace typecheck targets still have known pre-existing blockers.
 - Economy price clarity planning, pure projection, and focused tests have landed.
 - The 0.5.80 economy runtime/trade validation triage restored the focused civilization economy validation path.
-- Calendar/climate popup planning and pure projection have landed.
-- The next inserted pass is narrow read-only Calendar/Climate UI wiring before returning to combat audit.
+- Calendar/climate popup planning, pure projection, and read-only UI have landed.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
+- Combat equipment mapping audit is next and should remain audit-first.
 
 ## North Star
 
@@ -66,9 +66,8 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.82` | Calendar Climate Read-Only Popup | Landed. Implemented pure Calendar/Climate projection plus focused tests. | No React UI, active effects, weather, travel, crop, body-state, or simulation changes. |
-| `0.5.83` | Calendar Climate Read-Only Popup UI | Next. Render existing projection output in a narrow read-only popup. | No commands, content loading, generated output, or active climate/weather effects. |
-| `0.5.84` | Combat Equipment Mapping Audit | Planned. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
+| `0.5.83` | Calendar Climate Read-Only Popup UI | Landed. Rendered existing Calendar/Climate projection output in a narrow read-only top-status popup. | No commands, content loading, generated output, or active climate/weather effects. |
+| `0.5.84` | Combat Equipment Mapping Audit | Next. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
 | `0.5.85` | Known Spell Ownership Plan | Planned. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
