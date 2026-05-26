@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.82 - Calendar Climate Read-Only Popup`
-- Next recommended version: `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
+- Latest landed version: `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
+- Next recommended version: `Version 0.5.84 - Combat Equipment Mapping Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -37,9 +37,9 @@ Current repo reality:
 - Typecheck script routing is explicit; default UI and broad workspace typecheck targets still fail on known pre-existing blockers, so focused tests remain the current confidence path.
 - Economy price clarity planning, pure projection, and focused tests have landed.
 - The 0.5.80 economy runtime/trade validation triage restored the focused civilization economy validation path.
-- Calendar/climate popup planning and pure projection have landed.
-- The next inserted pass is read-only Calendar/Climate UI wiring before returning to combat audit.
+- Calendar/climate popup planning, pure projection, and read-only UI have landed.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
+- Combat equipment mapping audit is next and should remain audit-first.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
 
@@ -64,17 +64,13 @@ These are internal development maturity markers, not public release promises. Pa
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |
-| `0.5.74` | Typecheck Script And Target Policy Cleanup | Codex Local | Tooling / validation cleanup | Landed. Made typecheck commands honest and repeatable while preserving strictness. | Default and workspace typecheck targets still have known blockers; do not treat them as green gates yet. |
-| `0.5.75` | Chronicle Run-End Summary View Model Plan | Codex Local docs-only | Planning | Landed. Finalized source ownership and future projection boundary for run-end Chronicle summary. | Planning-only; no lifecycle, payout, estate, UI, Marks, Seals, Family Prestige, Bloodlines, or generated output changes. |
-| `0.5.76` | Chronicle Run-End Summary Pure Projection | Codex Local | Pure projection + tests | Landed. Implemented stored-data-only run-end summary projection and focused tests. | No React UI, payout recomputation, lifecycle mutation, estate movement, actions, Marks, Seals, Family Prestige, or Bloodlines behavior. |
-| `0.5.77` | Chronicle Run-End Read-Only UI | Codex Local | Read-only UI | Landed. Rendered the tested run-end summary projection read-only in Account Meta / Chronicles. | No payout mutation, estate delivery, Marks, Seals, Family Prestige grants, or new action paths. |
-| `0.5.78` | Economy Price Clarity View Model Plan | Codex Local docs-only | Planning | Landed. Finalized source ownership, labels, thresholds, and future projection boundary for economy clarity. | Planning-only; no economy math, source, UI, tests, content, simulation, commands, or generated output changes. |
 | `0.5.79` | Economy Price Clarity Pure Projection | Codex Local | Pure projection + tests | Landed. Implemented stored-state economy clarity projection and focused tests. | No resolver calls, economy math changes, stockpile mutation, shop/trade/craft/caravan commands, React UI, or generated output. |
 | `0.5.80` | Economy Runtime Test Failure Triage | Codex Local | Focused runtime/test validation fix | Landed. Restored focused civilization economy runtime/trade validation after 0.5.79. | No UI, generated output, broad economy expansion, or player-facing trade/craft commands. |
 | `0.5.81` | Calendar Climate Popup View Model Plan | Codex Local docs-only | Planning | Landed. Finalized the future Calendar/Climate popup projection boundary from live repo inspection. | Planning-only; no weather, travel, body-state, crop, clock, simulation, UI, or active-effect behavior. |
 | `0.5.82` | Calendar Climate Read-Only Popup | Codex Local | Pure projection + tests | Landed. Implemented the pure Calendar/Climate view model and focused tests. | No React UI, no active climate/weather/travel/crop/body-state effects. |
-| `0.5.83` | Calendar Climate Read-Only Popup UI | Codex Local | Read-only UI wiring | Next recommended step. Render the projection output in a narrow popup/overlay. | No commands, content loading, generated output, or active climate/weather effects. |
-| `0.5.84` | Combat Equipment Mapping Audit | Codex Local or connector-first | Audit | Planned. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
+| `0.5.83` | Calendar Climate Read-Only Popup UI | Codex Local | Read-only UI wiring | Landed. Rendered the projection output in a narrow top-status popup/overlay. | No commands, content loading, generated output, or active climate/weather effects. |
+| `0.5.84` | Combat Equipment Mapping Audit | Codex Local or connector-first | Audit | Next. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
+| `0.5.85` | Known Spell Ownership Plan | Codex Local docs-only or Plan Mode | Planning | Planned. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
 
 ## 4. Sequenced Near-Term Codex Queue
 
@@ -82,12 +78,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.82` | Calendar Climate Read-Only Popup | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Landed |
-| 2 | `0.5.83` | Calendar Climate Read-Only Popup UI | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Next |
-| 3 | `0.5.84` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 4 | `0.5.85` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
-
-Do not skip planning-to-projection-to-UI stages unless a newer handoff or user instruction explicitly changes the order.
+| 1 | `0.5.83` | Calendar Climate Read-Only Popup UI | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Landed |
+| 2 | `0.5.84` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Next |
+| 3 | `0.5.85` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 ## 5. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -97,7 +90,7 @@ Do not skip planning-to-projection-to-UI stages unless a newer handoff or user i
 | Chronicle Run-End Summary Source Audit | Consumed by `0.5.75`-`0.5.77`; retained only as historical source-detail reference. |
 | Economy Clarity Audit | Promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep until economy clarity UI direction is chosen. |
 | Economy Runtime Test Failure Triage Plan | Consumed by `0.5.80`; retained only as historical source-detail reference. |
-| Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep through the inserted Calendar/Climate UI pass as source-detail reference. |
+| Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep until climate-profile resolver ownership is addressed or explicitly deferred. |
 | Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; use for `0.5.84`. |
 | Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.85`. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
