@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-25 after `Version 0.5.80 - Economy Runtime Test Failure Triage` landed.
+Updated 2026-05-25 after `Version 0.5.81 - Calendar Climate Popup View Model Plan` landed.
 
 ## Purpose
 
@@ -19,11 +19,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.80 - Economy Runtime Test Failure Triage`
+- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
 
 Next recommended version:
 
-- `Version 0.5.81 - Calendar Climate Popup View Model Plan`
+- `Version 0.5.82 - Calendar Climate Read-Only Popup`
 
 Current sequence source:
 
@@ -41,8 +41,8 @@ Current phase:
 - Typecheck script routing is explicit, but default UI and broad workspace typecheck targets still have known pre-existing blockers.
 - Economy price clarity planning, pure projection, and focused tests have landed.
 - The 0.5.80 economy runtime/trade validation triage restored the focused civilization economy validation path.
-- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy expansion has been added.
-- Calendar/climate popup planning is next and should remain planning-only.
+- Calendar/climate popup planning has landed and recommends pure projection plus focused tests before React popup wiring.
+- No economy clarity React UI, calendar/climate React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
 
 ## North Star
 
@@ -65,10 +65,10 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.80` | Economy Runtime Test Failure Triage | Landed. Restored focused economy runtime/trade validation after 0.5.79. | No UI, generated output, broad economy expansion, or player-facing trade/craft commands. |
-| `0.5.81` | Calendar Climate Popup View Model Plan | Next. Plan the future read-only Calendar/Climate popup. | Planning-only; no weather, travel, crop, body-state, clock, simulation, UI, or active-effect behavior. |
-| `0.5.82` | Calendar Climate Read-Only Popup | Planned. Render tested calendar/climate context read-only. | Informational only; no active effects or simulation changes. |
+| `0.5.81` | Calendar Climate Popup View Model Plan | Landed. Planned the future read-only Calendar/Climate projection. | Planning-only; no weather, travel, crop, body-state, clock, simulation, UI, or active-effect behavior. |
+| `0.5.82` | Calendar Climate Read-Only Popup | Next. Implement pure Calendar/Climate projection plus focused tests first. | No React UI unless explicitly re-scoped; no active effects or simulation changes. |
 | `0.5.83` | Combat Equipment Mapping Audit | Planned. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
+| `0.5.84` | Known Spell Ownership Plan | Planned. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
