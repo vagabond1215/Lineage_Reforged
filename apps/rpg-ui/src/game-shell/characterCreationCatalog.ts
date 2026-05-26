@@ -17,14 +17,20 @@
   type PlayerSexId
 } from "../../../../packages/shared/types/src/index.js";
 import {
-  getLegacyUnlockDefinitions,
+  getLegacyUnlockDefinitions
+} from "../../../../packages/engines/game-engine/src/legacy-unlocks.js";
+import {
   resolveBackstoryEligibility,
-  resolveOwnedBackstoryLegacyPurchaseIds,
-  type BackstoryEligibilityAvailabilityStatus,
   type BackstoryEligibilityEvidenceInput,
   type BackstoryEligibilityRecordResult,
   type BackstoryEligibilityState
-} from "../../../../packages/engines/game-engine/src/index.js";
+} from "../../../../packages/engines/game-engine/src/backstory-eligibility.js";
+import type {
+  BackstoryEligibilityAvailabilityStatus
+} from "../../../../packages/engines/game-engine/src/backstory-eligibility-policy.js";
+import {
+  resolveOwnedBackstoryLegacyPurchaseIds
+} from "../../../../packages/engines/game-engine/src/backstory-legacy-purchases.js";
 import abilityCatalogData from "../../../../packages/content/base/player/abilities.json" with { type: "json" };
 import backstoryCatalogData from "../../../../packages/content/base/player/backstories.json" with { type: "json" };
 import itemCatalogData from "../../../../packages/content/base/items/items.json" with { type: "json" };
