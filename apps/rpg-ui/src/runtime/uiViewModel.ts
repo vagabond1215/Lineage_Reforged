@@ -57,6 +57,10 @@ import {
   ARCANE_COMPENDIUM_LABEL,
   getArcaneCompendiumEntries
 } from './spellCompatibilityPresentation.js';
+import {
+  buildCalendarClimatePopupViewModel,
+  type CalendarClimatePopupViewModel
+} from '../game-shell/calendarClimatePresentation.js';
 
 type WindowDetail = {
   title: string;
@@ -129,6 +133,7 @@ export type UiViewModel = {
     season: string;
     timeOfDay: string;
     conditionStrip: ConditionStripViewModel;
+    calendarClimate: CalendarClimatePopupViewModel;
   };
   topBarMeters: StatMeter[];
   initialPinnedIds: string[];
@@ -2075,6 +2080,20 @@ export function createUiViewModel(
     settlementId: snapshot.playerState.location.settlementId,
     regionId: snapshot.playerState.regionId
   });
+  const regionLabel = humanizeId(snapshot.playerState.regionId);
+  const settlementLabel = snapshot.playerState.location.siteLabel
+    ? `${humanizeId(snapshot.playerState.location.settlementId)} / ${snapshot.playerState.location.siteLabel}`
+    : humanizeId(snapshot.playerState.location.settlementId);
+  const calendarClimate = buildCalendarClimatePopupViewModel({
+    clock: snapshot.clock,
+    location: {
+      settlementId: snapshot.playerState.location.settlementId,
+      settlementName: settlementLabel,
+      regionId: snapshot.playerState.regionId,
+      regionName: regionLabel
+    },
+    monthLabels: monthNames
+  });
   const mappedWorldLocations = snapshot.sessionState.knownLocations.map((location) => {
     const locationRenown = resolveRenownPresentation(accountProfile, {
       ...(location.settlementId !== undefined ? { settlementId: location.settlementId } : {}),
@@ -2233,14 +2252,13 @@ export function createUiViewModel(
         .slice(0, 2)
         .toUpperCase(),
       name: snapshot.playerState.coreData.playerName,
-      region: humanizeId(snapshot.playerState.regionId),
-      settlement: snapshot.playerState.location.siteLabel
-        ? `${humanizeId(snapshot.playerState.location.settlementId)} / ${snapshot.playerState.location.siteLabel}`
-        : humanizeId(snapshot.playerState.location.settlementId),
+      region: regionLabel,
+      settlement: settlementLabel,
       date: formatDate(snapshot),
       season: snapshot.clock.season,
       timeOfDay: formatTimeOfDay(snapshot),
-      conditionStrip: bodyStatePresentation.conditionStrip
+      conditionStrip: bodyStatePresentation.conditionStrip,
+      calendarClimate
     },
     topBarMeters: [
       {

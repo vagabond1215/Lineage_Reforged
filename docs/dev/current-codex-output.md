@@ -1,12 +1,12 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.82 - Calendar Climate Read-Only Popup
+Source version/run: Version 0.5.83 - Calendar Climate Read-Only Popup UI
 Date: 2026-05-26
-Branch/status assumption: Ran locally on `master`. Initial worktree was clean and tracking `origin/master`. Default `git pull` failed local SSL issuer validation; `git -c http.sslBackend=schannel pull` succeeded and fast-forwarded to `9cfb69a`. Worktree was clean after sync and before edits.
+Branch/status assumption: Ran locally on `master`. Initial worktree was clean and tracking `origin/master`. Default `git pull` failed local SSL issuer validation; `git -c http.sslBackend=schannel pull` succeeded and fast-forwarded to `bb95e0d`. Worktree was clean after sync and before edits.
 
 ## Result
 
-Implemented the pure Calendar/Climate popup projection and focused tests. The new projection is read-only, synchronous, supplied-data-only, and returns no action ids. No React UI was added. Also fixed a browser loading error by replacing the only app import of the `game-engine/src/index.js` barrel with targeted browser-safe game-engine module imports.
+Rendered the existing Calendar/Climate projection in a compact read-only top-status popup. The UI opens from the date/season/time label, shows projection rows and notes only, and adds no actions, content loading, generated output, or active climate/weather behavior.
 
 ## Files Inspected
 
@@ -20,77 +20,47 @@ Implemented the pure Calendar/Climate popup projection and focused tests. The ne
 - `docs/design/calendar-climate-popup-ia-audit.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `packages/shared/time/src/index.ts`
-- `packages/shared/types/src/contracts.ts`
-- `apps/rpg-ui/src/game-shell/economyClarityPresentation.ts`
-- `apps/rpg-ui/src/game-shell/chronicleRunEndSummaryPresentation.ts`
-- `apps/rpg-ui/src/game-shell/bloodlinesPresentation.ts`
-- `apps/rpg-ui/src/runtime/uiViewModel.ts`
-- `apps/rpg-ui/src/components/TopStatusBar.tsx`
-- `tests/unit/economy-clarity-presentation.test.mjs`
+- `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`
+- `tests/unit/calendar-climate-presentation.test.mjs`
 - `tests/unit/clock-season-map.test.mjs`
+- `apps/rpg-ui/src/components/TopStatusBar.tsx`
+- `apps/rpg-ui/src/runtime/uiViewModel.ts`
+- `apps/rpg-ui/src/runtime/demoSnapshot.ts`
+- `apps/rpg-ui/src/runtime/GameSessionContext.tsx`
+- `apps/rpg-ui/src/game-shell/InGameShell.tsx`
+- `apps/rpg-ui/src/types.ts`
+- `apps/rpg-ui/src/index.css`
+- existing UI/source test search results under `tests/unit`
 
 ## Files Changed
 
-- `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`
-- `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`
-- `tests/unit/calendar-climate-presentation.test.mjs`
+- `apps/rpg-ui/src/components/TopStatusBar.tsx`
+- `apps/rpg-ui/src/runtime/uiViewModel.ts`
 - `docs/dev/current-codex-output.md`
 
-## Projection Boundary
+## UI Boundary
 
-Added `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` as a pure presentation module. It exports:
+`TopStatusBar.tsx` now renders a read-only Calendar/Climate overlay from the date/season/time text in the character header. It reuses the existing `forged-overlay` top-bar popover style and local toggle pattern. The overlay renders `title`, `subtitle`, `currentTimeRows`, `seasonRows`, `climateRows`, `temperatureRows`, `informationalEffectNotes`, and `warningNotes` from `buildCalendarClimatePopupViewModel` output. It does not render buttons or consume `actionIds`.
 
-- `CalendarClimateTone`
-- `CalendarClimateRow`
-- `CalendarClimateTemperatureBand`
-- `CalendarClimateProfileInput`
-- `CalendarClimateProfileSourceInput`
-- `CalendarClimateLocationInput`
-- `CalendarClimatePopupInput`
-- `CalendarClimatePopupViewModel`
-- `buildCalendarClimatePopupViewModel(input)`
+## Data Boundary
 
-The input accepts an optional supplied `SimulationClock`, optional location labels/ids, optional explicit climate profile/source data, and optional month labels. The output includes `title`, `subtitle`, `currentTimeRows`, `seasonRows`, `climateRows`, `temperatureRows`, `informationalEffectNotes`, `warningNotes`, and `actionIds: []`.
+`uiViewModel.ts` supplies the existing runtime snapshot `clock`, existing top-bar settlement/region display labels, current settlement/region ids, and the existing UI month labels. No climate profile data is supplied because no authoritative browser-safe profile owner is already present in UI state, so the projection safely renders unknown/unavailable climate rows. No global content, JSON climate profile import, content resolver, settlement-to-climate inference, or engine content loader was added.
 
-Every path returns `actionIds: []`.
+## Copy / Interaction Rules
 
-## Label / Copy Rules Implemented
+The popup copy remains projection-owned and informational: calendar rows use runtime clock data, season rows identify shared time month mapping, climate rows show unknown/unavailable without a supplied profile, temperature rows stay unavailable without supplied profile data, informational notes state no travel/crop/body-state/combat/economy effects are applied, and warning notes render as passive warnings. The UI adds only a toggle interaction from the existing date/time label and no action buttons, player commands, command ids, or active-effect warning copy.
 
-- Title is always `Calendar and Climate`.
-- Subtitle uses known settlement/region labels first, then known supplied profile label, otherwise `Read-only calendar context`.
-- Time rows render year, month, day, watch, and tick from the supplied clock.
-- Month labels use supplied labels, then local projection constants matching current UI month labels, then `Month <n>`.
-- Watch labels map subday 1 to `Dawn Watch`, 2 to `High Sun`, 3 to `Dusk Watch`, 4 to `Night Watch`, and unknown subdays to `Unknown Watch`.
-- Season rows use exact `clock.season` and state that runtime season comes from shared time month mapping.
-- Supplied climate profiles render profile name or humanized id, with source label detail when supplied.
-- Temperature rows render only `Expected seasonal band` from supplied profile data for the current runtime season.
-- Informational notes state climate/weather are informational only, no travel/crop/body-state/combat/economy effects are applied, and runtime season follows shared clock mapping rather than climate profile season progression.
-- Missing clock/profile/profile data/season band paths render unavailable or unknown rows with warning notes.
+## Browser Safety
 
-## Data Rules Enforced
-
-The projection uses supplied data only. It does not load global content, import design docs, infer climate from settlement id, region id, active region, climate burden, biome, or ecology hints, mutate input objects, change runtime clock state, or emit command/action ids.
-
-Browser-facing code no longer imports `packages/engines/game-engine/src/index.js` from `characterCreationCatalog.ts`; the file now imports only the specific legacy/backstory modules it needs. An app-only scan for `game-engine/src/index`, `civilization-engine/src/index`, `civilization-engine/src/content`, `load.*Content`, `node:fs`, and `readFileSync` in `apps/rpg-ui/src` returned no matches.
+Browser-facing app scan is clean for forbidden Node/content-loader imports. No app-side file imports `node:fs`, `readFileSync`, `load.*Content`, `civilization-engine/src/content`, `civilization-engine/src/index`, or `game-engine/src/index`.
 
 ## Behavior / Runtime Confirmation
 
-Clock progression, season mapping, climate profiles, calendar content, weather, travel, body-state, crops, economy, combat, save schema, UI, generated output, Chronicle, Bloodlines, Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heirloom, and bequest behavior did not change. The character creator import boundary changed only to avoid a browser-incompatible engine barrel import; backstory/Legacy resolver behavior was not changed.
+Clock progression, season mapping, climate profiles, calendar content, weather, travel, body-state, crops, economy, combat, save schema, generated output, Chronicle, Bloodlines, Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heirloom, and bequest behavior did not change. UI behavior changed only by adding the read-only top-status Calendar/Climate popup.
 
 ## Tests Added / Updated
 
-Added `tests/unit/calendar-climate-presentation.test.mjs` covering:
-
-- initial clock year/month/day/watch/tick/Winter rows
-- runtime season language staying informational and not profile-driven
-- supplied climate profile label/source label/current-season temperature band
-- missing profile unknown/unavailable behavior with no settlement climate inference
-- profile id without profile data warning and omitted temperature band
-- profile missing current-season band warning and unavailable row
-- empty `actionIds` invariant
-- input immutability
-- banned active-effect phrases absent from projection copy
+No UI/component test was added. The repo has source-scan tests and view-model tests, but no clear TopStatusBar render/component test pattern for this overlay. Existing focused Calendar/Climate projection tests and the clock-season map test remain the validation boundary for this narrow UI wiring pass.
 
 ## Checks Run
 
@@ -99,33 +69,28 @@ Added `tests/unit/calendar-climate-presentation.test.mjs` covering:
 - `git pull` (failed due local SSL issuer validation)
 - `git -c http.sslBackend=schannel pull`
 - `git status --short --branch`
+- `rg -n "Calendar|Climate|climate|weather|season" docs/design/future-system-design-ledger.md docs/future_content_backlog.md`
+- `rg -n "@testing-library|react-test|TopStatusBar|render\\(" tests apps/rpg-ui/src -g "*.test.*" -g "*.spec.*"`
+- `rg -n "createUiViewModel|uiViewModel|InGameShell|TopStatusBar" tests/unit tests/integration`
+- `rg -n "game-engine/src/index|civilization-engine/src/index|civilization-engine/src/content|load.*Content|node:fs|readFileSync" apps/rpg-ui/src` (no matches)
 - `node --test tests/unit/calendar-climate-presentation.test.mjs`
 - `node --test tests/unit/clock-season-map.test.mjs`
-- `rg "node:fs|readFileSync|load.*Content|civilization-engine/src/content|civilization-engine/src/index" apps/rpg-ui packages/engines tests`
-- `rg -n "game-engine/src/index|civilization-engine/src/index|civilization-engine/src/content|load.*Content|node:fs|readFileSync" apps/rpg-ui/src` (no matches)
-- `node --test tests/unit/calendar-climate-presentation.test.mjs` (rerun after loading fix)
-- `node --test tests/unit/clock-season-map.test.mjs` (rerun after loading fix)
 - `git diff --check` (passed; Git reported LF-to-CRLF working-copy warnings)
-
-Broad typecheck, broad workspace validation, and React/component tests were not run because this pass added no React UI and touched no broad runtime paths.
 
 ## Risks / Follow-Up
 
-- The projection intentionally does not resolve a climate profile from settlement or region ids. A later resolver should stay separate and tested if the project chooses to use `settlements.json` plus `world_map_features.json` for active location climate context.
-- UI wiring remains deferred. If desired, it should be a narrow read-only top-status popup pass that renders this projection without adding commands or active effects.
-- Existing Node-side engine and test files still contain `node:fs` and content-loader imports by design. The browser-facing `apps/rpg-ui/src` scan is clean for the forbidden content-loader path.
-- `docs/future_content_backlog.md` was not updated because no new deferred work was discovered beyond already recorded UI/resolver follow-up.
+- The popup intentionally shows unknown/unavailable climate context until a browser-safe authoritative climate-profile owner or resolver is designed.
+- The overlay was not browser-render tested because no existing TopStatusBar component test pattern was available in this repo.
+- `docs/future_content_backlog.md` was not updated because no new deferred work was discovered beyond the already recorded climate-profile resolver and weather/effect ownership gaps.
 
 ## Temporary Guardrail Cleanup Decision
 
-Keep `docs/design/calendar-climate-popup-ia-audit.md` useful through a later UI wiring decision. After either a narrow UI pass lands or the UI path is explicitly deferred again, it can be marked consumed/folded/deleted in a cleanup pass.
+Keep `docs/design/calendar-climate-popup-ia-audit.md` until climate-profile resolver ownership is addressed or explicitly deferred after this UI pass. It remains useful as a source-detail reference for avoiding settlement/region climate inference and content-loader drift.
 
 ## Next Recommended Version
 
-Version 0.5.83 - Combat Equipment Mapping Audit
-
-If the user wants immediate UI wiring after this projection lands, a narrow `Calendar Climate Read-Only Popup UI` pass can be inserted before 0.5.83.
+Version 0.5.84 - Combat Equipment Mapping Audit
 
 ## Suggested Commit Message
 
-feat(calendar): add climate popup projection
+feat(calendar): render climate popup read only
