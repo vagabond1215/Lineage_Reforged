@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.84 - Unified Shell And Creator Refinement Plan`
-- Next recommended version: `Version 0.5.85 - Creator Sidebar Layout And Backstory Gating`
+- Latest landed version: `Version 0.5.85 - Creator Sidebar Layout And Backstory Gating`
+- Next recommended version: `Version 0.5.86 - Combat Equipment Mapping Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -38,11 +38,11 @@ Current repo reality:
 - Economy price clarity planning, pure projection, and focused tests have landed.
 - The 0.5.80 economy runtime/trade validation triage restored the focused civilization economy validation path.
 - Calendar/climate popup planning, pure projection, and read-only UI have landed.
-- A planning-only unified shell and creator refinement track now exists for moving character creation toward the main-menu left-sidebar shell model before returning to combat audit.
-- Character creation is the next implementation target: move the live summary into the left sidebar, remove the separate summary toggle/right column, add fixed-width step states, gate/skip backstory only when no selectable backstories exist, add full-character randomization, and reduce the visible stat preview to one total attribute matrix.
+- Unified shell and creator refinement planning has landed.
+- Character creation now uses the launcher AppShell with left-sidebar summary, fixed-width steps, full-character randomization, no-selectable-backstory gating, and a total attribute matrix with contribution tooltips.
+- Gameplay shell unification remains deferred.
+- Combat equipment mapping audit is next and should remain audit-first.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
-- Gameplay shell unification remains deferred until after the creator pass proves whether a tiny shared shell extraction is safe.
-- Combat equipment mapping audit should resume after the creator refinement pass and should remain audit-first.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
 
@@ -67,14 +67,9 @@ These are internal development maturity markers, not public release promises. Pa
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |
-| `0.5.79` | Economy Price Clarity Pure Projection | Codex Local | Pure projection + tests | Landed. Implemented stored-state economy clarity projection and focused tests. | No resolver calls, economy math changes, stockpile mutation, shop/trade/craft/caravan commands, React UI, or generated output. |
-| `0.5.80` | Economy Runtime Test Failure Triage | Codex Local | Focused runtime/test validation fix | Landed. Restored focused civilization economy runtime/trade validation after 0.5.79. | No UI, generated output, broad economy expansion, or player-facing trade/craft commands. |
-| `0.5.81` | Calendar Climate Popup View Model Plan | Codex Local docs-only | Planning | Landed. Finalized the future Calendar/Climate popup projection boundary from live repo inspection. | Planning-only; no weather, travel, body-state, crop, clock, simulation, UI, or active-effect behavior. |
-| `0.5.82` | Calendar Climate Read-Only Popup | Codex Local | Pure projection + tests | Landed. Implemented the pure Calendar/Climate view model and focused tests. | No React UI, no active climate/weather/travel/crop/body-state effects. |
-| `0.5.83` | Calendar Climate Read-Only Popup UI | Codex Local | Read-only UI wiring | Landed. Rendered the projection output in a narrow top-status popup/overlay. | No commands, content loading, generated output, or active climate/weather effects. |
 | `0.5.84` | Unified Shell And Creator Refinement Plan | Codex Local docs-only | Planning | Landed. Added the source plan for creator shell/sidebar, backstory gating, full randomization, and stat preview cleanup before combat audit. | Planning-only; no UI/source behavior changes. |
-| `0.5.85` | Creator Sidebar Layout And Backstory Gating | Codex Local | Focused creator UI/form helper implementation | Next. Move character creation toward the main-menu left-sidebar shell model and implement the planned creator refinements. | Character creation only; no gameplay shell unification, generated output, or combat work. |
-| `0.5.86` | Combat Equipment Mapping Audit | Codex Local or connector-first | Audit | Planned. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
+| `0.5.85` | Creator Sidebar Layout And Backstory Gating | Codex Local | Focused creator UI/form helper implementation | Landed. Moved character creation into launcher AppShell/left-sidebar model with backstory gating, full randomization, and attribute matrix refinement. | Character creation only; no gameplay shell unification, generated output, or combat work. |
+| `0.5.86` | Combat Equipment Mapping Audit | Codex Local or connector-first | Audit | Next. Audit equipment mapping before combat math changes. | Audit only; no broad formula changes. |
 | `0.5.87` | Known Spell Ownership Plan | Codex Local docs-only or Plan Mode | Planning | Planned. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
 
 ## 4. Sequenced Near-Term Codex Queue
@@ -83,10 +78,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.84` | Unified Shell And Creator Refinement Plan | `docs/design/unified-shell-and-creator-refinement-plan.md` | Landed |
-| 2 | `0.5.85` | Creator Sidebar Layout And Backstory Gating | `docs/design/unified-shell-and-creator-refinement-plan.md` | Next |
-| 3 | `0.5.86` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 4 | `0.5.87` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 1 | `0.5.85` | Creator Sidebar Layout And Backstory Gating | `docs/design/unified-shell-and-creator-refinement-plan.md` | Landed |
+| 2 | `0.5.86` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Next |
+| 3 | `0.5.87` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 ## 5. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -97,7 +91,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Economy Clarity Audit | Promoted into `docs/design/economy-price-clarity-view-model-plan.md`; keep until economy clarity UI direction is chosen. |
 | Economy Runtime Test Failure Triage Plan | Consumed by `0.5.80`; retained only as historical source-detail reference. |
 | Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep until climate-profile resolver ownership is addressed or explicitly deferred. |
-| Unified Shell And Creator Refinement Plan | `docs/design/unified-shell-and-creator-refinement-plan.md`; use for `0.5.85`. |
+| Unified Shell And Creator Refinement Plan | `docs/design/unified-shell-and-creator-refinement-plan.md`; consumed by `0.5.85` for first creator implementation, keep as source-detail reference until gameplay shell unification is explicitly scoped or deferred. |
 | Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; use for `0.5.86`. |
 | Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.87`. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
