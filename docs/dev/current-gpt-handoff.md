@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.82 - Calendar Climate Read-Only Popup`
+Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 Date: 2026-05-26
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -22,7 +22,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.82 - Calendar Climate Read-Only Popup`
+- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
 
 Current sequence source:
 
@@ -30,19 +30,18 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.83 - Calendar Climate Read-Only Popup UI`
+- `Version 0.5.84 - Combat Equipment Mapping Audit`
 
 ## Recent Results
 
 Calendar / climate:
 
-- `0.5.81` finalized the planning-only Calendar/Climate popup view-model plan from live repo inspection.
+- `0.5.81` finalized the planning-only Calendar/Climate popup view-model plan.
 - `0.5.82` implemented `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` and `tests/unit/calendar-climate-presentation.test.mjs`.
-- The 0.5.82 projection is pure, synchronous, supplied-data-only, read-only, and always returns `actionIds: []`.
-- The projection accepts supplied `SimulationClock`, optional location labels, and optional explicit climate profile/source data.
-- The projection does not load global content, infer climate from settlement/region ids, mutate input, or emit command/action ids.
-- A browser loading error was fixed by replacing the app import of `game-engine/src/index.js` with targeted browser-safe game-engine module imports in `characterCreationCatalog.ts`.
-- Browser-facing app scans were clean for `node:fs`, `readFileSync`, content-loader paths, and engine barrel imports after the fix.
+- `0.5.83` rendered the existing Calendar/Climate projection in a compact read-only top-status popup.
+- The popup opens from the existing date/season/time label and renders projection rows/notes only.
+- No actions, command ids, content loading, generated output, climate profile resolver, weather simulation, or active climate/weather/travel/crop/body-state effects were added.
+- Keep `docs/design/calendar-climate-popup-ia-audit.md` as source-detail reference until climate-profile resolver ownership is addressed or explicitly deferred.
 
 Economy and Chronicle:
 
@@ -57,24 +56,26 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.83
+## Active Guardrails For 0.5.84
 
-Calendar/climate UI:
+Combat equipment mapping audit:
 
-- `0.5.83` is an inserted narrow UI pass before combat audit.
-- Render the existing `buildCalendarClimatePopupViewModel(input)` output in a read-only Calendar/Climate popup or overlay.
-- Prefer attaching it to the existing top status bar date/season/time area in `apps/rpg-ui/src/components/TopStatusBar.tsx` if current component ownership supports it.
-- Reuse existing overlay/popover patterns from `TopStatusBar.tsx`; do not create a broad UI shell redesign.
-- Do not add new projection behavior unless a tiny display-only shape adjustment is required and covered by existing/focused tests.
-- Do not load global content or import Node-only content loaders into browser code.
-- Do not import `packages/engines/*/src/index.js` barrels into browser-facing app files if that pulls Node-only modules.
-- Do not add player actions, command ids, travel warnings, freezing-risk warnings, crop warnings, penalties, buffs, weather randomization, weather simulation, route changes, body-state changes, crop behavior, economy behavior, combat behavior, save schema changes, or generated output.
-- UI copy must keep climate/weather clearly informational-only.
-- Keep `actionIds: []` and do not render action buttons.
+- `0.5.84` should be audit-first.
+- Use `docs/design/combat-equipment-mapping-audit-plan.md` as the primary source.
+- Inspect current combat, equipment, item, stat, skill, and loadout ownership before editing.
+- Produce or update audit tables/tests only if safe and within the focused audit boundary.
+- Do not rewrite combat formulas.
+- Do not add combat UI unless explicitly re-scoped.
+- Do not add new equipment behavior, durability behavior, item instance behavior, loot behavior, crafting behavior, economy behavior, save schema changes, generated output, or active magic behavior.
+- Do not mix combat mapping audit with Calendar/Climate, economy clarity, Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior.
+
+Browser-safety guardrail:
+
+- Do not import Node-only content loaders or engine barrels into browser-facing UI files.
+- Keep app-side scans clean for `node:fs`, `readFileSync`, `load.*Content`, `civilization-engine/src/content`, `civilization-engine/src/index`, and unsafe `game-engine/src/index` imports.
 
 Cross-system guardrails:
 
-- Do not touch economy clarity, economy runtime, Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior unless explicitly prompted.
 - Do not infer `familyId` from `lineageId`, `sourceRunId`, account id, selected character, selected backstory, or UI state.
 
 ## Sequenced Codex Queue
@@ -83,14 +84,13 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.82` | Calendar Climate Read-Only Popup | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Landed |
-| 2 | `0.5.83` | Calendar Climate Read-Only Popup UI | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Next |
-| 3 | `0.5.84` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Planned |
-| 4 | `0.5.85` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 1 | `0.5.83` | Calendar Climate Read-Only Popup UI | `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` | Landed |
+| 2 | `0.5.84` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Next |
+| 3 | `0.5.85` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.83 - Calendar Climate Read-Only Popup UI`, inspect:
+For `Version 0.5.84 - Combat Equipment Mapping Audit`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -98,21 +98,19 @@ For `Version 0.5.83 - Calendar Climate Read-Only Popup UI`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/calendar-climate-popup-view-model-plan.md`
-- `docs/design/calendar-climate-popup-ia-audit.md`
+- `docs/design/combat-equipment-mapping-audit-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts`
-- `tests/unit/calendar-climate-presentation.test.mjs`
-- `apps/rpg-ui/src/components/TopStatusBar.tsx`
-- `apps/rpg-ui/src/runtime/uiViewModel.ts`
-- `apps/rpg-ui/src/runtime/demoSnapshot.ts`
-- relevant narrow UI/component test patterns if present
+- combat runtime/source owners
+- equipment/loadout/source owners
+- item content and item type definitions
+- stat/skill/attribute mappings relevant to combat and equipment
+- current focused combat/equipment tests if present
 
-## After 0.5.83
+## After 0.5.84
 
-If the read-only Calendar/Climate UI pass lands cleanly, return to the sequence file. The next run should be:
+If the combat equipment mapping audit lands cleanly, return to the sequence file. The next run should be:
 
-- `Version 0.5.84 - Combat Equipment Mapping Audit`
+- `Version 0.5.85 - Known Spell Ownership Plan`
 
-Keep it audit-first and do not rewrite combat math unless explicitly re-scoped.
+Keep it planning-only unless explicitly re-scoped.
