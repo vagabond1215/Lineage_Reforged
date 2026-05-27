@@ -6,7 +6,7 @@ Status: connector-updated sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.86 - Combat Equipment Mapping Audit` documented current combat/equipment ownership and identified the short-bow starter mapping gap.
+This file gives Codex a stable ordered queue after `Version 0.5.87 - Combat Equipment Mapping Follow-Up` added the short-bow combat profile and closed the Hunter starter bow mapping gap.
 
 It does not replace:
 
@@ -19,13 +19,13 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed combat audit slice:
+Latest landed combat follow-up slice:
 
-- `Version 0.5.86 - Combat Equipment Mapping Audit`
+- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
 
 Immediate next Codex run:
 
-- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
+- `Version 0.5.88 - Known Spell Ownership Plan`
 
 ## Ordered Trajectory
 
@@ -39,8 +39,8 @@ Immediate next Codex run:
 | 6 | `0.5.84` | Unified Shell And Creator Refinement Plan | Codex 5.5 Local docs-only | `docs/design/unified-shell-and-creator-refinement-plan.md` | planning doc | Landed | Planned creator shell/sidebar, backstory gating, full randomization, and stat preview cleanup only. |
 | 7 | `0.5.85` | Creator Sidebar Layout And Backstory Gating | Codex 5.5 Local | `docs/design/unified-shell-and-creator-refinement-plan.md` | focused creator UI/form helpers + tests | Landed | Character creation only; no gameplay shell unification, generated output, or combat work. |
 | 8 | `0.5.86` | Combat Equipment Mapping Audit | Codex 5.5 Local | `docs/design/combat-equipment-mapping-audit-plan.md` | audit tables + focused tests | Landed | Audit only; no combat formula rewrites or content behavior changes. |
-| 9 | `0.5.87` | Combat Equipment Mapping Follow-Up | Codex 5.5 Local | `docs/design/combat-equipment-mapping-audit-plan.md` | narrow content/test fix | Next | Add short-bow combat profile only; no formulas, ammo, balance, UI, or broad equipment policy. |
-| 10 | `0.5.88` | Known Spell Ownership Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Planned | Define ownership/acquisition before runtime casting; no spell execution. |
+| 9 | `0.5.87` | Combat Equipment Mapping Follow-Up | Codex 5.5 Local | `docs/design/combat-equipment-mapping-audit-plan.md` | narrow content/test fix | Landed | Added short-bow combat profile only; no formulas, ammo, balance, UI, or broad equipment policy. |
+| 10 | `0.5.88` | Known Spell Ownership Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Next | Define ownership/acquisition before runtime casting; no spell execution. |
 
 ## Default Prompt Pattern
 
@@ -58,11 +58,10 @@ Each future Codex prompt should:
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
-- Do not continue creator polishing inside the combat follow-up unless a blocking regression prevents validation.
 - Do not extract a universal shell before a later dedicated shell pass scopes it.
-- Do not add generated UI output during combat follow-up.
+- Do not add generated UI output during known-spell ownership planning.
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
-- Do not mix short-bow mapping follow-up with combat math rewrites, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or active magic.
+- Do not mix known-spell ownership planning with combat math rewrites, active spell execution, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
 - Do not begin runtime magic until known-spell ownership and acquisition are explicitly planned.
 
 ## When To Reorder
