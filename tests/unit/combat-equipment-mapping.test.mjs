@@ -13,7 +13,7 @@ import {
 import { createNewGameSnapshot } from "../../apps/rpg-ui/src/game-shell/newGameSnapshot.ts";
 import { getDefaultWorldSelection } from "../../apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts";
 
-const KNOWN_STARTER_WEAPON_PROFILE_GAPS = new Set(["item.short_bow", "item.butcher_knife"]);
+const KNOWN_STARTER_WEAPON_PROFILE_GAPS = new Set(["item.butcher_knife"]);
 const KNOWN_STARTER_ACTION_TRAINING_GAPS = new Set(["item.battle_staff", "item.buckler_shield", "item.pickaxe"]);
 const KNOWN_STARTER_NON_MITIGATING_APPAREL = new Set(["item.casual_tunic"]);
 
@@ -69,6 +69,16 @@ function combatDamageProfiles(item) {
 
 function isCurrentWeaponTrainingCandidateProfile(profile) {
   return ["combat.melee.primary", "combat.ranged.primary"].includes(profile.actionType) && profile.handlingType === "weapon";
+}
+
+function findCurrentRangedWeaponProfile(item) {
+  return (item?.useProfiles ?? []).find(
+    (profile) =>
+      profile.actionType === "combat.ranged.primary" &&
+      profile.primarySkillId === "skill.combat.weapon.archery" &&
+      profile.handlingType === "weapon" &&
+      (profile.resolutionHooks ?? []).includes("damage.ranged")
+  );
 }
 
 function hasArmorOrShieldHandlingProfile(item) {
@@ -175,6 +185,22 @@ test("current creator starter equipment maps bundles into observed equipment slo
       starterCase.label
     );
   }
+});
+
+test("hunter starter short bow maps to the current ranged weapon combat profile", async () => {
+  const items = await loadRecords("packages/content/base/items/items.json");
+  const itemById = new Map(items.map((item) => [item.id, item]));
+  const equipped = resolveEquippedItemIds("starting_bundle.hunter");
+
+  assert.equal(equipped["slot.weapon.right"], "item.short_bow");
+
+  const shortBowProfile = findCurrentRangedWeaponProfile(itemById.get("item.short_bow"));
+  const compositeBowProfile = findCurrentRangedWeaponProfile(itemById.get("item.composite_bow"));
+
+  assert.ok(shortBowProfile, "item.short_bow must expose a ranged archery weapon profile");
+  assert.ok(compositeBowProfile, "item.composite_bow must keep the source ranged archery profile");
+  assert.deepEqual(shortBowProfile, compositeBowProfile);
+  assert.equal(isCurrentWeaponTrainingCandidateProfile(shortBowProfile), true);
 });
 
 test("starter equipped weapon-slot items either map to combat profiles or known audit gaps", async () => {

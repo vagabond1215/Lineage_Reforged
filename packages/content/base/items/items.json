@@ -26752,7 +26752,56 @@
         "processingIntensity": "precision",
         "difficultyTier": "hard",
         "demandBand": "specialty"
-      }
+      },
+      "useProfiles": [
+        {
+          "actionType": "combat.ranged.primary",
+          "primarySkillId": "skill.combat.weapon.archery",
+          "supportSkillIds": [
+            "skill.resource.spotting.fauna"
+          ],
+          "requiredSkillRank": 1,
+          "masteryRank": 100,
+          "effectChannels": [
+            "accuracy",
+            "damage",
+            "critChance",
+            "penaltyReduction"
+          ],
+          "handlingType": "weapon",
+          "proficiencySkillId": "skill.combat.weapon.archery",
+          "hybridSkillIds": [],
+          "combatTags": [
+            "weapon.archery",
+            "ranged"
+          ],
+          "resolutionHooks": [
+            "weapon.archery",
+            "damage.ranged"
+          ],
+          "grantTags": [
+            "weapon.archery"
+          ],
+          "targetProfile": {
+            "disposition": "enemy",
+            "shape": "single_target",
+            "range": "ranged",
+            "maxTargets": 1,
+            "requiresAccuracy": true
+          },
+          "activation": {
+            "type": "active",
+            "actionType": "combat.ranged.primary",
+            "timing": "instant",
+            "executionTimeTicks": 4,
+            "recoveryTimeTicks": 5,
+            "interruptible": false,
+            "costs": {
+              "stamina": 5
+            }
+          }
+        }
+      ]
     },
     {
       "id": "item.short_sword",
