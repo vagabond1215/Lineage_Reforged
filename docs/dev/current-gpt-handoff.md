@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.86 - Combat Equipment Mapping Audit`
+Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
 Date: 2026-05-27
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -22,7 +22,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.86 - Combat Equipment Mapping Audit`
+- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
 
 Current sequence source:
 
@@ -30,18 +30,19 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
+- `Version 0.5.88 - Known Spell Ownership Plan`
 
 ## Recent Results
 
 Combat / equipment:
 
 - `0.5.86` completed the audit-first combat/equipment mapping pass.
-- The audit updated `docs/design/combat-equipment-mapping-audit-plan.md`, `tests/unit/combat-equipment-mapping.test.mjs`, `docs/future_content_backlog.md`, and `docs/dev/current-codex-output.md`.
-- It did not change item content, combat runtime/source, formulas, equipment behavior, durability, item instances, loot, crafting, economy, UI, save schema, generated output, or active magic behavior.
-- Current source ownership is now documented for equipment slots, item use profiles, starter bundles, starter equipment heuristic mapping, combat actions, damage-family inference, defensive mitigation, skill/stat mapping, and skill-gain candidates.
-- The smallest high-value next fix is `item.short_bow`: it is equipped by Hunter starts into `slot.weapon.right` but has no combat use profile, so it does not grant expected ranged action / archery mapping.
-- The safe follow-up is to add a current-content `item.short_bow` combat use profile following the existing `item.composite_bow` profile shape, then remove `item.short_bow` from known starter profile gaps in `tests/unit/combat-equipment-mapping.test.mjs`.
+- `0.5.87` added the narrow current-content combat use profile for `item.short_bow`.
+- Hunter starts still equip `item.short_bow` into `slot.weapon.right`, and the short bow now maps to the current ranged archery weapon profile shape.
+- `tests/unit/combat-equipment-mapping.test.mjs` now removes `item.short_bow` from known starter weapon-profile gaps and asserts the Hunter short bow has a current ranged archery weapon profile.
+- The remaining known starter weapon-profile gap is `item.butcher_knife`.
+- No combat formulas, combat runtime code, equipment behavior, durability, item instances, loot, crafting, economy, UI, save schema, generated output, active magic, creator shell/sidebar, calendar/climate, Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, or bequest behavior changed.
+- Deferred combat/equipment gaps remain: `item.butcher_knife` equip/profile policy, hybrid staff skill-gain policy, improvised pickaxe skill-gain policy, shield/armor defensive skill-gain policy, content-owned equipment slot/handedness/offhand/two-handed metadata, explicit damage-type table, and broad weapon/armor/clothing profile coverage.
 
 Unified shell / creator:
 
@@ -73,19 +74,19 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.87
+## Active Guardrails For 0.5.88
 
-Combat Equipment Mapping Follow-Up:
+Known Spell Ownership Plan:
 
-- Use `docs/design/combat-equipment-mapping-audit-plan.md` as the primary source.
-- This should be a narrow current-content mapping fix for `item.short_bow` only.
-- Add a combat use profile for `item.short_bow` following the current `item.composite_bow` ranged profile shape.
-- The profile should map to `combat.ranged.primary`, `skill.combat.weapon.archery`, `handlingType: "weapon"`, and `damage.ranged`.
-- Update `tests/unit/combat-equipment-mapping.test.mjs` so `item.short_bow` is no longer listed as a known starter weapon-profile gap.
-- Keep the test asserting Hunter starter bow profile coverage.
-- Do not alter damage formulas, ranged balance, ammo behavior, loot, item instances, equipment behavior, UI, save schema, generated output, or active magic behavior.
-- Do not broaden into `item.butcher_knife`, `item.battle_staff`, `item.pickaxe`, shield skill gain, armor skill gain, damage type schema, handedness, offhand, two-handed, or item-owned equipment slot metadata.
-- Do not continue creator/sidebar polishing unless a blocking regression prevents validation.
+- Use `docs/design/known-spell-ownership-plan.md` as the primary source.
+- This should be planning-only unless the user explicitly re-scopes it.
+- Define known-spell ownership/acquisition before runtime casting.
+- Inspect current spell content, ability/magic ownership shape, player save state, Legacy/account unlock boundaries, and relevant tests before writing the plan.
+- Plan ownership, acquisition, validation, migration/current-data policy, UI projection needs, and future tests.
+- Do not implement spell casting.
+- Do not add active magic behavior.
+- Do not add spell execution commands, combat actions, generated output, save schema changes, UI, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior.
+- Do not infer family ownership or spell ownership from lineage, backstory, UI state, selected character, source run, or account id unless the plan explicitly scopes a future evidence rule.
 
 Browser-safety guardrail:
 
@@ -103,13 +104,13 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.86` | Combat Equipment Mapping Audit | `docs/design/combat-equipment-mapping-audit-plan.md` | Landed |
-| 2 | `0.5.87` | Combat Equipment Mapping Follow-Up | `docs/design/combat-equipment-mapping-audit-plan.md` | Next |
-| 3 | `0.5.88` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Planned |
+| 1 | `0.5.87` | Combat Equipment Mapping Follow-Up | `docs/design/combat-equipment-mapping-audit-plan.md` | Landed |
+| 2 | `0.5.88` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Next |
+| 3 | `0.5.89` | Post-plan implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.88 |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.87 - Combat Equipment Mapping Follow-Up`, inspect:
+For `Version 0.5.88 - Known Spell Ownership Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -117,18 +118,14 @@ For `Version 0.5.87 - Combat Equipment Mapping Follow-Up`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/combat-equipment-mapping-audit-plan.md`
+- `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `packages/content/base/items/items.json`
-- `packages/schemas/items/item.schema.json`
-- `tests/unit/combat-equipment-mapping.test.mjs`
-- focused combat tests relevant to ranged item profiles and skill gain
+- current spell/magic content and schemas
+- current player save/state ownership types
+- current ability/spell/combat-magic owners
+- current focused magic/spell/ability tests if present
 
-## After 0.5.87
+## After 0.5.88
 
-If the short-bow mapping follow-up lands cleanly, return to the sequence file. The next run should be:
-
-- `Version 0.5.88 - Known Spell Ownership Plan`
-
-Keep it planning-only unless explicitly re-scoped.
+Use the plan result in `docs/dev/current-codex-output.md` to decide whether the next run should remain planning-only, add pure ownership helpers/tests, or return to another queued stabilization item.
