@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-27 after `Version 0.5.86 - Combat Equipment Mapping Audit` landed.
+Updated 2026-05-27 after `Version 0.5.87 - Combat Equipment Mapping Follow-Up` landed.
 
 ## Purpose
 
@@ -19,11 +19,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.86 - Combat Equipment Mapping Audit`
+- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
 
 Next recommended version:
 
-- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
+- `Version 0.5.88 - Known Spell Ownership Plan`
 
 Current sequence source:
 
@@ -45,8 +45,9 @@ Current phase:
 - Character creation now uses the launcher AppShell with a left-sidebar summary, fixed-width step navigation, full-character randomization, no-selectable-backstory gating, and a total attribute matrix with contribution tooltips.
 - Gameplay shell unification remains deferred.
 - Combat equipment mapping audit has landed.
-- `item.short_bow` is equipped by Hunter starts into `slot.weapon.right` but has no combat use profile yet; this is the next narrow fix.
-- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
+- `item.short_bow` now has a current ranged archery combat use profile for Hunter starter mapping.
+- Known spell ownership planning is next and should remain planning-only unless explicitly re-scoped.
+- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
 
 ## North Star
 
@@ -69,9 +70,9 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.86` | Combat Equipment Mapping Audit | Landed. Audited combat/equipment ownership and starter equipment mapping. | Audit only; no formula/content behavior changes. |
-| `0.5.87` | Combat Equipment Mapping Follow-Up | Next. Add current-content short-bow combat profile for Hunter starter mapping. | Short bow only; no formulas, ammo, range balance, UI, or broad equipment policy. |
-| `0.5.88` | Known Spell Ownership Plan | Planned. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
+| `0.5.87` | Combat Equipment Mapping Follow-Up | Landed. Added current-content short-bow combat profile for Hunter starter mapping. | Short bow only; no formulas, ammo, range balance, UI, or broad equipment policy. |
+| `0.5.88` | Known Spell Ownership Plan | Next. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
+| `0.5.89` | Post-plan implementation TBD | Planned after `0.5.88` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
