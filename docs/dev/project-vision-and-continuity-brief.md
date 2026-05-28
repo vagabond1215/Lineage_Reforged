@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-27 after `Version 0.5.87 - Combat Equipment Mapping Follow-Up` landed.
+Updated 2026-05-28 after `Version 0.5.88 - Known Spell Ownership Plan` landed.
 
 ## Purpose
 
@@ -19,11 +19,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
+- `Version 0.5.88 - Known Spell Ownership Plan`
 
 Next recommended version:
 
-- `Version 0.5.88 - Known Spell Ownership Plan`
+- `Version 0.5.89 - Known Spell Ownership Helpers`
 
 Current sequence source:
 
@@ -46,7 +46,9 @@ Current phase:
 - Gameplay shell unification remains deferred.
 - Combat equipment mapping audit has landed.
 - `item.short_bow` now has a current ranged archery combat use profile for Hunter starter mapping.
-- Known spell ownership planning is next and should remain planning-only unless explicitly re-scoped.
+- Known spell ownership planning has landed and chooses character-scoped known spells first.
+- Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
+- Known spell ownership helper implementation is next and should remain pure helper/test work unless explicitly re-scoped.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
 
 ## North Star
@@ -70,9 +72,9 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.87` | Combat Equipment Mapping Follow-Up | Landed. Added current-content short-bow combat profile for Hunter starter mapping. | Short bow only; no formulas, ammo, range balance, UI, or broad equipment policy. |
-| `0.5.88` | Known Spell Ownership Plan | Next. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
-| `0.5.89` | Post-plan implementation TBD | Planned after `0.5.88` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
+| `0.5.88` | Known Spell Ownership Plan | Landed. Defined character-scoped known spell ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
+| `0.5.89` | Known Spell Ownership Helpers | Next. Add character-scoped known-spell helper boundary. | Pure helpers/tests only; no casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
+| `0.5.90` | Post-helper implementation TBD | Planned after `0.5.89` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
