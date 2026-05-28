@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-05-27
+Date: 2026-05-28
 Route: ChatGPT via GitHub Connector cleanup
 Status: connector-updated sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.87 - Combat Equipment Mapping Follow-Up` added the short-bow combat profile and closed the Hunter starter bow mapping gap.
+This file gives Codex a stable ordered queue after `Version 0.5.88 - Known Spell Ownership Plan` defined character-scoped known-spell ownership and acquisition boundaries before active magic expansion.
 
 It does not replace:
 
@@ -19,13 +19,13 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed combat follow-up slice:
+Latest landed magic planning slice:
 
-- `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
+- `Version 0.5.88 - Known Spell Ownership Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.88 - Known Spell Ownership Plan`
+- `Version 0.5.89 - Known Spell Ownership Helpers`
 
 ## Ordered Trajectory
 
@@ -40,7 +40,8 @@ Immediate next Codex run:
 | 7 | `0.5.85` | Creator Sidebar Layout And Backstory Gating | Codex 5.5 Local | `docs/design/unified-shell-and-creator-refinement-plan.md` | focused creator UI/form helpers + tests | Landed | Character creation only; no gameplay shell unification, generated output, or combat work. |
 | 8 | `0.5.86` | Combat Equipment Mapping Audit | Codex 5.5 Local | `docs/design/combat-equipment-mapping-audit-plan.md` | audit tables + focused tests | Landed | Audit only; no combat formula rewrites or content behavior changes. |
 | 9 | `0.5.87` | Combat Equipment Mapping Follow-Up | Codex 5.5 Local | `docs/design/combat-equipment-mapping-audit-plan.md` | narrow content/test fix | Landed | Added short-bow combat profile only; no formulas, ammo, balance, UI, or broad equipment policy. |
-| 10 | `0.5.88` | Known Spell Ownership Plan | Codex 5.5 Plan Mode or Codex Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Next | Define ownership/acquisition before runtime casting; no spell execution. |
+| 10 | `0.5.88` | Known Spell Ownership Plan | Codex 5.5 Local docs-only | `docs/design/known-spell-ownership-plan.md` | planning doc | Landed | Planned ownership/acquisition before runtime casting; no spell execution. |
+| 11 | `0.5.89` | Known Spell Ownership Helpers | Codex 5.5 Local | `docs/design/known-spell-ownership-plan.md` | pure helpers + focused tests | Next | Character-scoped known-spell helper boundary only; no casting, UI, save schema migration, catalyst behavior, or Legacy power. |
 
 ## Default Prompt Pattern
 
@@ -59,10 +60,10 @@ Each future Codex prompt should:
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
 - Do not extract a universal shell before a later dedicated shell pass scopes it.
-- Do not add generated UI output during known-spell ownership planning.
+- Do not add generated UI output during known-spell ownership helper work.
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
-- Do not mix known-spell ownership planning with combat math rewrites, active spell execution, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
-- Do not begin runtime magic until known-spell ownership and acquisition are explicitly planned.
+- Do not mix known-spell ownership helpers with combat math rewrites, active spell execution, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
+- Do not begin runtime magic until known-spell ownership helpers, validation, conduit/catalyst/control policy, and blocked-hook tests are explicitly implemented in narrow slices.
 
 ## When To Reorder
 
