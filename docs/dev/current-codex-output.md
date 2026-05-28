@@ -1,11 +1,11 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.87 - Combat Equipment Mapping Follow-Up
-Date: 2026-05-27
-Branch/status assumption: Ran locally on `master`. Default `git pull` failed local SSL certificate validation; `git -c http.sslBackend=schannel pull` fast-forwarded `master` from `87034c4` to `e918764`. Pre-edit worktree was clean and `master` was even with `origin/master` (`0 0`).
+Source version/run: Version 0.5.88 - Known Spell Ownership Plan
+Date: 2026-05-28
+Branch/status assumption: Ran locally on `master`. Preflight worktree was clean and `master` was even with `origin/master` (`0 0`). Default `git pull` failed local SSL certificate validation; `git -c http.sslBackend=schannel pull` fast-forwarded `master` from `2814b9b` to `87dc35c`. Post-pull `master` was clean and even with `origin/master` before edits.
 
 ## Result
-Added the narrow current-content combat use profile for `item.short_bow` and updated the focused combat/equipment mapping test so Hunter's starter bow is no longer an allowed weapon-profile gap.
+Updated the planning-only Known Spell Ownership Plan into a current `Version 0.5.88` source document and recorded the deferred magic ownership/runtime boundaries in the backlog.
 
 ## Files Inspected
 - `AGENTS.md`
@@ -14,62 +14,95 @@ Added the narrow current-content combat use profile for `item.short_bow` and upd
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/combat-equipment-mapping-audit-plan.md`
+- `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
+- `packages/content/base/player/spells.json`
+- `packages/content/base/player/abilities.json`
 - `packages/content/base/items/items.json`
+- `packages/content/base/player/legacy_unlocks.json`
+- `packages/schemas/player/spell.schema.json`
+- `packages/schemas/player/ability.schema.json`
 - `packages/schemas/items/item.schema.json`
+- `packages/shared/types/src/contracts.ts`
+- `packages/shared/types/src/combat.ts`
 - `packages/engines/game-engine/src/combat/index.ts`
-- `tests/unit/combat-equipment-mapping.test.mjs`
-- `tests/unit/combat-spawn-foundation.test.mjs`
-- `tests/unit/combat-hook-support.test.mjs`
+- `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts`
+- `tools/content-lint/spell-hook-support.mjs`
+- `tools/content-lint/magic-metadata-support.mjs`
+- `tests/unit/spell-hook-support.test.mjs`
+- `tests/unit/spell-compatibility-status.test.mjs`
+- `tests/unit/spell-primary-family.test.mjs`
+- `tests/unit/magic-metadata-support.test.mjs`
+- `tests/unit/arcane-compendium-presentation.test.mjs`
+- `tests/unit/arcane-compendium-codex.test.mjs`
 
 ## Files Changed
-- `packages/content/base/items/items.json`
-- `tests/unit/combat-equipment-mapping.test.mjs`
+- `docs/design/known-spell-ownership-plan.md`
+- `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
-## Short Bow Mapping
-`item.short_bow` now has one `useProfiles` entry matching the existing `item.composite_bow` ranged combat profile shape: `combat.ranged.primary`, `skill.combat.weapon.archery`, `handlingType: "weapon"`, `proficiencySkillId: "skill.combat.weapon.archery"`, `weapon.archery`/`ranged` tags, `weapon.archery` plus `damage.ranged` resolution hooks, single enemy ranged target profile, and the same active timing/stamina profile.
+## Known Spell Ownership Plan
+The plan chooses character-known spells as the first ownership model. Early known spells live on the current character/run through explicit character-scoped knowledge records; they do not persist after death or retirement unless a future inheritance/tradition evidence model is designed.
 
-No conduit profile, ammo behavior, new action id, new skill id, new hook, schema field, or balance-specific ranged behavior was added.
+Account, family, institution, item, document, source-run, and heir-scoped ownership remain deferred.
 
-## Test Update
-`tests/unit/combat-equipment-mapping.test.mjs` now removes `item.short_bow` from `KNOWN_STARTER_WEAPON_PROFILE_GAPS`. A focused Hunter assertion confirms `starting_bundle.hunter` still equips `item.short_bow` into `slot.weapon.right`, then verifies the short-bow ranged archery weapon profile matches the current `item.composite_bow` profile and is a current weapon-training candidate profile.
+## Acquisition Policy
+A spell becomes known only through explicit character-scoped acquisition evidence. Safe early planning favors a pure `training_event` route, with `teacher` and `quest_event_reward` later when those owners can provide stable source ids.
 
-The remaining known starter weapon-profile gap is `item.butcher_knife`.
+Scroll/tome teaching, temporary document/item grants, discovered records, institution licensing, family tradition inheritance, Legacy-granted spell knowledge, and backstory/lineage starter spell bundles remain deferred.
+
+## Legacy / Account / Family Boundaries
+Magic Legacy must not grant direct spell power or free spell knowledge. Legacy, account unlocks, family tradition, institutions, scrolls, tomes, and documents may later unlock access lanes or study evidence, but they must not automatically create character-known spells.
+
+The plan explicitly forbids inferring spell ownership from lineage, backstory, UI state, selected character, source run, account id, or family id alone.
+
+## Data Shape Planning
+The future owner record is planned around `knownSpellId`, `ownerScope`, `ownerId`, `characterId`, `spellId`, acquisition route/source fields, acquisition time/run/character fields, optional teacher/institution/source item/source event evidence, and an availability state such as available, blocked, forgotten, lost, or revoked.
+
+Validation should require valid spell catalog ids, supported character owners, supported acquisition routes, required route evidence, and blocked unsupported/deferred/unknown hooks. Current-data-only policy applies; old-save compatibility is not required unless explicitly requested.
+
+## Runtime Casting Blockers
+- Known-spell check against a character-scoped record.
+- Equipped conduit source and conduit tag resolution.
+- Catalyst source plus consumption or persistence policy.
+- Control capacity.
+- MP, stamina, strain, and backlash/collateral cost handling.
+- Combat versus noncombat context.
+- Spell/effect lane ownership.
+- Unsupported, deferred, and unknown hook behavior.
+- UI command ownership and command validation.
+- Save/current-data validation and tests proving blocked hooks remain blocked.
+
+## First Safe Implementation Slice
+Recommended next scope: `Version 0.5.89 - Known Spell Ownership Helpers`.
+
+That slice should add pure known-spell ownership helper types/functions and focused tests only, supporting current-data character-scoped records, spell id validation, owner/acquisition validation, and a read-only `characterKnowsSpell(...)`-style helper. It should not wire combat casting, UI commands, save schema changes, catalyst behavior, scroll/tome behavior, Magic Legacy power, family inheritance, institution licensing, or document teaching.
 
 ## Behavior / Runtime Confirmation
-Combat formulas, combat runtime code, equipment behavior, durability, item instances, loot, crafting, economy, UI, save schema, generated output, active magic, creator shell/sidebar, calendar/climate, Chronicle, Bloodlines, Backstory Legacy, Family Prestige, Chronicle Marks, Lineage Seals, estate, heir, heirloom, and bequest behavior were not changed.
+No spells, spell metadata, known-spell runtime state, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, active magic behavior, generated output, UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
 
-This run changed current item content metadata for `item.short_bow`, focused test coverage, and this Codex output file only.
+This run changed planning docs only.
 
 ## Checks Run
 - `git branch --show-current`
-- `git pull` (failed local SSL certificate validation)
-- `git -c http.sslBackend=schannel pull`
 - `git status --short`
 - `git rev-list --left-right --count origin/master...master`
-- `node --test tests/unit/combat-equipment-mapping.test.mjs`
-- `node --test tests/unit/combat-equipment-mapping.test.mjs tests/unit/combat-spawn-foundation.test.mjs tests/unit/combat-hook-support.test.mjs`
+- `git pull` (failed local SSL certificate validation)
+- `git -c http.sslBackend=schannel pull`
 - `git diff --check` (passed; Git reported expected LF-to-CRLF working-copy warnings)
 
 Not run:
-- Browser-facing UI import safety scan, because no browser-facing app files were touched.
-- Broad workspace typecheck or generated output validation, per prompt.
+- `npm.cmd run tool:content-lint`, because no content or schema files were touched.
+- Focused spell/magic/ability tests, because no source or test files were touched.
+- Broad typecheck or generated output validation, per prompt.
 
 ## Risks / Follow-Up
-- Keep known deferred gaps separate:
-  - `item.butcher_knife` equip/profile policy
-  - hybrid staff skill-gain policy
-  - improvised pickaxe skill-gain policy
-  - shield/armor defensive skill-gain policy
-  - content-owned equipment slot/handedness/offhand/two-handed metadata
-  - explicit damage-type table
-  - broad weapon/armor/clothing profile coverage
+- Current `PlayerSpellState[]` can still feed combat spell grants, but it is not a complete acquisition/ownership model and should be treated as readiness context until helpers/tests define the boundary.
+- Keep scroll/tome/document teaching, temporary grants, institution licensing, family tradition inheritance, Magic Legacy access lanes, catalyst behavior, and active casting deferred until owner evidence and validation exist.
 
 ## Next Recommended Version
-Version 0.5.88 - Known Spell Ownership Plan
+Version 0.5.89 - Known Spell Ownership Helpers
 
 ## Suggested Commit Message
-fix(content): add short bow combat profile
+docs(magic): plan known spell ownership
