@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-05-27
+Last reviewed: 2026-05-28
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.87 - Combat Equipment Mapping Follow-Up`
-- Next recommended version: `Version 0.5.88 - Known Spell Ownership Plan`
+- Latest landed version: `Version 0.5.88 - Known Spell Ownership Plan`
+- Next recommended version: `Version 0.5.89 - Known Spell Ownership Helpers`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -43,8 +43,10 @@ Current repo reality:
 - Gameplay shell unification remains deferred.
 - Combat equipment mapping audit has landed.
 - `item.short_bow` now has a current ranged archery combat use profile for Hunter starter mapping.
-- Remaining combat/equipment gaps include `item.butcher_knife` equip/profile policy, hybrid staff skill-gain policy, improvised pickaxe skill-gain policy, shield/armor defensive skill-gain policy, content-owned equipment slot/handedness/offhand/two-handed metadata, explicit damage-type table, and broad weapon/armor/clothing profile coverage.
-- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, or broad economy/climate expansion has been added.
+- Known spell ownership planning has landed and chooses character-scoped known spells first.
+- Early known spells should require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
+- Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
+- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
 - Family Prestige earning/spending behavior is not implemented yet.
 - Family management, heirs, heirlooms, bequests, item-instance persistence, estate transfer/claim execution, Chronicle Marks, Lineage Seals, and scoped Backstory evidence remain deferred.
 
@@ -73,7 +75,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.85` | Creator Sidebar Layout And Backstory Gating | Codex Local | Focused creator UI/form helper implementation | Landed. Moved character creation into launcher AppShell/left-sidebar model with backstory gating, full randomization, and attribute matrix refinement. | Character creation only; no gameplay shell unification, generated output, or combat work. |
 | `0.5.86` | Combat Equipment Mapping Audit | Codex Local | Audit | Landed. Audited current combat/equipment ownership and starter equipment mapping. | Audit only; no formula/content behavior changes. |
 | `0.5.87` | Combat Equipment Mapping Follow-Up | Codex Local | Narrow content/test fix | Landed. Added current-content short-bow combat profile for Hunter starter mapping. | Short bow only; no formulas, ammo, range balance, UI, or broad equipment policy. |
-| `0.5.88` | Known Spell Ownership Plan | Codex Local docs-only or Plan Mode | Planning | Next. Define ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
+| `0.5.88` | Known Spell Ownership Plan | Codex Local docs-only | Planning | Landed. Defined character-scoped known spell ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
+| `0.5.89` | Known Spell Ownership Helpers | Codex Local | Pure helpers + focused tests | Next. Add character-scoped known-spell helper boundary. | No casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
 
 ## 4. Sequenced Near-Term Codex Queue
 
@@ -81,9 +84,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.87` | Combat Equipment Mapping Follow-Up | `docs/design/combat-equipment-mapping-audit-plan.md` | Landed |
-| 2 | `0.5.88` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Next |
-| 3 | `0.5.89` | Post-plan implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.88 |
+| 1 | `0.5.88` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Landed |
+| 2 | `0.5.89` | Known Spell Ownership Helpers | `docs/design/known-spell-ownership-plan.md` | Next |
+| 3 | `0.5.90` | Post-helper implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.89 |
 
 ## 5. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -96,7 +99,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep until climate-profile resolver ownership is addressed or explicitly deferred. |
 | Unified Shell And Creator Refinement Plan | `docs/design/unified-shell-and-creator-refinement-plan.md`; consumed by `0.5.85` for first creator implementation, keep as source-detail reference until gameplay shell unification is explicitly scoped or deferred. |
 | Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; consumed by `0.5.86`; retained as the source-detail reference for remaining deferred combat/equipment mapping policy gaps. |
-| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; use for `0.5.88`. |
+| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; consumed by `0.5.88`; retained as the source-detail reference for `0.5.89` known-spell ownership helpers. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
