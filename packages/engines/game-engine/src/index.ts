@@ -129,6 +129,26 @@ export {
   type ResolveOwnedBackstoryLegacyPurchaseIdsParams
 } from "./backstory-legacy-purchases.js";
 export {
+  KNOWN_SPELL_ACQUISITION_ROUTES,
+  KNOWN_SPELL_AVAILABILITY_STATES,
+  KNOWN_SPELL_OWNER_SCOPES,
+  characterKnowsSpell,
+  collectKnownSpellCatalogIds,
+  createKnownSpellRecord,
+  validateKnownSpellRecord,
+  type CharacterKnowsSpellParams,
+  type CreateKnownSpellRecordParams,
+  type KnownSpellAcquisitionRoute,
+  type KnownSpellAvailabilityState,
+  type KnownSpellCatalogEntry,
+  type KnownSpellOwnerScope,
+  type KnownSpellRecordState,
+  type KnownSpellValidationIssue,
+  type KnownSpellValidationIssueCode,
+  type KnownSpellValidationResult,
+  type ValidateKnownSpellRecordParams
+} from "./known-spells.js";
+export {
   createCombatModeState,
   createDefaultGameState,
   createDefaultRunDifficultyState,

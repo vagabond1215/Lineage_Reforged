@@ -1,11 +1,11 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.88 - Known Spell Ownership Plan
-Date: 2026-05-28
-Branch/status assumption: Ran locally on `master`. Preflight worktree was clean and `master` was even with `origin/master` (`0 0`). Default `git pull` failed local SSL certificate validation; `git -c http.sslBackend=schannel pull` fast-forwarded `master` from `2814b9b` to `87dc35c`. Post-pull `master` was clean and even with `origin/master` before edits.
+Source version/run: Version 0.5.89 - Known Spell Ownership Helpers
+Date: 2026-05-29
+Branch/status assumption: Ran locally on `master`. Preflight worktree was clean and `master` was initially even with `origin/master`. Default `git pull` failed local SSL certificate validation; `git -c http.sslBackend=schannel pull` fast-forwarded `master` from `d56e8f5` to `440abf9`. Post-pull `master` was clean and even with `origin/master` (`0 0`) before edits.
 
 ## Result
-Updated the planning-only Known Spell Ownership Plan into a current `Version 0.5.88` source document and recorded the deferred magic ownership/runtime boundaries in the backlog.
+Added the first pure known-spell ownership helper boundary for current-data character-scoped spell knowledge, plus focused tests proving the boundary remains independent from combat casting, Arcane Compendium projection, save schema, UI, catalyst behavior, and current `PlayerSpellState[]` readiness context.
 
 ## Files Inspected
 - `AGENTS.md`
@@ -18,12 +18,7 @@ Updated the planning-only Known Spell Ownership Plan into a current `Version 0.5
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
 - `packages/content/base/player/spells.json`
-- `packages/content/base/player/abilities.json`
-- `packages/content/base/items/items.json`
-- `packages/content/base/player/legacy_unlocks.json`
 - `packages/schemas/player/spell.schema.json`
-- `packages/schemas/player/ability.schema.json`
-- `packages/schemas/items/item.schema.json`
 - `packages/shared/types/src/contracts.ts`
 - `packages/shared/types/src/combat.ts`
 - `packages/engines/game-engine/src/combat/index.ts`
@@ -36,73 +31,102 @@ Updated the planning-only Known Spell Ownership Plan into a current `Version 0.5
 - `tests/unit/magic-metadata-support.test.mjs`
 - `tests/unit/arcane-compendium-presentation.test.mjs`
 - `tests/unit/arcane-compendium-codex.test.mjs`
+- `packages/engines/game-engine/src/index.ts`
+- `packages/engines/game-engine/src/backstory-legacy-purchases.ts`
+- `packages/engines/game-engine/src/backstory-eligibility.ts`
+- `packages/engines/game-engine/src/account-family.ts`
+- `packages/engines/game-engine/src/legacy-account.ts`
 
 ## Files Changed
-- `docs/design/known-spell-ownership-plan.md`
-- `docs/future_content_backlog.md`
+- `packages/engines/game-engine/src/known-spells.ts`
+- `packages/engines/game-engine/src/known-spells.js`
+- `packages/engines/game-engine/src/index.ts`
+- `tests/unit/known-spell-ownership.test.mjs`
 - `docs/dev/current-codex-output.md`
 
-## Known Spell Ownership Plan
-The plan chooses character-known spells as the first ownership model. Early known spells live on the current character/run through explicit character-scoped knowledge records; they do not persist after death or retirement unless a future inheritance/tradition evidence model is designed.
+## Known Spell Helper Boundary
+The helper lives in `packages/engines/game-engine/src/known-spells.ts` with a matching `.js` bridge and game-engine index exports.
 
-Account, family, institution, item, document, source-run, and heir-scoped ownership remain deferred.
+Added pure helper-facing types and constants for:
 
-## Acquisition Policy
-A spell becomes known only through explicit character-scoped acquisition evidence. Safe early planning favors a pure `training_event` route, with `teacher` and `quest_event_reward` later when those owners can provide stable source ids.
+- `KnownSpellOwnerScope`, currently only `"character"`.
+- `KnownSpellAcquisitionRoute`, currently only `"training_event"`.
+- `KnownSpellAvailabilityState`, currently `"available"` and `"blocked"`.
+- `KnownSpellRecordState`, a minimal current-data character-owned record shape.
 
-Scroll/tome teaching, temporary document/item grants, discovered records, institution licensing, family tradition inheritance, Legacy-granted spell knowledge, and backstory/lineage starter spell bundles remain deferred.
+The helper does not import spell JSON, UI code, combat runtime, design docs, content loaders, or `PlayerSpellState`. Callers supply spell catalog ids or records, so the boundary remains pure and non-mutating.
 
-## Legacy / Account / Family Boundaries
-Magic Legacy must not grant direct spell power or free spell knowledge. Legacy, account unlocks, family tradition, institutions, scrolls, tomes, and documents may later unlock access lanes or study evidence, but they must not automatically create character-known spells.
+## Validation Rules
+`validateKnownSpellRecord(...)` validates deterministic issue codes for:
 
-The plan explicitly forbids inferring spell ownership from lineage, backstory, UI state, selected character, source run, account id, or family id alone.
+- required `knownSpellId`, `ownerScope`, `ownerId`, `characterId`, `spellId`, `acquisitionRoute`, `acquiredAt`, and `availability`
+- spell ids against the supplied current spell catalog
+- `ownerScope` exactly `"character"`
+- `acquisitionRoute` exactly `"training_event"`
+- `availability` as `"available"` or `"blocked"`
+- current character consistency by requiring `ownerId`, `characterId`, and optional query context to match
 
-## Data Shape Planning
-The future owner record is planned around `knownSpellId`, `ownerScope`, `ownerId`, `characterId`, `spellId`, acquisition route/source fields, acquisition time/run/character fields, optional teacher/institution/source item/source event evidence, and an availability state such as available, blocked, forgotten, lost, or revoked.
+Unsupported account, family, institution, document, item-instance, source-run, heir, Legacy, scroll, tome, discovered-record, teacher, and quest/event routes are rejected by scope or route validation rather than treated as spell knowledge.
 
-Validation should require valid spell catalog ids, supported character owners, supported acquisition routes, required route evidence, and blocked unsupported/deferred/unknown hooks. Current-data-only policy applies; old-save compatibility is not required unless explicitly requested.
+## Query Helper
+`characterKnowsSpell(...)` is a read-only pure query helper. It returns `true` only when a supplied record validates as an available character-owned known-spell record for the requested character id and spell id.
 
-## Runtime Casting Blockers
-- Known-spell check against a character-scoped record.
-- Equipped conduit source and conduit tag resolution.
-- Catalyst source plus consumption or persistence policy.
-- Control capacity.
-- MP, stamina, strain, and backlash/collateral cost handling.
-- Combat versus noncombat context.
-- Spell/effect lane ownership.
-- Unsupported, deferred, and unknown hook behavior.
-- UI command ownership and command validation.
-- Save/current-data validation and tests proving blocked hooks remain blocked.
+Blocked records, unknown spell ids, mismatched characters, unsupported owner scopes, unsupported acquisition routes, and legacy `PlayerSpellState[]`-shaped entries return `false` and do not mutate input.
 
-## First Safe Implementation Slice
-Recommended next scope: `Version 0.5.89 - Known Spell Ownership Helpers`.
+`createKnownSpellRecord(...)` is also pure: it builds the minimal supported character/training-event shape and returns the same validation result structure without writing runtime state.
 
-That slice should add pure known-spell ownership helper types/functions and focused tests only, supporting current-data character-scoped records, spell id validation, owner/acquisition validation, and a read-only `characterKnowsSpell(...)`-style helper. It should not wire combat casting, UI commands, save schema changes, catalyst behavior, scroll/tome behavior, Magic Legacy power, family inheritance, institution licensing, or document teaching.
+## Tests
+Added `tests/unit/known-spell-ownership.test.mjs`.
+
+Focused coverage proves:
+
+- valid character-scoped known-spell records pass
+- unknown spell ids fail
+- unsupported owner scopes fail
+- unsupported acquisition routes fail
+- missing required fields fail with deterministic issue codes
+- owner and character ids must match the current character context
+- unsupported availability states fail
+- `characterKnowsSpell(...)` only returns true for matching available character-owned records
+- blocked records do not count as known
+- account/family/institution/document/Legacy-like records do not count as known
+- Arcane Compendium projection remains independent from known-spell ownership
+- current `PlayerSpellState[]` remains readiness/legacy context, not an acquisition model
+- the helper source does not import content JSON, UI, combat, planning docs, or `PlayerSpellState`
 
 ## Behavior / Runtime Confirmation
-No spells, spell metadata, known-spell runtime state, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, active magic behavior, generated output, UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
+No spells, spell metadata, active spell casting, known-spell runtime wiring, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
 
-This run changed planning docs only.
+This run added pure helper code and focused tests only.
 
 ## Checks Run
 - `git branch --show-current`
-- `git status --short`
-- `git rev-list --left-right --count origin/master...master`
+- `git status --short --branch`
 - `git pull` (failed local SSL certificate validation)
 - `git -c http.sslBackend=schannel pull`
+- `git rev-list --left-right --count origin/master...master`
+- `node --test tests\unit\known-spell-ownership.test.mjs`
+- `node --test tests\unit\spell-hook-support.test.mjs tests\unit\spell-compatibility-status.test.mjs tests\unit\spell-primary-family.test.mjs tests\unit\magic-metadata-support.test.mjs tests\unit\arcane-compendium-presentation.test.mjs tests\unit\arcane-compendium-codex.test.mjs`
 - `git diff --check` (passed; Git reported expected LF-to-CRLF working-copy warnings)
 
 Not run:
+
 - `npm.cmd run tool:content-lint`, because no content or schema files were touched.
-- Focused spell/magic/ability tests, because no source or test files were touched.
-- Broad typecheck or generated output validation, per prompt.
+- `npm.cmd run typecheck` or broad workspace validation, per prompt and known pre-existing blockers.
+- Generated output validation, because no generated output was touched.
 
 ## Risks / Follow-Up
-- Current `PlayerSpellState[]` can still feed combat spell grants, but it is not a complete acquisition/ownership model and should be treated as readiness context until helpers/tests define the boundary.
-- Keep scroll/tome/document teaching, temporary grants, institution licensing, family tradition inheritance, Magic Legacy access lanes, catalyst behavior, and active casting deferred until owner evidence and validation exist.
+- Acquisition event creation remains deferred.
+- Active casting remains deferred.
+- Conduit/catalyst/control policy remains deferred.
+- Scroll/tome/document teaching remains deferred.
+- Magic Legacy access lanes remain deferred.
+- Family, institution, account, document, item-instance, source-run, and heir ownership scopes remain deferred.
+- `PlayerSpellState[]` remains readiness/legacy context and is not a complete acquisition/ownership model.
+- Collection-level validation, such as duplicate `knownSpellId` detection and route-evidence validation beyond the minimal `training_event` route, should be handled in the next validation pass.
 
 ## Next Recommended Version
-Version 0.5.89 - Known Spell Ownership Helpers
+Version 0.5.90 - Known Spell Validation Helpers
 
 ## Suggested Commit Message
-docs(magic): plan known spell ownership
+feat(magic): add known spell ownership helpers
