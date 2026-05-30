@@ -9,7 +9,8 @@ import {
   characterKnowsSpell,
   collectKnownSpellCatalogIds,
   createKnownSpellRecord,
-  validateKnownSpellRecord
+  validateKnownSpellRecord,
+  validateKnownSpellRecordCollection
 } from "../../packages/engines/game-engine/src/index.ts";
 import { buildArcaneCompendiumEntries } from "../../apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts";
 
@@ -17,6 +18,7 @@ const CHARACTER_ID = "player.test.character";
 const KNOWN_SPELL_ID = "known-spell.test.firebolt";
 const FIREBOLT_ID = "spell.fire.elemental.firebolt";
 const MEND_ID = "spell.water.healing.mend";
+const TRAINING_EVENT_ID = "training-event.test.firebolt";
 const ACQUIRED_AT = "2026-05-29T12:00:00.000Z";
 
 async function loadSpellRecords() {
@@ -36,6 +38,21 @@ function validRecord(overrides = {}) {
     availability: "available",
     ...overrides
   };
+}
+
+function trainingEventEvidence(overrides = {}) {
+  return {
+    trainingEventId: TRAINING_EVENT_ID,
+    sourceType: "training_event",
+    ...overrides
+  };
+}
+
+function validRecordWithEvidence(overrides = {}) {
+  return validRecord({
+    trainingEventEvidence: trainingEventEvidence(),
+    ...overrides
+  });
 }
 
 function issueCodes(result) {
@@ -64,6 +81,160 @@ test("valid character-scoped known-spell records pass validation without mutatio
   assert.deepEqual(result.record, record);
   assert.deepEqual(record, before);
   assert.ok(collectKnownSpellCatalogIds(spellRecords).has(FIREBOLT_ID));
+});
+
+test("valid character-scoped known-spell record collections pass validation", async () => {
+  const spellRecords = await loadSpellRecords();
+  const records = [
+    validRecordWithEvidence(),
+    validRecordWithEvidence({
+      knownSpellId: "known-spell.test.mend",
+      spellId: MEND_ID,
+      trainingEventEvidence: trainingEventEvidence({
+        trainingEventId: "training-event.test.mend"
+      })
+    })
+  ];
+
+  const result = validateKnownSpellRecordCollection({
+    records,
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.issues, []);
+  assert.deepEqual(result.records, records);
+});
+
+test("non-array known-spell collections fail deterministically", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const result = validateKnownSpellRecordCollection({
+    records: { entries: [validRecordWithEvidence()] },
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(result.ok, false);
+  assert.deepEqual(issueCodes(result), ["invalid_collection"]);
+  assert.deepEqual(result.records, []);
+});
+
+test("known-spell collection validation preserves record-level issue detail", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const result = validateKnownSpellRecordCollection({
+    records: [
+      validRecordWithEvidence(),
+      validRecordWithEvidence({
+        knownSpellId: "known-spell.test.unknown",
+        spellId: "spell.fixture.unknown",
+        trainingEventEvidence: trainingEventEvidence({
+          trainingEventId: "training-event.test.unknown"
+        })
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(result.ok, false);
+  const failure = result.issues.find((issue) => issue.code === "record_validation_failed");
+  assert.ok(failure);
+  assert.equal(failure.index, 1);
+  assert.equal(failure.knownSpellId, "known-spell.test.unknown");
+  assert.deepEqual(failure.recordIssues.map((issue) => issue.code), ["unknown_spell_id"]);
+  assert.deepEqual(result.records, []);
+});
+
+test("known-spell collection validation rejects duplicate knownSpellId values", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const result = validateKnownSpellRecordCollection({
+    records: [
+      validRecordWithEvidence(),
+      validRecordWithEvidence({
+        spellId: MEND_ID,
+        trainingEventEvidence: trainingEventEvidence({
+          trainingEventId: "training-event.test.mend"
+        })
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(result.ok, false);
+  const duplicate = result.issues.find((issue) => issue.code === "duplicate_known_spell_id");
+  assert.ok(duplicate);
+  assert.equal(duplicate.knownSpellId, KNOWN_SPELL_ID);
+  assert.deepEqual(duplicate.duplicateIndexes, [0, 1]);
+});
+
+test("known-spell collection validation requires minimal training-event evidence", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const result = validateKnownSpellRecordCollection({
+    records: [validRecord()],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(result.ok, false);
+  assert.ok(issueCodes(result).includes("missing_training_event_id"));
+  assert.ok(issueCodes(result).includes("missing_training_event_source"));
+});
+
+test("known-spell collection validation rejects unsupported training-event evidence", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const sourceMismatch = validateKnownSpellRecordCollection({
+    records: [
+      validRecordWithEvidence({
+        trainingEventEvidence: trainingEventEvidence({
+          sourceType: "legacy_access_lane",
+          sourceLegacyUnlockId: "legacy.magic.safe_study"
+        })
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+  assert.equal(sourceMismatch.ok, false);
+  assert.ok(issueCodes(sourceMismatch).includes("unsupported_training_event_evidence"));
+
+  const nonObjectEvidence = validateKnownSpellRecordCollection({
+    records: [
+      validRecord({
+        trainingEventEvidence: "training-event.test.firebolt"
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+  assert.equal(nonObjectEvidence.ok, false);
+  assert.deepEqual(issueCodes(nonObjectEvidence), ["unsupported_training_event_evidence"]);
+});
+
+test("unsupported route evidence does not enable unsupported acquisition routes", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const result = validateKnownSpellRecordCollection({
+    records: [
+      validRecordWithEvidence({
+        acquisitionRoute: "legacy_access_lane",
+        trainingEventEvidence: trainingEventEvidence()
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(result.ok, false);
+  const failure = result.issues.find((issue) => issue.code === "record_validation_failed");
+  assert.ok(failure);
+  assert.ok(failure.recordIssues.some((issue) => issue.code === "unsupported_acquisition_route"));
 });
 
 test("pure create helper normalizes only the supported character training-event shape", async () => {
@@ -254,6 +425,32 @@ test("blocked records do not count as character-known spells", async () => {
   );
 });
 
+test("blocked records remain valid collection records with evidence", async () => {
+  const spellRecords = await loadSpellRecords();
+  const blockedRecord = validRecordWithEvidence({
+    availability: "blocked",
+    blockedReason: "training_incomplete"
+  });
+
+  const result = validateKnownSpellRecordCollection({
+    records: [blockedRecord],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.records, [blockedRecord]);
+  assert.equal(
+    characterKnowsSpell({
+      records: [blockedRecord],
+      characterId: CHARACTER_ID,
+      spellId: FIREBOLT_ID,
+      spellCatalog: spellRecords
+    }),
+    false
+  );
+});
+
 test("account, family, institution, document, and Legacy-like records do not count as known", async () => {
   const spellRecords = await loadSpellRecords();
   const records = [
@@ -278,6 +475,13 @@ test("account, family, institution, document, and Legacy-like records do not cou
 test("Arcane Compendium projection remains independent from known-spell ownership", async () => {
   const spellRecords = await loadSpellRecords();
   const entriesBefore = buildArcaneCompendiumEntries(spellRecords);
+
+  const validation = validateKnownSpellRecordCollection({
+    records: [validRecordWithEvidence()],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+  assert.equal(validation.ok, true);
 
   assert.equal(
     characterKnowsSpell({
@@ -328,6 +532,16 @@ test("current PlayerSpellState entries remain readiness context, not acquisition
   assert.equal(result.ok, false);
   assert.ok(issueCodes(result).includes("missing_known_spell_id"));
   assert.ok(issueCodes(result).includes("missing_owner_scope"));
+
+  const collectionResult = validateKnownSpellRecordCollection({
+    records: playerSpellStateRecords,
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+  assert.equal(collectionResult.ok, false);
+  const failure = collectionResult.issues.find((issue) => issue.code === "record_validation_failed");
+  assert.ok(failure);
+  assert.ok(failure.recordIssues.some((issue) => issue.code === "missing_known_spell_id"));
 });
 
 test("known-spell helper does not import content, UI, combat, or planning sources", () => {

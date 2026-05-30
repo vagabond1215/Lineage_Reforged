@@ -136,16 +136,22 @@ export {
   collectKnownSpellCatalogIds,
   createKnownSpellRecord,
   validateKnownSpellRecord,
+  validateKnownSpellRecordCollection,
   type CharacterKnowsSpellParams,
   type CreateKnownSpellRecordParams,
   type KnownSpellAcquisitionRoute,
   type KnownSpellAvailabilityState,
   type KnownSpellCatalogEntry,
+  type KnownSpellCollectionValidationIssue,
+  type KnownSpellCollectionValidationIssueCode,
+  type KnownSpellCollectionValidationResult,
   type KnownSpellOwnerScope,
   type KnownSpellRecordState,
+  type KnownSpellTrainingEventEvidence,
   type KnownSpellValidationIssue,
   type KnownSpellValidationIssueCode,
   type KnownSpellValidationResult,
+  type ValidateKnownSpellRecordCollectionParams,
   type ValidateKnownSpellRecordParams
 } from "./known-spells.js";
 export {
