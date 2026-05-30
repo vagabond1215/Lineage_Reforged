@@ -1,7 +1,7 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.88 - Known Spell Ownership Plan`
-Date: 2026-05-28
+Source route: ChatGPT via GitHub Connector cleanup after `Version 0.5.89 - Known Spell Ownership Helpers`
+Date: 2026-05-29
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
 ## Purpose
@@ -22,7 +22,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.88 - Known Spell Ownership Plan`
+- `Version 0.5.89 - Known Spell Ownership Helpers`
 
 Current sequence source:
 
@@ -30,21 +30,22 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.89 - Known Spell Ownership Helpers`
+- `Version 0.5.90 - Known Spell Validation Helpers`
 
 ## Recent Results
 
 Magic / known spells:
 
 - `0.5.88` updated `docs/design/known-spell-ownership-plan.md` as the current planning source for known-spell ownership and acquisition before active magic expansion.
-- The plan chooses character-known spells first: early known spells live on the current character/run as explicit character-scoped spell knowledge.
-- Early spell knowledge does not persist after death or retirement unless a future inheritance/tradition evidence model is designed.
-- Account, family, institution, item, document, source-run, and heir-scoped spell ownership remain deferred.
-- Account/family/institution/document/Legacy access may later unlock routes or study evidence, but must not automatically create character-known spells.
-- Safe early acquisition favors explicit character-scoped `training_event` records; teacher and quest/event reward routes require stable source ids before use.
-- Scroll/tome/document teaching, temporary grants, discovered records, institution licensing, family tradition inheritance, Legacy-granted spell knowledge, and backstory/lineage starter spell bundles remain deferred.
-- Current `PlayerSpellState[]` can still feed combat spell grants, but it is not a complete acquisition/ownership model and should be treated as readiness context until helper boundaries are defined and tested.
-- `0.5.88` changed planning docs only: no spells, spell metadata, known-spell runtime state, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, active magic behavior, generated output, UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
+- `0.5.89` added the first pure known-spell ownership helper boundary in `packages/engines/game-engine/src/known-spells.ts`, with a `.js` bridge and game-engine index exports.
+- The helper supports current-data character-scoped known-spell records only.
+- Supported helper vocabulary is intentionally minimal: owner scope `"character"`, acquisition route `"training_event"`, and availability states `"available"` and `"blocked"`.
+- `validateKnownSpellRecord(...)` validates required fields, spell ids against a supplied catalog, supported owner scope, supported acquisition route, supported availability, and owner/character consistency.
+- `characterKnowsSpell(...)` is a read-only pure query helper. It returns true only for a valid, available, character-owned record matching the requested character id and spell id.
+- `createKnownSpellRecord(...)` is pure and creates only the supported character/training-event shape before validating it.
+- Current `PlayerSpellState[]` remains readiness/legacy context and is not a complete acquisition/ownership model.
+- `0.5.89` changed pure helper code and focused tests only: no spells, spell metadata, active spell casting, known-spell runtime wiring, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
+- Remaining known-spell follow-up: collection-level validation, duplicate `knownSpellId` detection, and route-evidence validation beyond the minimal `training_event` route.
 
 Combat / equipment:
 
@@ -84,24 +85,25 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.89
+## Active Guardrails For 0.5.90
 
-Known Spell Ownership Helpers:
+Known Spell Validation Helpers:
 
-- Use `docs/design/known-spell-ownership-plan.md` as the primary source.
-- Implement pure helper types/functions and focused tests only.
-- Support current-data character-scoped known-spell records only.
-- Validate spell ids against the current spell catalog.
-- Validate supported owner scope and acquisition route.
-- Add a read-only `characterKnowsSpell(...)`-style helper or equivalent pure query helper that does not mutate state.
-- Keep Arcane Compendium read-only and independent from known-spell state.
-- Do not wire combat casting, UI commands, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, family inheritance, institution licensing, document teaching, or active spell acquisition.
-- Do not add account, family, institution, document, item-instance, source-run, or heir scopes to live helper behavior.
-- Do not treat current `PlayerSpellState[]` as a complete acquisition model unless the helper boundary explicitly treats it as legacy/readiness context only.
+- Use `docs/dev/current-codex-output.md` and `docs/design/known-spell-ownership-plan.md` as the primary sources.
+- Build on the `packages/engines/game-engine/src/known-spells.ts` helper boundary added in `0.5.89`.
+- Keep the pass pure helper/test work only.
+- Add collection-level validation for known-spell record arrays or collections.
+- Add duplicate `knownSpellId` detection.
+- Add deterministic validation issue codes for collection-level failures.
+- Add route-evidence validation for the currently supported `training_event` route only.
+- Preserve current-data character-scoped known-spell records only.
+- Preserve `characterKnowsSpell(...)` as a pure read-only query helper.
+- Do not add account, family, institution, document, item-instance, source-run, heir, Legacy, scroll, tome, teacher, quest/event, or discovered-record live behavior.
 - Do not implement runtime spell casting.
 - Do not add active magic behavior.
+- Do not wire combat casting, UI commands, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, family inheritance, institution licensing, document teaching, or active spell acquisition.
 - Do not add spell execution commands, combat actions, generated output, save schema changes, UI, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior.
-- Do not infer family ownership or spell ownership from lineage, backstory, UI state, selected character, source run, account id, or family id alone.
+- Do not infer spell ownership from lineage, backstory, UI state, selected character state without an explicit known-spell record, source run, account id, or family id alone.
 
 Browser-safety guardrail:
 
@@ -119,13 +121,13 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.88` | Known Spell Ownership Plan | `docs/design/known-spell-ownership-plan.md` | Landed |
-| 2 | `0.5.89` | Known Spell Ownership Helpers | `docs/design/known-spell-ownership-plan.md` | Next |
-| 3 | `0.5.90` | Post-helper implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.89 |
+| 1 | `0.5.89` | Known Spell Ownership Helpers | `docs/design/known-spell-ownership-plan.md` | Landed |
+| 2 | `0.5.90` | Known Spell Validation Helpers | `docs/dev/current-codex-output.md` | Next |
+| 3 | `0.5.91` | Post-validation implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.90 |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.89 - Known Spell Ownership Helpers`, inspect:
+For `Version 0.5.90 - Known Spell Validation Helpers`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -136,12 +138,13 @@ For `Version 0.5.89 - Known Spell Ownership Helpers`, inspect:
 - `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
+- `packages/engines/game-engine/src/known-spells.ts`
+- `packages/engines/game-engine/src/known-spells.js`
+- `packages/engines/game-engine/src/index.ts`
+- `tests/unit/known-spell-ownership.test.mjs`
 - `packages/content/base/player/spells.json`
-- `packages/schemas/player/spell.schema.json`
-- `packages/shared/types/src/contracts.ts`
-- current spell/magic helper owners, if any
 - current focused spell/magic/ability tests
 
-## After 0.5.89
+## After 0.5.90
 
-Use the helper result in `docs/dev/current-codex-output.md` to decide whether the next run should add validation helpers, a read-only known-spell projection, or return to another queued stabilization item.
+Use the validation result in `docs/dev/current-codex-output.md` to decide whether the next run should add acquisition evidence helpers, a read-only known-spell projection, or return to another queued stabilization item.
