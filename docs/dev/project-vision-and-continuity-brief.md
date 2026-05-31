@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-29 after `Version 0.5.89 - Known Spell Ownership Helpers` landed.
+Updated 2026-05-30 after `Version 0.5.90 - Known Spell Validation Helpers` landed.
 
 ## Purpose
 
@@ -19,11 +19,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.89 - Known Spell Ownership Helpers`
+- `Version 0.5.90 - Known Spell Validation Helpers`
 
 Next recommended version:
 
-- `Version 0.5.90 - Known Spell Validation Helpers`
+- `Version 0.5.91 - Known Spell Acquisition Evidence Helpers`
 
 Current sequence source:
 
@@ -48,8 +48,9 @@ Current phase:
 - `item.short_bow` now has a current ranged archery combat use profile for Hunter starter mapping.
 - Known spell ownership planning has landed and chooses character-scoped known spells first.
 - Known spell ownership helpers have landed as a pure character-scoped helper boundary with focused tests.
+- Known spell validation helpers have landed as pure collection validation, duplicate id detection, and minimal training-event evidence validation.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
-- Known spell validation helpers are next and should remain pure helper/test work unless explicitly re-scoped.
+- Known spell acquisition evidence helpers are next and should remain pure helper/test work unless explicitly re-scoped.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
 
 ## North Star
@@ -73,9 +74,9 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.89` | Known Spell Ownership Helpers | Landed. Added character-scoped known-spell helper boundary. | Pure helpers/tests only; no casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
-| `0.5.90` | Known Spell Validation Helpers | Next. Add collection validation, duplicate id checks, and minimal training-event evidence validation. | Pure validation helpers/tests only; no casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
-| `0.5.91` | Post-validation implementation TBD | Planned after `0.5.90` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
+| `0.5.90` | Known Spell Validation Helpers | Landed. Added collection validation, duplicate id checks, and minimal training-event evidence validation. | Pure validation helpers/tests only; no casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
+| `0.5.91` | Known Spell Acquisition Evidence Helpers | Next. Add training-event evidence helper boundaries. | Pure evidence helpers/tests only; no acquisition mutation, casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
+| `0.5.92` | Post-evidence implementation TBD | Planned after `0.5.91` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
