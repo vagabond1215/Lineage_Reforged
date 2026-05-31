@@ -7,6 +7,25 @@ export interface KnownSpellTrainingEventEvidence {
   sourceType: "training_event";
 }
 
+export type KnownSpellTrainingEventEvidenceValidationIssueCode =
+  | "invalid_training_event_evidence"
+  | "missing_training_event_id"
+  | "missing_training_event_source"
+  | "unsupported_training_event_source"
+  | "unsupported_training_event_evidence_field";
+
+export interface KnownSpellTrainingEventEvidenceValidationIssue {
+  code: KnownSpellTrainingEventEvidenceValidationIssueCode;
+  field: string;
+  message: string;
+}
+
+export interface KnownSpellTrainingEventEvidenceValidationResult {
+  ok: boolean;
+  issues: KnownSpellTrainingEventEvidenceValidationIssue[];
+  evidence?: KnownSpellTrainingEventEvidence;
+}
+
 export interface KnownSpellRecordState {
   knownSpellId: string;
   ownerScope: KnownSpellOwnerScope;
@@ -87,6 +106,11 @@ export interface ValidateKnownSpellRecordCollectionParams {
   characterId?: string | null;
 }
 
+export interface CreateKnownSpellTrainingEventEvidenceParams {
+  trainingEventId: unknown;
+  sourceType?: unknown;
+}
+
 export interface CreateKnownSpellRecordParams {
   knownSpellId: string;
   ownerId: string;
@@ -144,6 +168,14 @@ function createCollectionIssue(
   return { code, field, message, ...details };
 }
 
+function createTrainingEventEvidenceIssue(
+  code: KnownSpellTrainingEventEvidenceValidationIssueCode,
+  field: string,
+  message: string
+): KnownSpellTrainingEventEvidenceValidationIssue {
+  return { code, field, message };
+}
+
 export function collectKnownSpellCatalogIds(
   spellCatalog: Iterable<KnownSpellCatalogEntry>
 ): Set<string> {
@@ -157,24 +189,151 @@ export function collectKnownSpellCatalogIds(
   return ids;
 }
 
-function normalizeTrainingEventEvidence(value: unknown): KnownSpellTrainingEventEvidence | null {
-  if (!isRecord(value)) {
-    return null;
+export function validateKnownSpellTrainingEventEvidence(
+  evidence: unknown
+): KnownSpellTrainingEventEvidenceValidationResult {
+  if (evidence === undefined || evidence === null) {
+    return {
+      ok: false,
+      issues: [
+        createTrainingEventEvidenceIssue(
+          "missing_training_event_id",
+          "trainingEventId",
+          "training_event evidence requires a trainingEventId."
+        ),
+        createTrainingEventEvidenceIssue(
+          "missing_training_event_source",
+          "sourceType",
+          "training_event evidence requires sourceType 'training_event'."
+        )
+      ]
+    };
   }
 
-  const trainingEventId = normalizeString(value.trainingEventId);
-  const sourceType = normalizeString(value.sourceType);
-  if (!trainingEventId || sourceType !== "training_event") {
-    return null;
+  if (!isRecord(evidence)) {
+    return {
+      ok: false,
+      issues: [
+        createTrainingEventEvidenceIssue(
+          "invalid_training_event_evidence",
+          "trainingEventEvidence",
+          "training_event evidence must be a minimal object."
+        )
+      ]
+    };
   }
 
-  for (const field of Object.keys(value)) {
+  const issues: KnownSpellTrainingEventEvidenceValidationIssue[] = [];
+
+  for (const field of Object.keys(evidence)) {
     if (!TRAINING_EVENT_EVIDENCE_FIELDS.has(field)) {
-      return null;
+      issues.push(
+        createTrainingEventEvidenceIssue(
+          "unsupported_training_event_evidence_field",
+          field,
+          `training_event evidence field '${field}' is not supported by this helper boundary.`
+        )
+      );
     }
   }
 
-  return { trainingEventId, sourceType: "training_event" };
+  const trainingEventId = normalizeString(evidence.trainingEventId);
+  const sourceType = normalizeString(evidence.sourceType);
+
+  if (!trainingEventId) {
+    issues.push(
+      createTrainingEventEvidenceIssue(
+        "missing_training_event_id",
+        "trainingEventId",
+        "training_event evidence requires a trainingEventId."
+      )
+    );
+  }
+
+  if (!sourceType) {
+    issues.push(
+      createTrainingEventEvidenceIssue(
+        "missing_training_event_source",
+        "sourceType",
+        "training_event evidence requires sourceType 'training_event'."
+      )
+    );
+  } else if (sourceType !== "training_event") {
+    issues.push(
+      createTrainingEventEvidenceIssue(
+        "unsupported_training_event_source",
+        "sourceType",
+        `training_event evidence sourceType '${sourceType}' is not supported by this helper boundary.`
+      )
+    );
+  }
+
+  if (issues.length > 0) {
+    return { ok: false, issues };
+  }
+
+  return {
+    ok: true,
+    issues: [],
+    evidence: {
+      trainingEventId: trainingEventId as string,
+      sourceType: "training_event"
+    }
+  };
+}
+
+export function normalizeKnownSpellTrainingEventEvidence(
+  value: unknown
+): KnownSpellTrainingEventEvidence | null {
+  return validateKnownSpellTrainingEventEvidence(value).evidence ?? null;
+}
+
+export function isKnownSpellTrainingEventEvidence(
+  value: unknown
+): value is KnownSpellTrainingEventEvidence {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  const result = validateKnownSpellTrainingEventEvidence(value);
+  return (
+    result.ok &&
+    result.evidence?.trainingEventId === value.trainingEventId &&
+    value.sourceType === "training_event"
+  );
+}
+
+export function createKnownSpellTrainingEventEvidence(
+  params: CreateKnownSpellTrainingEventEvidenceParams
+): KnownSpellTrainingEventEvidenceValidationResult {
+  return validateKnownSpellTrainingEventEvidence({
+    trainingEventId: params.trainingEventId,
+    sourceType: params.sourceType ?? "training_event"
+  });
+}
+
+function mapTrainingEventEvidenceIssueToCollectionCode(
+  code: KnownSpellTrainingEventEvidenceValidationIssueCode
+): KnownSpellCollectionValidationIssueCode {
+  switch (code) {
+    case "missing_training_event_id":
+      return "missing_training_event_id";
+    case "missing_training_event_source":
+      return "missing_training_event_source";
+    case "invalid_training_event_evidence":
+    case "unsupported_training_event_source":
+    case "unsupported_training_event_evidence_field":
+      return "unsupported_training_event_evidence";
+  }
+}
+
+function getTrainingEventEvidenceCollectionField(
+  index: number,
+  field: string
+): string {
+  return field === "trainingEventEvidence"
+    ? `records[${index}].trainingEventEvidence`
+    : `records[${index}].trainingEventEvidence.${field}`;
 }
 
 function getKnownSpellIdForIssue(record: unknown): string | undefined {
@@ -186,101 +345,21 @@ function validateTrainingEventEvidenceForCollection(
   index: number,
   knownSpellId: string
 ): { evidence: KnownSpellTrainingEventEvidence | null; issues: KnownSpellCollectionValidationIssue[] } {
-  const issues: KnownSpellCollectionValidationIssue[] = [];
-  const evidence = record.trainingEventEvidence;
+  const result = validateKnownSpellTrainingEventEvidence(record.trainingEventEvidence);
 
-  if (evidence === undefined || evidence === null) {
-    return {
-      evidence: null,
-      issues: [
-        createCollectionIssue(
-          "missing_training_event_id",
-          `records[${index}].trainingEventEvidence.trainingEventId`,
-          "training_event known-spell records require a trainingEventId.",
-          { index, knownSpellId }
-        ),
-        createCollectionIssue(
-          "missing_training_event_source",
-          `records[${index}].trainingEventEvidence.sourceType`,
-          "training_event known-spell records require sourceType 'training_event'.",
-          { index, knownSpellId }
+  return result.ok && result.evidence
+    ? { evidence: result.evidence, issues: [] }
+    : {
+        evidence: null,
+        issues: result.issues.map((issue) =>
+          createCollectionIssue(
+            mapTrainingEventEvidenceIssueToCollectionCode(issue.code),
+            getTrainingEventEvidenceCollectionField(index, issue.field),
+            issue.message,
+            { index, knownSpellId }
+          )
         )
-      ]
-    };
-  }
-
-  if (!isRecord(evidence)) {
-    return {
-      evidence: null,
-      issues: [
-        createCollectionIssue(
-          "unsupported_training_event_evidence",
-          `records[${index}].trainingEventEvidence`,
-          "trainingEventEvidence must be a minimal object for the training_event route.",
-          { index, knownSpellId }
-        )
-      ]
-    };
-  }
-
-  for (const field of Object.keys(evidence)) {
-    if (!TRAINING_EVENT_EVIDENCE_FIELDS.has(field)) {
-      issues.push(
-        createCollectionIssue(
-          "unsupported_training_event_evidence",
-          `records[${index}].trainingEventEvidence.${field}`,
-          `trainingEventEvidence field '${field}' is not supported by this helper boundary.`,
-          { index, knownSpellId }
-        )
-      );
-    }
-  }
-
-  const trainingEventId = normalizeString(evidence.trainingEventId);
-  const sourceType = normalizeString(evidence.sourceType);
-
-  if (!trainingEventId) {
-    issues.push(
-      createCollectionIssue(
-        "missing_training_event_id",
-        `records[${index}].trainingEventEvidence.trainingEventId`,
-        "training_event known-spell records require a trainingEventId.",
-        { index, knownSpellId }
-      )
-    );
-  }
-
-  if (!sourceType) {
-    issues.push(
-      createCollectionIssue(
-        "missing_training_event_source",
-        `records[${index}].trainingEventEvidence.sourceType`,
-        "training_event known-spell records require sourceType 'training_event'.",
-        { index, knownSpellId }
-      )
-    );
-  } else if (sourceType !== "training_event") {
-    issues.push(
-      createCollectionIssue(
-        "unsupported_training_event_evidence",
-        `records[${index}].trainingEventEvidence.sourceType`,
-        `trainingEventEvidence sourceType '${sourceType}' is not supported by this helper boundary.`,
-        { index, knownSpellId }
-      )
-    );
-  }
-
-  if (issues.length > 0) {
-    return { evidence: null, issues };
-  }
-
-  return {
-    evidence: {
-      trainingEventId: trainingEventId as string,
-      sourceType: "training_event"
-    },
-    issues: []
-  };
+      };
 }
 
 function validateKnownSpellRecordWithCatalog(
@@ -312,7 +391,7 @@ function validateKnownSpellRecordWithCatalog(
   const acquiredAt = normalizeString(record.acquiredAt);
   const availability = normalizeString(record.availability);
   const blockedReason = normalizeString(record.blockedReason);
-  const trainingEventEvidence = normalizeTrainingEventEvidence(record.trainingEventEvidence);
+  const trainingEventEvidence = normalizeKnownSpellTrainingEventEvidence(record.trainingEventEvidence);
 
   if (!knownSpellId) {
     issues.push(createIssue("missing_known_spell_id", "knownSpellId", "knownSpellId is required."));

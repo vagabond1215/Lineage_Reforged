@@ -1,14 +1,16 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.90 - Known Spell Validation Helpers
-Date: 2026-05-30
-Branch/status assumption: Ran locally on `master`. Preflight worktree was clean and `master` was even with `origin/master` (`0 0`) before edits. Default `git pull` failed local SSL certificate validation; `git -c http.sslBackend=schannel pull` first hit a sandbox network error, then succeeded with escalation and reported `Already up to date`. Post-pull `master` was clean and even with `origin/master` before edits.
+Source version/run: Version 0.5.91 - Known Spell Acquisition Evidence Helpers
+Date: 2026-05-31
+Branch/status assumption: Ran on `master`. Preflight was clean and even with `origin/master`; default `git pull` hit the known local SSL certificate validation issue, then `git -c http.sslBackend=schannel pull` fast-forwarded successfully and the branch remained even before edits.
 
 ## Result
-Added pure collection-level known-spell validation helpers on top of the existing character-scoped helper boundary. Collections now validate every record with the existing single-record validator, reject duplicate `knownSpellId` values, require minimal `training_event` evidence, and return deterministic collection-level issue details without adding runtime acquisition, casting, UI, save/schema, catalyst, scroll/tome, Magic Legacy, or broader ownership behavior.
+Added a pure training-event acquisition evidence helper boundary on top of the existing character-scoped known-spell ownership helpers.
+
+The new helper surface creates, validates, normalizes, and type-checks minimal `training_event` evidence only. Collection validation now reuses the evidence validator while preserving existing collection-level issue codes for missing ids, missing source, and unsupported evidence.
 
 ## Files Inspected
-- `C:\Users\vagab\.codex\attachments\51321e26-2be6-4b09-b273-2475aec63d12\pasted-text.txt`
+- `C:\Users\vagab\.codex\attachments\1d6a3be6-ccc5-4f64-9a5b-a4bda6343bf6\pasted-text.txt`
 - `AGENTS.md`
 - `README.md`
 - `docs/dev/current-codex-output.md`
@@ -18,18 +20,18 @@ Added pure collection-level known-spell validation helpers on top of the existin
 - `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
-- `packages/engines/game-engine/src/known-spells.ts`
-- `packages/engines/game-engine/src/known-spells.js`
-- `packages/engines/game-engine/src/index.ts`
-- `tests/unit/known-spell-ownership.test.mjs`
 - `packages/content/base/player/spells.json`
 - `packages/schemas/player/spell.schema.json`
 - `packages/shared/types/src/contracts.ts`
 - `packages/shared/types/src/combat.ts`
+- `packages/engines/game-engine/src/known-spells.ts`
+- `packages/engines/game-engine/src/known-spells.js`
+- `packages/engines/game-engine/src/index.ts`
 - `packages/engines/game-engine/src/combat/index.ts`
 - `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts`
 - `tools/content-lint/spell-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
+- `tests/unit/known-spell-ownership.test.mjs`
 - `tests/unit/spell-hook-support.test.mjs`
 - `tests/unit/spell-compatibility-status.test.mjs`
 - `tests/unit/spell-primary-family.test.mjs`
@@ -41,103 +43,79 @@ Added pure collection-level known-spell validation helpers on top of the existin
 - `packages/engines/game-engine/src/known-spells.ts`
 - `packages/engines/game-engine/src/index.ts`
 - `tests/unit/known-spell-ownership.test.mjs`
-- `docs/dev/current-codex-output.md`
 - `docs/future_content_backlog.md`
+- `docs/dev/current-codex-output.md`
 
-## Known Spell Validation Helpers
-Added `validateKnownSpellRecordCollection(...)` plus exported collection result and issue types:
+## Known Spell Acquisition Evidence Helpers
+Added exported pure helpers for the currently supported evidence shape:
 
-- `KnownSpellCollectionValidationResult`
-- `KnownSpellCollectionValidationIssue`
-- `KnownSpellCollectionValidationIssueCode`
-- `ValidateKnownSpellRecordCollectionParams`
-- `KnownSpellTrainingEventEvidence`
+- `validateKnownSpellTrainingEventEvidence(...)`
+- `normalizeKnownSpellTrainingEventEvidence(...)`
+- `isKnownSpellTrainingEventEvidence(...)`
+- `createKnownSpellTrainingEventEvidence(...)`
+- `KnownSpellTrainingEventEvidenceValidationResult`
+- `KnownSpellTrainingEventEvidenceValidationIssue`
+- `KnownSpellTrainingEventEvidenceValidationIssueCode`
+- `CreateKnownSpellTrainingEventEvidenceParams`
 
-Collection issue codes are deterministic and limited to:
+The evidence boundary remains route-specific and minimal: `{ trainingEventId, sourceType: "training_event" }`. It does not introduce teacher, quest, scroll, tome, document, account, family, institution, item-instance, source-run, heir, or Legacy evidence behavior.
 
-- `invalid_collection`
-- `record_validation_failed`
-- `duplicate_known_spell_id`
-- `missing_training_event_id`
-- `missing_training_event_source`
-- `unsupported_training_event_evidence`
+## Evidence Validation Rules
+The evidence validator:
 
-The helper remains in `packages/engines/game-engine/src/known-spells.ts`, with exports surfaced through the existing game-engine index. The `.js` bridge already re-exports the TypeScript module and did not need a behavior change.
+- accepts only object evidence
+- requires a non-empty `trainingEventId`
+- requires `sourceType: "training_event"`
+- trims valid string fields in the normalized result
+- rejects unsupported source types
+- rejects extra future-route/source fields such as account, family, institution, document, item-instance, Legacy, or source-run evidence fields
 
-## Collection Validation Rules
-`validateKnownSpellRecordCollection(...)` accepts only arrays. Non-array input returns `invalid_collection`.
+Deterministic evidence issue codes now cover invalid evidence, missing training event id, missing source, unsupported source, and unsupported evidence fields.
 
-Every array entry is validated through the existing `validateKnownSpellRecord(...)` path against the supplied spell catalog and optional character context. Invalid entries become a collection-level `record_validation_failed` issue that preserves the underlying record-level issues.
+## Record / Collection Integration
+Single-record validation still treats `trainingEventEvidence` as optional record detail and does not require acquisition evidence by itself.
 
-Duplicate non-empty `knownSpellId` values are detected across the collection and reported as `duplicate_known_spell_id`, including the duplicated id and affected indexes.
+Collection validation still requires minimal evidence for otherwise-valid `training_event` records, but now delegates evidence shape checking to the dedicated evidence validator and maps evidence issues back to the existing collection-level issue vocabulary.
 
-Valid collection results return normalized known-spell records. Any collection-level issue returns `ok: false` with no normalized records.
-
-## Training Event Evidence
-Added minimal optional `trainingEventEvidence` support for the currently supported `training_event` route:
-
-- `trainingEventId`: required stable string id
-- `sourceType`: required literal `"training_event"`
-
-Collection validation requires this evidence for otherwise-valid `training_event` records. Missing ids, missing source type, non-object evidence, unsupported source type, or extra unsupported evidence fields fail collection validation.
-
-This does not create training events, execute acquisition behavior, add teacher/quest/institution/scroll/tome/discovered-record/Legacy/family-tradition routes, or validate against runtime training-event state.
-
-## Query Helper Confirmation
-`characterKnowsSpell(...)` remains pure, read-only, and unchanged in behavior. It still returns `true` only for matching valid, available, character-owned records using the existing single-record validator.
-
-Blocked records remain valid records when evidence is present, but they still do not count as known through `characterKnowsSpell(...)`.
+`characterKnowsSpell(...)` behavior remains unchanged: it is read-only and returns `true` only for matching valid, available, character-owned records.
 
 ## Tests
-Expanded `tests/unit/known-spell-ownership.test.mjs` to cover:
+Expanded `tests/unit/known-spell-ownership.test.mjs` with focused coverage for:
 
-- valid known-spell record collections
-- non-array collection failures
-- preservation of record-level issue detail
-- duplicate `knownSpellId` detection with affected indexes
-- missing `training_event` evidence
-- unsupported evidence forms and unsupported evidence source types
-- unsupported evidence not enabling unsupported acquisition routes
-- blocked records remaining valid but not known
-- `PlayerSpellState[]`-shaped entries still failing as known-spell acquisition records
-- Arcane Compendium independence from known-spell validation
-- helper import-boundary guardrails
+- evidence validation and normalization
+- create-helper default `sourceType`
+- type guard behavior
+- missing ids and missing source
+- unsupported source type
+- non-object evidence
+- future-route-shaped evidence fields remaining blocked
+
+Existing ownership, collection, read-only query, Arcane Compendium independence, and `PlayerSpellState[]` isolation tests remain in the same focused file.
 
 ## Behavior / Runtime Confirmation
 No spells, spell metadata, active spell casting, known-spell runtime wiring, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
 
-This run added pure helper code, exports, focused tests, and documentation notes only.
+Arcane Compendium remains read-only and independent from known-spell ownership or acquisition evidence.
+
+Current `PlayerSpellState[]` remains readiness/legacy context and is not treated as a complete acquisition or ownership model.
 
 ## Checks Run
-- `git branch --show-current`
-- `git status --short --branch`
-- `git rev-list --left-right --count origin/master...master`
-- `git pull` (failed local SSL certificate validation)
-- `git -c http.sslBackend=schannel pull` (sandbox network failure)
-- `git -c http.sslBackend=schannel pull` with escalation
 - `node --test tests\unit\known-spell-ownership.test.mjs`
 - `node --test tests\unit\spell-hook-support.test.mjs tests\unit\spell-compatibility-status.test.mjs tests\unit\spell-primary-family.test.mjs tests\unit\magic-metadata-support.test.mjs tests\unit\arcane-compendium-presentation.test.mjs tests\unit\arcane-compendium-codex.test.mjs`
-- `git diff --check` (passed; Git reported expected LF-to-CRLF working-copy warnings)
-
-Not run:
-
-- `npm.cmd run tool:content-lint`, because no content or schema files were touched.
-- Browser-facing app import scan, because no browser-facing app files were touched.
-- `npm.cmd run typecheck` or broad workspace validation, per prompt and known pre-existing blockers.
-- Generated output validation, because no generated output was touched.
+- `git diff --check`
 
 ## Risks / Follow-Up
-- Acquisition event creation remains deferred.
-- Active casting remains deferred.
-- Conduit/catalyst/control policy remains deferred.
-- Scroll/tome/document teaching remains deferred.
-- Magic Legacy access lanes remain deferred.
-- Family, institution, account, document, item-instance, source-run, and heir ownership scopes remain deferred.
-- Teacher, quest/event, discovered-record, Legacy, and family-tradition acquisition routes remain deferred.
-- `PlayerSpellState[]` remains readiness/legacy context unless otherwise resolved.
+- acquisition event creation remains deferred
+- active casting remains deferred
+- conduit/catalyst/control policy remains deferred
+- scroll/tome/document teaching remains deferred
+- Magic Legacy access lanes remain deferred
+- family/institution/account/document ownership scopes remain deferred
+- teacher, quest, discovered-record, item-instance, source-run, heir, and Legacy evidence routes remain deferred
+- `PlayerSpellState[]` remains readiness/legacy context unless otherwise resolved
 
 ## Next Recommended Version
-Version 0.5.91 - Known Spell Acquisition Evidence Helpers
+Version 0.5.92 - Known Spell Read-Only Projection
 
 ## Suggested Commit Message
-feat(magic): add known spell validation helpers
+feat(magic): add known spell acquisition evidence helpers

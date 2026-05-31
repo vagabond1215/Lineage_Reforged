@@ -8,7 +8,11 @@ import {
   KNOWN_SPELL_OWNER_SCOPES,
   characterKnowsSpell,
   collectKnownSpellCatalogIds,
+  createKnownSpellTrainingEventEvidence,
   createKnownSpellRecord,
+  isKnownSpellTrainingEventEvidence,
+  normalizeKnownSpellTrainingEventEvidence,
+  validateKnownSpellTrainingEventEvidence,
   validateKnownSpellRecord,
   validateKnownSpellRecordCollection
 } from "../../packages/engines/game-engine/src/index.ts";
@@ -63,6 +67,80 @@ test("known-spell helper vocabulary is minimal and character-scoped", () => {
   assert.deepEqual(KNOWN_SPELL_OWNER_SCOPES, ["character"]);
   assert.deepEqual(KNOWN_SPELL_ACQUISITION_ROUTES, ["training_event"]);
   assert.deepEqual(KNOWN_SPELL_AVAILABILITY_STATES, ["available", "blocked"]);
+});
+
+test("training-event evidence helpers validate and normalize supported evidence", () => {
+  const rawEvidence = {
+    trainingEventId: ` ${TRAINING_EVENT_ID} `,
+    sourceType: " training_event "
+  };
+  const expectedEvidence = trainingEventEvidence();
+
+  const result = validateKnownSpellTrainingEventEvidence(rawEvidence);
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.issues, []);
+  assert.deepEqual(result.evidence, expectedEvidence);
+  assert.deepEqual(normalizeKnownSpellTrainingEventEvidence(rawEvidence), expectedEvidence);
+  assert.equal(isKnownSpellTrainingEventEvidence(rawEvidence), false);
+  assert.equal(isKnownSpellTrainingEventEvidence(expectedEvidence), true);
+});
+
+test("training-event evidence create helper defaults to the supported source", () => {
+  const result = createKnownSpellTrainingEventEvidence({
+    trainingEventId: ` ${TRAINING_EVENT_ID} `
+  });
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.issues, []);
+  assert.deepEqual(result.evidence, trainingEventEvidence());
+});
+
+test("training-event evidence validation rejects missing ids and sources", () => {
+  const blank = validateKnownSpellTrainingEventEvidence({
+    trainingEventId: " ",
+    sourceType: " "
+  });
+  assert.equal(blank.ok, false);
+  assert.deepEqual(issueCodes(blank), ["missing_training_event_id", "missing_training_event_source"]);
+
+  const sourceMismatch = validateKnownSpellTrainingEventEvidence({
+    trainingEventId: TRAINING_EVENT_ID,
+    sourceType: "legacy_access_lane"
+  });
+  assert.equal(sourceMismatch.ok, false);
+  assert.deepEqual(issueCodes(sourceMismatch), ["unsupported_training_event_source"]);
+  assert.equal(
+    normalizeKnownSpellTrainingEventEvidence({
+      trainingEventId: TRAINING_EVENT_ID,
+      sourceType: "legacy_access_lane"
+    }),
+    null
+  );
+});
+
+test("training-event evidence validation rejects non-object and future-route-shaped evidence", () => {
+  const nonObject = validateKnownSpellTrainingEventEvidence(TRAINING_EVENT_ID);
+  assert.equal(nonObject.ok, false);
+  assert.deepEqual(issueCodes(nonObject), ["invalid_training_event_evidence"]);
+
+  for (const field of [
+    "sourceAccountId",
+    "sourceFamilyId",
+    "sourceInstitutionId",
+    "sourceDocumentId",
+    "sourceItemInstanceId",
+    "sourceLegacyUnlockId",
+    "sourceRunId"
+  ]) {
+    const result = validateKnownSpellTrainingEventEvidence({
+      trainingEventId: TRAINING_EVENT_ID,
+      sourceType: "training_event",
+      [field]: `${field}.test`
+    });
+    assert.equal(result.ok, false, field);
+    assert.deepEqual(issueCodes(result), ["unsupported_training_event_evidence_field"], field);
+  }
 });
 
 test("valid character-scoped known-spell records pass validation without mutation", async () => {
