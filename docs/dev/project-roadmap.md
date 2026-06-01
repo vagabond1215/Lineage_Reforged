@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-05-30
+Last reviewed: 2026-05-31
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.90 - Known Spell Validation Helpers`
-- Next recommended version: `Version 0.5.91 - Known Spell Acquisition Evidence Helpers`
+- Latest landed version: `Version 0.5.91 - Known Spell Acquisition Evidence Helpers`
+- Next recommended version: `Version 0.5.92 - Known Spell Read-Only Projection`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -46,6 +46,7 @@ Current repo reality:
 - Known spell ownership planning has landed and chooses character-scoped known spells first.
 - Known spell ownership helpers have landed as a pure character-scoped helper boundary with focused tests.
 - Known spell validation helpers have landed as pure collection validation, duplicate id detection, and minimal training-event evidence validation.
+- Known spell acquisition evidence helpers have landed as pure helpers for minimal `training_event` evidence.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
@@ -80,7 +81,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.88` | Known Spell Ownership Plan | Codex Local docs-only | Planning | Landed. Defined character-scoped known spell ownership/acquisition before runtime casting. | Planning-only; no spell execution. |
 | `0.5.89` | Known Spell Ownership Helpers | Codex Local | Pure helpers + focused tests | Landed. Added character-scoped known-spell helper boundary. | No casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
 | `0.5.90` | Known Spell Validation Helpers | Codex Local | Pure validation helpers + focused tests | Landed. Added collection validation, duplicate id checks, and minimal training-event evidence validation. | No casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
-| `0.5.91` | Known Spell Acquisition Evidence Helpers | Codex Local | Pure acquisition evidence helpers + focused tests | Next. Add training-event evidence helper boundaries. | No acquisition mutation, casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
+| `0.5.91` | Known Spell Acquisition Evidence Helpers | Codex Local | Pure acquisition evidence helpers + focused tests | Landed. Added training-event evidence helper boundaries. | No acquisition mutation, casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
+| `0.5.92` | Known Spell Read-Only Projection | Codex Local | Pure projection + focused tests | Next. Add read-only known-spell projection. | No acquisition mutation, casting, React UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
 
 ## 4. Sequenced Near-Term Codex Queue
 
@@ -88,9 +90,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.90` | Known Spell Validation Helpers | `docs/dev/current-codex-output.md` | Landed |
-| 2 | `0.5.91` | Known Spell Acquisition Evidence Helpers | `docs/dev/current-codex-output.md` | Next |
-| 3 | `0.5.92` | Post-evidence implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.91 |
+| 1 | `0.5.91` | Known Spell Acquisition Evidence Helpers | `docs/dev/current-codex-output.md` | Landed |
+| 2 | `0.5.92` | Known Spell Read-Only Projection | `docs/dev/current-codex-output.md` | Next |
+| 3 | `0.5.93` | Post-projection implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.92 |
 
 ## 5. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -103,7 +105,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Calendar / Climate Popup IA Audit | Promoted into `docs/design/calendar-climate-popup-view-model-plan.md`; keep until climate-profile resolver ownership is addressed or explicitly deferred. |
 | Unified Shell And Creator Refinement Plan | `docs/design/unified-shell-and-creator-refinement-plan.md`; consumed by `0.5.85` for first creator implementation, keep as source-detail reference until gameplay shell unification is explicitly scoped or deferred. |
 | Combat Audit Scoping Pass | Promoted into `docs/design/combat-equipment-mapping-audit-plan.md`; consumed by `0.5.86`; retained as the source-detail reference for remaining deferred combat/equipment mapping policy gaps. |
-| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; consumed by `0.5.88`; retained as the source-detail reference for `0.5.91` known-spell acquisition evidence helpers. |
+| Magic Runtime Readiness Audit | Promoted into `docs/design/known-spell-ownership-plan.md`; consumed by `0.5.88`; retained as the source-detail reference for `0.5.92` known-spell read-only projection. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
