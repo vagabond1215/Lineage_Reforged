@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-05-31 after `Version 0.5.91 - Known Spell Acquisition Evidence Helpers` landed.
+Updated 2026-06-01 after `Version 0.5.92 - Known Spell Read-Only Projection` landed.
 
 ## Purpose
 
@@ -19,11 +19,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.91 - Known Spell Acquisition Evidence Helpers`
+- `Version 0.5.92 - Known Spell Read-Only Projection`
 
 Next recommended version:
 
-- `Version 0.5.92 - Known Spell Read-Only Projection`
+- `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
 
 Current sequence source:
 
@@ -50,8 +50,9 @@ Current phase:
 - Known spell ownership helpers have landed as a pure character-scoped helper boundary with focused tests.
 - Known spell validation helpers have landed as pure collection validation, duplicate id detection, and minimal training-event evidence validation.
 - Known spell acquisition evidence helpers have landed as pure helpers for minimal `training_event` evidence.
+- Known spell read-only projection has landed as a pure projection over explicit character-scoped known-spell records.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
-- Known spell read-only projection is next and should remain pure projection/test work unless explicitly re-scoped.
+- Magic runtime readiness blocker tests are next and should remain focused test/scaffold work unless explicitly re-scoped.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
 
 ## North Star
@@ -75,9 +76,9 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.91` | Known Spell Acquisition Evidence Helpers | Landed. Added training-event evidence helper boundaries. | Pure evidence helpers/tests only; no acquisition mutation, casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
-| `0.5.92` | Known Spell Read-Only Projection | Next. Add read-only known-spell projection. | Pure projection/tests only; no acquisition mutation, casting, React UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
-| `0.5.93` | Post-projection implementation TBD | Planned after `0.5.92` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
+| `0.5.92` | Known Spell Read-Only Projection | Landed. Added read-only known-spell projection. | Pure projection/tests only; no acquisition mutation, casting, React UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
+| `0.5.93` | Magic Runtime Readiness Blocker Tests | Next. Add tests proving runtime magic remains blocked without required policy gates. | Focused blocker tests/scaffold only; no runtime casting, commands, React UI, save schema migration, or broader routes/scopes. |
+| `0.5.94` | Post-blocker-test implementation TBD | Planned after `0.5.93` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
