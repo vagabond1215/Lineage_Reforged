@@ -130,6 +130,35 @@ export interface CharacterKnowsSpellParams {
   spellCatalog: Iterable<KnownSpellCatalogEntry>;
 }
 
+export interface BuildKnownSpellReadOnlyProjectionParams {
+  records: unknown;
+  spellCatalog: Iterable<KnownSpellCatalogEntry>;
+  characterId: string;
+}
+
+export interface KnownSpellReadOnlyProjectionEntry {
+  knownSpellId: string;
+  spellId: string;
+  characterId: string;
+  availability: KnownSpellAvailabilityState;
+  acquisitionRoute: KnownSpellAcquisitionRoute;
+  acquiredAt: string;
+  trainingEventId?: string;
+  blockedReason?: string;
+}
+
+export interface KnownSpellReadOnlyProjection {
+  ok: boolean;
+  characterId: string;
+  knownSpellCount: number;
+  availableSpellCount: number;
+  blockedSpellCount: number;
+  invalidRecordCount: number;
+  knownSpells: KnownSpellReadOnlyProjectionEntry[];
+  blockedSpells: KnownSpellReadOnlyProjectionEntry[];
+  issues: KnownSpellCollectionValidationIssue[];
+}
+
 export const KNOWN_SPELL_OWNER_SCOPES = ["character"] as const satisfies readonly KnownSpellOwnerScope[];
 export const KNOWN_SPELL_ACQUISITION_ROUTES = ["training_event"] as const satisfies readonly KnownSpellAcquisitionRoute[];
 export const KNOWN_SPELL_AVAILABILITY_STATES = ["available", "blocked"] as const satisfies readonly KnownSpellAvailabilityState[];
@@ -360,6 +389,82 @@ function validateTrainingEventEvidenceForCollection(
           )
         )
       };
+}
+
+function collectInvalidKnownSpellProjectionRecordIndexes(
+  issues: readonly KnownSpellCollectionValidationIssue[]
+): Set<number> {
+  const indexes = new Set<number>();
+
+  for (const issue of issues) {
+    if (typeof issue.index === "number") {
+      indexes.add(issue.index);
+    }
+    for (const duplicateIndex of issue.duplicateIndexes ?? []) {
+      indexes.add(duplicateIndex);
+    }
+  }
+
+  return indexes;
+}
+
+function mapKnownSpellReadOnlyProjectionEntry(
+  record: KnownSpellRecordState
+): KnownSpellReadOnlyProjectionEntry {
+  return {
+    knownSpellId: record.knownSpellId,
+    spellId: record.spellId,
+    characterId: record.characterId,
+    availability: record.availability,
+    acquisitionRoute: record.acquisitionRoute,
+    acquiredAt: record.acquiredAt,
+    ...(record.trainingEventEvidence?.trainingEventId
+      ? { trainingEventId: record.trainingEventEvidence.trainingEventId }
+      : {}),
+    ...(record.blockedReason ? { blockedReason: record.blockedReason } : {})
+  };
+}
+
+function buildKnownSpellReadOnlyProjectionEntries(
+  records: readonly KnownSpellRecordState[]
+): Pick<KnownSpellReadOnlyProjection, "knownSpells" | "blockedSpells"> {
+  return {
+    knownSpells: records
+      .filter((record) => record.availability === "available")
+      .map(mapKnownSpellReadOnlyProjectionEntry),
+    blockedSpells: records
+      .filter((record) => record.availability === "blocked")
+      .map(mapKnownSpellReadOnlyProjectionEntry)
+  };
+}
+
+function collectProjectableKnownSpellRecords(
+  records: unknown,
+  spellCatalog: Iterable<KnownSpellCatalogEntry>,
+  characterId: string,
+  invalidIndexes: ReadonlySet<number>
+): KnownSpellRecordState[] {
+  if (!Array.isArray(records)) {
+    return [];
+  }
+
+  const validRecords: KnownSpellRecordState[] = [];
+  for (const [index, record] of records.entries()) {
+    if (invalidIndexes.has(index)) {
+      continue;
+    }
+
+    const validation = validateKnownSpellRecordCollection({
+      records: [record],
+      spellCatalog,
+      characterId
+    });
+    if (validation.ok) {
+      validRecords.push(...validation.records);
+    }
+  }
+
+  return validRecords;
 }
 
 function validateKnownSpellRecordWithCatalog(
@@ -613,6 +718,78 @@ export function validateKnownSpellRecordCollection(
   }
 
   return { ok: true, issues: [], records: normalizedRecords };
+}
+
+export function buildKnownSpellReadOnlyProjection(
+  params: BuildKnownSpellReadOnlyProjectionParams
+): KnownSpellReadOnlyProjection {
+  const characterId = normalizeString(params.characterId);
+  if (!characterId) {
+    return {
+      ok: false,
+      characterId: "",
+      knownSpellCount: 0,
+      availableSpellCount: 0,
+      blockedSpellCount: 0,
+      invalidRecordCount: 0,
+      knownSpells: [],
+      blockedSpells: [],
+      issues: [
+        createCollectionIssue(
+          "invalid_collection",
+          "characterId",
+          "Known-spell read-only projection requires a characterId."
+        )
+      ]
+    };
+  }
+
+  const spellCatalog = Array.from(params.spellCatalog);
+  const validation = validateKnownSpellRecordCollection({
+    records: params.records,
+    spellCatalog,
+    characterId
+  });
+
+  if (!validation.ok) {
+    const invalidIndexes = collectInvalidKnownSpellProjectionRecordIndexes(validation.issues);
+    const { knownSpells, blockedSpells } = buildKnownSpellReadOnlyProjectionEntries(
+      collectProjectableKnownSpellRecords(
+        params.records,
+        spellCatalog,
+        characterId,
+        invalidIndexes
+      )
+    );
+
+    return {
+      ok: false,
+      characterId,
+      knownSpellCount: knownSpells.length + blockedSpells.length,
+      availableSpellCount: knownSpells.length,
+      blockedSpellCount: blockedSpells.length,
+      invalidRecordCount: invalidIndexes.size,
+      knownSpells,
+      blockedSpells,
+      issues: validation.issues
+    };
+  }
+
+  const { knownSpells, blockedSpells } = buildKnownSpellReadOnlyProjectionEntries(
+    validation.records
+  );
+
+  return {
+    ok: true,
+    characterId,
+    knownSpellCount: knownSpells.length + blockedSpells.length,
+    availableSpellCount: knownSpells.length,
+    blockedSpellCount: blockedSpells.length,
+    invalidRecordCount: 0,
+    knownSpells,
+    blockedSpells,
+    issues: []
+  };
 }
 
 export function createKnownSpellRecord(

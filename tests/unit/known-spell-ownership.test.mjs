@@ -6,6 +6,7 @@ import {
   KNOWN_SPELL_ACQUISITION_ROUTES,
   KNOWN_SPELL_AVAILABILITY_STATES,
   KNOWN_SPELL_OWNER_SCOPES,
+  buildKnownSpellReadOnlyProjection,
   characterKnowsSpell,
   collectKnownSpellCatalogIds,
   createKnownSpellTrainingEventEvidence,
@@ -529,6 +530,176 @@ test("blocked records remain valid collection records with evidence", async () =
   );
 });
 
+test("known-spell read-only projection summarizes available and blocked records without mutation", async () => {
+  const spellRecords = await loadSpellRecords();
+  const records = [
+    validRecordWithEvidence(),
+    validRecordWithEvidence({
+      knownSpellId: "known-spell.test.mend",
+      spellId: MEND_ID,
+      availability: "blocked",
+      blockedReason: "training_incomplete",
+      trainingEventEvidence: trainingEventEvidence({
+        trainingEventId: "training-event.test.mend"
+      })
+    })
+  ];
+  const before = structuredClone(records);
+
+  const projection = buildKnownSpellReadOnlyProjection({
+    records,
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(projection.ok, true);
+  assert.equal(projection.characterId, CHARACTER_ID);
+  assert.equal(projection.knownSpellCount, 2);
+  assert.equal(projection.availableSpellCount, 1);
+  assert.equal(projection.blockedSpellCount, 1);
+  assert.equal(projection.invalidRecordCount, 0);
+  assert.deepEqual(projection.issues, []);
+  assert.deepEqual(projection.knownSpells, [
+    {
+      knownSpellId: KNOWN_SPELL_ID,
+      spellId: FIREBOLT_ID,
+      characterId: CHARACTER_ID,
+      availability: "available",
+      acquisitionRoute: "training_event",
+      acquiredAt: ACQUIRED_AT,
+      trainingEventId: TRAINING_EVENT_ID
+    }
+  ]);
+  assert.deepEqual(projection.blockedSpells, [
+    {
+      knownSpellId: "known-spell.test.mend",
+      spellId: MEND_ID,
+      characterId: CHARACTER_ID,
+      availability: "blocked",
+      acquisitionRoute: "training_event",
+      acquiredAt: ACQUIRED_AT,
+      trainingEventId: "training-event.test.mend",
+      blockedReason: "training_incomplete"
+    }
+  ]);
+  assert.deepEqual(records, before);
+});
+
+test("known-spell read-only projection does not infer ownership from catalog presence", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const projection = buildKnownSpellReadOnlyProjection({
+    records: [],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(projection.ok, true);
+  assert.equal(projection.knownSpellCount, 0);
+  assert.equal(projection.availableSpellCount, 0);
+  assert.equal(projection.blockedSpellCount, 0);
+  assert.equal(projection.invalidRecordCount, 0);
+  assert.deepEqual(projection.knownSpells, []);
+  assert.deepEqual(projection.blockedSpells, []);
+});
+
+test("known-spell read-only projection reports invalid records without projecting them", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const projection = buildKnownSpellReadOnlyProjection({
+    records: [
+      validRecordWithEvidence(),
+      validRecordWithEvidence({
+        knownSpellId: "known-spell.test.unknown",
+        spellId: "spell.fixture.unknown",
+        trainingEventEvidence: trainingEventEvidence({
+          trainingEventId: "training-event.test.unknown"
+        })
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(projection.ok, false);
+  assert.equal(projection.knownSpellCount, 1);
+  assert.equal(projection.availableSpellCount, 1);
+  assert.equal(projection.blockedSpellCount, 0);
+  assert.equal(projection.invalidRecordCount, 1);
+  assert.deepEqual(projection.knownSpells.map((entry) => entry.knownSpellId), [KNOWN_SPELL_ID]);
+  assert.deepEqual(projection.blockedSpells, []);
+  const failure = projection.issues.find((issue) => issue.code === "record_validation_failed");
+  assert.ok(failure);
+  assert.equal(failure.index, 1);
+  assert.deepEqual(failure.recordIssues.map((issue) => issue.code), ["unknown_spell_id"]);
+});
+
+test("known-spell read-only projection requires training-event evidence through collection validation", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const projection = buildKnownSpellReadOnlyProjection({
+    records: [validRecord()],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(projection.ok, false);
+  assert.equal(projection.invalidRecordCount, 1);
+  assert.deepEqual(projection.knownSpells, []);
+  assert.deepEqual(projection.blockedSpells, []);
+  assert.ok(issueCodes(projection).includes("missing_training_event_id"));
+  assert.ok(issueCodes(projection).includes("missing_training_event_source"));
+});
+
+test("known-spell read-only projection rejects duplicate knownSpellId records", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const projection = buildKnownSpellReadOnlyProjection({
+    records: [
+      validRecordWithEvidence(),
+      validRecordWithEvidence({
+        spellId: MEND_ID,
+        trainingEventEvidence: trainingEventEvidence({
+          trainingEventId: "training-event.test.mend"
+        })
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(projection.ok, false);
+  assert.equal(projection.invalidRecordCount, 2);
+  assert.deepEqual(projection.knownSpells, []);
+  assert.deepEqual(projection.blockedSpells, []);
+  const duplicate = projection.issues.find((issue) => issue.code === "duplicate_known_spell_id");
+  assert.ok(duplicate);
+  assert.deepEqual(duplicate.duplicateIndexes, [0, 1]);
+});
+
+test("known-spell read-only projection rejects unsupported owner scopes and routes", async () => {
+  const spellRecords = await loadSpellRecords();
+
+  const projection = buildKnownSpellReadOnlyProjection({
+    records: [
+      validRecordWithEvidence({
+        ownerScope: "account",
+        ownerId: "account.local.default",
+        acquisitionRoute: "legacy_access_lane"
+      })
+    ],
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+
+  assert.equal(projection.ok, false);
+  assert.equal(projection.invalidRecordCount, 1);
+  const failure = projection.issues.find((issue) => issue.code === "record_validation_failed");
+  assert.ok(failure);
+  assert.ok(failure.recordIssues.some((issue) => issue.code === "unsupported_owner_scope"));
+  assert.ok(failure.recordIssues.some((issue) => issue.code === "unsupported_acquisition_route"));
+});
+
 test("account, family, institution, document, and Legacy-like records do not count as known", async () => {
   const spellRecords = await loadSpellRecords();
   const records = [
@@ -570,6 +741,14 @@ test("Arcane Compendium projection remains independent from known-spell ownershi
     }),
     true
   );
+
+  const knownSpellProjection = buildKnownSpellReadOnlyProjection({
+    records: [validRecordWithEvidence()],
+    characterId: CHARACTER_ID,
+    spellCatalog: spellRecords
+  });
+  assert.equal(knownSpellProjection.ok, true);
+  assert.equal(knownSpellProjection.knownSpells.length, 1);
 
   const entriesAfter = buildArcaneCompendiumEntries(spellRecords);
   assert.equal(entriesBefore.length, 55);
@@ -620,6 +799,16 @@ test("current PlayerSpellState entries remain readiness context, not acquisition
   const failure = collectionResult.issues.find((issue) => issue.code === "record_validation_failed");
   assert.ok(failure);
   assert.ok(failure.recordIssues.some((issue) => issue.code === "missing_known_spell_id"));
+
+  const projection = buildKnownSpellReadOnlyProjection({
+    records: playerSpellStateRecords,
+    spellCatalog: spellRecords,
+    characterId: CHARACTER_ID
+  });
+  assert.equal(projection.ok, false);
+  assert.equal(projection.invalidRecordCount, 1);
+  assert.deepEqual(projection.knownSpells, []);
+  assert.deepEqual(projection.blockedSpells, []);
 });
 
 test("known-spell helper does not import content, UI, combat, or planning sources", () => {
