@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.97 - Training Event Acquisition Helpers
+Source version/run: Version 0.5.98 - Magic Command Contract
 Date: 2026-06-03
-Branch/status assumption: Ran on `master`; preflight working tree appeared clean and `master` matched `origin/master` before edits.
+Branch/status assumption: Ran on `master`; preflight working tree was clean and `HEAD` matched `origin/master` at `c8216e0`.
 
 ## Result
-Added pure training-event acquisition helpers that validate explicit character-scoped `training_event` acquisition input, return deterministic proposal issues, derive stable known-spell ids when omitted, and return proposed in-memory `KnownSpellRecordState` records without mutating state or creating acquisition events.
+Added the planning-only Magic Command Contract Plan at `docs/design/magic-command-contract-plan.md`.
 
-Updated the near-term handoff docs so `Version 0.5.97 - Training Event Acquisition Helpers` is landed and `Version 0.5.98 - Magic Command Contract` is next.
+The plan defines a future `magic.cast` command/intention shape with explicit caster, spell, known-spell reference, target descriptor, conduit source descriptor, catalyst source descriptor, casting context, requested timestamps, and optional request-source metadata. It also defines target/source descriptor policies, future pure command validation boundaries, forbidden inference rules, and deferred runtime work.
+
+Updated near-term handoff docs so `Version 0.5.98 - Magic Command Contract` is landed and `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan` is next.
 
 ## Files Changed
-- `packages/engines/game-engine/src/known-spells.ts`
-- `packages/engines/game-engine/src/index.ts`
-- `tests/unit/known-spell-training-event-acquisition.test.mjs`
+- `docs/design/magic-command-contract-plan.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
@@ -21,24 +21,20 @@ Updated the near-term handoff docs so `Version 0.5.97 - Training Event Acquisiti
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
-- `node --test tests/unit/known-spell-training-event-acquisition.test.mjs`
-- `node --test tests/unit/known-spell-ownership.test.mjs`
-- `node --test tests/unit/magic-cast-readiness.test.mjs`
-- `node --test tests/unit/magic-runtime-readiness-blockers.test.mjs`
 - `git diff --check`
 
 ## Behavior / Runtime Confirmation
-Runtime casting behavior did not change. No spell JSON, item JSON, schemas, save/account state, generated output, combat behavior, catalyst consumption, magic skill gain, Magic Legacy power, scroll/tome/document teaching, family/institution/account ownership, acquisition event persistence, command wiring, React UI, or `PlayerSpellState[]` replacement changed.
+Docs-only run. No runtime, JSON, schema, UI, generated output, combat, known-spell helper, cast-readiness helper, acquisition helper, save/account/session, catalyst, resource payment, Magic Legacy, scroll/tome/document teaching, command handler, command dispatch, or active spell behavior changed.
 
-The new helpers are read-only and deterministic. They do not apply spell effects, mutate inventory, consume catalysts, pay MP/stamina/strain costs, produce combat events, change save data, or create acquisition records.
+No runtime spell casting was implemented. No cast commands or React UI were added.
 
 ## Risks / Follow-Up
-- `Version 0.5.98 - Magic Command Contract` should define selected spell, caster, target, conduit source, catalyst source, and casting-context command/intention shape before resolver behavior.
-- Persisted acquisition event creation/mutation, runtime cast resolver work, active casting, catalyst/control/failure implementation, broader acquisition routes, and UI command wiring remain deferred.
-- Broad typecheck was intentionally not run because known pre-existing blockers remain outside this scoped helper pass.
+- `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan` should use `docs/design/magic-command-contract-plan.md` to plan the first narrow engine-owned resolver boundary before implementation.
+- Command handlers, runtime cast resolver implementation, effect application, target resolution, resource payment, catalyst consumption, inventory mutation, combat/Chronicle/quest/account/UI event creation, UI dispatch, save/account/session schema changes, control/failure/backlash behavior, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement remain deferred.
+- Broad typecheck was intentionally not run because this was docs-only and known pre-existing blockers remain outside this scope.
 
 ## Next Recommended Version
-Version 0.5.98 - Magic Command Contract
+Version 0.5.99 - First Narrow Runtime Cast Resolver Plan
 
 ## Suggested Commit Message
-feat(magic): add training event acquisition helpers
+docs(magic): plan magic command contract

@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.97 - Training Event Acquisition Helpers`
+Source route: Codex local planning after `Version 0.5.98 - Magic Command Contract`
 Date: 2026-06-03
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -16,6 +16,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the current sequenced Codex queue.
 - `docs/design/magic-runtime-boundary-plan.md` owns the `0.5.95` cast-readiness helper boundary.
 - `docs/design/known-spell-acquisition-event-plan.md` owns the training-event acquisition helper boundary and later acquisition mutation constraints.
+- `docs/design/magic-command-contract-plan.md` owns the active magic command/intention boundary.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -24,7 +25,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.97 - Training Event Acquisition Helpers`
+- `Version 0.5.98 - Magic Command Contract`
 
 Current sequence source:
 
@@ -32,7 +33,7 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.98 - Magic Command Contract`
+- `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
 
 ## Recent Results
 
@@ -56,12 +57,15 @@ Magic / known spells:
 - The acquisition-event plan defines explicit character-scoped training-event acquisition ownership, evidence requirements, deterministic duplicate handling, forbidden inference rules, and the exact allowed scope for `0.5.97`.
 - `0.5.97` added `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` as pure deterministic helpers exported through the game-engine barrel.
 - The training-event acquisition helpers validate explicit character-scoped `training_event` acquisition input, return deterministic proposal issues, derive stable known-spell ids when omitted, and propose in-memory `KnownSpellRecordState` records without mutating state or creating acquisition events.
+- `0.5.98` added `docs/design/magic-command-contract-plan.md` as the planning-only command/intention boundary for future active magic.
+- The command contract plan defines a future `magic.cast` command shape with explicit caster, spell, known-spell reference, target descriptor, conduit source descriptor, catalyst source descriptor, casting context, requested timestamps, and optional request-source metadata.
+- The command contract plan keeps command validation pure/readiness-gated and forbids runtime casting, command handlers, UI dispatch, save mutation, event creation, resource payment, catalyst consumption, target effect resolution, control failure, backlash, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement.
 - Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership.
 - `characterKnowsSpell(...)` remains a pure read-only query helper and still counts only valid, available, character-owned records under existing query semantics.
 - Arcane Compendium remains read-only and independent from known-spell ownership/acquisition evidence/projection.
 - Current `PlayerSpellState[]` remains readiness/legacy context and is not a complete acquisition/ownership model.
-- `0.5.97` changed pure helper code, exports, focused tests, `docs/dev/current-codex-output.md`, and narrow handoff/backlog docs only: no spells, spell metadata, active spell casting, known-spell runtime wiring, persisted acquisition event creation, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, React UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
-- Remaining known-spell follow-up: command contract planning, acquisition event mutation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
+- `0.5.98` changed docs only: no spells, spell metadata, active spell casting, known-spell runtime wiring, persisted acquisition event creation, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, React UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
+- Remaining known-spell/magic follow-up: first narrow runtime cast resolver planning, acquisition event mutation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
 
 Combat / equipment:
 
@@ -101,18 +105,19 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.98
+## Active Guardrails For 0.5.99
 
-Magic Command Contract:
+First Narrow Runtime Cast Resolver Plan:
 
-- Use `docs/dev/current-codex-output.md`, `docs/design/magic-runtime-boundary-plan.md`, `docs/design/known-spell-acquisition-event-plan.md`, `docs/design/known-spell-ownership-plan.md`, `packages/engines/game-engine/src/known-spells.ts`, and the focused known-spell/magic tests as the primary sources.
-- Define a command/intention contract for selected spell, caster, target, conduit source, catalyst source, and casting context before resolver behavior.
-- Keep the run docs-first or contract-only unless the prompt explicitly scopes pure helper code.
+- Use `docs/design/magic-command-contract-plan.md`, `docs/dev/current-codex-output.md`, `docs/design/magic-runtime-boundary-plan.md`, `docs/design/known-spell-acquisition-event-plan.md`, `docs/design/known-spell-ownership-plan.md`, `packages/engines/game-engine/src/known-spells.ts`, and the focused known-spell/magic tests as the primary sources.
+- Plan the first narrow engine-owned runtime cast resolver boundary before effect implementation.
+- Keep the run planning-first unless the prompt explicitly scopes pure helper code.
 - Preserve the existing read-only readiness and acquisition-helper boundaries.
-- Do not create cast commands or wire UI command dispatch.
+- Preserve the explicit `magic.cast` command/intention descriptors from `docs/design/magic-command-contract-plan.md`.
+- Do not wire UI command dispatch.
 - Do not write to save/account/session state, mutate known-spell collections, or create persisted acquisition events.
-- Do not implement runtime spell casting.
-- Do not add active magic behavior, React UI, generated output, spell execution, combat actions, save schema changes, catalyst consumption, magic skill gain, Magic Legacy power, scroll/tome/document teaching, or broader ownership/acquisition routes.
+- Do not implement effectful spell casting unless a later prompt explicitly scopes a narrow pure/resolver implementation.
+- Do not add active magic behavior, React UI, generated output, spell execution effects, combat actions, save schema changes, catalyst consumption, resource payment, magic skill gain, Magic Legacy power, scroll/tome/document teaching, or broader ownership/acquisition routes.
 - Preserve character-scoped known-spell ownership only.
 - Do not infer spell ownership from `PlayerSpellState[]`, Arcane Compendium entries, catalog presence, lineage, backstory, account id, family id, source run id, selected character UI state, or Legacy data.
 
@@ -138,11 +143,12 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | 4 | `0.5.95` | Magic Cast Readiness Helper | `docs/design/magic-runtime-boundary-plan.md` | Landed |
 | 5 | `0.5.96` | Known Spell Acquisition Event Planning | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
 | 6 | `0.5.97` | Training Event Acquisition Helpers | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
-| 7 | `0.5.98` | Magic Command Contract | `docs/dev/current-codex-output.md` | Next |
+| 7 | `0.5.98` | Magic Command Contract | `docs/design/magic-command-contract-plan.md` | Landed |
+| 8 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | `docs/design/magic-command-contract-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.98 - Magic Command Contract`, inspect:
+For `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -150,6 +156,7 @@ For `Version 0.5.98 - Magic Command Contract`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/design/magic-command-contract-plan.md`
 - `docs/design/known-spell-acquisition-event-plan.md`
 - `docs/design/magic-runtime-boundary-plan.md`
 - `docs/design/known-spell-ownership-plan.md`
@@ -166,6 +173,6 @@ For `Version 0.5.98 - Magic Command Contract`, inspect:
 - `tools/content-lint/spell-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
 
-## After 0.5.98
+## After 0.5.99
 
-Use the magic command contract result in `docs/dev/current-codex-output.md` to decide whether the next safe run is a first narrow runtime cast resolver, another command/readiness guardrail, or a narrow acquisition mutation plan.
+Use the first narrow runtime cast resolver plan in `docs/dev/current-codex-output.md` to decide whether the next safe run is a pure resolver implementation, another command/readiness guardrail, or a narrow acquisition mutation plan.
