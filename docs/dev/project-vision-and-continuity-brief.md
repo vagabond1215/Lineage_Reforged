@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-01 after `Version 0.5.92 - Known Spell Read-Only Projection` landed.
+Updated 2026-06-02 after `Version 0.5.94 - Magic Runtime Boundary Plan` landed.
 
 ## Purpose
 
@@ -12,6 +12,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/dev/current-gpt-handoff.md` owns current connector-side guardrails and prompt-prep direction.
 - `docs/dev/project-roadmap.md` owns version order, version-band maturity, and active pipeline direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the ordered near-term Codex queue.
+- `docs/design/magic-runtime-boundary-plan.md` owns the `0.5.95` cast-readiness helper boundary.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/future_content_backlog.md` owns chronological deferred notes and run notes.
 
@@ -19,11 +20,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.92 - Known Spell Read-Only Projection`
+- `Version 0.5.94 - Magic Runtime Boundary Plan`
 
 Next recommended version:
 
-- `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+- `Version 0.5.95 - Magic Cast Readiness Helper`
 
 Current sequence source:
 
@@ -51,9 +52,11 @@ Current phase:
 - Known spell validation helpers have landed as pure collection validation, duplicate id detection, and minimal training-event evidence validation.
 - Known spell acquisition evidence helpers have landed as pure helpers for minimal `training_event` evidence.
 - Known spell read-only projection has landed as a pure projection over explicit character-scoped known-spell records.
+- Magic runtime readiness blocker tests have landed as test-only coverage proving current read-only spell surfaces and metadata do not imply cast readiness.
+- Magic runtime boundary planning has landed as `docs/design/magic-runtime-boundary-plan.md`, defining the next pure cast-readiness helper boundary.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
-- Magic runtime readiness blocker tests are next and should remain focused test/scaffold work unless explicitly re-scoped.
-- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
+- The next magic slice is a pure deterministic cast-readiness helper, not runtime casting.
+- No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
 
 ## North Star
 
@@ -76,9 +79,9 @@ The game should build slowly through narrow tested slices, strict validation, an
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.92` | Known Spell Read-Only Projection | Landed. Added read-only known-spell projection. | Pure projection/tests only; no acquisition mutation, casting, React UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
-| `0.5.93` | Magic Runtime Readiness Blocker Tests | Next. Add tests proving runtime magic remains blocked without required policy gates. | Focused blocker tests/scaffold only; no runtime casting, commands, React UI, save schema migration, or broader routes/scopes. |
-| `0.5.94` | Post-blocker-test implementation TBD | Planned after `0.5.93` defines the next safe slice. | Follow `docs/dev/current-codex-output.md`. |
+| `0.5.93` | Magic Runtime Readiness Blocker Tests | Landed. Added tests proving runtime magic remains blocked without required policy gates. | Focused blocker tests/scaffold only; no runtime casting, commands, React UI, save schema migration, or broader routes/scopes. |
+| `0.5.94` | Magic Runtime Boundary Plan | Landed. Added planning-only boundary for a future pure cast-readiness helper. | Docs-only; no runtime casting, commands, UI, JSON, schema, save/account, catalyst consumption, or broader routes/scopes. |
+| `0.5.95` | Magic Cast Readiness Helper | Next. Add a pure deterministic helper that reports readiness blockers without applying effects. | No effect application, resource payment, catalyst consumption, combat events, acquisition creation, or save mutation. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
@@ -103,6 +106,7 @@ Latest Codex handoff: docs/dev/current-codex-output.md
 Current GPT handoff: docs/dev/current-gpt-handoff.md
 Roadmap: docs/dev/project-roadmap.md
 Sequenced Codex plan: docs/dev/codex-sequenced-implementation-plan.md
+Magic runtime boundary plan: docs/design/magic-runtime-boundary-plan.md
 Future system design ledger: docs/design/future-system-design-ledger.md
 Strategic continuity brief: docs/dev/project-vision-and-continuity-brief.md
 Backlog: docs/future_content_backlog.md
@@ -111,6 +115,7 @@ Read current-codex-output first for exact implementation state.
 Read current-gpt-handoff second for current connector-side guardrails.
 Use the roadmap for version order and playability checkpoints.
 Use the sequenced Codex plan for the current implementation queue.
+Use the magic runtime boundary plan for Version 0.5.95 - Magic Cast Readiness Helper.
 Use the design ledger for durable conceptual criteria and vocabulary.
 Use the continuity brief for north-star direction and source map.
 Use the backlog for deferred work and historical run notes.
