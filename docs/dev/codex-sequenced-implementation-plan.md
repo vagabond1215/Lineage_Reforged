@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-03
-Route: Codex local sequencing alignment after `Version 0.5.98 - Magic Command Contract`
+Route: Codex local sequencing alignment after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.98 - Magic Command Contract` added the planning-only active magic command boundary.
+This file gives Codex a stable ordered queue after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan` added the planning-only runtime cast resolver readiness boundary.
 
 It does not replace:
 
@@ -19,13 +19,13 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed magic contract slice:
+Latest landed magic resolver planning slice:
 
-- `Version 0.5.98 - Magic Command Contract`
+- `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
+- `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
 
 ## Ordered Trajectory
 
@@ -51,7 +51,8 @@ Immediate next Codex run:
 | 18 | `0.5.96` | Known Spell Acquisition Event Planning | Codex 5.5 Local docs-only | `docs/design/known-spell-acquisition-event-plan.md` | planning doc | Landed | Planned training-event acquisition ownership only; no acquisition mutation, active casting, commands, UI, broader routes/scopes, or save/account changes. |
 | 19 | `0.5.97` | Training Event Acquisition Helpers | Codex 5.5 Local | `docs/design/known-spell-acquisition-event-plan.md` | pure helper + focused tests | Landed | Produces proposed character-scoped known-spell records from explicit training-event evidence only; no save/session mutation, persisted acquisition events, active casting, commands, UI, or broader routes/scopes. |
 | 20 | `0.5.98` | Magic Command Contract | Codex 5.5 Local docs-first | `docs/design/magic-command-contract-plan.md` | command contract plan | Landed | Defined selected spell, caster, target, conduit source, catalyst source, and casting-context command shape only; no runtime cast resolver, cast commands, UI, save mutation, effect application, or catalyst consumption. |
-| 21 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Codex 5.5 Local docs-first | `docs/design/magic-command-contract-plan.md` | resolver boundary plan | Next | Plan the first narrow engine-owned resolver boundary only; no effect implementation, command handler wiring, UI dispatch, save mutation, resource payment, catalyst consumption, or event creation unless a later prompt explicitly scopes it. |
+| 21 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Codex 5.5 Local docs-first | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | resolver boundary plan | Landed | Planned the first narrow engine-owned resolver boundary only; no effect implementation, command handler wiring, UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
+| 22 | `0.6.0` | Runtime Cast Resolver Readiness Helper | Codex 5.5 Local | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | pure resolver readiness helper + focused tests | Next | Pure deterministic resolver readiness only; call `buildMagicCastReadiness(...)` and return issues without effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
 
 ## Default Prompt Pattern
 
@@ -73,7 +74,7 @@ Each future Codex prompt should:
 - Do not add generated UI output during cast-readiness helper work.
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
 - Do not mix cast-readiness helper work with combat math rewrites, active spell execution, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
-- Do not begin runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, conduit/catalyst/control policy, blocked-hook tests, and a pure cast-readiness helper are explicitly implemented in narrow slices.
+- Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, conduit/catalyst/control policy, blocked-hook tests, a pure cast-readiness helper, and a pure resolver-readiness helper are explicitly implemented in narrow slices.
 
 ## When To Reorder
 

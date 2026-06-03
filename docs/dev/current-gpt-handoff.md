@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.98 - Magic Command Contract`
+Source route: Codex local planning after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
 Date: 2026-06-03
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -17,6 +17,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/design/magic-runtime-boundary-plan.md` owns the `0.5.95` cast-readiness helper boundary.
 - `docs/design/known-spell-acquisition-event-plan.md` owns the training-event acquisition helper boundary and later acquisition mutation constraints.
 - `docs/design/magic-command-contract-plan.md` owns the active magic command/intention boundary.
+- `docs/design/first-narrow-runtime-cast-resolver-plan.md` owns the first narrow runtime cast resolver readiness boundary.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -25,7 +26,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.98 - Magic Command Contract`
+- `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
 
 Current sequence source:
 
@@ -33,7 +34,7 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
+- `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
 
 ## Recent Results
 
@@ -60,12 +61,15 @@ Magic / known spells:
 - `0.5.98` added `docs/design/magic-command-contract-plan.md` as the planning-only command/intention boundary for future active magic.
 - The command contract plan defines a future `magic.cast` command shape with explicit caster, spell, known-spell reference, target descriptor, conduit source descriptor, catalyst source descriptor, casting context, requested timestamps, and optional request-source metadata.
 - The command contract plan keeps command validation pure/readiness-gated and forbids runtime casting, command handlers, UI dispatch, save mutation, event creation, resource payment, catalyst consumption, target effect resolution, control failure, backlash, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement.
+- `0.5.99` added `docs/design/first-narrow-runtime-cast-resolver-plan.md` as the planning-only boundary for a future engine-owned runtime cast resolver readiness helper.
+- The resolver plan defines a future pure resolver request/result shape, required resolver gates, issue/blocker vocabulary, inert planned output envelopes, target/effect boundaries, resource/catalyst/failure policy boundaries, and exact scope for `0.6.0`.
+- The resolver plan keeps command handlers, UI dispatch, effectful casting, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, save/account/session schema changes, control failure, backlash, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement deferred.
 - Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership.
 - `characterKnowsSpell(...)` remains a pure read-only query helper and still counts only valid, available, character-owned records under existing query semantics.
 - Arcane Compendium remains read-only and independent from known-spell ownership/acquisition evidence/projection.
 - Current `PlayerSpellState[]` remains readiness/legacy context and is not a complete acquisition/ownership model.
-- `0.5.98` changed docs only: no spells, spell metadata, active spell casting, known-spell runtime wiring, persisted acquisition event creation, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, React UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
-- Remaining known-spell/magic follow-up: first narrow runtime cast resolver planning, acquisition event mutation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
+- `0.5.99` changed docs only: no spells, spell metadata, active spell casting, known-spell runtime wiring, persisted acquisition event creation, cast commands, command handlers, catalyst behavior, target resolution, resource payment, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, React UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
+- Remaining known-spell/magic follow-up: the pure runtime cast resolver readiness helper, acquisition event mutation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
 
 Combat / equipment:
 
@@ -105,21 +109,22 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.99
+## Active Guardrails For 0.6.0
 
-First Narrow Runtime Cast Resolver Plan:
+Runtime Cast Resolver Readiness Helper:
 
-- Use `docs/design/magic-command-contract-plan.md`, `docs/dev/current-codex-output.md`, `docs/design/magic-runtime-boundary-plan.md`, `docs/design/known-spell-acquisition-event-plan.md`, `docs/design/known-spell-ownership-plan.md`, `packages/engines/game-engine/src/known-spells.ts`, and the focused known-spell/magic tests as the primary sources.
-- Plan the first narrow engine-owned runtime cast resolver boundary before effect implementation.
-- Keep the run planning-first unless the prompt explicitly scopes pure helper code.
+- Use `docs/design/first-narrow-runtime-cast-resolver-plan.md`, `docs/design/magic-command-contract-plan.md`, `docs/design/magic-runtime-boundary-plan.md`, `docs/design/known-spell-acquisition-event-plan.md`, `docs/design/known-spell-ownership-plan.md`, `packages/engines/game-engine/src/known-spells.ts`, and the focused known-spell/magic tests as the primary sources.
+- Implement only the pure resolver readiness helper if the prompt explicitly scopes implementation.
+- The helper should consume explicit command-like input, call `buildMagicCastReadiness(...)`, and return deterministic `ok` / `blocked` resolver issues without effects.
 - Preserve the existing read-only readiness and acquisition-helper boundaries.
 - Preserve the explicit `magic.cast` command/intention descriptors from `docs/design/magic-command-contract-plan.md`.
-- Do not wire UI command dispatch.
-- Do not write to save/account/session state, mutate known-spell collections, or create persisted acquisition events.
-- Do not implement effectful spell casting unless a later prompt explicitly scopes a narrow pure/resolver implementation.
+- Keep planned output envelopes inert unless a future prompt explicitly scopes a test-only envelope result.
+- Do not wire command handlers or UI command dispatch.
+- Do not write to save/account/session state, mutate known-spell collections, mutate inventory, or create persisted acquisition events.
+- Do not implement effectful spell casting.
 - Do not add active magic behavior, React UI, generated output, spell execution effects, combat actions, save schema changes, catalyst consumption, resource payment, magic skill gain, Magic Legacy power, scroll/tome/document teaching, or broader ownership/acquisition routes.
 - Preserve character-scoped known-spell ownership only.
-- Do not infer spell ownership from `PlayerSpellState[]`, Arcane Compendium entries, catalog presence, lineage, backstory, account id, family id, source run id, selected character UI state, or Legacy data.
+- Do not infer spell ownership, acquisition, command authority, target authority, conduit authority, catalyst authority, or resource authority from `PlayerSpellState[]`, Arcane Compendium entries, catalog presence, lineage, backstory, account id, family id, source run id, selected character UI state, Legacy data, item ownership, document ownership, scroll ownership, or tome ownership.
 
 Browser-safety guardrail:
 
@@ -144,11 +149,12 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | 5 | `0.5.96` | Known Spell Acquisition Event Planning | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
 | 6 | `0.5.97` | Training Event Acquisition Helpers | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
 | 7 | `0.5.98` | Magic Command Contract | `docs/design/magic-command-contract-plan.md` | Landed |
-| 8 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | `docs/design/magic-command-contract-plan.md` | Next |
+| 8 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Landed |
+| 9 | `0.6.0` | Runtime Cast Resolver Readiness Helper | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`, inspect:
+For `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -156,6 +162,7 @@ For `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/design/first-narrow-runtime-cast-resolver-plan.md`
 - `docs/design/magic-command-contract-plan.md`
 - `docs/design/known-spell-acquisition-event-plan.md`
 - `docs/design/magic-runtime-boundary-plan.md`
@@ -173,6 +180,6 @@ For `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`, inspect:
 - `tools/content-lint/spell-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
 
-## After 0.5.99
+## After 0.6.0
 
-Use the first narrow runtime cast resolver plan in `docs/dev/current-codex-output.md` to decide whether the next safe run is a pure resolver implementation, another command/readiness guardrail, or a narrow acquisition mutation plan.
+Use the runtime cast resolver readiness helper result in `docs/dev/current-codex-output.md` to decide whether the next safe run is a narrow resolver implementation follow-up, another command/readiness guardrail, or a separate acquisition mutation plan.
