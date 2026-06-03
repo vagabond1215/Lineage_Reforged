@@ -123,6 +123,76 @@ export interface CreateKnownSpellRecordParams {
   trainingEventEvidence?: KnownSpellTrainingEventEvidence;
 }
 
+export type KnownSpellTrainingEventAcquisitionIssueCode =
+  | "missing_acquisition_event_id"
+  | "missing_character_id"
+  | "missing_owner_id"
+  | "owner_character_mismatch"
+  | "unknown_spell_id"
+  | "unsupported_owner_scope"
+  | "unsupported_acquisition_route"
+  | "missing_training_event_evidence"
+  | "unsupported_training_event_evidence"
+  | "missing_acquired_at"
+  | "duplicate_known_spell_id"
+  | "invalid_known_spell_record";
+
+export type KnownSpellTrainingEventAcquisitionValidationStatus =
+  | "valid"
+  | "invalid";
+
+export interface KnownSpellTrainingEventAcquisitionIssue {
+  code: KnownSpellTrainingEventAcquisitionIssueCode;
+  field: string;
+  message: string;
+  knownSpellId?: string;
+  duplicateIndexes?: number[];
+  recordIssues?: KnownSpellValidationIssue[];
+}
+
+export interface KnownSpellTrainingEventAcquisitionProposal {
+  eventId: string;
+  ownerScope: "character";
+  ownerId: string;
+  characterId: string;
+  spellId: string;
+  trainingEventId: string;
+  acquiredAt: string;
+  acquisitionRoute: "training_event";
+  evidenceSource: KnownSpellTrainingEventEvidence;
+  validationStatus: KnownSpellTrainingEventAcquisitionValidationStatus;
+  notes?: string[];
+  blockedReasons?: string[];
+}
+
+export interface ValidateKnownSpellTrainingEventAcquisitionParams {
+  eventId?: unknown;
+  acquisitionEventId?: unknown;
+  knownSpellId?: unknown;
+  ownerScope?: unknown;
+  ownerId?: unknown;
+  characterId?: unknown;
+  spellId?: unknown;
+  acquisitionRoute?: unknown;
+  acquiredAt?: unknown;
+  availability?: unknown;
+  blockedReason?: unknown;
+  trainingEventId?: unknown;
+  trainingEventEvidence?: unknown;
+  existingRecords?: unknown;
+  spellCatalog: Iterable<KnownSpellCatalogEntry>;
+}
+
+export type BuildKnownSpellRecordFromTrainingEventParams =
+  ValidateKnownSpellTrainingEventAcquisitionParams;
+
+export interface KnownSpellTrainingEventAcquisitionResult {
+  ok: boolean;
+  issues: KnownSpellTrainingEventAcquisitionIssue[];
+  acquisition?: KnownSpellTrainingEventAcquisitionProposal;
+  proposedRecord?: KnownSpellRecordState;
+}
+
 export interface CharacterKnowsSpellParams {
   records: Iterable<unknown>;
   characterId: string;
@@ -317,6 +387,15 @@ function createTrainingEventEvidenceIssue(
   message: string
 ): KnownSpellTrainingEventEvidenceValidationIssue {
   return { code, field, message };
+}
+
+function createTrainingEventAcquisitionIssue(
+  code: KnownSpellTrainingEventAcquisitionIssueCode,
+  field: string,
+  message: string,
+  details: Omit<KnownSpellTrainingEventAcquisitionIssue, "code" | "field" | "message"> = {}
+): KnownSpellTrainingEventAcquisitionIssue {
+  return { code, field, message, ...details };
 }
 
 export function collectKnownSpellCatalogIds(
@@ -1543,6 +1622,288 @@ export function buildMagicCastReadiness(
       ...hookDetails
     }
   };
+}
+
+function deriveKnownSpellIdFromTrainingEvent(
+  characterId: string,
+  spellId: string,
+  trainingEventId: string
+): string {
+  return `known-spell.${characterId}.${spellId}.${trainingEventId}`;
+}
+
+function collectDuplicateKnownSpellIdIndexes(
+  records: unknown,
+  knownSpellId: string
+): number[] {
+  if (!Array.isArray(records)) {
+    return [];
+  }
+
+  const indexes: number[] = [];
+  for (const [index, record] of records.entries()) {
+    if (getKnownSpellIdForIssue(record) === knownSpellId) {
+      indexes.push(index);
+    }
+  }
+  return indexes;
+}
+
+function mapTrainingEventEvidenceIssueToAcquisitionIssue(
+  issue: KnownSpellTrainingEventEvidenceValidationIssue
+): KnownSpellTrainingEventAcquisitionIssue {
+  const code: KnownSpellTrainingEventAcquisitionIssueCode =
+    issue.code === "missing_training_event_id" || issue.code === "missing_training_event_source"
+      ? "missing_training_event_evidence"
+      : "unsupported_training_event_evidence";
+
+  return createTrainingEventAcquisitionIssue(
+    code,
+    issue.field === "trainingEventEvidence" ? "trainingEventEvidence" : `trainingEventEvidence.${issue.field}`,
+    issue.message
+  );
+}
+
+function validateTrainingEventAcquisitionEvidence(
+  params: ValidateKnownSpellTrainingEventAcquisitionParams
+): {
+  evidence: KnownSpellTrainingEventEvidence | null;
+  issues: KnownSpellTrainingEventAcquisitionIssue[];
+} {
+  const evidenceInput =
+    params.trainingEventEvidence === undefined || params.trainingEventEvidence === null
+      ? normalizeString(params.trainingEventId)
+        ? {
+            trainingEventId: params.trainingEventId,
+            sourceType: "training_event"
+          }
+        : undefined
+      : params.trainingEventEvidence;
+
+  const result = validateKnownSpellTrainingEventEvidence(evidenceInput);
+  if (result.ok && result.evidence) {
+    return { evidence: result.evidence, issues: [] };
+  }
+
+  const hasMissingEvidence = result.issues.some(
+    (issue) => issue.code === "missing_training_event_id" || issue.code === "missing_training_event_source"
+  );
+  const issues = result.issues
+    .filter(
+      (issue) => issue.code !== "missing_training_event_id" && issue.code !== "missing_training_event_source"
+    )
+    .map(mapTrainingEventEvidenceIssueToAcquisitionIssue);
+
+  return {
+    evidence: null,
+    issues: [
+      ...(hasMissingEvidence
+        ? [
+            createTrainingEventAcquisitionIssue(
+              "missing_training_event_evidence",
+              "trainingEventEvidence",
+              "training_event acquisition requires evidence with trainingEventId and sourceType 'training_event'."
+            )
+          ]
+        : []),
+      ...issues
+    ]
+  };
+}
+
+export function validateKnownSpellTrainingEventAcquisition(
+  params: ValidateKnownSpellTrainingEventAcquisitionParams
+): KnownSpellTrainingEventAcquisitionResult {
+  const eventId = normalizeString(params.acquisitionEventId) ?? normalizeString(params.eventId);
+  const ownerScope = normalizeString(params.ownerScope) ?? "character";
+  const ownerId = normalizeString(params.ownerId);
+  const characterId = normalizeString(params.characterId);
+  const spellId = normalizeString(params.spellId);
+  const acquisitionRoute = normalizeString(params.acquisitionRoute) ?? "training_event";
+  const acquiredAt = normalizeString(params.acquiredAt);
+  const availability = normalizeString(params.availability) ?? "available";
+  const blockedReason = normalizeString(params.blockedReason);
+  const spellCatalog = Array.from(params.spellCatalog);
+  const spellCatalogIds = collectKnownSpellCatalogIds(spellCatalog);
+  const evidenceResult = validateTrainingEventAcquisitionEvidence(params);
+  const issues: KnownSpellTrainingEventAcquisitionIssue[] = [];
+
+  if (!eventId) {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "missing_acquisition_event_id",
+        "eventId",
+        "training_event acquisition requires an eventId or acquisitionEventId."
+      )
+    );
+  }
+
+  if (ownerScope !== "character") {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "unsupported_owner_scope",
+        "ownerScope",
+        `Known-spell training_event acquisition ownerScope '${ownerScope}' is not supported.`
+      )
+    );
+  }
+
+  if (!characterId) {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "missing_character_id",
+        "characterId",
+        "training_event acquisition requires a characterId."
+      )
+    );
+  }
+
+  if (!ownerId) {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "missing_owner_id",
+        "ownerId",
+        "training_event acquisition requires an ownerId."
+      )
+    );
+  }
+
+  if (ownerId && characterId && ownerId !== characterId) {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "owner_character_mismatch",
+        "ownerId",
+        "character-scoped training_event acquisition requires ownerId to match characterId."
+      )
+    );
+  }
+
+  if (!spellId || !spellCatalogIds.has(spellId)) {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "unknown_spell_id",
+        "spellId",
+        spellId
+          ? `training_event acquisition references unknown spellId '${spellId}'.`
+          : "training_event acquisition requires a spellId from the current spell catalog."
+      )
+    );
+  }
+
+  if (acquisitionRoute !== "training_event") {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "unsupported_acquisition_route",
+        "acquisitionRoute",
+        `Known-spell acquisitionRoute '${acquisitionRoute}' is not supported by this helper boundary.`
+      )
+    );
+  }
+
+  issues.push(...evidenceResult.issues);
+
+  if (!acquiredAt) {
+    issues.push(
+      createTrainingEventAcquisitionIssue(
+        "missing_acquired_at",
+        "acquiredAt",
+        "training_event acquisition requires caller-supplied acquiredAt."
+      )
+    );
+  }
+
+  const knownSpellId =
+    normalizeString(params.knownSpellId) ??
+    (characterId && spellId && evidenceResult.evidence
+      ? deriveKnownSpellIdFromTrainingEvent(characterId, spellId, evidenceResult.evidence.trainingEventId)
+      : null);
+
+  if (knownSpellId) {
+    const duplicateIndexes = collectDuplicateKnownSpellIdIndexes(params.existingRecords, knownSpellId);
+    if (duplicateIndexes.length > 0) {
+      issues.push(
+        createTrainingEventAcquisitionIssue(
+          "duplicate_known_spell_id",
+          "knownSpellId",
+          `Known-spell training_event acquisition would duplicate knownSpellId '${knownSpellId}'.`,
+          { knownSpellId, duplicateIndexes }
+        )
+      );
+    }
+  }
+
+  let proposedRecord: KnownSpellRecordState | undefined;
+  if (
+    issues.length === 0 &&
+    knownSpellId &&
+    ownerId &&
+    characterId &&
+    spellId &&
+    acquiredAt &&
+    evidenceResult.evidence
+  ) {
+    const record: KnownSpellRecordState = {
+      knownSpellId,
+      ownerScope: "character",
+      ownerId,
+      characterId,
+      spellId,
+      acquisitionRoute: "training_event",
+      acquiredAt,
+      availability: availability as KnownSpellAvailabilityState,
+      ...(blockedReason ? { blockedReason } : {}),
+      trainingEventEvidence: evidenceResult.evidence
+    };
+    const recordValidation = validateKnownSpellRecordCollection({
+      records: [record],
+      spellCatalog,
+      characterId
+    });
+
+    if (recordValidation.ok && recordValidation.records[0]) {
+      proposedRecord = recordValidation.records[0];
+    } else {
+      issues.push(
+        createTrainingEventAcquisitionIssue(
+          "invalid_known_spell_record",
+          "proposedRecord",
+          "The normalized training_event acquisition record failed known-spell validation.",
+          {
+            knownSpellId,
+            recordIssues: recordValidation.issues.flatMap((issue) => issue.recordIssues ?? [])
+          }
+        )
+      );
+    }
+  }
+
+  if (issues.length > 0 || !proposedRecord || !eventId || !evidenceResult.evidence) {
+    return { ok: false, issues };
+  }
+
+  return {
+    ok: true,
+    issues: [],
+    acquisition: {
+      eventId,
+      ownerScope: "character",
+      ownerId: proposedRecord.ownerId,
+      characterId: proposedRecord.characterId,
+      spellId: proposedRecord.spellId,
+      trainingEventId: evidenceResult.evidence.trainingEventId,
+      acquiredAt: proposedRecord.acquiredAt,
+      acquisitionRoute: "training_event",
+      evidenceSource: evidenceResult.evidence,
+      validationStatus: "valid"
+    },
+    proposedRecord
+  };
+}
+
+export function buildKnownSpellRecordFromTrainingEvent(
+  params: BuildKnownSpellRecordFromTrainingEventParams
+): KnownSpellTrainingEventAcquisitionResult {
+  return validateKnownSpellTrainingEventAcquisition(params);
 }
 
 export function createKnownSpellRecord(

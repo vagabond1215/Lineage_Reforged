@@ -1,39 +1,44 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.96 - Known Spell Acquisition Event Planning
+Source version/run: Version 0.5.97 - Training Event Acquisition Helpers
 Date: 2026-06-03
-Branch/status assumption: Ran on `master`. Preflight worktree was clean and `master` matched `origin/master`; no repository sync was attempted during this focused docs-only run.
+Branch/status assumption: Ran on `master`; preflight working tree appeared clean and `master` matched `origin/master` before edits.
 
 ## Result
-Added `docs/design/known-spell-acquisition-event-plan.md` as the planning-only boundary for future training-event acquisition helpers.
+Added pure training-event acquisition helpers that validate explicit character-scoped `training_event` acquisition input, return deterministic proposal issues, derive stable known-spell ids when omitted, and return proposed in-memory `KnownSpellRecordState` records without mutating state or creating acquisition events.
 
-The plan defines explicit character-scoped acquisition event ownership, minimal `training_event` evidence requirements, deterministic duplicate handling, forbidden inference rules, and the exact allowed scope for `Version 0.5.97 - Training Event Acquisition Helpers`.
-
-Narrow handoff, roadmap, sequence, and backlog docs were updated so the next run points to `Version 0.5.97 - Training Event Acquisition Helpers`.
+Updated the near-term handoff docs so `Version 0.5.97 - Training Event Acquisition Helpers` is landed and `Version 0.5.98 - Magic Command Contract` is next.
 
 ## Files Changed
-- `docs/design/known-spell-acquisition-event-plan.md`
+- `packages/engines/game-engine/src/known-spells.ts`
+- `packages/engines/game-engine/src/index.ts`
+- `tests/unit/known-spell-training-event-acquisition.test.mjs`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
-- `git diff --check` (passed; Git emitted CRLF normalization warnings for touched tracked files)
-- `Select-String -Path docs/design/known-spell-acquisition-event-plan.md -Pattern '[ \t]+$'` (no trailing-whitespace matches)
+- `node --test tests/unit/known-spell-training-event-acquisition.test.mjs`
+- `node --test tests/unit/known-spell-ownership.test.mjs`
+- `node --test tests/unit/magic-cast-readiness.test.mjs`
+- `node --test tests/unit/magic-runtime-readiness-blockers.test.mjs`
+- `git diff --check`
 
 ## Behavior / Runtime Confirmation
-Docs only. No runtime spell casting, cast commands, acquisition mutation, React UI, spell JSON, item JSON, schemas, save/account state, generated output, combat runtime behavior, catalyst consumption, magic skill gain, Magic Legacy power, scroll/tome/document teaching, broader ownership routes, broader acquisition routes, or `PlayerSpellState[]` replacement changed.
+Runtime casting behavior did not change. No spell JSON, item JSON, schemas, save/account state, generated output, combat behavior, catalyst consumption, magic skill gain, Magic Legacy power, scroll/tome/document teaching, family/institution/account ownership, acquisition event persistence, command wiring, React UI, or `PlayerSpellState[]` replacement changed.
+
+The new helpers are read-only and deterministic. They do not apply spell effects, mutate inventory, consume catalysts, pay MP/stamina/strain costs, produce combat events, change save data, or create acquisition records.
 
 ## Risks / Follow-Up
-- `0.5.97` should add pure training-event acquisition helpers only.
-- Persisted acquisition event creation remains deferred.
-- Active casting, command contracts, runtime cast resolver work, catalyst consumption, control/failure/backlash behavior, scroll/tome/document teaching, teacher/institution/quest/family/Legacy/source-run routes, broader ownership scopes, and `PlayerSpellState[]` replacement remain deferred.
-- Broad typecheck was not run because this run was docs-only and known pre-existing blockers remain.
+- `Version 0.5.98 - Magic Command Contract` should define selected spell, caster, target, conduit source, catalyst source, and casting-context command/intention shape before resolver behavior.
+- Persisted acquisition event creation/mutation, runtime cast resolver work, active casting, catalyst/control/failure implementation, broader acquisition routes, and UI command wiring remain deferred.
+- Broad typecheck was intentionally not run because known pre-existing blockers remain outside this scoped helper pass.
 
 ## Next Recommended Version
-Version 0.5.97 - Training Event Acquisition Helpers
+Version 0.5.98 - Magic Command Contract
 
 ## Suggested Commit Message
-docs(magic): plan known spell acquisition events
+feat(magic): add training event acquisition helpers

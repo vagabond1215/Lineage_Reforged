@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-03
-Route: Codex local sequencing alignment after `Version 0.5.96 - Known Spell Acquisition Event Planning`
+Route: Codex local sequencing alignment after `Version 0.5.97 - Training Event Acquisition Helpers`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.96 - Known Spell Acquisition Event Planning` added the planning-only training-event acquisition boundary.
+This file gives Codex a stable ordered queue after `Version 0.5.97 - Training Event Acquisition Helpers` added the pure training-event acquisition helper boundary.
 
 It does not replace:
 
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed known-spell acquisition slice:
 
-- `Version 0.5.96 - Known Spell Acquisition Event Planning`
+- `Version 0.5.97 - Training Event Acquisition Helpers`
 
 Immediate next Codex run:
 
-- `Version 0.5.97 - Training Event Acquisition Helpers`
+- `Version 0.5.98 - Magic Command Contract`
 
 ## Ordered Trajectory
 
@@ -49,7 +49,8 @@ Immediate next Codex run:
 | 16 | `0.5.94` | Magic Runtime Boundary Plan | Codex 5.5 Local docs-only | `docs/design/magic-runtime-boundary-plan.md` | planning doc | Landed | Defined cast-readiness boundary only; no runtime casting, commands, UI, JSON, schema, save/account, catalyst consumption, or broader routes/scopes. |
 | 17 | `0.5.95` | Magic Cast Readiness Helper | Codex 5.5 Local | `docs/design/magic-runtime-boundary-plan.md` | pure helper + focused tests | Landed | Read-only deterministic helper only; no effect application, resource payment, catalyst consumption, acquisition creation, combat events, or save mutation. |
 | 18 | `0.5.96` | Known Spell Acquisition Event Planning | Codex 5.5 Local docs-only | `docs/design/known-spell-acquisition-event-plan.md` | planning doc | Landed | Planned training-event acquisition ownership only; no acquisition mutation, active casting, commands, UI, broader routes/scopes, or save/account changes. |
-| 19 | `0.5.97` | Training Event Acquisition Helpers | Codex 5.5 Local | `docs/design/known-spell-acquisition-event-plan.md` | pure helper + focused tests | Next | Produce proposed character-scoped known-spell records from explicit training-event evidence only; no save/session mutation, persisted acquisition events, active casting, commands, UI, or broader routes/scopes. |
+| 19 | `0.5.97` | Training Event Acquisition Helpers | Codex 5.5 Local | `docs/design/known-spell-acquisition-event-plan.md` | pure helper + focused tests | Landed | Produces proposed character-scoped known-spell records from explicit training-event evidence only; no save/session mutation, persisted acquisition events, active casting, commands, UI, or broader routes/scopes. |
+| 20 | `0.5.98` | Magic Command Contract | Codex 5.5 Local docs-first | `docs/dev/current-codex-output.md` | command contract plan | Next | Define selected spell, caster, target, conduit source, catalyst source, and casting-context command shape only; no runtime cast resolver, cast commands, UI, save mutation, effect application, or catalyst consumption. |
 
 ## Default Prompt Pattern
 

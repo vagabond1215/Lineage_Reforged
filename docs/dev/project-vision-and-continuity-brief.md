@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-03 after `Version 0.5.96 - Known Spell Acquisition Event Planning` landed.
+Updated 2026-06-03 after `Version 0.5.97 - Training Event Acquisition Helpers` landed.
 
 ## Purpose
 
@@ -13,7 +13,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/dev/project-roadmap.md` owns version order, version-band maturity, and active pipeline direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the ordered near-term Codex queue.
 - `docs/design/magic-runtime-boundary-plan.md` owns the cast-readiness helper boundary and later runtime guardrails.
-- `docs/design/known-spell-acquisition-event-plan.md` owns the `0.5.97` training-event acquisition helper boundary.
+- `docs/design/known-spell-acquisition-event-plan.md` owns the training-event acquisition helper boundary and later acquisition mutation constraints.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/future_content_backlog.md` owns chronological deferred notes and run notes.
 
@@ -21,11 +21,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.96 - Known Spell Acquisition Event Planning`
+- `Version 0.5.97 - Training Event Acquisition Helpers`
 
 Next recommended version:
 
-- `Version 0.5.97 - Training Event Acquisition Helpers`
+- `Version 0.5.98 - Magic Command Contract`
 
 Current sequence source:
 
@@ -37,10 +37,10 @@ Current phase:
 
 ## Current Implementation Reality
 
-- Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, and acquisition event planning have landed.
+- Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, and training-event acquisition helpers have landed.
 - `buildMagicCastReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
-- `docs/design/known-spell-acquisition-event-plan.md` defines the next pure helper boundary for training-event acquisition proposals.
-- The next magic slice is a pure helper pass for validating explicit training-event acquisition input and proposing a character-scoped known-spell record.
+- `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` are pure, deterministic, read-only, and exported through the game-engine boundary.
+- The next magic slice is a command contract plan before any active cast resolver behavior.
 - Runtime casting, command handling, acquisition mutation, save/account changes, UI work, broader ownership routes, and broader acquisition routes remain deferred.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - The project remains in foundation stabilization; validation and ownership boundaries remain higher priority than broad runtime expansion.
@@ -64,7 +64,8 @@ Every major system should answer at least one of these questions:
 | --- | --- | --- | --- |
 | `0.5.95` | Magic Cast Readiness Helper | Landed. Added a pure deterministic helper that reports readiness blockers without applying effects. | No mutation or effect application. |
 | `0.5.96` | Known Spell Acquisition Event Planning | Landed. Defined acquisition event ownership and evidence boundaries before any acquisition mutation. | Planning-only; no acquisition creation or broader routes. |
-| `0.5.97` | Training Event Acquisition Helpers | Next. Add pure helper types/functions for validating explicit training-event acquisition input and proposing a known-spell record. | Pure helper only; no persisted acquisition events or state mutation. |
+| `0.5.97` | Training Event Acquisition Helpers | Landed. Added pure helper types/functions for validating explicit training-event acquisition input and proposing a known-spell record. | Pure helper only; no persisted acquisition events or state mutation. |
+| `0.5.98` | Magic Command Contract | Next. Define command/intention shape before resolver behavior. | Contract only; no runtime cast resolver, commands, UI, effects, or mutation. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
@@ -100,7 +101,7 @@ Read current-gpt-handoff second for current connector-side guardrails.
 Use the roadmap for version order and playability checkpoints.
 Use the sequenced Codex plan for the current implementation queue.
 Use the magic runtime boundary plan for cast-readiness helper and later runtime guardrails.
-Use the known-spell acquisition event plan for Version 0.5.97 - Training Event Acquisition Helpers.
+Use the known-spell acquisition event plan for training-event acquisition helper history and later acquisition mutation constraints.
 Use the design ledger for durable conceptual criteria and vocabulary.
 Use the continuity brief for north-star direction and source map.
 Use the backlog for deferred work and historical run notes.
