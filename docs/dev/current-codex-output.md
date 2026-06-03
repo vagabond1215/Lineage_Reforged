@@ -1,17 +1,22 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.94 - Magic Runtime Boundary Plan
-Date: 2026-06-02
-Branch/status assumption: Ran on `master`. Preflight worktree was clean before edits; no repository sync was attempted during this docs-only run.
+Source version/run: Version 0.5.95 - Magic Cast Readiness Helper
+Date: 2026-06-03
+Branch/status assumption: Ran on `master`. Preflight worktree was clean before edits; no repository sync was attempted during this focused local implementation run.
 
 ## Result
-Added the planning-only Magic Runtime Boundary Plan for the next safe magic runtime step after `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`.
+Added `buildMagicCastReadiness(...)` as a pure deterministic read-only helper in the game-engine known-spell boundary.
 
-The new plan defines the boundary between current known-spell ownership/read-only projection helpers and the future pure cast-readiness helper. It covers conduit policy, catalyst policy, control/failure policy, unsupported/deferred/unknown hook behavior, readiness blocker vocabulary, and the exact allowed scope for `Version 0.5.95 - Magic Cast Readiness Helper`.
+The helper reuses `buildKnownSpellReadOnlyProjection(...)` and returns ordered readiness blockers for missing, blocked, or invalid known-spell records; missing training-event evidence; missing or invalid conduit/catalyst metadata; insufficient control context; unsupported spell hooks; non-ready spell runtime status; and absent effectful runtime casting.
 
-Narrow sequence docs were updated where they still described `0.5.93` as next.
+The helper is exported through `packages/engines/game-engine/src/index.ts`, keeps `runtime_casting_not_implemented` present by default, and can return `ready: true` only when the caller explicitly supplies valid known-spell records, spell metadata, conduit/catalyst/control inputs, hook support, and `runtimeCastingImplemented: true`.
+
+Narrow handoff, roadmap, sequence, boundary-plan, and backlog docs were updated so the next run points to `Version 0.5.96 - Known Spell Acquisition Event Planning`.
 
 ## Files Changed
+- `packages/engines/game-engine/src/known-spells.ts`
+- `packages/engines/game-engine/src/index.ts`
+- `tests/unit/magic-cast-readiness.test.mjs`
 - `docs/design/magic-runtime-boundary-plan.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -20,19 +25,22 @@ Narrow sequence docs were updated where they still described `0.5.93` as next.
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
-- `git diff --check` (passed; Git emitted CRLF normalization warnings for touched docs)
+- `node --test tests/unit/magic-cast-readiness.test.mjs`
+- `node --test tests/unit/known-spell-ownership.test.mjs`
+- `node --test tests/unit/magic-runtime-readiness-blockers.test.mjs`
+- `git diff --check` (passed; Git emitted CRLF normalization warnings for touched files)
 
 ## Behavior / Runtime Confirmation
-Docs-only run. No runtime, JSON, schema, UI, save/account, combat, spell casting, cast command, catalyst consumption, acquisition event, Magic Legacy, magic skill gain, scroll/tome/document teaching, family/institution/account ownership, or generated-output behavior changed.
+Pure helper/export and focused tests changed. No runtime spell casting, cast commands, command handlers, React UI, spell JSON, item JSON, schemas, save/account state, generated output, combat runtime behavior, catalyst consumption, resource payment, combat events, Chronicle events, acquisition records, magic skill gain, Magic Legacy power, scroll/tome/document teaching, broader ownership routes, or broader acquisition routes were added.
 
 ## Risks / Follow-Up
-- Active spell casting remains deferred.
-- The future `0.5.95` cast-readiness helper remains deferred and must stay pure, deterministic, read-only, and non-mutating.
-- Acquisition event creation, conduit/catalyst implementation, control/failure resolution, catalyst consumption, runtime cast commands, scroll/tome/document teaching, family/institution/account spell ownership, and Magic Legacy access lanes remain deferred.
-- `docs/dev/project-vision-and-continuity-brief.md` still contains a stale `0.5.93` next pointer, but it was outside the requested correction set for this run.
+- Active casting remains deferred.
+- Acquisition event creation remains deferred; `0.5.96` should plan ownership and evidence boundaries before any mutation.
+- Catalyst consumption, command contracts, control/failure resolution, scroll/tome/document teaching, broader ownership routes, and Magic Legacy access lanes remain deferred.
+- Broad typecheck was not run because known pre-existing blockers remain and this run used focused unit tests.
 
 ## Next Recommended Version
-Version 0.5.95 - Magic Cast Readiness Helper
+Version 0.5.96 - Known Spell Acquisition Event Planning
 
 ## Suggested Commit Message
-docs(magic): add runtime boundary plan
+feat(magic): add cast readiness helper

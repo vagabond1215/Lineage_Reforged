@@ -2,13 +2,13 @@
 
 Date: 2026-06-02
 Source version/run: Version 0.5.94 - Magic Runtime Boundary Plan
-Status: planning-only boundary for the next pure cast-readiness helper
+Status: consumed by Version 0.5.95; retained as the boundary reference for cast-readiness and later runtime work
 
 ## Purpose
 
 Define the boundary between the existing known-spell ownership and read-only projection helpers and a future pure cast-readiness helper.
 
-This plan prepares `Version 0.5.95 - Magic Cast Readiness Helper`. It does not implement runtime casting, cast commands, React UI, catalyst consumption, MP/stamina/strain payment, combat events, acquisition events, save/account changes, spell JSON edits, item JSON edits, scroll/tome/document teaching, magic skill gain, Magic Legacy power, or broader known-spell ownership routes.
+This plan prepared `Version 0.5.95 - Magic Cast Readiness Helper`. It does not authorize runtime casting, cast commands, React UI, catalyst consumption, MP/stamina/strain payment, combat events, acquisition events, save/account changes, spell JSON edits, item JSON edits, scroll/tome/document teaching, magic skill gain, Magic Legacy power, or broader known-spell ownership routes.
 
 ## Current Foundation
 
@@ -215,9 +215,13 @@ The `0.5.93` test-local names such as `blocked_known_spell`, `missing_conduit_po
 
 ## Follow-Up Sequence
 
-Recommended next run:
+Implemented helper run:
 
 `Version 0.5.95 - Magic Cast Readiness Helper`
+
+Recommended next run:
+
+`Version 0.5.96 - Known Spell Acquisition Event Planning`
 
 Later work remains deferred:
 

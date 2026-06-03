@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-02
-Route: Codex local sequencing alignment after `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+Date: 2026-06-03
+Route: Codex local sequencing alignment after `Version 0.5.95 - Magic Cast Readiness Helper`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.93 - Magic Runtime Readiness Blocker Tests` added focused blocker coverage.
+This file gives Codex a stable ordered queue after `Version 0.5.95 - Magic Cast Readiness Helper` added the pure read-only cast-readiness helper.
 
 It does not replace:
 
@@ -19,13 +19,13 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed magic blocker slice:
+Latest landed magic readiness slice:
 
-- `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+- `Version 0.5.95 - Magic Cast Readiness Helper`
 
 Immediate next Codex run:
 
-- `Version 0.5.94 - Magic Runtime Boundary Plan`
+- `Version 0.5.96 - Known Spell Acquisition Event Planning`
 
 ## Ordered Trajectory
 
@@ -46,8 +46,9 @@ Immediate next Codex run:
 | 13 | `0.5.91` | Known Spell Acquisition Evidence Helpers | Codex 5.5 Local | `docs/dev/current-codex-output.md` | pure acquisition evidence helpers + focused tests | Landed | Training-event evidence helper boundaries only; no acquisition mutation, casting, UI, save schema migration, or broader routes/scopes. |
 | 14 | `0.5.92` | Known Spell Read-Only Projection | Codex 5.5 Local | `docs/dev/current-codex-output.md` | pure projection + focused tests | Landed | Read-only projection only; no acquisition mutation, casting, UI, save schema migration, or broader routes/scopes. |
 | 15 | `0.5.93` | Magic Runtime Readiness Blocker Tests | Codex 5.5 Local | `docs/dev/current-codex-output.md` | focused blocker tests | Landed | Test/scaffold blocker boundaries only; no runtime casting, commands, UI, save schema migration, or broader routes/scopes. |
-| 16 | `0.5.94` | Magic Runtime Boundary Plan | Codex 5.5 Local docs-only | `docs/dev/current-codex-output.md` | planning doc | Next | Define cast-readiness boundary only; no runtime casting, commands, UI, JSON, schema, save/account, catalyst consumption, or broader routes/scopes. |
-| 17 | `0.5.95` | Magic Cast Readiness Helper | Codex 5.5 Local | `docs/design/magic-runtime-boundary-plan.md` | pure helper + focused tests | Planned after 0.5.94 | Read-only deterministic helper only; no effect application, resource payment, catalyst consumption, acquisition creation, or save mutation. |
+| 16 | `0.5.94` | Magic Runtime Boundary Plan | Codex 5.5 Local docs-only | `docs/dev/current-codex-output.md` | planning doc | Landed | Defined cast-readiness boundary only; no runtime casting, commands, UI, JSON, schema, save/account, catalyst consumption, or broader routes/scopes. |
+| 17 | `0.5.95` | Magic Cast Readiness Helper | Codex 5.5 Local | `docs/design/magic-runtime-boundary-plan.md` | pure helper + focused tests | Landed | Read-only deterministic helper only; no effect application, resource payment, catalyst consumption, acquisition creation, or save mutation. |
+| 18 | `0.5.96` | Known Spell Acquisition Event Planning | Codex 5.5 Local docs-only | `docs/dev/current-codex-output.md` | planning doc | Next | Plan acquisition event ownership only; no acquisition mutation, active casting, commands, UI, broader routes/scopes, or save/account changes. |
 
 ## Default Prompt Pattern
 

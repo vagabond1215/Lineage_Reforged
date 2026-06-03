@@ -159,14 +159,128 @@ export interface KnownSpellReadOnlyProjection {
   issues: KnownSpellCollectionValidationIssue[];
 }
 
+export type MagicCastReadinessBlockerId =
+  | "missing_known_spell"
+  | "known_spell_blocked"
+  | "invalid_known_spell_record"
+  | "missing_training_event_evidence"
+  | "missing_conduit"
+  | "invalid_conduit"
+  | "missing_catalyst"
+  | "invalid_catalyst"
+  | "insufficient_control"
+  | "unsupported_spell_hooks"
+  | "spell_runtime_deferred"
+  | "runtime_casting_not_implemented";
+
+export type MagicCastReadinessHookClassification =
+  | "runtime"
+  | "classifier"
+  | "supported"
+  | "deferred"
+  | "unsupported"
+  | "unknown";
+
+export type MagicCastReadinessControlLevel =
+  | "control.easy"
+  | "control.moderate"
+  | "control.hard";
+
+export interface MagicCastReadinessBlocker {
+  id: MagicCastReadinessBlockerId;
+  source: string;
+  message: string;
+  details?: Record<string, unknown>;
+}
+
+export interface MagicCastReadinessHookSupport {
+  resolutionHooks?: Readonly<Record<string, MagicCastReadinessHookClassification>>;
+  itemGenerationHooks?: Readonly<Record<string, MagicCastReadinessHookClassification>>;
+  runtimeResolutionHooks?: Iterable<unknown>;
+  classifierResolutionHooks?: Iterable<unknown>;
+  supportedResolutionHooks?: Iterable<unknown>;
+  deferredResolutionHooks?: Iterable<unknown>;
+  unsupportedResolutionHooks?: Iterable<unknown>;
+  runtimeItemGenerationHookIds?: Iterable<unknown>;
+  classifierItemGenerationHookIds?: Iterable<unknown>;
+  supportedItemGenerationHookIds?: Iterable<unknown>;
+  deferredItemGenerationHookIds?: Iterable<unknown>;
+  unsupportedItemGenerationHookIds?: Iterable<unknown>;
+}
+
+export interface MagicCastReadinessControlContext {
+  canCast?: unknown;
+  controlScore?: unknown;
+  controlTags?: unknown;
+}
+
+export interface BuildMagicCastReadinessParams {
+  records: unknown;
+  spellCatalog: Iterable<KnownSpellCatalogEntry>;
+  characterId: string;
+  spellId: string;
+  spellRecord?: unknown;
+  conduitCandidate?: unknown;
+  catalystCandidate?: unknown;
+  controlContext?: unknown;
+  hookSupport?: MagicCastReadinessHookSupport;
+  requireConduit?: boolean;
+  requireCatalyst?: boolean;
+  runtimeCastingImplemented?: boolean;
+}
+
+export interface MagicCastReadinessDetails {
+  spellId: string;
+  characterId: string;
+  compatibilityStatus?: string;
+  availableKnownSpellId?: string;
+  blockedKnownSpellId?: string;
+  freecastAllowed: boolean;
+  conduitRequired: boolean;
+  catalystRequired: boolean;
+  requiredControlLevel: MagicCastReadinessControlLevel;
+  conduitId?: string;
+  catalystId?: string;
+  unsupportedResolutionHooks: string[];
+  unsupportedItemGenerationHookIds: string[];
+}
+
+export interface MagicCastReadinessResult {
+  ready: boolean;
+  blockers: MagicCastReadinessBlocker[];
+  projection: KnownSpellReadOnlyProjection;
+  details: MagicCastReadinessDetails;
+}
+
 export const KNOWN_SPELL_OWNER_SCOPES = ["character"] as const satisfies readonly KnownSpellOwnerScope[];
 export const KNOWN_SPELL_ACQUISITION_ROUTES = ["training_event"] as const satisfies readonly KnownSpellAcquisitionRoute[];
 export const KNOWN_SPELL_AVAILABILITY_STATES = ["available", "blocked"] as const satisfies readonly KnownSpellAvailabilityState[];
+export const MAGIC_CAST_READINESS_BLOCKER_IDS = [
+  "missing_known_spell",
+  "known_spell_blocked",
+  "invalid_known_spell_record",
+  "missing_training_event_evidence",
+  "missing_conduit",
+  "invalid_conduit",
+  "missing_catalyst",
+  "invalid_catalyst",
+  "insufficient_control",
+  "unsupported_spell_hooks",
+  "spell_runtime_deferred",
+  "runtime_casting_not_implemented"
+] as const satisfies readonly MagicCastReadinessBlockerId[];
 
 const KNOWN_SPELL_OWNER_SCOPE_SET: ReadonlySet<string> = new Set(KNOWN_SPELL_OWNER_SCOPES);
 const KNOWN_SPELL_ACQUISITION_ROUTE_SET: ReadonlySet<string> = new Set(KNOWN_SPELL_ACQUISITION_ROUTES);
 const KNOWN_SPELL_AVAILABILITY_STATE_SET: ReadonlySet<string> = new Set(KNOWN_SPELL_AVAILABILITY_STATES);
 const TRAINING_EVENT_EVIDENCE_FIELDS: ReadonlySet<string> = new Set(["trainingEventId", "sourceType"]);
+const MAGIC_CAST_READINESS_TRAINING_EVIDENCE_ISSUE_CODES: ReadonlySet<KnownSpellCollectionValidationIssueCode> =
+  new Set(["missing_training_event_id", "missing_training_event_source", "unsupported_training_event_evidence"]);
+const MAGIC_CAST_CONTROL_LEVEL_WEIGHTS: ReadonlyMap<MagicCastReadinessControlLevel, number> = new Map([
+  ["control.easy", 1],
+  ["control.moderate", 2],
+  ["control.hard", 3]
+]);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -789,6 +903,645 @@ export function buildKnownSpellReadOnlyProjection(
     knownSpells,
     blockedSpells,
     issues: []
+  };
+}
+
+function createMagicCastReadinessBlocker(
+  id: MagicCastReadinessBlockerId,
+  source: string,
+  message: string,
+  details?: Record<string, unknown>
+): MagicCastReadinessBlocker {
+  return {
+    id,
+    source,
+    message,
+    ...(details && Object.keys(details).length > 0 ? { details } : {})
+  };
+}
+
+function normalizeBoolean(value: unknown): boolean | null {
+  return typeof value === "boolean" ? value : null;
+}
+
+function normalizeNumber(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function normalizeStringArray(value: unknown): string[] | null {
+  if (!Array.isArray(value)) {
+    return null;
+  }
+
+  const normalized: string[] = [];
+  for (const entry of value) {
+    const text = normalizeString(entry);
+    if (!text) {
+      return null;
+    }
+    normalized.push(text);
+  }
+  return normalized;
+}
+
+function normalizeStringArrayGroups(value: unknown): string[][] | null {
+  if (!Array.isArray(value)) {
+    return null;
+  }
+
+  const normalized: string[][] = [];
+  for (const group of value) {
+    const tags = normalizeStringArray(group);
+    if (!tags || tags.length === 0) {
+      return null;
+    }
+    normalized.push(tags);
+  }
+  return normalized;
+}
+
+function collectStrings(values: Iterable<unknown> | undefined): ReadonlySet<string> {
+  const strings = new Set<string>();
+  if (!values || typeof values === "string") {
+    return strings;
+  }
+
+  for (const value of values) {
+    const text = normalizeString(value);
+    if (text) {
+      strings.add(text);
+    }
+  }
+  return strings;
+}
+
+function normalizeHookClassification(
+  value: unknown
+): MagicCastReadinessHookClassification | null {
+  switch (value) {
+    case "runtime":
+    case "classifier":
+    case "supported":
+    case "deferred":
+    case "unsupported":
+    case "unknown":
+      return value;
+    default:
+      return null;
+  }
+}
+
+function classifyMagicCastReadinessHook(
+  hookId: string,
+  map: Readonly<Record<string, MagicCastReadinessHookClassification>> | undefined,
+  runtimeHooks: ReadonlySet<string>,
+  classifierHooks: ReadonlySet<string>,
+  supportedHooks: ReadonlySet<string>,
+  deferredHooks: ReadonlySet<string>,
+  unsupportedHooks: ReadonlySet<string>
+): MagicCastReadinessHookClassification {
+  const mappedClassification = normalizeHookClassification(map?.[hookId]);
+  if (mappedClassification) {
+    return mappedClassification;
+  }
+  if (runtimeHooks.has(hookId)) {
+    return "runtime";
+  }
+  if (classifierHooks.has(hookId)) {
+    return "classifier";
+  }
+  if (supportedHooks.has(hookId)) {
+    return "supported";
+  }
+  if (deferredHooks.has(hookId)) {
+    return "deferred";
+  }
+  if (unsupportedHooks.has(hookId)) {
+    return "unsupported";
+  }
+  return "unknown";
+}
+
+function isSupportedMagicCastReadinessHook(
+  classification: MagicCastReadinessHookClassification
+): boolean {
+  return classification === "runtime" || classification === "classifier" || classification === "supported";
+}
+
+function findMagicCastReadinessSpellRecord(
+  spellCatalog: readonly KnownSpellCatalogEntry[],
+  spellId: string,
+  spellRecord: unknown
+): Record<string, unknown> | null {
+  if (isRecord(spellRecord)) {
+    const explicitId = normalizeString(spellRecord.id);
+    if (!explicitId || explicitId === spellId) {
+      return spellRecord;
+    }
+  }
+
+  for (const entry of spellCatalog) {
+    if (isRecord(entry) && normalizeString(entry.id) === spellId) {
+      return entry;
+    }
+  }
+
+  return null;
+}
+
+function getMagicCastReadinessCompatibilityProfile(
+  spellRecord: Record<string, unknown> | null
+): Record<string, unknown> | null {
+  return isRecord(spellRecord?.compatibilityProfile) ? spellRecord.compatibilityProfile : null;
+}
+
+function isMagicCastFreecastAllowed(profile: Record<string, unknown> | null): boolean {
+  return normalizeBoolean(profile?.freecastAllowed) === true;
+}
+
+function getRequiredMagicCastConduitTagCheck(
+  profile: Record<string, unknown> | null,
+  conduitTags: readonly string[]
+): { ok: boolean; missingTags: string[]; missingAnyGroups: string[][]; invalidProfile: boolean } {
+  const requiredTags = isRecord(profile?.requiredTags) ? profile.requiredTags : null;
+  if (!requiredTags) {
+    return { ok: false, missingTags: [], missingAnyGroups: [], invalidProfile: true };
+  }
+
+  const allTags = requiredTags.all === undefined ? [] : normalizeStringArray(requiredTags.all);
+  if (!allTags) {
+    return { ok: false, missingTags: [], missingAnyGroups: [], invalidProfile: true };
+  }
+
+  const conduitTagSet = new Set(conduitTags);
+  const missingTags = allTags.filter((tag) => !conduitTagSet.has(tag));
+
+  let missingAnyGroups: string[][] = [];
+  if (requiredTags.any !== undefined) {
+    const anyGroups = normalizeStringArrayGroups(requiredTags.any);
+    if (!anyGroups || anyGroups.length === 0) {
+      return { ok: false, missingTags, missingAnyGroups: [], invalidProfile: true };
+    }
+    missingAnyGroups = anyGroups.filter((group) => !group.some((tag) => conduitTagSet.has(tag)));
+  }
+
+  return {
+    ok: missingTags.length === 0 && missingAnyGroups.length === 0,
+    missingTags,
+    missingAnyGroups,
+    invalidProfile: false
+  };
+}
+
+function isConduitCandidateCompatible(
+  spellProfile: Record<string, unknown> | null,
+  conduitCandidate: unknown
+): { ok: boolean; conduitId?: string; details: Record<string, unknown> } {
+  if (!isRecord(conduitCandidate) || !isRecord(conduitCandidate.conduitProfile)) {
+    return {
+      ok: false,
+      details: { reason: "missing_conduit_profile" }
+    };
+  }
+
+  const conduitId = normalizeString(conduitCandidate.id) ?? undefined;
+  const conduitProfile = conduitCandidate.conduitProfile;
+  const castingTags = normalizeStringArray(conduitProfile.castingTags);
+  if (!castingTags || castingTags.length === 0) {
+    return {
+      ok: false,
+      ...(conduitId ? { conduitId } : {}),
+      details: { reason: "missing_casting_tags" }
+    };
+  }
+
+  const tagCheck = getRequiredMagicCastConduitTagCheck(spellProfile, castingTags);
+  if (!tagCheck.ok) {
+    return {
+      ok: false,
+      ...(conduitId ? { conduitId } : {}),
+      details: {
+        reason: tagCheck.invalidProfile ? "invalid_spell_required_tags" : "tag_mismatch",
+        ...(tagCheck.missingTags.length > 0 ? { missingTags: tagCheck.missingTags } : {}),
+        ...(tagCheck.missingAnyGroups.length > 0 ? { missingAnyGroups: tagCheck.missingAnyGroups } : {})
+      }
+    };
+  }
+
+  return {
+    ok: true,
+    ...(conduitId ? { conduitId } : {}),
+    details: { castingTags }
+  };
+}
+
+function collectMagicCastCatalystRequirements(profile: Record<string, unknown> | null): {
+  families: string[] | null;
+  tiers: string[] | null;
+  declaresRequirement: boolean;
+} {
+  const declaresFamilies = profile?.catalystFamilies !== undefined;
+  const declaresTiers = profile?.catalystTiers !== undefined;
+  return {
+    families: declaresFamilies ? normalizeStringArray(profile?.catalystFamilies) : [],
+    tiers: declaresTiers ? normalizeStringArray(profile?.catalystTiers) : [],
+    declaresRequirement: declaresFamilies || declaresTiers
+  };
+}
+
+function isCatalystCandidateCompatible(
+  spellProfile: Record<string, unknown> | null,
+  catalystCandidate: unknown
+): { ok: boolean; catalystId?: string; details: Record<string, unknown> } {
+  if (!isRecord(catalystCandidate) || !isRecord(catalystCandidate.catalystProfile)) {
+    return {
+      ok: false,
+      details: { reason: "missing_catalyst_profile" }
+    };
+  }
+
+  const catalystId = normalizeString(catalystCandidate.id) ?? undefined;
+  const catalystProfile = catalystCandidate.catalystProfile;
+  const catalystTier = normalizeString(catalystProfile.tier);
+  const catalystFamilies = catalystProfile.families === undefined ? [] : normalizeStringArray(catalystProfile.families);
+  const requirements = collectMagicCastCatalystRequirements(spellProfile);
+
+  if (!catalystTier) {
+    return {
+      ok: false,
+      ...(catalystId ? { catalystId } : {}),
+      details: { reason: "missing_catalyst_tier" }
+    };
+  }
+  if (!catalystFamilies || requirements.families === null || requirements.tiers === null) {
+    return {
+      ok: false,
+      ...(catalystId ? { catalystId } : {}),
+      details: { reason: "invalid_catalyst_metadata" }
+    };
+  }
+
+  const familyMismatch =
+    requirements.families.length > 0 &&
+    !requirements.families.some((family) => catalystFamilies.includes(family));
+  const tierMismatch = requirements.tiers.length > 0 && !requirements.tiers.includes(catalystTier);
+
+  if (familyMismatch || tierMismatch) {
+    return {
+      ok: false,
+      ...(catalystId ? { catalystId } : {}),
+      details: {
+        reason: "catalyst_mismatch",
+        ...(familyMismatch ? { requiredFamilies: requirements.families, catalystFamilies } : {}),
+        ...(tierMismatch ? { requiredTiers: requirements.tiers, catalystTier } : {})
+      }
+    };
+  }
+
+  return {
+    ok: true,
+    ...(catalystId ? { catalystId } : {}),
+    details: { catalystTier, catalystFamilies }
+  };
+}
+
+function collectMagicCastControlTagsFromTagRequirements(requiredTags: unknown): string[] {
+  if (!isRecord(requiredTags)) {
+    return [];
+  }
+
+  const tags: string[] = [];
+  const allTags = normalizeStringArray(requiredTags.all);
+  if (allTags) {
+    tags.push(...allTags);
+  }
+  const anyGroups = normalizeStringArrayGroups(requiredTags.any);
+  if (anyGroups) {
+    tags.push(...anyGroups.flat());
+  }
+  return tags.filter((tag): tag is MagicCastReadinessControlLevel =>
+    MAGIC_CAST_CONTROL_LEVEL_WEIGHTS.has(tag as MagicCastReadinessControlLevel)
+  );
+}
+
+function resolveRequiredMagicCastControlLevel(
+  profile: Record<string, unknown> | null
+): MagicCastReadinessControlLevel {
+  const candidateTags = [
+    ...collectMagicCastControlTagsFromTagRequirements(profile?.requiredTags),
+    ...(normalizeStringArray(profile?.preferredTags) ?? []).filter((tag): tag is MagicCastReadinessControlLevel =>
+      MAGIC_CAST_CONTROL_LEVEL_WEIGHTS.has(tag as MagicCastReadinessControlLevel)
+    )
+  ];
+
+  let selected: MagicCastReadinessControlLevel = "control.easy";
+  for (const tag of candidateTags) {
+    if ((MAGIC_CAST_CONTROL_LEVEL_WEIGHTS.get(tag) ?? 0) > (MAGIC_CAST_CONTROL_LEVEL_WEIGHTS.get(selected) ?? 0)) {
+      selected = tag;
+    }
+  }
+  return selected;
+}
+
+function isMagicCastControlContextSufficient(
+  controlContext: unknown,
+  requiredControlLevel: MagicCastReadinessControlLevel
+): boolean {
+  if (!isRecord(controlContext)) {
+    return false;
+  }
+
+  if (controlContext.canCast === true) {
+    return true;
+  }
+
+  const requiredScore = MAGIC_CAST_CONTROL_LEVEL_WEIGHTS.get(requiredControlLevel) ?? 1;
+  const controlScore = normalizeNumber(controlContext.controlScore);
+  if (controlScore !== null && controlScore >= requiredScore) {
+    return true;
+  }
+
+  const controlTags = normalizeStringArray(controlContext.controlTags);
+  if (!controlTags) {
+    return false;
+  }
+
+  return controlTags.some((tag) => {
+    const weight = MAGIC_CAST_CONTROL_LEVEL_WEIGHTS.get(tag as MagicCastReadinessControlLevel);
+    return weight !== undefined && weight >= requiredScore;
+  });
+}
+
+function collectUnsupportedMagicCastHooks(
+  spellRecord: Record<string, unknown> | null,
+  hookSupport: MagicCastReadinessHookSupport | undefined
+): Pick<MagicCastReadinessDetails, "unsupportedResolutionHooks" | "unsupportedItemGenerationHookIds"> {
+  const runtimeResolutionHooks = collectStrings(hookSupport?.runtimeResolutionHooks);
+  const classifierResolutionHooks = collectStrings(hookSupport?.classifierResolutionHooks);
+  const supportedResolutionHooks = collectStrings(hookSupport?.supportedResolutionHooks);
+  const deferredResolutionHooks = collectStrings(hookSupport?.deferredResolutionHooks);
+  const unsupportedResolutionHooks = collectStrings(hookSupport?.unsupportedResolutionHooks);
+  const runtimeItemGenerationHookIds = collectStrings(hookSupport?.runtimeItemGenerationHookIds);
+  const classifierItemGenerationHookIds = collectStrings(hookSupport?.classifierItemGenerationHookIds);
+  const supportedItemGenerationHookIds = collectStrings(hookSupport?.supportedItemGenerationHookIds);
+  const deferredItemGenerationHookIds = collectStrings(hookSupport?.deferredItemGenerationHookIds);
+  const unsupportedItemGenerationHookIds = collectStrings(hookSupport?.unsupportedItemGenerationHookIds);
+
+  const unsupportedResolutionHookIds: string[] = [];
+  for (const hook of normalizeStringArray(spellRecord?.resolutionHooks) ?? []) {
+    const classification = classifyMagicCastReadinessHook(
+      hook,
+      hookSupport?.resolutionHooks,
+      runtimeResolutionHooks,
+      classifierResolutionHooks,
+      supportedResolutionHooks,
+      deferredResolutionHooks,
+      unsupportedResolutionHooks
+    );
+    if (!isSupportedMagicCastReadinessHook(classification)) {
+      unsupportedResolutionHookIds.push(hook);
+    }
+  }
+
+  const unsupportedGeneratedItemIds: string[] = [];
+  const itemGenerationHooks = Array.isArray(spellRecord?.itemGenerationHooks)
+    ? spellRecord?.itemGenerationHooks
+    : [];
+  for (const [index, hook] of itemGenerationHooks.entries()) {
+    const hookId = isRecord(hook) ? normalizeString(hook.generatedItemId) : null;
+    if (!hookId) {
+      unsupportedGeneratedItemIds.push(`itemGenerationHooks[${index}]`);
+      continue;
+    }
+    const classification = classifyMagicCastReadinessHook(
+      hookId,
+      hookSupport?.itemGenerationHooks,
+      runtimeItemGenerationHookIds,
+      classifierItemGenerationHookIds,
+      supportedItemGenerationHookIds,
+      deferredItemGenerationHookIds,
+      unsupportedItemGenerationHookIds
+    );
+    if (!isSupportedMagicCastReadinessHook(classification)) {
+      unsupportedGeneratedItemIds.push(hookId);
+    }
+  }
+
+  return {
+    unsupportedResolutionHooks: unsupportedResolutionHookIds,
+    unsupportedItemGenerationHookIds: unsupportedGeneratedItemIds
+  };
+}
+
+export function buildMagicCastReadiness(
+  params: BuildMagicCastReadinessParams
+): MagicCastReadinessResult {
+  const characterId = normalizeString(params.characterId) ?? "";
+  const spellId = normalizeString(params.spellId) ?? "";
+  const spellCatalog = Array.from(params.spellCatalog);
+  const projection = buildKnownSpellReadOnlyProjection({
+    records: params.records,
+    spellCatalog,
+    characterId
+  });
+  const spellRecord = spellId
+    ? findMagicCastReadinessSpellRecord(spellCatalog, spellId, params.spellRecord)
+    : null;
+  const spellProfile = getMagicCastReadinessCompatibilityProfile(spellRecord);
+  const compatibilityStatus = normalizeString(spellRecord?.compatibilityStatus) ?? undefined;
+  const freecastAllowed = isMagicCastFreecastAllowed(spellProfile);
+  const conduitRequired = params.requireConduit === true || !freecastAllowed;
+  const catalystRequirements = collectMagicCastCatalystRequirements(spellProfile);
+  const catalystRequired =
+    params.requireCatalyst === true ||
+    (params.requireCatalyst !== false && catalystRequirements.declaresRequirement);
+  const requiredControlLevel = resolveRequiredMagicCastControlLevel(spellProfile);
+  const availableKnownSpell = projection.knownSpells.find((entry) => entry.spellId === spellId);
+  const blockedKnownSpell = projection.blockedSpells.find((entry) => entry.spellId === spellId);
+  const hookDetails = collectUnsupportedMagicCastHooks(spellRecord, params.hookSupport);
+  const blockers: MagicCastReadinessBlocker[] = [];
+  let conduitId: string | undefined;
+  let catalystId: string | undefined;
+
+  if (!availableKnownSpell && !blockedKnownSpell) {
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "missing_known_spell",
+        "known_spell_projection",
+        "No valid available character-scoped known-spell record exists for the requested spell.",
+        { spellId, characterId }
+      )
+    );
+  }
+
+  if (blockedKnownSpell) {
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "known_spell_blocked",
+        blockedKnownSpell.knownSpellId,
+        "The requested spell is known but currently blocked.",
+        {
+          spellId,
+          blockedReason: blockedKnownSpell.blockedReason ?? null
+        }
+      )
+    );
+  }
+
+  if (projection.issues.length > 0) {
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "invalid_known_spell_record",
+        "known_spell_projection",
+        "Known-spell projection found invalid records for this character context.",
+        { issueCodes: projection.issues.map((issue) => issue.code) }
+      )
+    );
+  }
+
+  if (projection.issues.some((issue) => MAGIC_CAST_READINESS_TRAINING_EVIDENCE_ISSUE_CODES.has(issue.code))) {
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "missing_training_event_evidence",
+        "known_spell_projection",
+        "Known-spell records require supported training_event evidence before cast readiness.",
+        {
+          issueCodes: projection.issues
+            .filter((issue) => MAGIC_CAST_READINESS_TRAINING_EVIDENCE_ISSUE_CODES.has(issue.code))
+            .map((issue) => issue.code)
+        }
+      )
+    );
+  }
+
+  if (params.conduitCandidate === undefined || params.conduitCandidate === null) {
+    if (conduitRequired) {
+      blockers.push(
+        createMagicCastReadinessBlocker(
+          "missing_conduit",
+          "conduit",
+          "A conduit is required for this cast-readiness lane.",
+          { spellId, freecastAllowed, requireConduit: params.requireConduit === true }
+        )
+      );
+    }
+  } else {
+    const conduitCheck = isConduitCandidateCompatible(spellProfile, params.conduitCandidate);
+    conduitId = conduitCheck.conduitId;
+    if (!conduitCheck.ok) {
+      blockers.push(
+        createMagicCastReadinessBlocker(
+          "invalid_conduit",
+          conduitCheck.conduitId ?? "conduit",
+          "The supplied conduit does not satisfy spell compatibility metadata.",
+          conduitCheck.details
+        )
+      );
+    }
+  }
+
+  if (params.catalystCandidate === undefined || params.catalystCandidate === null) {
+    if (catalystRequired) {
+      blockers.push(
+        createMagicCastReadinessBlocker(
+          "missing_catalyst",
+          "catalyst",
+          "A catalyst is required by the selected spell compatibility metadata.",
+          {
+            spellId,
+            ...(catalystRequirements.families && catalystRequirements.families.length > 0
+              ? { requiredFamilies: catalystRequirements.families }
+              : {}),
+            ...(catalystRequirements.tiers && catalystRequirements.tiers.length > 0
+              ? { requiredTiers: catalystRequirements.tiers }
+              : {})
+          }
+        )
+      );
+    }
+  } else {
+    const catalystCheck = isCatalystCandidateCompatible(spellProfile, params.catalystCandidate);
+    catalystId = catalystCheck.catalystId;
+    if (!catalystCheck.ok) {
+      blockers.push(
+        createMagicCastReadinessBlocker(
+          "invalid_catalyst",
+          catalystCheck.catalystId ?? "catalyst",
+          "The supplied catalyst does not satisfy spell compatibility metadata.",
+          catalystCheck.details
+        )
+      );
+    }
+  }
+
+  if (!isMagicCastControlContextSufficient(params.controlContext, requiredControlLevel)) {
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "insufficient_control",
+        "control",
+        "Caller-supplied control context is missing or below the deterministic threshold.",
+        { requiredControlLevel }
+      )
+    );
+  }
+
+  if (
+    hookDetails.unsupportedResolutionHooks.length > 0 ||
+    hookDetails.unsupportedItemGenerationHookIds.length > 0
+  ) {
+    const unsupportedHookDetails: Record<string, unknown> = {
+      unsupportedResolutionHooks: hookDetails.unsupportedResolutionHooks,
+      unsupportedItemGenerationHookIds: hookDetails.unsupportedItemGenerationHookIds
+    };
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "unsupported_spell_hooks",
+        "spell_hooks",
+        "The requested spell uses deferred, unsupported, or unknown hooks.",
+        unsupportedHookDetails
+      )
+    );
+  }
+
+  if (compatibilityStatus !== "ready") {
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "spell_runtime_deferred",
+        spellId || "spell",
+        "The requested spell is not marked ready for runtime readiness.",
+        { compatibilityStatus: compatibilityStatus ?? null }
+      )
+    );
+  }
+
+  if (params.runtimeCastingImplemented !== true) {
+    blockers.push(
+      createMagicCastReadinessBlocker(
+        "runtime_casting_not_implemented",
+        "runtime",
+        "Effectful runtime casting is not implemented by this read-only helper."
+      )
+    );
+  }
+
+  return {
+    ready: blockers.length === 0,
+    blockers,
+    projection,
+    details: {
+      spellId,
+      characterId,
+      ...(compatibilityStatus ? { compatibilityStatus } : {}),
+      ...(availableKnownSpell ? { availableKnownSpellId: availableKnownSpell.knownSpellId } : {}),
+      ...(blockedKnownSpell ? { blockedKnownSpellId: blockedKnownSpell.knownSpellId } : {}),
+      freecastAllowed,
+      conduitRequired,
+      catalystRequired,
+      requiredControlLevel,
+      ...(conduitId ? { conduitId } : {}),
+      ...(catalystId ? { catalystId } : {}),
+      ...hookDetails
+    }
   };
 }
 
