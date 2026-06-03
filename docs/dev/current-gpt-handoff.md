@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.95 - Magic Cast Readiness Helper`
+Source route: Codex local planning after `Version 0.5.96 - Known Spell Acquisition Event Planning`
 Date: 2026-06-03
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -15,6 +15,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/dev/project-roadmap.md` owns version order, version-band meaning, and active pipeline direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the current sequenced Codex queue.
 - `docs/design/magic-runtime-boundary-plan.md` owns the `0.5.95` cast-readiness helper boundary.
+- `docs/design/known-spell-acquisition-event-plan.md` owns the `0.5.97` training-event acquisition helper boundary.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -23,7 +24,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.95 - Magic Cast Readiness Helper`
+- `Version 0.5.96 - Known Spell Acquisition Event Planning`
 
 Current sequence source:
 
@@ -31,7 +32,7 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.96 - Known Spell Acquisition Event Planning`
+- `Version 0.5.97 - Training Event Acquisition Helpers`
 
 ## Recent Results
 
@@ -51,12 +52,14 @@ Magic / known spells:
 - `0.5.95` added `buildMagicCastReadiness(...)` as a pure deterministic read-only helper exported through the game-engine barrel.
 - The cast-readiness helper reuses known-spell projection and can return ordered blockers for missing/blocked/invalid known-spell records, missing training-event evidence, missing/invalid conduit, missing/invalid catalyst, insufficient control, unsupported hooks, non-ready spell runtime status, and absent effectful runtime casting.
 - `runtime_casting_not_implemented` remains present by default unless the caller explicitly supplies runtime support.
+- `0.5.96` added `docs/design/known-spell-acquisition-event-plan.md` as the planning-only boundary for future training-event acquisition helpers.
+- The acquisition-event plan defines explicit character-scoped training-event acquisition ownership, evidence requirements, deterministic duplicate handling, forbidden inference rules, and the exact allowed scope for `0.5.97`.
 - Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership.
 - `characterKnowsSpell(...)` remains a pure read-only query helper and still counts only valid, available, character-owned records under existing query semantics.
 - Arcane Compendium remains read-only and independent from known-spell ownership/acquisition evidence/projection.
 - Current `PlayerSpellState[]` remains readiness/legacy context and is not a complete acquisition/ownership model.
 - `0.5.95` changed pure helper code, exports, focused tests, `docs/dev/current-codex-output.md`, and the backlog note only: no spells, spell metadata, active spell casting, known-spell runtime wiring, acquisition event creation, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, React UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
-- Remaining known-spell follow-up: acquisition event planning, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
+- Remaining known-spell follow-up: pure training-event acquisition helpers, acquisition event mutation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
 
 Combat / equipment:
 
@@ -96,14 +99,17 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.96
+## Active Guardrails For 0.5.97
 
-Known Spell Acquisition Event Planning:
+Training Event Acquisition Helpers:
 
-- Use `docs/dev/current-codex-output.md`, `docs/design/known-spell-ownership-plan.md`, `docs/design/magic-runtime-boundary-plan.md`, `packages/engines/game-engine/src/known-spells.ts`, and the current focused known-spell/magic tests as the primary sources.
-- Keep the pass planning-focused unless the next prompt explicitly scopes a pure helper.
-- Define acquisition event ownership and evidence boundaries before adding any acquisition mutation.
+- Use `docs/design/known-spell-acquisition-event-plan.md`, `docs/dev/current-codex-output.md`, `docs/design/known-spell-ownership-plan.md`, `docs/design/magic-runtime-boundary-plan.md`, `packages/engines/game-engine/src/known-spells.ts`, and the current focused known-spell/magic tests as the primary sources.
+- Add pure deterministic helper types/functions only.
+- Validate explicit training-event acquisition input and return a normalized proposed `KnownSpellRecordState`.
+- Reuse existing known-spell validation helpers instead of duplicating record validation.
+- Return deterministic issues/blockers for missing evidence, unsupported routes, unknown spell ids, owner mismatch, duplicate ids, invalid records, and forbidden inference attempts.
 - Preserve the current supported known-spell route as `training_event` only until a dedicated helper run expands it.
+- Do not write to save/account/session state or create persisted acquisition events.
 - Do not implement runtime spell casting.
 - Do not add cast commands, active magic behavior, acquisition event creation, React UI, generated output, spell execution commands, combat actions, save schema changes, catalyst consumption, magic skill gain, Magic Legacy power, scroll/tome/document teaching, or broader ownership/acquisition routes.
 - Preserve character-scoped known-spell ownership only.
@@ -129,11 +135,12 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | 2 | `0.5.93` | Magic Runtime Readiness Blocker Tests | `docs/dev/current-codex-output.md` | Landed |
 | 3 | `0.5.94` | Magic Runtime Boundary Plan | `docs/design/magic-runtime-boundary-plan.md` | Landed |
 | 4 | `0.5.95` | Magic Cast Readiness Helper | `docs/design/magic-runtime-boundary-plan.md` | Landed |
-| 5 | `0.5.96` | Known Spell Acquisition Event Planning | `docs/dev/current-codex-output.md` | Next |
+| 5 | `0.5.96` | Known Spell Acquisition Event Planning | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
+| 6 | `0.5.97` | Training Event Acquisition Helpers | `docs/design/known-spell-acquisition-event-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.96 - Known Spell Acquisition Event Planning`, inspect:
+For `Version 0.5.97 - Training Event Acquisition Helpers`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -141,12 +148,14 @@ For `Version 0.5.96 - Known Spell Acquisition Event Planning`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/design/known-spell-acquisition-event-plan.md`
 - `docs/design/magic-runtime-boundary-plan.md`
 - `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
 - `packages/engines/game-engine/src/known-spells.ts`
 - `packages/engines/game-engine/src/index.ts`
+- `tests/unit/known-spell-ownership.test.mjs`
 - `tests/unit/magic-cast-readiness.test.mjs`
 - `tests/unit/magic-runtime-readiness-blockers.test.mjs`
 - `packages/content/base/player/spells.json`
@@ -154,6 +163,6 @@ For `Version 0.5.96 - Known Spell Acquisition Event Planning`, inspect:
 - `tools/content-lint/spell-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
 
-## After 0.5.96
+## After 0.5.97
 
-Use the acquisition event planning result in `docs/dev/current-codex-output.md` to decide whether the next safe run is a pure training-event acquisition helper, a command-contract plan, or another narrow magic ownership guardrail.
+Use the training-event acquisition helper result in `docs/dev/current-codex-output.md` to decide whether the next safe run is a command-contract plan, another known-spell ownership guardrail, or a narrow acquisition mutation plan.

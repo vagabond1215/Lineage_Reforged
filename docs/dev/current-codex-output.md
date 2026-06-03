@@ -1,23 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.95 - Magic Cast Readiness Helper
+Source version/run: Version 0.5.96 - Known Spell Acquisition Event Planning
 Date: 2026-06-03
-Branch/status assumption: Ran on `master`. Preflight worktree was clean before edits; no repository sync was attempted during this focused local implementation run.
+Branch/status assumption: Ran on `master`. Preflight worktree was clean and `master` matched `origin/master`; no repository sync was attempted during this focused docs-only run.
 
 ## Result
-Added `buildMagicCastReadiness(...)` as a pure deterministic read-only helper in the game-engine known-spell boundary.
+Added `docs/design/known-spell-acquisition-event-plan.md` as the planning-only boundary for future training-event acquisition helpers.
 
-The helper reuses `buildKnownSpellReadOnlyProjection(...)` and returns ordered readiness blockers for missing, blocked, or invalid known-spell records; missing training-event evidence; missing or invalid conduit/catalyst metadata; insufficient control context; unsupported spell hooks; non-ready spell runtime status; and absent effectful runtime casting.
+The plan defines explicit character-scoped acquisition event ownership, minimal `training_event` evidence requirements, deterministic duplicate handling, forbidden inference rules, and the exact allowed scope for `Version 0.5.97 - Training Event Acquisition Helpers`.
 
-The helper is exported through `packages/engines/game-engine/src/index.ts`, keeps `runtime_casting_not_implemented` present by default, and can return `ready: true` only when the caller explicitly supplies valid known-spell records, spell metadata, conduit/catalyst/control inputs, hook support, and `runtimeCastingImplemented: true`.
-
-Narrow handoff, roadmap, sequence, boundary-plan, and backlog docs were updated so the next run points to `Version 0.5.96 - Known Spell Acquisition Event Planning`.
+Narrow handoff, roadmap, sequence, and backlog docs were updated so the next run points to `Version 0.5.97 - Training Event Acquisition Helpers`.
 
 ## Files Changed
-- `packages/engines/game-engine/src/known-spells.ts`
-- `packages/engines/game-engine/src/index.ts`
-- `tests/unit/magic-cast-readiness.test.mjs`
-- `docs/design/magic-runtime-boundary-plan.md`
+- `docs/design/known-spell-acquisition-event-plan.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
@@ -25,22 +20,20 @@ Narrow handoff, roadmap, sequence, boundary-plan, and backlog docs were updated 
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
-- `node --test tests/unit/magic-cast-readiness.test.mjs`
-- `node --test tests/unit/known-spell-ownership.test.mjs`
-- `node --test tests/unit/magic-runtime-readiness-blockers.test.mjs`
-- `git diff --check` (passed; Git emitted CRLF normalization warnings for touched files)
+- `git diff --check` (passed; Git emitted CRLF normalization warnings for touched tracked files)
+- `Select-String -Path docs/design/known-spell-acquisition-event-plan.md -Pattern '[ \t]+$'` (no trailing-whitespace matches)
 
 ## Behavior / Runtime Confirmation
-Pure helper/export and focused tests changed. No runtime spell casting, cast commands, command handlers, React UI, spell JSON, item JSON, schemas, save/account state, generated output, combat runtime behavior, catalyst consumption, resource payment, combat events, Chronicle events, acquisition records, magic skill gain, Magic Legacy power, scroll/tome/document teaching, broader ownership routes, or broader acquisition routes were added.
+Docs only. No runtime spell casting, cast commands, acquisition mutation, React UI, spell JSON, item JSON, schemas, save/account state, generated output, combat runtime behavior, catalyst consumption, magic skill gain, Magic Legacy power, scroll/tome/document teaching, broader ownership routes, broader acquisition routes, or `PlayerSpellState[]` replacement changed.
 
 ## Risks / Follow-Up
-- Active casting remains deferred.
-- Acquisition event creation remains deferred; `0.5.96` should plan ownership and evidence boundaries before any mutation.
-- Catalyst consumption, command contracts, control/failure resolution, scroll/tome/document teaching, broader ownership routes, and Magic Legacy access lanes remain deferred.
-- Broad typecheck was not run because known pre-existing blockers remain and this run used focused unit tests.
+- `0.5.97` should add pure training-event acquisition helpers only.
+- Persisted acquisition event creation remains deferred.
+- Active casting, command contracts, runtime cast resolver work, catalyst consumption, control/failure/backlash behavior, scroll/tome/document teaching, teacher/institution/quest/family/Legacy/source-run routes, broader ownership scopes, and `PlayerSpellState[]` replacement remain deferred.
+- Broad typecheck was not run because this run was docs-only and known pre-existing blockers remain.
 
 ## Next Recommended Version
-Version 0.5.96 - Known Spell Acquisition Event Planning
+Version 0.5.97 - Training Event Acquisition Helpers
 
 ## Suggested Commit Message
-feat(magic): add cast readiness helper
+docs(magic): plan known spell acquisition events
