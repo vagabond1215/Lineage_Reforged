@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: Codex local alignment after `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+Source route: ChatGPT via GitHub Connector sync after `Version 0.5.94 - Magic Runtime Boundary Plan`
 Date: 2026-06-02
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -14,6 +14,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/dev/current-gpt-handoff.md` is the immediate prompt-prep handoff.
 - `docs/dev/project-roadmap.md` owns version order, version-band meaning, and active pipeline direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the current sequenced Codex queue.
+- `docs/design/magic-runtime-boundary-plan.md` owns the `0.5.95` cast-readiness helper boundary.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -22,7 +23,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+- `Version 0.5.94 - Magic Runtime Boundary Plan`
 
 Current sequence source:
 
@@ -30,7 +31,7 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.5.94 - Magic Runtime Boundary Plan`
+- `Version 0.5.95 - Magic Cast Readiness Helper`
 
 ## Recent Results
 
@@ -45,12 +46,13 @@ Magic / known spells:
 - The projection distinguishes valid available records, valid blocked records, invalid records, duplicate records, missing evidence, unknown spells, unsupported owner scopes, and unsupported acquisition routes through existing validation pathways.
 - `0.5.93` added focused test-only blocker coverage proving current read-only spell surfaces and metadata helpers do not imply cast readiness.
 - The blocker tests keep runtime magic blocked without explicit known-spell ownership, valid training-event evidence, availability, conduit policy, catalyst policy, control/failure policy, supported hooks, and an actual runtime casting implementation.
+- `0.5.94` added `docs/design/magic-runtime-boundary-plan.md`, a planning-only boundary for `0.5.95 - Magic Cast Readiness Helper`.
+- The boundary plan defines allowed conduit metadata comparison, catalyst metadata comparison, pure control threshold checks, unsupported/deferred/unknown hook blocking, blocker vocabulary, and exact allowed/forbidden scope for the next helper.
 - Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership.
 - `characterKnowsSpell(...)` remains a pure read-only query helper and still counts only valid, available, character-owned records under existing query semantics.
 - Arcane Compendium remains read-only and independent from known-spell ownership/acquisition evidence/projection.
 - Current `PlayerSpellState[]` remains readiness/legacy context and is not a complete acquisition/ownership model.
-- `0.5.92` changed pure helper code, exports, focused tests, `docs/dev/current-codex-output.md`, and the backlog note only: no spells, spell metadata, active spell casting, known-spell runtime wiring, acquisition event creation, cast commands, catalyst behavior, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, React UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
-- Remaining known-spell follow-up: magic runtime boundary planning, the future pure cast-readiness helper, acquisition event creation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
+- Remaining known-spell follow-up: the future pure cast-readiness helper, acquisition event creation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
 
 Combat / equipment:
 
@@ -90,14 +92,17 @@ Typecheck tooling:
 - Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
 - Do not require broad typecheck unless a prompt specifically fixes those blockers.
 
-## Active Guardrails For 0.5.94
+## Active Guardrails For 0.5.95
 
-Magic Runtime Boundary Plan:
+Magic Cast Readiness Helper:
 
-- Use `docs/dev/current-codex-output.md`, `docs/design/known-spell-ownership-plan.md`, `tests/unit/magic-runtime-readiness-blockers.test.mjs`, and the current spell/item metadata helpers as the primary sources.
-- Keep the pass docs-only unless narrow handoff or roadmap pointers still describe `0.5.93` as next.
-- Define the boundary between existing known-spell ownership/read-only projection helpers and a future pure cast-readiness helper.
-- Cover conduit policy, catalyst policy, control/failure policy, unsupported/deferred/unknown hook behavior, readiness blocker vocabulary, and exact allowed scope for `Version 0.5.95 - Magic Cast Readiness Helper`.
+- Use `docs/dev/current-codex-output.md` and `docs/design/magic-runtime-boundary-plan.md` as the primary sources.
+- Build on `packages/engines/game-engine/src/known-spells.ts`, `packages/engines/game-engine/src/index.ts`, and `tests/unit/magic-runtime-readiness-blockers.test.mjs`.
+- Add a pure deterministic read-only helper only.
+- Reuse `buildKnownSpellReadOnlyProjection(...)` instead of duplicating known-spell ownership validation.
+- Return deterministic readiness blockers and a `ready` boolean.
+- Keep `runtime_casting_not_implemented` present by default while no cast resolver exists.
+- Compare spell compatibility metadata only against caller-supplied conduit, catalyst, control, and hook-support inputs.
 - Do not implement runtime spell casting.
 - Do not add cast commands, active magic behavior, acquisition events, React UI, generated output, spell execution commands, combat actions, save schema changes, catalyst consumption, magic skill gain, Magic Legacy power, scroll/tome/document teaching, or broader ownership/acquisition routes.
 - Preserve character-scoped known-spell ownership only.
@@ -121,12 +126,12 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | ---: | --- | --- | --- | --- |
 | 1 | `0.5.92` | Known Spell Read-Only Projection | `docs/dev/current-codex-output.md` | Landed |
 | 2 | `0.5.93` | Magic Runtime Readiness Blocker Tests | `docs/dev/current-codex-output.md` | Landed |
-| 3 | `0.5.94` | Magic Runtime Boundary Plan | `docs/dev/current-codex-output.md` | Next |
-| 4 | `0.5.95` | Magic Cast Readiness Helper | `docs/design/magic-runtime-boundary-plan.md` | Planned after 0.5.94 |
+| 3 | `0.5.94` | Magic Runtime Boundary Plan | `docs/design/magic-runtime-boundary-plan.md` | Landed |
+| 4 | `0.5.95` | Magic Cast Readiness Helper | `docs/design/magic-runtime-boundary-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.94 - Magic Runtime Boundary Plan`, inspect:
+For `Version 0.5.95 - Magic Cast Readiness Helper`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -134,6 +139,7 @@ For `Version 0.5.94 - Magic Runtime Boundary Plan`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/design/magic-runtime-boundary-plan.md`
 - `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
@@ -145,6 +151,6 @@ For `Version 0.5.94 - Magic Runtime Boundary Plan`, inspect:
 - `tools/content-lint/spell-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
 
-## After 0.5.94
+## After 0.5.95
 
-Use `docs/design/magic-runtime-boundary-plan.md` and `docs/dev/current-codex-output.md` to scope `Version 0.5.95 - Magic Cast Readiness Helper`. Keep it pure, deterministic, read-only, and non-mutating.
+Use the cast-readiness helper result in `docs/dev/current-codex-output.md` to decide whether the next run should add known-spell acquisition event planning, training-event acquisition helpers, magic command contract planning, or another narrow stabilization item.
