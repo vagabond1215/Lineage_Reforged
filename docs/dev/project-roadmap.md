@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-06-01
+Last reviewed: 2026-06-02
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.92 - Known Spell Read-Only Projection`
-- Next recommended version: `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+- Latest landed version: `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+- Next recommended version: `Version 0.5.94 - Magic Runtime Boundary Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -48,6 +48,7 @@ Current repo reality:
 - Known spell validation helpers have landed as pure collection validation, duplicate id detection, and minimal training-event evidence validation.
 - Known spell acquisition evidence helpers have landed as pure helpers for minimal `training_event` evidence.
 - Known spell read-only projection has landed as a pure projection over explicit character-scoped known-spell records.
+- Magic runtime readiness blocker tests have landed as test-only coverage proving current read-only spell surfaces and metadata do not imply cast readiness.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, or broad economy/climate expansion has been added.
@@ -84,7 +85,9 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.90` | Known Spell Validation Helpers | Codex Local | Pure validation helpers + focused tests | Landed. Added collection validation, duplicate id checks, and minimal training-event evidence validation. | No casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader ownership scopes. |
 | `0.5.91` | Known Spell Acquisition Evidence Helpers | Codex Local | Pure acquisition evidence helpers + focused tests | Landed. Added training-event evidence helper boundaries. | No acquisition mutation, casting, UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
 | `0.5.92` | Known Spell Read-Only Projection | Codex Local | Pure projection + focused tests | Landed. Added read-only known-spell projection. | No acquisition mutation, casting, React UI, save schema migration, catalyst behavior, scroll/tome behavior, Magic Legacy power, or broader routes/scopes. |
-| `0.5.93` | Magic Runtime Readiness Blocker Tests | Codex Local | Focused blocker tests | Next. Add tests proving runtime magic remains blocked without required policy gates. | No runtime casting, commands, React UI, save schema migration, or broader routes/scopes. |
+| `0.5.93` | Magic Runtime Readiness Blocker Tests | Codex Local | Focused blocker tests | Landed. Added tests proving runtime magic remains blocked without required policy gates. | No runtime casting, commands, React UI, save schema migration, or broader routes/scopes. |
+| `0.5.94` | Magic Runtime Boundary Plan | Codex Local docs-only | Planning | Next. Define the boundary between known-spell projection and a future pure cast-readiness helper. | Planning-only; no runtime casting, commands, React UI, JSON, schema, save/account, catalyst consumption, or broader routes/scopes. |
+| `0.5.95` | Magic Cast Readiness Helper | Codex Local | Pure helper + focused tests | Planned after 0.5.94. Add deterministic read-only blocker results for cast readiness. | No effect application, resource payment, catalyst consumption, combat events, acquisition creation, or save mutation. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -92,8 +95,8 @@ The magic runtime path must not jump directly from known-spell projection into a
 
 | Order | Step | Purpose | Boundary |
 | ---: | --- | --- | --- |
-| 1 | Runtime readiness blocker tests | Executable guardrails proving runtime magic remains blocked without explicit known-spell ownership, validated acquisition evidence, conduit policy, catalyst policy, control/failure policy, and blocked-hook policy. | Test/scaffold only; no runtime casting. |
-| 2 | Conduit / catalyst / control policy plan | Define what counts as a valid conduit, how catalysts are required or consumed, and how control/failure checks should work. | Planning or pure policy helpers only. |
+| 1 | Runtime readiness blocker tests | Executable guardrails proving runtime magic remains blocked without explicit known-spell ownership, validated acquisition evidence, conduit policy, catalyst policy, control/failure policy, and blocked-hook policy. | Landed as test/scaffold only; no runtime casting. |
+| 2 | Magic runtime boundary plan | Define what counts as a valid conduit, how catalyst presence is checked without consumption, how control/failure remains a pure gate, how unsupported/deferred/unknown hooks block readiness, and what blocker vocabulary `0.5.95` may return. | Planning-only; no runtime casting. |
 | 3 | Runtime cast-readiness helper | Add a pure helper that can return deterministic blockers such as `missing_known_spell`, `known_spell_blocked`, `missing_training_event_evidence`, `missing_conduit`, `invalid_conduit`, `missing_catalyst`, `insufficient_control`, `unsupported_spell_hooks`, or `spell_runtime_deferred`. | No effect application. |
 | 4 | Acquisition event planning / helpers | Define and validate training-event acquisition records, then create safe helper boundaries for turning valid training evidence into character-scoped known-spell records. | Do not add teacher, quest, scroll, tome, Legacy, family, institution, or document routes yet. |
 | 5 | Active casting command contract | Define the command/intention shape for selected spell, caster, target, conduit source, catalyst source, and casting context. | Contract only before resolver behavior. |
@@ -103,16 +106,15 @@ The magic runtime path must not jump directly from known-spell projection into a
 | 9 | Save/runtime state integration | Persist known spell records, acquisition evidence, training events, catalyst inventory changes, cooldowns, backlash, cast history, and Chronicle hooks when shapes are stable. | No old-save compatibility unless explicitly requested. |
 | 10 | Expanded acquisition routes | Add teacher, quest/event reward, scroll/tome study, institution licensing, document-owned study access, Magic Legacy lanes, and family tradition only after explicit evidence and ownership rules exist. | Keep blocked until each route has evidence and validation. |
 
-Practical near-term sequence after the current blocker-test pass:
+Practical near-term sequence after the blocker-test pass:
 
-1. `0.5.93 - Magic Runtime Readiness Blocker Tests`
-2. `0.5.94 - Conduit Catalyst Control Policy Plan`
-3. `0.5.95 - Magic Cast Readiness Helper`
-4. `0.5.96 - Known Spell Acquisition Event Planning`
-5. `0.5.97 - Training Event Acquisition Helpers`
-6. `0.5.98 - Magic Command Contract`
-7. `0.5.99 - First Narrow Runtime Cast Resolver`
-8. `0.6.x - UI command wiring / active magic integration`
+1. `0.5.94 - Magic Runtime Boundary Plan`
+2. `0.5.95 - Magic Cast Readiness Helper`
+3. `0.5.96 - Known Spell Acquisition Event Planning`
+4. `0.5.97 - Training Event Acquisition Helpers`
+5. `0.5.98 - Magic Command Contract`
+6. `0.5.99 - First Narrow Runtime Cast Resolver`
+7. `0.6.x - UI command wiring / active magic integration`
 
 ## 5. Sequenced Near-Term Codex Queue
 
@@ -121,8 +123,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
 | 1 | `0.5.92` | Known Spell Read-Only Projection | `docs/dev/current-codex-output.md` | Landed |
-| 2 | `0.5.93` | Magic Runtime Readiness Blocker Tests | `docs/dev/current-codex-output.md` | Next |
-| 3 | `0.5.94` | Post-blocker-test implementation TBD | `docs/dev/current-codex-output.md` | Planned after 0.5.93 |
+| 2 | `0.5.93` | Magic Runtime Readiness Blocker Tests | `docs/dev/current-codex-output.md` | Landed |
+| 3 | `0.5.94` | Magic Runtime Boundary Plan | `docs/dev/current-codex-output.md` | Next |
+| 4 | `0.5.95` | Magic Cast Readiness Helper | `docs/design/magic-runtime-boundary-plan.md` | Planned after 0.5.94 |
 
 ## 6. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

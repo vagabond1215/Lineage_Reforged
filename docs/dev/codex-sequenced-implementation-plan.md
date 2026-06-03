@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-01
-Route: ChatGPT via GitHub Connector cleanup
-Status: connector-updated sequencing plan for future Codex runs
+Date: 2026-06-02
+Route: Codex local sequencing alignment after `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.92 - Known Spell Read-Only Projection` added pure known-spell projection helpers.
+This file gives Codex a stable ordered queue after `Version 0.5.93 - Magic Runtime Readiness Blocker Tests` added focused blocker coverage.
 
 It does not replace:
 
@@ -19,13 +19,13 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed magic projection slice:
+Latest landed magic blocker slice:
 
-- `Version 0.5.92 - Known Spell Read-Only Projection`
+- `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
 
 Immediate next Codex run:
 
-- `Version 0.5.93 - Magic Runtime Readiness Blocker Tests`
+- `Version 0.5.94 - Magic Runtime Boundary Plan`
 
 ## Ordered Trajectory
 
@@ -45,7 +45,9 @@ Immediate next Codex run:
 | 12 | `0.5.90` | Known Spell Validation Helpers | Codex 5.5 Local | `docs/dev/current-codex-output.md` | pure validation helpers + focused tests | Landed | Collection validation, duplicate id checks, and training-event evidence validation only; no casting, UI, save schema migration, or broader ownership scopes. |
 | 13 | `0.5.91` | Known Spell Acquisition Evidence Helpers | Codex 5.5 Local | `docs/dev/current-codex-output.md` | pure acquisition evidence helpers + focused tests | Landed | Training-event evidence helper boundaries only; no acquisition mutation, casting, UI, save schema migration, or broader routes/scopes. |
 | 14 | `0.5.92` | Known Spell Read-Only Projection | Codex 5.5 Local | `docs/dev/current-codex-output.md` | pure projection + focused tests | Landed | Read-only projection only; no acquisition mutation, casting, UI, save schema migration, or broader routes/scopes. |
-| 15 | `0.5.93` | Magic Runtime Readiness Blocker Tests | Codex 5.5 Local | `docs/dev/current-codex-output.md` | focused blocker tests | Next | Test/scaffold blocker boundaries only; no runtime casting, commands, UI, save schema migration, or broader routes/scopes. |
+| 15 | `0.5.93` | Magic Runtime Readiness Blocker Tests | Codex 5.5 Local | `docs/dev/current-codex-output.md` | focused blocker tests | Landed | Test/scaffold blocker boundaries only; no runtime casting, commands, UI, save schema migration, or broader routes/scopes. |
+| 16 | `0.5.94` | Magic Runtime Boundary Plan | Codex 5.5 Local docs-only | `docs/dev/current-codex-output.md` | planning doc | Next | Define cast-readiness boundary only; no runtime casting, commands, UI, JSON, schema, save/account, catalyst consumption, or broader routes/scopes. |
+| 17 | `0.5.95` | Magic Cast Readiness Helper | Codex 5.5 Local | `docs/design/magic-runtime-boundary-plan.md` | pure helper + focused tests | Planned after 0.5.94 | Read-only deterministic helper only; no effect application, resource payment, catalyst consumption, acquisition creation, or save mutation. |
 
 ## Default Prompt Pattern
 
@@ -64,10 +66,10 @@ Each future Codex prompt should:
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
 - Do not extract a universal shell before a later dedicated shell pass scopes it.
-- Do not add generated UI output during magic runtime readiness blocker test work.
+- Do not add generated UI output during magic runtime boundary or cast-readiness helper work.
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
-- Do not mix magic runtime readiness blocker tests with combat math rewrites, active spell execution, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
-- Do not begin runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, conduit/catalyst/control policy, and blocked-hook tests are explicitly implemented in narrow slices.
+- Do not mix magic runtime boundary or cast-readiness helper work with combat math rewrites, active spell execution, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
+- Do not begin runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, conduit/catalyst/control policy, blocked-hook tests, and a pure cast-readiness helper are explicitly implemented in narrow slices.
 
 ## When To Reorder
 
