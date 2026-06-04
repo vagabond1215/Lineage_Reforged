@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 Source version/run: Version 0.5.99 - First Narrow Runtime Cast Resolver Plan
-Status: planning-only source for Version 0.6.0 - Runtime Cast Resolver Readiness Helper
+Status: planning-only source for Version 0.5.100 - Runtime Cast Resolver Readiness Helper
 
 ## Purpose
 
@@ -11,6 +11,8 @@ Define the first narrow engine-owned runtime cast resolver boundary before imple
 This plan prepares a future pure resolver-readiness helper that can consume an explicit validated `magic.cast` command/intention, reuse existing known-spell and cast-readiness helpers, and return deterministic resolver issues without applying spell effects.
 
 This plan does not implement runtime spell casting, command handlers, UI dispatch, save mutation, event creation, resource payment, catalyst consumption or reservation, inventory mutation, target effect resolution, control failure, backlash, broader acquisition routes, broader owner scopes, or `PlayerSpellState[]` replacement.
+
+Versioning note: the next helper remains in the `0.5.x` line as `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`. Patch numbers may exceed two digits; do not roll to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## 1. Current Foundation
 
@@ -127,7 +129,7 @@ Until resource, catalyst, and failure owners exist, the resolver should represen
 
 ## 4. First Narrow Implementation Lane
 
-The smallest future implementation lane after this plan should be `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`.
+The smallest future implementation lane after this plan should be `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`.
 
 Allowed future helper behavior:
 
@@ -323,9 +325,9 @@ Deferred after `0.5.99`:
 - magic skill gain
 - Magic Legacy power
 
-## Exact Allowed Scope For Version 0.6.0
+## Exact Allowed Scope For Version 0.5.100
 
-`Version 0.6.0 - Runtime Cast Resolver Readiness Helper` may:
+`Version 0.5.100 - Runtime Cast Resolver Readiness Helper` may:
 
 - Add pure TypeScript helper types/functions for resolver readiness if explicitly scoped.
 - Accept an explicit command-like input based on `docs/design/magic-command-contract-plan.md`.
@@ -337,7 +339,7 @@ Deferred after `0.5.99`:
 - Export only pure helper types/functions through the game-engine barrel if implemented.
 - Update docs and backlog notes.
 
-`0.6.0` must not:
+`0.5.100` must not:
 
 - implement effectful casting
 - register or dispatch commands
@@ -354,4 +356,4 @@ Deferred after `0.5.99`:
 
 Recommended next run:
 
-`Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
+`Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
