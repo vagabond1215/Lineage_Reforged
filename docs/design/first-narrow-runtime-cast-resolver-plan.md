@@ -2,7 +2,11 @@
 
 Date: 2026-06-03
 Source version/run: Version 0.5.99 - First Narrow Runtime Cast Resolver Plan
+<<<<<<< HEAD
 Status: consumed by Version 0.5.100; retained as the boundary reference for resolver-readiness and later runtime cast work
+=======
+Status: planning-only source for Version 0.5.100 - Runtime Cast Resolver Readiness Helper
+>>>>>>> e1efcb4baca9e4149f6c43fcbfe98a3f5fbe4c87
 
 ## Purpose
 
@@ -11,6 +15,8 @@ Define the first narrow engine-owned runtime cast resolver boundary before imple
 This plan prepares a future pure resolver-readiness helper that can consume an explicit validated `magic.cast` command/intention, reuse existing known-spell and cast-readiness helpers, and return deterministic resolver issues without applying spell effects.
 
 This plan does not implement runtime spell casting, command handlers, UI dispatch, save mutation, event creation, resource payment, catalyst consumption or reservation, inventory mutation, target effect resolution, control failure, backlash, broader acquisition routes, broader owner scopes, or `PlayerSpellState[]` replacement.
+
+Versioning note: the next helper remains in the `0.5.x` line as `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`. Patch numbers may exceed two digits; do not roll to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## 1. Current Foundation
 
