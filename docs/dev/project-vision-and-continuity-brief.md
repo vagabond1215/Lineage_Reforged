@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-04 after `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan` landed.
+Updated 2026-06-04 after `Version 0.5.102 - Magic Resolver Inert Envelope Helper` landed.
 
 ## Purpose
 
@@ -26,11 +26,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
+- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
 
 Next recommended version:
 
-- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
+- `Version 0.5.103 - Spell Hook Support Expansion Plan`
 
 Current sequence source:
 
@@ -42,10 +42,11 @@ Current phase:
 
 ## Current Implementation Reality
 
-- Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, command contract planning, first narrow runtime cast resolver planning, resolver-readiness helpers, and planned output-envelope policy have landed.
+- Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, command contract planning, first narrow runtime cast resolver planning, resolver-readiness helpers, planned output-envelope policy, and inert resolver envelope helpers have landed.
 - `buildMagicCastReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` are pure, deterministic, read-only, and exported through the game-engine boundary.
 - `buildMagicCastResolverReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
+- `buildMagicResolverInertEnvelope(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` defines planned resolver envelopes as inert result projections, not emitted events or side-effecting command results.
 - Runtime casting, command handling, acquisition mutation, save/account changes, UI work, broader ownership routes, broader acquisition routes, target resolution, effect application, resource payment, catalyst behavior, Chronicle/Renown hooks, skill trial runtime behavior, magic study event runtime behavior, and knowledge snippet runtime behavior remain deferred.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
@@ -72,7 +73,8 @@ Every major system should answer at least one of these questions:
 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Landed. Planned the first narrow engine-owned resolver readiness boundary. | Planning only; no UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
 | `0.5.100` | Runtime Cast Resolver Readiness Helper | Landed. Added a pure helper that consumes explicit command-like input, calls `buildMagicCastReadiness(...)`, and returns deterministic resolver issues. | Pure helper only; no effectful casting, command handlers, UI dispatch, save mutation, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, or event creation. |
 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | Landed. Planned inert output-envelope policy before runtime events or effect application. | Planning only; no emitted events, effects, mutation, UI dispatch, or command handlers. |
-| `0.5.102` | Magic Resolver Inert Envelope Helper | Next. Add a pure inert envelope helper only if scoped by the plan. | Pure projection only; no emitted events, effects, runtime dispatch, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
+| `0.5.102` | Magic Resolver Inert Envelope Helper | Landed. Added a pure inert envelope helper with explicit safety flags. | Pure projection only; no emitted events, effects, runtime dispatch, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
+| `0.5.103` | Spell Hook Support Expansion Plan | Next. Plan hook-support expansion before broad casting. | Planning only; no generic hook execution, runtime effects, target resolution, resource/catalyst behavior, mutation, UI, or generated output. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
@@ -83,7 +85,7 @@ For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 - Do not weaken validation unless the validator is demonstrably stale or wrong.
 - Do not add old-save or old-account compatibility unless explicitly requested.
 - Keep current data direct and validated.
-- Patch numbers may exceed two digits inside the current band; do not roll from `0.5.101` to `0.6.0` unless the actual `0.6.x` milestone has been reached.
+- Patch numbers may exceed two digits inside the current band; do not roll from `0.5.102` to `0.6.0` unless the actual `0.6.x` milestone has been reached.
 - For complex systems, prefer design criteria, runtime shape, pure helpers, validation, view model, read-only UI, then mutating behavior.
 
 ## New Thread Starter

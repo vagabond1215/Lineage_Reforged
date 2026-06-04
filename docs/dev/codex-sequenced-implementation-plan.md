@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-04
-Route: Codex local sequencing alignment after `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
+Route: Codex local sequencing alignment after `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan` added the inert planned-output-envelope boundary.
+This file gives Codex a stable ordered queue after `Version 0.5.102 - Magic Resolver Inert Envelope Helper` added the pure inert planned-output-envelope helper.
 
 It does not replace:
 
@@ -19,18 +19,18 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed magic resolver planning slice:
+Latest landed magic resolver slice:
 
-- `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
+- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
 
 Immediate next Codex run:
 
-- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
+- `Version 0.5.103 - Spell Hook Support Expansion Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.101` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.102` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -59,7 +59,8 @@ Versioning note:
 | 21 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Codex 5.5 Local docs-first | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | resolver boundary plan | Landed | Planned the first narrow engine-owned resolver boundary only; no effect implementation, command handler wiring, UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
 | 22 | `0.5.100` | Runtime Cast Resolver Readiness Helper | Codex 5.5 Local | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | pure resolver readiness helper + focused tests | Landed | Added pure deterministic resolver readiness only; calls `buildMagicCastReadiness(...)` and returns issues without effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
 | 23 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | Codex 5.5 Local docs-first | `docs/design/magic-resolver-planned-output-envelope-plan.md` | planning doc | Landed | Planned inert result-envelope policy only; no emitted events, effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, or target resolution. |
-| 24 | `0.5.102` | Magic Resolver Inert Envelope Helper | Codex 5.5 Local | `docs/design/magic-resolver-planned-output-envelope-plan.md` | pure helper + focused tests | Next | Add inert planned envelope result helper only; no emitted events, runtime dispatch, effects, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
+| 24 | `0.5.102` | Magic Resolver Inert Envelope Helper | Codex 5.5 Local | `docs/design/magic-resolver-planned-output-envelope-plan.md` | pure helper + focused tests | Landed | Added inert planned envelope result helper only; no emitted events, runtime dispatch, effects, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
+| 25 | `0.5.103` | Spell Hook Support Expansion Plan | Codex 5.5 Local docs-first | `docs/design/magic-runtime-boundary-plan.md` | planning doc | Next | Plan explicit hook support expansion or blocked-hook behavior only; no generic spell hook execution, runtime effects, target resolution, resource/catalyst behavior, mutation, UI, or generated output. |
 
 ## Default Prompt Pattern
 
@@ -82,7 +83,7 @@ Each future Codex prompt should:
 - Do not add generated UI output during magic runtime-helper work.
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
 - Do not mix resolver readiness helper work with combat math rewrites, active spell effects, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
-- Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, cast-readiness helper, training-event acquisition helpers, command contract, resolver readiness helper, planned-output-envelope policy, and blocked-hook tests are explicitly implemented in narrow slices.
+- Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, cast-readiness helper, training-event acquisition helpers, command contract, resolver readiness helper, planned-output-envelope policy, inert envelope helper, and blocked-hook tests are explicitly implemented in narrow slices.
 
 ## When To Reorder
 

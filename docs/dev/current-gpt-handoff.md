@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local docs pass after `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
+Source route: Codex local helper pass after `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
 Date: 2026-06-04
-Branch/status assumption: `master`; local `git pull` was attempted but blocked by local SSL certificate verification. The worktree was clean before edits; final status showed local `master` behind `origin/master` by one roadmap-only commit (`1c03067`), so remote sync should be repaired before committing or pushing this work.
+Branch/status assumption: `master`; `git pull` was attempted but blocked by local Git SSL certificate verification. The worktree was clean before edits and local status reported `master...origin/master` with no ahead/behind markers.
 
 ## Purpose
 
@@ -14,11 +14,11 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/dev/current-gpt-handoff.md` is the immediate prompt-prep handoff.
 - `docs/dev/project-roadmap.md` owns version order, version-band meaning, and active pipeline direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the current sequenced Codex queue.
-- `docs/design/magic-runtime-boundary-plan.md` owns the cast-readiness helper boundary.
+- `docs/design/magic-runtime-boundary-plan.md` owns the cast-readiness helper boundary and hook-support runtime guardrails.
 - `docs/design/known-spell-acquisition-event-plan.md` owns the training-event acquisition helper boundary and later acquisition mutation constraints.
 - `docs/design/magic-command-contract-plan.md` owns the active magic command/intention boundary.
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` owns the first narrow runtime cast resolver readiness boundary.
-- `docs/design/magic-resolver-planned-output-envelope-plan.md` owns the inert planned-output-envelope boundary.
+- `docs/design/magic-resolver-planned-output-envelope-plan.md` owns inert planned-output-envelope constraints.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -27,16 +27,16 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
+- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
 
 Immediate next version:
 
-- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
+- `Version 0.5.103 - Spell Hook Support Expansion Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.101` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.102` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Recent Magic Results
 
@@ -48,27 +48,28 @@ Versioning note:
 - `0.5.97` added pure training-event acquisition proposal helpers.
 - `0.5.98` added `docs/design/magic-command-contract-plan.md`.
 - `0.5.99` added `docs/design/first-narrow-runtime-cast-resolver-plan.md`.
-- `0.5.100` added `buildMagicCastResolverReadiness(...)` and `MAGIC_CAST_RESOLVER_READINESS_ISSUE_CODES` as pure deterministic exports through the game-engine barrel.
-- `0.5.101` added `docs/design/magic-resolver-planned-output-envelope-plan.md` as the planning-only inert envelope policy.
+- `0.5.100` added `buildMagicCastResolverReadiness(...)`.
+- `0.5.101` added `docs/design/magic-resolver-planned-output-envelope-plan.md`.
+- `0.5.102` added `buildMagicResolverInertEnvelope(...)` plus explicit inert safety flags and focused tests.
 
 Current non-inference rule:
 
-- Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership, acquisition, command authority, target authority, conduit authority, catalyst authority, or resource authority.
+- Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership, acquisition, command authority, target authority, conduit authority, catalyst authority, resource authority, or effect authority.
 
 Current deferrals:
 
-- Effectful casting, command handlers, UI dispatch, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, planned envelope helper implementation, save/account/session mutation, control failure, backlash, broader acquisition routes, broader owner scopes, knowledge snippet runtime behavior, skill trial runtime behavior, magic study event runtime behavior, and `PlayerSpellState[]` replacement remain deferred.
+- Effectful casting, command handlers, UI dispatch, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, save/account/session mutation, control failure, backlash, broader acquisition routes, broader owner scopes, knowledge snippet runtime behavior, skill trial runtime behavior, magic study event runtime behavior, and `PlayerSpellState[]` replacement remain deferred.
 
-## Active Guardrails For 0.5.102
+## Active Guardrails For 0.5.103
 
-Magic Resolver Inert Envelope Helper:
+Spell Hook Support Expansion Plan:
 
-- Use `docs/design/magic-resolver-planned-output-envelope-plan.md` as the primary source.
-- Preserve `buildMagicCastResolverReadiness(...)` as the current pure readiness helper.
-- Add only a pure inert planned-output-envelope helper if explicitly scoped.
-- Planned envelopes are result projections only; they are not emitted runtime events, command results with side effects, persisted records, or stealth casting implementations.
-- Do not emit events, dispatch commands, register commands, mutate save/account/session/inventory/combat/known-spell state, consume or reserve catalysts, pay resources, resolve targets, apply effects, create Chronicle/Renown/quest records, wire React UI, migrate schemas, or touch generated output.
-- Keep resource, catalyst, failure, target, effect, Chronicle/Renown, magic study, skill trial, and knowledge snippet behavior deferred until owner boundaries exist.
+- Use `docs/design/magic-runtime-boundary-plan.md`, `docs/design/first-narrow-runtime-cast-resolver-plan.md`, `docs/design/magic-resolver-planned-output-envelope-plan.md`, `tools/content-lint/spell-hook-support.mjs`, and `packages/content/base/player/spells.json` as the primary source stack.
+- Keep the run docs-first unless the prompt explicitly scopes a tiny helper or test-only guardrail.
+- Plan explicit hook support expansion or blocked-hook behavior before broad casting.
+- Do not add generic tag-driven or hook-driven spell execution.
+- Do not apply spell effects, resolve targets, pay resources, consume/reserve catalysts, mutate inventory/save/account/session/combat state, emit events, dispatch UI, register commands, wire React UI, edit spell JSON, edit item JSON, migrate schemas, or touch generated output.
+- Preserve `buildMagicCastReadiness(...)`, `buildMagicCastResolverReadiness(...)`, and `buildMagicResolverInertEnvelope(...)` as pure deterministic helper boundaries.
 
 Browser-safety guardrail:
 
@@ -86,16 +87,14 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.97` | Training Event Acquisition Helpers | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
-| 2 | `0.5.98` | Magic Command Contract | `docs/design/magic-command-contract-plan.md` | Landed |
-| 3 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Landed |
-| 4 | `0.5.100` | Runtime Cast Resolver Readiness Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
-| 5 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | `docs/design/magic-resolver-planned-output-envelope-plan.md` | Landed |
-| 6 | `0.5.102` | Magic Resolver Inert Envelope Helper | `docs/design/magic-resolver-planned-output-envelope-plan.md` | Next |
+| 1 | `0.5.100` | Runtime Cast Resolver Readiness Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
+| 2 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | `docs/design/magic-resolver-planned-output-envelope-plan.md` | Landed |
+| 3 | `0.5.102` | Magic Resolver Inert Envelope Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
+| 4 | `0.5.103` | Spell Hook Support Expansion Plan | `docs/design/magic-runtime-boundary-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.102 - Magic Resolver Inert Envelope Helper`, inspect:
+For `Version 0.5.103 - Spell Hook Support Expansion Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -103,27 +102,23 @@ For `Version 0.5.102 - Magic Resolver Inert Envelope Helper`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/design/magic-resolver-planned-output-envelope-plan.md`
-- `docs/design/first-narrow-runtime-cast-resolver-plan.md`
-- `docs/design/magic-command-contract-plan.md`
 - `docs/design/magic-runtime-boundary-plan.md`
-- `docs/design/known-spell-acquisition-event-plan.md`
+- `docs/design/first-narrow-runtime-cast-resolver-plan.md`
+- `docs/design/magic-resolver-planned-output-envelope-plan.md`
+- `docs/design/magic-command-contract-plan.md`
 - `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
 - `docs/future_content_backlog.md`
 - `packages/engines/game-engine/src/known-spells.ts`
 - `packages/engines/game-engine/src/index.ts`
+- `tests/unit/magic-resolver-inert-envelope.test.mjs`
 - `tests/unit/magic-cast-resolver-readiness.test.mjs`
 - `tests/unit/magic-cast-readiness.test.mjs`
-- `tests/unit/known-spell-training-event-acquisition.test.mjs`
-- `tests/unit/known-spell-ownership.test.mjs`
-- `tests/unit/magic-runtime-readiness-blockers.test.mjs`
 - `packages/content/base/player/spells.json`
 - `packages/content/base/items/items.json`
 - `tools/content-lint/spell-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
 
-## After 0.5.102
+## After 0.5.103
 
-Use the inert envelope helper result in `docs/dev/current-codex-output.md` to decide whether the next safe run is another pure resolver guardrail, spell hook support expansion planning, or knowledge domain registry planning. Do not advance to `0.6.x` automatically.
+Use the hook-support plan result in `docs/dev/current-codex-output.md` to decide whether the next safe run is a focused blocked-hook test/helper pass, `Version 0.5.x - Knowledge Domain Registry Plan`, or another resolver guardrail. Do not advance to `0.6.x` automatically.

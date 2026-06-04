@@ -383,6 +383,91 @@ export interface MagicCastResolverReadinessResult {
   issues: MagicCastResolverReadinessIssue[];
 }
 
+export type MagicResolverInertEnvelopeKind = "magic_resolver_inert_envelope";
+export type MagicResolverInertEnvelopeMode = "planning_only";
+
+export interface MagicResolverInertEnvelopeSafetyFlags {
+  eventsEmitted: false;
+  stateMutated: false;
+  targetResolved: false;
+  effectsApplied: false;
+  resourcesPaid: false;
+  catalystReserved: false;
+  catalystConsumed: false;
+  inventoryMutated: false;
+  commandDispatched: false;
+  uiDispatched: false;
+  persisted: false;
+}
+
+export interface MagicResolverInertEnvelopeReadinessSummary {
+  ready?: boolean;
+  spellId?: string;
+  characterId?: string;
+  compatibilityStatus?: string;
+  availableKnownSpellId?: string;
+  blockedKnownSpellId?: string;
+  blockerIds: MagicCastReadinessBlockerId[];
+  unsupportedResolutionHooks: string[];
+  unsupportedItemGenerationHookIds: string[];
+}
+
+export interface MagicResolverInertEnvelopeBlockerSummary {
+  blocked: boolean;
+  readinessBlockerIds: MagicCastReadinessBlockerId[];
+  resolverIssueCodes: MagicCastResolverReadinessIssueCode[];
+  providedBlockerSummary?: unknown;
+}
+
+export interface BuildMagicResolverInertEnvelopeParams {
+  resolverRequestId?: unknown;
+  command?: unknown;
+  commandId?: unknown;
+  spellId?: unknown;
+  casterCharacterId?: unknown;
+  knownSpellId?: unknown;
+  knownSpellRef?: unknown;
+  targetDescriptor?: unknown;
+  conduitDescriptor?: unknown;
+  catalystDescriptor?: unknown;
+  readinessResult?: MagicCastReadinessResult;
+  resolverReadiness?: MagicCastResolverReadinessResult;
+  resolverIssues?: readonly MagicCastResolverReadinessIssue[];
+  blockerSummary?: unknown;
+  runtimePolicyRef?: unknown;
+  plannedCostSummary?: unknown;
+  plannedCatalystSummary?: unknown;
+  plannedFailurePolicySummary?: unknown;
+  plannedHookSummary?: unknown;
+  plannedNarrativeSummary?: unknown;
+  deferredEffectFamilies?: unknown;
+  diagnostics?: unknown;
+}
+
+export interface MagicResolverInertEnvelope {
+  envelopeKind: MagicResolverInertEnvelopeKind;
+  mode: MagicResolverInertEnvelopeMode;
+  resolverRequestId?: string;
+  commandId?: string;
+  spellId?: string;
+  casterCharacterId?: string;
+  knownSpellId?: string;
+  targetDescriptor?: unknown;
+  conduitDescriptor?: unknown;
+  catalystDescriptor?: unknown;
+  readinessSummary: MagicResolverInertEnvelopeReadinessSummary;
+  blockerSummary: MagicResolverInertEnvelopeBlockerSummary;
+  runtimePolicyRef?: string;
+  plannedCostSummary?: unknown;
+  plannedCatalystSummary?: unknown;
+  plannedFailurePolicySummary?: unknown;
+  plannedHookSummary?: unknown;
+  plannedNarrativeSummary?: unknown;
+  deferredEffectFamilies: string[];
+  diagnostics?: unknown;
+  safetyFlags: MagicResolverInertEnvelopeSafetyFlags;
+}
+
 export const KNOWN_SPELL_OWNER_SCOPES = ["character"] as const satisfies readonly KnownSpellOwnerScope[];
 export const KNOWN_SPELL_ACQUISITION_ROUTES = ["training_event"] as const satisfies readonly KnownSpellAcquisitionRoute[];
 export const KNOWN_SPELL_AVAILABILITY_STATES = ["available", "blocked"] as const satisfies readonly KnownSpellAvailabilityState[];
@@ -420,6 +505,19 @@ export const MAGIC_CAST_RESOLVER_READINESS_ISSUE_CODES = [
   "failure_policy_missing",
   "effect_resolution_deferred"
 ] as const satisfies readonly MagicCastResolverReadinessIssueCode[];
+export const MAGIC_RESOLVER_INERT_ENVELOPE_SAFETY_FLAGS: MagicResolverInertEnvelopeSafetyFlags = Object.freeze({
+  eventsEmitted: false,
+  stateMutated: false,
+  targetResolved: false,
+  effectsApplied: false,
+  resourcesPaid: false,
+  catalystReserved: false,
+  catalystConsumed: false,
+  inventoryMutated: false,
+  commandDispatched: false,
+  uiDispatched: false,
+  persisted: false
+});
 
 const KNOWN_SPELL_OWNER_SCOPE_SET: ReadonlySet<string> = new Set(KNOWN_SPELL_OWNER_SCOPES);
 const KNOWN_SPELL_ACQUISITION_ROUTE_SET: ReadonlySet<string> = new Set(KNOWN_SPELL_ACQUISITION_ROUTES);
@@ -2077,6 +2175,129 @@ export function buildMagicCastResolverReadiness(
     ...(commandId ? { commandId } : {}),
     readiness,
     issues
+  };
+}
+
+function hasOwnField(value: object, field: string): boolean {
+  return Object.prototype.hasOwnProperty.call(value, field);
+}
+
+function getMagicResolverInertEnvelopeValue(
+  params: BuildMagicResolverInertEnvelopeParams,
+  field: keyof BuildMagicResolverInertEnvelopeParams,
+  command: unknown,
+  commandField: string
+): unknown {
+  if (hasOwnField(params, field)) {
+    return params[field];
+  }
+  if (isRecord(command) && hasOwnField(command, commandField)) {
+    return command[commandField];
+  }
+  return undefined;
+}
+
+function getMagicResolverInertEnvelopeKnownSpellId(
+  params: BuildMagicResolverInertEnvelopeParams,
+  command: unknown
+): string | undefined {
+  const directKnownSpellId = normalizeString(params.knownSpellId);
+  if (directKnownSpellId) {
+    return directKnownSpellId;
+  }
+
+  const knownSpellRef = hasOwnField(params, "knownSpellRef")
+    ? params.knownSpellRef
+    : isRecord(command)
+      ? command.knownSpellRef
+      : undefined;
+
+  if (!isRecord(knownSpellRef)) {
+    return undefined;
+  }
+
+  const refType = normalizeString(knownSpellRef.refType);
+  if (refType === "known_spell_id") {
+    return normalizeString(knownSpellRef.knownSpellId) ?? undefined;
+  }
+  if (refType === "known_spell_record" && isRecord(knownSpellRef.record)) {
+    return normalizeString(knownSpellRef.record.knownSpellId) ?? undefined;
+  }
+  return undefined;
+}
+
+function summarizeMagicResolverInertEnvelopeReadiness(
+  readiness: MagicCastReadinessResult | undefined
+): MagicResolverInertEnvelopeReadinessSummary {
+  const details = readiness?.details;
+
+  return {
+    ...(readiness ? { ready: readiness.ready } : {}),
+    ...(details?.spellId ? { spellId: details.spellId } : {}),
+    ...(details?.characterId ? { characterId: details.characterId } : {}),
+    ...(details?.compatibilityStatus ? { compatibilityStatus: details.compatibilityStatus } : {}),
+    ...(details?.availableKnownSpellId ? { availableKnownSpellId: details.availableKnownSpellId } : {}),
+    ...(details?.blockedKnownSpellId ? { blockedKnownSpellId: details.blockedKnownSpellId } : {}),
+    blockerIds: readiness?.blockers.map((blocker) => blocker.id) ?? [],
+    unsupportedResolutionHooks: [...(details?.unsupportedResolutionHooks ?? [])],
+    unsupportedItemGenerationHookIds: [...(details?.unsupportedItemGenerationHookIds ?? [])]
+  };
+}
+
+export function buildMagicResolverInertEnvelope(
+  params: BuildMagicResolverInertEnvelopeParams
+): MagicResolverInertEnvelope {
+  const command = params.command;
+  const resolverReadiness = params.resolverReadiness;
+  const readiness = params.readinessResult ?? resolverReadiness?.readiness;
+  const resolverIssues = resolverReadiness?.issues ?? (Array.isArray(params.resolverIssues) ? params.resolverIssues : []);
+  const resolverRequestId =
+    normalizeString(params.resolverRequestId) ?? normalizeString(resolverReadiness?.resolverRequestId) ?? undefined;
+  const commandId =
+    normalizeString(getMagicResolverInertEnvelopeValue(params, "commandId", command, "commandId")) ??
+    normalizeString(resolverReadiness?.commandId) ??
+    undefined;
+  const spellId = normalizeString(getMagicResolverInertEnvelopeValue(params, "spellId", command, "spellId")) ?? undefined;
+  const casterCharacterId =
+    normalizeString(getMagicResolverInertEnvelopeValue(params, "casterCharacterId", command, "casterCharacterId")) ??
+    undefined;
+  const knownSpellId = getMagicResolverInertEnvelopeKnownSpellId(params, command);
+  const targetDescriptor = getMagicResolverInertEnvelopeValue(params, "targetDescriptor", command, "target");
+  const conduitDescriptor = getMagicResolverInertEnvelopeValue(params, "conduitDescriptor", command, "conduitSource");
+  const catalystDescriptor = getMagicResolverInertEnvelopeValue(params, "catalystDescriptor", command, "catalystSource");
+  const runtimePolicyRef = normalizeString(params.runtimePolicyRef) ?? undefined;
+  const readinessSummary = summarizeMagicResolverInertEnvelopeReadiness(readiness);
+  const blockerSummary: MagicResolverInertEnvelopeBlockerSummary = {
+    blocked: Boolean(resolverReadiness?.blocked) || readinessSummary.blockerIds.length > 0 || resolverIssues.length > 0,
+    readinessBlockerIds: [...readinessSummary.blockerIds],
+    resolverIssueCodes: resolverIssues.map((issue) => issue.code),
+    ...(params.blockerSummary !== undefined ? { providedBlockerSummary: params.blockerSummary } : {})
+  };
+
+  return {
+    envelopeKind: "magic_resolver_inert_envelope",
+    mode: "planning_only",
+    ...(resolverRequestId ? { resolverRequestId } : {}),
+    ...(commandId ? { commandId } : {}),
+    ...(spellId ? { spellId } : {}),
+    ...(casterCharacterId ? { casterCharacterId } : {}),
+    ...(knownSpellId ? { knownSpellId } : {}),
+    ...(targetDescriptor !== undefined ? { targetDescriptor } : {}),
+    ...(conduitDescriptor !== undefined ? { conduitDescriptor } : {}),
+    ...(catalystDescriptor !== undefined ? { catalystDescriptor } : {}),
+    readinessSummary,
+    blockerSummary,
+    ...(runtimePolicyRef ? { runtimePolicyRef } : {}),
+    ...(params.plannedCostSummary !== undefined ? { plannedCostSummary: params.plannedCostSummary } : {}),
+    ...(params.plannedCatalystSummary !== undefined ? { plannedCatalystSummary: params.plannedCatalystSummary } : {}),
+    ...(params.plannedFailurePolicySummary !== undefined
+      ? { plannedFailurePolicySummary: params.plannedFailurePolicySummary }
+      : {}),
+    ...(params.plannedHookSummary !== undefined ? { plannedHookSummary: params.plannedHookSummary } : {}),
+    ...(params.plannedNarrativeSummary !== undefined ? { plannedNarrativeSummary: params.plannedNarrativeSummary } : {}),
+    deferredEffectFamilies: normalizeStringArray(params.deferredEffectFamilies) ?? [],
+    ...(params.diagnostics !== undefined ? { diagnostics: params.diagnostics } : {}),
+    safetyFlags: { ...MAGIC_RESOLVER_INERT_ENVELOPE_SAFETY_FLAGS }
   };
 }
 
