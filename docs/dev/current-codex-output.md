@@ -1,17 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.99 - First Narrow Runtime Cast Resolver Plan
-Date: 2026-06-03
-Branch/status assumption: Ran on `master`; preflight `git status --short` was clean before edits.
+Source version/run: Version 0.5.100 - Runtime Cast Resolver Readiness Helper
+Date: 2026-06-04
+Branch/status assumption: Ran on `master`; preflight `git status --short` was clean before edits and HEAD was `b42d36f` / `origin/master`.
 
 ## Result
 
-Added a planning-only first narrow runtime cast resolver boundary document and rolled the active handoff/roadmap pointers forward to `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`.
+Added the first pure runtime cast resolver readiness helper under the existing magic/known-spell boundary.
 
-The new plan defines the future engine-owned pure resolver-readiness boundary before implementation: explicit `magic.cast` command/intention input, known-spell/readiness gates, target/conduit/catalyst/control/hook/runtime policy gates, resolver issue vocabulary, inert planned output envelopes, forbidden inference rules, and deferred target/effect/resource/catalyst/failure behavior.
+The new `buildMagicCastResolverReadiness(...)` helper validates explicit command-like resolver input, required caster/spell/known-spell/target/source/context/runtime-policy structure, optional policy refs, and then delegates to `buildMagicCastReadiness(...)`. It returns deterministic resolver issues with `ok`, `blocked`, `resolverRequestId`, optional `commandId`, and optional `readiness`.
 
 ## Files Changed
 
+- `packages/engines/game-engine/src/known-spells.ts`
+- `packages/engines/game-engine/src/index.ts`
+- `tests/unit/magic-cast-resolver-readiness.test.mjs`
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -22,23 +25,24 @@ The new plan defines the future engine-owned pure resolver-readiness boundary be
 
 ## Checks Run
 
-- `git diff --check` (passed; Git reported LF-to-CRLF normalization warnings for edited docs)
+- `npm.cmd run tool:content-lint` (passed)
+- `node --test tests/unit/magic-cast-resolver-readiness.test.mjs` (passed)
+- `git diff --check` (passed; Git reported LF-to-CRLF normalization warnings for edited docs/source)
 
 ## Behavior / Runtime Confirmation
 
-Docs-only run. No runtime spell casting, command handlers, React UI, UI dispatch, save/account/session schema fields, known-spell mutation, persisted acquisition events, spell JSON, item JSON, generated output, combat runtime behavior, catalyst consumption/reservation, resource payment, inventory mutation, target resolution, event creation, control/failure/backlash behavior, magic skill gain, Magic Legacy power, broader acquisition routes, broader owner scopes, or `PlayerSpellState[]` replacement changed.
+Pure helper/test/docs run. No spell execution, spell effects, target resolution, target existence/range/line-of-sight/area checks, damage, healing, status application, resource payment, catalyst consumption/reservation, inventory mutation, cooldown/action economy mutation, save/account/session mutation, event creation, Chronicle integration, command registration, UI wiring, React changes, new acquisition routes, broader ownership scopes, document/tome/scroll learning, teacher/institution learning, family/Legacy acquisition paths, or `PlayerSpellState[]` replacement changed.
 
 ## Risks / Follow-Up
 
-- `Version 0.6.0` should remain a pure deterministic resolver-readiness helper if implemented.
-- The future helper should consume explicit command-like input, call `buildMagicCastReadiness(...)`, and return resolver issues/blockers without effects.
-- Keep planned output envelopes inert unless a future prompt explicitly scopes a test-only envelope result.
-- Effectful casting, command handlers, UI dispatch, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, save/account/session mutation, control failure, backlash, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement remain deferred.
+- `docs/design/first-narrow-runtime-cast-resolver-plan.md` remains useful after this implementation as the active boundary reference for planned output envelopes and later resolver work.
+- Focused magic planning docs should remain active for now: `magic-runtime-boundary-plan.md`, `magic-command-contract-plan.md`, `first-narrow-runtime-cast-resolver-plan.md`, `known-spell-ownership-plan.md`, and `known-spell-acquisition-event-plan.md` still protect deferred active casting and acquisition mutation work.
+- A later cleanup can fold narrow planning docs only after output-envelope policy, command handling, target/effect ownership, resource/catalyst/failure ownership, and acquisition mutation owners are implemented or deliberately re-scoped.
 
 ## Next Recommended Version
 
-Version 0.6.0 - Runtime Cast Resolver Readiness Helper
+Version 0.5.101 - Magic Resolver Planned Output Envelope Plan
 
 ## Suggested Commit Message
 
-docs(magic): plan first runtime cast resolver
+feat(magic): add runtime cast resolver readiness helper

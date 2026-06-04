@@ -18,10 +18,10 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
-- Next recommended version: `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
+- Latest landed version: `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
+- Next recommended version: `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: transitioning from `v0.5.x` foundation stabilization / ownership hardening into `v0.6.x` runtime ownership transition
+- Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Current repo reality:
 
@@ -55,6 +55,7 @@ Current repo reality:
 - Training-event acquisition helpers have landed as pure deterministic helpers that validate explicit character-scoped `training_event` acquisition input and propose in-memory known-spell records without mutation.
 - Magic command contract planning has landed as `docs/design/magic-command-contract-plan.md`, defining the future `magic.cast` command/intention shape before resolver behavior.
 - First narrow runtime cast resolver planning has landed as `docs/design/first-narrow-runtime-cast-resolver-plan.md`, defining the future pure resolver-readiness boundary before effectful casting.
+- Runtime cast resolver readiness helpers have landed as pure deterministic helpers that validate explicit command-like input, call `buildMagicCastReadiness(...)`, and return resolver issues without mutation or event creation.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -98,7 +99,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.97` | Training Event Acquisition Helpers | Codex Local | Pure helper + focused tests | Landed. Added pure helpers that validate explicit training-event acquisition input and return proposed character-scoped known-spell records. | No save/session mutation, persisted acquisition events, runtime casting, commands, React UI, broader routes/scopes, or schema changes. |
 | `0.5.98` | Magic Command Contract | Codex Local docs-first | Command contract plan | Landed. Defined the command/intention shape for selected spell, caster, target, conduit source, catalyst source, and casting context before resolver behavior. | Contract only; no runtime cast resolver, cast commands, UI, save mutation, effect application, or catalyst consumption. |
 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Codex Local docs-first | Resolver boundary plan | Landed. Planned the first narrow engine-owned resolver boundary using known-spell, readiness, and command-contract inputs. | Planning only; no effect implementation, command handler wiring, UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
-| `0.6.0` | Runtime Cast Resolver Readiness Helper | Codex Local | Pure resolver readiness helper + focused tests | Next. Add a pure deterministic resolver-readiness helper that consumes explicit command-like input and calls `buildMagicCastReadiness(...)`. | No effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
+| `0.5.100` | Runtime Cast Resolver Readiness Helper | Codex Local | Pure resolver readiness helper + focused tests | Landed. Added a pure deterministic resolver-readiness helper that consumes explicit command-like input and calls `buildMagicCastReadiness(...)`. | No effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
+| `0.5.101` | Magic Resolver Planned Output Envelope Plan | Codex Local docs-first | Planning | Next. Plan inert result-envelope policy before any resolver output/event implementation. | Planning only; no emitted events, effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, or target resolution. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -113,17 +115,18 @@ The magic runtime path must not jump directly from known-spell projection into a
 | 5 | Training-event acquisition helpers | Validate explicit training-event acquisition input and return proposed character-scoped known-spell records. | Landed as pure helper only; no persisted acquisition events or save/session mutation. |
 | 6 | Active casting command contract | Define the command/intention shape for selected spell, caster, target, conduit source, catalyst source, and casting context. | Landed as contract-only; no resolver behavior. |
 | 7 | Runtime cast resolver readiness boundary | First narrow resolver-readiness planning: known-spell check, readiness check, command shape, policy blockers, hook compatibility, and inert planned output envelopes. | Landed as planning-only in `docs/design/first-narrow-runtime-cast-resolver-plan.md`; no UI-authored ownership. |
-| 8 | Runtime cast resolver readiness helper | Pure engine helper that consumes explicit command-like input, calls `buildMagicCastReadiness(...)`, and returns deterministic resolver issues. | Next implementation step; no effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
-| 9 | Spell hook support expansion | Explicitly handle or block authored spell hooks before broad casting can become reliable. | No generic assumption that every authored hook is executable. |
-| 10 | UI command/readiness surface | Later read-only or disabled-command presentation for known spells, cast-ready state, and blocked reasons. | UI must consume engine/runtime state and must not author ownership. |
-| 11 | Save/runtime state integration | Persist known spell records, acquisition evidence, training events, catalyst inventory changes, cooldowns, backlash, cast history, and Chronicle hooks when shapes are stable. | No old-save compatibility unless explicitly requested. |
-| 12 | Expanded acquisition routes | Add teacher, quest/event reward, scroll/tome study, institution licensing, document-owned study access, Magic Legacy lanes, and family tradition only after explicit evidence and ownership rules exist. | Keep blocked until each route has evidence and validation. |
+| 8 | Runtime cast resolver readiness helper | Pure engine helper that consumes explicit command-like input, calls `buildMagicCastReadiness(...)`, and returns deterministic resolver issues. | Landed as pure helper only; no effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
+| 9 | Planned output envelope policy | Define inert resolver output-envelope shape and policy before any emitted event behavior. | Next planning step; no emitted events or runtime dispatch. |
+| 10 | Spell hook support expansion | Explicitly handle or block authored spell hooks before broad casting can become reliable. | No generic assumption that every authored hook is executable. |
+| 11 | UI command/readiness surface | Later read-only or disabled-command presentation for known spells, cast-ready state, and blocked reasons. | UI must consume engine/runtime state and must not author ownership. |
+| 12 | Save/runtime state integration | Persist known spell records, acquisition evidence, training events, catalyst inventory changes, cooldowns, backlash, cast history, and Chronicle hooks when shapes are stable. | No old-save compatibility unless explicitly requested. |
+| 13 | Expanded acquisition routes | Add teacher, quest/event reward, scroll/tome study, institution licensing, document-owned study access, Magic Legacy lanes, and family tradition only after explicit evidence and ownership rules exist. | Keep blocked until each route has evidence and validation. |
 
-Practical near-term sequence after the first narrow resolver plan:
+Practical near-term sequence after the resolver-readiness helper:
 
-1. `0.6.0 - Runtime Cast Resolver Readiness Helper`
-2. `0.6.x - First Narrow Runtime Cast Resolver`
-3. `0.6.x - UI command wiring / active magic integration`
+1. `0.5.101 - Magic Resolver Planned Output Envelope Plan`
+2. `0.5.x - First Narrow Runtime Cast Resolver`
+3. `0.5.x - UI command wiring / active magic integration`
 
 ## 5. Sequenced Near-Term Codex Queue
 
@@ -139,7 +142,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 6 | `0.5.97` | Training Event Acquisition Helpers | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
 | 7 | `0.5.98` | Magic Command Contract | `docs/design/magic-command-contract-plan.md` | Landed |
 | 8 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Landed |
-| 9 | `0.6.0` | Runtime Cast Resolver Readiness Helper | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Next |
+| 9 | `0.5.100` | Runtime Cast Resolver Readiness Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
+| 10 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Next |
 
 ## 6. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -156,7 +160,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Magic Runtime Boundary Plan | `docs/design/magic-runtime-boundary-plan.md`; consumed by `0.5.95`, retain for later magic runtime constraints. |
 | Known Spell Acquisition Event Plan | `docs/design/known-spell-acquisition-event-plan.md`; retained for training-event acquisition helper constraints and later acquisition mutation planning. |
 | Magic Command Contract Plan | `docs/design/magic-command-contract-plan.md`; retained for future active magic command/intention constraints. |
-| First Narrow Runtime Cast Resolver Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md`; use for `0.6.0 - Runtime Cast Resolver Readiness Helper`. |
+| First Narrow Runtime Cast Resolver Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md`; consumed by `0.5.100`, retain for planned output envelope and later resolver constraints. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |

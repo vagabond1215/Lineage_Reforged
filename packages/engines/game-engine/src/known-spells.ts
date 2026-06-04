@@ -322,6 +322,67 @@ export interface MagicCastReadinessResult {
   details: MagicCastReadinessDetails;
 }
 
+export type MagicCastResolverReadinessIssueCode =
+  | "invalid_magic_command"
+  | "missing_caster_character_id"
+  | "missing_spell_id"
+  | "missing_known_spell_reference"
+  | "invalid_known_spell_reference"
+  | "missing_target_descriptor"
+  | "invalid_target_descriptor"
+  | "invalid_conduit_source_descriptor"
+  | "invalid_catalyst_source_descriptor"
+  | "invalid_casting_context"
+  | "cast_readiness_blocked"
+  | "runtime_casting_not_implemented"
+  | "unsupported_spell_hooks"
+  | "spell_runtime_deferred"
+  | "resource_policy_missing"
+  | "catalyst_policy_missing"
+  | "failure_policy_missing"
+  | "effect_resolution_deferred";
+
+export interface MagicCastResolverReadinessIssue {
+  code: MagicCastResolverReadinessIssueCode;
+  field: string;
+  message: string;
+  blockerId?: MagicCastReadinessBlockerId;
+  details?: Record<string, unknown>;
+}
+
+export interface MagicCastResolverRuntimePolicy {
+  runtimeCastingImplemented?: unknown;
+  requireResourcePolicy?: unknown;
+  resourcePolicyRef?: unknown;
+  requireCatalystPolicy?: unknown;
+  catalystPolicyRef?: unknown;
+  requireFailurePolicy?: unknown;
+  failurePolicyRef?: unknown;
+  testOnlyResolverLane?: unknown;
+}
+
+export interface BuildMagicCastResolverReadinessParams {
+  resolverRequestId?: unknown;
+  command?: unknown;
+  knownSpellRecords?: unknown;
+  spellCatalog: Iterable<KnownSpellCatalogEntry>;
+  spellRecord?: unknown;
+  conduitCandidate?: unknown;
+  catalystCandidate?: unknown;
+  controlContext?: unknown;
+  hookSupport?: MagicCastReadinessHookSupport;
+  runtimePolicy?: unknown;
+}
+
+export interface MagicCastResolverReadinessResult {
+  ok: boolean;
+  blocked: boolean;
+  resolverRequestId: string;
+  commandId?: string;
+  readiness?: MagicCastReadinessResult;
+  issues: MagicCastResolverReadinessIssue[];
+}
+
 export const KNOWN_SPELL_OWNER_SCOPES = ["character"] as const satisfies readonly KnownSpellOwnerScope[];
 export const KNOWN_SPELL_ACQUISITION_ROUTES = ["training_event"] as const satisfies readonly KnownSpellAcquisitionRoute[];
 export const KNOWN_SPELL_AVAILABILITY_STATES = ["available", "blocked"] as const satisfies readonly KnownSpellAvailabilityState[];
@@ -339,6 +400,26 @@ export const MAGIC_CAST_READINESS_BLOCKER_IDS = [
   "spell_runtime_deferred",
   "runtime_casting_not_implemented"
 ] as const satisfies readonly MagicCastReadinessBlockerId[];
+export const MAGIC_CAST_RESOLVER_READINESS_ISSUE_CODES = [
+  "invalid_magic_command",
+  "missing_caster_character_id",
+  "missing_spell_id",
+  "missing_known_spell_reference",
+  "invalid_known_spell_reference",
+  "missing_target_descriptor",
+  "invalid_target_descriptor",
+  "invalid_conduit_source_descriptor",
+  "invalid_catalyst_source_descriptor",
+  "invalid_casting_context",
+  "cast_readiness_blocked",
+  "runtime_casting_not_implemented",
+  "unsupported_spell_hooks",
+  "spell_runtime_deferred",
+  "resource_policy_missing",
+  "catalyst_policy_missing",
+  "failure_policy_missing",
+  "effect_resolution_deferred"
+] as const satisfies readonly MagicCastResolverReadinessIssueCode[];
 
 const KNOWN_SPELL_OWNER_SCOPE_SET: ReadonlySet<string> = new Set(KNOWN_SPELL_OWNER_SCOPES);
 const KNOWN_SPELL_ACQUISITION_ROUTE_SET: ReadonlySet<string> = new Set(KNOWN_SPELL_ACQUISITION_ROUTES);
@@ -395,6 +476,15 @@ function createTrainingEventAcquisitionIssue(
   message: string,
   details: Omit<KnownSpellTrainingEventAcquisitionIssue, "code" | "field" | "message"> = {}
 ): KnownSpellTrainingEventAcquisitionIssue {
+  return { code, field, message, ...details };
+}
+
+function createMagicCastResolverReadinessIssue(
+  code: MagicCastResolverReadinessIssueCode,
+  field: string,
+  message: string,
+  details: Omit<MagicCastResolverReadinessIssue, "code" | "field" | "message"> = {}
+): MagicCastResolverReadinessIssue {
   return { code, field, message, ...details };
 }
 
@@ -1412,6 +1502,171 @@ function collectUnsupportedMagicCastHooks(
   };
 }
 
+function isMagicCastResolverKnownSpellReference(value: unknown): boolean {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  const refType = normalizeString(value.refType);
+  if (refType === "known_spell_id") {
+    return Boolean(normalizeString(value.knownSpellId));
+  }
+  if (refType === "known_spell_record") {
+    return isRecord(value.record) && Boolean(normalizeString(value.record.knownSpellId));
+  }
+  return false;
+}
+
+function resolveMagicCastResolverKnownSpellRecords(
+  providedRecords: unknown,
+  knownSpellRef: unknown
+): unknown {
+  if (providedRecords !== undefined) {
+    return providedRecords;
+  }
+  if (isRecord(knownSpellRef) && normalizeString(knownSpellRef.refType) === "known_spell_record") {
+    return [knownSpellRef.record];
+  }
+  return [];
+}
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function isMagicCastResolverAreaOrigin(value: unknown): boolean {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  switch (normalizeString(value.originType)) {
+    case "self":
+      return true;
+    case "character":
+      return Boolean(normalizeString(value.characterId));
+    case "entity":
+      return Boolean(normalizeString(value.entityId));
+    case "location":
+      return Boolean(normalizeString(value.locationId));
+    case "point": {
+      const point = value.point;
+      return isRecord(point) && isFiniteNumber(point.x) && isFiniteNumber(point.y);
+    }
+    default:
+      return false;
+  }
+}
+
+function isMagicCastResolverTargetDescriptor(value: unknown, casterCharacterId: string): boolean {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  switch (normalizeString(value.targetType)) {
+    case "none":
+      return true;
+    case "self":
+      return normalizeString(value.characterId) === casterCharacterId;
+    case "character":
+      return Boolean(normalizeString(value.characterId));
+    case "entity":
+      return Boolean(normalizeString(value.entityId));
+    case "location":
+      return Boolean(normalizeString(value.locationId));
+    case "point": {
+      const point = value.point;
+      return isRecord(point) && isFiniteNumber(point.x) && isFiniteNumber(point.y);
+    }
+    case "item":
+      return Boolean(normalizeString(value.itemId) ?? normalizeString(value.itemInstanceId));
+    case "area":
+      return isMagicCastResolverAreaOrigin(value.origin) &&
+        (value.radius === undefined || (isFiniteNumber(value.radius) && value.radius >= 0));
+    default:
+      return false;
+  }
+}
+
+function isMagicCastResolverItemSourceDescriptor(value: unknown): boolean {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  switch (normalizeString(value.sourceType)) {
+    case "none":
+    case "unavailable":
+    case "unknown":
+      return true;
+    case "equipped_item":
+    case "held_item":
+    case "inventory_item":
+      return Boolean(normalizeString(value.itemInstanceId));
+    case "supplied_candidate":
+      return value.itemRecord !== undefined ||
+        Boolean(normalizeString(value.itemId) ?? normalizeString(value.itemInstanceId));
+    default:
+      return false;
+  }
+}
+
+function isMagicCastResolverCastingContext(value: unknown): value is Record<string, unknown> {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  const contextType = normalizeString(value.contextType);
+  return contextType === "combat" || contextType === "noncombat";
+}
+
+function isMagicCastResolverRuntimePolicy(value: unknown): value is MagicCastResolverRuntimePolicy {
+  return isRecord(value);
+}
+
+function getMagicCastResolverRuntimeFlag(policy: MagicCastResolverRuntimePolicy): boolean {
+  return policy.testOnlyResolverLane === true || policy.runtimeCastingImplemented === true;
+}
+
+function appendMagicCastReadinessResolverIssues(
+  issues: MagicCastResolverReadinessIssue[],
+  readiness: MagicCastReadinessResult
+): void {
+  if (readiness.blockers.length === 0) {
+    return;
+  }
+
+  issues.push(
+    createMagicCastResolverReadinessIssue(
+      "cast_readiness_blocked",
+      "readiness",
+      "Magic cast readiness returned one or more blockers.",
+      { details: { blockerIds: readiness.blockers.map((blocker) => blocker.id) } }
+    )
+  );
+
+  for (const blocker of readiness.blockers) {
+    switch (blocker.id) {
+      case "runtime_casting_not_implemented":
+      case "unsupported_spell_hooks":
+      case "spell_runtime_deferred":
+        issues.push(
+          createMagicCastResolverReadinessIssue(
+            blocker.id,
+            "readiness",
+            blocker.message,
+            {
+              blockerId: blocker.id,
+              details: {
+                source: blocker.source,
+                ...(blocker.details ? { blockerDetails: blocker.details } : {})
+              }
+            }
+          )
+        );
+        break;
+    }
+  }
+}
+
 export function buildMagicCastReadiness(
   params: BuildMagicCastReadinessParams
 ): MagicCastReadinessResult {
@@ -1621,6 +1876,207 @@ export function buildMagicCastReadiness(
       ...(catalystId ? { catalystId } : {}),
       ...hookDetails
     }
+  };
+}
+
+export function buildMagicCastResolverReadiness(
+  params: BuildMagicCastResolverReadinessParams
+): MagicCastResolverReadinessResult {
+  const resolverRequestId = normalizeString(params.resolverRequestId) ?? "magic-cast-resolver-readiness";
+  const issues: MagicCastResolverReadinessIssue[] = [];
+
+  if (!isRecord(params.command)) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_magic_command",
+        "command",
+        "Magic cast resolver readiness requires an explicit command-like object."
+      )
+    );
+    return { ok: false, blocked: true, resolverRequestId, issues };
+  }
+
+  const command = params.command;
+  const commandId = normalizeString(command.commandId) ?? undefined;
+  const commandType = normalizeString(command.commandType);
+  const casterCharacterId = normalizeString(command.casterCharacterId);
+  const spellId = normalizeString(command.spellId);
+  const knownSpellRef = command.knownSpellRef;
+  const castingContext = command.castingContext;
+  const runtimePolicy = params.runtimePolicy;
+
+  if (commandType !== undefined && commandType !== "magic.cast") {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_magic_command",
+        "command.commandType",
+        `Magic cast resolver readiness supports only commandType 'magic.cast'.`
+      )
+    );
+  }
+
+  if (!casterCharacterId) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "missing_caster_character_id",
+        "command.casterCharacterId",
+        "Magic cast resolver readiness requires an explicit casterCharacterId."
+      )
+    );
+  }
+
+  if (!spellId) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "missing_spell_id",
+        "command.spellId",
+        "Magic cast resolver readiness requires an explicit spellId."
+      )
+    );
+  }
+
+  if (knownSpellRef === undefined || knownSpellRef === null) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "missing_known_spell_reference",
+        "command.knownSpellRef",
+        "Magic cast resolver readiness requires an explicit known-spell reference."
+      )
+    );
+  } else if (!isMagicCastResolverKnownSpellReference(knownSpellRef)) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_known_spell_reference",
+        "command.knownSpellRef",
+        "Magic cast resolver readiness known-spell reference must be a known_spell_id or known_spell_record reference."
+      )
+    );
+  }
+
+  if (command.target === undefined || command.target === null) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "missing_target_descriptor",
+        "command.target",
+        "Magic cast resolver readiness requires an explicit target descriptor."
+      )
+    );
+  } else if (casterCharacterId && !isMagicCastResolverTargetDescriptor(command.target, casterCharacterId)) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_target_descriptor",
+        "command.target",
+        "Magic cast resolver readiness target descriptor is malformed or unsupported."
+      )
+    );
+  }
+
+  if (!isMagicCastResolverItemSourceDescriptor(command.conduitSource)) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_conduit_source_descriptor",
+        "command.conduitSource",
+        "Magic cast resolver readiness requires an explicit supported conduit source descriptor."
+      )
+    );
+  }
+
+  if (!isMagicCastResolverItemSourceDescriptor(command.catalystSource)) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_catalyst_source_descriptor",
+        "command.catalystSource",
+        "Magic cast resolver readiness requires an explicit supported catalyst source descriptor."
+      )
+    );
+  }
+
+  if (!isMagicCastResolverCastingContext(castingContext)) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_casting_context",
+        "command.castingContext",
+        "Magic cast resolver readiness requires a combat or noncombat casting context."
+      )
+    );
+  }
+
+  if (!isMagicCastResolverRuntimePolicy(runtimePolicy)) {
+    issues.push(
+      createMagicCastResolverReadinessIssue(
+        "invalid_casting_context",
+        "runtimePolicy",
+        "Magic cast resolver readiness requires an explicit runtime policy object."
+      )
+    );
+  } else {
+    if (runtimePolicy.requireResourcePolicy === true && !normalizeString(runtimePolicy.resourcePolicyRef)) {
+      issues.push(
+        createMagicCastResolverReadinessIssue(
+          "resource_policy_missing",
+          "runtimePolicy.resourcePolicyRef",
+          "Magic cast resolver readiness requires a resource policy reference for this lane."
+        )
+      );
+    }
+    if (runtimePolicy.requireCatalystPolicy === true && !normalizeString(runtimePolicy.catalystPolicyRef)) {
+      issues.push(
+        createMagicCastResolverReadinessIssue(
+          "catalyst_policy_missing",
+          "runtimePolicy.catalystPolicyRef",
+          "Magic cast resolver readiness requires a catalyst policy reference for this lane."
+        )
+      );
+    }
+    if (runtimePolicy.requireFailurePolicy === true && !normalizeString(runtimePolicy.failurePolicyRef)) {
+      issues.push(
+        createMagicCastResolverReadinessIssue(
+          "failure_policy_missing",
+          "runtimePolicy.failurePolicyRef",
+          "Magic cast resolver readiness requires a failure policy reference for this lane."
+        )
+      );
+    }
+  }
+
+  if (issues.length > 0 || !casterCharacterId || !spellId || !isRecord(castingContext) || !isMagicCastResolverRuntimePolicy(runtimePolicy)) {
+    return {
+      ok: false,
+      blocked: true,
+      resolverRequestId,
+      ...(commandId ? { commandId } : {}),
+      issues
+    };
+  }
+
+  const controlContext = params.controlContext ?? castingContext.controlContext;
+  const hookSupport = params.hookSupport ?? (castingContext.hookSupport as MagicCastReadinessHookSupport | undefined);
+  const requireConduit = normalizeBoolean(castingContext.requireConduit);
+  const requireCatalyst = normalizeBoolean(castingContext.requireCatalyst);
+  const readiness = buildMagicCastReadiness({
+    records: resolveMagicCastResolverKnownSpellRecords(params.knownSpellRecords, knownSpellRef),
+    spellCatalog: params.spellCatalog,
+    characterId: casterCharacterId,
+    spellId,
+    ...(params.spellRecord !== undefined ? { spellRecord: params.spellRecord } : {}),
+    ...(params.conduitCandidate !== undefined ? { conduitCandidate: params.conduitCandidate } : {}),
+    ...(params.catalystCandidate !== undefined ? { catalystCandidate: params.catalystCandidate } : {}),
+    ...(controlContext !== undefined ? { controlContext } : {}),
+    ...(hookSupport !== undefined ? { hookSupport } : {}),
+    ...(requireConduit !== null ? { requireConduit } : {}),
+    ...(requireCatalyst !== null ? { requireCatalyst } : {}),
+    runtimeCastingImplemented: getMagicCastResolverRuntimeFlag(runtimePolicy)
+  });
+
+  appendMagicCastReadinessResolverIssues(issues, readiness);
+
+  return {
+    ok: issues.length === 0,
+    blocked: issues.length > 0,
+    resolverRequestId,
+    ...(commandId ? { commandId } : {}),
+    readiness,
+    issues
   };
 }
 

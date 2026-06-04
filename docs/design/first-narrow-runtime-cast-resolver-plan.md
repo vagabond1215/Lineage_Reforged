@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 Source version/run: Version 0.5.99 - First Narrow Runtime Cast Resolver Plan
-Status: planning-only source for Version 0.6.0 - Runtime Cast Resolver Readiness Helper
+Status: consumed by Version 0.5.100; retained as the boundary reference for resolver-readiness and later runtime cast work
 
 ## Purpose
 
@@ -127,7 +127,7 @@ Until resource, catalyst, and failure owners exist, the resolver should represen
 
 ## 4. First Narrow Implementation Lane
 
-The smallest future implementation lane after this plan should be `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`.
+The smallest future implementation lane after this plan should be `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`.
 
 Allowed future helper behavior:
 
@@ -323,9 +323,9 @@ Deferred after `0.5.99`:
 - magic skill gain
 - Magic Legacy power
 
-## Exact Allowed Scope For Version 0.6.0
+## Exact Allowed Scope For Version 0.5.100
 
-`Version 0.6.0 - Runtime Cast Resolver Readiness Helper` may:
+`Version 0.5.100 - Runtime Cast Resolver Readiness Helper` may:
 
 - Add pure TypeScript helper types/functions for resolver readiness if explicitly scoped.
 - Accept an explicit command-like input based on `docs/design/magic-command-contract-plan.md`.
@@ -337,7 +337,7 @@ Deferred after `0.5.99`:
 - Export only pure helper types/functions through the game-engine barrel if implemented.
 - Update docs and backlog notes.
 
-`0.6.0` must not:
+`0.5.100` must not:
 
 - implement effectful casting
 - register or dispatch commands
@@ -354,4 +354,4 @@ Deferred after `0.5.99`:
 
 Recommended next run:
 
-`Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
+`Version 0.5.100 - Runtime Cast Resolver Readiness Helper`

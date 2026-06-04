@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-03 after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan` landed.
+Updated 2026-06-04 after `Version 0.5.100 - Runtime Cast Resolver Readiness Helper` landed.
 
 ## Purpose
 
@@ -23,11 +23,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
+- `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
 
 Next recommended version:
 
-- `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
+- `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
 
 Current sequence source:
 
@@ -35,16 +35,17 @@ Current sequence source:
 
 Current phase:
 
-- transitioning from `v0.5.x` foundation stabilization / ownership hardening into `v0.6.x` runtime ownership transition
+- `v0.5.x` foundation stabilization / ownership hardening
 
 ## Current Implementation Reality
 
 - Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, and command contract planning have landed.
 - `buildMagicCastReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` are pure, deterministic, read-only, and exported through the game-engine boundary.
+- `buildMagicCastResolverReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `docs/design/magic-command-contract-plan.md` defines the future `magic.cast` command/intention shape before resolver behavior.
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` defines the future pure runtime cast resolver readiness boundary before effectful casting.
-- The next magic slice is a pure runtime cast resolver readiness helper.
+- The next magic slice is a planned output envelope policy pass.
 - Runtime casting, command handling, acquisition mutation, save/account changes, UI work, broader ownership routes, and broader acquisition routes remain deferred.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - The project remains in foundation stabilization; validation and ownership boundaries remain higher priority than broad runtime expansion.
@@ -71,7 +72,8 @@ Every major system should answer at least one of these questions:
 | `0.5.97` | Training Event Acquisition Helpers | Landed. Added pure helper types/functions for validating explicit training-event acquisition input and proposing a known-spell record. | Pure helper only; no persisted acquisition events or state mutation. |
 | `0.5.98` | Magic Command Contract | Landed. Defined command/intention shape before resolver behavior. | Contract only; no runtime cast resolver, commands, UI, effects, or mutation. |
 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Landed. Planned the first narrow engine-owned resolver readiness boundary. | Planning only; no UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
-| `0.6.0` | Runtime Cast Resolver Readiness Helper | Next. Add a pure helper that consumes explicit command-like input, calls `buildMagicCastReadiness(...)`, and returns deterministic resolver issues. | Pure helper only; no effectful casting, command handlers, UI dispatch, save mutation, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, or event creation. |
+| `0.5.100` | Runtime Cast Resolver Readiness Helper | Landed. Added a pure helper that consumes explicit command-like input, calls `buildMagicCastReadiness(...)`, and returns deterministic resolver issues. | Pure helper only; no effectful casting, command handlers, UI dispatch, save mutation, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, or event creation. |
+| `0.5.101` | Magic Resolver Planned Output Envelope Plan | Next. Plan inert output-envelope policy before runtime events or effect application. | Planning only; no emitted events, effects, mutation, UI dispatch, or command handlers. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
@@ -111,7 +113,7 @@ Use the sequenced Codex plan for the current implementation queue.
 Use the magic runtime boundary plan for cast-readiness helper and later runtime guardrails.
 Use the known-spell acquisition event plan for training-event acquisition helper history and later acquisition mutation constraints.
 Use the magic command contract plan for active magic command/intention constraints.
-Use the first narrow runtime cast resolver plan for Version 0.6.0 - Runtime Cast Resolver Readiness Helper.
+Use the first narrow runtime cast resolver plan for Version 0.5.101 - Magic Resolver Planned Output Envelope Plan.
 Use the design ledger for durable conceptual criteria and vocabulary.
 Use the continuity brief for north-star direction and source map.
 Use the backlog for deferred work and historical run notes.
