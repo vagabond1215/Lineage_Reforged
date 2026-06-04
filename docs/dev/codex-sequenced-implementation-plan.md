@@ -1,8 +1,8 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-03
-Route: Codex local sequencing alignment after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
-Status: locally aligned sequencing plan for future Codex runs
+Route: Connector versioning cleanup after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
+Status: aligned sequencing plan for future Codex runs
 
 ## Purpose
 
@@ -25,7 +25,12 @@ Latest landed magic resolver planning slice:
 
 Immediate next Codex run:
 
-- `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
+- `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
+
+Versioning note:
+
+- Patch numbers may exceed two digits inside the active band.
+- Do not roll from `0.5.99` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -52,7 +57,7 @@ Immediate next Codex run:
 | 19 | `0.5.97` | Training Event Acquisition Helpers | Codex 5.5 Local | `docs/design/known-spell-acquisition-event-plan.md` | pure helper + focused tests | Landed | Produces proposed character-scoped known-spell records from explicit training-event evidence only; no save/session mutation, persisted acquisition events, active casting, commands, UI, or broader routes/scopes. |
 | 20 | `0.5.98` | Magic Command Contract | Codex 5.5 Local docs-first | `docs/design/magic-command-contract-plan.md` | command contract plan | Landed | Defined selected spell, caster, target, conduit source, catalyst source, and casting-context command shape only; no runtime cast resolver, cast commands, UI, save mutation, effect application, or catalyst consumption. |
 | 21 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Codex 5.5 Local docs-first | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | resolver boundary plan | Landed | Planned the first narrow engine-owned resolver boundary only; no effect implementation, command handler wiring, UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
-| 22 | `0.6.0` | Runtime Cast Resolver Readiness Helper | Codex 5.5 Local | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | pure resolver readiness helper + focused tests | Next | Pure deterministic resolver readiness only; call `buildMagicCastReadiness(...)` and return issues without effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
+| 22 | `0.5.100` | Runtime Cast Resolver Readiness Helper | Codex 5.5 Local | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | pure helper + focused tests | Next | Implement only a pure resolver-readiness helper; no effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption, inventory mutation, target resolution, or event creation. |
 
 ## Default Prompt Pattern
 
@@ -64,6 +69,7 @@ Each future Codex prompt should:
 4. Update `docs/dev/current-codex-output.md` at the end.
 5. Update `docs/future_content_backlog.md` with a concise run note when useful.
 6. Avoid updating direction-bearing docs unless a handoff would become misleading.
+7. Keep numbering inside the current version band until the roadmap explicitly declares a milestone transition.
 
 ## Sequence Guardrails
 
@@ -71,10 +77,10 @@ Each future Codex prompt should:
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
 - Do not extract a universal shell before a later dedicated shell pass scopes it.
-- Do not add generated UI output during cast-readiness helper work.
+- Do not add generated UI output during magic runtime-helper work.
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
-- Do not mix cast-readiness helper work with combat math rewrites, active spell execution, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
-- Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, conduit/catalyst/control policy, blocked-hook tests, a pure cast-readiness helper, and a pure resolver-readiness helper are explicitly implemented in narrow slices.
+- Do not mix resolver readiness helper work with combat math rewrites, active spell effects, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
+- Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, cast-readiness helper, training-event acquisition helpers, command contract, resolver readiness helper, and blocked-hook tests are explicitly implemented in narrow slices.
 
 ## When To Reorder
 
@@ -83,6 +89,7 @@ Reorder only if:
 - a newer `docs/dev/current-codex-output.md` explicitly changes direction;
 - a blocking validation/tooling issue prevents the next step;
 - the user explicitly chooses a different target;
-- a connector/Codex inspection finds the source plan stale or unsafe.
+- a connector/Codex inspection finds the source plan stale or unsafe;
+- the roadmap explicitly declares that the project has reached a new version-band milestone.
 
 If reordered, update this file and `docs/dev/project-roadmap.md` together.
