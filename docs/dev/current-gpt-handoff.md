@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
+Source route: Connector cleanup after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
 Date: 2026-06-03
 Branch/status assumption: `master`; use `docs/dev/current-codex-output.md` for the exact latest Codex run state.
 
@@ -34,82 +34,34 @@ Current sequence source:
 
 Immediate next version:
 
-- `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`
+- `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
 
-## Recent Results
+Versioning note:
 
-Magic / known spells:
+- Patch numbers may exceed two digits inside the active band.
+- Do not roll from `0.5.99` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
-- `0.5.88` updated `docs/design/known-spell-ownership-plan.md` as the current planning source for known-spell ownership and acquisition before active magic expansion.
-- `0.5.89` added the first pure known-spell ownership helper boundary in `packages/engines/game-engine/src/known-spells.ts`, with a `.js` bridge and game-engine index exports.
-- `0.5.90` added pure collection-level known-spell validation helpers on top of the character-scoped helper boundary.
-- `0.5.91` added pure acquisition-evidence helper boundaries for the currently supported `training_event` route only.
-- `0.5.92` added a pure read-only known-spell projection helper.
-- `buildKnownSpellReadOnlyProjection(...)` consumes explicit known-spell records plus caller-supplied spell catalog records, reuses collection validation and training-event evidence validation, and returns deterministic available, blocked, and invalid-record summaries.
-- The projection distinguishes valid available records, valid blocked records, invalid records, duplicate records, missing evidence, unknown spells, unsupported owner scopes, and unsupported acquisition routes through existing validation pathways.
-- `0.5.93` added focused test-only blocker coverage proving current read-only spell surfaces and metadata helpers do not imply cast readiness.
-- The blocker tests keep runtime magic blocked without explicit known-spell ownership, valid training-event evidence, availability, conduit policy, catalyst policy, control/failure policy, supported hooks, and an actual runtime casting implementation.
-- `0.5.94` added `docs/design/magic-runtime-boundary-plan.md` as the planning-only boundary between known-spell projection and a future pure cast-readiness helper.
-- The boundary plan defines allowed conduit metadata comparison, catalyst metadata comparison, pure control threshold checks, unsupported/deferred/unknown hook blocking, blocker vocabulary, and exact allowed/forbidden scope for the cast-readiness helper.
-- `0.5.95` added `buildMagicCastReadiness(...)` as a pure deterministic read-only helper exported through the game-engine barrel.
-- The cast-readiness helper reuses known-spell projection and can return ordered blockers for missing/blocked/invalid known-spell records, missing training-event evidence, missing/invalid conduit, missing/invalid catalyst, insufficient control, unsupported hooks, non-ready spell runtime status, and absent effectful runtime casting.
-- `runtime_casting_not_implemented` remains present by default unless the caller explicitly supplies runtime support.
-- `0.5.96` added `docs/design/known-spell-acquisition-event-plan.md` as the planning-only boundary for future training-event acquisition helpers.
-- The acquisition-event plan defines explicit character-scoped training-event acquisition ownership, evidence requirements, deterministic duplicate handling, forbidden inference rules, and the exact allowed scope for `0.5.97`.
-- `0.5.97` added `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` as pure deterministic helpers exported through the game-engine barrel.
-- The training-event acquisition helpers validate explicit character-scoped `training_event` acquisition input, return deterministic proposal issues, derive stable known-spell ids when omitted, and propose in-memory `KnownSpellRecordState` records without mutating state or creating acquisition events.
-- `0.5.98` added `docs/design/magic-command-contract-plan.md` as the planning-only command/intention boundary for future active magic.
-- The command contract plan defines a future `magic.cast` command shape with explicit caster, spell, known-spell reference, target descriptor, conduit source descriptor, catalyst source descriptor, casting context, requested timestamps, and optional request-source metadata.
-- The command contract plan keeps command validation pure/readiness-gated and forbids runtime casting, command handlers, UI dispatch, save mutation, event creation, resource payment, catalyst consumption, target effect resolution, control failure, backlash, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement.
+## Recent Magic Results
+
+- `0.5.88` added known-spell ownership planning before active magic expansion.
+- `0.5.89` through `0.5.92` added pure character-scoped known-spell ownership, validation, evidence, and read-only projection helpers.
+- `0.5.93` added focused blocker tests proving current read-only spell surfaces and metadata helpers do not imply cast readiness.
+- `0.5.94` added `docs/design/magic-runtime-boundary-plan.md` as the planning boundary for cast readiness.
+- `0.5.95` added `buildMagicCastReadiness(...)` as a pure deterministic read-only helper.
+- `0.5.96` added `docs/design/known-spell-acquisition-event-plan.md` as the planning-only boundary for training-event acquisition helpers.
+- `0.5.97` added `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` as pure deterministic helpers that propose in-memory `KnownSpellRecordState` records without mutation.
+- `0.5.98` added `docs/design/magic-command-contract-plan.md` as the planning-only `magic.cast` command/intention boundary.
 - `0.5.99` added `docs/design/first-narrow-runtime-cast-resolver-plan.md` as the planning-only boundary for a future engine-owned runtime cast resolver readiness helper.
-- The resolver plan defines a future pure resolver request/result shape, required resolver gates, issue/blocker vocabulary, inert planned output envelopes, target/effect boundaries, resource/catalyst/failure policy boundaries, and exact scope for `0.6.0`.
-- The resolver plan keeps command handlers, UI dispatch, effectful casting, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, save/account/session schema changes, control failure, backlash, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement deferred.
-- Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership.
-- `characterKnowsSpell(...)` remains a pure read-only query helper and still counts only valid, available, character-owned records under existing query semantics.
-- Arcane Compendium remains read-only and independent from known-spell ownership/acquisition evidence/projection.
-- Current `PlayerSpellState[]` remains readiness/legacy context and is not a complete acquisition/ownership model.
-- `0.5.99` changed docs only: no spells, spell metadata, active spell casting, known-spell runtime wiring, persisted acquisition event creation, cast commands, command handlers, catalyst behavior, target resolution, resource payment, scroll/tome behavior, magic skill gain, Magic Legacy power, combat magic runtime, generated output, React UI, save schema, economy, loot, crafting, equipment, family, Bloodlines, Chronicle, estate, heir, heirloom, bequest, or Backstory Legacy behavior changed.
-- Remaining known-spell/magic follow-up: the pure runtime cast resolver readiness helper, acquisition event mutation, active casting, conduit/catalyst/control implementation, scroll/tome/document teaching, Magic Legacy access lanes, broader ownership scopes/routes, and `PlayerSpellState[]` replacement remain deferred.
 
-Combat / equipment:
+Current non-inference rule:
 
-- `0.5.86` completed the audit-first combat/equipment mapping pass.
-- `0.5.87` added the narrow current-content combat use profile for `item.short_bow`.
-- Hunter starts still equip `item.short_bow` into `slot.weapon.right`, and the short bow now maps to the current ranged archery weapon profile shape.
-- The remaining known starter weapon-profile gap is `item.butcher_knife`.
-- Deferred combat/equipment gaps remain: `item.butcher_knife` equip/profile policy, hybrid staff skill-gain policy, improvised pickaxe skill-gain policy, shield/armor defensive skill-gain policy, content-owned equipment slot/handedness/offhand/two-handed metadata, explicit damage-type table, and broad weapon/armor/clothing profile coverage.
+- Catalog presence, Arcane Compendium entries, `PlayerSpellState[]`, account/family/institution/document/item/source-run/heir/Legacy data, lineage, backstory, selected character UI state, and UI state do not imply known spell ownership or casting authority.
 
-Unified shell / creator:
+Current deferrals:
 
-- `0.5.84` added `docs/design/unified-shell-and-creator-refinement-plan.md`.
-- `0.5.85` implemented the character-creation sidebar/layout refinement.
-- Character creation now uses the launcher `AppShell` with `ShellBrandLogo`, a left sidebar summary, fixed-width step navigation, full-character randomization, and a total attribute matrix with contribution tooltips.
-- Backstory is locked/skipped only when no selectable backstories exist and remains required once at least one selectable backstory exists.
-- No-selectable-backstory starts create no backstory package.
-- Touch long-press tooltip behavior for the attribute breakdown remains deferred.
-- Gameplay shell unification remains deferred.
+- Effectful casting, command handlers, UI dispatch, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, save/account/session mutation, control failure, backlash, broader acquisition routes, broader owner scopes, and `PlayerSpellState[]` replacement remain deferred.
 
-Calendar / climate:
-
-- `0.5.81` finalized the planning-only Calendar/Climate popup view-model plan.
-- `0.5.82` implemented `apps/rpg-ui/src/game-shell/calendarClimatePresentation.ts` and `tests/unit/calendar-climate-presentation.test.mjs`.
-- `0.5.83` rendered the existing Calendar/Climate projection in a compact read-only top-status popup.
-- No actions, command ids, content loading, generated output, climate profile resolver, weather simulation, or active climate/weather/travel/crop/body-state effects were added.
-
-Economy and Chronicle:
-
-- `0.5.79` implemented the pure economy clarity projection and focused tests.
-- `0.5.80` fixed the focused economy runtime/trade validation failures that appeared after `0.5.79`.
-- `0.5.77` rendered Chronicle run-end projection read-only inside Account Meta / Chronicles.
-- Future economy and Chronicle UI work must stay read-only unless explicitly re-scoped.
-
-Typecheck tooling:
-
-- `0.5.74` made typecheck commands honest and repeatable.
-- Default UI and broad workspace typecheck targets still fail on known pre-existing blockers.
-- Do not require broad typecheck unless a prompt specifically fixes those blockers.
-
-## Active Guardrails For 0.6.0
+## Active Guardrails For 0.5.100
 
 Runtime Cast Resolver Readiness Helper:
 
@@ -150,11 +102,11 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | 6 | `0.5.97` | Training Event Acquisition Helpers | `docs/design/known-spell-acquisition-event-plan.md` | Landed |
 | 7 | `0.5.98` | Magic Command Contract | `docs/design/magic-command-contract-plan.md` | Landed |
 | 8 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Landed |
-| 9 | `0.6.0` | Runtime Cast Resolver Readiness Helper | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Next |
+| 9 | `0.5.100` | Runtime Cast Resolver Readiness Helper | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`, inspect:
+For `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -180,6 +132,6 @@ For `Version 0.6.0 - Runtime Cast Resolver Readiness Helper`, inspect:
 - `tools/content-lint/spell-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
 
-## After 0.6.0
+## After 0.5.100
 
-Use the runtime cast resolver readiness helper result in `docs/dev/current-codex-output.md` to decide whether the next safe run is a narrow resolver implementation follow-up, another command/readiness guardrail, or a separate acquisition mutation plan.
+Use the resolver readiness helper result in `docs/dev/current-codex-output.md` to decide whether the next safe run is another pure resolver guardrail, a command/readiness validation helper, or a later milestone-gated runtime implementation. Do not advance to `0.6.x` automatically.
