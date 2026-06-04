@@ -186,6 +186,245 @@ Rules:
 - NPC teaching should feed explicit training/study/acquisition evidence.
 - These routes must eventually connect to known-spell acquisition boundaries without bypassing character-scoped ownership.
 
+## Magic Learning And Study Event Framework
+
+Magic learning should use the same checkpoint-style advancement architecture as skill trials, but it should be modeled as a parallel study-event path instead of a replacement for skill band progression.
+
+Purpose:
+
+- make learning magic an event-driven progression activity
+- distinguish self-study, paid teaching, and institutional study
+- support scroll/tome/grimoire learning without automatic spell ownership
+- feed future known-spell acquisition evidence
+- preserve the current character-scoped spell ownership rules
+
+### Magic Learning Flow
+
+```text
+Access Source
+  -> Study Event
+  -> Checkpoint Resolution
+  -> Study Completion
+  -> Acquisition Evidence
+  -> Known Spell Ownership
+  -> Cast Readiness
+  -> Runtime Casting
+```
+
+Access creates opportunity. Study creates progress. Only validated acquisition evidence should later create known-spell ownership.
+
+### Study Source Modes
+
+| Source mode | Cost / access profile | Mechanical identity |
+| --- | --- | --- |
+| `self_study` | Cheapest and most available; requires a scroll, tome, grimoire, notes, or prior exposure. | Slowest progress, highest misunderstanding risk, weakest recovery help. |
+| `paid_teacher` | Requires an NPC teacher, cost, availability, and possibly reputation or prerequisites. | Moderate progress, better recovery chance, reduced hard-failure risk. |
+| `institutional_study` | Requires admission, fees, sponsorship, rank, renown, or faction/institution access. | Most consistent progress, strongest checkpoint support, best advanced-study eligibility. |
+| `supervised_ritual` | Requires a teacher, institution, cult, order, or specialist environment. | High-stakes study for complex or dangerous spells; strong support but severe failure consequences. |
+| `field_discovery` | Tied to exploration, ruins, artifacts, rare events, or quest discoveries. | Irregular access, high variance, strong Chronicle/Renown potential later. |
+
+### Magic Study Inputs
+
+Study events should be weighted by:
+
+- `INT` for comprehension, theory, pattern reading, and correction
+- `WIS` for judgment, interpretation, caution, and diagnosis
+- `SPT` for control, stability, focus, and endurance
+- school-specific attributes where appropriate
+- associated magic school skill rank
+- core magic skill rank, if present
+- arcane or domain knowledge support
+- teacher quality
+- institution quality
+- text/source quality
+- conduit/catalyst familiarity, if relevant later
+- fatigue, injury, hydration, intoxication, stress, and other body-state penalties
+- prior soft-failure state
+
+### School-Specific Weighting Examples
+
+| School / study type | Likely primary weights | Notes |
+| --- | --- | --- |
+| Elemental | `INT`, `SPT`, elemental school skill, arcane knowledge | Pattern control, force shaping, stability. |
+| Healing / divine | `WIS`, `SPT`, healing/divine skill, anatomy or doctrine support | Diagnosis, intent, safe channeling. |
+| Illusion / influence | `INT`, `CHA`, school skill, perception/social support | Pattern deception, timing, presentation. |
+| Warding / protection | `WIS`, `SPT`, warding skill, symbol/lore support | Structure, patience, stability. |
+| Dark / forbidden | `INT`, `SPT`, forbidden knowledge, resistance/support context | Higher hard-failure risk and stricter access gates. |
+| Utility / ritual | `INT`, `WIS`, relevant school skill, tool/text quality | Methodical interpretation and execution. |
+
+These examples are planning guidance only. Final weights should be authored per study event or spell family.
+
+### Study Checkpoints
+
+A magic study event should eventually define checkpoints such as:
+
+- read the theory
+- identify the pattern
+- prepare the medium
+- shape the flow
+- stabilize the effect
+- recover from feedback
+- complete the working
+
+Each checkpoint should support:
+
+- narrative prompt
+- pass value
+- soft-fail value
+- hard-fail value, when appropriate
+- recovery branch
+- optional player choices
+- source-mode modifiers
+- teacher/institution/source-quality modifiers
+
+### Magic Soft Failure And Recovery
+
+Soft failures should represent partial misunderstanding or instability, not immediate total collapse.
+
+Examples:
+
+- misread glyph
+- unstable flow
+- flawed pronunciation
+- imprecise gesture
+- drifting focus
+- partial feedback
+- theory contradiction
+
+Recovery branches may include:
+
+- re-read the passage
+- ask the teacher
+- meditate and stabilize
+- re-draw the glyph
+- reduce the effect scale
+- replace the catalyst
+- pause and rest
+
+Rules:
+
+- A soft failure branches to a recovery/save event.
+- A second consecutive soft failure becomes a hard failure.
+- A success after a soft failure returns the player to the main study route.
+
+### Magic Hard Failure
+
+Hard failures should immediately fail the study attempt and start a retry delay.
+
+Possible hard-failure outcomes:
+
+- severe magical feedback
+- mana burn
+- broken focus
+- corrupted working
+- catalyst destruction
+- damaged text/source
+- institutional censure
+- teacher refusal until cooldown ends
+- temporary study block
+
+Hard failure consequences should stay narrative and readiness-level until effect owners exist. Do not add injury, item destruction, resource loss, reputation loss, or event creation without later owner systems.
+
+### Study Cooldowns And Delays
+
+Magic study should include retry delays so players cannot spam attempts.
+
+Future cooldowns should depend on:
+
+- spell complexity
+- source mode
+- failure type
+- teacher/institution policy
+- body state
+- available materials
+- current study fatigue
+
+Suggested planning scale:
+
+| Spell complexity | Self-study delay | Teacher delay | Institutional delay |
+| --- | ---: | ---: | ---: |
+| Simple | short | shorter | shortest |
+| Intermediate | moderate | short/moderate | short |
+| Advanced | long | moderate | moderate |
+| Expert | very long | long | moderate/long |
+| Master / forbidden | special access required | special access required | special access required |
+
+Exact durations should be authored later after time-scale and economy balance are reviewed.
+
+### Spell Complexity
+
+Study events should support spell complexity tiers:
+
+- `simple`
+- `intermediate`
+- `advanced`
+- `expert`
+- `master`
+- `forbidden`
+
+Complexity should affect:
+
+- checkpoint count
+- pass thresholds
+- soft-failure margin
+- hard-failure severity
+- retry delay
+- access requirements
+- teacher/institution requirements
+- source quality requirements
+- Chronicle/Renown significance later
+
+### Player Choice In Magic Study
+
+Magic study choices should be sparse and scenario-specific.
+
+Examples:
+
+- stabilize the pattern / push more power
+- re-check the diagram / trust memory
+- ask the teacher / continue alone
+- simplify the working / attempt full structure
+- replace the catalyst / risk the current one
+- pause to meditate / continue before focus fades
+
+Choice correctness can be:
+
+- deterministic from the narrative clue
+- weighted by character build
+- affected by teacher/institution support
+- affected by source quality
+- affected by previous checkpoint results
+
+Choices should not become routine clicking.
+
+### Chronicle, Renown, And Legacy Notes
+
+Magic study events should eventually support outputs for:
+
+- learned a spell
+- failed a dangerous study attempt
+- completed an institutional examination
+- earned recognition from a teacher/order/school
+- discovered a rare magical pattern
+- completed a forbidden or high-risk study event
+
+These are planning hooks only until Chronicle, Renown, institution, and Legacy owner boundaries are implemented.
+
+### Spell Ownership Boundary
+
+Magic study does not equal known-spell ownership by itself.
+
+A completed study event should produce future acquisition evidence. That evidence can later feed character-scoped known-spell ownership helpers.
+
+Forbidden inference:
+
+- owning a scroll does not mean knowing the spell
+- owning a tome does not mean knowing the spell
+- paying a teacher does not mean knowing the spell
+- entering an institution does not mean knowing the spell
+- seeing a spell in a catalog or Arcane Compendium does not mean knowing the spell
+- Legacy access does not mean knowing the spell
+
 ## Trial Narrative Fill-Out Template
 
 Use this template for future per-skill/per-trial narrative work:
@@ -219,6 +458,43 @@ Renown note:
 Legacy note:
 ```
 
+## Magic Study Fill-Out Template
+
+Use this template for future spell-learning study events:
+
+```text
+Spell:
+School / family:
+Complexity:
+Study event title:
+Source mode: self_study / paid_teacher / institutional_study / supervised_ritual / field_discovery
+Access source:
+Eligibility:
+Cost / admission / reputation requirement:
+Retry delay:
+Input mode: automatic / limited_choice / directed_choice
+Primary attributes:
+Associated magic skills:
+Supporting knowledge skills:
+Teacher or institution modifiers:
+Source text quality:
+Checkpoint list:
+  - checkpoint id
+  - narrative beat
+  - pass value
+  - soft-fail value
+  - hard-fail value, if any
+  - recovery branch, if any
+  - player choices, if any
+Study success result:
+Soft-failure result:
+Hard-failure result:
+Acquisition evidence note:
+Chronicle note:
+Renown note:
+Legacy note:
+```
+
 ## Roadmap Placement
 
 This framework should become a mandatory `0.6` readiness pillar, but implementation should remain in the `0.5.x` foundation line until each boundary is planned and validated.
@@ -231,9 +507,10 @@ Recommended sequence after the current magic handoff stabilizes:
 4. Trial attempt cooldown/readiness helper.
 5. Trial narrative content template pass.
 6. First concrete skill trial family, preferably one combat, one crafting, one knowledge, and one magic trial.
-7. Magic teaching source plan for NPCs, scrolls, tomes, and institutions.
-8. Known-spell acquisition source integration for teaching/study routes.
-9. Chronicle/Renown hooks for trial outcomes.
+7. Magic study event plan for self-study, paid teachers, institutions, scrolls, tomes, grimoires, and field discoveries.
+8. Magic teaching source plan for NPCs, scrolls, tomes, and institutions.
+9. Known-spell acquisition source integration for teaching/study routes.
+10. Chronicle/Renown hooks for trial and study outcomes.
 
 ## Forbidden Until Explicitly Scoped
 
