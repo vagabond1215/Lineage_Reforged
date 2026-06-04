@@ -2,6 +2,7 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-21
+Updated: 2026-06-04
 Status: connector-only prompt guidance; no runtime/source/UI/content changes
 
 ## Purpose
@@ -40,6 +41,25 @@ Accepted labels:
 
 Do not put this routing block inside the copy-paste prompt body.
 
+## Version-Band Guardrails
+
+Every versioned prompt should preserve the current version band unless the roadmap explicitly declares a milestone transition.
+
+Required rules:
+
+- Patch numbers may exceed two digits inside a version band.
+- Do not automatically roll from `0.5.99` to `0.6.0`.
+- Continue to `0.5.100`, `0.5.101`, and so on unless `docs/dev/project-roadmap.md` explicitly says the actual `0.6.x` milestone has been reached.
+- Treat version-band labels as maturity markers, not decimal numbers.
+- When the next version is unclear, inspect `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/project-roadmap.md`, and `docs/dev/codex-sequenced-implementation-plan.md` before naming it.
+- Do not change `docs/dev/project-roadmap.md` or `docs/dev/codex-sequenced-implementation-plan.md` just to make a version number convenient.
+
+Use this note in prompts when relevant:
+
+```text
+Versioning guardrail: patch numbers may exceed two digits. Do not roll from 0.5.99 to 0.6.0 unless the roadmap explicitly declares that the actual 0.6.x milestone has been reached.
+```
+
 ## Universal Codex Prompt Skeleton
 
 ```text
@@ -54,8 +74,14 @@ Read first:
 - docs/dev/current-codex-output.md
 - docs/dev/current-gpt-handoff.md
 - docs/dev/project-roadmap.md when version order/tool routing matters
+- docs/dev/codex-sequenced-implementation-plan.md when near-term sequencing matters
 - docs/design/future-system-design-ledger.md when design criteria/vocabulary/future-system boundaries matter
 - <specific source docs/files>
+
+Versioning guardrail:
+- Patch numbers may exceed two digits inside the current version band.
+- Do not roll from 0.5.99 to 0.6.0 unless the roadmap explicitly declares that the actual 0.6.x milestone has been reached.
+- Preserve the current band and use the next patch number from the active handoff/sequence docs.
 
 Scope:
 - <allowed work>
@@ -95,6 +121,10 @@ Use when Codex should inspect the repo and produce a durable plan or update a do
 Version X.Y.Z - Planning Title
 
 Run locally on the current branch. This is a planning-only pass.
+
+Versioning guardrail:
+- Patch numbers may exceed two digits inside the current version band.
+- Do not roll from 0.5.99 to 0.6.0 unless the roadmap explicitly declares that the actual 0.6.x milestone has been reached.
 
 Allowed:
 - inspect source/content/tests/docs
@@ -136,6 +166,10 @@ Goal:
 Inspect:
 - <files>
 
+Versioning guardrail:
+- Do not advance roadmap versions unless this pass explicitly exists to fix routing or sequencing.
+- Patch numbers may exceed two digits; do not roll 0.5.99 to 0.6.0 without an explicit roadmap milestone.
+
 Allowed:
 - create/update focused docs only
 - update roadmap/handoff only if this pass changes routing or queue status
@@ -143,9 +177,10 @@ Allowed:
 Forbidden:
 - runtime/source/schema/UI/content changes
 - generated output changes
-- docs/dev/current-codex-output.md edits
+- docs/dev/current-codex-output.md edits unless this is a sequencing-fix pass
 - broad backlog rewrites from partial fetches
 - treating planning docs as implementation permission
+- version-band jumps without roadmap authority
 
 Output:
 - concise result
@@ -257,6 +292,7 @@ Forbidden:
 - direct skill rank grants outside policy
 - generic tag-driven execution
 - save/account schema changes without explicit current-data rules
+- version-band jumps without explicit roadmap authority
 
 ## Recommended Use
 
