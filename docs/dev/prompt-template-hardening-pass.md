@@ -60,6 +60,50 @@ Use this note in prompts when relevant:
 Versioning guardrail: patch numbers may exceed two digits. Do not roll from 0.5.99 to 0.6.0 unless the roadmap explicitly declares that the actual 0.6.x milestone has been reached.
 ```
 
+## Codex Progress Tracking Guardrails
+
+Every Codex implementation, planning, or docs-only prompt should include explicit progress tracking instructions so the Codex progress/task list stays aligned with actual work.
+
+Place this block directly after the versioning guardrail in generated prompts:
+
+```text
+Progress tracking requirements:
+- Update the Codex progress/task list immediately when a milestone begins and immediately when it completes.
+- Do not leave completed work items in an in-progress state.
+- If the implementation plan changes during inspection, update the task list before continuing.
+- Keep task descriptions concise and action-oriented.
+- Prefer 4-8 meaningful tasks rather than many tiny tasks.
+- When a task becomes unnecessary, remove it or mark it as skipped with explanation.
+- When new work is discovered, add a new task before starting that work.
+- Never perform substantial work without a corresponding progress item.
+
+Required progress flow:
+1. Inspect current state and requested source context.
+2. Implement or update the scoped feature/doc.
+3. Add or update focused tests when source behavior changes.
+4. Run focused validation.
+5. Update handoff/output documentation when scoped.
+6. Final review.
+
+Status discipline:
+- Mark inspection complete immediately after repository inspection and source-document review are finished.
+- Mark implementation/update in progress before changing files.
+- Mark implementation/update complete immediately after file changes are finished.
+- Mark tests in progress before creating or changing tests.
+- Mark tests complete immediately after test changes are finished.
+- Mark validation in progress before executing validation.
+- Mark validation complete immediately after validation finishes.
+- Mark documentation in progress before updating handoff/output docs.
+- Mark documentation complete immediately after documentation updates are finished.
+
+Required final verification:
+- Confirm all completed tasks are marked complete.
+- Explain any remaining incomplete tasks.
+- Confirm no completed step remains unchecked.
+- Confirm no skipped step appears as completed.
+- Confirm the progress tracker reflects actual repository state before producing the final response.
+```
+
 ## Universal Codex Prompt Skeleton
 
 ```text
@@ -82,6 +126,13 @@ Versioning guardrail:
 - Patch numbers may exceed two digits inside the current version band.
 - Do not roll from 0.5.99 to 0.6.0 unless the roadmap explicitly declares that the actual 0.6.x milestone has been reached.
 - Preserve the current band and use the next patch number from the active handoff/sequence docs.
+
+Progress tracking requirements:
+- Update the Codex progress/task list immediately when a milestone begins and immediately when it completes.
+- Do not leave completed work items in an in-progress state.
+- If the implementation plan changes during inspection, update the task list before continuing.
+- Prefer 4-8 meaningful tasks rather than many tiny tasks.
+- Confirm the progress tracker reflects actual repository state before producing the final response.
 
 Scope:
 - <allowed work>
@@ -126,6 +177,13 @@ Versioning guardrail:
 - Patch numbers may exceed two digits inside the current version band.
 - Do not roll from 0.5.99 to 0.6.0 unless the roadmap explicitly declares that the actual 0.6.x milestone has been reached.
 
+Progress tracking requirements:
+- Update the Codex progress/task list immediately when a milestone begins and immediately when it completes.
+- Mark inspection complete after source-document review.
+- Mark planning-doc updates complete after file changes finish.
+- Mark validation complete after `git diff --check` or scoped validation finishes.
+- Confirm the progress tracker reflects actual repository state before producing the final response.
+
 Allowed:
 - inspect source/content/tests/docs
 - create or update the named planning document
@@ -169,6 +227,11 @@ Inspect:
 Versioning guardrail:
 - Do not advance roadmap versions unless this pass explicitly exists to fix routing or sequencing.
 - Patch numbers may exceed two digits; do not roll 0.5.99 to 0.6.0 without an explicit roadmap milestone.
+
+Progress tracking requirements:
+- If run through Codex or Agent Mode, update the progress/task list when inspection starts, docs edits start, validation starts, and final review starts.
+- Mark each step complete immediately when finished.
+- Confirm the tracker matches actual work before final output.
 
 Allowed:
 - create/update focused docs only
@@ -283,6 +346,7 @@ Required:
 - focused tests
 - old behavior confirmation where relevant
 - clear forbidden adjacent systems
+- progress tracker updates at inspection, implementation, test, validation, documentation, and final-review milestones
 
 Forbidden:
 
