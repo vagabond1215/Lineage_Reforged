@@ -2,21 +2,17 @@
 
 Date: 2026-06-03
 Source version/run: Version 0.5.99 - First Narrow Runtime Cast Resolver Plan
-<<<<<<< HEAD
-Status: consumed by Version 0.5.100; retained as the boundary reference for resolver-readiness and later runtime cast work
-=======
-Status: planning-only source for Version 0.5.100 - Runtime Cast Resolver Readiness Helper
->>>>>>> e1efcb4baca9e4149f6c43fcbfe98a3f5fbe4c87
+Status: consumed by Version 0.5.100 and Version 0.5.101; retained as the boundary reference for resolver-readiness and later runtime cast work
 
 ## Purpose
 
 Define the first narrow engine-owned runtime cast resolver boundary before implementation.
 
-This plan prepares a future pure resolver-readiness helper that can consume an explicit validated `magic.cast` command/intention, reuse existing known-spell and cast-readiness helpers, and return deterministic resolver issues without applying spell effects.
+This plan prepared the pure resolver-readiness helper that consumes an explicit validated `magic.cast` command/intention, reuses existing known-spell and cast-readiness helpers, and returns deterministic resolver issues without applying spell effects.
 
 This plan does not implement runtime spell casting, command handlers, UI dispatch, save mutation, event creation, resource payment, catalyst consumption or reservation, inventory mutation, target effect resolution, control failure, backlash, broader acquisition routes, broader owner scopes, or `PlayerSpellState[]` replacement.
 
-Versioning note: the next helper remains in the `0.5.x` line as `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`. Patch numbers may exceed two digits; do not roll to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+Versioning note: `Version 0.5.100 - Runtime Cast Resolver Readiness Helper` has landed and `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan` consumes this plan for inert output-envelope policy. Patch numbers may exceed two digits; do not roll to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## 1. Current Foundation
 
@@ -26,11 +22,12 @@ Current known-spell and magic command foundation:
 - The only supported known-spell acquisition route is `training_event`.
 - `buildKnownSpellReadOnlyProjection(...)` is pure/read-only.
 - `buildMagicCastReadiness(...)` is pure/read-only and returns deterministic blockers.
+- `buildMagicCastResolverReadiness(...)` is pure/read-only and returns deterministic resolver issues.
 - `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` are pure proposal helpers.
 - `docs/design/magic-command-contract-plan.md` defines the future `magic.cast` command/intention contract.
 - No persisted acquisition event creator exists.
 - No command handler exists.
-- No runtime cast resolver exists.
+- No effectful runtime cast resolver exists.
 - No UI command dispatch exists.
 
 Current metadata and tests:
@@ -133,7 +130,7 @@ Until resource, catalyst, and failure owners exist, the resolver should represen
 
 ## 4. First Narrow Implementation Lane
 
-The smallest future implementation lane after this plan should be `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`.
+The smallest implementation lane after this plan was `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`.
 
 Allowed future helper behavior:
 
@@ -358,6 +355,6 @@ Deferred after `0.5.99`:
 - add broader acquisition routes or owner scopes
 - replace `PlayerSpellState[]`
 
-Recommended next run:
+Recommended follow-up after the resolver-readiness and planned-envelope planning passes:
 
-`Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
+`Version 0.5.102 - Magic Resolver Inert Envelope Helper`

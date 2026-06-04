@@ -1,18 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-<<<<<<< HEAD
 Date: 2026-06-04
-Route: Codex local sequencing alignment after `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
+Route: Codex local sequencing alignment after `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
 Status: locally aligned sequencing plan for future Codex runs
-=======
-Date: 2026-06-03
-Route: Connector versioning cleanup after `Version 0.5.99 - First Narrow Runtime Cast Resolver Plan`
-Status: aligned sequencing plan for future Codex runs
->>>>>>> e1efcb4baca9e4149f6c43fcbfe98a3f5fbe4c87
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.100 - Runtime Cast Resolver Readiness Helper` added the first pure resolver-readiness helper.
+This file gives Codex a stable ordered queue after `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan` added the inert planned-output-envelope boundary.
 
 It does not replace:
 
@@ -25,22 +19,18 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed magic resolver readiness slice:
+Latest landed magic resolver planning slice:
 
-- `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
+- `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
 
 Immediate next Codex run:
 
-<<<<<<< HEAD
-- `Version 0.5.101 - Magic Resolver Planned Output Envelope Plan`
-=======
-- `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
+- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.99` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
->>>>>>> e1efcb4baca9e4149f6c43fcbfe98a3f5fbe4c87
+- Do not roll from `0.5.101` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -67,12 +57,9 @@ Versioning note:
 | 19 | `0.5.97` | Training Event Acquisition Helpers | Codex 5.5 Local | `docs/design/known-spell-acquisition-event-plan.md` | pure helper + focused tests | Landed | Produces proposed character-scoped known-spell records from explicit training-event evidence only; no save/session mutation, persisted acquisition events, active casting, commands, UI, or broader routes/scopes. |
 | 20 | `0.5.98` | Magic Command Contract | Codex 5.5 Local docs-first | `docs/design/magic-command-contract-plan.md` | command contract plan | Landed | Defined selected spell, caster, target, conduit source, catalyst source, and casting-context command shape only; no runtime cast resolver, cast commands, UI, save mutation, effect application, or catalyst consumption. |
 | 21 | `0.5.99` | First Narrow Runtime Cast Resolver Plan | Codex 5.5 Local docs-first | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | resolver boundary plan | Landed | Planned the first narrow engine-owned resolver boundary only; no effect implementation, command handler wiring, UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
-<<<<<<< HEAD
 | 22 | `0.5.100` | Runtime Cast Resolver Readiness Helper | Codex 5.5 Local | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | pure resolver readiness helper + focused tests | Landed | Added pure deterministic resolver readiness only; calls `buildMagicCastReadiness(...)` and returns issues without effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
-| 23 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | Codex 5.5 Local docs-first | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | planning doc | Next | Plan inert result-envelope policy only; no emitted events, effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, or target resolution. |
-=======
-| 22 | `0.5.100` | Runtime Cast Resolver Readiness Helper | Codex 5.5 Local | `docs/design/first-narrow-runtime-cast-resolver-plan.md` | pure helper + focused tests | Next | Implement only a pure resolver-readiness helper; no effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption, inventory mutation, target resolution, or event creation. |
->>>>>>> e1efcb4baca9e4149f6c43fcbfe98a3f5fbe4c87
+| 23 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | Codex 5.5 Local docs-first | `docs/design/magic-resolver-planned-output-envelope-plan.md` | planning doc | Landed | Planned inert result-envelope policy only; no emitted events, effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, or target resolution. |
+| 24 | `0.5.102` | Magic Resolver Inert Envelope Helper | Codex 5.5 Local | `docs/design/magic-resolver-planned-output-envelope-plan.md` | pure helper + focused tests | Next | Add inert planned envelope result helper only; no emitted events, runtime dispatch, effects, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
 
 ## Default Prompt Pattern
 
@@ -95,7 +82,7 @@ Each future Codex prompt should:
 - Do not add generated UI output during magic runtime-helper work.
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
 - Do not mix resolver readiness helper work with combat math rewrites, active spell effects, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
-- Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, cast-readiness helper, training-event acquisition helpers, command contract, resolver readiness helper, and blocked-hook tests are explicitly implemented in narrow slices.
+- Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, cast-readiness helper, training-event acquisition helpers, command contract, resolver readiness helper, planned-output-envelope policy, and blocked-hook tests are explicitly implemented in narrow slices.
 
 ## When To Reorder
 
