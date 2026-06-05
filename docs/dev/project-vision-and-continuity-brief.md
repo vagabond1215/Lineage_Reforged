@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-05 after `Version 0.5.105 - Spell Hook Support Constants Cleanup` landed.
+Updated 2026-06-05 after `Version 0.5.106 - Pure Hook Support Projection Helper` landed.
 
 ## Purpose
 
@@ -18,7 +18,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` owns the first narrow runtime cast resolver readiness boundary.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` owns the inert planned-output-envelope boundary.
 - `docs/design/spell-hook-support-expansion-plan.md` owns hook taxonomy, readiness classification, executable promotion criteria, and future hook-owner sequencing.
-- `docs/design/spell-hook-classification-audit.md` is the temporary source for constants cleanup, projection requirements, and unresolved legacy combat ownership findings.
+- `docs/design/legacy-combat-spell-runtime-ownership-plan.md` owns deferred legacy spell staging, compatibility, multi-effect, and status-approximation decisions.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/design/skill-mastery-trial-framework-plan.md` owns skill trial and magic study-event planning constraints.
 - `packages/schemas/player/knowledge_snippet.schema.json` is planning-only schema source for snippet-based knowledge progression; it is not runtime content loading.
@@ -28,11 +28,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.105 - Spell Hook Support Constants Cleanup`
+- `Version 0.5.106 - Pure Hook Support Projection Helper`
 
 Next recommended version:
 
-- `Version 0.5.106 - Pure Hook Support Projection Helper`
+- `Version 0.5.107 - Knowledge Domain Registry Plan`
 
 Current sequence source:
 
@@ -51,8 +51,9 @@ Current phase:
 - `buildMagicResolverInertEnvelope(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` defines planned resolver envelopes as inert result projections, not emitted events or side-effecting command results.
 - `docs/design/spell-hook-support-expansion-plan.md` defines runtime-consumed, classifier, supported, deferred, unsupported, and unknown hook classes without making any hook executable.
-- `docs/design/spell-hook-classification-audit.md` confirms spell lint as the authored classification authority, the current four authored classes, and the need for browser-safe constants cleanup before six-class projection.
 - `packages/shared/types/src/spell-hook-support.ts` is now the browser-safe authored authority consumed by lint, UI presentation, and focused readiness tests.
+- `buildMagicHookSupportProjection(...)` now projects six-class policy provenance and blocker detail while keeping every hook explicitly non-executable.
+- The temporary classification audit was consumed; unresolved legacy combat findings were promoted into `docs/design/legacy-combat-spell-runtime-ownership-plan.md`.
 - Runtime casting, command handling, acquisition mutation, save/account changes, UI work, broader ownership routes, broader acquisition routes, target resolution, effect application, resource payment, catalyst behavior, Chronicle/Renown hooks, skill trial runtime behavior, magic study event runtime behavior, and knowledge snippet runtime behavior remain deferred.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - The project remains in foundation stabilization; validation and ownership boundaries remain higher priority than broad runtime expansion.
@@ -82,7 +83,8 @@ Every major system should answer at least one of these questions:
 | `0.5.103` | Spell Hook Support Expansion Plan | Landed. Defined hook taxonomy, current readiness/inert-envelope behavior, executable promotion criteria, owner requirements, and future sequence. | Planning only; no generic hook execution, runtime effects, target resolution, events, resource/catalyst behavior, mutation, UI, or generated output. |
 | `0.5.104` | Spell Hook Classification Audit | Landed. Reconciled spell lint, combat, engine readiness, UI presentation, and authored-hook classifications. | Documentation only; no source refactor, runtime behavior, content JSON, schema, or UI changes. |
 | `0.5.105` | Spell Hook Support Constants Cleanup | Landed. Established the shared authored authority, adapter, and exact inventory/parity/subset/precedence coverage. | Preserved all classifications and behavior; no hook execution, content changes, or legacy combat fixes. |
-| `0.5.106` | Pure Hook Support Projection Helper | Next. Project deterministic six-class detail and blockers from explicit support input. | Pure output only; no execution, mutation, readiness weakening, UI, content, schema, or combat changes. |
+| `0.5.106` | Pure Hook Support Projection Helper | Landed. Projects deterministic six-class detail and blockers from explicit support input. | Pure output only; no execution, mutation, readiness weakening, UI, content, schema, or combat changes. |
+| `0.5.107` | Knowledge Domain Registry Plan | Next. Define stable knowledge-domain ownership and validation before content/runtime wiring. | Planning only; no runtime loading, progression, trials, UI, or events. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
@@ -93,7 +95,7 @@ For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 - Do not weaken validation unless the validator is demonstrably stale or wrong.
 - Do not add old-save or old-account compatibility unless explicitly requested.
 - Keep current data direct and validated.
-- Patch numbers may exceed two digits inside the current band; do not roll from `0.5.105` to `0.6.0` unless the actual `0.6.x` milestone has been reached.
+- Patch numbers may exceed two digits inside the current band; do not roll from `0.5.106` to `0.6.0` unless the actual `0.6.x` milestone has been reached.
 - For complex systems, prefer design criteria, runtime shape, pure helpers, validation, view model, read-only UI, then mutating behavior.
 
 ## New Thread Starter
@@ -114,7 +116,7 @@ Magic command contract plan: docs/design/magic-command-contract-plan.md
 First narrow runtime cast resolver plan: docs/design/first-narrow-runtime-cast-resolver-plan.md
 Magic resolver planned output envelope plan: docs/design/magic-resolver-planned-output-envelope-plan.md
 Spell hook support expansion plan: docs/design/spell-hook-support-expansion-plan.md
-Spell hook classification audit: docs/design/spell-hook-classification-audit.md
+Legacy combat spell runtime ownership plan: docs/design/legacy-combat-spell-runtime-ownership-plan.md
 Future system design ledger: docs/design/future-system-design-ledger.md
 Strategic continuity brief: docs/dev/project-vision-and-continuity-brief.md
 Backlog: docs/future_content_backlog.md

@@ -251,6 +251,32 @@ export type MagicCastReadinessHookClassification =
   | "unsupported"
   | "unknown";
 
+export type MagicHookSupportProjectionSourceField =
+  | "resolutionHooks"
+  | "itemGenerationHooks";
+
+export type MagicHookSupportClassificationAuthority =
+  | "resolutionHooks"
+  | "itemGenerationHooks"
+  | "runtimeResolutionHooks"
+  | "classifierResolutionHooks"
+  | "supportedResolutionHooks"
+  | "deferredResolutionHooks"
+  | "unsupportedResolutionHooks"
+  | "runtimeItemGenerationHookIds"
+  | "classifierItemGenerationHookIds"
+  | "supportedItemGenerationHookIds"
+  | "deferredItemGenerationHookIds"
+  | "unsupportedItemGenerationHookIds"
+  | "unknown_fallback";
+
+export type MagicHookSupportReadinessEffect = "supported" | "blocking";
+
+export type MagicHookSupportBlockerReason =
+  | "deferred_hook"
+  | "unsupported_hook"
+  | "unknown_hook";
+
 export type MagicCastReadinessControlLevel =
   | "control.easy"
   | "control.moderate"
@@ -276,6 +302,28 @@ export interface MagicCastReadinessHookSupport {
   supportedItemGenerationHookIds?: Iterable<unknown>;
   deferredItemGenerationHookIds?: Iterable<unknown>;
   unsupportedItemGenerationHookIds?: Iterable<unknown>;
+}
+
+export interface BuildMagicHookSupportProjectionParams {
+  resolutionHookIds?: Iterable<unknown>;
+  itemGenerationHookIds?: Iterable<unknown>;
+  hookSupport?: MagicCastReadinessHookSupport;
+}
+
+export interface MagicHookSupportProjectionEntry {
+  hookId: string;
+  sourceField: MagicHookSupportProjectionSourceField;
+  classification: MagicCastReadinessHookClassification;
+  classificationAuthority: MagicHookSupportClassificationAuthority;
+  readinessEffect: MagicHookSupportReadinessEffect;
+  executable: false;
+  blockerReason?: MagicHookSupportBlockerReason;
+}
+
+export interface MagicHookSupportProjection {
+  allHooksSupported: boolean;
+  hooks: MagicHookSupportProjectionEntry[];
+  blockingHooks: MagicHookSupportProjectionEntry[];
 }
 
 export interface MagicCastReadinessControlContext {
@@ -1258,41 +1306,186 @@ function normalizeHookClassification(
   }
 }
 
+interface MagicCastReadinessHookPolicy {
+  map: Readonly<Record<string, MagicCastReadinessHookClassification>> | undefined;
+  mapAuthority: MagicHookSupportClassificationAuthority;
+  runtimeHooks: ReadonlySet<string>;
+  runtimeAuthority: MagicHookSupportClassificationAuthority;
+  classifierHooks: ReadonlySet<string>;
+  classifierAuthority: MagicHookSupportClassificationAuthority;
+  supportedHooks: ReadonlySet<string>;
+  supportedAuthority: MagicHookSupportClassificationAuthority;
+  deferredHooks: ReadonlySet<string>;
+  deferredAuthority: MagicHookSupportClassificationAuthority;
+  unsupportedHooks: ReadonlySet<string>;
+  unsupportedAuthority: MagicHookSupportClassificationAuthority;
+}
+
 function classifyMagicCastReadinessHook(
   hookId: string,
-  map: Readonly<Record<string, MagicCastReadinessHookClassification>> | undefined,
-  runtimeHooks: ReadonlySet<string>,
-  classifierHooks: ReadonlySet<string>,
-  supportedHooks: ReadonlySet<string>,
-  deferredHooks: ReadonlySet<string>,
-  unsupportedHooks: ReadonlySet<string>
-): MagicCastReadinessHookClassification {
-  const mappedClassification = normalizeHookClassification(map?.[hookId]);
+  policy: MagicCastReadinessHookPolicy
+): Pick<MagicHookSupportProjectionEntry, "classification" | "classificationAuthority"> {
+  const mappedClassification = normalizeHookClassification(policy.map?.[hookId]);
   if (mappedClassification) {
-    return mappedClassification;
+    return {
+      classification: mappedClassification,
+      classificationAuthority: policy.mapAuthority
+    };
   }
-  if (runtimeHooks.has(hookId)) {
-    return "runtime";
+  if (policy.runtimeHooks.has(hookId)) {
+    return {
+      classification: "runtime",
+      classificationAuthority: policy.runtimeAuthority
+    };
   }
-  if (classifierHooks.has(hookId)) {
-    return "classifier";
+  if (policy.classifierHooks.has(hookId)) {
+    return {
+      classification: "classifier",
+      classificationAuthority: policy.classifierAuthority
+    };
   }
-  if (supportedHooks.has(hookId)) {
-    return "supported";
+  if (policy.supportedHooks.has(hookId)) {
+    return {
+      classification: "supported",
+      classificationAuthority: policy.supportedAuthority
+    };
   }
-  if (deferredHooks.has(hookId)) {
-    return "deferred";
+  if (policy.deferredHooks.has(hookId)) {
+    return {
+      classification: "deferred",
+      classificationAuthority: policy.deferredAuthority
+    };
   }
-  if (unsupportedHooks.has(hookId)) {
-    return "unsupported";
+  if (policy.unsupportedHooks.has(hookId)) {
+    return {
+      classification: "unsupported",
+      classificationAuthority: policy.unsupportedAuthority
+    };
   }
-  return "unknown";
+  return {
+    classification: "unknown",
+    classificationAuthority: "unknown_fallback"
+  };
 }
 
 function isSupportedMagicCastReadinessHook(
   classification: MagicCastReadinessHookClassification
 ): boolean {
   return classification === "runtime" || classification === "classifier" || classification === "supported";
+}
+
+function createResolutionHookPolicy(
+  hookSupport: MagicCastReadinessHookSupport | undefined
+): MagicCastReadinessHookPolicy {
+  return {
+    map: hookSupport?.resolutionHooks,
+    mapAuthority: "resolutionHooks",
+    runtimeHooks: collectStrings(hookSupport?.runtimeResolutionHooks),
+    runtimeAuthority: "runtimeResolutionHooks",
+    classifierHooks: collectStrings(hookSupport?.classifierResolutionHooks),
+    classifierAuthority: "classifierResolutionHooks",
+    supportedHooks: collectStrings(hookSupport?.supportedResolutionHooks),
+    supportedAuthority: "supportedResolutionHooks",
+    deferredHooks: collectStrings(hookSupport?.deferredResolutionHooks),
+    deferredAuthority: "deferredResolutionHooks",
+    unsupportedHooks: collectStrings(hookSupport?.unsupportedResolutionHooks),
+    unsupportedAuthority: "unsupportedResolutionHooks"
+  };
+}
+
+function createItemGenerationHookPolicy(
+  hookSupport: MagicCastReadinessHookSupport | undefined
+): MagicCastReadinessHookPolicy {
+  return {
+    map: hookSupport?.itemGenerationHooks,
+    mapAuthority: "itemGenerationHooks",
+    runtimeHooks: collectStrings(hookSupport?.runtimeItemGenerationHookIds),
+    runtimeAuthority: "runtimeItemGenerationHookIds",
+    classifierHooks: collectStrings(hookSupport?.classifierItemGenerationHookIds),
+    classifierAuthority: "classifierItemGenerationHookIds",
+    supportedHooks: collectStrings(hookSupport?.supportedItemGenerationHookIds),
+    supportedAuthority: "supportedItemGenerationHookIds",
+    deferredHooks: collectStrings(hookSupport?.deferredItemGenerationHookIds),
+    deferredAuthority: "deferredItemGenerationHookIds",
+    unsupportedHooks: collectStrings(hookSupport?.unsupportedItemGenerationHookIds),
+    unsupportedAuthority: "unsupportedItemGenerationHookIds"
+  };
+}
+
+function collectMagicHookProjectionIds(values: Iterable<unknown> | undefined): string[] {
+  const hookIds: string[] = [];
+  if (!values || typeof values === "string") {
+    return hookIds;
+  }
+
+  for (const value of values) {
+    const hookId = normalizeString(value);
+    if (hookId) {
+      hookIds.push(hookId);
+    }
+  }
+  return hookIds;
+}
+
+function getMagicHookSupportBlockerReason(
+  classification: MagicCastReadinessHookClassification
+): MagicHookSupportBlockerReason | undefined {
+  switch (classification) {
+    case "deferred":
+      return "deferred_hook";
+    case "unsupported":
+      return "unsupported_hook";
+    case "unknown":
+      return "unknown_hook";
+    default:
+      return undefined;
+  }
+}
+
+function projectMagicHookSupportEntries(
+  hookIds: readonly string[],
+  sourceField: MagicHookSupportProjectionSourceField,
+  policy: MagicCastReadinessHookPolicy
+): MagicHookSupportProjectionEntry[] {
+  return hookIds.map((hookId) => {
+    const classified = classifyMagicCastReadinessHook(hookId, policy);
+    const readinessEffect: MagicHookSupportReadinessEffect =
+      isSupportedMagicCastReadinessHook(classified.classification) ? "supported" : "blocking";
+    const blockerReason = getMagicHookSupportBlockerReason(classified.classification);
+
+    return {
+      hookId,
+      sourceField,
+      ...classified,
+      readinessEffect,
+      executable: false,
+      ...(blockerReason ? { blockerReason } : {})
+    };
+  });
+}
+
+export function buildMagicHookSupportProjection(
+  params: BuildMagicHookSupportProjectionParams
+): MagicHookSupportProjection {
+  const hooks = [
+    ...projectMagicHookSupportEntries(
+      collectMagicHookProjectionIds(params.resolutionHookIds),
+      "resolutionHooks",
+      createResolutionHookPolicy(params.hookSupport)
+    ),
+    ...projectMagicHookSupportEntries(
+      collectMagicHookProjectionIds(params.itemGenerationHookIds),
+      "itemGenerationHooks",
+      createItemGenerationHookPolicy(params.hookSupport)
+    )
+  ];
+  const blockingHooks = hooks.filter((hook) => hook.readinessEffect === "blocking");
+
+  return {
+    allHooksSupported: blockingHooks.length === 0,
+    hooks,
+    blockingHooks
+  };
 }
 
 function findMagicCastReadinessSpellRecord(
@@ -1543,28 +1736,12 @@ function collectUnsupportedMagicCastHooks(
   spellRecord: Record<string, unknown> | null,
   hookSupport: MagicCastReadinessHookSupport | undefined
 ): Pick<MagicCastReadinessDetails, "unsupportedResolutionHooks" | "unsupportedItemGenerationHookIds"> {
-  const runtimeResolutionHooks = collectStrings(hookSupport?.runtimeResolutionHooks);
-  const classifierResolutionHooks = collectStrings(hookSupport?.classifierResolutionHooks);
-  const supportedResolutionHooks = collectStrings(hookSupport?.supportedResolutionHooks);
-  const deferredResolutionHooks = collectStrings(hookSupport?.deferredResolutionHooks);
-  const unsupportedResolutionHooks = collectStrings(hookSupport?.unsupportedResolutionHooks);
-  const runtimeItemGenerationHookIds = collectStrings(hookSupport?.runtimeItemGenerationHookIds);
-  const classifierItemGenerationHookIds = collectStrings(hookSupport?.classifierItemGenerationHookIds);
-  const supportedItemGenerationHookIds = collectStrings(hookSupport?.supportedItemGenerationHookIds);
-  const deferredItemGenerationHookIds = collectStrings(hookSupport?.deferredItemGenerationHookIds);
-  const unsupportedItemGenerationHookIds = collectStrings(hookSupport?.unsupportedItemGenerationHookIds);
+  const resolutionPolicy = createResolutionHookPolicy(hookSupport);
+  const itemGenerationPolicy = createItemGenerationHookPolicy(hookSupport);
 
   const unsupportedResolutionHookIds: string[] = [];
   for (const hook of normalizeStringArray(spellRecord?.resolutionHooks) ?? []) {
-    const classification = classifyMagicCastReadinessHook(
-      hook,
-      hookSupport?.resolutionHooks,
-      runtimeResolutionHooks,
-      classifierResolutionHooks,
-      supportedResolutionHooks,
-      deferredResolutionHooks,
-      unsupportedResolutionHooks
-    );
+    const { classification } = classifyMagicCastReadinessHook(hook, resolutionPolicy);
     if (!isSupportedMagicCastReadinessHook(classification)) {
       unsupportedResolutionHookIds.push(hook);
     }
@@ -1580,15 +1757,7 @@ function collectUnsupportedMagicCastHooks(
       unsupportedGeneratedItemIds.push(`itemGenerationHooks[${index}]`);
       continue;
     }
-    const classification = classifyMagicCastReadinessHook(
-      hookId,
-      hookSupport?.itemGenerationHooks,
-      runtimeItemGenerationHookIds,
-      classifierItemGenerationHookIds,
-      supportedItemGenerationHookIds,
-      deferredItemGenerationHookIds,
-      unsupportedItemGenerationHookIds
-    );
+    const { classification } = classifyMagicCastReadinessHook(hookId, itemGenerationPolicy);
     if (!isSupportedMagicCastReadinessHook(classification)) {
       unsupportedGeneratedItemIds.push(hookId);
     }

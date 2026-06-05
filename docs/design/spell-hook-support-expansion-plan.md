@@ -35,7 +35,7 @@ Current classification owners:
 
 The term `runtime-consumed` therefore has a narrow meaning: an existing consumer recognizes the hook identifier. It does not prove known-spell ownership, command authority, target authority, resource authority, effect ownership, or resolver integration.
 
-`Version 0.5.104 - Spell Hook Classification Audit` identified the authority boundary, and `Version 0.5.105 - Spell Hook Support Constants Cleanup` moved that authority into the shared browser-safe module. The lint validator, broader combat registry, engine caller policy, and UI presentation are consumers or adjacent capability surfaces, not authored spell authorities. See `docs/design/spell-hook-classification-audit.md` for the complete reconciliation and projection requirements.
+`Version 0.5.104 - Spell Hook Classification Audit` identified the authority boundary, `Version 0.5.105 - Spell Hook Support Constants Cleanup` moved that authority into the shared browser-safe module, and `Version 0.5.106 - Pure Hook Support Projection Helper` added the deterministic six-class projection. The lint validator, broader combat registry, engine caller policy, and UI presentation are consumers or adjacent capability surfaces, not authored spell authorities.
 
 Current lint runtime-consumed spell hooks:
 
@@ -265,9 +265,9 @@ The engine-only `supported` and `unsupported` classes remain explicit caller pol
 2. Hook Support Constants Cleanup - landed in Version 0.5.105
    - Consolidate or explicitly separate canonical spell classification from combat and presentation registries.
    - Avoid importing Node-only lint modules into browser/runtime code.
-3. Pure Hook Support Projection Helper - next in Version 0.5.106
-   - Return deterministic six-class projections and blockers from explicit inputs.
-   - Execute nothing and mutate nothing.
+3. Pure Hook Support Projection Helper - landed in Version 0.5.106
+   - Returns deterministic six-class projections and blockers from explicit inputs.
+   - Executes nothing, mutates nothing, and reports every projected hook as non-executable.
 4. First Executable Hook Owner Plan
    - Select one family based on complete ownership and low blast radius, not merely because combat already recognizes its id.
    - Do not default to damage/combat if a safer narrow owner boundary exists.
@@ -326,7 +326,8 @@ No broad workspace typecheck is required because this run changes documentation 
 ## Relationship To Existing Plans
 
 - This document remains the durable source for hook taxonomy, executable promotion, and hook-owner planning.
-- `docs/design/spell-hook-classification-audit.md` is the temporary source for constants cleanup, six-class projection requirements, and the legacy combat ownership findings discovered in Version 0.5.104.
+- The temporary spell-hook classification audit was consumed and removed in Version 0.5.106.
+- `docs/design/legacy-combat-spell-runtime-ownership-plan.md` now owns the promoted legacy combat staging, multi-effect, compatibility, and status-approximation findings.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` remains active for inert envelope constraints.
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` remains active for resolver-readiness and first narrow runtime resolver constraints.
 - `docs/design/magic-runtime-boundary-plan.md` remains the historical cast-readiness boundary source.

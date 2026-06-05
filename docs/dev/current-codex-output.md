@@ -1,77 +1,69 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.105 - Spell Hook Support Constants Cleanup
+Source version/run: Version 0.5.106 - Pure Hook Support Projection Helper
 Date: 2026-06-05
-Branch/status assumption: Ran on `master` from commit `6ed3fc9`. The worktree was clean before edits. `git pull` could not write `.git/FETCH_HEAD` because Git metadata is read-only in the current sandbox, so remote synchronization was not reverified; this is a sandbox permission limitation, not evidence of the prior SSL failure.
+Branch/status assumption: Ran on `master` from commit `0109ad7`. The worktree was clean before edits. GitHub Connector confirmed the private repository default branch is `master` and commit `0109ad7c0a175cae7dbfcbbfc5fcee7d79a2a5c4` exists remotely.
 
 ## Result
 
-Established one browser-safe authored spell-hook classification authority at `packages/shared/types/src/spell-hook-support.{ts,js}`.
+Added `buildMagicHookSupportProjection(...)` as a pure deterministic game-engine helper over explicit resolution hook ids, item-generation hook ids, and caller-supplied `MagicCastReadinessHookSupport`.
 
-Spell lint now re-exports that authority while retaining validation ownership. The Arcane Compendium now consumes the shared resolution and item-generation classifiers instead of copying all hook ids. `AUTHORED_SPELL_HOOK_SUPPORT` provides the explicit four-class, readiness-shaped adapter used by focused readiness, resolver-readiness, and inert-envelope tests.
+Each projected hook now reports its source field, six-class classification, exact policy field that supplied the classification, supported/blocking readiness effect, blocker reason when applicable, and `executable: false`. Existing readiness uses the same provenance-aware internal classifier, preserving the established precedence and readiness outcomes.
 
-Added exact coverage for the canonical hook arrays, authored spell/status/occurrence inventory, lint/shared identity, UI source and full classification parity, runtime-spell-to-combat subset, direct `supported`/`unsupported` policy, explicit-map precedence, and contradictory iterable precedence.
-
-All hook ids, classifications, compatibility statuses, readiness results, UI output, and combat behavior remain unchanged.
+The temporary spell-hook classification audit was consumed and removed. Its unresolved legacy combat staging, compatibility, multi-effect, and status-approximation findings were promoted into `docs/design/legacy-combat-spell-runtime-ownership-plan.md`.
 
 ## Files Changed
 
-- `packages/shared/types/src/spell-hook-support.ts`
-- `packages/shared/types/src/spell-hook-support.js`
-- `packages/shared/types/src/index.ts`
-- `packages/shared/types/src/index.js`
-- `tools/content-lint/spell-hook-support.mjs`
-- `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts`
-- `tests/unit/spell-hook-support.test.mjs`
-- `tests/unit/combat-hook-support.test.mjs`
-- `tests/unit/arcane-compendium-presentation.test.mjs`
-- `tests/unit/magic-cast-readiness.test.mjs`
-- `tests/unit/magic-cast-resolver-readiness.test.mjs`
-- `tests/unit/magic-resolver-inert-envelope.test.mjs`
-- `docs/design/spell-hook-classification-audit.md`
+- `packages/engines/game-engine/src/known-spells.ts`
+- `packages/engines/game-engine/src/index.ts`
+- `tests/unit/magic-hook-support-projection.test.mjs`
+- `docs/design/legacy-combat-spell-runtime-ownership-plan.md`
+- `docs/design/spell-hook-classification-audit.md` (removed after consumption)
 - `docs/design/spell-hook-support-expansion-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
+- `docs/dev/current-gpt-handoff.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
 
-- `git status --short --branch` before edits (passed: clean `master...origin/master`)
-- `git pull` (not run to completion: sandbox denied writing `.git/FETCH_HEAD`)
-- `npm.cmd run tool:content-lint` (passed: 53 files checked)
-- Focused changed-module TypeScript check using the installed local compiler (passed)
-- Vite production build to temporary output (passed: 182 modules transformed; existing large-chunk warning only; temporary output removed)
-- `node --test tests\unit\spell-hook-support.test.mjs tests\unit\spell-compatibility-status.test.mjs tests\unit\combat-hook-support.test.mjs tests\unit\arcane-compendium-presentation.test.mjs tests\unit\magic-cast-readiness.test.mjs tests\unit\magic-cast-resolver-readiness.test.mjs tests\unit\magic-resolver-inert-envelope.test.mjs` (passed: 75 tests)
-- Browser-safety scan for Node-only loaders and unsafe engine imports in changed browser/shared modules (passed)
-- UI copied-hook source scan (passed)
-- Conflict-marker and stale current-anchor scans over touched files (passed)
-- `git diff --check` (passed; Git reported LF-to-CRLF normalization warnings for edited tracked files)
-- Broad UI typecheck using the installed local compiler (failed only on the documented pre-existing strictness backlog outside this patch; no errors referenced the changed spell-hook files)
-- Initial `npx.cmd tsc` attempt (could not reach the npm registry because npm still reports `UNABLE_TO_VERIFY_LEAF_SIGNATURE`; local installed tooling was used instead)
+- `npm.cmd run tool:content-lint`
+  - Passed: 53 files checked.
+- Focused hook, compatibility, combat-support, Arcane Compendium, readiness, resolver-readiness, inert-envelope, blocker, and projection tests.
+  - Passed: 90 tests.
+- Focused TypeScript syntax/no-check compile for `known-spells.ts`.
+  - Passed.
+- Direct TypeScript checking was attempted.
+  - Still blocked by pre-existing control-level narrowing errors in `known-spells.ts` and broader known engine/type-environment errors when compiling the barrel.
+- GitHub Connector repository and base-commit verification.
+  - Passed.
+- Stale deleted-audit reference and merge-conflict marker scans.
+  - Passed.
+- `git diff --check`
+  - Passed.
 
 ## Behavior / Runtime Confirmation
 
-Classification ownership changed; classifications and runtime behavior did not.
-
-No spell became more or less ready. No hook became executable. No content JSON, schema, compatibility status, command handler, target resolution, effect application, item generation, event emission, resource payment, catalyst behavior, inventory mutation, save/account/session shape, combat behavior, or UI presentation output changed.
+- Added a pure read-only projection API and exported its types.
+- Preserved classification precedence: explicit map, runtime, classifier, supported, deferred, unsupported, unknown fallback.
+- Preserved current readiness results by sharing the same internal classifier.
+- Preserved duplicate hook occurrences and input order; invalid non-string ids are omitted.
+- No hook became executable.
+- No active casting, target resolution, effect application, event emission, mutation, combat behavior, item-generation policy, content JSON, schema, save/account/session, React UI, or generated output changed.
 
 ## Risks / Follow-Up
 
-- `docs/design/spell-hook-classification-audit.md` remains temporarily active for `0.5.106` only. Make an explicit cleanup/promotion decision after projection lands.
-- `AUTHORED_SPELL_HOOK_SUPPORT` represents the current four authored classes. Engine `supported` and `unsupported` remain explicit caller policy.
-- Current readiness precedence is now tested but unchanged; contradictory iterable inputs still resolve by precedence and do not produce collision diagnostics.
-- The broad UI typecheck remains blocked by known unrelated strictness errors.
-- Git remote synchronization could not be reverified because the sandbox cannot write Git metadata.
-- npm registry certificate verification remains broken for commands that attempt a network fetch, despite normal Git SSL having worked in the prior run.
-- Legacy combat spell staging, compatibility gating, multi-effect branch order, and status approximations remain deferred to a dedicated runtime ownership pass.
+- `MagicCastReadinessHookSupport` remains caller-supplied policy. Contradictory inputs resolve by the documented precedence and do not emit a collision diagnostic.
+- `runtime`, `classifier`, and `supported` remain readiness-supported classifications only; every projection entry is explicitly non-executable.
+- Legacy combat spell staging, ownership gating, compatibility gating, multi-effect semantics, and status approximations remain deferred under `docs/design/legacy-combat-spell-runtime-ownership-plan.md`.
+- Normal strict TypeScript validation remains limited by the documented pre-existing blockers; this run did not broaden into unrelated type cleanup.
 
 ## Next Recommended Version
 
-Version 0.5.106 - Pure Hook Support Projection Helper
+Version 0.5.107 - Knowledge Domain Registry Plan
 
 ## Suggested Commit Message
 
-refactor(magic): centralize spell hook support constants
+feat(magic): add hook support projection
