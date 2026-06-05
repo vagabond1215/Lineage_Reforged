@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-06-04
+Last reviewed: 2026-06-05
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
-- Next recommended version: `Version 0.5.103 - Spell Hook Support Expansion Plan`
+- Latest landed version: `Version 0.5.103 - Spell Hook Support Expansion Plan`
+- Next recommended version: `Version 0.5.104 - Spell Hook Classification Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.102` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.103` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -62,6 +62,7 @@ Current repo reality:
 - Runtime cast resolver readiness helpers have landed as pure deterministic helpers that validate explicit command-like input, call `buildMagicCastReadiness(...)`, and return resolver issues without mutation or event creation.
 - Magic resolver planned output envelope policy has landed as `docs/design/magic-resolver-planned-output-envelope-plan.md`; planned envelopes are inert result projections only.
 - Magic resolver inert envelope helpers have landed as pure deterministic helpers that return planned result envelopes with explicit no-event/no-mutation/no-effect safety flags.
+- Spell hook support expansion planning has landed as `docs/design/spell-hook-support-expansion-plan.md`, defining the six-class readiness taxonomy, current classification drift, executable-owner criteria, and future hook sequence.
 - Skill mastery trials and magic study events are now planned in `docs/design/skill-mastery-trial-framework-plan.md`.
 - Snippet-based knowledge progression has a planning schema at `packages/schemas/player/knowledge_snippet.schema.json` and a domain backlog in `docs/future_content_backlog.md`.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
@@ -98,7 +99,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.100` | Runtime Cast Resolver Readiness Helper | Codex Local | Pure resolver readiness helper + focused tests | Landed. Added a pure deterministic resolver-readiness helper that consumes explicit command-like input and calls `buildMagicCastReadiness(...)`. | No effectful casting, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | Codex Local docs-first | Planning | Landed. Planned inert result-envelope policy before any resolver output/event implementation. | Planning only; no emitted events, effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, or target resolution. |
 | `0.5.102` | Magic Resolver Inert Envelope Helper | Codex Local | Pure helper + focused tests | Landed. Added a pure inert planned-envelope result helper with explicit safety flags. | No emitted events, runtime dispatch, effects, target resolution, resource payment, catalyst behavior, mutation, UI, generated output, or schema migration. |
-| `0.5.103` | Spell Hook Support Expansion Plan | Codex Local docs-first | Planning | Next. Plan the next hook-support classification/blocked behavior step before any broad casting. | No generic hook execution, runtime spell effects, target resolution, resource/catalyst behavior, UI, or mutation. |
+| `0.5.103` | Spell Hook Support Expansion Plan | Codex Local docs-first | Planning | Landed. Defined current hook classes, readiness/inert-envelope behavior, executable promotion criteria, owner requirements, authoring rules, and future sequence. | Planning only; no generic hook execution, runtime effects, target resolution, events, resource/catalyst behavior, UI, or mutation. |
+| `0.5.104` | Spell Hook Classification Audit | Codex Local audit | Read-only audit + documentation | Next. Reconcile spell lint, magic metadata lint, combat support, engine readiness classes, UI copies, and authored spell hooks before adding a projection helper. | No hook execution, source refactor, runtime behavior, content JSON, schema, or UI changes. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -116,16 +118,19 @@ The magic runtime path must not jump directly from known-spell projection into a
 | 8 | Runtime cast resolver readiness helper | Pure engine helper that consumes explicit command-like input, calls `buildMagicCastReadiness(...)`, and returns deterministic resolver issues. | Landed as pure helper only; no effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, target resolution, or event creation. |
 | 9 | Planned output envelope policy | Define inert resolver output-envelope shape and policy before any emitted event behavior. | Landed as planning-only in `docs/design/magic-resolver-planned-output-envelope-plan.md`; no emitted events or runtime dispatch. |
 | 10 | Planned output envelope helper | Return inert planned-output envelope projections from explicit inputs and readiness results. | Landed as pure helper only; no emitted events, effects, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
-| 11 | Spell hook support expansion | Explicitly handle or block authored spell hooks before broad casting can become reliable. | Next planning candidate; no generic assumption that every authored hook is executable. |
-| 12 | UI command/readiness surface | Later read-only or disabled-command presentation for known spells, cast-ready state, and blocked reasons. | UI must consume engine/runtime state and must not author ownership. |
-| 13 | Save/runtime state integration | Persist known spell records, acquisition evidence, training events, catalyst inventory changes, cooldowns, backlash, cast history, and Chronicle hooks when shapes are stable. | No old-save compatibility unless explicitly requested. |
-| 14 | Expanded acquisition routes | Add teacher, quest/event reward, scroll/tome study, institution licensing, document-owned study access, Magic Legacy lanes, and family tradition only after explicit evidence and ownership rules exist. | Keep blocked until each route has evidence and validation. |
+| 11 | Spell hook support expansion | Explicitly define supported, classifier-only, deferred, unsupported, and unknown hook behavior before broad casting. | Landed as planning-only in `docs/design/spell-hook-support-expansion-plan.md`; no hook became executable. |
+| 12 | Spell hook classification audit | Reconcile canonical spell lint, combat support, engine readiness classes, UI copies, and authored content. | Next audit candidate; no source refactor or runtime behavior. |
+| 13 | Pure hook support projection | Return deterministic six-class hook projections and blockers from explicit inputs. | Future pure helper only; no execution or mutation. |
+| 14 | First executable hook owner plan | Select one narrow hook family only after target, effect, mutation, event, and persistence owners are explicit. | Do not default to damage merely because combat recognizes the hook id. |
+| 15 | UI command/readiness surface | Later read-only or disabled-command presentation for known spells, cast-ready state, and blocked reasons. | UI must consume engine/runtime state and must not author ownership. |
+| 16 | Save/runtime state integration | Persist known spell records, acquisition evidence, training events, catalyst inventory changes, cooldowns, backlash, cast history, and Chronicle hooks when shapes are stable. | No old-save compatibility unless explicitly requested. |
+| 17 | Expanded acquisition routes | Add teacher, quest/event reward, scroll/tome study, institution licensing, document-owned study access, Magic Legacy lanes, and family tradition only after explicit evidence and ownership rules exist. | Keep blocked until each route has evidence and validation. |
 
 Practical near-term sequence:
 
-1. `0.5.103 - Spell Hook Support Expansion Plan`
-2. `0.5.x - Knowledge Domain Registry Plan`
-3. `0.5.x - Magic Resolver Blocked Output UI Readiness Plan`
+1. `0.5.104 - Spell Hook Classification Audit`
+2. `0.5.x - Pure Hook Support Projection Helper`
+3. `0.5.x - Knowledge Domain Registry Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -277,7 +282,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 9 | `0.5.100` | Runtime Cast Resolver Readiness Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
 | 10 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | `docs/design/magic-resolver-planned-output-envelope-plan.md` | Landed |
 | 11 | `0.5.102` | Magic Resolver Inert Envelope Helper | `docs/design/magic-resolver-planned-output-envelope-plan.md` | Landed |
-| 12 | `0.5.103` | Spell Hook Support Expansion Plan | `docs/design/magic-runtime-boundary-plan.md` | Next |
+| 12 | `0.5.103` | Spell Hook Support Expansion Plan | `docs/design/spell-hook-support-expansion-plan.md` | Landed |
+| 13 | `0.5.104` | Spell Hook Classification Audit | `docs/design/spell-hook-support-expansion-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

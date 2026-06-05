@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local helper pass after `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
-Date: 2026-06-04
-Branch/status assumption: `master`; `git pull` was attempted but blocked by local Git SSL certificate verification. The worktree was clean before edits and local status reported `master...origin/master` with no ahead/behind markers.
+Source route: Codex local planning pass after `Version 0.5.103 - Spell Hook Support Expansion Plan`
+Date: 2026-06-05
+Branch/status assumption: `master`; `git pull` succeeded using `git -c http.sslBackend=schannel pull` and reported already up to date. The worktree was clean before edits.
 
 ## Purpose
 
@@ -19,6 +19,7 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/design/magic-command-contract-plan.md` owns the active magic command/intention boundary.
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` owns the first narrow runtime cast resolver readiness boundary.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` owns inert planned-output-envelope constraints.
+- `docs/design/spell-hook-support-expansion-plan.md` owns hook taxonomy, readiness classification, executable promotion criteria, and future hook-owner sequencing.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -27,16 +28,16 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.102 - Magic Resolver Inert Envelope Helper`
+- `Version 0.5.103 - Spell Hook Support Expansion Plan`
 
 Immediate next version:
 
-- `Version 0.5.103 - Spell Hook Support Expansion Plan`
+- `Version 0.5.104 - Spell Hook Classification Audit`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.102` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.103` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Recent Magic Results
 
@@ -51,6 +52,7 @@ Versioning note:
 - `0.5.100` added `buildMagicCastResolverReadiness(...)`.
 - `0.5.101` added `docs/design/magic-resolver-planned-output-envelope-plan.md`.
 - `0.5.102` added `buildMagicResolverInertEnvelope(...)` plus explicit inert safety flags and focused tests.
+- `0.5.103` added `docs/design/spell-hook-support-expansion-plan.md` with the six-class hook taxonomy, current readiness/inert-envelope behavior, executable promotion criteria, owner requirements, authoring rules, and future sequence.
 
 Current non-inference rule:
 
@@ -60,15 +62,15 @@ Current deferrals:
 
 - Effectful casting, command handlers, UI dispatch, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, save/account/session mutation, control failure, backlash, broader acquisition routes, broader owner scopes, knowledge snippet runtime behavior, skill trial runtime behavior, magic study event runtime behavior, and `PlayerSpellState[]` replacement remain deferred.
 
-## Active Guardrails For 0.5.103
+## Active Guardrails For 0.5.104
 
-Spell Hook Support Expansion Plan:
+Spell Hook Classification Audit:
 
-- Use `docs/design/magic-runtime-boundary-plan.md`, `docs/design/first-narrow-runtime-cast-resolver-plan.md`, `docs/design/magic-resolver-planned-output-envelope-plan.md`, `tools/content-lint/spell-hook-support.mjs`, and `packages/content/base/player/spells.json` as the primary source stack.
-- Keep the run docs-first unless the prompt explicitly scopes a tiny helper or test-only guardrail.
-- Plan explicit hook support expansion or blocked-hook behavior before broad casting.
-- Do not add generic tag-driven or hook-driven spell execution.
-- Do not apply spell effects, resolve targets, pay resources, consume/reserve catalysts, mutate inventory/save/account/session/combat state, emit events, dispatch UI, register commands, wire React UI, edit spell JSON, edit item JSON, migrate schemas, or touch generated output.
+- Use `docs/design/spell-hook-support-expansion-plan.md` as the primary source.
+- Audit `tools/content-lint/spell-hook-support.mjs`, `tools/content-lint/magic-metadata-support.mjs`, `tools/content-lint/combat-hook-support.mjs`, `packages/engines/game-engine/src/known-spells.ts`, `packages/engines/game-engine/src/combat/index.ts`, `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts`, and authored spell hooks.
+- Record where classifications intentionally differ and where copied lists can drift.
+- Decide the canonical authority boundary before any pure hook projection helper.
+- Do not refactor source, add hook execution, promote spells, edit content JSON, edit schemas, change UI, or touch generated output in the audit pass.
 - Preserve `buildMagicCastReadiness(...)`, `buildMagicCastResolverReadiness(...)`, and `buildMagicResolverInertEnvelope(...)` as pure deterministic helper boundaries.
 
 Browser-safety guardrail:
@@ -90,11 +92,12 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | 1 | `0.5.100` | Runtime Cast Resolver Readiness Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
 | 2 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | `docs/design/magic-resolver-planned-output-envelope-plan.md` | Landed |
 | 3 | `0.5.102` | Magic Resolver Inert Envelope Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
-| 4 | `0.5.103` | Spell Hook Support Expansion Plan | `docs/design/magic-runtime-boundary-plan.md` | Next |
+| 4 | `0.5.103` | Spell Hook Support Expansion Plan | `docs/design/spell-hook-support-expansion-plan.md` | Landed |
+| 5 | `0.5.104` | Spell Hook Classification Audit | `docs/design/spell-hook-support-expansion-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.103 - Spell Hook Support Expansion Plan`, inspect:
+For `Version 0.5.104 - Spell Hook Classification Audit`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -105,6 +108,7 @@ For `Version 0.5.103 - Spell Hook Support Expansion Plan`, inspect:
 - `docs/design/magic-runtime-boundary-plan.md`
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md`
 - `docs/design/magic-resolver-planned-output-envelope-plan.md`
+- `docs/design/spell-hook-support-expansion-plan.md`
 - `docs/design/magic-command-contract-plan.md`
 - `docs/design/known-spell-ownership-plan.md`
 - `docs/design/future-system-design-ledger.md`
@@ -117,8 +121,11 @@ For `Version 0.5.103 - Spell Hook Support Expansion Plan`, inspect:
 - `packages/content/base/player/spells.json`
 - `packages/content/base/items/items.json`
 - `tools/content-lint/spell-hook-support.mjs`
+- `tools/content-lint/combat-hook-support.mjs`
 - `tools/content-lint/magic-metadata-support.mjs`
+- `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts`
+- `packages/engines/game-engine/src/combat/index.ts`
 
-## After 0.5.103
+## After 0.5.104
 
-Use the hook-support plan result in `docs/dev/current-codex-output.md` to decide whether the next safe run is a focused blocked-hook test/helper pass, `Version 0.5.x - Knowledge Domain Registry Plan`, or another resolver guardrail. Do not advance to `0.6.x` automatically.
+Use the classification audit to decide whether the next safe run is `Version 0.5.x - Hook Support Constants Cleanup`, `Version 0.5.x - Pure Hook Support Projection Helper`, or `Version 0.5.x - Knowledge Domain Registry Plan`. Do not advance to `0.6.x` automatically.

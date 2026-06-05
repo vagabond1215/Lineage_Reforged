@@ -1,58 +1,57 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.102 - Magic Resolver Inert Envelope Helper
-Date: 2026-06-04
-Branch/status assumption: Ran on `master`. `git pull` was attempted before edits and again with escalation, but both attempts failed because local Git SSL certificate verification could not validate the remote certificate. The worktree was clean before edits and local status reported `master...origin/master` with no ahead/behind markers.
+Source version/run: Version 0.5.103 - Spell Hook Support Expansion Plan
+Date: 2026-06-05
+Branch/status assumption: Ran on `master`. The worktree was clean before edits. A normal `git pull` failed because Git's OpenSSL certificate backend could not validate the remote certificate; `git -c http.sslBackend=schannel pull` succeeded and reported the branch already up to date.
 
 ## Result
 
-Added `buildMagicResolverInertEnvelope(...)` as a pure deterministic helper for inert resolver planned-output envelopes.
+Added the planning-only spell-hook support expansion authority.
 
-The helper can copy explicit command-like fields and descriptors, summarize current cast-readiness and resolver issues, preserve deferred effect family labels, carry descriptive cost/catalyst/failure/hook summaries, and return fixed safety flags proving that no event, mutation, target resolution, effect application, resource payment, catalyst reservation/consumption, inventory mutation, command dispatch, UI dispatch, or persistence occurred.
+The plan defines runtime-consumed, classifier, supported, deferred, unsupported, and unknown hook classes; documents current lint, combat, readiness, and UI classification boundaries; specifies readiness and inert-envelope treatment; defines executable promotion criteria and runtime owner requirements; and establishes safe authoring and implementation sequences.
 
-The game-engine barrel now exports the helper, inert envelope types, and `MAGIC_RESOLVER_INERT_ENVELOPE_SAFETY_FLAGS`. Focused tests lock no-inference behavior, unresolved target descriptors, catalyst non-consumption/non-reservation, blocker summaries, deferred effect families, determinism, and no input mutation.
+No spell became more castable. The next recommended run is a read-only classification audit because current hook classifications are distributed across spell lint, magic metadata lint, combat support, engine caller inputs, UI copies, and authored content.
 
 ## Files Changed
 
-- `packages/engines/game-engine/src/known-spells.ts`
-- `packages/engines/game-engine/src/index.ts`
-- `tests/unit/magic-resolver-inert-envelope.test.mjs`
-- `docs/dev/current-gpt-handoff.md`
+- `docs/design/spell-hook-support-expansion-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
 
 ## Checks Run
 
-- `git pull` (failed: local SSL certificate verification could not validate remote certificate)
-- `git pull` with escalation (failed: same local SSL certificate verification issue)
-- `node --test tests/unit/magic-resolver-inert-envelope.test.mjs` (passed)
-- `npm.cmd run tool:content-lint` (passed)
-- `node --test tests/unit/magic-cast-resolver-readiness.test.mjs` (passed)
-- `node --test tests/unit/magic-cast-readiness.test.mjs` (passed)
-- `node --test tests/unit/known-spell-training-event-acquisition.test.mjs` (passed)
-- `node --test tests/unit/known-spell-ownership.test.mjs` (passed)
-- `node --test tests/unit/magic-runtime-readiness-blockers.test.mjs` (passed)
+- `git pull` (failed: local OpenSSL certificate verification could not validate the remote certificate)
+- `git -c http.sslBackend=schannel pull` (passed: already up to date)
+- `npm.cmd run tool:content-lint` (passed: 53 files checked)
+- `node --test tests/unit/magic-resolver-inert-envelope.test.mjs` (passed: 8 tests)
+- `node --test tests/unit/magic-cast-resolver-readiness.test.mjs` (passed: 15 tests)
+- `node --test tests/unit/magic-cast-readiness.test.mjs` (passed: 16 tests)
+- `node --test tests/unit/magic-runtime-readiness-blockers.test.mjs` (passed: 11 tests)
 - Conflict-marker scan over touched docs (passed)
 - `git diff --check` (passed; Git reported LF-to-CRLF normalization warnings for edited files)
 
 ## Behavior / Runtime Confirmation
 
-Pure helper and test run only. No runtime casting, command handlers, UI dispatch, React UI, save/account/session schema changes, content JSON changes, generated output, target resolution, spell effect application, resource payment, catalyst reservation/consumption, inventory mutation, combat runtime integration, Chronicle/Renown/quest/account/save/UI event creation, acquisition event mutation, knowledge snippet runtime behavior, skill trial runtime behavior, magic study event runtime behavior, broader ownership scopes, broader acquisition routes, or `PlayerSpellState[]` replacement changed.
+Documentation only. No runtime source, React UI, content JSON, package schema, save/account/session shape, generated output, command handler, target resolution, spell effect, hook execution, emitted event, resource payment, catalyst behavior, inventory mutation, Chronicle/Renown/quest output, knowledge snippet behavior, skill trial behavior, or magic study behavior changed.
 
 ## Risks / Follow-Up
 
-- `docs/design/magic-resolver-planned-output-envelope-plan.md` remains active as the guardrail for inert envelope and later resolver-output constraints.
+- `docs/design/spell-hook-support-expansion-plan.md` is now the active source for hook classification, hook projection, executable promotion, and hook-owner planning.
+- `docs/design/magic-resolver-planned-output-envelope-plan.md` remains active for inert envelope constraints.
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` remains active for resolver-readiness and first narrow runtime resolver constraints.
-- Active casting, emitted events, target/effect/resource/catalyst/failure owners, Chronicle/Renown hooks, command handlers, UI dispatch, skill trial runtime behavior, magic study event runtime behavior, knowledge snippet runtime behavior, and broader acquisition routes remain deferred.
-- Local Git SSL certificate trust still blocks `git pull`; repair local Git certificate trust before relying on remote sync from this machine.
+- Current classification authority is distributed across `spell-hook-support.mjs`, `magic-metadata-support.mjs`, `combat-hook-support.mjs`, engine caller-supplied support, UI copies, and authored spell records. Audit before consolidating or adding helpers.
+- `runtime-consumed` means an existing consumer recognizes a hook id; it does not grant the future magic resolver effect authority.
+- Active casting, hook execution, target resolution, emitted events, effect owners, Chronicle/Renown/quest outputs, and progression/study behavior remain deferred.
+- Local Git's default OpenSSL certificate trust remains broken; the Windows `schannel` backend succeeded for this run.
 
 ## Next Recommended Version
 
-Version 0.5.103 - Spell Hook Support Expansion Plan
+Version 0.5.104 - Spell Hook Classification Audit
 
 ## Suggested Commit Message
 
-feat(magic): add inert resolver envelope helper
+docs(magic): plan spell hook support expansion
