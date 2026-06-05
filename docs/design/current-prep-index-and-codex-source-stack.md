@@ -31,7 +31,7 @@ Use for `Version 0.5.107 - Knowledge Domain Registry Plan`:
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
-- `docs/dev/sequenced-implementation-plan.md`
+- `docs/dev/codex-sequenced-implementation-plan.md`
 - `packages/schemas/player/knowledge_snippet.schema.json`
 - `docs/future_content_backlog.md`
 - `docs/design/knowledge-framework-source-map.md`

@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation pass after `Version 0.5.106 - Pure Hook Support Projection Helper`
+Source route: Codex local planning pass after `Version 0.5.107 - Knowledge Domain Registry Plan`
 Date: 2026-06-05
-Branch/status assumption: `master` at commit `0109ad7` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `d7aebde` before edits; the worktree was clean after a fast-forward pull of connector-only prep documents.
 
 ## Purpose
 
@@ -10,77 +10,76 @@ This is the short current handoff for future ChatGPT/GitHub Connector, Deep Rese
 
 ## Authority Rules
 
-- `docs/dev/current-codex-output.md` is the exact latest Codex implementation handoff.
+- `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
-- `docs/design/spell-hook-support-expansion-plan.md` owns hook taxonomy, readiness classification, executable promotion criteria, and hook-owner sequencing.
-- `packages/shared/types/src/spell-hook-support.ts` is the browser-safe authored hook-classification authority.
-- `packages/engines/game-engine/src/known-spells.ts` owns readiness policy and the pure six-class projection.
-- `docs/design/legacy-combat-spell-runtime-ownership-plan.md` owns deferred legacy combat staging, compatibility, multi-effect, and status-approximation decisions.
-- `docs/design/skill-mastery-trial-framework-plan.md`, `packages/schemas/player/knowledge_snippet.schema.json`, and `docs/design/future-system-design-ledger.md` are the primary knowledge-registry planning sources.
+- `docs/design/knowledge-domain-registry-plan.md` owns the planned broad registry shape, Wave 0 target, Waves 1-3, groups, source/evidence vocabulary, field ownership, validation boundaries, schema gaps, and safe future sequence.
+- `packages/schemas/player/knowledge_snippet.schema.json` remains the current planning authority for snippet subject, category, source, progression, and visibility fields.
+- `packages/content/base/player/knowledge_domains.json` and `KnowledgeDomainRecord` in `packages/engines/civilization-engine/src/content.ts` remain the current narrow legacy resource-identification shape.
+- `docs/design/knowledge-discovery-source-vocabulary.md`, `docs/design/knowledge-registry-field-ownership.md`, and `docs/design/knowledge-boundary-glossary.md` remain detailed prep references.
+- `docs/design/skill-mastery-trial-framework-plan.md` owns deferred skill-trial and magic-study planning.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
 
 ## Current Anchor
 
 Latest landed Codex version:
 
-- `Version 0.5.106 - Pure Hook Support Projection Helper`
+- `Version 0.5.107 - Knowledge Domain Registry Plan`
 
 Immediate next version:
 
-- `Version 0.5.107 - Knowledge Domain Registry Plan`
+- `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.106` to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
+- Do not roll from `0.5.107` to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.106 Result
+## Version 0.5.107 Result
 
-- Added `buildMagicHookSupportProjection(...)` as a pure deterministic engine helper.
-- Inputs are explicit resolution hook ids, item-generation hook ids, and caller-supplied `MagicCastReadinessHookSupport`.
-- Output records hook id, source field, six-class classification, exact policy authority, supported/blocking readiness effect, blocker reason where applicable, and `executable: false`.
-- Precedence remains explicit map, runtime, classifier, supported, deferred, unsupported, unknown fallback.
-- Existing readiness now uses the same provenance-aware internal classifier, preserving readiness outcomes.
-- Authored support remains four-class authority; `supported` and `unsupported` remain caller policy only.
-- Focused tests cover the 57-id authored inventory, all six classes, every precedence tier, both source fields, determinism, no mutation, duplicates, invalid-value omission, and no namespace inference.
-- No hook ids, authored classifications, compatibility statuses, content, schemas, UI, combat behavior, item-generation policy, events, mutation, casting, or target behavior changed.
+- Added the planning-only `docs/design/knowledge-domain-registry-plan.md`.
+- Defined the future registry record fields, approved groups, status vocabulary, Waves 0-3, source families, evidence-owner scopes, ownership boundaries, validation rules, schema gaps, and safe future sequence.
+- Formalized the five-domain Wave 0 target: flora, fauna, minerals, arcane lore, and general lore.
+- Recorded current repo reality: four narrow legacy records exist; Arcane Lore is implied by a skill but is not currently registered or linked through `knowledgeDomainId`.
+- Preserved the distinction between registry metadata, snippet definitions, runtime/player state, source/evidence records, validation, and presentation.
+- Made no runtime, schema, content JSON, generated-output, UI, persistence, progress, trial, event, item, spell, or skill ownership changes.
 
-## Cleanup Decision
+## Active Guardrails For 0.5.108
 
-- `docs/design/spell-hook-classification-audit.md` was consumed and removed.
-- Its unresolved legacy combat findings were promoted into `docs/design/legacy-combat-spell-runtime-ownership-plan.md`.
-- Do not restore the audit as a second backlog.
-
-## Active Guardrails For 0.5.107
-
-Knowledge Domain Registry Plan:
+Knowledge Domain Registry Schema Plan:
 
 - Planning-only pass.
-- Define stable knowledge-domain ids, ownership, snippet relationships, source/evidence vocabulary, and validation boundaries.
-- Use the current planning schema and existing domain backlog; do not wire runtime loading.
-- Keep knowledge distinct from skills, magic study, known-spell ownership, and generic item possession.
-- Access to a book, teacher, institution, scroll, tome, document, region, or travel observation must not automatically complete knowledge.
-- Do not add snippet content, completion math, trials, UI, Chronicle/Renown events, save/account schema changes, generated output, or runtime behavior.
+- Decide whether the broad registry evolves or separates from the legacy `KnowledgeDomainRecord` shape.
+- Define the future schema location, wrapper shape, required fields, enums, nullable policy references, and semantic validation owner.
+- Select a canonical related-content-collection vocabulary.
+- Select or explicitly defer the canonical magic-school id authority.
+- Define current-data transition rules for the four existing legacy records without implementing a migration.
+- Keep `knowledge_domain.arcane_lore` planned until a later seed-data/content pass.
+- Do not create or edit schemas, registry content JSON, snippet content, runtime loaders, progress state, evidence state, completion math, trials, UI, Chronicle/Renown events, or generated output.
 
-Magic/runtime guardrails:
+Boundary rules:
 
-- Effectful casting, command handlers, UI dispatch, target resolution, resource payment, catalyst behavior, inventory mutation, runtime event creation, save/account/session mutation, broader acquisition routes, and broader owner scopes remain deferred.
-- Do not treat `runtime`, `classifier`, or `supported` projection classes as executable.
-- Do not combine knowledge planning with legacy combat spell staging or first executable-hook owner work.
+- Access is not study.
+- Observation is not mastery.
+- Possession is not understanding.
+- Skill rank is not knowledge completion.
+- Known-spell ownership is not arcane knowledge.
+- Magic study access is not known-spell ownership.
+- Chronicle, reputation, Renown, region visibility, and UI visibility do not create knowledge.
+- Registry records never create player state or grant access, knowledge, skills, spells, items, or evidence.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.104` | Spell Hook Classification Audit | `docs/design/spell-hook-support-expansion-plan.md` | Landed; temporary audit consumed |
-| 2 | `0.5.105` | Spell Hook Support Constants Cleanup | `packages/shared/types/src/spell-hook-support.ts` | Landed |
-| 3 | `0.5.106` | Pure Hook Support Projection Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
-| 4 | `0.5.107` | Knowledge Domain Registry Plan | `packages/schemas/player/knowledge_snippet.schema.json` | Next |
+| 1 | `0.5.105` | Spell Hook Support Constants Cleanup | `packages/shared/types/src/spell-hook-support.ts` | Landed |
+| 2 | `0.5.106` | Pure Hook Support Projection Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
+| 3 | `0.5.107` | Knowledge Domain Registry Plan | `docs/design/knowledge-domain-registry-plan.md` | Landed |
+| 4 | `0.5.108` | Knowledge Domain Registry Schema Plan | `docs/design/knowledge-domain-registry-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.107 - Knowledge Domain Registry Plan`, inspect:
+For `Version 0.5.108 - Knowledge Domain Registry Schema Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -88,9 +87,11 @@ For `Version 0.5.107 - Knowledge Domain Registry Plan`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/design/future-system-design-ledger.md`
-- `docs/design/skill-mastery-trial-framework-plan.md`
-- `docs/design/spell-hook-support-expansion-plan.md`
+- `docs/design/knowledge-domain-registry-plan.md`
+- `docs/design/knowledge-registry-field-ownership.md`
+- `docs/design/knowledge-discovery-source-vocabulary.md`
+- `docs/design/knowledge-boundary-glossary.md`
 - `packages/schemas/player/knowledge_snippet.schema.json`
+- `packages/content/base/player/knowledge_domains.json`
+- `packages/engines/civilization-engine/src/content.ts`
 - `docs/future_content_backlog.md`

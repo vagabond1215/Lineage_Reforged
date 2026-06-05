@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-05
-Route: Codex local sequencing alignment after `Version 0.5.106 - Pure Hook Support Projection Helper`
+Route: Codex local sequencing alignment after `Version 0.5.107 - Knowledge Domain Registry Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.106 - Pure Hook Support Projection Helper` established the deterministic six-class projection boundary.
+This file gives Codex a stable ordered queue after `Version 0.5.107 - Knowledge Domain Registry Plan` established the future domain catalog, ownership, source/evidence, and validation boundaries.
 
 It does not replace:
 
@@ -19,18 +19,18 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed magic foundation slice:
+Latest landed foundation slice:
 
-- `Version 0.5.106 - Pure Hook Support Projection Helper`
+- `Version 0.5.107 - Knowledge Domain Registry Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.107 - Knowledge Domain Registry Plan`
+- `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.106` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.107` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -64,7 +64,8 @@ Versioning note:
 | 26 | `0.5.104` | Spell Hook Classification Audit | Codex 5.5 Local audit | `docs/design/spell-hook-support-expansion-plan.md` | audit tables + narrow docs | Landed; temporary audit later consumed | Confirmed spell lint as the authored authority, recorded intentional differences and current risks, and changed no runtime, content, schema, or UI behavior. |
 | 27 | `0.5.105` | Spell Hook Support Constants Cleanup | Codex 5.5 Local | `packages/shared/types/src/spell-hook-support.ts` | focused constants cleanup + parity tests | Landed | Added one browser-safe authored authority, lint/UI consumers, a readiness adapter, and exact inventory/parity/subset/precedence tests without behavior changes. |
 | 28 | `0.5.106` | Pure Hook Support Projection Helper | Codex 5.5 Local | `packages/engines/game-engine/src/known-spells.ts` | pure helper + focused tests | Landed | Projects six classes and blocker details from explicit support input; no execution, mutation, readiness weakening, UI, content, schema, or combat changes. |
-| 29 | `0.5.107` | Knowledge Domain Registry Plan | Codex 5.5 Local docs-first | `packages/schemas/player/knowledge_snippet.schema.json` | planning doc | Next | Define ids, ownership, snippet relationships, and validation boundaries only; no runtime loading, progression math, trials, UI, or events. |
+| 29 | `0.5.107` | Knowledge Domain Registry Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-plan.md` | planning doc | Landed | Defined the broader future registry shape, Wave 0 target, Waves 1-3, groups, source/evidence vocabulary, ownership boundaries, validation rules, schema gaps, and safe sequence without implementation. |
+| 30 | `0.5.108` | Knowledge Domain Registry Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-plan.md` | planning doc | Next | Decide schema location/shape, legacy-record disposition, required enums, references, and validation ownership only; no schema file, seed data, content migration, runtime, state, UI, trials, or events. |
 
 ## Default Prompt Pattern
 
