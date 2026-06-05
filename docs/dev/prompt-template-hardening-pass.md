@@ -2,7 +2,7 @@
 
 Source route: ChatGPT via GitHub Connector
 Date: 2026-05-21
-Updated: 2026-06-04
+Updated: 2026-06-05
 Status: connector-only prompt guidance; no runtime/source/UI/content changes
 
 ## Purpose
@@ -38,8 +38,83 @@ Accepted labels:
 - Codex 5.5 Plan Mode
 - Codex 5.5 Local
 - Codex 5.5 Cloud
+- Codex 5.5 Local - Pursue Goal
+- Codex 5.5 Cloud - Pursue Goal
 
 Do not put this routing block inside the copy-paste prompt body.
+
+## Tool / Mode Selection Guidance
+
+Use the routing label to choose the least-powerful mode that can safely complete the task.
+
+| Mode | Use when | Avoid when |
+| --- | --- | --- |
+| ChatGPT via GitHub Connector | Tiny repo inspections, docs-only connector edits, prompt generation, small planning updates. | Multi-file implementation, local tests, or tasks needing repeated iteration. |
+| ChatGPT Deep Research | Non-repo research, external references, long analysis, or comparing outside sources. | Current repo implementation or local validation. |
+| ChatGPT Agent Mode | Browser/app workflow, multi-step interaction with external services, or UI-assisted tasks. | Simple repo edits that Codex can do locally. |
+| Codex 5.5 Plan Mode | Planning, audit, or design work where Codex should inspect but not edit broadly. | Source implementation with tests. |
+| Codex 5.5 Local | Normal bounded implementation, docs, or tests on a local worktree. | Long objectives needing multiple rounds of autonomous iteration. |
+| Codex 5.5 Cloud | Bounded implementation or validation where cloud execution is acceptable. | Work requiring local-only assets, local credentials, or unsynced files. |
+| Codex 5.5 Local - Pursue Goal | Longer local objectives with a clear completion condition, repeated inspection/edit/test loops, and strict scope guardrails. | Quick questions, loose exploration, or tasks where broad autonomous iteration could widen scope. |
+| Codex 5.5 Cloud - Pursue Goal | Longer cloud-safe objectives with a clear completion condition and strict file/scope/validation guardrails. | Local-only dependencies, secrets, unsynced files, or tasks where remote state may lag behind local reality. |
+
+### Pursue Goal Guidance
+
+`Pursue Goal` turns a request into a persistent objective. Codex may continue working across multiple turns until it completes the objective, reaches the specified token/work budget, or becomes genuinely blocked and needs user input.
+
+Use `Pursue Goal` only when the prompt has:
+
+- a specific version/run or named objective
+- explicit completion conditions
+- exact files to read first
+- allowed files or areas to edit
+- forbidden scope
+- validation commands
+- progress-tracking requirements
+- stop conditions for uncertainty or scope drift
+- required handoff/output documentation
+
+Good uses:
+
+- finish a scoped versioned run through implementation and focused validation
+- fix a focused failing test suite until it passes or is blocked
+- complete a bounded planning/audit pass with required docs updates
+- continue a refactor only inside a named file/module set
+
+Avoid uses:
+
+- quick factual questions
+- open-ended exploration
+- broad cleanup
+- loosely defined feature requests
+- anything that could invite unrelated UI/schema/runtime/generated-output work
+
+For Lineage Reborn, `Pursue Goal` must not override repository guardrails. It should still preserve version-band rules, owner boundaries, forbidden adjacent systems, and the required Codex progress tracker.
+
+Recommended outside-prompt examples:
+
+```text
+Recommended platform/tool/model: Codex 5.5 Local - Pursue Goal
+Why: Longer scoped implementation with repeated edit/test loops and explicit completion conditions.
+Manual preflight: Pull latest master and confirm current handoff state.
+Token posture: Broad but bounded.
+Research needed: Repo-only.
+```
+
+```text
+Recommended platform/tool/model: Codex 5.5 Cloud - Pursue Goal
+Why: Cloud-safe docs/test objective that can continue until validation passes or the prompt's stop condition is reached.
+Manual preflight: Confirm remote branch and current handoff state.
+Token posture: Broad but bounded.
+Research needed: Repo-only.
+```
+
+Use this warning in generated prompts when selecting `Pursue Goal`:
+
+```text
+Pursue Goal guardrail:
+Continue only until the scoped objective is complete, validation is run, or a listed blocker is reached. Do not widen beyond the allowed files/systems. Stop and report if the task appears to require forbidden scope, version-band changes, unrelated cleanup, generated output, UI work, schema migration, or runtime behavior outside this prompt.
+```
 
 ## Version-Band Guardrails
 
