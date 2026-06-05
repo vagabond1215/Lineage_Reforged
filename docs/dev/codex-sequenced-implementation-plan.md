@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-05
-Route: Codex local sequencing alignment after `Version 0.5.103 - Spell Hook Support Expansion Plan`
+Route: Codex local sequencing alignment after `Version 0.5.104 - Spell Hook Classification Audit`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.103 - Spell Hook Support Expansion Plan` defined the current hook taxonomy, owner boundary, and future implementation sequence.
+This file gives Codex a stable ordered queue after `Version 0.5.104 - Spell Hook Classification Audit` reconciled the authored classification authority, adjacent registries, and cleanup prerequisites.
 
 It does not replace:
 
@@ -19,18 +19,18 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed magic planning slice:
+Latest landed magic foundation slice:
 
-- `Version 0.5.103 - Spell Hook Support Expansion Plan`
+- `Version 0.5.104 - Spell Hook Classification Audit`
 
 Immediate next Codex run:
 
-- `Version 0.5.104 - Spell Hook Classification Audit`
+- `Version 0.5.105 - Spell Hook Support Constants Cleanup`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.103` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.104` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -61,7 +61,8 @@ Versioning note:
 | 23 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | Codex 5.5 Local docs-first | `docs/design/magic-resolver-planned-output-envelope-plan.md` | planning doc | Landed | Planned inert result-envelope policy only; no emitted events, effect application, command handlers, UI dispatch, save mutation, resource payment, catalyst consumption/reservation, inventory mutation, or target resolution. |
 | 24 | `0.5.102` | Magic Resolver Inert Envelope Helper | Codex 5.5 Local | `docs/design/magic-resolver-planned-output-envelope-plan.md` | pure helper + focused tests | Landed | Added inert planned envelope result helper only; no emitted events, runtime dispatch, effects, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
 | 25 | `0.5.103` | Spell Hook Support Expansion Plan | Codex 5.5 Local docs-first | `docs/design/spell-hook-support-expansion-plan.md` | planning doc | Landed | Defined six hook classes, current readiness/inert-envelope behavior, owner requirements, authoring rules, and future sequence; no hook execution or runtime behavior. |
-| 26 | `0.5.104` | Spell Hook Classification Audit | Codex 5.5 Local audit | `docs/design/spell-hook-support-expansion-plan.md` | audit tables + narrow docs | Next | Reconcile spell lint, magic metadata lint, combat support, engine readiness classes, UI copies, and authored hooks; no source refactor, runtime behavior, content JSON, schema, or UI changes. |
+| 26 | `0.5.104` | Spell Hook Classification Audit | Codex 5.5 Local audit | `docs/design/spell-hook-classification-audit.md` | audit tables + narrow docs | Landed | Confirmed spell lint as the authored authority, recorded intentional differences and current risks, and changed no runtime, content, schema, or UI behavior. |
+| 27 | `0.5.105` | Spell Hook Support Constants Cleanup | Codex 5.5 Local | `docs/design/spell-hook-classification-audit.md` | focused constants cleanup + parity tests | Next | Establish one browser-safe authored classification source; preserve hook ids, classes, readiness results, UI output, combat behavior, and all no-execution boundaries. |
 
 ## Default Prompt Pattern
 
@@ -85,6 +86,7 @@ Each future Codex prompt should:
 - Do not import Node-only content loaders or engine barrels into browser-facing UI files.
 - Do not mix resolver readiness helper work with combat math rewrites, active spell effects, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
 - Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, cast-readiness helper, training-event acquisition helpers, command contract, resolver readiness helper, planned-output-envelope policy, inert envelope helper, hook classification audit, pure hook projection, executable-owner planning, and blocked-hook tests are explicitly implemented in narrow slices.
+- Do not combine the legacy combat spell-staging or multi-effect branch-order findings with constants cleanup or pure projection work.
 
 ## When To Reorder
 

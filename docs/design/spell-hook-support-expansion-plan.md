@@ -2,7 +2,7 @@
 
 Date: 2026-06-05
 Source version/run: Version 0.5.103 - Spell Hook Support Expansion Plan
-Status: active planning source for future hook classification, projection, and executable-owner work
+Status: durable hook taxonomy and executable-owner source; classification authority reconciled by Version 0.5.104
 
 ## Purpose
 
@@ -33,6 +33,8 @@ Current classification owners:
 | `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts` | Presents copied hook classifications in the Arcane Compendium. | The copied lists are presentation data, not classification authority. |
 
 The term `runtime-consumed` therefore has a narrow meaning: an existing consumer recognizes the hook identifier. It does not prove known-spell ownership, command authority, target authority, resource authority, effect ownership, or resolver integration.
+
+`Version 0.5.104 - Spell Hook Classification Audit` confirmed that `tools/content-lint/spell-hook-support.mjs` is the canonical authored-classification authority for now. The broader combat registry, engine caller policy, and UI copies are consumers or adjacent capability surfaces, not authored spell authorities. See `docs/design/spell-hook-classification-audit.md` for the complete reconciliation and cleanup requirements.
 
 Current lint runtime-consumed spell hooks:
 
@@ -242,7 +244,7 @@ Future content authors must:
 
 1. Reuse an existing hook only when its documented semantics match exactly.
 2. Add a new hook to the canonical classification source before using it in content.
-3. Choose a deliberate class: classifier, runtime-consumed, supported, deferred, or unsupported.
+3. Choose a deliberate authored class: classifier, runtime-consumed, or deferred. Unknown remains a validation failure.
 4. Record the intended effect family and future owner for deferred hooks.
 5. Add focused classification and content-lint tests.
 6. Keep `compatibilityStatus: "ready"` limited to hooks accepted by current lint policy.
@@ -252,15 +254,17 @@ Future content authors must:
 
 Unknown authored hooks remain validation errors. A new hook must not be added directly to spell JSON and classified later.
 
+The engine-only `supported` and `unsupported` classes remain explicit caller policy overrides unless a later dedicated design pass promotes them into canonical authored classes.
+
 ## Future Implementation Sequence
 
-1. Spell Hook Classification Audit
+1. Spell Hook Classification Audit - landed in Version 0.5.104
    - Compare spell lint, magic metadata lint, combat hook support, engine readiness classes, UI copies, and authored spell hooks.
    - Decide the canonical authority and document intentional differences.
-2. Hook Support Constants Cleanup
+2. Hook Support Constants Cleanup - next in Version 0.5.105
    - Consolidate or explicitly separate canonical spell classification from combat and presentation registries.
    - Avoid importing Node-only lint modules into browser/runtime code.
-3. Pure Hook Support Projection Helper
+3. Pure Hook Support Projection Helper - planned for Version 0.5.106
    - Return deterministic six-class projections and blockers from explicit inputs.
    - Execute nothing and mutate nothing.
 4. First Executable Hook Owner Plan
@@ -320,7 +324,8 @@ No broad workspace typecheck is required because this run changes documentation 
 
 ## Relationship To Existing Plans
 
-- This document becomes the active source for future hook classification, hook projection, and executable-owner planning.
+- This document remains the durable source for hook taxonomy, executable promotion, and hook-owner planning.
+- `docs/design/spell-hook-classification-audit.md` is the temporary source for constants cleanup, six-class projection requirements, and the legacy combat ownership findings discovered in Version 0.5.104.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` remains active for inert envelope constraints.
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` remains active for resolver-readiness and first narrow runtime resolver constraints.
 - `docs/design/magic-runtime-boundary-plan.md` remains the historical cast-readiness boundary source.

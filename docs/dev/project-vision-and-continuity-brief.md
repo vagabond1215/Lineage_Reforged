@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-05 after `Version 0.5.103 - Spell Hook Support Expansion Plan` landed.
+Updated 2026-06-05 after `Version 0.5.104 - Spell Hook Classification Audit` landed.
 
 ## Purpose
 
@@ -18,6 +18,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` owns the first narrow runtime cast resolver readiness boundary.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` owns the inert planned-output-envelope boundary.
 - `docs/design/spell-hook-support-expansion-plan.md` owns hook taxonomy, readiness classification, executable promotion criteria, and future hook-owner sequencing.
+- `docs/design/spell-hook-classification-audit.md` is the temporary source for constants cleanup, projection requirements, and unresolved legacy combat ownership findings.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/design/skill-mastery-trial-framework-plan.md` owns skill trial and magic study-event planning constraints.
 - `packages/schemas/player/knowledge_snippet.schema.json` is planning-only schema source for snippet-based knowledge progression; it is not runtime content loading.
@@ -27,11 +28,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.103 - Spell Hook Support Expansion Plan`
+- `Version 0.5.104 - Spell Hook Classification Audit`
 
 Next recommended version:
 
-- `Version 0.5.104 - Spell Hook Classification Audit`
+- `Version 0.5.105 - Spell Hook Support Constants Cleanup`
 
 Current sequence source:
 
@@ -43,13 +44,14 @@ Current phase:
 
 ## Current Implementation Reality
 
-- Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, command contract planning, first narrow runtime cast resolver planning, resolver-readiness helpers, planned output-envelope policy, inert resolver envelope helpers, and spell-hook support expansion planning have landed.
+- Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, command contract planning, first narrow runtime cast resolver planning, resolver-readiness helpers, planned output-envelope policy, inert resolver envelope helpers, spell-hook support expansion planning, and spell-hook classification auditing have landed.
 - `buildMagicCastReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` are pure, deterministic, read-only, and exported through the game-engine boundary.
 - `buildMagicCastResolverReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `buildMagicResolverInertEnvelope(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` defines planned resolver envelopes as inert result projections, not emitted events or side-effecting command results.
 - `docs/design/spell-hook-support-expansion-plan.md` defines runtime-consumed, classifier, supported, deferred, unsupported, and unknown hook classes without making any hook executable.
+- `docs/design/spell-hook-classification-audit.md` confirms spell lint as the authored classification authority, the current four authored classes, and the need for browser-safe constants cleanup before six-class projection.
 - Runtime casting, command handling, acquisition mutation, save/account changes, UI work, broader ownership routes, broader acquisition routes, target resolution, effect application, resource payment, catalyst behavior, Chronicle/Renown hooks, skill trial runtime behavior, magic study event runtime behavior, and knowledge snippet runtime behavior remain deferred.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - The project remains in foundation stabilization; validation and ownership boundaries remain higher priority than broad runtime expansion.
@@ -77,7 +79,8 @@ Every major system should answer at least one of these questions:
 | `0.5.101` | Magic Resolver Planned Output Envelope Plan | Landed. Planned inert output-envelope policy before runtime events or effect application. | Planning only; no emitted events, effects, mutation, UI dispatch, or command handlers. |
 | `0.5.102` | Magic Resolver Inert Envelope Helper | Landed. Added a pure inert envelope helper with explicit safety flags. | Pure projection only; no emitted events, effects, runtime dispatch, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
 | `0.5.103` | Spell Hook Support Expansion Plan | Landed. Defined hook taxonomy, current readiness/inert-envelope behavior, executable promotion criteria, owner requirements, and future sequence. | Planning only; no generic hook execution, runtime effects, target resolution, events, resource/catalyst behavior, mutation, UI, or generated output. |
-| `0.5.104` | Spell Hook Classification Audit | Next. Reconcile the current spell lint, combat, engine readiness, UI presentation, and authored-hook classifications before a projection helper. | Audit only; no source refactor, runtime behavior, content JSON, schema, or UI changes. |
+| `0.5.104` | Spell Hook Classification Audit | Landed. Reconciled spell lint, combat, engine readiness, UI presentation, and authored-hook classifications. | Documentation only; no source refactor, runtime behavior, content JSON, schema, or UI changes. |
+| `0.5.105` | Spell Hook Support Constants Cleanup | Next. Establish a browser-safe authored classification source and exact parity/subset tests before projection. | Preserve all classifications and behavior; no hook execution, content changes, or legacy combat fixes. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
@@ -109,6 +112,7 @@ Magic command contract plan: docs/design/magic-command-contract-plan.md
 First narrow runtime cast resolver plan: docs/design/first-narrow-runtime-cast-resolver-plan.md
 Magic resolver planned output envelope plan: docs/design/magic-resolver-planned-output-envelope-plan.md
 Spell hook support expansion plan: docs/design/spell-hook-support-expansion-plan.md
+Spell hook classification audit: docs/design/spell-hook-classification-audit.md
 Future system design ledger: docs/design/future-system-design-ledger.md
 Strategic continuity brief: docs/dev/project-vision-and-continuity-brief.md
 Backlog: docs/future_content_backlog.md
@@ -123,6 +127,7 @@ Use the magic command contract plan for active magic command/intention constrain
 Use the first narrow runtime cast resolver plan for resolver-readiness and later resolver constraints.
 Use the magic resolver planned output envelope plan for inert envelope constraints.
 Use the spell hook support expansion plan for hook classification, readiness, executable-owner, and sequencing constraints.
+Use the spell hook classification audit for constants cleanup, projection requirements, and current legacy combat findings.
 Use the design ledger for durable conceptual criteria and vocabulary.
 Use the continuity brief for north-star direction and source map.
 Use the backlog for deferred work and historical run notes.
