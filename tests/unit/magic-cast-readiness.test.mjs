@@ -7,11 +7,8 @@ import {
 } from "../../packages/engines/game-engine/src/index.ts";
 import { buildArcaneCompendiumEntries } from "../../apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts";
 import {
-  CLASSIFIER_SPELL_RESOLUTION_HOOKS,
-  DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS,
-  DEFERRED_SPELL_RESOLUTION_HOOKS,
-  RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS
-} from "../../tools/content-lint/spell-hook-support.mjs";
+  AUTHORED_SPELL_HOOK_SUPPORT
+} from "../../packages/shared/types/src/spell-hook-support.js";
 
 const CHARACTER_ID = "player.test.character";
 const FIREBOLT_ID = "spell.fire.elemental.firebolt";
@@ -20,12 +17,7 @@ const KNOWN_SPELL_ID = "known-spell.test.firebolt";
 const TRAINING_EVENT_ID = "training-event.test.firebolt";
 const ACQUIRED_AT = "2026-06-02T12:00:00.000Z";
 
-const HOOK_SUPPORT = {
-  runtimeResolutionHooks: RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS,
-  classifierResolutionHooks: CLASSIFIER_SPELL_RESOLUTION_HOOKS,
-  deferredResolutionHooks: DEFERRED_SPELL_RESOLUTION_HOOKS,
-  deferredItemGenerationHookIds: DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS
-};
+const HOOK_SUPPORT = AUTHORED_SPELL_HOOK_SUPPORT;
 
 async function loadJsonRecords(path) {
   const raw = await readFile(path, "utf8");
@@ -438,6 +430,63 @@ test("deferred or unknown resolution and item-generation hooks return unsupporte
   assert.ok(hasBlocker(unknown, "unsupported_spell_hooks"));
   assert.deepEqual(unknown.details.unsupportedResolutionHooks, ["spell.future.unmapped"]);
   assert.deepEqual(unknown.details.unsupportedItemGenerationHookIds, ["generated_item.future.unmapped"]);
+});
+
+test("readiness preserves explicit six-class support and precedence behavior", async () => {
+  const spellRecords = await loadSpellRecords();
+  const itemRecords = await loadItemRecords();
+
+  const readinessForHook = (hook, hookSupport) =>
+    buildMagicCastReadiness(
+      readyParams(spellRecords, itemRecords, {
+        spellRecord: {
+          id: FIREBOLT_ID,
+          compatibilityStatus: "ready",
+          compatibilityProfile: {
+            requiredTags: { all: ["magic.elemental"] },
+            freecastAllowed: true
+          },
+          resolutionHooks: [hook]
+        },
+        conduitCandidate: undefined,
+        catalystCandidate: undefined,
+        hookSupport,
+        runtimeCastingImplemented: true
+      })
+    );
+
+  const supported = readinessForHook("spell.fixture.supported", {
+    ...HOOK_SUPPORT,
+    supportedResolutionHooks: ["spell.fixture.supported"]
+  });
+  assert.equal(supported.ready, true);
+  assert.equal(hasBlocker(supported, "unsupported_spell_hooks"), false);
+
+  const unsupported = readinessForHook("damage.magic", {
+    ...HOOK_SUPPORT,
+    resolutionHooks: { "damage.magic": "unsupported" }
+  });
+  assert.equal(unsupported.ready, false);
+  assert.deepEqual(unsupported.details.unsupportedResolutionHooks, ["damage.magic"]);
+
+  const explicitSupported = readinessForHook("buff.bless", {
+    ...HOOK_SUPPORT,
+    resolutionHooks: { "buff.bless": "supported" }
+  });
+  assert.equal(explicitSupported.ready, true);
+
+  const runtimeWinsCollision = readinessForHook("spell.fixture.collision", {
+    runtimeResolutionHooks: ["spell.fixture.collision"],
+    deferredResolutionHooks: ["spell.fixture.collision"]
+  });
+  assert.equal(runtimeWinsCollision.ready, true);
+
+  const supportedWinsCollision = readinessForHook("spell.fixture.supported_collision", {
+    supportedResolutionHooks: ["spell.fixture.supported_collision"],
+    deferredResolutionHooks: ["spell.fixture.supported_collision"],
+    unsupportedResolutionHooks: ["spell.fixture.supported_collision"]
+  });
+  assert.equal(supportedWinsCollision.ready, true);
 });
 
 test("fully satisfied readiness requires explicit runtime casting support", async () => {

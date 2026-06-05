@@ -2,7 +2,7 @@
 
 Date: 2026-06-05
 Source version/run: Version 0.5.104 - Spell Hook Classification Audit
-Status: temporary implementation guardrail for hook-support constants cleanup and pure hook-support projection
+Status: constants cleanup consumed in Version 0.5.105; temporary guardrail retained for pure hook-support projection
 
 ## Purpose
 
@@ -56,17 +56,18 @@ Eight non-ready spells contain at least one runtime-classified hook. Compatibili
 
 ## Authority Decision
 
-The current canonical authored spell-hook authority is:
+The current canonical authored spell-hook authority after Version 0.5.105 is:
 
-- `tools/content-lint/spell-hook-support.mjs` for explicit resolution-hook and item-generation-hook classification
+- `packages/shared/types/src/spell-hook-support.{ts,js}` for explicit resolution-hook and item-generation-hook classification
 - `tools/content-lint/magic-metadata-support.mjs` for the rule that a `ready` authored spell may use only current lint `runtime` and `classifier` hooks
 
 The following surfaces are not canonical authored-classification authorities:
 
+- `tools/content-lint/spell-hook-support.mjs` re-exports the shared authority and owns lint validation helpers.
 - `tools/content-lint/combat-hook-support.mjs` is the broader combat vocabulary and capability registry.
 - `packages/engines/game-engine/src/combat/index.ts` is an existing consumer of some hook ids, not spell classification authority.
 - `packages/engines/game-engine/src/known-spells.ts` defines six-class readiness policy vocabulary but receives support data from callers.
-- `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts` is a presentation consumer with copied constants.
+- `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts` is a presentation consumer of the shared classifiers.
 
 The engine-only `supported` and `unsupported` classes remain explicit caller policy overrides. They are not authored spell classes and must not be added to content merely because the readiness type permits them.
 
@@ -92,9 +93,9 @@ Engine readiness additionally permits `supported` and `unsupported` through expl
 
 ### Presentation classification
 
-The Arcane Compendium currently duplicates the four authored-classification lists. Its current values match all authored resolution and item-generation hooks, but no complete parity test prevents future drift.
+The Arcane Compendium consumes the shared browser-safe classifiers and no longer duplicates the four authored-classification lists. Exact source-boundary and full classification parity tests guard this relationship.
 
-The UI must not import the Node-only lint tool. A cleanup should establish a browser-safe shared classification source or an equally strong generated/parity boundary.
+The UI does not import the Node-only lint tool.
 
 ## Runtime And Readiness Findings
 
@@ -155,37 +156,29 @@ Consequences:
 
 No production caller outside the engine implementation was located. Current focused tests supply the canonical lint lists, but the helper contract itself permits divergence. Cleanup and projection work must make the future adapter/input boundary explicit without silently changing precedence or readiness behavior.
 
-## Test Coverage Gaps
+## Remaining Test Coverage Gap
 
-Current focused tests cover important samples and current readiness outcomes, but do not prove:
+Version 0.5.105 now proves exact authored inventories, TypeScript/JavaScript shared-entry parity, lint/shared identity, UI source and classification parity, the spell-runtime-to-combat subset, direct `supported` and `unsupported` readiness semantics, and current precedence for contradictory inputs.
 
-- exact parity for every runtime, classifier, deferred, and item-generation constant copied into the UI
-- exact full classifier and deferred hook inventories
-- the spell runtime set remains a subset of combat support
-- every runtime-classified spell hook has a concrete combat handler or status definition
-- six-class precedence and contradictory-set behavior
-- direct `supported` and `unsupported` readiness semantics
-- a deterministic full six-class projection
-
-These are cleanup/projection test requirements, not reasons to alter current content or runtime behavior in this audit.
+The remaining gap is a deterministic full six-class projection with classification authority and blocker detail. Concrete combat handler/status semantics remain a separate runtime ownership concern, not a constants or projection requirement.
 
 ## Required Cleanup Boundary
 
-The next safe implementation run is `Version 0.5.105 - Spell Hook Support Constants Cleanup`.
+`Version 0.5.105 - Spell Hook Support Constants Cleanup` landed the required boundary.
 
-It should:
+It:
 
-1. Establish one browser-safe canonical source for the current four authored classes.
-2. Keep the broader combat support registry separate.
-3. Make lint and UI consume the shared authored classification or add an exact automated parity boundary.
-4. Add exact inventory and combat-subset tests.
-5. Add focused readiness tests for `supported`, `unsupported`, precedence, and contradictory inputs.
-6. Preserve current hook ids, classes, compatibility statuses, readiness results, UI output, and combat behavior.
-7. Preserve pure helper boundaries and add no hook execution.
+1. Added `packages/shared/types/src/spell-hook-support.{ts,js}` as the browser-safe authority for the current four authored classes.
+2. Kept the broader combat support registry separate.
+3. Made spell lint re-export the shared authority and made the Arcane Compendium consume the shared classifiers.
+4. Added exact authored inventory, UI source/parity, and combat-subset tests.
+5. Added focused readiness tests for `supported`, `unsupported`, explicit-map precedence, and contradictory iterable inputs.
+6. Added `AUTHORED_SPELL_HOOK_SUPPORT` as the explicit readiness-shaped adapter used by focused readiness, resolver-readiness, and inert-envelope tests.
+7. Preserved current hook ids, classes, compatibility statuses, readiness results, UI output, combat behavior, pure helper boundaries, and all no-execution rules.
 
-The cleanup must not import Node-only tooling into browser code. The exact shared module location should follow an existing browser-safe package boundary after source inspection.
+The cleanup imports no Node-only tooling into browser code.
 
-After cleanup, `Version 0.5.106 - Pure Hook Support Projection Helper` may add deterministic six-class projections from explicit support input. That helper must execute nothing, mutate nothing, and must not reinterpret `runtime` or `supported` as executable.
+The next safe run is `Version 0.5.106 - Pure Hook Support Projection Helper`. It may add deterministic six-class projections from explicit support input. That helper must execute nothing, mutate nothing, and must not reinterpret `runtime` or `supported` as executable.
 
 ## Deferred Runtime Follow-Up
 
@@ -200,6 +193,6 @@ Do not combine that work with constants cleanup, projection, content promotion, 
 
 ## Cleanup Decision
 
-Keep this audit while it directly guides `0.5.105` and `0.5.106`.
+Keep this audit while it directly guides `0.5.106`.
 
-After those runs consume the findings, either remove this temporary guardrail or retain only unresolved legacy combat ownership findings in the current handoff, roadmap, or a dedicated runtime plan. Do not let this file become a second backlog.
+After that run consumes the remaining findings, either remove this temporary guardrail or retain only unresolved legacy combat ownership findings in the current handoff, roadmap, or a dedicated runtime plan. Do not let this file become a second backlog.

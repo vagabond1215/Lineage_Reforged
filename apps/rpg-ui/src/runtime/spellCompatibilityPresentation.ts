@@ -1,12 +1,15 @@
 import spellCatalogData from '../../../../packages/content/base/player/spells.json' with { type: 'json' };
+import {
+  classifySpellItemGenerationHookId,
+  classifySpellResolutionHook,
+  type AuthoredSpellHookClassification
+} from '../../../../packages/shared/types/src/spell-hook-support.js';
 import type { DetailEntry, DetailGroup, ListItem, TagTone } from '../types.js';
 
 export const ARCANE_COMPENDIUM_CATEGORY = 'spells';
 export const ARCANE_COMPENDIUM_LABEL = 'Arcane Compendium';
 
 type SpellCompatibilityStatus = 'ready' | 'partial' | 'deferred' | 'placeholder';
-type HookClassification = 'runtime' | 'classifier' | 'deferred' | 'unknown';
-
 type RequiredTags = {
   all?: string[];
   any?: string[][];
@@ -57,84 +60,14 @@ type HookSummary = {
 
 const spellCatalog = spellCatalogData as SpellCatalog;
 
-const RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS = new Set([
-  'damage.magic',
-  'damage.ranged',
-  'heal.hp',
-  'interrupt.primary',
-  'status.bind',
-  'status.stagger',
-  'buff.protect',
-  'buff.ward',
-  'buff.anthem',
-  'mobility.shadow_step',
-  'support.berry'
-]);
+export function classifyArcaneCompendiumHook(hook: string): AuthoredSpellHookClassification {
+  return classifySpellResolutionHook(hook);
+}
 
-const CLASSIFIER_SPELL_RESOLUTION_HOOKS = new Set([
-  'school.control',
-  'school.elemental',
-  'school.enfeebling',
-  'school.enhancing',
-  'school.healing',
-  'school.ranged',
-  'school.utility',
-  'tradition.druidic',
-  'discipline.ninjutsu',
-  'discipline.performance',
-  'element.air',
-  'element.earth',
-  'element.fire',
-  'element.ice',
-  'element.light',
-  'element.lightning',
-  'element.shadow',
-  'element.water'
-]);
-
-const DEFERRED_SPELL_RESOLUTION_HOOKS = new Set([
-  'buff.bless',
-  'buff.charge',
-  'buff.ember_spikes',
-  'buff.grace',
-  'buff.haste',
-  'buff.haze',
-  'buff.march',
-  'buff.preserve',
-  'buff.regeneration',
-  'buff.thornskin',
-  'buff.veil',
-  'buff.war_song',
-  'buff.warmth',
-  'buff.waterbreath',
-  'debuff.blind',
-  'debuff.curse',
-  'debuff.dirge',
-  'debuff.discord',
-  'debuff.soaked',
-  'field.smoke',
-  'restore.mp',
-  'restore.stamina',
-  'status.burn',
-  'status.slow',
-  'utility.mirror',
-  'utility.speak_beast',
-  'utility.speak_plant'
-]);
-
-const DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS = new Set(['generated_item.druidic.berry']);
-
-export function classifyArcaneCompendiumHook(hook: string): HookClassification {
-  if (RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS.has(hook)) {
-    return 'runtime';
-  }
-  if (CLASSIFIER_SPELL_RESOLUTION_HOOKS.has(hook)) {
-    return 'classifier';
-  }
-  if (DEFERRED_SPELL_RESOLUTION_HOOKS.has(hook)) {
-    return 'deferred';
-  }
-  return 'unknown';
+export function classifyArcaneCompendiumItemGenerationHook(
+  hookId: string
+): AuthoredSpellHookClassification {
+  return classifySpellItemGenerationHookId(hookId);
 }
 
 export function getArcaneCompendiumEntries(): ListItem[] {
@@ -276,7 +209,7 @@ function summarizeHooks(record: SpellRecord): HookSummary {
       summary.itemGenerationUnknown.push('missing generatedItemId');
       continue;
     }
-    if (DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS.has(hookId)) {
+    if (classifyArcaneCompendiumItemGenerationHook(hookId) === 'deferred') {
       summary.itemGenerationDeferred.push(hookId);
       continue;
     }

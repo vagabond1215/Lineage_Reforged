@@ -7,11 +7,8 @@ import {
 } from "../../packages/engines/game-engine/src/index.ts";
 import { buildArcaneCompendiumEntries } from "../../apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts";
 import {
-  CLASSIFIER_SPELL_RESOLUTION_HOOKS,
-  DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS,
-  DEFERRED_SPELL_RESOLUTION_HOOKS,
-  RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS
-} from "../../tools/content-lint/spell-hook-support.mjs";
+  AUTHORED_SPELL_HOOK_SUPPORT
+} from "../../packages/shared/types/src/spell-hook-support.js";
 
 const RESOLVER_REQUEST_ID = "resolver-request.test.firebolt";
 const COMMAND_ID = "command.test.magic.cast.firebolt";
@@ -21,12 +18,7 @@ const KNOWN_SPELL_ID = "known-spell.test.firebolt";
 const TRAINING_EVENT_ID = "training-event.test.firebolt";
 const ACQUIRED_AT = "2026-06-04T12:00:00.000Z";
 
-const HOOK_SUPPORT = {
-  runtimeResolutionHooks: RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS,
-  classifierResolutionHooks: CLASSIFIER_SPELL_RESOLUTION_HOOKS,
-  deferredResolutionHooks: DEFERRED_SPELL_RESOLUTION_HOOKS,
-  deferredItemGenerationHookIds: DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS
-};
+const HOOK_SUPPORT = AUTHORED_SPELL_HOOK_SUPPORT;
 
 async function loadJsonRecords(path) {
   const raw = await readFile(path, "utf8");

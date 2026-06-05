@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local audit pass after `Version 0.5.104 - Spell Hook Classification Audit`
+Source route: Codex local implementation pass after `Version 0.5.105 - Spell Hook Support Constants Cleanup`
 Date: 2026-06-05
-Branch/status assumption: `master`; normal `git pull` succeeded and reported already up to date. The worktree was clean before edits.
+Branch/status assumption: `master` at commit `6ed3fc9` before edits; the worktree was clean. `git pull` could not write `.git/FETCH_HEAD` because Git metadata is read-only in the current sandbox, so remote synchronization was not reverified in this run.
 
 ## Purpose
 
@@ -20,7 +20,8 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 - `docs/design/first-narrow-runtime-cast-resolver-plan.md` owns the first narrow runtime cast resolver readiness boundary.
 - `docs/design/magic-resolver-planned-output-envelope-plan.md` owns inert planned-output-envelope constraints.
 - `docs/design/spell-hook-support-expansion-plan.md` owns hook taxonomy, readiness classification, executable promotion criteria, and future hook-owner sequencing.
-- `docs/design/spell-hook-classification-audit.md` is the temporary authority for constants cleanup, projection requirements, current drift risks, and legacy combat findings.
+- `docs/design/spell-hook-classification-audit.md` is the temporary authority for projection requirements and unresolved legacy combat findings.
+- `packages/shared/types/src/spell-hook-support.ts` is the browser-safe authored hook classification authority.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` owns the strategic north-star and source map.
 - `docs/future_content_backlog.md` owns chronological deferred-work and run notes.
@@ -29,16 +30,16 @@ This file is the short current handoff for future ChatGPT/GitHub Connector, Deep
 
 Latest landed Codex version:
 
-- `Version 0.5.104 - Spell Hook Classification Audit`
+- `Version 0.5.105 - Spell Hook Support Constants Cleanup`
 
 Immediate next version:
 
-- `Version 0.5.105 - Spell Hook Support Constants Cleanup`
+- `Version 0.5.106 - Pure Hook Support Projection Helper`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.104` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.105` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Recent Magic Results
 
@@ -55,6 +56,7 @@ Versioning note:
 - `0.5.102` added `buildMagicResolverInertEnvelope(...)` plus explicit inert safety flags and focused tests.
 - `0.5.103` added `docs/design/spell-hook-support-expansion-plan.md` with the six-class hook taxonomy, current readiness/inert-envelope behavior, executable promotion criteria, owner requirements, authoring rules, and future sequence.
 - `0.5.104` added `docs/design/spell-hook-classification-audit.md`, confirming spell lint as the current authored authority, exact authored inventory and UI parity, the combat subset, caller-supplied readiness precedence risks, and legacy combat staging hazards.
+- `0.5.105` added `packages/shared/types/src/spell-hook-support.{ts,js}` as the browser-safe authored authority, made lint and Arcane Compendium presentation consume it, added `AUTHORED_SPELL_HOOK_SUPPORT`, and added exact inventory, UI parity, combat subset, and readiness precedence/collision tests.
 
 Current non-inference rule:
 
@@ -64,19 +66,19 @@ Current deferrals:
 
 - Effectful casting, command handlers, UI dispatch, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, runtime event creation, save/account/session mutation, control failure, backlash, broader acquisition routes, broader owner scopes, knowledge snippet runtime behavior, skill trial runtime behavior, magic study event runtime behavior, and `PlayerSpellState[]` replacement remain deferred.
 
-## Active Guardrails For 0.5.105
+## Active Guardrails For 0.5.106
 
-Spell Hook Support Constants Cleanup:
+Pure Hook Support Projection Helper:
 
 - Use `docs/design/spell-hook-classification-audit.md` as the primary source.
-- Establish one browser-safe canonical source for the current four authored classes: `runtime`, `classifier`, `deferred`, and `unknown`.
-- Keep `tools/content-lint/combat-hook-support.mjs` as a separate broader combat capability registry.
-- Keep engine `supported` and `unsupported` classifications as explicit caller policy rather than authored classes.
-- Make lint and UI consume the shared source, or establish an exact automated parity boundary if direct sharing would violate package/browser boundaries.
-- Add exact authored-inventory, UI-parity, combat-subset, and readiness precedence/collision tests.
-- Preserve all hook ids, classes, spell compatibility statuses, readiness outcomes, UI output, and combat behavior.
-- Do not fix legacy combat spell staging, multi-effect branch order, status approximations, or ownership gating in this cleanup.
-- Do not add hook execution, promote spells, edit content JSON, edit schemas, alter UI presentation, or touch generated output.
+- Use `packages/shared/types/src/spell-hook-support.ts` and `AUTHORED_SPELL_HOOK_SUPPORT` as the authored input boundary.
+- Add a pure deterministic six-class projection from explicit hook ids and explicit `MagicCastReadinessHookSupport`-shaped policy input.
+- Preserve current precedence: explicit map, runtime, classifier, supported, deferred, unsupported, unknown.
+- Project classification authority, supported/blocking readiness effect, and source field without implying execution.
+- Keep `supported` and `unsupported` as caller policy rather than authored classes.
+- Do not alter current hook ids, authored classes, compatibility statuses, readiness outcomes, UI output, combat behavior, or item-generation policy.
+- Do not fix legacy combat spell staging, multi-effect branch order, status approximations, or ownership gating.
+- Do not add hook execution, active casting, target resolution, events, mutation, content JSON, schemas, React changes, or generated output.
 - Preserve `buildMagicCastReadiness(...)`, `buildMagicCastResolverReadiness(...)`, and `buildMagicResolverInertEnvelope(...)` as pure deterministic helper boundaries.
 
 Browser-safety guardrail:
@@ -100,11 +102,12 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` for the full queue. Curren
 | 3 | `0.5.102` | Magic Resolver Inert Envelope Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
 | 4 | `0.5.103` | Spell Hook Support Expansion Plan | `docs/design/spell-hook-support-expansion-plan.md` | Landed |
 | 5 | `0.5.104` | Spell Hook Classification Audit | `docs/design/spell-hook-classification-audit.md` | Landed |
-| 6 | `0.5.105` | Spell Hook Support Constants Cleanup | `docs/design/spell-hook-classification-audit.md` | Next |
+| 6 | `0.5.105` | Spell Hook Support Constants Cleanup | `packages/shared/types/src/spell-hook-support.ts` | Landed |
+| 7 | `0.5.106` | Pure Hook Support Projection Helper | `docs/design/spell-hook-classification-audit.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.105 - Spell Hook Support Constants Cleanup`, inspect:
+For `Version 0.5.106 - Pure Hook Support Projection Helper`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -123,6 +126,8 @@ For `Version 0.5.105 - Spell Hook Support Constants Cleanup`, inspect:
 - `docs/future_content_backlog.md`
 - `packages/engines/game-engine/src/known-spells.ts`
 - `packages/engines/game-engine/src/index.ts`
+- `packages/shared/types/src/spell-hook-support.ts`
+- `packages/shared/types/src/spell-hook-support.js`
 - `tests/unit/magic-resolver-inert-envelope.test.mjs`
 - `tests/unit/magic-cast-resolver-readiness.test.mjs`
 - `tests/unit/magic-cast-readiness.test.mjs`
@@ -138,6 +143,6 @@ For `Version 0.5.105 - Spell Hook Support Constants Cleanup`, inspect:
 - `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts`
 - `packages/engines/game-engine/src/combat/index.ts`
 
-## After 0.5.105
+## After 0.5.106
 
-Proceed to `Version 0.5.106 - Pure Hook Support Projection Helper` only if constants and parity ownership are clean. Keep the helper pure, deterministic, six-class, and explicitly non-executable. Do not advance to `0.6.x` automatically.
+Make an explicit cleanup decision for `docs/design/spell-hook-classification-audit.md`. Promote only unresolved legacy combat ownership findings into a dedicated plan or current handoff before removing the temporary audit. Do not advance to executable hooks or `0.6.x` automatically.

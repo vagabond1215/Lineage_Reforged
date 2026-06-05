@@ -1,11 +1,19 @@
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
   ARCANE_COMPENDIUM_CATEGORY,
   buildArcaneCompendiumEntries,
   classifyArcaneCompendiumHook,
+  classifyArcaneCompendiumItemGenerationHook,
   getArcaneCompendiumEntries
 } from "../../apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts";
+import {
+  CLASSIFIER_SPELL_RESOLUTION_HOOKS,
+  DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS,
+  DEFERRED_SPELL_RESOLUTION_HOOKS,
+  RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS
+} from "../../packages/shared/types/src/spell-hook-support.js";
 import spellCatalog from "../../packages/content/base/player/spells.json" with { type: "json" };
 
 function entryById(entries, id) {
@@ -64,10 +72,40 @@ test("Arcane Compendium mapper emits warnings for partial and runtime-blocked re
 });
 
 test("Arcane Compendium hook classification mirrors current validation groups", () => {
-  assert.equal(classifyArcaneCompendiumHook("damage.magic"), "runtime");
-  assert.equal(classifyArcaneCompendiumHook("school.elemental"), "classifier");
-  assert.equal(classifyArcaneCompendiumHook("buff.regeneration"), "deferred");
+  for (const hook of RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS) {
+    assert.equal(classifyArcaneCompendiumHook(hook), "runtime", hook);
+  }
+  for (const hook of CLASSIFIER_SPELL_RESOLUTION_HOOKS) {
+    assert.equal(classifyArcaneCompendiumHook(hook), "classifier", hook);
+  }
+  for (const hook of DEFERRED_SPELL_RESOLUTION_HOOKS) {
+    assert.equal(classifyArcaneCompendiumHook(hook), "deferred", hook);
+  }
+  for (const hookId of DEFERRED_SPELL_ITEM_GENERATION_HOOK_IDS) {
+    assert.equal(
+      classifyArcaneCompendiumItemGenerationHook(hookId),
+      "deferred",
+      hookId
+    );
+  }
   assert.equal(classifyArcaneCompendiumHook("spell.future.unmapped"), "unknown");
+  assert.equal(
+    classifyArcaneCompendiumItemGenerationHook("generated_item.future.unmapped"),
+    "unknown"
+  );
+});
+
+test("Arcane Compendium imports the shared hook authority instead of copying hook ids", async () => {
+  const source = await readFile(
+    "apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts",
+    "utf8"
+  );
+
+  assert.match(source, /packages\/shared\/types\/src\/spell-hook-support\.js/);
+  assert.doesNotMatch(source, /new Set\(\[\s*['"]damage\.magic/);
+  assert.doesNotMatch(source, /new Set\(\[\s*['"]school\.control/);
+  assert.doesNotMatch(source, /new Set\(\[\s*['"]buff\.bless/);
+  assert.doesNotMatch(source, /new Set\(\[\s*['"]generated_item\.druidic\.berry/);
 });
 
 test("Arcane Compendium mapper can project explicit records without runtime state", () => {

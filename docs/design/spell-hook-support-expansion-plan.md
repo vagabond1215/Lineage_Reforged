@@ -18,23 +18,24 @@ Current authored spell metadata:
 
 - `packages/content/base/player/spells.json` contains 55 spells.
 - Compatibility statuses are 23 `ready`, 5 `partial`, and 27 `deferred`.
-- Authored resolution hooks are all known to `tools/content-lint/spell-hook-support.mjs`.
+- Authored resolution hooks are all known to `packages/shared/types/src/spell-hook-support.ts` and validated through `tools/content-lint/spell-hook-support.mjs`.
 - The only authored item-generation hook id is `generated_item.druidic.berry`, classified as deferred.
 
 Current classification owners:
 
 | Surface | Current responsibility | Important limit |
 | --- | --- | --- |
-| `tools/content-lint/spell-hook-support.mjs` | Canonical content-lint classification for spell resolution hooks and item-generation hook ids. | Exposes only `runtime`, `classifier`, `deferred`, and `unknown`; it executes nothing. |
+| `packages/shared/types/src/spell-hook-support.{ts,js}` | Canonical browser-safe authored classification for spell resolution hooks and item-generation hook ids. | Exposes only `runtime`, `classifier`, `deferred`, and `unknown`; it executes nothing. |
+| `tools/content-lint/spell-hook-support.mjs` | Re-exports the shared authority and owns spell-hook validation helpers. | Validation only; it executes nothing. |
 | `tools/content-lint/magic-metadata-support.mjs` | Uses hook classification to reject `ready` spells that depend on deferred or unknown hooks. | Treats only lint `runtime` and `classifier` hooks as ready-compatible. |
 | `packages/engines/game-engine/src/known-spells.ts` | Accepts caller-supplied hook support and blocks cast readiness for non-supported classifications. | Supports six classifications, but does not own a canonical hook registry and does not execute hooks. |
 | `tools/content-lint/combat-hook-support.mjs` | Defines the broader combat hook vocabulary recognized by current combat content/runtime. | Combat support does not grant authority to the new magic cast resolver. |
 | `packages/engines/game-engine/src/combat/index.ts` | Current combat action flow consumes several hook ids for damage, healing, interrupts, and status application. | This is an existing combat path staged from `PlayerSpellState[]`; it is not the planned authoritative known-spell cast resolver. |
-| `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts` | Presents copied hook classifications in the Arcane Compendium. | The copied lists are presentation data, not classification authority. |
+| `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts` | Presents shared hook classifications in the Arcane Compendium. | Presentation remains a consumer, not classification authority. |
 
 The term `runtime-consumed` therefore has a narrow meaning: an existing consumer recognizes the hook identifier. It does not prove known-spell ownership, command authority, target authority, resource authority, effect ownership, or resolver integration.
 
-`Version 0.5.104 - Spell Hook Classification Audit` confirmed that `tools/content-lint/spell-hook-support.mjs` is the canonical authored-classification authority for now. The broader combat registry, engine caller policy, and UI copies are consumers or adjacent capability surfaces, not authored spell authorities. See `docs/design/spell-hook-classification-audit.md` for the complete reconciliation and cleanup requirements.
+`Version 0.5.104 - Spell Hook Classification Audit` identified the authority boundary, and `Version 0.5.105 - Spell Hook Support Constants Cleanup` moved that authority into the shared browser-safe module. The lint validator, broader combat registry, engine caller policy, and UI presentation are consumers or adjacent capability surfaces, not authored spell authorities. See `docs/design/spell-hook-classification-audit.md` for the complete reconciliation and projection requirements.
 
 Current lint runtime-consumed spell hooks:
 
@@ -94,7 +95,7 @@ Meaning:
 
 Current limitation:
 
-- `tools/content-lint/spell-hook-support.mjs` has no canonical `supported` list.
+- The shared authored authority has no canonical `supported` list.
 - `tools/content-lint/magic-metadata-support.mjs` cannot currently promote a spell to `ready` based on this engine-only class.
 - A future audit must decide whether `supported` remains caller-local, becomes a canonical class, or is removed in favor of more precise classes.
 
@@ -261,10 +262,10 @@ The engine-only `supported` and `unsupported` classes remain explicit caller pol
 1. Spell Hook Classification Audit - landed in Version 0.5.104
    - Compare spell lint, magic metadata lint, combat hook support, engine readiness classes, UI copies, and authored spell hooks.
    - Decide the canonical authority and document intentional differences.
-2. Hook Support Constants Cleanup - next in Version 0.5.105
+2. Hook Support Constants Cleanup - landed in Version 0.5.105
    - Consolidate or explicitly separate canonical spell classification from combat and presentation registries.
    - Avoid importing Node-only lint modules into browser/runtime code.
-3. Pure Hook Support Projection Helper - planned for Version 0.5.106
+3. Pure Hook Support Projection Helper - next in Version 0.5.106
    - Return deterministic six-class projections and blockers from explicit inputs.
    - Execute nothing and mutate nothing.
 4. First Executable Hook Owner Plan

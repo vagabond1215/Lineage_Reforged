@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.104 - Spell Hook Classification Audit`
-- Next recommended version: `Version 0.5.105 - Spell Hook Support Constants Cleanup`
+- Latest landed version: `Version 0.5.105 - Spell Hook Support Constants Cleanup`
+- Next recommended version: `Version 0.5.106 - Pure Hook Support Projection Helper`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.104` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.105` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -64,6 +64,7 @@ Current repo reality:
 - Magic resolver inert envelope helpers have landed as pure deterministic helpers that return planned result envelopes with explicit no-event/no-mutation/no-effect safety flags.
 - Spell hook support expansion planning has landed as `docs/design/spell-hook-support-expansion-plan.md`, defining the six-class readiness taxonomy, current classification drift, executable-owner criteria, and future hook sequence.
 - Spell hook classification auditing has landed as `docs/design/spell-hook-classification-audit.md`, confirming the authored-classification authority, current four-class inventory, UI parity, combat subset, caller-supplied readiness risks, and legacy combat staging hazards.
+- Spell hook support constants cleanup has landed as `packages/shared/types/src/spell-hook-support.ts`, providing one browser-safe authored authority, a readiness-shaped adapter, lint/UI consumers, and exact parity, subset, inventory, and precedence tests.
 - Skill mastery trials and magic study events are now planned in `docs/design/skill-mastery-trial-framework-plan.md`.
 - Snippet-based knowledge progression has a planning schema at `packages/schemas/player/knowledge_snippet.schema.json` and a domain backlog in `docs/future_content_backlog.md`.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
@@ -102,7 +103,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.102` | Magic Resolver Inert Envelope Helper | Codex Local | Pure helper + focused tests | Landed. Added a pure inert planned-envelope result helper with explicit safety flags. | No emitted events, runtime dispatch, effects, target resolution, resource payment, catalyst behavior, mutation, UI, generated output, or schema migration. |
 | `0.5.103` | Spell Hook Support Expansion Plan | Codex Local docs-first | Planning | Landed. Defined current hook classes, readiness/inert-envelope behavior, executable promotion criteria, owner requirements, authoring rules, and future sequence. | Planning only; no generic hook execution, runtime effects, target resolution, events, resource/catalyst behavior, UI, or mutation. |
 | `0.5.104` | Spell Hook Classification Audit | Codex Local audit | Read-only audit + documentation | Landed. Confirmed spell lint as the authored-classification authority, documented intentional registry differences, and recorded readiness, UI-drift, and legacy combat risks. | Documentation only; no hook execution, source refactor, runtime behavior, content JSON, schema, or UI changes. |
-| `0.5.105` | Spell Hook Support Constants Cleanup | Codex Local | Focused constants cleanup + parity tests | Next. Establish one browser-safe source for the current four authored classes while keeping combat support and engine caller policy separate. | Preserve all hook ids, classes, compatibility statuses, readiness results, UI output, and combat behavior; no execution or content changes. |
+| `0.5.105` | Spell Hook Support Constants Cleanup | Codex Local | Focused constants cleanup + parity tests | Landed. Added a shared browser-safe authored authority, lint/UI consumers, an explicit readiness adapter, and exact inventory/parity/subset/precedence tests. | Preserved all hook ids, classes, compatibility statuses, readiness results, UI output, combat behavior, and no-execution boundaries. |
+| `0.5.106` | Pure Hook Support Projection Helper | Codex Local | Pure helper + focused tests | Next. Return deterministic six-class hook projections and blocker detail from explicit support input. | Execute nothing, mutate nothing, preserve readiness behavior, and never equate `runtime` or `supported` with executable. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -122,8 +124,8 @@ The magic runtime path must not jump directly from known-spell projection into a
 | 10 | Planned output envelope helper | Return inert planned-output envelope projections from explicit inputs and readiness results. | Landed as pure helper only; no emitted events, effects, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
 | 11 | Spell hook support expansion | Explicitly define supported, classifier-only, deferred, unsupported, and unknown hook behavior before broad casting. | Landed as planning-only in `docs/design/spell-hook-support-expansion-plan.md`; no hook became executable. |
 | 12 | Spell hook classification audit | Reconcile canonical spell lint, combat support, engine readiness classes, UI copies, and authored content. | Landed in `docs/design/spell-hook-classification-audit.md`; no source refactor or runtime behavior. |
-| 13 | Hook support constants cleanup | Establish one browser-safe source for the current four authored classes and exact parity/subset tests. | Next; preserve classifications, readiness behavior, UI output, and combat behavior. |
-| 14 | Pure hook support projection | Return deterministic six-class hook projections and blockers from explicit inputs. | Future pure helper only; no execution or mutation. |
+| 13 | Hook support constants cleanup | Establish one browser-safe source for the current four authored classes and exact parity/subset tests. | Landed in Version 0.5.105; classifications and behavior remain unchanged. |
+| 14 | Pure hook support projection | Return deterministic six-class hook projections and blockers from explicit inputs. | Next pure helper only; no execution or mutation. |
 | 15 | First executable hook owner plan | Select one narrow hook family only after target, effect, mutation, event, and persistence owners are explicit. | Do not default to damage merely because combat recognizes the hook id. |
 | 16 | UI command/readiness surface | Later read-only or disabled-command presentation for known spells, cast-ready state, and blocked reasons. | UI must consume engine/runtime state and must not author ownership. |
 | 17 | Save/runtime state integration | Persist known spell records, acquisition evidence, training events, catalyst inventory changes, cooldowns, backlash, cast history, and Chronicle hooks when shapes are stable. | No old-save compatibility unless explicitly requested. |
@@ -131,9 +133,8 @@ The magic runtime path must not jump directly from known-spell projection into a
 
 Practical near-term sequence:
 
-1. `0.5.105 - Spell Hook Support Constants Cleanup`
-2. `0.5.106 - Pure Hook Support Projection Helper`
-3. `0.5.x - Knowledge Domain Registry Plan`
+1. `0.5.106 - Pure Hook Support Projection Helper`
+2. `0.5.x - Knowledge Domain Registry Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -287,7 +288,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 11 | `0.5.102` | Magic Resolver Inert Envelope Helper | `docs/design/magic-resolver-planned-output-envelope-plan.md` | Landed |
 | 12 | `0.5.103` | Spell Hook Support Expansion Plan | `docs/design/spell-hook-support-expansion-plan.md` | Landed |
 | 13 | `0.5.104` | Spell Hook Classification Audit | `docs/design/spell-hook-classification-audit.md` | Landed |
-| 14 | `0.5.105` | Spell Hook Support Constants Cleanup | `docs/design/spell-hook-classification-audit.md` | Next |
+| 14 | `0.5.105` | Spell Hook Support Constants Cleanup | `packages/shared/types/src/spell-hook-support.ts` | Landed |
+| 15 | `0.5.106` | Pure Hook Support Projection Helper | `docs/design/spell-hook-classification-audit.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -306,7 +308,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Magic Command Contract Plan | `docs/design/magic-command-contract-plan.md`; retained for future active magic command/intention constraints. |
 | First Narrow Runtime Cast Resolver Plan | `docs/design/first-narrow-runtime-cast-resolver-plan.md`; consumed by `0.5.100` and `0.5.101`, retain for later resolver constraints. |
 | Magic Resolver Planned Output Envelope Plan | `docs/design/magic-resolver-planned-output-envelope-plan.md`; consumed by `0.5.102`, retain for inert envelope and later resolver-output constraints. |
-| Spell Hook Classification Audit | `docs/design/spell-hook-classification-audit.md`; use for `0.5.105` constants cleanup and `0.5.106` projection, then remove or promote only unresolved runtime ownership findings. |
+| Spell Hook Classification Audit | `docs/design/spell-hook-classification-audit.md`; constants cleanup was consumed by `0.5.105`; use remaining guidance for `0.5.106`, then remove or promote only unresolved runtime ownership findings. |
 | Skill Mastery Trial Framework Plan | `docs/design/skill-mastery-trial-framework-plan.md`; use for skill trials, magic study events, and advancement event planning. |
 | Knowledge Snippet Schema | `packages/schemas/player/knowledge_snippet.schema.json`; use for future knowledge registry/schema planning, but do not treat it as runtime-wired content. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |

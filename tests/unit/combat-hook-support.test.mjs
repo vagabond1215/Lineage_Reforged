@@ -4,11 +4,15 @@ import assert from "node:assert/strict";
 import {
   DESCRIPTIVE_COMBAT_EFFECT_CHANNELS,
   RUNTIME_CONSUMED_COMBAT_EFFECT_CHANNELS,
+  RUNTIME_CONSUMED_COMBAT_RESOLUTION_HOOKS,
   UTILITY_ONLY_ITEM_EFFECT_CHANNELS,
   isUtilityOnlyItemUseProfile,
   validateCombatEffectChannels,
   validateCombatResolutionHooks
 } from "../../tools/content-lint/combat-hook-support.mjs";
+import {
+  RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS
+} from "../../packages/shared/types/src/spell-hook-support.js";
 
 async function loadContentRecords(relativePath) {
   const raw = await readFile(relativePath, "utf8");
@@ -82,6 +86,15 @@ test("combat hook matrix keeps current channel labels explicit", () => {
     "wasteReduction",
     "timeEfficiency"
   ]);
+});
+
+test("runtime-consumed spell hooks remain a subset of combat runtime support", () => {
+  assert.deepEqual(
+    RUNTIME_CONSUMED_SPELL_RESOLUTION_HOOKS.filter(
+      (hook) => !RUNTIME_CONSUMED_COMBAT_RESOLUTION_HOOKS.includes(hook)
+    ),
+    []
+  );
 });
 
 test("current live skill effects use supported combat channels and hooks", async () => {
