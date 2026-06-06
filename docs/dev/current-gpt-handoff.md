@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning pass after `Version 0.5.107 - Knowledge Domain Registry Plan`
+Source route: Codex local planning pass after `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
 Date: 2026-06-05
-Branch/status assumption: `master` at commit `d7aebde` before edits; the worktree was clean after a fast-forward pull of connector-only prep documents.
+Branch/status assumption: `master` at commit `5f9e78c` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -13,73 +13,74 @@ This is the short current handoff for future ChatGPT/GitHub Connector, Deep Rese
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
-- `docs/design/knowledge-domain-registry-plan.md` owns the planned broad registry shape, Wave 0 target, Waves 1-3, groups, source/evidence vocabulary, field ownership, validation boundaries, schema gaps, and safe future sequence.
+- `docs/design/knowledge-domain-registry-plan.md` owns domain purpose, groups, waves, source/evidence vocabulary, ownership boundaries, and the five-domain Wave 0 target.
+- `docs/design/knowledge-domain-registry-schema-plan.md` owns future registry paths, exact fields/enums, reference authorities, semantic validation ownership, current-data transition rules, and implementation acceptance criteria.
 - `packages/schemas/player/knowledge_snippet.schema.json` remains the current planning authority for snippet subject, category, source, progression, and visibility fields.
-- `packages/content/base/player/knowledge_domains.json` and `KnowledgeDomainRecord` in `packages/engines/civilization-engine/src/content.ts` remain the current narrow legacy resource-identification shape.
-- `docs/design/knowledge-discovery-source-vocabulary.md`, `docs/design/knowledge-registry-field-ownership.md`, and `docs/design/knowledge-boundary-glossary.md` remain detailed prep references.
-- `docs/design/skill-mastery-trial-framework-plan.md` owns deferred skill-trial and magic-study planning.
+- `packages/schemas/player/knowledge-domain.schema.json`, `packages/content/base/player/knowledge_domains.json`, and `KnowledgeDomainRecord` remain the current narrow identification-policy shape.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
 
 ## Current Anchor
 
 Latest landed Codex version:
 
-- `Version 0.5.107 - Knowledge Domain Registry Plan`
+- `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
 
 Immediate next version:
 
-- `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
+- `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.107` to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
+- Do not roll from `0.5.108` to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.107 Result
+## Version 0.5.108 Result
 
-- Added the planning-only `docs/design/knowledge-domain-registry-plan.md`.
-- Defined the future registry record fields, approved groups, status vocabulary, Waves 0-3, source families, evidence-owner scopes, ownership boundaries, validation rules, schema gaps, and safe future sequence.
-- Formalized the five-domain Wave 0 target: flora, fauna, minerals, arcane lore, and general lore.
-- Recorded current repo reality: four narrow legacy records exist; Arcane Lore is implied by a skill but is not currently registered or linked through `knowledgeDomainId`.
-- Preserved the distinction between registry metadata, snippet definitions, runtime/player state, source/evidence records, validation, and presentation.
-- Made no runtime, schema, content JSON, generated-output, UI, persistence, progress, trial, event, item, spell, or skill ownership changes.
+- Added the planning-only `docs/design/knowledge-domain-registry-schema-plan.md`.
+- Selected a separate broad registry schema at `packages/schemas/player/knowledge-domain-registry.schema.json`.
+- Selected a separate broad registry content file at `packages/content/base/player/knowledge_domain_registry.json`.
+- Defined the exact required field list, patterns, enums, array constraints, nullable policy-reference namespaces, and wrapper contract.
+- Selected `skill.magic.school.*` skill records as the current magic-school reference authority.
+- Defined file-derived content-collection ids from canonical JSON under `packages/content/base`.
+- Assigned structural rules to JSON Schema and cross-file/semantic rules to `tools/content-lint/index.mjs`.
+- Made the future broad registry the canonical domain-id authority while preserving the current legacy file as an identification-policy subset.
+- Defined a no-alias current-data transition and left runtime loading, DB storage, identification behavior, content, schemas, state, UI, trials, and events unchanged.
 
-## Active Guardrails For 0.5.108
+## Active Guardrails For 0.5.109
 
-Knowledge Domain Registry Schema Plan:
+Knowledge Domain Registry Seed Data Plan:
 
 - Planning-only pass.
-- Decide whether the broad registry evolves or separates from the legacy `KnowledgeDomainRecord` shape.
-- Define the future schema location, wrapper shape, required fields, enums, nullable policy references, and semantic validation owner.
-- Select a canonical related-content-collection vocabulary.
-- Select or explicitly defer the canonical magic-school id authority.
-- Define current-data transition rules for the four existing legacy records without implementing a migration.
-- Keep `knowledge_domain.arcane_lore` planned until a later seed-data/content pass.
-- Do not create or edit schemas, registry content JSON, snippet content, runtime loaders, progress state, evidence state, completion math, trials, UI, Chronicle/Renown events, or generated output.
+- Define the exact five Wave 0 records under the approved schema contract.
+- Specify every required field for flora, fauna, minerals, arcane lore, and general lore.
+- Use only current snippet subject/category/source enum values.
+- Use only existing skill ids and `skill.magic.school.*` ids.
+- Use only file-derived canonical content-collection ids.
+- Keep `trialPolicyRef`, `completionPolicyRef`, and `visibilityPolicyRef` explicitly `null`.
+- Keep `knowledge_domain.arcane_lore` status `planned`.
+- Decide explicitly whether a later implementation should add `knowledgeDomainId` to `skill.knowledge.arcane_lore`.
+- Do not create schemas or content JSON, edit skills, change legacy identification policies, add runtime loaders, change DB/persistence, add snippets/state/completion/trials/UI/events, or generate output.
 
 Boundary rules:
 
-- Access is not study.
-- Observation is not mastery.
-- Possession is not understanding.
-- Skill rank is not knowledge completion.
-- Known-spell ownership is not arcane knowledge.
-- Magic study access is not known-spell ownership.
-- Chronicle, reputation, Renown, region visibility, and UI visibility do not create knowledge.
-- Registry records never create player state or grant access, knowledge, skills, spells, items, or evidence.
+- The broad registry is catalog metadata, not identification math.
+- Legacy policy ids are a subset of broad registry ids.
+- Skill and magic-school references do not grant knowledge.
+- Content-collection references do not imply runtime loading.
+- Status, wave, and source declarations do not grant access, evidence, discovery, or completion.
+- `custom` requires explicit notes and is not a validation bypass.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.105` | Spell Hook Support Constants Cleanup | `packages/shared/types/src/spell-hook-support.ts` | Landed |
-| 2 | `0.5.106` | Pure Hook Support Projection Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
-| 3 | `0.5.107` | Knowledge Domain Registry Plan | `docs/design/knowledge-domain-registry-plan.md` | Landed |
-| 4 | `0.5.108` | Knowledge Domain Registry Schema Plan | `docs/design/knowledge-domain-registry-plan.md` | Next |
+| 1 | `0.5.107` | Knowledge Domain Registry Plan | `docs/design/knowledge-domain-registry-plan.md` | Landed |
+| 2 | `0.5.108` | Knowledge Domain Registry Schema Plan | `docs/design/knowledge-domain-registry-schema-plan.md` | Landed |
+| 3 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | `docs/design/knowledge-domain-registry-schema-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.108 - Knowledge Domain Registry Schema Plan`, inspect:
+For `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -88,10 +89,11 @@ For `Version 0.5.108 - Knowledge Domain Registry Schema Plan`, inspect:
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/design/knowledge-domain-registry-plan.md`
-- `docs/design/knowledge-registry-field-ownership.md`
-- `docs/design/knowledge-discovery-source-vocabulary.md`
-- `docs/design/knowledge-boundary-glossary.md`
+- `docs/design/knowledge-domain-registry-schema-plan.md`
 - `packages/schemas/player/knowledge_snippet.schema.json`
+- `packages/schemas/player/knowledge-domain.schema.json`
 - `packages/content/base/player/knowledge_domains.json`
-- `packages/engines/civilization-engine/src/content.ts`
+- `packages/content/base/player/skills.json`
+- `packages/content/base/player/spells.json`
+- `tools/content-lint/index.mjs`
 - `docs/future_content_backlog.md`

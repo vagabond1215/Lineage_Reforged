@@ -21,6 +21,8 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/design/legacy-combat-spell-runtime-ownership-plan.md` owns deferred legacy spell staging, compatibility, multi-effect, and status-approximation decisions.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
 - `docs/design/skill-mastery-trial-framework-plan.md` owns skill trial and magic study-event planning constraints.
+- `docs/design/knowledge-domain-registry-plan.md` owns knowledge-domain purpose, groups, waves, source/evidence vocabulary, and ownership boundaries.
+- `docs/design/knowledge-domain-registry-schema-plan.md` owns the future broad-registry schema contract, reference authorities, validation ownership, and current-data transition.
 - `packages/schemas/player/knowledge_snippet.schema.json` is planning-only schema source for snippet-based knowledge progression; it is not runtime content loading.
 - `docs/future_content_backlog.md` owns chronological deferred notes and run notes.
 
@@ -28,11 +30,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.106 - Pure Hook Support Projection Helper`
+- `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
 
 Next recommended version:
 
-- `Version 0.5.107 - Knowledge Domain Registry Plan`
+- `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
 
 Current sequence source:
 
@@ -84,7 +86,9 @@ Every major system should answer at least one of these questions:
 | `0.5.104` | Spell Hook Classification Audit | Landed. Reconciled spell lint, combat, engine readiness, UI presentation, and authored-hook classifications. | Documentation only; no source refactor, runtime behavior, content JSON, schema, or UI changes. |
 | `0.5.105` | Spell Hook Support Constants Cleanup | Landed. Established the shared authored authority, adapter, and exact inventory/parity/subset/precedence coverage. | Preserved all classifications and behavior; no hook execution, content changes, or legacy combat fixes. |
 | `0.5.106` | Pure Hook Support Projection Helper | Landed. Projects deterministic six-class detail and blockers from explicit support input. | Pure output only; no execution, mutation, readiness weakening, UI, content, schema, or combat changes. |
-| `0.5.107` | Knowledge Domain Registry Plan | Next. Define stable knowledge-domain ownership and validation before content/runtime wiring. | Planning only; no runtime loading, progression, trials, UI, or events. |
+| `0.5.107` | Knowledge Domain Registry Plan | Landed. Defined stable knowledge-domain ownership, waves, source/evidence vocabulary, and validation boundaries. | Documentation only; no runtime loading, progression, trials, UI, or events. |
+| `0.5.108` | Knowledge Domain Registry Schema Plan | Landed. Selected separate broad-registry schema/content paths, exact fields/enums, reference authorities, semantic validation ownership, and transition rules. | Documentation only; no schema file, seed data, runtime loading, persistence, state, trials, UI, or events. |
+| `0.5.109` | Knowledge Domain Registry Seed Data Plan | Next. Define exact Wave 0 records before schema/content implementation. | Planning only; no schema or JSON creation, skill-link changes, runtime loading, persistence, state, trials, UI, or events. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 

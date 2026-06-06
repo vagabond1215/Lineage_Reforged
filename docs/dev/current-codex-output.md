@@ -1,23 +1,24 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.107 - Knowledge Domain Registry Plan
+Source version/run: Version 0.5.108 - Knowledge Domain Registry Schema Plan
 Date: 2026-06-05
-Branch/status assumption: Ran on `master` from commit `d7aebde` after a clean fast-forward pull brought in the required connector-only prep stack. The worktree was clean before this version's edits.
+Branch/status assumption: Ran on `master` from commit `5f9e78c`. The worktree was clean before edits.
 
 ## Result
 
-Added the planning-only knowledge-domain registry authority at `docs/design/knowledge-domain-registry-plan.md`.
+Added the planning-only schema authority at `docs/design/knowledge-domain-registry-schema-plan.md`.
 
-The plan defines the future registry record shape, the five-domain Wave 0 target, normalized domain groups and Waves 0-3, source-family and evidence-owner vocabulary, registry/snippet/runtime ownership boundaries, future validation rules, known schema gaps, and the safe implementation sequence.
+The plan selects a separate broad registry schema and content file, defines the exact required record contract and wrapper, assigns canonical reference authorities, separates structural and semantic validation ownership, and specifies a no-alias current-data transition.
 
-It also records the current repository distinction between the four narrow legacy records in `knowledge_domains.json` and the broader registry target. `knowledge_domain.arcane_lore` is formalized as a planned Wave 0 id but remains absent from current registry content and is not linked from the Arcane Lore skill.
+The future broad registry becomes the canonical domain-id catalog without overloading the existing identification-policy records. Current legacy identification behavior, schemas, content, loaders, DB storage, skills, and runtime state remain unchanged.
 
 ## Files Changed
 
+- `docs/design/knowledge-domain-registry-schema-plan.md`
 - `docs/design/knowledge-domain-registry-plan.md`
-- `docs/design/current-prep-index-and-codex-source-stack.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/current-codex-output.md`
@@ -30,8 +31,10 @@ It also records the current repository distinction between the four narrow legac
   - Passed.
 - Trailing-whitespace scan across touched files.
   - Passed.
-- Required registry-plan content coverage scan.
-  - Passed after tightening the forbidden-change wording.
+- Required schema-plan decision coverage scan.
+  - Passed.
+- Current skill-id and magic-school-id pattern audits.
+  - Passed.
 - `git diff --check`
   - Passed.
 - Broad typecheck was not run because this was a docs-only pass.
@@ -39,20 +42,21 @@ It also records the current repository distinction between the four narrow legac
 ## Behavior / Runtime Confirmation
 
 - Documentation only.
-- No runtime logic, content JSON records, schema changes, generated output, UI, save/account/session state, evidence state, completion math, trials, Chronicle/Renown events, ownership changes, or settlement/map/travel/economy implementation changed.
-- No current knowledge-domain record, snippet, skill link, runtime loader, or legacy interface changed.
+- No schema file, content JSON, runtime loader, DB behavior, generated output, save/account/session state, evidence/progress state, completion math, trials, UI, events, or ownership changed.
+- Existing `knowledge_domains.json`, `knowledge-domain.schema.json`, `KnowledgeDomainRecord`, identification assistance, and skill links remain unchanged.
 
 ## Risks / Follow-Up
 
-- The broad registry's relationship to the existing narrow `KnowledgeDomainRecord` and `knowledge_domains.json` remains intentionally unresolved until the schema-plan pass.
-- `knowledge_domain.arcane_lore` is a planned Wave 0 target, not a live registry record.
-- The canonical magic-school reference authority and related-content-collection vocabulary remain open decisions for the schema plan.
-- `custom` remains the subject/category/source escape hatch until a dedicated schema pass; future validation should require explicit notes and discourage overuse.
+- The broad registry schema and seed content are planned but do not exist yet.
+- The current `knowledge-domain.schema.json` and `knowledge_domains.json` names remain ambiguous until a later identification-policy naming cleanup.
+- Current spell-family values `control` and `ranged` do not have `skill.magic.school.*` authorities and are intentionally invalid for `relatedMagicSchoolIds`.
+- File-derived content-collection ids are path-stable only while canonical content paths remain stable.
+- The future schema-and-seed implementation must shift skill domain-reference validation to the broad registry without changing runtime identification behavior.
 
 ## Next Recommended Version
 
-Version 0.5.108 - Knowledge Domain Registry Schema Plan
+Version 0.5.109 - Knowledge Domain Registry Seed Data Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan domain registry
+docs(knowledge): plan registry schema

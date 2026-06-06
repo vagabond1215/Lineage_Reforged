@@ -421,7 +421,7 @@ Potential future source distinctions include supervised ritual, oral tradition, 
 
 Recommended next safe sequence:
 
-1. `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
+1. `Version 0.5.108 - Knowledge Domain Registry Schema Plan` - landed in `docs/design/knowledge-domain-registry-schema-plan.md`
 2. Knowledge Domain Registry Seed Data Plan
 3. Knowledge Snippet Content Authoring Plan
 4. Knowledge Evidence Contract Plan
@@ -439,6 +439,8 @@ The schema plan should decide:
 - magic-school reference authority
 - semantic validation ownership
 - current-data transition rules for the four existing legacy records
+
+Those decisions are now owned by `docs/design/knowledge-domain-registry-schema-plan.md`. This registry plan remains the authority for domain purpose, groups, waves, source/evidence vocabulary, and ownership boundaries.
 
 Seed data, snippets, evidence, progress state, trials, and UI should remain separate runs.
 
