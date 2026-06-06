@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-06
-Route: Codex local sequencing alignment after `Version 0.5.110 - Knowledge Domain Registry Schema File`
+Route: Codex local sequencing alignment after `Version 0.5.111 - Knowledge Domain Registry Seed Data`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.110 - Knowledge Domain Registry Schema File` implemented the exact broad-registry record contract and focused schema-test registration.
+This file gives Codex a stable ordered queue after `Version 0.5.111 - Knowledge Domain Registry Seed Data` added the exact five-record authored broad registry catalog under the live schema.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.110 - Knowledge Domain Registry Schema File`
+- `Version 0.5.111 - Knowledge Domain Registry Seed Data`
 
 Immediate next Codex run:
 
-- `Version 0.5.111 - Knowledge Domain Registry Seed Data`
+- `Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.110` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.111` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -68,7 +68,8 @@ Versioning note:
 | 30 | `0.5.108` | Knowledge Domain Registry Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-schema-plan.md` | planning doc | Landed | Selected the separate schema/content paths, exact field and enum contract, reference authorities, semantic lint ownership, and no-alias transition without implementation. |
 | 31 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-seed-data-plan.md` | planning doc | Landed | Defined all required fields for the five exact Wave 0 records, constrained General Lore `custom` use, and separated Arcane Lore registry metadata from legacy identification policy and skill linking. |
 | 32 | `0.5.110` | Knowledge Domain Registry Schema File | Codex 5.5 Local | `packages/schemas/player/knowledge-domain-registry.schema.json` | schema file + focused schema test | Landed | Added the exact 20-field structural record schema and focused parse-test registration without seed content, semantic validation, runtime loading, or behavior changes. |
-| 33 | `0.5.111` | Knowledge Domain Registry Seed Data | Codex 5.5 Local | `docs/design/knowledge-domain-registry-seed-data-plan.md` | broad registry content JSON | Next | Add only the exact five-record wrapper/content file; no semantic validator, skill-link changes, legacy policy edits, runtime loading, persistence, snippets, state, UI, trials, or events. |
+| 33 | `0.5.111` | Knowledge Domain Registry Seed Data | Codex 5.5 Local | `packages/content/base/player/knowledge_domain_registry.json` | broad registry content JSON | Landed | Added the exact approved five-record wrapper/content file without semantic validation, skill-link changes, legacy policy edits, runtime loading, or behavior changes. |
+| 34 | `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-schema-plan.md` | planning doc | Next | Define exact lint ownership, checks, tests, and acceptance criteria only; no validator implementation, content edits, skill realignment, runtime loading, persistence, snippets, state, UI, trials, or events. |
 
 ## Default Prompt Pattern
 

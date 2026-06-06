@@ -1,0 +1,463 @@
+{
+  "records": [
+    {
+      "id": "knowledge_domain.flora",
+      "slug": "flora",
+      "name": "Flora",
+      "summary": "Plants, fungi, and other botanical subjects, including identification, habitats, uses, hazards, and regional variation.",
+      "group": "natural_world",
+      "wave": 0,
+      "status": "active",
+      "canonicalSubjectTypes": [
+        "flora",
+        "item",
+        "region"
+      ],
+      "supportedSnippetCategories": [
+        "identification",
+        "habitat",
+        "use",
+        "byproduct",
+        "processing",
+        "danger",
+        "lookalike",
+        "regional_variant",
+        "seasonality",
+        "trade_value",
+        "ritual_use",
+        "cultural_context",
+        "mechanical_application"
+      ],
+      "supportedDiscoverySourceFamilies": [
+        "field_observation",
+        "practical_use",
+        "textual_study",
+        "instruction",
+        "event_record"
+      ],
+      "supportedDiscoverySourceTypes": [
+        "field_identification",
+        "resource_use",
+        "crafting_use",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "scroll_study",
+        "tome_study",
+        "quest_event",
+        "chronicle_record"
+      ],
+      "defaultEvidenceOwnerScopes": [
+        "character",
+        "institution",
+        "region",
+        "settlement",
+        "quest_event",
+        "chronicle_record",
+        "item_instance",
+        "document_instance",
+        "teacher",
+        "study_event",
+        "travel_event"
+      ],
+      "relatedSkillIds": [
+        "skill.resource.spotting.flora",
+        "skill.resource.identify.flora",
+        "skill.knowledge.flora_lore",
+        "skill.knowledge.general_lore"
+      ],
+      "relatedMagicSchoolIds": [],
+      "relatedContentCollections": [
+        "items.consumable_profiles",
+        "items.items",
+        "world.biomes",
+        "world.flora",
+        "world.habitats",
+        "world.regional_ecology_profiles",
+        "world.regions"
+      ],
+      "trialPolicyRef": null,
+      "completionPolicyRef": null,
+      "visibilityPolicyRef": null,
+      "schemaGapNotes": [
+        "Future biome, habitat, and material subject types may reduce indirect region and item references."
+      ],
+      "notes": [
+        "Field observation, possession, and practical use are discovery opportunities, not automatic completion.",
+        "The legacy Flora identification policy remains separate and owns support weights and thresholds."
+      ]
+    },
+    {
+      "id": "knowledge_domain.fauna",
+      "slug": "fauna",
+      "name": "Fauna",
+      "summary": "Animals and other natural fauna, including identification, habitats, behavior, uses, hazards, and regional variation.",
+      "group": "natural_world",
+      "wave": 0,
+      "status": "active",
+      "canonicalSubjectTypes": [
+        "fauna",
+        "item",
+        "region"
+      ],
+      "supportedSnippetCategories": [
+        "identification",
+        "habitat",
+        "behavior",
+        "use",
+        "byproduct",
+        "processing",
+        "danger",
+        "lookalike",
+        "regional_variant",
+        "seasonality",
+        "trade_value",
+        "cultural_context",
+        "mechanical_application"
+      ],
+      "supportedDiscoverySourceFamilies": [
+        "field_observation",
+        "practical_use",
+        "textual_study",
+        "instruction",
+        "event_record"
+      ],
+      "supportedDiscoverySourceTypes": [
+        "field_identification",
+        "resource_use",
+        "crafting_use",
+        "combat_observation",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "scroll_study",
+        "tome_study",
+        "quest_event",
+        "chronicle_record"
+      ],
+      "defaultEvidenceOwnerScopes": [
+        "character",
+        "institution",
+        "region",
+        "settlement",
+        "quest_event",
+        "chronicle_record",
+        "item_instance",
+        "document_instance",
+        "teacher",
+        "study_event",
+        "travel_event",
+        "combat_event"
+      ],
+      "relatedSkillIds": [
+        "skill.resource.spotting.fauna",
+        "skill.resource.identify.fauna",
+        "skill.knowledge.fauna_lore",
+        "skill.knowledge.general_lore"
+      ],
+      "relatedMagicSchoolIds": [],
+      "relatedContentCollections": [
+        "civilization.meat_cut_standards",
+        "items.consumable_profiles",
+        "items.items",
+        "world.biomes",
+        "world.fauna",
+        "world.habitats",
+        "world.regional_ecology_profiles",
+        "world.regions"
+      ],
+      "trialPolicyRef": null,
+      "completionPolicyRef": null,
+      "visibilityPolicyRef": null,
+      "schemaGapNotes": [
+        "Future monster, habitat, and anatomy subject types may be needed before broader creature knowledge is authored."
+      ],
+      "notes": [
+        "Observation, combat contact, possession, and practical use are evidence opportunities, not automatic completion.",
+        "The legacy Fauna identification policy remains separate and owns support weights and thresholds."
+      ]
+    },
+    {
+      "id": "knowledge_domain.minerals",
+      "slug": "minerals",
+      "name": "Minerals",
+      "summary": "Minerals and naturally occurring material deposits, including identification, extraction context, processing, uses, hazards, and trade relevance.",
+      "group": "natural_world",
+      "wave": 0,
+      "status": "active",
+      "canonicalSubjectTypes": [
+        "mineral",
+        "item",
+        "region"
+      ],
+      "supportedSnippetCategories": [
+        "identification",
+        "use",
+        "byproduct",
+        "processing",
+        "danger",
+        "lookalike",
+        "regional_variant",
+        "trade_value",
+        "ritual_use",
+        "mechanical_application"
+      ],
+      "supportedDiscoverySourceFamilies": [
+        "field_observation",
+        "practical_use",
+        "textual_study",
+        "instruction",
+        "event_record"
+      ],
+      "supportedDiscoverySourceTypes": [
+        "field_identification",
+        "resource_use",
+        "crafting_use",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "scroll_study",
+        "tome_study",
+        "quest_event",
+        "chronicle_record"
+      ],
+      "defaultEvidenceOwnerScopes": [
+        "character",
+        "institution",
+        "region",
+        "settlement",
+        "quest_event",
+        "chronicle_record",
+        "item_instance",
+        "document_instance",
+        "teacher",
+        "study_event",
+        "travel_event"
+      ],
+      "relatedSkillIds": [
+        "skill.resource.spotting.minerals",
+        "skill.resource.identify.minerals",
+        "skill.knowledge.mineral_lore",
+        "skill.knowledge.general_lore"
+      ],
+      "relatedMagicSchoolIds": [],
+      "relatedContentCollections": [
+        "civilization.extraction_methods",
+        "civilization.production_chains",
+        "items.items",
+        "world.crystal_catalog",
+        "world.minerals",
+        "world.regions"
+      ],
+      "trialPolicyRef": null,
+      "completionPolicyRef": null,
+      "visibilityPolicyRef": null,
+      "schemaGapNotes": [
+        "Future material, deposit, and production_chain subject types may reduce indirect item and region references."
+      ],
+      "notes": [
+        "Field discovery, extraction, possession, processing, and trade exposure are evidence opportunities, not automatic completion.",
+        "The legacy Minerals identification policy remains separate and owns support weights and thresholds."
+      ]
+    },
+    {
+      "id": "knowledge_domain.arcane_lore",
+      "slug": "arcane_lore",
+      "name": "Arcane Lore",
+      "summary": "Spells, magical materials, institutions, and historical arcane practice, including identification, hazards, ritual context, and practical theory.",
+      "group": "magic_arcana",
+      "wave": 0,
+      "status": "planned",
+      "canonicalSubjectTypes": [
+        "institution",
+        "spell",
+        "item",
+        "historical_event"
+      ],
+      "supportedSnippetCategories": [
+        "identification",
+        "use",
+        "processing",
+        "danger",
+        "ritual_use",
+        "historical_context",
+        "cultural_context",
+        "mechanical_application"
+      ],
+      "supportedDiscoverySourceFamilies": [
+        "field_observation",
+        "practical_use",
+        "textual_study",
+        "instruction",
+        "event_record"
+      ],
+      "supportedDiscoverySourceTypes": [
+        "field_identification",
+        "resource_use",
+        "crafting_use",
+        "combat_observation",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "scroll_study",
+        "tome_study",
+        "quest_event",
+        "chronicle_record"
+      ],
+      "defaultEvidenceOwnerScopes": [
+        "character",
+        "institution",
+        "region",
+        "settlement",
+        "quest_event",
+        "chronicle_record",
+        "item_instance",
+        "document_instance",
+        "teacher",
+        "study_event",
+        "travel_event",
+        "combat_event"
+      ],
+      "relatedSkillIds": [
+        "skill.knowledge.arcane_lore"
+      ],
+      "relatedMagicSchoolIds": [
+        "skill.magic.school.elemental",
+        "skill.magic.school.enfeebling",
+        "skill.magic.school.enhancing",
+        "skill.magic.school.healing",
+        "skill.magic.school.divine",
+        "skill.magic.school.dark",
+        "skill.magic.school.summoning",
+        "skill.magic.school.druidic",
+        "skill.magic.school.enchantment",
+        "skill.magic.school.utility",
+        "skill.magic.school.ninjutsu",
+        "skill.magic.school.performance"
+      ],
+      "relatedContentCollections": [
+        "civilization.guilds",
+        "items.items",
+        "player.spells",
+        "world.crystal_catalog",
+        "world.magic_infrastructure",
+        "world.religions"
+      ],
+      "trialPolicyRef": null,
+      "completionPolicyRef": null,
+      "visibilityPolicyRef": null,
+      "schemaGapNotes": [
+        "Future magic_school, conduit, catalyst, ritual, and theory_principle subject types may be needed before specialized arcane snippets are authored."
+      ],
+      "notes": [
+        "Arcane Lore is planned registry metadata only; it does not create identification-policy thresholds or runtime loading.",
+        "A later skill-link pass must decide whether skill.knowledge.arcane_lore gains knowledgeDomainId; this plan does not edit the skill.",
+        "Known-spell ownership, magic-study completion, and spell access remain separate authorities."
+      ]
+    },
+    {
+      "id": "knowledge_domain.general_lore",
+      "slug": "general_lore",
+      "name": "General Lore",
+      "summary": "Broad historical, cultural, civic, regional, and material context that does not belong to a more specific knowledge domain.",
+      "group": "general",
+      "wave": 0,
+      "status": "active",
+      "canonicalSubjectTypes": [
+        "settlement",
+        "region",
+        "culture",
+        "institution",
+        "item",
+        "ruin",
+        "historical_event",
+        "custom"
+      ],
+      "supportedSnippetCategories": [
+        "identification",
+        "habitat",
+        "behavior",
+        "use",
+        "byproduct",
+        "processing",
+        "danger",
+        "lookalike",
+        "regional_variant",
+        "seasonality",
+        "trade_value",
+        "ritual_use",
+        "historical_context",
+        "cultural_context",
+        "mechanical_application",
+        "custom"
+      ],
+      "supportedDiscoverySourceFamilies": [
+        "field_observation",
+        "practical_use",
+        "textual_study",
+        "instruction",
+        "event_record",
+        "custom"
+      ],
+      "supportedDiscoverySourceTypes": [
+        "field_identification",
+        "resource_use",
+        "crafting_use",
+        "combat_observation",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "scroll_study",
+        "tome_study",
+        "quest_event",
+        "chronicle_record",
+        "custom"
+      ],
+      "defaultEvidenceOwnerScopes": [
+        "character",
+        "institution",
+        "region",
+        "settlement",
+        "quest_event",
+        "chronicle_record",
+        "item_instance",
+        "document_instance",
+        "teacher",
+        "study_event",
+        "travel_event",
+        "combat_event"
+      ],
+      "relatedSkillIds": [
+        "skill.knowledge.general_lore"
+      ],
+      "relatedMagicSchoolIds": [],
+      "relatedContentCollections": [
+        "civilization.guilds",
+        "civilization.quest_definitions",
+        "game.events",
+        "items.items",
+        "world.region_localities",
+        "world.regions",
+        "world.religions",
+        "world.settlements"
+      ],
+      "trialPolicyRef": null,
+      "completionPolicyRef": null,
+      "visibilityPolicyRef": null,
+      "schemaGapNotes": [
+        "Custom is permitted only for broad contextual subjects, categories, or sources that no current enum can represent; each snippet use requires explicit notes and semantic review.",
+        "Current base content has no dedicated culture or ruin collection; future authoring must resolve those subjects through a verified owning collection or defer them."
+      ],
+      "notes": [
+        "Use a specific registered domain whenever one owns the subject; General Lore is not a fallback for Flora, Fauna, Minerals, or Arcane Lore.",
+        "All source declarations describe possible evidence routes only and never grant discovery or completion.",
+        "The legacy General Lore identification policy remains separate and owns support weights and thresholds."
+      ]
+    }
+  ]
+}

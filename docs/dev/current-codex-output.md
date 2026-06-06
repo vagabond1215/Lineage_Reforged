@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.110 - Knowledge Domain Registry Schema File
+Source version/run: Version 0.5.111 - Knowledge Domain Registry Seed Data
 Date: 2026-06-06
-Branch/status assumption: Ran on `master` from commit `f93c25d`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `1517ddf`. The worktree was clean before edits.
 
 ## Result
 
-Added `packages/schemas/player/knowledge-domain-registry.schema.json` as the structural authority for broad knowledge-domain registry records.
+Added `packages/content/base/player/knowledge_domain_registry.json` as the authored broad knowledge-domain registry catalog.
 
-The record-level schema implements the exact 20 required fields, current approved enums, reference patterns, nullable policy references, array constraints, and unknown-field rejection from the schema plan. It intentionally leaves cross-file and relational rules to later semantic content-lint work.
+The file uses the exact one-field wrapper and contains the five approved Wave 0 records for Flora, Fauna, Minerals, Arcane Lore, and General Lore. Every record matches the seed-data plan exactly and satisfies the live broad-registry record schema.
 
-Registered the schema in the focused schema-file test. No broad registry content file was created.
+No semantic content-lint behavior or runtime loading was added.
 
 ## Files Changed
 
-- `packages/schemas/player/knowledge-domain-registry.schema.json`
-- `tests/unit/schema-files.test.mjs`
+- `packages/content/base/player/knowledge_domain_registry.json`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/current-gpt-handoff.md`
@@ -24,35 +23,37 @@ Registered the schema in the focused schema-file test. No broad registry content
 
 ## Checks Run
 
+- Focused JSON Schema validation against `packages/schemas/player/knowledge-domain-registry.schema.json`.
+  - Passed: exact wrapper and all 5 records satisfy the live schema.
+- Approved seed-plan parity audit.
+  - Passed: all 5 records match the approved plan exactly and in order.
 - `node --test tests/unit/schema-files.test.mjs`
   - Passed: 51 tests.
-- Exact schema contract audit.
-  - Passed: record-level boundary, exact 20 required fields/properties, and current snippet subject/category/source enum parity verified.
 - `npm.cmd run tool:content-lint`
   - Passed: 53 files checked.
 - Conflict-marker and trailing-whitespace scans across touched files.
   - Passed.
 - `git diff --check`
   - Passed.
-- Broad typecheck was not run because this pass touched only JSON Schema, its focused registration test, and documentation.
+- Broad typecheck was not run because this pass touched only authored JSON content and documentation.
 
 ## Behavior / Runtime Confirmation
 
-- Schema structure changed by adding one new record-level JSON Schema.
-- No broad registry content JSON, legacy knowledge-domain content, skills, spells, content-lint behavior, runtime loader, DB/persistence, generated output, save/account/session state, evidence/progress state, completion math, trials, UI, events, or ownership behavior changed.
-- Existing identification assistance and knowledge-domain skill links remain unchanged.
+- Authored content data changed by adding the broad registry catalog.
+- No schema, semantic content-lint behavior, legacy knowledge-domain policy, skills, spells, runtime loader, DB/persistence, generated output, save/account/session state, evidence/progress state, completion math, trials, UI, events, or ownership behavior changed.
+- Arcane Lore remains broad registry metadata only and has no legacy identification policy or automatic skill link.
 
 ## Risks / Follow-Up
 
-- The broad registry has no seed content yet.
-- Cross-file rules such as id/slug equality, source-family mapping, reference resolution, and `custom` note requirements are intentionally not enforced until the semantic validator pass.
-- The registry schema inlines current snippet enums by design; future snippet-enum changes require deliberate registry-schema review.
-- Seed data, semantic validator planning, semantic validator implementation, and skill-reference realignment remain separate runs.
+- The broad registry is not yet registered with semantic content lint.
+- Cross-file rules such as id/slug equality, source-family mapping, reference resolution, legacy-policy subset validation, and `custom` note requirements remain unenforced by repository lint.
+- The new content file is not runtime-loaded.
+- Semantic validator planning, validator implementation, and skill-reference realignment remain separate runs.
 
 ## Next Recommended Version
 
-Version 0.5.111 - Knowledge Domain Registry Seed Data
+Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan
 
 ## Suggested Commit Message
 
-schemas(knowledge): add domain registry schema
+content(knowledge): seed domain registry
