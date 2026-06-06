@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-05
-Route: Codex local sequencing alignment after `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
+Date: 2026-06-06
+Route: Codex local sequencing alignment after `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.108 - Knowledge Domain Registry Schema Plan` established the separate broad-registry schema boundary, exact field contract, reference authorities, validation ownership, and current-data transition.
+This file gives Codex a stable ordered queue after `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan` established the exact five Wave 0 record drafts and a schema-first implementation sequence.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
+- `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
+- `Version 0.5.110 - Knowledge Domain Registry Schema File`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.108` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.109` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -66,7 +66,8 @@ Versioning note:
 | 28 | `0.5.106` | Pure Hook Support Projection Helper | Codex 5.5 Local | `packages/engines/game-engine/src/known-spells.ts` | pure helper + focused tests | Landed | Projects six classes and blocker details from explicit support input; no execution, mutation, readiness weakening, UI, content, schema, or combat changes. |
 | 29 | `0.5.107` | Knowledge Domain Registry Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-plan.md` | planning doc | Landed | Defined the broader future registry shape, Wave 0 target, Waves 1-3, groups, source/evidence vocabulary, ownership boundaries, validation rules, schema gaps, and safe sequence without implementation. |
 | 30 | `0.5.108` | Knowledge Domain Registry Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-schema-plan.md` | planning doc | Landed | Selected the separate schema/content paths, exact field and enum contract, reference authorities, semantic lint ownership, and no-alias transition without implementation. |
-| 31 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-schema-plan.md` | planning doc | Next | Define the five exact Wave 0 records only; no schema or JSON creation, skill-link changes, runtime loading, persistence, snippets, state, UI, trials, or events. |
+| 31 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-seed-data-plan.md` | planning doc | Landed | Defined all required fields for the five exact Wave 0 records, constrained General Lore `custom` use, and separated Arcane Lore registry metadata from legacy identification policy and skill linking. |
+| 32 | `0.5.110` | Knowledge Domain Registry Schema File | Codex 5.5 Local | `docs/design/knowledge-domain-registry-schema-plan.md` | schema file + focused schema test | Next | Add only the approved record schema and focused schema registration; no seed JSON, semantic validator, skill-link changes, runtime loading, persistence, snippets, state, UI, trials, or events. |
 
 ## Default Prompt Pattern
 
@@ -91,6 +92,7 @@ Each future Codex prompt should:
 - Do not mix resolver readiness helper work with combat math rewrites, active spell effects, ammo behavior, ranged balancing, broad equipment slot metadata, shield/armor training, hybrid/improvised weapon policy, or UI implementation.
 - Do not begin effectful runtime magic until known-spell ownership helpers, validation, acquisition evidence helpers, read-only projection, cast-readiness helper, training-event acquisition helpers, command contract, resolver readiness helper, planned-output-envelope policy, inert envelope helper, hook classification audit, pure hook projection, executable-owner planning, and blocked-hook tests are explicitly implemented in narrow slices.
 - Do not combine the legacy combat spell-staging or multi-effect branch-order findings with constants cleanup or pure projection work.
+- Keep the registry schema file, seed data, semantic validator planning, semantic validator implementation, and skill-reference realignment as separate runs.
 
 ## When To Reorder
 

@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-06-05
+Last reviewed: 2026-06-06
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
-- Next recommended version: `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
+- Latest landed version: `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
+- Next recommended version: `Version 0.5.110 - Knowledge Domain Registry Schema File`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.108` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.109` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -70,6 +70,7 @@ Current repo reality:
 - Snippet-based knowledge progression has a planning schema at `packages/schemas/player/knowledge_snippet.schema.json` and a domain backlog in `docs/future_content_backlog.md`.
 - Knowledge-domain registry planning has landed in `docs/design/knowledge-domain-registry-plan.md`, defining the broader future record shape, the five-domain Wave 0 target, Waves 1-3, groups, source/evidence vocabulary, ownership boundaries, validation rules, schema gaps, and future sequence.
 - Knowledge-domain registry schema planning has landed in `docs/design/knowledge-domain-registry-schema-plan.md`. It selects a separate broad registry schema/content file, exact record constraints, file-derived content-collection ids, magic-school skill ids as the current school authority, content-lint semantic ownership, and a no-alias current-data transition.
+- Knowledge-domain registry seed-data planning has landed in `docs/design/knowledge-domain-registry-seed-data-plan.md`. It defines complete drafts for the five Wave 0 records, constrains `custom` to General Lore, verifies current references, preserves the legacy policy subset, and separates the schema file, seed data, semantic validation, and skill-reference realignment into later runs.
 - The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four records exist today; `knowledge_domain.arcane_lore` remains a planned Wave 0 record and is not currently registered or linked from the Arcane Lore skill.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
@@ -111,7 +112,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.106` | Pure Hook Support Projection Helper | Codex Local | Pure helper + focused tests | Landed. Returns deterministic six-class hook projections and blocker detail from explicit support input. | Executes nothing, mutates nothing, preserves readiness behavior, and reports every hook as non-executable. |
 | `0.5.107` | Knowledge Domain Registry Plan | Codex Local docs-first | Planning | Landed. Defined the future record shape, five-domain Wave 0 set, Waves 1-3, groups, source/evidence vocabulary, ownership boundaries, validation rules, schema gaps, and safe sequence. | Documentation only; no runtime loading, content JSON, schemas, completion math, trials, UI, events, persistence, or ownership changes. |
 | `0.5.108` | Knowledge Domain Registry Schema Plan | Codex Local docs-first | Planning | Landed. Selected a separate broad registry schema/content file, exact field and enum contract, reference authorities, lint ownership, and current-data transition. | Documentation only; no schema file, seed data, content migration, runtime loading, snippets, state, trials, UI, or events. |
-| `0.5.109` | Knowledge Domain Registry Seed Data Plan | Codex Local docs-first | Planning | Next. Define exact Wave 0 records under the approved schema contract before schema/content implementation. | Planning only; no schema or JSON creation, skill-link edits, runtime loading, persistence, snippets, state, trials, UI, or events. |
+| `0.5.109` | Knowledge Domain Registry Seed Data Plan | Codex Local docs-first | Planning | Landed. Defined complete exact drafts for the five Wave 0 registry records and the schema-first implementation sequence. | Documentation only; no schema or JSON creation, skill-link edits, runtime loading, persistence, snippets, state, trials, UI, or events. |
+| `0.5.110` | Knowledge Domain Registry Schema File | Codex Local | Schema file + focused schema test | Next. Add the approved broad registry record schema before content or semantic validation. | Schema only; no seed JSON, content-lint implementation, skill-link edits, runtime loading, persistence, snippets, state, trials, UI, or events. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -140,10 +142,12 @@ The magic runtime path must not jump directly from known-spell projection into a
 
 Practical near-term sequence:
 
-1. `0.5.109 - Knowledge Domain Registry Seed Data Plan`
-2. `0.5.x - Knowledge Domain Registry Schema And Seed Implementation`
-3. `0.5.x - Knowledge Identification Policy Naming Cleanup`
-4. `0.5.x - Knowledge Snippet Content Authoring Plan`
+1. `0.5.110 - Knowledge Domain Registry Schema File`
+2. `0.5.x - Knowledge Domain Registry Seed Data`
+3. `0.5.x - Knowledge Domain Registry Semantic Validator Plan`
+4. `0.5.x - Knowledge Domain Registry Semantic Validator`
+5. `0.5.x - Skill Knowledge Domain Reference Realignment Plan`
+6. `0.5.x - Knowledge Snippet Content Authoring Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -159,23 +163,28 @@ Recommended advancement sequence:
 
 1. `0.5.107 - Knowledge Domain Registry Plan` - landed
 2. `0.5.108 - Knowledge Domain Registry Schema Plan` - landed
-3. `0.5.109 - Knowledge Domain Registry Seed Data Plan`
-4. `0.5.x - Knowledge Domain Registry Schema And Seed Implementation`
-5. `0.5.x - Knowledge Identification Policy Naming Cleanup`
-6. `0.5.x - Knowledge Snippet Content Authoring Plan`
-7. `0.5.x - Knowledge Evidence Contract Plan`
-8. `0.5.x - Knowledge Progress State Plan`
-9. `0.5.x - Skill Trial Schema Expansion Plan`
-10. `0.5.x - Pure Checkpoint Outcome Helper`
-11. `0.5.x - Trial Attempt Cooldown Readiness Helper`
-12. `0.5.x - Magic Study Event Plan`
-13. `0.5.x - Magic Teaching Source Plan`
-14. `0.6.x - First Advancement Event Runtime Shape`
-15. `0.6.x - First Knowledge Completion Helper`
-16. `0.6.x - First Skill Trial Family Content`
-17. `0.6.x - First Magic Study Event Family Content`
-18. `0.6.x - First Knowledge Trial Family Content`
-19. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
+3. `0.5.109 - Knowledge Domain Registry Seed Data Plan` - landed
+4. `0.5.110 - Knowledge Domain Registry Schema File`
+5. `0.5.x - Knowledge Domain Registry Seed Data`
+6. `0.5.x - Knowledge Domain Registry Semantic Validator Plan`
+7. `0.5.x - Knowledge Domain Registry Semantic Validator`
+8. `0.5.x - Skill Knowledge Domain Reference Realignment Plan`
+9. `0.5.x - Knowledge Snippet Content Authoring Plan`
+10. `0.5.x - Knowledge Evidence Contract Plan`
+11. `0.5.x - Knowledge Progress State Plan`
+12. `0.5.x - Knowledge Trial Plan`
+13. `0.5.x - Knowledge UI Plan`
+14. `0.5.x - Skill Trial Schema Expansion Plan`
+15. `0.5.x - Pure Checkpoint Outcome Helper`
+16. `0.5.x - Trial Attempt Cooldown Readiness Helper`
+17. `0.5.x - Magic Study Event Plan`
+18. `0.5.x - Magic Teaching Source Plan`
+19. `0.6.x - First Advancement Event Runtime Shape`
+20. `0.6.x - First Knowledge Completion Helper`
+21. `0.6.x - First Skill Trial Family Content`
+22. `0.6.x - First Magic Study Event Family Content`
+23. `0.6.x - First Knowledge Trial Family Content`
+24. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
 
 ## 6. Knowledge Domain Timing
 
@@ -279,7 +288,7 @@ These domains are useful, but should wait until core domain mechanics and first 
 
 Timing guardrails:
 
-- Do not wire knowledge snippets into runtime content loading until a knowledge-domain registry/content plan exists.
+- Do not wire knowledge snippets into runtime content loading until the broad registry schema, seed content, and semantic validation exist.
 - Do not let book, teacher, institution, scroll, tome, Chronicle, travel, or quest sources automatically grant knowledge without dedicated discovery/progression helpers.
 - Keep knowledge distinct from skills and known spells: knowledge is discovered understanding, skills are action capability, and magic study can later produce acquisition evidence.
 - Do not entangle knowledge snippet runtime behavior with magic resolver planned output envelopes.
@@ -307,7 +316,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 15 | `0.5.106` | Pure Hook Support Projection Helper | `packages/engines/game-engine/src/known-spells.ts` | Landed |
 | 16 | `0.5.107` | Knowledge Domain Registry Plan | `docs/design/knowledge-domain-registry-plan.md` | Landed |
 | 17 | `0.5.108` | Knowledge Domain Registry Schema Plan | `docs/design/knowledge-domain-registry-schema-plan.md` | Landed |
-| 18 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | `docs/design/knowledge-domain-registry-schema-plan.md` | Next |
+| 18 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | `docs/design/knowledge-domain-registry-seed-data-plan.md` | Landed |
+| 19 | `0.5.110` | Knowledge Domain Registry Schema File | `docs/design/knowledge-domain-registry-schema-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
