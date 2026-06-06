@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest landed version: `Version 0.5.111 - Knowledge Domain Registry Seed Data`
-- Next recommended version: `Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
+- Latest completed version: `Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
+- Next recommended version: `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.111` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.112` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -117,7 +117,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | Codex Local docs-first | Planning | Landed. Defined complete exact drafts for the five Wave 0 registry records and the schema-first implementation sequence. | Documentation only; no schema or JSON creation, skill-link edits, runtime loading, persistence, snippets, state, trials, UI, or events. |
 | `0.5.110` | Knowledge Domain Registry Schema File | Codex Local | Schema file + focused schema test | Landed. Added the exact broad registry record schema and focused parse-test registration. | Structural schema only; no seed JSON, content-lint implementation, skill-link edits, runtime loading, persistence, snippets, state, trials, UI, or events. |
 | `0.5.111` | Knowledge Domain Registry Seed Data | Codex Local | Broad registry content JSON | Landed. Added the exact five Wave 0 records under the live schema. | Seed content only; no semantic validator, skill-link edits, legacy policy changes, runtime loading, persistence, snippets, state, trials, UI, or events. |
-| `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | Codex Local docs-first | Planning | Next. Define the exact semantic lint checks, test ownership, and acceptance criteria before validator implementation. | Planning only; no content-lint implementation, content edits, skill realignment, runtime loading, persistence, snippets, state, trials, UI, or events. |
+| `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | Codex Local docs-first | Planning | Completed. Defined the schema-first lint entrypoint, semantic checks, focused tests, and acceptance criteria. | Documentation only; no validator code, content, schema, skill, runtime, persistence, snippets, state, trials, UI, or events. |
+| `0.5.113` | Knowledge Domain Registry Semantic Validator | Codex Local | Focused content-lint validator + tests | Next. Implement the approved broad-registry semantic checks and broad skill-domain authority. | No content, schema, skill-link, runtime, persistence, generated-output, snippet, trial, UI, or gameplay changes. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -146,10 +147,11 @@ The magic runtime path must not jump directly from known-spell projection into a
 
 Practical near-term sequence:
 
-1. `0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
-2. `0.5.x - Knowledge Domain Registry Semantic Validator`
-3. `0.5.x - Skill Knowledge Domain Reference Realignment Plan`
-4. `0.5.x - Knowledge Snippet Content Authoring Plan`
+1. `0.5.112 - Knowledge Domain Registry Semantic Validator Plan` - completed
+2. `0.5.113 - Knowledge Domain Registry Semantic Validator`
+3. `0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
+4. `0.5.115 - Skill Knowledge Domain Reference Realignment`
+5. `0.5.x - Knowledge Snippet Content Authoring Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -168,25 +170,26 @@ Recommended advancement sequence:
 3. `0.5.109 - Knowledge Domain Registry Seed Data Plan` - landed
 4. `0.5.110 - Knowledge Domain Registry Schema File` - landed
 5. `0.5.111 - Knowledge Domain Registry Seed Data` - landed
-6. `0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
-7. `0.5.x - Knowledge Domain Registry Semantic Validator`
-8. `0.5.x - Skill Knowledge Domain Reference Realignment Plan`
-9. `0.5.x - Knowledge Snippet Content Authoring Plan`
-10. `0.5.x - Knowledge Evidence Contract Plan`
-11. `0.5.x - Knowledge Progress State Plan`
-12. `0.5.x - Knowledge Trial Plan`
-13. `0.5.x - Knowledge UI Plan`
-14. `0.5.x - Skill Trial Schema Expansion Plan`
-15. `0.5.x - Pure Checkpoint Outcome Helper`
-16. `0.5.x - Trial Attempt Cooldown Readiness Helper`
-17. `0.5.x - Magic Study Event Plan`
-18. `0.5.x - Magic Teaching Source Plan`
-19. `0.6.x - First Advancement Event Runtime Shape`
-20. `0.6.x - First Knowledge Completion Helper`
-21. `0.6.x - First Skill Trial Family Content`
-22. `0.6.x - First Magic Study Event Family Content`
-23. `0.6.x - First Knowledge Trial Family Content`
-24. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
+6. `0.5.112 - Knowledge Domain Registry Semantic Validator Plan` - completed
+7. `0.5.113 - Knowledge Domain Registry Semantic Validator`
+8. `0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
+9. `0.5.115 - Skill Knowledge Domain Reference Realignment`
+10. `0.5.x - Knowledge Snippet Content Authoring Plan`
+11. `0.5.x - Knowledge Evidence Contract Plan`
+12. `0.5.x - Knowledge Progress State Plan`
+13. `0.5.x - Knowledge Trial Plan`
+14. `0.5.x - Knowledge UI Plan`
+15. `0.5.x - Skill Trial Schema Expansion Plan`
+16. `0.5.x - Pure Checkpoint Outcome Helper`
+17. `0.5.x - Trial Attempt Cooldown Readiness Helper`
+18. `0.5.x - Magic Study Event Plan`
+19. `0.5.x - Magic Teaching Source Plan`
+20. `0.6.x - First Advancement Event Runtime Shape`
+21. `0.6.x - First Knowledge Completion Helper`
+22. `0.6.x - First Skill Trial Family Content`
+23. `0.6.x - First Magic Study Event Family Content`
+24. `0.6.x - First Knowledge Trial Family Content`
+25. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
 
 ## 6. Knowledge Domain Timing
 
@@ -321,7 +324,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 18 | `0.5.109` | Knowledge Domain Registry Seed Data Plan | `docs/design/knowledge-domain-registry-seed-data-plan.md` | Landed |
 | 19 | `0.5.110` | Knowledge Domain Registry Schema File | `packages/schemas/player/knowledge-domain-registry.schema.json` | Landed |
 | 20 | `0.5.111` | Knowledge Domain Registry Seed Data | `packages/content/base/player/knowledge_domain_registry.json` | Landed |
-| 21 | `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | `docs/design/knowledge-domain-registry-schema-plan.md` | Next |
+| 21 | `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Completed |
+| 22 | `0.5.113` | Knowledge Domain Registry Semantic Validator | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
