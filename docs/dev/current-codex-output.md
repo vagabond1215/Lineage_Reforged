@@ -1,20 +1,21 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.109 - Knowledge Domain Registry Seed Data Plan
+Source version/run: Version 0.5.110 - Knowledge Domain Registry Schema File
 Date: 2026-06-06
-Branch/status assumption: Ran on `master` from commit `6aa4d4d`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `f93c25d`. The worktree was clean before edits.
 
 ## Result
 
-Added the planning-only seed-data authority at `docs/design/knowledge-domain-registry-seed-data-plan.md`.
+Added `packages/schemas/player/knowledge-domain-registry.schema.json` as the structural authority for broad knowledge-domain registry records.
 
-The plan defines complete future records for Flora, Fauna, Minerals, Arcane Lore, and General Lore with every required registry field. It uses only current snippet enums, existing skill and school-skill ids, and file-derived base-content collection ids.
+The record-level schema implements the exact 20 required fields, current approved enums, reference patterns, nullable policy references, array constraints, and unknown-field rejection from the schema plan. It intentionally leaves cross-file and relational rules to later semantic content-lint work.
 
-All records remain Wave 0, all policy references remain `null`, Arcane Lore remains `planned`, and `custom` is limited to explicitly constrained General Lore use. The legacy identification-policy subset and current runtime behavior remain unchanged.
+Registered the schema in the focused schema-file test. No broad registry content file was created.
 
 ## Files Changed
 
-- `docs/design/knowledge-domain-registry-seed-data-plan.md`
+- `packages/schemas/player/knowledge-domain-registry.schema.json`
+- `tests/unit/schema-files.test.mjs`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/current-gpt-handoff.md`
@@ -23,35 +24,35 @@ All records remain Wave 0, all policy references remain `null`, Arcane Lore rema
 
 ## Checks Run
 
+- `node --test tests/unit/schema-files.test.mjs`
+  - Passed: 51 tests.
+- Exact schema contract audit.
+  - Passed: record-level boundary, exact 20 required fields/properties, and current snippet subject/category/source enum parity verified.
 - `npm.cmd run tool:content-lint`
   - Passed: 53 files checked.
-- Conflict-marker scan across touched files.
+- Conflict-marker and trailing-whitespace scans across touched files.
   - Passed.
-- Trailing-whitespace scan across touched files.
-  - Passed.
-- Required seed-data-plan coverage and record-reference audit.
-  - Passed: 12 required sections and 5 exact records; required fields, current enums, source-family mappings, skill ids, school-skill ids, and base-content collection ids verified.
 - `git diff --check`
   - Passed.
-- Broad typecheck was not run because this was a docs-only pass.
+- Broad typecheck was not run because this pass touched only JSON Schema, its focused registration test, and documentation.
 
 ## Behavior / Runtime Confirmation
 
-- Documentation only.
-- No schema file, content JSON, legacy identification policy, skill, spell, content-lint implementation, runtime loader, DB behavior, generated output, save/account/session state, evidence/progress state, completion math, trials, UI, events, or ownership changed.
-- Existing identification assistance, knowledge-domain skill links, and known-spell behavior remain unchanged.
+- Schema structure changed by adding one new record-level JSON Schema.
+- No broad registry content JSON, legacy knowledge-domain content, skills, spells, content-lint behavior, runtime loader, DB/persistence, generated output, save/account/session state, evidence/progress state, completion math, trials, UI, events, or ownership behavior changed.
+- Existing identification assistance and knowledge-domain skill links remain unchanged.
 
 ## Risks / Follow-Up
 
-- The broad registry schema and content file do not exist yet.
-- General Lore includes constrained `custom` support; future semantic validation must require explicit notes and reject use when a specific domain applies.
-- Arcane Lore references all current school-skill ids as metadata, but remains unlinked from `skill.knowledge.arcane_lore` until a later explicit reference-realignment plan.
-- The future schema, seed data, semantic validator plan, semantic validator, and skill-reference realignment should remain separate runs.
+- The broad registry has no seed content yet.
+- Cross-file rules such as id/slug equality, source-family mapping, reference resolution, and `custom` note requirements are intentionally not enforced until the semantic validator pass.
+- The registry schema inlines current snippet enums by design; future snippet-enum changes require deliberate registry-schema review.
+- Seed data, semantic validator planning, semantic validator implementation, and skill-reference realignment remain separate runs.
 
 ## Next Recommended Version
 
-Version 0.5.110 - Knowledge Domain Registry Schema File
+Version 0.5.111 - Knowledge Domain Registry Seed Data
 
 ## Suggested Commit Message
 
-docs(knowledge): plan registry seed data
+schemas(knowledge): add domain registry schema

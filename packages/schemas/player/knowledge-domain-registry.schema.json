@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnowledgeDomainRegistryRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "slug",
+    "name",
+    "summary",
+    "group",
+    "wave",
+    "status",
+    "canonicalSubjectTypes",
+    "supportedSnippetCategories",
+    "supportedDiscoverySourceFamilies",
+    "supportedDiscoverySourceTypes",
+    "defaultEvidenceOwnerScopes",
+    "relatedSkillIds",
+    "relatedMagicSchoolIds",
+    "relatedContentCollections",
+    "trialPolicyRef",
+    "completionPolicyRef",
+    "visibilityPolicyRef",
+    "schemaGapNotes",
+    "notes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^knowledge_domain\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "group": {
+      "type": "string",
+      "enum": [
+        "natural_world",
+        "geography_travel",
+        "settlement_society",
+        "monster_combat",
+        "economy_materials",
+        "medicine_body",
+        "magic_arcana",
+        "religion_myth",
+        "history_culture",
+        "military_tactics",
+        "general"
+      ]
+    },
+    "wave": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "planned",
+        "draft",
+        "deferred"
+      ]
+    },
+    "canonicalSubjectTypes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "flora",
+          "fauna",
+          "mineral",
+          "settlement",
+          "region",
+          "culture",
+          "institution",
+          "spell",
+          "item",
+          "ruin",
+          "historical_event",
+          "custom"
+        ]
+      }
+    },
+    "supportedSnippetCategories": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "identification",
+          "habitat",
+          "behavior",
+          "use",
+          "byproduct",
+          "processing",
+          "danger",
+          "lookalike",
+          "regional_variant",
+          "seasonality",
+          "trade_value",
+          "ritual_use",
+          "historical_context",
+          "cultural_context",
+          "mechanical_application",
+          "custom"
+        ]
+      }
+    },
+    "supportedDiscoverySourceFamilies": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "field_observation",
+          "practical_use",
+          "textual_study",
+          "instruction",
+          "event_record",
+          "custom"
+        ]
+      }
+    },
+    "supportedDiscoverySourceTypes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "field_identification",
+          "resource_use",
+          "crafting_use",
+          "combat_observation",
+          "travel_observation",
+          "book_study",
+          "teacher_instruction",
+          "institutional_study",
+          "scroll_study",
+          "tome_study",
+          "quest_event",
+          "chronicle_record",
+          "custom"
+        ]
+      }
+    },
+    "defaultEvidenceOwnerScopes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "character",
+          "account",
+          "family",
+          "institution",
+          "region",
+          "settlement",
+          "quest_event",
+          "chronicle_record",
+          "item_instance",
+          "document_instance",
+          "teacher",
+          "study_event",
+          "travel_event",
+          "combat_event",
+          "custom"
+        ]
+      }
+    },
+    "relatedSkillIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^skill\\.[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+      }
+    },
+    "relatedMagicSchoolIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^skill\\.magic\\.school\\.[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+      }
+    },
+    "relatedContentCollections": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+      }
+    },
+    "trialPolicyRef": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^knowledge_trial_policy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        }
+      ]
+    },
+    "completionPolicyRef": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^knowledge_completion_policy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        }
+      ]
+    },
+    "visibilityPolicyRef": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^knowledge_visibility_policy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        }
+      ]
+    },
+    "schemaGapNotes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
