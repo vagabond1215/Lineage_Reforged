@@ -1,0 +1,126 @@
+{
+  "records": [
+    {
+      "id": "knowledge_snippet.flora.aloe.identification",
+      "domainId": "knowledge_domain.flora",
+      "subjectType": "flora",
+      "subjectId": "flora.aloe",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Aloe",
+      "summary": "Aloe is a perennial herb associated with tidal-flat habitat; its harvestable parts include leaves, stems, roots, and flowers.",
+      "discoverySources": [
+        {
+          "sourceType": "field_identification",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified plant remains to be understood."
+      },
+      "notes": [
+        "Field identification is a possible discovery route only and does not grant completion without future evidence and progression rules."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.fauna.badger.identification",
+      "domainId": "knowledge_domain.fauna",
+      "subjectType": "fauna",
+      "subjectId": "fauna.badger",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Badger",
+      "summary": "The badger is a crepuscular omnivorous mammal with a medium danger classification and an association with tidal-flat habitat.",
+      "discoverySources": [
+        {
+          "sourceType": "field_identification",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified animal remains to be understood."
+      },
+      "notes": [
+        "Field identification is a possible discovery route only and does not grant completion without future evidence and progression rules."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.minerals.iron_ore.identification",
+      "domainId": "knowledge_domain.minerals",
+      "subjectType": "mineral",
+      "subjectId": "mineral.iron_ore",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Iron Ore",
+      "summary": "Iron ore is a tier-one mineral found in vein and lode deposits and can be extracted manually or with infrastructure.",
+      "discoverySources": [
+        {
+          "sourceType": "field_identification",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified mineral remains to be understood."
+      },
+      "notes": [
+        "Field identification is a possible discovery route only and does not grant completion without future evidence and progression rules."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.kaelvar.cultural_context",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "region",
+      "subjectId": "region.kaelvar",
+      "tier": 1,
+      "category": "cultural_context",
+      "title": "Settlement Patterns of Kaelvar",
+      "summary": "Kaelvar's southern coasts cluster ports and estates, while its interior depends on marches, mines, and caravan forts.",
+      "discoverySources": [
+        {
+          "sourceType": "travel_observation",
+          "sourceId": null,
+          "locationScope": {
+            "continentId": "region.kaelvar",
+            "regionId": null,
+            "settlementId": null,
+            "biomeTags": []
+          }
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": false,
+        "hiddenSummary": "A regional settlement pattern remains undiscovered."
+      },
+      "notes": [
+        "Travel observation is a possible discovery route only; entering or revealing Kaelvar does not grant completion."
+      ]
+    }
+  ]
+}

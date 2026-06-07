@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.117 - Knowledge Snippet Schema Hardening`
+Source route: Codex local implementation after `Version 0.5.118 - Knowledge Snippet Seed Data`
 Date: 2026-06-07
-Branch/status assumption: `master` at commit `a2e6405` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `a790dde` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -15,6 +15,7 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
 - `docs/design/knowledge-snippet-content-authoring-plan.md` owns the exact first seed records, schema readiness, subject authorities, semantic checks, and implementation sequence.
 - `packages/schemas/player/knowledge_snippet.schema.json` is the live authored-record structural contract.
+- `packages/content/base/player/knowledge_snippets.json` is the authored snippet catalog.
 - `docs/design/knowledge-domain-registry-plan.md` owns domain purpose, status meaning, source vocabulary, and ownership boundaries.
 - `packages/content/base/player/knowledge_domain_registry.json` is the broad domain authority.
 - `docs/design/skill-knowledge-domain-reference-realignment-plan.md` retains deferred Folk Lore and Civic Lore decisions.
@@ -24,40 +25,40 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.117 - Knowledge Snippet Schema Hardening`
+- `Version 0.5.118 - Knowledge Snippet Seed Data`
 
 Immediate next version:
 
-- `Version 0.5.118 - Knowledge Snippet Seed Data`
+- `Version 0.5.119 - Knowledge Snippet Semantic Validator Plan`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.117 Result
+## Version 0.5.118 Result
 
-- Hardened the existing record-level schema without adding a content wrapper schema.
-- Required all intended live authored fields, including `summary`, `notes`, and all three progression fields.
-- Added canonical patterns for snippet, domain, subject, prerequisite skill, location, and biome-tag values.
-- Added non-empty authored-string and exact-duplicate protections.
-- Preserved Tier 1-10, rank 0-125, subject, category, and discovery-source vocabularies.
-- Kept prerequisites and `hiddenSummary` optional, with `hiddenSummary` nullable and non-empty when non-null.
-- Registered the schema in `tests/unit/schema-files.test.mjs`.
-- Added no snippet JSON, semantic validation, registry/skill changes, runtime loading, state, UI, generated output, or gameplay behavior.
+- Added `packages/content/base/player/knowledge_snippets.json` with the exact `records` wrapper.
+- Added exactly four Tier 1 records in approved order:
+  - Aloe identification
+  - Badger identification
+  - Iron Ore identification
+  - Kaelvar cultural context
+- Preserved exact plan text, sources, weights, visibility, and notes.
+- Confirmed all four records pass the hardened schema and reference active broad domains and current canonical subjects.
+- Added no semantic validator, schema/registry/skill changes, runtime loading, state, UI, generated output, or gameplay behavior.
 
-## Active Guardrails For 0.5.118
+## Active Guardrails For 0.5.119
 
-Knowledge Snippet Seed Data:
+Knowledge Snippet Semantic Validator Plan:
 
-- Create only `packages/content/base/player/knowledge_snippets.json` plus required handoff documentation.
-- Use the exact top-level `{ "records": [...] }` wrapper from the authoring plan.
-- Add exactly the four approved Tier 1 records in authored order: Aloe, Badger, Iron Ore, and Kaelvar.
-- Preserve the exact ids, fields, text, sources, weights, visibility values, and notes from Section 6 of the authoring plan unless canonical source inspection proves a blocker.
-- Do not add Arcane Lore or other records.
-- Do not edit the hardened schema, registry content, skills, or existing validators unless a blocking defect is proven and separately reported.
-- Do not add semantic validator behavior, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership.
+- Create a planning-only validator contract from Section 8 of the authoring plan.
+- Define schema-first validation ownership, wrapper checks, active-domain compatibility, subject authorities, source/category compatibility, reference resolution, prerequisite graph checks, location checks, custom/source-id posture, focused tests, and lint orchestration.
+- Keep the current four-record content and hardened schema unchanged unless the audit proves a blocking defect.
+- Do not implement validator code or tests during the planning pass.
+- Do not add runtime loading, evidence, progress, completion, trials, UI, events, persistence, ownership, or gameplay behavior.
 
 Current follow-up risks:
 
-- No snippet semantic validator exists, so the seed run needs focused local structural/reference audits in addition to existing tests.
+- Normal content lint does not yet validate the snippet wrapper or records.
+- `hiddenSummary` when locked, duplicate discovery declarations, non-null source authority, and prerequisite graph rules remain semantic checks.
 - The broad Arcane Lore record retains a stale future-link note; do not edit registry content without explicit authorization.
 - Folk Lore awaits a cultures-domain authority.
 - Civic Lore awaits a focused domain-ownership decision.
@@ -69,8 +70,8 @@ Current follow-up risks:
 | 1 | `0.5.115` | Skill Knowledge Domain Reference Realignment | `packages/content/base/player/skills.json` | Completed |
 | 2 | `0.5.116` | Knowledge Snippet Content Authoring Plan | `docs/design/knowledge-snippet-content-authoring-plan.md` | Completed |
 | 3 | `0.5.117` | Knowledge Snippet Schema Hardening | `packages/schemas/player/knowledge_snippet.schema.json` | Completed |
-| 4 | `0.5.118` | Knowledge Snippet Seed Data | `docs/design/knowledge-snippet-content-authoring-plan.md` | Next |
-| 5 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | `docs/design/knowledge-snippet-content-authoring-plan.md` | Planned |
+| 4 | `0.5.118` | Knowledge Snippet Seed Data | `packages/content/base/player/knowledge_snippets.json` | Completed |
+| 5 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | `docs/design/knowledge-snippet-content-authoring-plan.md` | Next |
 | 6 | `0.5.120` | Knowledge Snippet Semantic Validator | Future validator plan | Planned |
 | 7 | `0.5.x` | Knowledge Evidence Contract Plan | Future focused plan | Deferred |
 | 8 | `0.5.x` | Knowledge Progress State Plan | Future focused plan | Deferred |
@@ -80,7 +81,7 @@ Current follow-up risks:
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.118 - Knowledge Snippet Seed Data`, inspect:
+For `Version 0.5.119 - Knowledge Snippet Semantic Validator Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -91,10 +92,13 @@ For `Version 0.5.118 - Knowledge Snippet Seed Data`, inspect:
 - `docs/design/knowledge-snippet-content-authoring-plan.md`
 - `docs/design/knowledge-domain-registry-plan.md`
 - `packages/schemas/player/knowledge_snippet.schema.json`
+- `packages/content/base/player/knowledge_snippets.json`
 - `packages/content/base/player/knowledge_domain_registry.json`
+- `tools/content-lint/index.mjs`
+- `tools/content-lint/knowledge-domain-registry.mjs`
 - `packages/content/base/world/flora.json`
 - `packages/content/base/world/fauna.json`
 - `packages/content/base/world/minerals.json`
 - `packages/content/base/world/regions.json`
-- `tests/unit/schema-files.test.mjs`
+- `tests/unit/knowledge-domain-registry-validation.test.mjs`
 - `docs/future_content_backlog.md`

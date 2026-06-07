@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-07
-Route: Codex local sequencing alignment after `Version 0.5.117 - Knowledge Snippet Schema Hardening`
+Route: Codex local sequencing alignment after `Version 0.5.118 - Knowledge Snippet Seed Data`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.117 - Knowledge Snippet Schema Hardening` established the authored record contract and focused schema-file registration.
+This file gives Codex a stable ordered queue after `Version 0.5.118 - Knowledge Snippet Seed Data` added the exact first four authored Tier 1 records.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.117 - Knowledge Snippet Schema Hardening`
+- `Version 0.5.118 - Knowledge Snippet Seed Data`
 
 Immediate next Codex run:
 
-- `Version 0.5.118 - Knowledge Snippet Seed Data`
+- `Version 0.5.119 - Knowledge Snippet Semantic Validator Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.117` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.118` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -75,8 +75,8 @@ Versioning note:
 | 37 | `0.5.115` | Skill Knowledge Domain Reference Realignment | Codex 5.5 Local | `docs/design/skill-knowledge-domain-reference-realignment-plan.md` | narrow skill metadata + focused test fixture | Completed | Added one Arcane Lore `knowledgeDomainId` field and made the positive unreferenced-domain test data-independent without registry, legacy policy, schema, validator behavior, runtime, persistence, snippet, UI, or gameplay changes. |
 | 38 | `0.5.116` | Knowledge Snippet Content Authoring Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-snippet-content-authoring-plan.md` | planning doc | Completed | Defined the exact four-record Tier 1 seed, future wrapper, schema hardening, semantic validation ownership, and non-runtime boundaries without implementation. |
 | 39 | `0.5.117` | Knowledge Snippet Schema Hardening | Codex 5.5 Local | `packages/schemas/player/knowledge_snippet.schema.json` | schema hardening + focused schema test | Completed | Hardened and registered the record schema without snippet JSON, semantic validation, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
-| 40 | `0.5.118` | Knowledge Snippet Seed Data | Codex 5.5 Local | `docs/design/knowledge-snippet-content-authoring-plan.md` | four-record content JSON | Next | Add exactly the approved Tier 1 records under the hardened schema; no semantic validator, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
-| 41 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-snippet-content-authoring-plan.md` | planning doc | Planned | Define schema-first cross-file validation and focused tests without implementation. |
+| 40 | `0.5.118` | Knowledge Snippet Seed Data | Codex 5.5 Local | `packages/content/base/player/knowledge_snippets.json` | four-record content JSON | Completed | Added exactly the approved Tier 1 records under the hardened schema without semantic validation, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
+| 41 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-snippet-content-authoring-plan.md` | planning doc | Next | Define schema-first cross-file validation and focused tests without implementation. |
 | 42 | `0.5.120` | Knowledge Snippet Semantic Validator | Codex 5.5 Local | Future validator plan | focused content-lint validator + tests | Planned | Validate authored snippets without runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
 
 ## Default Prompt Pattern

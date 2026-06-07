@@ -1,19 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.117 - Knowledge Snippet Schema Hardening
+Source version/run: Version 0.5.118 - Knowledge Snippet Seed Data
 Date: 2026-06-07
-Branch/status assumption: Ran on `master` from commit `a2e6405`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `a790dde`. The worktree was clean before edits.
 
 ## Result
 
-Hardened the record-level knowledge snippet schema for authored content and registered it in the focused schema-file test.
+Added the first authored knowledge snippet seed content file with exactly the four approved Tier 1 records.
 
-The schema now requires all intended authored fields, constrains snippet/domain/subject/skill/location/tag identifiers, rejects empty authored text and exact duplicate simple-array entries, requires explicit progression and visibility values, preserves all existing vocabularies and numeric ranges, and continues to forbid runtime/player-state fields through strict object shapes.
+`packages/content/base/player/knowledge_snippets.json` now contains Aloe identification, Badger identification, Iron Ore identification, and Kaelvar cultural context in the exact authored order and field form defined by the content authoring plan. All four records pass the hardened record schema and resolve to active domains and current canonical subjects.
 
 ## Files Changed
 
-- `packages/schemas/player/knowledge_snippet.schema.json`
-- `tests/unit/schema-files.test.mjs`
+- `packages/content/base/player/knowledge_snippets.json`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -22,39 +21,38 @@ The schema now requires all intended authored fields, constrains snippet/domain/
 
 ## Checks Run
 
-- `node --test tests/unit/schema-files.test.mjs`
-  - Passed: 52 tests.
 - `npm.cmd run tool:content-lint`
   - Passed: 54 files checked.
+- `node --test tests/unit/schema-files.test.mjs`
+  - Passed: 52 tests.
 - `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
   - Passed: 37 tests.
-- Focused scripted schema contract audit.
-  - Passed: required fields, patterns, nullable branches, duplicate guards, preserved enums/ranges, forbidden runtime-state names, and focused test registration were confirmed.
-- Explicit snippet-content absence check.
-  - Passed: `packages/content/base/player/knowledge_snippets.json` was not created.
+- Focused scripted seed contract audit.
+  - Passed: exact plan parity, exact wrapper/order/count, four schema-valid Tier 1 records, unique ids, active-domain compatibility, canonical subject resolution, and forbidden runtime-state absence were confirmed.
+- Changed-path scope audit.
+  - Passed: one seed content file plus five handoff documents changed; schema, validator, registry, skill, runtime, UI, persistence, and generated paths remained unchanged.
 - Conflict-marker and trailing-whitespace scans across touched files.
   - Passed.
 - `git diff --check`
   - Passed.
-- Broad typecheck was not run because this pass changed only JSON Schema, one focused parse-test registration, and documentation.
+- Broad typecheck was not run because this pass changed only authored JSON content and documentation.
 
 ## Behavior / Runtime Confirmation
 
-- Structural authored-content validation and workflow sequencing changed.
-- No knowledge snippet JSON, semantic validator, registry content, skills, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, evidence/progress state, completion math, trial, event, ownership, or gameplay behavior changed.
+- Authored knowledge snippet content and workflow sequencing changed.
+- No schema, semantic validator, registry content, skills, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, evidence/progress state, completion math, trial, event, ownership, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
 - No snippet semantic validator exists.
-- The schema-file test proves parseability and top-level type only; cross-file and full structural enforcement remain assigned to the later snippet semantic validator.
-- `uniqueItems` on prerequisite skill-rank objects rejects exact duplicate objects; duplicate skill ids with differing ranks remain a later semantic check.
+- Normal content lint does not yet structurally or semantically validate `knowledge_snippets.json`; this run used a focused local audit until the dedicated validator is implemented.
 - Arcane Lore remains `planned` and is excluded from the first seed.
 - Culture, institution, ruin, and historical-event subjects still lack one selected canonical authority.
 
 ## Next Recommended Version
 
-Version 0.5.118 - Knowledge Snippet Seed Data
+Version 0.5.119 - Knowledge Snippet Semantic Validator Plan
 
 ## Suggested Commit Message
 
-schemas(knowledge): harden snippet schema
+content(knowledge): add first snippet seed
