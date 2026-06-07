@@ -1,18 +1,21 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan
-Date: 2026-06-06
-Branch/status assumption: Ran on `master` from commit `aa6e702`. The worktree was clean before edits.
+Source version/run: Version 0.5.115 - Skill Knowledge Domain Reference Realignment
+Date: 2026-06-07
+Branch/status assumption: Ran on `master` from commit `07c92de`. The worktree was clean before edits.
 
 ## Result
 
-Created the planning-only Skill Knowledge Domain Reference Realignment Plan.
+Completed the narrow skill knowledge-domain reference realignment.
 
-The audit confirms that all ten current skill `knowledgeDomainId` values resolve to the broad registry and legacy identification-policy subset. It selects `knowledge_domain.arcane_lore` as the later metadata link for `skill.knowledge.arcane_lore`, defers Folk Lore and Civic Lore until specific broad domains exist, and records the focused validator-test fixture assumption that must be updated in the implementation pass without changing validator behavior.
+`skill.knowledge.arcane_lore` now has `knowledgeDomainId: "knowledge_domain.arcane_lore"`. The focused positive validator test now removes Arcane Lore references from its cloned fixture before validation, preserving the rule that broad registry domains do not require skill references without depending on live Arcane content remaining unlinked.
+
+Folk Lore and Civic Lore remain unchanged and unlinked.
 
 ## Files Changed
 
-- `docs/design/skill-knowledge-domain-reference-realignment-plan.md`
+- `packages/content/base/player/skills.json`
+- `tests/unit/knowledge-domain-registry-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -27,30 +30,32 @@ The audit confirms that all ten current skill `knowledgeDomainId` values resolve
   - Passed: 37 tests.
 - `node --test tests/unit/schema-files.test.mjs`
   - Passed: 51 tests.
-- Required plan coverage scan.
-  - Passed.
+- Focused JSON reference and duplicate-id scan.
+  - Passed: Arcane linked; Folk and Civic unlinked; zero duplicate skill ids.
 - Conflict-marker and trailing-whitespace scans across touched files.
   - Passed.
 - `git diff --check`
   - Passed.
-- Broad typecheck was not run because this pass changed documentation only.
+- Broad typecheck was not run because this pass touched only JSON, one focused test, and documentation.
 
 ## Behavior / Runtime Confirmation
 
-- Documentation and workflow sequencing changed.
-- No skill content, registry content, legacy policy, schema, validator, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, snippet, evidence/progress state, completion math, trial, event, or ownership behavior changed.
+- Authored skill metadata changed by adding the Arcane Lore broad-domain reference.
+- Focused test fixture behavior changed so the optional-reference rule is tested independently of live Arcane content.
+- No broad registry content, legacy identification policy, schema, validator behavior, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, snippet, evidence/progress state, completion math, trial, event, or ownership behavior changed.
 
 ## Risks / Follow-Up
 
-- `skill.knowledge.arcane_lore` remains unlinked until `0.5.115`.
-- The implementation must update the positive focused test that currently assumes Arcane Lore is the unreferenced broad domain.
-- Folk Lore and Civic Lore remain deferred until specific broad-domain authorities exist.
+- The broad Arcane Lore registry record still contains a note saying a later skill-link pass must decide the link. Registry edits were explicitly forbidden in this run, so a future authorized metadata cleanup should remove or update that stale note.
+- Folk Lore still needs a future cultures-domain authority before linking.
+- Civic Lore still needs a focused domain-ownership decision before linking.
+- `docs/design/skill-knowledge-domain-reference-realignment-plan.md` is retained because it still owns those deferred Folk and Civic decisions and the metadata boundaries.
 - Runtime loading of the broad registry remains deferred.
 
 ## Next Recommended Version
 
-Version 0.5.115 - Skill Knowledge Domain Reference Realignment
+Version 0.5.116 - Knowledge Snippet Content Authoring Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan skill domain reference realignment
+content(knowledge): link arcane lore skill domain

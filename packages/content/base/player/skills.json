@@ -4092,7 +4092,8 @@
                                         },
                         "itemHookTags":  [
                                              "arcane_lore"
-                                         ]
+                                         ],
+                        "knowledgeDomainId":  "knowledge_domain.arcane_lore"
                     },
                     {
                         "id":  "skill.knowledge.cultural_lore",

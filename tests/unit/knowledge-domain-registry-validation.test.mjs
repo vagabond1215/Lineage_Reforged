@@ -114,10 +114,13 @@ test("accepts Arcane Lore as planned without a legacy policy", () => {
 
 test("allows a broad registry id without a skill knowledgeDomainId reference", () => {
   const input = makeInput();
-  assert.equal(
-    input.skills.some((skill) => skill.knowledgeDomainId === "knowledge_domain.arcane_lore"),
-    false
-  );
+  const domainId = "knowledge_domain.arcane_lore";
+  const referencingSkills = input.skills.filter((skill) => skill.knowledgeDomainId === domainId);
+  assert.ok(referencingSkills.length > 0);
+  for (const skill of referencingSkills) {
+    delete skill.knowledgeDomainId;
+  }
+  assert.equal(input.skills.some((skill) => skill.knowledgeDomainId === domainId), false);
   assert.equal(validate(input), true);
 });
 
