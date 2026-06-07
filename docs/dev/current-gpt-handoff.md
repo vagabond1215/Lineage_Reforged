@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
+Source route: Codex local implementation after `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
 Date: 2026-06-06
-Branch/status assumption: `master` at commit `406cfe9` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `4a4ab06` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -17,6 +17,8 @@ This is the short current handoff for future ChatGPT/GitHub Connector, Deep Rese
 - `docs/design/knowledge-domain-registry-schema-plan.md` owns registry paths, reference authorities, semantic validation ownership, current-data transition rules, and implementation acceptance criteria.
 - `docs/design/knowledge-domain-registry-seed-data-plan.md` owns the approved five Wave 0 record definitions, constrained `custom` use, Arcane Lore transition, and implementation sequence.
 - `docs/design/knowledge-domain-registry-semantic-validator-plan.md` owns the future lint entrypoint, exact semantic checks, test matrix, and validator acceptance criteria.
+- `tools/content-lint/knowledge-domain-registry.mjs` is the live pure structural and semantic validation unit.
+- `tests/unit/knowledge-domain-registry-validation.test.mjs` is the focused mutation-test authority for the validator.
 - `packages/schemas/player/knowledge-domain-registry.schema.json` is the live structural authority for broad registry records.
 - `packages/content/base/player/knowledge_domain_registry.json` is the live authored broad registry catalog.
 - `packages/schemas/player/knowledge_snippet.schema.json` remains the current authority for snippet subject, category, source, progression, and visibility fields.
@@ -27,44 +29,42 @@ This is the short current handoff for future ChatGPT/GitHub Connector, Deep Rese
 
 Latest completed Codex version:
 
-- `Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
+- `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
 
 Immediate next version:
 
-- `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
+- `Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.112` to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
+- Do not roll from `0.5.113` to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.112 Result
+## Version 0.5.113 Result
 
-- Added the planning-only semantic validator design.
-- Assigned executable ownership to `tools/content-lint/index.mjs`, with an optional pure helper module as the focused unit-test seam.
-- Defined schema-first gating, wrapper checks, identity checks, source-family mapping, skill and magic-school references, file-derived content collections, hard rejection of policy references until authorities exist, explicit `custom` justification, legacy subset checks, and broad registry ownership for skill `knowledgeDomainId`.
-- Chose no record-order enforcement in the first validator.
-- Defined the focused positive and negative test matrix plus implementation acceptance criteria.
-- Changed no validator code, content, schema, skills, spells, runtime, persistence, UI, generated output, state, trial, event, or ownership behavior.
+- Added the broad registry to normal content-lint coverage.
+- Added a narrow fail-closed structural adapter driven by the live registry schema.
+- Added semantic checks for wrapper identity, source families, custom notes, skills, magic-school records, content collections, policy references, legacy-policy subset membership, and skill `knowledgeDomainId` resolution.
+- Switched existing skill `knowledgeDomainId` dependency checks from the legacy subset to the broad registry.
+- Added 37 focused positive and negative tests.
+- Changed no content, schema, skill, spell, runtime, persistence, UI, generated output, state, trial, event, or ownership behavior.
 
-## Active Guardrails For 0.5.113
+## Active Guardrails For 0.5.114
 
-Knowledge Domain Registry Semantic Validator:
+Skill Knowledge Domain Reference Realignment Plan:
 
-- Implement only the checks and tests approved in `docs/design/knowledge-domain-registry-semantic-validator-plan.md`.
-- Keep `tools/content-lint/index.mjs` as the executable integration owner.
-- Run the live registry schema through the approved narrow, fail-closed adapter before semantic validation; do not add a dependency or general schema framework.
-- Use the broad registry for skill `knowledgeDomainId` resolution and the legacy policy records only as a required subset.
-- Keep current registry, legacy policy, skill, and spell content unchanged.
-- Preserve the current seed records, broad schema, legacy identification behavior, and runtime boundary.
-- Do not realign the Arcane Lore skill, add runtime loaders, change persistence, add snippets, or modify UI/gameplay behavior.
+- Planning-only pass.
+- Audit current `skills[].knowledgeDomainId` values against the broad registry.
+- Decide the exact intended link for `skill.knowledge.arcane_lore` and whether any other current knowledge skills require a registered domain before implementation.
+- Preserve the semantic validator and legacy identification-policy subset boundary.
+- Do not edit skills, registry content, schemas, runtime loaders, persistence, snippets, UI, or gameplay behavior.
 
 Boundary rules:
 
 - The broad registry is authored catalog metadata and is not runtime-loaded.
 - The legacy four-record file remains identification policy only.
 - Arcane Lore has no legacy identification policy and no automatic skill link.
-- Semantic validator planning, validator implementation, and skill-reference realignment remain separate runs.
+- Semantic validator implementation is complete; skill-reference realignment planning and implementation remain separate runs.
 
 ## Near-Term Sequence
 
@@ -76,11 +76,12 @@ Boundary rules:
 | 4 | `0.5.110` | Knowledge Domain Registry Schema File | `packages/schemas/player/knowledge-domain-registry.schema.json` | Landed |
 | 5 | `0.5.111` | Knowledge Domain Registry Seed Data | `packages/content/base/player/knowledge_domain_registry.json` | Landed |
 | 6 | `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Completed |
-| 7 | `0.5.113` | Knowledge Domain Registry Semantic Validator | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Next |
+| 7 | `0.5.113` | Knowledge Domain Registry Semantic Validator | `tools/content-lint/knowledge-domain-registry.mjs` | Completed |
+| 8 | `0.5.114` | Skill Knowledge Domain Reference Realignment Plan | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Next |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`, inspect:
+For `Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -96,7 +97,7 @@ For `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`, inspect:
 - `packages/content/base/player/knowledge_domain_registry.json`
 - `packages/content/base/player/knowledge_domains.json`
 - `packages/content/base/player/skills.json`
-- `packages/content/base/player/spells.json`
 - `tools/content-lint/index.mjs`
-- `tests/unit/schema-files.test.mjs`
+- `tools/content-lint/knowledge-domain-registry.mjs`
+- `tests/unit/knowledge-domain-registry-validation.test.mjs`
 - `docs/future_content_backlog.md`

@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan`
-- Next recommended version: `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
+- Latest completed version: `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
+- Next recommended version: `Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.112` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.113` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -72,8 +72,9 @@ Current repo reality:
 - Knowledge-domain registry schema planning has landed in `docs/design/knowledge-domain-registry-schema-plan.md`. It selects a separate broad registry schema/content file, exact record constraints, file-derived content-collection ids, magic-school skill ids as the current school authority, content-lint semantic ownership, and a no-alias current-data transition.
 - Knowledge-domain registry seed-data planning has landed in `docs/design/knowledge-domain-registry-seed-data-plan.md`. It defines complete drafts for the five Wave 0 records, constrains `custom` to General Lore, verifies current references, preserves the legacy policy subset, and separates the schema file, seed data, semantic validation, and skill-reference realignment into later runs.
 - The broad registry record schema exists at `packages/schemas/player/knowledge-domain-registry.schema.json` with the exact 20-field structural contract and focused schema-file test registration.
-- The authored broad registry catalog exists at `packages/content/base/player/knowledge_domain_registry.json` with the exact five approved Wave 0 records. Semantic validation and runtime loading remain deferred.
-- The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four records exist today; `knowledge_domain.arcane_lore` remains a planned Wave 0 record and is not currently registered or linked from the Arcane Lore skill.
+- The authored broad registry catalog exists at `packages/content/base/player/knowledge_domain_registry.json` with the exact five approved Wave 0 records.
+- Broad registry structural and semantic content lint now enforces wrapper shape, schema compliance, source families, references, policy-null posture, custom notes, legacy-policy subset membership, and broad-registry skill-domain authority.
+- The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four policy records exist today; `knowledge_domain.arcane_lore` exists only in the broad registry and is not linked from the Arcane Lore skill.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -118,7 +119,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.110` | Knowledge Domain Registry Schema File | Codex Local | Schema file + focused schema test | Landed. Added the exact broad registry record schema and focused parse-test registration. | Structural schema only; no seed JSON, content-lint implementation, skill-link edits, runtime loading, persistence, snippets, state, trials, UI, or events. |
 | `0.5.111` | Knowledge Domain Registry Seed Data | Codex Local | Broad registry content JSON | Landed. Added the exact five Wave 0 records under the live schema. | Seed content only; no semantic validator, skill-link edits, legacy policy changes, runtime loading, persistence, snippets, state, trials, UI, or events. |
 | `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | Codex Local docs-first | Planning | Completed. Defined the schema-first lint entrypoint, semantic checks, focused tests, and acceptance criteria. | Documentation only; no validator code, content, schema, skill, runtime, persistence, snippets, state, trials, UI, or events. |
-| `0.5.113` | Knowledge Domain Registry Semantic Validator | Codex Local | Focused content-lint validator + tests | Next. Implement the approved broad-registry semantic checks and broad skill-domain authority. | No content, schema, skill-link, runtime, persistence, generated-output, snippet, trial, UI, or gameplay changes. |
+| `0.5.113` | Knowledge Domain Registry Semantic Validator | Codex Local | Focused content-lint validator + tests | Completed. Added schema-driven structural gating, semantic/cross-file checks, broad skill-domain authority, and focused mutation tests. | No content, schema, skill-link, runtime, persistence, generated-output, snippet, trial, UI, or gameplay changes. |
+| `0.5.114` | Skill Knowledge Domain Reference Realignment Plan | Codex Local docs-first | Planning | Next. Audit current skill-domain links and decide the exact Arcane Lore link before content edits. | Planning only; no skill, registry, schema, runtime, persistence, snippet, UI, or gameplay changes. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -148,7 +150,7 @@ The magic runtime path must not jump directly from known-spell projection into a
 Practical near-term sequence:
 
 1. `0.5.112 - Knowledge Domain Registry Semantic Validator Plan` - completed
-2. `0.5.113 - Knowledge Domain Registry Semantic Validator`
+2. `0.5.113 - Knowledge Domain Registry Semantic Validator` - completed
 3. `0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
 4. `0.5.115 - Skill Knowledge Domain Reference Realignment`
 5. `0.5.x - Knowledge Snippet Content Authoring Plan`
@@ -171,7 +173,7 @@ Recommended advancement sequence:
 4. `0.5.110 - Knowledge Domain Registry Schema File` - landed
 5. `0.5.111 - Knowledge Domain Registry Seed Data` - landed
 6. `0.5.112 - Knowledge Domain Registry Semantic Validator Plan` - completed
-7. `0.5.113 - Knowledge Domain Registry Semantic Validator`
+7. `0.5.113 - Knowledge Domain Registry Semantic Validator` - completed
 8. `0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
 9. `0.5.115 - Skill Knowledge Domain Reference Realignment`
 10. `0.5.x - Knowledge Snippet Content Authoring Plan`
@@ -325,7 +327,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 19 | `0.5.110` | Knowledge Domain Registry Schema File | `packages/schemas/player/knowledge-domain-registry.schema.json` | Landed |
 | 20 | `0.5.111` | Knowledge Domain Registry Seed Data | `packages/content/base/player/knowledge_domain_registry.json` | Landed |
 | 21 | `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Completed |
-| 22 | `0.5.113` | Knowledge Domain Registry Semantic Validator | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Next |
+| 22 | `0.5.113` | Knowledge Domain Registry Semantic Validator | `tools/content-lint/knowledge-domain-registry.mjs` | Completed |
+| 23 | `0.5.114` | Skill Knowledge Domain Reference Realignment Plan | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

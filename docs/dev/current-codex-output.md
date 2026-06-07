@@ -1,20 +1,22 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.112 - Knowledge Domain Registry Semantic Validator Plan
+Source version/run: Version 0.5.113 - Knowledge Domain Registry Semantic Validator
 Date: 2026-06-06
-Branch/status assumption: Ran on `master` from commit `406cfe9`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `4a4ab06`. The worktree was clean before edits.
 
 ## Result
 
-Added `docs/design/knowledge-domain-registry-semantic-validator-plan.md` as the decision-complete design for future broad knowledge-domain registry linting.
+Implemented broad knowledge-domain registry validation in the normal content-lint path.
 
-The plan assigns executable integration ownership to `tools/content-lint/index.mjs`, keeps record structure in the live broad registry schema, defines the future schema-first entrypoint and inputs, specifies every required semantic check and source-family mapping, and provides the focused positive/negative test matrix and acceptance criteria.
+`tools/content-lint/knowledge-domain-registry.mjs` now provides a pure validator with a narrow fail-closed structural adapter driven by the live registry schema. It enforces exact wrapper shape, record structure, identity, snippet vocabularies, source-family mapping, custom-note requirements, skill and magic-school references, content-collection references, null policy posture, legacy identification-policy subset membership, and broad-registry authority for skill `knowledgeDomainId`.
 
-The workflow handoff, roadmap, sequence, and backlog now point to `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`.
+`tools/content-lint/index.mjs` now loads the registry and authorities, derives canonical base-content collection ids, runs the validator, includes the registry in the normal checked-file count, and resolves existing skill domain references against the broad registry.
 
 ## Files Changed
 
-- `docs/design/knowledge-domain-registry-semantic-validator-plan.md`
+- `tools/content-lint/index.mjs`
+- `tools/content-lint/knowledge-domain-registry.mjs`
+- `tests/unit/knowledge-domain-registry-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -23,36 +25,41 @@ The workflow handoff, roadmap, sequence, and backlog now point to `Version 0.5.1
 
 ## Checks Run
 
-- `npm.cmd run tool:content-lint`
-  - Passed: 53 files checked.
+- `node --check tools/content-lint/knowledge-domain-registry.mjs`
+  - Passed.
+- `node --check tools/content-lint/index.mjs`
+  - Passed.
+- `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
+  - Passed: 37 tests.
 - `node --test tests/unit/schema-files.test.mjs`
   - Passed: 51 tests.
-- Required semantic-validator-plan coverage scans.
-  - Passed: 26 section/semantic markers and 27 exact sequence/forbidden markers.
-- Stale workflow-version pointer scan.
-  - Passed.
+- `npm.cmd run tool:content-lint`
+  - Passed: 54 files checked.
 - Conflict-marker and trailing-whitespace scans across touched files.
+  - Passed.
+- Stale workflow-version pointer scan.
   - Passed.
 - `git diff --check`
   - Passed.
-- Broad typecheck was not run because this pass touched documentation only.
+- Broad typecheck was not run because this pass touched only lint tooling, focused tests, and documentation.
 
 ## Behavior / Runtime Confirmation
 
-- Documentation and workflow handoff state changed.
-- No validator code, content JSON, schema, legacy identification policy, skill, spell, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, snippet, evidence/progress state, completion math, trial, event, or ownership behavior changed.
+- Content-lint behavior changed by adding structural, semantic, and cross-file validation for the authored broad registry.
+- Existing skill `knowledgeDomainId` lint resolution now uses broad registry ids instead of the legacy identification-policy subset.
+- No content JSON, schema, legacy policy, skill, spell, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, snippet, evidence/progress state, completion math, trial, event, or ownership behavior changed.
 
 ## Risks / Follow-Up
 
-- Broad registry semantic validation remains unimplemented until Version 0.5.113.
-- The repository has no declared JSON Schema execution dependency. The plan selects a narrow, fail-closed adapter driven by the live registry schema and forbids broadening that work into a general schema framework.
-- `skill.knowledge.arcane_lore` remains intentionally unlinked until the later skill-reference realignment pass.
-- The new plan remains an active temporary guardrail until validator implementation consumes it and makes an explicit cleanup decision.
+- The structural adapter intentionally supports only the keywords used by the current broad registry schema and fails closed on unsupported keywords or types. Future schema expansion must update focused adapter coverage deliberately.
+- `skill.knowledge.arcane_lore` remains intentionally unlinked until the planned skill-reference realignment work.
+- `docs/design/knowledge-domain-registry-semantic-validator-plan.md` is retained as the durable validation contract because it still documents the implemented ownership and acceptance rules.
+- Runtime loading of the broad registry remains deferred.
 
 ## Next Recommended Version
 
-Version 0.5.113 - Knowledge Domain Registry Semantic Validator
+Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan registry semantic validation
+tools(knowledge): validate domain registry semantics

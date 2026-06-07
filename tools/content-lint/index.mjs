@@ -1,5 +1,6 @@
 ﻿import { readFile as readFileRaw } from "node:fs/promises";
 import path from "node:path";
+import { readdir } from "node:fs/promises";
 import { SPELL_SCALING_CHANNELS_BY_SCHOOL } from "../../packages/engines/player-engine/src/progression.js";
 import {
   assertSupportedCombatEffectChannels,
@@ -14,6 +15,7 @@ import {
   assertKnownSpellItemGenerationHooks,
   assertKnownSpellResolutionHooks
 } from "./spell-hook-support.mjs";
+import { validateKnowledgeDomainRegistry } from "./knowledge-domain-registry.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -586,6 +588,12 @@ const checks = [
     requireSlug: false,
     forbidGeoQualifierInName: false,
     validateProgressionTracks: true
+  },
+  {
+    file: "packages/content/base/player/knowledge_domain_registry.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false
   },
   {
     file: "packages/content/base/player/knowledge_domains.json",
@@ -9184,6 +9192,105 @@ async function validateQuestDefinitionsAgainstWorldData() {
   }
 }
 
+const NON_CANONICAL_BASE_COLLECTION_SEGMENTS = new Set([
+  ".cache",
+  "build",
+  "dist",
+  "docs",
+  "generated",
+  "node_modules",
+  "runtime",
+  "schemas",
+  "temp",
+  "tmp",
+  "vendor"
+]);
+
+async function deriveBaseContentCollectionIds() {
+  const baseRoot = path.join(ROOT, "packages/content/base");
+  const collectionIds = new Set();
+
+  async function visit(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    for (const entry of entries) {
+      const lowerName = entry.name.toLowerCase();
+      if (
+        NON_CANONICAL_BASE_COLLECTION_SEGMENTS.has(lowerName) ||
+        lowerName.endsWith(".generated.json")
+      ) {
+        continue;
+      }
+
+      const fullPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        await visit(fullPath);
+        continue;
+      }
+      if (!entry.isFile() || path.extname(entry.name).toLowerCase() !== ".json") {
+        continue;
+      }
+
+      const relativePath = path.relative(baseRoot, fullPath);
+      const collectionId = relativePath
+        .slice(0, -path.extname(relativePath).length)
+        .split(path.sep)
+        .join(".");
+      collectionIds.add(collectionId);
+    }
+  }
+
+  await visit(baseRoot);
+  return collectionIds;
+}
+
+function requireSchemaEnum(value, schemaPath) {
+  if (!Array.isArray(value) || value.some((entry) => typeof entry !== "string")) {
+    throw new Error(`${schemaPath} must define a string enum`);
+  }
+  return value;
+}
+
+async function validateKnowledgeDomainRegistryAgainstDependencies() {
+  const relativePath = "packages/content/base/player/knowledge_domain_registry.json";
+  const registryPath = path.join(ROOT, relativePath);
+  const registrySchemaPath = path.join(ROOT, "packages/schemas/player/knowledge-domain-registry.schema.json");
+  const legacyPolicyPath = path.join(ROOT, "packages/content/base/player/knowledge_domains.json");
+  const skillsPath = path.join(ROOT, "packages/content/base/player/skills.json");
+  const snippetSchemaPath = path.join(ROOT, "packages/schemas/player/knowledge_snippet.schema.json");
+
+  const registryWrapper = JSON.parse(await readFile(registryPath, "utf8"));
+  const registrySchema = JSON.parse(await readFile(registrySchemaPath, "utf8"));
+  const legacyPolicyWrapper = JSON.parse(await readFile(legacyPolicyPath, "utf8"));
+  const skillsWrapper = JSON.parse(await readFile(skillsPath, "utf8"));
+  const snippetSchema = JSON.parse(await readFile(snippetSchemaPath, "utf8"));
+  const availableBaseCollectionIds = await deriveBaseContentCollectionIds();
+
+  const snippetVocabularies = {
+    subjectTypes: requireSchemaEnum(
+      snippetSchema.properties?.subjectType?.enum,
+      "packages/schemas/player/knowledge_snippet.schema.json properties.subjectType.enum"
+    ),
+    categories: requireSchemaEnum(
+      snippetSchema.properties?.category?.enum,
+      "packages/schemas/player/knowledge_snippet.schema.json properties.category.enum"
+    ),
+    sourceTypes: requireSchemaEnum(
+      snippetSchema.properties?.discoverySources?.items?.properties?.sourceType?.enum,
+      "packages/schemas/player/knowledge_snippet.schema.json properties.discoverySources.items.properties.sourceType.enum"
+    )
+  };
+
+  validateKnowledgeDomainRegistry({
+    relativePath,
+    wrapper: registryWrapper,
+    recordSchema: registrySchema,
+    legacyPolicyRecords: legacyPolicyWrapper.records,
+    skills: skillsWrapper.records,
+    availableBaseCollectionIds,
+    snippetVocabularies
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -9193,6 +9300,7 @@ async function validatePlayerContentAgainstDependencies() {
   const backstoryPath = path.join(ROOT, "packages/content/base/player/backstories.json");
   const startingBundlePath = path.join(ROOT, "packages/content/base/player/starting_bundles.json");
   const progressionTrackPath = path.join(ROOT, "packages/content/base/player/progression_tracks.json");
+  const knowledgeDomainRegistryPath = path.join(ROOT, "packages/content/base/player/knowledge_domain_registry.json");
   const knowledgeDomainPath = path.join(ROOT, "packages/content/base/player/knowledge_domains.json");
   const skillEffectPath = path.join(ROOT, "packages/content/base/player/skill_effects.json");
   const trialPath = path.join(ROOT, "packages/content/base/player/trials.json");
@@ -9207,6 +9315,7 @@ async function validatePlayerContentAgainstDependencies() {
   const backstoriesParsed = JSON.parse(await readFile(backstoryPath, "utf8"));
   const startingBundlesParsed = JSON.parse(await readFile(startingBundlePath, "utf8"));
   const progressionParsed = JSON.parse(await readFile(progressionTrackPath, "utf8"));
+  const knowledgeRegistryParsed = JSON.parse(await readFile(knowledgeDomainRegistryPath, "utf8"));
   const knowledgeParsed = JSON.parse(await readFile(knowledgeDomainPath, "utf8"));
   const skillEffectsParsed = JSON.parse(await readFile(skillEffectPath, "utf8"));
   const trialsParsed = JSON.parse(await readFile(trialPath, "utf8"));
@@ -9217,7 +9326,7 @@ async function validatePlayerContentAgainstDependencies() {
   const skillIds = new Set(skillsParsed.records.map((record) => record.id));
   const abilityIds = new Set(abilitiesParsed.records.map((record) => record.id));
   const progressionTrackIds = new Set(progressionParsed.records.map((record) => record.id));
-  const knowledgeDomainIds = new Set(knowledgeParsed.records.map((record) => record.id));
+  const knowledgeDomainIds = new Set(knowledgeRegistryParsed.records.map((record) => record.id));
   const skillEffectIds = new Set(skillEffectsParsed.records.map((record) => record.id));
   const trialIds = new Set(trialsParsed.records.map((record) => record.id));
   const itemIds = new Set(itemsParsed.records.map((record) => record.id));
@@ -9748,6 +9857,7 @@ async function main() {
     await validateFile(check);
   }
 
+  await validateKnowledgeDomainRegistryAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

@@ -12,6 +12,7 @@ This file tracks content and systems that are intentionally deferred.
 
 ## Run Notes
 
+- 2026-06-06: Completed Knowledge Domain Registry Semantic Validator for `Version 0.5.113`. Content lint now applies a narrow fail-closed structural adapter plus semantic checks for wrapper identity, source families, custom notes, skill and school-skill references, content collections, policy-null posture, the legacy-policy subset, and broad-registry skill `knowledgeDomainId` authority. Skill-reference realignment, snippets, evidence, progress, completion, trials, UI, events, persistence, and runtime loading remain deferred.
 - 2026-06-06: Completed the planning-only Knowledge Domain Registry Semantic Validator Plan for `Version 0.5.112`. `docs/design/knowledge-domain-registry-semantic-validator-plan.md` defines schema-first lint orchestration, exact wrapper/identity/source/reference/policy/custom/subset checks, broad-registry ownership for skill `knowledgeDomainId`, focused tests, and acceptance criteria. Validator implementation, skill-reference realignment, snippets, evidence, progress, completion, trials, UI, events, persistence, and runtime loading remain deferred.
 - 2026-06-06: Completed Knowledge Domain Registry Seed Data for `Version 0.5.111`. Added `packages/content/base/player/knowledge_domain_registry.json` with exactly the approved five Wave 0 records and verified exact plan parity plus structural compliance with the live broad-registry schema. Semantic validator planning/implementation, skill-reference realignment, snippets, evidence, progress, completion, trials, UI, events, persistence, and runtime loading remain deferred.
 - 2026-06-06: Completed the Knowledge Domain Registry Schema File for `Version 0.5.110`. Added `packages/schemas/player/knowledge-domain-registry.schema.json` with the exact structural 20-field record contract and registered it in the focused schema-file test. Broad registry seed content, semantic validator planning/implementation, skill-reference realignment, snippets, evidence, progress, completion, trials, UI, events, persistence, and runtime loading remain deferred.
@@ -33,7 +34,7 @@ This file tracks content and systems that are intentionally deferred.
 
 - Status: deferred
 - Source planning: `docs/design/knowledge-domain-registry-plan.md`, `docs/design/knowledge-domain-registry-schema-plan.md`, `docs/design/knowledge-domain-registry-seed-data-plan.md`, `docs/design/knowledge-domain-registry-semantic-validator-plan.md`, `packages/schemas/player/knowledge_snippet.schema.json`, and `docs/design/skill-mastery-trial-framework-plan.md`
-- Prerequisite: registry semantic validator implementation, skill-reference realignment, knowledge snippet content, evidence/progress contracts, pure completion/progression helpers, and later trial/checkpoint integration
+- Prerequisite: skill-reference realignment, knowledge snippet content, evidence/progress contracts, pure completion/progression helpers, and later trial/checkpoint integration
 - Intended owner: player progression/knowledge content, future codex/map/resource UI, travel/exploration systems, economy/material systems, magic study systems, and Chronicle/Renown projection layers
 - Intended implementation:
   - use snippet-based knowledge rather than whole-record-only discovery
