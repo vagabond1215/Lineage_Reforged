@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-07
-Route: Codex local sequencing alignment after `Version 0.5.119 - Knowledge Snippet Semantic Validator Plan`
+Route: Codex local sequencing alignment after `Version 0.5.120 - Knowledge Snippet Semantic Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.119 - Knowledge Snippet Semantic Validator Plan` defined the schema-first snippet validation contract.
+This file gives Codex a stable ordered queue after `Version 0.5.120 - Knowledge Snippet Semantic Validator` added focused snippet validation and normal lint integration.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.119 - Knowledge Snippet Semantic Validator Plan`
+- `Version 0.5.120 - Knowledge Snippet Semantic Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.120 - Knowledge Snippet Semantic Validator`
+- `Version 0.5.121 - Knowledge Evidence Contract Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.119` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.120` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -77,7 +77,8 @@ Versioning note:
 | 39 | `0.5.117` | Knowledge Snippet Schema Hardening | Codex 5.5 Local | `packages/schemas/player/knowledge_snippet.schema.json` | schema hardening + focused schema test | Completed | Hardened and registered the record schema without snippet JSON, semantic validation, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
 | 40 | `0.5.118` | Knowledge Snippet Seed Data | Codex 5.5 Local | `packages/content/base/player/knowledge_snippets.json` | four-record content JSON | Completed | Added exactly the approved Tier 1 records under the hardened schema without semantic validation, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
 | 41 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-snippet-semantic-validator-plan.md` | planning doc | Completed | Defined schema-first cross-file validation, authority maps, prerequisite graph rules, focused tests, and acceptance criteria without implementation. |
-| 42 | `0.5.120` | Knowledge Snippet Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-snippet-semantic-validator-plan.md` | focused content-lint validator + tests | Next | Validate authored snippets without content/schema changes, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
+| 42 | `0.5.120` | Knowledge Snippet Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-snippet-semantic-validator-plan.md` | focused content-lint validator + tests | Completed | Added schema-first semantic validation, 49 focused tests, and normal lint registration without content/schema, runtime, state, UI, persistence, or ownership changes. |
+| 43 | `0.5.121` | Knowledge Evidence Contract Plan | Codex 5.5 Local docs-first | Future focused plan | planning doc | Next | Define evidence identity, source, owner, context, and validation boundaries without implementing evidence state or runtime behavior. |
 
 ## Default Prompt Pattern
 

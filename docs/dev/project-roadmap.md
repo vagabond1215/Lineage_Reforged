@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.119 - Knowledge Snippet Semantic Validator Plan`
-- Next recommended version: `Version 0.5.120 - Knowledge Snippet Semantic Validator`
+- Latest completed version: `Version 0.5.120 - Knowledge Snippet Semantic Validator`
+- Next recommended version: `Version 0.5.121 - Knowledge Evidence Contract Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.119` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.120` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -81,6 +81,7 @@ Current repo reality:
 - The authored knowledge snippet record schema is hardened and registered in the focused schema-file test. It requires explicit authored text, progression, visibility, notes, canonical identifier patterns, and exact-duplicate protections while defining no runtime/player state.
 - The first authored knowledge snippet catalog exists at `packages/content/base/player/knowledge_snippets.json` with the exact four approved Tier 1 Aloe, Badger, Iron Ore, and Kaelvar records. It remains content-only and is not runtime-loaded.
 - Knowledge snippet semantic validator planning has landed in `docs/design/knowledge-snippet-semantic-validator-plan.md`. It assigns content-lint ownership, defines the snippet-scoped schema-first gate, initial authority maps, semantic and prerequisite graph rules, focused tests, and acceptance criteria before implementation.
+- Knowledge snippet structural and semantic validation has landed in `tools/content-lint/knowledge-snippets.mjs` with focused tests and normal lint integration. The current catalog is now included in the 55-file content-lint count without runtime loading or state behavior.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -132,7 +133,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.117` | Knowledge Snippet Schema Hardening | Codex Local | Schema hardening + focused schema test | Completed. Hardened the authored record contract and registered it in the focused schema-file test. | No snippet JSON, semantic validator, registry, skill, runtime, UI, generated-output, persistence, ownership, or gameplay changes. |
 | `0.5.118` | Knowledge Snippet Seed Data | Codex Local | Four-record content JSON | Completed. Added the exact planned Tier 1 Aloe, Badger, Iron Ore, and Kaelvar records under the hardened schema. | No semantic validator, schema, registry, skill, runtime, UI, generated-output, persistence, ownership, or gameplay changes. |
 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | Codex Local docs-first | Planning | Completed. Defined schema-first wrapper, compatibility, authority, prerequisite, source, focused-test, and acceptance contracts before implementation. | Documentation only; no validator code, tests, content/schema changes, runtime loading, state, UI, persistence, ownership, or gameplay changes. |
-| `0.5.120` | Knowledge Snippet Semantic Validator | Codex Local | Focused content-lint validator + tests | Next. Implement the approved snippet validation contract and add the catalog to normal lint. | No snippet content, schema, registry, skill, runtime, persistence, generated-output, UI, ownership, or gameplay changes. |
+| `0.5.120` | Knowledge Snippet Semantic Validator | Codex Local | Focused content-lint validator + tests | Completed. Added fail-closed structural gating, semantic authority/reference checks, prerequisite graph validation, focused tests, and normal lint registration. | No snippet content, schema, registry, skill, runtime, persistence, generated-output, UI, ownership, or gameplay changes. |
+| `0.5.121` | Knowledge Evidence Contract Plan | Codex Local docs-first | Planning | Next. Define evidence identity, source, owner, context, and validation boundaries before state implementation. | Documentation only; no evidence storage, runtime loading, progress, completion, trials, UI, events, persistence, ownership mutation, or gameplay changes. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -169,7 +171,8 @@ Practical near-term sequence:
 6. `0.5.117 - Knowledge Snippet Schema Hardening` - completed
 7. `0.5.118 - Knowledge Snippet Seed Data` - completed
 8. `0.5.119 - Knowledge Snippet Semantic Validator Plan` - completed
-9. `0.5.120 - Knowledge Snippet Semantic Validator`
+9. `0.5.120 - Knowledge Snippet Semantic Validator` - completed
+10. `0.5.121 - Knowledge Evidence Contract Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -196,8 +199,8 @@ Recommended advancement sequence:
 11. `0.5.117 - Knowledge Snippet Schema Hardening` - completed
 12. `0.5.118 - Knowledge Snippet Seed Data` - completed
 13. `0.5.119 - Knowledge Snippet Semantic Validator Plan` - completed
-14. `0.5.120 - Knowledge Snippet Semantic Validator` - next
-15. `0.5.x - Knowledge Evidence Contract Plan`
+14. `0.5.120 - Knowledge Snippet Semantic Validator` - completed
+15. `0.5.121 - Knowledge Evidence Contract Plan` - next
 16. `0.5.x - Knowledge Progress State Plan`
 17. `0.5.x - Knowledge Completion Helper Plan`
 18. `0.5.x - Knowledge Trial Plan`

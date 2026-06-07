@@ -16,6 +16,7 @@ import {
   assertKnownSpellResolutionHooks
 } from "./spell-hook-support.mjs";
 import { validateKnowledgeDomainRegistry } from "./knowledge-domain-registry.mjs";
+import { validateKnowledgeSnippets } from "./knowledge-snippets.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -591,6 +592,12 @@ const checks = [
   },
   {
     file: "packages/content/base/player/knowledge_domain_registry.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/player/knowledge_snippets.json",
     requiredTopLevel: ["records"],
     requireSlug: false,
     forbidGeoQualifierInName: false
@@ -9291,6 +9298,65 @@ async function validateKnowledgeDomainRegistryAgainstDependencies() {
   });
 }
 
+async function validateKnowledgeSnippetsAgainstDependencies() {
+  const relativePath = "packages/content/base/player/knowledge_snippets.json";
+  const snippetPath = path.join(ROOT, relativePath);
+  const snippetSchemaPath = path.join(ROOT, "packages/schemas/player/knowledge_snippet.schema.json");
+  const registryPath = path.join(ROOT, "packages/content/base/player/knowledge_domain_registry.json");
+  const skillsPath = path.join(ROOT, "packages/content/base/player/skills.json");
+  const floraPath = path.join(ROOT, "packages/content/base/world/flora.json");
+  const faunaPath = path.join(ROOT, "packages/content/base/world/fauna.json");
+  const mineralPath = path.join(ROOT, "packages/content/base/world/minerals.json");
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+
+  const snippetWrapper = JSON.parse(await readFile(snippetPath, "utf8"));
+  const snippetSchema = JSON.parse(await readFile(snippetSchemaPath, "utf8"));
+  const registryWrapper = JSON.parse(await readFile(registryPath, "utf8"));
+  const skillsWrapper = JSON.parse(await readFile(skillsPath, "utf8"));
+  const floraWrapper = JSON.parse(await readFile(floraPath, "utf8"));
+  const faunaWrapper = JSON.parse(await readFile(faunaPath, "utf8"));
+  const mineralWrapper = JSON.parse(await readFile(mineralPath, "utf8"));
+  const regionWrapper = JSON.parse(await readFile(regionPath, "utf8"));
+  const settlementWrapper = JSON.parse(await readFile(settlementPath, "utf8"));
+  const availableContentCollectionIds = await deriveBaseContentCollectionIds();
+
+  validateKnowledgeSnippets({
+    relativePath,
+    wrapper: snippetWrapper,
+    snippetSchema,
+    registryRecords: registryWrapper.records,
+    subjectAuthorities: {
+      flora: {
+        collectionId: "world.flora",
+        idPrefix: "flora.",
+        records: floraWrapper.records
+      },
+      fauna: {
+        collectionId: "world.fauna",
+        idPrefix: "fauna.",
+        records: faunaWrapper.records
+      },
+      mineral: {
+        collectionId: "world.minerals",
+        idPrefix: "mineral.",
+        records: mineralWrapper.records
+      },
+      region: {
+        collectionId: "world.regions",
+        idPrefix: "region.",
+        records: regionWrapper.records
+      }
+    },
+    locationAuthorities: {
+      regions: regionWrapper.records,
+      settlements: settlementWrapper.records
+    },
+    skillRecords: skillsWrapper.records,
+    availableContentCollectionIds
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -9858,6 +9924,7 @@ async function main() {
   }
 
   await validateKnowledgeDomainRegistryAgainstDependencies();
+  await validateKnowledgeSnippetsAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();
