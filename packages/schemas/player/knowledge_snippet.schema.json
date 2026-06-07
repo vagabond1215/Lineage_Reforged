@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "KnowledgeSnippetRecord",
-  "description": "Planning schema for snippet-based knowledge progression. This schema is not wired into runtime content loading yet.",
+  "description": "Schema for authored knowledge snippet content records. It defines content only and does not define runtime state, evidence, completion, ownership, or UI behavior.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -12,13 +12,21 @@
     "tier",
     "category",
     "title",
+    "summary",
     "discoverySources",
     "progression",
-    "visibility"
+    "visibility",
+    "notes"
   ],
   "properties": {
-    "id": { "type": "string", "minLength": 1 },
-    "domainId": { "type": "string", "minLength": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^knowledge_snippet\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "domainId": {
+      "type": "string",
+      "pattern": "^knowledge_domain\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
     "subjectType": {
       "type": "string",
       "enum": [
@@ -36,7 +44,10 @@
         "custom"
       ]
     },
-    "subjectId": { "type": "string", "minLength": 1 },
+    "subjectId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+    },
     "tier": { "type": "integer", "minimum": 1, "maximum": 10 },
     "category": {
       "type": "string",
@@ -60,21 +71,34 @@
       ]
     },
     "title": { "type": "string", "minLength": 1 },
-    "summary": { "type": "string" },
+    "summary": { "type": "string", "minLength": 1 },
     "prerequisites": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "requiredSnippetIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "requiredSnippetIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^knowledge_snippet\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
         "requiredDomainTier": { "type": "integer", "minimum": 0, "maximum": 10 },
         "requiredSkillRanks": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "type": "object",
             "additionalProperties": false,
             "required": ["skillId", "minimumRank"],
             "properties": {
-              "skillId": { "type": "string" },
+              "skillId": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^skill\\.[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+              },
               "minimumRank": { "type": "integer", "minimum": 0, "maximum": 125 }
             }
           }
@@ -107,15 +131,63 @@
               "custom"
             ]
           },
-          "sourceId": { "type": ["string", "null"] },
+          "sourceId": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
           "locationScope": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "continentId": { "type": ["string", "null"] },
-              "regionId": { "type": ["string", "null"] },
-              "settlementId": { "type": ["string", "null"] },
-              "biomeTags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+              "continentId": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+                  }
+                ]
+              },
+              "regionId": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+                  }
+                ]
+              },
+              "settlementId": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+                  }
+                ]
+              },
+              "biomeTags": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+                }
+              }
             }
           },
           "rarity": { "type": "string", "enum": ["common", "uncommon", "rare", "obscure", "unique"] }
@@ -125,10 +197,14 @@
     "progression": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["completionWeight"],
+      "required": [
+        "completionWeight",
+        "countsTowardTierCompletion",
+        "trialUnlockWeight"
+      ],
       "properties": {
-        "completionWeight": { "type": "number", "exclusiveMinimum": 0 },
-        "countsTowardTierCompletion": { "type": "boolean", "default": true },
+        "completionWeight": { "type": "number", "minimum": 0 },
+        "countsTowardTierCompletion": { "type": "boolean" },
         "trialUnlockWeight": { "type": "number", "minimum": 0 }
       }
     },
@@ -139,9 +215,26 @@
       "properties": {
         "lockedUntilDiscovered": { "type": "boolean" },
         "revealsSubjectIdentity": { "type": "boolean" },
-        "hiddenSummary": { "type": "string" }
+        "hiddenSummary": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        }
       }
     },
-    "notes": { "type": "array", "items": { "type": "string" } }
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
   }
 }

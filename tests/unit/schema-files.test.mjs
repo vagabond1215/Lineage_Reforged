@@ -42,6 +42,7 @@ const schemaFiles = [
   "packages/schemas/player/progression-track.schema.json",
   "packages/schemas/player/knowledge-domain.schema.json",
   "packages/schemas/player/knowledge-domain-registry.schema.json",
+  "packages/schemas/player/knowledge_snippet.schema.json",
   "packages/schemas/player/skill-effect.schema.json",
   "packages/schemas/player/title.schema.json",
   "packages/schemas/player/spell.schema.json",

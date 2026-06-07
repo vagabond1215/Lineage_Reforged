@@ -1,18 +1,19 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.116 - Knowledge Snippet Content Authoring Plan
+Source version/run: Version 0.5.117 - Knowledge Snippet Schema Hardening
 Date: 2026-06-07
-Branch/status assumption: Ran on `master` from commit `5a83420`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `a2e6405`. The worktree was clean before edits.
 
 ## Result
 
-Created the planning-only Knowledge Snippet Content Authoring Plan.
+Hardened the record-level knowledge snippet schema for authored content and registered it in the focused schema-file test.
 
-The plan selects a first seed of exactly four Tier 1 records: Aloe identification, Badger identification, Iron Ore identification, and Kaelvar cultural context. It limits authoring to the four active broad domains, excludes planned Arcane Lore, selects `packages/content/base/player/knowledge_snippets.json`, and defines schema hardening before seed data followed by separate semantic validation.
+The schema now requires all intended authored fields, constrains snippet/domain/subject/skill/location/tag identifiers, rejects empty authored text and exact duplicate simple-array entries, requires explicit progression and visibility values, preserves all existing vocabularies and numeric ranges, and continues to forbid runtime/player-state fields through strict object shapes.
 
 ## Files Changed
 
-- `docs/design/knowledge-snippet-content-authoring-plan.md`
+- `packages/schemas/player/knowledge_snippet.schema.json`
+- `tests/unit/schema-files.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -21,37 +22,39 @@ The plan selects a first seed of exactly four Tier 1 records: Aloe identificatio
 
 ## Checks Run
 
+- `node --test tests/unit/schema-files.test.mjs`
+  - Passed: 52 tests.
 - `npm.cmd run tool:content-lint`
   - Passed: 54 files checked.
 - `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
   - Passed: 37 tests.
-- `node --test tests/unit/schema-files.test.mjs`
-  - Passed: 51 tests.
-- Required plan coverage and canonical-reference scan.
-  - Passed: all four subjects exist and their domains, subject types, categories, and source types are compatible with active registry records.
+- Focused scripted schema contract audit.
+  - Passed: required fields, patterns, nullable branches, duplicate guards, preserved enums/ranges, forbidden runtime-state names, and focused test registration were confirmed.
+- Explicit snippet-content absence check.
+  - Passed: `packages/content/base/player/knowledge_snippets.json` was not created.
 - Conflict-marker and trailing-whitespace scans across touched files.
   - Passed.
 - `git diff --check`
   - Passed.
-- Broad typecheck was not run because this pass changed documentation only.
+- Broad typecheck was not run because this pass changed only JSON Schema, one focused parse-test registration, and documentation.
 
 ## Behavior / Runtime Confirmation
 
-- Documentation and workflow sequencing changed.
-- No knowledge snippet JSON, registry content, legacy policy, schema, validator, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, evidence/progress state, completion math, trial, event, or ownership behavior changed.
+- Structural authored-content validation and workflow sequencing changed.
+- No knowledge snippet JSON, semantic validator, registry content, skills, runtime loader, database/persistence behavior, generated output, UI, save/account/session state, evidence/progress state, completion math, trial, event, ownership, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The current snippet schema is planning-only and is not registered in the schema-file test.
 - No snippet semantic validator exists.
+- The schema-file test proves parseability and top-level type only; cross-file and full structural enforcement remain assigned to the later snippet semantic validator.
+- `uniqueItems` on prerequisite skill-rank objects rejects exact duplicate objects; duplicate skill ids with differing ranks remain a later semantic check.
 - Arcane Lore remains `planned` and is excluded from the first seed.
 - Culture, institution, ruin, and historical-event subjects still lack one selected canonical authority.
-- The broad Arcane Lore record's stale future-link note remains outside this run's scope.
 
 ## Next Recommended Version
 
-Version 0.5.117 - Knowledge Snippet Schema Hardening
+Version 0.5.118 - Knowledge Snippet Seed Data
 
 ## Suggested Commit Message
 
-docs(knowledge): plan first snippet content
+schemas(knowledge): harden snippet schema
