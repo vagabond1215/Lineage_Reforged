@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-06
-Route: Codex local sequencing alignment after `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
+Route: Codex local sequencing alignment after `Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.113 - Knowledge Domain Registry Semantic Validator` added live schema-driven structural and semantic registry checks with focused tests.
+This file gives Codex a stable ordered queue after `Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan` audited current skill references and selected the exact Arcane Lore metadata change.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.113 - Knowledge Domain Registry Semantic Validator`
+- `Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.114 - Skill Knowledge Domain Reference Realignment Plan`
+- `Version 0.5.115 - Skill Knowledge Domain Reference Realignment`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.113` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.114` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -71,7 +71,8 @@ Versioning note:
 | 33 | `0.5.111` | Knowledge Domain Registry Seed Data | Codex 5.5 Local | `packages/content/base/player/knowledge_domain_registry.json` | broad registry content JSON | Landed | Added the exact approved five-record wrapper/content file without semantic validation, skill-link changes, legacy policy edits, runtime loading, or behavior changes. |
 | 34 | `0.5.112` | Knowledge Domain Registry Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | planning doc | Completed | Defined schema-first lint ownership, exact semantic checks, focused tests, and acceptance criteria without implementation or behavior changes. |
 | 35 | `0.5.113` | Knowledge Domain Registry Semantic Validator | Codex 5.5 Local | `tools/content-lint/knowledge-domain-registry.mjs` | focused content-lint validator + tests | Completed | Added schema-driven structural and semantic validation plus focused tests without content, schema, skill-link, runtime, persistence, generated-output, snippet, trial, UI, or gameplay changes. |
-| 36 | `0.5.114` | Skill Knowledge Domain Reference Realignment Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-domain-registry-semantic-validator-plan.md` | planning doc | Next | Audit and decide exact skill-domain links only; no skill edits, content changes, runtime loading, persistence, snippets, UI, or gameplay behavior. |
+| 36 | `0.5.114` | Skill Knowledge Domain Reference Realignment Plan | Codex 5.5 Local docs-first | `docs/design/skill-knowledge-domain-reference-realignment-plan.md` | planning doc | Completed | Audited every current link, selected the Arcane Lore metadata reference, deferred Folk and Civic Lore, and scoped a fixture-only focused-test update without implementation. |
+| 37 | `0.5.115` | Skill Knowledge Domain Reference Realignment | Codex 5.5 Local | `docs/design/skill-knowledge-domain-reference-realignment-plan.md` | narrow skill metadata + focused test fixture | Next | Add one Arcane Lore `knowledgeDomainId` field and make the positive unreferenced-domain test data-independent; no registry, legacy policy, schema, validator behavior, runtime, persistence, snippets, UI, or gameplay changes. |
 
 ## Default Prompt Pattern
 
