@@ -38,13 +38,9 @@ export const LAUNCHER_SIDEBAR_ART_ASPECT_RATIO = '7 / 2';
 
 /*
  * Sidebar art contract:
- * - 7:2 transparent PNG button plates.
+ * - 7:2 transparent PNG or SVG button plates.
  * - No baked readable labels; live labels stay in React for accessibility and localization.
  * - Add sections here only after both active and inactive files exist in /public/launcher.
- *
- * Bloodlines intentionally falls back to the text treatment until these files exist:
- * - /launcher/bloodlines-inactive-soft.png
- * - /launcher/bloodlines-active-soft.png
  */
 const launcherSidebarAssets: Partial<Record<string, LauncherSidebarAsset>> = {
   characters: {
@@ -58,6 +54,10 @@ const launcherSidebarAssets: Partial<Record<string, LauncherSidebarAsset>> = {
   chronicles: {
     inactive: '/launcher/chronicles-inactive-soft.png',
     active: '/launcher/chronicles-active-soft.png'
+  },
+  bloodlines: {
+    inactive: '/launcher/bloodlines-inactive-soft.svg',
+    active: '/launcher/bloodlines-active-soft.svg'
   },
   settings: {
     inactive: '/launcher/settings-inactive-soft.png',
