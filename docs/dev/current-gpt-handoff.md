@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local documentation after `Version 0.5.126 - Knowledge Progress State Plan`
+Source route: Codex local documentation after `Version 0.5.127 - Knowledge Progress Schema Plan`
 Date: 2026-06-08
-Branch/status assumption: `master` at commit `9a107a7` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `d7852c2` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -13,13 +13,11 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
-- `docs/design/knowledge-progress-state-plan.md` owns progress identity, character ownership, snippet/evidence relationships, integer-value posture, schema boundary, validation boundary, and sequence.
-- `docs/design/knowledge-evidence-contract-plan.md` owns evidence identity, beneficiary ownership, source/context relationships, validation boundaries, and sequence.
-- `docs/design/knowledge-evidence-schema-plan.md` owns the evidence record schema design and structural boundary.
-- `docs/design/knowledge-evidence-semantic-validator-plan.md` remains the consumed validator guardrail and should be retained through progress schema and evidence-to-progress planning.
+- `docs/design/knowledge-progress-state-plan.md` owns progress identity, character ownership, snippet/evidence relationships, integer-value posture, validation boundary, and sequence.
+- `docs/design/knowledge-progress-schema-plan.md` owns the exact first-schema path, required fields, patterns, enums, array and notes posture, forbidden fields, schema tests, and `0.5.128` acceptance criteria.
+- `docs/design/knowledge-evidence-contract-plan.md`, `docs/design/knowledge-evidence-schema-plan.md`, and `docs/design/knowledge-evidence-semantic-validator-plan.md` remain evidence boundary guardrails through progress semantic validation and evidence-to-progress planning.
 - `packages/schemas/player/knowledge_evidence.schema.json` owns the structural contract for one evidence record.
-- `tools/content-lint/knowledge-evidence.mjs` owns the current pure evidence wrapper, schema-first, reference, source/context, and duplicate-identity validation boundary.
-- `tests/unit/knowledge-evidence-validation.test.mjs` owns focused in-memory evidence-validator coverage.
+- `tools/content-lint/knowledge-evidence.mjs` owns the current pure evidence validation boundary.
 - `packages/content/base/player/knowledge_snippets.json` remains the authored snippet authority.
 - `packages/content/base/player/knowledge_domain_registry.json` remains broad domain compatibility metadata.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
@@ -28,71 +26,75 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.126 - Knowledge Progress State Plan`
+- `Version 0.5.127 - Knowledge Progress Schema Plan`
 
 Immediate next version:
 
-- `Version 0.5.127 - Knowledge Progress Schema Plan`
+- `Version 0.5.128 - Knowledge Progress Schema`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.126 Result
+## Version 0.5.127 Result
 
-- Added `docs/design/knowledge-progress-state-plan.md` as a planning-only authority.
-- Defined progress as character-owned state for one authored snippet, separate from authored content, evidence, completion, trials, and UI.
-- Selected finite non-negative integer progress points without percentage or threshold semantics.
-- Planned strict snippet/domain/subject snapshots, character-only owner scope, pattern-only owner ids, unique consumed evidence ids, and deterministic update sequences.
-- Kept `consumedEvidenceIds` as the first audit boundary.
-- Deferred `progressSources` from the first schema until source kinds, integer deltas, reason vocabulary, and replay expectations are defined.
-- Recommended `packages/schemas/player/knowledge_progress.schema.json` as the future strict record-level schema path.
-- Kept storage, persistence, save/session state, evidence producers, evidence-to-progress computation, completion, trials, UI, events, and gameplay behavior deferred.
-- Changed no source, schema, content, validator, test, runtime, UI/main-menu, generated, persistence, or gameplay file.
+- Added `docs/design/knowledge-progress-schema-plan.md` as the exact first-schema authority.
+- Selected `packages/schemas/player/knowledge_progress.schema.json` as a strict record-level schema only.
+- Required the 11 approved progress identity, snippet snapshot, owner, value, consumed-evidence, sequence, and notes fields.
+- Selected exact progress, snippet, domain, subject, owner, and evidence id patterns.
+- Preserved the live snippet `subjectType` enum and character-only `ownerScope`.
+- Selected integer `progressValue` and `updatedSequence` with minimum zero and no progress maximum.
+- Allowed an empty `consumedEvidenceIds` array structurally while deferring zero-state persistence and value consistency to semantic/storage policy.
+- Required at least one unique non-empty note.
+- Kept `progressSources`, completion, trial, UI, event, generated-output, and persistence fields out of the first schema.
+- Added no schema, state, validator, source, content, test, runtime, UI/main-menu, persistence, generated, or gameplay change.
 
-## Active Guardrails For 0.5.127
+## Active Guardrails For 0.5.128
 
-Knowledge Progress Schema Plan:
+Knowledge Progress Schema:
 
-- Keep the next run planning-only.
-- Use `docs/design/knowledge-progress-state-plan.md` as the primary authority.
-- Freeze the exact first-schema required fields, identifier patterns, enum and integer constraints, consumed-evidence array posture, notes posture, and schema-file test expectations.
-- Keep `progressSources` out of the first schema unless the plan identifies a narrow contract that does not invent delta policy.
-- Preserve character-only ownership and pattern-only `ownerId`.
-- Keep the future schema strict, record-level, and free of defaults, wrappers, UI, completion, trial, event, persistence, and generated-output fields.
-- Do not create progress JSON/content/state or canonical evidence state.
-- Do not edit evidence, snippet, registry, skill, spell, runtime, UI/main-menu, persistence, save/account/session, generated, or gameplay files.
+- Create only `packages/schemas/player/knowledge_progress.schema.json`.
+- Update only the focused schema-file registration needed in `tests/unit/schema-files.test.mjs`, plus normal handoff docs.
+- Use `docs/design/knowledge-progress-schema-plan.md` as the exact contract.
+- Require all 11 planned fields.
+- Use `type: "object"`, `additionalProperties: false`, and no defaults.
+- Use exact planned patterns and enums.
+- Allow `consumedEvidenceIds: []` structurally; do not add conditional zero-state behavior.
+- Require `notes` with `minItems: 1`, `uniqueItems: true`, and non-empty strings.
+- Keep `progressSources` and all completion, trial, UI, event, generated-output, persistence, and owner-shortcut fields absent.
+- Do not create progress or evidence JSON/content/state.
+- Do not implement a progress semantic validator, evidence-to-progress rules, runtime producers, persistence, UI, events, completion, trials, ownership behavior, or gameplay behavior.
+- Do not edit evidence/snippet schemas or validators, authored snippets, registry content, skills, spells, or main-menu files.
 
 Current follow-up risks:
 
 - No canonical evidence or progress storage path exists.
 - Character owner authority remains pattern-only.
-- Evidence-to-progress weights, duplicate credit, repeatability, stacking, and authorized non-evidence operations remain undefined.
+- Empty consumed-evidence arrays are structurally allowed, but zero-state persistence policy remains undefined.
+- Evidence-to-progress weights, duplicate credit, repeatability, stacking, and cross-record consumption remain undefined.
 - `progressSources` remains deferred.
 - Completion thresholds, tier aggregation, trial readiness, persistence, and UI remain undefined.
-- Arcane Lore snippets, evidence, and progress remain blocked while the domain is planned.
+- Arcane Lore progress remains blocked while the domain is planned.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.121` | Knowledge Evidence Contract Plan | `docs/design/knowledge-evidence-contract-plan.md` | Completed |
-| 2 | `0.5.122` | Knowledge Evidence Schema Plan | `docs/design/knowledge-evidence-schema-plan.md` | Completed |
-| 3 | `0.5.123` | Knowledge Evidence Schema | `packages/schemas/player/knowledge_evidence.schema.json` | Completed |
-| 4 | `0.5.124` | Knowledge Evidence Semantic Validator Plan | `docs/design/knowledge-evidence-semantic-validator-plan.md` | Completed |
-| 5 | `0.5.125` | Knowledge Evidence Semantic Validator | `tools/content-lint/knowledge-evidence.mjs` | Completed |
-| 6 | `0.5.126` | Knowledge Progress State Plan | `docs/design/knowledge-progress-state-plan.md` | Completed |
-| 7 | `0.5.127` | Knowledge Progress Schema Plan | `docs/design/knowledge-progress-state-plan.md` | Next |
-| 8 | `0.5.x` | Knowledge Progress Schema | Future schema plan | Deferred |
-| 9 | `0.5.x` | Knowledge Progress Semantic Validator Plan | Future schema and state plans | Deferred |
-| 10 | `0.5.x` | Knowledge Progress Semantic Validator | Future validator plan | Deferred |
-| 11 | `0.5.x` | Knowledge Evidence-to-Progress Rules Plan | Progress authorities | Deferred |
-| 12 | `0.5.x` | Knowledge Evidence Producers Plan | Future focused plan | Deferred |
-| 13 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
-| 14 | `0.5.x` | Knowledge Trials Plan | Future focused plan | Deferred |
-| 15 | `0.5.x` | Knowledge UI Plan | Future focused plan | Deferred |
+| 1 | `0.5.123` | Knowledge Evidence Schema | `packages/schemas/player/knowledge_evidence.schema.json` | Completed |
+| 2 | `0.5.124` | Knowledge Evidence Semantic Validator Plan | `docs/design/knowledge-evidence-semantic-validator-plan.md` | Completed |
+| 3 | `0.5.125` | Knowledge Evidence Semantic Validator | `tools/content-lint/knowledge-evidence.mjs` | Completed |
+| 4 | `0.5.126` | Knowledge Progress State Plan | `docs/design/knowledge-progress-state-plan.md` | Completed |
+| 5 | `0.5.127` | Knowledge Progress Schema Plan | `docs/design/knowledge-progress-schema-plan.md` | Completed |
+| 6 | `0.5.128` | Knowledge Progress Schema | `docs/design/knowledge-progress-schema-plan.md` | Next |
+| 7 | `0.5.x` | Knowledge Progress Semantic Validator Plan | Progress plans and schema | Deferred |
+| 8 | `0.5.x` | Knowledge Progress Semantic Validator | Future validator plan | Deferred |
+| 9 | `0.5.x` | Knowledge Evidence-to-Progress Rules Plan | Progress authorities | Deferred |
+| 10 | `0.5.x` | Knowledge Evidence Producers Plan | Future focused plan | Deferred |
+| 11 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
+| 12 | `0.5.x` | Knowledge Trials Plan | Future focused plan | Deferred |
+| 13 | `0.5.x` | Knowledge UI Plan | Future focused plan | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.127 - Knowledge Progress Schema Plan`, inspect:
+For `Version 0.5.128 - Knowledge Progress Schema`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -101,14 +103,8 @@ For `Version 0.5.127 - Knowledge Progress Schema Plan`, inspect:
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/design/knowledge-progress-state-plan.md`
-- `docs/design/knowledge-evidence-contract-plan.md`
-- `docs/design/knowledge-evidence-schema-plan.md`
-- `docs/design/knowledge-evidence-semantic-validator-plan.md`
+- `docs/design/knowledge-progress-schema-plan.md`
 - `packages/schemas/player/knowledge_evidence.schema.json`
-- `tools/content-lint/knowledge-evidence.mjs`
-- `tests/unit/knowledge-evidence-validation.test.mjs`
 - `packages/schemas/player/knowledge_snippet.schema.json`
-- `packages/content/base/player/knowledge_snippets.json`
-- `packages/content/base/player/knowledge_domain_registry.json`
 - `tests/unit/schema-files.test.mjs`
 - `docs/future_content_backlog.md`
