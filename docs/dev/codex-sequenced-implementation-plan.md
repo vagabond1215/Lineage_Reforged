@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-07
-Route: Codex local sequencing alignment after `Version 0.5.120 - Knowledge Snippet Semantic Validator`
+Date: 2026-06-08
+Route: Codex local sequencing alignment after `Version 0.5.121 - Knowledge Evidence Contract Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.120 - Knowledge Snippet Semantic Validator` added focused snippet validation and normal lint integration.
+This file gives Codex a stable ordered queue after `Version 0.5.121 - Knowledge Evidence Contract Plan` defined evidence identity, beneficiary ownership, source/context boundaries, and future validation layers.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.120 - Knowledge Snippet Semantic Validator`
+- `Version 0.5.121 - Knowledge Evidence Contract Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.121 - Knowledge Evidence Contract Plan`
+- `Version 0.5.122 - Knowledge Evidence Schema Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.120` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.121` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -78,7 +78,9 @@ Versioning note:
 | 40 | `0.5.118` | Knowledge Snippet Seed Data | Codex 5.5 Local | `packages/content/base/player/knowledge_snippets.json` | four-record content JSON | Completed | Added exactly the approved Tier 1 records under the hardened schema without semantic validation, runtime loading, evidence, progress, completion, trials, UI, events, persistence, or ownership changes. |
 | 41 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-snippet-semantic-validator-plan.md` | planning doc | Completed | Defined schema-first cross-file validation, authority maps, prerequisite graph rules, focused tests, and acceptance criteria without implementation. |
 | 42 | `0.5.120` | Knowledge Snippet Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-snippet-semantic-validator-plan.md` | focused content-lint validator + tests | Completed | Added schema-first semantic validation, 49 focused tests, and normal lint registration without content/schema, runtime, state, UI, persistence, or ownership changes. |
-| 43 | `0.5.121` | Knowledge Evidence Contract Plan | Codex 5.5 Local docs-first | Future focused plan | planning doc | Next | Define evidence identity, source, owner, context, and validation boundaries without implementing evidence state or runtime behavior. |
+| 43 | `0.5.121` | Knowledge Evidence Contract Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-contract-plan.md` | planning doc | Completed | Defined evidence identity, character-first beneficiary ownership, source/context separation, validation boundaries, examples, and implementation sequence without state behavior. |
+| 44 | `0.5.122` | Knowledge Evidence Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-contract-plan.md` | planning doc | Next | Select the exact evidence schema path, wrapper, fields, nullability, owner vocabulary, context variants, and validator ownership without implementation. |
+| 45 | `0.5.123` | Knowledge Evidence Schema | Codex 5.5 Local | Future schema plan | schema file + focused schema tests | Planned | Implement evidence structure only; no evidence content/state, runtime loading, progress, completion, trials, UI, persistence, or ownership behavior. |
 
 ## Default Prompt Pattern
 
@@ -105,6 +107,7 @@ Each future Codex prompt should:
 - Do not combine the legacy combat spell-staging or multi-effect branch-order findings with constants cleanup or pure projection work.
 - Keep the registry schema file, seed data, semantic validator planning, semantic validator implementation, and skill-reference realignment as separate runs.
 - Keep snippet authoring, schema hardening, seed data, semantic validator planning, semantic validator implementation, evidence, progress, trials, and UI as separate runs.
+- Keep the evidence contract, schema planning, schema file, evidence state, progress state, evidence-to-progress rules, trials, and UI as separate runs.
 
 ## When To Reorder
 
