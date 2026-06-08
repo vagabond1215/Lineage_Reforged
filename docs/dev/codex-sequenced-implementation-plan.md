@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-08
-Route: Codex local sequencing alignment after `Version 0.5.125 - Knowledge Evidence Semantic Validator`
+Route: Codex local sequencing alignment after `Version 0.5.126 - Knowledge Progress State Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.125 - Knowledge Evidence Semantic Validator` added the pure schema-first validator and focused in-memory tests without evidence state or behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.126 - Knowledge Progress State Plan` defined progress identity, character ownership, evidence-consumption boundaries, integer-value posture, schema ownership, validation layers, and later implementation order without state or behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.125 - Knowledge Evidence Semantic Validator`
+- `Version 0.5.126 - Knowledge Progress State Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.126 - Knowledge Progress State Plan`
+- `Version 0.5.127 - Knowledge Progress Schema Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.125` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.126` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -83,7 +83,8 @@ Versioning note:
 | 45 | `0.5.123` | Knowledge Evidence Schema | Codex 5.5 Local | `packages/schemas/player/knowledge_evidence.schema.json` | schema file + focused schema tests | Completed | Added evidence structure only; no evidence content/state, runtime loading, semantic validator, progress, completion, trials, UI, persistence, or ownership behavior. |
 | 46 | `0.5.124` | Knowledge Evidence Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-semantic-validator-plan.md` | planning doc | Completed | Defined a schema-first test-fixture-only pure-helper plan, authority posture, source/context matrix, duplicate identity checks, focused tests, and acceptance criteria without implementation. |
 | 47 | `0.5.125` | Knowledge Evidence Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-evidence-semantic-validator-plan.md` | focused validator + tests | Completed | Added schema-first pure validation and 76 focused in-memory tests without canonical evidence content/state, normal lint registration, progress credit, persistence, runtime producers, trials, UI, or gameplay behavior. |
-| 48 | `0.5.126` | Knowledge Progress State Plan | Codex 5.5 Local docs-first | `tools/content-lint/knowledge-evidence.mjs` | planning doc | Next | Plan progress-state identity, ownership, evidence-consumption boundaries, schema posture, and later sequence without implementing state or behavior. |
+| 48 | `0.5.126` | Knowledge Progress State Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-state-plan.md` | planning doc | Completed | Defined character-owned progress identity, integer-value posture, consumed-evidence boundaries, deferred source audit detail, schema ownership, validation layers, and later sequence without state or behavior. |
+| 49 | `0.5.127` | Knowledge Progress Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-state-plan.md` | planning doc | Next | Freeze the first strict record-schema contract, identifiers, required fields, array and notes posture, and focused schema-test expectations without implementation. |
 
 ## Default Prompt Pattern
 
@@ -110,7 +111,7 @@ Each future Codex prompt should:
 - Do not combine the legacy combat spell-staging or multi-effect branch-order findings with constants cleanup or pure projection work.
 - Keep the registry schema file, seed data, semantic validator planning, semantic validator implementation, and skill-reference realignment as separate runs.
 - Keep snippet authoring, schema hardening, seed data, semantic validator planning, semantic validator implementation, evidence, progress, trials, and UI as separate runs.
-- Keep the evidence contract, schema planning, schema file, evidence state, progress state, evidence-to-progress rules, trials, and UI as separate runs.
+- Keep the evidence contract, schema planning, schema file, evidence state, progress-state planning, progress-schema planning, progress schema, progress semantic-validator planning, progress semantic validation, evidence-to-progress rules, evidence producers, completion rules, trials, and UI as separate runs.
 
 ## When To Reorder
 
