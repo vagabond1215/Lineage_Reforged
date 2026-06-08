@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-08
-Route: Codex local sequencing alignment after `Version 0.5.121 - Knowledge Evidence Contract Plan`
+Route: Codex local sequencing alignment after `Version 0.5.122 - Knowledge Evidence Schema Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.121 - Knowledge Evidence Contract Plan` defined evidence identity, beneficiary ownership, source/context boundaries, and future validation layers.
+This file gives Codex a stable ordered queue after `Version 0.5.122 - Knowledge Evidence Schema Plan` selected the future record schema path, exact field contract, identifier patterns, character-only owner enum, strict acquisition context, and schema-test posture.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.121 - Knowledge Evidence Contract Plan`
+- `Version 0.5.122 - Knowledge Evidence Schema Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.122 - Knowledge Evidence Schema Plan`
+- `Version 0.5.123 - Knowledge Evidence Schema`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.121` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.122` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -79,8 +79,10 @@ Versioning note:
 | 41 | `0.5.119` | Knowledge Snippet Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-snippet-semantic-validator-plan.md` | planning doc | Completed | Defined schema-first cross-file validation, authority maps, prerequisite graph rules, focused tests, and acceptance criteria without implementation. |
 | 42 | `0.5.120` | Knowledge Snippet Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-snippet-semantic-validator-plan.md` | focused content-lint validator + tests | Completed | Added schema-first semantic validation, 49 focused tests, and normal lint registration without content/schema, runtime, state, UI, persistence, or ownership changes. |
 | 43 | `0.5.121` | Knowledge Evidence Contract Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-contract-plan.md` | planning doc | Completed | Defined evidence identity, character-first beneficiary ownership, source/context separation, validation boundaries, examples, and implementation sequence without state behavior. |
-| 44 | `0.5.122` | Knowledge Evidence Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-contract-plan.md` | planning doc | Next | Select the exact evidence schema path, wrapper, fields, nullability, owner vocabulary, context variants, and validator ownership without implementation. |
-| 45 | `0.5.123` | Knowledge Evidence Schema | Codex 5.5 Local | Future schema plan | schema file + focused schema tests | Planned | Implement evidence structure only; no evidence content/state, runtime loading, progress, completion, trials, UI, persistence, or ownership behavior. |
+| 44 | `0.5.122` | Knowledge Evidence Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-schema-plan.md` | planning doc | Completed | Selected the exact record schema path, wrapper posture, required fields, patterns, enums, strict context shape, schema tests, and semantic boundary without implementation. |
+| 45 | `0.5.123` | Knowledge Evidence Schema | Codex 5.5 Local | `docs/design/knowledge-evidence-schema-plan.md` | schema file + focused schema tests | Next | Implement evidence structure only; no evidence content/state, runtime loading, semantic validator, progress, completion, trials, UI, persistence, or ownership behavior. |
+| 46 | `0.5.x` | Knowledge Evidence Semantic Validator Plan | Codex 5.5 Local docs-first | Future focused plan | planning doc | Deferred | Plan cross-reference, owner, source, and source/context compatibility checks without implementation. |
+| 47 | `0.5.x` | Knowledge Evidence Semantic Validator | Codex 5.5 Local | Future validator plan | focused validator + tests | Deferred | Validate evidence only; no progress credit, persistence, runtime producers, trials, UI, or gameplay behavior. |
 
 ## Default Prompt Pattern
 
