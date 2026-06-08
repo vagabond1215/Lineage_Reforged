@@ -6,20 +6,20 @@ This file defines expected launcher art paths and dimensions so future image ass
 
 ## Sidebar button art
 
-Sidebar art uses paired transparent PNG files. Each button should use a **7:2** aspect ratio and should not include baked readable labels, logos, or UI text.
+Sidebar art uses paired transparent PNG or SVG files. Each button should use a **7:2** aspect ratio and should not include baked readable labels, logos, or UI text.
 
 | Section | Inactive path | Active path | Status |
 | --- | --- | --- | --- |
 | Characters | `/launcher/character-inactive-soft.png` | `/launcher/character-active-soft.png` | Existing |
 | Legacy | `/launcher/legacy-inactive-soft.png` | `/launcher/legacy-active-soft.png` | Existing |
 | Chronicles | `/launcher/chronicles-inactive-soft.png` | `/launcher/chronicles-active-soft.png` | Existing |
+| Bloodlines | `/launcher/bloodlines-inactive-soft.svg` | `/launcher/bloodlines-active-soft.svg` | Existing |
 | Settings | `/launcher/settings-inactive-soft.png` | `/launcher/settings-active-soft.png` | Existing |
-| Bloodlines | `/launcher/bloodlines-inactive-soft.png` | `/launcher/bloodlines-active-soft.png` | Needed |
 
 Recommended export sizes:
 
-- `1400 x 400` transparent PNG
-- `2100 x 600` transparent PNG
+- `1400 x 400` transparent PNG or SVG viewBox
+- `2100 x 600` transparent PNG or SVG viewBox
 
 Only add a section to the image-backed sidebar map after both inactive and active files exist.
 
