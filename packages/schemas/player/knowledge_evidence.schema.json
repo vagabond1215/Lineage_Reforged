@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnowledgeEvidenceRecord",
+  "description": "Schema for one future knowledge evidence record. It defines record structure only and does not define collections, runtime state, progress, completion, trials, UI, persistence, ownership mutation, or gameplay behavior. Character is the only initial beneficiary owner scope; broader scopes remain deferred pending explicit sharing and benefit rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evidenceId",
+    "snippetId",
+    "domainId",
+    "subjectType",
+    "subjectId",
+    "sourceType",
+    "sourceId",
+    "ownerScope",
+    "ownerId",
+    "acquiredSequence",
+    "acquisitionContext",
+    "notes"
+  ],
+  "properties": {
+    "evidenceId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^knowledge_evidence\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "snippetId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^knowledge_snippet\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "domainId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^knowledge_domain\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "subjectType": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "flora",
+        "fauna",
+        "mineral",
+        "settlement",
+        "region",
+        "culture",
+        "institution",
+        "spell",
+        "item",
+        "ruin",
+        "historical_event",
+        "custom"
+      ]
+    },
+    "subjectId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+    },
+    "sourceType": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "field_identification",
+        "resource_use",
+        "crafting_use",
+        "combat_observation",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "scroll_study",
+        "tome_study",
+        "quest_event",
+        "chronicle_record",
+        "custom"
+      ]
+    },
+    "sourceId": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+        }
+      ]
+    },
+    "ownerScope": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "character"
+      ]
+    },
+    "ownerId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+    },
+    "acquiredSequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "acquisitionContext": {
+      "description": "Strict structural context for the evidence-producing occurrence. Source-specific compatibility and reference resolution belong to later semantic validation.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contextType"
+      ],
+      "properties": {
+        "contextType": {
+          "type": "string",
+          "minLength": 1,
+          "enum": [
+            "field_observation",
+            "travel_observation",
+            "resource_use",
+            "crafting_use",
+            "study",
+            "instruction",
+            "quest_event",
+            "chronicle_record"
+          ]
+        },
+        "continentId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "regionId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "settlementId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "eventId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "actionId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "itemInstanceId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "documentId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "teacherId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "institutionId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "questOutcomeId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "chronicleRecordId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "skillId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "spellId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "biomeTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

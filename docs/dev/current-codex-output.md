@@ -1,20 +1,21 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.122 - Knowledge Evidence Schema Plan
+Source version/run: Version 0.5.123 - Knowledge Evidence Schema
 Date: 2026-06-08
-Branch/status assumption: Ran on `master` from commit `458a250`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `40a1150`. The worktree was clean before edits.
 
 ## Result
 
-Created the planning-only knowledge evidence schema design.
+Implemented the strict record-level knowledge evidence JSON Schema at `packages/schemas/player/knowledge_evidence.schema.json` and registered it in the focused schema-file test.
 
-`docs/design/knowledge-evidence-schema-plan.md` selects `packages/schemas/player/knowledge_evidence.schema.json` as a future strict record-level schema, keeps evidence as runtime/state data rather than authored base content, defines all required fields and identifier patterns, limits first-schema ownership to `character`, keeps `sourceId` nullable, defines a closed acquisition-context object, and separates structural schema ownership from later semantic validation.
+The schema requires exactly the approved 12 live fields, preserves subject/source enum parity with the knowledge snippet schema, limits ownership to `character`, keeps `sourceId` nullable, requires deterministic non-negative acquisition ordering, and uses a closed acquisition-context object. `notes` is required with `minItems: 1`, unique entries, and non-empty strings.
 
-The roadmap, sequence, GPT handoff, and backlog now identify `Version 0.5.123 - Knowledge Evidence Schema` as the next run.
+The roadmap, sequence, GPT handoff, and backlog now identify `Version 0.5.124 - Knowledge Evidence Semantic Validator Plan` as the next run.
 
 ## Files Changed
 
-- `docs/design/knowledge-evidence-schema-plan.md`
+- `packages/schemas/player/knowledge_evidence.schema.json`
+- `tests/unit/schema-files.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -23,42 +24,43 @@ The roadmap, sequence, GPT handoff, and backlog now identify `Version 0.5.123 - 
 
 ## Checks Run
 
+- `node --test tests/unit/schema-files.test.mjs`
+  - Passed: 53 tests, including the new evidence schema.
 - `npm.cmd run tool:content-lint`
   - Passed: 55 files checked.
 - `node --test tests/unit/knowledge-snippets-validation.test.mjs`
   - Passed: 49 tests.
-- `node --test tests/unit/schema-files.test.mjs`
-  - Passed: 52 tests.
 - `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
   - Passed: 37 tests.
-- Required evidence-schema-plan coverage scan.
-  - Passed: all 16 required sections and 55 required schema path, wrapper, field, enum, context, boundary, test, sequence, and non-goal markers were present.
+- Focused scripted `knowledge_evidence.schema.json` contract audit.
+  - Passed: root strictness, exact required/property fields, identifier patterns, snippet enum parity, character-only ownership, nullable canonical `sourceId`, non-negative integer sequence, strict context fields, nullable context references, biome tags, non-empty unique notes, deferred-field absence, and test registration.
 - Changed-path scope audit.
-  - Passed: exactly six documentation files changed; evidence schema/content/state, snippet JSON/schema/validator, registry, skill, runtime, UI/main-menu, persistence, state, gameplay, and generated paths remained unchanged.
+  - Passed: exactly seven authorized schema, focused-test, and documentation files changed; evidence JSON/content/state, snippet JSON/schema/validator, registry, skill, spell, runtime, UI/main-menu, persistence, state, gameplay, and generated paths remained unchanged.
 - Conflict-marker and trailing-whitespace scans across touched files.
   - Passed.
 - `git diff --check`
-  - Passed; Git reported only line-ending normalization warnings for modified tracked documentation files.
-- Broad typecheck was not run because this pass changed documentation only.
+  - Passed; Git reported only line-ending normalization warnings for modified tracked files.
+- Broad typecheck was not run because this pass touched only one JSON Schema, focused schema registration, and documentation.
 
 ## Behavior / Runtime Confirmation
 
-- Documentation and workflow sequencing changed.
-- No evidence schema, evidence JSON/content, evidence state, semantic validator, runtime loader, database/persistence behavior, generated output, UI, main-menu file, save/account/session state, progress state, completion math, trial, Chronicle/Renown event, ownership, snippet content/schema/validator, registry content, skill, spell, or gameplay behavior changed.
+- The evidence record structural schema and schema-file test registration changed.
+- No evidence JSON/content, evidence state, semantic validator, runtime loader, database/persistence behavior, generated output, UI, main-menu file, save/account/session state, progress state, completion math, trial, Chronicle/Renown event, ownership behavior, snippet JSON/schema/validator, registry content, skill, spell, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Character owner-id resolution remains a later semantic authority concern.
-- Source-id, event, action, item-instance, document, teacher, institution, quest-outcome, and Chronicle-record authorities remain undefined.
-- The strict first context object still requires later source-specific compatibility validation.
+- The schema validates record shape only; it does not prove references or source/context compatibility.
+- `sourceId` remains structurally nullable, and later semantic validation must reject non-null use until source authorities exist.
+- Character owner-id resolution remains undefined.
+- Event, action, item-instance, document, teacher, institution, quest-outcome, and Chronicle-record authorities remain undefined.
 - Duplicate credit, repeatability, confidence, weight, family/account sharing, progress, completion, persistence, trials, and UI remain deferred.
 - Arcane Lore snippets remain blocked while `knowledge_domain.arcane_lore` is `planned`.
-- Retain the evidence contract and schema plan through schema implementation and semantic-validator planning, then make an explicit retain, consolidate, promote, or remove decision.
+- Retain the evidence contract and schema plan through semantic-validator planning and implementation, then make an explicit retain, consolidate, promote, or remove decision.
 
 ## Next Recommended Version
 
-Version 0.5.123 - Knowledge Evidence Schema
+Version 0.5.124 - Knowledge Evidence Semantic Validator Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan evidence schema
+schemas(knowledge): add evidence schema

@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.122 - Knowledge Evidence Schema Plan`
-- Next recommended version: `Version 0.5.123 - Knowledge Evidence Schema`
+- Latest completed version: `Version 0.5.123 - Knowledge Evidence Schema`
+- Next recommended version: `Version 0.5.124 - Knowledge Evidence Semantic Validator Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.122` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.123` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -84,6 +84,7 @@ Current repo reality:
 - Knowledge snippet structural and semantic validation has landed in `tools/content-lint/knowledge-snippets.mjs` with focused tests and normal lint integration. The current catalog is now included in the 55-file content-lint count without runtime loading or state behavior.
 - Knowledge evidence contract planning has landed in `docs/design/knowledge-evidence-contract-plan.md`. It defines evidence identity, character-first beneficiary ownership, source/context separation, snippet-reference rules, validation layers, and the schema-to-progress sequence without implementing evidence state.
 - Knowledge evidence schema planning has landed in `docs/design/knowledge-evidence-schema-plan.md`. It selects the future strict record schema, required fields and patterns, character-only owner enum, nullable source reference, closed acquisition-context structure, focused schema-file test posture, and later semantic-validation boundary without implementing evidence state.
+- The strict record-level knowledge evidence schema now exists at `packages/schemas/player/knowledge_evidence.schema.json` and is registered in the focused schema-file test. It defines structure only; no evidence collection, state, semantic validation, runtime loading, persistence, progress, completion, trials, UI, or ownership behavior exists.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -138,7 +139,9 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.120` | Knowledge Snippet Semantic Validator | Codex Local | Focused content-lint validator + tests | Completed. Added fail-closed structural gating, semantic authority/reference checks, prerequisite graph validation, focused tests, and normal lint registration. | No snippet content, schema, registry, skill, runtime, persistence, generated-output, UI, ownership, or gameplay changes. |
 | `0.5.121` | Knowledge Evidence Contract Plan | Codex Local docs-first | Planning | Completed. Defined evidence identity, beneficiary ownership, source/context separation, snippet relationships, validation layers, examples, and future sequence. | Documentation only; no schema, evidence storage, runtime loading, progress, completion, trials, UI, events, persistence, ownership mutation, or gameplay changes. |
 | `0.5.122` | Knowledge Evidence Schema Plan | Codex Local docs-first | Planning | Completed. Selected the exact record-level schema path, required fields, identifier patterns, enums, strict context structure, schema-file test plan, and semantic-validation boundary. | Documentation only; no schema file, evidence content/state, runtime, progress, completion, trials, UI, persistence, or gameplay changes. |
-| `0.5.123` | Knowledge Evidence Schema | Codex Local | Schema file + focused schema tests | Next. Implement the approved evidence record structure only. | No evidence content/state, runtime loading, semantic validator, progress, completion, trials, UI, persistence, or gameplay changes. |
+| `0.5.123` | Knowledge Evidence Schema | Codex Local | Schema file + focused schema tests | Completed. Added the strict record schema and focused schema-file registration with exact field, enum, identifier, context, and deferred-field boundaries. | No evidence content/state, runtime loading, semantic validator, progress, completion, trials, UI, persistence, or gameplay changes. |
+| `0.5.124` | Knowledge Evidence Semantic Validator Plan | Codex Local docs-first | Planning | Next. Define schema-first evidence validation, authorities, compatibility checks, duplicate identity, focused tests, and acceptance criteria. | Documentation only; no validator, evidence content/state, runtime, progress, completion, trials, UI, persistence, or gameplay changes. |
+| `0.5.125` | Knowledge Evidence Semantic Validator | Codex Local | Focused validator + tests | Planned. Implement only the approved evidence semantic checks. | No progress credit, runtime producers, persistence, trials, UI, ownership mutation, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -178,7 +181,8 @@ Practical near-term sequence:
 9. `0.5.120 - Knowledge Snippet Semantic Validator` - completed
 10. `0.5.121 - Knowledge Evidence Contract Plan` - completed
 11. `0.5.122 - Knowledge Evidence Schema Plan` - completed
-12. `0.5.123 - Knowledge Evidence Schema`
+12. `0.5.123 - Knowledge Evidence Schema` - completed
+13. `0.5.124 - Knowledge Evidence Semantic Validator Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -208,9 +212,9 @@ Recommended advancement sequence:
 14. `0.5.120 - Knowledge Snippet Semantic Validator` - completed
 15. `0.5.121 - Knowledge Evidence Contract Plan` - completed
 16. `0.5.122 - Knowledge Evidence Schema Plan` - completed
-17. `0.5.123 - Knowledge Evidence Schema` - next
-18. `0.5.x - Knowledge Evidence Semantic Validator Plan`
-19. `0.5.x - Knowledge Evidence Semantic Validator`
+17. `0.5.123 - Knowledge Evidence Schema` - completed
+18. `0.5.124 - Knowledge Evidence Semantic Validator Plan` - next
+19. `0.5.125 - Knowledge Evidence Semantic Validator`
 20. `0.5.x - Knowledge Progress State Plan`
 21. `0.5.x - Knowledge Progress State Schema`
 22. `0.5.x - Knowledge Evidence-to-Progress Rules Plan`
@@ -372,7 +376,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 29 | `0.5.120` | Knowledge Snippet Semantic Validator | `tools/content-lint/knowledge-snippets.mjs` | Completed |
 | 30 | `0.5.121` | Knowledge Evidence Contract Plan | `docs/design/knowledge-evidence-contract-plan.md` | Completed |
 | 31 | `0.5.122` | Knowledge Evidence Schema Plan | `docs/design/knowledge-evidence-schema-plan.md` | Completed |
-| 32 | `0.5.123` | Knowledge Evidence Schema | `docs/design/knowledge-evidence-schema-plan.md` | Next |
+| 32 | `0.5.123` | Knowledge Evidence Schema | `packages/schemas/player/knowledge_evidence.schema.json` | Completed |
+| 33 | `0.5.124` | Knowledge Evidence Semantic Validator Plan | `packages/schemas/player/knowledge_evidence.schema.json` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -394,7 +399,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Legacy Combat Spell Runtime Ownership Plan | `docs/design/legacy-combat-spell-runtime-ownership-plan.md`; owns only deferred legacy staging, compatibility, multi-effect, and status-approximation decisions after the temporary classification audit was consumed. |
 | Skill Mastery Trial Framework Plan | `docs/design/skill-mastery-trial-framework-plan.md`; use for skill trials, magic study events, and advancement event planning. |
 | Knowledge Snippet Schema | `packages/schemas/player/knowledge_snippet.schema.json`; use as the authored record structural contract, but do not treat it as runtime-wired content or semantic validation. |
-| Knowledge Evidence Schema Plan | `docs/design/knowledge-evidence-schema-plan.md`; use for the future strict evidence record schema and focused schema-test contract, not as permission for evidence state, semantic validation, runtime loading, progress, persistence, or UI. |
+| Knowledge Evidence Schema | `packages/schemas/player/knowledge_evidence.schema.json`; use as the strict evidence record structural contract, not as permission for evidence state, semantic validation, runtime loading, progress, persistence, or UI. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |

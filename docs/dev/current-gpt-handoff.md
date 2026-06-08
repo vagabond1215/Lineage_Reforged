@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.122 - Knowledge Evidence Schema Plan`
+Source route: Codex local implementation after `Version 0.5.123 - Knowledge Evidence Schema`
 Date: 2026-06-08
-Branch/status assumption: `master` at commit `458a250` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `40a1150` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -15,6 +15,7 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
 - `docs/design/knowledge-evidence-contract-plan.md` owns future evidence identity, beneficiary ownership, source/context relationships, validation boundaries, and sequence.
 - `docs/design/knowledge-evidence-schema-plan.md` owns the approved future evidence record schema path, exact first-schema field contract, identifier patterns, enum posture, acquisition-context shape, and schema acceptance criteria.
+- `packages/schemas/player/knowledge_evidence.schema.json` owns the live structural contract for one future evidence record only.
 - `docs/design/knowledge-snippet-content-authoring-plan.md` owns snippet authoring boundaries.
 - `docs/design/knowledge-snippet-semantic-validator-plan.md` owns the snippet validation contract.
 - `tools/content-lint/knowledge-snippets.mjs` owns current authored snippet validation.
@@ -27,37 +28,37 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.122 - Knowledge Evidence Schema Plan`
+- `Version 0.5.123 - Knowledge Evidence Schema`
 
 Immediate next version:
 
-- `Version 0.5.123 - Knowledge Evidence Schema`
+- `Version 0.5.124 - Knowledge Evidence Semantic Validator Plan`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.122 Result
+## Version 0.5.123 Result
 
-- Added `docs/design/knowledge-evidence-schema-plan.md`.
-- Selected `packages/schemas/player/knowledge_evidence.schema.json` as the future strict record-level schema.
-- Kept evidence as future runtime/state data rather than authored base content and selected no evidence JSON path.
-- Required explicit identity, snippet/domain/subject/source, character owner, deterministic sequence, strict acquisition context, and notes fields.
-- Selected `character` as the only first-schema owner scope; family/account remain blocked and settlement/faction remain deferred.
-- Kept `sourceId` nullable and semantically blocked from non-null use until authorities exist.
-- Selected a closed acquisition-context object with a required context type and strict nullable reference fields.
-- Deferred source-specific context compatibility to a separate semantic-validator plan.
-- Changed documentation only.
+- Added `packages/schemas/player/knowledge_evidence.schema.json`.
+- Registered the schema in `tests/unit/schema-files.test.mjs`.
+- Implemented the exact 12-field strict record contract with canonical identifier patterns and no undeclared properties.
+- Preserved subject and source enum parity with the live snippet schema.
+- Limited `ownerScope` to `character`.
+- Kept `sourceId` required and nullable.
+- Added the strict required `contextType` context object with only the approved optional references and biome tags.
+- Required at least one unique non-empty note.
+- Added no evidence collection, content, state, semantic validation, runtime loading, persistence, progress, completion, trials, UI, events, ownership behavior, or gameplay behavior.
 
-## Active Guardrails For 0.5.123
+## Active Guardrails For 0.5.124
 
-Knowledge Evidence Schema:
+Knowledge Evidence Semantic Validator Plan:
 
-- Implement only `packages/schemas/player/knowledge_evidence.schema.json`, focused schema-file registration, and normal handoff updates.
-- Use a strict record-level schema with all fields and patterns selected by `docs/design/knowledge-evidence-schema-plan.md`.
-- Keep `character` as the only `ownerScope` enum value.
-- Keep `sourceId` required and nullable.
-- Keep deferred acquired time, confidence, weight, progress, completion, trial, UI, generated-output, and consumer-state fields out.
-- Do not create evidence JSON, evidence state, a wrapper schema, semantic validator, runtime loader, persistence, UI, events, ownership mutation, or gameplay behavior.
-- Do not change snippet content, snippet schema, snippet validator, registry content, skills, spells, or main-menu files.
+- Keep the next run planning-only.
+- Define the future evidence wrapper gate, schema-first validation flow, reference authorities, source/context compatibility matrix, duplicate-id checks, and focused test plan.
+- Keep `sourceId` non-null use blocked until source-specific authorities exist.
+- Keep `character` as the only approved owner scope and define owner-id resolution without adding owner state.
+- Separate duplicate record identity from duplicate progress credit.
+- Do not implement a validator, evidence JSON/state, runtime producer, persistence, progress, completion, trials, UI, events, ownership mutation, or gameplay behavior.
+- Do not change the evidence schema, snippet content/schema/validator, registry content, skills, spells, or main-menu files.
 
 Current follow-up risks:
 
@@ -76,9 +77,9 @@ Current follow-up risks:
 | 2 | `0.5.120` | Knowledge Snippet Semantic Validator | `tools/content-lint/knowledge-snippets.mjs` | Completed |
 | 3 | `0.5.121` | Knowledge Evidence Contract Plan | `docs/design/knowledge-evidence-contract-plan.md` | Completed |
 | 4 | `0.5.122` | Knowledge Evidence Schema Plan | `docs/design/knowledge-evidence-schema-plan.md` | Completed |
-| 5 | `0.5.123` | Knowledge Evidence Schema | `docs/design/knowledge-evidence-schema-plan.md` | Next |
-| 6 | `0.5.x` | Knowledge Evidence Semantic Validator Plan | Future focused plan | Deferred |
-| 7 | `0.5.x` | Knowledge Evidence Semantic Validator | Future validator plan | Deferred |
+| 5 | `0.5.123` | Knowledge Evidence Schema | `packages/schemas/player/knowledge_evidence.schema.json` | Completed |
+| 6 | `0.5.124` | Knowledge Evidence Semantic Validator Plan | `packages/schemas/player/knowledge_evidence.schema.json` | Next |
+| 7 | `0.5.125` | Knowledge Evidence Semantic Validator | Future validator plan | Planned |
 | 8 | `0.5.x` | Knowledge Progress State Plan | Future focused plan | Deferred |
 | 9 | `0.5.x` | Knowledge Progress State Schema | Future progress plan | Deferred |
 | 10 | `0.5.x` | Knowledge Evidence-to-Progress Rules Plan | Future focused plan | Deferred |
@@ -87,7 +88,7 @@ Current follow-up risks:
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.123 - Knowledge Evidence Schema`, inspect:
+For `Version 0.5.124 - Knowledge Evidence Semantic Validator Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -97,6 +98,7 @@ For `Version 0.5.123 - Knowledge Evidence Schema`, inspect:
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/design/knowledge-evidence-contract-plan.md`
 - `docs/design/knowledge-evidence-schema-plan.md`
+- `packages/schemas/player/knowledge_evidence.schema.json`
 - `docs/design/knowledge-snippet-content-authoring-plan.md`
 - `docs/design/knowledge-snippet-semantic-validator-plan.md`
 - `docs/design/knowledge-domain-registry-plan.md`
