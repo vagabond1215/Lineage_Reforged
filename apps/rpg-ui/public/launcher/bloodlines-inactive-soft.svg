@@ -1,50 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" role="img" aria-label="Bloodlines inactive sidebar art">
   <defs>
     <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2a2926" stop-opacity="0.82" />
-      <stop offset="0.52" stop-color="#181715" stop-opacity="0.9" />
-      <stop offset="1" stop-color="#0d0d0c" stop-opacity="0.92" />
+      <stop offset="0" stop-color="#292724" stop-opacity="0.86" />
+      <stop offset="0.55" stop-color="#161512" stop-opacity="0.94" />
+      <stop offset="1" stop-color="#0b0b0a" stop-opacity="0.96" />
     </linearGradient>
-    <radialGradient id="leftAtmosphere" cx="28%" cy="48%" r="62%">
-      <stop offset="0" stop-color="#5a1715" stop-opacity="0.2" />
-      <stop offset="0.46" stop-color="#4c3323" stop-opacity="0.12" />
-      <stop offset="1" stop-color="#000000" stop-opacity="0" />
+    <radialGradient id="left" cx="28%" cy="48%" r="62%">
+      <stop offset="0" stop-color="#5a1715" stop-opacity="0.18" />
+      <stop offset="0.5" stop-color="#4c3323" stop-opacity="0.1" />
+      <stop offset="1" stop-color="#000" stop-opacity="0" />
     </radialGradient>
-    <radialGradient id="goldBruise" cx="42%" cy="18%" r="58%">
-      <stop offset="0" stop-color="#bda66f" stop-opacity="0.13" />
-      <stop offset="0.5" stop-color="#776b5a" stop-opacity="0.05" />
-      <stop offset="1" stop-color="#000000" stop-opacity="0" />
+    <radialGradient id="gold" cx="42%" cy="18%" r="58%">
+      <stop offset="0" stop-color="#bda66f" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#000" stop-opacity="0" />
     </radialGradient>
     <filter id="paint" x="-8%" y="-18%" width="116%" height="136%">
       <feTurbulence type="fractalNoise" baseFrequency="0.018 0.075" numOctaves="4" seed="19" result="grain" />
       <feColorMatrix in="grain" type="matrix" values="0.16 0 0 0 0.09 0 0.13 0 0 0.08 0 0 0.1 0 0.06 0 0 0 0.22 0" result="grainColor" />
       <feBlend in="SourceGraphic" in2="grainColor" mode="screen" />
     </filter>
-    <filter id="soften" x="-10%" y="-20%" width="120%" height="140%">
-      <feGaussianBlur stdDeviation="1.15" />
-    </filter>
-    <filter id="shadow" x="-8%" y="-18%" width="116%" height="136%">
-      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity="0.42" />
-    </filter>
-    <clipPath id="plateClip">
-      <rect x="4" y="5" width="692" height="190" rx="10" />
-    </clipPath>
+    <filter id="soft" x="-10%" y="-20%" width="120%" height="140%"><feGaussianBlur stdDeviation="1.1" /></filter>
+    <filter id="shadow" x="-8%" y="-18%" width="116%" height="136%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity="0.42" /></filter>
+    <clipPath id="clip"><rect x="4" y="5" width="692" height="190" rx="10" /></clipPath>
   </defs>
-
   <g filter="url(#shadow)">
-    <g clip-path="url(#plateClip)" filter="url(#paint)">
+    <g clip-path="url(#clip)" filter="url(#paint)">
       <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#base)" />
-      <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#leftAtmosphere)" />
-      <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#goldBruise)" />
+      <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#left)" />
+      <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#gold)" />
       <path d="M0 30 C120 10 190 42 305 28 C440 12 548 28 700 12 L700 0 L0 0 Z" fill="#e8ddc6" opacity="0.025" />
       <path d="M0 170 C130 190 240 160 360 176 C486 193 585 162 700 178 L700 200 L0 200 Z" fill="#000" opacity="0.32" />
-      <ellipse cx="184" cy="100" rx="118" ry="78" fill="#5a1715" opacity="0.07" filter="url(#soften)" />
-      <ellipse cx="250" cy="78" rx="210" ry="62" fill="#bda66f" opacity="0.045" filter="url(#soften)" />
+      <ellipse cx="184" cy="100" rx="118" ry="78" fill="#5a1715" opacity="0.07" filter="url(#soft)" />
+      <ellipse cx="250" cy="78" rx="210" ry="62" fill="#bda66f" opacity="0.045" filter="url(#soft)" />
     </g>
-
-    <g opacity="0.72" filter="url(#soften)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g opacity="0.58" filter="url(#soft)" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M210 143 L210 62" stroke="#a4895a" stroke-opacity="0.42" stroke-width="4" />
-      <path d="M196 138 Q210 113 224 138" stroke="#a4895a" stroke-opacity="0.3" stroke-width="3" />
       <ellipse cx="210" cy="100" rx="48" ry="64" stroke="#bda66f" stroke-opacity="0.18" stroke-width="2" />
       <path d="M210 39 L230 60 L220 86 L200 86 L190 60 Z" stroke="#bda66f" stroke-opacity="0.16" stroke-width="2" />
       <path d="M210 70 C270 36 340 38 420 62" stroke="#7d2521" stroke-opacity="0.58" stroke-width="3" />
@@ -54,27 +44,14 @@
       <path d="M210 126 C265 158 330 166 405 148" stroke="#7d2521" stroke-opacity="0.44" stroke-width="3" />
       <path d="M210 78 C170 54 135 52 98 72" stroke="#7d2521" stroke-opacity="0.4" stroke-width="3" />
       <path d="M210 113 C166 134 136 148 100 132" stroke="#7d2521" stroke-opacity="0.38" stroke-width="3" />
-      <g stroke="#bda66f" stroke-opacity="0.22" stroke-width="1">
-        <path d="M210 70 C270 36 340 38 420 62" />
-        <path d="M210 82 C278 66 358 67 456 88" />
-        <path d="M210 96 C290 94 376 100 485 112" />
-        <path d="M210 112 C282 128 358 134 440 148" />
-      </g>
     </g>
-
-    <g fill="#bda66f" opacity="0.22" filter="url(#soften)">
-      <circle cx="336" cy="50" r="3" />
-      <circle cx="402" cy="58" r="3" />
-      <circle cx="392" cy="82" r="3" />
-      <circle cx="470" cy="106" r="3" />
-      <circle cx="152" cy="64" r="3" />
-      <circle cx="128" cy="137" r="3" />
-    </g>
-
+    <rect x="310" y="48" width="335" height="104" rx="12" fill="#000" opacity="0.2" filter="url(#soft)" />
+    <text x="512" y="111" text-anchor="middle" font-family="EB Garamond, Georgia, serif" font-size="63" fill="#000" opacity="0.72">Bloodlines</text>
+    <text x="510" y="108" text-anchor="middle" font-family="EB Garamond, Georgia, serif" font-size="63" fill="#a9a18e" opacity="0.72">Bloodlines</text>
+    <path d="M386 138 H632" stroke="#bda66f" stroke-opacity="0.22" stroke-width="1" />
     <rect x="4" y="5" width="692" height="190" rx="10" fill="none" stroke="#bda66f" stroke-opacity="0.26" stroke-width="2" />
     <rect x="12" y="13" width="676" height="174" rx="8" fill="none" stroke="#000" stroke-opacity="0.42" stroke-width="3" />
     <path d="M18 18 H682" stroke="#e8ddc6" stroke-opacity="0.09" stroke-width="1" />
     <path d="M18 182 H682" stroke="#000" stroke-opacity="0.42" stroke-width="2" />
-    <rect x="310" y="48" width="335" height="104" rx="12" fill="#000" opacity="0.2" filter="url(#soften)" />
   </g>
 </svg>
