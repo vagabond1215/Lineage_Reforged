@@ -1,88 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 400" role="img" aria-label="Bloodlines inactive sidebar art">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" role="img" aria-label="Bloodlines inactive sidebar art">
   <defs>
-    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#211b15" stop-opacity="0.95" />
-      <stop offset="1" stop-color="#0c0b09" stop-opacity="0.96" />
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a2926" stop-opacity="0.82" />
+      <stop offset="0.52" stop-color="#181715" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#0d0d0c" stop-opacity="0.92" />
     </linearGradient>
-    <linearGradient id="inset" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2a241d" stop-opacity="0.78" />
-      <stop offset="1" stop-color="#15120e" stop-opacity="0.88" />
-    </linearGradient>
-    <radialGradient id="crimsonGlow" cx="22%" cy="50%" r="55%">
-      <stop offset="0" stop-color="#5a1715" stop-opacity="0.28" />
-      <stop offset="0.55" stop-color="#5a1715" stop-opacity="0.08" />
-      <stop offset="1" stop-color="#5a1715" stop-opacity="0" />
+    <radialGradient id="leftAtmosphere" cx="28%" cy="48%" r="62%">
+      <stop offset="0" stop-color="#5a1715" stop-opacity="0.2" />
+      <stop offset="0.46" stop-color="#4c3323" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#000000" stop-opacity="0" />
     </radialGradient>
-    <filter id="softShadow" x="-8%" y="-16%" width="116%" height="132%">
-      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.45" />
+    <radialGradient id="goldBruise" cx="42%" cy="18%" r="58%">
+      <stop offset="0" stop-color="#bda66f" stop-opacity="0.13" />
+      <stop offset="0.5" stop-color="#776b5a" stop-opacity="0.05" />
+      <stop offset="1" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <filter id="paint" x="-8%" y="-18%" width="116%" height="136%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018 0.075" numOctaves="4" seed="19" result="grain" />
+      <feColorMatrix in="grain" type="matrix" values="0.16 0 0 0 0.09 0 0.13 0 0 0.08 0 0 0.1 0 0.06 0 0 0 0.22 0" result="grainColor" />
+      <feBlend in="SourceGraphic" in2="grainColor" mode="screen" />
     </filter>
-    <filter id="lineBlur" x="-12%" y="-12%" width="124%" height="124%">
-      <feGaussianBlur stdDeviation="0.6" />
+    <filter id="soften" x="-10%" y="-20%" width="120%" height="140%">
+      <feGaussianBlur stdDeviation="1.15" />
     </filter>
-    <pattern id="grain" width="42" height="42" patternUnits="userSpaceOnUse">
-      <circle cx="5" cy="8" r="1" fill="#e8ddc6" opacity="0.05" />
-      <circle cx="19" cy="17" r="0.8" fill="#e8ddc6" opacity="0.035" />
-      <circle cx="35" cy="28" r="1.1" fill="#e8ddc6" opacity="0.03" />
-      <circle cx="27" cy="38" r="0.7" fill="#000" opacity="0.16" />
-    </pattern>
+    <filter id="shadow" x="-8%" y="-18%" width="116%" height="136%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity="0.42" />
+    </filter>
+    <clipPath id="plateClip">
+      <rect x="4" y="5" width="692" height="190" rx="10" />
+    </clipPath>
   </defs>
 
-  <g filter="url(#softShadow)">
-    <rect x="38" y="50" width="1324" height="300" rx="42" fill="url(#plate)" />
-    <rect x="46" y="58" width="1308" height="284" rx="34" fill="none" stroke="#3d352b" stroke-width="3" opacity="0.82" />
-    <rect x="38" y="50" width="1324" height="300" rx="42" fill="none" stroke="#bda66f" stroke-width="4" opacity="0.34" />
-    <rect x="65" y="76" width="1270" height="248" rx="28" fill="url(#inset)" stroke="#776b5a" stroke-width="2" opacity="0.95" />
-    <rect x="65" y="76" width="1270" height="248" rx="28" fill="url(#crimsonGlow)" />
-    <rect x="65" y="76" width="1270" height="248" rx="28" fill="url(#grain)" opacity="0.55" />
+  <g filter="url(#shadow)">
+    <g clip-path="url(#plateClip)" filter="url(#paint)">
+      <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#base)" />
+      <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#leftAtmosphere)" />
+      <rect x="4" y="5" width="692" height="190" rx="10" fill="url(#goldBruise)" />
+      <path d="M0 30 C120 10 190 42 305 28 C440 12 548 28 700 12 L700 0 L0 0 Z" fill="#e8ddc6" opacity="0.025" />
+      <path d="M0 170 C130 190 240 160 360 176 C486 193 585 162 700 178 L700 200 L0 200 Z" fill="#000" opacity="0.32" />
+      <ellipse cx="184" cy="100" rx="118" ry="78" fill="#5a1715" opacity="0.07" filter="url(#soften)" />
+      <ellipse cx="250" cy="78" rx="210" ry="62" fill="#bda66f" opacity="0.045" filter="url(#soften)" />
+    </g>
 
-    <rect x="58" y="70" width="126" height="260" rx="30" fill="#17120e" stroke="#bda66f" stroke-opacity="0.3" stroke-width="2" />
-    <rect x="1216" y="70" width="126" height="260" rx="30" fill="#17120e" stroke="#bda66f" stroke-opacity="0.3" stroke-width="2" />
-
-    <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#lineBlur)">
-      <path d="M370 280 L370 135" stroke="#977e53" stroke-opacity="0.45" stroke-width="7" />
-      <path d="M356 274 Q370 247 385 272" stroke="#977e53" stroke-opacity="0.42" stroke-width="5" />
-      <ellipse cx="370" cy="200" rx="85" ry="108" stroke="#bda66f" stroke-opacity="0.22" stroke-width="3" />
-      <path d="M370 72 L405 112 L390 160 L350 160 L335 112 Z" stroke="#bda66f" stroke-opacity="0.22" stroke-width="3" />
-
-      <path d="M370 150 C485 90 625 88 760 122" stroke="#8a2622" stroke-opacity="0.48" stroke-width="4" />
-      <path d="M370 168 C505 130 650 125 815 165" stroke="#8a2622" stroke-opacity="0.48" stroke-width="4" />
-      <path d="M370 190 C525 178 690 182 870 210" stroke="#8a2622" stroke-opacity="0.48" stroke-width="4" />
-      <path d="M370 210 C510 240 650 250 805 282" stroke="#8a2622" stroke-opacity="0.48" stroke-width="4" />
-      <path d="M370 232 C475 292 600 305 730 276" stroke="#8a2622" stroke-opacity="0.48" stroke-width="4" />
-      <path d="M370 162 C305 110 250 95 205 132" stroke="#8a2622" stroke-opacity="0.42" stroke-width="4" />
-      <path d="M370 215 C300 255 250 280 200 248" stroke="#8a2622" stroke-opacity="0.42" stroke-width="4" />
-
-      <g stroke="#bda66f" stroke-opacity="0.33" stroke-width="1.5">
-        <path d="M370 150 C485 90 625 88 760 122" />
-        <path d="M370 168 C505 130 650 125 815 165" />
-        <path d="M370 190 C525 178 690 182 870 210" />
-        <path d="M370 210 C510 240 650 250 805 282" />
-        <path d="M370 232 C475 292 600 305 730 276" />
+    <g opacity="0.72" filter="url(#soften)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M210 143 L210 62" stroke="#a4895a" stroke-opacity="0.42" stroke-width="4" />
+      <path d="M196 138 Q210 113 224 138" stroke="#a4895a" stroke-opacity="0.3" stroke-width="3" />
+      <ellipse cx="210" cy="100" rx="48" ry="64" stroke="#bda66f" stroke-opacity="0.18" stroke-width="2" />
+      <path d="M210 39 L230 60 L220 86 L200 86 L190 60 Z" stroke="#bda66f" stroke-opacity="0.16" stroke-width="2" />
+      <path d="M210 70 C270 36 340 38 420 62" stroke="#7d2521" stroke-opacity="0.58" stroke-width="3" />
+      <path d="M210 82 C278 66 358 67 456 88" stroke="#7d2521" stroke-opacity="0.56" stroke-width="3" />
+      <path d="M210 96 C290 94 376 100 485 112" stroke="#7d2521" stroke-opacity="0.52" stroke-width="3" />
+      <path d="M210 112 C282 128 358 134 440 148" stroke="#7d2521" stroke-opacity="0.46" stroke-width="3" />
+      <path d="M210 126 C265 158 330 166 405 148" stroke="#7d2521" stroke-opacity="0.44" stroke-width="3" />
+      <path d="M210 78 C170 54 135 52 98 72" stroke="#7d2521" stroke-opacity="0.4" stroke-width="3" />
+      <path d="M210 113 C166 134 136 148 100 132" stroke="#7d2521" stroke-opacity="0.38" stroke-width="3" />
+      <g stroke="#bda66f" stroke-opacity="0.22" stroke-width="1">
+        <path d="M210 70 C270 36 340 38 420 62" />
+        <path d="M210 82 C278 66 358 67 456 88" />
+        <path d="M210 96 C290 94 376 100 485 112" />
+        <path d="M210 112 C282 128 358 134 440 148" />
       </g>
     </g>
 
-    <g fill="#bda66f" opacity="0.34">
-      <circle cx="556" cy="107" r="5" />
-      <circle cx="672" cy="98" r="5" />
-      <circle cx="739" cy="119" r="5" />
-      <circle cx="606" cy="146" r="5" />
-      <circle cx="720" cy="149" r="5" />
-      <circle cx="808" cy="164" r="5" />
-      <circle cx="650" cy="188" r="5" />
-      <circle cx="780" cy="199" r="5" />
-      <circle cx="250" cy="125" r="5" />
-      <circle cx="255" cy="264" r="5" />
+    <g fill="#bda66f" opacity="0.22" filter="url(#soften)">
+      <circle cx="336" cy="50" r="3" />
+      <circle cx="402" cy="58" r="3" />
+      <circle cx="392" cy="82" r="3" />
+      <circle cx="470" cy="106" r="3" />
+      <circle cx="152" cy="64" r="3" />
+      <circle cx="128" cy="137" r="3" />
     </g>
 
-    <path d="M200 104 H1190" stroke="#bda66f" stroke-opacity="0.18" stroke-width="2" />
-    <path d="M200 296 H1190" stroke="#bda66f" stroke-opacity="0.18" stroke-width="2" />
-    <circle cx="190" cy="104" r="10" fill="none" stroke="#bda66f" stroke-opacity="0.24" stroke-width="2" />
-    <circle cx="1200" cy="104" r="10" fill="none" stroke="#bda66f" stroke-opacity="0.24" stroke-width="2" />
-    <circle cx="190" cy="296" r="10" fill="none" stroke="#bda66f" stroke-opacity="0.24" stroke-width="2" />
-    <circle cx="1200" cy="296" r="10" fill="none" stroke="#bda66f" stroke-opacity="0.24" stroke-width="2" />
-
-    <rect x="520" y="120" width="595" height="160" rx="22" fill="#000" opacity="0.19" />
-    <path d="M98 84 H1302" stroke="#e8ddc6" stroke-opacity="0.12" stroke-width="2" />
-    <path d="M100 316 H1300" stroke="#000" stroke-opacity="0.45" stroke-width="3" />
+    <rect x="4" y="5" width="692" height="190" rx="10" fill="none" stroke="#bda66f" stroke-opacity="0.26" stroke-width="2" />
+    <rect x="12" y="13" width="676" height="174" rx="8" fill="none" stroke="#000" stroke-opacity="0.42" stroke-width="3" />
+    <path d="M18 18 H682" stroke="#e8ddc6" stroke-opacity="0.09" stroke-width="1" />
+    <path d="M18 182 H682" stroke="#000" stroke-opacity="0.42" stroke-width="2" />
+    <rect x="310" y="48" width="335" height="104" rx="12" fill="#000" opacity="0.2" filter="url(#soften)" />
   </g>
 </svg>
