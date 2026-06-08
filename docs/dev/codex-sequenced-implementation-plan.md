@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-08
-Route: Codex local sequencing alignment after `Version 0.5.124 - Knowledge Evidence Semantic Validator Plan`
+Route: Codex local sequencing alignment after `Version 0.5.125 - Knowledge Evidence Semantic Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.124 - Knowledge Evidence Semantic Validator Plan` defined the first evidence semantic-validation implementation without evidence state or behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.125 - Knowledge Evidence Semantic Validator` added the pure schema-first validator and focused in-memory tests without evidence state or behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.124 - Knowledge Evidence Semantic Validator Plan`
+- `Version 0.5.125 - Knowledge Evidence Semantic Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.125 - Knowledge Evidence Semantic Validator`
+- `Version 0.5.126 - Knowledge Progress State Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.124` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.125` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -82,7 +82,8 @@ Versioning note:
 | 44 | `0.5.122` | Knowledge Evidence Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-schema-plan.md` | planning doc | Completed | Selected the exact record schema path, wrapper posture, required fields, patterns, enums, strict context shape, schema tests, and semantic boundary without implementation. |
 | 45 | `0.5.123` | Knowledge Evidence Schema | Codex 5.5 Local | `packages/schemas/player/knowledge_evidence.schema.json` | schema file + focused schema tests | Completed | Added evidence structure only; no evidence content/state, runtime loading, semantic validator, progress, completion, trials, UI, persistence, or ownership behavior. |
 | 46 | `0.5.124` | Knowledge Evidence Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-semantic-validator-plan.md` | planning doc | Completed | Defined a schema-first test-fixture-only pure-helper plan, authority posture, source/context matrix, duplicate identity checks, focused tests, and acceptance criteria without implementation. |
-| 47 | `0.5.125` | Knowledge Evidence Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-evidence-semantic-validator-plan.md` | focused validator + tests | Next | Implement the pure helper and in-memory focused fixtures only; no canonical evidence path, progress credit, persistence, runtime producers, trials, UI, or gameplay behavior. |
+| 47 | `0.5.125` | Knowledge Evidence Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-evidence-semantic-validator-plan.md` | focused validator + tests | Completed | Added schema-first pure validation and 76 focused in-memory tests without canonical evidence content/state, normal lint registration, progress credit, persistence, runtime producers, trials, UI, or gameplay behavior. |
+| 48 | `0.5.126` | Knowledge Progress State Plan | Codex 5.5 Local docs-first | `tools/content-lint/knowledge-evidence.mjs` | planning doc | Next | Plan progress-state identity, ownership, evidence-consumption boundaries, schema posture, and later sequence without implementing state or behavior. |
 
 ## Default Prompt Pattern
 
