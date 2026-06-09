@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-08
-Route: Codex local sequencing alignment after `Version 0.5.127 - Knowledge Progress Schema Plan`
+Date: 2026-06-09
+Route: Codex local sequencing alignment after `Version 0.5.128 - Knowledge Progress Schema`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.127 - Knowledge Progress Schema Plan` froze the first strict progress record contract, identifier patterns, enums, empty consumed-evidence posture, notes requirements, schema tests, and implementation acceptance criteria without adding a schema or state.
+This file gives Codex a stable ordered queue after `Version 0.5.128 - Knowledge Progress Schema` added the first strict progress record contract and focused schema-file registration without adding progress content/state, semantic validation, evidence credit, runtime, persistence, completion, trials, UI, or gameplay behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.127 - Knowledge Progress Schema Plan`
+- `Version 0.5.128 - Knowledge Progress Schema`
 
 Immediate next Codex run:
 
-- `Version 0.5.128 - Knowledge Progress Schema`
+- `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.127` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.128` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -85,7 +85,8 @@ Versioning note:
 | 47 | `0.5.125` | Knowledge Evidence Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-evidence-semantic-validator-plan.md` | focused validator + tests | Completed | Added schema-first pure validation and 76 focused in-memory tests without canonical evidence content/state, normal lint registration, progress credit, persistence, runtime producers, trials, UI, or gameplay behavior. |
 | 48 | `0.5.126` | Knowledge Progress State Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-state-plan.md` | planning doc | Completed | Defined character-owned progress identity, integer-value posture, consumed-evidence boundaries, deferred source audit detail, schema ownership, validation layers, and later sequence without state or behavior. |
 | 49 | `0.5.127` | Knowledge Progress Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-schema-plan.md` | planning doc | Completed | Froze the strict record-schema contract, exact patterns and enums, empty consumed-evidence posture, required notes, schema tests, forbidden fields, and `0.5.128` acceptance criteria without implementation. |
-| 50 | `0.5.128` | Knowledge Progress Schema | Codex 5.5 Local | `docs/design/knowledge-progress-schema-plan.md` | schema file + focused schema test | Next | Add only the strict record schema and focused schema-file registration; no state, semantic validator, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
+| 50 | `0.5.128` | Knowledge Progress Schema | Codex 5.5 Local | `packages/schemas/player/knowledge_progress.schema.json` | schema file + focused schema test | Completed | Added only the strict record schema and focused schema-file registration; no state, semantic validator, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
+| 51 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-state-plan.md`; `packages/schemas/player/knowledge_progress.schema.json` | planning doc | Next | Define the schema-first pure-helper boundary, authorities, semantic checks, focused test matrix, and acceptance criteria without implementation or state. |
 
 ## Default Prompt Pattern
 

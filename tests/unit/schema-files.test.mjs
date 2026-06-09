@@ -43,6 +43,7 @@ const schemaFiles = [
   "packages/schemas/player/knowledge-domain.schema.json",
   "packages/schemas/player/knowledge-domain-registry.schema.json",
   "packages/schemas/player/knowledge_evidence.schema.json",
+  "packages/schemas/player/knowledge_progress.schema.json",
   "packages/schemas/player/knowledge_snippet.schema.json",
   "packages/schemas/player/skill-effect.schema.json",
   "packages/schemas/player/title.schema.json",

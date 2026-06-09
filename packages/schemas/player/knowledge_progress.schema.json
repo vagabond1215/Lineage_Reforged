@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnowledgeProgressRecord",
+  "description": "Schema for one future knowledge progress record. It defines record structure only and does not define collections, evidence existence or eligibility, evidence-to-progress calculation, completion, trials, UI, generated output, persistence, ownership mutation, runtime events, or gameplay behavior. Character is the only initial owner scope.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "progressId",
+    "snippetId",
+    "domainId",
+    "subjectType",
+    "subjectId",
+    "ownerScope",
+    "ownerId",
+    "progressValue",
+    "consumedEvidenceIds",
+    "updatedSequence",
+    "notes"
+  ],
+  "properties": {
+    "progressId": {
+      "description": "Stable progress-record identity. It must not encode mutable progressValue; collection uniqueness belongs to later semantic validation.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^knowledge_progress\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "snippetId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^knowledge_snippet\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "domainId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^knowledge_domain\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "subjectType": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "flora",
+        "fauna",
+        "mineral",
+        "settlement",
+        "region",
+        "culture",
+        "institution",
+        "spell",
+        "item",
+        "ruin",
+        "historical_event",
+        "custom"
+      ]
+    },
+    "subjectId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+    },
+    "ownerScope": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "character"
+      ]
+    },
+    "ownerId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+    },
+    "progressValue": {
+      "description": "Stored progress points only. This value is not a percentage, completion flag, or evidence-to-progress calculation rule.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "consumedEvidenceIds": {
+      "description": "Evidence id references only. Uniqueness within this record is structural; evidence existence, eligibility, ownership, target parity, and cross-record consumption remain semantic or policy concerns.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^knowledge_evidence\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+      }
+    },
+    "updatedSequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
