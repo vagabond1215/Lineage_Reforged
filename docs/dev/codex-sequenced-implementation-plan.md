@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-09
-Route: Codex local sequencing alignment after `Version 0.5.128 - Knowledge Progress Schema`
+Date: 2026-06-10
+Route: Codex local sequencing alignment after `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.128 - Knowledge Progress Schema` added the first strict progress record contract and focused schema-file registration without adding progress content/state, semantic validation, evidence credit, runtime, persistence, completion, trials, UI, or gameplay behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.129 - Knowledge Progress Semantic Validator Plan` defined the future pure schema-first helper, authority, parity, duplicate-consumption, zero-state, focused-test, and acceptance boundaries without implementing validation or state.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.128 - Knowledge Progress Schema`
+- `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
+- `Version 0.5.130 - Knowledge Progress Semantic Validator`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.128` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.129` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -86,7 +86,8 @@ Versioning note:
 | 48 | `0.5.126` | Knowledge Progress State Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-state-plan.md` | planning doc | Completed | Defined character-owned progress identity, integer-value posture, consumed-evidence boundaries, deferred source audit detail, schema ownership, validation layers, and later sequence without state or behavior. |
 | 49 | `0.5.127` | Knowledge Progress Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-schema-plan.md` | planning doc | Completed | Froze the strict record-schema contract, exact patterns and enums, empty consumed-evidence posture, required notes, schema tests, forbidden fields, and `0.5.128` acceptance criteria without implementation. |
 | 50 | `0.5.128` | Knowledge Progress Schema | Codex 5.5 Local | `packages/schemas/player/knowledge_progress.schema.json` | schema file + focused schema test | Completed | Added only the strict record schema and focused schema-file registration; no state, semantic validator, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
-| 51 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-state-plan.md`; `packages/schemas/player/knowledge_progress.schema.json` | planning doc | Next | Define the schema-first pure-helper boundary, authorities, semantic checks, focused test matrix, and acceptance criteria without implementation or state. |
+| 51 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-semantic-validator-plan.md` | planning doc | Completed | Defined the exact wrapper and schema-first gates, fail-closed authorities, owner and consumed-evidence parity, duplicate and zero-state policies, focused tests, and `0.5.130` acceptance criteria without implementation or state. |
+| 52 | `0.5.130` | Knowledge Progress Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-progress-semantic-validator-plan.md` | focused validator + tests | Next | Implement only the pure in-memory helper and focused tests; do not create canonical progress/evidence state, register normal lint, or add credit, runtime, persistence, completion, trial, UI, generated-output, ownership, or gameplay behavior. |
 
 ## Default Prompt Pattern
 

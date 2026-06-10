@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.128 - Knowledge Progress Schema
-Date: 2026-06-09
-Branch/status assumption: Ran on `master` from commit `bd782ec`. The worktree was clean before edits.
+Source version/run: Version 0.5.129 - Knowledge Progress Semantic Validator Plan
+Date: 2026-06-10
+Branch/status assumption: Ran on `master` from commit `111885a`. The worktree was clean before edits.
 
 ## Result
 
-Added `packages/schemas/player/knowledge_progress.schema.json` as the strict record-level structural contract approved by the progress schema plan.
+Added `docs/design/knowledge-progress-semantic-validator-plan.md` as the docs-only authority for the future pure, schema-first knowledge progress validator.
 
-The schema requires the 11 approved progress identity, snippet snapshot, character owner, integer value, consumed-evidence, update sequence, and notes fields. It uses exact identifier patterns and live snippet `subjectType` parity, allows an empty consumed-evidence array structurally, requires at least one unique non-empty note, and rejects unapproved state fields through `additionalProperties: false`.
+The plan selects `tools/content-lint/knowledge-progress.mjs`, exact wrapper validation, schema-first progress and evidence gates, fail-closed snippet/domain/evidence authorities, character-owner and target parity, duplicate progress and cross-record evidence-consumption rules, explicit empty/zero-state options, focused tests, `0.5.130` acceptance criteria, and the later evidence-to-progress sequence.
 
-Registered the schema in the focused schema-file parseability test. No progress content/state, semantic validator, evidence-to-progress rule, runtime producer, persistence, completion, trial, UI, generated output, ownership behavior, or gameplay behavior was added.
+No progress validator or tests, progress/evidence content or state, schema or existing-validator edits, runtime, persistence, UI/main-menu, generated output, completion, trial, ownership, or gameplay behavior was added.
 
 ## Files Changed
 
-- `packages/schemas/player/knowledge_progress.schema.json`
-- `tests/unit/schema-files.test.mjs`
+- `docs/design/knowledge-progress-semantic-validator-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,10 +23,10 @@ Registered the schema in the focused schema-file parseability test. No progress 
 
 ## Checks Run
 
-- `node --test tests/unit/schema-files.test.mjs`
-  - Passed: 54 tests.
 - `npm.cmd run tool:content-lint`
   - Passed: 55 files checked.
+- `node --test tests/unit/schema-files.test.mjs`
+  - Passed: 54 tests.
 - `node --check tools/content-lint/knowledge-evidence.mjs`
   - Passed.
 - `node --test tests/unit/knowledge-evidence-validation.test.mjs`
@@ -36,43 +35,43 @@ Registered the schema in the focused schema-file parseability test. No progress 
   - Passed: 49 tests.
 - `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
   - Passed: 37 tests.
-- Focused knowledge-progress schema contract audit.
-  - Passed: exact required fields, patterns, enum, bounds, array posture, notes posture, strictness, and forbidden-field absence confirmed.
+- Knowledge progress semantic-validator plan coverage scan.
+  - Passed: all required purpose, wrapper, schema-first, authority, owner, evidence, duplicate, zero-state, test, acceptance, sequence, risk, and forbidden-change anchors were present.
 - Changed-path scope audit.
-  - Passed: exactly seven authorized files changed.
+  - Passed: only the six authorized documentation paths changed.
 - Protected-path audit.
-  - Passed: no progress content/state/validator, evidence content/state/schema/validator, snippet content/schema/validator, registry, skill, spell, runtime, UI/main-menu, persistence, save/account/session state, fixture, generated, or gameplay path changed.
+  - Passed: no progress schema/content/state/validator/test, evidence schema/content/state/validator, snippet JSON/schema/validator, registry, skill, spell, runtime, UI/main-menu, persistence, save/account/session, gameplay, fixture, or generated path changed.
 - Conflict-marker and trailing-whitespace scans across touched files.
   - Passed.
 - `git diff --check`
-  - Passed.
-- Broad typecheck was not run because this pass added a JSON Schema and focused schema registration only.
+  - Passed. Git reported only existing line-ending normalization notices for tracked Markdown files.
+- Broad typecheck was not run because this pass changed documentation only.
 
 ## Behavior / Runtime Confirmation
 
-- JSON Schema structure and focused schema-file registration changed.
 - Documentation and workflow sequencing changed.
-- No progress JSON/content/state or progress semantic validator changed.
+- No progress semantic validator or validator test changed.
+- No progress JSON/content/state or progress schema changed.
 - No evidence JSON/content/state, evidence schema, or evidence validator changed.
-- No snippet JSON/schema/validator, registry content, skill, or spell changed.
-- No runtime loader/producer, persistence, save/account/session state, generated output, UI/main-menu file, evidence-to-progress rule, completion math, trial, Chronicle/Renown event, ownership behavior, or gameplay behavior changed.
+- No snippet JSON/schema/validator, registry content, skill, spell, or test file changed.
+- No runtime loader/producer, persistence, database, save/account/session state, generated output, UI/main-menu file, evidence-to-progress rule, completion math, trial, Chronicle/Renown event, ownership behavior, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
 - No canonical evidence or progress storage path exists.
 - Character `ownerId` remains pattern-only because no character authority is selected.
-- Empty consumed-evidence arrays are structurally allowed, but zero-state persistence policy remains undefined.
-- Evidence existence, eligibility, ownership parity, target parity, duplicate credit, repeatability, stacking, and cross-record consumption require semantic or later policy.
-- `progressValue` has no schema maximum and does not define percentage, completion, or calculation behavior.
-- `progressSources` remains deferred from the first schema.
-- Completion thresholds, tier aggregation, trial readiness, persistence, and UI remain undefined.
-- Arcane Lore progress remains blocked while the domain is planned.
-- Retain the progress and evidence planning guardrails through progress semantic validation and evidence-to-progress planning, then make a later explicit cleanup decision.
+- Evidence-to-progress calculation, weights, repeatability, stacking, occurrence equivalence, and authorized non-evidence operations remain deferred.
+- Cross-record evidence-consumption policy may require later refinement.
+- Zero-state persistence policy remains unresolved.
+- `progressSources`, completion thresholds, tier aggregation, trials, persistence, save migration, UI, and generated output remain deferred.
+- Arcane Lore progress remains blocked while `knowledge_domain.arcane_lore` is planned.
+- Retain evidence and progress planning guardrails through progress validation and evidence-to-progress planning, then make an explicit cleanup decision.
+- No blockers occurred.
 
 ## Next Recommended Version
 
-Version 0.5.129 - Knowledge Progress Semantic Validator Plan
+Version 0.5.130 - Knowledge Progress Semantic Validator
 
 ## Suggested Commit Message
 
-schemas(knowledge): add progress schema
+docs(knowledge): plan progress semantic validation

@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.128 - Knowledge Progress Schema`
-Date: 2026-06-09
-Branch/status assumption: `master` at commit `bd782ec` before edits; the worktree was clean.
+Source route: Codex local planning after `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
+Date: 2026-06-10
+Branch/status assumption: `master` at commit `111885a` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -13,12 +13,12 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
-- `docs/design/knowledge-progress-state-plan.md` owns progress identity, character ownership, snippet/evidence relationships, integer-value posture, validation boundary, and sequence.
-- `docs/design/knowledge-progress-schema-plan.md` remains the implementation rationale and first-schema acceptance authority.
-- `packages/schemas/player/knowledge_progress.schema.json` now owns the strict structural contract for one progress record.
-- `docs/design/knowledge-evidence-contract-plan.md`, `docs/design/knowledge-evidence-schema-plan.md`, and `docs/design/knowledge-evidence-semantic-validator-plan.md` remain evidence boundary guardrails through progress semantic validation and evidence-to-progress planning.
+- `docs/design/knowledge-progress-state-plan.md` owns progress identity, character ownership, snippet/evidence relationships, integer-value posture, and broad validation boundaries.
+- `docs/design/knowledge-progress-schema-plan.md` owns first-schema rationale.
+- `packages/schemas/player/knowledge_progress.schema.json` owns the strict structural contract for one progress record.
+- `docs/design/knowledge-progress-semantic-validator-plan.md` now owns the first progress semantic-validator wrapper, authority, parity, duplicate-consumption, zero-state, test, acceptance, and sequencing decisions.
 - `packages/schemas/player/knowledge_evidence.schema.json` owns the structural contract for one evidence record.
-- `tools/content-lint/knowledge-evidence.mjs` owns the current pure evidence validation boundary.
+- `tools/content-lint/knowledge-evidence.mjs` owns the current pure evidence semantic-validation boundary.
 - `packages/content/base/player/knowledge_snippets.json` remains the authored snippet authority.
 - `packages/content/base/player/knowledge_domain_registry.json` remains broad domain compatibility metadata.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
@@ -27,73 +27,76 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.128 - Knowledge Progress Schema`
+- `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
 
 Immediate next version:
 
-- `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
+- `Version 0.5.130 - Knowledge Progress Semantic Validator`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.128 Result
+## Version 0.5.129 Result
 
-- Added `packages/schemas/player/knowledge_progress.schema.json` as a strict record-level schema only.
-- Required the 11 approved progress identity, snippet snapshot, character owner, value, consumed-evidence, sequence, and notes fields.
-- Applied exact progress, snippet, domain, subject, owner, and evidence id patterns.
-- Preserved the live snippet `subjectType` enum and character-only `ownerScope`.
-- Defined integer `progressValue` and `updatedSequence` with minimum zero and no progress maximum.
-- Allowed an empty `consumedEvidenceIds` array structurally while deferring evidence existence, eligibility, parity, credit, and cross-record policy.
-- Required at least one unique non-empty note.
-- Kept `progressSources`, completion, trial, UI, event, generated-output, persistence, and owner-shortcut fields out of the schema.
-- Registered the schema in `tests/unit/schema-files.test.mjs`.
-- Added no progress/evidence content or state, semantic validator, runtime producer, persistence, completion, trial, UI/main-menu, generated, ownership, or gameplay change.
+- Added `docs/design/knowledge-progress-semantic-validator-plan.md`.
+- Selected `tools/content-lint/knowledge-progress.mjs` as the future pure, deterministic, side-effect-free, in-memory helper.
+- Defined the exact `{ records: [...] }` wrapper and schema-first progress-record gate.
+- Required consumed evidence to pass the live evidence schema and `tools/content-lint/knowledge-evidence.mjs`.
+- Defined active snippet/domain checks and exact domain, subject, owner, and consumed-evidence parity.
+- Selected duplicate `progressId`, duplicate owner-and-snippet identity, and same-wrapper cross-record evidence consumption as invalid.
+- Defined explicit out-of-band empty-state and zero-state test posture.
+- Kept positive progress calculation, weights, repeatability, stacking, occurrence equivalence, authorized non-evidence operations, completion, trials, runtime, persistence, UI, generated output, and ownership behavior deferred.
+- Added no validator, tests, progress/evidence content or state, schema edits, runtime code, persistence, UI/main-menu work, or gameplay behavior.
 
-## Active Guardrails For 0.5.129
+## Active Guardrails For 0.5.130
 
-Knowledge Progress Semantic Validator Plan:
+Knowledge Progress Semantic Validator:
 
-- Produce a planning document only; do not implement the validator or tests.
-- Treat `packages/schemas/player/knowledge_progress.schema.json` as the structural authority.
-- Define a schema-first pure-helper boundary using in-memory fixture wrappers, without selecting canonical progress storage or normal content-lint registration.
-- Plan exact wrapper shape, duplicate progress identity checks, one-record-per-owner-and-snippet semantics, active snippet/domain reference checks, and snapshot parity for `domainId`, `subjectType`, and `subjectId`.
-- Plan character-only owner enforcement while keeping `ownerId` pattern-only unless a current authority is explicitly selected.
-- Plan consumed evidence existence, character owner parity, snippet/domain/subject target parity, and duplicate or cross-record consumption policy without defining evidence-to-progress weights.
-- Keep `progressValue` as a non-negative integer state value, not a percentage, completion flag, or calculation result.
-- Decide the first validator posture for empty consumed-evidence arrays and zero/nonzero progress consistency without creating persistence policy.
-- Keep `progressSources`, evidence-credit weights, repeatability, stacking, completion, trials, UI, events, runtime producers, persistence, generated output, ownership mutation, and gameplay behavior deferred.
-- Do not edit progress/evidence/snippet schemas, authored content, current validators, registry content, skills, spells, or main-menu files.
+- Implement only `tools/content-lint/knowledge-progress.mjs` and `tests/unit/knowledge-progress-validation.test.mjs`, plus normal docs/handoff updates.
+- Keep the helper pure, deterministic, side-effect-free, and driven by in-memory fixtures.
+- Validate the exact wrapper and every progress record against `knowledge_progress.schema.json` before progress semantics.
+- Do not run progress semantics when progress structure or consumed evidence validation fails.
+- Validate supplied evidence through the current evidence semantic validator or a behavior-preserving shared pure path.
+- Fail closed on duplicate snippet, domain, and evidence authority ids.
+- Enforce active snippet/domain resolution, snapshot parity, character-only owner posture, evidence owner parity, and evidence target parity.
+- Reject duplicate progress ids, duplicate owner/scope/snippet tuples, and the same evidence id consumed by more than one progress record in one wrapper.
+- Permit empty wrappers and zero-value/empty-evidence records only through explicit out-of-band test options.
+- Reject nonzero progress with no consumed evidence and zero progress with consumed evidence.
+- Do not verify progress calculation, evidence weights, repeatability, stacking, occurrence equivalence, or non-evidence progress operations.
+- Do not create canonical progress/evidence JSON, content, state, persistence, save/account/session shape, runtime producers, or generated output.
+- Do not register the helper in normal content lint without an explicitly selected progress path.
+- Do not edit progress/evidence/snippet schemas, evidence/snippet validators, authored snippets, registry content, skills, spells, UI/main-menu files, or gameplay systems.
 
 Current follow-up risks:
 
 - No canonical evidence or progress storage path exists.
 - Character owner authority remains pattern-only.
-- Empty consumed-evidence arrays are structurally allowed, but semantic consistency is not yet defined.
-- Evidence-to-progress weights, duplicate credit, repeatability, stacking, and cross-record consumption remain undefined.
+- Evidence-to-progress weights and calculation remain undefined.
+- Duplicate credit, repeatability, stacking, occurrence equivalence, and authorized non-evidence operations remain undefined.
+- Zero-state persistence policy remains undefined.
 - `progressSources` remains deferred.
 - Completion thresholds, tier aggregation, trial readiness, persistence, and UI remain undefined.
 - Arcane Lore progress remains blocked while the domain is planned.
+- Retain evidence and progress planning guardrails through progress validation and evidence-to-progress planning, then make an explicit cleanup decision.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.123` | Knowledge Evidence Schema | `packages/schemas/player/knowledge_evidence.schema.json` | Completed |
-| 2 | `0.5.124` | Knowledge Evidence Semantic Validator Plan | `docs/design/knowledge-evidence-semantic-validator-plan.md` | Completed |
-| 3 | `0.5.125` | Knowledge Evidence Semantic Validator | `tools/content-lint/knowledge-evidence.mjs` | Completed |
-| 4 | `0.5.126` | Knowledge Progress State Plan | `docs/design/knowledge-progress-state-plan.md` | Completed |
-| 5 | `0.5.127` | Knowledge Progress Schema Plan | `docs/design/knowledge-progress-schema-plan.md` | Completed |
-| 6 | `0.5.128` | Knowledge Progress Schema | `packages/schemas/player/knowledge_progress.schema.json` | Completed |
-| 7 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Progress plans and live schema | Next |
-| 8 | `0.5.x` | Knowledge Progress Semantic Validator | Future validator plan | Deferred |
-| 9 | `0.5.x` | Knowledge Evidence-to-Progress Rules Plan | Progress authorities | Deferred |
-| 10 | `0.5.x` | Knowledge Evidence Producers Plan | Future focused plan | Deferred |
-| 11 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
-| 12 | `0.5.x` | Knowledge Trials Plan | Future focused plan | Deferred |
-| 13 | `0.5.x` | Knowledge UI Plan | Future focused plan | Deferred |
+| 1 | `0.5.125` | Knowledge Evidence Semantic Validator | `tools/content-lint/knowledge-evidence.mjs` | Completed |
+| 2 | `0.5.126` | Knowledge Progress State Plan | `docs/design/knowledge-progress-state-plan.md` | Completed |
+| 3 | `0.5.127` | Knowledge Progress Schema Plan | `docs/design/knowledge-progress-schema-plan.md` | Completed |
+| 4 | `0.5.128` | Knowledge Progress Schema | `packages/schemas/player/knowledge_progress.schema.json` | Completed |
+| 5 | `0.5.129` | Knowledge Progress Semantic Validator Plan | `docs/design/knowledge-progress-semantic-validator-plan.md` | Completed |
+| 6 | `0.5.130` | Knowledge Progress Semantic Validator | Validator plan | Next |
+| 7 | `0.5.x` | Knowledge Evidence-to-Progress Rules Plan | Progress authorities | Deferred |
+| 8 | `0.5.x` | Knowledge Evidence Producers Plan | Future focused plan | Deferred |
+| 9 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
+| 10 | `0.5.x` | Knowledge Trials Plan | Future focused plan | Deferred |
+| 11 | `0.5.x` | Knowledge UI Plan | Future focused plan | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`, inspect:
+For `Version 0.5.130 - Knowledge Progress Semantic Validator`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -103,6 +106,7 @@ For `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`, inspect:
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/design/knowledge-progress-state-plan.md`
 - `docs/design/knowledge-progress-schema-plan.md`
+- `docs/design/knowledge-progress-semantic-validator-plan.md`
 - `packages/schemas/player/knowledge_progress.schema.json`
 - `packages/schemas/player/knowledge_evidence.schema.json`
 - `tools/content-lint/knowledge-evidence.mjs`
