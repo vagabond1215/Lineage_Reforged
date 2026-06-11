@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-11
-Route: Codex local sequencing alignment after `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
+Route: Codex local sequencing alignment after `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan` selected exact evidence eligibility, additive `+1` integer deltas, duplicate-credit blocking, deterministic ordering, no automatic progress-record creation, and an inert proposal envelope without implementing calculation, mutation, storage, runtime, persistence, completion, trials, UI, or gameplay behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.132 - Knowledge Evidence-to-Progress Rules` added the pure proposal helper and 36 focused in-memory tests without canonical state, normal lint registration, producers, mutation, runtime, persistence, completion, trials, UI, or gameplay behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
+- `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
 
 Immediate next Codex run:
 
-- `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
+- `Version 0.5.133 - Knowledge Evidence Producers Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.131` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.132` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -89,7 +89,8 @@ Versioning note:
 | 51 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-semantic-validator-plan.md` | planning doc | Completed | Defined the exact wrapper and schema-first gates, fail-closed authorities, owner and consumed-evidence parity, duplicate and zero-state policies, focused tests, and `0.5.130` acceptance criteria without implementation or state. |
 | 52 | `0.5.130` | Knowledge Progress Semantic Validator | Codex 5.5 Local | `tools/content-lint/knowledge-progress.mjs` | focused validator + tests | Completed | Added pure schema-first validation and 59 focused in-memory tests without canonical progress/evidence state, normal lint registration, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
 | 53 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | planning doc | Completed | Defined the pure-helper boundary, exact eligibility, `+1` integer deltas, duplicate-credit posture, deferred occurrence equivalence, deterministic ordering, inert proposal envelope, focused tests, and `0.5.132` acceptance criteria without implementation. |
-| 54 | `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex 5.5 Local | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | pure helper + focused tests | Next | Implement only the inert evidence eligibility and additive integer-delta proposal helper; no state creation, mutation, persistence, normal lint registration, producers, completion, trials, UI, or gameplay behavior. |
+| 54 | `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex 5.5 Local | `tools/content-lint/knowledge-evidence-to-progress.mjs` | pure helper + focused tests | Completed | Added validation-gated, deterministic `+1` proposals, duplicate/consumption blocking, inert output, and 36 focused tests without state, mutation, persistence, normal lint registration, producers, completion, trials, UI, or gameplay behavior. |
+| 55 | `0.5.133` | Knowledge Evidence Producers Plan | Codex 5.5 Local docs-first | Evidence, progress, and proposal authorities | planning doc | Next | Define which runtime/system owners may create evidence and the producer-to-validator boundary without implementing producers, state mutation, persistence, events, completion, trials, UI, or gameplay behavior. |
 
 ## Default Prompt Pattern
 

@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
+Source route: Codex local implementation after `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
 Date: 2026-06-11
-Branch/status assumption: `master` at commit `bcaf7f1` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `bf07e93` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -18,6 +18,7 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/design/knowledge-progress-semantic-validator-plan.md` owns the first progress semantic-validator decisions.
 - `tools/content-lint/knowledge-progress.mjs` now owns the pure progress semantic-validation boundary.
 - `docs/design/knowledge-evidence-to-progress-rules-plan.md` owns evidence eligibility, additive integer deltas, duplicate-credit posture, deterministic ordering, and inert proposal boundaries.
+- `tools/content-lint/knowledge-evidence-to-progress.mjs` now owns the pure evidence-to-progress proposal boundary.
 - `packages/schemas/player/knowledge_evidence.schema.json` owns the structural contract for one evidence record.
 - `tools/content-lint/knowledge-evidence.mjs` owns the pure evidence semantic-validation boundary.
 - `packages/content/base/player/knowledge_snippets.json` remains the authored snippet authority.
@@ -28,56 +29,53 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
+- `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
 
 Immediate next version:
 
-- `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
+- `Version 0.5.133 - Knowledge Evidence Producers Plan`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.131 Result
+## Version 0.5.132 Result
 
-- Added the planning-only authority at `docs/design/knowledge-evidence-to-progress-rules-plan.md`.
-- Selected `tools/content-lint/knowledge-evidence-to-progress.mjs` as the future pure in-memory helper.
-- Required existing semantically valid evidence and one existing semantically valid target progress record.
-- Selected exact character owner and snippet/domain/subject parity plus active-domain eligibility.
-- Selected one positive integer point per eligible evidence id with no weights, percentages, decay, caps, thresholds, completion, or trials.
-- Blocked duplicate candidate ids, already consumed ids, and ids consumed by another supplied progress record.
-- Kept distinct valid evidence ids independently eligible because occurrence equivalence has no current authority.
-- Selected deterministic evidence-id ordering and explicit numeric sequence proposals without clocks or hidden state.
-- Required an inert proposal envelope with no mutation, persistence, completion, trial unlock, UI output, event, reward, or ownership effect.
-- Prohibited automatic progress-record creation, non-evidence credit, `progressSources`, persisted delta history, normal lint registration, and canonical evidence/progress storage.
-- Added no implementation, tests, schema, validator, content, runtime, persistence, UI, generated output, ownership, or gameplay behavior.
+- Added `tools/content-lint/knowledge-evidence-to-progress.mjs` as a pure, deterministic, filesystem-free proposal helper.
+- Added `tests/unit/knowledge-evidence-to-progress.test.mjs` with 36 focused in-memory tests.
+- Gated progress and evidence through the existing pure validators and current explicit authorities.
+- Required exactly one existing valid target progress record and refused automatic creation.
+- Proposed exactly `+1` per eligible evidence id with exact character owner and target parity.
+- Sorted candidate ids deterministically and blocked duplicate, target-consumed, cross-record-consumed, unresolved, and mismatched evidence.
+- Kept distinct valid ids independently eligible without occurrence-equivalence inference.
+- Derived `updatedSequence` from the maximum explicit progress/evidence sequence plus one.
+- Returned only an inert envelope with immutable proposed progress, preview deltas, deterministic rejection detail, issues, and all five safety flags.
+- Added no evidence/progress content or state, canonical storage, normal lint registration, schema or existing-validator edit, producer, runtime, persistence, completion, trial, event, UI/main-menu, generated output, ownership, or gameplay behavior.
 
-## Active Guardrails For 0.5.132
+## Active Guardrails For 0.5.133
 
-Knowledge Evidence-to-Progress Rules:
+Knowledge Evidence Producers Plan:
 
-- Implement only `tools/content-lint/knowledge-evidence-to-progress.mjs` and `tests/unit/knowledge-evidence-to-progress.test.mjs`.
-- Keep the helper pure, deterministic, side-effect-free, filesystem-free, and in-memory fixture driven.
-- Gate inputs through the existing evidence and progress semantic validators.
-- Require one existing valid target progress record; do not auto-create progress.
-- Preserve exact character owner and snippet/domain/subject parity.
-- Award exactly `+1` per eligible evidence id.
-- Reject duplicate, already consumed, cross-record-consumed, unsupported-source/context, planned-domain, and mismatched evidence.
-- Sort evidence ids deterministically and derive sequence only from explicit numeric inputs.
-- Return an inert proposal envelope; never mutate, persist, emit events, calculate completion, unlock trials, or produce UI.
-- Do not add normal content-lint registration, canonical state paths, `progressSources`, persisted delta history, non-evidence operations, occurrence equivalence, caps, anti-farming, thresholds, completion, trials, producers, or runtime behavior.
-- Do not edit evidence/progress/snippet schemas or existing validators, authored snippets, registry content, skills, spells, or main-menu files.
+- Produce a planning document only; do not implement runtime or system producers.
+- Define which explicit occurrences may propose evidence and which system owns each occurrence.
+- Define producer inputs, evidence identity construction, acquired-sequence authority, owner derivation, snippet/source selection, and source/context population.
+- Preserve current evidence schema and semantic-validator requirements, including character-only ownership, null `sourceId`, and unresolved context-reference blocking.
+- Treat the new evidence-to-progress helper as a downstream consumer; producers must not grant progress directly.
+- Do not invent canonical evidence/progress storage, persistence, save/account/session state, runtime mutation, event emission, UI, completion, trials, rewards, or ownership behavior.
+- Keep occurrence equivalence, anti-farming, persistent audit/replay, and atomic consumption deferred unless separately planned.
+- Do not edit schemas, validators, snippets, registry content, skills, spells, main-menu files, or unrelated runtime code.
 
 Current follow-up risks:
 
 - No canonical evidence or progress storage path exists.
 - Character owner authority remains pattern-only.
 - Progress-record initialization remains undefined.
+- Producer ownership, evidence identity construction, occurrence authenticity, and acquired-sequence authority remain undefined.
 - Occurrence equivalence, stacking limits, anti-farming, and producer-issued grouping identity remain undefined.
 - Non-evidence operations remain unauthorized.
 - Zero-state persistence policy remains undefined.
 - `progressSources`, persistent audit history, replay, and reason vocabularies remain deferred.
 - Completion thresholds, tier aggregation, trial readiness, persistence, and UI remain undefined.
 - Arcane Lore progress remains blocked while the domain is planned.
-- Retain evidence and progress planning guardrails through `0.5.132`, then make an explicit cleanup decision.
+- Retain evidence and progress planning guardrails through `0.5.133`; producer planning still needs their source/context, ownership, and downstream-consumer boundaries.
 
 ## Near-Term Sequence
 
@@ -89,15 +87,15 @@ Current follow-up risks:
 | 4 | `0.5.129` | Knowledge Progress Semantic Validator Plan | `docs/design/knowledge-progress-semantic-validator-plan.md` | Completed |
 | 5 | `0.5.130` | Knowledge Progress Semantic Validator | `tools/content-lint/knowledge-progress.mjs` | Completed |
 | 6 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Completed |
-| 7 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Next |
-| 8 | `0.5.x` | Knowledge Evidence Producers Plan | Future focused plan | Deferred |
+| 7 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `tools/content-lint/knowledge-evidence-to-progress.mjs` | Completed |
+| 8 | `0.5.133` | Knowledge Evidence Producers Plan | Evidence, progress, and proposal authorities | Next |
 | 9 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
 | 10 | `0.5.x` | Knowledge Trials Plan | Future focused plan | Deferred |
 | 11 | `0.5.x` | Knowledge UI Plan | Future focused plan | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`, inspect:
+For `Version 0.5.133 - Knowledge Evidence Producers Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -115,8 +113,10 @@ For `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`, inspect:
 - `packages/schemas/player/knowledge_progress.schema.json`
 - `tools/content-lint/knowledge-evidence.mjs`
 - `tools/content-lint/knowledge-progress.mjs`
+- `tools/content-lint/knowledge-evidence-to-progress.mjs`
 - `tests/unit/knowledge-evidence-validation.test.mjs`
 - `tests/unit/knowledge-progress-validation.test.mjs`
+- `tests/unit/knowledge-evidence-to-progress.test.mjs`
 - `packages/content/base/player/knowledge_snippets.json`
 - `packages/content/base/player/knowledge_domain_registry.json`
 - `docs/future_content_backlog.md`

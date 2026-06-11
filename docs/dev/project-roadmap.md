@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
-- Next recommended version: `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
+- Latest completed version: `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
+- Next recommended version: `Version 0.5.133 - Knowledge Evidence Producers Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.131` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.132` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -93,6 +93,7 @@ Current repo reality:
 - Knowledge progress semantic-validator planning has landed in `docs/design/knowledge-progress-semantic-validator-plan.md`. It selects a test-fixture-only pure helper, exact wrapper and schema-first gates, snippet/domain/evidence authorities, owner and target parity, duplicate progress and cross-record evidence-consumption rules, explicit zero-state posture, focused tests, and `0.5.130` acceptance criteria without implementation.
 - Pure knowledge progress semantic validation now exists at `tools/content-lint/knowledge-progress.mjs` with 59 focused in-memory tests. It validates exact wrapper and progress structure before semantics, delegates supplied evidence to the current evidence validator, rejects duplicate progress identities and cross-record evidence consumption, enforces active snippet/domain plus owner/target parity, and applies explicit zero-state consistency without normal content-lint registration, progress state, or calculation behavior.
 - Knowledge evidence-to-progress rules planning has landed in `docs/design/knowledge-evidence-to-progress-rules-plan.md`. It selects a future pure in-memory helper, exact character owner and target parity, one positive integer point per eligible evidence id, duplicate and already-consumed blocking, deterministic ordering and sequence proposals, no automatic progress-record creation, and an inert no-mutation/no-persistence envelope.
+- Pure knowledge evidence-to-progress proposals now exist at `tools/content-lint/knowledge-evidence-to-progress.mjs` with 36 focused in-memory tests. The helper gates inputs through current evidence/progress validators, requires one existing target, proposes exactly `+1` per eligible sorted evidence id, blocks duplicate and consumed ids, derives sequence only from explicit values, and returns an inert no-mutation/no-persistence envelope without normal content-lint registration or state behavior.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -156,7 +157,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Codex Local docs-first | Planning | Completed. Defined the schema-first pure-helper boundary, exact wrapper gate, authorities, owner and target parity, duplicate and zero-state policies, focused tests, and acceptance criteria. | Documentation only; no validator, tests, progress/evidence state, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
 | `0.5.130` | Knowledge Progress Semantic Validator | Codex Local | Focused validator + tests | Completed. Added the pure schema-first helper and 59 focused in-memory tests without selecting canonical progress storage or normal lint registration. | No progress/evidence content or state, schema changes, credit rules, runtime, persistence, completion, trials, UI, generated output, or gameplay behavior. |
 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Codex Local docs-first | Planning | Completed. Defined the pure-helper boundary, exact eligibility, `+1` integer deltas, duplicate-credit posture, deferred occurrence equivalence, deterministic ordering, inert proposal envelope, focused tests, and `0.5.132` acceptance criteria. | Documentation only; no helper, tests, state, mutation, producers, persistence, completion, trials, UI, generated output, or gameplay behavior. |
-| `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex Local | Pure helper + focused tests | Next. Implement the inert evidence eligibility and additive integer-delta proposal helper from the approved plan. | No state creation, mutation, persistence, normal lint registration, producers, completion, trials, UI, generated output, or gameplay behavior. |
+| `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex Local | Pure helper + focused tests | Completed. Added the pure proposal helper and 36 focused in-memory tests for validation gates, eligibility, `+1` deltas, duplicate consumption, deterministic ordering/sequence, inert safety flags, and immutability. | No state creation, mutation, persistence, normal lint registration, producers, completion, trials, UI, generated output, or gameplay behavior. |
+| `0.5.133` | Knowledge Evidence Producers Plan | Codex Local docs-first | Planning | Next. Define the first runtime/system owners that may create semantically valid evidence without implementing producers. | Documentation only; no runtime producer, state mutation, persistence, events, completion, trials, UI, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -205,7 +207,8 @@ Practical near-term sequence:
 18. `0.5.129 - Knowledge Progress Semantic Validator Plan` - completed
 19. `0.5.130 - Knowledge Progress Semantic Validator` - completed
 20. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan` - completed
-21. `0.5.132 - Knowledge Evidence-to-Progress Rules`
+21. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
+22. `0.5.133 - Knowledge Evidence Producers Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -244,8 +247,8 @@ Recommended advancement sequence:
 23. `0.5.129 - Knowledge Progress Semantic Validator Plan` - completed
 24. `0.5.130 - Knowledge Progress Semantic Validator` - completed
 25. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan` - completed
-26. `0.5.132 - Knowledge Evidence-to-Progress Rules` - next
-27. `0.5.x - Knowledge Evidence Producers Plan`
+26. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
+27. `0.5.133 - Knowledge Evidence Producers Plan` - next
 28. `0.5.x - Knowledge Completion Rules Plan`
 29. `0.5.x - Knowledge Trials Plan`
 30. `0.5.x - Knowledge UI Plan`
@@ -414,7 +417,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 38 | `0.5.129` | Knowledge Progress Semantic Validator Plan | `docs/design/knowledge-progress-semantic-validator-plan.md` | Completed |
 | 39 | `0.5.130` | Knowledge Progress Semantic Validator | `tools/content-lint/knowledge-progress.mjs` | Completed |
 | 40 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Completed |
-| 41 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Next |
+| 41 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `tools/content-lint/knowledge-evidence-to-progress.mjs` | Completed |
+| 42 | `0.5.133` | Knowledge Evidence Producers Plan | Evidence, progress, and proposal authorities | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
