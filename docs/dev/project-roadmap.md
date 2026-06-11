@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-06-10
+Last reviewed: 2026-06-11
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
-- Next recommended version: `Version 0.5.130 - Knowledge Progress Semantic Validator`
+- Latest completed version: `Version 0.5.130 - Knowledge Progress Semantic Validator`
+- Next recommended version: `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.129` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.130` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -91,6 +91,7 @@ Current repo reality:
 - Knowledge progress schema planning has landed in `docs/design/knowledge-progress-schema-plan.md`. It selects the strict record-level schema path, all 11 required fields, exact patterns and enums, structurally empty consumed-evidence arrays, required notes, forbidden fields, focused schema registration, and `0.5.128` acceptance criteria without implementation.
 - The strict record-level knowledge progress schema now exists at `packages/schemas/player/knowledge_progress.schema.json` and is registered in the focused schema-file test. It defines structure only; no progress collection/state, semantic validation, evidence credit, runtime loading, persistence, completion, trials, UI, or ownership behavior exists.
 - Knowledge progress semantic-validator planning has landed in `docs/design/knowledge-progress-semantic-validator-plan.md`. It selects a test-fixture-only pure helper, exact wrapper and schema-first gates, snippet/domain/evidence authorities, owner and target parity, duplicate progress and cross-record evidence-consumption rules, explicit zero-state posture, focused tests, and `0.5.130` acceptance criteria without implementation.
+- Pure knowledge progress semantic validation now exists at `tools/content-lint/knowledge-progress.mjs` with 59 focused in-memory tests. It validates exact wrapper and progress structure before semantics, delegates supplied evidence to the current evidence validator, rejects duplicate progress identities and cross-record evidence consumption, enforces active snippet/domain plus owner/target parity, and applies explicit zero-state consistency without normal content-lint registration, progress state, or calculation behavior.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -152,7 +153,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.127` | Knowledge Progress Schema Plan | Codex Local docs-first | Planning | Completed. Froze the first strict record-level schema contract, exact fields, identifier patterns, enums, empty consumed-evidence posture, notes posture, forbidden fields, and schema-test expectations. | Documentation only; no progress schema/state/validator, evidence state, runtime, persistence, completion, trials, UI, or gameplay behavior. |
 | `0.5.128` | Knowledge Progress Schema | Codex Local | Schema + focused schema test | Completed. Added the strict record schema and focused schema-file registration with exact field, pattern, enum, array, notes, and deferred-field boundaries. | No progress/evidence state, semantic validator, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Codex Local docs-first | Planning | Completed. Defined the schema-first pure-helper boundary, exact wrapper gate, authorities, owner and target parity, duplicate and zero-state policies, focused tests, and acceptance criteria. | Documentation only; no validator, tests, progress/evidence state, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
-| `0.5.130` | Knowledge Progress Semantic Validator | Codex Local | Focused validator + tests | Next. Implement the planned pure helper and focused in-memory tests without selecting canonical progress storage or normal lint registration. | No progress/evidence content or state, schema changes, credit rules, runtime, persistence, completion, trials, UI, generated output, or gameplay behavior. |
+| `0.5.130` | Knowledge Progress Semantic Validator | Codex Local | Focused validator + tests | Completed. Added the pure schema-first helper and 59 focused in-memory tests without selecting canonical progress storage or normal lint registration. | No progress/evidence content or state, schema changes, credit rules, runtime, persistence, completion, trials, UI, generated output, or gameplay behavior. |
+| `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Codex Local docs-first | Planning | Next. Define eligible evidence, integer deltas, repeatability, duplicate credit, occurrence equivalence, ordering, and any authorized non-evidence operations before calculation behavior. | Documentation only; no progress mutation, producers, persistence, completion, trials, UI, generated output, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -199,7 +201,8 @@ Practical near-term sequence:
 16. `0.5.127 - Knowledge Progress Schema Plan` - completed
 17. `0.5.128 - Knowledge Progress Schema` - completed
 18. `0.5.129 - Knowledge Progress Semantic Validator Plan` - completed
-19. `0.5.130 - Knowledge Progress Semantic Validator`
+19. `0.5.130 - Knowledge Progress Semantic Validator` - completed
+20. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
 
 ## 5. Advancement Framework Roadmap
 
@@ -236,8 +239,8 @@ Recommended advancement sequence:
 21. `0.5.127 - Knowledge Progress Schema Plan` - completed
 22. `0.5.128 - Knowledge Progress Schema` - completed
 23. `0.5.129 - Knowledge Progress Semantic Validator Plan` - completed
-24. `0.5.130 - Knowledge Progress Semantic Validator` - next
-25. `0.5.x - Knowledge Evidence-to-Progress Rules Plan`
+24. `0.5.130 - Knowledge Progress Semantic Validator` - completed
+25. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan` - next
 26. `0.5.x - Knowledge Evidence Producers Plan`
 27. `0.5.x - Knowledge Completion Rules Plan`
 28. `0.5.x - Knowledge Trials Plan`
@@ -405,7 +408,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 36 | `0.5.127` | Knowledge Progress Schema Plan | `docs/design/knowledge-progress-schema-plan.md` | Completed |
 | 37 | `0.5.128` | Knowledge Progress Schema | `packages/schemas/player/knowledge_progress.schema.json` | Completed |
 | 38 | `0.5.129` | Knowledge Progress Semantic Validator Plan | `docs/design/knowledge-progress-semantic-validator-plan.md` | Completed |
-| 39 | `0.5.130` | Knowledge Progress Semantic Validator | `docs/design/knowledge-progress-semantic-validator-plan.md` | Next |
+| 39 | `0.5.130` | Knowledge Progress Semantic Validator | `tools/content-lint/knowledge-progress.mjs` | Completed |
+| 40 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Progress and evidence validation authorities | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

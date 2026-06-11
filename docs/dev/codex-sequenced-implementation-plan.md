@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-10
-Route: Codex local sequencing alignment after `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
+Date: 2026-06-11
+Route: Codex local sequencing alignment after `Version 0.5.130 - Knowledge Progress Semantic Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.129 - Knowledge Progress Semantic Validator Plan` defined the future pure schema-first helper, authority, parity, duplicate-consumption, zero-state, focused-test, and acceptance boundaries without implementing validation or state.
+This file gives Codex a stable ordered queue after `Version 0.5.130 - Knowledge Progress Semantic Validator` added the pure schema-first helper and 59 focused in-memory tests without canonical progress state, normal lint registration, calculation rules, runtime, persistence, completion, trials, UI, or gameplay behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.129 - Knowledge Progress Semantic Validator Plan`
+- `Version 0.5.130 - Knowledge Progress Semantic Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.130 - Knowledge Progress Semantic Validator`
+- `Version 0.5.131 - Knowledge Evidence-to-Progress Rules Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.129` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.130` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -87,7 +87,8 @@ Versioning note:
 | 49 | `0.5.127` | Knowledge Progress Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-schema-plan.md` | planning doc | Completed | Froze the strict record-schema contract, exact patterns and enums, empty consumed-evidence posture, required notes, schema tests, forbidden fields, and `0.5.128` acceptance criteria without implementation. |
 | 50 | `0.5.128` | Knowledge Progress Schema | Codex 5.5 Local | `packages/schemas/player/knowledge_progress.schema.json` | schema file + focused schema test | Completed | Added only the strict record schema and focused schema-file registration; no state, semantic validator, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
 | 51 | `0.5.129` | Knowledge Progress Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-semantic-validator-plan.md` | planning doc | Completed | Defined the exact wrapper and schema-first gates, fail-closed authorities, owner and consumed-evidence parity, duplicate and zero-state policies, focused tests, and `0.5.130` acceptance criteria without implementation or state. |
-| 52 | `0.5.130` | Knowledge Progress Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-progress-semantic-validator-plan.md` | focused validator + tests | Next | Implement only the pure in-memory helper and focused tests; do not create canonical progress/evidence state, register normal lint, or add credit, runtime, persistence, completion, trial, UI, generated-output, ownership, or gameplay behavior. |
+| 52 | `0.5.130` | Knowledge Progress Semantic Validator | Codex 5.5 Local | `tools/content-lint/knowledge-progress.mjs` | focused validator + tests | Completed | Added pure schema-first validation and 59 focused in-memory tests without canonical progress/evidence state, normal lint registration, credit rules, runtime, persistence, completion, trials, UI, or gameplay behavior. |
+| 53 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Codex 5.5 Local docs-first | Progress and evidence validation authorities | planning doc | Next | Define eligibility, integer deltas, repeatability, duplicate credit, occurrence equivalence, ordering, and authorized non-evidence operations without implementing mutation, producers, persistence, completion, trials, UI, or gameplay behavior. |
 
 ## Default Prompt Pattern
 
