@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-06-11
+Last reviewed: 2026-06-12
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.134 - Knowledge Observation Evidence Producer`
-- Next recommended version: `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
+- Latest completed version: `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
+- Next recommended version: `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.134` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.135` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -95,6 +95,7 @@ Current repo reality:
 - Knowledge evidence-to-progress rules planning has landed in `docs/design/knowledge-evidence-to-progress-rules-plan.md`. It selects a future pure in-memory helper, exact character owner and target parity, one positive integer point per eligible evidence id, duplicate and already-consumed blocking, deterministic ordering and sequence proposals, no automatic progress-record creation, and an inert no-mutation/no-persistence envelope.
 - Pure knowledge evidence-to-progress proposals now exist at `tools/content-lint/knowledge-evidence-to-progress.mjs` with 36 focused in-memory tests. The helper gates inputs through current evidence/progress validators, requires one existing target, proposes exactly `+1` per eligible sorted evidence id, blocks duplicate and consumed ids, derives sequence only from explicit values, and returns an inert no-mutation/no-persistence envelope without normal content-lint registration or state behavior.
 - Pure Knowledge observation evidence candidate proposals now exist at `tools/content-lint/knowledge-evidence-producers.mjs` with 29 focused in-memory tests. The helper derives current snippet snapshots, supports narrow field-identification and Kaelvar travel-observation candidates, constructs deterministic ids from explicit occurrence identity, validates through the current evidence helper, and remains unregistered and candidate-only without storage, persistence, progress invocation, runtime, UI, completion, trials, or gameplay behavior.
+- Knowledge storage and persistence boundary planning has landed in `docs/design/knowledge-storage-persistence-boundary-plan.md`. It distinguishes candidate, accepted, rejected, and persisted evidence plus proposed and applied progress; keeps canonical storage ownership deferred; defines conceptual collection, acceptance, duplicate/replay, occurrence, sequence, owner, initialization, and atomicity responsibilities; and selects a docs-only fixture-boundary plan next without implementing storage or state.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -161,7 +162,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex Local | Pure helper + focused tests | Completed. Added the pure proposal helper and 36 focused in-memory tests for validation gates, eligibility, `+1` deltas, duplicate consumption, deterministic ordering/sequence, inert safety flags, and immutability. | No state creation, mutation, persistence, normal lint registration, producers, completion, trials, UI, generated output, or gameplay behavior. |
 | `0.5.133` | Knowledge Evidence Producers Plan | Codex Local docs-first | Planning | Completed. Defined the candidate-only producer boundary, exact evidence output, deterministic identity and explicit sequence rules, category ownership, focused tests, and `0.5.134` acceptance criteria. | Documentation only; no producer, state mutation, persistence, events, completion, trials, UI, generated output, or gameplay behavior. |
 | `0.5.134` | Knowledge Observation Evidence Producer | Codex Local | Pure helper + focused tests | Completed. Added a deterministic candidate-only helper and 29 focused tests for current Aloe, Badger, Iron Ore, and validator-supported Kaelvar observation contexts. | No persistence, runtime wiring, lint registration, progress invocation or mutation, completion, trials, UI, source expansion, or schema/validator changes. |
-| `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Codex Local docs-first | Planning | Next. Define evidence/progress acceptance, duplicate/replay, collection ownership, sequence authority, and save/session boundaries before any storage implementation. | Documentation only; no storage, persistence, schema, migration, runtime, mutation, completion, trials, UI, or gameplay behavior. |
+| `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Codex Local docs-first | Planning | Completed. Defined candidate/accepted/persisted boundaries, future collection and acceptance responsibilities, duplicate/replay and occurrence identity posture, sequence/owner requirements, and atomicity recommendations while deferring canonical storage ownership. | Documentation only; no storage, fixtures, persistence, schema, migration, runtime, mutation, completion, trials, UI, or gameplay behavior. |
+| `0.5.136` | Knowledge Storage Fixture Boundary Plan | Codex Local docs-first | Planning | Next. Define a test-only evidence/progress collection fixture contract and acceptance scenarios without creating fixtures or selecting production storage. | Documentation only; no fixture files, storage, persistence, registration, initialization, mutation, runtime, completion, trials, UI, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -213,7 +215,8 @@ Practical near-term sequence:
 21. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
 22. `0.5.133 - Knowledge Evidence Producers Plan` - completed
 23. `0.5.134 - Knowledge Observation Evidence Producer` - completed
-24. `0.5.135 - Knowledge Storage And Persistence Boundary Plan` - next
+24. `0.5.135 - Knowledge Storage And Persistence Boundary Plan` - completed
+25. `0.5.136 - Knowledge Storage Fixture Boundary Plan` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -255,22 +258,25 @@ Recommended advancement sequence:
 26. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
 27. `0.5.133 - Knowledge Evidence Producers Plan` - completed
 28. `0.5.134 - Knowledge Observation Evidence Producer` - completed
-29. `0.5.135 - Knowledge Storage And Persistence Boundary Plan` - next
-30. `0.5.x - Knowledge Progress Record Initialization Plan`
-31. `0.5.x - Knowledge Completion Rules Plan`
-32. `0.5.x - Knowledge Trials Plan`
-33. `0.5.x - Knowledge UI Plan`
-34. `0.5.x - Skill Trial Schema Expansion Plan`
-35. `0.5.x - Pure Checkpoint Outcome Helper`
-36. `0.5.x - Trial Attempt Cooldown Readiness Helper`
-37. `0.5.x - Magic Study Event Plan`
-38. `0.5.x - Magic Teaching Source Plan`
-39. `0.6.x - First Advancement Event Runtime Shape`
-40. `0.6.x - First Knowledge Completion Helper`
-41. `0.6.x - First Skill Trial Family Content`
-42. `0.6.x - First Magic Study Event Family Content`
-43. `0.6.x - First Knowledge Trial Family Content`
-44. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
+29. `0.5.135 - Knowledge Storage And Persistence Boundary Plan` - completed
+30. `0.5.136 - Knowledge Storage Fixture Boundary Plan` - next
+31. `0.5.x - Knowledge Progress Record Initialization Plan`
+32. `0.5.x - Knowledge Evidence Acceptance Helper Plan`
+33. `0.5.x - Knowledge Evidence Acceptance Helper`
+34. `0.5.x - Knowledge Completion Rules Plan`
+35. `0.5.x - Knowledge Trials Plan`
+36. `0.5.x - Knowledge UI Plan`
+37. `0.5.x - Skill Trial Schema Expansion Plan`
+38. `0.5.x - Pure Checkpoint Outcome Helper`
+39. `0.5.x - Trial Attempt Cooldown Readiness Helper`
+40. `0.5.x - Magic Study Event Plan`
+41. `0.5.x - Magic Teaching Source Plan`
+42. `0.6.x - First Advancement Event Runtime Shape`
+43. `0.6.x - First Knowledge Completion Helper`
+44. `0.6.x - First Skill Trial Family Content`
+45. `0.6.x - First Magic Study Event Family Content`
+46. `0.6.x - First Knowledge Trial Family Content`
+47. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
 
 ## 6. Knowledge Domain Timing
 
@@ -428,7 +434,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 41 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `tools/content-lint/knowledge-evidence-to-progress.mjs` | Completed |
 | 42 | `0.5.133` | Knowledge Evidence Producers Plan | `docs/design/knowledge-evidence-producers-plan.md` | Completed |
 | 43 | `0.5.134` | Knowledge Observation Evidence Producer | `tools/content-lint/knowledge-evidence-producers.mjs` | Completed |
-| 44 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Evidence, progress, producer, and proposal authorities | Next |
+| 44 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | `docs/design/knowledge-storage-persistence-boundary-plan.md` | Completed |
+| 45 | `0.5.136` | Knowledge Storage Fixture Boundary Plan | `docs/design/knowledge-storage-persistence-boundary-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

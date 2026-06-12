@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-12
-Route: Codex local sequencing alignment after `Version 0.5.134 - Knowledge Observation Evidence Producer`
+Route: Codex local sequencing alignment after `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.134 - Knowledge Observation Evidence Producer` added the pure candidate helper and 29 focused in-memory tests without canonical state, normal lint registration, progress invocation, mutation, runtime, persistence, completion, trials, UI, or gameplay behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan` defined candidate, accepted, rejected, and persisted evidence; progress proposal/application distinctions; conceptual collection and acceptance responsibilities; duplicate/replay and occurrence posture; sequence and owner requirements; and atomicity recommendations without selecting or implementing canonical storage.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.134 - Knowledge Observation Evidence Producer`
+- `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
+- `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.134` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.135` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -92,7 +92,8 @@ Versioning note:
 | 54 | `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex 5.5 Local | `tools/content-lint/knowledge-evidence-to-progress.mjs` | pure helper + focused tests | Completed | Added validation-gated, deterministic `+1` proposals, duplicate/consumption blocking, inert output, and 36 focused tests without state, mutation, persistence, normal lint registration, producers, completion, trials, UI, or gameplay behavior. |
 | 55 | `0.5.133` | Knowledge Evidence Producers Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-producers-plan.md` | planning doc | Completed | Defined explicit producer categories and owners, exact candidate output, deterministic identity and sequence posture, current source/context limits, focused tests, and `0.5.134` acceptance criteria without implementation. |
 | 56 | `0.5.134` | Knowledge Observation Evidence Producer | Codex 5.5 Local | `tools/content-lint/knowledge-evidence-producers.mjs` | pure helper + focused tests | Completed | Added deterministic candidate proposals for current field-identification and Kaelvar travel-observation examples with 29 tests, current evidence validation, explicit owner/occurrence/sequence inputs, and no state or downstream behavior. |
-| 57 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Codex 5.5 Local docs-first | Evidence, progress, producer, and proposal authorities | planning doc | Next | Define future acceptance, collection ownership, duplicate/replay, sequence authority, and save/session boundaries without implementing storage, persistence, migration, runtime wiring, mutation, completion, trials, UI, or gameplay behavior. |
+| 57 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-storage-persistence-boundary-plan.md` | planning doc | Completed | Defined acceptance terminology and pipeline, conceptual collection ownership, duplicate/replay and occurrence posture, sequence/owner authority requirements, deferred storage placement, and atomic or replayable handling without implementation. |
+| 58 | `0.5.136` | Knowledge Storage Fixture Boundary Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-storage-persistence-boundary-plan.md` | planning doc | Next | Define a test-only evidence/progress collection fixture contract and acceptance scenarios without creating fixtures, selecting production storage, adding registration, or implementing mutation. |
 
 ## Default Prompt Pattern
 
@@ -119,7 +120,7 @@ Each future Codex prompt should:
 - Do not combine the legacy combat spell-staging or multi-effect branch-order findings with constants cleanup or pure projection work.
 - Keep the registry schema file, seed data, semantic validator planning, semantic validator implementation, and skill-reference realignment as separate runs.
 - Keep snippet authoring, schema hardening, seed data, semantic validator planning, semantic validator implementation, evidence, progress, trials, and UI as separate runs.
-- Keep the evidence contract, schema planning, schema file, evidence state, progress-state planning, progress-schema planning, progress schema, progress semantic-validator planning, progress semantic validation, evidence-to-progress rules, evidence producers, completion rules, trials, and UI as separate runs.
+- Keep the evidence contract, schema planning, schema file, fixture-boundary planning, progress initialization, acceptance planning, acceptance implementation, completion rules, trials, and UI as separate runs.
 
 ## When To Reorder
 
