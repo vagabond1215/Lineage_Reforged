@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.132 - Knowledge Evidence-to-Progress Rules
-Date: 2026-06-11
-Branch/status assumption: Ran on `master` from commit `bf07e93`. The worktree was clean before edits.
+Source version/run: Version 0.5.133 - Knowledge Evidence Producers Plan
+Date: 2026-06-12
+Branch/status assumption: Ran on `master` from commit `f6f8cbb`. The worktree was clean before edits.
 
 ## Result
 
-Added `tools/content-lint/knowledge-evidence-to-progress.mjs` as the first pure, deterministic, in-memory evidence-to-progress proposal helper and added 36 focused tests.
+Added `docs/design/knowledge-evidence-producers-plan.md` as the planning authority for future Knowledge evidence producers.
 
-The helper gates supplied progress and evidence through the existing validators, requires exactly one existing valid target progress record, evaluates candidate evidence in ascending id order, proposes exactly `+1` per eligible id, blocks duplicate and already-consumed evidence, and derives `updatedSequence` only from explicit progress/evidence sequence values.
+The plan defines six producer categories, a candidate-only producer boundary, the exact current evidence output, deterministic identity and explicit acquisition-sequence rules, character-only owner posture, current source/context limits, the downstream evidence-to-progress relationship, persistence deferral, and focused acceptance criteria.
 
-The output is an inert envelope containing accepted and rejected evidence, an immutable proposed progress record, preview deltas, deterministic issues, and explicit no-mutation/no-persistence/no-completion/no-trial/no-UI safety flags.
+It selects `Version 0.5.134 - Knowledge Observation Evidence Producer` as the next run: a pure, deterministic, in-memory, unregistered candidate helper with focused tests for Aloe, Badger, Iron Ore, and validator-supported Kaelvar examples while Arcane remains blocked.
 
 ## Files Changed
 
-- `tools/content-lint/knowledge-evidence-to-progress.mjs`
-- `tests/unit/knowledge-evidence-to-progress.test.mjs`
+- `docs/design/knowledge-evidence-producers-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,12 +23,12 @@ The output is an inert envelope containing accepted and rejected evidence, an im
 
 ## Checks Run
 
+- `npm.cmd run tool:content-lint`
+  - Passed: 55 files checked.
 - `node --check tools/content-lint/knowledge-evidence-to-progress.mjs`
   - Passed.
 - `node --test tests/unit/knowledge-evidence-to-progress.test.mjs`
   - Passed: 36 tests.
-- `npm.cmd run tool:content-lint`
-  - Passed: 55 files checked; evidence-to-progress and progress validation remain unregistered.
 - `node --check tools/content-lint/knowledge-progress.mjs`
   - Passed.
 - `node --test tests/unit/knowledge-progress-validation.test.mjs`
@@ -44,48 +43,39 @@ The output is an inert envelope containing accepted and rejected evidence, an im
   - Passed: 49 tests.
 - `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
   - Passed: 37 tests.
-- Focused evidence-to-progress behavior audit.
-  - Passed: 18 required helper anchors and no filesystem, clock, or randomness use.
-- Normal content-lint registration audit.
-  - Passed: `tools/content-lint/index.mjs` is unchanged and contains no evidence-to-progress or progress-validator registration.
-- Protected-path audit before handoff updates.
-  - Passed: only the two authorized new helper/test paths had changed; all existing validators, schemas, content, tests, and UI/main-menu files were unchanged.
-- Final changed-path and protected-path audit.
-  - Passed: exactly seven authorized helper, focused-test, and handoff documentation paths changed; main-menu files remain untouched.
-- Version and stale-sequence audits.
-  - Passed: `0.5.132` is completed and `0.5.133` is next across the roadmap, sequence, GPT handoff, and current output.
+- Plan coverage scan.
+  - Passed: all 19 required numbered sections and required implementation/sequence anchors are present.
+- Changed-path and protected-path audit.
+  - Passed: only the six authorized documentation paths changed; implementation, tests, schemas, content, runtime, generated, storage, and UI/main-menu paths remain untouched.
+- Version and sequence audit.
+  - Passed: `0.5.133` is completed and `0.5.134` is next across the roadmap, sequence, GPT handoff, backlog, and current output.
 - Conflict-marker and trailing-whitespace scan.
-  - Passed across all seven changed files.
+  - Passed across all six changed files.
 - `git diff --check`
   - Passed. Git reported only line-ending normalization notices for tracked Markdown files.
-- Broad typecheck was not run because this pass touched only the focused helper, focused test, and documentation.
+- Broad typecheck was not run because this was a documentation-only planning pass.
 
 ## Behavior / Runtime Confirmation
 
-- Pure in-memory knowledge evidence-to-progress proposal behavior and focused tests changed.
 - Documentation and workflow sequencing changed.
-- No progress/evidence JSON, content, state, canonical storage, normal content-lint registration, schema, or existing validator behavior changed.
-- No snippet JSON/schema/validator, registry content, skill, spell, or unrelated test file changed.
-- No runtime loader/producer, persistence, database, save/account/session state, generated output, UI/main-menu file, completion math, trial behavior, Chronicle/Renown/quest/combat event, reward, ownership mutation, or gameplay behavior changed.
+- No JSON, schema, validator, content, test, helper, runtime, storage, persistence, generated, save/account/session, or UI/main-menu behavior changed.
+- No evidence or progress state, mutation, completion, trial, reward, Chronicle/Renown, event, ownership, or gameplay behavior was added.
 
 ## Risks / Follow-Up
 
-- No canonical evidence or progress storage path exists.
-- Character owner authority remains pattern-only.
-- Progress-record initialization and identity construction remain unresolved.
-- Evidence producer ownership, evidence identity construction, occurrence authenticity, and acquired-sequence authority remain unresolved.
-- Occurrence equivalence, producer-issued grouping identity, anti-farming, cooldowns, and diminishing returns remain deferred.
-- Non-evidence progress operations remain unauthorized.
-- `progressSources`, persistent audit history, replay, provenance, and reason vocabularies remain deferred.
-- Completion thresholds, tier aggregation, trial readiness, persistence, UI, and generated output remain deferred.
-- Arcane Lore evidence/progress remains blocked while `knowledge_domain.arcane_lore` is planned.
-- Retain evidence and progress guardrail documents through `0.5.133`; they remain relevant to producer planning.
+- Occurrence equivalence still requires a stable producer-issued event, action, or occurrence identity.
+- Canonical acquisition-sequence and character identity authorities remain undefined.
+- Evidence acceptance, duplicate handling, storage, persistence, progress-record initialization, replay, and anti-farming remain deferred.
+- `sourceId` remains null-only and several future producer categories remain blocked by current source/context authority.
+- Completion, trials, UI, rewards, generated projections, and runtime wiring remain deferred.
+- Arcane evidence remains blocked while its domain and snippet route are not active.
+- The next implementation must remain candidate-only and must not invoke the evidence-to-progress helper.
 - No blockers occurred.
 
 ## Next Recommended Version
 
-Version 0.5.133 - Knowledge Evidence Producers Plan
+Version 0.5.134 - Knowledge Observation Evidence Producer
 
 ## Suggested Commit Message
 
-tools(knowledge): propose evidence progress deltas
+docs(knowledge): plan evidence producers

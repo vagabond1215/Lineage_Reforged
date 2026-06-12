@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.132 - Knowledge Evidence-to-Progress Rules`
-- Next recommended version: `Version 0.5.133 - Knowledge Evidence Producers Plan`
+- Latest completed version: `Version 0.5.133 - Knowledge Evidence Producers Plan`
+- Next recommended version: `Version 0.5.134 - Knowledge Observation Evidence Producer`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.132` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.133` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -158,7 +158,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.130` | Knowledge Progress Semantic Validator | Codex Local | Focused validator + tests | Completed. Added the pure schema-first helper and 59 focused in-memory tests without selecting canonical progress storage or normal lint registration. | No progress/evidence content or state, schema changes, credit rules, runtime, persistence, completion, trials, UI, generated output, or gameplay behavior. |
 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Codex Local docs-first | Planning | Completed. Defined the pure-helper boundary, exact eligibility, `+1` integer deltas, duplicate-credit posture, deferred occurrence equivalence, deterministic ordering, inert proposal envelope, focused tests, and `0.5.132` acceptance criteria. | Documentation only; no helper, tests, state, mutation, producers, persistence, completion, trials, UI, generated output, or gameplay behavior. |
 | `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex Local | Pure helper + focused tests | Completed. Added the pure proposal helper and 36 focused in-memory tests for validation gates, eligibility, `+1` deltas, duplicate consumption, deterministic ordering/sequence, inert safety flags, and immutability. | No state creation, mutation, persistence, normal lint registration, producers, completion, trials, UI, generated output, or gameplay behavior. |
-| `0.5.133` | Knowledge Evidence Producers Plan | Codex Local docs-first | Planning | Next. Define the first runtime/system owners that may create semantically valid evidence without implementing producers. | Documentation only; no runtime producer, state mutation, persistence, events, completion, trials, UI, or gameplay behavior. |
+| `0.5.133` | Knowledge Evidence Producers Plan | Codex Local docs-first | Planning | Completed. Defined the candidate-only producer boundary, exact evidence output, deterministic identity and explicit sequence rules, category ownership, focused tests, and `0.5.134` acceptance criteria. | Documentation only; no producer, state mutation, persistence, events, completion, trials, UI, generated output, or gameplay behavior. |
+| `0.5.134` | Knowledge Observation Evidence Producer | Codex Local | Pure helper + focused tests | Next. Add a narrow deterministic observation candidate helper for the currently supported Aloe, Badger, Iron Ore, and Kaelvar examples. | No persistence, runtime wiring, lint registration, progress invocation or mutation, completion, trials, UI, source expansion, or schema/validator changes. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -208,7 +209,8 @@ Practical near-term sequence:
 19. `0.5.130 - Knowledge Progress Semantic Validator` - completed
 20. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan` - completed
 21. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
-22. `0.5.133 - Knowledge Evidence Producers Plan`
+22. `0.5.133 - Knowledge Evidence Producers Plan` - completed
+23. `0.5.134 - Knowledge Observation Evidence Producer` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -248,21 +250,24 @@ Recommended advancement sequence:
 24. `0.5.130 - Knowledge Progress Semantic Validator` - completed
 25. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan` - completed
 26. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
-27. `0.5.133 - Knowledge Evidence Producers Plan` - next
-28. `0.5.x - Knowledge Completion Rules Plan`
-29. `0.5.x - Knowledge Trials Plan`
-30. `0.5.x - Knowledge UI Plan`
-31. `0.5.x - Skill Trial Schema Expansion Plan`
-32. `0.5.x - Pure Checkpoint Outcome Helper`
-33. `0.5.x - Trial Attempt Cooldown Readiness Helper`
-34. `0.5.x - Magic Study Event Plan`
-35. `0.5.x - Magic Teaching Source Plan`
-36. `0.6.x - First Advancement Event Runtime Shape`
-37. `0.6.x - First Knowledge Completion Helper`
-38. `0.6.x - First Skill Trial Family Content`
-39. `0.6.x - First Magic Study Event Family Content`
-40. `0.6.x - First Knowledge Trial Family Content`
-41. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
+27. `0.5.133 - Knowledge Evidence Producers Plan` - completed
+28. `0.5.134 - Knowledge Observation Evidence Producer` - next
+29. `0.5.x - Knowledge Storage And Persistence Boundary Plan`
+30. `0.5.x - Knowledge Progress Record Initialization Plan`
+31. `0.5.x - Knowledge Completion Rules Plan`
+32. `0.5.x - Knowledge Trials Plan`
+33. `0.5.x - Knowledge UI Plan`
+34. `0.5.x - Skill Trial Schema Expansion Plan`
+35. `0.5.x - Pure Checkpoint Outcome Helper`
+36. `0.5.x - Trial Attempt Cooldown Readiness Helper`
+37. `0.5.x - Magic Study Event Plan`
+38. `0.5.x - Magic Teaching Source Plan`
+39. `0.6.x - First Advancement Event Runtime Shape`
+40. `0.6.x - First Knowledge Completion Helper`
+41. `0.6.x - First Skill Trial Family Content`
+42. `0.6.x - First Magic Study Event Family Content`
+43. `0.6.x - First Knowledge Trial Family Content`
+44. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
 
 ## 6. Knowledge Domain Timing
 
@@ -418,7 +423,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 39 | `0.5.130` | Knowledge Progress Semantic Validator | `tools/content-lint/knowledge-progress.mjs` | Completed |
 | 40 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Completed |
 | 41 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `tools/content-lint/knowledge-evidence-to-progress.mjs` | Completed |
-| 42 | `0.5.133` | Knowledge Evidence Producers Plan | Evidence, progress, and proposal authorities | Next |
+| 42 | `0.5.133` | Knowledge Evidence Producers Plan | `docs/design/knowledge-evidence-producers-plan.md` | Completed |
+| 43 | `0.5.134` | Knowledge Observation Evidence Producer | `docs/design/knowledge-evidence-producers-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
