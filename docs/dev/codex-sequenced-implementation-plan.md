@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-12
-Route: Codex local sequencing alignment after `Version 0.5.133 - Knowledge Evidence Producers Plan`
+Route: Codex local sequencing alignment after `Version 0.5.134 - Knowledge Observation Evidence Producer`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.133 - Knowledge Evidence Producers Plan` defined the candidate-only producer boundary, deterministic identity and sequence posture, category ownership, and the first narrow observation implementation scope without adding a producer, state, mutation, runtime, persistence, completion, trials, UI, or gameplay behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.134 - Knowledge Observation Evidence Producer` added the pure candidate helper and 29 focused in-memory tests without canonical state, normal lint registration, progress invocation, mutation, runtime, persistence, completion, trials, UI, or gameplay behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.133 - Knowledge Evidence Producers Plan`
+- `Version 0.5.134 - Knowledge Observation Evidence Producer`
 
 Immediate next Codex run:
 
-- `Version 0.5.134 - Knowledge Observation Evidence Producer`
+- `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.133` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.134` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -91,7 +91,8 @@ Versioning note:
 | 53 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | planning doc | Completed | Defined the pure-helper boundary, exact eligibility, `+1` integer deltas, duplicate-credit posture, deferred occurrence equivalence, deterministic ordering, inert proposal envelope, focused tests, and `0.5.132` acceptance criteria without implementation. |
 | 54 | `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex 5.5 Local | `tools/content-lint/knowledge-evidence-to-progress.mjs` | pure helper + focused tests | Completed | Added validation-gated, deterministic `+1` proposals, duplicate/consumption blocking, inert output, and 36 focused tests without state, mutation, persistence, normal lint registration, producers, completion, trials, UI, or gameplay behavior. |
 | 55 | `0.5.133` | Knowledge Evidence Producers Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-producers-plan.md` | planning doc | Completed | Defined explicit producer categories and owners, exact candidate output, deterministic identity and sequence posture, current source/context limits, focused tests, and `0.5.134` acceptance criteria without implementation. |
-| 56 | `0.5.134` | Knowledge Observation Evidence Producer | Codex 5.5 Local | `docs/design/knowledge-evidence-producers-plan.md` | pure helper + focused tests | Next | Add a narrow deterministic in-memory candidate helper for currently supported observation examples without persistence, runtime wiring, lint registration, progress invocation, mutation, completion, trials, UI, or schema/validator changes. |
+| 56 | `0.5.134` | Knowledge Observation Evidence Producer | Codex 5.5 Local | `tools/content-lint/knowledge-evidence-producers.mjs` | pure helper + focused tests | Completed | Added deterministic candidate proposals for current field-identification and Kaelvar travel-observation examples with 29 tests, current evidence validation, explicit owner/occurrence/sequence inputs, and no state or downstream behavior. |
+| 57 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Codex 5.5 Local docs-first | Evidence, progress, producer, and proposal authorities | planning doc | Next | Define future acceptance, collection ownership, duplicate/replay, sequence authority, and save/session boundaries without implementing storage, persistence, migration, runtime wiring, mutation, completion, trials, UI, or gameplay behavior. |
 
 ## Default Prompt Pattern
 

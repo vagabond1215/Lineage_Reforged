@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.133 - Knowledge Evidence Producers Plan`
-- Next recommended version: `Version 0.5.134 - Knowledge Observation Evidence Producer`
+- Latest completed version: `Version 0.5.134 - Knowledge Observation Evidence Producer`
+- Next recommended version: `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.133` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.134` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -94,6 +94,7 @@ Current repo reality:
 - Pure knowledge progress semantic validation now exists at `tools/content-lint/knowledge-progress.mjs` with 59 focused in-memory tests. It validates exact wrapper and progress structure before semantics, delegates supplied evidence to the current evidence validator, rejects duplicate progress identities and cross-record evidence consumption, enforces active snippet/domain plus owner/target parity, and applies explicit zero-state consistency without normal content-lint registration, progress state, or calculation behavior.
 - Knowledge evidence-to-progress rules planning has landed in `docs/design/knowledge-evidence-to-progress-rules-plan.md`. It selects a future pure in-memory helper, exact character owner and target parity, one positive integer point per eligible evidence id, duplicate and already-consumed blocking, deterministic ordering and sequence proposals, no automatic progress-record creation, and an inert no-mutation/no-persistence envelope.
 - Pure knowledge evidence-to-progress proposals now exist at `tools/content-lint/knowledge-evidence-to-progress.mjs` with 36 focused in-memory tests. The helper gates inputs through current evidence/progress validators, requires one existing target, proposes exactly `+1` per eligible sorted evidence id, blocks duplicate and consumed ids, derives sequence only from explicit values, and returns an inert no-mutation/no-persistence envelope without normal content-lint registration or state behavior.
+- Pure Knowledge observation evidence candidate proposals now exist at `tools/content-lint/knowledge-evidence-producers.mjs` with 29 focused in-memory tests. The helper derives current snippet snapshots, supports narrow field-identification and Kaelvar travel-observation candidates, constructs deterministic ids from explicit occurrence identity, validates through the current evidence helper, and remains unregistered and candidate-only without storage, persistence, progress invocation, runtime, UI, completion, trials, or gameplay behavior.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -159,7 +160,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | Codex Local docs-first | Planning | Completed. Defined the pure-helper boundary, exact eligibility, `+1` integer deltas, duplicate-credit posture, deferred occurrence equivalence, deterministic ordering, inert proposal envelope, focused tests, and `0.5.132` acceptance criteria. | Documentation only; no helper, tests, state, mutation, producers, persistence, completion, trials, UI, generated output, or gameplay behavior. |
 | `0.5.132` | Knowledge Evidence-to-Progress Rules | Codex Local | Pure helper + focused tests | Completed. Added the pure proposal helper and 36 focused in-memory tests for validation gates, eligibility, `+1` deltas, duplicate consumption, deterministic ordering/sequence, inert safety flags, and immutability. | No state creation, mutation, persistence, normal lint registration, producers, completion, trials, UI, generated output, or gameplay behavior. |
 | `0.5.133` | Knowledge Evidence Producers Plan | Codex Local docs-first | Planning | Completed. Defined the candidate-only producer boundary, exact evidence output, deterministic identity and explicit sequence rules, category ownership, focused tests, and `0.5.134` acceptance criteria. | Documentation only; no producer, state mutation, persistence, events, completion, trials, UI, generated output, or gameplay behavior. |
-| `0.5.134` | Knowledge Observation Evidence Producer | Codex Local | Pure helper + focused tests | Next. Add a narrow deterministic observation candidate helper for the currently supported Aloe, Badger, Iron Ore, and Kaelvar examples. | No persistence, runtime wiring, lint registration, progress invocation or mutation, completion, trials, UI, source expansion, or schema/validator changes. |
+| `0.5.134` | Knowledge Observation Evidence Producer | Codex Local | Pure helper + focused tests | Completed. Added a deterministic candidate-only helper and 29 focused tests for current Aloe, Badger, Iron Ore, and validator-supported Kaelvar observation contexts. | No persistence, runtime wiring, lint registration, progress invocation or mutation, completion, trials, UI, source expansion, or schema/validator changes. |
+| `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Codex Local docs-first | Planning | Next. Define evidence/progress acceptance, duplicate/replay, collection ownership, sequence authority, and save/session boundaries before any storage implementation. | Documentation only; no storage, persistence, schema, migration, runtime, mutation, completion, trials, UI, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -210,7 +212,8 @@ Practical near-term sequence:
 20. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan` - completed
 21. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
 22. `0.5.133 - Knowledge Evidence Producers Plan` - completed
-23. `0.5.134 - Knowledge Observation Evidence Producer` - next
+23. `0.5.134 - Knowledge Observation Evidence Producer` - completed
+24. `0.5.135 - Knowledge Storage And Persistence Boundary Plan` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -251,8 +254,8 @@ Recommended advancement sequence:
 25. `0.5.131 - Knowledge Evidence-to-Progress Rules Plan` - completed
 26. `0.5.132 - Knowledge Evidence-to-Progress Rules` - completed
 27. `0.5.133 - Knowledge Evidence Producers Plan` - completed
-28. `0.5.134 - Knowledge Observation Evidence Producer` - next
-29. `0.5.x - Knowledge Storage And Persistence Boundary Plan`
+28. `0.5.134 - Knowledge Observation Evidence Producer` - completed
+29. `0.5.135 - Knowledge Storage And Persistence Boundary Plan` - next
 30. `0.5.x - Knowledge Progress Record Initialization Plan`
 31. `0.5.x - Knowledge Completion Rules Plan`
 32. `0.5.x - Knowledge Trials Plan`
@@ -424,7 +427,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 40 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Completed |
 | 41 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `tools/content-lint/knowledge-evidence-to-progress.mjs` | Completed |
 | 42 | `0.5.133` | Knowledge Evidence Producers Plan | `docs/design/knowledge-evidence-producers-plan.md` | Completed |
-| 43 | `0.5.134` | Knowledge Observation Evidence Producer | `docs/design/knowledge-evidence-producers-plan.md` | Next |
+| 43 | `0.5.134` | Knowledge Observation Evidence Producer | `tools/content-lint/knowledge-evidence-producers.mjs` | Completed |
+| 44 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Evidence, progress, producer, and proposal authorities | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

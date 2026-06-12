@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.133 - Knowledge Evidence Producers Plan`
+Source route: Codex local implementation after `Version 0.5.134 - Knowledge Observation Evidence Producer`
 Date: 2026-06-12
-Branch/status assumption: `master` at commit `f6f8cbb` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `5b4f85f` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -20,6 +20,7 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/design/knowledge-evidence-to-progress-rules-plan.md` owns evidence eligibility, additive integer deltas, duplicate-credit posture, deterministic ordering, and inert proposal boundaries.
 - `tools/content-lint/knowledge-evidence-to-progress.mjs` now owns the pure evidence-to-progress proposal boundary.
 - `docs/design/knowledge-evidence-producers-plan.md` owns producer categories, candidate-only output, deterministic identity and explicit sequence posture, current source/context limits, and the first observation-producer acceptance criteria.
+- `tools/content-lint/knowledge-evidence-producers.mjs` now owns the pure observation evidence candidate boundary.
 - `packages/schemas/player/knowledge_evidence.schema.json` owns the structural contract for one evidence record.
 - `tools/content-lint/knowledge-evidence.mjs` owns the pure evidence semantic-validation boundary.
 - `packages/content/base/player/knowledge_snippets.json` remains the authored snippet authority.
@@ -30,41 +31,41 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.133 - Knowledge Evidence Producers Plan`
+- `Version 0.5.134 - Knowledge Observation Evidence Producer`
 
 Immediate next version:
 
-- `Version 0.5.134 - Knowledge Observation Evidence Producer`
+- `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.133 Result
+## Version 0.5.134 Result
 
-- Added `docs/design/knowledge-evidence-producers-plan.md` as a planning-only producer authority.
-- Defined observation, travel/context, study/training, teacher/institution, document, and quest/event producer categories.
-- Kept producer output to exactly the current 12 evidence fields and separated candidate proposal from validation, progress proposal, acceptance, and persistence.
-- Required deterministic evidence identity, explicit character ownership, and explicit acquisition sequence without clocks, randomness, UI state, or hidden counters.
-- Preserved the current null-only `sourceId` and supported source/context posture.
-- Selected `Version 0.5.134 - Knowledge Observation Evidence Producer` as a pure, in-memory, unregistered helper with focused tests.
-- Added no producer, tests, schema, validator, content, state, persistence, runtime, progress invocation or mutation, completion, trials, UI/main-menu, generated output, ownership mutation, or gameplay behavior.
+- Added `tools/content-lint/knowledge-evidence-producers.mjs` as a pure, deterministic, filesystem-free candidate helper.
+- Added `tests/unit/knowledge-evidence-producers.test.mjs` with 29 focused in-memory tests.
+- Derived domain, subject type, subject id, and source type from one explicitly selected current snippet.
+- Supported current Aloe, Badger, and Iron Ore field-identification candidates plus Kaelvar travel-observation candidates with its authored continent scope.
+- Required explicit character owner, stable producer-issued occurrence identity, acquisition context, and non-negative integer acquisition sequence.
+- Froze the deterministic id shape as snippet domain, subject, category, occurrence kind, and occurrence token under the live evidence-id schema.
+- Validated every successful candidate through the existing evidence schema and semantic helper.
+- Returned only candidate evidence, deterministic issues, and candidate-only safety flags.
+- Added no evidence/progress content or state, canonical storage, normal lint registration, schema/validator/proposal-helper edit, persistence, runtime, progress invocation or mutation, completion, trials, UI/main-menu, generated output, ownership mutation, or gameplay behavior.
 
-## Active Guardrails For 0.5.134
+## Active Guardrails For 0.5.135
 
-Knowledge Observation Evidence Producer:
+Knowledge Storage And Persistence Boundary Plan:
 
-- Add only `tools/content-lint/knowledge-evidence-producers.mjs` and `tests/unit/knowledge-evidence-producers.test.mjs`.
-- Keep the helper pure, deterministic, in-memory, filesystem-free, and unregistered.
-- Support only the current Aloe, Badger, Iron Ore, and validator-supported Kaelvar examples; keep Arcane blocked.
-- Require explicit owner, subject, occurrence identity, acquisition context, and acquisition sequence.
-- Emit exactly the current evidence fields and validate every candidate with the existing evidence helper.
-- Freeze and test a narrow deterministic evidence-id suffix rule without randomness, wall-clock time, UI state, or an implicit counter.
-- Do not invoke the evidence-to-progress helper or create, mutate, accept, store, or persist evidence or progress.
-- Do not add runtime wiring, lint-index registration, source authority, completion, trials, rewards, UI, generated output, schema changes, or validator changes.
-- Do not edit snippets, registry content, skills, spells, main-menu files, or unrelated runtime code.
+- Produce a planning document only; do not implement evidence or progress storage.
+- Define the future acceptance boundary between producer candidates, validated evidence, evidence-to-progress proposals, and persisted records.
+- Define collection ownership, duplicate and replay posture, occurrence identity responsibility, acquisition/update sequence authority, and atomic evidence/progress handling.
+- Decide future save/session placement conceptually without editing save, account, session, database, schema, or migration files.
+- Keep the observation producer pure, unregistered, and unchanged.
+- Do not add runtime wiring, normal lint registration, mutation, progress-record initialization, completion, trials, rewards, UI, generated output, or gameplay behavior.
+- Do not edit current schemas, validators, helpers, focused tests, snippets, registry content, skills, spells, main-menu files, or unrelated runtime code.
 
 Current follow-up risks:
 
-- No canonical evidence or progress storage path exists.
+- No canonical evidence or progress storage or acceptance path exists.
 - Character owner authority remains pattern-only.
 - Progress-record initialization remains undefined.
 - Occurrence equivalence still depends on a producer-issued stable event, action, or occurrence identity.
@@ -75,7 +76,7 @@ Current follow-up risks:
 - `progressSources`, persistent audit history, replay, and reason vocabularies remain deferred.
 - Completion thresholds, tier aggregation, trial readiness, persistence, and UI remain undefined.
 - Arcane Lore progress remains blocked while the domain is planned.
-- Retain evidence and progress planning guardrails through `0.5.134`; the observation helper remains a candidate producer only.
+- Retain evidence, progress, proposal, and producer guardrails through `0.5.135`; the observation helper remains a candidate producer only.
 
 ## Near-Term Sequence
 
@@ -89,8 +90,8 @@ Current follow-up risks:
 | 6 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Completed |
 | 7 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `tools/content-lint/knowledge-evidence-to-progress.mjs` | Completed |
 | 8 | `0.5.133` | Knowledge Evidence Producers Plan | `docs/design/knowledge-evidence-producers-plan.md` | Completed |
-| 9 | `0.5.134` | Knowledge Observation Evidence Producer | `docs/design/knowledge-evidence-producers-plan.md` | Next |
-| 10 | `0.5.x` | Knowledge Storage And Persistence Boundary Plan | Future focused plan | Deferred |
+| 9 | `0.5.134` | Knowledge Observation Evidence Producer | `tools/content-lint/knowledge-evidence-producers.mjs` | Completed |
+| 10 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Current Knowledge authorities | Next |
 | 11 | `0.5.x` | Knowledge Progress Record Initialization Plan | Future focused plan | Deferred |
 | 12 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
 | 13 | `0.5.x` | Knowledge Trials Plan | Future focused plan | Deferred |
@@ -98,7 +99,7 @@ Current follow-up risks:
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.134 - Knowledge Observation Evidence Producer`, inspect:
+For `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -113,6 +114,8 @@ For `Version 0.5.134 - Knowledge Observation Evidence Producer`, inspect:
 - `docs/design/knowledge-progress-semantic-validator-plan.md`
 - `docs/design/knowledge-evidence-to-progress-rules-plan.md`
 - `docs/design/knowledge-evidence-producers-plan.md`
+- `tools/content-lint/knowledge-evidence-producers.mjs`
+- `tests/unit/knowledge-evidence-producers.test.mjs`
 - `packages/schemas/player/knowledge_evidence.schema.json`
 - `packages/schemas/player/knowledge_progress.schema.json`
 - `tools/content-lint/knowledge-evidence.mjs`
