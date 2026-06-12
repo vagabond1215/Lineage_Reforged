@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
+Source route: Codex local planning after `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`
 Date: 2026-06-12
-Branch/status assumption: `master` at commit `ec7d7ab` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `79ae418` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -13,70 +13,72 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
+- `docs/design/knowledge-storage-fixture-boundary-plan.md` owns the planned test-only fixture path family, wrapper posture, scenario matrix, non-authority boundary, lint isolation, and future fixture implementation criteria.
+- `docs/design/knowledge-storage-persistence-boundary-plan.md` owns the candidate/accepted/persisted distinction, future acceptance pipeline, collection responsibilities, duplicate/replay posture, atomicity recommendation, sequence authority requirements, and deferred storage-owner decision.
 - `docs/design/knowledge-progress-state-plan.md` owns progress identity, character ownership, snippet/evidence relationships, integer-value posture, and broad validation boundaries.
 - `packages/schemas/player/knowledge_progress.schema.json` owns the strict structural contract for one progress record.
-- `docs/design/knowledge-progress-semantic-validator-plan.md` owns the first progress semantic-validator decisions.
-- `tools/content-lint/knowledge-progress.mjs` now owns the pure progress semantic-validation boundary.
-- `docs/design/knowledge-evidence-to-progress-rules-plan.md` owns evidence eligibility, additive integer deltas, duplicate-credit posture, deterministic ordering, and inert proposal boundaries.
-- `tools/content-lint/knowledge-evidence-to-progress.mjs` now owns the pure evidence-to-progress proposal boundary.
-- `docs/design/knowledge-evidence-producers-plan.md` owns producer categories, candidate-only output, deterministic identity and explicit sequence posture, current source/context limits, and the first observation-producer acceptance criteria.
-- `tools/content-lint/knowledge-evidence-producers.mjs` now owns the pure observation evidence candidate boundary.
-- `docs/design/knowledge-storage-persistence-boundary-plan.md` owns the candidate/accepted/persisted distinction, future acceptance pipeline, collection responsibilities, duplicate/replay posture, atomicity recommendation, sequence authority requirements, and deferred storage-owner decision.
+- `tools/content-lint/knowledge-progress.mjs` owns the pure progress semantic-validation boundary.
+- `tools/content-lint/knowledge-evidence-to-progress.mjs` owns the pure evidence-to-progress proposal boundary.
+- `tools/content-lint/knowledge-evidence-producers.mjs` owns the pure observation evidence candidate boundary.
 - `packages/schemas/player/knowledge_evidence.schema.json` owns the structural contract for one evidence record.
 - `tools/content-lint/knowledge-evidence.mjs` owns the pure evidence semantic-validation boundary.
 - `packages/content/base/player/knowledge_snippets.json` remains the authored snippet authority.
 - `packages/content/base/player/knowledge_domain_registry.json` remains broad domain compatibility metadata.
+- `docs/design/skill-mastery-trial-framework-plan.md` owns the separate Skill-trial and Magic-study planning posture.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
 
 ## Current Anchor
 
 Latest completed Codex version:
 
-- `Version 0.5.135 - Knowledge Storage And Persistence Boundary Plan`
+- `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`
 
 Immediate next version:
 
-- `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`
+- `Version 0.5.137 - Knowledge Progress Record Initialization Plan`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.135 Result
+## Version 0.5.136 Result
 
-- Added `docs/design/knowledge-storage-persistence-boundary-plan.md` as the planning authority for future Knowledge acceptance, storage, and persistence boundaries.
-- Distinguished candidate, accepted, rejected, and persisted evidence plus proposed and applied progress.
-- Kept canonical evidence/progress storage ownership deferred across save, session, character, account, runtime, database, and fixture candidates.
-- Defined conceptual evidence/progress collection responsibilities without creating paths or wrappers.
-- Recommended no progress mutation before an explicit owner exists; later handling should be atomic when one transactional owner exists or replayable and idempotent from durable accepted evidence.
-- Defined deterministic duplicate, replay, occurrence identity, sequence-authority, owner-authority, and missing-progress-record boundaries.
-- Selected `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan` as the next docs-only run.
-- Added no implementation, tests, schemas, fixtures, content, validators, helpers, registration, state, persistence, runtime, completion, trials, UI/main-menu, generated output, ownership mutation, or gameplay behavior.
+- Added `docs/design/knowledge-storage-fixture-boundary-plan.md` as the planning authority for future test-only Knowledge fixture documents and storage scenarios.
+- Recommended the planned-only `tests/fixtures/knowledge/` path family without creating it.
+- Defined separate accepted-evidence and progress fixture envelopes using test-only collection identity, fixture version, and records.
+- Kept fixture metadata outside the exact current `{ records }` validator wrappers; future tests must project cloned records into unchanged current helpers.
+- Defined combined scenario identity, current-authority, sequence, owner, positive, negative, duplicate, replay, immutability, lint-isolation, and non-persistence boundaries.
+- Kept Knowledge, Skill, and Spell/Magic Study trials separate.
+- Selected `Version 0.5.137 - Knowledge Progress Record Initialization Plan` as the next docs-only run.
+- Added no fixtures, fixture directories, loaders, adapters, schemas, tests, helpers, content, registration, storage, persistence, runtime, mutation, completion, trials, UI/main-menu, generated output, or gameplay behavior.
 
-## Active Guardrails For 0.5.136
+## Active Guardrails For 0.5.137
 
-Knowledge Storage Fixture Boundary Plan:
+Knowledge Progress Record Initialization Plan:
 
-- Produce a planning document only; do not create evidence or progress fixtures.
-- Define a test-only collection fixture contract, exact wrapper posture, authority inputs, fixture identities, and positive/negative acceptance scenarios.
-- Keep fixture data isolated from authored content, normal content lint, runtime state, save/account/session state, and persistence.
-- Do not choose a production storage owner or canonical save/session/database path.
-- Do not implement acceptance, mutation, progress-record initialization, replay infrastructure, or sequence generation.
-- Keep the producer, proposal helper, validators, schemas, focused tests, snippets, registry, skills, spells, and main-menu unchanged.
+- Produce a planning document only; do not create progress records, fixture files, helpers, or tests.
+- Define exactly when a character-owned progress record may be initialized.
+- Require current active snippet/domain/subject authority and exact character-owner parity.
+- Freeze zero-point, empty-consumed-evidence, note, and explicit initial-sequence posture.
+- Decide whether initialization may be proposed from accepted evidence, an explicit request, or both.
+- Reject duplicate initialization for an existing character/snippet target.
+- Keep initialization output pure and inert; do not accept evidence, apply progress, persist state, or mutate storage.
+- Do not choose canonical save/session/account/runtime/database ownership.
+- Keep current producers, proposal helper, validators, schemas, snippets, registry, skills, spells, fixtures, content lint registration, and main-menu unchanged.
 
 Current follow-up risks:
 
 - No canonical evidence or progress storage owner or acceptance implementation exists.
 - Character owner authority remains pattern-only.
-- Progress-record initialization remains undefined.
+- Progress-record initialization is still undefined until `0.5.137`.
 - Occurrence equivalence still depends on a producer-issued stable event, action, or occurrence identity.
 - Canonical acquired-sequence and character identity authorities remain undefined.
-- The plan defines duplicate/replay posture, but persistent replay infrastructure, stacking limits, anti-farming, and source-specific equivalence remain undefined.
+- Persistent replay infrastructure, stacking limits, anti-farming, and source-specific equivalence remain undefined.
 - Atomic evidence/progress handling is recommended but not implemented.
-- Non-evidence operations remain unauthorized.
+- Fixture paths and wrappers are planned only and must not be treated as production contracts.
 - Zero-state persistence policy remains undefined.
 - `progressSources`, persistent audit history, replay, and reason vocabularies remain deferred.
 - Completion thresholds, tier aggregation, trial readiness, persistence, and UI remain undefined.
-- Arcane Lore progress remains blocked while the domain is planned.
-- Retain evidence, progress, proposal, producer, and storage-boundary guardrails through fixture, initialization, and acceptance planning.
+- Arcane Lore progress remains blocked while no active Arcane snippet exists.
+- Retain evidence, progress, proposal, producer, storage-boundary, and fixture-boundary guardrails through initialization and acceptance planning.
 
 ## Near-Term Sequence
 
@@ -92,17 +94,21 @@ Current follow-up risks:
 | 8 | `0.5.133` | Knowledge Evidence Producers Plan | `docs/design/knowledge-evidence-producers-plan.md` | Completed |
 | 9 | `0.5.134` | Knowledge Observation Evidence Producer | `tools/content-lint/knowledge-evidence-producers.mjs` | Completed |
 | 10 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | `docs/design/knowledge-storage-persistence-boundary-plan.md` | Completed |
-| 11 | `0.5.136` | Knowledge Storage Fixture Boundary Plan | `docs/design/knowledge-storage-persistence-boundary-plan.md` | Next |
-| 12 | `0.5.x` | Knowledge Progress Record Initialization Plan | Future focused plan | Deferred |
-| 13 | `0.5.x` | Knowledge Evidence Acceptance Helper Plan | Future focused plan | Deferred |
-| 14 | `0.5.x` | Knowledge Evidence Acceptance Helper | Future focused implementation | Deferred |
-| 15 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
-| 16 | `0.5.x` | Knowledge Trials Plan | Future focused plan | Deferred |
-| 17 | `0.5.x` | Knowledge UI Plan | Future focused plan | Deferred |
+| 11 | `0.5.136` | Knowledge Storage Fixture Boundary Plan | `docs/design/knowledge-storage-fixture-boundary-plan.md` | Completed |
+| 12 | `0.5.137` | Knowledge Progress Record Initialization Plan | Future focused plan | Next |
+| 13 | `0.5.x` | Knowledge Progress Record Initialization Helper Plan | Future focused plan | Deferred |
+| 14 | `0.5.x` | Knowledge Progress Record Initialization Helper | Future focused implementation | Deferred |
+| 15 | `0.5.x` | Knowledge Evidence Acceptance Helper Plan | Future focused plan | Deferred |
+| 16 | `0.5.x` | Knowledge Evidence Acceptance Helper | Future focused implementation | Deferred |
+| 17 | `0.5.x` | Knowledge Progress Application Helper Plan | Future focused plan | Deferred |
+| 18 | `0.5.x` | Knowledge Progress Application Helper | Future focused implementation | Deferred |
+| 19 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
+| 20 | `0.5.x` | Knowledge Trial Rules Plan | Future focused plan | Deferred |
+| 21 | `0.5.x` | Knowledge Read-Model Plan | Future focused plan | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`, inspect:
+For `Version 0.5.137 - Knowledge Progress Record Initialization Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -110,23 +116,19 @@ For `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/knowledge-evidence-contract-plan.md`
-- `docs/design/knowledge-evidence-semantic-validator-plan.md`
 - `docs/design/knowledge-progress-state-plan.md`
 - `docs/design/knowledge-progress-schema-plan.md`
 - `docs/design/knowledge-progress-semantic-validator-plan.md`
 - `docs/design/knowledge-evidence-to-progress-rules-plan.md`
-- `docs/design/knowledge-evidence-producers-plan.md`
 - `docs/design/knowledge-storage-persistence-boundary-plan.md`
-- `tools/content-lint/knowledge-evidence-producers.mjs`
-- `tests/unit/knowledge-evidence-producers.test.mjs`
-- `packages/schemas/player/knowledge_evidence.schema.json`
+- `docs/design/knowledge-storage-fixture-boundary-plan.md`
 - `packages/schemas/player/knowledge_progress.schema.json`
-- `tools/content-lint/knowledge-evidence.mjs`
+- `packages/schemas/player/knowledge_evidence.schema.json`
 - `tools/content-lint/knowledge-progress.mjs`
+- `tools/content-lint/knowledge-evidence.mjs`
 - `tools/content-lint/knowledge-evidence-to-progress.mjs`
-- `tests/unit/knowledge-evidence-validation.test.mjs`
 - `tests/unit/knowledge-progress-validation.test.mjs`
+- `tests/unit/knowledge-evidence-validation.test.mjs`
 - `tests/unit/knowledge-evidence-to-progress.test.mjs`
 - `packages/content/base/player/knowledge_snippets.json`
 - `packages/content/base/player/knowledge_domain_registry.json`
