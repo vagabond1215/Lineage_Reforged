@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-12
-Route: Codex local sequencing alignment after `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`
+Route: Codex local sequencing alignment after `Version 0.5.137 - Knowledge Progress Record Initialization Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan` defined the planned-only Knowledge fixture path family, test-only evidence/progress wrappers, combined scenario posture, authority and lint isolation, positive/negative scenario requirements, and future fixture criteria without creating fixtures or selecting production storage.
+This file gives Codex a stable ordered queue after `Version 0.5.137 - Knowledge Progress Record Initialization Plan` defined lazy explicit zero-state initialization, deterministic schema-compatible progress identity, active authored target and character-owner authority, explicit sequence and notes, duplicate rejection, and first-helper acceptance criteria without creating progress state or storage.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.136 - Knowledge Storage Fixture Boundary Plan`
+- `Version 0.5.137 - Knowledge Progress Record Initialization Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.137 - Knowledge Progress Record Initialization Plan`
+- `Version 0.5.138 - Knowledge Progress Record Initialization Helper`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.136` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.137` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -94,7 +94,8 @@ Versioning note:
 | 56 | `0.5.134` | Knowledge Observation Evidence Producer | Codex 5.5 Local | `tools/content-lint/knowledge-evidence-producers.mjs` | pure helper + focused tests | Completed | Added deterministic candidate proposals for current field-identification and Kaelvar travel-observation examples with 29 tests, current evidence validation, explicit owner/occurrence/sequence inputs, and no state or downstream behavior. |
 | 57 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-storage-persistence-boundary-plan.md` | planning doc | Completed | Defined acceptance terminology and pipeline, conceptual collection ownership, duplicate/replay and occurrence posture, sequence/owner authority requirements, deferred storage placement, and atomic or replayable handling without implementation. |
 | 58 | `0.5.136` | Knowledge Storage Fixture Boundary Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-storage-fixture-boundary-plan.md` | planning doc | Completed | Defined planned-only fixture paths, test-only evidence/progress wrappers, combined scenarios, authority isolation, positive/negative coverage, lint exclusion, and future implementation criteria without creating fixtures or state. |
-| 59 | `0.5.137` | Knowledge Progress Record Initialization Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-storage-fixture-boundary-plan.md` | planning doc | Next | Define exact zero-state character-owned progress initialization authority, defaults, sequence posture, duplicate rejection, and pure inert proposal boundaries without records, helpers, fixtures, storage, or mutation. |
+| 59 | `0.5.137` | Knowledge Progress Record Initialization Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-record-initialization-plan.md` | planning doc | Completed | Defined lazy explicit zero-state initialization, deterministic progress identity, active target and character-owner authority, sequence and notes posture, duplicate rejection, and a pure helper test contract without state. |
+| 60 | `0.5.138` | Knowledge Progress Record Initialization Helper | Codex 5.5 Local | `docs/design/knowledge-progress-record-initialization-plan.md` | pure helper + focused tests | Next | Add a deterministic in-memory zero-state proposal only; no evidence consumption, storage, persistence, fixtures, normal lint registration, application, completion, trials, UI, runtime, or gameplay behavior. |
 
 ## Default Prompt Pattern
 
