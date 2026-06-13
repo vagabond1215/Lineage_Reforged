@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.139 - Knowledge Evidence Acceptance Helper Plan`
-- Next recommended version: `Version 0.5.140 - Knowledge Evidence Acceptance Helper`
+- Latest completed version: `Version 0.5.140 - Knowledge Evidence Acceptance Helper`
+- Next recommended version: `Version 0.5.141 - Knowledge Progress Application Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.139` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.140` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -100,6 +100,7 @@ Current repo reality:
 - Knowledge progress-record initialization planning has landed in `docs/design/knowledge-progress-record-initialization-plan.md`. It selects lazy explicit zero-state initialization, freezes deterministic schema-compatible owner/snippet identity construction, requires active authored target authority plus explicit character owner, sequence, notes, and duplicate rejection, defers first-evidence consumption, and selects a pure focused initializer next without creating state or storage.
 - Pure Knowledge progress-record initialization now exists at `tools/content-lint/knowledge-progress-initialization.mjs` with 26 focused tests. It proposes explicit zero-state records for active authored snippets, derives deterministic length-prefixed identities, rejects invalid owners, targets, domains, current-state duplicates, unsupported modes, and ambient-state shortcuts, and remains unregistered and in-memory without evidence creation or consumption, state, storage, persistence, progress application, completion, trials, UI, runtime, generated output, or gameplay behavior.
 - Knowledge evidence acceptance helper planning has landed in `docs/design/knowledge-evidence-acceptance-helper-plan.md`. It selects a pure one-candidate decision, requires an explicit current accepted wrapper, retains the current evidence validator as the gate, rejects every existing `evidenceId`, returns a copied accepted record in an inert envelope, and defers storage-level idempotency, persistence, progress behavior, completion, trials, UI, runtime, and gameplay.
+- Pure Knowledge evidence acceptance now exists at `tools/content-lint/knowledge-evidence-acceptance.mjs` with 27 focused tests. It validates one candidate and an explicit current accepted wrapper through the unchanged evidence validator, rejects every existing exact `evidenceId`, returns a deep copied accepted record in an inert decision envelope, and remains unregistered and in-memory without fixtures, state, storage, persistence, progress behavior, completion, trials, UI, runtime, generated output, or gameplay behavior.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -171,7 +172,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.137` | Knowledge Progress Record Initialization Plan | Codex Local docs-first | Planning | Completed. Defined lazy explicit zero-state initialization, deterministic `progressId`, active target and character-owner authority, sequence and notes posture, duplicate rejection, and future helper acceptance criteria. | Documentation only; no progress records, fixtures, helpers, tests, schemas, storage, persistence, runtime, mutation, completion, trials, UI, or gameplay behavior. |
 | `0.5.138` | Knowledge Progress Record Initialization Helper | Codex Local | Pure helper + focused tests | Completed. Added deterministic in-memory zero-state initialization proposals, exact length-prefixed identity, active target authority, explicit character owner/sequence/notes, current-record duplicate blocking, 26 focused tests, and external current-validator confirmation. | No storage, persistence, fixtures, normal lint registration, evidence acceptance or consumption, progress application, completion, trials, UI, runtime, generated output, or gameplay behavior. |
 | `0.5.139` | Knowledge Evidence Acceptance Helper Plan | Codex Local docs-first | Planning | Completed. Defined an explicit one-candidate acceptance boundary, required current accepted wrapper, existing-validator gates, exact-id rejection, accepted-record copy, inert output envelope, and future helper test criteria. | Documentation only; no acceptance helper, evidence/progress state, fixtures, storage, persistence, progress application, completion, trials, UI, runtime, generated output, or gameplay behavior. |
-| `0.5.140` | Knowledge Evidence Acceptance Helper | Codex Local | Pure helper + focused tests | Next. Implement the one-candidate acceptance decision, explicit current-wrapper validation, exact-id rejection, copied accepted record, deterministic envelope, and inert safety flags. | No canonical storage, persistence, fixtures, normal lint registration, progress initialization/proposal/application, completion, trials, UI, runtime, generated output, or gameplay behavior. |
+| `0.5.140` | Knowledge Evidence Acceptance Helper | Codex Local | Pure helper + focused tests | Completed. Added one-candidate acceptance, explicit current-wrapper validation, exact-id rejection, copied accepted output, deterministic validation/duplicate distinction, inert safety flags, and 27 focused tests. | No canonical storage, persistence, fixtures, normal lint registration, progress initialization/proposal/application, completion, trials, UI, runtime, generated output, or gameplay behavior. |
+| `0.5.141` | Knowledge Progress Application Plan | Codex Local docs-first | Planning | Next. Define the future pure application boundary after accepted evidence, explicit initialization, and an evidence-to-progress proposal without implementing mutation or storage. | Documentation only; no application helper, state mutation, storage, persistence, fixtures, completion, trials, UI, runtime, generated output, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -228,7 +230,8 @@ Practical near-term sequence:
 26. `0.5.137 - Knowledge Progress Record Initialization Plan` - completed
 27. `0.5.138 - Knowledge Progress Record Initialization Helper` - completed
 28. `0.5.139 - Knowledge Evidence Acceptance Helper Plan` - completed
-29. `0.5.140 - Knowledge Evidence Acceptance Helper` - next
+29. `0.5.140 - Knowledge Evidence Acceptance Helper` - completed
+30. `0.5.141 - Knowledge Progress Application Plan` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -275,8 +278,8 @@ Recommended advancement sequence:
 31. `0.5.137 - Knowledge Progress Record Initialization Plan` - completed
 32. `0.5.138 - Knowledge Progress Record Initialization Helper` - completed
 33. `0.5.139 - Knowledge Evidence Acceptance Helper Plan` - completed
-34. `0.5.140 - Knowledge Evidence Acceptance Helper` - next
-35. `0.5.x - Knowledge Progress Application Plan`
+34. `0.5.140 - Knowledge Evidence Acceptance Helper` - completed
+35. `0.5.141 - Knowledge Progress Application Plan` - next
 36. `0.5.x - Knowledge Progress Application Helper`
 37. `0.5.x - Knowledge Completion Rules Plan`
 38. `0.5.x - Knowledge Completion Helper`
@@ -459,7 +462,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 46 | `0.5.137` | Knowledge Progress Record Initialization Plan | `docs/design/knowledge-progress-record-initialization-plan.md` | Completed |
 | 47 | `0.5.138` | Knowledge Progress Record Initialization Helper | `tools/content-lint/knowledge-progress-initialization.mjs` | Completed |
 | 48 | `0.5.139` | Knowledge Evidence Acceptance Helper Plan | `docs/design/knowledge-evidence-acceptance-helper-plan.md` | Completed |
-| 49 | `0.5.140` | Knowledge Evidence Acceptance Helper | `tools/content-lint/knowledge-evidence-acceptance.mjs` | Next |
+| 49 | `0.5.140` | Knowledge Evidence Acceptance Helper | `tools/content-lint/knowledge-evidence-acceptance.mjs` | Completed |
+| 50 | `0.5.141` | Knowledge Progress Application Plan | Future focused plan | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
