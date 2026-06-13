@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.137 - Knowledge Progress Record Initialization Plan`
-Date: 2026-06-12
-Branch/status assumption: `master` at commit `07e204a` before edits; the worktree was clean.
+Source route: Codex local implementation after `Version 0.5.138 - Knowledge Progress Record Initialization Helper`
+Date: 2026-06-13
+Branch/status assumption: `master` at commit `21933b1` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -13,13 +13,11 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
-- `docs/design/knowledge-progress-record-initialization-plan.md` owns explicit lazy initialization, target and owner authority, deterministic `progressId`, zero-state values, sequence, notes, duplicate rejection, and the first helper acceptance criteria.
-- `docs/design/knowledge-storage-fixture-boundary-plan.md` owns the planned test-only fixture path family, wrapper posture, scenario matrix, non-authority boundary, and lint isolation.
-- `docs/design/knowledge-storage-persistence-boundary-plan.md` owns candidate/accepted/persisted distinctions, future acceptance pipeline, duplicate/replay posture, atomicity recommendations, and deferred storage ownership.
-- `docs/design/knowledge-progress-state-plan.md`, `packages/schemas/player/knowledge_progress.schema.json`, and `tools/content-lint/knowledge-progress.mjs` own the current progress state, structure, and pure semantic-validation contracts.
-- `tools/content-lint/knowledge-evidence-to-progress.mjs` owns the current inert evidence-to-progress proposal boundary and still requires one existing target.
-- `tools/content-lint/knowledge-evidence-producers.mjs` owns the current candidate-only observation producer.
-- `packages/schemas/player/knowledge_evidence.schema.json` and `tools/content-lint/knowledge-evidence.mjs` own current evidence structure and pure semantic validation.
+- `docs/design/knowledge-progress-record-initialization-plan.md` owns explicit lazy initialization, target and owner authority, deterministic `progressId`, zero-state values, sequence, notes, and duplicate rejection.
+- `tools/content-lint/knowledge-progress-initialization.mjs` owns the pure zero-state proposal boundary only.
+- `docs/design/knowledge-storage-persistence-boundary-plan.md` owns candidate/accepted/persisted distinctions, future acceptance ownership, duplicate/replay posture, atomicity recommendations, and deferred storage ownership.
+- `docs/design/knowledge-storage-fixture-boundary-plan.md` owns the planned test-only fixture family and lint isolation; no fixtures exist.
+- `tools/content-lint/knowledge-progress.mjs`, `tools/content-lint/knowledge-evidence.mjs`, `tools/content-lint/knowledge-evidence-to-progress.mjs`, and `tools/content-lint/knowledge-evidence-producers.mjs` retain their existing pure validation, proposal, and candidate boundaries.
 - `packages/content/base/player/knowledge_snippets.json` and `packages/content/base/player/knowledge_domain_registry.json` remain read-only authored authorities.
 - `docs/design/skill-mastery-trial-framework-plan.md` owns separate Skill Trial and Magic Study planning posture.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
@@ -28,78 +26,70 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.137 - Knowledge Progress Record Initialization Plan`
+- `Version 0.5.138 - Knowledge Progress Record Initialization Helper`
 
 Immediate next version:
 
-- `Version 0.5.138 - Knowledge Progress Record Initialization Helper`
+- `Version 0.5.139 - Knowledge Evidence Acceptance Helper Plan`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.137 Result
+## Version 0.5.138 Result
 
-- Added `docs/design/knowledge-progress-record-initialization-plan.md`.
-- Selected lazy explicit initialization rather than character-creation-wide or implicit initialization.
-- Recognized `zero_state` and future `first_evidence` modes; the first helper supports only `zero_state`.
-- Defined exact target snapshot ownership from one active authored snippet and active broad domain.
-- Kept owner scope character-only and owner identity pattern-only.
-- Froze deterministic schema-compatible identity as `knowledge_progress.<domain-token>.<length-prefixed-snippet-token>.<length-prefixed-owner-token>`.
-- Set initial `progressValue` to zero and `consumedEvidenceIds` to empty.
-- Required explicit `updatedSequence` and schema-valid initialization notes.
-- Required duplicate `progressId` and duplicate owner/snippet rejection.
-- Kept initialization separate from evidence acceptance, proposal, application, completion, trials, storage, persistence, UI, runtime, and gameplay.
-- Selected `Version 0.5.138 - Knowledge Progress Record Initialization Helper` as the next focused run.
+- Added `tools/content-lint/knowledge-progress-initialization.mjs`.
+- Added `tests/unit/knowledge-progress-initialization.test.mjs` with 26 focused tests.
+- Supports explicit `zero_state` initialization only.
+- Derives exact length-prefixed schema-compatible `progressId` values from one active authored snippet and explicit character owner.
+- Copies domain and subject snapshots only from the snippet authority.
+- Preserves explicit non-negative `updatedSequence` and schema-valid notes.
+- Rejects invalid owner/target/authority inputs, planned Arcane Lore, duplicate current ids or targets, existing initialization, `first_evidence`, and ambient/evidence/UI/runtime shortcuts.
+- Returns a complete zero-state record, deterministic issues, and inert safety flags without importing existing validators or proposal helpers.
+- Proposed records validate externally through the unchanged current progress helper.
+- Added no fixtures, storage, persistence, evidence creation or consumption, progress application, normal lint registration, completion, trials, UI, runtime, generated output, or gameplay behavior.
 
-## Active Guardrails For 0.5.138
+## Active Guardrails For 0.5.139
 
-Knowledge Progress Record Initialization Helper:
+Knowledge Evidence Acceptance Helper Plan:
 
-- Add only `tools/content-lint/knowledge-progress-initialization.mjs`, focused tests, and normal handoff updates.
-- Keep the helper pure, deterministic, in-memory, filesystem-free, immutable, and unregistered.
-- Support explicit `zero_state` mode only.
-- Require explicit character owner, snippet id, update sequence, notes, current snippets/domains, and current progress records.
-- Derive target snapshots from the authored snippet and derive `progressId`; do not accept caller overrides.
-- Return a complete zero-state record or `null`, deterministic issues, and inert safety flags.
-- Reject duplicate `progressId` and duplicate owner/snippet targets.
-- Validate the result externally through the unchanged current progress validator with explicit zero-state permission.
-- Do not import or invoke producer, evidence validator, progress validator, or evidence-to-progress proposal from the initializer.
-- Add no evidence consumption, accepted-evidence behavior, progress application, fixture files, storage, persistence, normal lint registration, completion, trials, UI, runtime, generated output, events, rewards, or gameplay behavior.
+- Make this a documentation-only ownership and contract pass.
+- Define the exact candidate-to-accepted evidence transition and name the future acceptance owner.
+- Require current evidence schema and semantic validation before acceptance.
+- Define duplicate identity, replay, occurrence, owner/target parity, and accepted-sequence posture.
+- Decide whether acceptance returns an inert accepted-evidence proposal or another explicit envelope, without implementing it.
+- Keep candidate production, evidence validation, progress initialization, progress proposal, and future progress application as separate operations.
+- Do not create fixture files, evidence/progress JSON state, storage, persistence, save/account/session/database shape, normal lint registration, runtime producers, UI, generated output, completion, trials, events, rewards, or gameplay behavior.
 
 Current follow-up risks:
 
-- The planned `progressId` rule may require an explicit current-data revision if canonical storage later selects another identity.
 - Character owner authority and sequence authority remain pattern/input-only.
-- No accepted-evidence collection, acceptance owner, progress application owner, storage owner, or persistence owner exists.
+- No canonical candidate or accepted-evidence collection, acceptance owner, progress application owner, storage owner, or persistence owner exists.
+- Concurrent duplicate/replay behavior and occurrence equivalence remain undefined.
 - First-evidence initialization remains deferred.
-- Concurrent duplicate/replay behavior and zero-state persistence policy remain undefined.
+- Zero-state persistence policy remains undefined.
 - Completion, Knowledge trials, Skill Trials, Spell/Magic Study trials, UI, runtime, and gameplay remain deferred.
 - Arcane Lore initialization remains blocked.
-- Retain evidence, progress, proposal, producer, storage, fixture, and initialization guardrails through initialization, acceptance, and application planning.
+- Retain evidence, progress, proposal, producer, storage, fixture, and initialization guardrails through acceptance and application planning.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.130` | Knowledge Progress Semantic Validator | `tools/content-lint/knowledge-progress.mjs` | Completed |
-| 2 | `0.5.131` | Knowledge Evidence-to-Progress Rules Plan | `docs/design/knowledge-evidence-to-progress-rules-plan.md` | Completed |
-| 3 | `0.5.132` | Knowledge Evidence-to-Progress Rules | `tools/content-lint/knowledge-evidence-to-progress.mjs` | Completed |
-| 4 | `0.5.133` | Knowledge Evidence Producers Plan | `docs/design/knowledge-evidence-producers-plan.md` | Completed |
-| 5 | `0.5.134` | Knowledge Observation Evidence Producer | `tools/content-lint/knowledge-evidence-producers.mjs` | Completed |
-| 6 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | `docs/design/knowledge-storage-persistence-boundary-plan.md` | Completed |
-| 7 | `0.5.136` | Knowledge Storage Fixture Boundary Plan | `docs/design/knowledge-storage-fixture-boundary-plan.md` | Completed |
-| 8 | `0.5.137` | Knowledge Progress Record Initialization Plan | `docs/design/knowledge-progress-record-initialization-plan.md` | Completed |
-| 9 | `0.5.138` | Knowledge Progress Record Initialization Helper | `docs/design/knowledge-progress-record-initialization-plan.md` | Next |
-| 10 | `0.5.x` | Knowledge Evidence Acceptance Helper Plan | Future focused plan | Deferred |
-| 11 | `0.5.x` | Knowledge Evidence Acceptance Helper | Future focused implementation | Deferred |
-| 12 | `0.5.x` | Knowledge Progress Application Plan | Future focused plan | Deferred |
-| 13 | `0.5.x` | Knowledge Progress Application Helper | Future focused implementation | Deferred |
-| 14 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
-| 15 | `0.5.x` | Knowledge Completion Helper | Future focused implementation | Deferred |
-| 16 | `0.5.x` | Knowledge Trial Boundary Plan | Future focused plan | Deferred |
+| 1 | `0.5.134` | Knowledge Observation Evidence Producer | `tools/content-lint/knowledge-evidence-producers.mjs` | Completed |
+| 2 | `0.5.135` | Knowledge Storage And Persistence Boundary Plan | `docs/design/knowledge-storage-persistence-boundary-plan.md` | Completed |
+| 3 | `0.5.136` | Knowledge Storage Fixture Boundary Plan | `docs/design/knowledge-storage-fixture-boundary-plan.md` | Completed |
+| 4 | `0.5.137` | Knowledge Progress Record Initialization Plan | `docs/design/knowledge-progress-record-initialization-plan.md` | Completed |
+| 5 | `0.5.138` | Knowledge Progress Record Initialization Helper | `tools/content-lint/knowledge-progress-initialization.mjs` | Completed |
+| 6 | `0.5.139` | Knowledge Evidence Acceptance Helper Plan | `docs/design/knowledge-storage-persistence-boundary-plan.md` | Next |
+| 7 | `0.5.x` | Knowledge Evidence Acceptance Helper | Future focused implementation | Deferred |
+| 8 | `0.5.x` | Knowledge Progress Application Plan | Future focused plan | Deferred |
+| 9 | `0.5.x` | Knowledge Progress Application Helper | Future focused implementation | Deferred |
+| 10 | `0.5.x` | Knowledge Completion Rules Plan | Future focused plan | Deferred |
+| 11 | `0.5.x` | Knowledge Completion Helper | Future focused implementation | Deferred |
+| 12 | `0.5.x` | Knowledge Trial Boundary Plan | Future focused plan | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.138 - Knowledge Progress Record Initialization Helper`, inspect:
+For `Version 0.5.139 - Knowledge Evidence Acceptance Helper Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -107,18 +97,15 @@ For `Version 0.5.138 - Knowledge Progress Record Initialization Helper`, inspect
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/knowledge-progress-record-initialization-plan.md`
-- `docs/design/knowledge-progress-state-plan.md`
-- `docs/design/knowledge-progress-schema-plan.md`
-- `docs/design/knowledge-progress-semantic-validator-plan.md`
 - `docs/design/knowledge-storage-persistence-boundary-plan.md`
 - `docs/design/knowledge-storage-fixture-boundary-plan.md`
-- `packages/schemas/player/knowledge_progress.schema.json`
-- `tools/content-lint/knowledge-progress.mjs`
-- `tests/unit/knowledge-progress-validation.test.mjs`
-- `packages/content/base/player/knowledge_snippets.json`
-- `packages/content/base/player/knowledge_domain_registry.json`
-- `tools/content-lint/knowledge-evidence-to-progress.mjs`
+- `docs/design/knowledge-progress-record-initialization-plan.md`
+- `docs/design/knowledge-evidence-contract-plan.md`
+- `docs/design/knowledge-evidence-schema-plan.md`
+- `docs/design/knowledge-evidence-semantic-validator-plan.md`
+- `packages/schemas/player/knowledge_evidence.schema.json`
+- `tools/content-lint/knowledge-evidence.mjs`
 - `tools/content-lint/knowledge-evidence-producers.mjs`
-- `tools/content-lint/index.mjs`
+- `tools/content-lint/knowledge-progress-initialization.mjs`
+- `tools/content-lint/knowledge-evidence-to-progress.mjs`
 - `docs/future_content_backlog.md`
