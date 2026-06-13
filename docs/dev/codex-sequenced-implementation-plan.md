@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-13
-Route: Codex local sequencing alignment after `Version 0.5.141 - Knowledge Progress Application Plan`
+Route: Codex local sequencing alignment after `Version 0.5.142 - Knowledge Progress Application Helper`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.141 - Knowledge Progress Application Plan` defined the future pure application boundary with explicit accepted evidence, current progress and proposal verification, positive monotonic transitions, unchanged validator gates, and no implementation or state mutation.
+This file gives Codex a stable ordered queue after `Version 0.5.142 - Knowledge Progress Application Helper` implemented deterministic one-proposal application with explicit accepted evidence and current progress, strict proposal checks, unchanged validator gates, replacement-wrapper validation, and no storage or downstream effects.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.141 - Knowledge Progress Application Plan`
+- `Version 0.5.142 - Knowledge Progress Application Helper`
 
 Immediate next Codex run:
 
-- `Version 0.5.142 - Knowledge Progress Application Helper`
+- `Version 0.5.143 - Knowledge Completion Rules Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.141` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.142` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -99,7 +99,8 @@ Versioning note:
 | 61 | `0.5.139` | Knowledge Evidence Acceptance Helper Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-evidence-acceptance-helper-plan.md` | planning doc | Completed | Defined explicit one-candidate acceptance, required current accepted wrapper, unchanged evidence-validator gates, exact-id rejection, copied accepted output, deterministic envelope, and focused helper criteria without implementation or state. |
 | 62 | `0.5.140` | Knowledge Evidence Acceptance Helper | Codex 5.5 Local | `tools/content-lint/knowledge-evidence-acceptance.mjs` | pure helper + focused tests | Completed | Added deterministic one-candidate acceptance, explicit current-wrapper validation, exact-id rejection, copied accepted output, validation/duplicate distinction, inert safety flags, and 27 focused tests without storage, persistence, fixtures, normal lint registration, progress behavior, completion, trials, UI, runtime, generated output, or gameplay behavior. |
 | 63 | `0.5.141` | Knowledge Progress Application Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-progress-application-plan.md` | planning doc | Completed | Defined explicit accepted-evidence and current-progress inputs, strict proposal verification, positive delta and monotonic sequence rules, exact notes preservation, replacement-wrapper validation, and an inert application envelope without implementation or state. |
-| 64 | `0.5.142` | Knowledge Progress Application Helper | Codex 5.5 Local | `tools/content-lint/knowledge-progress-application.mjs` | pure helper + focused tests | Next | Implement only the deterministic in-memory application decision; no storage, persistence, fixtures, normal lint registration, evidence acceptance, progress initialization, completion, trials, UI, runtime, generated output, or gameplay behavior. |
+| 64 | `0.5.142` | Knowledge Progress Application Helper | Codex 5.5 Local | `tools/content-lint/knowledge-progress-application.mjs` | pure helper + focused tests | Completed | Added deterministic one-proposal application, explicit accepted/current validation, strict proposal/target/value/consumption/sequence/notes checks, replacement-wrapper validation, inert safety flags, and 43 focused tests without storage or downstream behavior. |
+| 65 | `0.5.143` | Knowledge Completion Rules Plan | Codex 5.5 Local docs-first | Future focused plan | planning doc | Next | Define only completion thresholds, authored progression metadata ownership, aggregation boundaries, inert outputs, and future helper criteria; do not implement completion, trials, storage, persistence, UI, runtime, generated output, or gameplay behavior. |
 
 ## Default Prompt Pattern
 

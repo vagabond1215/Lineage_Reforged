@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.141 - Knowledge Progress Application Plan`
-- Next recommended version: `Version 0.5.142 - Knowledge Progress Application Helper`
+- Latest completed version: `Version 0.5.142 - Knowledge Progress Application Helper`
+- Next recommended version: `Version 0.5.143 - Knowledge Completion Rules Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.141` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.142` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -174,7 +174,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.139` | Knowledge Evidence Acceptance Helper Plan | Codex Local docs-first | Planning | Completed. Defined an explicit one-candidate acceptance boundary, required current accepted wrapper, existing-validator gates, exact-id rejection, accepted-record copy, inert output envelope, and future helper test criteria. | Documentation only; no acceptance helper, evidence/progress state, fixtures, storage, persistence, progress application, completion, trials, UI, runtime, generated output, or gameplay behavior. |
 | `0.5.140` | Knowledge Evidence Acceptance Helper | Codex Local | Pure helper + focused tests | Completed. Added one-candidate acceptance, explicit current-wrapper validation, exact-id rejection, copied accepted output, deterministic validation/duplicate distinction, inert safety flags, and 27 focused tests. | No canonical storage, persistence, fixtures, normal lint registration, progress initialization/proposal/application, completion, trials, UI, runtime, generated output, or gameplay behavior. |
 | `0.5.141` | Knowledge Progress Application Plan | Codex Local docs-first | Planning | Completed. Defined explicit accepted-evidence and current-progress inputs, strict proposal verification, target parity, positive delta and monotonic sequence rules, exact notes preservation, replacement-wrapper validation, and an inert application envelope. | Documentation only; no application helper, state mutation, storage, persistence, fixtures, completion, trials, UI, runtime, generated output, or gameplay behavior. |
-| `0.5.142` | Knowledge Progress Application Helper | Codex Local | Pure helper + focused tests | Next. Implement only the deterministic in-memory application decision against explicit accepted evidence, current progress, and one inert proposal. | No storage, persistence, fixtures, normal lint registration, evidence acceptance, progress initialization, completion, trials, UI, runtime, generated output, or gameplay behavior. |
+| `0.5.142` | Knowledge Progress Application Helper | Codex Local | Pure helper + focused tests | Completed. Added deterministic one-proposal application, explicit accepted-evidence and current-progress validation, strict proposal/target/value/consumption/sequence/notes checks, replacement-wrapper validation, inert safety flags, and 43 focused tests. | No storage, persistence, fixtures, normal lint registration, evidence acceptance, progress initialization, completion, trials, UI, runtime, generated output, or gameplay behavior. |
+| `0.5.143` | Knowledge Completion Rules Plan | Codex Local docs-first | Planning | Next. Define completion thresholds, authored progression metadata ownership, aggregation boundaries, inert outputs, and focused helper acceptance criteria without implementation. | Documentation only; no completion helper, state mutation, storage, persistence, fixtures, trials, UI, runtime, generated output, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -233,7 +234,8 @@ Practical near-term sequence:
 28. `0.5.139 - Knowledge Evidence Acceptance Helper Plan` - completed
 29. `0.5.140 - Knowledge Evidence Acceptance Helper` - completed
 30. `0.5.141 - Knowledge Progress Application Plan` - completed
-31. `0.5.142 - Knowledge Progress Application Helper` - next
+31. `0.5.142 - Knowledge Progress Application Helper` - completed
+32. `0.5.143 - Knowledge Completion Rules Plan` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -282,8 +284,8 @@ Recommended advancement sequence:
 33. `0.5.139 - Knowledge Evidence Acceptance Helper Plan` - completed
 34. `0.5.140 - Knowledge Evidence Acceptance Helper` - completed
 35. `0.5.141 - Knowledge Progress Application Plan` - completed
-36. `0.5.142 - Knowledge Progress Application Helper` - next
-37. `0.5.x - Knowledge Completion Rules Plan`
+36. `0.5.142 - Knowledge Progress Application Helper` - completed
+37. `0.5.143 - Knowledge Completion Rules Plan` - next
 38. `0.5.x - Knowledge Completion Helper`
 39. `0.5.x - Knowledge Trial Boundary Plan`
 40. `0.5.x - Knowledge Trial Schema Plan`
@@ -466,7 +468,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 48 | `0.5.139` | Knowledge Evidence Acceptance Helper Plan | `docs/design/knowledge-evidence-acceptance-helper-plan.md` | Completed |
 | 49 | `0.5.140` | Knowledge Evidence Acceptance Helper | `tools/content-lint/knowledge-evidence-acceptance.mjs` | Completed |
 | 50 | `0.5.141` | Knowledge Progress Application Plan | `docs/design/knowledge-progress-application-plan.md` | Completed |
-| 51 | `0.5.142` | Knowledge Progress Application Helper | Future focused implementation | Next |
+| 51 | `0.5.142` | Knowledge Progress Application Helper | `tools/content-lint/knowledge-progress-application.mjs` | Completed |
+| 52 | `0.5.143` | Knowledge Completion Rules Plan | Future focused plan | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
