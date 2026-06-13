@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.143 - Knowledge Completion Rules Plan`
-- Next recommended version: `Version 0.5.x - Knowledge Completion Helper`
+- Latest completed version: `Version 0.5.144 - Knowledge Completion Helper`
+- Next recommended version: `Version 0.5.145 - Knowledge Trial Boundary Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.143` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.144` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -104,6 +104,7 @@ Current repo reality:
 - Knowledge progress application planning has landed in `docs/design/knowledge-progress-application-plan.md`. It defines explicit accepted-evidence and current-progress inputs, strict proposal verification, target parity, deterministic consumption, monotonic sequence, replacement-wrapper validation, and an inert application envelope.
 - Pure Knowledge progress application now exists at `tools/content-lint/knowledge-progress-application.mjs` with 43 focused tests. It returns a validated applied progress record as in-memory output only and adds no storage, persistence, completion, trials, UI, runtime, or gameplay behavior.
 - Knowledge completion-rule planning has landed in `docs/design/knowledge-completion-rules-plan.md`. It defines applied progress as input only, requires explicit authored/planned thresholds, treats `completionWeight` as aggregation weight rather than a snippet threshold, isolates owner/domain/tier aggregation, and specifies a fail-closed read-only decision envelope for a later helper.
+- Pure Knowledge completion decisions now exist at `tools/content-lint/knowledge-completion.mjs` with 64 focused in-memory tests. The helper validates explicit applied progress through the unchanged current validator, requires exact in-memory completion-policy authority, evaluates isolated snippet/tier/domain targets, returns inert `candidate`, `incomplete`, or `blocked` envelopes, blocks planned Arcane Lore, and remains unregistered without state, persistence, trials, UI, runtime, events, rewards, ownership mutation, or gameplay behavior.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -179,7 +180,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.141` | Knowledge Progress Application Plan | Codex Local docs-first | Planning | Completed. Defined explicit accepted-evidence and current-progress inputs, strict proposal verification, target parity, positive delta and monotonic sequence rules, exact notes preservation, replacement-wrapper validation, and an inert application envelope. | Documentation only; no application helper, state mutation, storage, persistence, fixtures, completion, trials, UI, runtime, generated output, or gameplay behavior. |
 | `0.5.142` | Knowledge Progress Application Helper | Codex Local | Pure helper + focused tests | Completed. Added deterministic one-proposal application, explicit accepted-evidence and current-progress validation, strict proposal/target/value/consumption/sequence/notes checks, replacement-wrapper validation, inert safety flags, and 43 focused tests. | No storage, persistence, fixtures, normal lint registration, evidence acceptance, progress initialization, completion, trials, UI, runtime, generated output, or gameplay behavior. |
 | `0.5.143` | Knowledge Completion Rules Plan | Codex Local docs-first | Planning | Completed. Defined fail-closed threshold authority, applied-progress interpretation, authored completion-weight/counting posture, owner/domain/tier aggregation boundaries, exact inert safety flags, focused tests, and future helper acceptance criteria. | Documentation only; no completion helper, schema/content/validator edits, state mutation, storage, persistence, fixtures, trials, UI, runtime, generated output, or gameplay behavior. |
-| `0.5.x` | Knowledge Completion Helper | Codex Local | Pure helper + focused tests | Next. Implement one deterministic read-only completion decision over explicit applied progress and explicit in-memory completion-policy authority. | No schema/content/validator edits, storage, persistence, fixtures, normal lint registration, trials, UI, runtime, generated output, events, rewards, ownership mutation, or gameplay behavior. |
+| `0.5.144` | Knowledge Completion Helper | Codex Local | Pure helper + focused tests | Completed. Added deterministic snippet/tier/domain completion decisions over explicit validated applied progress and exact in-memory policy, strict aggregation isolation, exact safety flags, Arcane Lore blocking, and 64 focused tests. | No schema/content/validator edits, storage, persistence, fixtures, normal lint registration, completion state, trials, UI, runtime, generated output, events, rewards, ownership mutation, or gameplay behavior. |
+| `0.5.145` | Knowledge Trial Boundary Plan | Codex Local docs-first | Planning | Next. Define how completion candidates may become explicit inputs to a future Knowledge trial eligibility/readiness boundary. | Documentation only; keep Knowledge, Skill, and Spell/Magic Study trial families separate and add no trial state or behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -240,7 +242,8 @@ Practical near-term sequence:
 30. `0.5.141 - Knowledge Progress Application Plan` - completed
 31. `0.5.142 - Knowledge Progress Application Helper` - completed
 32. `0.5.143 - Knowledge Completion Rules Plan` - completed
-33. `0.5.x - Knowledge Completion Helper` - next
+33. `0.5.144 - Knowledge Completion Helper` - completed
+34. `0.5.145 - Knowledge Trial Boundary Plan` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -291,8 +294,8 @@ Recommended advancement sequence:
 35. `0.5.141 - Knowledge Progress Application Plan` - completed
 36. `0.5.142 - Knowledge Progress Application Helper` - completed
 37. `0.5.143 - Knowledge Completion Rules Plan` - completed
-38. `0.5.x - Knowledge Completion Helper` - next
-39. `0.5.x - Knowledge Trial Boundary Plan`
+38. `0.5.144 - Knowledge Completion Helper` - completed
+39. `0.5.145 - Knowledge Trial Boundary Plan` - next
 40. `0.5.x - Knowledge Trial Schema Plan`
 41. `0.5.x - Knowledge Trial Checkpoint Helper`
 42. `0.5.x - Skill Trial Schema Expansion Plan`
@@ -475,7 +478,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 50 | `0.5.141` | Knowledge Progress Application Plan | `docs/design/knowledge-progress-application-plan.md` | Completed |
 | 51 | `0.5.142` | Knowledge Progress Application Helper | `tools/content-lint/knowledge-progress-application.mjs` | Completed |
 | 52 | `0.5.143` | Knowledge Completion Rules Plan | `docs/design/knowledge-completion-rules-plan.md` | Completed |
-| 53 | `0.5.x` | Knowledge Completion Helper | `docs/design/knowledge-completion-rules-plan.md` | Next |
+| 53 | `0.5.144` | Knowledge Completion Helper | `tools/content-lint/knowledge-completion.mjs` | Completed |
+| 54 | `0.5.145` | Knowledge Trial Boundary Plan | Future focused plan | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
