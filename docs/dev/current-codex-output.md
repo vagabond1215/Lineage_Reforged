@@ -1,19 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.140 - Knowledge Evidence Acceptance Helper
+Source version/run: Version 0.5.141 - Knowledge Progress Application Plan
 Date: 2026-06-13
-Branch/status assumption: Ran on `master` from commit `7891328`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `30d2eba`. The worktree was clean before edits.
 
 ## Result
 
-Implemented the pure deterministic in-memory Knowledge evidence acceptance helper and 27 focused tests.
+Created the planning-only Knowledge Progress Application Plan.
 
-The helper accepts exactly one candidate against an explicit current accepted-evidence wrapper, validates both through the unchanged current evidence validator, rejects every existing exact `evidenceId`, returns a deep copied accepted record in an inert decision envelope, and performs no storage, persistence, progress, completion, trial, UI, runtime, generated-output, or gameplay behavior.
+The plan defines a future pure deterministic helper that verifies one inert evidence-to-progress proposal against explicit accepted evidence and one existing current progress target. It freezes exact target parity, positive delta, consumed-id append, strict sequence monotonicity, exact notes preservation, current/replacement wrapper validation, and an inert applied/rejected envelope.
 
 ## Files Changed
 
-- `tools/content-lint/knowledge-evidence-acceptance.mjs`
-- `tests/unit/knowledge-evidence-acceptance.test.mjs`
+- `docs/design/knowledge-progress-application-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -22,14 +21,18 @@ The helper accepts exactly one candidate against an explicit current accepted-ev
 
 ## Checks Run
 
-- `node --check tools/content-lint/knowledge-evidence-acceptance.mjs`
-  - Passed.
-- `node --test tests/unit/knowledge-evidence-acceptance.test.mjs`
-  - Passed: 27 tests.
 - `npm.cmd run tool:content-lint`
   - Passed: 55 files checked.
-- Existing Knowledge helper syntax and focused suites:
-  - Progress initializer: passed 26 tests.
+- Existing Knowledge helper syntax checks:
+  - Evidence acceptance: passed.
+  - Progress initialization: passed.
+  - Evidence producer: passed.
+  - Evidence-to-progress proposal: passed.
+  - Progress validator: passed.
+  - Evidence validator: passed.
+- Existing focused Knowledge suites:
+  - Evidence acceptance: passed 27 tests.
+  - Progress initialization: passed 26 tests.
   - Evidence producer: passed 29 tests.
   - Evidence-to-progress proposal: passed 36 tests.
   - Progress validator: passed 59 tests.
@@ -40,45 +43,41 @@ The helper accepts exactly one candidate against an explicit current accepted-ev
   - Passed: 49 tests.
 - `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
   - Passed: 37 tests.
-- Focused source audit.
-  - Passed: no filesystem, clock, randomness, producer, progress-initialization, evidence-to-progress, runtime/UI, fixture, completion, trial, generated-output, or gameplay coupling.
-- Normal content-lint registration audit.
-  - Passed: `tools/content-lint/index.mjs` is unchanged and contains no acceptance-helper registration.
-- Fixture audit.
-  - Passed: `tests/fixtures/knowledge/` does not exist and no fixture file or loader was created.
+- Required plan coverage scan.
+  - Passed: exactly 30 sequential numbered sections.
 - Changed-path scope audit.
-  - Passed: only the new helper, new focused test, and required output/handoff/roadmap/sequence/backlog documents changed.
+  - Passed: only the new plan and required output/handoff/roadmap/sequence/backlog documents changed.
 - Conflict-marker and trailing-whitespace scans.
   - Passed.
 - `git diff --check`
-  - Passed. Git reported only line-ending normalization notices for tracked Markdown files.
-- Broad typecheck was not run because this pass touched only the focused JavaScript helper/tests and documentation.
+  - Passed.
+- New-file no-index whitespace check for `docs/design/knowledge-progress-application-plan.md`.
+  - Passed.
+- Broad typecheck was not run because this pass changed documentation only.
 
 ## Behavior / Runtime Confirmation
 
-- Added only a pure in-memory acceptance decision.
-- Accepted output is a deep value copy and contains no acceptance or storage metadata.
-- Duplicate policy rejects identical and conflicting exact-id replays; distinct ids remain distinct candidates.
-- Validation issues remain separate from valid duplicate-policy rejection.
-- No fixture files or fixture loader, evidence/progress JSON content or state, canonical storage, persistence, normal content-lint registration, schema edit, validator edit, producer edit, initializer edit, evidence-to-progress edit, progress application, completion, trial, UI/main-menu, runtime, generated output, ownership mutation, or gameplay behavior changed.
-- No snippet JSON/schema/validator, registry, skill, spell, or unrelated test file changed.
+- Documentation and workflow handoff state changed only.
+- No application helper, fixture file, fixture loader, storage or persistence implementation, evidence/progress JSON content or state, canonical storage, normal content-lint registration, schema edit, validator edit, helper edit, or test edit was added.
+- No runtime, UI/main-menu, generated output, completion, trial, event, reward, ownership mutation, or gameplay behavior changed.
+- No snippet JSON/schema/validator, registry, skill, spell, or fixture path changed.
 - Knowledge, Skill, and Spell/Magic Study trial families remain separate and deferred.
 
 ## Risks / Follow-Up
 
-- The pure helper cannot prevent stale-snapshot or concurrent duplicate writes.
-- Distinct-id occurrence equivalence remains undefined.
-- Character owner and sequence authority remain pattern-only or explicit-input boundaries.
-- No accepted-evidence collection, progress collection, storage owner, persistence owner, or progress application owner exists.
-- Atomic evidence append and progress application remain unresolved.
-- `first_evidence` initialization remains deferred.
+- Application output could be mistaken for persisted state.
+- No accepted-evidence collection, progress collection, storage owner, or persistence owner exists.
+- Character owner and canonical sequence authorities remain unresolved.
+- Distinct-id occurrence equivalence and storage-level idempotent replay remain unresolved.
+- Atomic accepted-evidence append and progress application remain deferred.
 - Arcane Lore remains blocked.
+- Temporary Knowledge guardrail documents still require a later retain, consolidate, promote, or remove decision.
 - No blockers occurred.
 
 ## Next Recommended Version
 
-Version 0.5.141 - Knowledge Progress Application Plan
+Version 0.5.142 - Knowledge Progress Application Helper
 
 ## Suggested Commit Message
 
-tools(knowledge): accept evidence candidates
+docs(knowledge): plan progress application
