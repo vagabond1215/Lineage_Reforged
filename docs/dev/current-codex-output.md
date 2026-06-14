@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.154 - Knowledge Trial Policy Semantic Validator
+Source version/run: Version 0.5.155 - Knowledge Trial Policy Normal Lint Registration Plan
 Date: 2026-06-14
-Branch/status assumption: Ran on `master` from commit `6469167`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `3fc0eed`. The worktree was clean before edits.
 
 ## Result
 
-Added the pure, unregistered Knowledge trial policy semantic validator and focused tests.
+Added the documentation-only Knowledge trial policy normal lint registration plan.
 
-`validateKnowledgeTrialPolicies(...)` validates explicit in-memory policy, schema, domain-registry, and snippet inputs. It enforces exact wrappers, fail-closed live-schema structure with local `$ref` support, duplicate-aware authority indexes, active non-Arcane domains, policy/target domain parity, domain/tier target coherence, deterministic duplicate-target keys, snippet reference parity, null readiness, empty rewards, and null registry `trialPolicyRef` values.
+The plan selects a conservative one-step `0.5.156` registration: add `knowledge_trial_policies.json` exactly once to the normal checked-file list, load policy content/schema plus registry/snippet dependencies in index orchestration, call the unchanged pure validator after existing registry/snippet validation, and let failures propagate through the current top-level lint handler.
 
-Valid content returns `{ ok: true, policyIds: [...] }` with sorted ids. Failures throw deterministic path-bearing `Error` messages. The module performs no file I/O and remains absent from normal content lint.
+The policy content should increment normal lint from 55 to 56 checked files. The schema remains dependency-only, while registry and snippets are not counted again because they already have checked-file entries and dedicated semantic validators.
 
 ## Files Changed
 
-- `tools/content-lint/knowledge-trial-policies.mjs`
-- `tests/unit/knowledge-trial-policies-validation.test.mjs`
+- `docs/design/knowledge-trial-policy-normal-lint-registration-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,33 +23,29 @@ Valid content returns `{ ok: true, policyIds: [...] }` with sorted ids. Failures
 
 ## Checks Run
 
-- `node --check tools/content-lint/knowledge-trial-policies.mjs`
-- `node --check tests/unit/knowledge-trial-policies-validation.test.mjs`
-- `node --test tests/unit/knowledge-trial-policies-validation.test.mjs` - 76 passed, 0 failed.
-- `node --test tests/unit/schema-files.test.mjs` - 71 passed, 0 failed.
+- `node tools/content-lint/index.mjs` - current baseline confirmed as 55 files checked.
 - Conflict-marker scan across changed files.
 - Trailing-whitespace scan across changed files.
 - `git diff --check`
 - Changed-path scope audit.
-- Forbidden schema, content, registry, snippet, existing-helper, adapter, readiness, fixture, runtime, storage, persistence, UI, generated-output, event, reward, and gameplay audit.
-- Normal content-lint unregistered audit.
-- Validator and test source-purity audit.
-- Broad typecheck and test suites were not run because no TypeScript, UI, or runtime files changed.
+- Forbidden index, validator, schema, content, test, fixture, helper, adapter, runtime, storage, persistence, UI, generated-output, event, reward, and gameplay audit.
+- Broad typecheck and test suites were not run because this was a documentation-only change.
 
 ## Behavior / Runtime Confirmation
 
-- Added a pure test-invoked semantic validator only.
-- No schema, content JSON, registry, snippet, existing helper, fixture, adapter, or normal content-lint registration changed.
+- Documentation only.
+- No validator implementation or normal content-lint registration changed.
+- No schema, content JSON, registry, snippet, test, fixture, helper, adapter, or readiness policy changed.
 - No storage, persistence, save/account/session/database, UI, runtime, generated output, event, reward, ownership mutation, or gameplay behavior changed.
-- Completion, eligibility, and readiness helpers remain unchanged and are not imported or called.
 - Every registry `trialPolicyRef` remains null.
 - Knowledge, Skill, and Spell/Magic Study trial families remain separate.
-- Arcane Lore remains planned, blocked, and rejected by this validator.
+- Arcane Lore remains planned, blocked, and deferred.
 
 ## Risks / Follow-Up
 
-- The validator is not yet registered in normal content lint.
-- A dedicated registration plan should define orchestration, checked-file counting, integration tests, and dependency-loading boundaries before registration.
+- The validator remains unregistered until the separately scoped `0.5.156` implementation.
+- Registration must preserve explicit index-owned dependency loading and validator purity.
+- Existing tests that assert the policy is unregistered must be intentionally replaced during registration.
 - Registry alignment remains separately deferred.
 - No content-to-helper adapter or canonical completion-policy content exists.
 - Readiness schema/content remains deferred.
@@ -61,8 +56,8 @@ Valid content returns `{ ok: true, policyIds: [...] }` with sorted ids. Failures
 
 ## Next Recommended Version
 
-Version 0.5.155 - Knowledge Trial Policy Normal Lint Registration Plan
+Version 0.5.156 - Knowledge Trial Policy Normal Lint Registration
 
 ## Suggested Commit Message
 
-tools(knowledge): validate trial policy content
+docs(knowledge): plan trial policy lint registration
