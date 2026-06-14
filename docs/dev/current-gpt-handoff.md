@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton`
+Source route: Codex local planning after `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan`
 Date: 2026-06-14
-Branch/status assumption: `master` at commit `c8cea14` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `5adac38` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -16,6 +16,7 @@ This is the short current handoff for future prompt preparation. It records imme
 - `packages/schemas/player/knowledge_trial_policy.schema.json` owns the strict structure of one static authored Knowledge trial eligibility policy.
 - `packages/content/base/player/knowledge_trial_policies.json` owns the current exact one-record authored Flora Tier 1 eligibility-policy skeleton.
 - `docs/design/knowledge-trial-policy-content-plan.md` owns the first content path, wrapper shape, selected one-record Flora Tier 1 slice, registry-null posture, semantic-validation sequence, and Version 0.5.152 acceptance criteria.
+- `docs/design/knowledge-trial-policy-semantic-validator-plan.md` owns the future validator location, schema-first semantic rules, diagnostic posture, unregistered implementation sequence, focused test matrix, and Version 0.5.154 acceptance criteria.
 - `docs/design/knowledge-trial-schema-plan.md` owns the broader policy/content split, mutable-state exclusions, and deferred readiness posture.
 - `tools/content-lint/knowledge-completion.mjs` owns current pure completion decisions.
 - `tools/content-lint/knowledge-trial-eligibility.mjs` owns current operation-local eligibility evaluation.
@@ -28,36 +29,38 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed Codex version:
 
-- `Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton`
+- `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan`
 
 Immediate next version:
 
-- `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan`
+- `Version 0.5.154 - Knowledge Trial Policy Semantic Validator`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.152 Result
+## Version 0.5.153 Result
 
-- Added `packages/content/base/player/knowledge_trial_policies.json` with exactly one `records` entry.
-- Added active character-scoped, tier-scoped `knowledge_trial_policy.flora_tier_1`.
-- Required exactly one Flora Tier 1 completion target with `requiredDecision: "candidate"`.
-- Kept prerequisite targets empty, `readinessPolicyId` null, and `rewardRefs` empty.
-- Preserved the selected two inert notes.
-- Added focused structural coverage in `tests/unit/schema-files.test.mjs`.
-- Verified exact record parity, schema compliance, excluded behavior fields, registry-null posture, and no normal content-lint registration.
-- Kept every registry `trialPolicyRef` null.
-- Added no semantic validator, helper adapter, readiness content, fixture, runtime, state, storage, persistence, UI, event, reward, ownership mutation, or gameplay behavior.
+- Added `docs/design/knowledge-trial-policy-semantic-validator-plan.md`.
+- Selected future `tools/content-lint/knowledge-trial-policies.mjs`.
+- Defined an explicit pure input contract over policy wrapper, live schema, domain registry, and snippets.
+- Required exact wrapper and schema-first validation.
+- Required duplicate-aware active non-Arcane domain and snippet resolution.
+- Required exact policy-domain parity and matching domain/tier target coherence.
+- Selected hard semantic failure for non-null readiness references and non-empty reward references.
+- Required every registry `trialPolicyRef` to remain null.
+- Selected deterministic path-bearing `Error` messages matching current lint convention.
+- Selected an unregistered module plus focused tests for Version 0.5.154.
+- Added no validator, test, registration, schema/content edit, helper change, adapter, state, persistence, runtime, UI, reward, event, ownership mutation, or gameplay behavior.
 
-## Active Guardrails For Semantic Validator Planning
+## Active Guardrails For Semantic Validator
 
-- Plan semantic validation only; do not implement the validator in Version 0.5.153.
-- Treat the existing schema as structural authority and the new policy file as authored content input.
-- Define exact wrapper, duplicate identity, active-domain, scope/domain/tier, completion-target, prerequisite-target, readiness-reference, reward-reference, and registry-null checks.
-- Keep schema validation ahead of semantic validation.
-- Preserve the exact one-record Flora Tier 1 content unchanged.
-- Keep all registry `trialPolicyRef` values null until a later separately authorized alignment run.
-- Keep Fauna, Minerals, General Lore, and Arcane Lore policy content deferred.
-- Keep Knowledge, Skill, and Spell/Magic Study trial families separate.
+- Add only `tools/content-lint/knowledge-trial-policies.mjs`, one focused validator test file, and required coordination docs.
+- Keep `packages/content/base/player/knowledge_trial_policies.json`, its schema, registry, and snippets unchanged.
+- Validate the exact wrapper and every record structurally before semantics.
+- Fail closed on duplicate ids, unresolved or duplicate authorities, inactive/planned/Arcane domains, cross-domain targets, incoherent policy scope, duplicate targets, unresolved snippets, non-null readiness, non-empty rewards, and non-null registry `trialPolicyRef`.
+- Require a matching required domain target for domain policies and matching required tier target for tier policies.
+- Do not infer tier or completion from snippets or owner state.
+- Do not call completion, eligibility, or readiness helpers.
+- Keep the module pure, deterministic, input-preserving, and unregistered in normal content lint.
 - Do not add adapters, readiness content, mutable authority, storage, persistence, UI, runtime, generated output, events, rewards, ownership mutation, or gameplay behavior.
 
 Current follow-up risks:
@@ -76,14 +79,15 @@ Current follow-up risks:
 | 1 | `0.5.150` | Knowledge Trial Static Policy Schema | `packages/schemas/player/knowledge_trial_policy.schema.json` | Completed |
 | 2 | `0.5.151` | Knowledge Trial Policy Content Plan | `docs/design/knowledge-trial-policy-content-plan.md` | Completed |
 | 3 | `0.5.152` | Knowledge Trial Authored Policy Content Skeleton | `packages/content/base/player/knowledge_trial_policies.json` | Completed |
-| 4 | `0.5.153` | Knowledge Trial Policy Semantic Validator Plan | Future focused design doc | Next |
-| 5 | `0.5.x` | Knowledge Trial Policy Semantic Validator | Future focused run | Deferred |
-| 6 | `0.5.x` | Knowledge Trial Registry Reference Alignment | Future focused run | Deferred |
-| 7 | `0.5.x` | Knowledge Trial Readiness Policy Schema | Future focused run | Deferred |
+| 4 | `0.5.153` | Knowledge Trial Policy Semantic Validator Plan | `docs/design/knowledge-trial-policy-semantic-validator-plan.md` | Completed |
+| 5 | `0.5.154` | Knowledge Trial Policy Semantic Validator | `docs/design/knowledge-trial-policy-semantic-validator-plan.md` | Next |
+| 6 | `0.5.x` | Knowledge Trial Policy Normal Lint Registration | Future focused run | Deferred |
+| 7 | `0.5.x` | Knowledge Trial Registry Reference Alignment | Future focused run | Deferred |
+| 8 | `0.5.x` | Knowledge Trial Readiness Policy Schema | Future focused run | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan`, inspect:
+For `Version 0.5.154 - Knowledge Trial Policy Semantic Validator`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -92,13 +96,16 @@ For `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan`, inspect:
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/design/knowledge-trial-policy-content-plan.md`
+- `docs/design/knowledge-trial-policy-semantic-validator-plan.md`
 - `docs/design/knowledge-trial-schema-plan.md`
 - `packages/schemas/player/knowledge_trial_policy.schema.json`
 - `packages/content/base/player/knowledge_trial_policies.json`
 - `packages/content/base/player/knowledge_domain_registry.json`
 - `packages/content/base/player/knowledge_snippets.json`
-- `tools/content-lint/knowledge-domains.mjs`
+- `tools/content-lint/knowledge-domain-registry.mjs`
 - `tools/content-lint/knowledge-snippets.mjs`
 - `tools/content-lint/index.mjs`
+- `tests/unit/knowledge-domain-registry-validation.test.mjs`
+- `tests/unit/knowledge-snippets-validation.test.mjs`
 - `tests/unit/schema-files.test.mjs`
 - `docs/future_content_backlog.md`

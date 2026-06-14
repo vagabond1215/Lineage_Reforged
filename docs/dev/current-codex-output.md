@@ -1,19 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton
+Source version/run: Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan
 Date: 2026-06-14
-Branch/status assumption: Ran on `master` from commit `c8cea14`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `5adac38`. The worktree was clean before edits.
 
 ## Result
 
-Added the exact one-record authored Knowledge trial policy skeleton selected by the content plan. The active character-scoped Flora Tier 1 policy requires one Flora Tier 1 completion candidate, keeps prerequisites empty, readiness null, and rewards empty, and remains inert content authority only.
+Added the documentation-only Knowledge Trial Policy Semantic Validator Plan.
 
-Focused schema-file coverage verifies exact record parity, structural schema compliance, excluded deferred behavior fields, registry-null posture, and absence from normal content-lint registration.
+The plan selects a future pure `tools/content-lint/knowledge-trial-policies.mjs` module, defines schema-first wrapper and semantic checks, exact domain/scope/tier/target coherence, duplicate and reference rejection, null readiness and empty reward posture, registry-null enforcement, deterministic path-bearing diagnostics, purity audits, focused tests, and Version 0.5.154 acceptance criteria.
+
+The conservative implementation posture is an unregistered validator module plus focused tests first. Normal content-lint registration and registry alignment remain separate future runs.
 
 ## Files Changed
 
-- `packages/content/base/player/knowledge_trial_policies.json`
-- `tests/unit/schema-files.test.mjs`
+- `docs/design/knowledge-trial-policy-semantic-validator-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -22,39 +23,38 @@ Focused schema-file coverage verifies exact record parity, structural schema com
 
 ## Checks Run
 
-- `node --check tests/unit/schema-files.test.mjs`
-- `node --test tests/unit/schema-files.test.mjs` - 71 passed, 0 failed.
 - Conflict-marker scan across changed files.
 - Trailing-whitespace scan across changed files.
 - `git diff --check`
 - Changed-path scope audit.
-- Forbidden schema, registry, validator, helper, helper-test, fixture, normal-lint-registration, runtime, storage, persistence, UI, generated-output, event, reward, ownership-mutation, and gameplay-behavior audit.
-- Registry audit confirming every `trialPolicyRef` remains null.
-- Broad typecheck and test suites were not run because no executable production files changed.
+- Forbidden schema, content, test, fixture, validator, helper, runtime, storage, persistence, UI, generated-output, event, reward, gameplay, and normal-lint-registration audit.
+- Broad typecheck and test suites were not run because this was a documentation-only pass.
 
 ## Behavior / Runtime Confirmation
 
-- Added authored content JSON only; no schema or executable production behavior changed.
-- No registry reference changed, and every `trialPolicyRef` remains null.
-- No semantic validator, helper adapter, readiness content, attempt, checkpoint, outcome, cooldown, reward, unlock, storage, persistence, save/account/session/database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior changed.
-- The policy file is not registered in normal content lint.
+- No executable, schema, content JSON, test, fixture, validator, helper, or normal content-lint registration changed.
+- No `knowledge_domain_registry.json` `trialPolicyRef` value changed.
+- No content-to-helper adapter, readiness content, attempt, checkpoint, outcome, cooldown, reward, unlock, storage, persistence, UI, runtime, generated output, event, ownership mutation, or gameplay behavior changed.
+- Completion, eligibility, and readiness helpers remain unchanged.
 - Knowledge, Skill, and Spell/Magic Study trial families remain separate.
 - Arcane Lore remains planned, blocked, and deferred.
 
 ## Risks / Follow-Up
 
-- The new authored policy has structural test coverage but no semantic validator.
-- Registry alignment remains separately deferred until semantic validation is planned and implemented.
-- No content-to-helper adapter exists.
-- Canonical completion-policy content and readiness-policy schema/content remain deferred.
-- Reward references remain intentionally empty and inert.
-- Mutable authority, persistence, checkpoint/outcome ownership, runtime, UI, events, and gameplay remain undefined.
+- The semantic validator is planned but not implemented.
+- Normal content-lint registration remains deferred until the focused validator and safety tests pass.
+- Registry alignment remains separately deferred.
+- No content-to-helper adapter or canonical completion-policy content exists.
+- Readiness schema/content remains deferred.
+- Current Flora Tier 1 has one authored counting snippet.
+- Reward references remain inert and empty.
 - `trialUnlockWeight` remains uninterpreted.
+- Mutable authority, persistence, checkpoint/outcome ownership, runtime, UI, events, and gameplay remain undefined.
 
 ## Next Recommended Version
 
-Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan
+Version 0.5.154 - Knowledge Trial Policy Semantic Validator
 
 ## Suggested Commit Message
 
-content(knowledge): add trial policy skeleton
+docs(knowledge): plan trial policy semantic validation
