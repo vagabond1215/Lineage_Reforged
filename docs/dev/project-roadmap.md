@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.146 - Knowledge Trial Eligibility Helper`
-- Next recommended version: `Version 0.5.147 - Knowledge Trial Readiness Boundary Plan`
+- Latest completed version: `Version 0.5.147 - Knowledge Trial Readiness Boundary Plan`
+- Next recommended version: `Version 0.5.148 - Knowledge Trial Readiness Helper`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.146` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.147` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -107,6 +107,7 @@ Current repo reality:
 - Pure Knowledge completion decisions now exist at `tools/content-lint/knowledge-completion.mjs` with 64 focused in-memory tests. The helper validates explicit applied progress through the unchanged current validator, requires exact in-memory completion-policy authority, evaluates isolated snippet/tier/domain targets, returns inert `candidate`, `incomplete`, or `blocked` envelopes, blocks planned Arcane Lore, and remains unregistered without state, persistence, trials, UI, runtime, events, rewards, ownership mutation, or gameplay behavior.
 - Knowledge trial boundary planning has landed in `docs/design/knowledge-trial-boundary-plan.md`. It separates completion candidates, eligibility candidates, readiness candidates, attempts, checkpoints, outcomes, cooldowns, and rewards; requires explicit completion envelopes and separate trial policy; keeps owner/domain/tier isolation; and remains the source boundary for later readiness planning without trial behavior.
 - Pure Knowledge trial eligibility decisions now exist at `tools/content-lint/knowledge-trial-eligibility.mjs` with 70 focused inline tests. The helper consumes exact current completion envelopes and exact implementation-local policy, returns only `eligible_candidate`, `not_eligible`, or `blocked`, isolates owner/domain/tier/snippet requirements, keeps reward references inert and readiness/attempt/cooldown status not evaluated, blocks Arcane Lore, and remains unregistered without state, storage, persistence, UI, runtime, events, rewards, ownership mutation, or gameplay behavior.
+- Knowledge trial readiness boundary planning has landed in `docs/design/knowledge-trial-readiness-boundary-plan.md`. It requires exact eligibility-envelope validation plus explicit readiness policy, attempt/history/limit, cooldown, availability, prerequisite, and sequence/time authorities; defines `ready_candidate`, `not_ready`, and `blocked`; and keeps attempts, checkpoints, outcomes, cooldown mutation, rewards, storage, persistence, UI, runtime, events, and gameplay behavior outside readiness.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -185,7 +186,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.144` | Knowledge Completion Helper | Codex Local | Pure helper + focused tests | Completed. Added deterministic snippet/tier/domain completion decisions over explicit validated applied progress and exact in-memory policy, strict aggregation isolation, exact safety flags, Arcane Lore blocking, and 64 focused tests. | No schema/content/validator edits, storage, persistence, fixtures, normal lint registration, completion state, trials, UI, runtime, generated output, events, rewards, ownership mutation, or gameplay behavior. |
 | `0.5.145` | Knowledge Trial Boundary Plan | Codex Local docs-first | Planning | Completed. Defined separate eligibility and readiness phases, exact completion-envelope and trial-policy authority, owner/domain/tier isolation, inert cooldown/attempt/reward posture, Arcane Lore blocking, and future helper acceptance criteria. | Documentation only; no trial helper, schema/content/test/fixture, state, storage, persistence, UI, runtime, generated output, events, rewards, ownership mutation, or gameplay behavior. |
 | `0.5.146` | Knowledge Trial Eligibility Helper | Codex Local | Pure helper + focused tests | Completed. Added exact completion-envelope and policy validation, deterministic eligibility decisions, strict owner/domain/tier isolation, inert downstream statuses/reward references, Arcane Lore blocking, and 70 focused tests. | No readiness evaluation, attempt creation, checkpoints, outcomes, cooldown mutation, reward grant, storage, persistence, normal lint registration, UI, runtime, events, ownership mutation, or gameplay behavior. |
-| `0.5.147` | Knowledge Trial Readiness Boundary Plan | Codex Local docs-first | Planning | Next. Define eligible-envelope authority and explicit readiness policy/input boundaries for attempts, cooldowns, availability, and sequence/time. | Documentation only; no readiness helper, schema/content/test/fixture, state, attempt, checkpoint, outcome, cooldown mutation, reward, storage, persistence, UI, runtime, event, or gameplay behavior. |
+| `0.5.147` | Knowledge Trial Readiness Boundary Plan | Codex Local docs-first | Planning | Completed. Defined exact eligibility-envelope validation, readiness policy, attempt/history/limit, cooldown, availability, prerequisite, sequence/time, decision, isolation, safety, and future-helper boundaries. | Documentation only; no readiness helper, schema/content/test/fixture, state, attempt, checkpoint, outcome, cooldown mutation, reward, storage, persistence, UI, runtime, event, or gameplay behavior. |
+| `0.5.148` | Knowledge Trial Readiness Helper | Codex Local | Pure helper + focused tests | Next. Evaluate only Knowledge trial readiness from one exact eligibility envelope and explicit implementation-local readiness authorities. | No attempt creation, checkpoint/outcome resolution, cooldown mutation, reward grant, storage, persistence, normal lint registration, UI, runtime, events, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -249,7 +251,8 @@ Practical near-term sequence:
 33. `0.5.144 - Knowledge Completion Helper` - completed
 34. `0.5.145 - Knowledge Trial Boundary Plan` - completed
 35. `0.5.146 - Knowledge Trial Eligibility Helper` - completed
-36. `0.5.147 - Knowledge Trial Readiness Boundary Plan` - next
+36. `0.5.147 - Knowledge Trial Readiness Boundary Plan` - completed
+37. `0.5.148 - Knowledge Trial Readiness Helper` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -303,8 +306,8 @@ Recommended advancement sequence:
 38. `0.5.144 - Knowledge Completion Helper` - completed
 39. `0.5.145 - Knowledge Trial Boundary Plan` - completed
 40. `0.5.146 - Knowledge Trial Eligibility Helper` - completed
-41. `0.5.147 - Knowledge Trial Readiness Boundary Plan` - next
-42. `0.5.x - Knowledge Trial Readiness Helper`
+41. `0.5.147 - Knowledge Trial Readiness Boundary Plan` - completed
+42. `0.5.148 - Knowledge Trial Readiness Helper` - next
 43. `0.5.x - Knowledge Trial Schema Plan`
 44. `0.5.x - Knowledge Trial Checkpoint Helper`
 45. `0.5.x - Skill Trial Schema Expansion Plan`
@@ -490,7 +493,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 53 | `0.5.144` | Knowledge Completion Helper | `tools/content-lint/knowledge-completion.mjs` | Completed |
 | 54 | `0.5.145` | Knowledge Trial Boundary Plan | `docs/design/knowledge-trial-boundary-plan.md` | Completed |
 | 55 | `0.5.146` | Knowledge Trial Eligibility Helper | `tools/content-lint/knowledge-trial-eligibility.mjs` | Completed |
-| 56 | `0.5.147` | Knowledge Trial Readiness Boundary Plan | `docs/design/knowledge-trial-boundary-plan.md` | Next |
+| 56 | `0.5.147` | Knowledge Trial Readiness Boundary Plan | `docs/design/knowledge-trial-readiness-boundary-plan.md` | Completed |
+| 57 | `0.5.148` | Knowledge Trial Readiness Helper | `docs/design/knowledge-trial-readiness-boundary-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -520,6 +524,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Knowledge Completion Rules Plan | `docs/design/knowledge-completion-rules-plan.md`; use for completion terminology, explicit threshold authority, applied-progress interpretation, snippet/tier/domain aggregation, exact safety flags, focused tests, and the later pure-helper acceptance criteria. |
 | Knowledge Trial Boundary Plan | `docs/design/knowledge-trial-boundary-plan.md`; use for completion-envelope authority, separate eligibility/readiness phases, owner/domain/tier isolation, inert attempt/cooldown/reward posture, Arcane Lore blocking, eligibility implementation history, and readiness-boundary planning. |
 | Knowledge Trial Eligibility Helper | `tools/content-lint/knowledge-trial-eligibility.mjs`; use as the exact current eligibility-envelope and implementation-local policy authority, not as persisted trial state or readiness/attempt permission. |
+| Knowledge Trial Readiness Boundary Plan | `docs/design/knowledge-trial-readiness-boundary-plan.md`; use for exact eligibility-envelope input, readiness policy, attempt/cooldown/availability/sequence-time authorities, decisions, safety flags, focused tests, and later helper acceptance criteria. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
