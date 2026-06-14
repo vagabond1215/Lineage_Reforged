@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-13
-Route: Codex local sequencing alignment after `Version 0.5.144 - Knowledge Completion Helper`
+Date: 2026-06-14
+Route: Codex local sequencing alignment after `Version 0.5.145 - Knowledge Trial Boundary Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.144 - Knowledge Completion Helper` implemented fail-closed snippet, tier, and domain decisions over explicit validated applied progress and exact in-memory completion policy without state or downstream behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.145 - Knowledge Trial Boundary Plan` defined separate eligibility and readiness phases over explicit completion envelopes and explicit trial policy without trial state or behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.144 - Knowledge Completion Helper`
+- `Version 0.5.145 - Knowledge Trial Boundary Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.145 - Knowledge Trial Boundary Plan`
+- `Version 0.5.146 - Knowledge Trial Eligibility Helper`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.144` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.145` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -102,7 +102,8 @@ Versioning note:
 | 64 | `0.5.142` | Knowledge Progress Application Helper | Codex 5.5 Local | `tools/content-lint/knowledge-progress-application.mjs` | pure helper + focused tests | Completed | Added deterministic one-proposal application, explicit accepted/current validation, strict proposal/target/value/consumption/sequence/notes checks, replacement-wrapper validation, inert safety flags, and 43 focused tests without storage or downstream behavior. |
 | 65 | `0.5.143` | Knowledge Completion Rules Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-completion-rules-plan.md` | planning doc | Completed | Defined fail-closed threshold authority, applied-progress interpretation, completion-weight/counting posture, owner/domain/tier aggregation, exact safety flags, focused tests, and future helper criteria without implementation or state. |
 | 66 | `0.5.144` | Knowledge Completion Helper | Codex 5.5 Local | `tools/content-lint/knowledge-completion.mjs` | pure helper + focused tests | Completed | Added deterministic snippet/tier/domain decisions over explicit validated applied progress and exact in-memory completion policy, strict aggregation isolation, exact safety flags, Arcane Lore blocking, and 64 focused tests without state or downstream behavior. |
-| 67 | `0.5.145` | Knowledge Trial Boundary Plan | Codex 5.5 Local docs-first | `docs/design/skill-mastery-trial-framework-plan.md` | planning doc | Next | Define only the boundary from read-only completion candidates to future Knowledge trial eligibility/readiness; keep Knowledge, Skill, and Spell/Magic Study separate and add no schema, state, behavior, UI, runtime, events, rewards, or persistence. |
+| 67 | `0.5.145` | Knowledge Trial Boundary Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-boundary-plan.md` | planning doc | Completed | Defined separate eligibility and readiness phases, exact completion-envelope and trial-policy authority, owner/domain/tier isolation, inert attempt/cooldown/reward posture, Arcane Lore blocking, and later helper criteria without implementation or state. |
+| 68 | `0.5.146` | Knowledge Trial Eligibility Helper | Codex 5.5 Local | `docs/design/knowledge-trial-boundary-plan.md` | pure helper + focused tests | Next | Add only a deterministic eligibility decision over explicit completion envelopes and explicit in-memory eligibility policy; no readiness, attempts, checkpoints, outcomes, cooldown mutation, rewards, storage, persistence, registration, UI, runtime, events, or gameplay behavior. |
 
 ## Default Prompt Pattern
 

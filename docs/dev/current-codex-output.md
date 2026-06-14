@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.144 - Knowledge Completion Helper
-Date: 2026-06-13
-Branch/status assumption: Ran on `master` from commit `61cccf3`. The worktree was clean before edits.
+Source version/run: Version 0.5.145 - Knowledge Trial Boundary Plan
+Date: 2026-06-14
+Branch/status assumption: Ran on `master` from commit `a553226`. The worktree was clean before edits.
 
 ## Result
 
-Added the pure deterministic in-memory Knowledge completion helper and 64 focused tests, then aligned the current handoff, roadmap, sequence, and backlog.
+Added the documentation-only Knowledge Trial Boundary Plan and aligned the current handoff, roadmap, sequence, and backlog.
 
-`evaluateKnowledgeCompletion(...)` supports exact snippet, tier, and domain targets. It validates supplied applied progress through unchanged `validateKnowledgeProgress(...)`, requires exact implementation-local completion-policy authority, returns only `candidate`, `incomplete`, or `blocked`, and preserves the plan's exact inert safety flags.
+The plan separates completion candidates, trial eligibility candidates, trial readiness, attempts, checkpoints, outcomes, cooldowns, and rewards. It requires exact read-only completion envelopes plus separate explicit trial policy and keeps eligibility distinct from readiness.
 
-Snippet decisions compare explicit `progressValue` to explicit positive integer thresholds. Tier decisions aggregate only independently completed authored snippets with `countsTowardTierCompletion: true`, using `completionWeight` only as tier weight. Domain decisions consume explicit required-tier decisions. Owner, domain, and tier boundaries remain isolated and planned Arcane Lore remains blocked.
+The first later helper is scoped to eligibility only. It may return `eligible_candidate`, `not_eligible`, or `blocked` from explicit completion envelopes and implementation-local eligibility policy. Readiness, attempts, checkpoints, outcomes, cooldown mutation, rewards, storage, UI, runtime, events, and gameplay remain deferred.
 
 ## Files Changed
 
-- `tools/content-lint/knowledge-completion.mjs`
-- `tests/unit/knowledge-completion.test.mjs`
+- `docs/design/knowledge-trial-boundary-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,21 +23,6 @@ Snippet decisions compare explicit `progressValue` to explicit positive integer 
 
 ## Checks Run
 
-- `node --check tools/content-lint/knowledge-completion.mjs`
-  - Passed.
-- `node --check tests/unit/knowledge-completion.test.mjs`
-  - Passed.
-- `node --test tests/unit/knowledge-completion.test.mjs`
-  - Passed: 64 tests.
-- `npm.cmd run tool:content-lint`
-  - Passed: 55 files checked.
-- Existing focused Knowledge tests:
-  - `tests/unit/knowledge-progress-application.test.mjs`
-  - `tests/unit/knowledge-progress-validation.test.mjs`
-  - `tests/unit/knowledge-evidence-validation.test.mjs`
-  - `tests/unit/knowledge-snippets-validation.test.mjs`
-  - `tests/unit/knowledge-domain-registry-validation.test.mjs`
-  - Passed: 264 tests.
 - Conflict-marker scan across changed files.
   - Passed.
 - Trailing-whitespace scan across changed files.
@@ -46,37 +30,36 @@ Snippet decisions compare explicit `progressValue` to explicit positive integer 
 - `git diff --check`
   - Passed.
 - Changed-path scope audit.
-  - Passed: only the helper, its focused test, and required coordination documents changed.
-- Forbidden registration/runtime/storage/UI/schema/content audit.
-  - Passed: no normal lint registration, schema, content JSON, validator, existing helper, fixture, storage, persistence, UI, runtime, generated-output, event, reward, ownership, or gameplay path changed.
-- Broad typecheck was not run because no TypeScript or UI file changed.
+  - Passed: only the new design plan and required coordination documents changed.
+- Forbidden executable/schema/content/test/fixture/runtime/storage/UI/registration audit.
+  - Passed: no executable, schema, content JSON, test, fixture, runtime, storage, persistence, UI, or normal content-lint registration path changed.
+- Broad typecheck and test suites were not run because this was a documentation-only pass.
 
 ## Behavior / Runtime Confirmation
 
-- Added only a pure read-only completion decision helper; no completion state is written.
-- No schema, content JSON, validator, or existing Knowledge helper changed.
-- No fixture or canonical completion-policy file was added.
+- No executable behavior changed.
+- No trial helper, test, fixture, schema, content JSON, validator, or existing helper changed.
 - Nothing was registered in normal content lint.
-- No evidence acceptance, progress initialization, progress proposal, or progress application behavior changed.
-- No storage, persistence, save, account, session, database, UI, runtime, generated output, event, reward, ownership mutation, or gameplay behavior changed.
-- No Knowledge trial, Skill Trial, or Spell/Magic Study behavior changed.
+- No completion, eligibility, readiness, attempt, checkpoint, outcome, cooldown, reward, unlock, storage, persistence, save, account, session, database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior changed.
+- Knowledge, Skill, and Spell/Magic Study trial families remain separate.
 - Arcane Lore remains planned, blocked, and deferred.
 
 ## Risks / Follow-Up
 
-- Completion policy is still explicit implementation-local input; no canonical schema, content path, storage owner, or persistence owner exists.
-- Applied progress and completion decisions remain in-memory outputs, not persisted state.
-- No canonical accepted-evidence, progress, completion, or trial collection exists.
-- Character owner, canonical sequence, atomic append/application, and replay ownership remain unresolved.
-- Knowledge trial eligibility, readiness, attempts, checkpoints, outcomes, cooldowns, rewards, and persistence remain deferred.
-- Knowledge, Skill, and Spell/Magic Study trial families must remain separate.
-- Temporary Knowledge guardrail documents should be reviewed during the next planning run for retention, consolidation, promotion, or removal.
+- No canonical Knowledge trial policy schema, content path, policy id pattern, storage owner, or persistence owner exists.
+- Completion and future eligibility decisions remain in-memory outputs, not persisted state.
+- No canonical eligibility, readiness, attempt, checkpoint, outcome, cooldown, or reward collection exists.
+- Character owner, sequence, time, replay, concurrency, and atomic trial-state authorities remain unresolved.
+- Checkpoint scoring, soft-fail recovery, hard-fail behavior, cooldown rules, reward authority, and UI/runtime integration remain deferred.
+- `trialUnlockWeight` has no approved eligibility or readiness interpretation.
+- Arcane Lore remains blocked.
+- The completion rules and trial boundary plans should remain through the eligibility-helper run, then be reviewed for consolidation or durable promotion.
 - No blockers occurred.
 
 ## Next Recommended Version
 
-Version 0.5.145 - Knowledge Trial Boundary Plan
+Version 0.5.146 - Knowledge Trial Eligibility Helper
 
 ## Suggested Commit Message
 
-tools(knowledge): evaluate completion candidates
+docs(knowledge): plan trial boundary
