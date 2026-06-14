@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local planning after `Version 0.5.147 - Knowledge Trial Readiness Boundary Plan`
+Source route: Codex local implementation after `Version 0.5.148 - Knowledge Trial Readiness Helper`
 Date: 2026-06-14
-Branch/status assumption: `master` at commit `c30a01c` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `9d4743e` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -13,82 +13,74 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
-- `docs/design/knowledge-completion-rules-plan.md` owns completion terminology, threshold authority, aggregation, and completion safety.
-- `tools/content-lint/knowledge-completion.mjs` owns the implemented pure completion decision.
-- `docs/design/knowledge-trial-boundary-plan.md` owns the broad completion-to-eligibility-to-readiness separation.
-- `tools/content-lint/knowledge-trial-eligibility.mjs` owns the implemented pure eligibility decision and exact eligibility envelope.
-- `docs/design/knowledge-trial-readiness-boundary-plan.md` owns readiness terminology, eligibility-envelope input authority, policy/attempt/cooldown/availability/sequence-time boundaries, decisions, safety, and implementation acceptance criteria.
-- `docs/design/skill-mastery-trial-framework-plan.md` owns the separate Skill Trial and Spell/Magic Study framework posture.
+- `tools/content-lint/knowledge-completion.mjs` owns the pure completion decision.
+- `tools/content-lint/knowledge-trial-eligibility.mjs` owns the pure eligibility decision and exact eligibility envelope.
+- `docs/design/knowledge-trial-readiness-boundary-plan.md` owns readiness terminology, authority boundaries, decisions, and downstream exclusions.
+- `tools/content-lint/knowledge-trial-readiness.mjs` owns the implemented pure readiness decision over one exact eligibility envelope and explicit operation-local authorities.
 - `docs/design/knowledge-storage-persistence-boundary-plan.md` owns deferred collection, atomicity, and persistence decisions.
+- `docs/design/skill-mastery-trial-framework-plan.md` owns the separate Skill Trial and Spell/Magic Study posture.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
 
 ## Current Anchor
 
 Latest completed Codex version:
 
-- `Version 0.5.147 - Knowledge Trial Readiness Boundary Plan`
+- `Version 0.5.148 - Knowledge Trial Readiness Helper`
 
 Immediate next version:
 
-- `Version 0.5.148 - Knowledge Trial Readiness Helper`
+- `Version 0.5.149 - Knowledge Trial Schema Plan`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.147 Result
+## Version 0.5.148 Result
 
-- Added `docs/design/knowledge-trial-readiness-boundary-plan.md`.
-- Defines eligibility candidate, readiness candidate, policy, attempts/history/limits, cooldown, availability, prerequisites, sequence/time, blockers, and deferred authority.
-- Records the current `not_ready` posture because no readiness policy or authoritative attempt/cooldown/availability/sequence-time inputs exist.
-- Requires exact validation of the current eligibility envelope and safety flags.
-- Defines `ready_candidate`, `not_ready`, and `blocked`.
-- Requires exact owner, readiness-policy, eligibility-policy, domain, and tier parity.
-- Defines explicit implementation-local readiness policy and authority concepts.
-- Keeps missing/deferred policy or safely failed gates `not_ready`; malformed, unsafe, ambiguous, cross-scope, unsupported, unresolved, or Arcane Lore authority is `blocked`.
-- Defines the future read-only readiness envelope and exact no-effect safety posture.
-- Forbids completion/eligibility helper calls, raw progress/evidence inspection, wall-clock/random/environment inference, and all downstream trial behavior.
-- Added no helper, test, fixture, schema/content/validator edit, registration, state, storage, persistence, UI, runtime, generated output, event, reward, ownership mutation, or gameplay behavior.
+- Added `evaluateKnowledgeTrialReadiness(...)` as a pure deterministic in-memory helper.
+- Consumes one exact current eligibility envelope without calling eligibility or completion.
+- Requires exact character owner, readiness policy, eligibility policy, domain, and optional tier parity.
+- Supports explicit attempt-limit, cooldown, availability, and sequence/time gates.
+- Returns only `ready_candidate`, `not_ready`, or `blocked`.
+- Missing/deferred policy and safe unsatisfied gates return `not_ready`.
+- Malformed, ambiguous, cross-scope, unsupported, unresolved, or Arcane Lore authority returns `blocked`.
+- Reward references remain inert metadata.
+- Non-empty prerequisite readiness gates remain unsupported and fail closed.
+- Added 83 focused tests including purity, registration, fixture, determinism, and immutability audits.
+- Added no schema, content JSON, validator edit, registration, state, persistence, attempt creation, checkpoint/outcome resolution, cooldown mutation, reward grant, UI, runtime, event, or gameplay behavior.
 
-## Active Guardrails For Knowledge Trial Readiness Helper
+## Active Guardrails For Knowledge Trial Schema Plan
 
-- Add only a pure deterministic in-memory readiness helper and focused inline tests.
-- Consume one exact eligibility envelope; do not call eligibility or completion helpers.
-- Validate exact eligibility shape, target, observed fields, issues, and every current eligibility safety flag.
-- Require exact implementation-local readiness policy plus explicit attempt, cooldown, availability, sequence/time, and domain authority.
-- Support only `ready_candidate`, `not_ready`, and `blocked`.
-- Return `not_ready` for missing/deferred readiness policy and valid but failed readiness gates.
-- Return `blocked` for malformed/unsafe eligibility, active-policy eligibility mismatch, malformed/ambiguous/cross-scope authority, unsupported input, unresolved domain, or Arcane Lore.
-- Keep owner, readiness-policy, eligibility-policy, domain, and tier matching exact.
-- Keep reward references inert.
-- Do not create attempts, resolve checkpoints/outcomes, mutate cooldowns, grant rewards, unlock content, or emit events.
-- Do not use wall-clock time, randomness, hidden counters, environment, runtime globals, UI state, generated output, Skill Trial data, Spell/Magic Study data, or Arcane Lore references.
-- Preserve existing helpers unchanged and keep the new helper unregistered from normal content lint.
-- Do not edit schemas, content JSON, validators, existing tests/helpers, fixtures, storage, persistence, save/account/session/database, UI, runtime, generated output, events, rewards, ownership, or gameplay behavior.
+- Plan schema and authored authority only; do not implement a schema or content file unless separately authorized.
+- Reconcile the operation-local readiness policy, attempt, cooldown, availability, and sequence/time shapes before selecting canonical ownership.
+- Keep eligibility and readiness envelopes as read-only decisions, not persisted state.
+- Do not treat `ready_candidate` as attempt permission or create/reserve an attempt.
+- Do not add checkpoint, outcome, cooldown mutation, reward, unlock, storage, persistence, save/account/session/database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior.
+- Preserve exact character owner and domain/tier isolation.
 - Keep Knowledge, Skill, and Spell/Magic Study trial families separate.
+- Keep Arcane Lore blocked and deferred.
+- Do not register operation inputs or mutable state in normal authored-content lint without a separate ownership decision.
+- Do not edit current completion, eligibility, or readiness helpers during the schema-plan run.
 
 Current follow-up risks:
 
-- No canonical readiness policy, attempt, cooldown, availability, or sequence/time schema/content authority exists.
-- Eligibility and readiness decisions remain in-memory outputs, not persisted state.
-- Current snippet completion envelopes do not carry snippet-tier authority.
-- Attempt lifecycle/history/counting, cooldown units, availability ownership, and time/sequence ownership remain undefined.
-- Checkpoint, outcome, reward, storage, persistence, replay, concurrency, UI, runtime, and event integration remain deferred.
+- No canonical trial policy, attempt, cooldown, availability, or sequence/time schema/content authority exists.
+- Attempt lifecycle and status vocabulary remain implementation-local.
+- Idempotency, replay, concurrency, reservation, persistence, and atomicity remain undefined.
+- Prerequisite readiness gates, checkpoints, outcomes, rewards, storage, runtime, UI, and events remain deferred.
 - `trialUnlockWeight` has no approved interpretation.
-- Arcane Lore remains blocked.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.145` | Knowledge Trial Boundary Plan | `docs/design/knowledge-trial-boundary-plan.md` | Completed |
-| 2 | `0.5.146` | Knowledge Trial Eligibility Helper | `tools/content-lint/knowledge-trial-eligibility.mjs` | Completed |
-| 3 | `0.5.147` | Knowledge Trial Readiness Boundary Plan | `docs/design/knowledge-trial-readiness-boundary-plan.md` | Completed |
-| 4 | `0.5.148` | Knowledge Trial Readiness Helper | `docs/design/knowledge-trial-readiness-boundary-plan.md` | Next |
-| 5 | `0.5.x` | Knowledge Trial Schema Plan | Future focused plan | Deferred |
-| 6 | `0.5.x` | Knowledge Trial Checkpoint Helper | Future focused plan | Deferred |
+| 1 | `0.5.146` | Knowledge Trial Eligibility Helper | `tools/content-lint/knowledge-trial-eligibility.mjs` | Completed |
+| 2 | `0.5.147` | Knowledge Trial Readiness Boundary Plan | `docs/design/knowledge-trial-readiness-boundary-plan.md` | Completed |
+| 3 | `0.5.148` | Knowledge Trial Readiness Helper | `tools/content-lint/knowledge-trial-readiness.mjs` | Completed |
+| 4 | `0.5.149` | Knowledge Trial Schema Plan | Current helper and trial boundary sources | Next |
+| 5 | `0.5.x` | Knowledge Trial Checkpoint Helper | Future focused plan | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.148 - Knowledge Trial Readiness Helper`, inspect:
+For `Version 0.5.149 - Knowledge Trial Schema Plan`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -96,12 +88,13 @@ For `Version 0.5.148 - Knowledge Trial Readiness Helper`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/design/knowledge-trial-readiness-boundary-plan.md`
 - `docs/design/knowledge-trial-boundary-plan.md`
+- `docs/design/knowledge-trial-readiness-boundary-plan.md`
 - `tools/content-lint/knowledge-trial-eligibility.mjs`
+- `tools/content-lint/knowledge-trial-readiness.mjs`
 - `tests/unit/knowledge-trial-eligibility.test.mjs`
+- `tests/unit/knowledge-trial-readiness.test.mjs`
 - `packages/content/base/player/knowledge_domain_registry.json`
 - `docs/design/knowledge-storage-persistence-boundary-plan.md`
 - `docs/design/skill-mastery-trial-framework-plan.md`
-- related Knowledge helper focused tests
 - `docs/future_content_backlog.md`

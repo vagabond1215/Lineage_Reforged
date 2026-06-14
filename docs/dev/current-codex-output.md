@@ -1,20 +1,19 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.147 - Knowledge Trial Readiness Boundary Plan
+Source version/run: Version 0.5.148 - Knowledge Trial Readiness Helper
 Date: 2026-06-14
-Branch/status assumption: Ran on `master` from commit `c30a01c`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `9d4743e`. The worktree was clean before edits.
 
 ## Result
 
-Added the documentation-only Knowledge Trial Readiness Boundary Plan and aligned the current handoff, roadmap, sequence, and backlog.
+Added the first pure deterministic in-memory Knowledge trial readiness evaluator and 83 focused inline tests.
 
-The plan defines readiness as a separate read-only phase after eligibility. It requires one exact eligibility envelope plus separately authorized readiness policy, attempt history, cooldown, availability, and sequence/time inputs before `ready_candidate` can exist.
-
-It defines `ready_candidate`, `not_ready`, and `blocked`; exact owner/policy/domain/tier isolation; the eligibility-envelope validation contract; inert readiness safety flags; downstream attempt/checkpoint/outcome/cooldown/reward boundaries; a focused future test matrix; and acceptance criteria for a later pure readiness helper.
+The helper consumes one exact current eligibility envelope plus explicit implementation-local readiness policy, attempt, cooldown, availability, sequence/time, and domain authority. It returns only `ready_candidate`, `not_ready`, or `blocked`, preserves exact character-owner and domain/tier isolation, reports inert reward references, and constructs exact no-effect safety flags.
 
 ## Files Changed
 
-- `docs/design/knowledge-trial-readiness-boundary-plan.md`
+- `tools/content-lint/knowledge-trial-readiness.mjs`
+- `tests/unit/knowledge-trial-readiness.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -23,44 +22,42 @@ It defines `ready_candidate`, `not_ready`, and `blocked`; exact owner/policy/dom
 
 ## Checks Run
 
+- `node --check tools/content-lint/knowledge-trial-readiness.mjs`
+- `node --check tests/unit/knowledge-trial-readiness.test.mjs`
+- `node --test tests/unit/knowledge-trial-readiness.test.mjs`
+  - Passed: 83 tests.
+- Existing focused Knowledge tests listed by the run prompt.
+- `npm.cmd run tool:content-lint`
 - Conflict-marker scan across changed files.
-  - Passed.
 - Trailing-whitespace scan across changed files.
-  - Passed.
 - `git diff --check`
-  - Passed.
 - Changed-path scope audit.
-  - Passed: only the new readiness design plan and five required coordination documents changed.
-- Forbidden executable/schema/content/test/fixture/runtime/storage/UI/helper-registration audit.
-  - Passed.
-- Broad typecheck and test suites were not run because this was a documentation-only pass.
+- Forbidden schema/content/validator/existing-helper/fixture/runtime/storage/UI/registration audit.
 
 ## Behavior / Runtime Confirmation
 
-- No executable behavior changed.
-- No readiness helper, test, fixture, schema, content JSON, validator, or existing helper changed.
-- Nothing was registered in normal content lint.
-- No readiness evaluation, attempt creation, checkpoint or outcome resolution, cooldown mutation, reward resolution/grant, unlock, storage, persistence, save/account/session/database behavior, UI, runtime, generated output, event, ownership mutation, or gameplay behavior was added.
-- The completion and eligibility helpers remain unchanged.
+- Added only a pure read-only readiness decision over explicit in-memory inputs.
+- No completion or eligibility evaluation is called.
+- No attempt, checkpoint, outcome, cooldown, reward, unlock, storage, persistence, save/account/session/database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior was added.
+- No schema, content JSON, validator, existing Knowledge helper/test, or fixture changed.
+- The helper is not registered in normal content lint.
 - Knowledge, Skill, and Spell/Magic Study trial families remain separate.
-- Arcane Lore remains planned, blocked, and deferred.
+- Arcane Lore remains blocked and deferred.
 
 ## Risks / Follow-Up
 
-- No canonical readiness policy schema, content path, id authority, or storage owner exists.
-- Eligibility and future readiness envelopes remain in-memory decisions, not persisted state.
-- Current snippet completion envelopes do not carry snippet-tier authority.
-- Attempt lifecycle/history, counting rules, cooldown units, availability ownership, and sequence/time authority remain undefined.
-- Attempt idempotency, replay, concurrency, reservation, and persistence remain undefined.
-- Checkpoint scoring, outcomes, rewards, UI/runtime integration, and event ownership remain deferred.
+- Readiness policy and all mutable authorities remain implementation-local; no canonical schema or content path exists.
+- Eligibility and readiness envelopes remain in-memory decisions, not persisted state or attempt permission.
+- Non-empty prerequisite readiness gates remain unsupported and fail closed.
+- Attempt lifecycle, status vocabulary, idempotency, replay, concurrency, reservation, and persistence remain undefined.
+- Cooldown, availability, and sequence/time storage and ownership remain undefined.
+- Checkpoint, outcome, reward, trial-state, UI/runtime, and event integration remain deferred.
 - `trialUnlockWeight` has no approved readiness interpretation.
-- Arcane Lore remains blocked.
-- No blockers occurred.
 
 ## Next Recommended Version
 
-Version 0.5.148 - Knowledge Trial Readiness Helper
+Version 0.5.149 - Knowledge Trial Schema Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan trial readiness boundary
+tools(knowledge): evaluate trial readiness
