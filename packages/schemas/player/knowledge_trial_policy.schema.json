@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnowledgeTrialPolicyRecord",
+  "description": "Strict authored Knowledge trial static eligibility-policy record. This schema defines no owner-specific state, readiness state, trial operation envelope, or runtime behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "policyId",
+    "status",
+    "ownerScope",
+    "scope",
+    "domainId",
+    "requiredCompletionTargets",
+    "prerequisiteCompletionTargets",
+    "readinessPolicyId",
+    "rewardRefs",
+    "notes"
+  ],
+  "properties": {
+    "policyId": {
+      "type": "string",
+      "pattern": "^knowledge_trial_policy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "deferred"
+      ]
+    },
+    "ownerScope": {
+      "type": "string",
+      "enum": [
+        "character"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "domain",
+        "tier"
+      ]
+    },
+    "domainId": {
+      "type": "string",
+      "pattern": "^knowledge_domain\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requiredCompletionTargets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/completionRequirement"
+      }
+    },
+    "prerequisiteCompletionTargets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/completionRequirement"
+      }
+    },
+    "readinessPolicyId": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^knowledge_trial_readiness_policy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        }
+      ]
+    },
+    "rewardRefs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyId",
+        "status",
+        "ownerScope",
+        "scope",
+        "domainId",
+        "requiredCompletionTargets",
+        "prerequisiteCompletionTargets",
+        "readinessPolicyId",
+        "rewardRefs",
+        "notes"
+      ],
+      "properties": {
+        "policyId": {
+          "$ref": "#/properties/policyId"
+        },
+        "status": {
+          "$ref": "#/properties/status"
+        },
+        "ownerScope": {
+          "$ref": "#/properties/ownerScope"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "domain"
+          ]
+        },
+        "domainId": {
+          "$ref": "#/properties/domainId"
+        },
+        "requiredCompletionTargets": {
+          "$ref": "#/properties/requiredCompletionTargets"
+        },
+        "prerequisiteCompletionTargets": {
+          "$ref": "#/properties/prerequisiteCompletionTargets"
+        },
+        "readinessPolicyId": {
+          "$ref": "#/properties/readinessPolicyId"
+        },
+        "rewardRefs": {
+          "$ref": "#/properties/rewardRefs"
+        },
+        "notes": {
+          "$ref": "#/properties/notes"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyId",
+        "status",
+        "ownerScope",
+        "scope",
+        "domainId",
+        "tier",
+        "requiredCompletionTargets",
+        "prerequisiteCompletionTargets",
+        "readinessPolicyId",
+        "rewardRefs",
+        "notes"
+      ],
+      "properties": {
+        "policyId": {
+          "$ref": "#/properties/policyId"
+        },
+        "status": {
+          "$ref": "#/properties/status"
+        },
+        "ownerScope": {
+          "$ref": "#/properties/ownerScope"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "tier"
+          ]
+        },
+        "domainId": {
+          "$ref": "#/properties/domainId"
+        },
+        "tier": {
+          "$ref": "#/properties/tier"
+        },
+        "requiredCompletionTargets": {
+          "$ref": "#/properties/requiredCompletionTargets"
+        },
+        "prerequisiteCompletionTargets": {
+          "$ref": "#/properties/prerequisiteCompletionTargets"
+        },
+        "readinessPolicyId": {
+          "$ref": "#/properties/readinessPolicyId"
+        },
+        "rewardRefs": {
+          "$ref": "#/properties/rewardRefs"
+        },
+        "notes": {
+          "$ref": "#/properties/notes"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "completionRequirement": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "domainId",
+            "snippetId",
+            "requiredDecision"
+          ],
+          "properties": {
+            "scope": {
+              "type": "string",
+              "enum": [
+                "snippet"
+              ]
+            },
+            "domainId": {
+              "$ref": "#/properties/domainId"
+            },
+            "snippetId": {
+              "type": "string",
+              "pattern": "^knowledge_snippet\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+            },
+            "requiredDecision": {
+              "type": "string",
+              "enum": [
+                "candidate"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "domainId",
+            "tier",
+            "requiredDecision"
+          ],
+          "properties": {
+            "scope": {
+              "type": "string",
+              "enum": [
+                "tier"
+              ]
+            },
+            "domainId": {
+              "$ref": "#/properties/domainId"
+            },
+            "tier": {
+              "$ref": "#/properties/tier"
+            },
+            "requiredDecision": {
+              "type": "string",
+              "enum": [
+                "candidate"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "domainId",
+            "requiredDecision"
+          ],
+          "properties": {
+            "scope": {
+              "type": "string",
+              "enum": [
+                "domain"
+              ]
+            },
+            "domainId": {
+              "$ref": "#/properties/domainId"
+            },
+            "requiredDecision": {
+              "type": "string",
+              "enum": [
+                "candidate"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

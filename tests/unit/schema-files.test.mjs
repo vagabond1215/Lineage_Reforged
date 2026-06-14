@@ -45,6 +45,7 @@ const schemaFiles = [
   "packages/schemas/player/knowledge_evidence.schema.json",
   "packages/schemas/player/knowledge_progress.schema.json",
   "packages/schemas/player/knowledge_snippet.schema.json",
+  "packages/schemas/player/knowledge_trial_policy.schema.json",
   "packages/schemas/player/skill-effect.schema.json",
   "packages/schemas/player/title.schema.json",
   "packages/schemas/player/spell.schema.json",
@@ -72,4 +73,410 @@ for (const schemaFile of schemaFiles) {
     assert.equal(typeof parsed.type, "string");
   });
 }
+
+function resolveLocalRef(rootSchema, reference) {
+  assert.match(reference, /^#\//);
+  return reference
+    .slice(2)
+    .split("/")
+    .reduce((value, segment) => value[segment], rootSchema);
+}
+
+function matchesSchema(value, schema, rootSchema) {
+  if (schema.$ref) {
+    return matchesSchema(value, resolveLocalRef(rootSchema, schema.$ref), rootSchema);
+  }
+
+  if (schema.oneOf) {
+    return schema.oneOf.filter((branch) =>
+      matchesSchema(value, branch, rootSchema)
+    ).length === 1;
+  }
+
+  if (schema.type === "null") {
+    return value === null;
+  }
+  if (schema.type === "object") {
+    if (typeof value !== "object" || value === null || Array.isArray(value)) {
+      return false;
+    }
+    if (
+      schema.required?.some(
+        (requiredProperty) => !Object.hasOwn(value, requiredProperty)
+      )
+    ) {
+      return false;
+    }
+    if (
+      schema.additionalProperties === false &&
+      Object.keys(value).some(
+        (property) => !Object.hasOwn(schema.properties ?? {}, property)
+      )
+    ) {
+      return false;
+    }
+    return Object.entries(schema.properties ?? {}).every(
+      ([property, propertySchema]) =>
+        !Object.hasOwn(value, property) ||
+        matchesSchema(value[property], propertySchema, rootSchema)
+    );
+  }
+  if (schema.type === "array") {
+    if (!Array.isArray(value)) {
+      return false;
+    }
+    if (schema.minItems !== undefined && value.length < schema.minItems) {
+      return false;
+    }
+    if (
+      schema.uniqueItems === true &&
+      new Set(value.map((item) => JSON.stringify(item))).size !== value.length
+    ) {
+      return false;
+    }
+    return !schema.items ||
+      value.every((item) => matchesSchema(item, schema.items, rootSchema));
+  }
+  if (schema.type === "string") {
+    if (typeof value !== "string") {
+      return false;
+    }
+    if (schema.minLength !== undefined && value.length < schema.minLength) {
+      return false;
+    }
+    if (schema.pattern && !new RegExp(schema.pattern).test(value)) {
+      return false;
+    }
+  }
+  if (
+    schema.type === "integer" &&
+    (!Number.isInteger(value) ||
+      (schema.minimum !== undefined && value < schema.minimum))
+  ) {
+    return false;
+  }
+  return !schema.enum || schema.enum.includes(value);
+}
+
+const knowledgeTrialPolicySchema = JSON.parse(
+  stripBom(
+    await readFile(
+      "packages/schemas/player/knowledge_trial_policy.schema.json",
+      "utf8"
+    )
+  )
+);
+
+function snippetRequirement(overrides = {}) {
+  return {
+    scope: "snippet",
+    domainId: "knowledge_domain.flora",
+    snippetId: "knowledge_snippet.flora.aloe.identification",
+    requiredDecision: "candidate",
+    ...overrides
+  };
+}
+
+function tierRequirement(overrides = {}) {
+  return {
+    scope: "tier",
+    domainId: "knowledge_domain.flora",
+    tier: 1,
+    requiredDecision: "candidate",
+    ...overrides
+  };
+}
+
+function domainRequirement(overrides = {}) {
+  return {
+    scope: "domain",
+    domainId: "knowledge_domain.flora",
+    requiredDecision: "candidate",
+    ...overrides
+  };
+}
+
+function knowledgeTrialPolicy(overrides = {}) {
+  return {
+    policyId: "knowledge_trial_policy.flora_tier_1",
+    status: "active",
+    ownerScope: "character",
+    scope: "tier",
+    domainId: "knowledge_domain.flora",
+    tier: 1,
+    requiredCompletionTargets: [tierRequirement()],
+    prerequisiteCompletionTargets: [],
+    readinessPolicyId: null,
+    rewardRefs: [],
+    notes: ["Static eligibility policy only."],
+    ...overrides
+  };
+}
+
+function validatesKnowledgeTrialPolicy(record) {
+  return matchesSchema(
+    record,
+    knowledgeTrialPolicySchema,
+    knowledgeTrialPolicySchema
+  );
+}
+
+test("Knowledge trial policy schema accepts exact domain and tier policies", () => {
+  const domainPolicy = knowledgeTrialPolicy({
+    policyId: "knowledge_trial_policy.flora_domain",
+    scope: "domain",
+    requiredCompletionTargets: [domainRequirement()]
+  });
+  delete domainPolicy.tier;
+
+  assert.equal(validatesKnowledgeTrialPolicy(domainPolicy), true);
+  assert.equal(validatesKnowledgeTrialPolicy(knowledgeTrialPolicy()), true);
+});
+
+test("Knowledge trial policy schema requires every static top-level field", () => {
+  for (const field of knowledgeTrialPolicySchema.required) {
+    const record = knowledgeTrialPolicy();
+    delete record[field];
+    assert.equal(validatesKnowledgeTrialPolicy(record), false, field);
+  }
+});
+
+test("Knowledge trial policy schema rejects unsupported top-level authority", () => {
+  for (const field of [
+    "ownerId",
+    "readinessPolicyStatus",
+    "attemptConstraintStatus",
+    "cooldownConstraintStatus",
+    "eligibilityDecision",
+    "readinessDecision",
+    "eligibilityEnvelope",
+    "readinessEnvelope",
+    "attemptPolicy",
+    "cooldownPolicy",
+    "availabilityPolicy",
+    "sequenceTimePolicy",
+    "attemptHistory",
+    "cooldownState",
+    "availabilityFacts",
+    "sequenceValue",
+    "checkpointResults",
+    "outcome",
+    "rewardState",
+    "uiState",
+    "runtimeState",
+    "generatedOutput",
+    "events",
+    "persistence",
+    "saveState",
+    "accountState",
+    "sessionState",
+    "databaseState",
+    "skillTrialPolicy",
+    "magicStudyPolicy"
+  ]) {
+    assert.equal(
+      validatesKnowledgeTrialPolicy(
+        knowledgeTrialPolicy({ [field]: {} })
+      ),
+      false,
+      field
+    );
+  }
+});
+
+test("Knowledge trial policy schema enforces identity, status, owner, and scope", () => {
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ status: "deferred" })
+    ),
+    true
+  );
+
+  for (const overrides of [
+    { policyId: "trial_policy.flora" },
+    { status: "retired" },
+    { ownerScope: "account" },
+    { scope: "snippet" },
+    { domainId: "domain.flora" }
+  ]) {
+    assert.equal(
+      validatesKnowledgeTrialPolicy(knowledgeTrialPolicy(overrides)),
+      false,
+      JSON.stringify(overrides)
+    );
+  }
+});
+
+test("Knowledge trial policy schema enforces domain and tier shapes", () => {
+  const domainWithTier = knowledgeTrialPolicy({
+    scope: "domain",
+    requiredCompletionTargets: [domainRequirement()]
+  });
+  assert.equal(validatesKnowledgeTrialPolicy(domainWithTier), false);
+
+  for (const tier of [undefined, 0, -1, 1.5]) {
+    const record = knowledgeTrialPolicy({ tier });
+    if (tier === undefined) {
+      delete record.tier;
+    }
+    assert.equal(validatesKnowledgeTrialPolicy(record), false, String(tier));
+  }
+});
+
+test("Knowledge trial policy schema enforces completion target arrays", () => {
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ requiredCompletionTargets: [] })
+    ),
+    false
+  );
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ prerequisiteCompletionTargets: [] })
+    ),
+    true
+  );
+});
+
+test("Knowledge trial policy schema constrains readiness and reward references", () => {
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ readinessPolicyId: null })
+    ),
+    true
+  );
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({
+        readinessPolicyId: "knowledge_trial_readiness_policy.flora_tier_1"
+      })
+    ),
+    true
+  );
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ readinessPolicyId: "readiness_policy.flora" })
+    ),
+    false
+  );
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({
+        rewardRefs: ["reward.knowledge.flora", "reward.knowledge.flora"]
+      })
+    ),
+    false
+  );
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ rewardRefs: ["not-canonical"] })
+    ),
+    false
+  );
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({
+        rewardRefs: ["reward.knowledge.flora", "title.knowledge.flora"]
+      })
+    ),
+    true
+  );
+});
+
+test("Knowledge trial policy schema requires unique non-empty notes", () => {
+  assert.equal(
+    validatesKnowledgeTrialPolicy(knowledgeTrialPolicy({ notes: [""] })),
+    false
+  );
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ notes: ["Repeated.", "Repeated."] })
+    ),
+    false
+  );
+});
+
+test("Knowledge trial policy schema accepts exact requirement variants", () => {
+  for (const requirement of [
+    snippetRequirement(),
+    tierRequirement(),
+    domainRequirement()
+  ]) {
+    assert.equal(
+      validatesKnowledgeTrialPolicy(
+        knowledgeTrialPolicy({ requiredCompletionTargets: [requirement] })
+      ),
+      true,
+      requirement.scope
+    );
+    assert.equal(
+      validatesKnowledgeTrialPolicy(
+        knowledgeTrialPolicy({
+          prerequisiteCompletionTargets: [requirement]
+        })
+      ),
+      true,
+      `prerequisite ${requirement.scope}`
+    );
+  }
+});
+
+test("Knowledge trial policy schema rejects malformed snippet requirements", () => {
+  for (const requirement of [
+    snippetRequirement({ tier: 1 }),
+    snippetRequirement({ ownerId: "character.example" }),
+    snippetRequirement({ requiredDecision: "complete" }),
+    snippetRequirement({ snippetId: "snippet.flora.aloe" })
+  ]) {
+    assert.equal(
+      validatesKnowledgeTrialPolicy(
+        knowledgeTrialPolicy({ requiredCompletionTargets: [requirement] })
+      ),
+      false,
+      JSON.stringify(requirement)
+    );
+  }
+});
+
+test("Knowledge trial policy schema rejects malformed tier requirements", () => {
+  for (const requirement of [
+    tierRequirement({ tier: 0 }),
+    tierRequirement({ tier: -1 }),
+    tierRequirement({ tier: 1.5 }),
+    tierRequirement({ ownerId: "character.example" })
+  ]) {
+    assert.equal(
+      validatesKnowledgeTrialPolicy(
+        knowledgeTrialPolicy({ requiredCompletionTargets: [requirement] })
+      ),
+      false,
+      JSON.stringify(requirement)
+    );
+  }
+
+  const missingTier = tierRequirement();
+  delete missingTier.tier;
+  assert.equal(
+    validatesKnowledgeTrialPolicy(
+      knowledgeTrialPolicy({ requiredCompletionTargets: [missingTier] })
+    ),
+    false
+  );
+});
+
+test("Knowledge trial policy schema rejects malformed domain requirements", () => {
+  for (const requirement of [
+    domainRequirement({ tier: 1 }),
+    domainRequirement({ extra: true }),
+    domainRequirement({ requiredDecision: "eligible_candidate" })
+  ]) {
+    assert.equal(
+      validatesKnowledgeTrialPolicy(
+        knowledgeTrialPolicy({ requiredCompletionTargets: [requirement] })
+      ),
+      false,
+      JSON.stringify(requirement)
+    );
+  }
+});
 

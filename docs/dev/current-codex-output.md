@@ -1,18 +1,19 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.149 - Knowledge Trial Schema Plan
+Source version/run: Version 0.5.150 - Knowledge Trial Static Policy Schema
 Date: 2026-06-14
-Branch/status assumption: Ran on `master` from commit `4418322`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `51bdff4`. The worktree was clean before edits.
 
 ## Result
 
-Added the documentation-only Knowledge Trial Schema Plan and aligned the current handoff, roadmap, sequence, and backlog.
+Added the strict record-level static Knowledge trial eligibility-policy schema and focused schema-file contract coverage.
 
-The plan separates static authored policy from mutable owner-specific authority. It recommends `packages/schemas/player/knowledge_trial_policy.schema.json` as the first eligibility-policy-only schema slice, omits concrete owner ids and operation-envelope fields from authored policy, defers the readiness schema until attempt lifecycle vocabulary is canonical, rejects reuse of the existing cross-family `trials.json`, and keeps attempts, cooldowns, availability facts, sequence/time snapshots, eligibility/readiness envelopes, and downstream trial behavior outside authored base content.
+The schema defines exact domain- and tier-scoped policy records, character owner scope without a concrete owner id, strict snippet/tier/domain completion requirements with `requiredDecision: "candidate"`, nullable inert readiness-policy references, unique inert reward references, and unique non-empty notes. It rejects extra fields, operation envelopes, mutable authority, downstream trial state, and cross-family authority.
 
 ## Files Changed
 
-- `docs/design/knowledge-trial-schema-plan.md`
+- `packages/schemas/player/knowledge_trial_policy.schema.json`
+- `tests/unit/schema-files.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -21,38 +22,38 @@ The plan separates static authored policy from mutable owner-specific authority.
 
 ## Checks Run
 
+- `node --check tests/unit/schema-files.test.mjs`
+- `node --test tests/unit/schema-files.test.mjs` - 67 passed, 0 failed.
 - Conflict-marker scan across changed files.
 - Trailing-whitespace scan across changed files.
 - `git diff --check`
 - Changed-path scope audit.
-- Forbidden executable/schema/content/test/fixture/runtime/storage/UI/helper-registration audit.
-- Broad typecheck and test suites were not run because this was a documentation-only pass.
+- Forbidden content JSON, readiness-schema, semantic-validator, helper, fixture, normal-lint-registration, runtime, storage, persistence, and UI path audit.
+- Broad typecheck was not run because no TypeScript or UI files changed.
 
 ## Behavior / Runtime Confirmation
 
-- No executable behavior changed.
-- No schema, content JSON, validator, helper, test, fixture, or normal content-lint registration changed.
-- No adapter from authored content to helper inputs was added.
-- No attempt, checkpoint, outcome, cooldown, reward, unlock, storage, persistence, save/account/session/database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior was added.
-- The completion, eligibility, and readiness helpers remain unchanged and operation-local.
+- One structural JSON schema and focused test coverage changed.
+- No policy content JSON, readiness policy schema, mutable authority schema, semantic validator, content-to-helper adapter, fixture, or normal content-lint registration was added.
+- Existing Knowledge completion, eligibility, and readiness helpers and tests remain unchanged.
+- No attempt, checkpoint, outcome, cooldown, reward grant, unlock, storage, persistence, save/account/session/database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior changed.
 - Knowledge, Skill, and Spell/Magic Study trial families remain separate.
-- Arcane Lore remains planned, blocked, and deferred.
+- Arcane Lore remains structurally representable by canonical domain id only; active-domain and Arcane rejection remain deferred to semantic validation.
 
 ## Risks / Follow-Up
 
-- No canonical policy content authority exists.
-- Readiness policy schema/content remains deferred until attempt lifecycle status vocabulary is owned.
-- Non-empty prerequisite readiness gates remain unsupported and fail closed.
-- Attempt idempotency, replay, concurrency, reservation, persistence, and atomicity remain undefined.
-- Cooldown, availability, and sequence/time ownership remains undefined.
-- Current snippet completion envelopes do not carry snippet-tier authority.
-- `trialUnlockWeight` has no approved eligibility/readiness interpretation.
-- Existing `trials.json` remains a separate cross-family legacy concern.
+- No canonical Knowledge trial policy content exists.
+- No semantic validator or content-to-helper adapter exists.
+- Readiness policy schema/content remains deferred until attempt lifecycle vocabulary is canonical.
+- Duplicate completion targets and cross-section duplication require later semantic validation.
+- Domain and snippet references are structural only and are not yet checked against active authored authority.
+- Reward references remain inert structural ids without reward authority.
+- Mutable authority, persistence, checkpoint/outcome ownership, and downstream trial behavior remain undefined.
 
 ## Next Recommended Version
 
-Version 0.5.150 - Knowledge Trial Static Policy Schema
+Version 0.5.151 - Knowledge Trial Policy Content Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan trial policy schemas
+schemas(knowledge): add trial policy schema
