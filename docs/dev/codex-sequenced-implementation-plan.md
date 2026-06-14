@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-14
-Route: Codex local sequencing alignment after `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan`
+Route: Codex local sequencing alignment after `Version 0.5.154 - Knowledge Trial Policy Semantic Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan` defined the pure schema-first validation boundary, focused tests, and conservative unregistered implementation posture.
+This file gives Codex a stable ordered queue after `Version 0.5.154 - Knowledge Trial Policy Semantic Validator` implemented the pure schema-first validator with focused tests while remaining outside normal content lint.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.153 - Knowledge Trial Policy Semantic Validator Plan`
+- `Version 0.5.154 - Knowledge Trial Policy Semantic Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.154 - Knowledge Trial Policy Semantic Validator`
+- `Version 0.5.155 - Knowledge Trial Policy Normal Lint Registration Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.153` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.154` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -111,7 +111,8 @@ Versioning note:
 | 73 | `0.5.151` | Knowledge Trial Policy Content Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-policy-content-plan.md` | planning doc | Completed | Selected the records wrapper, exact one-record Flora Tier 1 slice, registry-null posture, later semantic checks, and content-skeleton acceptance criteria without implementation. |
 | 74 | `0.5.152` | Knowledge Trial Authored Policy Content Skeleton | Codex 5.5 Local | `packages/content/base/player/knowledge_trial_policies.json` | content JSON + focused parse tests | Completed | Added exactly the selected Flora Tier 1 policy wrapper and focused structural coverage without registry alignment, semantic validation, adapters, readiness content, state, storage, UI, runtime, events, or gameplay behavior. |
 | 75 | `0.5.153` | Knowledge Trial Policy Semantic Validator Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-policy-semantic-validator-plan.md` | planning doc | Completed | Defined schema-first semantic checks, exact target coherence, focused tests, deterministic diagnostics, and an unregistered implementation posture without adding the validator or behavior. |
-| 76 | `0.5.154` | Knowledge Trial Policy Semantic Validator | Codex 5.5 Local | `docs/design/knowledge-trial-policy-semantic-validator-plan.md` | pure validator + focused tests | Next | Add the pure unregistered validator and focused tests without content/schema edits, helper calls, registry alignment, normal lint registration, state, storage, UI, runtime, events, or gameplay behavior. |
+| 76 | `0.5.154` | Knowledge Trial Policy Semantic Validator | Codex 5.5 Local | `tools/content-lint/knowledge-trial-policies.mjs` | pure validator + focused tests | Completed | Added exact wrapper/schema validation, duplicate-aware references, target coherence, deterministic diagnostics, and 76 focused tests without content/schema edits, helper calls, registry alignment, normal lint registration, state, storage, UI, runtime, events, or gameplay behavior. |
+| 77 | `0.5.155` | Knowledge Trial Policy Normal Lint Registration Plan | Codex 5.5 Local docs-first | Future focused design doc | planning doc | Next | Define normal lint orchestration, dependency loading, checked-file counting, focused integration coverage, and implementation criteria without registering the validator. |
 
 ## Default Prompt Pattern
 
