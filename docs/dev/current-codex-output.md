@@ -1,19 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.150 - Knowledge Trial Static Policy Schema
+Source version/run: Version 0.5.151 - Knowledge Trial Policy Content Plan
 Date: 2026-06-14
-Branch/status assumption: Ran on `master` from commit `51bdff4`. The worktree was clean before edits.
+Branch/status assumption: Ran on `master` from commit `d6e4445`. The worktree was clean before edits.
 
 ## Result
 
-Added the strict record-level static Knowledge trial eligibility-policy schema and focused schema-file contract coverage.
+Added the documentation-only Knowledge Trial Policy Content Plan.
 
-The schema defines exact domain- and tier-scoped policy records, character owner scope without a concrete owner id, strict snippet/tier/domain completion requirements with `requiredDecision: "candidate"`, nullable inert readiness-policy references, unique inert reward references, and unique non-empty notes. It rejects extra fields, operation envelopes, mutable authority, downstream trial state, and cross-family authority.
+The plan selects `packages/content/base/player/knowledge_trial_policies.json` as a future wrapper with a `records` array and chooses exactly one first content record: active tier-scoped `knowledge_trial_policy.flora_tier_1`, requiring an exact Flora Tier 1 completion candidate. It keeps prerequisites empty, readiness null, rewards empty, registry references null, and Arcane Lore absent. It compares domain-, tier-, and snippet-requirement alternatives, defines future semantic checks, and sets acceptance criteria for the content-skeleton run.
 
 ## Files Changed
 
-- `packages/schemas/player/knowledge_trial_policy.schema.json`
-- `tests/unit/schema-files.test.mjs`
+- `docs/design/knowledge-trial-policy-content-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -22,38 +21,37 @@ The schema defines exact domain- and tier-scoped policy records, character owner
 
 ## Checks Run
 
-- `node --check tests/unit/schema-files.test.mjs`
-- `node --test tests/unit/schema-files.test.mjs` - 67 passed, 0 failed.
 - Conflict-marker scan across changed files.
 - Trailing-whitespace scan across changed files.
 - `git diff --check`
 - Changed-path scope audit.
-- Forbidden content JSON, readiness-schema, semantic-validator, helper, fixture, normal-lint-registration, runtime, storage, persistence, and UI path audit.
-- Broad typecheck was not run because no TypeScript or UI files changed.
+- Forbidden schema, content JSON, test, fixture, validator, helper, runtime, storage, persistence, UI, and normal-lint-registration audit.
+- Broad typecheck and test suites were not run because this was a documentation-only pass.
 
 ## Behavior / Runtime Confirmation
 
-- One structural JSON schema and focused test coverage changed.
-- No policy content JSON, readiness policy schema, mutable authority schema, semantic validator, content-to-helper adapter, fixture, or normal content-lint registration was added.
-- Existing Knowledge completion, eligibility, and readiness helpers and tests remain unchanged.
-- No attempt, checkpoint, outcome, cooldown, reward grant, unlock, storage, persistence, save/account/session/database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior changed.
+- No executable, schema, content JSON, test, fixture, validator, helper, or normal content-lint registration changed.
+- No `knowledge_domain_registry.json` `trialPolicyRef` value changed.
+- No readiness content, content-to-helper adapter, attempt, checkpoint, outcome, cooldown, reward, unlock, storage, persistence, save/account/session/database, UI, runtime, generated output, event, ownership mutation, or gameplay behavior changed.
 - Knowledge, Skill, and Spell/Magic Study trial families remain separate.
-- Arcane Lore remains structurally representable by canonical domain id only; active-domain and Arcane rejection remain deferred to semantic validation.
+- Arcane Lore remains planned, blocked, and deferred.
 
 ## Risks / Follow-Up
 
-- No canonical Knowledge trial policy content exists.
+- No canonical Knowledge trial policy content exists yet.
 - No semantic validator or content-to-helper adapter exists.
-- Readiness policy schema/content remains deferred until attempt lifecycle vocabulary is canonical.
-- Duplicate completion targets and cross-section duplication require later semantic validation.
-- Domain and snippet references are structural only and are not yet checked against active authored authority.
-- Reward references remain inert structural ids without reward authority.
-- Mutable authority, persistence, checkpoint/outcome ownership, and downstream trial behavior remain undefined.
+- Canonical completion-policy content does not exist.
+- Readiness policy schema/content remains deferred.
+- Domain/snippet references and duplicate-target rules remain unvalidated semantically.
+- Current Flora Tier 1 content contains only one authored counting snippet.
+- Reward references remain inert and should stay empty in the first slice.
+- Mutable authority, persistence, checkpoint/outcome ownership, runtime, UI, events, and gameplay remain undefined.
+- `trialUnlockWeight` remains uninterpreted.
 
 ## Next Recommended Version
 
-Version 0.5.151 - Knowledge Trial Policy Content Plan
+Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton
 
 ## Suggested Commit Message
 
-schemas(knowledge): add trial policy schema
+docs(knowledge): plan trial policy content

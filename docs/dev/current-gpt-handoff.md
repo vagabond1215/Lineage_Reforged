@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.150 - Knowledge Trial Static Policy Schema`
+Source route: Codex local planning after `Version 0.5.151 - Knowledge Trial Policy Content Plan`
 Date: 2026-06-14
-Branch/status assumption: `master` at commit `51bdff4` before edits; the worktree was clean.
+Branch/status assumption: `master` at commit `d6e4445` before edits; the worktree was clean.
 
 ## Purpose
 
@@ -13,77 +13,83 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
-- `packages/schemas/player/knowledge_trial_policy.schema.json` owns the strict structural contract for one static authored Knowledge trial eligibility policy.
-- `docs/design/knowledge-trial-schema-plan.md` owns the policy/content split, content-path recommendation, mutable-state exclusions, semantic-validation sequence, and deferred readiness posture.
-- `tools/content-lint/knowledge-completion.mjs` owns the current pure completion decision.
-- `tools/content-lint/knowledge-trial-eligibility.mjs` owns the current operation-local eligibility contract.
-- `tools/content-lint/knowledge-trial-readiness.mjs` owns the current operation-local readiness contract.
-- `docs/design/knowledge-storage-persistence-boundary-plan.md` owns deferred state, sequence, atomicity, and persistence decisions.
-- `docs/design/skill-mastery-trial-framework-plan.md` owns the separate Skill Trial and Spell/Magic Study posture.
+- `packages/schemas/player/knowledge_trial_policy.schema.json` owns the strict structure of one static authored Knowledge trial eligibility policy.
+- `docs/design/knowledge-trial-policy-content-plan.md` owns the first content path, wrapper shape, selected one-record Flora Tier 1 slice, registry-null posture, semantic-validation sequence, and Version 0.5.152 acceptance criteria.
+- `docs/design/knowledge-trial-schema-plan.md` owns the broader policy/content split, mutable-state exclusions, and deferred readiness posture.
+- `tools/content-lint/knowledge-completion.mjs` owns current pure completion decisions.
+- `tools/content-lint/knowledge-trial-eligibility.mjs` owns current operation-local eligibility evaluation.
+- `tools/content-lint/knowledge-trial-readiness.mjs` owns current operation-local readiness evaluation.
+- `packages/content/base/player/knowledge_domain_registry.json` owns domain status and nullable trial-policy references.
+- `packages/content/base/player/knowledge_snippets.json` owns the current authored snippet inventory.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
 
 ## Current Anchor
 
 Latest completed Codex version:
 
-- `Version 0.5.150 - Knowledge Trial Static Policy Schema`
+- `Version 0.5.151 - Knowledge Trial Policy Content Plan`
 
 Immediate next version:
 
-- `Version 0.5.151 - Knowledge Trial Policy Content Plan`
+- `Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton`
 
 Do not roll to `0.6.0` unless the roadmap explicitly declares the runtime-ownership milestone reached.
 
-## Version 0.5.150 Result
+## Version 0.5.151 Result
 
-- Added `packages/schemas/player/knowledge_trial_policy.schema.json`.
-- Added it to the focused schema-file inventory and structural contract coverage.
-- Defined strict domain- and tier-scoped static eligibility-policy records.
-- Required `ownerScope: "character"` and rejected concrete `ownerId`.
-- Defined exact snippet, tier, and domain completion requirement variants with `requiredDecision: "candidate"`.
-- Required a non-empty primary requirement array and allowed an empty prerequisite array.
-- Allowed nullable inert `knowledge_trial_readiness_policy.*` references.
-- Allowed unique canonical dotted reward references and unique non-empty notes.
-- Rejected extra fields, operation envelopes, mutable authority, trial state, UI/runtime/persistence fields, Skill Trial fields, and Spell/Magic Study fields.
-- Added no policy content, readiness schema, semantic validator, adapter, fixture, normal lint registration, state, persistence, runtime, or gameplay behavior.
+- Added `docs/design/knowledge-trial-policy-content-plan.md`.
+- Selected `packages/content/base/player/knowledge_trial_policies.json`.
+- Selected a wrapper object containing one `records` array.
+- Selected exactly one first record: `knowledge_trial_policy.flora_tier_1`.
+- Selected active character-scoped, tier-scoped Flora Tier 1 policy authority.
+- Required one exact Flora Tier 1 completion candidate.
+- Kept prerequisite completion targets empty.
+- Kept `readinessPolicyId` null and `rewardRefs` empty.
+- Kept all registry `trialPolicyRef` values null until semantic validation and separately authorized alignment exist.
+- Rejected domain scope as too broad for current coverage.
+- Rejected a snippet-only requirement as a substitute for explicit tier completion.
+- Kept Fauna, Minerals, General Lore, and Arcane Lore policy content deferred.
+- Added no content JSON, schema edit, validator, adapter, test, fixture, registration, state, persistence, runtime, UI, or gameplay behavior.
 
-## Active Guardrails For Policy Content Planning
+## Active Guardrails For Content Skeleton
 
-- Plan only; do not add `packages/content/base/player/knowledge_trial_policies.json` during 0.5.151.
-- Use the new schema as structural authority without weakening or expanding it.
-- Decide the smallest first authored eligibility-policy set, exact ids, target scopes, requirements, prerequisites, nullable readiness references, inert reward references, and notes.
-- Resolve whether the first content slice is domain-scoped, tier-scoped, or both from current active completion authority.
-- Keep `ownerId` out of authored content.
-- Keep Arcane Lore planned, blocked, and absent from active policy content.
-- Keep Knowledge, Skill, and Spell/Magic Study policy families separate.
-- Define later semantic checks for wrapper shape, policy uniqueness, active domains, exact snippet/domain references, duplicate requirements, cross-section duplication, target parity, and registry `trialPolicyRef` alignment.
-- Do not add readiness policy schema/content, attempt/cooldown/availability/sequence-time authority, adapters, fixtures, registration, storage, persistence, UI, runtime, events, rewards, or gameplay behavior.
-- Do not edit current completion, eligibility, or readiness helpers.
+- Add only `packages/content/base/player/knowledge_trial_policies.json`, focused content/schema parse tests, and required coordination docs.
+- Use exactly `{ "records": [...] }` with no wrapper extras.
+- Add exactly the selected `knowledge_trial_policy.flora_tier_1` record from the content plan.
+- Keep `ownerScope: "character"` and omit `ownerId`.
+- Use top-level tier scope for `knowledge_domain.flora`, tier `1`.
+- Require exactly one tier completion target for Flora Tier 1 with `requiredDecision: "candidate"`.
+- Keep prerequisites empty, `readinessPolicyId` null, and `rewardRefs` empty.
+- Preserve the two inert notes selected in the plan.
+- Keep all registry `trialPolicyRef` values null.
+- Do not add Fauna, Minerals, General Lore, or Arcane Lore policies.
+- Do not edit schemas, helpers, existing helper tests, validators, fixtures, or normal content-lint registration.
+- Do not add semantic validation, content-to-helper adaptation, readiness content, mutable authority, storage, persistence, UI, runtime, generated output, events, rewards, ownership mutation, or gameplay behavior.
 
 Current follow-up risks:
 
-- No canonical policy content authority exists.
 - No semantic validator or content-to-helper adapter exists.
-- Readiness schema remains deferred.
-- Attempt lifecycle/status vocabulary is not canonical.
-- Mutable authority and persistence ownership remain undefined.
-- Current snippet completion envelopes do not carry tier.
+- Canonical completion-policy content does not exist.
+- Readiness schema/content remains deferred.
+- Current Flora Tier 1 has one authored counting snippet.
+- Registry alignment requires a later separately authorized run.
 - `trialUnlockWeight` remains uninterpreted.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
-| 1 | `0.5.149` | Knowledge Trial Schema Plan | `docs/design/knowledge-trial-schema-plan.md` | Completed |
-| 2 | `0.5.150` | Knowledge Trial Static Policy Schema | `packages/schemas/player/knowledge_trial_policy.schema.json` | Completed |
-| 3 | `0.5.151` | Knowledge Trial Policy Content Plan | `docs/design/knowledge-trial-schema-plan.md` | Next |
-| 4 | `0.5.x` | Knowledge Trial Authored Policy Content | Future focused run | Deferred |
-| 5 | `0.5.x` | Knowledge Trial Policy Semantic Validator Plan | Future focused run | Deferred |
-| 6 | `0.5.x` | Knowledge Trial Readiness Policy Schema | Future focused run | Deferred |
+| 1 | `0.5.150` | Knowledge Trial Static Policy Schema | `packages/schemas/player/knowledge_trial_policy.schema.json` | Completed |
+| 2 | `0.5.151` | Knowledge Trial Policy Content Plan | `docs/design/knowledge-trial-policy-content-plan.md` | Completed |
+| 3 | `0.5.152` | Knowledge Trial Authored Policy Content Skeleton | `docs/design/knowledge-trial-policy-content-plan.md` | Next |
+| 4 | `0.5.x` | Knowledge Trial Policy Semantic Validator Plan | Future focused run | Deferred |
+| 5 | `0.5.x` | Knowledge Trial Policy Semantic Validator | Future focused run | Deferred |
+| 6 | `0.5.x` | Knowledge Trial Registry Reference Alignment | Future focused run | Deferred |
+| 7 | `0.5.x` | Knowledge Trial Readiness Policy Schema | Future focused run | Deferred |
 
 ## Next Prompt Source Stack
 
-For `Version 0.5.151 - Knowledge Trial Policy Content Plan`, inspect:
+For `Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton`, inspect:
 
 - `AGENTS.md`
 - `README.md`
@@ -91,13 +97,10 @@ For `Version 0.5.151 - Knowledge Trial Policy Content Plan`, inspect:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/design/knowledge-trial-policy-content-plan.md`
 - `docs/design/knowledge-trial-schema-plan.md`
-- `docs/design/knowledge-trial-boundary-plan.md`
 - `packages/schemas/player/knowledge_trial_policy.schema.json`
-- `packages/schemas/player/knowledge-domain-registry.schema.json`
 - `packages/content/base/player/knowledge_domain_registry.json`
 - `packages/content/base/player/knowledge_snippets.json`
-- `tools/content-lint/knowledge-completion.mjs`
-- `tools/content-lint/knowledge-trial-eligibility.mjs`
 - `tests/unit/schema-files.test.mjs`
 - `docs/future_content_backlog.md`

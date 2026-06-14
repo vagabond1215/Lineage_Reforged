@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.150 - Knowledge Trial Static Policy Schema`
-- Next recommended version: `Version 0.5.151 - Knowledge Trial Policy Content Plan`
+- Latest completed version: `Version 0.5.151 - Knowledge Trial Policy Content Plan`
+- Next recommended version: `Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.150` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.151` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -111,6 +111,7 @@ Current repo reality:
 - Pure Knowledge trial readiness evaluation now exists at `tools/content-lint/knowledge-trial-readiness.mjs` with 83 focused in-memory tests. It consumes one exact eligibility envelope plus explicit operation-local readiness policy and authority inputs, returns deterministic `ready_candidate`, `not_ready`, or `blocked` decisions, preserves exact owner/domain/tier isolation, keeps rewards inert, fails closed on Arcane Lore and unsupported prerequisites, and remains unregistered without state or downstream trial behavior.
 - Knowledge trial schema planning has landed in `docs/design/knowledge-trial-schema-plan.md`. It separates static authored eligibility/readiness policy from mutable owner-specific authority, selects an eligibility-policy-only record schema for `0.5.150`, omits concrete owner ids and operation-envelope fields from authored policy, rejects the existing cross-family `trials.json` as Knowledge policy authority, and defers readiness schema until attempt lifecycle vocabulary is canonical.
 - The strict static Knowledge trial eligibility-policy record schema now exists at `packages/schemas/player/knowledge_trial_policy.schema.json` with focused schema-file contract coverage. It defines domain/tier policy targets, exact snippet/tier/domain completion requirements, nullable inert readiness references, inert reward references, and no concrete owner id or mutable/operation authority.
+- Knowledge trial policy content planning has landed in `docs/design/knowledge-trial-policy-content-plan.md`. It selects a future `knowledge_trial_policies.json` records wrapper and exactly one first active policy, `knowledge_trial_policy.flora_tier_1`, requiring a Flora Tier 1 completion candidate while keeping readiness null, rewards empty, registry references null, and Arcane Lore absent.
 - Early known spells require explicit character-scoped acquisition evidence; account, family, institution, Legacy, scroll, tome, and document access must not automatically become character spell knowledge.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - No economy clarity React UI, shop/trade/craft/caravan command UI, generated output, active magic behavior, runtime casting, cast commands, catalyst consumption, or broad economy/climate expansion has been added.
@@ -193,7 +194,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.148` | Knowledge Trial Readiness Helper | Codex Local | Pure helper + focused tests | Completed. Added exact eligibility-envelope and explicit-authority validation with deterministic readiness decisions and 83 focused tests. | No attempt creation, checkpoint/outcome resolution, cooldown mutation, reward grant, storage, persistence, normal lint registration, UI, runtime, events, or gameplay behavior. |
 | `0.5.149` | Knowledge Trial Schema Plan | Codex Local docs-first | Planning | Completed. Selected the first static eligibility-policy schema slice, content-path split, owner-free authored posture, mutable-authority exclusions, and staged validation sequence. | Documentation only; no schema/content implementation, validator, helper adapter, state, attempts, checkpoints, outcomes, cooldown mutation, rewards, storage, persistence, UI, runtime, events, or gameplay behavior. |
 | `0.5.150` | Knowledge Trial Static Policy Schema | Codex Local | Schema file + focused schema tests | Completed. Added one strict record-level static eligibility-policy schema and focused structural contract coverage. | No content JSON, readiness schema, semantic validator, helper adapter, fixture, registration, state, storage, UI, runtime, events, or gameplay behavior. |
-| `0.5.151` | Knowledge Trial Policy Content Plan | Codex Local docs-first | Planning | Next. Define the first authored eligibility-policy content slice and later semantic-validation sequence. | Documentation only; no policy content JSON, readiness schema/content, validator, adapter, state, storage, UI, runtime, events, or gameplay behavior. |
+| `0.5.151` | Knowledge Trial Policy Content Plan | Codex Local docs-first | Planning | Completed. Selected the future records wrapper, exact one-record Flora Tier 1 slice, registry-null posture, semantic-validation sequence, and content-skeleton acceptance criteria. | Documentation only; no policy content JSON, schema edit, validator, adapter, test, fixture, registration, state, storage, UI, runtime, events, or gameplay behavior. |
+| `0.5.152` | Knowledge Trial Authored Policy Content Skeleton | Codex Local | Content JSON + focused parse tests | Next. Add exactly the selected one-record Flora Tier 1 policy wrapper. | No registry reference update, readiness content, semantic validator, helper adapter, fixture, registration, state, storage, UI, runtime, events, or gameplay behavior. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -261,7 +263,8 @@ Practical near-term sequence:
 37. `0.5.148 - Knowledge Trial Readiness Helper` - completed
 38. `0.5.149 - Knowledge Trial Schema Plan` - completed
 39. `0.5.150 - Knowledge Trial Static Policy Schema` - completed
-40. `0.5.151 - Knowledge Trial Policy Content Plan` - next
+40. `0.5.151 - Knowledge Trial Policy Content Plan` - completed
+41. `0.5.152 - Knowledge Trial Authored Policy Content Skeleton` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -319,22 +322,23 @@ Recommended advancement sequence:
 42. `0.5.148 - Knowledge Trial Readiness Helper` - completed
 43. `0.5.149 - Knowledge Trial Schema Plan` - completed
 44. `0.5.150 - Knowledge Trial Static Policy Schema` - completed
-45. `0.5.151 - Knowledge Trial Policy Content Plan` - next
-46. `0.5.x - Knowledge Trial Checkpoint Helper`
-47. `0.5.x - Skill Trial Schema Expansion Plan`
-48. `0.5.x - Skill Trial Checkpoint Outcome Helper`
-49. `0.5.x - Skill Trial Cooldown/Readiness Helper`
-50. `0.5.x - Magic Study Event Boundary Plan`
-51. `0.5.x - Magic Study Source Plan`
-52. `0.5.x - Magic Study Checkpoint Helper`
-53. `0.5.x - Known-Spell Acquisition Evidence Integration Plan`
-54. `0.5.x - Shared Trial Vocabulary / Envelope Plan`
-55. `0.5.x - Trial UI Presentation Plan`
-56. `0.6.x - First Advancement Event Runtime Shape`
-57. `0.6.x - First Skill Trial Family Content`
-58. `0.6.x - First Magic Study Event Family Content`
-59. `0.6.x - First Knowledge Trial Family Content`
-60. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
+45. `0.5.151 - Knowledge Trial Policy Content Plan` - completed
+46. `0.5.152 - Knowledge Trial Authored Policy Content Skeleton` - next
+47. `0.5.x - Knowledge Trial Checkpoint Helper`
+48. `0.5.x - Skill Trial Schema Expansion Plan`
+49. `0.5.x - Skill Trial Checkpoint Outcome Helper`
+50. `0.5.x - Skill Trial Cooldown/Readiness Helper`
+51. `0.5.x - Magic Study Event Boundary Plan`
+52. `0.5.x - Magic Study Source Plan`
+53. `0.5.x - Magic Study Checkpoint Helper`
+54. `0.5.x - Known-Spell Acquisition Evidence Integration Plan`
+55. `0.5.x - Shared Trial Vocabulary / Envelope Plan`
+56. `0.5.x - Trial UI Presentation Plan`
+57. `0.6.x - First Advancement Event Runtime Shape`
+58. `0.6.x - First Skill Trial Family Content`
+59. `0.6.x - First Magic Study Event Family Content`
+60. `0.6.x - First Knowledge Trial Family Content`
+61. `0.7.x - Chronicle/Renown Hooks For Trials, Study, And Knowledge`
 
 ## 6. Knowledge Domain Timing
 
@@ -508,7 +512,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 57 | `0.5.148` | Knowledge Trial Readiness Helper | `tools/content-lint/knowledge-trial-readiness.mjs` | Completed |
 | 58 | `0.5.149` | Knowledge Trial Schema Plan | `docs/design/knowledge-trial-schema-plan.md` | Completed |
 | 59 | `0.5.150` | Knowledge Trial Static Policy Schema | `packages/schemas/player/knowledge_trial_policy.schema.json` | Completed |
-| 60 | `0.5.151` | Knowledge Trial Policy Content Plan | `docs/design/knowledge-trial-schema-plan.md` | Next |
+| 60 | `0.5.151` | Knowledge Trial Policy Content Plan | `docs/design/knowledge-trial-policy-content-plan.md` | Completed |
+| 61 | `0.5.152` | Knowledge Trial Authored Policy Content Skeleton | `docs/design/knowledge-trial-policy-content-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -542,6 +547,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Knowledge Trial Readiness Helper | `tools/content-lint/knowledge-trial-readiness.mjs`; use as the exact current readiness-envelope and operation-local authority contract, not as persisted trial state or attempt permission. |
 | Knowledge Trial Schema Plan | `docs/design/knowledge-trial-schema-plan.md`; use for static policy schema fields, owner-free authored posture, content-path decisions, mutable-state exclusions, validation sequencing, and `0.5.150` acceptance criteria. |
 | Knowledge Trial Static Policy Schema | `packages/schemas/player/knowledge_trial_policy.schema.json`; use as the strict record-level structural authority for future authored eligibility-policy content, not as content, semantic authority, helper input adaptation, readiness state, or trial behavior. |
+| Knowledge Trial Policy Content Plan | `docs/design/knowledge-trial-policy-content-plan.md`; use for the selected future content path and wrapper, exact Flora Tier 1 first record, registry-null posture, later semantic checks, and `0.5.152` acceptance criteria. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |

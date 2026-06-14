@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-14
-Route: Codex local sequencing alignment after `Version 0.5.150 - Knowledge Trial Static Policy Schema`
+Route: Codex local sequencing alignment after `Version 0.5.151 - Knowledge Trial Policy Content Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.150 - Knowledge Trial Static Policy Schema` added the strict record-level eligibility-policy structure without content, semantic validation, state, or behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.151 - Knowledge Trial Policy Content Plan` selected the exact first authored policy skeleton without adding content, semantic validation, state, or behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.150 - Knowledge Trial Static Policy Schema`
+- `Version 0.5.151 - Knowledge Trial Policy Content Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.151 - Knowledge Trial Policy Content Plan`
+- `Version 0.5.152 - Knowledge Trial Authored Policy Content Skeleton`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.150` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.151` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -108,7 +108,8 @@ Versioning note:
 | 70 | `0.5.148` | Knowledge Trial Readiness Helper | Codex 5.5 Local | `tools/content-lint/knowledge-trial-readiness.mjs` | pure helper + focused tests | Completed | Added deterministic readiness over one exact eligibility envelope and explicit in-memory authorities with 83 focused tests; no downstream trial behavior. |
 | 71 | `0.5.149` | Knowledge Trial Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-schema-plan.md` | planning doc | Completed | Selected the strict static eligibility-policy schema slice, owner-free authored posture, split content paths, mutable-state exclusions, and staged validation sequence without implementation. |
 | 72 | `0.5.150` | Knowledge Trial Static Policy Schema | Codex 5.5 Local | `packages/schemas/player/knowledge_trial_policy.schema.json` | schema file + focused schema tests | Completed | Added strict domain/tier eligibility-policy structure, exact completion requirement variants, nullable readiness references, inert reward metadata, and focused contract coverage without content or behavior. |
-| 73 | `0.5.151` | Knowledge Trial Policy Content Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-schema-plan.md` | planning doc | Next | Plan the first authored policy content slice and semantic-validation sequence without adding content, readiness policy, adapters, state, storage, UI, runtime, events, or gameplay behavior. |
+| 73 | `0.5.151` | Knowledge Trial Policy Content Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-policy-content-plan.md` | planning doc | Completed | Selected the records wrapper, exact one-record Flora Tier 1 slice, registry-null posture, later semantic checks, and content-skeleton acceptance criteria without implementation. |
+| 74 | `0.5.152` | Knowledge Trial Authored Policy Content Skeleton | Codex 5.5 Local | `docs/design/knowledge-trial-policy-content-plan.md` | content JSON + focused parse tests | Next | Add exactly the selected Flora Tier 1 policy wrapper without registry alignment, semantic validation, adapters, readiness content, state, storage, UI, runtime, events, or gameplay behavior. |
 
 ## Default Prompt Pattern
 
