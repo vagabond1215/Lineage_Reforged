@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-14
-Route: Codex local sequencing alignment after `Version 0.5.148 - Knowledge Trial Readiness Helper`
+Route: Codex local sequencing alignment after `Version 0.5.149 - Knowledge Trial Schema Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.148 - Knowledge Trial Readiness Helper` implemented the pure readiness decision without trial state or downstream behavior.
+This file gives Codex a stable ordered queue after `Version 0.5.149 - Knowledge Trial Schema Plan` selected the static eligibility-policy schema boundary without implementing schema, content, state, or behavior.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.148 - Knowledge Trial Readiness Helper`
+- `Version 0.5.149 - Knowledge Trial Schema Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.149 - Knowledge Trial Schema Plan`
+- `Version 0.5.150 - Knowledge Trial Static Policy Schema`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.148` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.149` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -106,7 +106,8 @@ Versioning note:
 | 68 | `0.5.146` | Knowledge Trial Eligibility Helper | Codex 5.5 Local | `tools/content-lint/knowledge-trial-eligibility.mjs` | pure helper + focused tests | Completed | Added exact completion-envelope and policy validation, deterministic `eligible_candidate`/`not_eligible`/`blocked` decisions, strict owner/domain/tier isolation, inert readiness/attempt/cooldown/reward posture, Arcane Lore blocking, and 70 focused tests without state or downstream behavior. |
 | 69 | `0.5.147` | Knowledge Trial Readiness Boundary Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-readiness-boundary-plan.md` | planning doc | Completed | Defined exact eligibility-envelope validation, separate readiness policy, attempt/history/limit, cooldown, availability, prerequisite, and sequence/time authority, `ready_candidate`/`not_ready`/`blocked`, inert safety, and later helper criteria without implementation or state. |
 | 70 | `0.5.148` | Knowledge Trial Readiness Helper | Codex 5.5 Local | `tools/content-lint/knowledge-trial-readiness.mjs` | pure helper + focused tests | Completed | Added deterministic readiness over one exact eligibility envelope and explicit in-memory authorities with 83 focused tests; no downstream trial behavior. |
-| 71 | `0.5.149` | Knowledge Trial Schema Plan | Codex 5.5 Local docs-first | `tools/content-lint/knowledge-trial-readiness.mjs` | planning doc | Next | Plan canonical trial policy and authority schema ownership only; no schema/content implementation, state, attempts, checkpoints, outcomes, cooldown mutation, rewards, storage, persistence, UI, runtime, events, or gameplay behavior. |
+| 71 | `0.5.149` | Knowledge Trial Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-schema-plan.md` | planning doc | Completed | Selected the strict static eligibility-policy schema slice, owner-free authored posture, split content paths, mutable-state exclusions, and staged validation sequence without implementation. |
+| 72 | `0.5.150` | Knowledge Trial Static Policy Schema | Codex 5.5 Local | `docs/design/knowledge-trial-schema-plan.md` | schema file + focused schema tests | Next | Add one strict record-level eligibility-policy schema only; no content, readiness schema, semantic validation, adapters, fixtures, registration, state, storage, UI, runtime, events, or gameplay behavior. |
 
 ## Default Prompt Pattern
 
