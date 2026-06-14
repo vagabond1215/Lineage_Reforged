@@ -1,0 +1,27 @@
+{
+  "records": [
+    {
+      "policyId": "knowledge_trial_policy.flora_tier_1",
+      "status": "active",
+      "ownerScope": "character",
+      "scope": "tier",
+      "domainId": "knowledge_domain.flora",
+      "tier": 1,
+      "requiredCompletionTargets": [
+        {
+          "scope": "tier",
+          "domainId": "knowledge_domain.flora",
+          "tier": 1,
+          "requiredDecision": "candidate"
+        }
+      ],
+      "prerequisiteCompletionTargets": [],
+      "readinessPolicyId": null,
+      "rewardRefs": [],
+      "notes": [
+        "Static eligibility policy only; it does not grant readiness, create an attempt, unlock a tier, or award a reward.",
+        "Readiness policy and reward references remain deferred."
+      ]
+    }
+  ]
+}

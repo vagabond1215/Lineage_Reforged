@@ -166,6 +166,22 @@ const knowledgeTrialPolicySchema = JSON.parse(
     )
   )
 );
+const knowledgeTrialPolicies = JSON.parse(
+  stripBom(
+    await readFile(
+      "packages/content/base/player/knowledge_trial_policies.json",
+      "utf8"
+    )
+  )
+);
+const knowledgeDomainRegistry = JSON.parse(
+  stripBom(
+    await readFile(
+      "packages/content/base/player/knowledge_domain_registry.json",
+      "utf8"
+    )
+  )
+);
 
 function snippetRequirement(overrides = {}) {
   return {
@@ -478,5 +494,71 @@ test("Knowledge trial policy schema rejects malformed domain requirements", () =
       JSON.stringify(requirement)
     );
   }
+});
+
+test("Knowledge trial authored policy skeleton parses and matches the selected exact record", () => {
+  assert.deepEqual(Object.keys(knowledgeTrialPolicies), ["records"]);
+  assert.deepEqual(knowledgeTrialPolicies.records, [
+    {
+      policyId: "knowledge_trial_policy.flora_tier_1",
+      status: "active",
+      ownerScope: "character",
+      scope: "tier",
+      domainId: "knowledge_domain.flora",
+      tier: 1,
+      requiredCompletionTargets: [
+        {
+          scope: "tier",
+          domainId: "knowledge_domain.flora",
+          tier: 1,
+          requiredDecision: "candidate"
+        }
+      ],
+      prerequisiteCompletionTargets: [],
+      readinessPolicyId: null,
+      rewardRefs: [],
+      notes: [
+        "Static eligibility policy only; it does not grant readiness, create an attempt, unlock a tier, or award a reward.",
+        "Readiness policy and reward references remain deferred."
+      ]
+    }
+  ]);
+  assert.equal(validatesKnowledgeTrialPolicy(knowledgeTrialPolicies.records[0]), true);
+});
+
+test("Knowledge trial authored policy skeleton excludes deferred behavior fields", () => {
+  const [policy] = knowledgeTrialPolicies.records;
+  const forbiddenFields = [
+    "ownerId",
+    "progress",
+    "readiness",
+    "attempt",
+    "result",
+    "rewardState",
+    "unlockState",
+    "storage"
+  ];
+
+  assert.deepEqual(knowledgeTrialPolicies.records.map((record) => record.policyId), [
+    "knowledge_trial_policy.flora_tier_1"
+  ]);
+  for (const field of forbiddenFields) {
+    assert.equal(Object.hasOwn(policy, field), false);
+  }
+});
+
+test("Knowledge domain registry trial policy references remain deferred", () => {
+  assert.ok(knowledgeDomainRegistry.records.length > 0);
+  assert.equal(
+    knowledgeDomainRegistry.records.every((record) => record.trialPolicyRef === null),
+    true
+  );
+});
+
+test("Knowledge trial authored policy content is not registered in normal content lint", async () => {
+  const contentLintSource = await readFile("tools/content-lint/index.mjs", "utf8");
+
+  assert.doesNotMatch(contentLintSource, /knowledge_trial_policies\.json/);
+  assert.doesNotMatch(contentLintSource, /knowledgeTrialPolicies/);
 });
 
