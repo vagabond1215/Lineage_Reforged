@@ -1,12 +1,12 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-15
-Route: Codex local sequencing alignment after `Version 0.5.156 - Knowledge Trial Policy Normal Lint Registration`
+Route: Codex local sequencing alignment after `Version 0.5.157 - Knowledge Trial Registry Reference Alignment Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
 
-This file gives Codex a stable ordered queue after `Version 0.5.156 - Knowledge Trial Policy Normal Lint Registration` registered the unchanged pure validator, added policy content exactly once to normal lint, preserved registry/snippet validation, and changed successful checked-file accounting from 55 to 56.
+This file gives Codex a stable ordered queue after `Version 0.5.157 - Knowledge Trial Registry Reference Alignment Plan` selected the exact Flora reference, validator ownership, single-policy-per-domain posture, failure modes, and narrow implementation acceptance criteria.
 
 It does not replace:
 
@@ -21,16 +21,16 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.156 - Knowledge Trial Policy Normal Lint Registration`
+- `Version 0.5.157 - Knowledge Trial Registry Reference Alignment Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.157 - Knowledge Trial Registry Reference Alignment Plan`
+- `Version 0.5.158 - Knowledge Trial Registry Reference Alignment`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- Do not roll from `0.5.156` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.157` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -114,7 +114,8 @@ Versioning note:
 | 76 | `0.5.154` | Knowledge Trial Policy Semantic Validator | Codex 5.5 Local | `tools/content-lint/knowledge-trial-policies.mjs` | pure validator + focused tests | Completed | Added exact wrapper/schema validation, duplicate-aware references, target coherence, deterministic diagnostics, and 76 focused tests without content/schema edits, helper calls, registry alignment, normal lint registration, state, storage, UI, runtime, events, or gameplay behavior. |
 | 77 | `0.5.155` | Knowledge Trial Policy Normal Lint Registration Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-policy-normal-lint-registration-plan.md` | planning doc | Completed | Defined one-step index registration, exact explicit dependency loading, 55-to-56 checked-file accounting, normal failure propagation, focused test updates, and implementation criteria without registration or behavior changes. |
 | 78 | `0.5.156` | Knowledge Trial Policy Normal Lint Registration | Codex 5.5 Local | `docs/design/knowledge-trial-policy-normal-lint-registration-plan.md` | index registration + focused tests | Completed | Registered the unchanged pure validator, counted policy content exactly once, preserved registry/snippet validation and null registry references, and changed successful normal lint from 55 to 56 files checked without adapters or runtime behavior. |
-| 79 | `0.5.157` | Knowledge Trial Registry Reference Alignment Plan | Codex 5.5 Local docs-first | Future focused plan | planning doc | Next | Plan registry-reference alignment without editing registry, policy content, schema, validators, helpers, adapters, runtime, storage, UI, rewards, events, or gameplay. |
+| 79 | `0.5.157` | Knowledge Trial Registry Reference Alignment Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-registry-reference-alignment-plan.md` | planning doc | Completed | Selected the exact Flora reference, policy-owned scope/tier, registry-local and cross-file validator ownership, one-policy-per-domain limit, failure modes, focused tests, and `0.5.158` acceptance criteria without implementation. |
+| 80 | `0.5.158` | Knowledge Trial Registry Reference Alignment | Codex 5.5 Local | `docs/design/knowledge-trial-registry-reference-alignment-plan.md` | narrow validator/test/content alignment | Next | Set only the Flora reference, reconcile null-only validators, keep policy/snippets/schemas/index unchanged, preserve 56-file lint, and add no runtime behavior. |
 
 ## Default Prompt Pattern
 

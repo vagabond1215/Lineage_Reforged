@@ -18,15 +18,15 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.156 - Knowledge Trial Policy Normal Lint Registration`
-- Next recommended version: `Version 0.5.157 - Knowledge Trial Registry Reference Alignment Plan`
+- Latest completed version: `Version 0.5.157 - Knowledge Trial Registry Reference Alignment Plan`
+- Next recommended version: `Version 0.5.158 - Knowledge Trial Registry Reference Alignment`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- Do not roll from `0.5.156` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Do not roll from `0.5.157` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -75,6 +75,7 @@ Current repo reality:
 - The authored broad registry catalog exists at `packages/content/base/player/knowledge_domain_registry.json` with the exact five approved Wave 0 records.
 - Broad registry structural and semantic content lint now enforces wrapper shape, schema compliance, source families, references, policy-null posture, custom notes, legacy-policy subset membership, and broad-registry skill-domain authority.
 - Normal content lint now checks `knowledge_trial_policies.json` and invokes the unchanged pure Knowledge trial policy validator against explicit policy-schema, domain-registry, and snippet inputs. The normal checked-file count is 56.
+- Knowledge trial registry-reference alignment planning has landed in `docs/design/knowledge-trial-registry-reference-alignment-plan.md`. It selects the exact Flora-to-Flora-Tier-1 reference, keeps policy scope/tier authoritative, assigns cross-file coherence to the policy validator, and blocks multiple active tier policies per domain until the registry shape expands.
 - The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four policy records exist today; `knowledge_domain.arcane_lore` exists only in the broad registry and is now linked from the Arcane Lore skill as metadata only.
 - Skill-domain reference realignment planning has landed in `docs/design/skill-knowledge-domain-reference-realignment-plan.md`. It confirms all ten current references, selects the Arcane Lore broad-registry link for `0.5.115`, defers Folk Lore and Civic Lore until specific broad domains exist, and identifies the focused validator-test fixture assumption that must be updated without changing validator behavior.
 - Skill-domain reference realignment has landed. `skill.knowledge.arcane_lore` now references `knowledge_domain.arcane_lore`, and the positive validator test now proves optional skill references through a cloned fixture rather than depending on Arcane Lore remaining unlinked.
@@ -202,7 +203,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.154` | Knowledge Trial Policy Semantic Validator | Codex Local | Pure validator + focused tests | Completed. Added the unregistered schema-first policy validator, deterministic diagnostics, exact semantic boundaries, and 76 focused tests. | No content/schema edit, registry alignment, helper calls, adapter, readiness content, normal lint registration, state, storage, UI, runtime, events, or gameplay behavior. |
 | `0.5.155` | Knowledge Trial Policy Normal Lint Registration Plan | Codex Local docs-first | Planning | Completed. Defined one-step index registration, exact explicit dependency loading, 55-to-56 checked-file accounting, failure propagation, focused test updates, and registration acceptance criteria. | Documentation only; no registration, validator/content/schema edit, registry alignment, adapter, state, storage, UI, runtime, events, or gameplay behavior. |
 | `0.5.156` | Knowledge Trial Policy Normal Lint Registration | Codex Local | Index registration + focused tests | Completed. Registered the unchanged pure validator, counted policy content exactly once, preserved registry/snippet validation, and changed successful normal lint from 55 to 56 checked files. | No validator/content/schema/registry/snippet/helper edit, registry alignment, adapter, readiness policy, state, storage, UI, runtime, events, rewards, or gameplay behavior. |
-| `0.5.157` | Knowledge Trial Registry Reference Alignment Plan | Codex Local docs-first | Planning | Next. Decide whether and how the current Flora Tier 1 policy should align with the broad registry while preserving current ownership boundaries. | Documentation only; no registry/content/schema/validator/helper/runtime behavior. |
+| `0.5.157` | Knowledge Trial Registry Reference Alignment Plan | Codex Local docs-first | Planning | Completed. Selected the exact Flora-to-Flora-Tier-1 reference, validator ownership, one-policy-per-domain posture, failure modes, tests, and `0.5.158` acceptance criteria. | Documentation only; no registry/content/schema/validator/test/helper/runtime behavior. |
+| `0.5.158` | Knowledge Trial Registry Reference Alignment | Codex Local | Narrow validator/test/content alignment | Next. Reconcile null-only validator rules and set the single approved Flora reference while preserving 56-file normal lint. | No policy/snippet/schema/index/helper/adapter/readiness/state/storage/UI/runtime/reward/event/gameplay changes. |
 
 ## 4. Remaining Magic Runtime Path
 
@@ -276,7 +278,8 @@ Practical near-term sequence:
 43. `0.5.154 - Knowledge Trial Policy Semantic Validator` - completed
 44. `0.5.155 - Knowledge Trial Policy Normal Lint Registration Plan` - completed
 45. `0.5.156 - Knowledge Trial Policy Normal Lint Registration` - completed
-46. `0.5.157 - Knowledge Trial Registry Reference Alignment Plan` - next
+46. `0.5.157 - Knowledge Trial Registry Reference Alignment Plan` - completed
+47. `0.5.158 - Knowledge Trial Registry Reference Alignment` - next
 
 ## 5. Advancement Framework Roadmap
 
@@ -340,8 +343,8 @@ Recommended advancement sequence:
 48. `0.5.154 - Knowledge Trial Policy Semantic Validator` - completed
 49. `0.5.155 - Knowledge Trial Policy Normal Lint Registration Plan` - completed
 50. `0.5.156 - Knowledge Trial Policy Normal Lint Registration` - completed
-51. `0.5.157 - Knowledge Trial Registry Reference Alignment Plan` - next
-52. `0.5.x - Knowledge Trial Registry Reference Alignment`
+51. `0.5.157 - Knowledge Trial Registry Reference Alignment Plan` - completed
+52. `0.5.158 - Knowledge Trial Registry Reference Alignment` - next
 53. `0.5.x - Knowledge Trial Checkpoint Helper`
 54. `0.5.x - Skill Trial Schema Expansion Plan`
 55. `0.5.x - Skill Trial Checkpoint Outcome Helper`
@@ -536,7 +539,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 63 | `0.5.154` | Knowledge Trial Policy Semantic Validator | `tools/content-lint/knowledge-trial-policies.mjs` | Completed |
 | 64 | `0.5.155` | Knowledge Trial Policy Normal Lint Registration Plan | `docs/design/knowledge-trial-policy-normal-lint-registration-plan.md` | Completed |
 | 65 | `0.5.156` | Knowledge Trial Policy Normal Lint Registration | `docs/design/knowledge-trial-policy-normal-lint-registration-plan.md` | Completed |
-| 66 | `0.5.157` | Knowledge Trial Registry Reference Alignment Plan | Future focused plan | Next |
+| 66 | `0.5.157` | Knowledge Trial Registry Reference Alignment Plan | `docs/design/knowledge-trial-registry-reference-alignment-plan.md` | Completed |
+| 67 | `0.5.158` | Knowledge Trial Registry Reference Alignment | `docs/design/knowledge-trial-registry-reference-alignment-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -573,6 +577,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Knowledge Trial Policy Content Plan | `docs/design/knowledge-trial-policy-content-plan.md`; use for the selected future content path and wrapper, exact Flora Tier 1 first record, registry-null posture, later semantic checks, and `0.5.152` acceptance criteria. |
 | Knowledge Trial Policy Semantic Validator Plan | `docs/design/knowledge-trial-policy-semantic-validator-plan.md`; use for the pure validator boundary, exact semantic rules, unregistered implementation posture, focused tests, and `0.5.154` acceptance criteria. |
 | Knowledge Trial Policy Normal Lint Registration Plan | `docs/design/knowledge-trial-policy-normal-lint-registration-plan.md`; use for exact index wiring, explicit dependency loading, checked-file accounting, failure propagation, focused test updates, and `0.5.156` acceptance criteria. |
+| Knowledge Trial Registry Reference Alignment Plan | `docs/design/knowledge-trial-registry-reference-alignment-plan.md`; use for the exact Flora reference, single-policy-per-domain posture, validator ownership, failure modes, focused tests, and `0.5.158` acceptance criteria. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
