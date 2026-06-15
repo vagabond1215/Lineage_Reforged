@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed
+Source version/run: Version 0.5.165 - Religion Knowledge Domain Plan
 Date: 2026-06-15
-Branch/status assumption: Ran on clean `master` from commit `936f278`.
+Branch/status assumption: Ran on clean `master` from commit `eba20d7`.
 
 ## Result
 
-Completed the narrow Ecology Knowledge Domain Registry And Snippet Seed.
+Completed the documentation-only Religion Knowledge Domain Plan.
 
-Added the exact approved active Wave 1 `knowledge_domain.ecology` registry record and three Tier 1 snippets for Kaelvar regional ecology, sheep seasonality, and grape-vine habitat.
+The plan selects one broad `knowledge_domain.religion`, defines an exact planned Wave 1 registry record, separates Religion from General Lore, Arcane Lore, Ecology, settlements, cultures, institutions, and family systems, and records the current snippet subject/hotspot authority gaps.
 
-Ecology is now live as authored metadata/content only. All Ecology policy references remain null, and normal content lint remains at 56 checked files.
+Religion content is not live. The candidate registry record passes current live validation, but useful Religion snippets require a separate vocabulary and validator path.
 
 ## Files Changed
 
-- `packages/content/base/player/knowledge_domain_registry.json`
-- `packages/content/base/player/knowledge_snippets.json`
+- `docs/design/religion-knowledge-domain-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,34 +23,32 @@ Ecology is now live as authored metadata/content only. All Ecology policy refere
 
 ## Checks Run
 
-- `node tools/content-lint/index.mjs` -> `content-lint: ok (56 files checked)`
-- Exact plan-to-live JSON parity check for the registry record and three snippets
+- Embedded candidate registry record validated against the current registry schema, semantic validator, skills, content collections, and snippet vocabularies
+- Current religion, deity, order, religious-site, region, locality, settlement, skill, and snippet-authority audit
 - Conflict-marker scan across changed files
 - Trailing-whitespace scan across changed files
 - `git diff --check`
 - Changed-path scope audit
 - Forbidden schema/validator/test/helper/adapter/fixture/runtime/UI/generated-output/storage/persistence/event/reward/gameplay edit audit
-- Broad tests and typecheck were not run because this was a narrow JSON content change validated by normal content lint
+- Tests and typecheck were not run because this was a documentation-only planning change
 
 ## Behavior / Runtime Confirmation
 
-- Authored JSON content changed only.
-- The broad registry now contains six records, including active Wave 1 Ecology.
-- The snippet catalog now contains seven records, including the three Tier 1 Ecology snippets.
-- No schema, validator, test, fixture, helper, adapter, runtime, UI, generated output, storage, persistence, save, account, session, database, event, reward, command, ownership mutation, simulation, or gameplay behavior changed.
+- Documentation only.
+- No registry, snippet, world religion content, schema, validator, test, fixture, helper, adapter, runtime, UI, generated output, storage, persistence, save, account, session, database, event, reward, command, ownership mutation, simulation, faction, reputation, law, conversion, apostasy, Prestige, family, or gameplay behavior changed.
 - Knowledge Trial readiness content and downstream implementation remain deferred.
 
 ## Risks / Follow-Up
 
-- The current snippet validator still cannot directly author habitat, biome, climate-profile, ecological-relationship, disease, domestication, agriculture, settlement, culture, or institution subjects.
-- Broader Ecology concepts require a separate vocabulary/validator plan.
-- The seed-content plan is retained as the exact implementation record; its later cleanup or promotion remains a focused documentation decision.
-- Family, religion, recipe, crafting, civil-society, maturation, estate, Skill Trial, and Spell/Magic Study documents remain future roadmap material only.
+- The current snippet schema has no direct religion, deity, doctrine, rite, religious-order, shrine, sacred-site, or hotspot subject.
+- The current semantic validator blocks settlement, culture, institution, historical-event, and custom subjects.
+- Existing shrine geography does not define dominant faith, pantheon affiliation, doctrine, mismatch pressure, or hotspot severity.
+- Family, heir, recipe, crafting, civil-society, maturation, estate, Skill Trial, and Spell/Magic Study documents remain future roadmap material only.
 
 ## Next Recommended Version
 
-Version 0.5.165 - Religion Knowledge Domain Plan
+Version 0.5.166 - Religion Knowledge Domain Registry Seed
 
 ## Suggested Commit Message
 
-content(knowledge): seed ecology domain snippets
+docs(knowledge): plan religion domain

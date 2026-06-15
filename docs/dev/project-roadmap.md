@@ -18,17 +18,17 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed`
-- Next recommended version: `Version 0.5.165 - Religion Knowledge Domain Plan`
+- Latest completed version: `Version 0.5.165 - Religion Knowledge Domain Plan`
+- Next recommended version: `Version 0.5.166 - Religion Knowledge Domain Registry Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- `Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed` added the exact active Wave 1 registry record and three Tier 1 snippets without runtime behavior.
-- `Version 0.5.165 - Religion Knowledge Domain Plan` is the next recommended documentation-only run.
-- Do not roll from `0.5.164` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.165 - Religion Knowledge Domain Plan` selected one broad planned Religion domain, an exact live-validator-compatible registry record, explicit snippet authority gaps, and a registry-first sequence without implementation.
+- `Version 0.5.166 - Religion Knowledge Domain Registry Seed` is the next recommended narrow content run.
+- Do not roll from `0.5.165` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -84,6 +84,7 @@ Current repo reality:
 - Ecology Knowledge domain planning has landed in `docs/design/ecology-knowledge-domain-plan.md`. It selects one broad Wave 1 `knowledge_domain.ecology`, defines an exact future registry sketch and current-vocabulary seed constraints, and keeps all content, simulation, runtime, trial, readiness, UI, storage, event, reward, and gameplay work deferred.
 - Ecology seed-content planning has landed in `docs/design/ecology-knowledge-domain-seed-content-plan.md`. It freezes the exact registry record plus Kaelvar regional-variation, sheep seasonality, and grape-vine habitat snippets, and confirms that all four records pass unchanged live validation in memory.
 - The active Wave 1 Ecology registry record and its three Tier 1 snippets are now live authored content. All Ecology policy references remain null; no runtime, simulation, trial, readiness, UI, storage, event, reward, command, ownership, or gameplay behavior was added.
+- Religion Knowledge domain planning has landed in `docs/design/religion-knowledge-domain-plan.md`. It selects one broad Wave 1 planned domain, freezes an exact registry candidate that passes current validation, and records that useful snippets require direct religion/deity/rite/order/site/hotspot authority rather than `custom` or an invented region bridge.
 - The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four policy records exist today; `knowledge_domain.arcane_lore` exists only in the broad registry and is now linked from the Arcane Lore skill as metadata only.
 - Skill-domain reference realignment planning has landed in `docs/design/skill-knowledge-domain-reference-realignment-plan.md`. It confirms all ten current references, selects the Arcane Lore broad-registry link for `0.5.115`, defers Folk Lore and Civic Lore until specific broad domains exist, and identifies the focused validator-test fixture assumption that must be updated without changing validator behavior.
 - Skill-domain reference realignment has landed. `skill.knowledge.arcane_lore` now references `knowledge_domain.arcane_lore`, and the positive validator test now proves optional skill references through a cloned fixture rather than depending on Arcane Lore remaining unlinked.
@@ -219,7 +220,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.162` | Ecology Knowledge Domain Plan | Codex Local docs-first | Planning | Completed. Selected one broad Wave 1 Ecology domain, candidate registry shape, vocabulary gaps, seed direction, and validation sequence. | Documentation only; no registry content, snippets, schemas, validators, tests, runtime, UI, storage, events, or gameplay behavior. |
 | `0.5.163` | Ecology Knowledge Domain Seed Content Plan | Codex Local docs-first | Planning | Completed. Selected the exact registry record and three Tier 1 snippets and proved them against current live validation. | Documentation only; no content, schema, validator, test, runtime, UI, storage, events, or gameplay behavior. |
 | `0.5.164` | Ecology Knowledge Domain Registry And Snippet Seed | Codex Local | Narrow content seed | Completed. Added the exact active Wave 1 record and three approved snippets; normal lint remains 56 files. | Content only; schemas, validators, tests, runtime, UI, storage, events, and gameplay behavior unchanged. |
-| `0.5.165` | Religion Knowledge Domain Plan | Codex Local docs-first | Planning | Next. Define the Religion domain boundary, registry posture, vocabulary gaps, and seed direction. | Documentation only; no registry, snippet, schema, validator, runtime, UI, storage, events, or gameplay behavior. |
+| `0.5.165` | Religion Knowledge Domain Plan | Codex Local docs-first | Planning | Completed. Selected one broad planned Religion domain, exact registry metadata, hotspot boundary, vocabulary gaps, and registry-first sequence. | Documentation only; no registry, snippet, schema, validator, runtime, UI, storage, events, or gameplay behavior. |
+| `0.5.166` | Religion Knowledge Domain Registry Seed | Codex Local | Narrow content seed | Next. Add the exact planned Wave 1 Religion registry record only. | No snippets, schemas, validators, tests, runtime, UI, storage, events, or gameplay behavior. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -240,13 +242,15 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.165 - Religion Knowledge Domain Plan`
-2. `0.5.166 - Religious Hotspot Knowledge Snippet Plan`
-3. `0.5.167 - Family Visibility And Heir Slot Projection Plan`
-4. `0.5.168 - Race-Specific Adult Age And Maturation Plan`
-5. `0.5.169 - Offspring Growth Role And Activity Build Plan`
-6. `0.5.170 - Recipe Ownership And Personal Learning Plan`
-7. `0.5.171 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.166 - Religion Knowledge Domain Registry Seed`
+2. `0.5.167 - Religion Knowledge Vocabulary And Validator Plan`
+3. `0.5.168 - Religion Knowledge Domain Seed Content Plan`
+4. `0.5.169 - Religious Hotspot Knowledge Snippet Plan`
+5. `0.5.170 - Family Visibility And Heir Slot Projection Plan`
+6. `0.5.171 - Race-Specific Adult Age And Maturation Plan`
+7. `0.5.172 - Offspring Growth Role And Activity Build Plan`
+8. `0.5.173 - Recipe Ownership And Personal Learning Plan`
+9. `0.5.174 - 0.6.0 Runtime Ownership Transition Reassessment`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -267,9 +271,9 @@ High-priority unresolved questions:
 Scope guardrails:
 
 - The integrated family, religion, ecology, recipe, crafting, civil-society, maturation, and estate documents are future roadmap material only. They do not authorize runtime behavior.
-- `Version 0.5.165 - Religion Knowledge Domain Plan` is the immediate next recommended run.
+- `Version 0.5.166 - Religion Knowledge Domain Registry Seed` is the immediate next recommended run.
 - The completed registry alignment remains content-lint authority only and does not make Knowledge trials runnable.
-- Keep `0.5.165` documentation-only and do not absorb Ecology expansion, registry/snippet implementation, schema, validator, runtime, family, heir, recipe, crafting, estate, Skill Trial, or Magic Study work.
+- Keep `0.5.166` to the exact planned Religion registry record and coordination docs; do not absorb snippets, schema, validator, hotspot, runtime, family, heir, recipe, crafting, estate, Skill Trial, or Magic Study work.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -618,7 +622,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 71 | `0.5.162` | Ecology Knowledge Domain Plan | `docs/design/ecology-knowledge-domain-plan.md` | Completed |
 | 72 | `0.5.163` | Ecology Knowledge Domain Seed Content Plan | `docs/design/ecology-knowledge-domain-seed-content-plan.md` | Completed |
 | 73 | `0.5.164` | Ecology Knowledge Domain Registry And Snippet Seed | `docs/design/ecology-knowledge-domain-seed-content-plan.md` | Completed |
-| 74 | `0.5.165` | Religion Knowledge Domain Plan | Roadmap candidate lane | Next |
+| 74 | `0.5.165` | Religion Knowledge Domain Plan | `docs/design/religion-knowledge-domain-plan.md` | Completed |
+| 75 | `0.5.166` | Religion Knowledge Domain Registry Seed | `docs/design/religion-knowledge-domain-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -660,6 +665,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Knowledge Trial Readiness Policy Schema | `packages/schemas/player/knowledge_trial_readiness_policy.schema.json`; use as the strict structural authority for future authored readiness records, not as content, semantic authority, helper input adaptation, mutable readiness state, or trial behavior. |
 | Ecology Knowledge Domain Plan | `docs/design/ecology-knowledge-domain-plan.md`; use for the broad Wave 1 domain decision, candidate registry record, current vocabulary and validator gaps, relationships to existing domains, seed direction, deferred simulation boundaries, and `0.5.163` acceptance criteria. |
 | Ecology Knowledge Domain Seed Content Plan | `docs/design/ecology-knowledge-domain-seed-content-plan.md`; use for the exact future registry record, three approved Tier 1 snippets, live-validator proof, implementation scope, and `0.5.164` acceptance criteria. |
+| Religion Knowledge Domain Plan | `docs/design/religion-knowledge-domain-plan.md`; use for the broad planned-domain decision, exact registry candidate, current religion authority, snippet and hotspot gaps, Prestige/family boundaries, and `0.5.166` acceptance criteria. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
