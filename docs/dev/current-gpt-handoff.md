@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.166 - Religion Knowledge Domain Registry Seed`
+Source route: Codex local documentation after `Version 0.5.167 - Religion Knowledge Vocabulary And Validator Plan`
 Date: 2026-06-15
-Branch/status assumption: clean `master` at commit `0907f01` before edits.
+Branch/status assumption: clean `master` at commit `d4dfa37` before edits.
 
 ## Purpose
 
@@ -11,9 +11,10 @@ This is the short current handoff for future prompt preparation. It records imme
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
-- `docs/design/religion-knowledge-domain-plan.md` owns the Religion boundary, exact registry record, vocabulary gaps, hotspot posture, and future sequence.
-- `packages/content/base/player/knowledge_domain_registry.json` now contains the exact planned Religion metadata record.
-- Current registry and snippet schemas and validators remain unchanged authorities.
+- `docs/design/religion-knowledge-domain-plan.md` owns the broad Religion boundary and hotspot/non-runtime constraints.
+- `docs/design/religion-knowledge-vocabulary-validator-plan.md` owns the exact first subject set, schema posture, resolver rules, tests, activation boundary, and `0.5.168` acceptance criteria.
+- `packages/content/base/player/knowledge_domain_registry.json` contains planned Religion metadata with null policies.
+- Current schemas, validators, and world religion content remain unchanged authorities until implementation.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the near-term queue.
 - `docs/future_content_backlog.md` owns deferred-work and run notes.
@@ -22,11 +23,11 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed:
 
-- `Version 0.5.166 - Religion Knowledge Domain Registry Seed`
+- `Version 0.5.167 - Religion Knowledge Vocabulary And Validator Plan`
 
 Immediate next:
 
-- `Version 0.5.167 - Religion Knowledge Vocabulary And Validator Plan`
+- `Version 0.5.168 - Religion Knowledge Schema And Validator Vocabulary`
 
 Current phase:
 
@@ -34,32 +35,35 @@ Current phase:
 
 Do not roll to `0.6.0`.
 
-## Version 0.5.166 Result
+## Version 0.5.167 Decision
 
-- Added the exact Wave 1 `knowledge_domain.religion` registry record.
-- Religion is live registry metadata with `status: "planned"`.
-- All Religion policy references remain null.
-- No Religion snippets or world religion content changed.
-- Normal content lint remains `content-lint: ok (56 files checked)`.
-- No schema, validator, test, helper, adapter, runtime, UI, storage, persistence, simulation, trial, readiness, event, reward, command, ownership mutation, faction, reputation, law, conversion, apostasy, Prestige, family, or gameplay behavior changed.
+- Add exactly `religion` and `deity` as the first direct Religion snippet subjects.
+- Expand both snippet and registry subject enums in the implementation run.
+- Add explicit `world.religions` authority for top-level religion records and nested deity records.
+- Reject duplicate and unknown religion/deity ids.
+- Keep the existing active-domain requirement; Religion remains planned and cannot receive snippets yet.
+- Current world religion content is sufficient for pantheon and deity facts, so no authority-hardening run is required first.
+- Defer orders, doctrine, rites, holy days, shrines, sacred sites, hotspots, and general settlement/culture/institution/historical-event enablement.
 
-## Guardrails For 0.5.167
+## Guardrails For 0.5.168
 
-- Plan exact Religion subject vocabulary and semantic authority before implementation.
-- Keep Religion `status: "planned"` until approved snippets can validate.
-- Do not add snippets, schema vocabulary, validator code, tests, hotspot content, or world religion content during the planning run.
-- Do not use `custom` or invent religious pressure through generic region facts.
-- Keep Knowledge Trial readiness and all runtime, family, Prestige, Magic Study, and gameplay behavior deferred.
+- Implement only schema vocabulary, planned registry vocabulary alignment, snippet resolver authority, normal-lint dependency loading, and focused tests.
+- Keep Religion `status: "planned"` and add no snippets.
+- Keep all Religion policy references null.
+- Do not change world religion content.
+- Keep `custom` and currently blocked subjects blocked.
+- Do not add hotspot, trial, readiness, runtime, UI, storage, family, Prestige, Magic Study, or gameplay behavior.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Status |
 | ---: | --- | --- | --- |
-| 1 | `0.5.167` | Religion Knowledge Vocabulary And Validator Plan | Next |
-| 2 | `0.5.168` | Religion Knowledge Domain Seed Content Plan | Recommended |
-| 3 | `0.5.169` | Religious Hotspot Knowledge Snippet Plan | Recommended |
-| 4 | `0.5.170` | Family Visibility And Heir Slot Projection Plan | Recommended |
-| 5 | `0.5.171` | Race-Specific Adult Age And Maturation Plan | Recommended |
-| 6 | `0.5.172` | Offspring Growth Role And Activity Build Plan | Recommended |
-| 7 | `0.5.173` | Recipe Ownership And Personal Learning Plan | Recommended |
-| 8 | `0.5.174` | 0.6.0 Runtime Ownership Transition Reassessment | Recommended |
+| 1 | `0.5.168` | Religion Knowledge Schema And Validator Vocabulary | Next |
+| 2 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | Recommended |
+| 3 | `0.5.170` | Religion Knowledge Domain Seed | Recommended |
+| 4 | `0.5.171` | Religious Hotspot Knowledge Snippet Plan | Recommended |
+| 5 | `0.5.172` | Family Visibility And Heir Slot Projection Plan | Recommended |
+| 6 | `0.5.173` | Race-Specific Adult Age And Maturation Plan | Recommended |
+| 7 | `0.5.174` | Offspring Growth Role And Activity Build Plan | Recommended |
+| 8 | `0.5.175` | Recipe Ownership And Personal Learning Plan | Recommended |
+| 9 | `0.5.176` | 0.6.0 Runtime Ownership Transition Reassessment | Recommended |
