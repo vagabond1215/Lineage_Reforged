@@ -525,9 +525,56 @@ test("validator source preserves purity and helper isolation", async () => {
   }
 });
 
-test("normal content lint remains unregistered", async () => {
+test("normal content lint registers the validator with explicit dependencies", async () => {
   const source = await readText("tools/content-lint/index.mjs");
-  assert.doesNotMatch(source, /knowledge_trial_policies\.json/);
-  assert.doesNotMatch(source, /knowledgeTrialPolicies/);
-  assert.doesNotMatch(source, /knowledge-trial-policies/);
+  const functionStart = source.indexOf(
+    "async function validateKnowledgeTrialPoliciesAgainstDependencies()"
+  );
+  const functionEnd = source.indexOf(
+    "async function validatePlayerContentAgainstDependencies()",
+    functionStart
+  );
+  const orchestrationSource = source.slice(functionStart, functionEnd);
+
+  assert.match(
+    source,
+    /import \{ validateKnowledgeTrialPolicies \} from "\.\/knowledge-trial-policies\.mjs";/
+  );
+  assert.ok(functionStart >= 0);
+  assert.ok(functionEnd > functionStart);
+  for (const dependencyPath of [
+    "packages/content/base/player/knowledge_trial_policies.json",
+    "packages/schemas/player/knowledge_trial_policy.schema.json",
+    "packages/content/base/player/knowledge_domain_registry.json",
+    "packages/content/base/player/knowledge_snippets.json"
+  ]) {
+    assert.match(orchestrationSource, new RegExp(dependencyPath.replaceAll(".", "\\.")));
+  }
+  assert.match(
+    orchestrationSource,
+    /validateKnowledgeTrialPolicies\(\{\s*relativePath: "packages\/content\/base\/player\/knowledge_trial_policies\.json",\s*wrapper: parsedPolicyWrapper,\s*policySchema: parsedPolicySchema,\s*domainRegistryWrapper: parsedDomainRegistryWrapper,\s*snippetWrapper: parsedSnippetWrapper\s*\}\);/
+  );
+  assert.doesNotMatch(orchestrationSource, /catch\s*\(/);
+
+  const registryCall = source.indexOf(
+    "await validateKnowledgeDomainRegistryAgainstDependencies();"
+  );
+  const snippetCall = source.indexOf(
+    "await validateKnowledgeSnippetsAgainstDependencies();"
+  );
+  const policyCall = source.indexOf(
+    "await validateKnowledgeTrialPoliciesAgainstDependencies();"
+  );
+  const successLog = source.indexOf(
+    "console.log(`content-lint: ok (${checks.length} files checked)`);"
+  );
+
+  assert.ok(registryCall >= 0);
+  assert.ok(snippetCall > registryCall);
+  assert.ok(policyCall > snippetCall);
+  assert.ok(successLog > policyCall);
+  assert.match(
+    source,
+    /main\(\)\.catch\(\(error\) => \{\s*console\.error\("content-lint: failed", error\.message\);\s*process\.exitCode = 1;\s*\}\);/
+  );
 });

@@ -17,6 +17,7 @@ import {
 } from "./spell-hook-support.mjs";
 import { validateKnowledgeDomainRegistry } from "./knowledge-domain-registry.mjs";
 import { validateKnowledgeSnippets } from "./knowledge-snippets.mjs";
+import { validateKnowledgeTrialPolicies } from "./knowledge-trial-policies.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -598,6 +599,12 @@ const checks = [
   },
   {
     file: "packages/content/base/player/knowledge_snippets.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/player/knowledge_trial_policies.json",
     requiredTopLevel: ["records"],
     requireSlug: false,
     forbidGeoQualifierInName: false
@@ -9357,6 +9364,38 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
   });
 }
 
+async function validateKnowledgeTrialPoliciesAgainstDependencies() {
+  const relativePath = "packages/content/base/player/knowledge_trial_policies.json";
+  const policyPath = path.join(ROOT, relativePath);
+  const policySchemaPath = path.join(
+    ROOT,
+    "packages/schemas/player/knowledge_trial_policy.schema.json"
+  );
+  const domainRegistryPath = path.join(
+    ROOT,
+    "packages/content/base/player/knowledge_domain_registry.json"
+  );
+  const snippetPath = path.join(
+    ROOT,
+    "packages/content/base/player/knowledge_snippets.json"
+  );
+
+  const parsedPolicyWrapper = JSON.parse(await readFile(policyPath, "utf8"));
+  const parsedPolicySchema = JSON.parse(await readFile(policySchemaPath, "utf8"));
+  const parsedDomainRegistryWrapper = JSON.parse(
+    await readFile(domainRegistryPath, "utf8")
+  );
+  const parsedSnippetWrapper = JSON.parse(await readFile(snippetPath, "utf8"));
+
+  validateKnowledgeTrialPolicies({
+    relativePath: "packages/content/base/player/knowledge_trial_policies.json",
+    wrapper: parsedPolicyWrapper,
+    policySchema: parsedPolicySchema,
+    domainRegistryWrapper: parsedDomainRegistryWrapper,
+    snippetWrapper: parsedSnippetWrapper
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -9925,6 +9964,7 @@ async function main() {
 
   await validateKnowledgeDomainRegistryAgainstDependencies();
   await validateKnowledgeSnippetsAgainstDependencies();
+  await validateKnowledgeTrialPoliciesAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

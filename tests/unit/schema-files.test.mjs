@@ -555,10 +555,32 @@ test("Knowledge domain registry trial policy references remain deferred", () => 
   );
 });
 
-test("Knowledge trial authored policy content is not registered in normal content lint", async () => {
+test("Knowledge trial authored policy content is registered exactly once in normal content lint", async () => {
   const contentLintSource = await readFile("tools/content-lint/index.mjs", "utf8");
+  const checksStart = contentLintSource.indexOf("const checks = [");
+  const checksEnd = contentLintSource.indexOf("\n];", checksStart);
+  const checksSource = contentLintSource.slice(checksStart, checksEnd);
 
-  assert.doesNotMatch(contentLintSource, /knowledge_trial_policies\.json/);
-  assert.doesNotMatch(contentLintSource, /knowledgeTrialPolicies/);
+  assert.ok(checksStart >= 0);
+  assert.ok(checksEnd > checksStart);
+  assert.equal(
+    checksSource.match(/packages\/content\/base\/player\/knowledge_trial_policies\.json/g)
+      ?.length,
+    1
+  );
+  assert.equal(
+    checksSource.match(/packages\/content\/base\/player\/knowledge_domain_registry\.json/g)
+      ?.length,
+    1
+  );
+  assert.equal(
+    checksSource.match(/packages\/content\/base\/player\/knowledge_snippets\.json/g)
+      ?.length,
+    1
+  );
+  assert.doesNotMatch(
+    checksSource,
+    /packages\/schemas\/player\/knowledge_trial_policy\.schema\.json/
+  );
 });
 

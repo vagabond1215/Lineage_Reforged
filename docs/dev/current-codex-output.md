@@ -1,20 +1,25 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.155 - Knowledge Trial Policy Normal Lint Registration Plan
-Date: 2026-06-14
-Branch/status assumption: Ran on `master` from commit `3fc0eed`. The worktree was clean before edits.
+Source version/run: Version 0.5.156 - Knowledge Trial Policy Normal Lint Registration
+Date: 2026-06-15
+Branch/status assumption: Ran on `master` from commit `8982c79`. The worktree was clean before edits, and the branch was five commits behind `origin/master`.
 
 ## Result
 
-Added the documentation-only Knowledge trial policy normal lint registration plan.
+Registered the existing pure Knowledge trial policy semantic validator in normal content lint.
 
-The plan selects a conservative one-step `0.5.156` registration: add `knowledge_trial_policies.json` exactly once to the normal checked-file list, load policy content/schema plus registry/snippet dependencies in index orchestration, call the unchanged pure validator after existing registry/snippet validation, and let failures propagate through the current top-level lint handler.
+Normal lint now checks `packages/content/base/player/knowledge_trial_policies.json` exactly once, explicitly loads policy content/schema plus domain-registry/snippet dependencies, invokes policy validation after the existing registry and snippet validators, and preserves the existing top-level failure handler.
 
-The policy content should increment normal lint from 55 to 56 checked files. The schema remains dependency-only, while registry and snippets are not counted again because they already have checked-file entries and dedicated semantic validators.
+Successful output is now:
+
+`content-lint: ok (56 files checked)`
 
 ## Files Changed
 
-- `docs/design/knowledge-trial-policy-normal-lint-registration-plan.md`
+- `tools/content-lint/index.mjs`
+- `tests/unit/knowledge-trial-policies-validation.test.mjs`
+- `tests/unit/schema-files.test.mjs`
+- `tests/integration/tool-surfaces.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -23,41 +28,42 @@ The policy content should increment normal lint from 55 to 56 checked files. The
 
 ## Checks Run
 
-- `node tools/content-lint/index.mjs` - current baseline confirmed as 55 files checked.
-- Conflict-marker scan across changed files.
-- Trailing-whitespace scan across changed files.
+- `node --check tools/content-lint/index.mjs`
+- `node --check tools/content-lint/knowledge-trial-policies.mjs`
+- `node --test tests/unit/knowledge-trial-policies-validation.test.mjs` - 76 passed
+- `node --test tests/unit/knowledge-domain-registry-validation.test.mjs` - 37 passed
+- `node --test tests/unit/knowledge-snippets-validation.test.mjs` - 49 passed
+- `node --test tests/unit/schema-files.test.mjs` - 71 passed
+- `node --test tests/integration/tool-surfaces.test.mjs` - 3 passed
+- `node tools/content-lint/index.mjs` - 56 files checked
+- Conflict-marker scan across changed files
+- Trailing-whitespace scan across changed files
 - `git diff --check`
-- Changed-path scope audit.
-- Forbidden index, validator, schema, content, test, fixture, helper, adapter, runtime, storage, persistence, UI, generated-output, event, reward, and gameplay audit.
-- Broad typecheck and test suites were not run because this was a documentation-only change.
+- Changed-path scope audit
+- Forbidden schema/content/registry/snippet/helper/adapter/readiness/storage/persistence/runtime/UI/generated-output/event/reward/gameplay/family/religion/ecology/recipe-doc edit audit
 
 ## Behavior / Runtime Confirmation
 
-- Documentation only.
-- No validator implementation or normal content-lint registration changed.
-- No schema, content JSON, registry, snippet, test, fixture, helper, adapter, or readiness policy changed.
-- No storage, persistence, save/account/session/database, UI, runtime, generated output, event, reward, ownership mutation, or gameplay behavior changed.
+- Normal content-lint behavior changed only to include Knowledge trial policy content and semantic validation.
+- The checked-file count changed from 55 to 56.
+- Policy content is counted once; the policy schema remains dependency-only.
+- Registry and snippets remain checked once and retain their existing validators.
+- Policy/schema/registry/snippet content and the pure policy validator remain unchanged.
 - Every registry `trialPolicyRef` remains null.
-- Knowledge, Skill, and Spell/Magic Study trial families remain separate.
-- Arcane Lore remains planned, blocked, and deferred.
+- No helper, adapter, readiness, storage, persistence, save/account/session/database, UI, runtime, generated output, reward, event, ownership mutation, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The validator remains unregistered until the separately scoped `0.5.156` implementation.
-- Registration must preserve explicit index-owned dependency loading and validator purity.
-- Existing tests that assert the policy is unregistered must be intentionally replaced during registration.
-- Registry alignment remains separately deferred.
+- Registry alignment remains deferred because current registry and policy validators require null `trialPolicyRef` values.
 - No content-to-helper adapter or canonical completion-policy content exists.
-- Readiness schema/content remains deferred.
-- Current Flora Tier 1 has one authored counting snippet.
-- Reward references remain inert and empty.
-- `trialUnlockWeight` remains uninterpreted.
-- Mutable authority, persistence, checkpoint/outcome ownership, runtime, UI, events, and gameplay remain undefined.
+- Readiness schema/content, attempts, checkpoints, outcomes, cooldowns, rewards, state, storage, persistence, runtime, and UI remain deferred.
+- Current Flora Tier 1 still has one authored counting snippet.
+- Family/religion/ecology/recipe expansion docs remain future roadmap material and were not edited in this run.
 
 ## Next Recommended Version
 
-Version 0.5.156 - Knowledge Trial Policy Normal Lint Registration
+Version 0.5.157 - Knowledge Trial Registry Reference Alignment Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan trial policy lint registration
+tools(knowledge): register trial policy content lint
