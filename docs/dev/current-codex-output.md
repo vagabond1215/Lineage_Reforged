@@ -1,20 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.165 - Religion Knowledge Domain Plan
+Source version/run: Version 0.5.166 - Religion Knowledge Domain Registry Seed
 Date: 2026-06-15
-Branch/status assumption: Ran on clean `master` from commit `eba20d7`.
+Branch/status assumption: Ran on clean `master` from commit `0907f01`.
 
 ## Result
 
-Completed the documentation-only Religion Knowledge Domain Plan.
+Added the exact planned Wave 1 `knowledge_domain.religion` record to the broad Knowledge registry.
 
-The plan selects one broad `knowledge_domain.religion`, defines an exact planned Wave 1 registry record, separates Religion from General Lore, Arcane Lore, Ecology, settlements, cultures, institutions, and family systems, and records the current snippet subject/hotspot authority gaps.
-
-Religion content is not live. The candidate registry record passes current live validation, but useful Religion snippets require a separate vocabulary and validator path.
+Religion is now live registry metadata with `status: "planned"`. All policy references remain null, and no Religion snippets or world religion content were added.
 
 ## Files Changed
 
-- `docs/design/religion-knowledge-domain-plan.md`
+- `packages/content/base/player/knowledge_domain_registry.json`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -23,32 +21,34 @@ Religion content is not live. The candidate registry record passes current live 
 
 ## Checks Run
 
-- Embedded candidate registry record validated against the current registry schema, semantic validator, skills, content collections, and snippet vocabularies
-- Current religion, deity, order, religious-site, region, locality, settlement, skill, and snippet-authority audit
+- `node tools/content-lint/index.mjs`
 - Conflict-marker scan across changed files
 - Trailing-whitespace scan across changed files
 - `git diff --check`
 - Changed-path scope audit
-- Forbidden schema/validator/test/helper/adapter/fixture/runtime/UI/generated-output/storage/persistence/event/reward/gameplay edit audit
-- Tests and typecheck were not run because this was a documentation-only planning change
+- Forbidden snippet/schema/validator/test/helper/adapter/fixture/world-religion/storage/persistence/runtime/UI/generated-output/event/reward/gameplay edit audit
+- Broad UI and workspace typecheck were not run because this was a narrow registry-content-only change
 
 ## Behavior / Runtime Confirmation
 
-- Documentation only.
-- No registry, snippet, world religion content, schema, validator, test, fixture, helper, adapter, runtime, UI, generated output, storage, persistence, save, account, session, database, event, reward, command, ownership mutation, simulation, faction, reputation, law, conversion, apostasy, Prestige, family, or gameplay behavior changed.
-- Knowledge Trial readiness content and downstream implementation remain deferred.
+- Registry metadata only.
+- Religion remains planned and is not a live snippet domain.
+- All Religion policy references remain null.
+- No Religion snippets or world religion content changed.
+- No schema, validator, test, helper, adapter, fixture, runtime, UI, generated output, storage, persistence, save, account, session, database, simulation, trial, readiness, reward, event, command, ownership mutation, faction, reputation, law, conversion, apostasy, Prestige, family, or gameplay behavior changed.
+- Normal content lint remains `content-lint: ok (56 files checked)`.
 
 ## Risks / Follow-Up
 
-- The current snippet schema has no direct religion, deity, doctrine, rite, religious-order, shrine, sacred-site, or hotspot subject.
-- The current semantic validator blocks settlement, culture, institution, historical-event, and custom subjects.
-- Existing shrine geography does not define dominant faith, pantheon affiliation, doctrine, mismatch pressure, or hotspot severity.
+- Useful Religion snippets remain blocked by missing direct religion, deity, doctrine, rite, order, sacred-site, and hotspot subjects.
+- The current snippet validator still blocks settlement, culture, institution, historical-event, and custom subjects.
+- Knowledge Trial readiness implementation remains deferred.
 - Family, heir, recipe, crafting, civil-society, maturation, estate, Skill Trial, and Spell/Magic Study documents remain future roadmap material only.
 
 ## Next Recommended Version
 
-Version 0.5.166 - Religion Knowledge Domain Registry Seed
+Version 0.5.167 - Religion Knowledge Vocabulary And Validator Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan religion domain
+content(knowledge): seed planned religion domain

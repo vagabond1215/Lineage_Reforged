@@ -370,6 +370,84 @@
       ]
     },
     {
+      "id": "knowledge_domain.religion",
+      "slug": "religion",
+      "name": "Religion",
+      "summary": "Gods, spirits, doctrines, rites, sacred places, religious institutions, holy days, taboos, and regional or cultural faith traditions.",
+      "group": "religion_myth",
+      "wave": 1,
+      "status": "planned",
+      "canonicalSubjectTypes": [
+        "region",
+        "settlement",
+        "culture",
+        "institution",
+        "historical_event"
+      ],
+      "supportedSnippetCategories": [
+        "identification",
+        "behavior",
+        "danger",
+        "regional_variant",
+        "ritual_use",
+        "historical_context",
+        "cultural_context"
+      ],
+      "supportedDiscoverySourceFamilies": [
+        "field_observation",
+        "textual_study",
+        "instruction",
+        "event_record"
+      ],
+      "supportedDiscoverySourceTypes": [
+        "field_identification",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "quest_event",
+        "chronicle_record"
+      ],
+      "defaultEvidenceOwnerScopes": [
+        "character",
+        "institution",
+        "region",
+        "settlement",
+        "quest_event",
+        "chronicle_record",
+        "document_instance",
+        "teacher",
+        "study_event",
+        "travel_event"
+      ],
+      "relatedSkillIds": [
+        "skill.knowledge.general_lore",
+        "skill.knowledge.cultural_lore",
+        "skill.knowledge.civic_lore"
+      ],
+      "relatedMagicSchoolIds": [],
+      "relatedContentCollections": [
+        "world.region_localities",
+        "world.regions",
+        "world.religions",
+        "world.settlements"
+      ],
+      "trialPolicyRef": null,
+      "completionPolicyRef": null,
+      "visibilityPolicyRef": null,
+      "schemaGapNotes": [
+        "The current snippet subject vocabulary has no religion, deity, doctrine, rite, holy-day, religious-order, shrine, temple, sacred-site, or religious-hotspot subject type.",
+        "The current snippet validator blocks settlement, culture, institution, historical_event, and custom subjects, leaving region as the only candidate Religion subject under current semantic authority.",
+        "Current region and settlement content can identify shrine communities, but it does not yet author dominant-faith, doctrine, mismatch-pressure, hotspot, or Elemental Pantheon affiliation authority."
+      ],
+      "notes": [
+        "Religion is authored knowledge only and does not create faith points, worship, conversion, apostasy, faction rank, reputation, law enforcement, access penalties, perks, buffs, punishment, or runtime behavior.",
+        "Folk Lore, Civic Lore, and Common Lore are related references only; skill rank does not grant religious knowledge.",
+        "Magic-school references remain empty so religious knowledge cannot imply Divine or Druidic Magic training, Magic Study readiness, or spell access.",
+        "The record should remain planned until a later vocabulary and validator pass approves useful Religion snippet subjects and hotspot authority."
+      ]
+    },
+    {
       "id": "knowledge_domain.arcane_lore",
       "slug": "arcane_lore",
       "name": "Arcane Lore",
