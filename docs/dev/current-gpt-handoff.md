@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local documentation after `Version 0.5.162 - Ecology Knowledge Domain Plan`
+Source route: Codex local documentation after `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan`
 Date: 2026-06-15
-Branch/status assumption: clean `master` at commit `d8d0839` before edits, aligned with `origin/master`.
+Branch/status assumption: clean `master` at commit `bc16865` before edits, aligned with `origin/master`.
 
 ## Purpose
 
@@ -21,11 +21,11 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed:
 
-- `Version 0.5.162 - Ecology Knowledge Domain Plan`
+- `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan`
 
 Immediate next:
 
-- `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan`
+- `Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed`
 
 Current phase:
 
@@ -33,35 +33,33 @@ Current phase:
 
 Do not roll to `0.6.0`.
 
-## Version 0.5.162 Decision
+## Version 0.5.163 Decision
 
-- Start with one broad Wave 1 `knowledge_domain.ecology`.
-- Defer narrower Ecology domains until authored snippets prove the split is useful.
-- Target `active` only in a future seed implementation; no Ecology record is live now.
-- Reuse current registry vocabulary and current `flora`, `fauna`, `mineral`, and `region` snippet subjects first.
-- Treat habitat, biome, climate, ecological relationship, disease, domestication, agriculture, settlement, culture, and institution subjects as current schema or validator gaps.
+- Implement one active Wave 1 `knowledge_domain.ecology` record and three Tier 1 snippets together.
+- Use exact Kaelvar regional-variation, sheep seasonality, and grape-vine habitat records from `docs/design/ecology-knowledge-domain-seed-content-plan.md`.
+- The exact proposed registry and snippets pass the unchanged live schemas and semantic validators in memory.
+- No schema, validator, vocabulary, or test change is required.
 - Keep all policy references null.
 - Add no trial, readiness, simulation, runtime, UI, storage, persistence, event, reward, command, or gameplay behavior.
 
-## Guardrails For 0.5.163
+## Guardrails For 0.5.164
 
-- Keep the run documentation-only.
-- Select the exact future Ecology registry record and a small Tier 1 snippet seed.
-- Verify every proposed skill and collection reference against current authorities.
-- Map each snippet to current subject, category, source, and location validation.
-- Do not force unsupported concepts into `custom`.
-- Do not edit registry or snippet content, schemas, validators, tests, helpers, adapters, runtime, UI, storage, persistence, simulation, events, rewards, commands, or gameplay.
+- Add only the exact approved registry record and three snippets plus required coordination docs.
+- Preserve current schemas, validators, tests, helpers, adapters, and index wiring.
+- Run normal content lint; both edited content files are already counted, so success should remain 56 checked files.
+- Do not broaden into unsupported subject/category vocabulary.
+- Do not add runtime, UI, storage, persistence, simulation, events, rewards, commands, ownership mutation, or gameplay.
 - Keep Ecology trial and readiness policy work deferred.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Status |
 | ---: | --- | --- | --- |
-| 1 | `0.5.163` | Ecology Knowledge Domain Seed Content Plan | Next |
-| 2 | `0.5.164` | Religion Knowledge Domain Plan | Recommended |
-| 3 | `0.5.165` | Religious Hotspot Knowledge Snippet Plan | Recommended |
-| 4 | `0.5.166` | Family Visibility And Heir Slot Projection Plan | Recommended |
-| 5 | `0.5.167` | Race-Specific Adult Age And Maturation Plan | Recommended |
-| 6 | `0.5.168` | Offspring Growth Role And Activity Build Plan | Recommended |
-| 7 | `0.5.169` | Recipe Ownership And Personal Learning Plan | Recommended |
-| 8 | `0.5.170` | 0.6.0 Runtime Ownership Transition Reassessment | Recommended |
+| 1 | `0.5.164` | Ecology Knowledge Domain Registry And Snippet Seed | Next |
+| 2 | `0.5.165` | Religion Knowledge Domain Plan | Recommended |
+| 3 | `0.5.166` | Religious Hotspot Knowledge Snippet Plan | Recommended |
+| 4 | `0.5.167` | Family Visibility And Heir Slot Projection Plan | Recommended |
+| 5 | `0.5.168` | Race-Specific Adult Age And Maturation Plan | Recommended |
+| 6 | `0.5.169` | Offspring Growth Role And Activity Build Plan | Recommended |
+| 7 | `0.5.170` | Recipe Ownership And Personal Learning Plan | Recommended |
+| 8 | `0.5.171` | 0.6.0 Runtime Ownership Transition Reassessment | Recommended |

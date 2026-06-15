@@ -1,20 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.162 - Ecology Knowledge Domain Plan
+Source version/run: Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan
 Date: 2026-06-15
-Branch/status assumption: Ran on clean `master` from commit `d8d0839`, aligned with `origin/master`.
+Branch/status assumption: Ran on clean `master` from commit `bc16865`, aligned with `origin/master`.
 
 ## Result
 
-Completed the documentation-only Ecology Knowledge Domain Plan.
+Completed the documentation-only Ecology Knowledge Domain Seed Content Plan.
 
-The plan selects one broad Wave 1 `knowledge_domain.ecology` and defers narrower habitat, flora ecology, fauna ecology, climate ecology, and resource ecology domains until authored-content pressure proves they are needed. It defines the domain boundary, an exact candidate registry record, current vocabulary reuse, schema and validator gaps, relationships to existing domains, seed-content direction, validation expectations, trial/readiness posture, and deferred simulation systems.
+The plan freezes the exact future active Wave 1 `knowledge_domain.ecology` registry record and three exact Tier 1 snippets: Kaelvar regional ecology, sheep seasonality, and grape-vine habitat. The proposed record and snippets pass the unchanged current schemas and semantic validators in memory, so the next implementation can be one narrow content-only slice.
 
 Ecology content is not live. Normal content lint remains at 56 checked files.
 
 ## Files Changed
 
-- `docs/design/ecology-knowledge-domain-plan.md`
+- `docs/design/ecology-knowledge-domain-seed-content-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -23,7 +23,8 @@ Ecology content is not live. Normal content lint remains at 56 checked files.
 
 ## Checks Run
 
-- Embedded candidate registry record validated against the current registry schema, semantic validator, skills, content collections, and snippet vocabularies
+- Exact proposed registry record and three snippets validated in memory against current schemas and semantic validators
+- All selected skill and file-derived content-collection references resolved
 - Conflict-marker scan across changed files
 - Trailing-whitespace scan across changed files
 - `git diff --check`
@@ -39,14 +40,14 @@ Ecology content is not live. Normal content lint remains at 56 checked files.
 
 ## Risks / Follow-Up
 
-- The current snippet validator cannot directly author habitat, biome, climate, ecological-relationship, disease, domestication, agriculture, settlement, culture, or institution subjects.
-- The seed plan must either stay within current Flora, Fauna, Minerals, and Region subject authority or separately justify vocabulary and validator work.
+- The current snippet validator still cannot directly author habitat, biome, climate, ecological-relationship, disease, domestication, agriculture, settlement, culture, or institution subjects.
+- The immediate implementation must preserve the exact validated record shapes; broader Ecology concepts require a separate vocabulary/validator plan.
 - Family, religion, recipe, crafting, civil-society, maturation, estate, Skill Trial, and Spell/Magic Study documents remain future roadmap material only.
 
 ## Next Recommended Version
 
-Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan
+Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed
 
 ## Suggested Commit Message
 
-docs(knowledge): plan ecology domain
+docs(knowledge): plan ecology seed content

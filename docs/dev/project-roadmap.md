@@ -18,17 +18,17 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.162 - Ecology Knowledge Domain Plan`
-- Next recommended version: `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan`
+- Latest completed version: `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan`
+- Next recommended version: `Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- `Version 0.5.162 - Ecology Knowledge Domain Plan` selected one broad Wave 1 Ecology domain, current-vocabulary reuse, explicit authoring gaps, and a seed-planning sequence without implementation.
-- `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan` is the next recommended documentation-only run.
-- Do not roll from `0.5.162` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan` selected the exact future registry record and three live-validator-compatible Tier 1 snippets without implementation.
+- `Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed` is the next recommended narrow content run.
+- Do not roll from `0.5.163` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -82,6 +82,7 @@ Current repo reality:
 - Knowledge trial readiness-policy schema planning has landed in `docs/design/knowledge-trial-readiness-policy-schema-plan.md`. It selects a minimal but meaningful owner-free record, exact one-to-one eligibility linkage, always-only availability, empty prerequisite gates, and strict exclusion of raw state, lifecycle, reward, helper, runtime, storage, and UI authority.
 - The strict Knowledge trial readiness-policy record schema now exists at `packages/schemas/player/knowledge_trial_readiness_policy.schema.json` with focused domain/tier, identity, empty-gate, availability, notes, and forbidden-authority coverage. It adds no content or runnable trial behavior.
 - Ecology Knowledge domain planning has landed in `docs/design/ecology-knowledge-domain-plan.md`. It selects one broad Wave 1 `knowledge_domain.ecology`, defines an exact future registry sketch and current-vocabulary seed constraints, and keeps all content, simulation, runtime, trial, readiness, UI, storage, event, reward, and gameplay work deferred.
+- Ecology seed-content planning has landed in `docs/design/ecology-knowledge-domain-seed-content-plan.md`. It freezes the exact registry record plus Kaelvar regional-variation, sheep seasonality, and grape-vine habitat snippets, and confirms that all four records pass unchanged live validation in memory.
 - The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four policy records exist today; `knowledge_domain.arcane_lore` exists only in the broad registry and is now linked from the Arcane Lore skill as metadata only.
 - Skill-domain reference realignment planning has landed in `docs/design/skill-knowledge-domain-reference-realignment-plan.md`. It confirms all ten current references, selects the Arcane Lore broad-registry link for `0.5.115`, defers Folk Lore and Civic Lore until specific broad domains exist, and identifies the focused validator-test fixture assumption that must be updated without changing validator behavior.
 - Skill-domain reference realignment has landed. `skill.knowledge.arcane_lore` now references `knowledge_domain.arcane_lore`, and the positive validator test now proves optional skill references through a cloned fixture rather than depending on Arcane Lore remaining unlinked.
@@ -215,7 +216,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.160` | Knowledge Trial Readiness Policy Schema Plan | Codex Local docs-first | Planning | Completed. Selected the strict record shape, first Flora candidate, validator/reference boundaries, and staged sequence. | Documentation only; no schema/content/helper/runtime implementation. |
 | `0.5.161` | Knowledge Trial Readiness Policy Schema | Codex Local | Schema + focused tests | Completed. Added the strict record-level readiness schema and focused structural contract coverage while preserving 56-file normal lint. | No content, validator, reference alignment, helper, adapter, state, storage, UI, runtime, event, reward, or gameplay behavior. |
 | `0.5.162` | Ecology Knowledge Domain Plan | Codex Local docs-first | Planning | Completed. Selected one broad Wave 1 Ecology domain, candidate registry shape, vocabulary gaps, seed direction, and validation sequence. | Documentation only; no registry content, snippets, schemas, validators, tests, runtime, UI, storage, events, or gameplay behavior. |
-| `0.5.163` | Ecology Knowledge Domain Seed Content Plan | Codex Local docs-first | Planning | Next. Select the exact registry record and small Tier 1 snippet seed under current authorities. | Documentation only; no content, schema, validator, test, runtime, UI, storage, events, or gameplay behavior. |
+| `0.5.163` | Ecology Knowledge Domain Seed Content Plan | Codex Local docs-first | Planning | Completed. Selected the exact registry record and three Tier 1 snippets and proved them against current live validation. | Documentation only; no content, schema, validator, test, runtime, UI, storage, events, or gameplay behavior. |
+| `0.5.164` | Ecology Knowledge Domain Registry And Snippet Seed | Codex Local | Narrow content seed | Next. Add the exact active Wave 1 record and three approved snippets. | Content only; preserve schemas, validators, tests, runtime, UI, storage, events, and gameplay behavior. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -236,14 +238,14 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.163 - Ecology Knowledge Domain Seed Content Plan`
-2. `0.5.164 - Religion Knowledge Domain Plan`
-3. `0.5.165 - Religious Hotspot Knowledge Snippet Plan`
-4. `0.5.166 - Family Visibility And Heir Slot Projection Plan`
-5. `0.5.167 - Race-Specific Adult Age And Maturation Plan`
-6. `0.5.168 - Offspring Growth Role And Activity Build Plan`
-7. `0.5.169 - Recipe Ownership And Personal Learning Plan`
-8. `0.5.170 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed`
+2. `0.5.165 - Religion Knowledge Domain Plan`
+3. `0.5.166 - Religious Hotspot Knowledge Snippet Plan`
+4. `0.5.167 - Family Visibility And Heir Slot Projection Plan`
+5. `0.5.168 - Race-Specific Adult Age And Maturation Plan`
+6. `0.5.169 - Offspring Growth Role And Activity Build Plan`
+7. `0.5.170 - Recipe Ownership And Personal Learning Plan`
+8. `0.5.171 - 0.6.0 Runtime Ownership Transition Reassessment`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -264,9 +266,9 @@ High-priority unresolved questions:
 Scope guardrails:
 
 - The integrated family, religion, ecology, recipe, crafting, civil-society, maturation, and estate documents are future roadmap material only. They do not authorize runtime behavior.
-- `Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan` is the immediate next recommended run.
+- `Version 0.5.164 - Ecology Knowledge Domain Registry And Snippet Seed` is the immediate next recommended run.
 - The completed registry alignment remains content-lint authority only and does not make Knowledge trials runnable.
-- Do not absorb registry content, snippets, schemas, validators, tests, runtime, family, heir, religion, recipe, crafting, estate, Skill Trial, or Magic Study implementation into `0.5.163`.
+- Keep `0.5.164` to the exact Ecology registry and snippet content plus required coordination docs; do not absorb schema, validator, runtime, family, heir, religion, recipe, crafting, estate, Skill Trial, or Magic Study work.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -613,7 +615,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 69 | `0.5.160` | Knowledge Trial Readiness Policy Schema Plan | `docs/design/knowledge-trial-readiness-policy-schema-plan.md` | Completed |
 | 70 | `0.5.161` | Knowledge Trial Readiness Policy Schema | `packages/schemas/player/knowledge_trial_readiness_policy.schema.json` | Completed |
 | 71 | `0.5.162` | Ecology Knowledge Domain Plan | `docs/design/ecology-knowledge-domain-plan.md` | Completed |
-| 72 | `0.5.163` | Ecology Knowledge Domain Seed Content Plan | `docs/design/ecology-knowledge-domain-plan.md` | Next |
+| 72 | `0.5.163` | Ecology Knowledge Domain Seed Content Plan | `docs/design/ecology-knowledge-domain-seed-content-plan.md` | Completed |
+| 73 | `0.5.164` | Ecology Knowledge Domain Registry And Snippet Seed | `docs/design/ecology-knowledge-domain-seed-content-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -654,6 +657,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Knowledge Trial Readiness Policy Schema Plan | `docs/design/knowledge-trial-readiness-policy-schema-plan.md`; use for the strict owner-free readiness record, exact eligibility linkage, always-only first availability posture, forbidden lifecycle/raw-state fields, validator/reference boundaries, and `0.5.161` acceptance criteria. |
 | Knowledge Trial Readiness Policy Schema | `packages/schemas/player/knowledge_trial_readiness_policy.schema.json`; use as the strict structural authority for future authored readiness records, not as content, semantic authority, helper input adaptation, mutable readiness state, or trial behavior. |
 | Ecology Knowledge Domain Plan | `docs/design/ecology-knowledge-domain-plan.md`; use for the broad Wave 1 domain decision, candidate registry record, current vocabulary and validator gaps, relationships to existing domains, seed direction, deferred simulation boundaries, and `0.5.163` acceptance criteria. |
+| Ecology Knowledge Domain Seed Content Plan | `docs/design/ecology-knowledge-domain-seed-content-plan.md`; use for the exact future registry record, three approved Tier 1 snippets, live-validator proof, implementation scope, and `0.5.164` acceptance criteria. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
