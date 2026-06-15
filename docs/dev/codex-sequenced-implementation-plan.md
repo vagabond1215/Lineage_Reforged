@@ -21,18 +21,18 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.168 - Religion Knowledge Schema And Validator Vocabulary`
+- `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan`
+- `Version 0.5.170 - Religion Knowledge Domain Seed`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- The Religion schema/validator vocabulary implementation landed in `0.5.168` and added exactly `religion` and `deity` with explicit `world.religions` authority, duplicate/malformed-id rejection, and focused tests.
-- Keep Religion Knowledge Domain Seed Content Plan as the immediate `0.5.169` direction.
-- Do not roll from `0.5.168` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The Religion seed-content plan landed in `0.5.169` and selected exactly two future snippets plus same-run Religion activation.
+- Keep Religion Knowledge Domain Seed as the immediate `0.5.170` direction.
+- Do not roll from `0.5.169` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -128,22 +128,23 @@ Versioning note:
 | 88 | `0.5.166` | Religion Knowledge Domain Registry Seed | Codex 5.5 Local | `docs/design/religion-knowledge-domain-plan.md` | narrow content seed | Completed | Added only the exact planned Religion registry record; preserved snippets, world religion content, schemas, validators, tests, runtime behavior, and 56-file lint. |
 | 89 | `0.5.167` | Religion Knowledge Vocabulary And Validator Plan | Codex 5.5 Local docs-first | `docs/design/religion-knowledge-vocabulary-validator-plan.md` | planning doc | Completed | Selected exactly `religion` and `deity`, both schema expansions, top-level/nested authority, duplicate rejection, active-domain gating, tests, and future activation sequence. |
 | 90 | `0.5.168` | Religion Knowledge Schema And Validator Vocabulary | Codex 5.5 Local | `docs/design/religion-knowledge-vocabulary-validator-plan.md` | narrow schema/validator vocabulary | Completed | Added only the two direct subjects, planned registry vocabulary, resolver authority, index dependency, duplicate/malformed authority rejection, and focused tests; added no snippets or activation. |
-| 91 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | Codex 5.5 Local docs-first | `docs/dev/current-codex-output.md` | planning doc | Next | Plan the first narrow Religion snippets using current `religion` and `deity` authority; add no implementation, hotspot content, favorability/alignment behavior, runtime, UI, or gameplay. |
+| 91 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | Codex 5.5 Local docs-first | `docs/design/religion-knowledge-domain-seed-content-plan.md` | planning doc | Completed | Selected exactly two future Religion snippets, same-run activation, null policy refs, validation checks, and deferred hotspot/favorability boundaries. |
+| 92 | `0.5.170` | Religion Knowledge Domain Seed | Codex 5.5 Local | `docs/design/religion-knowledge-domain-seed-content-plan.md` | narrow content seed | Next | Activate Religion and add only the two planned snippets; keep policy refs null and avoid schema, validator, test, world religion, hotspot, favorability/alignment, runtime, UI, or gameplay changes. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.169 - Religion Knowledge Domain Seed Content Plan`
-2. `0.5.170 - Religion Knowledge Domain Seed`
-3. `0.5.171 - Religious Hotspot Knowledge Snippet Plan`
-4. `0.5.172 - Family Visibility And Heir Slot Projection Plan`
-5. `0.5.173 - Race-Specific Adult Age And Maturation Plan`
-6. `0.5.174 - Offspring Growth Role And Activity Build Plan`
-7. `0.5.175 - Recipe Ownership And Personal Learning Plan`
-8. `0.5.176 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.170 - Religion Knowledge Domain Seed`
+2. `0.5.171 - Religious Hotspot Knowledge Snippet Plan`
+3. `0.5.172 - Religious Favorability And Elemental Alignment Plan`, optional if prioritized after the first seed
+4. `0.5.173 - Family Visibility And Heir Slot Projection Plan`
+5. `0.5.174 - Race-Specific Adult Age And Maturation Plan`
+6. `0.5.175 - Offspring Growth Role And Activity Build Plan`
+7. `0.5.176 - Recipe Ownership And Personal Learning Plan`
+8. `0.5.177 - 0.6.0 Runtime Ownership Transition Reassessment`
 
-The family, recipe, crafting, civil-society, maturation, and estate documents remain future roadmap material only. `0.5.169` authorizes only the next Religion seed-content planning pass.
+The family, recipe, crafting, civil-society, maturation, and estate documents remain future roadmap material only. `0.5.170` authorizes only the exact Religion seed implementation selected by the seed-content plan.
 
 ## Default Prompt Pattern
 
@@ -159,9 +160,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan` as the immediate next recommended run.
+- Keep `Version 0.5.170 - Religion Knowledge Domain Seed` as the immediate next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- Keep `0.5.169` to Religion seed-content planning only. Do not mix it with implementation, activation, hotspot content, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, Skill Trial, or Magic Study implementation.
+- Keep `0.5.170` to activating Religion and adding the exact two planned snippets. Do not mix it with hotspot content, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, Skill Trial, or Magic Study implementation.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

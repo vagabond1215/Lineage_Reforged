@@ -18,17 +18,17 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.168 - Religion Knowledge Schema And Validator Vocabulary`
-- Next recommended version: `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan`
+- Latest completed version: `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan`
+- Next recommended version: `Version 0.5.170 - Religion Knowledge Domain Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
 - Patch numbers may exceed two digits inside the current band.
-- `Version 0.5.168 - Religion Knowledge Schema And Validator Vocabulary` implemented exactly `religion` and `deity` as direct Religion subjects, added `world.religions` religion/deity authority to snippet lint, and kept Religion planned without snippets.
-- `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan` is the next recommended narrow planning run.
-- Do not roll from `0.5.168` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan` selected the exact two-snippet first Religion seed and same-run activation path while keeping Religion planned and snippet-free in live content.
+- `Version 0.5.170 - Religion Knowledge Domain Seed` is the next recommended narrow content run.
+- Do not roll from `0.5.169` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -88,6 +88,7 @@ Current repo reality:
 - The exact Wave 1 Religion registry record is now live metadata with `status: "planned"` and all policy references null. No Religion snippets or world religion content were added; normal content lint remains 56 checked files.
 - Religion vocabulary and validator planning has landed in `docs/design/religion-knowledge-vocabulary-validator-plan.md`. It selects only `religion` and `deity` for the first direct-subject implementation, requires both snippet and registry schema-enum expansion, defines top-level and nested resolver authority with duplicate rejection, preserves active-domain gating, and defers orders, sites, hotspots, and broad blocked-subject enablement.
 - Religion schema and validator vocabulary has landed. The snippet and registry schemas now include exactly `religion` and `deity`; normal snippet lint loads `world.religions` top-level religion records plus flattened deity records with duplicate and malformed-id rejection; Religion remains planned with no snippets.
+- Religion seed-content planning has landed in `docs/design/religion-knowledge-domain-seed-content-plan.md`. It selects exactly `knowledge_snippet.religion.elemental_pantheon.identification` and `knowledge_snippet.religion.light_lady.identification`, recommends activating Religion in the same future run that adds them, keeps all Religion policy refs null, and defers hotspots, favorability/alignment, trials, readiness, runtime, UI, storage, and gameplay behavior.
 - The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four policy records exist today; `knowledge_domain.arcane_lore` exists only in the broad registry and is now linked from the Arcane Lore skill as metadata only.
 - Skill-domain reference realignment planning has landed in `docs/design/skill-knowledge-domain-reference-realignment-plan.md`. It confirms all ten current references, selects the Arcane Lore broad-registry link for `0.5.115`, defers Folk Lore and Civic Lore until specific broad domains exist, and identifies the focused validator-test fixture assumption that must be updated without changing validator behavior.
 - Skill-domain reference realignment has landed. `skill.knowledge.arcane_lore` now references `knowledge_domain.arcane_lore`, and the positive validator test now proves optional skill references through a cloned fixture rather than depending on Arcane Lore remaining unlinked.
@@ -227,7 +228,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.166` | Religion Knowledge Domain Registry Seed | Codex Local | Narrow content seed | Completed. Added the exact planned Wave 1 Religion registry record; normal lint remains 56 files. | Registry metadata only; no snippets, world religion content, schemas, validators, tests, runtime, UI, storage, events, or gameplay behavior. |
 | `0.5.167` | Religion Knowledge Vocabulary And Validator Plan | Codex Local docs-first | Planning | Completed. Selected `religion` and `deity`, exact schema/validator authority, tests, and activation sequence. | Documentation only; no snippets, schemas, validators, tests, hotspot content, world religion content, runtime, or gameplay behavior. |
 | `0.5.168` | Religion Knowledge Schema And Validator Vocabulary | Codex Local | Narrow schema/validator vocabulary | Completed. Added the two direct subjects, planned registry vocabulary, explicit religion/deity authority, duplicate/malformed authority rejection, and focused tests. | No snippets, status activation, world religion content, hotspot content, runtime, UI, storage, trials, readiness, or gameplay behavior. |
-| `0.5.169` | Religion Knowledge Domain Seed Content Plan | Codex Local docs-first | Planning | Next. Plan the first narrow Religion snippets now that direct religion/deity subject authority exists. | Documentation only; no snippets, activation, hotspot content, runtime, UI, storage, trials, readiness, or gameplay behavior. |
+| `0.5.169` | Religion Knowledge Domain Seed Content Plan | Codex Local docs-first | Planning | Completed. Selected two exact future snippets and a same-run activation path for the next seed implementation. | Documentation only; no snippets, activation, source content, schema, validator, tests, hotspot content, runtime, UI, storage, trials, readiness, or gameplay behavior. |
+| `0.5.170` | Religion Knowledge Domain Seed | Codex Local | Narrow content seed | Next. Activate Religion and add the two planned Religion snippets. | Keep all Religion policy refs null; no schema, validator, test, world religion, hotspot, favorability/alignment, runtime, UI, storage, trial, readiness, reward, event, command, or gameplay changes. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -248,14 +250,14 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.169 - Religion Knowledge Domain Seed Content Plan`
-2. `0.5.170 - Religion Knowledge Domain Seed`
-3. `0.5.171 - Religious Hotspot Knowledge Snippet Plan`
-4. `0.5.172 - Family Visibility And Heir Slot Projection Plan`
-5. `0.5.173 - Race-Specific Adult Age And Maturation Plan`
-6. `0.5.174 - Offspring Growth Role And Activity Build Plan`
-7. `0.5.175 - Recipe Ownership And Personal Learning Plan`
-8. `0.5.176 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.170 - Religion Knowledge Domain Seed`
+2. `0.5.171 - Religious Hotspot Knowledge Snippet Plan`
+3. `0.5.172 - Religious Favorability And Elemental Alignment Plan`, optional if prioritized after the first seed
+4. `0.5.173 - Family Visibility And Heir Slot Projection Plan`
+5. `0.5.174 - Race-Specific Adult Age And Maturation Plan`
+6. `0.5.175 - Offspring Growth Role And Activity Build Plan`
+7. `0.5.176 - Recipe Ownership And Personal Learning Plan`
+8. `0.5.177 - 0.6.0 Runtime Ownership Transition Reassessment`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -276,9 +278,9 @@ High-priority unresolved questions:
 Scope guardrails:
 
 - The integrated family, religion, ecology, recipe, crafting, civil-society, maturation, and estate documents are future roadmap material only. They do not authorize runtime behavior.
-- `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan` is the immediate next recommended run.
+- `Version 0.5.170 - Religion Knowledge Domain Seed` is the immediate next recommended run.
 - The completed registry alignment remains content-lint authority only and does not make Knowledge trials runnable.
-- Keep `0.5.169` to the first Religion seed-content plan; do not absorb implementation, hotspot content, favorability/alignment mechanics, runtime, family, heir, recipe, crafting, estate, Skill Trial, or Magic Study work.
+- Keep `0.5.170` to activating Religion and adding the exact two planned snippets; do not absorb hotspot content, favorability/alignment mechanics, runtime, family, heir, recipe, crafting, estate, Skill Trial, or Magic Study work.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -631,7 +633,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 75 | `0.5.166` | Religion Knowledge Domain Registry Seed | `docs/design/religion-knowledge-domain-plan.md` | Completed |
 | 76 | `0.5.167` | Religion Knowledge Vocabulary And Validator Plan | `docs/design/religion-knowledge-vocabulary-validator-plan.md` | Completed |
 | 77 | `0.5.168` | Religion Knowledge Schema And Validator Vocabulary | `docs/design/religion-knowledge-vocabulary-validator-plan.md` | Completed |
-| 78 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | `docs/dev/current-codex-output.md` | Next |
+| 78 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | `docs/design/religion-knowledge-domain-seed-content-plan.md` | Completed |
+| 79 | `0.5.170` | Religion Knowledge Domain Seed | `docs/design/religion-knowledge-domain-seed-content-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -675,6 +678,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Ecology Knowledge Domain Seed Content Plan | `docs/design/ecology-knowledge-domain-seed-content-plan.md`; use for the exact future registry record, three approved Tier 1 snippets, live-validator proof, implementation scope, and `0.5.164` acceptance criteria. |
 | Religion Knowledge Domain Plan | `docs/design/religion-knowledge-domain-plan.md`; use for the broad planned-domain decision, exact registry candidate, current religion authority, snippet and hotspot gaps, Prestige/family boundaries, and `0.5.166` acceptance criteria. |
 | Religion Knowledge Vocabulary And Validator Plan | `docs/design/religion-knowledge-vocabulary-validator-plan.md`; use for the exact `religion`/`deity` subject set, schema changes, nested resolver and duplicate rules, activation boundary, focused tests, and `0.5.168` acceptance criteria. |
+| Religion Knowledge Domain Seed Content Plan | `docs/design/religion-knowledge-domain-seed-content-plan.md`; use for the exact two future Religion snippets, same-run activation decision, world religion authority mapping, validation plan, and deferred hotspot/favorability boundaries. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
