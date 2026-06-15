@@ -93,7 +93,7 @@ function expectFailure(mutate, expected) {
   assert.throws(() => validate(input), expected);
 }
 
-test("accepts the current five-record registry", () => {
+test("accepts the current registry", () => {
   assert.equal(validate(), true);
 });
 
@@ -121,6 +121,25 @@ test("accepts Arcane Lore as planned without a legacy policy", () => {
   const arcaneLore = input.wrapper.records.find((record) => record.id === "knowledge_domain.arcane_lore");
   assert.equal(arcaneLore.status, "planned");
   assert.equal(input.legacyPolicyRecords.some((record) => record.id === arcaneLore.id), false);
+  assert.equal(validate(input), true);
+});
+
+test("accepts Religion as planned with direct religion and deity subjects only", () => {
+  const input = makeInput();
+  const religion = input.wrapper.records.find(
+    (record) => record.id === "knowledge_domain.religion"
+  );
+
+  assert.equal(religion.status, "planned");
+  assert.deepEqual(
+    religion.canonicalSubjectTypes.filter((subjectType) =>
+      ["religion", "deity"].includes(subjectType)
+    ),
+    ["religion", "deity"]
+  );
+  assert.equal(religion.trialPolicyRef, null);
+  assert.equal(religion.completionPolicyRef, null);
+  assert.equal(religion.visibilityPolicyRef, null);
   assert.equal(validate(input), true);
 });
 
@@ -324,7 +343,10 @@ test("rejects a spell school slug as a magic-school id", () => {
 test("rejects overlap between related skill arrays", () => {
   expectFailure(
     (input) => {
-      input.wrapper.records[3].relatedSkillIds.push("skill.magic.school.elemental");
+      const arcaneLore = input.wrapper.records.find(
+        (record) => record.id === "knowledge_domain.arcane_lore"
+      );
+      arcaneLore.relatedSkillIds.push("skill.magic.school.elemental");
     },
     /cannot appear in both related skill arrays/
   );
@@ -457,6 +479,18 @@ test("rejects unjustified custom subject, category, source, and owner usage", as
       );
     });
   }
+});
+
+test("rejects registry subject vocabulary absent from the snippet schema", () => {
+  expectFailure(
+    (input) => {
+      input.snippetVocabularies.subjectTypes =
+        input.snippetVocabularies.subjectTypes.filter(
+          (subjectType) => subjectType !== "deity"
+        );
+    },
+    /canonicalSubjectTypes 'deity' is absent from the current snippet schema on record knowledge_domain\.religion/
+  );
 });
 
 test("rejects a legacy policy id absent from the broad registry", () => {

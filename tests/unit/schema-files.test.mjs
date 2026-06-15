@@ -194,6 +194,22 @@ const knowledgeDomainRegistry = JSON.parse(
     )
   )
 );
+const knowledgeSnippetSchema = JSON.parse(
+  stripBom(
+    await readFile(
+      "packages/schemas/player/knowledge_snippet.schema.json",
+      "utf8"
+    )
+  )
+);
+const knowledgeDomainRegistrySchema = JSON.parse(
+  stripBom(
+    await readFile(
+      "packages/schemas/player/knowledge-domain-registry.schema.json",
+      "utf8"
+    )
+  )
+);
 
 function snippetRequirement(overrides = {}) {
   return {
@@ -248,6 +264,16 @@ function validatesKnowledgeTrialPolicy(record) {
     knowledgeTrialPolicySchema
   );
 }
+
+test("knowledge subject schemas share direct religion and deity vocabulary", () => {
+  const snippetSubjectTypes = knowledgeSnippetSchema.properties.subjectType.enum;
+  const registrySubjectTypes =
+    knowledgeDomainRegistrySchema.properties.canonicalSubjectTypes.items.enum;
+
+  assert.ok(snippetSubjectTypes.includes("religion"));
+  assert.ok(snippetSubjectTypes.includes("deity"));
+  assert.deepEqual(registrySubjectTypes, snippetSubjectTypes);
+});
 
 test("Knowledge trial policy schema accepts exact domain and tier policies", () => {
   const domainPolicy = knowledgeTrialPolicy({

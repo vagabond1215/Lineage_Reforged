@@ -90,6 +90,8 @@
           "region",
           "culture",
           "institution",
+          "religion",
+          "deity",
           "spell",
           "item",
           "ruin",

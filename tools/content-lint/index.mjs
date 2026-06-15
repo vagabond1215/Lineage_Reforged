@@ -9314,6 +9314,7 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
   const floraPath = path.join(ROOT, "packages/content/base/world/flora.json");
   const faunaPath = path.join(ROOT, "packages/content/base/world/fauna.json");
   const mineralPath = path.join(ROOT, "packages/content/base/world/minerals.json");
+  const religionPath = path.join(ROOT, "packages/content/base/world/religions.json");
   const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
   const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
 
@@ -9324,8 +9325,12 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
   const floraWrapper = JSON.parse(await readFile(floraPath, "utf8"));
   const faunaWrapper = JSON.parse(await readFile(faunaPath, "utf8"));
   const mineralWrapper = JSON.parse(await readFile(mineralPath, "utf8"));
+  const religionWrapper = JSON.parse(await readFile(religionPath, "utf8"));
   const regionWrapper = JSON.parse(await readFile(regionPath, "utf8"));
   const settlementWrapper = JSON.parse(await readFile(settlementPath, "utf8"));
+  const deityRecords = religionWrapper.records.flatMap((religion) =>
+    Array.isArray(religion.deities) ? religion.deities : []
+  );
   const availableContentCollectionIds = await deriveBaseContentCollectionIds();
 
   validateKnowledgeSnippets({
@@ -9348,6 +9353,16 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
         collectionId: "world.minerals",
         idPrefix: "mineral.",
         records: mineralWrapper.records
+      },
+      religion: {
+        collectionId: "world.religions",
+        idPrefix: "religion.",
+        records: religionWrapper.records
+      },
+      deity: {
+        collectionId: "world.religions",
+        idPrefix: "deity.",
+        records: deityRecords
       },
       region: {
         collectionId: "world.regions",

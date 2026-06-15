@@ -21,13 +21,18 @@ const skillsWrapper = await readJson("packages/content/base/player/skills.json")
 const floraWrapper = await readJson("packages/content/base/world/flora.json");
 const faunaWrapper = await readJson("packages/content/base/world/fauna.json");
 const mineralWrapper = await readJson("packages/content/base/world/minerals.json");
+const religionWrapper = await readJson("packages/content/base/world/religions.json");
 const regionWrapper = await readJson("packages/content/base/world/regions.json");
 const settlementWrapper = await readJson("packages/content/base/world/settlements.json");
+const deityRecords = religionWrapper.records.flatMap((religion) => religion.deities ?? []);
 
 const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.flora",
   "knowledge_domain.fauna",
   "knowledge_domain.minerals",
+  "knowledge_domain.ecology",
+  "knowledge_domain.ecology",
+  "knowledge_domain.ecology",
   "knowledge_domain.general_lore"
 ];
 
@@ -35,6 +40,9 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.flora.aloe.identification",
   "knowledge_snippet.fauna.badger.identification",
   "knowledge_snippet.minerals.iron_ore.identification",
+  "knowledge_snippet.ecology.kaelvar.regional_variant",
+  "knowledge_snippet.ecology.sheep.seasonality",
+  "knowledge_snippet.ecology.grape_vine.habitat",
   "knowledge_snippet.general_lore.kaelvar.cultural_context"
 ];
 
@@ -60,6 +68,16 @@ function makeInput() {
         idPrefix: "mineral.",
         records: structuredClone(mineralWrapper.records)
       },
+      religion: {
+        collectionId: "world.religions",
+        idPrefix: "religion.",
+        records: structuredClone(religionWrapper.records)
+      },
+      deity: {
+        collectionId: "world.religions",
+        idPrefix: "deity.",
+        records: structuredClone(deityRecords)
+      },
       region: {
         collectionId: "world.regions",
         idPrefix: "region.",
@@ -75,6 +93,7 @@ function makeInput() {
       "world.flora",
       "world.fauna",
       "world.minerals",
+      "world.religions",
       "world.regions"
     ])
   };
@@ -94,7 +113,54 @@ function snippet(input, id = EXPECTED_SNIPPET_IDS[0]) {
   return input.wrapper.records.find((record) => record.id === id);
 }
 
-test("accepts the current four-record snippet catalog", () => {
+function religionDomain(input) {
+  return input.registryRecords.find(
+    (record) => record.id === "knowledge_domain.religion"
+  );
+}
+
+function activateReligionDomain(input) {
+  religionDomain(input).status = "active";
+}
+
+function religionSnippet({
+  id = "knowledge_snippet.religion.elemental_pantheon.identification",
+  subjectType = "religion",
+  subjectId = "religion.elemental_pantheon",
+  title = "Recognizing the Elemental Pantheon"
+} = {}) {
+  return {
+    id,
+    domainId: "knowledge_domain.religion",
+    subjectType,
+    subjectId,
+    tier: 1,
+    category: "identification",
+    title,
+    summary: "The Elemental Pantheon is recognized as a balanced faith tradition centered on paired elemental opposition and cyclical dominance.",
+    discoverySources: [
+      {
+        sourceType: "book_study",
+        sourceId: null
+      }
+    ],
+    progression: {
+      completionWeight: 1,
+      countsTowardTierCompletion: true,
+      trialUnlockWeight: 0
+    },
+    visibility: {
+      lockedUntilDiscovered: true,
+      revealsSubjectIdentity: true,
+      hiddenSummary: "An unidentified faith tradition remains to be understood."
+    },
+    notes: [
+      "Religion snippets remain authored knowledge only and do not grant worship, favor, faction, magic, or runtime behavior."
+    ]
+  };
+}
+
+test("accepts the current seven-record snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.id),
@@ -103,7 +169,7 @@ test("accepts the current four-record snippet catalog", () => {
   assert.equal(validate(input), true);
 });
 
-test("accepts active Flora, Fauna, Minerals, and General Lore domains", () => {
+test("accepts active Flora, Fauna, Minerals, Ecology, and General Lore domains", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.domainId),
@@ -116,9 +182,42 @@ test("accepts current canonical subject ids", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.subjectId),
-    ["flora.aloe", "fauna.badger", "mineral.iron_ore", "region.kaelvar"]
+    [
+      "flora.aloe",
+      "fauna.badger",
+      "mineral.iron_ore",
+      "region.kaelvar",
+      "fauna.sheep",
+      "flora.grape_vine",
+      "region.kaelvar"
+    ]
   );
   assert.equal(validate(input), true);
+});
+
+test("accepts an active Religion fixture with religion and deity authorities", () => {
+  const input = makeInput();
+  activateReligionDomain(input);
+  input.wrapper.records = [
+    religionSnippet(),
+    religionSnippet({
+      id: "knowledge_snippet.religion.light_lady.identification",
+      subjectType: "deity",
+      subjectId: "deity.light_lady",
+      title: "Recognizing the Lady of Light"
+    })
+  ];
+
+  assert.equal(validate(input), true);
+});
+
+test("keeps Religion snippets blocked while the domain remains planned", () => {
+  expectFailure(
+    (input) => {
+      input.wrapper.records = [religionSnippet()];
+    },
+    /domainId 'knowledge_domain\.religion' must reference status 'active'/
+  );
 });
 
 test("accepts null sourceId values", () => {
@@ -327,6 +426,115 @@ test("rejects a subjectId prefix mismatch", () => {
     },
     /subjectId 'fauna\.badger' must use prefix 'flora\.'/
   );
+});
+
+test("rejects unresolved religion and deity subject ids", async (t) => {
+  const cases = [
+    {
+      name: "religion",
+      record: religionSnippet({ subjectId: "religion.missing" }),
+      expected: /subjectId 'religion\.missing' is missing from world\.religions/
+    },
+    {
+      name: "deity",
+      record: religionSnippet({
+        id: "knowledge_snippet.religion.missing_deity.identification",
+        subjectType: "deity",
+        subjectId: "deity.missing"
+      }),
+      expected: /subjectId 'deity\.missing' is missing from world\.religions/
+    }
+  ];
+
+  for (const authorityCase of cases) {
+    await t.test(authorityCase.name, () => {
+      expectFailure(
+        (input) => {
+          activateReligionDomain(input);
+          input.wrapper.records = [authorityCase.record];
+        },
+        authorityCase.expected
+      );
+    });
+  }
+});
+
+test("rejects duplicate religion and deity authority ids", async (t) => {
+  const cases = [
+    {
+      name: "religion",
+      subjectType: "religion",
+      record: religionSnippet(),
+      duplicate() {
+        return structuredClone(religionWrapper.records[0]);
+      },
+      expected: /religion subject authority has duplicate id 'religion\.elemental_pantheon'/
+    },
+    {
+      name: "deity",
+      subjectType: "deity",
+      record: religionSnippet({
+        id: "knowledge_snippet.religion.light_lady.identification",
+        subjectType: "deity",
+        subjectId: "deity.light_lady"
+      }),
+      duplicate() {
+        return structuredClone(deityRecords[0]);
+      },
+      expected: /deity subject authority has duplicate id 'deity\.light_lady'/
+    }
+  ];
+
+  for (const authorityCase of cases) {
+    await t.test(authorityCase.name, () => {
+      expectFailure(
+        (input) => {
+          activateReligionDomain(input);
+          input.wrapper.records = [authorityCase.record];
+          input.subjectAuthorities[authorityCase.subjectType].records.push(
+            authorityCase.duplicate()
+          );
+        },
+        authorityCase.expected
+      );
+    });
+  }
+});
+
+test("rejects malformed religion and deity authority records without canonical ids", async (t) => {
+  const cases = [
+    {
+      name: "religion",
+      subjectType: "religion",
+      record: religionSnippet(),
+      expected: /religion subject authority records\[1\] must provide a canonical id/
+    },
+    {
+      name: "deity",
+      subjectType: "deity",
+      record: religionSnippet({
+        id: "knowledge_snippet.religion.light_lady.identification",
+        subjectType: "deity",
+        subjectId: "deity.light_lady"
+      }),
+      expected: /deity subject authority records\[8\] must provide a canonical id/
+    }
+  ];
+
+  for (const authorityCase of cases) {
+    await t.test(authorityCase.name, () => {
+      expectFailure(
+        (input) => {
+          activateReligionDomain(input);
+          input.wrapper.records = [authorityCase.record];
+          input.subjectAuthorities[authorityCase.subjectType].records.push({
+            name: "Missing Canonical Id"
+          });
+        },
+        authorityCase.expected
+      );
+    });
+  }
 });
 
 test("rejects blocked subject types without authority", () => {

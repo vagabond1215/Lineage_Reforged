@@ -309,6 +309,22 @@ function recordMap(records, source) {
   );
 }
 
+function authorityRecordMap(records, source) {
+  const map = new Map();
+
+  requireRecordArray(records, source).forEach((record, index) => {
+    if (!isObject(record) || typeof record.id !== "string" || record.id.length === 0) {
+      throw new Error(`${source} records[${index}] must provide a canonical id`);
+    }
+    if (map.has(record.id)) {
+      throw new Error(`${source} has duplicate id '${record.id}'`);
+    }
+    map.set(record.id, record);
+  });
+
+  return map;
+}
+
 function assertLocationScope(locationScope, locationAuthorities, recordId, relativePath) {
   if (locationScope === undefined) {
     return;
@@ -484,7 +500,7 @@ export function validateKnowledgeSnippets({
         `${relativePath} subjectId '${record.subjectId}' must use prefix '${subjectAuthority.idPrefix}' on record ${recordId}`
       );
     }
-    const subjectsById = recordMap(
+    const subjectsById = authorityRecordMap(
       subjectAuthority.records,
       `${record.subjectType} subject authority`
     );
