@@ -264,6 +264,112 @@
       ]
     },
     {
+      "id": "knowledge_domain.ecology",
+      "slug": "ecology",
+      "name": "Ecology",
+      "summary": "Relationships among organisms, habitats, climate, seasons, resources, regions, and human use, including natural pressures and practical consequences.",
+      "group": "natural_world",
+      "wave": 1,
+      "status": "active",
+      "canonicalSubjectTypes": [
+        "flora",
+        "fauna",
+        "mineral",
+        "region"
+      ],
+      "supportedSnippetCategories": [
+        "habitat",
+        "behavior",
+        "use",
+        "byproduct",
+        "processing",
+        "danger",
+        "lookalike",
+        "regional_variant",
+        "seasonality",
+        "trade_value",
+        "ritual_use",
+        "cultural_context",
+        "mechanical_application"
+      ],
+      "supportedDiscoverySourceFamilies": [
+        "field_observation",
+        "practical_use",
+        "textual_study",
+        "instruction",
+        "event_record"
+      ],
+      "supportedDiscoverySourceTypes": [
+        "field_identification",
+        "resource_use",
+        "crafting_use",
+        "combat_observation",
+        "travel_observation",
+        "book_study",
+        "teacher_instruction",
+        "institutional_study",
+        "scroll_study",
+        "tome_study",
+        "quest_event",
+        "chronicle_record"
+      ],
+      "defaultEvidenceOwnerScopes": [
+        "character",
+        "institution",
+        "region",
+        "settlement",
+        "quest_event",
+        "chronicle_record",
+        "item_instance",
+        "document_instance",
+        "teacher",
+        "study_event",
+        "travel_event",
+        "combat_event"
+      ],
+      "relatedSkillIds": [
+        "skill.knowledge.general_lore",
+        "skill.knowledge.flora_lore",
+        "skill.knowledge.fauna_lore",
+        "skill.knowledge.mineral_lore",
+        "skill.resource.spotting.flora",
+        "skill.resource.identify.flora",
+        "skill.resource.spotting.fauna",
+        "skill.resource.identify.fauna",
+        "skill.resource.spotting.minerals",
+        "skill.resource.identify.minerals",
+        "skill.resource.foraging",
+        "skill.resource.hunting",
+        "skill.resource.trapping",
+        "skill.resource.fishing",
+        "skill.survival.navigation"
+      ],
+      "relatedMagicSchoolIds": [],
+      "relatedContentCollections": [
+        "world.biomes",
+        "world.climate_profiles",
+        "world.fauna",
+        "world.flora",
+        "world.habitats",
+        "world.minerals",
+        "world.regional_ecology_profiles",
+        "world.regions"
+      ],
+      "trialPolicyRef": null,
+      "completionPolicyRef": null,
+      "visibilityPolicyRef": null,
+      "schemaGapNotes": [
+        "The current snippet subject vocabulary has no habitat, biome, climate profile, ecological relationship, disease, domestication, or agricultural-system subject type.",
+        "The current snippet validator supports live subject authority only for flora, fauna, mineral, and region records; item, settlement, culture, institution, ruin, historical_event, and custom subjects remain blocked.",
+        "Predator/prey, migration, breeding, disease-vector, domestication, cultivation, mutualism, and climate-interaction categories must use an existing category only when the authored meaning remains accurate; otherwise authoring stays deferred."
+      ],
+      "notes": [
+        "Ecology describes authored relationships and does not create population, depletion, breeding, production, disease, trade, prosperity, or travel-danger state.",
+        "Related skills and collections are references only; skill rank, possession, location, or collection access does not grant knowledge.",
+        "The first seed remains within current validated subject authorities and adds no trial, completion, visibility, runtime, or simulation policy."
+      ]
+    },
+    {
       "id": "knowledge_domain.arcane_lore",
       "slug": "arcane_lore",
       "name": "Arcane Lore",

@@ -88,6 +88,111 @@
       ]
     },
     {
+      "id": "knowledge_snippet.ecology.kaelvar.regional_variant",
+      "domainId": "knowledge_domain.ecology",
+      "subjectType": "region",
+      "subjectId": "region.kaelvar",
+      "tier": 1,
+      "category": "regional_variant",
+      "title": "Natural Pattern of Kaelvar",
+      "summary": "Kaelvar combines dry uplands and Mediterranean-style coasts, supporting strong pastoral goods, wine, and minerals while making bulk staple output less reliable.",
+      "discoverySources": [
+        {
+          "sourceType": "travel_observation",
+          "sourceId": null,
+          "locationScope": {
+            "continentId": "region.kaelvar",
+            "regionId": null,
+            "settlementId": null,
+            "biomeTags": []
+          }
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": false,
+        "hiddenSummary": "A regional natural pattern remains undiscovered."
+      },
+      "notes": [
+        "Travel observation is a possible discovery route only; entering or revealing Kaelvar does not grant completion."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.ecology.sheep.seasonality",
+      "domainId": "knowledge_domain.ecology",
+      "subjectType": "fauna",
+      "subjectId": "fauna.sheep",
+      "tier": 1,
+      "category": "seasonality",
+      "title": "Seasonal Pattern of Sheep",
+      "summary": "Sheep are sedentary, diurnal herbivores whose breeding seasons occur in spring and summer.",
+      "discoverySources": [
+        {
+          "sourceType": "travel_observation",
+          "sourceId": null,
+          "locationScope": {
+            "continentId": "region.kaelvar",
+            "regionId": null,
+            "settlementId": null,
+            "biomeTags": []
+          }
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": false,
+        "hiddenSummary": "A seasonal animal pattern remains undiscovered."
+      },
+      "notes": [
+        "Kaelvar lists sheep among its native fauna, but travel observation remains only a possible discovery route and does not grant completion."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.ecology.grape_vine.habitat",
+      "domainId": "knowledge_domain.ecology",
+      "subjectType": "flora",
+      "subjectId": "flora.grape_vine",
+      "tier": 1,
+      "category": "habitat",
+      "title": "Habitat Needs of Grape Vine",
+      "summary": "Grape vines favor temperate coastal conditions with high light, medium water needs, and silt, loam, or sandy-loam soils.",
+      "discoverySources": [
+        {
+          "sourceType": "travel_observation",
+          "sourceId": null,
+          "locationScope": {
+            "continentId": "region.kaelvar",
+            "regionId": null,
+            "settlementId": null,
+            "biomeTags": []
+          }
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": false,
+        "hiddenSummary": "A plant habitat pattern remains undiscovered."
+      },
+      "notes": [
+        "Kaelvar lists grape vine among its native flora, but travel observation remains only a possible discovery route and does not grant completion."
+      ]
+    },
+    {
       "id": "knowledge_snippet.general_lore.kaelvar.cultural_context",
       "domainId": "knowledge_domain.general_lore",
       "subjectType": "region",
