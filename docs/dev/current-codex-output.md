@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.161 - Knowledge Trial Readiness Policy Schema
+Source version/run: Version 0.5.162 - Ecology Knowledge Domain Plan
 Date: 2026-06-15
-Branch/status assumption: Ran on clean `master` from commit `c8e73bb`, aligned with `origin/master`.
+Branch/status assumption: Ran on clean `master` from commit `d8d0839`, aligned with `origin/master`.
 
 ## Result
 
-Added the strict record-level Knowledge Trial Readiness Policy schema and focused schema-file contract coverage.
+Completed the documentation-only Ecology Knowledge Domain Plan.
 
-The schema requires one canonical readiness policy and eligibility policy reference, character owner scope, exact domain/tier structure, `eligible_candidate`, always-only availability, empty prerequisite readiness gates, and unique non-empty notes. It rejects owner ids, plural policy references, raw completion/evidence/progress/snippet authority, lifecycle fields, rewards, helpers, adapters, runtime, UI, storage, persistence, events, commands, and gameplay authority.
+The plan selects one broad Wave 1 `knowledge_domain.ecology` and defers narrower habitat, flora ecology, fauna ecology, climate ecology, and resource ecology domains until authored-content pressure proves they are needed. It defines the domain boundary, an exact candidate registry record, current vocabulary reuse, schema and validator gaps, relationships to existing domains, seed-content direction, validation expectations, trial/readiness posture, and deferred simulation systems.
 
-Normal content lint remains at 56 checked files. Registry alignment remains content-lint authority only and Knowledge trials remain non-runnable.
+Ecology content is not live. Normal content lint remains at 56 checked files.
 
 ## Files Changed
 
-- `packages/schemas/player/knowledge_trial_readiness_policy.schema.json`
-- `tests/unit/schema-files.test.mjs`
+- `docs/design/ecology-knowledge-domain-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,32 +23,30 @@ Normal content lint remains at 56 checked files. Registry alignment remains cont
 
 ## Checks Run
 
-- `node --check tests/unit/schema-files.test.mjs`
-- `node --test tests/unit/schema-files.test.mjs` - 80 passed
-- `node tools/content-lint/index.mjs` - `content-lint: ok (56 files checked)`
+- Embedded candidate registry record validated against the current registry schema, semantic validator, skills, content collections, and snippet vocabularies
 - Conflict-marker scan across changed files
 - Trailing-whitespace scan across changed files
 - `git diff --check`
 - Changed-path scope audit
-- Forbidden content/tool/helper/adapter/semantic-validator/fixture/storage/persistence/runtime/UI/generated-output/event/reward/gameplay/family/religion/ecology/recipe edit audit
+- Forbidden source/schema/content/test/runtime/UI/generated-output/storage/persistence/event/reward/gameplay edit audit
+- Tests and typecheck were not run because this was a documentation-only planning change
 
 ## Behavior / Runtime Confirmation
 
-- Schema structure and focused schema tests changed.
-- No content JSON, semantic validator, normal-lint registration, helper, adapter, fixture, storage, persistence, runtime, UI, generated output, event, reward, command, ownership mutation, or gameplay behavior changed.
-- No existing schema changed.
+- Documentation only.
+- No registry, snippet, schema, validator, test, fixture, helper, adapter, runtime, UI, generated output, storage, persistence, save, account, session, database, event, reward, command, ownership mutation, simulation, or gameplay behavior changed.
+- Knowledge Trial readiness content and downstream implementation remain deferred.
 
 ## Risks / Follow-Up
 
-- Readiness content, semantic validation, normal-lint registration, eligibility-policy reference alignment, and content-to-helper adaptation remain separate future runs.
-- Attempt, checkpoint, outcome, cooldown, reward, storage, persistence, and runtime authority remain undefined.
-- The one-policy-per-domain registry limitation remains.
-- Family, religion, ecology, recipe, crafting, civil-society, maturation, and estate documents remain future roadmap material only.
+- The current snippet validator cannot directly author habitat, biome, climate, ecological-relationship, disease, domestication, agriculture, settlement, culture, or institution subjects.
+- The seed plan must either stay within current Flora, Fauna, Minerals, and Region subject authority or separately justify vocabulary and validator work.
+- Family, religion, recipe, crafting, civil-society, maturation, estate, Skill Trial, and Spell/Magic Study documents remain future roadmap material only.
 
 ## Next Recommended Version
 
-Version 0.5.162 - Ecology Knowledge Domain Plan
+Version 0.5.163 - Ecology Knowledge Domain Seed Content Plan
 
 ## Suggested Commit Message
 
-schema(knowledge): add trial readiness policy schema
+docs(knowledge): plan ecology domain
