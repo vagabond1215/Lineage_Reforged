@@ -93,6 +93,9 @@ test("accepts the current one-record wrapper with deterministic output", () => {
 test("accepts exact Flora Tier 1 authority with inert downstream fields", () => {
   const input = makeInput();
   const record = policy(input);
+  const flora = input.domainRegistryWrapper.records.find(
+    (domain) => domain.id === "knowledge_domain.flora"
+  );
   assert.equal(record.scope, "tier");
   assert.equal(record.domainId, "knowledge_domain.flora");
   assert.equal(record.tier, 1);
@@ -100,6 +103,10 @@ test("accepts exact Flora Tier 1 authority with inert downstream fields", () => 
   assert.deepEqual(record.prerequisiteCompletionTargets, []);
   assert.equal(record.readinessPolicyId, null);
   assert.deepEqual(record.rewardRefs, []);
+  assert.equal(
+    flora.trialPolicyRef,
+    "knowledge_trial_policy.flora_tier_1"
+  );
   assert.equal(validate(input).ok, true);
 });
 
@@ -114,6 +121,7 @@ test("accepts record order without treating it as authority", () => {
   const input = makeInput();
   const second = structuredClone(policy(input));
   second.policyId = "knowledge_trial_policy.flora_tier_2";
+  second.status = "deferred";
   second.tier = 2;
   second.requiredCompletionTargets = [tierTarget("knowledge_domain.flora", 2)];
   input.wrapper.records.unshift(second);
@@ -200,13 +208,16 @@ test("rejects duplicate and misleading policy ids", async (t) => {
       (input) => {
         input.wrapper.records.push(structuredClone(policy(input)));
       },
-      /records\[1\]\.policyId duplicates 'knowledge_trial_policy\.flora_tier_1'/
+      /records\[1\]\.policyId duplicates policy id 'knowledge_trial_policy\.flora_tier_1'/
     );
   });
   await t.test("misleading suffix", () => {
     expectFailure(
       (input) => {
         policy(input).policyId = "knowledge_trial_policy.flora_readiness";
+        input.domainRegistryWrapper.records.find(
+          (record) => record.id === "knowledge_domain.flora"
+        ).trialPolicyRef = "knowledge_trial_policy.flora_readiness";
       },
       /contains blocked authority token 'readiness'/
     );
@@ -215,6 +226,9 @@ test("rejects duplicate and misleading policy ids", async (t) => {
     expectFailure(
       (input) => {
         policy(input).policyId = "knowledge_trial_policy.flora_tier_2";
+        input.domainRegistryWrapper.records.find(
+          (record) => record.id === "knowledge_domain.flora"
+        ).trialPolicyRef = "knowledge_trial_policy.flora_tier_2";
       },
       /must include current policy 'knowledge_trial_policy\.flora_tier_1'/
     );
@@ -263,15 +277,73 @@ test("rejects non-active and Arcane domains", async (t) => {
     expectFailure(
       (input) => {
         const record = policy(input);
+        input.domainRegistryWrapper.records.find(
+          (domain) => domain.id === "knowledge_domain.flora"
+        ).trialPolicyRef = null;
+        const arcaneLore = input.domainRegistryWrapper.records.find(
+          (domain) => domain.id === "knowledge_domain.arcane_lore"
+        );
+        arcaneLore.status = "active";
+        arcaneLore.trialPolicyRef = record.policyId;
         record.domainId = "knowledge_domain.arcane_lore";
         record.requiredCompletionTargets = [
           tierTarget("knowledge_domain.arcane_lore", 1)
         ];
-        input.domainRegistryWrapper.records.find(
-          (domain) => domain.id === "knowledge_domain.arcane_lore"
-        ).status = "active";
       },
-      /knowledge_domain\.arcane_lore' must reference an active non-Arcane domain/
+      /trialPolicyRef must reference an active non-Arcane domain/
+    );
+  });
+});
+
+test("rejects invalid registry-to-policy alignment", async (t) => {
+  await t.test("unknown policy id", () => {
+    expectFailure(
+      (input) => {
+        input.domainRegistryWrapper.records.find(
+          (record) => record.id === "knowledge_domain.flora"
+        ).trialPolicyRef = "knowledge_trial_policy.missing";
+      },
+      /trialPolicyRef 'knowledge_trial_policy\.missing' is missing from policy authority/
+    );
+  });
+
+  await t.test("registry and policy domain mismatch", () => {
+    expectFailure(
+      (input) => {
+        policy(input).domainId = "knowledge_domain.fauna";
+      },
+      /trialPolicyRef 'knowledge_trial_policy\.flora_tier_1' has policy domainId 'knowledge_domain\.fauna'/
+    );
+  });
+
+  await t.test("deferred policy reference", () => {
+    expectFailure(
+      (input) => {
+        policy(input).status = "deferred";
+      },
+      /trialPolicyRef 'knowledge_trial_policy\.flora_tier_1' must reference status 'active'/
+    );
+  });
+
+  await t.test("duplicate policy reference", () => {
+    expectFailure(
+      (input) => {
+        input.domainRegistryWrapper.records.find(
+          (record) => record.id === "knowledge_domain.fauna"
+        ).trialPolicyRef = "knowledge_trial_policy.flora_tier_1";
+      },
+      /duplicates trialPolicyRef 'knowledge_trial_policy\.flora_tier_1' already used by domain 'knowledge_domain\.flora'/
+    );
+  });
+
+  await t.test("active policy without registry reference", () => {
+    expectFailure(
+      (input) => {
+        input.domainRegistryWrapper.records.find(
+          (record) => record.id === "knowledge_domain.flora"
+        ).trialPolicyRef = null;
+      },
+      /active policy 'knowledge_trial_policy\.flora_tier_1' must be referenced exactly once/
     );
   });
 });
@@ -435,7 +507,7 @@ test("rejects invalid snippet authority", async (t) => {
   });
 });
 
-test("rejects deferred readiness, rewards, and registry activation", async (t) => {
+test("rejects deferred readiness and rewards", async (t) => {
   await t.test("readiness", () => {
     expectFailure(
       (input) => {
@@ -451,15 +523,6 @@ test("rejects deferred readiness, rewards, and registry activation", async (t) =
         policy(input).rewardRefs = ["reward.knowledge.flora"];
       },
       /rewardRefs must remain empty/
-    );
-  });
-  await t.test("registry reference", () => {
-    expectFailure(
-      (input) => {
-        input.domainRegistryWrapper.records[0].trialPolicyRef =
-          "knowledge_trial_policy.flora_tier_1";
-      },
-      /trialPolicyRef must remain null/
     );
   });
 });

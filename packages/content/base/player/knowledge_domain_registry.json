@@ -77,7 +77,7 @@
         "world.regional_ecology_profiles",
         "world.regions"
       ],
-      "trialPolicyRef": null,
+      "trialPolicyRef": "knowledge_trial_policy.flora_tier_1",
       "completionPolicyRef": null,
       "visibilityPolicyRef": null,
       "schemaGapNotes": [

@@ -547,10 +547,21 @@ test("Knowledge trial authored policy skeleton excludes deferred behavior fields
   }
 });
 
-test("Knowledge domain registry trial policy references remain deferred", () => {
+test("Knowledge domain registry aligns only Flora to the current trial policy", () => {
   assert.ok(knowledgeDomainRegistry.records.length > 0);
+  const flora = knowledgeDomainRegistry.records.find(
+    (record) => record.id === "knowledge_domain.flora"
+  );
+  const otherDomains = knowledgeDomainRegistry.records.filter(
+    (record) => record.id !== "knowledge_domain.flora"
+  );
+
   assert.equal(
-    knowledgeDomainRegistry.records.every((record) => record.trialPolicyRef === null),
+    flora.trialPolicyRef,
+    "knowledge_trial_policy.flora_tier_1"
+  );
+  assert.equal(
+    otherDomains.every((record) => record.trialPolicyRef === null),
     true
   );
 });

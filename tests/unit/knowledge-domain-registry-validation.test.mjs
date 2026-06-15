@@ -97,6 +97,18 @@ test("accepts the current five-record registry", () => {
   assert.equal(validate(), true);
 });
 
+test("accepts the exact active Flora trial policy reference", () => {
+  const input = makeInput();
+  const flora = input.wrapper.records.find(
+    (record) => record.id === "knowledge_domain.flora"
+  );
+  assert.equal(
+    flora.trialPolicyRef,
+    "knowledge_trial_policy.flora_tier_1"
+  );
+  assert.equal(validate(input), true);
+});
+
 test("accepts General Lore constrained custom support", () => {
   const input = makeInput();
   const generalLore = input.wrapper.records.find((record) => record.id === "knowledge_domain.general_lore");
@@ -336,9 +348,54 @@ test("rejects broad registry self-reference", () => {
   );
 });
 
-test("rejects non-null policy references without policy authorities", () => {
+test("rejects trial policy references on non-active and Arcane domains", async (t) => {
+  for (const status of ["planned", "draft", "deferred"]) {
+    await t.test(status, () => {
+      expectFailure(
+        (input) => {
+          const flora = input.wrapper.records.find(
+            (record) => record.id === "knowledge_domain.flora"
+          );
+          flora.status = status;
+        },
+        /trialPolicyRef requires an active non-Arcane domain/
+      );
+    });
+  }
+
+  await t.test("inactive", () => {
+    expectFailure(
+      (input) => {
+        const flora = input.wrapper.records.find(
+          (record) => record.id === "knowledge_domain.flora"
+        );
+        flora.status = "inactive";
+      },
+      /structural validation failed: records\[0\]\.status must be one of the schema enum values/
+    );
+  });
+
+  await t.test("Arcane Lore", () => {
+    expectFailure(
+      (input) => {
+        const flora = input.wrapper.records.find(
+          (record) => record.id === "knowledge_domain.flora"
+        );
+        const arcaneLore = input.wrapper.records.find(
+          (record) => record.id === "knowledge_domain.arcane_lore"
+        );
+        flora.trialPolicyRef = null;
+        arcaneLore.status = "active";
+        arcaneLore.trialPolicyRef =
+          "knowledge_trial_policy.arcane_lore_tier_1";
+      },
+      /trialPolicyRef requires an active non-Arcane domain/
+    );
+  });
+});
+
+test("continues rejecting non-null completion and visibility policy references", () => {
   for (const [field, value] of [
-    ["trialPolicyRef", "knowledge_trial_policy.flora"],
     ["completionPolicyRef", "knowledge_completion_policy.flora"],
     ["visibilityPolicyRef", "knowledge_visibility_policy.flora"]
   ]) {

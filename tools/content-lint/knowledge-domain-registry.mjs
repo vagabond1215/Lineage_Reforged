@@ -51,11 +51,8 @@ const CUSTOM_FIELDS = [
   "defaultEvidenceOwnerScopes"
 ];
 
-const POLICY_FIELDS = [
-  "trialPolicyRef",
-  "completionPolicyRef",
-  "visibilityPolicyRef"
-];
+const ARCANE_DOMAIN_ID = "knowledge_domain.arcane_lore";
+const NULL_ONLY_POLICY_FIELDS = ["completionPolicyRef", "visibilityPolicyRef"];
 
 function isObject(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -433,7 +430,16 @@ export function validateKnowledgeDomainRegistry({
       }
     }
 
-    for (const policyField of POLICY_FIELDS) {
+    if (
+      record.trialPolicyRef !== null &&
+      (record.status !== "active" || record.id === ARCANE_DOMAIN_ID)
+    ) {
+      throw new Error(
+        `${relativePath} trialPolicyRef requires an active non-Arcane domain on record ${recordId}`
+      );
+    }
+
+    for (const policyField of NULL_ONLY_POLICY_FIELDS) {
       if (record[policyField] !== null) {
         throw new Error(
           `${relativePath} ${policyField} must remain null until its policy authority exists on record ${recordId}`

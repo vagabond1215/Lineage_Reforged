@@ -447,24 +447,47 @@ export function validateKnowledgeTrialPolicies({
   const snippetRecords = requireAuthorityWrapper(snippetWrapper, "knowledge snippets");
   const domainById = buildUniqueIndex(domainRecords, "id", "knowledge domain registry", "domain id");
   const snippetById = buildUniqueIndex(snippetRecords, "id", "knowledge snippets", "snippet id");
-  const policyIds = new Set();
+  const policyById = buildUniqueIndex(records, "policyId", relativePath, "policy id");
+  const referencedPolicyIds = new Map();
 
   for (const domain of domainRecords) {
-    if (domain.trialPolicyRef !== null) {
+    if (domain.trialPolicyRef === null) {
+      continue;
+    }
+
+    if (domain.id === ARCANE_DOMAIN_ID || domain.status !== "active") {
       throw new Error(
-        `knowledge domain registry domain '${domain.id}' trialPolicyRef must remain null`
+        `knowledge domain registry domain '${domain.id}' trialPolicyRef must reference an active non-Arcane domain`
+      );
+    }
+
+    const policy = policyById.get(domain.trialPolicyRef);
+    if (!policy) {
+      throw new Error(
+        `knowledge domain registry domain '${domain.id}' trialPolicyRef '${domain.trialPolicyRef}' is missing from policy authority`
+      );
+    }
+    if (referencedPolicyIds.has(domain.trialPolicyRef)) {
+      throw new Error(
+        `knowledge domain registry domain '${domain.id}' duplicates trialPolicyRef '${domain.trialPolicyRef}' already used by domain '${referencedPolicyIds.get(domain.trialPolicyRef)}'`
+      );
+    }
+    referencedPolicyIds.set(domain.trialPolicyRef, domain.id);
+
+    if (policy.status !== "active") {
+      throw new Error(
+        `knowledge domain registry domain '${domain.id}' trialPolicyRef '${domain.trialPolicyRef}' must reference status 'active'`
+      );
+    }
+    if (policy.domainId !== domain.id) {
+      throw new Error(
+        `knowledge domain registry domain '${domain.id}' trialPolicyRef '${domain.trialPolicyRef}' has policy domainId '${policy.domainId}'`
       );
     }
   }
 
   for (const [recordIndex, policy] of records.entries()) {
     const recordPath = `records[${recordIndex}]`;
-    if (policyIds.has(policy.policyId)) {
-      throw new Error(
-        `${relativePath} ${recordPath}.policyId duplicates '${policy.policyId}'`
-      );
-    }
-    policyIds.add(policy.policyId);
     assertPolicyId(policy.policyId, relativePath, `${recordPath}.policyId`);
     requireActiveDomain(policy.domainId, domainById, relativePath, `${recordPath}.domainId`);
 
@@ -560,7 +583,15 @@ export function validateKnowledgeTrialPolicies({
     }
   }
 
-  if (!policyIds.has(REQUIRED_CURRENT_POLICY_ID)) {
+  for (const policy of records) {
+    if (policy.status === "active" && !referencedPolicyIds.has(policy.policyId)) {
+      throw new Error(
+        `${relativePath} active policy '${policy.policyId}' must be referenced exactly once by the domain registry`
+      );
+    }
+  }
+
+  if (!policyById.has(REQUIRED_CURRENT_POLICY_ID)) {
     throw new Error(
       `${relativePath} must include current policy '${REQUIRED_CURRENT_POLICY_ID}'`
     );
@@ -568,6 +599,6 @@ export function validateKnowledgeTrialPolicies({
 
   return {
     ok: true,
-    policyIds: [...policyIds].sort()
+    policyIds: [...policyById.keys()].sort()
   };
 }
