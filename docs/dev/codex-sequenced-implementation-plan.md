@@ -21,18 +21,18 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan`
+- `Version 0.5.170 - Religion Knowledge Domain Seed`
 
 Immediate next Codex run:
 
-- `Version 0.5.170 - Religion Knowledge Domain Seed`
+- `Version 0.5.171 - Religious Hotspot Knowledge Snippet Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- The Religion seed-content plan landed in `0.5.169` and selected exactly two future snippets plus same-run Religion activation.
-- Keep Religion Knowledge Domain Seed as the immediate `0.5.170` direction.
-- Do not roll from `0.5.169` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
+- Keep Religious Hotspot Knowledge Snippet Plan as the immediate `0.5.171` direction.
+- Do not roll from `0.5.170` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -129,22 +129,22 @@ Versioning note:
 | 89 | `0.5.167` | Religion Knowledge Vocabulary And Validator Plan | Codex 5.5 Local docs-first | `docs/design/religion-knowledge-vocabulary-validator-plan.md` | planning doc | Completed | Selected exactly `religion` and `deity`, both schema expansions, top-level/nested authority, duplicate rejection, active-domain gating, tests, and future activation sequence. |
 | 90 | `0.5.168` | Religion Knowledge Schema And Validator Vocabulary | Codex 5.5 Local | `docs/design/religion-knowledge-vocabulary-validator-plan.md` | narrow schema/validator vocabulary | Completed | Added only the two direct subjects, planned registry vocabulary, resolver authority, index dependency, duplicate/malformed authority rejection, and focused tests; added no snippets or activation. |
 | 91 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | Codex 5.5 Local docs-first | `docs/design/religion-knowledge-domain-seed-content-plan.md` | planning doc | Completed | Selected exactly two future Religion snippets, same-run activation, null policy refs, validation checks, and deferred hotspot/favorability boundaries. |
-| 92 | `0.5.170` | Religion Knowledge Domain Seed | Codex 5.5 Local | `docs/design/religion-knowledge-domain-seed-content-plan.md` | narrow content seed | Next | Activate Religion and add only the two planned snippets; keep policy refs null and avoid schema, validator, test, world religion, hotspot, favorability/alignment, runtime, UI, or gameplay changes. |
+| 92 | `0.5.170` | Religion Knowledge Domain Seed | Codex 5.5 Local | `docs/design/religion-knowledge-domain-seed-content-plan.md` | narrow content seed | Completed | Activated Religion and added only the two planned snippets; kept policy refs null and avoided schema, validator, world religion, hotspot, favorability/alignment, runtime, UI, and gameplay changes. |
+| 93 | `0.5.171` | Religious Hotspot Knowledge Snippet Plan | Codex 5.5 Local docs-first | `docs/design/religion-knowledge-domain-plan.md` | planning doc | Next | Plan hotspot knowledge snippets only; keep policy refs null and avoid world religion, favorability/alignment, runtime, UI, trials, readiness, or gameplay changes. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.170 - Religion Knowledge Domain Seed`
-2. `0.5.171 - Religious Hotspot Knowledge Snippet Plan`
-3. `0.5.172 - Religious Favorability And Elemental Alignment Plan`, optional if prioritized after the first seed
-4. `0.5.173 - Family Visibility And Heir Slot Projection Plan`
-5. `0.5.174 - Race-Specific Adult Age And Maturation Plan`
-6. `0.5.175 - Offspring Growth Role And Activity Build Plan`
-7. `0.5.176 - Recipe Ownership And Personal Learning Plan`
-8. `0.5.177 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.171 - Religious Hotspot Knowledge Snippet Plan`
+2. `0.5.172 - Religious Favorability And Elemental Alignment Plan`, optional if prioritized after hotspot planning
+3. `0.5.173 - Family Visibility And Heir Slot Projection Plan`
+4. `0.5.174 - Race-Specific Adult Age And Maturation Plan`
+5. `0.5.175 - Offspring Growth Role And Activity Build Plan`
+6. `0.5.176 - Recipe Ownership And Personal Learning Plan`
+7. `0.5.177 - 0.6.0 Runtime Ownership Transition Reassessment`
 
-The family, recipe, crafting, civil-society, maturation, and estate documents remain future roadmap material only. `0.5.170` authorizes only the exact Religion seed implementation selected by the seed-content plan.
+The family, recipe, crafting, civil-society, maturation, and estate documents remain future roadmap material only. `0.5.171` should be documentation-only hotspot planning unless explicitly redirected.
 
 ## Default Prompt Pattern
 
@@ -160,9 +160,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.170 - Religion Knowledge Domain Seed` as the immediate next recommended run.
+- Keep `Version 0.5.171 - Religious Hotspot Knowledge Snippet Plan` as the immediate next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- Keep `0.5.170` to activating Religion and adding the exact two planned snippets. Do not mix it with hotspot content, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, Skill Trial, or Magic Study implementation.
+- Keep `0.5.171` to hotspot knowledge snippet planning. Do not mix it with favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, Skill Trial, or Magic Study implementation.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

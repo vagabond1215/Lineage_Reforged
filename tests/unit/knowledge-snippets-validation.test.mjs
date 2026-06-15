@@ -33,6 +33,8 @@ const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.ecology",
   "knowledge_domain.ecology",
   "knowledge_domain.ecology",
+  "knowledge_domain.religion",
+  "knowledge_domain.religion",
   "knowledge_domain.general_lore"
 ];
 
@@ -43,6 +45,8 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.ecology.kaelvar.regional_variant",
   "knowledge_snippet.ecology.sheep.seasonality",
   "knowledge_snippet.ecology.grape_vine.habitat",
+  "knowledge_snippet.religion.elemental_pantheon.identification",
+  "knowledge_snippet.religion.light_lady.identification",
   "knowledge_snippet.general_lore.kaelvar.cultural_context"
 ];
 
@@ -160,7 +164,7 @@ function religionSnippet({
   };
 }
 
-test("accepts the current seven-record snippet catalog", () => {
+test("accepts the current nine-record snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.id),
@@ -169,7 +173,7 @@ test("accepts the current seven-record snippet catalog", () => {
   assert.equal(validate(input), true);
 });
 
-test("accepts active Flora, Fauna, Minerals, Ecology, and General Lore domains", () => {
+test("accepts active Flora, Fauna, Minerals, Ecology, Religion, and General Lore domains", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.domainId),
@@ -189,6 +193,8 @@ test("accepts current canonical subject ids", () => {
       "region.kaelvar",
       "fauna.sheep",
       "flora.grape_vine",
+      "religion.elemental_pantheon",
+      "deity.light_lady",
       "region.kaelvar"
     ]
   );
@@ -214,6 +220,7 @@ test("accepts an active Religion fixture with religion and deity authorities", (
 test("keeps Religion snippets blocked while the domain remains planned", () => {
   expectFailure(
     (input) => {
+      religionDomain(input).status = "planned";
       input.wrapper.records = [religionSnippet()];
     },
     /domainId 'knowledge_domain\.religion' must reference status 'active'/

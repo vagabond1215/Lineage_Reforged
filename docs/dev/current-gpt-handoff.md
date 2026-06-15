@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local documentation after `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan`
+Source route: Codex local implementation after `Version 0.5.170 - Religion Knowledge Domain Seed`
 Date: 2026-06-15
-Branch/status assumption: `master`; worktree was clean before this documentation-only run.
+Branch/status assumption: `master`; worktree was clean before this narrow content run.
 
 ## Purpose
 
@@ -14,7 +14,8 @@ This is the short current handoff for future prompt preparation. It records imme
 - `docs/design/religion-knowledge-domain-plan.md` owns the broad Religion boundary and hotspot/non-runtime constraints.
 - `docs/design/religion-knowledge-vocabulary-validator-plan.md` owns the `religion` and `deity` schema/validator authority decisions.
 - `docs/design/religion-knowledge-domain-seed-content-plan.md` owns the exact first Religion seed content plan and activation path.
-- `packages/content/base/player/knowledge_domain_registry.json` keeps Religion `status: "planned"` with null trial, completion, and visibility policy refs until the future seed run.
+- `packages/content/base/player/knowledge_domain_registry.json` keeps Religion `status: "active"` with null trial, completion, and visibility policy refs.
+- `packages/content/base/player/knowledge_snippets.json` now contains exactly two Religion snippets: `knowledge_snippet.religion.elemental_pantheon.identification` and `knowledge_snippet.religion.light_lady.identification`.
 - `packages/schemas/player/knowledge_snippet.schema.json` and `packages/schemas/player/knowledge-domain-registry.schema.json` include exactly `religion` and `deity` as the first direct Religion subject vocabulary.
 - `tools/content-lint/knowledge-snippets.mjs` resolves `world.religions` top-level religion ids and flattened nested deity ids, with duplicate and malformed-id rejection.
 - `docs/dev/project-roadmap.md` owns version order and maturity direction.
@@ -25,11 +26,11 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed:
 
-- `Version 0.5.169 - Religion Knowledge Domain Seed Content Plan`
+- `Version 0.5.170 - Religion Knowledge Domain Seed`
 
 Immediate next:
 
-- `Version 0.5.170 - Religion Knowledge Domain Seed`
+- `Version 0.5.171 - Religious Hotspot Knowledge Snippet Plan`
 
 Current phase:
 
@@ -37,33 +38,32 @@ Current phase:
 
 Do not roll to `0.6.0`.
 
-## Version 0.5.169 Decision
+## Version 0.5.170 Result
 
-- Documentation-only planning selected exactly two future snippets:
+- `knowledge_domain.religion` is now active.
+- Exactly two Religion snippets are live:
   - `knowledge_snippet.religion.elemental_pantheon.identification`
   - `knowledge_snippet.religion.light_lady.identification`
-- The future implementation should activate `knowledge_domain.religion` in the same run that adds those snippets.
-- The future implementation should not do a status-only activation run.
 - All Religion policy refs remain null.
-- Religion remains planned today and no snippets are live.
-- The optional third opposition/duality snippet is deferred.
+- No world religion content, schema, validator, runtime, UI, storage, trial, readiness, reward, event, command, faction, reputation, law, conversion, apostasy, Prestige, family, Magic Study, favorability, elemental alignment, spell penalty, or gameplay behavior changed.
+- The optional third opposition/duality snippet remains deferred.
 - Religious hotspots remain deferred until dominant/tolerated faith, mismatch pressure, direct place identity, and owner/runtime consequence plans exist.
 - `Religious Favorability And Elemental Alignment Plan` remains a future design candidate only.
 
-## Guardrails For 0.5.170
+## Guardrails For 0.5.171
 
-- Implement only the exact two planned Religion snippets and the same-run Religion activation.
+- Plan religious hotspot knowledge only unless the user explicitly redirects.
 - Keep `trialPolicyRef`, `completionPolicyRef`, and `visibilityPolicyRef` null.
-- Do not change schemas, validators, tests, world religion content, trial/readiness content, runtime, UI, storage, rewards, events, commands, faction/reputation/law/conversion behavior, favorability, elemental alignment, spell penalties, Prestige, Magic Study, family, or gameplay.
+- Do not change schemas, validators, world religion content, trial/readiness content, runtime, UI, storage, rewards, events, commands, faction/reputation/law/conversion behavior, favorability, elemental alignment, spell penalties, Prestige, Magic Study, family, or gameplay.
 - Normal content lint should remain `content-lint: ok (56 files checked)`.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Status |
 | ---: | --- | --- | --- |
-| 1 | `0.5.170` | Religion Knowledge Domain Seed | Next |
-| 2 | `0.5.171` | Religious Hotspot Knowledge Snippet Plan | Recommended |
-| 3 | `0.5.172` | Religious Favorability And Elemental Alignment Plan | Optional recommended candidate after first seed |
+| 1 | `0.5.170` | Religion Knowledge Domain Seed | Completed |
+| 2 | `0.5.171` | Religious Hotspot Knowledge Snippet Plan | Next |
+| 3 | `0.5.172` | Religious Favorability And Elemental Alignment Plan | Optional recommended candidate after hotspot planning |
 | 4 | `0.5.173` | Family Visibility And Heir Slot Projection Plan | Recommended |
 | 5 | `0.5.174` | Race-Specific Adult Age And Maturation Plan | Recommended |
 | 6 | `0.5.175` | Offspring Growth Role And Activity Build Plan | Recommended |

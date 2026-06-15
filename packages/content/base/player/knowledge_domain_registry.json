@@ -376,7 +376,7 @@
       "summary": "Gods, spirits, doctrines, rites, sacred places, religious institutions, holy days, taboos, and regional or cultural faith traditions.",
       "group": "religion_myth",
       "wave": 1,
-      "status": "planned",
+      "status": "active",
       "canonicalSubjectTypes": [
         "religion",
         "deity",
@@ -446,7 +446,7 @@
         "Religion is authored knowledge only and does not create faith points, worship, conversion, apostasy, faction rank, reputation, law enforcement, access penalties, perks, buffs, punishment, or runtime behavior.",
         "Folk Lore, Civic Lore, and Common Lore are related references only; skill rank does not grant religious knowledge.",
         "Magic-school references remain empty so religious knowledge cannot imply Divine or Druidic Magic training, Magic Study readiness, or spell access.",
-        "The record remains planned until a later seed-content pass deliberately activates Religion and authors validated Religion snippets."
+        "The first live seed is authored knowledge only; Religion remains disconnected from trials, runtime favorability, Magic Study readiness, spell access, faction standing, and gameplay behavior."
       ]
     },
     {

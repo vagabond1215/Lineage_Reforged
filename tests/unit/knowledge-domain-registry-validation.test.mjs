@@ -124,13 +124,13 @@ test("accepts Arcane Lore as planned without a legacy policy", () => {
   assert.equal(validate(input), true);
 });
 
-test("accepts Religion as planned with direct religion and deity subjects only", () => {
+test("accepts active Religion with direct religion and deity subjects only", () => {
   const input = makeInput();
   const religion = input.wrapper.records.find(
     (record) => record.id === "knowledge_domain.religion"
   );
 
-  assert.equal(religion.status, "planned");
+  assert.equal(religion.status, "active");
   assert.deepEqual(
     religion.canonicalSubjectTypes.filter((subjectType) =>
       ["religion", "deity"].includes(subjectType)

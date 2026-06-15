@@ -193,6 +193,64 @@
       ]
     },
     {
+      "id": "knowledge_snippet.religion.elemental_pantheon.identification",
+      "domainId": "knowledge_domain.religion",
+      "subjectType": "religion",
+      "subjectId": "religion.elemental_pantheon",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Elemental Pantheon",
+      "summary": "The Elemental Pantheon is a balanced elemental religion built around paired opposition, cyclical dominance, and geography-shaped worship.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified faith tradition remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored Religion knowledge only and grants no worship, favorability, faction standing, spell access, Magic Study readiness, reputation, law effect, conversion, apostasy, Prestige, family status, or runtime behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.religion.light_lady.identification",
+      "domainId": "knowledge_domain.religion",
+      "subjectType": "deity",
+      "subjectId": "deity.light_lady",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Lady of Light",
+      "summary": "The Lady of Light is a female light deity of the Elemental Pantheon associated with guidance, healing, and judgment, and opposed to the Lord of Darkness.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified deity remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored Religion knowledge only and grants no worship, favorability, faction standing, spell access, Magic Study readiness, reputation, law effect, conversion, apostasy, Prestige, family status, or runtime behavior."
+      ]
+    },
+    {
       "id": "knowledge_snippet.general_lore.kaelvar.cultural_context",
       "domainId": "knowledge_domain.general_lore",
       "subjectType": "region",

@@ -1,23 +1,24 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.169 - Religion Knowledge Domain Seed Content Plan
+Source version/run: Version 0.5.170 - Religion Knowledge Domain Seed
 Date: 2026-06-15
-Branch/status assumption: `master`; worktree was clean before this documentation-only run.
+Branch/status assumption: `master`; worktree was clean before this narrow content run.
 
 ## Result
 
-Created `docs/design/religion-knowledge-domain-seed-content-plan.md`.
-
-The plan selects the exact first future Religion Knowledge seed:
+Activated `knowledge_domain.religion` and added the exact two planned Religion Knowledge snippets:
 
 - `knowledge_snippet.religion.elemental_pantheon.identification`
 - `knowledge_snippet.religion.light_lady.identification`
 
-It recommends activating `knowledge_domain.religion` in the same future run that adds those two snippets. Religion remains `status: "planned"` today, no Religion snippets are live, and all Religion policy references remain null.
+All Religion policy references remain null.
 
 ## Files Changed
 
-- `docs/design/religion-knowledge-domain-seed-content-plan.md`
+- `packages/content/base/player/knowledge_domain_registry.json`
+- `packages/content/base/player/knowledge_snippets.json`
+- `tests/unit/knowledge-snippets-validation.test.mjs`
+- `tests/unit/knowledge-domain-registry-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -26,32 +27,35 @@ It recommends activating `knowledge_domain.religion` in the same future run that
 
 ## Checks Run
 
+- `node --check tests/unit/knowledge-snippets-validation.test.mjs`
+- `node --check tests/unit/knowledge-domain-registry-validation.test.mjs`
+- `node --test tests/unit/knowledge-snippets-validation.test.mjs`
+- `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
+- `node tools/content-lint/index.mjs`
+- Religion active flag, null-policy, and two-snippet JSON assertion
 - `git diff --check`
-- conflict-marker search across changed docs (no matches)
-- trailing-whitespace search across changed docs (no matches)
+- conflict-marker search across changed files
+- trailing-whitespace search across changed files
 - changed-path scope audit including untracked files
-- forbidden source/schema/content/test/runtime/UI/generated-output/storage/persistence/event/reward/gameplay edit audit
-- No tests or typecheck run; this was a documentation-only planning run.
+- forbidden schema/validator/world-religion/helper/adapter/fixture/runtime/UI/generated-output/storage/persistence/event/reward/gameplay/favorability/alignment edit audit
 
 ## Behavior / Runtime Confirmation
 
-Documentation only.
+JSON content and focused test expectations changed.
 
-No schema, validator, test, source content, world religion content, runtime, UI, storage, persistence, trial, readiness, reward, event, command, faction, reputation, law, conversion, apostasy, Prestige, family, Magic Study, favorability, elemental alignment, spell penalty, or gameplay behavior changed.
+No schema, validator, world religion content, hotspot content, runtime, UI, storage, persistence, trial, readiness, reward, event, command, faction, reputation, law, conversion, apostasy, Prestige, family, Magic Study, favorability, elemental alignment, spell penalty, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- `Version 0.5.170 - Religion Knowledge Domain Seed` should activate Religion and add only the two planned snippets.
-- The future implementation should keep `trialPolicyRef`, `completionPolicyRef`, and `visibilityPolicyRef` null.
-- Religious hotspots remain deferred until dominant/tolerated faith, mismatch pressure, direct place identity, and owner/runtime consequence plans exist.
-- `Religious Favorability And Elemental Alignment Plan` remains a future design candidate only after the first Religion seed.
+- Religious hotspot knowledge remains deferred until a dedicated plan decides subject authority, place identity, and non-runtime boundaries.
+- `Religious Favorability And Elemental Alignment Plan` remains a future design candidate after hotspot planning unless priority changes.
 - Knowledge Trial readiness implementation remains deferred.
 - Family/heir/recipe/crafting/civil-society/maturation/estate docs remain future roadmap material only.
 
 ## Next Recommended Version
 
-Version 0.5.170 - Religion Knowledge Domain Seed
+Version 0.5.171 - Religious Hotspot Knowledge Snippet Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan religion seed content
+content(knowledge): seed religion domain snippets
