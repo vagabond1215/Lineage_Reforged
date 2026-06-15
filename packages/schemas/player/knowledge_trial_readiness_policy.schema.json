@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnowledgeTrialReadinessPolicyRecord",
+  "description": "Strict authored Knowledge trial static readiness-policy record. This schema defines no owner-specific state, trial attempt, runtime readiness, reward, storage, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "readinessPolicyId",
+    "status",
+    "ownerScope",
+    "trialPolicyId",
+    "scope",
+    "domainId",
+    "requiredEligibilityDecision",
+    "availabilityPolicy",
+    "prerequisiteReadinessGates",
+    "notes"
+  ],
+  "properties": {
+    "readinessPolicyId": {
+      "type": "string",
+      "pattern": "^knowledge_trial_readiness_policy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "deferred"
+      ]
+    },
+    "ownerScope": {
+      "type": "string",
+      "enum": [
+        "character"
+      ]
+    },
+    "trialPolicyId": {
+      "type": "string",
+      "pattern": "^knowledge_trial_policy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "domain",
+        "tier"
+      ]
+    },
+    "domainId": {
+      "type": "string",
+      "pattern": "^knowledge_domain\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requiredEligibilityDecision": {
+      "type": "string",
+      "enum": [
+        "eligible_candidate"
+      ]
+    },
+    "availabilityPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "always"
+          ]
+        }
+      }
+    },
+    "prerequisiteReadinessGates": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "readinessPolicyId",
+        "status",
+        "ownerScope",
+        "trialPolicyId",
+        "scope",
+        "domainId",
+        "requiredEligibilityDecision",
+        "availabilityPolicy",
+        "prerequisiteReadinessGates",
+        "notes"
+      ],
+      "properties": {
+        "readinessPolicyId": {
+          "$ref": "#/properties/readinessPolicyId"
+        },
+        "status": {
+          "$ref": "#/properties/status"
+        },
+        "ownerScope": {
+          "$ref": "#/properties/ownerScope"
+        },
+        "trialPolicyId": {
+          "$ref": "#/properties/trialPolicyId"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "domain"
+          ]
+        },
+        "domainId": {
+          "$ref": "#/properties/domainId"
+        },
+        "requiredEligibilityDecision": {
+          "$ref": "#/properties/requiredEligibilityDecision"
+        },
+        "availabilityPolicy": {
+          "$ref": "#/properties/availabilityPolicy"
+        },
+        "prerequisiteReadinessGates": {
+          "$ref": "#/properties/prerequisiteReadinessGates"
+        },
+        "notes": {
+          "$ref": "#/properties/notes"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "readinessPolicyId",
+        "status",
+        "ownerScope",
+        "trialPolicyId",
+        "scope",
+        "domainId",
+        "tier",
+        "requiredEligibilityDecision",
+        "availabilityPolicy",
+        "prerequisiteReadinessGates",
+        "notes"
+      ],
+      "properties": {
+        "readinessPolicyId": {
+          "$ref": "#/properties/readinessPolicyId"
+        },
+        "status": {
+          "$ref": "#/properties/status"
+        },
+        "ownerScope": {
+          "$ref": "#/properties/ownerScope"
+        },
+        "trialPolicyId": {
+          "$ref": "#/properties/trialPolicyId"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "tier"
+          ]
+        },
+        "domainId": {
+          "$ref": "#/properties/domainId"
+        },
+        "tier": {
+          "$ref": "#/properties/tier"
+        },
+        "requiredEligibilityDecision": {
+          "$ref": "#/properties/requiredEligibilityDecision"
+        },
+        "availabilityPolicy": {
+          "$ref": "#/properties/availabilityPolicy"
+        },
+        "prerequisiteReadinessGates": {
+          "$ref": "#/properties/prerequisiteReadinessGates"
+        },
+        "notes": {
+          "$ref": "#/properties/notes"
+        }
+      }
+    }
+  ]
+}

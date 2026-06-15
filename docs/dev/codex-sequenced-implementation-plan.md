@@ -21,18 +21,18 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.160 - Knowledge Trial Readiness Policy Schema Plan`
+- `Version 0.5.161 - Knowledge Trial Readiness Policy Schema`
 
 Immediate next Codex run:
 
-- `Version 0.5.161 - Knowledge Trial Readiness Policy Schema`
+- `Version 0.5.162 - Ecology Knowledge Domain Plan`
 
 Versioning note:
 
 - Patch numbers may exceed two digits inside the active band.
-- The readiness schema plan landed in `0.5.160` and selected a strict lifecycle-free static record.
-- Keep the Knowledge Trial Readiness Policy Schema as the immediate `0.5.161` direction.
-- Do not roll from `0.5.160` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The strict readiness schema landed in `0.5.161` with focused structural coverage and no content or runtime behavior.
+- Keep the Ecology Knowledge Domain Plan as the immediate `0.5.162` direction.
+- Do not roll from `0.5.161` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -120,24 +120,24 @@ Versioning note:
 | 80 | `0.5.158` | 0.5.x Roadmap Integration Pass | Codex 5.5 Local docs-only | `docs/dev/project-roadmap.md` | roadmap integration | Completed | Integrated expanded candidate lanes, unresolved questions, and shifted version direction without source, schema, content, test, runtime, UI, storage, persistence, event, reward, or gameplay changes. |
 | 81 | `0.5.159` | Knowledge Trial Registry Reference Alignment | Codex 5.5 Local | `docs/design/knowledge-trial-registry-reference-alignment-plan.md` | narrow validator/test/content alignment | Completed | Set only the Flora reference, added registry-local and cross-file policy-reference validation, kept policy/snippets/schemas/index unchanged, preserved 56-file lint, and added no runtime behavior. |
 | 82 | `0.5.160` | Knowledge Trial Readiness Policy Schema Plan | Codex 5.5 Local docs-first | `docs/design/knowledge-trial-readiness-policy-schema-plan.md` | planning doc | Completed | Selected the strict owner-free record, Flora candidate, always-only availability, validation boundaries, and staged sequence without implementation. |
-| 83 | `0.5.161` | Knowledge Trial Readiness Policy Schema | Codex 5.5 Local | `docs/design/knowledge-trial-readiness-policy-schema-plan.md` | schema + focused tests | Next | Add only the strict record-level schema and focused contract coverage; keep content, validators, references, helpers, adapters, state, storage, UI, runtime, and gameplay deferred. |
+| 83 | `0.5.161` | Knowledge Trial Readiness Policy Schema | Codex 5.5 Local | `packages/schemas/player/knowledge_trial_readiness_policy.schema.json` | schema + focused tests | Completed | Added only the strict record-level schema and focused contract coverage; content, validators, references, helpers, adapters, state, storage, UI, runtime, and gameplay remain deferred. |
+| 84 | `0.5.162` | Ecology Knowledge Domain Plan | Codex 5.5 Local docs-first | `docs/design/family-religion-ecology-civil-society-expansion-plan.md` | planning doc | Next | Define the first Ecology domain boundary and seed-content sequence without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.161 - Knowledge Trial Readiness Policy Schema`
-2. `0.5.162 - Ecology Knowledge Domain Plan`
-3. `0.5.163 - Ecology Knowledge Domain Seed Content Plan`
-4. `0.5.164 - Religion Knowledge Domain Plan`
-5. `0.5.165 - Religious Hotspot Knowledge Snippet Plan`
-6. `0.5.166 - Family Visibility And Heir Slot Projection Plan`
-7. `0.5.167 - Race-Specific Adult Age And Maturation Plan`
-8. `0.5.168 - Offspring Growth Role And Activity Build Plan`
-9. `0.5.169 - Recipe Ownership And Personal Learning Plan`
-10. `0.5.170 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.162 - Ecology Knowledge Domain Plan`
+2. `0.5.163 - Ecology Knowledge Domain Seed Content Plan`
+3. `0.5.164 - Religion Knowledge Domain Plan`
+4. `0.5.165 - Religious Hotspot Knowledge Snippet Plan`
+5. `0.5.166 - Family Visibility And Heir Slot Projection Plan`
+6. `0.5.167 - Race-Specific Adult Age And Maturation Plan`
+7. `0.5.168 - Offspring Growth Role And Activity Build Plan`
+8. `0.5.169 - Recipe Ownership And Personal Learning Plan`
+9. `0.5.170 - 0.6.0 Runtime Ownership Transition Reassessment`
 
-The family, religion, ecology, recipe, crafting, civil-society, maturation, and estate documents remain future roadmap material only. They do not authorize implementation, and `0.5.161` must not absorb those systems.
+The family, religion, ecology, recipe, crafting, civil-society, maturation, and estate documents remain future roadmap material only. They do not authorize implementation, and `0.5.162` remains documentation-only.
 
 ## Default Prompt Pattern
 
@@ -153,9 +153,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.161 - Knowledge Trial Readiness Policy Schema` as the immediate next recommended run.
+- Keep `Version 0.5.162 - Ecology Knowledge Domain Plan` as the immediate next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- Do not mix `0.5.161` with readiness content, validators, reference alignment, helpers, adapters, family, heir, religion, ecology, recipe, crafting, civil-society, maturation, estate, Skill Trial, or Magic Study implementation.
+- Do not mix `0.5.162` with readiness content, registry content, snippets, validators, helpers, adapters, family, heir, religion, recipe, crafting, civil-society, maturation, estate, Skill Trial, or Magic Study implementation.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
