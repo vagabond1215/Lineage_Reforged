@@ -18,6 +18,7 @@ const schemaFiles = [
   "packages/schemas/world/region-locality.schema.json",
   "packages/schemas/world/regional-ecology.schema.json",
   "packages/schemas/world/religion.schema.json",
+  "packages/schemas/world/religious-hotspot.schema.json",
   "packages/schemas/world/settlement.schema.json",
   "packages/schemas/world/travel-network.schema.json",
   "packages/schemas/world/transport-profile.schema.json",

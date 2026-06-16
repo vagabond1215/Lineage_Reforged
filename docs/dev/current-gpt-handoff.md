@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local documentation pass after `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
+Source route: Codex local implementation pass after `Version 0.5.175 - Religious Hotspot Content Authority Schema And Validator`
 Date: 2026-06-16
-Branch/status assumption: `master`; worktree was clean before this documentation-only run.
+Branch/status assumption: `master`; worktree was clean before this implementation run.
 
 ## Purpose
 
@@ -11,7 +11,10 @@ This is the short current handoff for future prompt preparation. It records imme
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
-- `docs/design/religious-hotspot-content-authority-schema-plan.md` owns the future `world.religious_hotspots` schema and semantic-validator contract.
+- `docs/design/religious-hotspot-content-authority-schema-plan.md` owns the planned contract for `world.religious_hotspots`.
+- `packages/schemas/world/religious-hotspot.schema.json` is the current structural schema for future religious hotspot content wrappers and records.
+- `tools/content-lint/religious-hotspots.mjs` is the current pure focused semantic validator for in-memory religious hotspot fixtures. It is not registered in normal content lint yet.
+- `tests/unit/religious-hotspots-validation.test.mjs` owns focused coverage for the hotspot schema/validator boundary.
 - `docs/design/religious-hotspot-content-authority-plan.md` owns the selected content-authority model: prefer a separate future `world.religious_hotspots` authored collection, keep it descriptive, defer `world.sacred_sites`, and keep favorability/alignment/consequences separate.
 - `docs/design/religious-hotspot-knowledge-snippet-plan.md` owns the blocked hotspot snippet decision and missing authority list.
 - `docs/design/religion-knowledge-domain-plan.md` owns the broad Religion boundary and hotspot/non-runtime constraints.
@@ -30,11 +33,11 @@ This is the short current handoff for future prompt preparation. It records imme
 
 Latest completed:
 
-- `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
+- `Version 0.5.175 - Religious Hotspot Content Authority Schema And Validator`
 
 Immediate next:
 
-- `Version 0.5.175 - Religious Hotspot Content Authority Schema And Validator`
+- `Version 0.5.176 - Religious Hotspot Content Authority Seed Plan`
 
 Current phase:
 
@@ -42,26 +45,29 @@ Current phase:
 
 Do not roll to `0.6.0`.
 
-## Version 0.5.174 Result
+## Version 0.5.175 Result
 
-- Added `docs/design/religious-hotspot-content-authority-schema-plan.md`.
-- Defined future paths for `packages/content/base/world/religious_hotspots.json`, `packages/schemas/world/religious-hotspot.schema.json`, `tools/content-lint/religious-hotspots.mjs`, and `tests/unit/religious-hotspots-validation.test.mjs`.
-- Selected the strict `records` wrapper, first-version fields, descriptive enum posture, place-anchor coherence rules, religion/deity reference rules, active-record dominant-faith requirement, and normal lint count policy.
-- Kept `religiousOrderIds` deferred unless the future implementation explicitly adds a narrow nested-order resolver.
-- Kept normal content lint at the current 56-file baseline until a later seed run adds and registers the live hotspot content file.
-- Re-sequenced the immediate next run to schema-and-validator implementation before seed planning, seed content, direct `religious_hotspot` subject support, or hotspot snippets.
-- No source, content JSON, schema, validator, tests, runtime, UI, storage, trial/readiness content, reward, event, command, faction, reputation, law, favorability, elemental alignment, conversion, apostasy, spell, Magic Study, Prestige, family, or gameplay behavior changed.
+- Added `packages/schemas/world/religious-hotspot.schema.json`.
+- Added `tools/content-lint/religious-hotspots.mjs`.
+- Added `tests/unit/religious-hotspots-validation.test.mjs`.
+- Registered the new schema file in `tests/unit/schema-files.test.mjs`.
+- The validator checks wrapper/record structure, duplicate hotspot ids, id/slug parity, religion and deity authorities, deity parent coherence, active dominant-faith requirements, faith posture disjointness, place-anchor hierarchy, and active-record no-runtime/no-consequence notes.
+- No live `packages/content/base/world/religious_hotspots.json` file was created.
+- The validator is not registered in normal content lint yet.
+- Normal content lint remains `content-lint: ok (56 files checked)`.
+- No live content JSON, Knowledge snippet subject support, snippets, `world.sacred_sites`, runtime, UI, storage, trial/readiness content, reward, event, command, faction, reputation, law, favorability, elemental alignment, conversion, apostasy, spell, Magic Study, Prestige, family, or gameplay behavior changed.
 
-## Guardrails For 0.5.175
+## Guardrails For 0.5.176
 
-- Implement only the `world.religious_hotspots` schema and focused semantic validator unless explicitly redirected.
-- Use in-memory focused fixtures first; do not add a live empty content file only to reserve the path.
-- Do not register normal lint until live hotspot seed content exists, unless the prompt explicitly changes that acceptance criterion.
-- Keep normal content lint at `content-lint: ok (56 files checked)` if no live content file is added.
-- Do not add live hotspot seed records, direct `religious_hotspot` Knowledge subject support, live hotspot snippets, or `world.sacred_sites`.
-- Do not use `custom`, `religion`, `deity`, `region`, settlement, shrine, sacred-site, or institution subjects as a workaround for missing hotspot subject support.
+- Plan the first seed records for `world.religious_hotspots` unless the user explicitly redirects.
+- Keep `0.5.176` docs-first unless the prompt explicitly requests live seed content.
+- Do not add `packages/content/base/world/religious_hotspots.json` during seed planning.
+- Do not register normal content lint during seed planning.
+- Do not add direct `religious_hotspot` Knowledge subject support or live hotspot snippets.
+- Do not add `world.sacred_sites`.
+- Do not add `religiousOrderIds` unless a future prompt explicitly scopes the nested-order resolver decision.
 - Do not add favorability, alignment, piety, law, faction, conversion, apostasy, service, spell, Prestige, family, Magic Study, consequence, runtime, UI, storage, reward, event, command, or gameplay behavior.
-- Do not use the survival/builder/RPG/MMO gap audit to broaden the hotspot schema-and-validator run.
+- Do not use the survival/builder/RPG/MMO gap audit to broaden the hotspot seed-plan run.
 
 ## Near-Term Sequence
 
@@ -71,8 +77,8 @@ Do not roll to `0.6.0`.
 | 2 | `0.5.172` | Religious Hotspot Content Authority Plan | Completed |
 | 3 | `0.5.173` | Documentation Authority Consolidation And Gap Audit Integration | Completed |
 | 4 | `0.5.174` | Religious Hotspot Content Authority Schema Plan | Completed |
-| 5 | `0.5.175` | Religious Hotspot Content Authority Schema And Validator | Recommended next |
-| 6 | `0.5.176` | Religious Hotspot Content Authority Seed Plan | Recommended |
+| 5 | `0.5.175` | Religious Hotspot Content Authority Schema And Validator | Completed |
+| 6 | `0.5.176` | Religious Hotspot Content Authority Seed Plan | Recommended next |
 | 7 | `0.5.177` | Religious Hotspot Content Authority Seed | Recommended |
 | 8 | `0.5.178` | Religious Hotspot Knowledge Subject Vocabulary Plan | Recommended |
 | 9 | `0.5.179` | Religious Hotspot Knowledge Subject Schema And Validator | Recommended |

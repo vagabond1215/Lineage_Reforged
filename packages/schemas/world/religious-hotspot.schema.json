@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ReligiousHotspotCollection",
+  "description": "Schema for authored religious hotspot content authority. It defines descriptive content only and does not define runtime state, favorability, law, rewards, commands, UI, storage, persistence, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/religiousHotspotRecord"
+      }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "religionId": {
+      "type": "string",
+      "pattern": "^religion\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "deityId": {
+      "type": "string",
+      "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "macroRegionId": {
+      "type": "string",
+      "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "regionId": {
+      "type": "string",
+      "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "regionLocalityId": {
+      "type": "string",
+      "pattern": "^region_locality\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "settlementId": {
+      "type": "string",
+      "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "placeAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "macroRegionId": {
+          "$ref": "#/$defs/macroRegionId"
+        },
+        "regionId": {
+          "$ref": "#/$defs/regionId"
+        },
+        "regionLocalityId": {
+          "$ref": "#/$defs/regionLocalityId"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlementId"
+        }
+      }
+    },
+    "religiousHotspotRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "summary",
+        "status",
+        "placeAnchor",
+        "religionIds",
+        "hotspotType",
+        "sacredSiteType",
+        "hotspotIntensity",
+        "publicPosture",
+        "mismatchPressure",
+        "pilgrimageStatus",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^religious_hotspot\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "active", "deferred"]
+        },
+        "placeAnchor": {
+          "$ref": "#/$defs/placeAnchor"
+        },
+        "religionIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/religionId"
+          }
+        },
+        "deityIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/deityId"
+          }
+        },
+        "dominantFaithIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/religionId"
+          }
+        },
+        "toleratedFaithIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/religionId"
+          }
+        },
+        "restrictedFaithIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/religionId"
+          }
+        },
+        "hotspotType": {
+          "type": "string",
+          "enum": [
+            "settlement_shrine",
+            "locality_shrine_cluster",
+            "pilgrimage_waypoint",
+            "contested_sacred_site",
+            "religious_district",
+            "natural_sacred_place",
+            "memorial_site"
+          ]
+        },
+        "sacredSiteType": {
+          "type": "string",
+          "enum": [
+            "none",
+            "shrine",
+            "temple",
+            "great_temple",
+            "convergence_site",
+            "grove",
+            "spring",
+            "beacon",
+            "memorial"
+          ]
+        },
+        "hotspotIntensity": {
+          "type": "string",
+          "enum": ["minor", "notable", "strong"]
+        },
+        "publicPosture": {
+          "type": "string",
+          "enum": ["indifferent", "universal", "tolerant", "aligned", "exclusive"]
+        },
+        "mismatchPressure": {
+          "type": "string",
+          "enum": ["none", "social_discomfort"]
+        },
+        "pilgrimageStatus": {
+          "type": "string",
+          "enum": ["none", "local", "regional", "major", "seasonal"]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/noteList"
+        },
+        "notes": {
+          "$ref": "#/$defs/noteList"
+        }
+      }
+    }
+  }
+}
