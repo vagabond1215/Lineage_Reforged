@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-05 after `Version 0.5.106 - Pure Hook Support Projection Helper` landed.
+Updated 2026-06-16 after `Version 0.5.173 - Documentation Authority Consolidation And Gap Audit Integration` landed.
 
 ## Purpose
 
@@ -20,6 +20,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/design/spell-hook-support-expansion-plan.md` owns hook taxonomy, readiness classification, executable promotion criteria, and future hook-owner sequencing.
 - `docs/design/legacy-combat-spell-runtime-ownership-plan.md` owns deferred legacy spell staging, compatibility, multi-effect, and status-approximation decisions.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
+- `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` owns broad survival/builder/RPG/MMO gap context for later roadmap planning; it is not runtime authority or a backlog replacement.
 - `docs/design/skill-mastery-trial-framework-plan.md` owns skill trial and magic study-event planning constraints.
 - `docs/design/knowledge-domain-registry-plan.md` owns knowledge-domain purpose, groups, waves, source/evidence vocabulary, and ownership boundaries.
 - `docs/design/knowledge-domain-registry-schema-plan.md` owns the future broad-registry schema contract, reference authorities, validation ownership, and current-data transition.
@@ -30,11 +31,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.108 - Knowledge Domain Registry Schema Plan`
+- `Version 0.5.173 - Documentation Authority Consolidation And Gap Audit Integration`
 
 Next recommended version:
 
-- `Version 0.5.109 - Knowledge Domain Registry Seed Data Plan`
+- `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
 
 Current sequence source:
 
@@ -59,6 +60,8 @@ Current phase:
 - Runtime casting, command handling, acquisition mutation, save/account changes, UI work, broader ownership routes, broader acquisition routes, target resolution, effect application, resource payment, catalyst behavior, Chronicle/Renown hooks, skill trial runtime behavior, magic study event runtime behavior, and knowledge snippet runtime behavior remain deferred.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - The project remains in foundation stabilization; validation and ownership boundaries remain higher priority than broad runtime expansion.
+- Religion is active with exactly two live Religion Knowledge snippets, and hotspot content remains blocked until `world.religious_hotspots` schema, validator, seed authority, and direct snippet subject support exist.
+- `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` is durable broad gap context for later roadmap planning around inventory/storage, survival needs, builder construction, NPC population, factions, reputation/favorability, quests/contracts, travel/POIs, law/crime, and estate/succession. It must not broaden narrow implementation prompts by default.
 
 ## North Star
 
@@ -77,18 +80,10 @@ Every major system should answer at least one of these questions:
 
 | Version | Name | Intent | Key Guardrail |
 | --- | --- | --- | --- |
-| `0.5.98` | Magic Command Contract | Landed. Defined command/intention shape before resolver behavior. | Contract only; no runtime cast resolver, commands, UI, effects, or mutation. |
-| `0.5.99` | First Narrow Runtime Cast Resolver Plan | Landed. Planned the first narrow engine-owned resolver readiness boundary. | Planning only; no UI dispatch, save mutation, resource payment, catalyst consumption, or event creation. |
-| `0.5.100` | Runtime Cast Resolver Readiness Helper | Landed. Added a pure helper that consumes explicit command-like input, calls `buildMagicCastReadiness(...)`, and returns deterministic resolver issues. | Pure helper only; no effectful casting, command handlers, UI dispatch, save mutation, target resolution, resource payment, catalyst consumption/reservation, inventory mutation, or event creation. |
-| `0.5.101` | Magic Resolver Planned Output Envelope Plan | Landed. Planned inert output-envelope policy before runtime events or effect application. | Planning only; no emitted events, effects, mutation, UI dispatch, or command handlers. |
-| `0.5.102` | Magic Resolver Inert Envelope Helper | Landed. Added a pure inert envelope helper with explicit safety flags. | Pure projection only; no emitted events, effects, runtime dispatch, target resolution, resource payment, catalyst behavior, mutation, UI, or generated output. |
-| `0.5.103` | Spell Hook Support Expansion Plan | Landed. Defined hook taxonomy, current readiness/inert-envelope behavior, executable promotion criteria, owner requirements, and future sequence. | Planning only; no generic hook execution, runtime effects, target resolution, events, resource/catalyst behavior, mutation, UI, or generated output. |
-| `0.5.104` | Spell Hook Classification Audit | Landed. Reconciled spell lint, combat, engine readiness, UI presentation, and authored-hook classifications. | Documentation only; no source refactor, runtime behavior, content JSON, schema, or UI changes. |
-| `0.5.105` | Spell Hook Support Constants Cleanup | Landed. Established the shared authored authority, adapter, and exact inventory/parity/subset/precedence coverage. | Preserved all classifications and behavior; no hook execution, content changes, or legacy combat fixes. |
-| `0.5.106` | Pure Hook Support Projection Helper | Landed. Projects deterministic six-class detail and blockers from explicit support input. | Pure output only; no execution, mutation, readiness weakening, UI, content, schema, or combat changes. |
-| `0.5.107` | Knowledge Domain Registry Plan | Landed. Defined stable knowledge-domain ownership, waves, source/evidence vocabulary, and validation boundaries. | Documentation only; no runtime loading, progression, trials, UI, or events. |
-| `0.5.108` | Knowledge Domain Registry Schema Plan | Landed. Selected separate broad-registry schema/content paths, exact fields/enums, reference authorities, semantic validation ownership, and transition rules. | Documentation only; no schema file, seed data, runtime loading, persistence, state, trials, UI, or events. |
-| `0.5.109` | Knowledge Domain Registry Seed Data Plan | Next. Define exact Wave 0 records before schema/content implementation. | Planning only; no schema or JSON creation, skill-link changes, runtime loading, persistence, state, trials, UI, or events. |
+| `0.5.171` | Religious Hotspot Knowledge Snippet Plan | Landed. Found hotspot snippets blocked by missing content authority. | Documentation only; no live hotspot snippets or behavior. |
+| `0.5.172` | Religious Hotspot Content Authority Plan | Landed. Selected future `world.religious_hotspots` and deferred `world.sacred_sites`. | Documentation only; no content JSON, schema, validator, runtime, UI, or gameplay changes. |
+| `0.5.173` | Documentation Authority Consolidation And Gap Audit Integration | Landed. Integrated the survival/builder/RPG/MMO gap audit as durable broad context. | Documentation only; not runtime authority and not permission to broaden narrow prompts. |
+| `0.5.174` | Religious Hotspot Content Authority Schema Plan | Next. Plan exact schema and semantic-validator contract for `world.religious_hotspots`. | Planning only unless explicitly redirected; no live content, snippets, favorability/alignment, runtime, UI, or gameplay behavior. |
 
 For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 
@@ -99,7 +94,7 @@ For the full queue, use `docs/dev/codex-sequenced-implementation-plan.md`.
 - Do not weaken validation unless the validator is demonstrably stale or wrong.
 - Do not add old-save or old-account compatibility unless explicitly requested.
 - Keep current data direct and validated.
-- Patch numbers may exceed two digits inside the current band; do not roll from `0.5.106` to `0.6.0` unless the actual `0.6.x` milestone has been reached.
+- Patch numbers may exceed two digits inside the current band; do not roll from `0.5.173` to `0.6.0` unless the actual `0.6.x` milestone has been reached.
 - For complex systems, prefer design criteria, runtime shape, pure helpers, validation, view model, read-only UI, then mutating behavior.
 
 ## New Thread Starter
@@ -122,6 +117,7 @@ Magic resolver planned output envelope plan: docs/design/magic-resolver-planned-
 Spell hook support expansion plan: docs/design/spell-hook-support-expansion-plan.md
 Legacy combat spell runtime ownership plan: docs/design/legacy-combat-spell-runtime-ownership-plan.md
 Future system design ledger: docs/design/future-system-design-ledger.md
+Survival/builder/RPG/MMO gap audit: docs/design/survival-builder-rpg-mmo-content-gap-audit.md
 Strategic continuity brief: docs/dev/project-vision-and-continuity-brief.md
 Backlog: docs/future_content_backlog.md
 
@@ -137,6 +133,7 @@ Use the magic resolver planned output envelope plan for inert envelope constrain
 Use the spell hook support expansion plan for hook classification, readiness, executable-owner, and sequencing constraints.
 Use the spell hook classification audit for constants cleanup, projection requirements, and current legacy combat findings.
 Use the design ledger for durable conceptual criteria and vocabulary.
+Use the survival/builder/RPG/MMO gap audit as broad future roadmap context only, not as implementation permission.
 Use the continuity brief for north-star direction and source map.
 Use the backlog for deferred work and historical run notes.
 

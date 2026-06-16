@@ -721,7 +721,7 @@ The following questions should be answered in future targeted planning passes ra
 
 ## Suggested Near-Term Use
 
-This audit should not interrupt the current `0.5.172` Religious Hotspot Content Authority Plan unless the user explicitly redirects.
+This audit should not interrupt the current Religion/hotspot authority lane. The next hotspot-specific run should remain `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan` unless the user explicitly redirects.
 
 Possible later sequence options:
 

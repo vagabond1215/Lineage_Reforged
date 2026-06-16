@@ -249,12 +249,12 @@ Religion Knowledge Trial policy references remain null. Hotspot authority does n
 
 Recommended next:
 
-- `Version 0.5.173 - Religious Hotspot Content Authority Schema Plan`
+- `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
 
 Rationale: the preferred model is clear, but the schema and semantic-validator contract should be planned before implementation. The plan should decide exact field requirements, nested religious-order resolver posture, active/planned status semantics, hierarchy checks, and whether the first schema should include direct `religious_hotspot` Knowledge subject preparation.
 
 Deferred alternatives:
 
-- `Version 0.5.173 - Religious Hotspot Content Authority Schema And Validator`: viable only if the user explicitly wants implementation next.
-- `Version 0.5.173 - Religious Hotspot Content Authority Seed Plan`: should wait until schema shape is planned.
-- `Version 0.5.173 - Religious Favorability And Elemental Alignment Plan`: remains separate and deferred unless explicitly prioritized.
+- `Version 0.5.174 - Religious Hotspot Content Authority Schema And Validator`: viable only if the user explicitly wants implementation next.
+- `Version 0.5.174 - Religious Hotspot Content Authority Seed Plan`: should wait until schema shape is planned.
+- `Version 0.5.175 - Religious Favorability And Elemental Alignment Plan`: remains separate and deferred unless explicitly prioritized.

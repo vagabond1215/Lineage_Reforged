@@ -37,6 +37,7 @@ This ledger consolidates durable design intent from:
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-output.md`
 - `docs/future_content_backlog.md`
+- `docs/design/survival-builder-rpg-mmo-content-gap-audit.md`
 - relevant `docs/design/*` planning files
 - ongoing design conversations about Legacy, Chronicle, Bloodlines, renown, heirs, bequests, heirlooms, magic, economy, combat, calendar, UI, and prompt workflow
 
@@ -179,6 +180,12 @@ Rules:
 - Do not import draft catalogs into gameplay unless the pass is explicitly a live-content migration.
 - Content prompts must state whether new records are live, draft-only, hidden, catalog-visible, inert, or effect-bearing.
 - `implementationPriority: "catalog_only"` or `"backlog"` is not a safety guard unless runtime/UI/purchase paths actually enforce it.
+
+### Genre Gap Audit Context
+
+`docs/design/survival-builder-rpg-mmo-content-gap-audit.md` is durable broad design context for later roadmap planning. It identifies missing or under-addressed lanes such as inventory/storage, survival needs, builder construction, NPC population, factions and institutions, reputation/favorability, quests/contracts, travel/POIs, law/crime, and estate/succession.
+
+Use it to inform a later `Survival Builder RPG MMO Content Gap Roadmap` after the current Religion/hotspot/favorability lane stabilizes. Do not treat it as runtime authority, a backlog replacement, or permission to broaden a narrow Codex prompt.
 
 ## Vocabulary Ledger
 
