@@ -1,30 +1,25 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.175 - Religious Hotspot Content Authority Schema And Validator
+Source version/run: Version 0.5.176 - Religious Hotspot Content Authority Seed Plan
 Date: 2026-06-16
-Branch/status assumption: `master`; worktree was clean before this implementation run.
+Branch/status assumption: `master`; worktree was clean before this documentation run.
 
 ## Result
 
-Implemented the future `world.religious_hotspots` schema and focused semantic validator planned by `Version 0.5.174`.
+Created a documentation-only seed-content plan for the first future `world.religious_hotspots` records.
 
-This pass added:
+The new plan recommends exactly two future `planned` seed records if both validate unchanged:
 
-- a strict wrapper schema at `packages/schemas/world/religious-hotspot.schema.json`
-- a pure focused validator at `tools/content-lint/religious-hotspots.mjs`
-- in-memory fixture tests at `tests/unit/religious-hotspots-validation.test.mjs`
-- schema-file smoke registration in `tests/unit/schema-files.test.mjs`
+- `religious_hotspot.glasswake_shrine_lantern_gardens`
+- `religious_hotspot.lantern_shrine_gardens`
 
-The validator checks strict structure, duplicate hotspot ids, id/slug parity, religion/deity authority, deity parent-religion coherence, active dominant-faith posture, pairwise faith-posture disjointness, region/locality/settlement anchor existence and hierarchy coherence, and active-record no-runtime/no-consequence notes.
+It recommends falling back to only `religious_hotspot.glasswake_shrine_lantern_gardens` if the locality-scale record becomes ambiguous or fails validation during the future implementation. The draft records intentionally omit `deityIds`, `dominantFaithIds`, `toleratedFaithIds`, `restrictedFaithIds`, and `religiousOrderIds`.
 
-No live `packages/content/base/world/religious_hotspots.json` file was created. The new validator is not registered in normal content lint because there is no live content file yet. Normal content lint remains `content-lint: ok (56 files checked)`.
+No live `packages/content/base/world/religious_hotspots.json` file was created. No normal content-lint registration was added. Normal content lint remains `content-lint: ok (56 files checked)`.
 
 ## Files Changed
 
-- `packages/schemas/world/religious-hotspot.schema.json`
-- `tools/content-lint/religious-hotspots.mjs`
-- `tests/unit/religious-hotspots-validation.test.mjs`
-- `tests/unit/schema-files.test.mjs`
+- `docs/design/religious-hotspot-content-authority-seed-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -33,35 +28,35 @@ No live `packages/content/base/world/religious_hotspots.json` file was created. 
 
 ## Checks Run
 
-- `node --test tests\unit\religious-hotspots-validation.test.mjs`
-- `node --test tests\unit\schema-files.test.mjs`
-- `npm.cmd run tool:content-lint`
+- in-memory `validateReligiousHotspots` dry run for the two future draft records
 - `git diff --check`
 - conflict-marker search across changed files
 - trailing-whitespace search across changed files
 - changed-path scope audit
-- normal-lint registration absence scan for `religious_hotspots.json`
-- next-run reference consistency scan for `0.5.176 - Religious Hotspot Content Authority Seed Plan`
-- forbidden live-content/runtime/UI/storage/persistence/event/reward/command/faction/law/favorability/elemental-alignment/spell/Magic Study/Prestige/family/gameplay edit audit
+- verified `packages/content/base/world/religious_hotspots.json` does not exist
+- verified no normal content-lint registration was added
+- stale version-reference scan for `0.5.176 - Religious Hotspot Content Authority Seed Plan`
+- next-run consistency scan for `0.5.177 - Religious Hotspot Content Authority Seed`
+- forbidden source/schema/content/test/runtime/UI/generated-output/storage/persistence/event/reward/gameplay edit audit
 
 ## Behavior / Runtime Confirmation
 
-Schema, focused validator, and unit-test behavior changed.
+Documentation changed only.
 
-No live content JSON, normal content-lint registration, Knowledge snippet subject support, live snippets, runtime, UI, storage, persistence, trial/readiness content, reward, event, command, ownership, simulation, faction, reputation, law, favorability, elemental alignment, conversion, apostasy, spell, Magic Study, Prestige, family, or gameplay behavior changed.
+No source, live content JSON, schema, validator, test, normal content-lint registration, Knowledge snippet subject support, live snippets, `world.sacred_sites`, runtime, UI, generated output, storage, persistence, trial/readiness content, reward, event, command, ownership, simulation, faction, reputation, law, favorability, elemental alignment, conversion, apostasy, spell, Magic Study, Prestige, family, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- `religiousOrderIds` remains deferred unless a future run explicitly adds a narrow nested-order resolver.
-- Direct `religious_hotspot` Knowledge subject support remains blocked until hotspot seed records exist.
-- The next run should be a docs-first seed plan, not live seed content, unless explicitly rescoped.
-- A future seed implementation should add and register `packages/content/base/world/religious_hotspots.json` and move normal content lint from 56 to 57 checked files.
+- The plan treats `religion.elemental_pantheon` as an explicit planned authored relationship for the first hotspot records, not as an existing place-authored dominant faith.
+- `deity.light_lady` remains omitted from the draft records because current place authority does not prove a specific deity affiliation.
+- Direct `religious_hotspot` Knowledge subject support remains blocked until hotspot seed content exists and a later vocabulary/schema/validator pass enables it.
+- The future `0.5.177` seed run should add and register `packages/content/base/world/religious_hotspots.json`, validate through the existing schema and validator, and move normal content lint from 56 to 57 checked files.
 - Religious Favorability And Elemental Alignment remains optional after the hotspot authority lane or earlier only if explicitly prioritized as design-only work.
 
 ## Next Recommended Version
 
-Version 0.5.176 - Religious Hotspot Content Authority Seed Plan
+Version 0.5.177 - Religious Hotspot Content Authority Seed
 
 ## Suggested Commit Message
 
-feat(content): add religious hotspot schema validator
+docs(knowledge): plan religious hotspot seed content
