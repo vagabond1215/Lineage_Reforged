@@ -18,8 +18,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.171 - Religious Hotspot Knowledge Snippet Plan`
-- Next recommended version: `Version 0.5.172 - Religious Hotspot Content Authority Plan`
+- Latest completed version: `Version 0.5.172 - Religious Hotspot Content Authority Plan`
+- Next recommended version: `Version 0.5.173 - Religious Hotspot Content Authority Schema Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -28,8 +28,9 @@ Versioning rule:
 - Patch numbers may exceed two digits inside the current band.
 - `Version 0.5.170 - Religion Knowledge Domain Seed` activated Religion and added the exact two planned Religion snippets while keeping policy refs null.
 - `Version 0.5.171 - Religious Hotspot Knowledge Snippet Plan` found hotspot snippets blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
-- `Version 0.5.172 - Religious Hotspot Content Authority Plan` is the next recommended narrow planning run.
-- Do not roll from `0.5.171` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.172 - Religious Hotspot Content Authority Plan` selected a future separate `world.religious_hotspots` authored content collection as the preferred hotspot authority and deferred `world.sacred_sites` as a possible later specialization.
+- `Version 0.5.173 - Religious Hotspot Content Authority Schema Plan` is the next recommended narrow planning run.
+- Do not roll from `0.5.172` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -92,6 +93,7 @@ Current repo reality:
 - Religion seed-content planning has landed in `docs/design/religion-knowledge-domain-seed-content-plan.md`. It selects exactly `knowledge_snippet.religion.elemental_pantheon.identification` and `knowledge_snippet.religion.light_lady.identification`, recommends activating Religion in the same future run that adds them, keeps all Religion policy refs null, and defers hotspots, favorability/alignment, trials, readiness, runtime, UI, storage, and gameplay behavior.
 - Religion Knowledge Domain Seed has landed. `knowledge_domain.religion` is active, exactly two Religion snippets are live, all Religion policy refs remain null, and no world religion content, schema, validator, runtime, UI, storage, trials, readiness, rewards, events, commands, favorability, elemental alignment, or gameplay behavior changed.
 - Religious Hotspot Knowledge Snippet planning has landed in `docs/design/religious-hotspot-knowledge-snippet-plan.md`. It finds live hotspot snippets blocked because current content mentions shrine-related geography but does not author exact hotspot place identity, religion/deity/institution affiliation, dominant/tolerated faith, hotspot severity, mismatch or visitor-risk posture, or supported settlement/shrine/sacred-site/hotspot snippet authority.
+- Religious Hotspot Content Authority planning has landed in `docs/design/religious-hotspot-content-authority-plan.md`. It selects a future separate `world.religious_hotspots` authored collection as the preferred descriptive authority between existing place anchors and religion/deity/order records, defers `world.sacred_sites` as a later possible specialization, and keeps favorability/alignment/consequence/runtime behavior separate.
 - The current `knowledge_domains.json` and `KnowledgeDomainRecord` remain the narrow legacy resource-identification shape. Four policy records exist today; `knowledge_domain.arcane_lore` exists only in the broad registry and is now linked from the Arcane Lore skill as metadata only.
 - Skill-domain reference realignment planning has landed in `docs/design/skill-knowledge-domain-reference-realignment-plan.md`. It confirms all ten current references, selects the Arcane Lore broad-registry link for `0.5.115`, defers Folk Lore and Civic Lore until specific broad domains exist, and identifies the focused validator-test fixture assumption that must be updated without changing validator behavior.
 - Skill-domain reference realignment has landed. `skill.knowledge.arcane_lore` now references `knowledge_domain.arcane_lore`, and the positive validator test now proves optional skill references through a cloned fixture rather than depending on Arcane Lore remaining unlinked.
@@ -234,7 +236,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | Codex Local docs-first | Planning | Completed. Selected two exact future snippets and a same-run activation path for the next seed implementation. | Documentation only; no snippets, activation, source content, schema, validator, tests, hotspot content, runtime, UI, storage, trials, readiness, or gameplay behavior. |
 | `0.5.170` | Religion Knowledge Domain Seed | Codex Local | Narrow content seed | Completed. Activated Religion and added the two planned Religion snippets. | Kept all Religion policy refs null; no schema, validator, world religion, hotspot, favorability/alignment, runtime, UI, storage, trial, readiness, reward, event, command, or gameplay changes. |
 | `0.5.171` | Religious Hotspot Knowledge Snippet Plan | Codex Local docs-first | Planning | Completed. Added the hotspot snippet readiness plan and found snippets blocked by missing content authority. | Documentation only; no live snippets, registry content, world religion content, schemas, validators, tests, runtime, UI, storage, trials, readiness, favorability/alignment, rewards, events, commands, or gameplay changes. |
-| `0.5.172` | Religious Hotspot Content Authority Plan | Codex Local docs-first | Planning | Recommended next. Define place/religion affiliation data before hotspot snippets or vocabulary. | Documentation only unless explicitly rescoped; keep favorability/alignment, consequences, runtime, UI, trial/readiness, Prestige, family, Magic Study, and gameplay deferred. |
+| `0.5.172` | Religious Hotspot Content Authority Plan | Codex Local docs-first | Planning | Completed. Selected future `world.religious_hotspots` as the descriptive authority model and deferred `world.sacred_sites` as a later specialization. | Documentation only; no content JSON, schema, validator, tests, runtime, UI, storage, trials, readiness, favorability/alignment, rewards, events, commands, or gameplay changes. |
+| `0.5.173` | Religious Hotspot Content Authority Schema Plan | Codex Local docs-first | Planning | Recommended next. Plan the exact schema and semantic-validator contract for `world.religious_hotspots`. | Documentation only unless explicitly rescoped; keep live hotspot content, snippets, favorability/alignment, consequences, runtime, UI, trial/readiness, Prestige, family, Magic Study, and gameplay deferred. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -255,13 +258,13 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.172 - Religious Hotspot Content Authority Plan`
-2. `0.5.173 - Religious Favorability And Elemental Alignment Plan`, optional if prioritized after content-authority planning
-3. `0.5.174 - Family Visibility And Heir Slot Projection Plan`
-4. `0.5.175 - Race-Specific Adult Age And Maturation Plan`
-5. `0.5.176 - Offspring Growth Role And Activity Build Plan`
-6. `0.5.177 - Recipe Ownership And Personal Learning Plan`
-7. `0.5.178 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.173 - Religious Hotspot Content Authority Schema Plan`
+2. `0.5.174 - Religious Favorability And Elemental Alignment Plan`, optional if prioritized after schema planning
+3. `0.5.175 - Family Visibility And Heir Slot Projection Plan`
+4. `0.5.176 - Race-Specific Adult Age And Maturation Plan`
+5. `0.5.177 - Offspring Growth Role And Activity Build Plan`
+6. `0.5.178 - Recipe Ownership And Personal Learning Plan`
+7. `0.5.179 - 0.6.0 Runtime Ownership Transition Reassessment`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -282,9 +285,9 @@ High-priority unresolved questions:
 Scope guardrails:
 
 - The integrated family, religion, ecology, recipe, crafting, civil-society, maturation, and estate documents are future roadmap material only. They do not authorize runtime behavior.
-- `Version 0.5.172 - Religious Hotspot Content Authority Plan` is the immediate next recommended run.
+- `Version 0.5.173 - Religious Hotspot Content Authority Schema Plan` is the immediate next recommended run.
 - The completed registry alignment remains content-lint authority only and does not make Knowledge trials runnable.
-- Keep `0.5.172` to hotspot content-authority planning; do not absorb favorability/alignment mechanics, runtime, family, heir, recipe, crafting, estate, Skill Trial, or Magic Study work.
+- Keep `0.5.173` to hotspot content-authority schema planning; do not absorb live content, snippets, favorability/alignment mechanics, runtime, family, heir, recipe, crafting, estate, Skill Trial, or Magic Study work.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -640,7 +643,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 78 | `0.5.169` | Religion Knowledge Domain Seed Content Plan | `docs/design/religion-knowledge-domain-seed-content-plan.md` | Completed |
 | 79 | `0.5.170` | Religion Knowledge Domain Seed | `docs/design/religion-knowledge-domain-seed-content-plan.md` | Completed |
 | 80 | `0.5.171` | Religious Hotspot Knowledge Snippet Plan | `docs/design/religious-hotspot-knowledge-snippet-plan.md` | Completed |
-| 81 | `0.5.172` | Religious Hotspot Content Authority Plan | `docs/design/religious-hotspot-knowledge-snippet-plan.md` | Next |
+| 81 | `0.5.172` | Religious Hotspot Content Authority Plan | `docs/design/religious-hotspot-content-authority-plan.md` | Completed |
+| 82 | `0.5.173` | Religious Hotspot Content Authority Schema Plan | `docs/design/religious-hotspot-content-authority-plan.md` | Next |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -686,6 +690,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Religion Knowledge Vocabulary And Validator Plan | `docs/design/religion-knowledge-vocabulary-validator-plan.md`; use for the exact `religion`/`deity` subject set, schema changes, nested resolver and duplicate rules, activation boundary, focused tests, and `0.5.168` acceptance criteria. |
 | Religion Knowledge Domain Seed Content Plan | `docs/design/religion-knowledge-domain-seed-content-plan.md`; use for the exact two future Religion snippets, same-run activation decision, world religion authority mapping, validation plan, and deferred hotspot/favorability boundaries. |
 | Religious Hotspot Knowledge Snippet Plan | `docs/design/religious-hotspot-knowledge-snippet-plan.md`; use for the blocked hotspot snippet decision, missing content-authority list, subject strategy, and non-runtime consequence/favorability boundaries. |
+| Religious Hotspot Content Authority Plan | `docs/design/religious-hotspot-content-authority-plan.md`; use for the preferred `world.religious_hotspots` model, deferred `world.sacred_sites` specialization, candidate fields, descriptive enum posture, future-only Glasswake sketches, validation requirements, and favorability/alignment/consequence boundaries. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |
 | Prompt Template Hardening Pass | `docs/dev/prompt-template-hardening-pass.md`; use when generating future Codex/GitHub Connector prompts. |
