@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-15
-Route: Codex local sequencing alignment after `Version 0.5.158 - 0.5.x Roadmap Integration Pass`
+Date: 2026-06-16
+Route: Codex local sequencing alignment after `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.173 - Documentation Authority Consolidation And Gap Audit Integration`
+- `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
+- `Version 0.5.175 - Religious Hotspot Content Authority Schema And Validator`
 
 Versioning note:
 
@@ -34,8 +34,9 @@ Versioning note:
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
 - The hotspot authority plan landed in `0.5.172`: future `world.religious_hotspots` is the preferred descriptive authority model, and `world.sacred_sites` remains a deferred possible specialization.
 - The documentation authority consolidation landed in `0.5.173`: `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` is durable broad context, not implementation permission, and the hotspot schema plan shifted to `0.5.174`.
-- Keep Religious Hotspot Content Authority Schema Plan as the immediate `0.5.174` direction.
-- Do not roll from `0.5.173` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The religious hotspot schema plan landed in `0.5.174`: `docs/design/religious-hotspot-content-authority-schema-plan.md` defines the future `world.religious_hotspots` schema and semantic-validator contract without implementation.
+- Keep Religious Hotspot Content Authority Schema And Validator as the immediate `0.5.175` direction.
+- Do not roll from `0.5.174` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -136,21 +137,22 @@ Versioning note:
 | 93 | `0.5.171` | Religious Hotspot Knowledge Snippet Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-knowledge-snippet-plan.md` | planning doc | Completed | Found hotspot snippets blocked; kept policy refs null and avoided live snippets, world religion content, schema, validator, tests, favorability/alignment, runtime, UI, trials, readiness, or gameplay changes. |
 | 94 | `0.5.172` | Religious Hotspot Content Authority Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-content-authority-plan.md` | planning doc | Completed | Selected future `world.religious_hotspots` as the descriptive authority model; deferred `world.sacred_sites`; avoided content JSON, schema, validator, tests, favorability/alignment, consequences, runtime, UI, trials, readiness, Prestige, family, Magic Study, or gameplay changes. |
 | 95 | `0.5.173` | Documentation Authority Consolidation And Gap Audit Integration | Codex 5.5 Local docs-only | `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` | documentation consolidation | Completed | Integrated broad genre/system gap audit as durable context without making it a backlog replacement, runtime authority, or permission to broaden the hotspot lane. |
-| 96 | `0.5.174` | Religious Hotspot Content Authority Schema Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-content-authority-plan.md` | planning doc | Next | Plan the exact schema and semantic-validator contract for `world.religious_hotspots`; avoid live content, snippets, favorability/alignment, consequences, runtime, UI, trials, readiness, Prestige, family, Magic Study, or gameplay changes. |
+| 96 | `0.5.174` | Religious Hotspot Content Authority Schema Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-content-authority-schema-plan.md` | planning doc | Completed | Defined the exact future schema and semantic-validator contract for `world.religious_hotspots`; avoided content JSON, schema files, validators, tests, snippets, favorability/alignment, consequences, runtime, UI, trials, readiness, Prestige, family, Magic Study, or gameplay changes. |
+| 97 | `0.5.175` | Religious Hotspot Content Authority Schema And Validator | Codex 5.5 Local | `docs/design/religious-hotspot-content-authority-schema-plan.md` | schema + pure focused validator + tests | Next | Add the schema file and focused validator with in-memory fixtures only; avoid live content, normal lint registration, snippets, favorability/alignment, consequences, runtime, UI, trials, readiness, Prestige, family, Magic Study, or gameplay changes. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.174 - Religious Hotspot Content Authority Schema Plan`
-2. `0.5.175 - Religious Favorability And Elemental Alignment Plan`, optional if prioritized after schema planning
-3. `0.5.176 - Family Visibility And Heir Slot Projection Plan`
-4. `0.5.177 - Race-Specific Adult Age And Maturation Plan`
-5. `0.5.178 - Offspring Growth Role And Activity Build Plan`
-6. `0.5.179 - Recipe Ownership And Personal Learning Plan`
-7. `0.5.180 - 0.6.0 Runtime Ownership Transition Reassessment`
+1. `0.5.175 - Religious Hotspot Content Authority Schema And Validator`
+2. `0.5.176 - Religious Hotspot Content Authority Seed Plan`
+3. `0.5.177 - Religious Hotspot Content Authority Seed`
+4. `0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan`
+5. `0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`
+6. `0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
+7. `Religious Favorability And Elemental Alignment Plan`, optional after the hotspot authority lane or earlier only if explicitly prioritized as design-only work
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.174` should be documentation-only hotspot content-authority schema planning unless explicitly redirected.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.175` should be narrow hotspot content-authority schema and focused validator implementation unless explicitly redirected.
 
 ## Default Prompt Pattern
 
@@ -166,9 +168,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan` as the immediate next recommended run.
+- Keep `Version 0.5.175 - Religious Hotspot Content Authority Schema And Validator` as the immediate next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- Keep `0.5.174` to hotspot content-authority schema planning. Do not mix it with live content, snippets, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, survival/builder/MMO gap work, Skill Trial, or Magic Study implementation.
+- Keep `0.5.175` to hotspot content-authority schema and focused semantic validation. Do not mix it with live content, snippets, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, survival/builder/MMO gap work, Skill Trial, or Magic Study implementation.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
