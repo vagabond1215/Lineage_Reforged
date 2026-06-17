@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Source route: Codex local documentation pass after `Version 0.5.176 - Religious Hotspot Content Authority Seed Plan`
-Date: 2026-06-16
-Branch/status assumption: `master`; worktree was clean before this documentation run.
+Source route: Codex local documentation pass after `Version 0.5.176 - Religious Hotspot Content Authority Seed Plan`, plus connector-side user-decision intake on 2026-06-17
+Date: 2026-06-17
+Branch/status assumption: `master`; connector-side docs were added after the latest numbered Codex run without changing the numbered pipeline.
 
 ## Purpose
 
@@ -10,7 +10,10 @@ This is the short current handoff for future prompt preparation. It records imme
 
 ## Authority Rules
 
-- `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
+- `docs/dev/current-codex-output.md` is the exact latest numbered Codex handoff.
+- `docs/design/user-design-decisions-2026-06-17.md` preserves the latest user decisions on relationships, religious favorability/alignment, survival, travel, inventory, NPCs, law, family, offspring growth, and related future systems.
+- `docs/design/open-design-questions-index.md` owns the current reduced list of unresolved user-input questions after the June 17 decision intake.
+- `docs/design/religious-hotspot-seed-preflight-audit.md` owns the connector-side preflight guardrails for `Version 0.5.177 - Religious Hotspot Content Authority Seed`.
 - `docs/design/religious-hotspot-content-authority-seed-plan.md` owns the selected first future hotspot seed records and validation/registration plan.
 - `packages/schemas/world/religious-hotspot.schema.json` is the current structural schema for future religious hotspot content wrappers and records.
 - `tools/content-lint/religious-hotspots.mjs` is the current pure focused semantic validator for in-memory religious hotspot fixtures. It is not registered in normal content lint yet.
@@ -30,11 +33,11 @@ This is the short current handoff for future prompt preparation. It records imme
 
 ## Current Anchor
 
-Latest completed:
+Latest completed numbered run:
 
 - `Version 0.5.176 - Religious Hotspot Content Authority Seed Plan`
 
-Immediate next:
+Immediate next numbered Codex run:
 
 - `Version 0.5.177 - Religious Hotspot Content Authority Seed`
 
@@ -58,18 +61,43 @@ Do not roll to `0.6.0`.
 - Normal content lint remains `content-lint: ok (56 files checked)`.
 - No source, content JSON, schema, validator, test, Knowledge subject support, snippet, `world.sacred_sites`, runtime, UI, storage, trial/readiness content, reward, event, command, faction, reputation, law, favorability, elemental alignment, conversion, apostasy, spell, Magic Study, Prestige, family, or gameplay behavior changed.
 
+## Connector-Side User Decisions After 0.5.176
+
+The user accepted the current `0.5.177` defaults before the seed run.
+
+Additional durable decisions were captured in `docs/design/user-design-decisions-2026-06-17.md`, including:
+
+- settlements and regions remain distinct organizational levels but settlements fall within regions;
+- religious orders should eventually have ids/placeholders and elemental assignment;
+- non-religious organizations can later have elemental religious favorability profiles;
+- religious favorability and elemental alignment are distinct;
+- sacred sites are rare subtypes under religious hotspots and may later provide pilgrimage, elemental trials, quests, boons, or other scoped mechanics;
+- reputation and religious favorability are separate relationship systems;
+- relationship values use internal numbers and bands, with exact changes normally hidden outside debug;
+- relationship progression requires trials/proof events and can decay to protected checkpoints;
+- initial structure is local single-player, with multi-character same-world continuity later through Prestige/heirs/marriage/rivals/apprentices;
+- survival uses descriptive bands plus status effects;
+- inventory must account for both weight and volume and separate storage by container/location;
+- player-to-player trade is deferred;
+- adult-age rules should be data-driven by race/culture;
+- offspring stat inheritance uses both parents' weighted stats with RNG weighting;
+- orphan caretaker order is adult siblings, then adult uncles/aunts, then grandparents.
+
+The refreshed `docs/design/open-design-questions-index.md` lists only questions still awaiting later user input.
+
 ## Guardrails For 0.5.177
 
 - Implement the selected hotspot seed content only if the prompt explicitly asks for `Version 0.5.177 - Religious Hotspot Content Authority Seed`.
 - Add live `packages/content/base/world/religious_hotspots.json` with the selected planned records.
 - Register the new content file in normal content lint and move the checked-file count from 56 to 57.
 - Use the existing schema and `validateReligiousHotspots`; do not change them unless validation exposes a narrow defect.
-- Keep records `planned` unless a future prompt explicitly proves active-record requirements are safe.
+- Keep records `planned`.
 - Do not add direct `religious_hotspot` Knowledge subject support or live hotspot snippets in the seed implementation.
 - Do not add `world.sacred_sites`.
-- Do not add `religiousOrderIds` unless a future prompt explicitly scopes the nested-order resolver decision.
+- Do not add `religiousOrderIds` in `0.5.177`.
+- Do not add `deityIds`, `dominantFaithIds`, `toleratedFaithIds`, or `restrictedFaithIds` in `0.5.177`.
 - Do not add favorability, alignment, piety, law, faction, conversion, apostasy, service, spell, Prestige, family, Magic Study, consequence, runtime, UI, storage, reward, event, command, or gameplay behavior.
-- Do not use the survival/builder/RPG/MMO gap audit to broaden the hotspot seed run.
+- Do not use the survival/builder/RPG/MMO gap audit or the new user-decision intake to broaden the hotspot seed run.
 
 ## Near-Term Sequence
 
