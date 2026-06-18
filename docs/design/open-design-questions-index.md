@@ -54,27 +54,37 @@ The following are no longer open questions unless the user later revises them:
 - Default elemental favorability values are `0` unless backstory or Prestige unlocks later adjust them.
 - Fanatical `100` favorability profiles are benchmarks with benefits and consequences, but should not force permanent compliance.
 - Sacred sites are a rare subtype under religious hotspots, not the whole category.
+- Sacred sites should be planned after generic hotspot snippets but before full favorability/alignment mechanics.
+- Rare confluence sacred sites should require two or more elemental authorities plus a rare trigger.
+- The first sacred-site mechanic should be pilgrimage.
 - Religious orders are organizations, not inherently sacred places, though they may control sacred sites.
+- `religiousOrderIds` should remain deferred until broader organization authority exists, while placeholder id patterns are preserved.
 - Religious legality is location/government-specific, not globally inherent to religion.
 - Reputation and religious favorability should remain separate relationship functions, even if displayed together later.
 - Relationship systems should use internal numeric values and bands, but player-facing exact values need not be visible.
 - Relationship systems should use separate top-level structures by relationship type, such as `relationships.element`, `relationships.renown`, and `relationships.reputation`, rather than one generic ledger as the first posture.
 - Relationship progression should require trials or proof events.
 - Relationship decay should have diminishing returns and protected checkpoints, except for serious violating actions.
+- Elemental favorability should use shared bands first, with optional per-order display labels later.
+- Relationship checkpoints should use mixed checkpoints: tier-band checkpoints plus hardening segments inside each band.
 - Initial structure is local single-player; multiplayer is deferred.
 - Each starting character has a separate world by default; Prestige can later allow multi-character continuity in a pre-existing world.
 - NPC party members should use logic controls similar in spirit to Final Fantasy XII gambits.
 - NPCs should use generated role placeholders for now, with NPC name generation and lore-friendly profiles added later.
+- Generated NPCs should be disposable by default and become persistent only when promoted by meaningful events, roles, relationships, or history.
 - Survival state should use descriptive bands plus status effects where appropriate.
 - Real building should not be an early feature beyond bushcraft.
 - Inventory should account for both weight and volume, organized by container/location.
 - Inventory should use weight plus container capacity by item bulk; purses should have coin limits, while coins may also be stored in non-purse containers.
+- The first container/storage implementation should be character containers only, designed to support vehicles and settlement storage later.
 - Player-to-player trade is deferred.
 - Character creation difficulty modes should include `Story`, `Adventure`, `Trial`, `Extreme`, and Prestige-locked `Custom`.
 - Custom difficulty should expose weighted sliders and a summed difficulty rating.
+- The first difficulty mechanics should be Combat Danger, Survival Pressure, Economy Pressure, Progression Friction, and Consequence Severity, weighted 25/20/15/20/20 by default.
 - Hardcore should be a toggle that modifies the selected difficulty mode.
 - Easier difficulty should reduce Prestige gain or make Prestige harder to earn.
 - Deep travel planning should wait until the map/grid system is reviewed or overhauled.
+- The first travel-adjacent pass should be map/grid authority cleanup and projection, not route travel.
 - Early adult-age rules should use data-driven race/culture variation.
 - Offspring age by birthday, with stat increases divided into smaller periodic increments.
 - Offspring stat inheritance should use both parents' weighted stats with RNG weighting.
@@ -94,10 +104,8 @@ The following are no longer open questions unless the user later revises them:
 
 | Question | Current recommendation / known posture | Priority |
 | --- | --- | --- |
-| Should `religiousOrderIds` be added through a nested-order resolver before hotspot snippets, or remain deferred until broader organization authority exists? | Still deferred; order ids/placeholders should eventually exist. | Soon |
-| Should sacred sites be planned immediately after generic hotspot snippets, or after favorability/alignment framework exists? | Unresolved. | Later |
-| What qualifies a rare confluence sacred site that can belong to multiple elements? | Unresolved. | Later |
-| What boon/system mechanic should the first sacred site support: pilgrimage, elemental trial, quest, spell interaction, or another mechanic? | Unresolved. | Later |
+| What exact rare triggers qualify a confluence sacred site for each element pair or opposition? | General rule accepted; exact trigger catalog unresolved. | Later |
+| What pilgrimage data fields and validation boundaries should the first sacred-site mechanic require? | Pilgrimage selected as first mechanic; implementation contract unresolved. | Later |
 | Should religious orders be Knowledge subjects, organization records only, or both depending on use case? | User leans organization construct first; Knowledge subject support remains unresolved. | Later |
 | Should auspicious environment/weather concepts become religious context records, ecology records, event tags, or hotspot modifiers? | Unresolved. | Later |
 | Which religion/element/doctrine knowledge concepts should be seeded next after the current hotspot lane? | Unresolved. | Later |
@@ -106,14 +114,12 @@ The following are no longer open questions unless the user later revises them:
 
 | Question | Current recommendation / known posture | Priority |
 | --- | --- | --- |
-| Should favorability bands be shared across all elemental branches or customizable per religion/order/institution? | Unresolved. | Later |
-| What are the first band names for religious favorability? | Unresolved; examples include initiate/favored-like labels but exact bands need planning. | Later |
-| Should relationship checkpoints be tier bands, intermediate segments inside tiers, or a mixed structure? | User allows any; exact first implementation unresolved. | Later |
-| How many days should recent relationship gains take to harden against ordinary decay? | Unresolved. | Later |
+| What final player-facing label should be used for the exact `100` favorability band: `Consecrated`, `Fanatical`, or a per-order label? | Shared band structure accepted; exact 100 label unresolved. | Later |
+| How many days should recent relationship gains take to harden against ordinary decay? | Mixed checkpoint model accepted; hardening duration unresolved. | Later |
 | Which relationship losses can bypass protected checkpoints beyond sacred-site desecration, elemental killing, crime, and institutional betrayal? | User gave examples; exact taxonomy unresolved. | Later |
 | Which NPC or institution types can reveal relationship bands through trials or mystical means? | Unresolved. | Later |
 | Should exact relationship values ever be player-visible outside debug, or always represented by labels/bands? | User says exact value need not display; whether it ever can remains unresolved. | Later |
-| What positive benefits should adversarial elemental relationships grant, such as increased damage against an element or favor with the strong-against element? | User approved the concept; exact mechanics unresolved. | Later |
+| What exact positive benefits should adversarial elemental relationships grant? | Concept accepted; exact damage/favor mechanics unresolved. | Later |
 
 ## Strategic: Survival / Builder / RPG / MMO Follow-Ups
 
@@ -122,11 +128,9 @@ The following are no longer open questions unless the user later revises them:
 | What is the first playable runtime loop after the current knowledge/content authority lane? | Unresolved. | Strategic |
 | Which UI surface is required before that first narrow runtime loop? | Unresolved. | Strategic |
 | Should the first builder-adjacent slice be bushcraft only, camp utility, survival shelter, or no building at all? | User says no real building early aside from bushcraft; exact first slice unresolved. | Strategic |
-| Which difficulty mechanics should the first character-creation difficulty implementation expose, and what weights should they carry? | Modes are decided; mechanic list and weights unresolved. | Strategic |
 | How should hardcore modify each difficulty mode? | Toggle is decided; exact effects unresolved. | Strategic |
 | How should Prestige gain scale inversely with difficulty? | Direction decided; exact scaling unresolved. | Strategic |
-| Should generated NPCs persist across a character world, or be disposable role/profile instances unless promoted by events? | Generated role placeholders are the first posture; persistence rules unresolved. | Strategic |
-| What is the first container/storage implementation: character-only containers, vehicle containers, settlement storage, or all via one inventory framework? | Unresolved. | Strategic |
+| Should promoted generated NPCs keep placeholder-derived traits, reroll into full profiles, or freeze their current generated profile? | Generated placeholder and persistence posture accepted; promotion mechanics unresolved. | Strategic |
 | Should item stacks split automatically by storage location, item condition, ownership, quality, or provenance? | Storage location is required; other split rules unresolved. | Strategic |
 
 ## Organizations, Factions, Law, And Quests
@@ -146,7 +150,7 @@ The following are no longer open questions unless the user later revises them:
 | Question | Current recommendation / known posture | Priority |
 | --- | --- | --- |
 | What map/grid overhaul is required before serious travel planning? | User says map/grid overhaul must come first; exact scope unresolved. | Strategic |
-| Should the first travel-adjacent implementation be map/grid authority cleanup, grid projection, route-risk projection, or another preparatory pass? | Unresolved. | Strategic |
+| What should map/grid authority cleanup and projection include as the first travel-adjacent pass? | Cleanup/projection selected; exact scope unresolved. | Strategic |
 | What success-rate model should eventually gate fast travel, and should the initial threshold be `95%` with Prestige reducing by `1%` per upgrade? | User suggested this; exact model needs planning after map/grid. | Later |
 | What action set should grid travel eventually support first: hunting, scouting, sneaking, mounted movement, climbing, swimming, or a smaller subset? | Unresolved; defer until after map/grid overhaul. | Later |
 | Should caravan travel use minigame/trial events before regular grid travel is implemented? | Unresolved; defer until after map/grid overhaul. | Later |
@@ -219,8 +223,7 @@ The following are no longer open questions unless the user later revises them:
 | Should the first gameplay shell present read-only state only? | Current project posture prefers read-only projection before mutation, but exact gameplay shell scope is unresolved. | Strategic |
 | Which UI surface is required before the first narrow runtime loop? | Unresolved. | Strategic |
 | Should knowledge, quest, map, reputation, and relationship journals share a common record-browser UI? | Unresolved. | Later |
-| What are the first player-facing labels for each relationship band by relationship type? | Unresolved. | Later |
-| Which NPC types can reveal relationship bands: fortune teller, institution officer, civil official, guild clerk, temple official, or others? | Unresolved. | Later |
+| Which NPC types can reveal relationship bands through trials or mystical means? | Unresolved. | Later |
 
 ## Questions That Do Not Need Input Before `0.5.179`
 
