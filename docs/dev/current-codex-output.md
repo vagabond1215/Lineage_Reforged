@@ -2,7 +2,7 @@
 
 Source version/run: Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator
 Date: 2026-06-18
-Branch/status assumption: `master`; worktree was clean before this implementation run.
+Branch/status assumption: `master`; local and refreshed `origin/master` conflicts were resolved before final verification, and the branch is ahead of origin with no unmerged paths.
 
 ## Result
 
@@ -11,6 +11,8 @@ Implemented direct `religious_hotspot` Knowledge subject schema and validator su
 Both Knowledge subject vocabularies now include `religious_hotspot`. Knowledge snippet dependency validation loads `world.religious_hotspots`, resolves canonical hotspot ids, rejects malformed and unresolved ids, and enforces the active-only policy. Focused tests use cloned active authority records; both live hotspot records remain `planned`, so no live hotspot snippets can validate yet.
 
 Normal content lint remains `content-lint: ok (57 files checked)` and counts `religious_hotspots.json` only through its existing normal check.
+
+Repository reconciliation preserved the completed 0.5.179 implementation while merging the June 18 connector decision documents and handoff context. Those accepted recommendations remain future planning context and did not broaden this run.
 
 ## Files Changed
 
@@ -40,6 +42,8 @@ Normal content lint remains `content-lint: ok (57 files checked)` and counts `re
 - trailing-whitespace scan on changed files
 - changed-path scope audit
 - live content/registry/hotspot-status and forbidden-area audits
+- local/upstream divergence and unmerged-path audit after refreshing `origin/master`
+- conflict resolution preserved 0.5.179 implementation authority plus June 18 future-planning context
 
 ## Behavior / Runtime Confirmation
 
