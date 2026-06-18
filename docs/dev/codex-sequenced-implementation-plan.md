@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-17
-Route: Codex local sequencing alignment after `Version 0.5.177 - Religious Hotspot Content Authority Seed`
+Date: 2026-06-18
+Route: Codex local sequencing alignment after `Version 0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.177 - Religious Hotspot Content Authority Seed`
+- `Version 0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan`
+- `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`
 
 Versioning note:
 
@@ -38,8 +38,9 @@ Versioning note:
 - The religious hotspot schema and validator landed in `0.5.175`: `packages/schemas/world/religious-hotspot.schema.json`, `tools/content-lint/religious-hotspots.mjs`, and focused in-memory tests now exist, with no live content file or normal lint registration.
 - The religious hotspot seed plan landed in `0.5.176`: `docs/design/religious-hotspot-content-authority-seed-plan.md` selects two future planned records and keeps live content, normal lint registration, snippets, and runtime behavior deferred.
 - The religious hotspot seed landed in `0.5.177`: both planned records are live, the existing validator is registered, and normal lint reports 57 files checked without Knowledge subject or snippet expansion.
-- Keep Religious Hotspot Knowledge Subject Vocabulary Plan as the immediate `0.5.178` direction.
-- Do not roll from `0.5.177` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The religious hotspot subject vocabulary plan landed in `0.5.178`: direct `religious_hotspot` support is planned with active-only live-snippet references, but no schema, validator, registry, status, or snippet changes landed.
+- Keep Religious Hotspot Knowledge Subject Schema And Validator as the immediate `0.5.179` direction.
+- Do not roll from `0.5.178` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -144,18 +145,19 @@ Versioning note:
 | 97 | `0.5.175` | Religious Hotspot Content Authority Schema And Validator | Codex 5.5 Local | `docs/design/religious-hotspot-content-authority-schema-plan.md` | schema + pure focused validator + tests | Completed | Added the schema file, focused validator, schema smoke registration, and in-memory tests; avoided live content, normal lint registration, snippets, favorability/alignment, consequences, runtime, UI, trials, readiness, Prestige, family, Magic Study, or gameplay changes. |
 | 98 | `0.5.176` | Religious Hotspot Content Authority Seed Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-content-authority-seed-plan.md` | planning doc | Completed | Selected two future planned seed records, recommended omitting unsupported deity/order/faith-posture fields, and defined future normal-lint registration from 56 to 57 checked files. |
 | 99 | `0.5.177` | Religious Hotspot Content Authority Seed | Codex 5.5 Local | `docs/design/religious-hotspot-content-authority-seed-plan.md` | narrow content seed + normal lint registration | Completed | Added both planned records, registered the existing validator, and moved normal lint from 56 to 57 checked files without Knowledge subject support, snippets, favorability/alignment, runtime, UI, or gameplay changes. |
-| 100 | `0.5.178` | Religious Hotspot Knowledge Subject Vocabulary Plan | Codex 5.5 Local docs-first | `packages/content/base/world/religious_hotspots.json` | planning doc | Next | Define direct subject vocabulary and validator ownership only; avoid implementation, snippets, runtime, UI, storage, or gameplay changes. |
+| 100 | `0.5.178` | Religious Hotspot Knowledge Subject Vocabulary Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md` | planning doc | Completed | Selected direct vocabulary, schema/validator touchpoints, active-only snippet references, tests, and strict deferred boundaries without implementation. |
+| 101 | `0.5.179` | Religious Hotspot Knowledge Subject Schema And Validator | Codex 5.5 Local | `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md` | narrow schema/validator vocabulary | Next | Add direct subject vocabulary and validation with active in-memory fixtures; do not activate live hotspots, edit registry content, add snippets, or add behavior. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan`
-2. `0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`
-3. `0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
+1. `0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`
+2. `0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
+3. `Hotspot Content Status Update`, required before live snippet content by the active-only policy
 4. `Religious Favorability And Elemental Alignment Plan`, optional after the hotspot authority lane or earlier only if explicitly prioritized as design-only work
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.178` should be a narrow documentation-only hotspot Knowledge subject vocabulary plan unless explicitly redirected.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.179` should be a narrow hotspot Knowledge subject schema/validator implementation unless explicitly redirected.
 
 ## Default Prompt Pattern
 
@@ -171,9 +173,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan` as the immediate next recommended run.
+- Keep `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator` as the immediate next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- Keep `0.5.178` to documentation-only hotspot Knowledge subject vocabulary planning. Do not mix it with schema implementation, snippets, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, survival/builder/MMO gap work, Skill Trial, or Magic Study implementation.
+- Keep `0.5.179` to direct subject schema/validator implementation and focused tests. Do not mix it with live hotspot activation, registry content, snippets, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, survival/builder/MMO gap work, Skill Trial, or Magic Study implementation.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
