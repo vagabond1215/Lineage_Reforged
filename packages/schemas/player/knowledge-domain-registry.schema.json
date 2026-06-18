@@ -92,6 +92,7 @@
           "institution",
           "religion",
           "deity",
+          "religious_hotspot",
           "spell",
           "item",
           "ruin",

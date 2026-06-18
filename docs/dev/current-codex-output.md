@@ -1,18 +1,26 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan
+Source version/run: Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator
 Date: 2026-06-18
-Branch/status assumption: `master`; worktree was clean before this documentation run.
+Branch/status assumption: `master`; worktree was clean before this implementation run.
 
 ## Result
 
-Added a documentation-only plan for direct `religious_hotspot` Knowledge subject vocabulary.
+Implemented direct `religious_hotspot` Knowledge subject schema and validator support.
 
-The plan recommends adding `religious_hotspot` to both Knowledge subject enums and resolving ids through live `world.religious_hotspots` authority in 0.5.179. It also sets an active-only policy for future live hotspot snippets: the 0.5.179 validator should reject snippet references to `planned` hotspots, while leaving both current records unchanged until a separate content-status decision.
+Both Knowledge subject vocabularies now include `religious_hotspot`. Knowledge snippet dependency validation loads `world.religious_hotspots`, resolves canonical hotspot ids, rejects malformed and unresolved ids, and enforces the active-only policy. Focused tests use cloned active authority records; both live hotspot records remain `planned`, so no live hotspot snippets can validate yet.
+
+Normal content lint remains `content-lint: ok (57 files checked)` and counts `religious_hotspots.json` only through its existing normal check.
 
 ## Files Changed
 
-- `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md`
+- `packages/schemas/player/knowledge_snippet.schema.json`
+- `packages/schemas/player/knowledge-domain-registry.schema.json`
+- `tools/content-lint/knowledge-snippets.mjs`
+- `tools/content-lint/index.mjs`
+- `tests/unit/knowledge-snippets-validation.test.mjs`
+- `tests/unit/knowledge-domain-registry-validation.test.mjs`
+- `tests/unit/schema-files.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -21,33 +29,35 @@ The plan recommends adding `religious_hotspot` to both Knowledge subject enums a
 
 ## Checks Run
 
+- `node --check tools/content-lint/knowledge-snippets.mjs`
+- `node --check tools/content-lint/index.mjs`
+- `node --test tests/unit/knowledge-snippets-validation.test.mjs`
+- `node --test tests/unit/knowledge-domain-registry-validation.test.mjs`
+- `node --test tests/unit/schema-files.test.mjs`
+- `npm run tool:content-lint` -> `content-lint: ok (57 files checked)`
 - `git diff --check`
 - conflict-marker scan on changed files
 - trailing-whitespace scan on changed files
 - changed-path scope audit
-- stale 0.5.178 reference scan
-- 0.5.179 next-run consistency scan
-- forbidden source/schema/content/test/runtime/UI/generated-output/storage/persistence/event/reward/gameplay edit audit
-
-No tests or typecheck were run because only documentation files changed.
+- live content/registry/hotspot-status and forbidden-area audits
 
 ## Behavior / Runtime Confirmation
 
-Documentation changed only. Normal content lint remains `content-lint: ok (57 files checked)` from 0.5.177. `world.religious_hotspots` remains exactly two `planned` records.
+Schema vocabulary and content-lint validation behavior changed only. Existing `religion` and `deity` behavior remains intact.
 
-No direct `religious_hotspot` support, schema, validator, source, test, content JSON, live snippet, hotspot status, `world.sacred_sites`, religious order, favorability, alignment, relationship, law, runtime, UI, storage, reward, event, command, Magic Study, Prestige, family, or gameplay behavior changed.
+No live Knowledge snippet, live registry record, hotspot content/status, `world.sacred_sites`, religious order, favorability, alignment, relationship, law, runtime, UI, storage, persistence, reward, event, command, Magic Study, Prestige, family, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- 0.5.179 should implement vocabulary and validation only, using active in-memory fixtures without activating live records or adding snippets.
-- A separate future content-status update must activate selected hotspots before live hotspot snippets are seeded.
-- The first snippet plan must decide whether one or both current records remain useful and should become active.
-- Connector-side user decisions and open questions remain future planning context only.
+- Both live hotspot records remain `planned`; active-only validation intentionally blocks live snippets against them.
+- 0.5.180 must decide whether one or both hotspot records should be activated and used for initial snippets.
+- A separate content-status update is required before live hotspot snippet content unless a later plan explicitly revises the active-only policy.
+- Live Religion registry content still does not advertise `religious_hotspot`; that content update remains part of the later activation/seed path.
 
 ## Next Recommended Version
 
-Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator
+Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan
 
 ## Suggested Commit Message
 
-docs(knowledge): plan religious hotspot subject vocabulary
+content(knowledge): add religious hotspot subject validation

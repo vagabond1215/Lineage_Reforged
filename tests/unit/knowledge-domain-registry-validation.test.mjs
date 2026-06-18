@@ -143,6 +143,59 @@ test("accepts active Religion with direct religion and deity subjects only", () 
   assert.equal(validate(input), true);
 });
 
+test("accepts religious hotspot vocabulary in an in-memory Religion fixture", () => {
+  const input = makeInput();
+  const religion = input.wrapper.records.find(
+    (record) => record.id === "knowledge_domain.religion"
+  );
+
+  assert.ok(
+    input.recordSchema.properties.canonicalSubjectTypes.items.enum.includes(
+      "religious_hotspot"
+    )
+  );
+  religion.canonicalSubjectTypes.push("religious_hotspot");
+  religion.relatedContentCollections.push("world.religious_hotspots");
+
+  assert.equal(validate(input), true);
+});
+
+test("rejects religious hotspot registry vocabulary without snippet schema support", () => {
+  expectFailure(
+    (input) => {
+      const religion = input.wrapper.records.find(
+        (record) => record.id === "knowledge_domain.religion"
+      );
+      religion.canonicalSubjectTypes.push("religious_hotspot");
+      religion.relatedContentCollections.push("world.religious_hotspots");
+      input.snippetVocabularies.subjectTypes =
+        input.snippetVocabularies.subjectTypes.filter(
+          (subjectType) => subjectType !== "religious_hotspot"
+        );
+    },
+    /canonicalSubjectTypes 'religious_hotspot' is absent from the current snippet schema/
+  );
+});
+
+test("keeps live Religion registry content unchanged after vocabulary support", () => {
+  const religion = registryWrapper.records.find(
+    (record) => record.id === "knowledge_domain.religion"
+  );
+
+  assert.ok(religion.canonicalSubjectTypes.includes("religion"));
+  assert.ok(religion.canonicalSubjectTypes.includes("deity"));
+  assert.equal(religion.canonicalSubjectTypes.includes("religious_hotspot"), false);
+  assert.equal(religion.trialPolicyRef, null);
+  assert.equal(religion.completionPolicyRef, null);
+  assert.equal(religion.visibilityPolicyRef, null);
+  assert.equal(
+    registryWrapper.records.some(
+      (record) => record.id === "knowledge_domain.religious_hotspots"
+    ),
+    false
+  );
+});
+
 test("allows a broad registry id without a skill knowledgeDomainId reference", () => {
   const input = makeInput();
   const domainId = "knowledge_domain.arcane_lore";

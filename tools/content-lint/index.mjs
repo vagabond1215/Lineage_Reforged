@@ -9352,6 +9352,7 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
   const faunaPath = path.join(ROOT, "packages/content/base/world/fauna.json");
   const mineralPath = path.join(ROOT, "packages/content/base/world/minerals.json");
   const religionPath = path.join(ROOT, "packages/content/base/world/religions.json");
+  const religiousHotspotPath = path.join(ROOT, "packages/content/base/world/religious_hotspots.json");
   const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
   const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
 
@@ -9363,6 +9364,7 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
   const faunaWrapper = JSON.parse(await readFile(faunaPath, "utf8"));
   const mineralWrapper = JSON.parse(await readFile(mineralPath, "utf8"));
   const religionWrapper = JSON.parse(await readFile(religionPath, "utf8"));
+  const religiousHotspotWrapper = JSON.parse(await readFile(religiousHotspotPath, "utf8"));
   const regionWrapper = JSON.parse(await readFile(regionPath, "utf8"));
   const settlementWrapper = JSON.parse(await readFile(settlementPath, "utf8"));
   const deityRecords = religionWrapper.records.flatMap((religion) =>
@@ -9400,6 +9402,12 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
         collectionId: "world.religions",
         idPrefix: "deity.",
         records: deityRecords
+      },
+      religious_hotspot: {
+        collectionId: "world.religious_hotspots",
+        idPrefix: "religious_hotspot.",
+        idPattern: /^religious_hotspot\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
+        records: religiousHotspotWrapper.records
       },
       region: {
         collectionId: "world.regions",

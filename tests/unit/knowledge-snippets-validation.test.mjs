@@ -22,6 +22,9 @@ const floraWrapper = await readJson("packages/content/base/world/flora.json");
 const faunaWrapper = await readJson("packages/content/base/world/fauna.json");
 const mineralWrapper = await readJson("packages/content/base/world/minerals.json");
 const religionWrapper = await readJson("packages/content/base/world/religions.json");
+const religiousHotspotWrapper = await readJson(
+  "packages/content/base/world/religious_hotspots.json"
+);
 const regionWrapper = await readJson("packages/content/base/world/regions.json");
 const settlementWrapper = await readJson("packages/content/base/world/settlements.json");
 const deityRecords = religionWrapper.records.flatMap((religion) => religion.deities ?? []);
@@ -82,6 +85,12 @@ function makeInput() {
         idPrefix: "deity.",
         records: structuredClone(deityRecords)
       },
+      religious_hotspot: {
+        collectionId: "world.religious_hotspots",
+        idPrefix: "religious_hotspot.",
+        idPattern: /^religious_hotspot\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
+        records: structuredClone(religiousHotspotWrapper.records)
+      },
       region: {
         collectionId: "world.regions",
         idPrefix: "region.",
@@ -98,6 +107,7 @@ function makeInput() {
       "world.fauna",
       "world.minerals",
       "world.religions",
+      "world.religious_hotspots",
       "world.regions"
     ])
   };
@@ -164,6 +174,26 @@ function religionSnippet({
   };
 }
 
+function prepareReligiousHotspotSnippet(
+  input,
+  hotspotId = "religious_hotspot.glasswake_shrine_lantern_gardens"
+) {
+  const domain = religionDomain(input);
+  domain.canonicalSubjectTypes.push("religious_hotspot");
+  domain.relatedContentCollections.push("world.religious_hotspots");
+  input.wrapper.records = [
+    religionSnippet({
+      id: "knowledge_snippet.religion.religious_hotspot_fixture.identification",
+      subjectType: "religious_hotspot",
+      subjectId: hotspotId,
+      title: "Recognizing a Religious Hotspot"
+    })
+  ];
+  return input.subjectAuthorities.religious_hotspot.records.find(
+    (record) => record.id === hotspotId
+  );
+}
+
 test("accepts the current nine-record snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
@@ -215,6 +245,79 @@ test("accepts an active Religion fixture with religion and deity authorities", (
   ];
 
   assert.equal(validate(input), true);
+});
+
+test("knowledge snippet schema includes direct religious hotspot vocabulary", () => {
+  assert.ok(snippetSchema.properties.subjectType.enum.includes("religious_hotspot"));
+  assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
+  assert.equal(snippetSchema.properties.subjectType.enum.includes("sacred_site"), false);
+});
+
+test("accepts religious hotspot fixtures when cloned authority records are active", async (t) => {
+  for (const hotspotId of [
+    "religious_hotspot.glasswake_shrine_lantern_gardens",
+    "religious_hotspot.lantern_shrine_gardens"
+  ]) {
+    await t.test(hotspotId, () => {
+      const input = makeInput();
+      const hotspot = prepareReligiousHotspotSnippet(input, hotspotId);
+      hotspot.status = "active";
+      assert.equal(validate(input), true);
+    });
+  }
+});
+
+test("rejects religious hotspot snippets while live authority remains planned", () => {
+  expectFailure(
+    (input) => {
+      prepareReligiousHotspotSnippet(input);
+    },
+    /religious_hotspot subjectId 'religious_hotspot\.glasswake_shrine_lantern_gardens' must reference an active hotspot record/
+  );
+});
+
+test("rejects unresolved and malformed religious hotspot subject ids", async (t) => {
+  await t.test("unresolved", () => {
+    expectFailure(
+      (input) => {
+        prepareReligiousHotspotSnippet(input, "religious_hotspot.missing_shrine");
+      },
+      /subjectId 'religious_hotspot\.missing_shrine' is missing from world\.religious_hotspots/
+    );
+  });
+
+  await t.test("malformed", () => {
+    expectFailure(
+      (input) => {
+        prepareReligiousHotspotSnippet(input, "religious_hotspot.bad.shrine");
+      },
+      /subjectId 'religious_hotspot\.bad\.shrine' is malformed for subjectType 'religious_hotspot'/
+    );
+  });
+});
+
+test("rejects shortcut subjects for religious hotspot ids", async (t) => {
+  const cases = [
+    ["custom", /subjectType 'custom' is blocked/],
+    ["shrine", /subjectType must be one of the schema enum values/],
+    ["sacred_site", /subjectType must be one of the schema enum values/],
+    ["region", /subjectId '.+' must use prefix 'region\.'/],
+    ["settlement", /subjectType 'settlement' is blocked/]
+  ];
+
+  for (const [subjectType, expected] of cases) {
+    await t.test(subjectType, () => {
+      const input = makeInput();
+      const record = religionSnippet({
+        id: `knowledge_snippet.religion.hotspot_${subjectType}.identification`,
+        subjectType,
+        subjectId: "religious_hotspot.glasswake_shrine_lantern_gardens"
+      });
+      religionDomain(input).canonicalSubjectTypes.push(subjectType);
+      input.wrapper.records = [record];
+      assert.throws(() => validate(input), expected);
+    });
+  }
 });
 
 test("keeps Religion snippets blocked while the domain remains planned", () => {

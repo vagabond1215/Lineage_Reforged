@@ -500,13 +500,27 @@ export function validateKnowledgeSnippets({
         `${relativePath} subjectId '${record.subjectId}' must use prefix '${subjectAuthority.idPrefix}' on record ${recordId}`
       );
     }
+    if (
+      subjectAuthority.idPattern !== undefined &&
+      !subjectAuthority.idPattern.test(record.subjectId)
+    ) {
+      throw new Error(
+        `${relativePath} subjectId '${record.subjectId}' is malformed for subjectType '${record.subjectType}' on record ${recordId}`
+      );
+    }
     const subjectsById = authorityRecordMap(
       subjectAuthority.records,
       `${record.subjectType} subject authority`
     );
-    if (!subjectsById.has(record.subjectId)) {
+    const subject = subjectsById.get(record.subjectId);
+    if (!subject) {
       throw new Error(
         `${relativePath} subjectId '${record.subjectId}' is missing from ${subjectAuthority.collectionId} on record ${recordId}`
+      );
+    }
+    if (record.subjectType === "religious_hotspot" && subject.status !== "active") {
+      throw new Error(
+        `${relativePath} ${record.subjectType} subjectId '${record.subjectId}' must reference an active hotspot record on record ${recordId}`
       );
     }
     if (!domain.relatedContentCollections.includes(subjectAuthority.collectionId)) {
