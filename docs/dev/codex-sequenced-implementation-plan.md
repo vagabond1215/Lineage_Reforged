@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-18
-Route: Codex local sequencing alignment after `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`
+Route: Codex local sequencing alignment after `Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`
+- `Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
+- `Version 0.5.181 - Religious Hotspot Content Status Activation`
 
 Versioning note:
 
@@ -40,8 +40,9 @@ Versioning note:
 - The religious hotspot seed landed in `0.5.177`: both planned records are live, the existing validator is registered, and normal lint reports 57 files checked without Knowledge subject or snippet expansion.
 - The religious hotspot subject vocabulary plan landed in `0.5.178`: direct `religious_hotspot` support is planned with active-only live-snippet references, but no schema, validator, registry, status, or snippet changes landed.
 - The religious hotspot subject schema and validator landed in `0.5.179`: direct vocabulary, live authority resolution, active-only enforcement, and focused tests now exist while both live hotspots remain planned.
-- Keep Religious Hotspot Knowledge Snippet Seed Plan as the immediate `0.5.180` direction.
-- Do not roll from `0.5.179` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The religious hotspot snippet seed plan landed in `0.5.180`: only the settlement-scale Glasswake hotspot should activate before one later identification snippet; the locality hotspot remains planned.
+- Keep Religious Hotspot Content Status Activation as the immediate `0.5.181` direction.
+- Do not roll from `0.5.180` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -148,18 +149,20 @@ Versioning note:
 | 99 | `0.5.177` | Religious Hotspot Content Authority Seed | Codex 5.5 Local | `docs/design/religious-hotspot-content-authority-seed-plan.md` | narrow content seed + normal lint registration | Completed | Added both planned records, registered the existing validator, and moved normal lint from 56 to 57 checked files without Knowledge subject support, snippets, favorability/alignment, runtime, UI, or gameplay changes. |
 | 100 | `0.5.178` | Religious Hotspot Knowledge Subject Vocabulary Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md` | planning doc | Completed | Selected direct vocabulary, schema/validator touchpoints, active-only snippet references, tests, and strict deferred boundaries without implementation. |
 | 101 | `0.5.179` | Religious Hotspot Knowledge Subject Schema And Validator | Codex 5.5 Local | `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md` | narrow schema/validator vocabulary | Completed | Added direct vocabulary, live authority resolution, active-only enforcement, and focused tests without hotspot activation, registry content, snippets, or behavior. |
-| 102 | `0.5.180` | Religious Hotspot Knowledge Snippet Seed Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md` | planning doc | Next | Decide activation and initial snippet scope; keep the run documentation-only and preserve all live content. |
+| 102 | `0.5.180` | Religious Hotspot Knowledge Snippet Seed Plan | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md` | planning doc | Completed | Selected one activation target, one later Tier 1 identification snippet, registry alignment timing, and supported discovery sources without changing live content. |
+| 103 | `0.5.181` | Religious Hotspot Content Status Activation | Codex 5.5 Local | `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md` | narrow content status | Next | Activate only the settlement-scale Glasswake hotspot; keep the locality hotspot planned and avoid registry/snippet changes. |
+| 104 | `0.5.182` | Religious Hotspot Knowledge Snippet Seed | Codex 5.5 Local | `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md` | narrow registry/snippet seed | Planned | Add one hotspot identification snippet and align Religion registry content after activation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
-2. `Hotspot Content Status Update`, required before live snippet content by the active-only policy
-3. `Religious Hotspot Knowledge Snippet Seed`
+1. `0.5.181 - Religious Hotspot Content Status Activation`
+2. `0.5.182 - Religious Hotspot Knowledge Snippet Seed`
+3. `Religious Hotspot Locality Snippet Decision or Sacred Site Authority Plan`
 4. `Religious Favorability And Elemental Alignment Plan`, optional after the hotspot authority lane or earlier only if explicitly prioritized as design-only work
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.180` should be a narrow documentation-only hotspot snippet seed plan unless explicitly redirected.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.181` should be a narrow one-record hotspot activation unless explicitly redirected.
 
 ## Default Prompt Pattern
 
@@ -175,9 +178,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan` as the immediate next recommended run.
+- Keep `Version 0.5.181 - Religious Hotspot Content Status Activation` as the immediate next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- Keep `0.5.180` to documentation-only hotspot activation, registry, and snippet seed planning. Do not mix it with live content changes, favorability/alignment behavior, readiness content, helpers, adapters, family, heir, recipe, crafting, civil-society, maturation, estate, survival/builder/MMO gap work, Skill Trial, or Magic Study implementation.
+- Keep `0.5.181` to activating only `religious_hotspot.glasswake_shrine_lantern_gardens`. Do not mix it with registry/snippet content, sacred sites, religious orders, favorability/alignment, difficulty, NPC, inventory, map/grid, travel, runtime, Skill Trial, or Magic Study work.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
