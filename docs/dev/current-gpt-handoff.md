@@ -1,18 +1,20 @@
 # Current GPT Handoff
 
-Source route: Codex local implementation after `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`
+Source route: Codex local implementation after `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`, plus connector-side user-decision context from 2026-06-17 and 2026-06-18
 Date: 2026-06-18
-Branch/status assumption: `master`; latest numbered implementation is local.
+Branch/status assumption: `master`; latest numbered implementation is local and June 18 connector decisions are merged.
 
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest numbered Codex handoff.
 - `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md` owns the direct subject and active-only policy decisions consumed by 0.5.179.
 - Both Knowledge subject schemas now include `religious_hotspot`.
-- `tools/content-lint/knowledge-snippets.mjs` now resolves direct hotspot ids and requires status `active` for hotspot snippet subjects.
+- `tools/content-lint/knowledge-snippets.mjs` resolves direct hotspot ids and requires status `active` for hotspot snippet subjects.
 - `packages/content/base/world/religious_hotspots.json` remains exactly two `planned` records.
 - Live Knowledge snippets and `knowledge_domain.religion` registry content remain unchanged.
-- `docs/design/user-design-decisions-2026-06-17.md` and `docs/design/open-design-questions-index.md` remain future planning context only.
+- `docs/design/user-design-decisions-2026-06-17.md` and `docs/design/user-design-decisions-2026-06-18.md` preserve broader future-system user decisions; they did not broaden 0.5.179.
+- `docs/design/open-design-questions-index.md` owns the reduced outstanding-question list after the June 18 intake.
+- `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, and `docs/future_content_backlog.md` own direction and deferred work.
 
 ## Current Anchor
 
@@ -37,6 +39,24 @@ Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not r
 - Activated no hotspot records; both remain `planned`.
 - Added no sacred-site/order/favorability/alignment/relationship/law/runtime/UI/storage/reward/event/command/Magic Study/Prestige/family/gameplay behavior.
 
+## Connector-Side Decisions After 0.5.178
+
+The June 18 connector intake captured future-system decisions only. These decisions do not alter the completed 0.5.179 scope.
+
+Key durable decisions:
+
+- elemental religious-order placeholder ids should use `religious_order.elemental.[element]`;
+- use the accepted FFXI-style elemental relationships, with Light and Darkness opposed;
+- Earth and Thunder are the intrinsic element names, while stone/rock and lightning may be applied spell labels;
+- relationship structures should use separate top-level categories;
+- elemental favorability normally floors at 0 for indirect changes, while direct antagonistic actions may reach a per-element floor of -100;
+- negative elemental values do not count against the positive 100 total favorability cap;
+- default elemental favorability is 0 unless scoped backstories or Prestige unlocks later adjust it;
+- difficulty modes should be Story, Adventure, Trial, Extreme, and Prestige-locked Custom, with a hardcore toggle and inverse Prestige scaling;
+- NPCs should begin with generated role placeholders;
+- inventory should use weight plus container capacity by item bulk, including purse coin limits;
+- deep travel planning should wait for map/grid review or overhaul.
+
 ## Near-Term Sequence
 
 | Order | Version | Topic | Status |
@@ -46,4 +66,4 @@ Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not r
 | 3 | Later | Hotspot content-status update before live snippets | Required by active-only policy |
 | 4 | Later | Religious Hotspot Knowledge Snippet Seed | Deferred |
 
-Sacred sites, religious orders, Religious Favorability And Elemental Alignment, and broader relationship systems remain deferred.
+Sacred sites, religious orders, Religious Favorability And Elemental Alignment, broader relationship systems, difficulty implementation, NPC generation, inventory, map/grid overhaul, travel, and broader runtime systems remain deferred unless explicitly prioritized.
