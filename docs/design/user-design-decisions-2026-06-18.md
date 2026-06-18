@@ -6,7 +6,7 @@ Status: connector-side user-decision intake; documentation only; not an implemen
 
 ## Purpose
 
-This document preserves user-provided design decisions from June 18, 2026. It updates open question posture for elemental religious orders, elemental relationships, relationship structures, favorability profile values, difficulty settings, NPC approach, inventory, and travel planning order.
+This document preserves user-provided design decisions from June 18, 2026. It updates open question posture for elemental religious orders, elemental relationships, relationship structures, favorability profile values, difficulty settings, NPC approach, inventory, travel planning order, and accepted recommendations for notable outstanding questions.
 
 This file is not:
 
@@ -200,3 +200,141 @@ Do not plan deep travel implementation before overhauling or confirming the map 
 The map/grid system should be reviewed and overhauled first.
 
 Travel planning can resume after that foundation is reliable.
+
+## Accepted Recommendations For Notable Questions
+
+The user accepted the June 18 recommendations for notable outstanding questions. These recommendations are durable planning posture unless revised later.
+
+### Religious Order References
+
+Defer `religiousOrderIds` until broader organization authority exists, but keep the placeholder id pattern now:
+
+- `religious_order.elemental.fire`
+- `religious_order.elemental.ice`
+- `religious_order.elemental.wind`
+- `religious_order.elemental.earth`
+- `religious_order.elemental.thunder`
+- `religious_order.elemental.water`
+- `religious_order.elemental.light`
+- `religious_order.elemental.darkness`
+
+Do not force hotspot records to reference organizations before an organization schema exists.
+
+### Sacred Site Sequence
+
+Plan sacred sites after generic hotspot snippets, but before full favorability/alignment mechanics.
+
+Sacred sites are a subtype of hotspots. They should consume hotspot/snippet authority first, while favorability can later consume sacred-site actions such as pilgrimage, desecration, or trial completion.
+
+### Confluence Sacred Sites
+
+A rare confluence sacred site should require two or more elemental authorities plus one rare trigger.
+
+Possible rare triggers:
+
+- permanent geographic convergence;
+- rare cyclic weather or astronomical event;
+- opposing-element balance point;
+- ancient ritual or artifact binding multiple elements;
+- confirmed elemental spawning overlap.
+
+### First Sacred-Site Mechanic
+
+The first sacred-site mechanic should be pilgrimage.
+
+Pilgrimage is safer than immediate elemental boons or spell effects and can remain descriptive before later connecting to favorability, trials, quests, or boons.
+
+### Favorability Bands
+
+Use shared elemental favorability bands first, with optional per-order display labels later.
+
+Initial internal bands:
+
+| Range | Band |
+| ---: | --- |
+| `-100` | Anathema |
+| `-99` to `-60` | Hated |
+| `-59` to `-25` | Hostile |
+| `-24` to `-1` | Disfavored |
+| `0` | Neutral |
+| `1` to `24` | Noticed |
+| `25` to `49` | Accepted |
+| `50` to `74` | Favored |
+| `75` to `99` | Devoted |
+| `100` | Consecrated / Fanatical |
+
+### Relationship Checkpoints
+
+Use mixed checkpoints: tier-band checkpoints plus hardening segments inside each band.
+
+Example posture:
+
+- reaching `50` enters `Favored`;
+- after maintaining it for a required period, `50` becomes protected;
+- recent gains above `50` decay faster until hardened;
+- serious direct violations can bypass protection.
+
+### Difficulty Mechanics And Weights
+
+The first character-creation difficulty implementation should expose these five mechanics:
+
+| Mechanic | Affects | Suggested weight |
+| --- | --- | ---: |
+| Combat danger | enemy damage, HP, tactics | 25 |
+| Survival pressure | hunger, thirst, climate, fatigue | 20 |
+| Economy pressure | prices, wages, scarcity | 15 |
+| Progression friction | skill/stat growth, trial difficulty | 20 |
+| Consequence severity | injury, death, law, failure costs | 20 |
+
+Total difficulty rating should sum to `100` for baseline weighting.
+
+Modes:
+
+- `Story`: low values, high forgiveness, low Prestige gain.
+- `Adventure`: baseline.
+- `Trial`: harder, better Prestige.
+- `Extreme`: high danger, high Prestige.
+- `Custom`: slider-based and Prestige-locked.
+
+### NPC Persistence
+
+Generated role-placeholder NPCs should be disposable by default and persistent when promoted.
+
+An NPC should become persistent when they:
+
+- give or complete a quest;
+- join the party;
+- marry into a family;
+- become a rival or apprentice;
+- hold office or become tied to a business, guild, religious order, or law case;
+- meaningfully affect character history.
+
+### First Container / Storage Implementation
+
+Start with character containers only, but design the schema to support vehicles and settlement storage later.
+
+First scope:
+
+- backpack;
+- pouch;
+- purse;
+- belt;
+- quiver;
+- item weight;
+- item bulk;
+- coin-specific purse limits;
+- storage location tracked per stack.
+
+Do not start with settlement storage or vehicles until ownership, storage, and economy seams exist.
+
+### Map/Grid Before Travel
+
+The first travel-adjacent pass should be map/grid authority cleanup and projection, not route travel.
+
+Recommended sequence:
+
+1. Audit map, grid, region, locality, settlement, and hex links.
+2. Ensure settlements connect to localities, regions, and macro regions.
+3. Ensure known point-of-interest visibility can be represented.
+4. Add read-only grid projection if needed.
+5. Plan route risk, caravan travel, fast travel, and grid travel actions only after the foundation is reliable.
