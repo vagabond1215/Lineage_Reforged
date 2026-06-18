@@ -1,4 +1,4 @@
-import { access, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -359,12 +359,12 @@ test("rejects active hotspots without descriptive no-runtime boundary notes", ()
   );
 });
 
-test("keeps normal content lint unregistered until live seed content exists", async () => {
+test("registers and validates the live religious hotspot seed content", async () => {
   const indexSource = await readFile("tools/content-lint/index.mjs", "utf8");
-  assert.doesNotMatch(indexSource, /religious_hotspots\.json/);
-  assert.doesNotMatch(indexSource, /religious-hotspots\.mjs/);
-  await assert.rejects(
-    () => access(HOTSPOT_PATH),
-    /ENOENT/
-  );
+  const wrapper = await readJson(HOTSPOT_PATH);
+
+  assert.match(indexSource, /religious_hotspots\.json/);
+  assert.match(indexSource, /religious-hotspots\.mjs/);
+  assert.equal(wrapper.records.length, 2);
+  assert.doesNotThrow(() => validate({ ...makeInput(), wrapper }));
 });

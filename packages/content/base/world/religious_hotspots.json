@@ -1,0 +1,67 @@
+{
+  "records": [
+    {
+      "id": "religious_hotspot.glasswake_shrine_lantern_gardens",
+      "slug": "glasswake_shrine_lantern_gardens",
+      "name": "Glasswake Shrine Lantern Gardens",
+      "summary": "A planned descriptive hotspot for the Glasswake Shrine community and its surrounding lantern shrine gardens.",
+      "status": "planned",
+      "placeAnchor": {
+        "macroRegionId": "region.lantern_isles",
+        "regionId": "region.glasswake_quay",
+        "regionLocalityId": "region_locality.lantern_shrine_gardens",
+        "settlementId": "settlement.glasswake_shrine"
+      },
+      "religionIds": [
+        "religion.elemental_pantheon"
+      ],
+      "hotspotType": "settlement_shrine",
+      "sacredSiteType": "shrine",
+      "hotspotIntensity": "minor",
+      "publicPosture": "tolerant",
+      "mismatchPressure": "none",
+      "pilgrimageStatus": "local",
+      "sourceAuthorityNotes": [
+        "Current place authority identifies Glasswake Shrine as a small sea-facing shrine community in the Lantern Shrine Gardens locality of Glasswake Quay.",
+        "Current locality and region authority describe shrine gardens, religious estates, traveler relief, copied records, herb cultivation, and shrine-adjacent settlement patterns.",
+        "The Elemental Pantheon is the only current top-level religion authority and is used here as a planned descriptive relationship, not as an existing place-authored dominant faith."
+      ],
+      "notes": [
+        "Descriptive content authority only; no runtime consequence, favorability, law, access, reward, command, or gameplay behavior.",
+        "No deityIds are listed because current place authority does not prove a specific Light Lady or other deity affiliation.",
+        "No dominantFaithIds, toleratedFaithIds, restrictedFaithIds, or religiousOrderIds are listed until later content authority or validator support exists."
+      ]
+    },
+    {
+      "id": "religious_hotspot.lantern_shrine_gardens",
+      "slug": "lantern_shrine_gardens",
+      "name": "Lantern Shrine Gardens",
+      "summary": "A planned descriptive hotspot for the wider shrine-garden locality around Glasswake Quay.",
+      "status": "planned",
+      "placeAnchor": {
+        "macroRegionId": "region.lantern_isles",
+        "regionId": "region.glasswake_quay",
+        "regionLocalityId": "region_locality.lantern_shrine_gardens"
+      },
+      "religionIds": [
+        "religion.elemental_pantheon"
+      ],
+      "hotspotType": "locality_shrine_cluster",
+      "sacredSiteType": "shrine",
+      "hotspotIntensity": "minor",
+      "publicPosture": "universal",
+      "mismatchPressure": "none",
+      "pilgrimageStatus": "local",
+      "sourceAuthorityNotes": [
+        "Current locality authority identifies Lantern Shrine Gardens as a shrine-garden locality with religious estates, herbs, records, and traveler relief.",
+        "Current region authority places the locality inside Glasswake Quay, a subregion with shrine estates, monasteries, herb gardens, lookout posts, and traveler refuges.",
+        "The Elemental Pantheon is the only current top-level religion authority and is used here as a planned descriptive relationship, not as an existing locality-authored dominant faith."
+      ],
+      "notes": [
+        "Descriptive content authority only; no runtime consequence, favorability, law, access, reward, command, or gameplay behavior.",
+        "This locality-scale record should remain separate from the Glasswake Shrine settlement record only if future snippets need broader shrine-garden context.",
+        "No deityIds, dominantFaithIds, toleratedFaithIds, restrictedFaithIds, or religiousOrderIds are listed until later authority exists."
+      ]
+    }
+  ]
+}
