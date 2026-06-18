@@ -11,7 +11,7 @@ Branch/status assumption: `master`; latest numbered run is documentation-only.
 - `packages/content/base/world/religious_hotspots.json` remains the live authority with exactly two `planned` records.
 - `packages/schemas/world/religious-hotspot.schema.json` and `tools/content-lint/religious-hotspots.mjs` remain unchanged hotspot validation authorities.
 - `docs/design/user-design-decisions-2026-06-17.md` and `docs/design/user-design-decisions-2026-06-18.md` preserve broader future-system user decisions; they must not broaden 0.5.179.
-- `docs/design/open-design-questions-index.md` owns the current reduced outstanding-question list after the June 18 intake.
+- `docs/design/open-design-questions-index.md` owns the current reduced outstanding-question list after the June 18 intake and accepted recommendations.
 - `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, and `docs/future_content_backlog.md` own direction and deferred work.
 
 ## Current Anchor
@@ -52,9 +52,13 @@ Key durable decisions:
 - defaults are 0 unless adjusted by scoped backstories or Prestige unlocks;
 - fanatical 100 favorability is a benchmark with benefits/consequences, not permanent forced compliance;
 - difficulty modes should be Story, Adventure, Trial, Extreme, and Prestige-locked Custom, with a hardcore toggle and inverse Prestige scaling;
-- NPCs should use generated role placeholders first;
+- the first difficulty mechanic weights should be Combat Danger 25, Survival Pressure 20, Economy Pressure 15, Progression Friction 20, and Consequence Severity 20;
+- NPCs should use generated role placeholders first and become persistent only when promoted by meaningful events, roles, relationships, or history;
 - inventory should use weight plus container capacity by item bulk, with special purse coin limits;
-- deep travel planning should wait until the map/grid system is reviewed or overhauled.
+- the first container/storage implementation should be character containers only, designed to support vehicles and settlement storage later;
+- sacred sites should be planned after generic hotspot snippets but before full favorability/alignment mechanics;
+- the first sacred-site mechanic should be pilgrimage;
+- map/grid authority cleanup and projection should precede serious travel planning.
 
 ## Near-Term Sequence
 
