@@ -4,8 +4,8 @@
       "id": "religious_hotspot.glasswake_shrine_lantern_gardens",
       "slug": "glasswake_shrine_lantern_gardens",
       "name": "Glasswake Shrine Lantern Gardens",
-      "summary": "A planned descriptive hotspot for the Glasswake Shrine community and its surrounding lantern shrine gardens.",
-      "status": "planned",
+      "summary": "A descriptive hotspot for the Glasswake Shrine community and its surrounding lantern shrine gardens.",
+      "status": "active",
       "placeAnchor": {
         "macroRegionId": "region.lantern_isles",
         "regionId": "region.glasswake_quay",
@@ -13,6 +13,9 @@
         "settlementId": "settlement.glasswake_shrine"
       },
       "religionIds": [
+        "religion.elemental_pantheon"
+      ],
+      "dominantFaithIds": [
         "religion.elemental_pantheon"
       ],
       "hotspotType": "settlement_shrine",
@@ -24,12 +27,12 @@
       "sourceAuthorityNotes": [
         "Current place authority identifies Glasswake Shrine as a small sea-facing shrine community in the Lantern Shrine Gardens locality of Glasswake Quay.",
         "Current locality and region authority describe shrine gardens, religious estates, traveler relief, copied records, herb cultivation, and shrine-adjacent settlement patterns.",
-        "The Elemental Pantheon is the only current top-level religion authority and is used here as a planned descriptive relationship, not as an existing place-authored dominant faith."
+        "The Elemental Pantheon is the only current top-level religion authority and is used here as the dominant descriptive faith relationship for the active settlement-scale hotspot."
       ],
       "notes": [
         "Descriptive content authority only; no runtime consequence, favorability, law, access, reward, command, or gameplay behavior.",
         "No deityIds are listed because current place authority does not prove a specific Light Lady or other deity affiliation.",
-        "No dominantFaithIds, toleratedFaithIds, restrictedFaithIds, or religiousOrderIds are listed until later content authority or validator support exists."
+        "dominantFaithIds lists religion.elemental_pantheon because active hotspot validation requires a dominant faith and current authority supports only the Elemental Pantheon at this scope."
       ]
     },
     {

@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan`
-- Next recommended version: `Version 0.5.181 - Religious Hotspot Content Status Activation`
+- Latest completed version: `Version 0.5.181 - Religious Hotspot Content Status Activation`
+- Next recommended version: `Version 0.5.182 - Religious Hotspot Knowledge Snippet Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -38,8 +38,9 @@ Versioning rule:
 - `Version 0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan` selected direct `religious_hotspot` vocabulary and an active-only policy for future live snippets without implementation.
 - `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator` added direct schema vocabulary, live authority resolution, active-only enforcement, and focused tests without content changes.
 - `Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan` selected the settlement-scale Glasswake hotspot for first activation and one later identification snippet.
-- `Version 0.5.181 - Religious Hotspot Content Status Activation` is the next recommended narrow content-status run.
-- Do not roll from `0.5.180` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.181 - Religious Hotspot Content Status Activation` activated only the settlement-scale Glasswake hotspot and added its validator-required Elemental Pantheon dominant faith; the locality hotspot remains planned without a dominant faith.
+- `Version 0.5.182 - Religious Hotspot Knowledge Snippet Seed` is the next recommended registry/snippet run.
+- Do not roll from `0.5.181` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -258,8 +259,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.178` | Religious Hotspot Knowledge Subject Vocabulary Plan | Codex Local docs-first | Planning | Completed. Selected direct `religious_hotspot` vocabulary, exact schema/validator touchpoints, active-only live-snippet policy, focused tests, and deferred boundaries. | Documentation only; no schema, validator, source, test, content JSON, snippets, runtime, UI, storage, or gameplay behavior. |
 | `0.5.179` | Religious Hotspot Knowledge Subject Schema And Validator | Codex Local | Narrow schema/validator vocabulary | Completed. Added direct subject vocabulary, hotspot authority resolution, active-only enforcement, and focused tests while preserving 57-file normal lint. | No live hotspot activation, registry content, snippets, sacred sites, orders, favorability/alignment, runtime, UI, storage, or gameplay behavior. |
 | `0.5.180` | Religious Hotspot Knowledge Snippet Seed Plan | Codex Local docs-first | Planning | Completed. Selected only the settlement-scale Glasswake hotspot for activation, one Tier 1 identification snippet, registry alignment timing, and supported discovery sources. | Documentation only; no content, schema, validator, source, test, runtime, UI, storage, or gameplay changes. |
-| `0.5.181` | Religious Hotspot Content Status Activation | Codex Local | Narrow content status | Recommended next. Activate only `religious_hotspot.glasswake_shrine_lantern_gardens`. | Keep the locality hotspot planned; add no registry/snippet content or behavior. |
-| `0.5.182` | Religious Hotspot Knowledge Snippet Seed | Codex Local | Narrow registry/snippet seed | Recommended after activation. Align Religion registry content and add exactly one hotspot identification snippet. | Keep policy refs null and add no runtime behavior. |
+| `0.5.181` | Religious Hotspot Content Status Activation | Codex Local | Narrow content status | Completed. Activated only `religious_hotspot.glasswake_shrine_lantern_gardens` with validator-required `dominantFaithIds: ["religion.elemental_pantheon"]`. | Kept the locality hotspot planned without `dominantFaithIds`; added no registry/snippet content or behavior. |
+| `0.5.182` | Religious Hotspot Knowledge Snippet Seed | Codex Local | Narrow registry/snippet seed | Recommended next. Align Religion registry content and add exactly one hotspot identification snippet. | Keep policy refs null and add no runtime behavior. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -308,9 +309,10 @@ Scope guardrails:
 - `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` is durable broad design context, not runtime authority, not a backlog replacement, and not permission to broaden the next hotspot schema prompt.
 - `Version 0.5.177 - Religious Hotspot Content Authority Seed` is completed with two live planned records and 57-file normal lint.
 - `Version 0.5.180 - Religious Hotspot Knowledge Snippet Seed Plan` is completed as documentation only.
-- `Version 0.5.181 - Religious Hotspot Content Status Activation` is the immediate next recommended run.
+- `Version 0.5.181 - Religious Hotspot Content Status Activation` is completed with only the settlement-scale Glasswake hotspot active.
+- `Version 0.5.182 - Religious Hotspot Knowledge Snippet Seed` is the immediate next recommended run.
 - The completed registry alignment remains content-lint authority only and does not make Knowledge trials runnable.
-- Keep `0.5.181` to activating only the settlement-scale Glasswake hotspot; do not edit registry/snippet content or absorb sacred sites, orders, favorability/alignment mechanics, runtime, family, difficulty, NPC, inventory, map/grid, travel, Skill Trial, or Magic Study work.
+- Keep `0.5.182` to one Glasswake identification snippet and live Religion registry alignment for `religious_hotspot` and `world.religious_hotspots`; do not absorb sacred sites, orders, favorability/alignment mechanics, relationship, law, runtime, UI, storage, rewards, events, commands, family, difficulty, NPC, inventory, map/grid, travel, Skill Trial, Prestige, gameplay, or Magic Study work.
 
 ## 4. Remaining Magic Runtime Path
 

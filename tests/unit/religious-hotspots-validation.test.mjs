@@ -362,9 +362,32 @@ test("rejects active hotspots without descriptive no-runtime boundary notes", ()
 test("registers and validates the live religious hotspot seed content", async () => {
   const indexSource = await readFile("tools/content-lint/index.mjs", "utf8");
   const wrapper = await readJson(HOTSPOT_PATH);
+  const glasswake = wrapper.records.find(
+    ({ id }) => id === "religious_hotspot.glasswake_shrine_lantern_gardens"
+  );
+  const locality = wrapper.records.find(
+    ({ id }) => id === "religious_hotspot.lantern_shrine_gardens"
+  );
+  const forbiddenFields = [
+    "deityIds",
+    "religiousOrderIds",
+    "toleratedFaithIds",
+    "restrictedFaithIds",
+    "runtimeState",
+    "gameplayEffects"
+  ];
 
   assert.match(indexSource, /religious_hotspots\.json/);
   assert.match(indexSource, /religious-hotspots\.mjs/);
   assert.equal(wrapper.records.length, 2);
+  assert.equal(glasswake.status, "active");
+  assert.deepEqual(glasswake.dominantFaithIds, ["religion.elemental_pantheon"]);
+  assert.equal(locality.status, "planned");
+  assert.equal(Object.hasOwn(locality, "dominantFaithIds"), false);
+  for (const record of wrapper.records) {
+    for (const field of forbiddenFields) {
+      assert.equal(Object.hasOwn(record, field), false, `${record.id} must not define ${field}`);
+    }
+  }
   assert.doesNotThrow(() => validate({ ...makeInput(), wrapper }));
 });
