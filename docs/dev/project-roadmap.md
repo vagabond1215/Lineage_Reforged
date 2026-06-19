@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.192 - Sacred Site Activation Decision`
-- Next recommended version: `Version 0.5.193 - Sacred Site Content Status Activation`
+- Latest completed version: `Version 0.5.193 - Sacred Site Content Status Activation`
+- Next recommended version: `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -50,7 +50,8 @@ Versioning rule:
 - `Version 0.5.190 - Sacred Site Knowledge Subject Decision` approved future direct `sacred_site` Religion subjects, active-only authority resolution, deferred registry alignment, and strict descriptive snippet boundaries without implementation.
 - `Version 0.5.191 - Sacred Site Knowledge Subject Support` added schema vocabulary, `world.sacred_sites` authority loading, active-only validation, and focused tests without live registry, snippet, or status changes.
 - `Version 0.5.192 - Sacred Site Activation Decision` approved the planned Glasswake Shrine record for later active status without changing live content.
-- Do not roll from `0.5.192` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.193 - Sacred Site Content Status Activation` changed exactly one Glasswake Shrine status value from planned to active without registry, snippet, hotspot, or behavior changes.
+- Do not roll from `0.5.193` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -281,7 +282,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.190` | Sacred Site Knowledge Subject Decision | Codex Local docs-first | Planning | Completed. Approved direct vocabulary, active-only references, exact authority, deferred registry timing, tests, and snippet boundaries. | Documentation only; no schema, validator, registry, activation, snippet, runtime, or gameplay changes. |
 | `0.5.191` | Sacred Site Knowledge Subject Support | Codex Local | Schema/validator vocabulary | Completed. Added both subject enums, authority loading, active-only resolution, and focused tests; normal lint remains 58 files. | No live registry update, site activation, snippet, runtime, UI, storage, or gameplay behavior. |
 | `0.5.192` | Sacred Site Activation Decision | Codex Local docs-first | Planning | Completed. Approved the planned Glasswake sacred-site record for later active status and fixed the narrow activation meaning. | Documentation only; no status, registry, snippet, runtime, UI, storage, or gameplay changes. |
-| `0.5.193` | Sacred Site Content Status Activation | Codex Local | Narrow content status | Recommended next. Change only the approved Glasswake Shrine site from planned to active, then run focused and normal validation. | No registry, snippet, hotspot, runtime, UI, storage, or gameplay changes. |
+| `0.5.193` | Sacred Site Content Status Activation | Codex Local | Narrow content status | Completed. Changed exactly one approved Glasswake Shrine status from planned to active; normal lint remains 58 files. | No registry, snippet, hotspot, runtime, UI, storage, or gameplay changes. |
+| `0.5.194` | Sacred Site Knowledge Snippet Seed Plan | Codex Local docs-first | Planning | Recommended next. Decide exact first snippet wording, discovery posture, non-duplication boundary, and registry alignment timing. | Documentation only; no registry, snippet, content, runtime, UI, storage, or gameplay changes. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -303,8 +305,8 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.193 - Sacred Site Content Status Activation`
-2. `Sacred Site Knowledge Snippet Seed Plan`, only after activation lands
+1. `0.5.194 - Sacred Site Knowledge Snippet Seed Plan`
+2. `Sacred Site Religion Registry And Snippet Seed`, only after the plan lands
 3. `Religious Order Placeholder Authority Plan`
 4. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
 
@@ -343,7 +345,8 @@ Scope guardrails:
 - `Version 0.5.190 - Sacred Site Knowledge Subject Decision` is completed as documentation only; live Religion remains unaligned and the site remains planned.
 - `Version 0.5.191 - Sacred Site Knowledge Subject Support` is completed; schema vocabulary and active-only authority exist while live Religion remains unaligned and the site remains planned.
 - `Version 0.5.192 - Sacred Site Activation Decision` is completed as documentation only; the site remains planned but is approved for later activation.
-- Keep `0.5.193` status-only: change the one approved record to active without registry content, snippets, hotspot, runtime, UI, storage, or gameplay changes.
+- `Version 0.5.193 - Sacred Site Content Status Activation` is completed; exactly one site is active while live Religion remains unaligned and no sacred-site snippet exists.
+- Keep `0.5.194` documentation-only: decide exact snippet content and registry timing without changing live content, registry, snippets, runtime, UI, storage, or gameplay behavior.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -720,7 +723,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 99 | `0.5.190` | Sacred Site Knowledge Subject Decision | `docs/design/sacred-site-knowledge-subject-decision.md` | Completed |
 | 100 | `0.5.191` | Sacred Site Knowledge Subject Support | `docs/design/sacred-site-knowledge-subject-decision.md` | Completed |
 | 101 | `0.5.192` | Sacred Site Activation Decision | `docs/design/sacred-site-activation-decision.md` | Completed |
-| 102 | `0.5.193` | Sacred Site Content Status Activation | `docs/design/sacred-site-activation-decision.md` | Next; one approved status change only |
+| 102 | `0.5.193` | Sacred Site Content Status Activation | `docs/design/sacred-site-activation-decision.md` | Completed |
+| 103 | `0.5.194` | Sacred Site Knowledge Snippet Seed Plan | `docs/design/sacred-site-knowledge-subject-decision.md` | Next; documentation-only snippet decision |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
