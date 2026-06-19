@@ -251,6 +251,35 @@
       ]
     },
     {
+      "id": "knowledge_snippet.religion.glasswake_shrine_lantern_gardens.identification",
+      "domainId": "knowledge_domain.religion",
+      "subjectType": "religious_hotspot",
+      "subjectId": "religious_hotspot.glasswake_shrine_lantern_gardens",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Glasswake Shrine Lantern Gardens",
+      "summary": "This religious hotspot centers on Glasswake Shrine and its lantern shrine gardens, a settlement in the Lantern Shrine Gardens locality of Glasswake Quay associated with the Elemental Pantheon, traveler relief, copied records, herb cultivation, and shrine-adjacent settlement patterns.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified religious hotspot remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored Religion knowledge only and grants no worship, favorability, faction standing, spell access, Magic Study readiness, reputation, law effect, conversion, apostasy, Prestige, family status, runtime behavior, or gameplay behavior."
+      ]
+    },
+    {
       "id": "knowledge_snippet.general_lore.kaelvar.cultural_context",
       "domainId": "knowledge_domain.general_lore",
       "subjectType": "region",

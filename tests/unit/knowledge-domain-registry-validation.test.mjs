@@ -124,18 +124,18 @@ test("accepts Arcane Lore as planned without a legacy policy", () => {
   assert.equal(validate(input), true);
 });
 
-test("accepts active Religion with direct religion and deity subjects only", () => {
+test("accepts active Religion with live religious hotspot registry alignment", () => {
   const input = makeInput();
   const religion = input.wrapper.records.find(
     (record) => record.id === "knowledge_domain.religion"
   );
 
   assert.equal(religion.status, "active");
-  assert.deepEqual(
-    religion.canonicalSubjectTypes.filter((subjectType) =>
-      ["religion", "deity"].includes(subjectType)
-    ),
-    ["religion", "deity"]
+  assert.ok(religion.canonicalSubjectTypes.includes("religion"));
+  assert.ok(religion.canonicalSubjectTypes.includes("deity"));
+  assert.ok(religion.canonicalSubjectTypes.includes("religious_hotspot"));
+  assert.ok(
+    religion.relatedContentCollections.includes("world.religious_hotspots")
   );
   assert.equal(religion.trialPolicyRef, null);
   assert.equal(religion.completionPolicyRef, null);
@@ -154,9 +154,6 @@ test("accepts religious hotspot vocabulary in an in-memory Religion fixture", ()
       "religious_hotspot"
     )
   );
-  religion.canonicalSubjectTypes.push("religious_hotspot");
-  religion.relatedContentCollections.push("world.religious_hotspots");
-
   assert.equal(validate(input), true);
 });
 
@@ -166,8 +163,6 @@ test("rejects religious hotspot registry vocabulary without snippet schema suppo
       const religion = input.wrapper.records.find(
         (record) => record.id === "knowledge_domain.religion"
       );
-      religion.canonicalSubjectTypes.push("religious_hotspot");
-      religion.relatedContentCollections.push("world.religious_hotspots");
       input.snippetVocabularies.subjectTypes =
         input.snippetVocabularies.subjectTypes.filter(
           (subjectType) => subjectType !== "religious_hotspot"
@@ -177,14 +172,17 @@ test("rejects religious hotspot registry vocabulary without snippet schema suppo
   );
 });
 
-test("keeps live Religion registry content unchanged after vocabulary support", () => {
+test("keeps live Religion policy refs null without a hotspot-specific domain", () => {
   const religion = registryWrapper.records.find(
     (record) => record.id === "knowledge_domain.religion"
   );
 
   assert.ok(religion.canonicalSubjectTypes.includes("religion"));
   assert.ok(religion.canonicalSubjectTypes.includes("deity"));
-  assert.equal(religion.canonicalSubjectTypes.includes("religious_hotspot"), false);
+  assert.ok(religion.canonicalSubjectTypes.includes("religious_hotspot"));
+  assert.ok(
+    religion.relatedContentCollections.includes("world.religious_hotspots")
+  );
   assert.equal(religion.trialPolicyRef, null);
   assert.equal(religion.completionPolicyRef, null);
   assert.equal(religion.visibilityPolicyRef, null);

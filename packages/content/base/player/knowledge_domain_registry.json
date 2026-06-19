@@ -380,6 +380,7 @@
       "canonicalSubjectTypes": [
         "religion",
         "deity",
+        "religious_hotspot",
         "region",
         "settlement",
         "culture",
@@ -432,6 +433,7 @@
         "world.region_localities",
         "world.regions",
         "world.religions",
+        "world.religious_hotspots",
         "world.settlements"
       ],
       "trialPolicyRef": null,

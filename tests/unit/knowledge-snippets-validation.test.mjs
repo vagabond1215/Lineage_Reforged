@@ -38,6 +38,7 @@ const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.ecology",
   "knowledge_domain.religion",
   "knowledge_domain.religion",
+  "knowledge_domain.religion",
   "knowledge_domain.general_lore"
 ];
 
@@ -50,6 +51,7 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.ecology.grape_vine.habitat",
   "knowledge_snippet.religion.elemental_pantheon.identification",
   "knowledge_snippet.religion.light_lady.identification",
+  "knowledge_snippet.religion.glasswake_shrine_lantern_gardens.identification",
   "knowledge_snippet.general_lore.kaelvar.cultural_context"
 ];
 
@@ -179,8 +181,12 @@ function prepareReligiousHotspotSnippet(
   hotspotId = "religious_hotspot.glasswake_shrine_lantern_gardens"
 ) {
   const domain = religionDomain(input);
-  domain.canonicalSubjectTypes.push("religious_hotspot");
-  domain.relatedContentCollections.push("world.religious_hotspots");
+  if (!domain.canonicalSubjectTypes.includes("religious_hotspot")) {
+    domain.canonicalSubjectTypes.push("religious_hotspot");
+  }
+  if (!domain.relatedContentCollections.includes("world.religious_hotspots")) {
+    domain.relatedContentCollections.push("world.religious_hotspots");
+  }
   input.wrapper.records = [
     religionSnippet({
       id: "knowledge_snippet.religion.religious_hotspot_fixture.identification",
@@ -194,7 +200,7 @@ function prepareReligiousHotspotSnippet(
   );
 }
 
-test("accepts the current nine-record snippet catalog", () => {
+test("accepts the current ten-record snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.id),
@@ -225,6 +231,7 @@ test("accepts current canonical subject ids", () => {
       "flora.grape_vine",
       "religion.elemental_pantheon",
       "deity.light_lady",
+      "religious_hotspot.glasswake_shrine_lantern_gardens",
       "region.kaelvar"
     ]
   );
@@ -244,6 +251,30 @@ test("accepts an active Religion fixture with religion and deity authorities", (
     })
   ];
 
+  assert.equal(validate(input), true);
+});
+
+test("accepts the live Glasswake religious hotspot snippet only for the active settlement hotspot", () => {
+  const input = makeInput();
+  const hotspotSnippets = input.wrapper.records.filter(
+    (record) => record.subjectType === "religious_hotspot"
+  );
+
+  assert.equal(hotspotSnippets.length, 1);
+  assert.equal(
+    hotspotSnippets[0].id,
+    "knowledge_snippet.religion.glasswake_shrine_lantern_gardens.identification"
+  );
+  assert.equal(
+    hotspotSnippets[0].subjectId,
+    "religious_hotspot.glasswake_shrine_lantern_gardens"
+  );
+  assert.equal(
+    input.wrapper.records.some(
+      (record) => record.subjectId === "religious_hotspot.lantern_shrine_gardens"
+    ),
+    false
+  );
   assert.equal(validate(input), true);
 });
 
@@ -267,12 +298,15 @@ test("accepts religious hotspot fixtures when cloned authority records are activ
   }
 });
 
-test("rejects religious hotspot snippets while live authority remains planned", () => {
+test("rejects religious hotspot snippets while locality authority remains planned", () => {
   expectFailure(
     (input) => {
-      prepareReligiousHotspotSnippet(input);
+      prepareReligiousHotspotSnippet(
+        input,
+        "religious_hotspot.lantern_shrine_gardens"
+      );
     },
-    /religious_hotspot subjectId 'religious_hotspot\.glasswake_shrine_lantern_gardens' must reference an active hotspot record/
+    /religious_hotspot subjectId 'religious_hotspot\.lantern_shrine_gardens' must reference an active hotspot record/
   );
 });
 
