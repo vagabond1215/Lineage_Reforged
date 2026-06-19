@@ -518,9 +518,14 @@ export function validateKnowledgeSnippets({
         `${relativePath} subjectId '${record.subjectId}' is missing from ${subjectAuthority.collectionId} on record ${recordId}`
       );
     }
-    if (record.subjectType === "religious_hotspot" && subject.status !== "active") {
+    if (
+      ["religious_hotspot", "sacred_site"].includes(record.subjectType) &&
+      subject.status !== "active"
+    ) {
+      const authorityLabel =
+        record.subjectType === "sacred_site" ? "sacred-site" : "hotspot";
       throw new Error(
-        `${relativePath} ${record.subjectType} subjectId '${record.subjectId}' must reference an active hotspot record on record ${recordId}`
+        `${relativePath} ${record.subjectType} subjectId '${record.subjectId}' must reference an active ${authorityLabel} record on record ${recordId}`
       );
     }
     if (!domain.relatedContentCollections.includes(subjectAuthority.collectionId)) {

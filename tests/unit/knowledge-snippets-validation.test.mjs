@@ -25,6 +25,9 @@ const religionWrapper = await readJson("packages/content/base/world/religions.js
 const religiousHotspotWrapper = await readJson(
   "packages/content/base/world/religious_hotspots.json"
 );
+const sacredSiteWrapper = await readJson(
+  "packages/content/base/world/sacred_sites.json"
+);
 const regionWrapper = await readJson("packages/content/base/world/regions.json");
 const settlementWrapper = await readJson("packages/content/base/world/settlements.json");
 const deityRecords = religionWrapper.records.flatMap((religion) => religion.deities ?? []);
@@ -93,6 +96,12 @@ function makeInput() {
         idPattern: /^religious_hotspot\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
         records: structuredClone(religiousHotspotWrapper.records)
       },
+      sacred_site: {
+        collectionId: "world.sacred_sites",
+        idPrefix: "sacred_site.",
+        idPattern: /^sacred_site\.[a-z0-9]+(?:_[a-z0-9]+)*\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
+        records: structuredClone(sacredSiteWrapper.records)
+      },
       region: {
         collectionId: "world.regions",
         idPrefix: "region.",
@@ -110,6 +119,7 @@ function makeInput() {
       "world.minerals",
       "world.religions",
       "world.religious_hotspots",
+      "world.sacred_sites",
       "world.regions"
     ])
   };
@@ -200,6 +210,26 @@ function prepareReligiousHotspotSnippet(
   );
 }
 
+function prepareSacredSiteSnippet(
+  input,
+  siteId = "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine"
+) {
+  const domain = religionDomain(input);
+  domain.canonicalSubjectTypes.push("sacred_site");
+  domain.relatedContentCollections.push("world.sacred_sites");
+  input.wrapper.records = [
+    religionSnippet({
+      id: "knowledge_snippet.religion.sacred_site_fixture.identification",
+      subjectType: "sacred_site",
+      subjectId: siteId,
+      title: "Recognizing Glasswake Shrine"
+    })
+  ];
+  return input.subjectAuthorities.sacred_site.records.find(
+    (record) => record.id === siteId
+  );
+}
+
 test("accepts the current ten-record snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
@@ -280,8 +310,123 @@ test("accepts the live Glasswake religious hotspot snippet only for the active s
 
 test("knowledge snippet schema includes direct religious hotspot vocabulary", () => {
   assert.ok(snippetSchema.properties.subjectType.enum.includes("religious_hotspot"));
+  assert.ok(snippetSchema.properties.subjectType.enum.includes("sacred_site"));
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
-  assert.equal(snippetSchema.properties.subjectType.enum.includes("sacred_site"), false);
+});
+
+test("keeps live Religion unaligned with sacred-site Knowledge authority", () => {
+  const religion = religionDomain(makeInput());
+  assert.equal(religion.canonicalSubjectTypes.includes("sacred_site"), false);
+  assert.equal(
+    religion.relatedContentCollections.includes("world.sacred_sites"),
+    false
+  );
+  assert.equal(
+    registryWrapper.records.some(
+      (record) => record.id === "knowledge_domain.sacred_sites"
+    ),
+    false
+  );
+});
+
+test("accepts a sacred-site fixture only when the cloned site is active and Religion is aligned", () => {
+  const input = makeInput();
+  const site = prepareSacredSiteSnippet(input);
+  site.status = "active";
+  assert.equal(validate(input), true);
+});
+
+test("rejects planned and deferred sacred-site subjects", async (t) => {
+  for (const status of ["planned", "deferred"]) {
+    await t.test(status, () => {
+      const input = makeInput();
+      const site = prepareSacredSiteSnippet(input);
+      site.status = status;
+      assert.throws(
+        () => validate(input),
+        /sacred_site subjectId '.+' must reference an active sacred-site record/
+      );
+    });
+  }
+});
+
+test("rejects missing, malformed, and type-only sacred-site subject ids", async (t) => {
+  const cases = [
+    [
+      "missing",
+      "sacred_site.glasswake_shrine_lantern_gardens.missing_shrine",
+      /is missing from world\.sacred_sites/
+    ],
+    [
+      "malformed",
+      "sacred_site.glasswake.shrine.extra",
+      /is malformed for subjectType 'sacred_site'/
+    ],
+    [
+      "type-only",
+      "sacred_site.shrine",
+      /is malformed for subjectType 'sacred_site'/
+    ]
+  ];
+
+  for (const [name, siteId, expected] of cases) {
+    await t.test(name, () => {
+      expectFailure(
+        (input) => {
+          prepareSacredSiteSnippet(input, siteId);
+        },
+        expected
+      );
+    });
+  }
+});
+
+test("rejects cross-type and settlement authority for sacred-site subjects", async (t) => {
+  const cases = [
+    [
+      "religious hotspot",
+      "religious_hotspot.glasswake_shrine_lantern_gardens",
+      /must use prefix 'sacred_site\.'/
+    ],
+    [
+      "settlement",
+      "settlement.glasswake_shrine",
+      /must use prefix 'sacred_site\.'/
+    ]
+  ];
+
+  for (const [name, subjectId, expected] of cases) {
+    await t.test(name, () => {
+      expectFailure(
+        (input) => {
+          prepareSacredSiteSnippet(input, subjectId);
+        },
+        expected
+      );
+    });
+  }
+
+  await t.test("sacred site as religious hotspot", () => {
+    expectFailure(
+      (input) => {
+        prepareReligiousHotspotSnippet(
+          input,
+          "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine"
+        );
+      },
+      /must use prefix 'religious_hotspot\.'/
+    );
+  });
+});
+
+test("does not infer sacred-site authority from hotspot descriptive metadata", () => {
+  const input = makeInput();
+  const hotspot = input.subjectAuthorities.religious_hotspot.records.find(
+    (record) => record.sacredSiteType === "shrine"
+  );
+  assert.ok(hotspot);
+  prepareSacredSiteSnippet(input, hotspot.id);
+  assert.throws(() => validate(input), /must use prefix 'sacred_site\.'/);
 });
 
 test("accepts religious hotspot fixtures when cloned authority records are active", async (t) => {
@@ -334,7 +479,7 @@ test("rejects shortcut subjects for religious hotspot ids", async (t) => {
   const cases = [
     ["custom", /subjectType 'custom' is blocked/],
     ["shrine", /subjectType must be one of the schema enum values/],
-    ["sacred_site", /subjectType must be one of the schema enum values/],
+    ["sacred_site", /subjectId '.+' must use prefix 'sacred_site\.'/],
     ["region", /subjectId '.+' must use prefix 'region\.'/],
     ["settlement", /subjectType 'settlement' is blocked/]
   ];

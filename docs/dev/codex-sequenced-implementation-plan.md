@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-19
-Route: Codex local sequencing alignment after `Version 0.5.190 - Sacred Site Knowledge Subject Decision`
+Route: Codex local sequencing alignment after `Version 0.5.191 - Sacred Site Knowledge Subject Support`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.190 - Sacred Site Knowledge Subject Decision`
+- `Version 0.5.191 - Sacred Site Knowledge Subject Support`
 
 Immediate next Codex run:
 
-- `Version 0.5.191 - Sacred Site Knowledge Subject Support`
+- `Version 0.5.192 - Sacred Site Activation Decision`
 
 Versioning note:
 
@@ -51,8 +51,9 @@ Versioning note:
 - The sacred-site schema and validator landed in `0.5.188`: strict structure, pure semantic validation, focused tests, and schema-file registration exist without live content or normal lint registration.
 - The first sacred-site seed landed in `0.5.189`: exactly one planned Glasswake Shrine record is live and normal content lint now checks 58 files.
 - The sacred-site Knowledge subject decision landed in `0.5.190`: direct support is approved with active-only resolution, live registry alignment deferred, and no implementation.
-- Keep Sacred Site Knowledge Subject Support as the narrow `0.5.191` direction.
-- Do not roll from `0.5.190` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Sacred-site Knowledge subject support landed in `0.5.191`: both schema vocabularies, authority loading, active-only validation, and focused tests exist while live content remains unchanged.
+- Keep Sacred Site Activation Decision as the documentation-only `0.5.192` direction.
+- Do not roll from `0.5.191` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -170,18 +171,19 @@ Versioning note:
 | 110 | `0.5.188` | Sacred Site Schema And Validator | Codex 5.5 Local | `packages/schemas/world/sacred-site.schema.json`; `tools/content-lint/sacred-sites.mjs` | schema + pure validator + focused tests | Completed | Added strict validation and 55 focused tests without content, normal lint registration, Knowledge support, activation, or behavior. |
 | 111 | `0.5.189` | First Sacred Site Content Seed | Codex 5.5 Local | `packages/content/base/world/sacred_sites.json` | narrow content seed + normal lint registration | Completed | Added exactly one planned record at 58-file lint without Knowledge support, activation, snippet, pilgrimage, runtime, UI, storage, or gameplay behavior. |
 | 112 | `0.5.190` | Sacred Site Knowledge Subject Decision | Codex 5.5 Local docs-first | `docs/design/sacred-site-knowledge-subject-decision.md` | planning decision | Completed | Approved direct vocabulary, active-only authority, deferred registry alignment, focused tests, and snippet boundaries without implementation. |
-| 113 | `0.5.191` | Sacred Site Knowledge Subject Support | Codex 5.5 Local | `docs/design/sacred-site-knowledge-subject-decision.md` | schema/validator vocabulary + focused tests | Next | No live registry update, activation, snippet, runtime, UI, storage, or gameplay behavior. |
+| 113 | `0.5.191` | Sacred Site Knowledge Subject Support | Codex 5.5 Local | `docs/design/sacred-site-knowledge-subject-decision.md` | schema/validator vocabulary + focused tests | Completed | Added active-only authority without live registry, activation, snippet, runtime, UI, storage, or gameplay behavior. |
+| 114 | `0.5.192` | Sacred Site Activation Decision | Codex 5.5 Local docs-first | `docs/design/sacred-site-knowledge-subject-decision.md` | planning decision | Next | Documentation only; decide readiness without changing status, registry, snippets, or behavior. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.191 - Sacred Site Knowledge Subject Support`
-2. `Sacred Site Status Activation Decision`, only after subject support lands
+1. `0.5.192 - Sacred Site Activation Decision`
+2. `Sacred Site Activation`, only if readiness is approved
 3. `Religious Order Placeholder Authority Plan`
 4. `Religious Favorability And Elemental Alignment Framework Plan`
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.191` must stay limited to Knowledge schema vocabulary, authority loading, active-only validation, and focused tests.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.192` must remain a documentation-only sacred-site activation readiness decision.
 
 ## Default Prompt Pattern
 
@@ -197,9 +199,10 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.191 - Sacred Site Knowledge Subject Support` as the immediate narrow next recommended run.
+- Keep `Version 0.5.192 - Sacred Site Activation Decision` as the immediate documentation-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
+- `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

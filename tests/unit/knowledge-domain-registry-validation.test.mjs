@@ -157,6 +157,41 @@ test("accepts religious hotspot vocabulary in an in-memory Religion fixture", ()
   assert.equal(validate(input), true);
 });
 
+test("accepts future sacred-site vocabulary in an in-memory Religion fixture", () => {
+  const input = makeInput();
+  const religion = input.wrapper.records.find(
+    (record) => record.id === "knowledge_domain.religion"
+  );
+
+  religion.canonicalSubjectTypes.push("sacred_site");
+  religion.relatedContentCollections.push("world.sacred_sites");
+
+  assert.ok(
+    input.recordSchema.properties.canonicalSubjectTypes.items.enum.includes(
+      "sacred_site"
+    )
+  );
+  assert.equal(validate(input), true);
+});
+
+test("keeps live Religion unaligned with sacred-site vocabulary", () => {
+  const religion = registryWrapper.records.find(
+    (record) => record.id === "knowledge_domain.religion"
+  );
+
+  assert.equal(religion.canonicalSubjectTypes.includes("sacred_site"), false);
+  assert.equal(
+    religion.relatedContentCollections.includes("world.sacred_sites"),
+    false
+  );
+  assert.equal(
+    registryWrapper.records.some(
+      (record) => record.id === "knowledge_domain.sacred_sites"
+    ),
+    false
+  );
+});
+
 test("rejects religious hotspot registry vocabulary without snippet schema support", () => {
   expectFailure(
     (input) => {
