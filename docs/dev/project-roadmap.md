@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.186 - Sacred Site Authority Schema Decision`
-- Next recommended version: `Version 0.5.187 - Sacred Site Content Seed Plan` (planning only)
+- Latest completed version: `Version 0.5.187 - Sacred Site Content Seed Plan`
+- Next recommended version: `Version 0.5.188 - Sacred Site Schema And Validator`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -44,7 +44,8 @@ Versioning rule:
 - `Version 0.5.184 - Sacred Site Authority Plan` selected a future separate `world.sacred_sites` named-site authority linked to parent religious hotspots, kept `sacredSiteType` descriptive, and separated authority from Knowledge, pilgrimage, order, law, relationship, and runtime behavior.
 - `Version 0.5.185 - Religion System Expansion Research Integration` integrated broad Deep Research findings as planning only, preserved the sacred-site lane, and shifted its schema-decision follow-up to 0.5.186.
 - `Version 0.5.186 - Sacred Site Authority Schema Decision` fixed the future records-only wrapper, paths, place-qualified ids, record contract, parent-hotspot coherence, vocabularies, validation posture, and staged Knowledge boundary without implementation.
-- Do not roll from `0.5.186` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.187 - Sacred Site Content Seed Plan` selected exactly one future planned Glasswake Shrine candidate and proved its place, parent-hotspot, and broad religion authority without live content.
+- Do not roll from `0.5.187` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -269,7 +270,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.184` | Sacred Site Authority Plan | Codex Local docs-first | Planning | Completed. Selected a future separate named-site authority linked to religious hotspots and defined minimum fields and boundaries. | Documentation only; no sacred-site content, schema, validator, snippet, pilgrimage, runtime, or gameplay implementation. |
 | `0.5.185` | Religion System Expansion Research Integration | Codex Local docs-first | Planning | Completed. Integrated knowledge-first, authority-layered Religion research, feature lanes, naming candidates, relationships, and staged sequencing. | Documentation only; no live content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
 | `0.5.186` | Sacred Site Authority Schema Decision | Codex Local docs-first | Planning | Completed. Finalized the future records-only wrapper, paths, record shape, ids, references, enums, status rules, validation, and Knowledge sequencing. | Documentation only; no schema, validator, tests, content, or behavior. |
-| `0.5.187` | Sacred Site Content Seed Plan | Codex Local docs-first | Planning | Recommended next. Select and draft at most one first planned named-site record against the decided contract. | Planning only; do not create `sacred_sites.json`, schema, validator, tests, snippets, or behavior. |
+| `0.5.187` | Sacred Site Content Seed Plan | Codex Local docs-first | Planning | Completed. Selected and drafted exactly one planned Glasswake Shrine record with explicit authority proof and blockers. | Documentation only; no `sacred_sites.json`, schema, validator, tests, snippets, or behavior. |
+| `0.5.188` | Sacred Site Schema And Validator | Codex Local | Schema/validator | Recommended next. Implement only the strict schema, pure validator, focused tests, and schema-file registration. | No content file, normal lint registration, Knowledge support, activation, pilgrimage, runtime, or gameplay behavior. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -291,11 +293,10 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.187 - Sacred Site Content Seed Plan`
-2. `Sacred Site Authority Schema And Validator`, after the seed plan proves the first contract needs
-3. `First Sacred Site Content Seed`, only after schema and validator support lands
-4. `Religious Order Placeholder Authority Plan`
-5. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
+1. `0.5.188 - Sacred Site Schema And Validator`
+2. `First Sacred Site Content Seed`, only after schema and validator support lands
+3. `Religious Order Placeholder Authority Plan`
+4. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -326,7 +327,8 @@ Scope guardrails:
 - `Version 0.5.184 - Sacred Site Authority Plan` is completed as documentation only; no sacred-site authority content exists and `sacredSiteType` remains descriptive.
 - `Version 0.5.185 - Religion System Expansion Research Integration` is completed as documentation only; its broad feature lanes are planning guidance, not implementation permission.
 - `Version 0.5.186 - Sacred Site Authority Schema Decision` is completed as documentation only; no schema, validator, test, content, or Knowledge support exists.
-- Keep `0.5.187` planning-only; it may select at most one planned record and must not create `sacred_sites.json`, schema, validator, tests, Knowledge vocabulary, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
+- `Version 0.5.187 - Sacred Site Content Seed Plan` is completed as documentation only with exactly one planned Glasswake Shrine candidate.
+- Keep `0.5.188` implementation narrow: schema, pure validator, focused tests, and schema-file registration only; no content file, normal lint registration, Knowledge vocabulary, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -697,7 +699,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 93 | `0.5.184` | Sacred Site Authority Plan | `docs/design/sacred-site-authority-plan.md` | Completed |
 | 94 | `0.5.185` | Religion System Expansion Research Integration | `docs/design/religion-system-expansion-research-plan.md` | Completed |
 | 95 | `0.5.186` | Sacred Site Authority Schema Decision | `docs/design/sacred-site-authority-schema-decision.md` | Completed |
-| 96 | `0.5.187` | Sacred Site Content Seed Plan | `docs/design/sacred-site-authority-schema-decision.md` | Next; planning only |
+| 96 | `0.5.187` | Sacred Site Content Seed Plan | `docs/design/sacred-site-content-seed-plan.md` | Completed |
+| 97 | `0.5.188` | Sacred Site Schema And Validator | `docs/design/sacred-site-authority-schema-decision.md`; `docs/design/sacred-site-content-seed-plan.md` | Next; narrow implementation |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -754,6 +757,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Sacred Site Authority Plan | `docs/design/sacred-site-authority-plan.md`; use for the future separate named-site authority decision, parent-hotspot relationship, minimum fields, Knowledge sequencing, pilgrimage separation, and forbidden inferences. |
 | Religion System Expansion Research Plan | `docs/design/religion-system-expansion-research-plan.md`; use for broad layered Religion architecture, future feature lanes, naming candidates, relationship guidance, research lessons, and staged sequencing. It does not override focused authority plans. |
 | Sacred Site Authority Schema Decision | `docs/design/sacred-site-authority-schema-decision.md`; use for the future wrapper, paths, place-qualified identity, record fields, parent/place coherence, enums, status semantics, validation posture, and first-seed readiness. |
+| Sacred Site Content Seed Plan | `docs/design/sacred-site-content-seed-plan.md`; use for the one planned Glasswake Shrine candidate, non-live draft, source proof, activation/Knowledge blockers, and 0.5.188 implementation boundary. |
 | Survival Builder RPG MMO Content Gap Audit | `docs/design/survival-builder-rpg-mmo-content-gap-audit.md`; durable documentation-only broad genre/system gap context for later roadmap planning. Do not treat it as a backlog replacement, runtime authority, or permission to broaden narrow prompts. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |

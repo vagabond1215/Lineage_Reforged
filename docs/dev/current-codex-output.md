@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.186 - Sacred Site Authority Schema Decision
+Source version/run: Version 0.5.187 - Sacred Site Content Seed Plan
 Date: 2026-06-19
-Branch/status assumption: `master`; worktree was clean before this run at `a1e8eb7`.
+Branch/status assumption: `master`; worktree was clean before this run at `eec57b2`.
 
 ## Result
 
-Completed a documentation-only schema decision for the future `world.sacred_sites` authority. The decision fixes the records-only wrapper, future file family, place-qualified id and flattened slug rules, strict record fields, planned/active semantics, parent-hotspot coherence, conservative enums, validation posture, and Knowledge sequencing.
+Completed a documentation-only seed plan selecting exactly one future planned sacred-site candidate: `sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine`.
 
-No sacred-site schema or validator was implemented, no content file was created, and no live content changed.
+The candidate is supported by the canonical Glasswake Shrine settlement, its shrine-community identity, coherent place hierarchy, and the active parent hotspot's Elemental Pantheon relationship. It is not ready for active status, Knowledge snippets, pilgrimage, services, or behavior.
 
 ## Files Changed
 
-- `docs/design/sacred-site-authority-schema-decision.md`
+- `docs/design/sacred-site-content-seed-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -28,14 +28,15 @@ No sacred-site schema or validator was implemented, no content file was created,
 - live JSON audit - passed; religions, hotspots, Knowledge registry, and snippets are unchanged
 - future artifact absence audit - passed; no sacred-site content, schema, validator, or test file exists
 - schema/validator/test/runtime/UI/storage audit - passed; no protected implementation path changed
+- draft JSON audit - passed; the one planned record has every required field and none of the forbidden optional/runtime fields
 - Religion registry/locality audit - passed; Religion does not advertise sacred sites and the locality remains planned and unreferenced
-- next-route audit - passed; 0.5.187 remains documentation-only and limited to at most one planned seed candidate
+- next-route audit - passed; 0.5.188 is limited to schema, pure validator, focused tests, and schema-file registration
 
-No tests were run because 0.5.186 changed documentation only.
+No tests were run because 0.5.187 changed documentation only.
 
 ## Behavior / Runtime Confirmation
 
-No sacred-site schema, validator, test, content, Knowledge snippet, Religion registry, religious hotspot, runtime, UI, storage, or gameplay behavior changed.
+No live content, sacred-site content file, schema, validator, test, Knowledge snippet, Religion registry, religious hotspot, runtime, UI, storage, or gameplay behavior changed.
 
 `religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced. `sacredSiteType` remains descriptive metadata only.
 
@@ -43,15 +44,15 @@ No pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study
 
 ## Risks / Follow-Up
 
-- All schema and validation rules remain planned until a later implementation run.
-- `religiousOrderIds` must remain unusable until canonical order authority exists.
-- The next run selects at most one planned content candidate and must not create live content.
+- The draft is a non-live planned candidate and does not prove active status.
+- No deity dedication, order stewardship, separately bounded building footprint, service, law, or mechanical authority is claimed.
+- `0.5.188` must not create sacred-site content or normal lint registration.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.187 - Sacred Site Content Seed Plan
+Version 0.5.188 - Sacred Site Schema And Validator
 
 ## Suggested Commit Message
 
-docs(world): decide sacred site authority schema
+docs(world): plan first sacred site seed
