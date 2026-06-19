@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-19
-Route: Codex local sequencing alignment after `Version 0.5.187 - Sacred Site Content Seed Plan`
+Route: Codex local sequencing alignment after `Version 0.5.188 - Sacred Site Schema And Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.187 - Sacred Site Content Seed Plan`
+- `Version 0.5.188 - Sacred Site Schema And Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.188 - Sacred Site Schema And Validator`
+- `Version 0.5.189 - First Sacred Site Content Seed`
 
 Versioning note:
 
@@ -48,8 +48,9 @@ Versioning note:
 - The Religion expansion research integration landed in `0.5.185`: broad feature lanes, naming candidates, relationships, and research lessons are planning guidance only and preserve the immediate sacred-site lane.
 - The sacred-site schema decision landed in `0.5.186`: the future wrapper, paths, record contract, ids, references, enums, status semantics, validation, and Knowledge sequence are fixed without implementation.
 - The sacred-site seed plan landed in `0.5.187`: exactly one planned Glasswake Shrine candidate is drafted with authority proof, explicit omissions, and active/Knowledge blockers.
-- Keep Sacred Site Schema And Validator as the narrow `0.5.188` direction.
-- Do not roll from `0.5.187` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The sacred-site schema and validator landed in `0.5.188`: strict structure, pure semantic validation, focused tests, and schema-file registration exist without live content or normal lint registration.
+- Keep First Sacred Site Content Seed as the narrow `0.5.189` direction.
+- Do not roll from `0.5.188` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -164,18 +165,19 @@ Versioning note:
 | 107 | `0.5.185` | Religion System Expansion Research Integration | Codex 5.5 Local docs-first | `docs/design/religion-system-expansion-research-plan.md` | research integration plan | Completed | Integrated broad Religion planning without changing live content or displacing the sacred-site lane. |
 | 108 | `0.5.186` | Sacred Site Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/sacred-site-authority-schema-decision.md` | planning decision | Completed | Fixed the future wrapper, paths, record contract, ids, references, enums, status semantics, validation, and Knowledge sequence without implementation. |
 | 109 | `0.5.187` | Sacred Site Content Seed Plan | Codex 5.5 Local docs-first | `docs/design/sacred-site-content-seed-plan.md` | planning doc | Completed | Selected one planned Glasswake Shrine draft without creating content, schema, validator, Knowledge support, or behavior. |
-| 110 | `0.5.188` | Sacred Site Schema And Validator | Codex 5.5 Local | `docs/design/sacred-site-authority-schema-decision.md`; `docs/design/sacred-site-content-seed-plan.md` | schema + pure validator + focused tests | Next | Implement no content file, normal lint registration, Knowledge support, activation, pilgrimage, runtime, or gameplay behavior. |
+| 110 | `0.5.188` | Sacred Site Schema And Validator | Codex 5.5 Local | `packages/schemas/world/sacred-site.schema.json`; `tools/content-lint/sacred-sites.mjs` | schema + pure validator + focused tests | Completed | Added strict validation and 55 focused tests without content, normal lint registration, Knowledge support, activation, or behavior. |
+| 111 | `0.5.189` | First Sacred Site Content Seed | Codex 5.5 Local | `docs/design/sacred-site-content-seed-plan.md` | narrow content seed + normal lint registration | Next | Add exactly one planned record; no Knowledge support, activation, snippet, pilgrimage, runtime, UI, storage, or gameplay behavior. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.188 - Sacred Site Schema And Validator`
-2. `First Sacred Site Content Seed`, only after schema and validator support lands
+1. `0.5.189 - First Sacred Site Content Seed`
+2. `Sacred Site Knowledge Subject Decision`, only after planned content validates
 3. `Religious Order Placeholder Authority Plan`
 4. `Religious Favorability And Elemental Alignment Framework Plan`
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.188` must stay limited to schema, pure validator, focused tests, and schema-file registration.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.189` must stay limited to one planned content record and normal-lint registration.
 
 ## Default Prompt Pattern
 
@@ -191,9 +193,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.188 - Sacred Site Schema And Validator` as the immediate narrow next recommended run.
+- Keep `Version 0.5.189 - First Sacred Site Content Seed` as the immediate narrow next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- `0.5.187` planned exactly one future Glasswake Shrine record without creating content, schema, validator, tests, Knowledge support, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
+- `0.5.188` added sacred-site schema and pure validation without creating content, normal lint registration, Knowledge support, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SacredSiteCollection",
+  "description": "Schema for planned and active named sacred-site authority. It defines descriptive content only and does not define runtime state, pilgrimage mechanics, access, services, rewards, law, favorability, alignment, commands, UI, storage, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/sacredSiteRecord"
+      }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "religionId": {
+      "type": "string",
+      "pattern": "^religion\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "deityId": {
+      "type": "string",
+      "pattern": "^deity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "religiousOrderId": {
+      "type": "string",
+      "pattern": "^religious_order\\.[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)?$"
+    },
+    "regionId": {
+      "type": "string",
+      "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "regionLocalityId": {
+      "type": "string",
+      "pattern": "^region_locality\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "settlementId": {
+      "type": "string",
+      "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "religiousHotspotId": {
+      "type": "string",
+      "pattern": "^religious_hotspot\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "placeAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["macroRegionId", "regionId"],
+      "properties": {
+        "macroRegionId": {
+          "$ref": "#/$defs/regionId"
+        },
+        "regionId": {
+          "$ref": "#/$defs/regionId"
+        },
+        "regionLocalityId": {
+          "$ref": "#/$defs/regionLocalityId"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlementId"
+        }
+      }
+    },
+    "sacredSiteRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "summary",
+        "status",
+        "placeAnchor",
+        "parentReligiousHotspotId",
+        "religionIds",
+        "sacredSiteType",
+        "publicPosture",
+        "pilgrimageStatus",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^sacred_site\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "active", "deferred"]
+        },
+        "placeAnchor": {
+          "$ref": "#/$defs/placeAnchor"
+        },
+        "parentReligiousHotspotId": {
+          "$ref": "#/$defs/religiousHotspotId"
+        },
+        "religionIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/religionId"
+          }
+        },
+        "deityIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/deityId"
+          }
+        },
+        "religiousOrderIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/religiousOrderId"
+          }
+        },
+        "sacredSiteType": {
+          "type": "string",
+          "enum": ["shrine", "temple", "monastery", "holy_spring", "sacred_grove"]
+        },
+        "publicPosture": {
+          "type": "string",
+          "enum": ["indifferent", "universal", "tolerant", "aligned", "exclusive"]
+        },
+        "pilgrimageStatus": {
+          "type": "string",
+          "enum": ["none", "local", "regional", "major"]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/noteList"
+        },
+        "notes": {
+          "$ref": "#/$defs/noteList"
+        }
+      }
+    }
+  }
+}
