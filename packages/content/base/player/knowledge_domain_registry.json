@@ -440,8 +440,8 @@
       "completionPolicyRef": null,
       "visibilityPolicyRef": null,
       "schemaGapNotes": [
-        "The current snippet subject vocabulary supports only religion and deity as direct Religion subjects; doctrine, rite, holy-day, religious-order, shrine, temple, sacred-site, and religious-hotspot subject types remain absent.",
-        "The current snippet validator blocks settlement, culture, institution, historical_event, and custom subjects for Religion snippets; religion and deity are the only direct Religion subject authorities.",
+        "The current snippet subject vocabulary supports religion, deity, and religious_hotspot as direct Religion subjects; doctrine, rite, holy-day, religious-order, shrine, temple, and sacred-site subject types remain absent.",
+        "The current snippet validator supports direct Religion authority for religion, deity, and active religious_hotspot records; settlement, culture, institution, historical_event, and custom subjects remain blocked for Religion snippets.",
         "Current region and settlement content can identify shrine communities, but it does not yet author dominant-faith, doctrine, mismatch-pressure, hotspot, or Elemental Pantheon affiliation authority."
       ],
       "notes": [
