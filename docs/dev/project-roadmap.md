@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.183 - Religious Hotspot Locality Snippet Decision`
-- Next recommended version: `Version 0.5.184 - Sacred Site Authority Plan` (planning only)
+- Latest completed version: `Version 0.5.184 - Sacred Site Authority Plan`
+- Next recommended version: `Version 0.5.185 - Sacred Site Authority Schema Decision` (planning only)
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -41,7 +41,8 @@ Versioning rule:
 - `Version 0.5.181 - Religious Hotspot Content Status Activation` activated only the settlement-scale Glasswake hotspot and added its validator-required Elemental Pantheon dominant faith; the locality hotspot remains planned without a dominant faith.
 - `Version 0.5.182 - Religious Hotspot Knowledge Snippet Seed` added exactly one Glasswake hotspot snippet and aligned the Religion registry; existing Religion snippets remain unchanged and the locality hotspot remains planned and unreferenced.
 - `Version 0.5.183 - Religious Hotspot Locality Snippet Decision` kept the locality hotspot planned and unreferenced because current authority does not prove distinct value beyond the Glasswake settlement snippet; it selected a planning-only sacred-site authority pass next.
-- Do not roll from `0.5.183` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.184 - Sacred Site Authority Plan` selected a future separate `world.sacred_sites` named-site authority linked to parent religious hotspots, kept `sacredSiteType` descriptive, and separated authority from Knowledge, pilgrimage, order, law, relationship, and runtime behavior.
+- Do not roll from `0.5.184` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -263,7 +264,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.181` | Religious Hotspot Content Status Activation | Codex Local | Narrow content status | Completed. Activated only `religious_hotspot.glasswake_shrine_lantern_gardens` with validator-required `dominantFaithIds: ["religion.elemental_pantheon"]`. | Kept the locality hotspot planned without `dominantFaithIds`; added no registry/snippet content or behavior. |
 | `0.5.182` | Religious Hotspot Knowledge Snippet Seed | Codex Local | Narrow registry/snippet seed | Completed. Aligned Religion registry content and added exactly one hotspot identification snippet. | Policy refs remain null; no runtime or gameplay behavior changed. |
 | `0.5.183` | Religious Hotspot Locality Snippet Decision | Codex Local docs-first | Planning | Completed. Kept the locality hotspot planned and unreferenced because current authority does not prove distinct coverage. | Documentation only; no live content or behavior changed. |
-| `0.5.184` | Sacred Site Authority Plan | Codex Local docs-first | Planning | Recommended next. Decide sacred-site identity, ownership, and hotspot-specialization boundaries. | Planning only; no sacred-site content, schema, validator, snippet, pilgrimage, runtime, or gameplay implementation. |
+| `0.5.184` | Sacred Site Authority Plan | Codex Local docs-first | Planning | Completed. Selected a future separate named-site authority linked to religious hotspots and defined minimum fields and boundaries. | Documentation only; no sacred-site content, schema, validator, snippet, pilgrimage, runtime, or gameplay implementation. |
+| `0.5.185` | Sacred Site Authority Schema Decision | Codex Local docs-first | Planning | Recommended next. Finalize exact record, wrapper, enum, reference, and semantic-validation decisions. | Planning only; do not create schema, validator, tests, content, or behavior. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -285,9 +287,10 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.184 - Sacred Site Authority Plan`
-2. `Religious Order Placeholder Authority Plan`
-3. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
+1. `0.5.185 - Sacred Site Authority Schema Decision`
+2. `Sacred Site Authority Schema And Validator`, only after the schema decision approves a bounded implementation
+3. `Religious Order Placeholder Authority Plan`
+4. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -315,7 +318,8 @@ Scope guardrails:
 - `Version 0.5.182 - Religious Hotspot Knowledge Snippet Seed` is completed with exactly one Glasswake snippet and live Religion registry alignment.
 - The completed registry alignment remains content-lint authority only and does not make Knowledge trials runnable.
 - `Version 0.5.183 - Religious Hotspot Locality Snippet Decision` is completed as documentation only; the locality hotspot remains planned and unreferenced.
-- Keep `0.5.184` planning-only; it must decide sacred-site authority without implementing sacred-site content, schemas, validators, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
+- `Version 0.5.184 - Sacred Site Authority Plan` is completed as documentation only; no sacred-site authority content exists and `sacredSiteType` remains descriptive.
+- Keep `0.5.185` planning-only; it must decide the exact schema and semantic-validation contract without creating schema, validator, tests, content, Knowledge vocabulary, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -683,7 +687,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 90 | `0.5.181` | Religious Hotspot Content Status Activation | `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md` | Completed |
 | 91 | `0.5.182` | Religious Hotspot Knowledge Snippet Seed | `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md` | Completed |
 | 92 | `0.5.183` | Religious Hotspot Locality Snippet Decision | `docs/design/religious-hotspot-locality-snippet-decision.md` | Completed |
-| 93 | `0.5.184` | Sacred Site Authority Plan | `docs/design/religious-hotspot-locality-snippet-decision.md` | Next; planning only |
+| 93 | `0.5.184` | Sacred Site Authority Plan | `docs/design/sacred-site-authority-plan.md` | Completed |
+| 94 | `0.5.185` | Sacred Site Authority Schema Decision | `docs/design/sacred-site-authority-plan.md` | Next; planning only |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
@@ -737,6 +742,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | Religious Hotspot Knowledge Subject Vocabulary Plan | `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md`; use for direct `religious_hotspot` vocabulary, exact future schema and validator touchpoints, active-only live-snippet references, focused tests, and deferred sacred-site/order/favorability boundaries. |
 | Religious Hotspot Knowledge Snippet Seed Plan | `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md`; use for the one-record activation decision, first Tier 1 snippet posture, registry alignment timing, supported discovery sources, and 0.5.181/0.5.182 sequence. |
 | Religious Hotspot Locality Snippet Decision | `docs/design/religious-hotspot-locality-snippet-decision.md`; use for the decision to keep locality coverage planned and unreferenced, the missing-authority criteria, forbidden claims, and the planning-only sacred-site authority next route. |
+| Sacred Site Authority Plan | `docs/design/sacred-site-authority-plan.md`; use for the future separate named-site authority decision, parent-hotspot relationship, minimum fields, Knowledge sequencing, pilgrimage separation, and forbidden inferences. |
 | Survival Builder RPG MMO Content Gap Audit | `docs/design/survival-builder-rpg-mmo-content-gap-audit.md`; durable documentation-only broad genre/system gap context for later roadmap planning. Do not treat it as a backlog replacement, runtime authority, or permission to broaden narrow prompts. |
 | Bloodlines Information Architecture Audit | Partially consumed by `0.5.71` and `0.5.72`; keep for richer tree and future Bloodlines presentation constraints. |
 | Heirloom vs Bequest Vocabulary Audit | Consumed by `docs/design/heirloom-and-bequest-systems-plan.md` and the design ledger; retained only as compact checklist until inheritance-runtime readiness cleanup. |

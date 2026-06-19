@@ -1,54 +1,54 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.183 - Religious Hotspot Locality Snippet Decision
+Source version/run: Version 0.5.184 - Sacred Site Authority Plan
 Date: 2026-06-19
-Branch/status assumption: `master`; the requested Religion `schemaGapNotes` blocker fix was already unstaged and was preserved as pre-existing worktree state.
+Branch/status assumption: `master`; worktree was clean before this run at `8799cbb`.
 
 ## Result
 
-Completed a documentation-only decision to keep `religious_hotspot.lantern_shrine_gardens` planned and unreferenced. Current authority does not prove distinct locality-scale Knowledge value beyond the existing Glasswake settlement snippet.
+Completed a documentation-only authority plan selecting a future separate `world.sacred_sites` collection for canonical named sites while preserving sacred sites as rare specializations of religious hotspots.
 
-Selected `Version 0.5.184 - Sacred Site Authority Plan` as the next narrow planning-only run. No live content changed in 0.5.183.
+Current `sacredSiteType` values remain descriptive metadata only. No sacred-site content was implemented, and no live Knowledge snippet, Religion registry record, or religious hotspot record changed in 0.5.184.
 
 ## Files Changed
 
-- `docs/design/religious-hotspot-locality-snippet-decision.md`
+- `docs/design/sacred-site-authority-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/future_content_backlog.md`
 
-Pre-existing and preserved outside this run: `packages/content/base/player/knowledge_domain_registry.json` contains only the separately requested Religion `schemaGapNotes` blocker fix.
-
 ## Checks Run
 
 - `git diff --check` - passed
 - conflict-marker scan on changed docs - passed
 - trailing-whitespace scan on changed docs - passed
-- changed-path scope audit - passed; six allowed 0.5.183 docs changed, plus the preserved pre-existing registry note fix
-- live locality/snippet audit - passed; the locality remains planned without `dominantFaithIds` and has no snippet references
-- protected live-content audit - passed; Knowledge snippets and religious hotspot records did not change
-- pre-existing registry baseline audit - passed; its diff remains limited to the two separately requested `schemaGapNotes` replacements
+- changed-path scope audit - passed; only the six allowed 0.5.184 documentation paths changed
+- protected hotspot/snippet/registry audit - passed; no live JSON changed
+- sacred-site content absence audit - passed; no content file was created
+- schema/validator/test/runtime/UI/storage audit - passed; no protected implementation path changed
+- live locality/snippet audit - passed; the locality remains planned without `dominantFaithIds` and unreferenced
 
-No tests were run because 0.5.183 changed documentation only.
+No tests were run because 0.5.184 changed documentation only.
 
 ## Behavior / Runtime Confirmation
 
-No snippet, registry, hotspot, schema, validator, source, test, runtime, UI, storage, gameplay, sacred-site, religious-order, favorability, alignment, law, pilgrimage, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, or travel behavior changed in 0.5.183.
+No sacred-site content, live Knowledge snippet, Religion registry, religious hotspot, schema, validator, source, test, runtime, UI, storage, gameplay, pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, or travel behavior changed in 0.5.184.
 
-The locality hotspot remains planned without `dominantFaithIds` and remains unreferenced by live snippets.
+`religious_hotspot.lantern_shrine_gardens` remains planned without `dominantFaithIds` and unreferenced. `sacredSiteType` remains descriptive metadata only.
 
 ## Risks / Follow-Up
 
-- Locality activation remains blocked until distinct locality-scale authority and a justified dominant faith exist.
-- `0.5.184` is planning-only and must not implement sacred-site authority or pilgrimage behavior.
+- No current record has canonical named sacred-site identity.
+- `0.5.185` must remain a documentation-only schema decision; implementation is not yet bounded.
+- Pilgrimage remains a later mechanic and must not be inferred from descriptive `pilgrimageStatus` content.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.184 - Sacred Site Authority Plan
+Version 0.5.185 - Sacred Site Authority Schema Decision
 
 ## Suggested Commit Message
 
-docs(knowledge): decide religious hotspot locality snippet path
+docs(world): plan sacred site authority boundary

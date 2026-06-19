@@ -1,51 +1,53 @@
 # Current GPT Handoff
 
-Source route: Codex local documentation pass through `Version 0.5.183 - Religious Hotspot Locality Snippet Decision`
+Source route: Codex local documentation pass through `Version 0.5.184 - Sacred Site Authority Plan`
 Date: 2026-06-19
-Branch/status assumption: `master`; latest numbered run is documentation-only. A separately requested Religion registry note fix may remain unstaged alongside these docs.
+Branch/status assumption: `master`; latest numbered run is documentation-only.
 
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest numbered Codex handoff.
-- `docs/design/religious-hotspot-locality-snippet-decision.md` owns the locality activation, snippet, missing-authority, and next-route decisions.
-- `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md` remains authority for the completed Glasswake activation and first hotspot snippet posture.
-- `docs/design/religious-hotspot-knowledge-subject-vocabulary-plan.md` remains authority for direct hotspot subjects and active-only validation.
-- The Glasswake settlement hotspot is active and owns the only live hotspot snippet.
-- `religious_hotspot.lantern_shrine_gardens` remains planned without `dominantFaithIds` and unreferenced by live snippets.
+- `docs/design/sacred-site-authority-plan.md` owns future sacred-site collection, identity, minimum-field, Knowledge sequencing, and boundary decisions.
+- `docs/design/religious-hotspot-locality-snippet-decision.md` continues to own the decision to keep locality coverage planned and unreferenced.
+- Named sacred sites should use a future separate `world.sacred_sites` authority while remaining rare specializations of canonical religious hotspots.
+- Existing `sacredSiteType` fields are descriptive metadata only and create no named-site identity.
+- The Glasswake settlement hotspot remains the only active hotspot and owns the only live hotspot snippet.
+- `religious_hotspot.lantern_shrine_gardens` remains planned without `dominantFaithIds` and unreferenced.
 - Religion advertises `religious_hotspot` and `world.religious_hotspots`; its policy refs remain null.
-- `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, and `docs/future_content_backlog.md` own direction and deferred work.
+- No `world.sacred_sites`, `sacred_site.*` ids, direct sacred-site Knowledge vocabulary, or `knowledge_domain.sacred_sites` exists.
 
 ## Current Anchor
 
 Latest completed numbered run:
 
-- `Version 0.5.183 - Religious Hotspot Locality Snippet Decision`
+- `Version 0.5.184 - Sacred Site Authority Plan`
 
 Immediate next numbered Codex run:
 
-- `Version 0.5.184 - Sacred Site Authority Plan` (planning only)
+- `Version 0.5.185 - Sacred Site Authority Schema Decision` (planning only)
 
 Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
 
-## Version 0.5.183 Result
+## Version 0.5.184 Result
 
-- Decided that current locality authority does not prove distinct Knowledge value beyond the existing Glasswake settlement snippet.
-- Kept the locality hotspot planned, without `dominantFaithIds`, and unreferenced.
-- Deferred locality activation and snippet authoring until distinct locality-scale faith, site, practice, history, deity, or order authority exists.
-- Routed the next planning pass to sacred-site authority because generic hotspot authority now exists but named sacred-site identity and ownership do not.
-- Added no live content and changed no snippet, registry, hotspot, schema, validator, source, test, policy, runtime, UI, storage, gameplay, sacred-site, religious-order, favorability, alignment, law, pilgrimage, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, or travel behavior.
+- Selected a future separate sacred-site authority collection linked to canonical parent religious hotspots.
+- Defined minimum future identity, place, religion, optional deity/order, type, posture, descriptive pilgrimage, provenance, and boundary fields.
+- Required canonical named-site ids before future sacred-site Knowledge snippets.
+- Separated descriptive authority from Knowledge references, pilgrimage mechanics, favorability/alignment, law/access, order control, and runtime state.
+- Kept `sacredSiteType` descriptive and changed no live content.
+- Added no sacred-site content, snippet, registry, hotspot, schema, validator, source, test, runtime, UI, storage, gameplay, pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, or travel behavior.
 
 ## Deferred Context
 
-- `0.5.184` should decide sacred-site authority ownership and identity only; it must not implement content, schemas, validators, snippets, pilgrimage, services, rewards, or behavior.
-- Locality snippet reconsideration requires distinct non-duplicative authority and a justified active-record dominant faith.
-- Religious-order placeholders remain later than the sacred-site authority decision unless order identity becomes a prerequisite.
-- Favorability/alignment, relationship, law, conversion, apostasy, runtime, UI, storage, rewards, events, commands, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, and gameplay remain deferred.
+- `0.5.185` should finalize exact sacred-site schema and semantic-validation decisions as documentation only.
+- A later approved sequence should separate schema/validator implementation, seed planning, planned content, Knowledge vocabulary, active status, and snippet content.
+- Pilgrimage remains the preferred first later sacred-site mechanic but has no contract or behavior yet.
+- Religious-order stewardship, favorability/alignment, legal/access consequences, confluence sites, runtime state, UI, storage, rewards, events, commands, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, and gameplay remain deferred.
 
 ## Near-Term Sequence
 
 | Order | Version | Topic | Status |
 | ---: | --- | --- | --- |
-| 1 | `0.5.183` | Religious Hotspot Locality Snippet Decision | Completed; documentation only |
-| 2 | `0.5.184` | Sacred Site Authority Plan | Recommended next; planning only |
-| 3 | Later | Religious Order Placeholder Authority Plan | Deferred |
+| 1 | `0.5.184` | Sacred Site Authority Plan | Completed; documentation only |
+| 2 | `0.5.185` | Sacred Site Authority Schema Decision | Recommended next; planning only |
+| 3 | Later | Sacred Site Authority Schema And Validator | Deferred implementation |
