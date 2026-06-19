@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-19
-Route: Codex local sequencing alignment after `Version 0.5.184 - Sacred Site Authority Plan`
+Route: Codex local sequencing alignment after `Version 0.5.185 - Religion System Expansion Research Integration`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.184 - Sacred Site Authority Plan`
+- `Version 0.5.185 - Religion System Expansion Research Integration`
 
 Immediate next Codex run:
 
-- `Version 0.5.185 - Sacred Site Authority Schema Decision` (planning only)
+- `Version 0.5.186 - Sacred Site Authority Schema Decision` (planning only)
 
 Versioning note:
 
@@ -45,8 +45,9 @@ Versioning note:
 - The religious hotspot snippet seed landed in `0.5.182`: exactly one Glasswake identification snippet is live, Religion advertises `religious_hotspot` and `world.religious_hotspots`, existing Religion snippets remain preserved, and the locality hotspot remains planned and unreferenced.
 - The locality snippet decision landed in `0.5.183`: current authority does not prove distinct locality-scale value, so the locality hotspot remains planned and unreferenced and sacred-site authority planning is next.
 - The sacred-site authority plan landed in `0.5.184`: future named sites use a separate authority linked to parent hotspots, `sacredSiteType` remains descriptive, and pilgrimage and other behavior stay separate.
-- Keep Sacred Site Authority Schema Decision as the planning-only `0.5.185` direction.
-- Do not roll from `0.5.184` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- The Religion expansion research integration landed in `0.5.185`: broad feature lanes, naming candidates, relationships, and research lessons are planning guidance only and preserve the immediate sacred-site lane.
+- Keep Sacred Site Authority Schema Decision as the planning-only `0.5.186` direction.
+- Do not roll from `0.5.185` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -158,18 +159,19 @@ Versioning note:
 | 104 | `0.5.182` | Religious Hotspot Knowledge Snippet Seed | Codex 5.5 Local | `docs/design/religious-hotspot-knowledge-snippet-seed-plan.md` | narrow registry/snippet seed | Completed | Added exactly one hotspot identification snippet and aligned Religion registry content with `religious_hotspot` and `world.religious_hotspots`; no policy or behavior changes. |
 | 105 | `0.5.183` | Religious Hotspot Locality Snippet Decision | Codex 5.5 Local docs-first | `docs/design/religious-hotspot-locality-snippet-decision.md` | planning decision | Completed | Kept locality coverage planned and unreferenced because current authority does not prove distinct value; no live content changed. |
 | 106 | `0.5.184` | Sacred Site Authority Plan | Codex 5.5 Local docs-first | `docs/design/sacred-site-authority-plan.md` | planning doc | Completed | Selected a future separate named-site authority linked to parent hotspots and defined minimum fields and strict behavior boundaries. |
-| 107 | `0.5.185` | Sacred Site Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/sacred-site-authority-plan.md` | planning decision | Next | Finalize exact schema and validation ownership only; no schema, validator, tests, content, snippets, pilgrimage, runtime, or gameplay implementation. |
+| 107 | `0.5.185` | Religion System Expansion Research Integration | Codex 5.5 Local docs-first | `docs/design/religion-system-expansion-research-plan.md` | research integration plan | Completed | Integrated broad Religion planning without changing live content or displacing the sacred-site lane. |
+| 108 | `0.5.186` | Sacred Site Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/sacred-site-authority-plan.md`; `docs/design/religion-system-expansion-research-plan.md` | planning decision | Next | Finalize exact schema and validation ownership only; no schema, validator, tests, content, snippets, pilgrimage, runtime, or gameplay implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.185 - Sacred Site Authority Schema Decision`
+1. `0.5.186 - Sacred Site Authority Schema Decision`
 2. `Sacred Site Authority Schema And Validator`, only after an approved bounded schema decision
 3. `Religious Order Placeholder Authority Plan`
 4. `Religious Favorability And Elemental Alignment Framework Plan`
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.185` is planning-only and must not create sacred-site schema, validator, content, Knowledge support, or pilgrimage behavior.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.186` is planning-only and must not create sacred-site schema, validator, content, Knowledge support, or pilgrimage behavior.
 
 ## Default Prompt Pattern
 
@@ -185,9 +187,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.185 - Sacred Site Authority Schema Decision` as the immediate planning-only next recommended run.
+- Keep `Version 0.5.186 - Sacred Site Authority Schema Decision` as the immediate planning-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
-- `0.5.184` planned a future sacred-site authority layer without creating content, schema, validator, Knowledge support, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
+- `0.5.185` integrated broad Religion research as documentation only without creating content, schema, validator, Knowledge support, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, worship, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

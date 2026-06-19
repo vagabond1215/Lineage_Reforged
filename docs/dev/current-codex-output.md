@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.184 - Sacred Site Authority Plan
+Source version/run: Version 0.5.185 - Religion System Expansion Research Integration
 Date: 2026-06-19
-Branch/status assumption: `master`; worktree was clean before this run at `8799cbb`.
+Branch/status assumption: `master`; worktree was clean before this run at `6f3e850`.
 
 ## Result
 
-Completed a documentation-only authority plan selecting a future separate `world.sacred_sites` collection for canonical named sites while preserving sacred sites as rare specializations of religious hotspots.
+Integrated the completed Deep Research religion-system findings as a documentation-only planning artifact. The plan selects a knowledge-first, authority-layered, descriptive-before-mechanical architecture and maps future Religion feature lanes without implementing them.
 
-Current `sacredSiteType` values remain descriptive metadata only. No sacred-site content was implemented, and no live Knowledge snippet, Religion registry record, or religious hotspot record changed in 0.5.184.
+The landed sacred-site authority plan remains the immediate near-term lane. Its documentation-only schema decision is renumbered to `0.5.186` after this inserted research integration.
 
 ## Files Changed
 
-- `docs/design/sacred-site-authority-plan.md`
+- `docs/design/religion-system-expansion-research-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,31 +24,30 @@ Current `sacredSiteType` values remain descriptive metadata only. No sacred-site
 - `git diff --check` - passed
 - conflict-marker scan on changed docs - passed
 - trailing-whitespace scan on changed docs - passed
-- changed-path scope audit - passed; only the six allowed 0.5.184 documentation paths changed
-- protected hotspot/snippet/registry audit - passed; no live JSON changed
-- sacred-site content absence audit - passed; no content file was created
+- changed-path scope audit - passed; only the six allowed documentation paths changed
+- live JSON audit - passed; religions, religious hotspots, Knowledge registry, and snippets are unchanged
 - schema/validator/test/runtime/UI/storage audit - passed; no protected implementation path changed
-- live locality/snippet audit - passed; the locality remains planned without `dominantFaithIds` and unreferenced
+- sacred-site narrow-route audit - passed; `0.5.186` remains the immediate planning-only Sacred Site Authority Schema Decision
 
-No tests were run because 0.5.184 changed documentation only.
+No tests were run because 0.5.185 changed documentation only.
 
 ## Behavior / Runtime Confirmation
 
-No sacred-site content, live Knowledge snippet, Religion registry, religious hotspot, schema, validator, source, test, runtime, UI, storage, gameplay, pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, or travel behavior changed in 0.5.184.
+No live content, schema, validator, source, test, Knowledge snippet, Religion registry, religious hotspot, runtime, UI, storage, or gameplay behavior changed.
 
-`religious_hotspot.lantern_shrine_gardens` remains planned without `dominantFaithIds` and unreferenced. `sacredSiteType` remains descriptive metadata only.
+No worship, prayer, offering, donation, service, pilgrimage, favorability, alignment, law, conversion, apostasy, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, or travel behavior was added.
 
 ## Risks / Follow-Up
 
-- No current record has canonical named sacred-site identity.
-- `0.5.185` must remain a documentation-only schema decision; implementation is not yet bounded.
-- Pilgrimage remains a later mechanic and must not be inferred from descriptive `pilgrimageStatus` content.
+- All new authority names, id patterns, relationships, and feature lanes are planning recommendations only.
+- Existing ids remain unchanged; the current flat deity-id convention is preserved pending any explicit future decision.
+- `0.5.186` must remain the narrow documentation-only Sacred Site Authority Schema Decision.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.185 - Sacred Site Authority Schema Decision
+Version 0.5.186 - Sacred Site Authority Schema Decision
 
 ## Suggested Commit Message
 
-docs(world): plan sacred site authority boundary
+docs(religion): integrate expansion research plan
