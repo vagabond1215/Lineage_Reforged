@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.188 - Sacred Site Schema And Validator`
-- Next recommended version: `Version 0.5.189 - First Sacred Site Content Seed`
+- Latest completed version: `Version 0.5.189 - First Sacred Site Content Seed`
+- Next recommended version: `Version 0.5.190 - Sacred Site Knowledge Subject Decision` (planning only)
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -46,7 +46,8 @@ Versioning rule:
 - `Version 0.5.186 - Sacred Site Authority Schema Decision` fixed the future records-only wrapper, paths, place-qualified ids, record contract, parent-hotspot coherence, vocabularies, validation posture, and staged Knowledge boundary without implementation.
 - `Version 0.5.187 - Sacred Site Content Seed Plan` selected exactly one future planned Glasswake Shrine candidate and proved its place, parent-hotspot, and broad religion authority without live content.
 - `Version 0.5.188 - Sacred Site Schema And Validator` added the strict schema, pure validator, focused tests, and schema-file registration without content or normal-lint registration.
-- Do not roll from `0.5.188` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.189 - First Sacred Site Content Seed` added exactly one planned Glasswake Shrine record and registered the collection in normal content lint at 58 files.
+- Do not roll from `0.5.189` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -273,7 +274,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.186` | Sacred Site Authority Schema Decision | Codex Local docs-first | Planning | Completed. Finalized the future records-only wrapper, paths, record shape, ids, references, enums, status rules, validation, and Knowledge sequencing. | Documentation only; no schema, validator, tests, content, or behavior. |
 | `0.5.187` | Sacred Site Content Seed Plan | Codex Local docs-first | Planning | Completed. Selected and drafted exactly one planned Glasswake Shrine record with explicit authority proof and blockers. | Documentation only; no `sacred_sites.json`, schema, validator, tests, snippets, or behavior. |
 | `0.5.188` | Sacred Site Schema And Validator | Codex Local | Schema/validator | Completed. Added the strict schema, pure validator, 55 focused tests, and schema-file registration. | No content file, normal lint registration, Knowledge support, activation, pilgrimage, runtime, or gameplay behavior. |
-| `0.5.189` | First Sacred Site Content Seed | Codex Local | Narrow content seed | Recommended next. Add exactly one planned Glasswake Shrine record and register the collection in normal lint. | No Knowledge support, activation, snippet, pilgrimage, runtime, UI, storage, or gameplay behavior. |
+| `0.5.189` | First Sacred Site Content Seed | Codex Local | Narrow content seed | Completed. Added exactly one planned Glasswake Shrine record and registered the collection in normal lint at 58 files. | No Knowledge support, activation, snippet, pilgrimage, runtime, UI, storage, or gameplay behavior. |
+| `0.5.190` | Sacred Site Knowledge Subject Decision | Codex Local docs-first | Planning | Recommended next. Decide direct vocabulary, active-only references, registry timing, validator ownership, and tests. | Planning only; no schema, validator, registry, activation, snippet, runtime, or gameplay changes. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -295,8 +297,8 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.189 - First Sacred Site Content Seed`
-2. `Sacred Site Knowledge Subject Decision`, only after the planned content validates
+1. `0.5.190 - Sacred Site Knowledge Subject Decision`
+2. `Sacred Site Knowledge Subject Support`, only after the subject decision
 3. `Religious Order Placeholder Authority Plan`
 4. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
 
@@ -331,7 +333,8 @@ Scope guardrails:
 - `Version 0.5.186 - Sacred Site Authority Schema Decision` is completed as documentation only; no schema, validator, test, content, or Knowledge support exists.
 - `Version 0.5.187 - Sacred Site Content Seed Plan` is completed as documentation only with exactly one planned Glasswake Shrine candidate.
 - `Version 0.5.188 - Sacred Site Schema And Validator` is completed with no live content or normal lint registration; normal lint remains 57 files.
-- Keep `0.5.189` narrow: add exactly one planned content record and normal-lint registration only; no Knowledge vocabulary, activation, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
+- `Version 0.5.189 - First Sacred Site Content Seed` is completed with exactly one planned record and normal lint at 58 files.
+- Keep `0.5.190` planning-only; decide Knowledge vocabulary and active-only resolution without changing schema, validator, registry, status, snippets, runtime, UI, storage, or gameplay behavior.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -704,7 +707,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 95 | `0.5.186` | Sacred Site Authority Schema Decision | `docs/design/sacred-site-authority-schema-decision.md` | Completed |
 | 96 | `0.5.187` | Sacred Site Content Seed Plan | `docs/design/sacred-site-content-seed-plan.md` | Completed |
 | 97 | `0.5.188` | Sacred Site Schema And Validator | `packages/schemas/world/sacred-site.schema.json`; `tools/content-lint/sacred-sites.mjs` | Completed |
-| 98 | `0.5.189` | First Sacred Site Content Seed | `docs/design/sacred-site-content-seed-plan.md` | Next; narrow content seed |
+| 98 | `0.5.189` | First Sacred Site Content Seed | `packages/content/base/world/sacred_sites.json` | Completed |
+| 99 | `0.5.190` | Sacred Site Knowledge Subject Decision | `packages/content/base/world/sacred_sites.json`; `docs/design/sacred-site-authority-schema-decision.md` | Next; planning only |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

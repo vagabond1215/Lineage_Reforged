@@ -306,8 +306,15 @@ test("rejects empty and duplicate authority notes", async (t) => {
   }
 });
 
-test("does not register sacred-site content in normal content lint", async () => {
+test("registers and validates exactly one planned sacred-site seed", async () => {
   const indexSource = await readFile("tools/content-lint/index.mjs", "utf8");
-  assert.doesNotMatch(indexSource, /sacred_sites\.json/);
-  assert.doesNotMatch(indexSource, /sacred-sites\.mjs/);
+  const wrapper = JSON.parse(await readFile(SITE_PATH, "utf8"));
+  assert.match(indexSource, /sacred_sites\.json/);
+  assert.match(indexSource, /sacred-sites\.mjs/);
+  assert.equal(wrapper.records.length, 1);
+  assert.equal(wrapper.records[0].id, "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine");
+  assert.equal(wrapper.records[0].status, "planned");
+  assert.equal(Object.hasOwn(wrapper.records[0], "deityIds"), false);
+  assert.equal(Object.hasOwn(wrapper.records[0], "religiousOrderIds"), false);
+  assert.doesNotThrow(() => validate({ ...makeInput(), wrapper }));
 });

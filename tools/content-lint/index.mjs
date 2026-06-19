@@ -19,6 +19,7 @@ import { validateKnowledgeDomainRegistry } from "./knowledge-domain-registry.mjs
 import { validateKnowledgeSnippets } from "./knowledge-snippets.mjs";
 import { validateKnowledgeTrialPolicies } from "./knowledge-trial-policies.mjs";
 import { validateReligiousHotspots } from "./religious-hotspots.mjs";
+import { validateSacredSites } from "./sacred-sites.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -744,6 +745,12 @@ const checks = [
   },
   {
     file: "packages/content/base/world/religious_hotspots.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/world/sacred_sites.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
     forbidGeoQualifierInName: false
@@ -9301,6 +9308,36 @@ async function validateReligiousHotspotsAgainstDependencies() {
   });
 }
 
+async function validateSacredSitesAgainstDependencies() {
+  const relativePath = "packages/content/base/world/sacred_sites.json";
+  const sitePath = path.join(ROOT, relativePath);
+  const siteSchemaPath = path.join(ROOT, "packages/schemas/world/sacred-site.schema.json");
+  const religionPath = path.join(ROOT, "packages/content/base/world/religions.json");
+  const hotspotPath = path.join(ROOT, "packages/content/base/world/religious_hotspots.json");
+  const regionPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const localityPath = path.join(ROOT, "packages/content/base/world/region_localities.json");
+  const settlementPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+
+  const siteWrapper = JSON.parse(await readFile(sitePath, "utf8"));
+  const siteSchema = JSON.parse(await readFile(siteSchemaPath, "utf8"));
+  const religionWrapper = JSON.parse(await readFile(religionPath, "utf8"));
+  const hotspotWrapper = JSON.parse(await readFile(hotspotPath, "utf8"));
+  const regionWrapper = JSON.parse(await readFile(regionPath, "utf8"));
+  const localityWrapper = JSON.parse(await readFile(localityPath, "utf8"));
+  const settlementWrapper = JSON.parse(await readFile(settlementPath, "utf8"));
+
+  validateSacredSites({
+    relativePath,
+    wrapper: siteWrapper,
+    schema: siteSchema,
+    religions: religionWrapper.records,
+    religiousHotspots: hotspotWrapper.records,
+    regions: regionWrapper.records,
+    regionLocalities: localityWrapper.records,
+    settlements: settlementWrapper.records
+  });
+}
+
 async function validateKnowledgeDomainRegistryAgainstDependencies() {
   const relativePath = "packages/content/base/player/knowledge_domain_registry.json";
   const registryPath = path.join(ROOT, relativePath);
@@ -10023,6 +10060,7 @@ async function main() {
   }
 
   await validateReligiousHotspotsAgainstDependencies();
+  await validateSacredSitesAgainstDependencies();
   await validateKnowledgeDomainRegistryAgainstDependencies();
   await validateKnowledgeSnippetsAgainstDependencies();
   await validateKnowledgeTrialPoliciesAgainstDependencies();

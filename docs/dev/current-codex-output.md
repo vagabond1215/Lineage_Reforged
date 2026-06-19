@@ -1,21 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.188 - Sacred Site Schema And Validator
+Source version/run: Version 0.5.189 - First Sacred Site Content Seed
 Date: 2026-06-19
-Branch/status assumption: `master`; worktree was clean before this run at `f9c84d9`.
+Branch/status assumption: `master`; worktree was clean before this run at `9235705`.
 
 ## Result
 
-Added the strict sacred-site record schema, pure fixture-driven semantic validator, 55 focused sacred-site tests, and focused schema-file registration.
+Added `packages/content/base/world/sacred_sites.json` with exactly one planned record: `sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine`.
 
-No sacred-site content file was created. Normal content lint does not load or require `world.sacred_sites` and remains at 57 checked files.
+Registered the collection and pure semantic validator in normal content lint and updated focused live-seed coverage. Normal lint now checks 58 files.
 
 ## Files Changed
 
-- `packages/schemas/world/sacred-site.schema.json`
-- `tools/content-lint/sacred-sites.mjs`
+- `packages/content/base/world/sacred_sites.json`
+- `tools/content-lint/index.mjs`
 - `tests/unit/sacred-sites-validation.test.mjs`
-- `tests/unit/schema-files.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -25,37 +24,37 @@ No sacred-site content file was created. Normal content lint does not load or re
 ## Checks Run
 
 - `node --test tests/unit/sacred-sites-validation.test.mjs` - passed, 55 tests
-- `node --test tests/unit/schema-files.test.mjs` - passed, 83 tests
-- `npm.cmd run tool:content-lint` - passed, `content-lint: ok (57 files checked)`
+- `npm.cmd run tool:content-lint` - passed, `content-lint: ok (58 files checked)`
 - `git diff --check` - passed
 - conflict-marker scan on changed files - passed
 - trailing-whitespace scan on changed files - passed
-- changed-path scope audit - passed; only the nine intended implementation, test, and coordination paths changed
-- sacred-site content absence audit - passed; no `sacred_sites.json` file exists
-- live JSON and normal-lint registration audit - passed; protected content and `tools/content-lint/index.mjs` are unchanged
+- changed-path scope audit - passed; only the eight intended content, lint, test, and coordination paths changed
+- sacred-site seed audit - passed; the records-only wrapper contains exactly the approved planned record and no forbidden authority fields
+- protected content/schema/validator audit - passed; religions, hotspots, Knowledge content, and the existing schema/validator module are unchanged
 - Religion registry/locality audit - passed; Religion does not advertise sacred sites and the locality remains planned and unreferenced
+- normal-lint registration audit - passed; the new collection and dependency validation pass are registered
 - runtime/UI/storage audit - passed; no protected runtime path changed
-- next-route audit - passed; 0.5.189 remains exactly one planned content record plus normal-lint registration
+- next-route audit - passed; 0.5.190 remains a planning-only Knowledge subject decision
 
 ## Behavior / Runtime Confirmation
 
-Schema, pure validation, and focused test behavior changed. No live content, sacred-site content file, normal content-lint registration, Knowledge subject support, Knowledge snippet, Religion registry, religious hotspot, runtime, UI, storage, or gameplay behavior changed.
+Authored sacred-site content and normal content-lint registration changed. No schema, validator-module, Knowledge subject support, Knowledge snippet, Religion registry, religious hotspot, runtime, UI, storage, or gameplay behavior changed.
 
-`religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced. Hotspot `sacredSiteType` remains descriptive metadata only.
+The only sacred-site record is `planned`. `religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced. Hotspot `sacredSiteType` remains descriptive metadata only.
 
 No pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, command, event, or reward behavior was added.
 
 ## Risks / Follow-Up
 
-- The validator is intentionally unregistered from normal content lint until the content file exists.
-- `religiousOrderIds` is structurally reserved but rejected semantically until canonical order authority exists.
-- `0.5.189` must add exactly one planned record and no Knowledge or runtime behavior.
+- Planned sacred-site content is not eligible for Knowledge snippets.
+- Religion does not yet advertise `sacred_site` or `world.sacred_sites`.
+- The next run is a subject-vocabulary decision only and must not implement support or activation.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.189 - First Sacred Site Content Seed
+Version 0.5.190 - Sacred Site Knowledge Subject Decision
 
 ## Suggested Commit Message
 
-feat(world): add sacred site schema validation
+content(world): seed first sacred site

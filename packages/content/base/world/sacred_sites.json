@@ -1,0 +1,35 @@
+{
+  "records": [
+    {
+      "id": "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine",
+      "slug": "glasswake_shrine_lantern_gardens_glasswake_shrine",
+      "name": "Glasswake Shrine",
+      "summary": "A planned named shrine authority centered on the sea-facing Glasswake Shrine community within the Lantern Shrine Gardens of Glasswake Quay.",
+      "status": "planned",
+      "placeAnchor": {
+        "macroRegionId": "region.lantern_isles",
+        "regionId": "region.glasswake_quay",
+        "regionLocalityId": "region_locality.lantern_shrine_gardens",
+        "settlementId": "settlement.glasswake_shrine"
+      },
+      "parentReligiousHotspotId": "religious_hotspot.glasswake_shrine_lantern_gardens",
+      "religionIds": [
+        "religion.elemental_pantheon"
+      ],
+      "sacredSiteType": "shrine",
+      "publicPosture": "tolerant",
+      "pilgrimageStatus": "local",
+      "sourceAuthorityNotes": [
+        "Current settlement authority names Glasswake Shrine and describes it as a sea-facing shrine community with coastal-shrine, monastic-house, and scholastic-hospice identity.",
+        "Current place authority locates the settlement in the Lantern Shrine Gardens locality of Glasswake Quay within the Lantern Isles.",
+        "The active parent hotspot centers on the Glasswake Shrine community, uses the same place anchor, and associates the location with the Elemental Pantheon."
+      ],
+      "notes": [
+        "Planned descriptive authority only; no runtime, access, service, route, reward, law, favorability, alignment, command, event, UI, storage, or gameplay behavior.",
+        "No deityIds are listed because current authority does not prove a specific deity dedication.",
+        "No religiousOrderIds or faith-posture arrays are listed because current authority does not prove order stewardship, control, or site-specific faith restrictions.",
+        "publicPosture and pilgrimageStatus remain descriptive classifications and create no access or pilgrimage mechanics."
+      ]
+    }
+  ]
+}
