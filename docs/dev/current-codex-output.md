@@ -1,23 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.191 - Sacred Site Knowledge Subject Support
+Source version/run: Version 0.5.192 - Sacred Site Activation Decision
 Date: 2026-06-19
-Branch/status assumption: `master`; worktree was clean before this run at `a43ac5b`.
+Branch/status assumption: `master`; worktree was clean before this run at `c8a7513`.
 
 ## Result
 
-Implemented direct `sacred_site` Knowledge subject vocabulary and validation support. Sacred-site subjects resolve only through `world.sacred_sites`, require the exact place-qualified id shape, and accept only active records.
+Approved `sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine` for a later narrow content-only activation pass. The decision is documentation-only; the live record remains `planned`.
 
-The live planned Glasswake site remains rejected. Live Religion registry content, Knowledge snippets, sacred-site status, religious hotspots, and runtime behavior remain unchanged.
+Activation will mean only that the named sacred site is live authored world authority. It will not add a Knowledge snippet, align Religion, or create pilgrimage, access, service, runtime, UI, storage, or gameplay behavior.
 
 ## Files Changed
 
-- `packages/schemas/player/knowledge_snippet.schema.json`
-- `packages/schemas/player/knowledge-domain-registry.schema.json`
-- `tools/content-lint/knowledge-snippets.mjs`
-- `tools/content-lint/index.mjs`
-- `tests/unit/knowledge-snippets-validation.test.mjs`
-- `tests/unit/knowledge-domain-registry-validation.test.mjs`
+- `docs/design/sacred-site-activation-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -26,36 +21,32 @@ The live planned Glasswake site remains rejected. Live Religion registry content
 
 ## Checks Run
 
-- `node --test tests/unit/knowledge-snippets-validation.test.mjs` - passed, 89 tests
-- `node --test tests/unit/knowledge-domain-registry-validation.test.mjs` - passed, 51 tests
-- `npm run tool:content-lint` - passed, 58 files checked
 - `git diff --check` - passed
 - conflict-marker scan on changed files - passed
 - trailing-whitespace scan on changed files - passed
-- changed-path scope audit - passed; exactly 11 permitted files changed
-- protected live-content and runtime audit - passed; no live content JSON or runtime paths changed
+- changed-path scope audit - passed; only the six permitted documentation files changed
+- protected live-content/schema/validator/test/runtime audit - passed; no protected paths changed
 - sacred-site/registry/snippet/hotspot invariant audit - passed
 
-`tests/unit/schema-files.test.mjs` was not changed, so its conditional focused run was not required.
+No tests were run because 0.5.192 changed documentation only.
 
 ## Behavior / Runtime Confirmation
 
-Knowledge schemas now permit future `sacred_site` registry and snippet vocabulary. Normal Knowledge validation loads `world.sacred_sites`, enforces `sacred_site.<place>.<site>` identity, canonical resolution, and active-only eligibility.
+No content, schema, validator, test, runtime, UI, storage, or gameplay behavior changed. The single sacred-site record remains planned. Religion still does not advertise `sacred_site` or `world.sacred_sites`; no sacred-site snippet exists.
 
-No live content JSON changed. Religion still does not advertise `sacred_site` or `world.sacred_sites`; policy refs remain null. No Knowledge snippet or sacred-site status changed, the only site remains planned, and `religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced. Hotspot `sacredSiteType` remains descriptive only.
-
-No pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, runtime, UI, storage, command, event, reward, access, service, donation, or gameplay behavior changed.
+No religious hotspot changed. `religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced, and hotspot `sacredSiteType` remains descriptive only. Normal content lint remains at the previously verified 58 checked files.
 
 ## Risks / Follow-Up
 
-- Subject support alone does not authorize a live snippet because Religion remains intentionally unaligned and the only site remains planned.
-- Activation readiness must be decided before changing the site status.
+- 0.5.193 must be status-only apart from focused test and coordination-doc updates.
+- Activation eligibility must not be confused with live Knowledge authorization.
+- Registry alignment and the first snippet remain later separate work.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.192 - Sacred Site Activation Decision
+Version 0.5.193 - Sacred Site Content Status Activation
 
 ## Suggested Commit Message
 
-feat(knowledge): add sacred site subject validation
+docs(world): decide sacred site activation readiness
