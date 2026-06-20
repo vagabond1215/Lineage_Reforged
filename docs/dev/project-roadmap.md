@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.198 - Economy Authority Boundary Decision`
-- Next recommended version: `Version 0.5.199 - Settlement Economy Schema Decision`
+- Latest completed version: `Version 0.5.200 - Family Authority Boundary Decision`
+- Next recommended version: `Version 0.5.201 - Household vs Family Schema Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -56,7 +56,8 @@ Versioning rule:
 - `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed` aligned Religion with `sacred_site` and `world.sacred_sites`, kept policy refs null, and added exactly one descriptive Glasswake Shrine snippet without changing site or hotspot content.
 - `Version 0.5.197 - World Geography Authority Boundary Decision` established docs-only boundaries across place hierarchy, semantic map features, visual geometry, routes, political overlays, ecology/biome profiles, POIs, and future grids.
 - `Version 0.5.198 - Economy Authority Boundary Decision` established docs-only boundaries across settlement economies, market profiles, resources, commodities, production, professions, guilds, institutions, crafting, route overlays, property/law, and Economy Knowledge.
-- Do not roll from `0.5.198` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.200 - Family Authority Boundary Decision` established docs-only boundaries across people, households, families, kinship links, genealogical lineages, bloodlines, overlays, estates, inheritance, prestige, and player legacy state.
+- Do not roll from `0.5.200` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -293,7 +294,9 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | Codex Local | Narrow registry and snippet content | Completed. Religion advertises `sacred_site` and `world.sacred_sites`; exactly one approved Tier 1 snippet is live. | Policy refs remain null; no hotspot, runtime, UI, storage, or gameplay changes. |
 | `0.5.197` | World Geography Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Defined semantic geography/map ownership and deferred new grid reliance to `0.6+`. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
 | `0.5.198` | Economy Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Defined descriptive economy authority ownership against substantial existing content and runtime surfaces. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
-| `0.5.199` | Settlement Economy Schema Decision | Codex Local docs-first | Planning | Recommended next. Define the strict `world.settlement_economies` contract and resolve embedded settlement-field ownership. | Documentation only; no schema, validator, content, migration, runtime, UI, storage, or gameplay changes. |
+| `0.5.199` | Settlement Economy Schema Decision | Codex Local docs-first | Planning | Deferred after explicit family-lane reprioritization; still valid. | Documentation only; no schema, validator, content, migration, runtime, UI, storage, or gameplay changes. |
+| `0.5.200` | Family Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Defined authored family authority against existing account family, estate, source-run, and Bloodlines owners. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
+| `0.5.201` | Household vs Family Schema Decision | Codex Local docs-first | Planning | Recommended next. Define household/family contracts, person prerequisites, membership ownership, and id boundaries. | Documentation only; no schema, validator, content, migration, runtime, UI, storage, or gameplay changes. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -315,11 +318,11 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.199 - Settlement Economy Schema Decision`
-2. `Settlement Economy Schema And Validator`, only after the schema decision
-3. `Settlement Economy Content Seed Plan`
-4. `World Map Feature Authority Schema Decision`, deferred but still valid
-5. `World Route Authority Decision`, required before trade-route economy overlays
+1. `0.5.201 - Household vs Family Schema Decision`
+2. `Kinship Link Authority Schema Decision`
+3. `Household Schema And Validator`, only after the schema decision
+4. `0.5.199 - Settlement Economy Schema Decision`, deferred but still valid
+5. `World Map Feature Authority Schema Decision`, deferred but still valid
 6. `Religious Order Placeholder Authority Plan`, deferred but still valid
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
@@ -363,7 +366,8 @@ Scope guardrails:
 - `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed` is completed; Religion registry alignment and exactly one approved sacred-site snippet are live without hotspot or behavior changes.
 - `Version 0.5.197 - World Geography Authority Boundary Decision` is completed as documentation only; no implementation occurred.
 - `Version 0.5.198 - Economy Authority Boundary Decision` is completed as documentation only; no implementation occurred.
-- Keep `0.5.199` limited to the settlement-economy schema decision and embedded-field ownership boundary.
+- `Version 0.5.200 - Family Authority Boundary Decision` is completed as documentation only; no implementation occurred.
+- Keep `0.5.201` limited to the household-vs-family schema decision and person/account/runtime ownership boundaries.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -746,7 +750,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 105 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Completed |
 | 106 | `0.5.197` | World Geography Authority Boundary Decision | `docs/design/world-geography-authority-boundary-decision.md` | Completed; documentation only |
 | 107 | `0.5.198` | Economy Authority Boundary Decision | `docs/design/economy-authority-boundary-decision.md` | Completed; documentation only |
-| 108 | `0.5.199` | Settlement Economy Schema Decision | `docs/design/economy-authority-boundary-decision.md` | Next; documentation only |
+| 108 | `0.5.199` | Settlement Economy Schema Decision | `docs/design/economy-authority-boundary-decision.md` | Deferred; documentation only |
+| 109 | `0.5.200` | Family Authority Boundary Decision | `docs/design/family-authority-boundary-decision.md` | Completed; documentation only |
+| 110 | `0.5.201` | Household vs Family Schema Decision | `docs/design/family-authority-boundary-decision.md` | Next; documentation only |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-20
-Route: Codex local sequencing alignment after `Version 0.5.198 - Economy Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.200 - Family Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.198 - Economy Authority Boundary Decision`
+- `Version 0.5.200 - Family Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.199 - Settlement Economy Schema Decision`
+- `Version 0.5.201 - Household vs Family Schema Decision`
 
 Versioning note:
 
@@ -59,8 +59,9 @@ Versioning note:
 - Sacred Site Religion Registry And Snippet Seed landed in `0.5.196`: Religion now advertises `sacred_site` and `world.sacred_sites`, policy refs remain null, and exactly one descriptive Glasswake Shrine snippet is live.
 - World Geography Authority Boundary Decision landed in `0.5.197`: semantic map features, visual geometry, routes, political overlays, ecology/biome profiles, POIs, and future grids now have explicit docs-only ownership boundaries.
 - Economy Authority Boundary Decision landed in `0.5.198`: descriptive economy layers now have explicit ownership boundaries against existing settlement, item-value, production, guild, and runtime economy surfaces.
-- Keep Settlement Economy Schema Decision as the documentation-only `0.5.199` direction.
-- Do not roll from `0.5.198` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Family Authority Boundary Decision landed in `0.5.200`: authored person, household, family, kinship, lineage, overlay, estate, inheritance, prestige, and player-state boundaries are now explicit.
+- Keep Household vs Family Schema Decision as the documentation-only `0.5.201` direction.
+- Do not roll from `0.5.200` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -186,20 +187,22 @@ Versioning note:
 | 118 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | Codex 5.5 Local | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | registry alignment + one snippet | Completed | Added one descriptive sacred-site snippet and aligned Religion; no hotspot, runtime, UI, storage, or gameplay behavior. |
 | 119 | `0.5.197` | World Geography Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/world-geography-authority-boundary-decision.md` | planning decision | Completed | Defined layer ownership and future sequence without implementation. |
 | 120 | `0.5.198` | Economy Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | planning decision | Completed | Defined economy authority ownership and future sequence without implementation. |
-| 121 | `0.5.199` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Next | Resolve embedded settlement-field ownership and define a strict descriptive contract without implementation. |
+| 121 | `0.5.199` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit family-lane reprioritization. |
+| 122 | `0.5.200` | Family Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/family-authority-boundary-decision.md` | planning decision | Completed | Defined authored family-layer ownership without implementation. |
+| 123 | `0.5.201` | Household vs Family Schema Decision | Codex 5.5 Local docs-first | `docs/design/family-authority-boundary-decision.md` | schema decision | Next | Resolve person references, membership ownership, ids, and account/runtime overlap without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.199 - Settlement Economy Schema Decision`
-2. `Settlement Economy Schema And Validator`, only after the schema decision
-3. `Settlement Economy Content Seed Plan`
-4. `World Map Feature Authority Schema Decision`
-5. `World Route Authority Decision`
+1. `0.5.201 - Household vs Family Schema Decision`
+2. `Kinship Link Authority Schema Decision`
+3. `Household Schema And Validator`, only after the schema decision
+4. `0.5.199 - Settlement Economy Schema Decision`
+5. `World Map Feature Authority Schema Decision`
 6. `Religious Order Placeholder Authority Plan`
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.199` must remain a documentation-only settlement-economy schema decision.
+The recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.201` must remain a documentation-only household-vs-family schema decision.
 
 ## Default Prompt Pattern
 
@@ -215,7 +218,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.199 - Settlement Economy Schema Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.201 - Household vs Family Schema Decision` as the immediate documentation-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
@@ -226,6 +229,7 @@ Each future Codex prompt should:
 - `0.5.196` aligned Religion and added exactly one sacred-site snippet without changing site content, hotspot content, runtime, UI, storage, or gameplay behavior.
 - `0.5.197` consumed the temporary world-map research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.198` consumed the temporary economy research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
+- `0.5.200` consumed the temporary family/lineage research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

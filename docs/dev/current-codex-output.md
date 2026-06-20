@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.198 - Economy Authority Boundary Decision
+Source version/run: Version 0.5.200 - Family Authority Boundary Decision
 Date: 2026-06-20
-Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `84d0633`.
+Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `c466c1f`.
 
 ## Result
 
-Created `docs/design/economy-authority-boundary-decision.md` from the temporary economy Deep Research artifact and live repository inspection.
+Created `docs/design/family-authority-boundary-decision.md` from the temporary family/lineage Deep Research artifact and live repository inspection.
 
-The decision selects future `world.settlement_economies` as the first implementation candidate, requires a current-data ownership decision for embedded settlement economy fields, keeps future `world.market_profiles` descriptive and price-free in `0.5.x`, separates resources from commodities and professions from guilds/institutions, defers trade-route economy overlays until route authority stabilizes, keeps crafting transformations separate, forbids exact prices and runtime fields in first-pass authority, and keeps Economy Knowledge informational pending a dedicated subject decision.
+The decision selects future `civilization.households` as the first family-lane implementation candidate, assigns direct kin facts to future `civilization.kinship_links`, separates households, families, genealogical lineages, political/cultural overlays, and estates, reserves bloodlines for explicit canon, keeps static inheritance and family prestige descriptive-only, requires visibility/dispute metadata, and defers full player heirs, bequests, descendants, property transfer, and legacy continuation to `0.6+`.
 
 ## Files Changed
 
-- `docs/design/economy-authority-boundary-decision.md`
+- `docs/design/family-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -31,19 +31,20 @@ The decision selects future `world.settlement_economies` as the first implementa
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No content, schema, validator, test, Knowledge, map/geography authority, runtime, UI, storage, market/trade simulation, crafting, ownership, pricing, or gameplay behavior changed.
+Documentation only. No content, schema, validator, test, Knowledge, economy/geography authority, account family, Family Prestige, estate, source-run inheritance, runtime, UI, storage, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Existing settlements, item values, economy rules, production chains, workplaces, guilds, and runtime economy/trade systems already own overlapping data. The next decision must prevent parallel authority and define a current-data transition without compatibility aliases.
-- The temporary economy research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
-- The world map-feature schema decision remains deferred and valid; it was displaced from immediate sequence by this user-prioritized economy pass.
+- Current player `lineageId` means ancestry/species context, not genealogical lineage. The next decision must establish non-conflicting ids and references.
+- Existing account family, prestige ledger, estate, source-run, and Bloodlines owners are mutable state/presentation, not static civilization authority. The next decision must prevent parallel ownership.
+- The temporary family research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
+- `Version 0.5.199 - Settlement Economy Schema Decision` remains deferred and valid; it was displaced by this user-prioritized family pass.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.199 - Settlement Economy Schema Decision
+Version 0.5.201 - Household vs Family Schema Decision
 
 ## Suggested Commit Message
 
-docs(economy): decide authority boundaries
+docs(family): decide authority boundaries
