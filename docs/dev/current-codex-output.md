@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.200 - Family Authority Boundary Decision
+Source version/run: Version 0.5.201 - Civic Authority Boundary Decision
 Date: 2026-06-20
-Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `c466c1f`.
+Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `1dd7aef`.
 
 ## Result
 
-Created `docs/design/family-authority-boundary-decision.md` from the temporary family/lineage Deep Research artifact and live repository inspection.
+Created `docs/design/civic-authority-boundary-decision.md` from the temporary civic Deep Research artifact and corrected its assumptions through live repository inspection.
 
-The decision selects future `civilization.households` as the first family-lane implementation candidate, assigns direct kin facts to future `civilization.kinship_links`, separates households, families, genealogical lineages, political/cultural overlays, and estates, reserves bloodlines for explicit canon, keeps static inheritance and family prestige descriptive-only, requires visibility/dispute metadata, and defers full player heirs, bequests, descendants, property transfer, and legacy continuation to `0.6+`.
+The decision selects future `world.polities` as the first civic implementation candidate, separates polity from government and jurisdiction from law text, preserves existing guild and physical-place owners, keeps factions/guilds/institutions and diplomacy/conflict as distinct layers, and makes all first-pass civic authority descriptive-only. Player legal status, faction reputation, enforcement, guard AI, courts, wanted/bounty state, diplomacy runtime, and war/conflict simulation remain deferred to `0.6+`.
 
 ## Files Changed
 
-- `docs/design/family-authority-boundary-decision.md`
+- `docs/design/civic-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -26,25 +26,25 @@ The decision selects future `civilization.households` as the first family-lane i
 - trailing-whitespace scan on changed files - passed
 - changed-path scope audit - passed; exactly six documentation files changed
 - implementation-scope audit - passed; no content, schema, validator, test, runtime, UI, storage, or gameplay file changed
-- required-section and decision-posture audit - passed
+- required-section and decision-posture audit - passed; all 21 required sections and 11 required decisions are explicit
 - no tests run; documentation-only change
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No content, schema, validator, test, Knowledge, economy/geography authority, account family, Family Prestige, estate, source-run inheritance, runtime, UI, storage, or gameplay behavior changed.
+Documentation only. No content, schema, validator, test, Knowledge, economy/family/geography/religion authority, runtime, UI, storage, legal-status, reputation, enforcement, diplomacy, conflict, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Current player `lineageId` means ancestry/species context, not genealogical lineage. The next decision must establish non-conflicting ids and references.
-- Existing account family, prestige ledger, estate, source-run, and Bloodlines owners are mutable state/presentation, not static civilization authority. The next decision must prevent parallel ownership.
-- The temporary family research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
-- `Version 0.5.199 - Settlement Economy Schema Decision` remains deferred and valid; it was displaced by this user-prioritized family pass.
+- Existing settlement `administrativeRole`, map `conflictZones`, guild records, and derived settlement institution profiles are adjacent owners, not polity, government, jurisdiction, law, authored institution, or diplomatic-conflict authority.
+- Jurisdiction authority must be decided before law-code or local-law schemas.
+- The temporary civic research artifact remains temporary. The polity schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
+- The uncompleted household/family and settlement-economy schema decisions remain deferred and valid after this user-prioritized civic pass.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.201 - Household vs Family Schema Decision
+Version 0.5.202 - Polity Schema Decision
 
 ## Suggested Commit Message
 
-docs(family): decide authority boundaries
+docs(civics): decide polity and law authority boundaries
