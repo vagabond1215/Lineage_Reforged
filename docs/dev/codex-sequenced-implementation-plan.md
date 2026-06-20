@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-20
-Route: Codex local sequencing alignment after `Version 0.5.208 - Quest Event Chronicle Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.209 - Item Equipment Inventory Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.208 - Quest Event Chronicle Authority Boundary Decision`
+- `Version 0.5.209 - Item Equipment Inventory Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.209 - Quest Objective And Condition Schema Decision`
+- `Version 0.5.210 - Weapon And Armor Profile Schema Decision`
 
 Versioning note:
 
@@ -65,8 +65,9 @@ Versioning note:
 - Magic Study Authority Boundary Decision landed in `0.5.204`: spell, known-spell, Arcane Lore, study, ritual, trial, Prestige, institution/teacher, item, and runtime-state boundaries are now explicit.
 - NPC And Social Authority Boundary Decision landed in `0.5.206`: people, NPC, role, workplace, schedule, dialogue, relationship, rumor, companion, service, Knowledge, and player-state boundaries are now explicit.
 - Quest Event Chronicle Authority Boundary Decision landed in `0.5.208`: quest, objective/condition, reward, template/offer, event/storylet, rumor/hook, Chronicle, and narrative-state boundaries are now explicit.
-- Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.209` direction.
-- Do not roll from `0.5.208` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Item Equipment Inventory Authority Boundary Decision landed in `0.5.209`: item, consumable, weapon/armor/container/loot, currency/value, integration, and runtime-state boundaries are now explicit.
+- Keep Weapon And Armor Profile Schema Decision as the documentation-only `0.5.210` direction.
+- Do not roll from `0.5.209` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -202,20 +203,21 @@ Versioning note:
 | 128 | `0.5.206` | NPC And Social Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | planning decision | Completed | Defined NPC/social authority ownership without implementation. |
 | 129 | `0.5.207` | Person vs NPC Schema Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit quest/narrative-lane reprioritization. |
 | 130 | `0.5.208` | Quest Event Chronicle Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/quest-event-chronicle-authority-boundary-decision.md` | planning decision | Completed | Defined narrative authority ownership without implementation. |
-| 131 | `0.5.209` | Quest Objective And Condition Schema Decision | Codex 5.5 Local docs-first | `docs/design/quest-event-chronicle-authority-boundary-decision.md` | schema decision | Next | Reconcile embedded authored components and generated objectives without implementation. |
+| 131 | `0.5.209` | Item Equipment Inventory Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | planning decision | Completed | Defined item/equipment/inventory authority ownership without implementation. |
+| 132 | `0.5.210` | Weapon And Armor Profile Schema Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | schema decision | Next | Reconcile future equipment profiles with current `useProfiles` without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.209 - Quest Objective And Condition Schema Decision`
-2. `0.5.207 - Person vs NPC Schema Decision`
-3. `Relationship Link Schema Decision`, only after person identity is stable
-4. `0.5.205 - Magic Study Source Schema Decision`
-5. `Hazard And Route Security Boundary Decision`
-6. `0.5.202 - Polity Schema Decision`
+1. `0.5.210 - Weapon And Armor Profile Schema Decision`
+2. `Container Template And Loot Table Schema Decision`, after equipment profile ownership is stable
+3. `Quest Objective And Condition Schema Decision`
+4. `0.5.207 - Person vs NPC Schema Decision`
+5. `0.5.205 - Magic Study Source Schema Decision`
+6. `Complete Combat Deep Research`
 
-The recipe, crafting, family, civic, travel, magic, NPC/social, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.209` must remain a documentation-only quest objective/condition schema decision.
+The recipe, crafting, family, civic, travel, magic, NPC/social, narrative, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.210` must remain a documentation-only weapon/armor profile schema decision.
 
 ## Default Prompt Pattern
 
@@ -231,7 +233,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.209 - Quest Objective And Condition Schema Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.210 - Weapon And Armor Profile Schema Decision` as the immediate documentation-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
@@ -248,6 +250,7 @@ Each future Codex prompt should:
 - `0.5.204` consumed the temporary magic/Knowledge/study research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.206` consumed the temporary NPC/social research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.208` consumed the temporary quest/event/Chronicle research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
+- `0.5.209` consumed the temporary item/equipment/inventory research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior; it did not replace complete combat research.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

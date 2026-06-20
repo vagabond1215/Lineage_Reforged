@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.208 - Quest Event Chronicle Authority Boundary Decision
+Source version/run: Version 0.5.209 - Item Equipment Inventory Authority Boundary Decision
 Date: 2026-06-20
-Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `207e4f9`.
+Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `6631524`.
 
 ## Result
 
-Created `docs/design/quest-event-chronicle-authority-boundary-decision.md` from the temporary quest/event/Chronicle Deep Research artifact and corrected its assumptions through live repository inspection.
+Created `docs/design/item-equipment-inventory-authority-boundary-decision.md` from the temporary item/equipment/inventory Deep Research artifact and corrected its assumptions through live repository inspection.
 
-The decision preserves `civilization.quest_definitions`, `civilization.quest_archetypes`, and `civilization.quest_templates` as distinct existing owners; keeps quest definitions separate from mutable quest state; retains embedded descriptive objectives/conditions; and separates unique quests from generated repeatable offers. Rewards/consequences remain descriptive envelopes in authored content, while events/storylets, rumors/hooks, and future Chronicle templates remain authored seeds/templates separate from runtime state.
+The decision preserves `items.items` as canonical static item identity and separate consumable profiles, selects separate future weapon/armor/container/loot profile authorities, keeps currency and market values economy-owned, and keeps reward/NPC/vendor/magic/crafting/combat references non-mutating. Existing inventory/equipment/bag/wallet state remains runtime-owned.
 
 ## Files Changed
 
-- `docs/design/quest-event-chronicle-authority-boundary-decision.md`
+- `docs/design/item-equipment-inventory-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -26,26 +26,27 @@ The decision preserves `civilization.quest_definitions`, `civilization.quest_arc
 - trailing-whitespace scan on changed files - passed
 - changed-path scope audit - passed; exactly six documentation files changed
 - implementation-scope audit - passed; no content, schema, validator, test, runtime, UI, storage, or gameplay file changed
-- required-section and decision-posture audit - passed; all 23 required sections and 11 required decisions are explicit
+- required-section and decision-posture audit - passed; all 21 required sections and 13 required decisions are explicit
 - no tests run; documentation-only change
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No content, schema, validator, test, Knowledge, NPC/social, economy/family/civic/travel/geography/religion/magic authority, runtime, UI, storage, quest/offer/objective, event, reward, Chronicle, reputation, service, or gameplay behavior changed.
+Documentation only. No content, schema, validator, test, Knowledge, economy/crafting/combat/quest/magic/NPC/social/travel/geography/religion/family/civic authority, runtime, UI, storage, inventory, equipment, item-instance, loot, reward, vendor, durability, ownership, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Current authored quest action trees include descriptive condition/effect/state vocabulary, while generated offers use a separate runtime objective vocabulary. The next decision must reconcile these without rewriting content or state.
-- Existing generated quest offers and player/session/account quest/Chronicle state are live owners and must not be duplicated by static narrative records.
-- Quest giver/contact fields remain presentation metadata until people/NPC authority lands; they must not be migrated by inference.
-- The temporary quest/event/Chronicle research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
-- The unlanded `Version 0.5.207 - Person vs NPC Schema Decision` and `Version 0.5.205 - Magic Study Source Schema Decision` remain deferred and valid.
+- Existing item `useProfiles` already carry selected weapon/armor/tool/clothing combat metadata. A future profile split must reconcile ownership instead of duplicating it.
+- Market values currently reference canonical `itemKey`, not item ids. This decision preserves that economy-owned contract.
+- Monster drops/loot and quest reward fields are existing source-local envelopes, not a general loot-table authority.
+- The source artifact came from a combat research request but is item/inventory-focused. A complete dedicated combat Deep Research pass remains needed later.
+- The temporary item research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
+- The unlanded `Version 0.5.209 - Quest Objective And Condition Schema Decision` remains deferred and valid.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.209 - Quest Objective And Condition Schema Decision
+Version 0.5.210 - Weapon And Armor Profile Schema Decision
 
 ## Suggested Commit Message
 
-docs(quests): decide narrative authority boundaries
+docs(items): decide equipment inventory authority boundaries
