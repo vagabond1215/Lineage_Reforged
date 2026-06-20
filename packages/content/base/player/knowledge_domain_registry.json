@@ -381,6 +381,7 @@
         "religion",
         "deity",
         "religious_hotspot",
+        "sacred_site",
         "region",
         "settlement",
         "culture",
@@ -434,14 +435,15 @@
         "world.regions",
         "world.religions",
         "world.religious_hotspots",
+        "world.sacred_sites",
         "world.settlements"
       ],
       "trialPolicyRef": null,
       "completionPolicyRef": null,
       "visibilityPolicyRef": null,
       "schemaGapNotes": [
-        "The current snippet subject vocabulary supports religion, deity, and religious_hotspot as direct Religion subjects; doctrine, rite, holy-day, religious-order, shrine, temple, and sacred-site subject types remain absent.",
-        "The current snippet validator supports direct Religion authority for religion, deity, and active religious_hotspot records; settlement, culture, institution, historical_event, and custom subjects remain blocked for Religion snippets.",
+        "The current snippet subject vocabulary supports religion, deity, religious_hotspot, and sacred_site as direct Religion subjects; doctrine, rite, holy-day, religious-order, shrine, and temple subject types remain absent.",
+        "The current snippet validator supports direct Religion authority for religion, deity, active religious_hotspot records, and active sacred_site records; settlement, culture, institution, historical_event, and custom subjects remain blocked for Religion snippets.",
         "Current region and settlement content can identify shrine communities, but it does not yet author dominant-faith, doctrine, mismatch-pressure, hotspot, or Elemental Pantheon affiliation authority."
       ],
       "notes": [

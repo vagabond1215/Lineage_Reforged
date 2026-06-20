@@ -280,6 +280,35 @@
       ]
     },
     {
+      "id": "knowledge_snippet.religion.glasswake_shrine_lantern_gardens_glasswake_shrine.identification",
+      "domainId": "knowledge_domain.religion",
+      "subjectType": "sacred_site",
+      "subjectId": "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Glasswake Shrine",
+      "summary": "Glasswake Shrine is a named sacred site within Lantern Shrine Gardens at Glasswake Quay, broadly associated with the Elemental Pantheon.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified sacred site remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored Religion knowledge only and grants no deity dedication, religious-order stewardship, service, access, pilgrimage progress, favorability, alignment, law effect, spell access, Magic Study readiness, Prestige, family effect, runtime behavior, or gameplay behavior."
+      ]
+    },
+    {
       "id": "knowledge_snippet.general_lore.kaelvar.cultural_context",
       "domainId": "knowledge_domain.general_lore",
       "subjectType": "region",

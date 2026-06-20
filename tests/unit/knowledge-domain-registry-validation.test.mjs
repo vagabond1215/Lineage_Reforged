@@ -124,7 +124,7 @@ test("accepts Arcane Lore as planned without a legacy policy", () => {
   assert.equal(validate(input), true);
 });
 
-test("accepts active Religion with live religious hotspot registry alignment", () => {
+test("accepts active Religion with live hotspot and sacred-site registry alignment", () => {
   const input = makeInput();
   const religion = input.wrapper.records.find(
     (record) => record.id === "knowledge_domain.religion"
@@ -134,9 +134,12 @@ test("accepts active Religion with live religious hotspot registry alignment", (
   assert.ok(religion.canonicalSubjectTypes.includes("religion"));
   assert.ok(religion.canonicalSubjectTypes.includes("deity"));
   assert.ok(religion.canonicalSubjectTypes.includes("religious_hotspot"));
+  assert.ok(religion.canonicalSubjectTypes.includes("sacred_site"));
+  assert.ok(religion.relatedContentCollections.includes("world.religions"));
   assert.ok(
     religion.relatedContentCollections.includes("world.religious_hotspots")
   );
+  assert.ok(religion.relatedContentCollections.includes("world.sacred_sites"));
   assert.equal(religion.trialPolicyRef, null);
   assert.equal(religion.completionPolicyRef, null);
   assert.equal(religion.visibilityPolicyRef, null);
@@ -157,14 +160,11 @@ test("accepts religious hotspot vocabulary in an in-memory Religion fixture", ()
   assert.equal(validate(input), true);
 });
 
-test("accepts future sacred-site vocabulary in an in-memory Religion fixture", () => {
+test("accepts live sacred-site vocabulary in Religion", () => {
   const input = makeInput();
   const religion = input.wrapper.records.find(
     (record) => record.id === "knowledge_domain.religion"
   );
-
-  religion.canonicalSubjectTypes.push("sacred_site");
-  religion.relatedContentCollections.push("world.sacred_sites");
 
   assert.ok(
     input.recordSchema.properties.canonicalSubjectTypes.items.enum.includes(
@@ -174,15 +174,27 @@ test("accepts future sacred-site vocabulary in an in-memory Religion fixture", (
   assert.equal(validate(input), true);
 });
 
-test("keeps live Religion unaligned with sacred-site vocabulary", () => {
+test("keeps live Religion aligned without a sacred-site-specific domain", () => {
   const religion = registryWrapper.records.find(
     (record) => record.id === "knowledge_domain.religion"
   );
 
-  assert.equal(religion.canonicalSubjectTypes.includes("sacred_site"), false);
-  assert.equal(
-    religion.relatedContentCollections.includes("world.sacred_sites"),
-    false
+  assert.ok(religion.canonicalSubjectTypes.includes("religion"));
+  assert.ok(religion.canonicalSubjectTypes.includes("deity"));
+  assert.ok(religion.canonicalSubjectTypes.includes("religious_hotspot"));
+  assert.ok(religion.canonicalSubjectTypes.includes("sacred_site"));
+  assert.ok(religion.relatedContentCollections.includes("world.religions"));
+  assert.ok(religion.relatedContentCollections.includes("world.religious_hotspots"));
+  assert.ok(religion.relatedContentCollections.includes("world.sacred_sites"));
+  assert.equal(religion.trialPolicyRef, null);
+  assert.equal(religion.completionPolicyRef, null);
+  assert.equal(religion.visibilityPolicyRef, null);
+  assert.ok(
+    religion.schemaGapNotes.every(
+      (note) =>
+        !note.includes("sacred-site subject types remain absent") &&
+        !note.includes("active religious_hotspot records; settlement")
+    )
   );
   assert.equal(
     registryWrapper.records.some(

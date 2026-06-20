@@ -42,6 +42,7 @@ const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.religion",
   "knowledge_domain.religion",
   "knowledge_domain.religion",
+  "knowledge_domain.religion",
   "knowledge_domain.general_lore"
 ];
 
@@ -55,6 +56,7 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.religion.elemental_pantheon.identification",
   "knowledge_snippet.religion.light_lady.identification",
   "knowledge_snippet.religion.glasswake_shrine_lantern_gardens.identification",
+  "knowledge_snippet.religion.glasswake_shrine_lantern_gardens_glasswake_shrine.identification",
   "knowledge_snippet.general_lore.kaelvar.cultural_context"
 ];
 
@@ -215,8 +217,12 @@ function prepareSacredSiteSnippet(
   siteId = "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine"
 ) {
   const domain = religionDomain(input);
-  domain.canonicalSubjectTypes.push("sacred_site");
-  domain.relatedContentCollections.push("world.sacred_sites");
+  if (!domain.canonicalSubjectTypes.includes("sacred_site")) {
+    domain.canonicalSubjectTypes.push("sacred_site");
+  }
+  if (!domain.relatedContentCollections.includes("world.sacred_sites")) {
+    domain.relatedContentCollections.push("world.sacred_sites");
+  }
   input.wrapper.records = [
     religionSnippet({
       id: "knowledge_snippet.religion.sacred_site_fixture.identification",
@@ -230,7 +236,7 @@ function prepareSacredSiteSnippet(
   );
 }
 
-test("accepts the current ten-record snippet catalog", () => {
+test("accepts the current eleven-record snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.id),
@@ -262,6 +268,7 @@ test("accepts current canonical subject ids", () => {
       "religion.elemental_pantheon",
       "deity.light_lady",
       "religious_hotspot.glasswake_shrine_lantern_gardens",
+      "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine",
       "region.kaelvar"
     ]
   );
@@ -314,19 +321,55 @@ test("knowledge snippet schema includes direct religious hotspot vocabulary", ()
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
 });
 
-test("keeps live Religion unaligned with sacred-site Knowledge authority", () => {
+test("aligns live Religion with exactly one active sacred-site Knowledge snippet", () => {
+  const input = makeInput();
   const religion = religionDomain(makeInput());
-  assert.equal(religion.canonicalSubjectTypes.includes("sacred_site"), false);
-  assert.equal(
-    religion.relatedContentCollections.includes("world.sacred_sites"),
-    false
+  const sacredSiteSnippets = input.wrapper.records.filter(
+    (record) => record.subjectType === "sacred_site"
   );
+
+  assert.ok(religion.canonicalSubjectTypes.includes("sacred_site"));
+  assert.ok(religion.relatedContentCollections.includes("world.sacred_sites"));
+  assert.equal(sacredSiteSnippets.length, 1);
+  assert.equal(
+    sacredSiteSnippets[0].id,
+    "knowledge_snippet.religion.glasswake_shrine_lantern_gardens_glasswake_shrine.identification"
+  );
+  assert.equal(
+    sacredSiteSnippets[0].subjectId,
+    "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine"
+  );
+  assert.equal(sacredSiteSnippets[0].tier, 1);
+  assert.equal(sacredSiteSnippets[0].category, "identification");
+  assert.deepEqual(sacredSiteSnippets[0].discoverySources, [
+    { sourceType: "book_study", sourceId: null }
+  ]);
+  assert.deepEqual(sacredSiteSnippets[0].notes, [
+    "This snippet is authored Religion knowledge only and grants no deity dedication, religious-order stewardship, service, access, pilgrimage progress, favorability, alignment, law effect, spell access, Magic Study readiness, Prestige, family effect, runtime behavior, or gameplay behavior."
+  ]);
   assert.equal(
     registryWrapper.records.some(
       (record) => record.id === "knowledge_domain.sacred_sites"
     ),
     false
   );
+  assert.equal(
+    input.wrapper.records.some(
+      (record) => record.subjectId === "religious_hotspot.lantern_shrine_gardens"
+    ),
+    false
+  );
+  const nonActiveSacredSiteIds = new Set(
+    input.subjectAuthorities.sacred_site.records
+      .filter((record) => record.status === "planned" || record.status === "deferred")
+      .map((record) => record.id)
+  );
+  assert.ok(
+    sacredSiteSnippets.every(
+      (record) => !nonActiveSacredSiteIds.has(record.subjectId)
+    )
+  );
+  assert.equal(validate(input), true);
 });
 
 test("accepts a sacred-site fixture only when the cloned site is active and Religion is aligned", () => {
