@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.197 - World Geography Authority Boundary Decision
-Date: 2026-06-19
-Branch/status assumption: `master`; worktree was clean before this run.
+Source version/run: Version 0.5.198 - Economy Authority Boundary Decision
+Date: 2026-06-20
+Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `84d0633`.
 
 ## Result
 
-Created `docs/design/world-geography-authority-boundary-decision.md` from the temporary Deep Research artifact and a live repository audit.
+Created `docs/design/economy-authority-boundary-decision.md` from the temporary economy Deep Research artifact and live repository inspection.
 
-The decision defers new `macro_region` vocabulary, approves a future geometry-free `world.map_features` authority as the first implementation candidate, separates it from the existing geometry-heavy `world.world_map_features` visual layer, approves a later graph-first route authority split, keeps political geography separate, keeps ecology/biome authority descriptive first, separates POI placement rules from canonical POIs, and defers new grid-overlay reliance to `0.6+`.
+The decision selects future `world.settlement_economies` as the first implementation candidate, requires a current-data ownership decision for embedded settlement economy fields, keeps future `world.market_profiles` descriptive and price-free in `0.5.x`, separates resources from commodities and professions from guilds/institutions, defers trade-route economy overlays until route authority stabilizes, keeps crafting transformations separate, forbids exact prices and runtime fields in first-pass authority, and keeps Economy Knowledge informational pending a dedicated subject decision.
 
 ## Files Changed
 
-- `docs/design/world-geography-authority-boundary-decision.md`
+- `docs/design/economy-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -26,21 +26,24 @@ The decision defers new `macro_region` vocabulary, approves a future geometry-fr
 - trailing-whitespace scan on changed files - passed
 - changed-path scope audit - passed; exactly six documentation files changed
 - implementation-scope audit - passed; no content, schema, validator, test, runtime, UI, storage, or gameplay file changed
+- required-section and decision-posture audit - passed
+- no tests run; documentation-only change
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No schema, validator, content, Knowledge, test, content-lint, runtime, UI, storage, travel, pathfinding, POI spawning, procedural generation, trade simulation, or gameplay behavior changed.
+Documentation only. No content, schema, validator, test, Knowledge, map/geography authority, runtime, UI, storage, market/trade simulation, crafting, ownership, pricing, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Existing `world_map_features.json`, hex/edge content, and travel networks predate this decision and have geometry or simulation-oriented fields. The next schema decision must define the new semantic authority relationship without assuming those collections are absent or authorizing migration.
-- The temporary research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or record a concrete remaining consumer and removal condition.
+- Existing settlements, item values, economy rules, production chains, workplaces, guilds, and runtime economy/trade systems already own overlapping data. The next decision must prevent parallel authority and define a current-data transition without compatibility aliases.
+- The temporary economy research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
+- The world map-feature schema decision remains deferred and valid; it was displaced from immediate sequence by this user-prioritized economy pass.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.198 - World Map Feature Authority Schema Decision
+Version 0.5.199 - Settlement Economy Schema Decision
 
 ## Suggested Commit Message
 
-docs(world): decide geography authority boundaries
+docs(economy): decide authority boundaries

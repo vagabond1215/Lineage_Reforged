@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-19
-Route: Codex local sequencing alignment after `Version 0.5.197 - World Geography Authority Boundary Decision`
+Date: 2026-06-20
+Route: Codex local sequencing alignment after `Version 0.5.198 - Economy Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.197 - World Geography Authority Boundary Decision`
+- `Version 0.5.198 - Economy Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.198 - World Map Feature Authority Schema Decision`
+- `Version 0.5.199 - Settlement Economy Schema Decision`
 
 Versioning note:
 
@@ -58,8 +58,9 @@ Versioning note:
 - Sacred-site active text cleanup landed in `0.5.195`: exactly two stale status phrases were corrected without changing status or authority.
 - Sacred Site Religion Registry And Snippet Seed landed in `0.5.196`: Religion now advertises `sacred_site` and `world.sacred_sites`, policy refs remain null, and exactly one descriptive Glasswake Shrine snippet is live.
 - World Geography Authority Boundary Decision landed in `0.5.197`: semantic map features, visual geometry, routes, political overlays, ecology/biome profiles, POIs, and future grids now have explicit docs-only ownership boundaries.
-- Keep World Map Feature Authority Schema Decision as the documentation-only `0.5.198` direction.
-- Do not roll from `0.5.197` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Economy Authority Boundary Decision landed in `0.5.198`: descriptive economy layers now have explicit ownership boundaries against existing settlement, item-value, production, guild, and runtime economy surfaces.
+- Keep Settlement Economy Schema Decision as the documentation-only `0.5.199` direction.
+- Do not roll from `0.5.198` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -184,19 +185,21 @@ Versioning note:
 | 117 | `0.5.195` | Sacred Site Active Text Cleanup | Codex 5.5 Local | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | two-phrase content cleanup | Completed | Corrected two stale phrases; no status, registry, snippet, hotspot, or behavior changes. |
 | 118 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | Codex 5.5 Local | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | registry alignment + one snippet | Completed | Added one descriptive sacred-site snippet and aligned Religion; no hotspot, runtime, UI, storage, or gameplay behavior. |
 | 119 | `0.5.197` | World Geography Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/world-geography-authority-boundary-decision.md` | planning decision | Completed | Defined layer ownership and future sequence without implementation. |
-| 120 | `0.5.198` | World Map Feature Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/world-geography-authority-boundary-decision.md` | schema decision | Next | Define geometry-free semantic authority and its visual-layer relationship without implementation. |
+| 120 | `0.5.198` | Economy Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | planning decision | Completed | Defined economy authority ownership and future sequence without implementation. |
+| 121 | `0.5.199` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Next | Resolve embedded settlement-field ownership and define a strict descriptive contract without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.198 - World Map Feature Authority Schema Decision`
-2. `World Map Feature Schema And Validator`, only after the schema decision
-3. `World Route Authority Decision`
-4. `Religious Order Placeholder Authority Plan`
-5. `Religious Favorability And Elemental Alignment Framework Plan`
+1. `0.5.199 - Settlement Economy Schema Decision`
+2. `Settlement Economy Schema And Validator`, only after the schema decision
+3. `Settlement Economy Content Seed Plan`
+4. `World Map Feature Authority Schema Decision`
+5. `World Route Authority Decision`
+6. `Religious Order Placeholder Authority Plan`
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.198` must remain a documentation-only map-feature schema decision.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.199` must remain a documentation-only settlement-economy schema decision.
 
 ## Default Prompt Pattern
 
@@ -212,7 +215,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.198 - World Map Feature Authority Schema Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.199 - Settlement Economy Schema Decision` as the immediate documentation-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
@@ -222,6 +225,7 @@ Each future Codex prompt should:
 - `0.5.195` corrected two stale site-text phrases without changing status, registry, snippets, hotspots, runtime, UI, storage, or gameplay behavior.
 - `0.5.196` aligned Religion and added exactly one sacred-site snippet without changing site content, hotspot content, runtime, UI, storage, or gameplay behavior.
 - `0.5.197` consumed the temporary world-map research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
+- `0.5.198` consumed the temporary economy research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
