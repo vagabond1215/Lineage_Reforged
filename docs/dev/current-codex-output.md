@@ -1,21 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed
+Source version/run: Version 0.5.197 - World Geography Authority Boundary Decision
 Date: 2026-06-19
 Branch/status assumption: `master`; worktree was clean before this run.
 
 ## Result
 
-Aligned live Religion with direct sacred-site Knowledge authority and added exactly one Tier 1 identification snippet for `sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine`.
+Created `docs/design/world-geography-authority-boundary-decision.md` from the temporary Deep Research artifact and a live repository audit.
 
-Religion now advertises `sacred_site` and `world.sacred_sites`. Its trial, completion, and visibility policy refs remain null, and no `knowledge_domain.sacred_sites` was created. The existing Glasswake religious-hotspot snippet remains unchanged.
+The decision defers new `macro_region` vocabulary, approves a future geometry-free `world.map_features` authority as the first implementation candidate, separates it from the existing geometry-heavy `world.world_map_features` visual layer, approves a later graph-first route authority split, keeps political geography separate, keeps ecology/biome authority descriptive first, separates POI placement rules from canonical POIs, and defers new grid-overlay reliance to `0.6+`.
 
 ## Files Changed
 
-- `packages/content/base/player/knowledge_domain_registry.json`
-- `packages/content/base/player/knowledge_snippets.json`
-- `tests/unit/knowledge-snippets-validation.test.mjs`
-- `tests/unit/knowledge-domain-registry-validation.test.mjs`
+- `docs/design/world-geography-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -24,31 +21,26 @@ Religion now advertises `sacred_site` and `world.sacred_sites`. Its trial, compl
 
 ## Checks Run
 
-- `node --test tests/unit/knowledge-snippets-validation.test.mjs` - passed, 89 tests
-- `node --test tests/unit/knowledge-domain-registry-validation.test.mjs` - passed, 51 tests
-- `node --test tests/unit/sacred-sites-validation.test.mjs` - passed, 55 tests
-- `npm run tool:content-lint` - passed, 58 files checked
 - `git diff --check` - passed
 - conflict-marker scan on changed files - passed
 - trailing-whitespace scan on changed files - passed
-- changed-path scope audit - passed; exactly nine permitted files changed
-- manual registry, snippet, hotspot, sacred-site, and behavior-boundary audits - passed
+- changed-path scope audit - passed; exactly six documentation files changed
+- implementation-scope audit - passed; no content, schema, validator, test, runtime, UI, storage, or gameplay file changed
 
 ## Behavior / Runtime Confirmation
 
-Knowledge content changed only by the paired Religion registry alignment and one descriptive sacred-site snippet. No sacred-site or religious-hotspot content changed. `religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced, and hotspot `sacredSiteType` remains descriptive metadata only.
-
-No pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, runtime, UI, storage, command, event, reward, access, service, donation, or gameplay behavior changed.
+Documentation only. No schema, validator, content, Knowledge, test, content-lint, runtime, UI, storage, travel, pathfinding, POI spawning, procedural generation, trade simulation, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Religious-order authority remains placeholder-only and requires a documentation-first boundary plan before content or behavior work.
+- Existing `world_map_features.json`, hex/edge content, and travel networks predate this decision and have geometry or simulation-oriented fields. The next schema decision must define the new semantic authority relationship without assuming those collections are absent or authorizing migration.
+- The temporary research artifact remains temporary. The next schema-decision run must delete it if all useful guidance has been promoted, or record a concrete remaining consumer and removal condition.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.197 - Religious Order Placeholder Authority Plan
+Version 0.5.198 - World Map Feature Authority Schema Decision
 
 ## Suggested Commit Message
 
-content(knowledge): seed glasswake sacred site snippet
+docs(world): decide geography authority boundaries

@@ -1,38 +1,41 @@
 # Current GPT Handoff
 
-Source route: Codex local content implementation through `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed`
+Source route: Codex local planning through `Version 0.5.197 - World Geography Authority Boundary Decision`
 Date: 2026-06-19
-Branch/status assumption: `master`; latest numbered run changes the Religion registry, one Knowledge snippet, focused tests, and coordination docs only.
+Branch/status assumption: `master`; latest numbered run is documentation-only.
 
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest numbered Codex handoff.
-- `packages/content/base/player/knowledge_domain_registry.json` now advertises direct `sacred_site` subjects and `world.sacred_sites` under Religion; all Religion policy refs remain null.
-- `packages/content/base/player/knowledge_snippets.json` contains exactly one sacred-site snippet targeting the active Glasswake Shrine authority.
-- `packages/content/base/world/sacred_sites.json` and `packages/content/base/world/religious_hotspots.json` did not change in `0.5.196`.
+- `docs/design/world-geography-authority-boundary-decision.md` is the permanent authority for the new geography/map layer boundaries.
+- `docs/dev/tmp-world-map-spatial-systems-research-2026-06-19.md` is temporary planning input, not design canon.
+- Live repository state overrides stale absence assumptions in the research artifact: geometry-backed map features, hexes, edges, travel networks, and regional ecology already exist.
 
 ## Current Anchor
 
 Latest completed numbered run:
 
-- `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed`
+- `Version 0.5.197 - World Geography Authority Boundary Decision`
 
 Immediate next numbered Codex run:
 
-- `Version 0.5.197 - Religious Order Placeholder Authority Plan`
+- `Version 0.5.198 - World Map Feature Authority Schema Decision`
 
 Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
 
-## Version 0.5.196 Result
+## Version 0.5.197 Result
 
-- Added `sacred_site` and `world.sacred_sites` to the live Religion registry record.
-- Kept Religion trial, completion, and visibility policy refs null; created no `knowledge_domain.sacred_sites`.
-- Added exactly one Tier 1 `book_study` identification snippet for `sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine`.
-- Preserved the existing Glasswake religious-hotspot snippet unchanged.
-- Kept `religious_hotspot.lantern_shrine_gardens` planned and unreferenced; hotspot `sacredSiteType` remains descriptive only.
-- Changed no sacred-site content, hotspot content, schema, validator, runtime, UI, storage, or gameplay behavior.
-- Normal content lint remains 58 checked files.
+- Deferred new `macro_region` vocabulary because existing region types already cover continents, island systems, oceans, and subregions.
+- Approved future geometry-free `world.map_features` as the first implementation candidate, distinct from existing `world.world_map_features` visual/reference geometry.
+- Approved a later graph-first split across routes, route segments, crossings, qualified ports, and later trade routes.
+- Made coordinates optional rather than required for first-pass semantic authorities.
+- Deferred new or expanded grid-overlay authority and reliance to `0.6+` while preserving existing hex/edge content unchanged.
+- Separated political overlays from physical geography, descriptive ecology/biome profiles from runtime spawning, and POI placement rules from canonical authored POIs.
+- Kept all new geography/map authorities descriptive-only.
+- Changed no content, schema, validator, test, runtime, UI, storage, travel, pathfinding, trade, or gameplay behavior.
 
 ## Next Route Boundary
 
-`Version 0.5.197 - Religious Order Placeholder Authority Plan` is documentation-only. It should plan placeholder religious-order authority boundaries without adding order content, schemas, validators, snippets, runtime, UI, storage, or gameplay behavior.
+`Version 0.5.198 - World Map Feature Authority Schema Decision` should remain documentation-only. It must define the future collection path/id, strict geometry-free record contract, feature vocabulary, place anchors, provenance, validation ownership, and relationship to existing `world_map_features.json` without implementing or migrating content.
+
+The temporary research artifact should be deleted after that run if its remaining useful guidance has been promoted; otherwise the handoff must name its next concrete consumer and removal condition.

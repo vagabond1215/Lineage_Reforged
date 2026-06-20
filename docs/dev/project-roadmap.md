@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed`
-- Next recommended version: `Version 0.5.197 - Religious Order Placeholder Authority Plan`
+- Latest completed version: `Version 0.5.197 - World Geography Authority Boundary Decision`
+- Next recommended version: `Version 0.5.198 - World Map Feature Authority Schema Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -54,7 +54,8 @@ Versioning rule:
 - `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan` approved one future named-site snippet but found stale `planned` wording that requires cleanup before registry/snippet seeding.
 - `Version 0.5.195 - Sacred Site Active Text Cleanup` cleaned exactly two stale status phrases while preserving active status and all authority fields.
 - `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed` aligned Religion with `sacred_site` and `world.sacred_sites`, kept policy refs null, and added exactly one descriptive Glasswake Shrine snippet without changing site or hotspot content.
-- Do not roll from `0.5.196` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.197 - World Geography Authority Boundary Decision` established docs-only boundaries across place hierarchy, semantic map features, visual geometry, routes, political overlays, ecology/biome profiles, POIs, and future grids.
+- Do not roll from `0.5.197` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -289,7 +290,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.194` | Sacred Site Knowledge Snippet Seed Plan | Codex Local docs-first | Planning | Completed. Approved exact first snippet content and paired registry timing; found stale active-site wording. | Documentation only; no registry, snippet, content, runtime, UI, storage, or gameplay changes. |
 | `0.5.195` | Sacred Site Active Text Cleanup | Codex Local | Narrow content text | Completed. Replaced exactly two stale planned-status phrases and added focused assertions; normal lint remains 58 files. | No status, registry, snippet, hotspot, runtime, UI, storage, or gameplay changes. |
 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | Codex Local | Narrow registry and snippet content | Completed. Religion advertises `sacred_site` and `world.sacred_sites`; exactly one approved Tier 1 snippet is live. | Policy refs remain null; no hotspot, runtime, UI, storage, or gameplay changes. |
-| `0.5.197` | Religious Order Placeholder Authority Plan | Codex Local docs-first | Planning | Recommended next. Define placeholder authority boundaries only. | No order content, schema, validator, snippet, runtime, UI, storage, or gameplay changes. |
+| `0.5.197` | World Geography Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Defined semantic geography/map ownership and deferred new grid reliance to `0.6+`. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
+| `0.5.198` | World Map Feature Authority Schema Decision | Codex Local docs-first | Planning | Recommended next. Define the geometry-free `world.map_features` contract and existing visual-layer relationship. | Documentation only; no schema, validator, content migration, runtime, UI, storage, or gameplay changes. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -311,8 +313,11 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.197 - Religious Order Placeholder Authority Plan`
-2. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
+1. `0.5.198 - World Map Feature Authority Schema Decision`
+2. `World Map Feature Schema And Validator`, only after the schema decision
+3. `World Route Authority Decision`, after the map-feature boundary is stable
+4. `Religious Order Placeholder Authority Plan`, deferred but still valid
+5. `Religious Favorability And Elemental Alignment Plan`, optional later as design-only work
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -353,7 +358,8 @@ Scope guardrails:
 - `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan` is completed as documentation only; the snippet is approved but stale active-site wording blocks seeding.
 - `Version 0.5.195 - Sacred Site Active Text Cleanup` is completed; active site prose is consistent and the approved registry/snippet seed is unblocked.
 - `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed` is completed; Religion registry alignment and exactly one approved sacred-site snippet are live without hotspot or behavior changes.
-- Keep `0.5.197` limited to documentation-only religious-order placeholder authority planning.
+- `Version 0.5.197 - World Geography Authority Boundary Decision` is completed as documentation only; no implementation occurred.
+- Keep `0.5.198` limited to the geometry-free map-feature schema decision and existing visual-layer relationship.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -734,7 +740,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 103 | `0.5.194` | Sacred Site Knowledge Snippet Seed Plan | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Completed |
 | 104 | `0.5.195` | Sacred Site Active Text Cleanup | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Completed |
 | 105 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Completed |
-| 106 | `0.5.197` | Religious Order Placeholder Authority Plan | current handoff | Next; documentation only |
+| 106 | `0.5.197` | World Geography Authority Boundary Decision | `docs/design/world-geography-authority-boundary-decision.md` | Completed; documentation only |
+| 107 | `0.5.198` | World Map Feature Authority Schema Decision | `docs/design/world-geography-authority-boundary-decision.md` | Next; documentation only |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
