@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-20
-Route: Codex local sequencing alignment after `Version 0.5.201 - Civic Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.203 - Travel Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.201 - Civic Authority Boundary Decision`
+- `Version 0.5.203 - Travel Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.202 - Polity Schema Decision`
+- `Version 0.5.204 - Hazard And Route Security Boundary Decision`
 
 Versioning note:
 
@@ -61,8 +61,9 @@ Versioning note:
 - Economy Authority Boundary Decision landed in `0.5.198`: descriptive economy layers now have explicit ownership boundaries against existing settlement, item-value, production, guild, and runtime economy surfaces.
 - Family Authority Boundary Decision landed in `0.5.200`: authored person, household, family, kinship, lineage, overlay, estate, inheritance, prestige, and player-state boundaries are now explicit.
 - Civic Authority Boundary Decision landed in `0.5.201`: polity, government, jurisdiction, law, civic-actor, public-order, diplomacy/conflict, and player-state boundaries are now explicit.
-- Keep Polity Schema Decision as the documentation-only `0.5.202` direction.
-- Do not roll from `0.5.201` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Travel Authority Boundary Decision landed in `0.5.203`: map/pixel, hex, edge, travel-network, security, hazard, encounter/spawn, camp/rest, discovery, and player-state boundaries are now explicit.
+- Keep Hazard And Route Security Boundary Decision as the documentation-only `0.5.204` direction.
+- Do not roll from `0.5.203` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -191,20 +192,22 @@ Versioning note:
 | 121 | `0.5.199` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit family-lane reprioritization. |
 | 122 | `0.5.200` | Family Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/family-authority-boundary-decision.md` | planning decision | Completed | Defined authored family-layer ownership without implementation. |
 | 123 | `0.5.201` | Civic Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | planning decision | Completed | Defined civic authority ownership without implementation. |
-| 124 | `0.5.202` | Polity Schema Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | schema decision | Next | Define the future `world.polities` contract without implementation. |
+| 124 | `0.5.202` | Polity Schema Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit travel-lane reprioritization. |
+| 125 | `0.5.203` | Travel Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Completed | Defined travel-layer ownership without implementation. |
+| 126 | `0.5.204` | Hazard And Route Security Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Next | Define separate overlay targets, overlap, precedence, and references without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.202 - Polity Schema Decision`
-2. `Jurisdiction Authority Schema Decision`
-3. `Household vs Family Schema Decision`
-4. `0.5.199 - Settlement Economy Schema Decision`
-5. `World Map Feature Authority Schema Decision`
-6. `Religious Order Placeholder Authority Plan`
+1. `0.5.204 - Hazard And Route Security Boundary Decision`
+2. `Route Security Schema Decision`, only after the boundary decision
+3. `0.5.202 - Polity Schema Decision`
+4. `Household vs Family Schema Decision`
+5. `0.5.199 - Settlement Economy Schema Decision`
+6. `World Map Feature Authority Schema Decision`
 
-The recipe, crafting, family, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.202` must remain a documentation-only polity schema decision.
+The recipe, crafting, family, civic, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.204` must remain a documentation-only hazard/security boundary decision.
 
 ## Default Prompt Pattern
 
@@ -220,7 +223,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.202 - Polity Schema Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.204 - Hazard And Route Security Boundary Decision` as the immediate documentation-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
@@ -233,6 +236,7 @@ Each future Codex prompt should:
 - `0.5.198` consumed the temporary economy research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.200` consumed the temporary family/lineage research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.201` consumed the temporary civic research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
+- `0.5.203` consumed the temporary travel/exploration research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.
