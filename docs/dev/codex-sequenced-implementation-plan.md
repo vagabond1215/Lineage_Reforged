@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-20
-Route: Codex local sequencing alignment after `Version 0.5.203 - Travel Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.204 - Magic Study Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.203 - Travel Authority Boundary Decision`
+- `Version 0.5.204 - Magic Study Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.204 - Hazard And Route Security Boundary Decision`
+- `Version 0.5.205 - Magic Study Source Schema Decision`
 
 Versioning note:
 
@@ -62,8 +62,9 @@ Versioning note:
 - Family Authority Boundary Decision landed in `0.5.200`: authored person, household, family, kinship, lineage, overlay, estate, inheritance, prestige, and player-state boundaries are now explicit.
 - Civic Authority Boundary Decision landed in `0.5.201`: polity, government, jurisdiction, law, civic-actor, public-order, diplomacy/conflict, and player-state boundaries are now explicit.
 - Travel Authority Boundary Decision landed in `0.5.203`: map/pixel, hex, edge, travel-network, security, hazard, encounter/spawn, camp/rest, discovery, and player-state boundaries are now explicit.
-- Keep Hazard And Route Security Boundary Decision as the documentation-only `0.5.204` direction.
-- Do not roll from `0.5.203` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Magic Study Authority Boundary Decision landed in `0.5.204`: spell, known-spell, Arcane Lore, study, ritual, trial, Prestige, institution/teacher, item, and runtime-state boundaries are now explicit.
+- Keep Magic Study Source Schema Decision as the documentation-only `0.5.205` direction.
+- Do not roll from `0.5.204` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -194,20 +195,21 @@ Versioning note:
 | 123 | `0.5.201` | Civic Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | planning decision | Completed | Defined civic authority ownership without implementation. |
 | 124 | `0.5.202` | Polity Schema Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit travel-lane reprioritization. |
 | 125 | `0.5.203` | Travel Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Completed | Defined travel-layer ownership without implementation. |
-| 126 | `0.5.204` | Hazard And Route Security Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Next | Define separate overlay targets, overlap, precedence, and references without implementation. |
+| 126 | `0.5.204` | Magic Study Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | planning decision | Completed | Defined magic-study authority ownership without implementation. |
+| 127 | `0.5.205` | Magic Study Source Schema Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | schema decision | Next | Define the future `player.magic_study_sources` contract without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.204 - Hazard And Route Security Boundary Decision`
-2. `Route Security Schema Decision`, only after the boundary decision
-3. `0.5.202 - Polity Schema Decision`
-4. `Household vs Family Schema Decision`
-5. `0.5.199 - Settlement Economy Schema Decision`
-6. `World Map Feature Authority Schema Decision`
+1. `0.5.205 - Magic Study Source Schema Decision`
+2. `Magic Study Policy Schema Decision`, only after the source decision
+3. `Arcane Lore Activation Decision`, after source contract planning
+4. `Hazard And Route Security Boundary Decision`
+5. `0.5.202 - Polity Schema Decision`
+6. `Household vs Family Schema Decision`
 
-The recipe, crafting, family, civic, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.204` must remain a documentation-only hazard/security boundary decision.
+The recipe, crafting, family, civic, travel, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.205` must remain a documentation-only magic-study source schema decision.
 
 ## Default Prompt Pattern
 
@@ -223,7 +225,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.204 - Hazard And Route Security Boundary Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.205 - Magic Study Source Schema Decision` as the immediate documentation-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
@@ -237,6 +239,7 @@ Each future Codex prompt should:
 - `0.5.200` consumed the temporary family/lineage research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.201` consumed the temporary civic research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.203` consumed the temporary travel/exploration research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
+- `0.5.204` consumed the temporary magic/Knowledge/study research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

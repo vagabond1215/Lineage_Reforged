@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.203 - Travel Authority Boundary Decision
+Source version/run: Version 0.5.204 - Magic Study Authority Boundary Decision
 Date: 2026-06-20
-Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `b7731b1`.
+Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `431ef0f`.
 
 ## Result
 
-Created `docs/design/travel-authority-boundary-decision.md` from the temporary travel/exploration Deep Research artifact and corrected its assumptions through live repository inspection.
+Created `docs/design/magic-study-authority-boundary-decision.md` from the temporary magic/Knowledge/study Deep Research artifact and corrected its assumptions through live repository inspection.
 
-The decision preserves existing map, hex, edge, travel-network, encounter-template, and spawn-profile owners; keeps `world.travel_networks` transitional through `0.5.x`; separates pixel, hex, and graph responsibilities; and selects separate future route-security and hazard overlays. Camp/rest authority remains a later descriptive layer, while player journey events/state, discovery/map reveal, runtime weather, pathfinding, travel simulation, camping/survival state, and travel UI remain deferred to `0.6+`.
+The decision selects future `player.magic_study_sources` as the first magic-study schema-decision target, keeps study policies separate, and places Arcane Lore activation after source-contract planning. It preserves the spell catalog, character-scoped/evidence-gated known-spell ownership, informational Knowledge, trials, item magic metadata, world magic infrastructure, Religion, institutions, rituals, Prestige, and future runtime state as distinct owners.
 
 ## Files Changed
 
-- `docs/design/travel-authority-boundary-decision.md`
+- `docs/design/magic-study-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -31,20 +31,21 @@ The decision preserves existing map, hex, edge, travel-network, encounter-templa
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No content, schema, validator, test, Knowledge, economy/family/civic/geography/religion authority, runtime, UI, storage, travel, pathfinding, spawn, survival, discovery, map-reveal, or gameplay behavior changed.
+Documentation only. No content, schema, validator, test, Knowledge, religion/economy/family/civic/travel/geography authority, runtime, UI, storage, spell access, known-spell, Prestige, trial, item, readiness, casting, reward, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Existing spawn profiles already feed encounter-candidate resolution. Future route-security and hazard overlays must not duplicate or silently alter that runtime owner.
-- Existing map `majorTradeRoutes`/`conflictZones`, hex hazard tags, regional/ecology hazard pressure, settlement security prose, and Knowledge travel vocabulary are adjacent descriptors, not new route-security, hazard, or player-journey authority.
-- The temporary travel research artifact remains temporary. The next hazard/security boundary run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
-- The uncompleted polity, household/family, settlement-economy, and map-feature schema decisions remain deferred and valid after this user-prioritized travel pass.
+- Arcane Lore is planned registry metadata with no live domain record or snippets, and spell subjects remain blocked by Knowledge snippet validation. Activation requires a later focused decision.
+- Existing known-spell helpers support character ownership and `training_event` evidence only; study sources/policies must not broaden routes or mutate ownership.
+- Generic authored institution and person/teacher authorities do not exist. Study-source planning must not seed free-form substitutes.
+- The temporary magic-study research artifact remains temporary. The source schema-decision run must delete it if all useful guidance has been promoted, or name its next consumer and removal condition.
+- The previously recommended Hazard And Route Security Boundary Decision remains deferred and valid after this user-prioritized magic pass.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.204 - Hazard And Route Security Boundary Decision
+Version 0.5.205 - Magic Study Source Schema Decision
 
 ## Suggested Commit Message
 
-docs(travel): decide travel authority boundaries
+docs(magic): decide study authority boundaries
