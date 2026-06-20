@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-20
-Route: Codex local sequencing alignment after `Version 0.5.206 - NPC And Social Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.208 - Quest Event Chronicle Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.206 - NPC And Social Authority Boundary Decision`
+- `Version 0.5.208 - Quest Event Chronicle Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.207 - Person vs NPC Schema Decision`
+- `Version 0.5.209 - Quest Objective And Condition Schema Decision`
 
 Versioning note:
 
@@ -64,8 +64,9 @@ Versioning note:
 - Travel Authority Boundary Decision landed in `0.5.203`: map/pixel, hex, edge, travel-network, security, hazard, encounter/spawn, camp/rest, discovery, and player-state boundaries are now explicit.
 - Magic Study Authority Boundary Decision landed in `0.5.204`: spell, known-spell, Arcane Lore, study, ritual, trial, Prestige, institution/teacher, item, and runtime-state boundaries are now explicit.
 - NPC And Social Authority Boundary Decision landed in `0.5.206`: people, NPC, role, workplace, schedule, dialogue, relationship, rumor, companion, service, Knowledge, and player-state boundaries are now explicit.
-- Keep Person vs NPC Schema Decision as the documentation-only `0.5.207` direction.
-- Do not roll from `0.5.206` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Quest Event Chronicle Authority Boundary Decision landed in `0.5.208`: quest, objective/condition, reward, template/offer, event/storylet, rumor/hook, Chronicle, and narrative-state boundaries are now explicit.
+- Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.209` direction.
+- Do not roll from `0.5.208` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -199,20 +200,22 @@ Versioning note:
 | 126 | `0.5.204` | Magic Study Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | planning decision | Completed | Defined magic-study authority ownership without implementation. |
 | 127 | `0.5.205` | Magic Study Source Schema Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit NPC/social-lane reprioritization. |
 | 128 | `0.5.206` | NPC And Social Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | planning decision | Completed | Defined NPC/social authority ownership without implementation. |
-| 129 | `0.5.207` | Person vs NPC Schema Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | schema decision | Next | Define people identity and NPC-overlay separation without implementation. |
+| 129 | `0.5.207` | Person vs NPC Schema Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit quest/narrative-lane reprioritization. |
+| 130 | `0.5.208` | Quest Event Chronicle Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/quest-event-chronicle-authority-boundary-decision.md` | planning decision | Completed | Defined narrative authority ownership without implementation. |
+| 131 | `0.5.209` | Quest Objective And Condition Schema Decision | Codex 5.5 Local docs-first | `docs/design/quest-event-chronicle-authority-boundary-decision.md` | schema decision | Next | Reconcile embedded authored components and generated objectives without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.207 - Person vs NPC Schema Decision`
-2. `Relationship Link Schema Decision`, only after person identity is stable
-3. `Dialogue Topic Schema Decision`, only after person/NPC ownership is stable
+1. `0.5.209 - Quest Objective And Condition Schema Decision`
+2. `0.5.207 - Person vs NPC Schema Decision`
+3. `Relationship Link Schema Decision`, only after person identity is stable
 4. `0.5.205 - Magic Study Source Schema Decision`
 5. `Hazard And Route Security Boundary Decision`
 6. `0.5.202 - Polity Schema Decision`
 
-The recipe, crafting, family, civic, travel, magic, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.207` must remain a documentation-only person-vs-NPC schema decision.
+The recipe, crafting, family, civic, travel, magic, NPC/social, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.209` must remain a documentation-only quest objective/condition schema decision.
 
 ## Default Prompt Pattern
 
@@ -228,7 +231,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.207 - Person vs NPC Schema Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.209 - Quest Objective And Condition Schema Decision` as the immediate documentation-only next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
@@ -244,6 +247,7 @@ Each future Codex prompt should:
 - `0.5.203` consumed the temporary travel/exploration research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.204` consumed the temporary magic/Knowledge/study research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - `0.5.206` consumed the temporary NPC/social research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
+- `0.5.208` consumed the temporary quest/event/Chronicle research into a permanent authority-boundary decision without changing content, schemas, validators, tests, runtime, UI, storage, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

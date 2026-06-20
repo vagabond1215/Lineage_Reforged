@@ -1,48 +1,49 @@
 # Current GPT Handoff
 
-Source route: Codex local planning through `Version 0.5.206 - NPC And Social Authority Boundary Decision`
+Source route: Codex local planning through `Version 0.5.208 - Quest Event Chronicle Authority Boundary Decision`
 Date: 2026-06-20
 Branch/status assumption: `master`; latest numbered run is documentation-only after a successful origin fetch and fast-forward pull check.
 
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest numbered Codex handoff.
-- `docs/design/npc-social-authority-boundary-decision.md` is the permanent authority for people, NPC overlays, social roles, schedules, dialogue, relationships, rumors, companion eligibility, services, Knowledge recognition, and player social-state boundaries.
-- `docs/dev/tmp-npc-social-systems-research-2026-06-20.md` is temporary planning input, not design canon.
-- Existing workplaces retain facility/job/economy authority; people/NPC records may only reference them.
-- Existing player fame/notoriety state and behavior retain their current runtime owner and are not person-local relationship authority.
-- Direct kin/care facts remain assigned to future family kinship links; general social links must not duplicate them.
-- Economy, family, civic, travel, geography, Religion, and magic prerequisites remain owned by their existing boundary decisions.
+- `docs/design/quest-event-chronicle-authority-boundary-decision.md` is the permanent authority for quest definitions/arcs/objectives/conditions/rewards, repeatable templates/offers, event/storylet seeds, rumor hooks, Chronicle templates, and narrative runtime-state boundaries.
+- `docs/dev/tmp-quest-event-chronicle-systems-research-2026-06-20.md` is temporary planning input, not design canon.
+- Existing `civilization.quest_definitions`, `civilization.quest_archetypes`, and `civilization.quest_templates` retain distinct canonical responsibilities.
+- Existing civilization offers, player quest ids, session quest journal/Chronicle, discovery Chronicle, and account Chronicle projections retain their runtime/state/presentation owners.
+- Quest giver/contact strings remain presentation metadata until canonical person/NPC authority explicitly supports references.
+- Adjacent NPC/social, economy, family, civic, travel, geography, Religion, magic, Knowledge, and trial owners remain separate.
 
 ## Current Anchor
 
 Latest completed numbered run:
 
-- `Version 0.5.206 - NPC And Social Authority Boundary Decision`
+- `Version 0.5.208 - Quest Event Chronicle Authority Boundary Decision`
 
 Immediate next numbered Codex run:
 
-- `Version 0.5.207 - Person vs NPC Schema Decision`
+- `Version 0.5.209 - Quest Objective And Condition Schema Decision`
 
 Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
 
-## Version 0.5.206 Result
+## Version 0.5.208 Result
 
-- Selected future `civilization.people` as the first NPC/social implementation candidate, beginning with a docs-only schema decision.
-- Kept stable person identity separate from NPC presence/interactable overlays and reusable social roles.
-- Kept workplaces/jobs and services/economy separate from person identity.
-- Assigned canonical non-kin social relationships to dedicated link records rather than person/NPC arrays.
-- Kept schedules descriptive/non-executable and dialogue topics authored/effect-free throughout `0.5.x`.
-- Kept rumors as authored seeds and companions as eligibility/characterization authority only.
-- Kept service/vendor references reference-only and Knowledge recognition informational-only.
-- Preserved current player fame/notoriety behavior while deferring new relationship, memory, favorability/standing, companion, dialogue, schedule, AI, and service runtime to `0.6+`.
-- Required new first-pass social records to reject runtime, gameplay, memory, reputation, service-access, player-state, storage, and UI fields.
+- Preserved `civilization.quest_definitions` as canonical unique authored quest authority.
+- Preserved quest archetypes as reusable structure and quest templates as repeatable generated-offer inputs.
+- Kept quest definitions separate from player/session quest state.
+- Kept objectives/conditions embedded and descriptive pending a dedicated schema decision.
+- Kept reward/consequence fields descriptive in authored content without payout/mutation.
+- Kept contracts/task-board work separate from unique authored quests through existing templates/offers.
+- Kept events/storylets and rumors/hooks as authored seeds without execution/propagation.
+- Kept future Chronicle/journal templates separate from existing mutable Chronicle state.
+- Kept quest-giver/contact fields as presentation metadata pending person/NPC authority.
+- Required new first-pass narrative records to reject runtime, gameplay, reward-payout, mutation, player-state, storage, and UI fields.
 - Changed no content, schema, validator, test, Knowledge, runtime, UI, storage, or gameplay behavior.
 
 ## Next Route Boundary
 
-`Version 0.5.207 - Person vs NPC Schema Decision` should remain documentation-only. It must decide exact collection/schema paths, records-only wrapper, ids, minimum person fields, life/presence status, person-vs-overlay duplication rules, supported references, generated-person posture, forbidden fields, validation ownership, and implementation order without creating schemas or content.
+`Version 0.5.209 - Quest Objective And Condition Schema Decision` should remain documentation-only. It must reconcile embedded requirements/action trees, archetype reuse, quest-template inputs, generated offer objectives, supported vocabularies/references, runtime-state separation, forbidden fields, validation ownership, and future implementation order without creating schemas or content.
 
-The temporary NPC/social research artifact should be deleted after that run if its remaining useful guidance has been promoted; otherwise the handoff must name its next concrete consumer and removal condition.
+The temporary quest/event/Chronicle research artifact should be deleted after that run if its remaining useful guidance has been promoted; otherwise the handoff must name its next concrete consumer and removal condition.
 
-The unlanded `Version 0.5.205 - Magic Study Source Schema Decision`, deferred `Hazard And Route Security Boundary Decision`, `Polity Schema Decision`, `Household vs Family Schema Decision`, `Settlement Economy Schema Decision`, and `World Map Feature Authority Schema Decision` remain valid later roadmap items.
+The unlanded `Version 0.5.207 - Person vs NPC Schema Decision`, `Version 0.5.205 - Magic Study Source Schema Decision`, deferred `Hazard And Route Security Boundary Decision`, `Polity Schema Decision`, `Household vs Family Schema Decision`, and `Settlement Economy Schema Decision` remain valid later roadmap items.
