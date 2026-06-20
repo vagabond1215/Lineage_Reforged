@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.204 - Magic Study Authority Boundary Decision`
-- Next recommended version: `Version 0.5.205 - Magic Study Source Schema Decision`
+- Latest completed version: `Version 0.5.206 - NPC And Social Authority Boundary Decision`
+- Next recommended version: `Version 0.5.207 - Person vs NPC Schema Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -60,7 +60,8 @@ Versioning rule:
 - `Version 0.5.201 - Civic Authority Boundary Decision` established docs-only boundaries across polities, governments, jurisdictions, laws, civic actors, public-order descriptors, diplomacy/conflict overlays, and future mutable player state.
 - `Version 0.5.203 - Travel Authority Boundary Decision` established docs-only boundaries across map/pixel geometry, semantic hexes, traversal edges, travel networks, route security, hazards, encounters/spawning, camps/rest, discovery, and future player journey state.
 - `Version 0.5.204 - Magic Study Authority Boundary Decision` established docs-only boundaries across spell identity, known-spell ownership, Arcane Lore, study sources/policies, rituals, trials, Prestige, institutions/teachers, item metadata, and future player magic state.
-- Do not roll from `0.5.204` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.206 - NPC And Social Authority Boundary Decision` established docs-only boundaries across people, NPC overlays, social roles, workplaces, schedules, dialogue, relationship links, rumors, companions, services, Knowledge recognition, and player social state.
+- Do not roll from `0.5.206` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -303,7 +304,9 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.202` | Polity Schema Decision | Codex Local docs-first | Planning | Deferred after explicit travel-lane reprioritization; still valid. | Documentation only; no schema, validator, content, runtime, UI, storage, or gameplay changes. |
 | `0.5.203` | Travel Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Defined travel/map/hex/edge/security/hazard/encounter/camp/discovery/player-state ownership. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
 | `0.5.204` | Magic Study Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Defined spell/study/Knowledge/ownership/ritual/trial/Prestige/institution/item/runtime boundaries. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
-| `0.5.205` | Magic Study Source Schema Decision | Codex Local docs-first | Planning | Recommended next. Define the future `player.magic_study_sources` contract without implementation. | Documentation only; no schema, validator, content, runtime, UI, storage, or gameplay changes. |
+| `0.5.205` | Magic Study Source Schema Decision | Codex Local docs-first | Planning | Deferred after explicit NPC/social-lane reprioritization; still valid. | Documentation only; no schema, validator, content, runtime, UI, storage, or gameplay changes. |
+| `0.5.206` | NPC And Social Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Defined people/NPC/role/schedule/dialogue/relationship/rumor/companion/service/social-state ownership. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
+| `0.5.207` | Person vs NPC Schema Decision | Codex Local docs-first | Planning | Recommended next. Define the future people identity contract and NPC-overlay separation. | Documentation only; no schema, validator, content, runtime, UI, storage, or gameplay changes. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -325,12 +328,12 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.205 - Magic Study Source Schema Decision`
-2. `Magic Study Policy Schema Decision`, only after the source decision
-3. `Arcane Lore Activation Decision`, after source contract planning
-4. `Hazard And Route Security Boundary Decision`, deferred but still valid
-5. `0.5.202 - Polity Schema Decision`, deferred but still valid
-6. `Household vs Family Schema Decision`, deferred but still valid
+1. `0.5.207 - Person vs NPC Schema Decision`
+2. `Relationship Link Schema Decision`, only after person identity is stable
+3. `Dialogue Topic Schema Decision`, only after person/NPC ownership is stable
+4. `0.5.205 - Magic Study Source Schema Decision`, deferred but still valid
+5. `Hazard And Route Security Boundary Decision`, deferred but still valid
+6. `0.5.202 - Polity Schema Decision`, deferred but still valid
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check.
 
@@ -377,7 +380,8 @@ Scope guardrails:
 - `Version 0.5.201 - Civic Authority Boundary Decision` is completed as documentation only; no implementation occurred.
 - `Version 0.5.203 - Travel Authority Boundary Decision` is completed as documentation only; no implementation occurred.
 - `Version 0.5.204 - Magic Study Authority Boundary Decision` is completed as documentation only; no implementation occurred.
-- Keep `0.5.205` limited to the magic-study source schema decision and Arcane Lore sequencing.
+- `Version 0.5.206 - NPC And Social Authority Boundary Decision` is completed as documentation only; no implementation occurred.
+- Keep `0.5.207` limited to person-vs-NPC schema ownership and generated-person boundaries.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -766,7 +770,9 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 111 | `0.5.202` | Polity Schema Decision | `docs/design/civic-authority-boundary-decision.md` | Deferred; documentation only |
 | 112 | `0.5.203` | Travel Authority Boundary Decision | `docs/design/travel-authority-boundary-decision.md` | Completed; documentation only |
 | 113 | `0.5.204` | Magic Study Authority Boundary Decision | `docs/design/magic-study-authority-boundary-decision.md` | Completed; documentation only |
-| 114 | `0.5.205` | Magic Study Source Schema Decision | `docs/design/magic-study-authority-boundary-decision.md` | Next; documentation only |
+| 114 | `0.5.205` | Magic Study Source Schema Decision | `docs/design/magic-study-authority-boundary-decision.md` | Deferred; documentation only |
+| 115 | `0.5.206` | NPC And Social Authority Boundary Decision | `docs/design/npc-social-authority-boundary-decision.md` | Completed; documentation only |
+| 116 | `0.5.207` | Person vs NPC Schema Decision | `docs/design/npc-social-authority-boundary-decision.md` | Next; documentation only |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
