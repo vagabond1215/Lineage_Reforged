@@ -1,18 +1,19 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan
+Source version/run: Version 0.5.195 - Sacred Site Active Text Cleanup
 Date: 2026-06-19
-Branch/status assumption: `master`; worktree was clean before this run at `5c3b110`.
+Branch/status assumption: `master`; worktree was clean before this run at `a36cc2d`.
 
 ## Result
 
-Approved one future Tier 1 Religion identification snippet for active `sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine`. Selected exact record shape, wording, discovery posture, non-duplication boundary, registry alignment timing, and future validation expectations.
+Cleaned stale status prose on exactly one active sacred-site record: `sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine`.
 
-The active site summary and first note still say `planned`, so the candidate is deferred pending a narrow active-text cleanup. No snippet or registry alignment was implemented.
+The summary now says `An active named shrine authority`, and the first note now says `Active descriptive authority only`. Status remains `active`; no other sacred-site field changed.
 
 ## Files Changed
 
-- `docs/design/sacred-site-knowledge-snippet-seed-plan.md`
+- `packages/content/base/world/sacred_sites.json`
+- `tests/unit/sacred-sites-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -21,33 +22,35 @@ The active site summary and first note still say `planned`, so the candidate is 
 
 ## Checks Run
 
+- `node --test tests/unit/sacred-sites-validation.test.mjs` - passed, 55 tests
+- `node --test tests/unit/knowledge-snippets-validation.test.mjs` - passed, 89 tests
+- `npm run tool:content-lint` - passed, 58 files checked
 - `git diff --check` - passed
 - conflict-marker scan on changed files - passed
 - trailing-whitespace scan on changed files - passed
-- changed-path scope audit - passed; only the six permitted documentation files changed
-- protected live-content/schema/validator/test/runtime audit - passed; no protected paths changed
-- sacred-site/registry/snippet/hotspot invariant audit - passed
-- active-text audit - passed; stale `planned` wording remains in the summary and one note as documented
-
-No tests were run because 0.5.194 changed documentation only.
+- changed-path scope audit - passed; exactly seven permitted files changed
+- sacred-site two-field diff audit - passed; only the summary and first note changed
+- registry/snippet/hotspot/runtime invariant audit - passed
+- active-text audit - passed; no `planned` wording remains in the live site summary or notes
 
 ## Behavior / Runtime Confirmation
 
-No live content, schema, validator, test, runtime, UI, storage, or gameplay behavior changed. Glasswake Shrine remains the single active sacred-site record.
+Only the active site's summary and first note changed. Its id, slug, name, status, place anchor, parent hotspot, religion ids, type, public posture, pilgrimage status, authority notes, and remaining notes are unchanged.
 
-Religion still does not advertise `sacred_site` or `world.sacred_sites`; no sacred-site snippet or `knowledge_domain.sacred_sites` exists. No hotspot changed; `religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced, and hotspot `sacredSiteType` remains descriptive only. Normal content lint remains at the previously verified 58 checked files.
+No Knowledge snippet was added and no Religion registry alignment occurred. Religion still does not advertise `sacred_site` or `world.sacred_sites`; policy refs remain null. No hotspot changed; `religious_hotspot.lantern_shrine_gardens` remains planned and unreferenced, and hotspot `sacredSiteType` remains descriptive only.
+
+No pilgrimage, favorability, alignment, law, religious-order, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, runtime, UI, storage, command, event, reward, access, service, donation, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The active site summary and first note contain stale `planned` wording and must be cleaned before seeding Knowledge content.
-- Registry alignment and snippet creation must remain paired after cleanup.
-- The sacred-site snippet must identify the named site without duplicating broader hotspot framing.
+- Registry alignment and the first sacred-site snippet must land together in the next narrow pass.
+- The snippet must retain the approved named-site/non-duplication boundary.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.195 - Sacred Site Active Text Cleanup
+Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed
 
 ## Suggested Commit Message
 
-docs(knowledge): plan sacred site snippet seed
+content(world): clean active sacred site wording

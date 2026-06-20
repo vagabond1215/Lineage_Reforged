@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan`
-- Next recommended version: `Version 0.5.195 - Sacred Site Active Text Cleanup`
+- Latest completed version: `Version 0.5.195 - Sacred Site Active Text Cleanup`
+- Next recommended version: `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -52,7 +52,8 @@ Versioning rule:
 - `Version 0.5.192 - Sacred Site Activation Decision` approved the planned Glasswake Shrine record for later active status without changing live content.
 - `Version 0.5.193 - Sacred Site Content Status Activation` changed exactly one Glasswake Shrine status value from planned to active without registry, snippet, hotspot, or behavior changes.
 - `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan` approved one future named-site snippet but found stale `planned` wording that requires cleanup before registry/snippet seeding.
-- Do not roll from `0.5.194` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- `Version 0.5.195 - Sacred Site Active Text Cleanup` cleaned exactly two stale status phrases while preserving active status and all authority fields.
+- Do not roll from `0.5.195` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 Current repo reality:
 
@@ -285,7 +286,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.192` | Sacred Site Activation Decision | Codex Local docs-first | Planning | Completed. Approved the planned Glasswake sacred-site record for later active status and fixed the narrow activation meaning. | Documentation only; no status, registry, snippet, runtime, UI, storage, or gameplay changes. |
 | `0.5.193` | Sacred Site Content Status Activation | Codex Local | Narrow content status | Completed. Changed exactly one approved Glasswake Shrine status from planned to active; normal lint remains 58 files. | No registry, snippet, hotspot, runtime, UI, storage, or gameplay changes. |
 | `0.5.194` | Sacred Site Knowledge Snippet Seed Plan | Codex Local docs-first | Planning | Completed. Approved exact first snippet content and paired registry timing; found stale active-site wording. | Documentation only; no registry, snippet, content, runtime, UI, storage, or gameplay changes. |
-| `0.5.195` | Sacred Site Active Text Cleanup | Codex Local | Narrow content text | Recommended next. Remove only stale `planned` wording from the active site's summary and first note. | No status, registry, snippet, hotspot, runtime, UI, storage, or gameplay changes. |
+| `0.5.195` | Sacred Site Active Text Cleanup | Codex Local | Narrow content text | Completed. Replaced exactly two stale planned-status phrases and added focused assertions; normal lint remains 58 files. | No status, registry, snippet, hotspot, runtime, UI, storage, or gameplay changes. |
+| `0.5.196` | Sacred Site Religion Registry And Snippet Seed | Codex Local | Narrow registry and snippet content | Recommended next. Align Religion with `sacred_site` and `world.sacred_sites`, then add exactly one approved Tier 1 snippet. | Keep policy refs null; no hotspot, runtime, UI, storage, or gameplay changes. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -307,8 +309,8 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.195 - Sacred Site Active Text Cleanup`
-2. `Sacred Site Religion Registry And Snippet Seed`, only after cleanup lands
+1. `0.5.196 - Sacred Site Religion Registry And Snippet Seed`
+2. `Religious Order Placeholder Authority Plan`
 3. `Religious Order Placeholder Authority Plan`
 4. `Religious Favorability And Elemental Alignment Plan`, optional after the authority lanes or earlier only if explicitly prioritized as design-only work
 
@@ -349,7 +351,8 @@ Scope guardrails:
 - `Version 0.5.192 - Sacred Site Activation Decision` is completed as documentation only; the site remains planned but is approved for later activation.
 - `Version 0.5.193 - Sacred Site Content Status Activation` is completed; exactly one site is active while live Religion remains unaligned and no sacred-site snippet exists.
 - `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan` is completed as documentation only; the snippet is approved but stale active-site wording blocks seeding.
-- Keep `0.5.195` limited to two stale status phrases; no status, registry, snippet, hotspot, runtime, UI, storage, or gameplay changes.
+- `Version 0.5.195 - Sacred Site Active Text Cleanup` is completed; active site prose is consistent and the approved registry/snippet seed is unblocked.
+- Keep `0.5.196` limited to Religion registry alignment, one approved snippet, focused tests, and coordination docs; no hotspot, runtime, UI, storage, or gameplay changes.
 
 ## 4. Remaining Magic Runtime Path
 
@@ -728,7 +731,8 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 101 | `0.5.192` | Sacred Site Activation Decision | `docs/design/sacred-site-activation-decision.md` | Completed |
 | 102 | `0.5.193` | Sacred Site Content Status Activation | `docs/design/sacred-site-activation-decision.md` | Completed |
 | 103 | `0.5.194` | Sacred Site Knowledge Snippet Seed Plan | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Completed |
-| 104 | `0.5.195` | Sacred Site Active Text Cleanup | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Next; two stale phrases only |
+| 104 | `0.5.195` | Sacred Site Active Text Cleanup | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Completed |
+| 105 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | Next; paired registry and one snippet |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 

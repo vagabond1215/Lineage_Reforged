@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-19
-Route: Codex local sequencing alignment after `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan`
+Route: Codex local sequencing alignment after `Version 0.5.195 - Sacred Site Active Text Cleanup`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.194 - Sacred Site Knowledge Snippet Seed Plan`
+- `Version 0.5.195 - Sacred Site Active Text Cleanup`
 
 Immediate next Codex run:
 
-- `Version 0.5.195 - Sacred Site Active Text Cleanup`
+- `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed`
 
 Versioning note:
 
@@ -55,8 +55,9 @@ Versioning note:
 - The sacred-site activation decision landed in `0.5.192`: the Glasswake Shrine record is approved for later active status while remaining planned in live content.
 - Sacred-site content status activation landed in `0.5.193`: exactly one Glasswake Shrine status changed from planned to active without registry, snippet, hotspot, or behavior changes.
 - The sacred-site Knowledge snippet seed plan landed in `0.5.194`: one exact future snippet is approved, but stale `planned` wording requires cleanup first.
-- Keep Sacred Site Active Text Cleanup as the two-phrase `0.5.195` direction.
-- Do not roll from `0.5.194` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Sacred-site active text cleanup landed in `0.5.195`: exactly two stale status phrases were corrected without changing status or authority.
+- Keep Sacred Site Religion Registry And Snippet Seed as the narrow `0.5.196` direction.
+- Do not roll from `0.5.195` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -178,18 +179,19 @@ Versioning note:
 | 114 | `0.5.192` | Sacred Site Activation Decision | Codex 5.5 Local docs-first | `docs/design/sacred-site-activation-decision.md` | planning decision | Completed | Approved later activation without changing status, registry, snippets, or behavior. |
 | 115 | `0.5.193` | Sacred Site Content Status Activation | Codex 5.5 Local | `docs/design/sacred-site-activation-decision.md` | one-record status change | Completed | Changed only planned to active; no registry, snippets, hotspots, runtime, UI, storage, or gameplay behavior. |
 | 116 | `0.5.194` | Sacred Site Knowledge Snippet Seed Plan | Codex 5.5 Local docs-first | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | planning decision | Completed | Approved exact draft and paired registry timing; found stale active-site wording. |
-| 117 | `0.5.195` | Sacred Site Active Text Cleanup | Codex 5.5 Local | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | two-phrase content cleanup | Next | Remove only stale planned wording; no status, registry, snippet, hotspot, or behavior changes. |
+| 117 | `0.5.195` | Sacred Site Active Text Cleanup | Codex 5.5 Local | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | two-phrase content cleanup | Completed | Corrected two stale phrases; no status, registry, snippet, hotspot, or behavior changes. |
+| 118 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | Codex 5.5 Local | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | registry alignment + one snippet | Next | Keep policy refs null; no hotspot, runtime, UI, storage, or gameplay behavior. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.195 - Sacred Site Active Text Cleanup`
-2. `Sacred Site Religion Registry And Snippet Seed`, only after cleanup lands
+1. `0.5.196 - Sacred Site Religion Registry And Snippet Seed`
+2. `Religious Order Placeholder Authority Plan`
 3. `Religious Order Placeholder Authority Plan`
 4. `Religious Favorability And Elemental Alignment Framework Plan`
 
-The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.195` must remain a two-phrase active-site text cleanup.
+The family, recipe, crafting, civil-society, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.196` must remain a paired Religion registry alignment and one-snippet seed.
 
 ## Default Prompt Pattern
 
@@ -205,13 +207,14 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.195 - Sacred Site Active Text Cleanup` as the immediate narrow next recommended run.
+- Keep `Version 0.5.196 - Sacred Site Religion Registry And Snippet Seed` as the immediate narrow next recommended run.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.
 - `0.5.192` approved later activation without changing content, registry, snippets, hotspots, pilgrimage, runtime, UI, storage, or gameplay behavior.
 - `0.5.193` activated exactly one site without changing registry content, snippets, hotspots, pilgrimage, runtime, UI, storage, or gameplay behavior.
 - `0.5.194` approved one future snippet without changing content, registry, snippets, hotspots, runtime, UI, storage, or gameplay behavior.
+- `0.5.195` corrected two stale site-text phrases without changing status, registry, snippets, hotspots, runtime, UI, storage, or gameplay behavior.
 - Do not skip directly from planning/audit to broad runtime rewrites.
 - Do not mix tooling cleanup with gameplay features.
 - Do not mix creator shell/sidebar refinement with combat, calendar/climate, economy, Chronicle, Bloodlines, Legacy, Family Prestige, heirloom, estate, or bequest work.

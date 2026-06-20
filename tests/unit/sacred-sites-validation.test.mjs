@@ -314,6 +314,16 @@ test("registers and validates exactly one active sacred-site seed", async () => 
   assert.equal(wrapper.records.length, 1);
   assert.equal(wrapper.records[0].id, "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine");
   assert.equal(wrapper.records[0].status, "active");
+  assert.equal(
+    wrapper.records[0].summary,
+    "An active named shrine authority centered on the sea-facing Glasswake Shrine community within the Lantern Shrine Gardens of Glasswake Quay."
+  );
+  assert.equal(
+    wrapper.records[0].notes[0],
+    "Active descriptive authority only; no runtime, access, service, route, reward, law, favorability, alignment, command, event, UI, storage, or gameplay behavior."
+  );
+  assert.doesNotMatch(wrapper.records[0].summary, /planned/i);
+  assert.doesNotMatch(wrapper.records[0].notes[0], /planned/i);
   assert.equal(Object.hasOwn(wrapper.records[0], "deityIds"), false);
   assert.equal(Object.hasOwn(wrapper.records[0], "religiousOrderIds"), false);
   for (const field of [
