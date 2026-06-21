@@ -1,51 +1,44 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.220 - Monster Record Schema Decision
+Source route: GPT-side Deep Research artifact update after `Version 0.5.220 - Monster Record Schema Decision`
 Date: 2026-06-21
-Branch/status assumption: `master`; synchronized with `origin/master` before edits; worktree was clean and the prior tooling-guide merge was complete.
+Branch/status assumption: `master`; update applied directly through the GitHub connector after the latest numbered Codex run.
 
 ## Result
 
-Completed the documentation-only monster record schema decision. Added `docs/design/monster-record-schema-decision.md`; preserved the live 24-record `world.monsters` authority; classified intrinsic identity and embedded static combat baselines; retained encounter/spawn/role/tactics separation; kept current drops/loot source-local; and defined later reference/coherence hardening without replacement or field movement.
+Latest completed numbered Codex run remains `Version 0.5.220 - Monster Record Schema Decision`.
 
-Deleted `docs/dev/tmp-combat-encounter-systems-research-2026-06-20.md` after promoting every useful monster-record concern into permanent design and coordination docs. It has no remaining consumer.
+Added `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` as a temporary, non-canonical Deep Research artifact.
+
+The artifact captures the Deep Research prompt-pack planning pass for the next 10 outstanding GPT-DR gates: discovery/POI/map reveal, services/vendor access, resources/gathering, health/injury, agriculture, maritime, time/weather/festivals, property/housing/storage, construction/upgrades, and progression/skills. It recommends priority order, dependency map, future artifact names, and reusable prompts for each topic.
+
+This update does not change the numbered Codex queue. The next numbered Codex pass remains `Version 0.5.221 - Weapon And Armor Profile Schema Decision`.
 
 ## Files Changed
 
-- `docs/design/monster-record-schema-decision.md` (created)
-- `docs/design/pipeline-roadmap-consolidation-decision.md`
+- `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` (created)
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
-- `docs/dev/gpt-codex-tooling-instructions.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/tmp-combat-encounter-systems-research-2026-06-20.md` (deleted)
-- `docs/future_content_backlog.md`
 
 ## Checks Run
 
-- `git fetch origin` - passed.
-- `git pull --ff-only origin master` - passed; already up to date.
-- `git diff --check` - passed.
-- Conflict-marker scan on changed files - passed.
-- Trailing-whitespace scan on changed files - passed.
-- Changed-path scope audit - passed; documentation files only.
-- Required-section audit - passed; all 15 required sections present.
-- Decision-completeness audit - passed; all 14 required decisions resolved.
-- Implementation-scope audit - passed.
-- Version tracking audit - passed: `0.5.220` completed, `0.5.221` next, and GPT Deep Research gates remain non-Codex labels.
-- No tests run; documentation-only change.
+- GitHub connector write completed.
+- Manual scope audit - passed; documentation-only temporary research artifact update.
+- Implementation-scope audit - passed; no schema, validator, content JSON, test, runtime, UI, storage, gameplay, migration, or existing temporary-artifact consumer file changed.
+- Version tracking audit - passed; `0.5.220` remains latest completed numbered Codex run and `0.5.221` remains next.
+- No tests run; documentation-only GPT-side research artifact update.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No schema, content JSON, validator, test, runtime, UI, storage/save-state, gameplay, loot, AI, combat, or migration change occurred.
+Documentation only. No schema, content JSON, validator, test, runtime, UI, storage/save-state, gameplay, migration, loot, AI, combat, or implementation change occurred.
 
 ## Risks / Follow-Up
 
-- Current drops/loot remain canonical source-local envelopes until a dedicated item-owned loot-table authority decision defines migration and cross-source ownership.
-- Optional variant/origin fields are unused in current content and need stronger reference/coupling validation before seeding.
-- Runtime derives enemy tactics presets from monster roles; later hardening may validate the convention without adding tactics state to monsters.
+- The prompt-pack artifact is temporary and non-canonical until integrated into permanent planning/tooling docs.
+- The artifact recommends `GPT-DR.discovery.poi-map-reveal` as the first later Deep Research gate, but it should not interrupt the current immediate numbered Codex queue.
+- The follow-up integration pass should promote durable guidance into permanent docs and either retire the temporary artifact or retain it with one named next consumer/removal condition.
 - No new GPT Deep Research is required before the immediate queue item.
+- Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
@@ -53,4 +46,4 @@ Version 0.5.221 - Weapon And Armor Profile Schema Decision
 
 ## Suggested Commit Message
 
-docs(combat): decide monster record schema posture
+docs(dev): add GPTDR prompt pack research
