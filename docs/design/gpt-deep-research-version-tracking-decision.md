@@ -1,6 +1,6 @@
 # GPT Deep Research Version Tracking Decision
 
-Source version/run: Version 0.5.218 - GPT Deep Research Version Tracking Update
+Source route: GPT-side documentation tracking update after `Version 0.5.217 - Pipeline Roadmap Consolidation`
 Date: 2026-06-20
 Status: approved documentation-only tracking update; no implementation permission
 
