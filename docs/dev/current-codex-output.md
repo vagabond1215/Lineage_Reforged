@@ -2,13 +2,15 @@
 
 Source version/run: Version 0.5.219 - Recipe And Production Schema Decision
 Date: 2026-06-21
-Branch/status assumption: `master`; synchronized with `origin/master` before edits; unrelated worktree changes were not present.
+Branch/status assumption: `master`; latest numbered Codex run merged with the GPT-side tooling guide update.
 
 ## Result
 
 Completed the documentation-only recipe and production schema decision. Added `docs/design/recipe-and-production-schema-decision.md`; approved future `crafting.recipes` as player-facing static transformation authority; preserved live production chains and embedded `recipeProfile` data; selected direct item-key, tool-item, and workplace references; and deferred instance-state and execution concerns.
 
 Deleted `docs/dev/tmp-crafting-production-systems-research-2026-06-20.md` after promoting every useful concern into permanent design and coordination docs. It has no remaining consumer.
+
+The merged GPT-side update added `docs/dev/gpt-codex-tooling-instructions.md` as the active operational guide for tool choice, skill choice, prompt formatting, GPT-DR labels, and cross-thread setup. It does not replace design or run authority.
 
 ## Files Changed
 
@@ -20,20 +22,21 @@ Deleted `docs/dev/tmp-crafting-production-systems-research-2026-06-20.md` after 
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/tmp-crafting-production-systems-research-2026-06-20.md` (deleted)
 - `docs/future_content_backlog.md`
+- `docs/dev/gpt-codex-tooling-instructions.md` (merged GPT-side operating guide)
 
 ## Checks Run
 
 - `git fetch origin` - passed.
-- `git pull --ff-only origin master` - passed; already up to date.
-- `git diff --check` - passed.
-- Conflict-marker scan on changed files - passed.
+- `git pull --ff-only origin master` - passed before the recipe decision; later remote tooling-guide changes required merge resolution.
+- `git diff --check` - passed for the recipe decision and merge resolution.
+- Conflict-marker scan on changed files - passed after resolution.
 - Trailing-whitespace scan on changed files - passed.
 - Changed-path scope audit - passed; documentation files only.
-- Required-section audit - passed; all 14 required sections present.
-- Decision-completeness audit - passed; all 15 required decisions resolved.
+- Required-section audit - passed; all 14 recipe-decision sections present.
+- Decision-completeness audit - passed; all 15 required recipe decisions resolved.
 - Implementation-scope audit - passed.
 - Version tracking audit - passed: `0.5.219` completed, `0.5.220` next, and GPT Deep Research gates remain non-Codex labels.
-- No tests run; documentation-only change.
+- No tests run; documentation-only changes.
 
 ## Behavior / Runtime Confirmation
 
@@ -44,6 +47,7 @@ Documentation only. No schema, content JSON, validator, test, runtime, UI, stora
 - The future recipe contract is approved but no schema/validator implementation is pre-approved before the conditional `0.5.231` pass.
 - `relatedProductionChainId` is a non-inheriting cross-reference only; it must not become migration, alias, or field inheritance.
 - Alchemy/enchanting subtype extensions need narrow reference contracts; repair/salvage and all item-instance quality/improvement behavior remain separate and deferred.
+- Use `docs/dev/gpt-codex-tooling-instructions.md` as operational guidance without allowing it to override current handoffs or permanent design decisions.
 - No new GPT Deep Research is required before the immediate queue item.
 
 ## Next Recommended Version
@@ -52,4 +56,4 @@ Version 0.5.220 - Monster Record Schema Decision
 
 ## Suggested Commit Message
 
-docs(crafting): decide recipe production schema posture
+docs(dev): merge tooling guide with recipe handoff

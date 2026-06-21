@@ -2,15 +2,17 @@
 
 Source version/run: Version 0.5.219 - Recipe And Production Schema Decision
 Date: 2026-06-21
-Branch/status assumption: `master`; latest numbered Codex run is documentation-only.
+Branch/status assumption: `master`; latest numbered Codex run merged with the GPT-side tooling guide update.
 
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
+- `docs/dev/gpt-codex-tooling-instructions.md` is the active operational guide for tool choice, skill choice, mode choice, prompt formatting, GPT-DR labels, and cross-thread setup.
 - `docs/design/recipe-and-production-schema-decision.md` is the permanent recipe/schema-posture authority.
 - `docs/design/crafting-authority-boundary-decision.md` remains the broader crafting/production ownership authority.
 - `docs/design/pipeline-roadmap-consolidation-decision.md` remains the authority for sequence, version remapping, artifact lifecycle, and research gates.
 - `docs/design/gpt-deep-research-version-tracking-decision.md` remains the supplemental GPT Deep Research label policy.
+- Operational guidance does not replace permanent design decisions, schemas, content, validators, tests, or current run state.
 - GPT Deep Research gates use `GPT-DR.<lane>.<topic>` labels and do not consume `0.5.x` Codex version numbers.
 - Runtime, UI, save state, inventory/item mutation, services, transactions, crafting execution, and player crafting state remain outside this `0.5.x` decision queue.
 
@@ -19,6 +21,10 @@ Branch/status assumption: `master`; latest numbered Codex run is documentation-o
 Latest completed numbered Codex run:
 
 - `Version 0.5.219 - Recipe And Production Schema Decision`
+
+Latest GPT-side documentation update:
+
+- `docs/dev/gpt-codex-tooling-instructions.md`
 
 Immediate next numbered Codex run:
 
@@ -37,6 +43,17 @@ Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not r
 - Alchemy/enchanting are future recipe subtypes under the common deterministic contract. Repair/salvage and all durability/quality/rarity/affix/improvement behavior remain separate and deferred.
 - The temporary crafting research artifact was deleted after full promotion. It has no remaining consumer.
 - No schema, content, validator, test, runtime, UI, storage, gameplay, or migration change occurred.
+
+## Tooling Guide Summary
+
+The GPT/Codex tooling guide standardizes:
+
+- when to use GPT, Codex, Deep Research, GitHub connector tools, web search, and uploaded-file context;
+- skill and mode selection for current docs/schema/content authority work versus later browser/UI/asset work;
+- Codex and Deep Research prompt skeletons;
+- inspect-last behavior and cross-thread setup;
+- temporary Deep Research artifact handling and GPT-DR gate labels;
+- separation of `0.5.x` static authority work from later `0.6+` runtime/UI/save-state work.
 
 ## Consolidated Near-Term Queue
 
