@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-20
-Route: Codex local sequencing alignment after `Version 0.5.212 - Combat Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.214 - Crafting Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.212 - Combat Authority Boundary Decision`
+- `Version 0.5.214 - Crafting Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.213 - Monster Record Schema Decision`
+- `Version 0.5.215 - Recipe And Production Schema Decision`
 
 Versioning note:
 
@@ -67,8 +67,9 @@ Versioning note:
 - Quest Event Chronicle Authority Boundary Decision landed in `0.5.208`: quest, objective/condition, reward, template/offer, event/storylet, rumor/hook, Chronicle, and narrative-state boundaries are now explicit.
 - Item Equipment Inventory Authority Boundary Decision landed in `0.5.209`: item, consumable, weapon/armor/container/loot, currency/value, integration, and runtime-state boundaries are now explicit.
 - Combat Authority Boundary Decision landed in `0.5.212`: existing monster, encounter, spawn, role, and tactics owners remain canonical and separate from runtime combat state.
-- Keep Monster Record Schema Decision as the documentation-only `0.5.213` direction; `0.5.210` remains valid and deferred.
-- Do not roll from `0.5.212` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Crafting Authority Boundary Decision landed in `0.5.214`: future `crafting.recipes` is separate from existing production chains, workplaces, items, and economy runtime.
+- Keep Recipe And Production Schema Decision as the documentation-only `0.5.215` direction; `0.5.213` and `0.5.210` remain valid and deferred.
+- Do not roll from `0.5.214` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
 
 ## Ordered Trajectory
 
@@ -207,20 +208,22 @@ Versioning note:
 | 131 | `0.5.209` | Item Equipment Inventory Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | planning decision | Completed | Defined item/equipment/inventory authority ownership without implementation. |
 | 132 | `0.5.210` | Weapon And Armor Profile Schema Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by the explicit combat authority pass. |
 | 133 | `0.5.212` | Combat Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | planning decision | Completed | Preserved live static owners and separated them from combat runtime state. |
-| 134 | `0.5.213` | Monster Record Schema Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | schema decision | Next | Audit the existing monster contract without implementation or a parallel enemy collection. |
+| 134 | `0.5.213` | Monster Record Schema Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by the explicit crafting authority pass. |
+| 135 | `0.5.214` | Crafting Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/crafting-authority-boundary-decision.md` | planning decision | Completed | Defined recipe/production/item/tool/station/runtime boundaries without implementation. |
+| 136 | `0.5.215` | Recipe And Production Schema Decision | Codex 5.5 Local docs-first | `docs/design/crafting-authority-boundary-decision.md` | schema decision | Next | Define future recipes against embedded production-chain recipe profiles without implementation. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.213 - Monster Record Schema Decision`
-2. `0.5.210 - Weapon And Armor Profile Schema Decision`, deferred but still valid
-3. `Encounter Template And Spawn Profile Schema Decision`
+1. `0.5.215 - Recipe And Production Schema Decision`
+2. `0.5.213 - Monster Record Schema Decision`, deferred but still valid
+3. `0.5.210 - Weapon And Armor Profile Schema Decision`, deferred but still valid
 4. `Quest Objective And Condition Schema Decision`
 5. `0.5.207 - Person vs NPC Schema Decision`
 6. `0.5.205 - Magic Study Source Schema Decision`
 
-The recipe, crafting, family, civic, travel, magic, NPC/social, narrative, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.213` must remain a documentation-only review of the existing monster schema and must not introduce a parallel enemy authority.
+The family, civic, travel, magic, NPC/social, narrative, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.215` must remain a documentation-only recipe/production schema decision and must not migrate embedded production-chain recipe profiles.
 
 ## Default Prompt Pattern
 
@@ -236,8 +239,8 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.213 - Monster Record Schema Decision` as the immediate documentation-only next recommended run.
-- Keep the unlanded `Version 0.5.210 - Weapon And Armor Profile Schema Decision` valid and deferred.
+- Keep `Version 0.5.215 - Recipe And Production Schema Decision` as the immediate documentation-only next recommended run.
+- Keep the unlanded `Version 0.5.213 - Monster Record Schema Decision` and `Version 0.5.210 - Weapon And Armor Profile Schema Decision` valid and deferred.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.

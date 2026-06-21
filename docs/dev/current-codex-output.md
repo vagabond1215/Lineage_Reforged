@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.212 - Combat Authority Boundary Decision
+Source version/run: Version 0.5.214 - Crafting Authority Boundary Decision
 Date: 2026-06-20
-Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `255d977`.
+Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `023b7e5`.
 
 ## Result
 
-Created `docs/design/combat-authority-boundary-decision.md` from the temporary combat/encounter Deep Research artifact and corrected its assumptions through live repository inspection.
+Created `docs/design/crafting-authority-boundary-decision.md` from the temporary crafting/production Deep Research artifact and corrected its assumptions through live repository inspection.
 
-The decision preserves existing `world.monsters`, `world.encounter_templates`, `world.spawn_profiles`, `game.combat_roles`, and `game.tactics_presets` authorities; separates all static records from runtime combat and encounter state; keeps damage family hook-derived; defers static status/condition authority to a dedicated decision; keeps injury/death/recovery runtime-only; and preserves source-local loot/reward envelopes pending a later loot decision.
+The decision selects future `crafting.recipes` for player-facing static transformations; preserves existing civilization production chains, embedded recipe profiles, workplaces, economy projections, item identity, guilds, and market values; uses direct item-key and workplace anchors initially; keeps tools item-owned; defers professions, quality/affixes, and player crafting state; treats alchemy/enchanting as future recipe subtypes; and reserves repair/salvage for separate future descriptive profile decisions.
 
 ## Files Changed
 
-- `docs/design/combat-authority-boundary-decision.md`
+- `docs/design/crafting-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -25,28 +25,29 @@ The decision preserves existing `world.monsters`, `world.encounter_templates`, `
 - conflict-marker scan on changed files - passed
 - trailing-whitespace scan on changed files - passed
 - changed-path scope audit - passed; exactly six documentation files changed
-- required-section audit - passed; all 20 required sections are present
+- required-section audit - passed; all 19 required sections are present
+- required-decision audit - passed; all 11 decisions are explicit
 - implementation-scope audit - passed; no content, schema, validator, test, runtime, UI, storage, or gameplay file changed
 - no tests run; documentation-only change
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No content, schema, validator, test, Knowledge, economy/crafting/item/equipment/quest/magic/NPC/social/travel/geography/religion/family/civic authority, runtime, UI, storage, combat, resources, actions, AI, pathfinding, status, injury, death, recovery, loot, reward, reputation, law, Chronicle, or gameplay behavior changed.
+Documentation only. No content, schema, validator, test, Knowledge, economy, item/equipment, combat, quest, magic, NPC/social, travel, geography, religion, family, civic, production-chain, runtime, UI, storage, crafting, inventory, item-state, market, vendor, repair, salvage, alchemy, enchanting, trial, Chronicle, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Existing monster, encounter, spawn, role, and tactics records are already strict live authorities. Future work must harden these contracts rather than introduce parallel collections.
-- Existing monster `combatProfile.base*` values are archetype baselines, not current resources; the next decision should make that boundary explicit.
-- Monster drops/loot and quest rewards remain source-local descriptive envelopes pending a later item-owned loot-table decision.
-- The temporary combat research artifact remains temporary through the next monster-record schema-decision pass, which must delete it if fully promoted or name its next consumer and removal condition.
-- The unlanded `Version 0.5.210 - Weapon And Armor Profile Schema Decision` remains valid.
+- The live repository already has 121 embedded production-chain recipe profiles plus civilization craft/cost projections. Future recipes must not duplicate or silently replace them.
+- Existing workplace tool tags are workforce/facility requirements, while portable tools are item identities. The next decision must define a resolvable reference contract.
+- Current craft `skillQualityFactor` is an economy projection, not item-instance quality or affix authority.
+- The temporary crafting research artifact remains temporary through the next recipe/production schema-decision pass, which must delete it if fully promoted or name its next consumer and removal condition.
+- The unlanded `Version 0.5.213 - Monster Record Schema Decision` and `Version 0.5.210 - Weapon And Armor Profile Schema Decision` remain valid.
 - The displaced Quest Objective And Condition Schema Decision remains valid and deferred.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.213 - Monster Record Schema Decision
+Version 0.5.215 - Recipe And Production Schema Decision
 
 ## Suggested Commit Message
 
-docs(combat): decide combat authority boundaries
+docs(crafting): decide crafting authority boundaries
