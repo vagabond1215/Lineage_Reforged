@@ -23,7 +23,7 @@ The repository has completed a broad static-authority wave while retaining subst
 Current facts:
 
 - 12 permanent authority-boundary decisions from `0.5.197` through `0.5.216` define world, economy, family, civic, travel, magic study, NPC/social, narrative, item/equipment, combat, crafting, and settlement ownership.
-- 12 temporary Deep Research artifacts remain in `docs/dev`; all have been consumed by a permanent decision but retain detail for one named follow-up.
+- Eleven temporary Deep Research artifacts remain in `docs/dev`. The settlement artifact was retired by `0.5.218`; each remaining artifact has been consumed by a permanent decision but retains detail for one named follow-up.
 - Multiple valid schema decisions were repeatedly displaced by user-prioritized authority lanes, leaving stale labels such as `0.5.199`, `0.5.202`, `0.5.205`, `0.5.207`, `0.5.209`, `0.5.210`, `0.5.213`, `0.5.215`, and `0.5.217` in coordination history.
 - The project is still in `v0.5.x` foundation stabilization. Static authority, validation, and narrow seed work remain appropriate; broad runtime ownership transition does not.
 - Religion/hotspot/sacred-site and Knowledge framework work already demonstrates the preferred cadence: decision, schema/validator/tests, seed plan, seed, then narrow integration.
@@ -51,11 +51,11 @@ Religious hotspot and sacred-site authority/schema/seed work is already landed a
 
 ## 4. Temporary Research Artifact Inventory
 
-Every temporary artifact has been consumed as planning input. None is deleted in this consolidation pass.
+Every temporary artifact was consumed as planning input. The consolidation pass itself deleted none; the table now records later retirement as follow-up runs land.
 
 | Temporary artifact | Permanent consumer | Current status | Retirement trigger |
 | --- | --- | --- | --- |
-| `tmp-settlement-space-systems-research-2026-06-20.md` | Settlement decision | Consumed; still useful for one pass | Delete after `0.5.218` if all schema guidance is promoted. |
+| `tmp-settlement-space-systems-research-2026-06-20.md` | Settlement decision and settlement identity decision | Retired in `0.5.218` after full promotion | Deleted; no remaining consumer. |
 | `tmp-crafting-production-systems-research-2026-06-20.md` | Crafting decision | Consumed; still useful for one pass | Delete after `0.5.219` if all schema guidance is promoted. |
 | `tmp-combat-encounter-systems-research-2026-06-20.md` | Combat decision | Consumed; still useful for one pass | Delete after `0.5.220` if all monster guidance is promoted; otherwise name the next encounter/status consumer. |
 | `tmp-item-equipment-inventory-systems-research-2026-06-20.md` | Item/equipment decision | Consumed; still useful for one pass | Delete after `0.5.221` if all equipment guidance is promoted; otherwise name the container/loot consumer. |
@@ -231,7 +231,7 @@ Near-term means `0.5.218`-`0.5.229`:
 4. Do not create schemas while unresolved overlap exists, especially settlement embedded fields, production-chain recipes, item use profiles, quest embedded objectives, and people/household identities.
 5. End with hazard/route-security boundary work after map features stabilize.
 
-Safest immediate next local Codex run: `Version 0.5.218 - Settlement Identity Schema Decision`.
+Safest immediate next local Codex run: `Version 0.5.219 - Recipe And Production Schema Decision`.
 
 ## 11. Medium-Term Priority Queue
 
@@ -307,6 +307,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.218 - Settlement Identity Schema Decision`
+`Version 0.5.219 - Recipe And Production Schema Decision`
 
-It should remain documentation-only, audit the existing settlement schema and embedded descriptive ownership, update the temporary settlement artifact's retirement status, and make no schema, validator, content, test, runtime, UI, storage, or gameplay change.
+It should remain documentation-only, resolve the future recipe contract against existing production-chain recipe profiles, update the temporary crafting artifact's retirement status, and make no schema, validator, content, test, runtime, UI, storage, or gameplay change.

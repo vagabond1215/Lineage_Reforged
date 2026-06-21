@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.217 - Pipeline Roadmap Consolidation`
-- Next recommended version: `Version 0.5.218 - Settlement Identity Schema Decision`
+- Latest completed version: `Version 0.5.218 - Settlement Identity Schema Decision`
+- Next recommended version: `Version 0.5.219 - Recipe And Production Schema Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -67,7 +67,8 @@ Versioning rule:
 - `Version 0.5.214 - Crafting Authority Boundary Decision` established docs-only boundaries across recipes, production chains, items/materials/tools/stations, professions/guilds/commissions, quality, repair/salvage, alchemy/enchanting, prerequisites, and player crafting state.
 - `Version 0.5.216 - Settlement Authority Boundary Decision` established docs-only boundaries across live settlement identity, world/map anchors, future districts/sites, building/infrastructure/workplace references, services, property anchors, specialized spaces, travel anchors, and settlement runtime state.
 - `Version 0.5.217 - Pipeline Roadmap Consolidation` replaced stale proposed labels with one monotonic dependency sequence, named all temporary-artifact retirement triggers, and classified future Deep Research gates.
-- Do not roll from `0.5.217` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.218 - Settlement Identity Schema Decision` preserved the live settlement contract, classified intrinsic and embedded descriptive fields, kept district/site references external, and retired the fully consumed temporary settlement research artifact.
+- Do not roll from `0.5.218` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -322,8 +323,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.215` | Recipe And Production Schema Decision | Codex Local docs-first | Planning | Historical proposed label; remapped to `0.5.219`. | No implementation landed under this label. |
 | `0.5.216` | Settlement Authority Boundary Decision | Codex Local docs-first | Planning | Completed. Preserved live settlement identity and separated future districts/sites from building, infrastructure, workplace, service, property, travel, and runtime owners. | Documentation only; no content, schema, validator, test, runtime, UI, storage, or gameplay changes. |
 | `0.5.217` | Pipeline Roadmap Consolidation | Codex Local docs-first | Planning | Completed. Consolidated dependency order, version mappings, research gates, and artifact retirement policy. | Documentation only; no schema, validator, content, test, runtime, UI, storage, gameplay, migration, or artifact deletion. |
-| `0.5.218` | Settlement Identity Schema Decision | Codex Local docs-first | Planning | Recommended next. Audit the existing settlement schema and embedded descriptive ownership without creating a new collection. | Documentation only. |
-| `0.5.219` | Recipe And Production Schema Decision | Codex Local docs-first | Planning | Queued. Resolve future recipes against embedded production-chain recipe profiles. | Documentation only. |
+| `0.5.218` | Settlement Identity Schema Decision | Codex Local docs-first | Planning | Completed. Preserved the live settlement contract and external future district/site references; retired the temporary settlement artifact. | Documentation only; no schema, content, validator, test, runtime, UI, storage, gameplay, or migration change. |
+| `0.5.219` | Recipe And Production Schema Decision | Codex Local docs-first | Planning | Recommended next. Resolve future recipes against embedded production-chain recipe profiles. | Documentation only. |
 | `0.5.220` | Monster Record Schema Decision | Codex Local docs-first | Planning | Queued. Audit the existing monster schema and runtime-field boundary. | Documentation only. |
 | `0.5.221` | Weapon And Armor Profile Schema Decision | Codex Local docs-first | Planning | Queued after monster review. | Documentation only. |
 | `0.5.222` | Quest Objective And Condition Schema Decision | Codex Local docs-first | Planning | Queued. Reconcile existing embedded objective/condition owners. | Documentation only. |
@@ -355,18 +356,17 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.218 - Settlement Identity Schema Decision`
-2. `0.5.219 - Recipe And Production Schema Decision`
-3. `0.5.220 - Monster Record Schema Decision`
-4. `0.5.221 - Weapon And Armor Profile Schema Decision`
-5. `0.5.222 - Quest Objective And Condition Schema Decision`
-6. `0.5.223 - Person vs NPC Schema Decision`
-7. `0.5.224 - Magic Study Source Schema Decision`
-8. `0.5.225 - Polity Schema Decision`
-9. `0.5.226 - Household vs Family Schema Decision`
-10. `0.5.227 - Settlement Economy Schema Decision`
-11. `0.5.228 - World Map Feature Authority Schema Decision`
-12. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.219 - Recipe And Production Schema Decision`
+2. `0.5.220 - Monster Record Schema Decision`
+3. `0.5.221 - Weapon And Armor Profile Schema Decision`
+4. `0.5.222 - Quest Objective And Condition Schema Decision`
+5. `0.5.223 - Person vs NPC Schema Decision`
+6. `0.5.224 - Magic Study Source Schema Decision`
+7. `0.5.225 - Polity Schema Decision`
+8. `0.5.226 - Household vs Family Schema Decision`
+9. `0.5.227 - Settlement Economy Schema Decision`
+10. `0.5.228 - World Map Feature Authority Schema Decision`
+11. `0.5.229 - Hazard And Route Security Boundary Decision`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.256` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan.
 
@@ -817,7 +817,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 123 | `0.5.215` | Recipe And Production Schema Decision | `docs/design/crafting-authority-boundary-decision.md` | Historical proposed label; remapped to `0.5.219` |
 | 124 | `0.5.216` | Settlement Authority Boundary Decision | `docs/design/settlement-authority-boundary-decision.md` | Completed; documentation only |
 | 125 | `0.5.217` | Pipeline Roadmap Consolidation | `docs/design/pipeline-roadmap-consolidation-decision.md` | Completed; documentation only |
-| 126 | `0.5.218` | Settlement Identity Schema Decision | `docs/design/settlement-authority-boundary-decision.md` | Next; documentation only |
+| 126 | `0.5.218` | Settlement Identity Schema Decision | `docs/design/settlement-identity-schema-decision.md` | Completed; documentation only; temporary research retired |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
