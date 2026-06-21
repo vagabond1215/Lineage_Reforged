@@ -1,18 +1,19 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.220 - Monster Record Schema Decision
+Source route: GPT-side Deep Research artifact update after `Version 0.5.220 - Monster Record Schema Decision`
 Date: 2026-06-21
 Branch/status assumption: `master`; latest numbered Codex run is documentation-only.
 
 ## Authority Rules
 
-- `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
+- `docs/dev/current-codex-output.md` is the exact latest handoff, including the GPT-side prompt-pack research artifact update.
 - `docs/dev/gpt-codex-tooling-instructions.md` remains the active operational guide for tool, skill, mode, prompt, GPT-DR, and cross-thread setup choices.
+- `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` is a temporary, non-canonical Deep Research prompt-pack artifact. It must be promoted into permanent planning/tooling docs or retained with one named next consumer before it becomes durable guidance.
 - `docs/design/monster-record-schema-decision.md` is the permanent monster/schema-posture authority.
 - `docs/design/combat-authority-boundary-decision.md` remains the broader combat/encounter/runtime ownership authority.
 - `docs/design/pipeline-roadmap-consolidation-decision.md` remains the authority for sequence, version remapping, artifact lifecycle, and research gates.
 - `docs/design/gpt-deep-research-version-tracking-decision.md` remains the supplemental GPT Deep Research label policy.
-- Operational guidance does not replace permanent design decisions or current run state.
+- Operational guidance and temporary research artifacts do not replace permanent design decisions or current run state.
 - GPT Deep Research gates use `GPT-DR.<lane>.<topic>` labels and do not consume `0.5.x` Codex version numbers.
 - Runtime combat, AI, loot rolls, rewards, item instances, UI, and save state remain outside this `0.5.x` decision queue.
 
@@ -22,9 +23,9 @@ Latest completed numbered Codex run:
 
 - `Version 0.5.220 - Monster Record Schema Decision`
 
-Latest GPT-side documentation update:
+Latest GPT-side documentation/research update:
 
-- `docs/dev/gpt-codex-tooling-instructions.md`
+- `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md`
 
 Immediate next numbered Codex run:
 
@@ -42,6 +43,14 @@ Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not r
 - Status, condition, injury, morale, fear, poison, disease, death, defeat, recovery, AI state, combatant state, loot rolls, rewards, and item instances remain outside static monsters.
 - The temporary combat research artifact was deleted after full promotion. It has no remaining consumer.
 - No schema, content, validator, test, runtime, UI, storage, gameplay, loot, AI, combat, or migration change occurred.
+
+## GPT-DR Prompt-Pack Artifact Result
+
+- Added `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` as temporary prompt-pack research.
+- The artifact confirms the next 10 outstanding GPT-DR gates and recommends their priority order.
+- It recommends `GPT-DR.discovery.poi-map-reveal` as the first later Deep Research gate.
+- It must not interrupt the immediate numbered Codex queue.
+- A later integration pass should promote durable guidance into permanent docs and retire or explicitly retain the temporary artifact.
 
 ## Consolidated Near-Term Queue
 
