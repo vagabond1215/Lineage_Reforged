@@ -23,7 +23,7 @@ The repository has completed a broad static-authority wave while retaining subst
 Current facts:
 
 - 12 permanent authority-boundary decisions from `0.5.197` through `0.5.216` define world, economy, family, civic, travel, magic study, NPC/social, narrative, item/equipment, combat, crafting, and settlement ownership.
-- Seven temporary Deep Research artifacts remain in `docs/dev`. The settlement, crafting, combat, item/equipment, and quest/event/Chronicle artifacts were retired by `0.5.218` through `0.5.222`; each remaining artifact has been consumed by a permanent decision but retains detail for one named follow-up.
+- Six temporary Deep Research artifacts remain in `docs/dev`. The settlement, crafting, combat, item/equipment, quest/event/Chronicle, and NPC/social artifacts were retired by `0.5.218` through `0.5.223`; each remaining artifact has been consumed by a permanent decision but retains detail for one named follow-up.
 - Multiple valid schema decisions were repeatedly displaced by user-prioritized authority lanes, leaving stale labels such as `0.5.199`, `0.5.202`, `0.5.205`, `0.5.207`, `0.5.209`, `0.5.210`, `0.5.213`, `0.5.215`, and `0.5.217` in coordination history.
 - The project is still in `v0.5.x` foundation stabilization. Static authority, validation, and narrow seed work remain appropriate; broad runtime ownership transition does not.
 - Religion/hotspot/sacred-site and Knowledge framework work already demonstrates the preferred cadence: decision, schema/validator/tests, seed plan, seed, then narrow integration.
@@ -60,7 +60,7 @@ Every temporary artifact was consumed as planning input. The consolidation pass 
 | `tmp-combat-encounter-systems-research-2026-06-20.md` | Combat decision and monster-record decision | Retired in `0.5.220` after full promotion | Deleted; no remaining consumer. |
 | `tmp-item-equipment-inventory-systems-research-2026-06-20.md` | Item/equipment decision and weapon/armor profile decision | Retired in `0.5.221` after full promotion | Deleted; no remaining consumer. |
 | `tmp-quest-event-chronicle-systems-research-2026-06-20.md` | Quest/event and objective/condition decisions | Retired in `0.5.222` after full promotion | Deleted; no remaining consumer. |
-| `tmp-npc-social-systems-research-2026-06-20.md` | NPC/social decision | Consumed; still useful for one pass | Delete after `0.5.223` if all person/NPC guidance is promoted. |
+| `tmp-npc-social-systems-research-2026-06-20.md` | NPC/social and person/NPC decisions | Retired in `0.5.223` after full promotion | Deleted; no remaining consumer. |
 | `tmp-magic-knowledge-study-systems-research-2026-06-20.md` | Magic-study decision | Consumed; still useful for one pass | Delete after `0.5.224` if all source-contract guidance is promoted. |
 | `tmp-civic-authority-systems-research-2026-06-20.md` | Civic decision | Consumed; still useful for one pass | Delete after `0.5.225` if all polity guidance is promoted. |
 | `tmp-family-lineage-systems-research-2026-06-20.md` | Family decision | Consumed; still useful for one pass | Delete after `0.5.226` if household/family guidance is promoted. |
@@ -233,7 +233,7 @@ Near-term means `0.5.218`-`0.5.229`:
 4. Do not create schemas while unresolved overlap exists, especially settlement embedded fields, production-chain recipes, item use profiles, quest embedded objectives, and people/household identities.
 5. End with hazard/route-security boundary work after map features stabilize.
 
-Safest immediate next local Codex run: `Version 0.5.223 - Person vs NPC Schema Decision`.
+Safest immediate next local Codex run: `Version 0.5.224 - Magic Study Source Schema Decision`.
 
 ## 11. Medium-Term Priority Queue
 
@@ -309,6 +309,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.223 - Person vs NPC Schema Decision`
+`Version 0.5.224 - Magic Study Source Schema Decision`
 
-It should remain documentation-only, define exact person versus NPC-overlay schema posture from live authorities, update the temporary NPC/social artifact's retirement status, and make no schema, validator, content, test, runtime, UI, storage, or gameplay change.
+It should remain documentation-only, define exact magic-study source schema posture from live authorities, update the temporary magic-study artifact's retirement status, and make no schema, validator, content, test, runtime, UI, storage, or gameplay change.

@@ -1,5 +1,7 @@
 # Future Content Backlog
 
+- 2026-06-21: Completed the documentation-only `Version 0.5.223 - Person vs NPC Schema Decision`. Added `docs/design/person-vs-npc-schema-decision.md`; approved future strict records-only `civilization.people` and `civilization.npcs`; kept person identity minimal and stable; made NPCs optional one-to-one overlays keyed to `personId`; allowed only a narrow optional settlement anchor; rejected inference from quest contacts, synthetic operators, combatants, players/account history, roles, titles, workplaces, and Knowledge vocabulary; and deferred generated people plus all roles, affiliations, family/kinship, relationships, schedules, dialogue, services, quests, Knowledge, runtime, UI, storage, and gameplay. Deleted `docs/dev/tmp-npc-social-systems-research-2026-06-20.md` after full promotion with no remaining consumer. No schema, content, validator, test, loader, lint, runtime, UI, storage, gameplay, social, Knowledge, or migration change occurred. Next is `Version 0.5.224 - Magic Study Source Schema Decision`; no new Deep Research is required.
+
 - 2026-06-21: Completed the documentation-only `Version 0.5.222 - Quest Objective And Condition Schema Decision`. Added `docs/design/quest-objective-and-condition-schema-decision.md`; kept objectives and conditions embedded; approved future shared schema components for duplicated definition/archetype action trees, checks, and requirements; preserved templates as separate generation inputs and generated offers/player/journal/Chronicle state as runtime-owned; standardized current quest item-reference posture on canonical `itemKey`; and kept rewards/consequences source-local and non-executing. Deleted `docs/dev/tmp-quest-event-chronicle-systems-research-2026-06-20.md` after full promotion with no remaining consumer. No schema, content, validator, test, runtime, UI, storage, gameplay, quest-state, reward, event, Chronicle, or migration change occurred. Next is `Version 0.5.223 - Person vs NPC Schema Decision`; no new Deep Research is required.
 
 This file tracks content and systems that are intentionally deferred.
@@ -295,11 +297,11 @@ Full candidate backlog for later domain expansion:
 
 ## NPC And Social Authority
 
-- `Version 0.5.223 - Person vs NPC Schema Decision` must define exact `civilization.people` and future NPC paths, records-only wrapper, ids, minimum person identity fields, life/presence status, person-vs-overlay duplication rules, supported references, generated-person posture, forbidden fields, validation ownership, and staged implementation without creating schemas or content. Intended owners: civilization people/NPC content and content validation.
+- `Version 0.5.223 - Person vs NPC Schema Decision` completed the future people/NPC schema posture. `docs/design/person-vs-npc-schema-decision.md` owns the exact paths, wrappers, ids, minimum fields, identity/overlay split, status vocabulary, reference posture, generated-person boundary, forbidden fields, validation ownership, and staged implementation direction.
 - Social roles, existing workplaces/jobs, schedules, dialogue topics/scenes, non-kin relationship links, rumors, and companion eligibility remain separate authorities. Direct kin/care facts remain owned by future family kinship links.
 - Quest giver/contact strings, synthetic `npc_household`/`npc_individual` operators, combat NPCs, role labels, and Knowledge character/teacher evidence vocabulary are not canonical people and must not be promoted by inference.
 - Existing player fame/notoriety runtime behavior remains unchanged and separate. New person-local relationship/favorability/standing, social memory, dialogue history, rumor propagation, companion party state, service execution, schedule execution, NPC AI, and pathfinding remain deferred to `0.6+`.
-- `docs/dev/tmp-npc-social-systems-research-2026-06-20.md` remains temporary through `0.5.223`. Delete it when useful guidance is fully promoted, or retain it only with a named next consumer and removal condition.
+- `docs/dev/tmp-npc-social-systems-research-2026-06-20.md` was deleted in `0.5.223` after full promotion. It has no remaining consumer; future social work must use permanent decisions and a fresh live-repo audit.
 
 ## Quest Event Chronicle Authority
 
