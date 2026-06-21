@@ -113,6 +113,8 @@ No new Deep Research is required before `0.5.218`-`0.5.229`.
 
 Research artifacts should be narrow and named for one future authority question. Do not create broad catch-all reports that duplicate the permanent roadmap.
 
+`docs/design/gpt-deep-research-prompt-pack-decision.md` owns the default priority, dependency map, recommended modes, artifact names, and prompt-generation policy for the first ten later gates in this inventory. `GPT-DR.discovery.poi-map-reveal` is the default first later gate, subject to a live dependency check after the immediate numbered queue. The prompt pack does not reserve versions or change any associated lane's prerequisite.
+
 ## 7. Dependency Map
 
 ```text

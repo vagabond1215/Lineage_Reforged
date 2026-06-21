@@ -358,6 +358,21 @@ Version 0.5.xxx - <Associated Codex Pass>
 
 The consolidated schema-decision queue through `0.5.229` does not require new Deep Research; consult the current handoffs for the first remaining numbered item.
 
+### 6.1 GPT-DR Prompt-Pack Routing
+
+Use `docs/design/gpt-deep-research-prompt-pack-decision.md` as the permanent source for the next prioritized ten later GPT-DR gates, their dependency order, recommended modes, and temporary artifact names.
+
+Do not maintain copied long-form prompt bodies in this guide. When a later gate becomes timely:
+
+1. inspect current handoffs and relevant permanent decisions;
+2. recheck the gate's dependencies and priority;
+3. generate one current copy-paste prompt from the Deep Research skeleton above;
+4. run only that gate using its recommended mode;
+5. create its exact `docs/dev/tmp-*-research-YYYY-MM-DD.md` artifact;
+6. schedule one documentation integration pass that promotes durable guidance and deletes the artifact, or retains it with one named consumer and removal condition.
+
+`GPT-DR.discovery.poi-map-reveal` is the default first later gate, after the immediate numbered queue and relevant map-feature decision. Current handoffs, not this stable guide, determine the next numbered Codex run.
+
 ## 7. Project-Specific Guardrails
 
 For the current `0.5.x` foundation phase:

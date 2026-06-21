@@ -1,21 +1,19 @@
 # Current GPT Handoff
 
-Source route: GPT-side Deep Research artifact update after `Version 0.5.220 - Monster Record Schema Decision`
+Source route: unnumbered GPT Deep Research prompt-pack integration after Version 0.5.220 - Monster Record Schema Decision
 Date: 2026-06-21
-Branch/status assumption: `master`; latest numbered Codex run is documentation-only.
+Branch/status assumption: `master`; latest numbered Codex run remains documentation-only.
 
 ## Authority Rules
 
-- `docs/dev/current-codex-output.md` is the exact latest handoff, including the GPT-side prompt-pack research artifact update.
-- `docs/dev/gpt-codex-tooling-instructions.md` remains the active operational guide for tool, skill, mode, prompt, GPT-DR, and cross-thread setup choices.
-- `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` is a temporary, non-canonical Deep Research prompt-pack artifact. It must be promoted into permanent planning/tooling docs or retained with one named next consumer before it becomes durable guidance.
-- `docs/design/monster-record-schema-decision.md` is the permanent monster/schema-posture authority.
-- `docs/design/combat-authority-boundary-decision.md` remains the broader combat/encounter/runtime ownership authority.
-- `docs/design/pipeline-roadmap-consolidation-decision.md` remains the authority for sequence, version remapping, artifact lifecycle, and research gates.
-- `docs/design/gpt-deep-research-version-tracking-decision.md` remains the supplemental GPT Deep Research label policy.
-- Operational guidance and temporary research artifacts do not replace permanent design decisions or current run state.
-- GPT Deep Research gates use `GPT-DR.<lane>.<topic>` labels and do not consume `0.5.x` Codex version numbers.
-- Runtime combat, AI, loot rolls, rewards, item instances, UI, and save state remain outside this `0.5.x` decision queue.
+- `docs/dev/current-codex-output.md` is the exact latest handoff.
+- `docs/dev/gpt-codex-tooling-instructions.md` remains the active operational guide for tools, skills, modes, prompt structure, GPT-DR labels, and cross-thread setup.
+- `docs/design/gpt-deep-research-prompt-pack-decision.md` owns the next prioritized ten later GPT-DR gates, dependencies, modes, artifact names, and prompt-generation policy.
+- `docs/design/gpt-deep-research-version-tracking-decision.md` owns the broader GPT-DR label and display policy.
+- `docs/design/pipeline-roadmap-consolidation-decision.md` remains the numbered sequence and dependency authority.
+- Full GPT-DR prompts are generated on demand from live repo state; permanent docs preserve compact routing guidance rather than copied prompt bodies.
+- Each GPT-DR gate produces one temporary artifact and consumes no `0.5.x` version number.
+- Runtime, UI, save state, mutation, transactions, execution, and gameplay remain outside the immediate docs/schema queue.
 
 ## Current Anchor
 
@@ -23,9 +21,9 @@ Latest completed numbered Codex run:
 
 - `Version 0.5.220 - Monster Record Schema Decision`
 
-Latest GPT-side documentation/research update:
+Latest unnumbered documentation integration:
 
-- `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md`
+- GPT Deep Research Prompt Pack Decision
 
 Immediate next numbered Codex run:
 
@@ -33,24 +31,15 @@ Immediate next numbered Codex run:
 
 Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
 
-## Monster Decision Result
+## Prompt-Pack Result
 
-- Existing `world.monsters` remains the canonical static monster identity/archetype authority; no replacement collection is planned.
-- Identity, ecology/behavior, optional lineage/origin, combat baselines, role/action packages, and scaling hooks remain in the current record contract.
-- Encounter templates compose monsters; spawn profiles place encounters; combat roles and tactics remain reusable descriptors rather than monster identity or AI execution.
-- Current `defaultRole` is sufficient. Do not add explicit tactics-preset references now.
-- Current monster drops/loot remain source-local. A future general loot-table authority is provisionally item-owned and requires a dedicated decision.
-- Status, condition, injury, morale, fear, poison, disease, death, defeat, recovery, AI state, combatant state, loot rolls, rewards, and item instances remain outside static monsters.
-- The temporary combat research artifact was deleted after full promotion. It has no remaining consumer.
-- No schema, content, validator, test, runtime, UI, storage, gameplay, loot, AI, combat, or migration change occurred.
-
-## GPT-DR Prompt-Pack Artifact Result
-
-- Added `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` as temporary prompt-pack research.
-- The artifact confirms the next 10 outstanding GPT-DR gates and recommends their priority order.
-- It recommends `GPT-DR.discovery.poi-map-reveal` as the first later Deep Research gate.
-- It must not interrupt the immediate numbered Codex queue.
-- A later integration pass should promote durable guidance into permanent docs and retire or explicitly retain the temporary artifact.
+- The next prioritized ten later gates exactly match permanent tracking-policy entries.
+- Default order: discovery, services, resources, health, agriculture, maritime, time/weather/festivals, property, construction, progression.
+- The order is guidance, not a lock; recheck dependencies before each gate.
+- `GPT-DR.discovery.poi-map-reveal` is the first recommended later gate, after the immediate queue and relevant map-feature decision.
+- The ten full long-form prompts were intentionally retired. Generate one current prompt when its gate becomes timely.
+- The temporary prompt-pack artifact was deleted after full promotion and has no remaining consumer.
+- No new Deep Research is required before `0.5.221` through `0.5.229`.
 
 ## Consolidated Near-Term Queue
 
@@ -64,7 +53,18 @@ Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not r
 8. `0.5.228 - World Map Feature Authority Schema Decision`
 9. `0.5.229 - Hazard And Route Security Boundary Decision`
 
-No new Deep Research is required before this queue. Use the matching permanent decision and temporary artifact for each remaining pass.
+## Later GPT-DR Priority
+
+1. `GPT-DR.discovery.poi-map-reveal`
+2. `GPT-DR.services.vendor-service-access`
+3. `GPT-DR.resources.gathering-extraction`
+4. `GPT-DR.health.injury-recovery`
+5. `GPT-DR.agriculture.land-food-livestock`
+6. `GPT-DR.maritime.ships-ports-sea-trade`
+7. `GPT-DR.time.calendar-weather-festivals`
+8. `GPT-DR.property.ownership-storage-housing`
+9. `GPT-DR.construction.upgrades-infrastructure`
+10. `GPT-DR.progression.character-creation-skills`
 
 ## Next Route Boundary
 

@@ -1,44 +1,51 @@
 # Current Codex Output
 
-Source route: GPT-side Deep Research artifact update after `Version 0.5.220 - Monster Record Schema Decision`
+Source route: unnumbered GPT Deep Research prompt-pack integration after Version 0.5.220 - Monster Record Schema Decision
 Date: 2026-06-21
-Branch/status assumption: `master`; update applied directly through the GitHub connector after the latest numbered Codex run.
+Branch/status assumption: `master`; synchronized with `origin/master` before edits; worktree was clean.
 
 ## Result
 
-Latest completed numbered Codex run remains `Version 0.5.220 - Monster Record Schema Decision`.
+Integrated the temporary GPT-DR prompt pack into permanent planning and tooling authority. Added `docs/design/gpt-deep-research-prompt-pack-decision.md`; confirmed the next prioritized ten later gates against the permanent tracking policy; preserved their order, dependencies, modes, artifact names, and integration lifecycle; and selected `GPT-DR.discovery.poi-map-reveal` as the default first later gate.
 
-Added `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` as a temporary, non-canonical Deep Research artifact.
+The ten long prompt bodies were intentionally not retained. Future GPT threads generate one current prompt at a time from the permanent decision, tooling skeleton, current handoffs, and live repo state.
 
-The artifact captures the Deep Research prompt-pack planning pass for the next 10 outstanding GPT-DR gates: discovery/POI/map reveal, services/vendor access, resources/gathering, health/injury, agriculture, maritime, time/weather/festivals, property/housing/storage, construction/upgrades, and progression/skills. It recommends priority order, dependency map, future artifact names, and reusable prompts for each topic.
-
-This update does not change the numbered Codex queue. The next numbered Codex pass remains `Version 0.5.221 - Weapon And Armor Profile Schema Decision`.
+Deleted `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` after full promotion. It has no remaining consumer.
 
 ## Files Changed
 
-- `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` (created)
+- `docs/design/gpt-deep-research-prompt-pack-decision.md` (created)
+- `docs/design/pipeline-roadmap-consolidation-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
+- `docs/dev/gpt-codex-tooling-instructions.md`
+- `docs/dev/tmp-gptdr-prompt-pack-research-2026-06-21.md` (deleted)
+- `docs/future_content_backlog.md`
 
 ## Checks Run
 
-- GitHub connector write completed.
-- Manual scope audit - passed; documentation-only temporary research artifact update.
-- Implementation-scope audit - passed; no schema, validator, content JSON, test, runtime, UI, storage, gameplay, migration, or existing temporary-artifact consumer file changed.
-- Version tracking audit - passed; `0.5.220` remains latest completed numbered Codex run and `0.5.221` remains next.
-- No tests run; documentation-only GPT-side research artifact update.
+- `git fetch origin` - passed.
+- `git pull --ff-only origin master` - passed; already up to date.
+- `git diff --check` - passed.
+- Conflict-marker scan on changed files - passed.
+- Trailing-whitespace scan on changed files - passed.
+- Changed-path scope audit - passed; documentation files only.
+- Required-section audit - passed; all 11 required sections present.
+- Decision-completeness audit - passed; all nine required decisions resolved.
+- Implementation-scope audit - passed.
+- Version tracking audit - passed: `0.5.220` remains latest completed, `0.5.221` remains next, and GPT-DR labels remain non-Codex labels.
+- No tests run; documentation-only change.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No schema, content JSON, validator, test, runtime, UI, storage/save-state, gameplay, migration, loot, AI, combat, or implementation change occurred.
+Documentation only. No schema, content JSON, validator, test, runtime, UI, storage/save-state, gameplay, migration, implementation, prompt execution, or Deep Research run occurred.
 
 ## Risks / Follow-Up
 
-- The prompt-pack artifact is temporary and non-canonical until integrated into permanent planning/tooling docs.
-- The artifact recommends `GPT-DR.discovery.poi-map-reveal` as the first later Deep Research gate, but it should not interrupt the current immediate numbered Codex queue.
-- The follow-up integration pass should promote durable guidance into permanent docs and either retire the temporary artifact or retain it with one named next consumer/removal condition.
-- No new GPT Deep Research is required before the immediate queue item.
-- Do not roll to `0.6.0`.
+- Gate priority is default planning guidance and must be rechecked against live dependencies before execution.
+- Full prompts must be regenerated when a gate becomes timely; do not restore the deleted staging prompt bodies as permanent authority.
+- Run one GPT-DR gate at a time and give each resulting artifact one named integration consumer.
+- No new Deep Research is required before the immediate numbered queue.
 
 ## Next Recommended Version
 
@@ -46,4 +53,4 @@ Version 0.5.221 - Weapon And Armor Profile Schema Decision
 
 ## Suggested Commit Message
 
-docs(dev): add GPTDR prompt pack research
+docs(dev): integrate GPTDR prompt pack guidance
