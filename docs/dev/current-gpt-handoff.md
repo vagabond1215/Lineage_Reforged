@@ -1,62 +1,55 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.221 - Weapon And Armor Profile Schema Decision
+Source version/run: Version 0.5.222 - Quest Objective And Condition Schema Decision
 Date: 2026-06-21
-Branch/status assumption: `master`; latest numbered Codex run is documentation-only.
+Status: documentation-only decision completed; no implementation occurred
 
 ## Authority Rules
 
-- `docs/dev/current-codex-output.md` is the exact latest handoff.
-- `docs/dev/gpt-codex-tooling-instructions.md` remains the active operational guide.
-- `docs/design/weapon-and-armor-profile-schema-decision.md` is the permanent equipment-profile schema-posture authority.
-- `docs/design/item-equipment-inventory-authority-boundary-decision.md` remains the broader item/equipment/inventory ownership authority.
-- `docs/design/monster-record-schema-decision.md` owns current monster/source-local loot boundaries.
-- `docs/design/recipe-and-production-schema-decision.md` owns future crafting transformations and item-key references.
-- `docs/design/gpt-deep-research-prompt-pack-decision.md` remains permanent later research guidance and does not interrupt the numbered queue.
-- GPT-DR labels do not consume `0.5.x` version numbers.
-- Runtime equipment, inventory, item instances, combat execution, UI, and save state remain outside this decision queue.
+- `civilization.quest_definitions` remains canonical for unique authored quests.
+- `civilization.quest_archetypes` remains canonical reusable authored quest structure.
+- `civilization.quest_templates` remains canonical repeatable-offer generation input.
+- Objectives and conditions remain embedded; future shared JSON Schema components may remove duplication but do not create content collections or global objective/condition ids.
+- Definition and archetype action-tree/check/requirement shapes may share schema components. Templates retain a distinct generator-input contract.
+- Generated `QuestOfferObjective` and `QuestOfferState` values remain civilization runtime output, not authored quest content.
+- Current quest item relationships use canonical `itemKey`.
+- Rewards, consequences, failure effects, and unlock candidates remain source-local descriptive envelopes without payout or mutation.
+- Player/session/runtime owners retain quest acceptance/progress/completion, condition satisfaction, cooldowns/timers, reward claims, journal entries, Chronicle records, events, and UI.
+- Quest giver/contact strings and synthetic entity ids are not canonical people.
 
 ## Current Anchor
 
-Latest completed numbered Codex run:
-
-- `Version 0.5.221 - Weapon And Armor Profile Schema Decision`
-
-Immediate next numbered Codex run:
+Latest completed:
 
 - `Version 0.5.222 - Quest Objective And Condition Schema Decision`
 
-Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
+Immediate next:
 
-## Equipment Profile Decision Result
+- `Version 0.5.223 - Person vs NPC Schema Decision`
 
-- `items.items` remains canonical static item identity.
-- All 22 current item-local `useProfiles` remain unchanged as live action/use/activation/skill/hook metadata.
-- Separate future `items.weapon_profiles` and `items.armor_profiles` are approved as additive structural descriptor collections.
-- Profiles use canonical `itemKey` references and one-to-one reverse lookup; item records do not gain profile-id fields initially.
-- Weapon profiles may own family, handedness, compatible weapon slots, delivery/range posture, and equipment tags.
-- Armor profiles may own kind/family, compatible slots, coverage, weight/encumbrance/mobility posture, and equipment tags.
-- Damage/mitigation hooks and action skill/timing/target/effect data remain in `useProfiles`.
-- Durability, condition, quality, rarity, affixes, enchantment state, charges, ammo counts, stacks, ownership, inventory location, and equipped state remain future/runtime/item-instance concerns.
-- Loot/drop/reward relationships remain source-local pending a dedicated item-owned loot-table decision.
-- The temporary item/equipment research artifact was deleted after full promotion and has no remaining consumer.
-- No schema, content, validator, test, runtime, UI, storage, gameplay, equipment, combat, inventory, item-instance, or migration change occurred.
+## Quest Decision Result
+
+- Live inventory: five definitions, eight archetypes, 36 templates.
+- Definitions and archetypes duplicate an embedded action-tree/check contract and closely related requirement structures.
+- Templates contain economic/security/frontier generation inputs rather than authored action trees.
+- Future reusable sub-schemas are approved only for duplicated static structures; standalone objective/condition records are rejected.
+- The conditional implementation candidate remains `0.5.234 - Quest Objective And Condition Validation Pass` after the docs-first queue.
+- `docs/dev/tmp-quest-event-chronicle-systems-research-2026-06-20.md` was deleted after full promotion and has no remaining consumer.
 
 ## Consolidated Near-Term Queue
 
-1. `0.5.222 - Quest Objective And Condition Schema Decision`
-2. `0.5.223 - Person vs NPC Schema Decision`
-3. `0.5.224 - Magic Study Source Schema Decision`
-4. `0.5.225 - Polity Schema Decision`
-5. `0.5.226 - Household vs Family Schema Decision`
-6. `0.5.227 - Settlement Economy Schema Decision`
-7. `0.5.228 - World Map Feature Authority Schema Decision`
-8. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.223 - Person vs NPC Schema Decision`
+2. `0.5.224 - Magic Study Source Schema Decision`
+3. `0.5.225 - Polity Schema Decision`
+4. `0.5.226 - Household vs Family Schema Decision`
+5. `0.5.227 - Settlement Economy Schema Decision`
+6. `0.5.228 - World Map Feature Authority Schema Decision`
+7. `0.5.229 - Hazard And Route Security Boundary Decision`
 
-No new Deep Research is required before this queue.
+No new Deep Research is required before this queue. GPT-DR labels remain non-Codex labels and do not consume `0.5.x` numbers. The permanent prompt-pack guidance remains active but does not interrupt the numbered queue.
 
 ## Next Route Boundary
 
-`Version 0.5.222 - Quest Objective And Condition Schema Decision` remains documentation-only. It must reconcile embedded objectives and conditions across quest definitions, archetypes, and templates, preserve generated-offer/player/Chronicle runtime owners, and decide the quest/event research artifact's retirement.
+`Version 0.5.223 - Person vs NPC Schema Decision` remains documentation-only. It must inspect live people-adjacent identities and generated/runtime character owners, define person versus NPC-overlay schema posture and references, preserve existing quest giver/contact strings as non-canonical metadata, and decide the NPC/social research artifact's retirement.
 
-It must not implement schemas, validators, content, tests, quest runtime, rewards, events, Chronicle mutation, UI, storage, or gameplay behavior.
+It must not implement schemas, validators, content, tests, NPC runtime, schedules, dialogue, relationships, services, UI, storage, migration, or gameplay behavior.

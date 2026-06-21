@@ -1,55 +1,54 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.221 - Weapon And Armor Profile Schema Decision
+Source version/run: Version 0.5.222 - Quest Objective And Condition Schema Decision
 Date: 2026-06-21
-Branch/status assumption: `master`; synchronized with `origin/master` before edits; worktree was clean.
+Branch/status assumption: `master`; synced with `origin/master` before editing; worktree was clean at `8ea967c`.
 
 ## Result
 
-Completed the documentation-only weapon and armor profile schema decision. Added `docs/design/weapon-and-armor-profile-schema-decision.md`; approved separate future additive `items.weapon_profiles` and `items.armor_profiles`; preserved canonical item identity and all current item-local `useProfiles`; selected canonical item-key references; and separated static structural descriptors from action hooks and runtime item state.
+Completed the documentation-only quest objective and condition schema decision. Live inspection confirmed five quest definitions, eight quest archetypes, 36 quest templates, duplicated embedded action-tree/check structures across definitions and archetypes, a distinct template generation-input contract, and existing generated-offer/player/journal/Chronicle runtime owners.
 
-Deleted `docs/dev/tmp-item-equipment-inventory-systems-research-2026-06-20.md` after promoting every useful concern into permanent design and coordination docs. It has no remaining consumer.
+The decision approves future shared schema components while keeping objective and condition data embedded. It rejects standalone objective/condition collections and independent global ids, preserves templates and generated `QuestOfferObjective` output as separate contracts, standardizes current item references on canonical `itemKey`, and keeps rewards/consequences descriptive and source-local. The fully promoted temporary quest/event/Chronicle research artifact was deleted with no remaining consumer.
 
 ## Files Changed
 
-- `docs/design/weapon-and-armor-profile-schema-decision.md` (created)
-- `docs/design/pipeline-roadmap-consolidation-decision.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/tmp-item-equipment-inventory-systems-research-2026-06-20.md` (deleted)
-- `docs/future_content_backlog.md`
+- `docs/design/quest-objective-and-condition-schema-decision.md` - added the permanent schema decision.
+- `docs/design/pipeline-roadmap-consolidation-decision.md` - recorded artifact retirement and advanced the immediate queue.
+- `docs/dev/current-codex-output.md` - replaced with this run result.
+- `docs/dev/current-gpt-handoff.md` - advanced the current anchor and next decision.
+- `docs/dev/project-roadmap.md` - marked `0.5.222` complete and `0.5.223` next.
+- `docs/dev/codex-sequenced-implementation-plan.md` - advanced the ordered queue and decision source.
+- `docs/future_content_backlog.md` - recorded the durable quest posture and temporary-artifact deletion.
+- `docs/dev/tmp-quest-event-chronicle-systems-research-2026-06-20.md` - deleted after full promotion; no remaining consumer.
 
 ## Checks Run
 
 - `git fetch origin` - passed.
 - `git pull --ff-only origin master` - passed; already up to date.
+- Live quest content/schema/lint/runtime ownership audit - passed.
 - `git diff --check` - passed.
 - Conflict-marker scan on changed files - passed.
 - Trailing-whitespace scan on changed files - passed.
-- Changed-path scope audit - passed; documentation files only.
-- Required-section audit - passed; all 16 required sections present.
-- Decision-completeness audit - passed; all 15 required decisions resolved.
-- Implementation-scope audit - passed.
-- Version tracking audit - passed: `0.5.221` completed, `0.5.222` next, and GPT-DR labels remain non-Codex labels.
-- No tests run; documentation-only change.
+- Changed-path scope audit - passed; documentation paths only.
+- Required-section audit - passed; all 15 sections present.
+- Decision-completeness and implementation-scope audits - passed.
+- Version/research tracking audit - passed: `0.5.222` completed, `0.5.223` next, GPT-DR labels remain non-Codex labels, and no new research gate interrupts the queue.
+- Tests were not run because this pass changed documentation only.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No schema, content JSON, validator, test, runtime, UI, storage/save-state, gameplay, equipment, combat, inventory, item-instance, or migration change occurred.
+No schema, content JSON, validator, test, runtime, UI, storage/save-state, gameplay, migration, quest execution, generated-offer, player quest-state, reward, event, journal, or Chronicle behavior changed.
 
 ## Risks / Follow-Up
 
-- Future profiles are additive structural metadata; existing `useProfiles` remain the action/activation/hook authority and must not be migrated implicitly.
-- Only profile schemas/validators are conditionally planned at `0.5.233`; profile content needs a later seed plan.
-- Damage families remain hook-derived, and durability/quality/affix/enchantment/ammo/item-instance concerns remain separate future decisions.
-- The permanent GPT-DR prompt-pack guidance remains later planning only and does not interrupt the immediate queue.
+- The later `0.5.234` validation pass must preserve current embedded content and avoid turning generated offer objectives into authored quest authority.
+- Current opaque branch-effect strings, party-size condition strings, standing ids, class/equipment tags, and RNG tokens remain normalization candidates, not newly approved canonical vocabularies.
+- Future reference branches must wait for stable person/NPC, service, map-feature, resource, and other authority decisions.
 
 ## Next Recommended Version
 
-Version 0.5.222 - Quest Objective And Condition Schema Decision
+Version 0.5.223 - Person vs NPC Schema Decision
 
 ## Suggested Commit Message
 
-docs(items): decide weapon armor profile schema posture
+`docs(quests): decide objective condition schema posture`

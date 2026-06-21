@@ -1,5 +1,7 @@
 # Future Content Backlog
 
+- 2026-06-21: Completed the documentation-only `Version 0.5.222 - Quest Objective And Condition Schema Decision`. Added `docs/design/quest-objective-and-condition-schema-decision.md`; kept objectives and conditions embedded; approved future shared schema components for duplicated definition/archetype action trees, checks, and requirements; preserved templates as separate generation inputs and generated offers/player/journal/Chronicle state as runtime-owned; standardized current quest item-reference posture on canonical `itemKey`; and kept rewards/consequences source-local and non-executing. Deleted `docs/dev/tmp-quest-event-chronicle-systems-research-2026-06-20.md` after full promotion with no remaining consumer. No schema, content, validator, test, runtime, UI, storage, gameplay, quest-state, reward, event, Chronicle, or migration change occurred. Next is `Version 0.5.223 - Person vs NPC Schema Decision`; no new Deep Research is required.
+
 This file tracks content and systems that are intentionally deferred.
 
 ## Update Policy
@@ -301,11 +303,11 @@ Full candidate backlog for later domain expansion:
 
 ## Quest Event Chronicle Authority
 
-- `Version 0.5.222 - Quest Objective And Condition Schema Decision` must reconcile requirements/action trees in `civilization.quest_definitions` and `civilization.quest_archetypes`, `civilization.quest_templates` generation inputs, generated `QuestOfferObjective` vocabulary, supported references, runtime-state separation, forbidden fields, validation ownership, and future schema sequence without implementation. Its previous `0.5.209` label is historical only.
+- `Version 0.5.222 - Quest Objective And Condition Schema Decision` completed the embedded/shared-schema decision. `docs/design/quest-objective-and-condition-schema-decision.md` owns the exact objective, condition, reference, validation, runtime, and forbidden-field posture. Its previous `0.5.209` label is historical only.
 - Existing quest definitions remain canonical for unique authored quests; archetypes remain reusable structure; templates remain repeatable offer inputs; civilization quest generation remains the generated-offer owner. Do not introduce a parallel quest collection.
-- Objectives/conditions remain embedded and non-executable pending the next decision. Authored rewards/consequences remain descriptive envelopes and must not pay out or mutate items, currency, Knowledge, spells, Prestige, reputation/standing/legal status, services, family/Legacy state, or Chronicle state.
+- Objectives/conditions remain embedded and non-executable. Future shared JSON Schema components may remove definition/archetype duplication, but standalone objective/condition collections and global component ids are not approved. Authored rewards/consequences remain descriptive envelopes and must not pay out or mutate items, currency, Knowledge, spells, Prestige, reputation/standing/legal status, services, family/Legacy state, or Chronicle state.
 - Events/storylets and rumors/hooks remain future authored seeds. Future Chronicle/journal templates remain separate from existing player/session/account Chronicle state. Quest giver/contact strings remain presentation metadata until person/NPC authority lands.
-- `docs/dev/tmp-quest-event-chronicle-systems-research-2026-06-20.md` remains temporary through `0.5.222`. Delete it when useful guidance is fully promoted, or retain it only with a named next consumer and removal condition.
+- `docs/dev/tmp-quest-event-chronicle-systems-research-2026-06-20.md` was deleted in `0.5.222` after full promotion. It has no remaining consumer; future narrative work must use permanent decisions and a fresh live-repo audit.
 
 ## Item Equipment Inventory Authority
 
