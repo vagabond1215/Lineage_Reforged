@@ -1,34 +1,27 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.217 - Pipeline Roadmap Consolidation
+Source route: GPT-side documentation tracking update after `Version 0.5.217 - Pipeline Roadmap Consolidation`
 Date: 2026-06-20
-Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `8494fb6`.
+Branch/status assumption: `master`; update applied directly through the GitHub connector.
 
 ## Result
 
-Created `docs/design/pipeline-roadmap-consolidation-decision.md` and consolidated the post-authority planning pipeline.
+Created `docs/design/gpt-deep-research-version-tracking-decision.md` and clarified how GPT Deep Research passes appear in version tracking before their associated content or authority lanes.
 
-The decision inventories 12 completed authority-boundary decisions, 12 temporary Deep Research artifacts, all active deferred Codex routes, outstanding research topics, dependency gates, stale version labels, artifact retirement rules, and the next 39 recommended `0.5.x` passes. This consolidation occupies `0.5.217`; the unlanded Settlement Identity Schema Decision moves to `0.5.218`.
+Deep Research passes now use non-Codex labels such as `GPT-DR.services.vendor-service-access`, do not consume `0.5.x` Codex version numbers, and should be displayed immediately before any later content/authority lane that requires them. The immediate numbered Codex queue is unchanged: `Version 0.5.218 - Settlement Identity Schema Decision` remains next.
 
 ## Files Changed
 
-- `docs/design/pipeline-roadmap-consolidation-decision.md`
+- `docs/design/gpt-deep-research-version-tracking-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/future_content_backlog.md`
 
 ## Checks Run
 
-- `git diff --check` - passed
-- conflict-marker scan on changed files - passed
-- trailing-whitespace scan on changed files - passed
-- changed-path scope audit - passed; exactly six documentation files changed
-- required-section audit - passed; all 16 required sections are present
-- version-sequence consistency audit - passed; `0.5.217` is consolidation and `0.5.218` is settlement identity across coordination docs
-- implementation-scope audit - passed; no schema, validator, content, test, runtime, UI, storage, gameplay, migration, or temporary-artifact file changed
-- no tests run; documentation-only change
+- GitHub connector write completed.
+- Manual scope audit - passed; documentation-only tracking update.
+- Implementation-scope audit - passed; no schema, validator, content JSON, test, runtime, UI, storage, gameplay, migration, or temporary-artifact file changed.
+- No tests run; documentation-only coordination update.
 
 ## Behavior / Runtime Confirmation
 
@@ -36,10 +29,9 @@ Documentation only. No schema, validator, content JSON, test, runtime, UI, stora
 
 ## Risks / Follow-Up
 
-- Passes `0.5.230`-`0.5.242` are conditional on their preceding schema decisions. They are sequence reservations, not implementation approval.
-- Historical design docs may retain old proposed numbers. Current coordination authority now uses the consolidated remapping and must not schedule versions retroactively.
-- All 12 temporary artifacts remain because each has one named near-term consumer; each consuming pass must delete or explicitly retain its artifact.
-- Focused new Deep Research is required only at later service, resource-node, health/injury, discovery/POI, agriculture, maritime, temporal, property, construction, and `0.6` readiness gates.
+- `docs/dev/codex-sequenced-implementation-plan.md` and `docs/dev/project-roadmap.md` still carry the full numbered Codex sequence from `0.5.217`; the new tracking decision is the supplemental policy for inserting GPT Deep Research gates before later content lanes.
+- Future coordination updates should mirror the `GPT-DR.<lane>.<topic>` gates into roadmap tables when a later lane is scheduled.
+- The immediate ready queue remains unchanged and does not need new Deep Research before `0.5.218`-`0.5.229`.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
@@ -48,4 +40,4 @@ Version 0.5.218 - Settlement Identity Schema Decision
 
 ## Suggested Commit Message
 
-docs(dev): consolidate pipeline roadmap
+docs(dev): track GPT deep research gates
