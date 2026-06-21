@@ -1,73 +1,62 @@
 # Current GPT Handoff
 
-Source route: unnumbered GPT Deep Research prompt-pack integration after Version 0.5.220 - Monster Record Schema Decision
+Source version/run: Version 0.5.221 - Weapon And Armor Profile Schema Decision
 Date: 2026-06-21
-Branch/status assumption: `master`; latest numbered Codex run remains documentation-only.
+Branch/status assumption: `master`; latest numbered Codex run is documentation-only.
 
 ## Authority Rules
 
 - `docs/dev/current-codex-output.md` is the exact latest handoff.
-- `docs/dev/gpt-codex-tooling-instructions.md` remains the active operational guide for tools, skills, modes, prompt structure, GPT-DR labels, and cross-thread setup.
-- `docs/design/gpt-deep-research-prompt-pack-decision.md` owns the next prioritized ten later GPT-DR gates, dependencies, modes, artifact names, and prompt-generation policy.
-- `docs/design/gpt-deep-research-version-tracking-decision.md` owns the broader GPT-DR label and display policy.
-- `docs/design/pipeline-roadmap-consolidation-decision.md` remains the numbered sequence and dependency authority.
-- Full GPT-DR prompts are generated on demand from live repo state; permanent docs preserve compact routing guidance rather than copied prompt bodies.
-- Each GPT-DR gate produces one temporary artifact and consumes no `0.5.x` version number.
-- Runtime, UI, save state, mutation, transactions, execution, and gameplay remain outside the immediate docs/schema queue.
+- `docs/dev/gpt-codex-tooling-instructions.md` remains the active operational guide.
+- `docs/design/weapon-and-armor-profile-schema-decision.md` is the permanent equipment-profile schema-posture authority.
+- `docs/design/item-equipment-inventory-authority-boundary-decision.md` remains the broader item/equipment/inventory ownership authority.
+- `docs/design/monster-record-schema-decision.md` owns current monster/source-local loot boundaries.
+- `docs/design/recipe-and-production-schema-decision.md` owns future crafting transformations and item-key references.
+- `docs/design/gpt-deep-research-prompt-pack-decision.md` remains permanent later research guidance and does not interrupt the numbered queue.
+- GPT-DR labels do not consume `0.5.x` version numbers.
+- Runtime equipment, inventory, item instances, combat execution, UI, and save state remain outside this decision queue.
 
 ## Current Anchor
 
 Latest completed numbered Codex run:
 
-- `Version 0.5.220 - Monster Record Schema Decision`
-
-Latest unnumbered documentation integration:
-
-- GPT Deep Research Prompt Pack Decision
+- `Version 0.5.221 - Weapon And Armor Profile Schema Decision`
 
 Immediate next numbered Codex run:
 
-- `Version 0.5.221 - Weapon And Armor Profile Schema Decision`
+- `Version 0.5.222 - Quest Objective And Condition Schema Decision`
 
 Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
 
-## Prompt-Pack Result
+## Equipment Profile Decision Result
 
-- The next prioritized ten later gates exactly match permanent tracking-policy entries.
-- Default order: discovery, services, resources, health, agriculture, maritime, time/weather/festivals, property, construction, progression.
-- The order is guidance, not a lock; recheck dependencies before each gate.
-- `GPT-DR.discovery.poi-map-reveal` is the first recommended later gate, after the immediate queue and relevant map-feature decision.
-- The ten full long-form prompts were intentionally retired. Generate one current prompt when its gate becomes timely.
-- The temporary prompt-pack artifact was deleted after full promotion and has no remaining consumer.
-- No new Deep Research is required before `0.5.221` through `0.5.229`.
+- `items.items` remains canonical static item identity.
+- All 22 current item-local `useProfiles` remain unchanged as live action/use/activation/skill/hook metadata.
+- Separate future `items.weapon_profiles` and `items.armor_profiles` are approved as additive structural descriptor collections.
+- Profiles use canonical `itemKey` references and one-to-one reverse lookup; item records do not gain profile-id fields initially.
+- Weapon profiles may own family, handedness, compatible weapon slots, delivery/range posture, and equipment tags.
+- Armor profiles may own kind/family, compatible slots, coverage, weight/encumbrance/mobility posture, and equipment tags.
+- Damage/mitigation hooks and action skill/timing/target/effect data remain in `useProfiles`.
+- Durability, condition, quality, rarity, affixes, enchantment state, charges, ammo counts, stacks, ownership, inventory location, and equipped state remain future/runtime/item-instance concerns.
+- Loot/drop/reward relationships remain source-local pending a dedicated item-owned loot-table decision.
+- The temporary item/equipment research artifact was deleted after full promotion and has no remaining consumer.
+- No schema, content, validator, test, runtime, UI, storage, gameplay, equipment, combat, inventory, item-instance, or migration change occurred.
 
 ## Consolidated Near-Term Queue
 
-1. `0.5.221 - Weapon And Armor Profile Schema Decision`
-2. `0.5.222 - Quest Objective And Condition Schema Decision`
-3. `0.5.223 - Person vs NPC Schema Decision`
-4. `0.5.224 - Magic Study Source Schema Decision`
-5. `0.5.225 - Polity Schema Decision`
-6. `0.5.226 - Household vs Family Schema Decision`
-7. `0.5.227 - Settlement Economy Schema Decision`
-8. `0.5.228 - World Map Feature Authority Schema Decision`
-9. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.222 - Quest Objective And Condition Schema Decision`
+2. `0.5.223 - Person vs NPC Schema Decision`
+3. `0.5.224 - Magic Study Source Schema Decision`
+4. `0.5.225 - Polity Schema Decision`
+5. `0.5.226 - Household vs Family Schema Decision`
+6. `0.5.227 - Settlement Economy Schema Decision`
+7. `0.5.228 - World Map Feature Authority Schema Decision`
+8. `0.5.229 - Hazard And Route Security Boundary Decision`
 
-## Later GPT-DR Priority
-
-1. `GPT-DR.discovery.poi-map-reveal`
-2. `GPT-DR.services.vendor-service-access`
-3. `GPT-DR.resources.gathering-extraction`
-4. `GPT-DR.health.injury-recovery`
-5. `GPT-DR.agriculture.land-food-livestock`
-6. `GPT-DR.maritime.ships-ports-sea-trade`
-7. `GPT-DR.time.calendar-weather-festivals`
-8. `GPT-DR.property.ownership-storage-housing`
-9. `GPT-DR.construction.upgrades-infrastructure`
-10. `GPT-DR.progression.character-creation-skills`
+No new Deep Research is required before this queue.
 
 ## Next Route Boundary
 
-`Version 0.5.221 - Weapon And Armor Profile Schema Decision` remains documentation-only. It must define future weapon/armor profile contracts against current item `useProfiles`, preserve item identity and runtime item-instance owners, resolve equipment/combat references, and decide the item research artifact's retirement.
+`Version 0.5.222 - Quest Objective And Condition Schema Decision` remains documentation-only. It must reconcile embedded objectives and conditions across quest definitions, archetypes, and templates, preserve generated-offer/player/Chronicle runtime owners, and decide the quest/event research artifact's retirement.
 
-It must not implement schemas, validators, content, tests, equipment behavior, item instances, inventory mutation, combat execution, UI, storage, or gameplay behavior.
+It must not implement schemas, validators, content, tests, quest runtime, rewards, events, Chronicle mutation, UI, storage, or gameplay behavior.

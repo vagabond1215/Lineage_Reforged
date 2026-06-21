@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.220 - Monster Record Schema Decision`
-- Next recommended version: `Version 0.5.221 - Weapon And Armor Profile Schema Decision`
+- Latest completed version: `Version 0.5.221 - Weapon And Armor Profile Schema Decision`
+- Next recommended version: `Version 0.5.222 - Quest Objective And Condition Schema Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -70,7 +70,8 @@ Versioning rule:
 - `Version 0.5.218 - Settlement Identity Schema Decision` preserved the live settlement contract, classified intrinsic and embedded descriptive fields, kept district/site references external, and retired the fully consumed temporary settlement research artifact.
 - `Version 0.5.219 - Recipe And Production Schema Decision` approved future player-facing `crafting.recipes`, preserved embedded macro-production profiles, fixed item/tool/workplace reference posture, and retired the temporary crafting research artifact.
 - `Version 0.5.220 - Monster Record Schema Decision` preserved the live monster authority, retained encounter/spawn/role/tactics separation and source-local loot, and retired the temporary combat research artifact.
-- Do not roll from `0.5.220` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.221 - Weapon And Armor Profile Schema Decision` approved additive weapon/armor structural profiles, preserved current item-local use profiles, and retired the temporary item/equipment research artifact.
+- Do not roll from `0.5.221` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -328,8 +329,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.218` | Settlement Identity Schema Decision | Codex Local docs-first | Planning | Completed. Preserved the live settlement contract and external future district/site references; retired the temporary settlement artifact. | Documentation only; no schema, content, validator, test, runtime, UI, storage, gameplay, or migration change. |
 | `0.5.219` | Recipe And Production Schema Decision | Codex Local docs-first | Planning | Completed. Approved future static recipes while preserving macro production; retired the temporary crafting artifact. | Documentation only; no schema, content, validator, test, runtime, UI, storage, gameplay, or migration change. |
 | `0.5.220` | Monster Record Schema Decision | Codex Local docs-first | Planning | Completed. Preserved the live monster contract and separate encounter/spawn/role/tactics owners; retired the temporary combat artifact. | Documentation only; no schema, content, validator, test, runtime, UI, storage, gameplay, loot, AI, combat, or migration change. |
-| `0.5.221` | Weapon And Armor Profile Schema Decision | Codex Local docs-first | Planning | Recommended next after monster review. | Documentation only. |
-| `0.5.222` | Quest Objective And Condition Schema Decision | Codex Local docs-first | Planning | Queued. Reconcile existing embedded objective/condition owners. | Documentation only. |
+| `0.5.221` | Weapon And Armor Profile Schema Decision | Codex Local docs-first | Planning | Completed. Approved additive profiles while preserving item identity/use profiles; retired the temporary item artifact. | Documentation only; no schema, content, validator, test, runtime, UI, storage, gameplay, equipment, combat, inventory, item-instance, or migration change. |
+| `0.5.222` | Quest Objective And Condition Schema Decision | Codex Local docs-first | Planning | Recommended next. Reconcile existing embedded objective/condition owners. | Documentation only. |
 | `0.5.223` | Person vs NPC Schema Decision | Codex Local docs-first | Planning | Queued. Define stable person identity and NPC overlay contracts. | Documentation only. |
 | `0.5.224` | Magic Study Source Schema Decision | Codex Local docs-first | Planning | Queued. Define study-source references and forbidden state. | Documentation only. |
 | `0.5.225` | Polity Schema Decision | Codex Local docs-first | Planning | Queued. Define descriptive polity identity. | Documentation only. |
@@ -358,15 +359,14 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.221 - Weapon And Armor Profile Schema Decision`
-2. `0.5.222 - Quest Objective And Condition Schema Decision`
-3. `0.5.223 - Person vs NPC Schema Decision`
-4. `0.5.224 - Magic Study Source Schema Decision`
-5. `0.5.225 - Polity Schema Decision`
-6. `0.5.226 - Household vs Family Schema Decision`
-7. `0.5.227 - Settlement Economy Schema Decision`
-8. `0.5.228 - World Map Feature Authority Schema Decision`
-9. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.222 - Quest Objective And Condition Schema Decision`
+2. `0.5.223 - Person vs NPC Schema Decision`
+3. `0.5.224 - Magic Study Source Schema Decision`
+4. `0.5.225 - Polity Schema Decision`
+5. `0.5.226 - Household vs Family Schema Decision`
+6. `0.5.227 - Settlement Economy Schema Decision`
+7. `0.5.228 - World Map Feature Authority Schema Decision`
+8. `0.5.229 - Hazard And Route Security Boundary Decision`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.256` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan.
 
@@ -820,6 +820,7 @@ Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for
 | 126 | `0.5.218` | Settlement Identity Schema Decision | `docs/design/settlement-identity-schema-decision.md` | Completed; documentation only; temporary research retired |
 | 127 | `0.5.219` | Recipe And Production Schema Decision | `docs/design/recipe-and-production-schema-decision.md` | Completed; documentation only; temporary research retired |
 | 128 | `0.5.220` | Monster Record Schema Decision | `docs/design/monster-record-schema-decision.md` | Completed; documentation only; temporary research retired |
+| 129 | `0.5.221` | Weapon And Armor Profile Schema Decision | `docs/design/weapon-and-armor-profile-schema-decision.md` | Completed; documentation only; temporary research retired |
 
 ## 8. Lightweight GPT + GitHub Connector Audit / Planning Queue
 
