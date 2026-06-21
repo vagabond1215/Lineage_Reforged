@@ -356,7 +356,7 @@ GPT-DR.<lane>.<topic> - <Research Title> [GPT Deep Research prerequisite]
 Version 0.5.xxx - <Associated Codex Pass>
 ```
 
-Current immediate queue does not require new Deep Research before `0.5.220` through `0.5.229`; existing permanent decisions and temp artifacts are enough.
+The consolidated schema-decision queue through `0.5.229` does not require new Deep Research; consult the current handoffs for the first remaining numbered item.
 
 ## 7. Project-Specific Guardrails
 
