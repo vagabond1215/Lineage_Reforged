@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-20
-Route: Codex local sequencing alignment after `Version 0.5.216 - Settlement Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.217 - Pipeline Roadmap Consolidation`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.216 - Settlement Authority Boundary Decision`
+- `Version 0.5.217 - Pipeline Roadmap Consolidation`
 
 Immediate next Codex run:
 
-- `Version 0.5.217 - Settlement Identity Schema Decision`
+- `Version 0.5.218 - Settlement Identity Schema Decision`
 
 Versioning note:
 
@@ -69,8 +69,9 @@ Versioning note:
 - Combat Authority Boundary Decision landed in `0.5.212`: existing monster, encounter, spawn, role, and tactics owners remain canonical and separate from runtime combat state.
 - Crafting Authority Boundary Decision landed in `0.5.214`: future `crafting.recipes` is separate from existing production chains, workplaces, items, and economy runtime.
 - Settlement Authority Boundary Decision landed in `0.5.216`: existing `world.settlements` remains canonical while districts, placed sites, services, property, travel, and runtime state retain separate boundaries.
-- Keep Settlement Identity Schema Decision as the documentation-only `0.5.217` direction; `0.5.215`, `0.5.213`, and `0.5.210` remain valid and deferred.
-- Do not roll from `0.5.216` to `0.6.0` unless the actual `0.6.x` runtime ownership milestone has been reached.
+- Pipeline Roadmap Consolidation landed in `0.5.217`: stale proposed labels are remapped, all 12 research artifacts have named consumers, and the conditional roadmap runs through `0.5.256`.
+- Keep Settlement Identity Schema Decision as the documentation-only `0.5.218` direction.
+- Do not roll from `0.5.217` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -196,37 +197,82 @@ Versioning note:
 | 118 | `0.5.196` | Sacred Site Religion Registry And Snippet Seed | Codex 5.5 Local | `docs/design/sacred-site-knowledge-snippet-seed-plan.md` | registry alignment + one snippet | Completed | Added one descriptive sacred-site snippet and aligned Religion; no hotspot, runtime, UI, storage, or gameplay behavior. |
 | 119 | `0.5.197` | World Geography Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/world-geography-authority-boundary-decision.md` | planning decision | Completed | Defined layer ownership and future sequence without implementation. |
 | 120 | `0.5.198` | Economy Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | planning decision | Completed | Defined economy authority ownership and future sequence without implementation. |
-| 121 | `0.5.199` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit family-lane reprioritization. |
+| 121 | `0.5.199` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Historical | Proposed label remapped to `0.5.227`; no implementation landed. |
 | 122 | `0.5.200` | Family Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/family-authority-boundary-decision.md` | planning decision | Completed | Defined authored family-layer ownership without implementation. |
 | 123 | `0.5.201` | Civic Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | planning decision | Completed | Defined civic authority ownership without implementation. |
-| 124 | `0.5.202` | Polity Schema Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit travel-lane reprioritization. |
+| 124 | `0.5.202` | Polity Schema Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | schema decision | Historical | Proposed label remapped to `0.5.225`; no implementation landed. |
 | 125 | `0.5.203` | Travel Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Completed | Defined travel-layer ownership without implementation. |
 | 126 | `0.5.204` | Magic Study Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | planning decision | Completed | Defined magic-study authority ownership without implementation. |
-| 127 | `0.5.205` | Magic Study Source Schema Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit NPC/social-lane reprioritization. |
+| 127 | `0.5.205` | Magic Study Source Schema Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | schema decision | Historical | Proposed label remapped to `0.5.224`; no implementation landed. |
 | 128 | `0.5.206` | NPC And Social Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | planning decision | Completed | Defined NPC/social authority ownership without implementation. |
-| 129 | `0.5.207` | Person vs NPC Schema Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by explicit quest/narrative-lane reprioritization. |
+| 129 | `0.5.207` | Person vs NPC Schema Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | schema decision | Historical | Proposed label remapped to `0.5.223`; no implementation landed. |
 | 130 | `0.5.208` | Quest Event Chronicle Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/quest-event-chronicle-authority-boundary-decision.md` | planning decision | Completed | Defined narrative authority ownership without implementation. |
 | 131 | `0.5.209` | Item Equipment Inventory Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | planning decision | Completed | Defined item/equipment/inventory authority ownership without implementation. |
-| 132 | `0.5.210` | Weapon And Armor Profile Schema Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by the explicit combat authority pass. |
+| 132 | `0.5.210` | Weapon And Armor Profile Schema Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | schema decision | Historical | Proposed label remapped to `0.5.221`; no implementation landed. |
 | 133 | `0.5.212` | Combat Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | planning decision | Completed | Preserved live static owners and separated them from combat runtime state. |
-| 134 | `0.5.213` | Monster Record Schema Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by the explicit crafting authority pass. |
+| 134 | `0.5.213` | Monster Record Schema Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | schema decision | Historical | Proposed label remapped to `0.5.220`; no implementation landed. |
 | 135 | `0.5.214` | Crafting Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/crafting-authority-boundary-decision.md` | planning decision | Completed | Defined recipe/production/item/tool/station/runtime boundaries without implementation. |
-| 136 | `0.5.215` | Recipe And Production Schema Decision | Codex 5.5 Local docs-first | `docs/design/crafting-authority-boundary-decision.md` | schema decision | Deferred | Still valid; displaced by the explicit settlement authority pass. |
+| 136 | `0.5.215` | Recipe And Production Schema Decision | Codex 5.5 Local docs-first | `docs/design/crafting-authority-boundary-decision.md` | schema decision | Historical | Proposed label remapped to `0.5.219`; no implementation landed. |
 | 137 | `0.5.216` | Settlement Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/settlement-authority-boundary-decision.md` | planning decision | Completed | Preserved live settlement identity and separated subordinate/static/runtime owners. |
-| 138 | `0.5.217` | Settlement Identity Schema Decision | Codex 5.5 Local docs-first | `docs/design/settlement-authority-boundary-decision.md` | schema decision | Next | Audit the existing settlement contract and embedded descriptive fields without implementation. |
+| 138 | `0.5.217` | Pipeline Roadmap Consolidation | Codex 5.5 Local docs-first | `docs/design/pipeline-roadmap-consolidation-decision.md` | planning decision | Completed | Consolidated versions, dependencies, research, and artifact retirement. |
+| 139 | `0.5.218` | Settlement Identity Schema Decision | Codex 5.5 Local docs-first | `docs/design/settlement-authority-boundary-decision.md` | schema decision | Next | Audit existing settlement ownership; documentation only. |
+| 140 | `0.5.219` | Recipe And Production Schema Decision | Codex 5.5 Local docs-first | `docs/design/crafting-authority-boundary-decision.md` | schema decision | Queued | Resolve embedded recipe overlap; documentation only. |
+| 141 | `0.5.220` | Monster Record Schema Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | schema decision | Queued | Audit existing monster authority; documentation only. |
+| 142 | `0.5.221` | Weapon And Armor Profile Schema Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | schema decision | Queued | Depends on monster/combat reference review. |
+| 143 | `0.5.222` | Quest Objective And Condition Schema Decision | Codex 5.5 Local docs-first | `docs/design/quest-event-chronicle-authority-boundary-decision.md` | schema decision | Queued | Reconcile embedded narrative shapes. |
+| 144 | `0.5.223` | Person vs NPC Schema Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | schema decision | Queued | Define person identity/NPC overlay. |
+| 145 | `0.5.224` | Magic Study Source Schema Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-authority-boundary-decision.md` | schema decision | Queued | Define sources and non-mutating references. |
+| 146 | `0.5.225` | Polity Schema Decision | Codex 5.5 Local docs-first | `docs/design/civic-authority-boundary-decision.md` | schema decision | Queued | Define descriptive polity identity. |
+| 147 | `0.5.226` | Household vs Family Schema Decision | Codex 5.5 Local docs-first | `docs/design/family-authority-boundary-decision.md` | schema decision | Queued | Depends on person/NPC. |
+| 148 | `0.5.227` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Queued | Depends on settlement and production decisions. |
+| 149 | `0.5.228` | World Map Feature Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/world-geography-authority-boundary-decision.md` | schema decision | Queued | Define geometry-free map features. |
+| 150 | `0.5.229` | Hazard And Route Security Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Queued | Boundary prerequisite for hazard/security schemas. |
+| 151 | `0.5.230` | Settlement Schema And Validator Hardening | Codex 5.5 Local | `0.5.218` decision | schema + validator + tests | Conditional | Only if approved by `0.5.218`. |
+| 152 | `0.5.231` | Crafting Recipe Schema And Validator | Codex 5.5 Local | `0.5.219` decision | schema + validator + tests | Conditional | Only if approved by `0.5.219`. |
+| 153 | `0.5.232` | Monster Schema And Validator Hardening | Codex 5.5 Local | `0.5.220` decision | schema + validator + tests | Conditional | Only if approved by `0.5.220`. |
+| 154 | `0.5.233` | Weapon And Armor Profile Schemas And Validators | Codex 5.5 Local | `0.5.221` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.221`. |
+| 155 | `0.5.234` | Quest Objective And Condition Validation Pass | Codex 5.5 Local | `0.5.222` decision | validator + tests | Conditional | Only if approved by `0.5.222`. |
+| 156 | `0.5.235` | People And NPC Schemas And Validators | Codex 5.5 Local | `0.5.223` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.223`. |
+| 157 | `0.5.236` | Magic Study Source Schema And Validator | Codex 5.5 Local | `0.5.224` decision | schema + validator + tests | Conditional | Only if approved by `0.5.224`. |
+| 158 | `0.5.237` | Polity Schema And Validator | Codex 5.5 Local | `0.5.225` decision | schema + validator + tests | Conditional | Only if approved by `0.5.225`. |
+| 159 | `0.5.238` | Household And Family Schemas And Validators | Codex 5.5 Local | `0.5.226` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.226`. |
+| 160 | `0.5.239` | Settlement Economy Schema And Validator | Codex 5.5 Local | `0.5.227` decision | schema + validator + tests | Conditional | Only if approved by `0.5.227`. |
+| 161 | `0.5.240` | World Map Feature Schema And Validator | Codex 5.5 Local | `0.5.228` decision | schema + validator + tests | Conditional | Only if approved by `0.5.228`. |
+| 162 | `0.5.241` | Hazard And Route Security Schema Decision | Codex 5.5 Local docs-first | `0.5.229` decision | schema decision | Conditional | Requires the boundary decision. |
+| 163 | `0.5.242` | Hazard And Route Security Schemas And Validators | Codex 5.5 Local | `0.5.241` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.241`. |
+| 164 | `0.5.243` | First Crafting Recipe Content Seed Plan | Codex 5.5 Local docs-first | `0.5.231` output | seed plan | Conditional | No live content. |
+| 165 | `0.5.244` | First Crafting Recipe Content Seed | Codex 5.5 Local | `0.5.243` plan | content + validation | Conditional | Narrow authored seed only. |
+| 166 | `0.5.245` | First People And NPC Content Seed Plan | Codex 5.5 Local docs-first | `0.5.235` output | seed plan | Conditional | No live content. |
+| 167 | `0.5.246` | First People And NPC Content Seed | Codex 5.5 Local | `0.5.245` plan | content + validation | Conditional | Narrow authored seed only. |
+| 168 | `0.5.247` | First Polity Content Seed Plan | Codex 5.5 Local docs-first | `0.5.237` output | seed plan | Conditional | No live content. |
+| 169 | `0.5.248` | First Polity Content Seed | Codex 5.5 Local | `0.5.247` plan | content + validation | Conditional | Narrow authored seed only. |
+| 170 | `0.5.249` | First World Map Feature Content Seed Plan | Codex 5.5 Local docs-first | `0.5.240` output | seed plan | Conditional | Focused discovery/POI research first if needed. |
+| 171 | `0.5.250` | First World Map Feature Content Seed | Codex 5.5 Local | `0.5.249` plan | content + validation | Conditional | Narrow authored seed only. |
+| 172 | `0.5.251` | Settlement District And Site Authority Boundary Decision | Codex 5.5 Local docs-first | settlement decisions | planning decision | Deferred | No schema or content. |
+| 173 | `0.5.252` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
+| 174 | `0.5.253` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 175 | `0.5.254` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
+| 176 | `0.5.255` | Settlement District And Site Schema Decision | Codex 5.5 Local docs-first | `0.5.251` decision | schema decision | Deferred | Requires site boundary. |
+| 177 | `0.5.256` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.217 - Settlement Identity Schema Decision`
-2. `0.5.215 - Recipe And Production Schema Decision`, deferred but still valid
-3. `0.5.213 - Monster Record Schema Decision`, deferred but still valid
-4. `0.5.210 - Weapon And Armor Profile Schema Decision`, deferred but still valid
-5. `Quest Objective And Condition Schema Decision`
-6. `0.5.207 - Person vs NPC Schema Decision`
+1. `0.5.218 - Settlement Identity Schema Decision`
+2. `0.5.219 - Recipe And Production Schema Decision`
+3. `0.5.220 - Monster Record Schema Decision`
+4. `0.5.221 - Weapon And Armor Profile Schema Decision`
+5. `0.5.222 - Quest Objective And Condition Schema Decision`
+6. `0.5.223 - Person vs NPC Schema Decision`
+7. `0.5.224 - Magic Study Source Schema Decision`
+8. `0.5.225 - Polity Schema Decision`
+9. `0.5.226 - Household vs Family Schema Decision`
+10. `0.5.227 - Settlement Economy Schema Decision`
+11. `0.5.228 - World Map Feature Authority Schema Decision`
+12. `0.5.229 - Hazard And Route Security Boundary Decision`
 
-The family, civic, travel, magic, NPC/social, narrative, maturation, estate, and broad survival/builder/RPG/MMO gap audit documents remain future roadmap material only. `0.5.217` must remain a documentation-only audit of the existing settlement schema and must not create a new settlement collection or migrate content.
+The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.218` must remain a documentation-only audit of the existing settlement schema and must not create a new settlement collection or migrate content.
 
 ## Default Prompt Pattern
 
@@ -242,8 +288,8 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.217 - Settlement Identity Schema Decision` as the immediate documentation-only next recommended run.
-- Keep the unlanded `Version 0.5.215 - Recipe And Production Schema Decision`, `Version 0.5.213 - Monster Record Schema Decision`, and `Version 0.5.210 - Weapon And Armor Profile Schema Decision` valid and deferred.
+- Keep `Version 0.5.218 - Settlement Identity Schema Decision` as the immediate documentation-only next recommended run.
+- Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.229` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
 - `0.5.191` implemented schema and active-only validator support without changing registry content, site status, snippets, pilgrimage, runtime, UI, storage, or gameplay behavior.

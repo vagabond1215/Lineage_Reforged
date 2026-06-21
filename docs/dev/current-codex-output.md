@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.216 - Settlement Authority Boundary Decision
+Source version/run: Version 0.5.217 - Pipeline Roadmap Consolidation
 Date: 2026-06-20
-Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `6ee6a8f`.
+Branch/status assumption: `master`; worktree was clean after successful `git fetch origin` and `git pull --ff-only origin master` at `8494fb6`.
 
 ## Result
 
-Created `docs/design/settlement-authority-boundary-decision.md` from the temporary settlement-space Deep Research artifact and corrected its assumptions through live repository inspection.
+Created `docs/design/pipeline-roadmap-consolidation-decision.md` and consolidated the post-authority planning pipeline.
 
-The decision preserves existing `world.settlements` as the canonical world-owned settlement identity authority; keeps districts optional and deferred; preserves generic civilization building, infrastructure, and workplace owners; plans a later separate placed `world.settlement_sites` layer; keeps services descriptive; separates property anchors from mutable ownership/storage; preserves specialized civic/religious/magic/Knowledge authorities; and separates local ports/gates/bridges from travel topology and runtime state.
+The decision inventories 12 completed authority-boundary decisions, 12 temporary Deep Research artifacts, all active deferred Codex routes, outstanding research topics, dependency gates, stale version labels, artifact retirement rules, and the next 39 recommended `0.5.x` passes. This consolidation occupies `0.5.217`; the unlanded Settlement Identity Schema Decision moves to `0.5.218`.
 
 ## Files Changed
 
-- `docs/design/settlement-authority-boundary-decision.md`
+- `docs/design/pipeline-roadmap-consolidation-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -25,29 +25,27 @@ The decision preserves existing `world.settlements` as the canonical world-owned
 - conflict-marker scan on changed files - passed
 - trailing-whitespace scan on changed files - passed
 - changed-path scope audit - passed; exactly six documentation files changed
-- required-section audit - passed; all 20 required sections are present
-- required-decision audit - passed; all 11 decisions are explicit
-- implementation-scope audit - passed; no content, schema, validator, test, runtime, UI, storage, or gameplay file changed
+- required-section audit - passed; all 16 required sections are present
+- version-sequence consistency audit - passed; `0.5.217` is consolidation and `0.5.218` is settlement identity across coordination docs
+- implementation-scope audit - passed; no schema, validator, content, test, runtime, UI, storage, gameplay, migration, or temporary-artifact file changed
 - no tests run; documentation-only change
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No content, schema, validator, test, Knowledge, economy, crafting, item/equipment, combat, quest, magic, NPC/social, travel, geography, religion, family, civic, settlement, district, building, infrastructure, workplace, service, vendor, property, construction, ownership, runtime, UI, storage, or gameplay behavior changed.
+Documentation only. No schema, validator, content JSON, test, runtime, UI, storage/save-state, gameplay, migration, temporary research artifact, or existing design-doc path changed.
 
 ## Risks / Follow-Up
 
-- The live settlement schema is broad: identity/place fields coexist with descriptive population, economy, trade, infrastructure, racial-mix, and guild-presence fields. Future normalization must resolve ownership before moving or duplicating them.
-- Existing `civilization.buildings` are reusable templates, not placed structures. A future `world.settlement_sites` decision must preserve that distinction.
-- Existing settlement simulation and spatial/economy/institution projections are runtime consumers, not authored settlement identity.
-- The temporary settlement research artifact remains temporary through the next settlement-identity schema-decision pass, which must delete it if fully promoted or name its next consumer and removal condition.
-- The unlanded `Version 0.5.215 - Recipe And Production Schema Decision`, `Version 0.5.213 - Monster Record Schema Decision`, and `Version 0.5.210 - Weapon And Armor Profile Schema Decision` remain valid.
-- The displaced Quest Objective And Condition Schema Decision remains valid and deferred.
+- Passes `0.5.230`-`0.5.242` are conditional on their preceding schema decisions. They are sequence reservations, not implementation approval.
+- Historical design docs may retain old proposed numbers. Current coordination authority now uses the consolidated remapping and must not schedule versions retroactively.
+- All 12 temporary artifacts remain because each has one named near-term consumer; each consuming pass must delete or explicitly retain its artifact.
+- Focused new Deep Research is required only at later service, resource-node, health/injury, discovery/POI, agriculture, maritime, temporal, property, construction, and `0.6` readiness gates.
 - Do not roll to `0.6.0`.
 
 ## Next Recommended Version
 
-Version 0.5.217 - Settlement Identity Schema Decision
+Version 0.5.218 - Settlement Identity Schema Decision
 
 ## Suggested Commit Message
 
-docs(world): decide settlement authority boundaries
+docs(dev): consolidate pipeline roadmap

@@ -1,47 +1,54 @@
 # Current GPT Handoff
 
-Source route: Codex local planning through `Version 0.5.216 - Settlement Authority Boundary Decision`
+Source route: Codex local planning through `Version 0.5.217 - Pipeline Roadmap Consolidation`
 Date: 2026-06-20
 Branch/status assumption: `master`; latest numbered run is documentation-only after a successful origin fetch and fast-forward pull check.
 
 ## Authority Rules
 
-- `docs/dev/current-codex-output.md` is the exact latest numbered Codex handoff.
-- `docs/design/settlement-authority-boundary-decision.md` is the permanent authority for settlement identity, world/map anchors, future districts/sites, building/infrastructure/workplace references, services, property anchors, specialized spaces, travel anchors, and settlement runtime-state separation.
-- Existing `world.settlements` is canonical and world-owned. It contains 88 strict live records and is not a future collection.
-- Existing `civilization.buildings` are generic templates, `civilization.infrastructure` owns reusable infrastructure definitions, and `civilization.workplaces` owns production/workforce semantics. None are placed settlement structures.
-- Districts are optional separate future records and deferred. A future `world.settlement_sites` layer may place important structures after a dedicated decision.
-- Services remain descriptive tags/functions first. Housing/property anchors remain static and separate from ownership, inheritance, rent/tax, storage, and player housing state.
-- Civic/guild/institution, religion/sacred-site, magic-study, Knowledge, economy/crafting, NPC/family, quest/event, and travel authorities remain separate and reference settlement/place ids.
-- Static settlement-space content must not execute services, construction, property, markets/vendors, schedules, quests/events, Chronicle, travel/pathfinding, UI, or gameplay.
+- `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
+- `docs/design/pipeline-roadmap-consolidation-decision.md` is the permanent authority for the post-`0.5.217` dependency order, version remapping, temporary-artifact lifecycle, and research gates.
+- The 12 topic authority-boundary decisions remain permanent ownership authority; consolidation sequences them but does not replace their decisions.
+- Temporary Deep Research artifacts are non-canonical staging inputs. Each has one named follow-up and retirement trigger.
+- Once a higher version lands, older unlanded labels are historical only and must be renumbered when scheduled.
+- Prefer docs-only schema decisions, then approved schema/validator/focused-test passes, then seed plans, then narrow seeds.
+- Runtime, UI, save state, mutation, execution, transactions, services, combat, crafting, property, and expanded settlement simulation remain outside this `0.5.x` queue.
 
 ## Current Anchor
 
 Latest completed numbered run:
 
-- `Version 0.5.216 - Settlement Authority Boundary Decision`
+- `Version 0.5.217 - Pipeline Roadmap Consolidation`
 
 Immediate next numbered Codex run:
 
-- `Version 0.5.217 - Settlement Identity Schema Decision`
+- `Version 0.5.218 - Settlement Identity Schema Decision`
+
+The prior `Version 0.5.217 - Settlement Identity Schema Decision` did not land and was displaced by consolidation. Do not reuse that label.
 
 Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
 
-## Version 0.5.216 Result
+## Consolidated Near-Term Queue
 
-- Consumed `docs/dev/tmp-settlement-space-systems-research-2026-06-20.md` as planning input and corrected its stale settlement-existence assumption against the live checkout.
-- Preserved `world.settlements` as the canonical world-owned settlement identity authority.
-- Kept region/locality/hex anchors semantic and pixel map references optional/display-oriented.
-- Deferred optional districts as separate records rather than embedded required sections.
-- Preserved generic building, infrastructure, and workplace owners; deferred placed `world.settlement_sites` to a later decision.
-- Kept services descriptive and property/housing anchors separate from mutable ownership/storage/runtime state.
-- Kept civic, guild, religion, sacred-site, magic-study, Knowledge, economy, crafting, NPC/family, quest/event, and travel authorities separate.
-- Changed no content, schema, validator, test, runtime, UI, storage, or gameplay behavior.
+1. `0.5.218 - Settlement Identity Schema Decision`
+2. `0.5.219 - Recipe And Production Schema Decision`
+3. `0.5.220 - Monster Record Schema Decision`
+4. `0.5.221 - Weapon And Armor Profile Schema Decision`
+5. `0.5.222 - Quest Objective And Condition Schema Decision`
+6. `0.5.223 - Person vs NPC Schema Decision`
+7. `0.5.224 - Magic Study Source Schema Decision`
+8. `0.5.225 - Polity Schema Decision`
+9. `0.5.226 - Household vs Family Schema Decision`
+10. `0.5.227 - Settlement Economy Schema Decision`
+11. `0.5.228 - World Map Feature Authority Schema Decision`
+12. `0.5.229 - Hazard And Route Security Boundary Decision`
+
+No new Deep Research is required before this queue. Use the matching permanent decision and temporary artifact for each pass.
 
 ## Next Route Boundary
 
-`Version 0.5.217 - Settlement Identity Schema Decision` should remain documentation-only. It must audit the existing settlement schema; classify intrinsic identity/place fields versus current embedded population/economy/trade/infrastructure/guild descriptors; preserve region/locality/hex and parent/dependency coherence; define future district/site reference posture; and specify forbidden runtime fields and validation ownership without changing schemas or content.
+`Version 0.5.218 - Settlement Identity Schema Decision` must remain documentation-only. It should audit the existing settlement schema, classify intrinsic place/identity fields against current embedded population/economy/trade/infrastructure/guild descriptors, preserve region/locality/hex and parent/dependency coherence, define future district/site reference posture, and decide whether the settlement research artifact can be deleted.
 
-The temporary settlement research artifact should be deleted after that run if its remaining useful guidance has been promoted; otherwise the handoff must name its next concrete consumer and removal condition.
+It must not change schemas, validators, content, tests, runtime, UI, storage, gameplay, migrations, or unrelated coordination sequencing.
 
-The unlanded `Version 0.5.215 - Recipe And Production Schema Decision`, `Version 0.5.213 - Monster Record Schema Decision`, `Version 0.5.210 - Weapon And Armor Profile Schema Decision`, displaced Quest Objective And Condition Schema Decision, `Version 0.5.207 - Person vs NPC Schema Decision`, and `Version 0.5.205 - Magic Study Source Schema Decision` remain valid deferred roadmap items.
+The full conditional roadmap through `0.5.256`, research classifications, blocked lanes, and artifact retirement table live in `docs/design/pipeline-roadmap-consolidation-decision.md`.
