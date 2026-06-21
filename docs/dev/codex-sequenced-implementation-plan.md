@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-21
-Route: Codex local sequencing alignment after `Version 0.5.218 - Settlement Identity Schema Decision`
+Route: Codex local sequencing alignment after `Version 0.5.219 - Recipe And Production Schema Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.218 - Settlement Identity Schema Decision`
+- `Version 0.5.219 - Recipe And Production Schema Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.219 - Recipe And Production Schema Decision`
+- `Version 0.5.220 - Monster Record Schema Decision`
 
 Versioning note:
 
@@ -71,8 +71,9 @@ Versioning note:
 - Settlement Authority Boundary Decision landed in `0.5.216`: existing `world.settlements` remains canonical while districts, placed sites, services, property, travel, and runtime state retain separate boundaries.
 - Pipeline Roadmap Consolidation landed in `0.5.217`: stale proposed labels are remapped, all 12 research artifacts have named consumers, and the conditional roadmap runs through `0.5.256`.
 - Settlement Identity Schema Decision landed in `0.5.218`: the live settlement contract remains intact, future district/site references stay external, and the fully consumed settlement research artifact was deleted.
-- Keep Recipe And Production Schema Decision as the documentation-only `0.5.219` direction.
-- Do not roll from `0.5.218` to `0.6.0` without a dedicated runtime-readiness decision.
+- Recipe And Production Schema Decision landed in `0.5.219`: future static recipes remain separate from macro production, use item/tool/workplace references, and the fully consumed crafting research artifact was deleted.
+- Keep Monster Record Schema Decision as the documentation-only `0.5.220` direction.
+- Do not roll from `0.5.219` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -217,8 +218,8 @@ Versioning note:
 | 137 | `0.5.216` | Settlement Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/settlement-authority-boundary-decision.md` | planning decision | Completed | Preserved live settlement identity and separated subordinate/static/runtime owners. |
 | 138 | `0.5.217` | Pipeline Roadmap Consolidation | Codex 5.5 Local docs-first | `docs/design/pipeline-roadmap-consolidation-decision.md` | planning decision | Completed | Consolidated versions, dependencies, research, and artifact retirement. |
 | 139 | `0.5.218` | Settlement Identity Schema Decision | Codex 5.5 Local docs-first | `docs/design/settlement-identity-schema-decision.md` | schema decision | Completed | Preserved current settlement shape and retired its temporary research artifact; documentation only. |
-| 140 | `0.5.219` | Recipe And Production Schema Decision | Codex 5.5 Local docs-first | `docs/design/crafting-authority-boundary-decision.md` | schema decision | Next | Resolve embedded recipe overlap; documentation only. |
-| 141 | `0.5.220` | Monster Record Schema Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | schema decision | Queued | Audit existing monster authority; documentation only. |
+| 140 | `0.5.219` | Recipe And Production Schema Decision | Codex 5.5 Local docs-first | `docs/design/recipe-and-production-schema-decision.md` | schema decision | Completed | Approved static recipe posture and retired its temporary research artifact; documentation only. |
+| 141 | `0.5.220` | Monster Record Schema Decision | Codex 5.5 Local docs-first | `docs/design/combat-authority-boundary-decision.md` | schema decision | Next | Audit existing monster authority; documentation only. |
 | 142 | `0.5.221` | Weapon And Armor Profile Schema Decision | Codex 5.5 Local docs-first | `docs/design/item-equipment-inventory-authority-boundary-decision.md` | schema decision | Queued | Depends on monster/combat reference review. |
 | 143 | `0.5.222` | Quest Objective And Condition Schema Decision | Codex 5.5 Local docs-first | `docs/design/quest-event-chronicle-authority-boundary-decision.md` | schema decision | Queued | Reconcile embedded narrative shapes. |
 | 144 | `0.5.223` | Person vs NPC Schema Decision | Codex 5.5 Local docs-first | `docs/design/npc-social-authority-boundary-decision.md` | schema decision | Queued | Define person identity/NPC overlay. |
@@ -260,19 +261,18 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.219 - Recipe And Production Schema Decision`
-2. `0.5.220 - Monster Record Schema Decision`
-3. `0.5.221 - Weapon And Armor Profile Schema Decision`
-4. `0.5.222 - Quest Objective And Condition Schema Decision`
-5. `0.5.223 - Person vs NPC Schema Decision`
-6. `0.5.224 - Magic Study Source Schema Decision`
-7. `0.5.225 - Polity Schema Decision`
-8. `0.5.226 - Household vs Family Schema Decision`
-9. `0.5.227 - Settlement Economy Schema Decision`
-10. `0.5.228 - World Map Feature Authority Schema Decision`
-11. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.220 - Monster Record Schema Decision`
+2. `0.5.221 - Weapon And Armor Profile Schema Decision`
+3. `0.5.222 - Quest Objective And Condition Schema Decision`
+4. `0.5.223 - Person vs NPC Schema Decision`
+5. `0.5.224 - Magic Study Source Schema Decision`
+6. `0.5.225 - Polity Schema Decision`
+7. `0.5.226 - Household vs Family Schema Decision`
+8. `0.5.227 - Settlement Economy Schema Decision`
+9. `0.5.228 - World Map Feature Authority Schema Decision`
+10. `0.5.229 - Hazard And Route Security Boundary Decision`
 
-The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.219` must remain a documentation-only recipe/production schema decision and must not implement crafting schemas, content, or runtime behavior.
+The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.220` must remain a documentation-only audit of the existing monster schema and must not create a replacement collection or implement combat behavior.
 
 ## Default Prompt Pattern
 
@@ -288,7 +288,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.219 - Recipe And Production Schema Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.220 - Monster Record Schema Decision` as the immediate documentation-only next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.229` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
