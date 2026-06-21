@@ -1,12 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.218 - Settlement Identity Schema Decision
+Source route: GPT-side tooling guide update after `Version 0.5.218 - Settlement Identity Schema Decision`
 Date: 2026-06-21
 Branch/status assumption: `master`; latest numbered Codex run is documentation-only.
 
 ## Authority Rules
 
-- `docs/dev/current-codex-output.md` is the exact latest Codex handoff.
+- `docs/dev/current-codex-output.md` is the exact latest handoff, including the GPT-side tooling guide update.
+- `docs/dev/gpt-codex-tooling-instructions.md` is the active GPT/Codex operating guide for tool choice, skill choice, mode choice, prompt formatting, GPT-DR labels, and cross-thread setup.
 - `docs/design/settlement-identity-schema-decision.md` is the permanent settlement identity/schema-posture authority.
 - `docs/design/settlement-authority-boundary-decision.md` remains the broader settlement-space ownership authority.
 - `docs/design/pipeline-roadmap-consolidation-decision.md` remains the authority for sequence, version remapping, artifact lifecycle, and research gates.
@@ -20,22 +21,28 @@ Latest completed numbered Codex run:
 
 - `Version 0.5.218 - Settlement Identity Schema Decision`
 
+Latest GPT-side documentation update:
+
+- `docs/dev/gpt-codex-tooling-instructions.md`
+
 Immediate next numbered Codex run:
 
 - `Version 0.5.219 - Recipe And Production Schema Decision`
 
 Current phase: `v0.5.x` foundation stabilization / ownership hardening. Do not roll to `0.6.0`.
 
-## Settlement Decision Result
+## Tooling Guide Summary
 
-- Existing `world.settlements` remains the world-owned canonical authority; no replacement or split is planned.
-- Intrinsic identity/place fields remain on settlement records.
-- Existing population, administration, economy, survival, trade, infrastructure, racial-mix, resource, and guild-presence fields remain embedded descriptive current-data authority.
-- Region/locality/hex coherence and paired parent/dependency hierarchy remain sufficient.
-- `visualMapRef` remains optional visual/reference support and non-authoritative for travel/pathfinding/runtime.
-- Future districts/sites reference settlements externally; no district, site, building, infrastructure, workplace, service, property, or construction fields were admitted.
-- The temporary settlement-space research artifact was deleted after full promotion. It has no remaining consumer.
-- No schema, content, validator, test, runtime, UI, storage, gameplay, or migration change occurred.
+The GPT/Codex tooling guide standardizes:
+
+- when to use GPT, Codex, Deep Research, GitHub connector tools, web search, and uploaded-file context;
+- which Codex skills are useful for docs/schema/content authority work versus later browser-game/UI/asset work;
+- prompt skeletons for Codex and Deep Research;
+- inspect-last behavior;
+- Deep Research artifact handling;
+- GPT-DR gate labels;
+- project guardrails for keeping `0.5.x` static authority work separate from later `0.6+` runtime/UI/save-state work;
+- a consistent cross-thread opening prompt for Lineage Reforged.
 
 ## Consolidated Near-Term Queue
 
