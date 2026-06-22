@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.224 - Magic Study Source Schema Decision`
-- Next recommended version: `Version 0.5.225 - Polity Schema Decision`
+- Latest completed version: `Version 0.5.225 - Polity Schema Decision`
+- Next recommended version: `Version 0.5.226 - Household vs Family Schema Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -74,7 +74,8 @@ Versioning rule:
 - `Version 0.5.222 - Quest Objective And Condition Schema Decision` kept objectives/conditions embedded, approved future shared schema components for definition/archetype duplication, preserved template/generated-offer/runtime owners, and retired the temporary quest/event/Chronicle research artifact.
 - `Version 0.5.223 - Person vs NPC Schema Decision` approved separate future people identity and optional one-to-one NPC overlay authorities, rejected inferred/synthetic identities, and retired the temporary NPC/social research artifact.
 - `Version 0.5.224 - Magic Study Source Schema Decision` approved future static study-source access descriptors, kept policies and ownership separate, preserved Arcane Lore blockers, and retired the temporary magic/Knowledge/study research artifact.
-- Do not roll from `0.5.224` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.225 - Polity Schema Decision` approved future narrow political identity records, kept civic/legal/claim/relation/runtime owners separate, and retired the temporary civic research artifact.
+- Do not roll from `0.5.225` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -336,8 +337,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.222` | Quest Objective And Condition Schema Decision | Codex Local docs-first | Planning | Completed. Kept objectives/conditions embedded, approved future shared schema components, and retired the temporary quest artifact. | Documentation only; no schema, content, validator, test, runtime, UI, storage, gameplay, quest-state, reward, event, Chronicle, or migration change. |
 | `0.5.223` | Person vs NPC Schema Decision | Codex Local docs-first | Planning | Completed. Approved separate people identity and optional NPC overlay authorities; retired the temporary NPC artifact. | Documentation only; no schema, content, validator, test, loader, runtime, UI, storage, gameplay, generated-person, social, Knowledge, or migration change. |
 | `0.5.224` | Magic Study Source Schema Decision | Codex Local docs-first | Planning | Completed. Approved static source access descriptors, kept policy/ownership/runtime separate, and retired the temporary magic-study artifact. | Documentation only; no schema, content, validator, test, loader, Knowledge, magic, item, trial, runtime, UI, storage, reward, event, or migration change. |
-| `0.5.225` | Polity Schema Decision | Codex Local docs-first | Planning | Recommended next. Define descriptive polity identity. | Documentation only. |
-| `0.5.226` | Household vs Family Schema Decision | Codex Local docs-first | Planning | Queued after person/NPC. | Documentation only. |
+| `0.5.225` | Polity Schema Decision | Codex Local docs-first | Planning | Completed. Approved narrow political identity/place-anchor records and retired the temporary civic artifact. | Documentation only; no schema, content, validator, test, loader, civic/legal, runtime, UI, storage, reward, event, or migration change. |
+| `0.5.226` | Household vs Family Schema Decision | Codex Local docs-first | Planning | Recommended next after person/NPC. | Documentation only. |
 | `0.5.227` | Settlement Economy Schema Decision | Codex Local docs-first | Planning | Queued after settlement and production decisions. | Documentation only. |
 | `0.5.228` | World Map Feature Authority Schema Decision | Codex Local docs-first | Planning | Queued after settlement identity review. | Documentation only. |
 | `0.5.229` | Hazard And Route Security Boundary Decision | Codex Local docs-first | Planning | Queued after map-feature decision. | Documentation only. |
@@ -362,11 +363,10 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.225 - Polity Schema Decision`
-2. `0.5.226 - Household vs Family Schema Decision`
-3. `0.5.227 - Settlement Economy Schema Decision`
-4. `0.5.228 - World Map Feature Authority Schema Decision`
-5. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.226 - Household vs Family Schema Decision`
+2. `0.5.227 - Settlement Economy Schema Decision`
+3. `0.5.228 - World Map Feature Authority Schema Decision`
+4. `0.5.229 - Hazard And Route Security Boundary Decision`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.256` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan.
 
