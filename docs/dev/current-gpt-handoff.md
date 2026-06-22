@@ -1,49 +1,48 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.226 - Household vs Family Schema Decision
+Source version/run: Version 0.5.227 - Settlement Economy Schema Decision
 Date: 2026-06-22
 Status: documentation-only decision completed; no implementation occurred
 
 ## Authority Rules
 
-- Future `civilization.households` owns stable authored domestic-group identity; future `civilization.families` owns stable authored socially recognized family identity.
-- Future household paths are `packages/content/base/civilization/households.json` and `packages/schemas/civilization/household.schema.json`; future family paths are `packages/content/base/civilization/families.json` and `packages/schemas/civilization/family.schema.json`.
-- Both collections use strict records-only wrappers and `planned`/`active`/`retired` lifecycle.
-- Static ids are `civilization_household.<slug>` and `civilization_family.<slug>`. They must not collide with mutable account `family.*` ids or synthetic settlement `household.*` ids.
-- Household membership belongs to future `civilization.household_memberships`; family membership belongs to future `civilization.family_memberships`; direct kin/care facts belong to future `civilization.kinship_links`.
-- Future relation records reference canonical `person.<slug>` identities. Household and family identity records do not embed people or membership arrays.
-- Existing account families, Family Prestige, run history, estate state, Bloodlines UI, synthetic settlement operators, and player ancestry/species `lineageId` retain current ownership and are not static civilization authority.
-- Genealogical lineages, clans, noble houses, dynasties, bloodlines, marriage, offspring, inheritance, succession, property, reputation, runtime, UI, and storage remain separate and deferred.
-- All first-pass household and family records remain descriptive-only.
+- Future `world.settlement_economies` owns optional authored descriptive settlement-economy posture.
+- Future paths are `packages/content/base/world/settlement_economies.json` and `packages/schemas/world/settlement-economy.schema.json`.
+- Records use `settlement_economy.<settlement_slug>`, strict records-only wrapping, one record per settlement, and `planned`/`active`/`retired` lifecycle.
+- The first implementation must be schema, pure validator, and focused tests only. It starts content-free and unregistered; a later seed plan must precede live content and normal lint registration.
+- Future economy authority owns durable role/specialization, market scale/order, qualitative wealth/resilience/scarcity/seasonality and import/export/dependency bands, supported canonical item posture, industry references, and exact broad guild references when proven.
+- Settlement `infrastructureProfile.marketTier` remains settlement-owned. `domesticTradeFlows` waits for route/trade overlay authority. Local `guildPresence` remains settlement-owned until a separate local guild/institution decision.
+- `economicModel` and supported non-topological `tradeDependencyProfile`/`domesticResourceProfile` claims conceptually move later; no data migrates until an atomic current-data pass removes dual ownership.
+- Future resources, commodities, market profiles, professions, and institutions remain separate. Free-form strings cannot create those authorities.
+- Existing items, market item values, economy rules, prices, stocks, production, markets, trade, transport, crafting estimates, runtime, UI, and storage retain current ownership.
+- Economy Knowledge remains unimplemented and informational only.
 
 ## Current Anchor
 
 Latest completed:
 
-- `Version 0.5.226 - Household vs Family Schema Decision`
+- `Version 0.5.227 - Settlement Economy Schema Decision`
 
 Immediate next:
 
-- `Version 0.5.227 - Settlement Economy Schema Decision`
+- `Version 0.5.228 - World Map Feature Authority Schema Decision`
 
-## Household And Family Decision Result
+## Settlement Economy Decision Result
 
-- Two future identity schemas are approved; memberships and kinship are not part of the first schema pass.
-- Household place anchors describe domestic association without property or ownership.
-- Family place associations describe recognized origin, public center, or historical association without jurisdiction, estate, or residence claims.
-- Conditional implementation remains `0.5.238 - Household And Family Schemas And Validators` and is not pre-approved.
-- `docs/dev/tmp-family-lineage-systems-research-2026-06-20.md` was deleted after full promotion and has no remaining consumer.
+- Live inventory confirmed 88 settlements, 58 workplaces, 121 production chains, 18 guilds, 1,372 items, 1,617 market values, six economy rules, nine ecology profiles, and one travel network plus active runtime economy/trade/transport surfaces.
+- The future minimum contract and all exact-price/runtime exclusions are fixed in `docs/design/settlement-economy-schema-decision.md`.
+- Conditional implementation remains `0.5.239 - Settlement Economy Schema And Validator` and is not pre-approved beyond the documented scope.
+- `docs/dev/tmp-economy-systems-research-2026-06-20.md` was deleted after full promotion and has no remaining consumer.
 
 ## Consolidated Near-Term Queue
 
-1. `0.5.227 - Settlement Economy Schema Decision`
-2. `0.5.228 - World Map Feature Authority Schema Decision`
-3. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.228 - World Map Feature Authority Schema Decision`
+2. `0.5.229 - Hazard And Route Security Boundary Decision`
 
 No new Deep Research is required before this queue. GPT-DR labels remain non-Codex labels and do not consume `0.5.x` numbers.
 
 ## Next Route Boundary
 
-`Version 0.5.227 - Settlement Economy Schema Decision` remains documentation-only. It must reconcile future settlement-economy authority with live settlement economy fields, market values, production chains, workplaces, guilds, items, and runtime projections, and decide the temporary economy artifact's disposition.
+`Version 0.5.228 - World Map Feature Authority Schema Decision` remains documentation-only. It must define the exact geometry-free map-feature collection against current place, visual-map, route, political, ecology, POI, and grid owners and decide the temporary world-map research artifact's disposition.
 
-It must not implement schemas, validators, content, tests, pricing, markets, trade simulation, runtime, UI, storage, transactions, or gameplay behavior.
+It must not implement schemas, validators, content, tests, geometry migration, routes, grids, map UI, runtime, storage, travel, pathfinding, spawning, or gameplay behavior.

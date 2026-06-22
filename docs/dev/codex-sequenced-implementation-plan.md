@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.226 - Household vs Family Schema Decision`
+- `Version 0.5.227 - Settlement Economy Schema Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.227 - Settlement Economy Schema Decision`
+- `Version 0.5.228 - World Map Feature Authority Schema Decision`
 
 Versioning note:
 
@@ -79,6 +79,7 @@ Versioning note:
 - Magic Study Source Schema Decision landed in `0.5.224`: future static access/context descriptors are approved, study policy and known-spell ownership remain separate, Arcane Lore remains planned, and the fully consumed magic/Knowledge/study research artifact was deleted.
 - Polity Schema Decision landed in `0.5.225`: future narrow political identity/place-anchor records are approved, government/legal/claim/relation/runtime owners remain separate, and the fully consumed civic research artifact was deleted.
 - Household vs Family Schema Decision landed in `0.5.226`: separate future household and family identities are approved, membership/kinship/account/runtime owners remain separate, and the fully consumed family research artifact was deleted.
+- Settlement Economy Schema Decision landed in `0.5.227`: future descriptive settlement-economy records are approved, embedded-field transition ownership is fixed, exact-price/runtime owners remain separate, and the fully consumed economy research artifact was deleted.
 - Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.222` direction.
 - Do not roll from `0.5.221` to `0.6.0` without a dedicated runtime-readiness decision.
 
@@ -233,8 +234,8 @@ Versioning note:
 | 145 | `0.5.224` | Magic Study Source Schema Decision | Codex 5.5 Local docs-first | `docs/design/magic-study-source-schema-decision.md` | schema decision | Completed | Approved static access descriptors and retired the temporary magic-study artifact; documentation only. |
 | 146 | `0.5.225` | Polity Schema Decision | Codex 5.5 Local docs-first | `docs/design/polity-schema-decision.md` | schema decision | Completed | Approved narrow political identity records and retired the temporary civic artifact; documentation only. |
 | 147 | `0.5.226` | Household vs Family Schema Decision | Codex 5.5 Local docs-first | `docs/design/household-vs-family-schema-decision.md` | schema decision | Completed | Approved separate identity schemas and retired the temporary family artifact; documentation only. |
-| 148 | `0.5.227` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/economy-authority-boundary-decision.md` | schema decision | Next | Depends on settlement and production decisions. |
-| 149 | `0.5.228` | World Map Feature Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/world-geography-authority-boundary-decision.md` | schema decision | Queued | Define geometry-free map features. |
+| 148 | `0.5.227` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/settlement-economy-schema-decision.md` | schema decision | Completed | Approved a content-free descriptive schema posture and retired the temporary economy artifact; documentation only. |
+| 149 | `0.5.228` | World Map Feature Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/world-geography-authority-boundary-decision.md` | schema decision | Next | Define geometry-free map features. |
 | 150 | `0.5.229` | Hazard And Route Security Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Queued | Boundary prerequisite for hazard/security schemas. |
 | 151 | `0.5.230` | Settlement Schema And Validator Hardening | Codex 5.5 Local | `0.5.218` decision | schema + validator + tests | Conditional | Only if approved by `0.5.218`. |
 | 152 | `0.5.231` | Crafting Recipe Schema And Validator | Codex 5.5 Local | `0.5.219` decision | schema + validator + tests | Conditional | Only if approved by `0.5.219`. |
@@ -268,9 +269,8 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.227 - Settlement Economy Schema Decision`
-2. `0.5.228 - World Map Feature Authority Schema Decision`
-3. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.228 - World Map Feature Authority Schema Decision`
+2. `0.5.229 - Hazard And Route Security Boundary Decision`
 
 The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.222` must remain a documentation-only quest objective/condition decision and must not implement narrative schemas, content, or runtime behavior.
 
@@ -288,7 +288,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.227 - Settlement Economy Schema Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.228 - World Map Feature Authority Schema Decision` as the immediate documentation-only next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.229` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
