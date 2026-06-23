@@ -12,7 +12,7 @@ This consolidation pass temporarily occupies `0.5.217`. The previously queued `V
 
 The immediate pipeline is docs-first: settlement, recipe/production, monster, weapon/armor, quest objective/condition, people/NPC, magic-study source, polity, household/family, settlement economy, map feature, then hazard/route security. Approved schema decisions may then advance to schema/validator/focused-test passes, followed by seed plans and narrow content seeds.
 
-No outstanding new Deep Research topic blocks `0.5.218` through `0.5.229`. Existing permanent decisions and temporary artifacts provide sufficient planning input. New research should be commissioned only before the later lane that needs it, not as a broad interruption to the ready schema-decision queue.
+No outstanding new Deep Research topic blocks `0.5.230`. Existing permanent decisions provide sufficient planning input. New research should be commissioned only before the later lane that needs it, not as a broad interruption to the ready schema/validator queue.
 
 Do not roll to `0.6.0`. Runtime, UI, save-state, player-state, mutation, execution, transactions, services, combat, crafting, property, settlement simulation expansion, and integration remain blocked until static authorities and validation lanes are stable and a dedicated runtime-readiness consolidation explicitly approves the transition.
 
@@ -23,7 +23,7 @@ The repository has completed a broad static-authority wave while retaining subst
 Current facts:
 
 - 12 permanent authority-boundary decisions from `0.5.197` through `0.5.216` define world, economy, family, civic, travel, magic study, NPC/social, narrative, item/equipment, combat, crafting, and settlement ownership.
-- One temporary Deep Research artifact remains in `docs/dev`. The settlement, crafting, combat, item/equipment, quest/event/Chronicle, NPC/social, magic/Knowledge/study, civic, family, economy, and world-map artifacts were retired by `0.5.218` through `0.5.228`; the remaining travel artifact has been consumed by a permanent decision but retains detail for one named follow-up.
+- No temporary Deep Research artifact remains in `docs/dev` from the consolidated `0.5.218`-`0.5.229` queue. The settlement, crafting, combat, item/equipment, quest/event/Chronicle, NPC/social, magic/Knowledge/study, civic, family, economy, world-map, and travel artifacts were retired by `0.5.218` through `0.5.229`.
 - Multiple valid schema decisions were repeatedly displaced by user-prioritized authority lanes, leaving stale labels such as `0.5.199`, `0.5.202`, `0.5.205`, `0.5.207`, `0.5.209`, `0.5.210`, `0.5.213`, `0.5.215`, and `0.5.217` in coordination history.
 - The project is still in `v0.5.x` foundation stabilization. Static authority, validation, and narrow seed work remain appropriate; broad runtime ownership transition does not.
 - Religion/hotspot/sacred-site and Knowledge framework work already demonstrates the preferred cadence: decision, schema/validator/tests, seed plan, seed, then narrow integration.
@@ -51,7 +51,7 @@ Religious hotspot and sacred-site authority/schema/seed work is already landed a
 
 ## 4. Temporary Research Artifact Inventory
 
-Every temporary artifact was consumed as planning input. The consolidation pass itself deleted none; the table now records later retirement as follow-up runs land.
+Every temporary artifact was consumed as planning input and later retired by its named follow-up.
 
 | Temporary artifact | Permanent consumer | Current status | Retirement trigger |
 | --- | --- | --- | --- |
@@ -66,9 +66,9 @@ Every temporary artifact was consumed as planning input. The consolidation pass 
 | `tmp-family-lineage-systems-research-2026-06-20.md` | Family and household/family decisions | Retired in `0.5.226` after full promotion | Deleted; no remaining consumer. |
 | `tmp-economy-systems-research-2026-06-20.md` | Economy and settlement-economy decisions | Retired in `0.5.227` after full promotion | Deleted; no remaining consumer. |
 | `tmp-world-map-spatial-systems-research-2026-06-19.md` | World-geography and map-feature decisions | Retired in `0.5.228` after full promotion | Deleted; no remaining consumer. |
-| `tmp-travel-exploration-systems-research-2026-06-20.md` | Travel decision | Consumed; retain through named boundary follow-up | Delete after `0.5.229` only if hazard/route-security guidance is fully promoted; otherwise retain for the schema decision at `0.5.241`. |
+| `tmp-travel-exploration-systems-research-2026-06-20.md` | Travel and hazard/route-security decisions | Retired in `0.5.229` after full promotion | Deleted; no remaining consumer. |
 
-“Consumed” means the artifact is not canon and must not override its permanent decision. “Still useful” means only that detailed candidate fields/questions remain for the named follow-up.
+Retired temporary artifacts are not canon and must not override their permanent decisions.
 
 ## 5. Deferred Codex Route Inventory
 
@@ -85,13 +85,13 @@ Every temporary artifact was consumed as planning input. The consolidation pass 
 | Household vs Family Schema Decision (previously `0.5.201`) | `0.5.226` | Completed after the person/NPC decision; temporary family artifact retired. |
 | Settlement Economy Schema Decision (`0.5.199`) | `0.5.227` | Completed after settlement identity and crafting/production decisions; temporary economy artifact retired. |
 | World Map Feature Authority Schema Decision (previously suggested `0.5.198`) | `0.5.228` | Completed after settlement identity review; temporary world-map artifact retired. |
-| Hazard And Route Security Boundary Decision (previously suggested `0.5.204`) | `0.5.229` | Boundary-ready after map-feature decision; schema work remains blocked until it lands. |
+| Hazard And Route Security Boundary Decision (previously suggested `0.5.204`) | `0.5.229` | Completed after map-feature decision; temporary travel artifact retired. |
 
 Other valid deferred routes remain backlog candidates without assigned near-term numbers: container templates/loot tables, encounter/spawn profiles, combat status/condition, magic-study policies, dialogue/rumor/relationship links, institutions, jurisdictions/laws, trade-route overlays, settlement districts/sites, services, property, resources/commodities, and crafting repair/salvage.
 
 ## 6. Outstanding Deep Research Inventory
 
-No new Deep Research is required before `0.5.218`-`0.5.229`.
+No new Deep Research is required before `0.5.230`.
 
 | Topic | Classification | Required before |
 | --- | --- | --- |
@@ -150,9 +150,9 @@ Map features (0.5.228)
   -> map-feature seed (0.5.249-0.5.250)
 ```
 
-Ready docs-only schema decisions: settlement identity, recipe/production, monster, weapon/armor, quest objectives/conditions, people/NPC, magic-study sources, polity, household/family, settlement economy, and map features.
+Completed docs-only schema decisions: settlement identity, recipe/production, monster, weapon/armor, quest objectives/conditions, people/NPC, magic-study sources, polity, household/family, settlement economy, map features, and the hazard/route-security boundary.
 
-Blocked lanes: hazard/route schemas need the hazard/security boundary; settlement sites/districts need settlement identity review; services need people/site/economy boundaries and focused research; property needs people/household/site boundaries; resource nodes need focused research and map/economy/crafting reconciliation; status/injury needs health research; all runtime integration needs `0.6` readiness.
+Blocked lanes: hazard/route schema implementation needs the later `0.5.241` schema decision; settlement sites/districts need settlement identity review; services need people/site/economy boundaries and focused research; property needs people/household/site boundaries; resource nodes need focused research and map/economy/crafting reconciliation; status/injury needs health research; all runtime integration needs `0.6` readiness.
 
 ## 8. Version Number Cleanup
 
@@ -192,7 +192,7 @@ The next 39 recommended passes are:
 | `0.5.226` | Household vs Family Schema Decision | Completed docs-only; depends on people/NPC. |
 | `0.5.227` | Settlement Economy Schema Decision | Completed docs-only; depends on settlement and production. |
 | `0.5.228` | World Map Feature Authority Schema Decision | Completed docs-only. |
-| `0.5.229` | Hazard And Route Security Boundary Decision | Docs-only boundary prerequisite. |
+| `0.5.229` | Hazard And Route Security Boundary Decision | Completed docs-only; temporary travel artifact retired. |
 | `0.5.230` | Settlement Schema And Validator Hardening | Only if `0.5.218` approves changes; focused tests. |
 | `0.5.231` | Crafting Recipe Schema And Validator | Only if `0.5.219` approves; focused tests. |
 | `0.5.232` | Monster Schema And Validator Hardening | Only if `0.5.220` approves; focused tests. |
@@ -225,7 +225,7 @@ Any failed prerequisite pauses only its lane. Do not silently broaden another ru
 
 ## 10. Near-Term Priority Queue
 
-Near-term means `0.5.218`-`0.5.229`:
+Near-term means `0.5.218`-`0.5.229` and is now complete:
 
 1. Consume each existing temporary artifact into its named schema/boundary decision.
 2. Retire the artifact in the same run when all useful guidance is promoted; otherwise name one remaining consumer.
@@ -233,7 +233,7 @@ Near-term means `0.5.218`-`0.5.229`:
 4. Do not create schemas while unresolved overlap exists, especially settlement embedded fields, production-chain recipes, item use profiles, quest embedded objectives, and people/household identities.
 5. End with hazard/route-security boundary work after map features stabilize.
 
-Safest immediate next local Codex run: `Version 0.5.229 - Hazard And Route Security Boundary Decision`.
+Safest immediate next local Codex run: `Version 0.5.230 - Settlement Schema And Validator Hardening`.
 
 ## 11. Medium-Term Priority Queue
 
@@ -275,7 +275,7 @@ Do not move these into `0.5.x` through this roadmap:
 4. The named next pass must either delete the artifact or document exactly one later consumer and removal condition.
 5. Do not retain an artifact merely because it contains more ideas; durable deferred work belongs in the backlog or a permanent design document.
 6. Deletion must update current handoff, output, roadmap/sequence if referenced, and backlog in the same run.
-7. This consolidation deletes none of the 12 artifacts because each has a near-term named consumer.
+7. The consolidated artifact queue is now empty after `0.5.229`; future temporary research artifacts need their own named consumer and retirement trigger.
 
 ## 14. Coordination Document Update Policy
 
@@ -309,6 +309,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.229 - Hazard And Route Security Boundary Decision`
+`Version 0.5.230 - Settlement Schema And Validator Hardening`
 
-It should remain documentation-only, define exact hazard and route-security ownership from live authorities, update the temporary travel artifact's retirement status or name one remaining consumer, and make no schema, validator, content, test, travel, encounter, spawn, runtime, UI, storage, or gameplay change.
+It should use the `0.5.218` settlement identity decision as its source and remain within that decision's approved schema, validator, and focused-test scope.

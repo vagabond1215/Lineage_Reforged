@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-06-21
-Route: Codex local sequencing alignment after `Version 0.5.221 - Weapon And Armor Profile Schema Decision`
+Date: 2026-06-22
+Route: Codex local sequencing alignment after `Version 0.5.229 - Hazard And Route Security Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.228 - World Map Feature Authority Schema Decision`
+- `Version 0.5.229 - Hazard And Route Security Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.229 - Hazard And Route Security Boundary Decision`
+- `Version 0.5.230 - Settlement Schema And Validator Hardening`
 
 Versioning note:
 
@@ -81,6 +81,7 @@ Versioning note:
 - Household vs Family Schema Decision landed in `0.5.226`: separate future household and family identities are approved, membership/kinship/account/runtime owners remain separate, and the fully consumed family research artifact was deleted.
 - Settlement Economy Schema Decision landed in `0.5.227`: future descriptive settlement-economy records are approved, embedded-field transition ownership is fixed, exact-price/runtime owners remain separate, and the fully consumed economy research artifact was deleted.
 - World Map Feature Authority Schema Decision landed in `0.5.228`: future geometry-free semantic map-feature records are approved, current visual geometry remains separate, and the fully consumed world-map research artifact was deleted.
+- Hazard And Route Security Boundary Decision landed in `0.5.229`: separate future descriptive route-security and hazard-profile authorities are approved, current map/hex/edge/travel-network/encounter/spawn/ecology/civic/economy/runtime owners remain separate, and the fully consumed travel research artifact was deleted.
 - Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.222` direction.
 - Do not roll from `0.5.221` to `0.6.0` without a dedicated runtime-readiness decision.
 
@@ -237,8 +238,8 @@ Versioning note:
 | 147 | `0.5.226` | Household vs Family Schema Decision | Codex 5.5 Local docs-first | `docs/design/household-vs-family-schema-decision.md` | schema decision | Completed | Approved separate identity schemas and retired the temporary family artifact; documentation only. |
 | 148 | `0.5.227` | Settlement Economy Schema Decision | Codex 5.5 Local docs-first | `docs/design/settlement-economy-schema-decision.md` | schema decision | Completed | Approved a content-free descriptive schema posture and retired the temporary economy artifact; documentation only. |
 | 149 | `0.5.228` | World Map Feature Authority Schema Decision | Codex 5.5 Local docs-first | `docs/design/world-map-feature-schema-decision.md` | schema decision | Completed | Approved semantic geometry-free map features and retired the temporary world-map artifact; documentation only. |
-| 150 | `0.5.229` | Hazard And Route Security Boundary Decision | Codex 5.5 Local docs-first | `docs/design/travel-authority-boundary-decision.md` | planning decision | Next | Boundary prerequisite for hazard/security schemas. |
-| 151 | `0.5.230` | Settlement Schema And Validator Hardening | Codex 5.5 Local | `0.5.218` decision | schema + validator + tests | Conditional | Only if approved by `0.5.218`. |
+| 150 | `0.5.229` | Hazard And Route Security Boundary Decision | Codex 5.5 Local docs-first | `docs/design/hazard-and-route-security-boundary-decision.md` | planning decision | Completed | Approved separate future route-security and hazard-profile authorities and retired the temporary travel artifact; documentation only. |
+| 151 | `0.5.230` | Settlement Schema And Validator Hardening | Codex 5.5 Local | `0.5.218` decision | schema + validator + tests | Next | Only if approved by `0.5.218`. |
 | 152 | `0.5.231` | Crafting Recipe Schema And Validator | Codex 5.5 Local | `0.5.219` decision | schema + validator + tests | Conditional | Only if approved by `0.5.219`. |
 | 153 | `0.5.232` | Monster Schema And Validator Hardening | Codex 5.5 Local | `0.5.220` decision | schema + validator + tests | Conditional | Only if approved by `0.5.220`. |
 | 154 | `0.5.233` | Weapon And Armor Profile Schemas And Validators | Codex 5.5 Local | `0.5.221` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.221`. |
@@ -270,7 +271,7 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.230 - Settlement Schema And Validator Hardening`
 
 The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.222` must remain a documentation-only quest objective/condition decision and must not implement narrative schemas, content, or runtime behavior.
 
@@ -288,7 +289,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.229 - Hazard And Route Security Boundary Decision` as the immediate documentation-only next recommended run.
+- Keep `Version 0.5.230 - Settlement Schema And Validator Hardening` as the immediate next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.229` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.

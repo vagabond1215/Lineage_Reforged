@@ -1,48 +1,45 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.228 - World Map Feature Authority Schema Decision
+Source version/run: Version 0.5.229 - Hazard And Route Security Boundary Decision
 Date: 2026-06-22
 Status: documentation-only decision completed; no implementation occurred
 
 ## Authority Rules
 
-- Future `world.map_features` owns stable semantic, geometry-free named physical/cultural feature identity.
-- Future paths are `packages/content/base/world/map_features.json` and `packages/schemas/world/map-feature.schema.json`.
-- Records use `map_feature.<slug>`, strict records-only wrapping, and `planned`/`active`/`retired` lifecycle. Feature type is not encoded in the id.
-- First-pass anchors resolve only regions, region localities, and settlements; at least one region/locality anchor is required.
-- First-pass types are rivers, lakes, wetlands, coastlines, estuaries, mountain ranges/passes, cliffs, forests, groves, deserts, swamps, plains, natural harbors/landmarks, and cultural landscapes.
-- Extent kinds are descriptive only: point-like, linear, area-like, corridor-like, or distributed.
-- Existing `world.world_map_features`, its schema/content/lint, map dimensions/assets, geometry, zones, and renderer consumers remain unchanged.
-- Optional semantic-to-visual references are non-authoritative pointers only. They cannot copy geometry or establish equality.
-- Existing place hierarchy, hexes/edges, travel networks, routes, ecology/biomes, POIs, encounters/spawns, Knowledge, runtime, UI, and storage retain ownership.
-- Macro regions, coordinates, new grids, routes/crossings/ports/trade routes, political overlays, ecology integration, POI placement, and Knowledge subjects remain separate/deferred.
-- All first-pass map-feature records remain descriptive-only.
+- Future `world.route_security_profiles` and `world.hazard_profiles` are separate descriptive authorities.
+- Route security owns human/civic/organized-route safety context: patrol presence, maintenance posture, checkpoint/toll posture, escort availability, bandit/piracy pressure, conflict disruption, controlling-authority references after their owners exist, provenance, and notes.
+- Hazard profiles own non-security environmental, terrain, seasonal, weather-adjacent, exposure, wilderness, and navigational hazard identity without damage, effects, current conditions, or runtime behavior.
+- Hazard posture is staged: reusable hazard vocabulary first, explicit target overlays later.
+- Existing `world.world_maps`, `world.world_hexes`, `world.world_hex_edges`, and `world.travel_networks` retain current map, semantic cell, traversal topology, mode, route, benchmark, route-record, and inter-port-lane authority through `0.5.x`.
+- Existing encounter templates and spawn profiles retain encounter composition and spawn-envelope authority. Hazard/security profiles must not duplicate spawn rates, density, hostility, weights, hazard-pressure bands, or encounter generation.
+- Civic/law/economy owners retain jurisdictions, laws, forces, patrol execution, tolls, taxes, markets, logistics, access, enforcement, and transactions. Route security may reference those owners only after they exist.
+- Camp/rest, provision, survival, discovery, map reveal, Knowledge subjects, player journey state, runtime, UI, storage, commands, events, rewards, services, access, and gameplay remain separate/deferred.
+- Missing target authorities fail closed. Do not smuggle unsupported routes, crossings, ports, forces, jurisdictions, or hazards through strings, tags, notes, prose, or Knowledge vocabulary.
 
 ## Current Anchor
 
 Latest completed:
 
-- `Version 0.5.228 - World Map Feature Authority Schema Decision`
+- `Version 0.5.229 - Hazard And Route Security Boundary Decision`
 
 Immediate next:
 
-- `Version 0.5.229 - Hazard And Route Security Boundary Decision`
+- `Version 0.5.230 - Settlement Schema And Validator Hardening`
 
-## Map Feature Decision Result
+## Hazard And Route Security Result
 
-- Live inventory confirmed 41 regions, 47 localities, 88 settlements, one visual aggregate, 47 hexes, 49 edges, one travel network, nine ecology profiles, 36 biomes, 18 climates, 93 habitats, 117 flora, 132 fauna, six encounter templates, and five spawn profiles.
-- The exact semantic contract and forbidden geometry/topology/runtime fields are fixed in `docs/design/world-map-feature-schema-decision.md`.
-- Conditional implementation remains `0.5.240 - World Map Feature Schema And Validator` and is not pre-approved beyond the documented scope.
-- `docs/dev/tmp-world-map-spatial-systems-research-2026-06-19.md` was deleted after full promotion and has no remaining consumer.
+- Added `docs/design/hazard-and-route-security-boundary-decision.md`.
+- Confirmed live map/travel reality: one world map, 47 hexes, 49 edges, one travel network with six modes, six benchmarks, 12 routes, eight inter-port lanes, six encounter templates, five spawn profiles, nine ecology profiles, 36 biomes, 18 climate profiles, 93 habitats, 117 flora records, and 132 fauna records.
+- Confirmed no live `world.route_security_profiles` or `world.hazard_profiles` collection/schema exists.
+- Deleted `docs/dev/tmp-travel-exploration-systems-research-2026-06-20.md` after full promotion; no remaining temporary research artifact consumer exists.
+- Historical `0.5.204 - Hazard And Route Security Boundary Decision` labels are remapped history only; current guidance must use `0.5.229`.
 
 ## Consolidated Near-Term Queue
 
-1. `0.5.229 - Hazard And Route Security Boundary Decision`
+1. `0.5.230 - Settlement Schema And Validator Hardening`
 
-No new Deep Research is required before this run. GPT-DR labels remain non-Codex labels and do not consume `0.5.x` numbers.
+The hazard/security lane resumes later at conditional `0.5.241 - Hazard And Route Security Schema Decision`, which remains documentation-only. No new Deep Research is required before `0.5.230`; GPT-DR labels remain non-Codex labels and do not consume `0.5.x` numbers.
 
-## Next Route Boundary
+## Next Route
 
-`Version 0.5.229 - Hazard And Route Security Boundary Decision` remains documentation-only. It must separate hazard and route-security descriptive authorities from current travel topology, ecology, encounter/spawn, civic/law, economy, and runtime owners and decide the temporary travel research artifact's disposition.
-
-It must not implement schemas, validators, content, tests, travel/security/hazard behavior, encounter generation, spawning, pathfinding, runtime, UI, storage, or gameplay behavior.
+`Version 0.5.230 - Settlement Schema And Validator Hardening` is the next queued run in the consolidated roadmap. It must use the existing `0.5.218` settlement identity decision and remain within whatever scope that decision approved.
