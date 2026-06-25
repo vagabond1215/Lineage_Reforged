@@ -1,46 +1,49 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.231 - Crafting Recipe Schema And Validator
+Source version/run: Version 0.5.232 - Monster Schema And Validator Hardening
 Date: 2026-06-25
-Status: crafting recipe schema and isolated validator completed; no content, runtime, UI, storage, or gameplay change
+Status: monster validator hardening completed; no schema, content, runtime, UI, storage, AI, loot execution, or gameplay change
 
 ## Authority Rules
 
-- Future `crafting.recipes` now has a strict schema at `packages/schemas/crafting/recipe.schema.json`.
-- The recipe validator helper at `tools/content-lint/crafting-recipes.mjs` is pure and in-memory. It is not registered in normal content lint because no live recipe content exists.
-- Recipes are descriptive static item transformations using canonical `itemKey` inputs/outputs, `requiredToolItemKeys`, `requiredWorkplaceIds`, skill requirements, optional prerequisite refs, and optional non-inheriting `relatedProductionChainId`.
-- Existing `civilization.production_chains` and embedded `recipeProfile` data remain macro-production authority. No extraction, inheritance, migration, aliasing, or production-chain edit occurred.
-- Workplaces remain the only first-pass fixed station anchors. `extract.*`, `building.*`, `infrastructure.*`, and `settlement.*` anchors are rejected by recipe validation.
-- Tools remain item-owned and must resolve to `items.items` records with `itemClass: "tool"`.
-- Alchemy and enchanting are reserved recipe subtypes under the same static transformation contract only; there is no subtype execution behavior.
-- Recipe content, normal content-lint registration, recipe learning/unlocks, crafting execution, inventory mutation, quality/affix rolls, repair/salvage, UI, storage, commands, events, rewards, economy, Knowledge, magic behavior, and gameplay remain deferred.
+- Existing `world.monsters` remains the canonical static monster identity, archetype, descriptor, and authored combat-baseline authority.
+- No `combat.enemy_archetypes`, replacement monster collection, field move, alias, migration, loot table, explicit monster `tacticsPresetId`, AI behavior, runtime combat behavior, reward payout, inventory mutation, or gameplay behavior was introduced.
+- Normal content lint now includes a pure monster authority helper for additional hardening:
+  - monster ids must equal `monster.<slug>`;
+  - `habitatTags` and `behaviorTags` must not duplicate values;
+  - `drops` and `loot` must not duplicate item keys within their own arrays;
+  - drop/loot item keys must resolve to `items.items` and remain covered by market item values;
+  - optional `baseFaunaId` resolves to `world.fauna`;
+  - optional `baseMonsterId` resolves to another monster and rejects self-references and cycles;
+  - optional lineage fields require `variantType`, and `variantType` requires a base fauna or monster authority;
+  - every used monster `defaultRole` must resolve to `game.combat_roles` and have the current derived `preset.enemy.<role>` tactics preset.
+- Monster `drops` and `loot` remain source-local descriptive envelopes only. They do not roll loot or create items.
+- Monster combat baselines remain static descriptors. Current HP/MP/stamina, statuses, AI state, targeting, cooldowns, rewards, inventory, encounter state, spawn state, UI, storage, commands, events, and gameplay remain runtime/future-owner concerns.
 
 ## Current Anchor
 
 Latest completed:
 
-- `Version 0.5.231 - Crafting Recipe Schema And Validator`
+- `Version 0.5.232 - Monster Schema And Validator Hardening`
 
 Immediate next:
 
-- `Version 0.5.232 - Monster Schema And Validator Hardening`
+- `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
 
-## Crafting Recipe Result
+## Monster Hardening Result
 
-- Added `packages/schemas/crafting/recipe.schema.json`.
-- Added `tools/content-lint/crafting-recipes.mjs`.
-- Added `tests/unit/crafting-recipes-validation.test.mjs`.
-- Registered the schema in `tests/unit/schema-files.test.mjs`.
-- Did not create `packages/content/base/crafting/recipes.json`.
-- Did not import or register recipe validation in `tools/content-lint/index.mjs`.
+- Added `tools/content-lint/monsters.mjs`.
+- Wired `validateMonsterAuthority(...)` into `tools/content-lint/index.mjs`.
+- Added `tests/unit/monster-validation-hardening.test.mjs`.
+- Did not edit monster schema or monster content.
 - Normal content lint still reports `content-lint: ok (58 files checked)`.
 
 ## Known Test Notes
 
-- `node --test tests/unit/crafting-recipes-validation.test.mjs` passes.
+- `node --test tests/unit/monster-validation-hardening.test.mjs` passes.
 - `npm.cmd run tool:content-lint` passes.
-- `node --test tests/unit/schema-files.test.mjs` parses the new recipe schema, then fails on the unrelated existing Knowledge subject vocabulary assertion that expects `sacred_site` to be absent.
+- The broader `schema-files.test.mjs` suite still has the unrelated pre-existing Knowledge subject vocabulary assertion noted in prior handoffs.
 
 ## Next Route
 
-`Version 0.5.232 - Monster Schema And Validator Hardening` is the next queued run. It must use the `0.5.220` Monster Record Schema Decision, preserve encounter/spawn/role/tactics owners, and stay within approved schema/validator/focused-test scope.
+`Version 0.5.233 - Weapon And Armor Profile Schemas And Validators` is the next queued run. It must use the `0.5.221` Weapon And Armor Profile Schema Decision, preserve current item identity/use-profile and item-instance owners, and stay within approved schema/validator/focused-test scope.

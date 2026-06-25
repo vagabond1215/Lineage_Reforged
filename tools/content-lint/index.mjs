@@ -21,6 +21,7 @@ import { validateKnowledgeTrialPolicies } from "./knowledge-trial-policies.mjs";
 import { validateReligiousHotspots } from "./religious-hotspots.mjs";
 import { validateSacredSites } from "./sacred-sites.mjs";
 import { validateSettlementVisualMapRefs } from "./settlement-visual-map-refs.mjs";
+import { validateMonsterAuthority } from "./monsters.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -9836,6 +9837,31 @@ async function validateMonstersAgainstMarketValues() {
   }
 }
 
+async function validateMonsterAuthorityAgainstDependencies() {
+  const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+  const faunaPath = path.join(ROOT, "packages/content/base/world/fauna.json");
+  const combatRolePath = path.join(ROOT, "packages/content/base/game/combat_roles.json");
+  const tacticsPresetPath = path.join(ROOT, "packages/content/base/game/tactics_presets.json");
+
+  const monsterParsed = JSON.parse(await readFile(monsterPath, "utf8"));
+  const itemParsed = JSON.parse(await readFile(itemPath, "utf8"));
+  const marketParsed = JSON.parse(await readFile(marketPath, "utf8"));
+  const faunaParsed = JSON.parse(await readFile(faunaPath, "utf8"));
+  const combatRoleParsed = JSON.parse(await readFile(combatRolePath, "utf8"));
+  const tacticsPresetParsed = JSON.parse(await readFile(tacticsPresetPath, "utf8"));
+
+  validateMonsterAuthority({
+    wrapper: monsterParsed,
+    items: itemParsed.records,
+    marketItemValues: marketParsed.records,
+    fauna: faunaParsed.records,
+    combatRoles: combatRoleParsed.records,
+    tacticsPresets: tacticsPresetParsed.records
+  });
+}
+
 async function validateTravelNetworksAgainstWorldData() {
   const travelPath = path.join(ROOT, "packages/content/base/world/travel_networks.json");
   const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
@@ -10104,6 +10130,7 @@ async function main() {
   await validateQuestDefinitionsAgainstWorldData();
   await validatePlayerContentAgainstDependencies();
   await validateCombatFoundationAgainstDependencies();
+  await validateMonsterAuthorityAgainstDependencies();
   await validateMonstersAgainstMarketValues();
   await validateTravelNetworksAgainstWorldData();
   await validateTransportProfilesAgainstWorldData();
