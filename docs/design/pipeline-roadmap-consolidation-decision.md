@@ -309,6 +309,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.230 - Settlement Schema And Validator Hardening`
+`Version 0.5.231 - Crafting Recipe Schema And Validator`
 
-It should use the `0.5.218` settlement identity decision as its source and remain within that decision's approved schema, validator, and focused-test scope.
+It should use the `0.5.219` recipe and production schema decision as its source and remain within that decision's approved schema, validator, and focused-test scope.

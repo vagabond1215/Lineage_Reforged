@@ -1,56 +1,59 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.229 - Hazard And Route Security Boundary Decision
-Date: 2026-06-22
-Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; worktree was clean at `5f90532`.
+Source version/run: Version 0.5.230 - Settlement Schema And Validator Hardening
+Date: 2026-06-25
+Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; worktree was clean at `186b0cc`.
 
 ## Result
 
-Completed the documentation-only hazard and route-security boundary decision. The new decision approves separate future descriptive `world.route_security_profiles` and `world.hazard_profiles`, keeps hazards vocabulary-first with later explicit target overlays, preserves current map/hex/edge/travel-network/encounter/spawn/ecology/civic/economy/runtime owners, and selects a later combined `0.5.241 - Hazard And Route Security Schema Decision` for the hazard/security lane.
+Completed a narrow settlement validator hardening pass approved by the `0.5.218` settlement identity decision. Added a pure semantic helper that resolves optional settlement `visualMapRef` entries against canonical `world_maps` and current `world_map_features` authority, including map id resolution, climate-zone resolution, biome-zone family resolution for split `.part_N` biome polygons, and map pixel bounds where `world_maps.scaleProfile` supplies dimensions.
 
-The temporary travel Deep Research artifact was deleted after its remaining guidance was promoted into permanent design and coordination docs. No implementation occurred.
+No settlement schema or content changed. `visualMapRef` remains optional visual/reference support and does not become simulation, pathfinding, occupancy, travel, encounter, or runtime coordinate authority.
 
 ## Files Changed
 
-- `docs/design/hazard-and-route-security-boundary-decision.md` - added the permanent boundary decision.
-- `docs/design/pipeline-roadmap-consolidation-decision.md` - recorded travel research artifact retirement and advanced the immediate queue.
+- `tools/content-lint/settlement-visual-map-refs.mjs` - added pure settlement visual-map reference validation.
+- `tools/content-lint/index.mjs` - wired the helper into the existing settlement cross-file content-lint pass.
+- `tests/unit/settlement-visual-map-refs.test.mjs` - added focused in-memory positive and negative tests for map, climate, biome-family, bounds, optionality, and normal-lint registration.
 - `docs/dev/current-codex-output.md` - replaced with this run result.
-- `docs/dev/current-gpt-handoff.md` - advanced the current anchor and hazard/security authority rules.
-- `docs/dev/project-roadmap.md` - marked `0.5.229` complete and `0.5.230` next.
-- `docs/dev/codex-sequenced-implementation-plan.md` - advanced the ordered queue and artifact status.
-- `docs/future_content_backlog.md` - recorded the durable posture and artifact deletion.
-- `docs/dev/tmp-travel-exploration-systems-research-2026-06-20.md` - deleted after full promotion; no remaining consumer.
+- `docs/dev/current-gpt-handoff.md` - advanced the current anchor and settlement validation posture.
+- `docs/dev/project-roadmap.md` - marked `0.5.230` complete and `0.5.231` next.
+- `docs/dev/codex-sequenced-implementation-plan.md` - advanced the ordered queue.
+- `docs/future_content_backlog.md` - recorded the run note and remaining deferred settlement authority boundaries.
+- `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the next recommended version.
 
 ## Checks Run
 
 - `git fetch origin` - passed.
 - `git pull --ff-only origin master` - passed; already up to date.
-- Live map, hex, edge, travel-network, route/lane, encounter, spawn, ecology, biome, climate, habitat, flora/fauna, Knowledge, runtime, schema, lint, and test surface audit - passed.
+- Fresh settlement schema/content/validator audit against `0.5.218` - completed.
+- `node --test tests/unit/settlement-visual-map-refs.test.mjs` - passed.
+- `npm.cmd run tool:content-lint` - passed; `content-lint: ok (58 files checked)`.
+- `node --test tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/settlement-visual-map-refs.test.mjs` - failed on unrelated existing issues: `region-first-world-data.test.mjs` does not strip a BOM before JSON.parse, and `schema-files.test.mjs` still expects `sacred_site` to be absent from Knowledge subject vocabulary.
 - `git diff --check` - passed.
 - Conflict-marker scan on changed files - passed.
 - Trailing-whitespace scan on changed files - passed.
-- Changed-path scope audit - passed; documentation paths only.
-- Required-section audit - passed; all 16 required sections present.
-- Decision-completeness audit - passed; all 21 requested decisions are covered.
-- Ownership-boundary audit - passed; route security, hazards, hex tags, ecology pressure, encounter templates, spawn profiles, travel networks, civic/law/economy overlays, and runtime state remain distinct.
-- Implementation-scope and version/research tracking audits - passed.
-- Tests were not run because this pass changed documentation only.
+- Changed-path scope audit - passed; changed paths are settlement lint/test files and coordination docs only.
+- Implementation-scope audit - passed; no runtime, UI, storage, gameplay, command, event, reward, or service files changed.
+- Settlement-authority audit - passed; no field moves, collection splits, aliases, migrations, new authorities, schema changes, or settlement content changes were introduced.
+- Version-tracking audit - passed; `0.5.230` is marked complete and `0.5.231` is the next recommended version.
 
 ## Behavior / Runtime Confirmation
 
-No schema, validator, content JSON, test, loader, normal content-lint registration, route-security record, hazard-profile record, route, route segment, crossing, port, trade route, travel mode, travel network, world hex, world hex edge, encounter template, spawn profile, ecology, biome, climate, habitat, flora, fauna, weather, map feature, Knowledge registry/snippet, civic, law, polity, economy, guild, settlement, combat, quest, Chronicle, item, service, religion, family, household, person/NPC, UI, storage/save-state, runtime, migration, command, event, reward, access, pathfinding, travel-time simulation, route closure, patrol AI, guard spawning, toll collection, law enforcement, bandit/piracy behavior, encounter generation, spawn weighting, weather runtime, survival meter, camp/rest mechanic, provision consumption, discovery state, map reveal, journey state, party travel, or gameplay behavior changed.
+No settlement schema, settlement content JSON, field move, collection split, normalization, compatibility alias, migration, district/site/building/service/property/economy/infrastructure/guild/travel/hazard/map-feature authority, runtime, UI, storage/save-state, command, event, reward, access, service, pathfinding, travel behavior, economy simulation, encounter behavior, or gameplay behavior changed.
+
+The only behavior change is content-lint validation: optional settlement visual map references now fail closed when they point at an unknown map, unknown current climate zone, unknown current biome-zone family, or pixels outside authoritative map dimensions.
 
 ## Risks / Follow-Up
 
-- `0.5.241` should remain a combined documentation-only schema decision for hazard/security because the two collections share target-resolution and overlap rules while staying separate authorities.
-- The first actual hazard/security implementation must be schema, pure validator, and focused tests only if explicitly approved later; no content or normal lint registration is pre-approved.
-- Current `world.travel_networks` remains transitional through `0.5.x`; splitting routes, route segments, crossings, ports, trade routes, or travel modes still requires dedicated approval.
-- Future route-security targets must fail closed until route/crossing/port/civic owners exist.
+- Existing settlement biome references use base biome-zone family ids while `world_map_features` stores split polygon ids with `.part_N` suffixes. The validator intentionally resolves those as a family and does not require polygon-specific settlement placement.
+- The broader `region-first-world-data` and `schema-files` unit failures are unrelated to this run and should be handled in a separate cleanup pass if those suites are needed as routine gates.
+- Future settlement district/site, service, property, economy normalization, and placed infrastructure work remains deferred and requires dedicated decisions.
 
 ## Next Recommended Version
 
-Version 0.5.230 - Settlement Schema And Validator Hardening
+Version 0.5.231 - Crafting Recipe Schema And Validator
 
 ## Suggested Commit Message
 
-`docs(travel): decide hazard and route security boundaries`
+`fix(world): harden settlement validation`

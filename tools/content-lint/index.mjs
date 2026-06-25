@@ -20,6 +20,7 @@ import { validateKnowledgeSnippets } from "./knowledge-snippets.mjs";
 import { validateKnowledgeTrialPolicies } from "./knowledge-trial-policies.mjs";
 import { validateReligiousHotspots } from "./religious-hotspots.mjs";
 import { validateSacredSites } from "./sacred-sites.mjs";
+import { validateSettlementVisualMapRefs } from "./settlement-visual-map-refs.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -8715,22 +8716,34 @@ async function validateSettlementsAgainstRegions() {
   const localityPath = path.join(ROOT, "packages/content/base/world/region_localities.json");
   const hexPath = path.join(ROOT, "packages/content/base/world/world_hexes.json");
   const guildPath = path.join(ROOT, "packages/content/base/civilization/guilds.json");
+  const worldMapPath = path.join(ROOT, "packages/content/base/world/world_maps.json");
+  const worldMapFeaturePath = path.join(ROOT, "packages/content/base/world/world_map_features.json");
 
   const settlementParsed = JSON.parse(await readFile(settlementPath, "utf8"));
   const regionParsed = JSON.parse(await readFile(regionPath, "utf8"));
   const localityParsed = JSON.parse(await readFile(localityPath, "utf8"));
   const hexParsed = JSON.parse(await readFile(hexPath, "utf8"));
   const guildParsed = JSON.parse(await readFile(guildPath, "utf8"));
+  const worldMapParsed = JSON.parse(await readFile(worldMapPath, "utf8"));
+  const worldMapFeatureParsed = JSON.parse(await readFile(worldMapFeaturePath, "utf8"));
 
   if (
     !Array.isArray(settlementParsed.records) ||
     !Array.isArray(regionParsed.records) ||
     !Array.isArray(localityParsed.records) ||
     !Array.isArray(hexParsed.records) ||
-    !Array.isArray(guildParsed.records)
+    !Array.isArray(guildParsed.records) ||
+    !Array.isArray(worldMapParsed.records) ||
+    !Array.isArray(worldMapFeatureParsed.records)
   ) {
-    throw new Error("content cross-check failed: settlement, region, locality, hex, or guild records are invalid");
+    throw new Error("content cross-check failed: settlement, region, locality, hex, guild, or map records are invalid");
   }
+
+  validateSettlementVisualMapRefs({
+    settlements: settlementParsed.records,
+    worldMaps: worldMapParsed.records,
+    worldMapFeatures: worldMapFeatureParsed.records
+  });
 
   const regionsById = new Map();
   for (const record of regionParsed.records) {
