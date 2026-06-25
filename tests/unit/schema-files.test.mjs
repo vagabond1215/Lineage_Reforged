@@ -64,6 +64,7 @@ const schemaFiles = [
   "packages/schemas/world/encounter-template.schema.json",
   "packages/schemas/items/item.schema.json",
   "packages/schemas/items/consumable-profile.schema.json",
+  "packages/schemas/crafting/recipe.schema.json",
   "packages/schemas/world/spawn-profile.schema.json"
 ];
 

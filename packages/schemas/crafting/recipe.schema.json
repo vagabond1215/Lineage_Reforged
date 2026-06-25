@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CraftingRecipeCollection",
+  "description": "Schema for future authored crafting recipe authority. Records are descriptive-only item transformations and do not define execution, inventory mutation, runtime state, UI, storage, economy, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/recipeRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "recipeId": {
+      "type": "string",
+      "pattern": "^recipe\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "itemKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "workplaceId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)+$"
+    },
+    "skillId": {
+      "type": "string",
+      "pattern": "^skill\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+    },
+    "productionChainId": {
+      "type": "string",
+      "pattern": "^chain\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+    },
+    "guildId": {
+      "type": "string",
+      "pattern": "^guild\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "knowledgeDomainId": {
+      "type": "string",
+      "pattern": "^knowledge_domain\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "knowledgeSnippetId": {
+      "type": "string",
+      "pattern": "^knowledge_snippet\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "trialId": {
+      "type": "string",
+      "pattern": "^trial\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "recipeInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemKey", "quantity", "role"],
+      "properties": {
+        "itemKey": { "$ref": "#/$defs/itemKey" },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "role": {
+          "type": "string",
+          "enum": ["ingredient", "material", "reagent", "catalyst", "conduit"]
+        }
+      }
+    },
+    "recipeOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemKey", "quantity", "role"],
+      "properties": {
+        "itemKey": { "$ref": "#/$defs/itemKey" },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "role": {
+          "type": "string",
+          "enum": ["primary", "byproduct"]
+        }
+      }
+    },
+    "skillRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "minimumRank"],
+      "properties": {
+        "skillId": { "$ref": "#/$defs/skillId" },
+        "minimumRank": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "prerequisiteRefs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "guildIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/guildId" }
+        },
+        "knowledgeDomainIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/knowledgeDomainId" }
+        },
+        "knowledgeSnippetIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/knowledgeSnippetId" }
+        },
+        "trialIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/trialId" }
+        }
+      }
+    },
+    "recipeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "status",
+        "summary",
+        "recipeFamily",
+        "recipeSubtype",
+        "inputs",
+        "outputs",
+        "requiredWorkplaceIds",
+        "requiredToolItemKeys",
+        "skillRequirements",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/recipeId" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "active", "retired"]
+        },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "recipeFamily": {
+          "type": "string",
+          "enum": [
+            "agriculture",
+            "alchemy",
+            "assembly",
+            "baking",
+            "binding",
+            "brewing",
+            "butchery",
+            "cooking",
+            "cooperage",
+            "dairy_processing",
+            "forging",
+            "glassmaking",
+            "leatherworking",
+            "metalsmithing",
+            "milling",
+            "preserving",
+            "rendering",
+            "tailoring",
+            "woodworking"
+          ]
+        },
+        "recipeSubtype": {
+          "type": "string",
+          "enum": ["standard", "alchemy", "enchanting"]
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/recipeInput" }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/recipeOutput" }
+        },
+        "requiredWorkplaceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/workplaceId" }
+        },
+        "requiredToolItemKeys": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/itemKey" }
+        },
+        "skillRequirements": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/skillRequirement" }
+        },
+        "prerequisiteRefs": { "$ref": "#/$defs/prerequisiteRefs" },
+        "relatedProductionChainId": { "$ref": "#/$defs/productionChainId" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/noteList" },
+        "notes": { "$ref": "#/$defs/noteList" }
+      }
+    }
+  }
+}

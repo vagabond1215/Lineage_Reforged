@@ -1,40 +1,46 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.230 - Settlement Schema And Validator Hardening
+Source version/run: Version 0.5.231 - Crafting Recipe Schema And Validator
 Date: 2026-06-25
-Status: settlement validator hardening completed; no schema, content, runtime, UI, storage, or gameplay change
+Status: crafting recipe schema and isolated validator completed; no content, runtime, UI, storage, or gameplay change
 
 ## Authority Rules
 
-- Existing `world.settlements` remains the canonical settlement identity and inhabited-place authority.
-- `visualMapRef` remains optional visual/reference support. It does not supersede `macroRegionId`, `regionId`, `localityBandId`, or `hexAnchorId`, and it must not become simulation, pathfinding, occupancy, route, encounter, or gameplay coordinate authority.
-- Content lint now resolves settlement `visualMapRef.mapId` against `world_maps`, resolves `visualMapRef.climateZoneId` against current `world_map_features.climateZones`, resolves `visualMapRef.biomeZoneId` against current `world_map_features.biomeZones` or their split `.part_N` family, and enforces known map pixel bounds from `world_maps.scaleProfile`.
-- Current settlement embedded descriptive fields remain in place: population, economy, survival, trade, infrastructure, racial mix, domestic resources/trade flows, and guild presence. No normalization or new authority was introduced.
-- Future settlement districts, settlement sites, services, property, placed infrastructure, settlement economies, guild/institution presence, route/trade overlays, and runtime settlement state remain separate/deferred.
+- Future `crafting.recipes` now has a strict schema at `packages/schemas/crafting/recipe.schema.json`.
+- The recipe validator helper at `tools/content-lint/crafting-recipes.mjs` is pure and in-memory. It is not registered in normal content lint because no live recipe content exists.
+- Recipes are descriptive static item transformations using canonical `itemKey` inputs/outputs, `requiredToolItemKeys`, `requiredWorkplaceIds`, skill requirements, optional prerequisite refs, and optional non-inheriting `relatedProductionChainId`.
+- Existing `civilization.production_chains` and embedded `recipeProfile` data remain macro-production authority. No extraction, inheritance, migration, aliasing, or production-chain edit occurred.
+- Workplaces remain the only first-pass fixed station anchors. `extract.*`, `building.*`, `infrastructure.*`, and `settlement.*` anchors are rejected by recipe validation.
+- Tools remain item-owned and must resolve to `items.items` records with `itemClass: "tool"`.
+- Alchemy and enchanting are reserved recipe subtypes under the same static transformation contract only; there is no subtype execution behavior.
+- Recipe content, normal content-lint registration, recipe learning/unlocks, crafting execution, inventory mutation, quality/affix rolls, repair/salvage, UI, storage, commands, events, rewards, economy, Knowledge, magic behavior, and gameplay remain deferred.
 
 ## Current Anchor
 
 Latest completed:
 
-- `Version 0.5.230 - Settlement Schema And Validator Hardening`
+- `Version 0.5.231 - Crafting Recipe Schema And Validator`
 
 Immediate next:
 
-- `Version 0.5.231 - Crafting Recipe Schema And Validator`
+- `Version 0.5.232 - Monster Schema And Validator Hardening`
 
-## Settlement Hardening Result
+## Crafting Recipe Result
 
-- Added `tools/content-lint/settlement-visual-map-refs.mjs` as a pure semantic validator helper.
-- Wired that helper into the existing settlement cross-file content-lint pass.
-- Added focused in-memory tests for valid references, optional `visualMapRef`, missing maps, missing visual aggregates, missing climate/biome refs, split biome-zone families, bounds, and registration.
-- Did not change settlement schema or settlement content.
-- Full normal content lint passes at 58 checked files.
+- Added `packages/schemas/crafting/recipe.schema.json`.
+- Added `tools/content-lint/crafting-recipes.mjs`.
+- Added `tests/unit/crafting-recipes-validation.test.mjs`.
+- Registered the schema in `tests/unit/schema-files.test.mjs`.
+- Did not create `packages/content/base/crafting/recipes.json`.
+- Did not import or register recipe validation in `tools/content-lint/index.mjs`.
+- Normal content lint still reports `content-lint: ok (58 files checked)`.
 
 ## Known Test Notes
 
-- `node --test tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/settlement-visual-map-refs.test.mjs` currently fails for unrelated existing reasons: BOM parsing in `region-first-world-data.test.mjs` and a stale Knowledge subject assertion in `schema-files.test.mjs`.
-- The focused settlement visual-map reference test passes.
+- `node --test tests/unit/crafting-recipes-validation.test.mjs` passes.
+- `npm.cmd run tool:content-lint` passes.
+- `node --test tests/unit/schema-files.test.mjs` parses the new recipe schema, then fails on the unrelated existing Knowledge subject vocabulary assertion that expects `sacred_site` to be absent.
 
 ## Next Route
 
-`Version 0.5.231 - Crafting Recipe Schema And Validator` is the next queued run. It must use the `0.5.219` Recipe And Production Schema Decision and stay within that decision's approved schema, validator, and focused-test scope.
+`Version 0.5.232 - Monster Schema And Validator Hardening` is the next queued run. It must use the `0.5.220` Monster Record Schema Decision, preserve encounter/spawn/role/tactics owners, and stay within approved schema/validator/focused-test scope.

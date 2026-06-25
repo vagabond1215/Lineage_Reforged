@@ -194,8 +194,8 @@ The next 39 recommended passes are:
 | `0.5.228` | World Map Feature Authority Schema Decision | Completed docs-only. |
 | `0.5.229` | Hazard And Route Security Boundary Decision | Completed docs-only; temporary travel artifact retired. |
 | `0.5.230` | Settlement Schema And Validator Hardening | Only if `0.5.218` approves changes; focused tests. |
-| `0.5.231` | Crafting Recipe Schema And Validator | Only if `0.5.219` approves; focused tests. |
-| `0.5.232` | Monster Schema And Validator Hardening | Only if `0.5.220` approves; focused tests. |
+| `0.5.231` | Crafting Recipe Schema And Validator | Completed; strict schema, isolated validator, focused tests, no live content. |
+| `0.5.232` | Monster Schema And Validator Hardening | Next; only if `0.5.220` approves; focused tests. |
 | `0.5.233` | Weapon And Armor Profile Schemas And Validators | Only if `0.5.221` approves; focused tests. |
 | `0.5.234` | Quest Objective And Condition Validation Pass | Only if `0.5.222` approves; focused tests. |
 | `0.5.235` | People And NPC Schemas And Validators | Only if `0.5.223` approves; focused tests. |
@@ -309,6 +309,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.231 - Crafting Recipe Schema And Validator`
+`Version 0.5.232 - Monster Schema And Validator Hardening`
 
-It should use the `0.5.219` recipe and production schema decision as its source and remain within that decision's approved schema, validator, and focused-test scope.
+It should use the `0.5.220` monster record schema decision as its source and remain within that decision's approved schema, validator, and focused-test scope.
